@@ -1,0 +1,123 @@
+version: '3.8'
+
+services:
+  zeropoint-node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: zeropoint-node
+    ports:
+      - "8080:8080"  # ZeroPoint network port
+      - "3001:3001"  # Production API port
+    environment:
+      - NODE_ENV=production
+      - ZEROPOINT_DEVICE_NAME=Production_Node
+      - ZEROPOINT_CONSIOUSNESS_LEVEL=0.8
+      - ZEROPOINT_DISCOVERY_ENABLED=true
+      - ZEROPOINT_MAX_CONNECTIONS=50
+      - ZEROPOINT_LOG_LEVEL=info
+      - ZEROPOINT_ENABLE_METRICS=true
+      - ZEROPOINT_ENABLE_HEALTH_CHECKS=true
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - zeropoint-network
+
+  zeropoint-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile.monitor
+    container_name: zeropoint-monitor
+    ports:
+      - "3000:3000"  # Monitoring dashboard
+    environment:
+      - NODE_ENV=production
+      - ZEROPOINT_API_URL=http://zeropoint-node:3001
+    depends_on:
+      - zeropoint-node
+    restart: unless-stopped
+    networks:
+      - zeropoint-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: zeropoint-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - zeropoint-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: zeropoint-grafana
+    ports:
+      - "3002:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=zeropoint2024
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - zeropoint-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: zeropoint-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    networks:
+      - zeropoint-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: zeropoint-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./public:/usr/share/nginx/html
+    depends_on:
+      - zeropoint-node
+      - zeropoint-monitor
+    restart: unless-stopped
+    networks:
+      - zeropoint-network
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  redis_data:
+
+networks:
+  zeropoint-network:
+    driver: bridge 

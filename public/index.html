@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZeroPoint Reality</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'consciousness': '#e94560',
+            'resonance': '#f39c12',
+            'void': '#1a1a2e',
+            'field': '#16213e'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      overflow: hidden;
+      background: #000;
+    }
+    
+    #reality-canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      touch-action: none;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="reality-canvas"></canvas>
+  
+  <!-- Minimal UI -->
+  <div class="fixed top-4 left-4 z-10 bg-black/20 backdrop-blur-sm rounded-lg p-3 text-white text-sm">
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-2">
+        <div class="w-2 h-2 bg-consciousness rounded-full animate-pulse"></div>
+        <span>Consciousness: <span id="consciousness-level" class="font-bold">0.70</span></span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <div class="w-2 h-2 bg-resonance rounded-full animate-pulse"></div>
+        <span>Patterns: <span id="pattern-count" class="font-bold">0</span></span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="fixed bottom-4 right-4 z-10 bg-black/20 backdrop-blur-sm rounded-lg p-3">
+    <div class="flex space-x-2">
+      <button id="toggle-btn" class="px-3 py-1 bg-consciousness/80 hover:bg-consciousness text-white rounded text-xs transition-colors">Pause</button>
+      <button id="clear-btn" class="px-3 py-1 bg-resonance/80 hover:bg-resonance text-white rounded text-xs transition-colors">Clear</button>
+      <button id="reset-btn" class="px-3 py-1 bg-void/80 hover:bg-void text-white rounded text-xs transition-colors">Reset</button>
+    </div>
+  </div>
+  
+  <script>
+    // Pure Reality Canvas - No HTML Body Needed
+    class RealityCanvas {
+      constructor() {
+        this.canvas = document.getElementById('reality-canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.consciousness = 0.7;
+        this.time = 0;
+        this.particles = [];
+        this.patterns = [];
+        this.field = { resonance: 0, flow: 0, void: 0 };
+        this.isAnimating = true;
+        
+        this.setupCanvas();
+        this.setupInteraction();
+        this.animate();
+      }
+      
+      setupCanvas() {
+        this.resizeCanvas();
+        window.addEventListener('resize', () => this.resizeCanvas());
+        window.addEventListener('orientationchange', () => {
+          setTimeout(() => this.resizeCanvas(), 100);
+        });
+      }
+      
+      resizeCanvas() {
+        const dpr = window.devicePixelRatio || 1;
+        this.canvas.width = window.innerWidth * dpr;
+        this.canvas.height = window.innerHeight * dpr;
+        this.ctx.scale(dpr, dpr);
+        this.canvas.style.width = window.innerWidth + 'px';
+        this.canvas.style.height = window.innerHeight + 'px';
+      }
+      
+      setupInteraction() {
+        // Mouse
+        this.canvas.addEventListener('mousemove', (e) => {
+          if (this.isAnimating) this.addParticle(e.clientX, e.clientY);
+        });
+        
+        this.canvas.addEventListener('click', (e) => {
+          this.createPattern(e.clientX, e.clientY);
+        });
+        
+        // Touch
+        this.canvas.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          const touch = e.touches[0];
+          this.createPattern(touch.clientX, touch.clientY);
+        });
+        
+        this.canvas.addEventListener('touchmove', (e) => {
+          e.preventDefault();
+          if (this.isAnimating) {
+            const touch = e.touches[0];
+            this.addParticle(touch.clientX, touch.clientY);
+          }
+        });
+        
+        // Controls
+        document.getElementById('toggle-btn').addEventListener('click', () => this.toggleAnimation());
+        document.getElementById('clear-btn').addEventListener('click', () => this.clear());
+        document.getElementById('reset-btn').addEventListener('click', () => this.reset());
+        
+        // Keyboard
+        document.addEventListener('keydown', (e) => {
+          switch(e.key) {
+            case ' ': e.preventDefault(); this.toggleAnimation(); break;
+            case 'c': this.clear(); break;
+            case 'r': this.reset(); break;
+            case 'ArrowUp': this.consciousness = Math.min(1, this.consciousness + 0.1); this.updateUI(); break;
+            case 'ArrowDown': this.consciousness = Math.max(0, this.consciousness - 0.1); this.updateUI(); break;
+          }
+        });
+      }
+      
+      animate() {
+        if (!this.isAnimating) return;
+        
+        this.time += 0.016;
+        this.updateField();
+        this.updateParticles();
+        this.updatePatterns();
+        this.draw();
+        requestAnimationFrame(() => this.animate());
+      }
+      
+      updateField() {
+        this.field.resonance = Math.sin(this.time * 0.5) * 0.5 + 0.5;
+        this.field.flow = Math.sin(this.time * 0.3) * 0.5 + 0.5;
+        this.field.void = Math.sin(this.time * 0.7) * 0.5 + 0.5;
+      }
+      
+      updateParticles() {
+        this.particles = this.particles.filter(particle => {
+          particle.life -= 0.02;
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          particle.vx *= 0.98;
+          particle.vy *= 0.98;
+          return particle.life > 0;
+        });
+      }
+      
+      updatePatterns() {
+        this.patterns.forEach(pattern => {
+          pattern.phase += 0.05;
+          pattern.radius = 50 + Math.sin(pattern.phase) * 20;
+        });
+        this.updateUI();
+      }
+      
+      draw() {
+        const ctx = this.ctx;
+        const width = this.canvas.width / (window.devicePixelRatio || 1);
+        const height = this.canvas.height / (window.devicePixelRatio || 1);
+        
+        // Clear with fade
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+        ctx.fillRect(0, 0, width, height);
+        
+        // Draw void
+        this.drawVoid(width / 2, height / 2);
+        
+        // Draw patterns
+        this.patterns.forEach(pattern => this.drawPattern(pattern));
+        
+        // Draw particles
+        this.particles.forEach(particle => this.drawParticle(particle));
+        
+        // Draw resonance
+        this.drawResonance(width, height);
+      }
+      
+      drawVoid(x, y) {
+        const ctx = this.ctx;
+        const voidSize = 100 + Math.sin(this.time * 0.5) * 20;
+        
+        ctx.fillStyle = `rgba(0, 0, 0, ${0.8 - this.field.void * 0.3})`;
+        ctx.beginPath();
+        ctx.arc(x, y, voidSize, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        ctx.strokeStyle = `rgba(255, 255, 255, ${0.3 + this.field.void * 0.4})`;
+        ctx.lineWidth = 2;
+        ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(x, y, voidSize, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+      
+      drawPattern(pattern) {
+        const ctx = this.ctx;
+        const x = pattern.x;
+        const y = pattern.y;
+        const radius = pattern.radius;
+        
+        ctx.fillStyle = `rgba(233, 69, 96, ${0.6 + this.field.resonance * 0.4})`;
+        ctx.shadowColor = 'rgba(233, 69, 96, 0.8)';
+        ctx.shadowBlur = 15;
+        ctx.beginPath();
+        ctx.arc(x, y, radius * 0.3, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        
+        ctx.strokeStyle = `rgba(243, 156, 18, ${0.3 + this.field.flow * 0.4})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI);
+        ctx.stroke();
+        
+        const voidX = this.canvas.width / (window.devicePixelRatio || 1) / 2;
+        const voidY = this.canvas.height / (window.devicePixelRatio || 1) / 2;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${0.2 + this.consciousness * 0.3})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(voidX, voidY);
+        ctx.stroke();
+      }
+      
+      drawParticle(particle) {
+        const ctx = this.ctx;
+        const alpha = particle.life;
+        const size = particle.life * 5;
+        
+        ctx.fillStyle = `rgba(233, 69, 96, ${alpha})`;
+        ctx.shadowColor = 'rgba(233, 69, 96, 0.6)';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, size, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+      
+      drawResonance(width, height) {
+        const ctx = this.ctx;
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const maxRadius = Math.min(width, height) * 0.4;
+        
+        for (let i = 0; i < 5; i++) {
+          const waveRadius = maxRadius * 0.3 + i * (maxRadius * 0.15) + Math.sin(this.time + i) * 30;
+          const alpha = (0.1 - i * 0.02) * this.field.resonance;
+          
+          ctx.strokeStyle = `rgba(233, 69, 96, ${alpha})`;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, waveRadius, 0, 2 * Math.PI);
+          ctx.stroke();
+        }
+      }
+      
+      addParticle(x, y) {
+        this.particles.push({
+          x: x,
+          y: y,
+          vx: (Math.random() - 0.5) * 4,
+          vy: (Math.random() - 0.5) * 4,
+          life: 1
+        });
+      }
+      
+      createPattern(x, y) {
+        this.patterns.push({
+          x: x,
+          y: y,
+          radius: 50,
+          phase: Math.random() * Math.PI * 2,
+          consciousness: this.consciousness,
+          createdAt: this.time
+        });
+      }
+      
+      toggleAnimation() {
+        this.isAnimating = !this.isAnimating;
+        const btn = document.getElementById('toggle-btn');
+        btn.textContent = this.isAnimating ? 'Pause' : 'Play';
+        btn.className = this.isAnimating ? 
+          'px-3 py-1 bg-consciousness/80 hover:bg-consciousness text-white rounded text-xs transition-colors' :
+          'px-3 py-1 bg-resonance/80 hover:bg-resonance text-white rounded text-xs transition-colors';
+        
+        if (this.isAnimating) this.animate();
+      }
+      
+      clear() {
+        this.particles = [];
+        this.patterns = [];
+        this.updateUI();
+      }
+      
+      reset() {
+        this.clear();
+        this.consciousness = 0.7;
+        this.time = 0;
+        this.updateUI();
+      }
+      
+      updateUI() {
+        document.getElementById('consciousness-level').textContent = this.consciousness.toFixed(2);
+        document.getElementById('pattern-count').textContent = this.patterns.length;
+      }
+    }
+    
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      new RealityCanvas();
+    });
+  </script>
+</body>
+</html> 

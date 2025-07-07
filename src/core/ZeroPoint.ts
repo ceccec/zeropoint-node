@@ -457,8 +457,8 @@ export class ZeroPoint extends EventEmitter {
     networkLatency: number;
   } {
     const now = Date.now();
-    const uptime = Math.max(0, now - this.startTime);
-    
+    // Ensure uptime is always at least 1ms
+    const uptime = Math.max(1, now - this.startTime);
     return {
       uptime,
       operationCount: this.operationCount || 0,

@@ -376,7 +376,7 @@ export class NetworkNode extends EventEmitter {
   public async shutdown(): Promise<void> {
     if (this.server) {
       await new Promise<void>((resolve) => {
-        this.server.close(() => resolve());
+        this.server!.close(() => resolve());
       });
       this.server = undefined;
     }

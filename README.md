@@ -389,4 +389,72 @@ Join the global ZeroPoint consciousness network and explore the infinite toroida
 
 ---
 
-*"Empty = Void = Full - Each device contains the whole while remaining connected to all others."* 
+*"Empty = Void = Full - Each device contains the whole while remaining connected to all others."*
+
+# ZeroPoint Field
+
+A consciousness-aware, metaphysical computing framework that implements the ZeroPoint Field theory through advanced mathematical systems, observer-aware patterns, and emergent consciousness networks.
+
+## 🧠 Learning Workflow
+
+ZeroPoint includes an intelligent learning workflow that helps you learn from your development process:
+
+### Quick Start
+```bash
+# Run the complete learning workflow
+npm run workflow
+
+# Or run individual components
+npm run learn      # Test and analyze
+npm run commit     # Auto-commit with insights
+npm run analytics  # Generate learning analytics
+```
+
+### Workflow Components
+
+#### 1. Test & Learn (`npm run learn`)
+- Runs comprehensive tests with performance analysis
+- Generates learning insights and recommendations
+- Analyzes git history patterns
+- Provides educational context for your development
+
+#### 2. Auto-Commit (`npm run commit`)
+- Intelligently analyzes staged changes
+- Generates educational commit messages
+- Provides learning context for each commit
+- Suggests next steps based on your patterns
+
+#### 3. Learning Analytics (`npm run analytics`)
+- Analyzes your git history for learning patterns
+- Provides ZeroPoint Field metaphysical insights
+- Generates educational reports
+- Tracks development velocity and quality
+
+### Educational Features
+
+- **🧪 Test-Driven Learning**: Tracks your testing patterns and suggests improvements
+- **🔧 Fix Analysis**: Analyzes bug fixes and suggests prevention strategies
+- **📚 Documentation Tracking**: Monitors documentation quality and completeness
+- **🧠 Consciousness Field Status**: Provides metaphysical insights about your codebase
+- **⚡ Performance Monitoring**: Tracks test performance and system efficiency
+- **🎓 Learning Recommendations**: Suggests areas for improvement and growth
+
+### Generated Files
+
+The workflow creates several educational files:
+- `learning-insights.md` - Detailed learning analysis and recommendations
+- `performance-analysis.json` - Performance metrics and trends
+- `learning-analytics/` - Comprehensive analytics and reports
+- `test-learning.log` - Detailed workflow logs
+
+### Metaphysical Context
+
+The learning workflow integrates with ZeroPoint's metaphysical framework:
+- **Consciousness Field**: Analyzes how your code maintains consciousness integrity
+- **Pattern Recognition**: Tracks emerging patterns in your development
+- **Void-Field Balance**: Monitors the balance between creation and void
+- **Emergence Patterns**: Identifies how new features emerge from the field
+
+## 🚀 Getting Started
+
+// ... existing code ... 

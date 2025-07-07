@@ -1,0 +1,25 @@
+{
+  "total": 2,
+  "byType": {
+    "test": 2
+  },
+  "byAuthor": {
+    "Tsvetan Rouschev": 2
+  },
+  "byDay": {
+    "2025-07-08": 2
+  },
+  "learningPatterns": [
+    {
+      "type": "test_driven_fix",
+      "commit": "1a74b35afe4e6693632f0f5f470224d6430198e9",
+      "message": "Fix: Ensure uptime is always > 0 in performance metrics; all tests now pass",
+      "date": "2025-07-08"
+    }
+  ],
+  "testDrivenDevelopment": 2,
+  "bugFixes": 0,
+  "features": 0,
+  "refactoring": 0,
+  "documentation": 0
+}

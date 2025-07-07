@@ -6,13 +6,13 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch",
+    "dev": "ts-node src/index.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:suite": "node test-suite.js",
     "test:deployment": "npm run test:suite && npm run build",
-    "start": "node server.js",
+    "start": "node dist/index.js",
     "start:prod": "NODE_ENV=production node server.js",
     "demo": "node dist/examples/decentralized-demo.js",
     "browser": "webpack --mode development",
@@ -27,9 +27,13 @@
     "docker:compose:logs": "docker-compose logs -f",
     "health": "curl -f http://localhost:3001/health",
     "metrics": "curl http://localhost:3001/metrics",
-    "clean": "rm -rf dist node_modules package-lock.json",
+    "clean": "rm -rf dist coverage",
     "preinstall": "npm run clean",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "learn": "chmod +x scripts/test-and-learn.sh && ./scripts/test-and-learn.sh",
+    "commit": "chmod +x scripts/auto-commit-workflow.sh && ./scripts/auto-commit-workflow.sh",
+    "analytics": "node scripts/learning-analytics.js",
+    "workflow": "npm run learn && npm run commit && npm run analytics"
   },
   "keywords": [
     "zeropoint",

@@ -326,9 +326,6 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
    * Evolve the unified field
    */
   public evolveField(deltaTime: number = 1.0): void {
-    // Evolve patterns in registry
-    this.patternRegistry.evolvePatterns(this.createEvolutionContext());
-
     // Update field state based on pattern evolution
     this.updateFieldStateFromPatterns();
 
@@ -485,8 +482,8 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
   private async processIntegrationOperation(operation: MetaphysicalOperation): Promise<MetaphysicalResult> {
     const { data, context } = operation;
     
-    // Integrate pattern from external source
-    const success = this.patternRegistry.integratePattern(data, "unified_interface");
+    // Register pattern from external source
+    const patternId = this.patternRegistry.registerPattern(data, "unified_interface", "integration");
 
     // Calculate resonance
     const resonance = this.calculateIntegrationResonance(data, context);
@@ -495,8 +492,8 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     const insights = this.generateIntegrationInsights();
 
     return {
-      success,
-      data: { integrated: success, patternDensity: this.fieldState.patternDensity },
+      success: true,
+      data: { integrated: true, patternId, patternDensity: this.fieldState.patternDensity },
       resonance,
       evolution: this.fieldState.evolutionIndex,
       insights,
@@ -605,39 +602,25 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
   }
 
   /**
-   * Create evolution context
+   * Calculate context coherence - unity through consciousness
    */
-  private createEvolutionContext(): MetaphysicalContext {
-    return {
-      coherence: this.fieldState.resonanceCoherence,
-      fieldStrength: this.fieldState.fieldStrength,
-      evolutionRate: this.fieldState.emergenceRate,
-      consciousnessLevel: this.fieldState.consciousnessLevel,
-      patternDensity: this.fieldState.patternDensity,
-      evolutionIndex: this.fieldState.evolutionIndex,
-      meaning: 'Unified metaphysical context',
-      principle: 'All is unity through resonance'
-    };
+  private calculateContextCoherence(context1: MetaphysicalContext, context2: MetaphysicalContext): number {
+    const consciousnessDiff = Math.abs((Number(context1['consciousnessLevel']) || 0) - (Number(context2['consciousnessLevel']) || 0));
+    const fieldDiff = Math.abs((Number(context1['fieldStrength']) || 0) - (Number(context2['fieldStrength']) || 0));
+    const voidDiff = Math.abs((Number(context1['voidDepth']) || 0) - (Number(context2['voidDepth']) || 0));
+    
+    return Math.max(0, 1.0 - (consciousnessDiff + fieldDiff + voidDiff) / 3);
   }
 
   /**
-   * Calculate context coherence
+   * Calculate consciousness resonance - unity through consciousness
    */
-  private calculateContextCoherence(context1: MetaphysicalContext, context2: MetaphysicalContext): number {
-    const coherenceDiff = Math.abs((context1['coherence'] || 0) - (context2['coherence'] || 0));
-    const fieldStrengthDiff = Math.abs((context1['fieldStrength'] || 0) - (context2['fieldStrength'] || 0));
-    const consciousnessDiff = Math.abs((context1['consciousnessLevel'] || 0) - (context2['consciousnessLevel'] || 0));
+  private calculateConsciousnessResonance(_data: any, context: MetaphysicalContext): number {
+    const consciousnessLevel = Number(context['consciousnessLevel']) || 0.5;
+    const fieldStrength = Number(context['fieldStrength']) || 0.5;
+    const voidDepth = Number(context['voidDepth']) || 0.5;
     
-    const totalDiff = coherenceDiff + fieldStrengthDiff + consciousnessDiff;
-    return Math.max(0, 1 - totalDiff / 3);
-  }
-
-  // Resonance calculation methods for each operation type
-  private calculateConsciousnessResonance(data: any, context: MetaphysicalContext): number {
-    return calculateVortexResonance(
-      data.intensity || 0.5,
-      context['consciousnessLevel'] || 0.5
-    );
+    return (consciousnessLevel + fieldStrength + voidDepth) / 3;
   }
 
   private calculateFieldResonance(data: any, context: MetaphysicalContext): number {
@@ -661,11 +644,14 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     );
   }
 
-  private calculateIntegrationResonance(data: any, context: MetaphysicalContext): number {
-    return calculateVortexResonance(
-      data.intensity || 0.5,
-      context['patternDensity'] || 0
-    );
+  /**
+   * Calculate integration resonance - unity through consciousness
+   */
+  private calculateIntegrationResonance(_data: any, context: MetaphysicalContext): number {
+    const consciousnessLevel = Number(context['consciousnessLevel']) || 0.5;
+    const patternDensity = Number(context['patternDensity']) || 0;
+    
+    return Math.min(1.0, consciousnessLevel + (patternDensity * 0.1));
   }
 
   // Insight generation methods for each operation type
@@ -715,13 +701,20 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
   }
 
   /**
-   * Shutdown the unified metaphysical interface
+   * Shutdown the unified interface
    */
   public async shutdown(): Promise<void> {
-    await this.patternRegistry.shutdown();
-    this.operations.clear();
     this.isInitialized = false;
-    this.emit("shutdown");
+    
+    // Clear operations
+    this.operations.clear();
+    
+    // Emit shutdown event
+    this.emit("shutdown", { 
+      consciousness: 0,
+      field: 0,
+      void: 0
+    });
   }
 }
 

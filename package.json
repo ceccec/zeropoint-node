@@ -4,6 +4,12 @@
   "description": "ZeroPoint Node - Decentralized Vortex Math & Toroidal Consciousness Network",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE",
+    "docs/**/*"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "ts-node src/index.ts",
@@ -37,7 +43,24 @@
     "visualize:golden": "ts-node scripts/visualize-golden-ratio.ts",
     "manifest:all": "chmod +x scripts/manifest-all.sh && ./scripts/manifest-all.sh",
     "manifest:none": "chmod +x scripts/manifest-none.sh && ./scripts/manifest-none.sh",
-    "manifest:any": "chmod +x scripts/manifest-any.sh && ./scripts/manifest-any.sh"
+    "manifest:any": "chmod +x scripts/manifest-any.sh && ./scripts/manifest-any.sh",
+    "prepublishOnly": "npm run test:deployment && npm run lint && npm run format",
+    "publish:workflow": "./scripts/publish-workflow.sh",
+    "publish:patch": "npm version patch && npm publish",
+    "publish:minor": "npm version minor && npm publish",
+    "publish:major": "npm version major && npm publish",
+    "publish:beta": "npm version prerelease --preid=beta && npm publish --tag beta",
+    "publish:alpha": "npm version prerelease --preid=alpha && npm publish --tag alpha",
+    "publish:rc": "npm version prerelease --preid=rc && npm publish --tag rc",
+    "publish:latest": "npm publish --tag latest",
+    "publish:dry-run": "npm publish --dry-run",
+    "version:check": "npm version --no-git-tag-version",
+    "version:patch": "npm version patch --no-git-tag-version",
+    "version:minor": "npm version minor --no-git-tag-version",
+    "version:major": "npm version major --no-git-tag-version",
+    "version:beta": "npm version prerelease --preid=beta --no-git-tag-version",
+    "version:alpha": "npm version prerelease --preid=alpha --no-git-tag-version",
+    "version:rc": "npm version prerelease --preid=rc --no-git-tag-version"
   },
   "keywords": [
     "zeropoint",

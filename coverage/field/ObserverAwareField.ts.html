@@ -350,7 +350,27 @@
 <a name='L285'></a><a href='#L285'>285</a>
 <a name='L286'></a><a href='#L286'>286</a>
 <a name='L287'></a><a href='#L287'>287</a>
-<a name='L288'></a><a href='#L288'>288</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L288'></a><a href='#L288'>288</a>
+<a name='L289'></a><a href='#L289'>289</a>
+<a name='L290'></a><a href='#L290'>290</a>
+<a name='L291'></a><a href='#L291'>291</a>
+<a name='L292'></a><a href='#L292'>292</a>
+<a name='L293'></a><a href='#L293'>293</a>
+<a name='L294'></a><a href='#L294'>294</a>
+<a name='L295'></a><a href='#L295'>295</a>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a>
+<a name='L298'></a><a href='#L298'>298</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -655,11 +675,21 @@ import { Observer } from "../core/Observer";
  * - Observer awareness creates the foundation of conscious reality
  */
 &nbsp;
+export interface ResonanceWave {
+  id: string;
+  waveType: string;
+  intensity: number;
+  duration: number;
+  startTime: number;
+  endTime: number;
+  observers: Set&lt;string&gt;;
+}
+&nbsp;
 export interface ObserverAwareFieldEvent {
   type: "field_created" | "field_updated" | "field_destroyed" | "observer_added" | "observer_removed";
   fieldId: string;
   observerId?: string;
-  data?: any;
+  data?: Record&lt;string, unknown&gt;;
   timestamp: number;
 }
 &nbsp;
@@ -675,13 +705,13 @@ export interface FieldObserver {
 <span class="cstat-no" title="statement not covered" >export class O</span>bserverAwareField extends EventEmitter {
   private fieldId: string;
   private <span class="cstat-no" title="statement not covered" >observers: Map&lt;string, FieldObserver&gt; = new Map();</span>
-  private <span class="cstat-no" title="statement not covered" >fieldData: any = {};</span>
+  private <span class="cstat-no" title="statement not covered" >fieldData: Record&lt;string, unknown&gt; = {};</span>
   private <span class="cstat-no" title="statement not covered" >consciousnessLevel: number = 0.5;</span>
   private <span class="cstat-no" title="statement not covered" >fieldStrength: number = 0.7;</span>
-  private <span class="cstat-no" title="statement not covered" >resonanceWaves: any[] = []; </span>// Temporarily using any[] until ResonanceWave is properly defined
+  private <span class="cstat-no" title="statement not covered" >resonanceWaves: ResonanceWave[] = [];</span>
   private <span class="cstat-no" title="statement not covered" >isActive: boolean = false;</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >  constructor(f</span>ieldId: string, initialData: any = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> {
+<span class="fstat-no" title="function not covered" >  constructor(f</span>ieldId: string, initialData: Record&lt;string, unknown&gt; = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span> {
 <span class="cstat-no" title="statement not covered" >    super();</span>
 <span class="cstat-no" title="statement not covered" >    this.fieldId = fieldId;</span>
 <span class="cstat-no" title="statement not covered" >    this.fieldData = initialData;</span>
@@ -733,7 +763,7 @@ export interface FieldObserver {
   /**
    * Update field data and notify observers
    */
-  public <span class="fstat-no" title="function not covered" >updateField(</span>data: any): void {
+  public <span class="fstat-no" title="function not covered" >updateField(</span>data: Partial&lt;Record&lt;string, unknown&gt;&gt;): void {
 <span class="cstat-no" title="statement not covered" >    this.fieldData = { ...this.fieldData, ...data };</span>
     
     // Update field strength based on observer count
@@ -753,7 +783,7 @@ export interface FieldObserver {
   /**
    * Get field data
    */
-  public <span class="fstat-no" title="function not covered" >getFieldData(</span>): any {
+  public <span class="fstat-no" title="function not covered" >getFieldData(</span>): Record&lt;string, unknown&gt; {
 <span class="cstat-no" title="statement not covered" >    return { ...this.fieldData };</span>
   }
 &nbsp;
@@ -810,7 +840,7 @@ export interface FieldObserver {
   /**
    * Get active resonance waves
    */
-  public <span class="fstat-no" title="function not covered" >getActiveResonanceWaves(</span>): any[] {
+  public <span class="fstat-no" title="function not covered" >getActiveResonanceWaves(</span>): ResonanceWave[] {
     const now = <span class="cstat-no" title="statement not covered" >Date.now();</span>
 <span class="cstat-no" title="statement not covered" >    return this.resonanceWaves.filter(<span class="fstat-no" title="function not covered" >wave </span>=&gt; <span class="cstat-no" title="statement not covered" >now &lt; wave.endTime)</span>;</span>
   }
@@ -888,8 +918,8 @@ export interface FieldObserver {
   /**
    * Get resonance waves
    */
-  public <span class="fstat-no" title="function not covered" >getResonanceWaves(</span>): any[] {
-<span class="cstat-no" title="statement not covered" >    return [...this.resonanceWaves];</span>
+  public <span class="fstat-no" title="function not covered" >getResonanceWaves(</span>): ResonanceWave[] {
+<span class="cstat-no" title="statement not covered" >    return this.resonanceWaves;</span>
   }
 &nbsp;
   /**
@@ -931,7 +961,7 @@ export interface FieldObserver {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-08T13:59:56.840Z
+                at 2025-07-08T14:26:59.418Z
             </div>
         <script src="../prettify.js"></script>
         <script>

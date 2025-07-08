@@ -415,7 +415,7 @@ console.log(answer);
 
 ### KnowledgeSystem
 
-Pattern recognition and relationship discovery.
+Pattern recognition and relationship discovery with **UUID-based identity consciousness**.
 
 #### Constructor
 ```typescript
@@ -427,6 +427,27 @@ constructor()
 import { KnowledgeSystem } from './src/knowledge/KnowledgeSystem';
 
 const knowledge = new KnowledgeSystem();
+```
+
+#### Static Properties
+
+##### KNOWLEDGE_PATTERNS
+```typescript
+public static readonly KNOWLEDGE_PATTERNS: { [key: string]: KnowledgePattern }
+```
+
+Contains all core knowledge patterns with UUID-based identity.
+
+**Example:**
+```typescript
+// Access UUID-based test patterns
+const testPatterns = Object.values(KnowledgeSystem.KNOWLEDGE_PATTERNS)
+  .filter(p => p.category === "test");
+
+console.log(`Found ${testPatterns.length} test patterns with unique UUIDs`);
+testPatterns.forEach(pattern => {
+  console.log(`${pattern.id}: ${pattern.name}`);
+});
 ```
 
 #### Methods
@@ -464,12 +485,12 @@ addPattern(pattern: Pattern): void
 Adds a new pattern to the knowledge system.
 
 **Parameters:**
-- `pattern`: Pattern object
+- `pattern`: Pattern object with UUID-based identity
 
 **Example:**
 ```typescript
 knowledge.addPattern({
-  id: "pattern_001",
+  id: "550e8400-e29b-41d4-a716-446655440001",
   name: "Void Unity",
   description: "All opposites unified in void",
   category: "metaphysical",
@@ -567,6 +588,158 @@ Returns all relationships in the knowledge system.
 const relationships = knowledge.getRelationships();
 relationships.forEach(rel => {
   console.log(`${rel.source} -> ${rel.target} (${rel.type})`);
+});
+```
+
+##### getTestPatterns()
+```typescript
+getTestPatterns(): KnowledgePattern[]
+```
+
+Returns all test patterns with UUID-based identity.
+
+**Returns:** KnowledgePattern[] - Array of test patterns with UUIDs
+
+**Example:**
+```typescript
+const testPatterns = knowledge.getTestPatterns();
+console.log(`Found ${testPatterns.length} test patterns`);
+
+testPatterns.forEach(pattern => {
+  // Validate UUID format
+  expect(pattern.id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+  expect(pattern.name).toMatch(/Test/);
+  expect(pattern.category).toBe('test');
+});
+```
+
+##### getInsights()
+```typescript
+getInsights(): KnowledgeInsights
+```
+
+Returns comprehensive system insights including metaphysical principles.
+
+**Returns:** KnowledgeInsights object with metaphysical principles
+
+**Example:**
+```typescript
+const insights = knowledge.getInsights();
+console.log(`Total patterns: ${insights.totalPatterns}`);
+console.log(`Categories: ${insights.categories.join(', ')}`);
+console.log(`Metaphysical principles: ${insights.metaphysicalPrinciples.length}`);
+```
+
+##### getCategories()
+```typescript
+getCategories(): string[]
+```
+
+Returns all pattern categories in the knowledge system.
+
+**Returns:** string[] - Array of category names
+
+**Example:**
+```typescript
+const categories = knowledge.getCategories();
+console.log(`Available categories: ${categories.join(', ')}`);
+```
+
+##### discoverNewPatterns()
+```typescript
+discoverNewPatterns(): void
+```
+
+Auto-discovers new patterns from code, tests, and documentation.
+
+**Example:**
+```typescript
+// Auto-discover new patterns
+knowledge.discoverNewPatterns();
+
+// Check for newly discovered patterns
+const patterns = knowledge.getPatterns();
+console.log(`Total patterns after discovery: ${patterns.length}`);
+```
+
+##### generateSelfDocumentation()
+```typescript
+generateSelfDocumentation(): void
+```
+
+Generates self-documentation of the knowledge system structure.
+
+**Example:**
+```typescript
+// Generate self-documentation
+knowledge.generateSelfDocumentation();
+
+// Documentation is saved to EMERGENCE.md
+console.log('Self-documentation generated in EMERGENCE.md');
+```
+
+##### generateLivingDiagram()
+```typescript
+generateLivingDiagram(): void
+```
+
+Generates a living Mermaid diagram of all patterns and relationships.
+
+**Example:**
+```typescript
+// Generate living diagram
+knowledge.generateLivingDiagram();
+
+// Diagram is saved to LIVING_DIAGRAM.md
+console.log('Living diagram generated in LIVING_DIAGRAM.md');
+```
+
+##### getPattern()
+```typescript
+getPattern(id: string): KnowledgePattern | undefined
+```
+
+Retrieves a specific pattern by ID (supports both UUID and descriptive IDs).
+
+**Parameters:**
+- `id`: string - Pattern ID (UUID or descriptive)
+
+**Returns:** KnowledgePattern | undefined
+
+**Example:**
+```typescript
+// Get pattern by UUID
+const voidPattern = knowledge.getPattern('550e8400-e29b-41d4-a716-446655440001');
+
+// Get pattern by descriptive ID
+const vortexPattern = knowledge.getPattern('vortex_sequence');
+
+if (voidPattern) {
+  console.log(`Found pattern: ${voidPattern.name}`);
+  console.log(`Description: ${voidPattern.description}`);
+}
+```
+
+##### validatePatternStructure()
+```typescript
+validatePatternStructure(pattern: KnowledgePattern): boolean
+```
+
+Validates that a pattern has the correct structure for UUID-based identity.
+
+**Parameters:**
+- `pattern`: KnowledgePattern - Pattern to validate
+
+**Returns:** boolean - True if pattern structure is valid
+
+**Example:**
+```typescript
+const testPatterns = knowledge.getTestPatterns();
+testPatterns.forEach(pattern => {
+  const isValid = knowledge.validatePatternStructure(pattern);
+  if (!isValid) {
+    console.warn(`Invalid pattern structure: ${pattern.id}`);
+  }
 });
 ```
 

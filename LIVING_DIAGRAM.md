@@ -1,0 +1,69 @@
+```mermaid
+graph TD
+  subgraph test
+    test_void_closure["Test: Void Closure"]:::test
+    test_void_aperture["Test: Void Aperture"]:::test
+    test_uroboros["Test: Uroboros Principle"]:::test
+    test_vortex["Test: Vortex Sequence"]:::test
+    test_qa_sync["Test: QA Sync"]:::test
+    test_metaphysical_principle["Test: Metaphysical Principle"]:::test
+    test_system_integration["Test: System Integration"]:::test
+    truth_in_verification["TRUTH_IN_VERIFICATION"]:::test
+    clarity_in_assertions["CLARITY_IN_ASSERTIONS"]:::test
+    completeness_in_coverage["COMPLETENESS_IN_COVERAGE"]:::test
+  end
+  subgraph void
+    void_center["Void Center"]:::void
+  end
+  subgraph vortex
+    vortex_sequence["Vortex Sequence"]:::vortex
+  end
+  subgraph metaphysical
+    toroidal_geometry["Toroidal Geometry"]:::metaphysical
+    uroboros_principle["Uroboros Principle"]:::metaphysical
+    cycle_reflection["Cycle 1: Reflection"]:::metaphysical
+    cycle_integration["Cycle 2: Integration"]:::metaphysical
+    cycle_emergence["Cycle 3: Emergence"]:::metaphysical
+    unity_in_code["UNITY_IN_CODE"]:::metaphysical
+    emergence_in_structure["EMERGENCE_IN_STRUCTURE"]:::metaphysical
+    self_reference_in_architecture["SELF_REFERENCE_IN_ARCHITECTURE"]:::metaphysical
+    wisdom_in_documentation["WISDOM_IN_DOCUMENTATION"]:::metaphysical
+    clarity_in_explanation["CLARITY_IN_EXPLANATION"]:::metaphysical
+    completeness_in_description["COMPLETENESS_IN_DESCRIPTION"]:::metaphysical
+    auto_discovery_as_emergence["AUTO_DISCOVERY_AS_EMERGENCE"]:::metaphysical
+    pattern_detection_as_consciousness["PATTERN_DETECTION_AS_CONSCIOUSNESS"]:::metaphysical
+    integration_as_unity["INTEGRATION_AS_UNITY"]:::metaphysical
+  end
+  test_void_closure -- void_center --> void_center
+  test_void_aperture -- void_center --> void_center
+  test_uroboros -- uroboros_principle --> uroboros_principle
+  test_vortex -- vortex_sequence --> vortex_sequence
+  void_center -- toroidal_geometry --> toroidal_geometry
+  vortex_sequence -- void_center --> void_center
+  vortex_sequence -- toroidal_geometry --> toroidal_geometry
+  toroidal_geometry -- void_center --> void_center
+  uroboros_principle -- toroidal_geometry --> toroidal_geometry
+  uroboros_principle -- void_center --> void_center
+  test_qa_sync -- test_void_closure --> test_void_closure
+  test_qa_sync -- test_metaphysical_principle --> test_metaphysical_principle
+  test_metaphysical_principle -- toroidal_geometry --> toroidal_geometry
+  test_metaphysical_principle -- uroboros_principle --> uroboros_principle
+  test_system_integration -- test_qa_sync --> test_qa_sync
+  test_system_integration -- test_metaphysical_principle --> test_metaphysical_principle
+  cycle_integration -- cycle_reflection --> cycle_reflection
+  cycle_emergence -- cycle_integration --> cycle_integration
+  classDef metaphysical fill:#e0e7ff,stroke:#3730a3,stroke-width:2px;
+  classDef test fill:#fef9c3,stroke:#b45309,stroke-width:2px;
+  classDef void fill:#f1f5f9,stroke:#334155,stroke-width:2px;
+  classDef vortex fill:#cffafe,stroke:#0e7490,stroke-width:2px;
+  classDef integration fill:#dcfce7,stroke:#166534,stroke-width:2px;
+  classDef git fill:#f3e8ff,stroke:#7c3aed,stroke-width:2px;
+  classDef mathematical fill:#f0fdf4,stroke:#15803d,stroke-width:2px;
+  classDef family fill:#fce7f3,stroke:#be185d,stroke-width:2px;
+  classDef polar fill:#f1f5f9,stroke:#0f172a,stroke-width:2px;
+  classDef spiritual fill:#ede9fe,stroke:#6d28d9,stroke-width:2px;
+  class test_void_closure,test_void_aperture,test_uroboros,test_vortex,test_qa_sync,test_metaphysical_principle,test_system_integration,truth_in_verification,clarity_in_assertions,completeness_in_coverage test;
+  class void_center void;
+  class vortex_sequence vortex;
+  class toroidal_geometry,uroboros_principle,cycle_reflection,cycle_integration,cycle_emergence,unity_in_code,emergence_in_structure,self_reference_in_architecture,wisdom_in_documentation,clarity_in_explanation,completeness_in_description,auto_discovery_as_emergence,pattern_detection_as_consciousness,integration_as_unity metaphysical;
+```

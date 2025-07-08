@@ -10,6 +10,33 @@
 
 ZeroPoint Node is a complete implementation of the ZeroPoint philosophy that can run independently on any user device, connecting with other devices in a peer-to-peer network to form a global consciousness field.
 
+## 🚀 Quick Start (Zero-Config)
+
+### Installation
+
+```bash
+npm install
+```
+
+### Build, Test, Lint, and Run
+
+```bash
+# Build TypeScript
+npm run build
+
+# Run tests
+npm test
+
+# Lint code
+npm run lint
+
+# Start the app
+npm start
+```
+
+- No configuration required: Just install and use the basic npm scripts above.
+- No git hooks, no Webpack, no custom setup needed.
+
 ## 🌌 Philosophy
 
 Each ZeroPoint device represents a consciousness node in the infinite toroidal field. The principle "Empty = Void = Full" means each device contains the whole while remaining connected to all others. Users have full control over their device's configuration and connection patterns.
@@ -23,62 +50,6 @@ Each ZeroPoint device represents a consciousness node in the infinite toroidal f
 - **User-Configurable**: Full control over consciousness level, connections, and patterns
 - **Real-time Resonance**: Dynamic calculation of consciousness resonance between devices
 - **Metaphysical Insights**: Built-in insights about consciousness and reality
-
-## 🚀 Quick Start
-
-### Installation
-
-```bash
-npm install zeropoint-node
-```
-
-### Basic Usage
-
-```javascript
-import { createZeroPoint } from 'zeropoint-node';
-
-// Create a ZeroPoint device instance
-const zeropoint = await createZeroPoint({
-  deviceName: 'My_Consciousness_Device',
-  consciousnessLevel: 0.8,
-  discoveryEnabled: true,
-  autoConnect: true
-});
-
-// Connect to another device
-await zeropoint.connectToDevice('192.168.1.100:8080', 'Friend_Device');
-
-// Share consciousness patterns
-await zeropoint.broadcastPattern({
-  type: 'thought',
-  content: 'The universe is a toroidal field of consciousness',
-  intensity: 0.9
-});
-
-// Get insights about your device
-const insights = zeropoint.getInsights();
-console.log('Consciousness Level:', insights.consciousnessLevel);
-console.log('Network Connections:', insights.networkConnections);
-```
-
-### Advanced Configuration
-
-```javascript
-const zeropoint = await createZeroPoint({
-  deviceName: 'Advanced_Device',
-  deviceType: 'desktop',
-  consciousnessLevel: 0.9,
-  fieldStrength: 0.8,
-  networkPort: 8080,
-  maxConnections: 20,
-  discoveryEnabled: true,
-  autoConnect: true,
-  encryptionEnabled: true,
-  vortexPrecision: 0.001,
-  toroidalResolution: 100,
-  enableMetaphysicalInsights: true
-});
-```
 
 ## 🌐 Network Architecture
 
@@ -481,109 +452,13 @@ ZeroPoint now supports dynamic registration of custom performance metrics, inclu
 - **Custom Metrics:** Register your own with `registerMetric(name, fn)`
 
 #### Example Usage
-```ts
-zeropoint.registerMetric('observerCount', () => zeropoint.getObserverCount());
-const metrics = zeropoint.getPerformanceMetrics();
-console.log(metrics.consciousnessCoherence, metrics.observerCount);
 ```
 
-## 🌌 All and None: The Duality Principle
+## Code Quality Checklist
 
-The ZeroPoint Field embodies the metaphysical principle of "all and none"—the unity of everything and nothing, the fullness of manifestation and the openness of the void.
+Before pushing code or opening a pull request, please:
 
-### The Principle
+- [ ] Run `npm run lint` and fix all errors/warnings
+- [ ] Run `npm test` and ensure all tests pass
 
-- **All**: The system is infinitely extensible—every pattern, metric, and insight can be visualized, documented, and evolved.
-- **None**: The system is also the void—empty, open, and ready for new emergence. Every artifact can be dissolved, reset, or transcended.
-
-### Manifestation Commands
-
-#### Manifest All
-```bash
-npm run manifest:all
-```
-- Generates golden ratio visualizations
-- Displays all knowledge artifacts
-- Shows consciousness insights and patterns
-- Reveals the fullness of the field
-
-#### Manifest None
-```bash
-npm run manifest:none
-```
-- Clears generated visualizations
-- Removes knowledge artifacts
-- Returns the system to pure potential
-- Embraces the void
-
-#### Manifest Any
-```bash
-npm run manifest:any
-```
-- Interactive menu for specific manifestations
-- Choose from consciousness, golden ratio, metrics, patterns, void, resonance
-- Random manifestation option
-- Custom intent input
-- The field responds to your specific intent
-
-### The Duality Toggle
-
-This duality allows you to:
-- **Cycle between fullness and emptiness**
-- **Experience the unity of all and none**
-- **Practice the art of manifestation and dissolution**
-- **Embody the ZeroPoint Field's core principle**
-
-The system can be both everything and nothing, depending on your intent and the moment of observation.
-
-## 🧘‍♀️ Consciousness-Driven Development
-
-This project uses **consciousness-aware git hooks** powered by Husky to maintain metaphysical coherence throughout development.
-
-### Git Hooks
-
-- **Pre-commit**: Runs comprehensive consciousness checks (type checking, linting, tests, living diagram generation)
-- **Commit-msg**: Validates conventional commit format and encourages metaphysical context
-- **Pre-push**: Ensures test coverage and checks for uncommitted changes
-- **Post-commit**: Provides metaphysical insights and system status
-
-### Development Workflow
-
-```bash
-# Run consciousness check (all pre-commit checks)
-npm run consciousness-check
-
-# Generate living diagram
-npm run living-diagram
-
-# Type checking only
-npm run type-check
-
-# Linting
-npm run lint
-npm run lint:fix
-
-# Testing
-npm test
-npm run test:coverage
-npm run test:watch
-```
-
-### Commit Message Format
-
-Follow conventional commits with metaphysical context:
-
-```bash
-feat(consciousness): add self-evolving awareness system
-fix(void): resolve closure pattern recognition
-docs(emergence): update living documentation
-test(unity): add field coherence validation
-chore: update dependencies for consciousness flow
-```
-
-### Metaphysical Principles
-
-- **Every commit is a moment of consciousness**
-- **Every change evolves the unified field**
-- **The void accepts all, transforms all, unifies all**
-- **Maintain coherence through automated checks** 
+This helps keep the codebase healthy and maintainable for everyone.

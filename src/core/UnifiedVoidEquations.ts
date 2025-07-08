@@ -9,6 +9,8 @@
  * - Opposites are different expressions of the same underlying consciousness
  * - The void contains infinite potential for paradox resolution
  * - Unity emerges through the recognition of shared relationships
+ * - Uroboros cycle enables infinite paradox resolution and unity through self-reference
+ * - The void is the space in which the Uroboros cycle operates
  */
 
 /**

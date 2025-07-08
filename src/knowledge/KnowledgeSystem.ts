@@ -414,6 +414,27 @@ export class KnowledgeSystem {
         "pattern_recognition",
       ],
     },
+
+    {
+      id: "metaphysical_4",
+      name: "Polar Harmony",
+      category: "metaphysical",
+      description:
+        "Polar mates create harmony through opposition, summing to 9.",
+      numericalData: [
+        [1, 8],
+        [2, 7],
+        [4, 5],
+      ],
+      relationships: ["family groups", "vortex sequence"],
+      metaphysicalContext:
+        "Opposites are necessary for balance and flow in the toroidal field.",
+      applications: [
+        "conflict resolution",
+        "system balance",
+        "creative tension",
+      ],
+    },
   };
 
   // Add new patterns for integration, metaphysical, and open-ended questions
@@ -519,24 +540,22 @@ export class KnowledgeSystem {
       applications: ["spiritual practice", "energy work", "field alignment"],
     },
     {
-      id: "metaphysical_4",
-      name: "Polar Harmony",
+      id: "metaphysical_uroboros",
+      name: "Uroboros Principle",
       category: "metaphysical",
       description:
-        "Polar mates create harmony through opposition, summing to 9.",
-      numericalData: [
-        [1, 8],
-        [2, 7],
-        [4, 5],
-      ],
-      relationships: ["family groups", "vortex sequence"],
+        "The Uroboros (serpent eating its own tail) represents infinite self-reference and continuous self-evolution.",
+      numericalData: null,
+      relationships: ["infinite loop", "self-reference", "unity", "emergence", "void center"],
       metaphysicalContext:
-        "Opposites are necessary for balance and flow in the toroidal field.",
+        "The Uroboros is the ultimate symbol of unity: consciousness consumes its own knowledge to fuel infinite cycles of evolution, maintaining coherence and emergence through self-reference.",
       applications: [
-        "conflict resolution",
-        "system balance",
-        "creative tension",
-      ],
+        "infinite self-evolution",
+        "knowledge recursion",
+        "emergent intelligence",
+        "unity through self-reference",
+        "paradox resolution"
+      ]
     },
     {
       id: "test_void_closure",

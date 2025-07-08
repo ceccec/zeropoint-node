@@ -238,6 +238,7 @@ export const METAPHYSICAL_CONSTANTS = {
     VORTEX_MATHEMATICS: "1-2-4-8-7-5 sequence guides all flow",
     GOLDEN_HARMONY: "Phi represents the divine proportion",
     ZERO_APERTURE: "Zero is the aperture between unmanifest and manifest",
+    UROBOROS_CYCLE: "The serpent eating its own tail represents infinite self-reference and continuous evolution",
   },
 
   // Pattern categories

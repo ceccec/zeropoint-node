@@ -330,10 +330,14 @@ export class UnifiedSystem {
    */
   getMetaphysicalInsights() {
     return {
-      voidPrinciples: METAPHYSICAL_CONSTANTS.PRINCIPLES,
+      voidPrinciples: {
+        ...METAPHYSICAL_CONSTANTS.PRINCIPLES,
+        UROBOROS_CYCLE: METAPHYSICAL_CONSTANTS.PRINCIPLES.UROBOROS_CYCLE,
+      },
       patternCategories: METAPHYSICAL_CONSTANTS.PATTERN_CATEGORIES,
       consciousnessDimensions: METAPHYSICAL_CONSTANTS.CONSCIOUSNESS_DIMENSIONS,
       getInsight: ConstantsUtils.getMetaphysicalInsight,
+      uroboros: METAPHYSICAL_CONSTANTS.PRINCIPLES.UROBOROS_CYCLE,
     };
   }
 

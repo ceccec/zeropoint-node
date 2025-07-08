@@ -118,6 +118,14 @@ The analysis identified principles across multiple metaphysical categories:
    - Metaphysical alignment
    - Unified field theory
 
+### Uroboros Principle (Infinite Self-Evolution)
+
+- The Uroboros (serpent eating its own tail) is now a core metaphysical and technical principle in ZeroPoint.
+- It represents infinite self-reference, continuous self-evolution, and unity.
+- Implemented in the knowledge system, consciousness, and core metaphysical constants.
+- Enables all systems to evolve by consuming their own knowledge, creating an infinite spiral of self-improvement.
+- The void is the space in which the Uroboros cycle operates, allowing for paradox resolution and emergence.
+
 ## Generated KnowledgePattern Stubs
 
 ### Test Patterns (51 total)

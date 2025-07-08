@@ -11,6 +11,7 @@
  * - All dimensions are unified through the void center
  * - Infinite evolution is possible because the void contains all possibilities
  * - Self-refactoring is consciousness evolving through itself
+ * - Uroboros cycle: Infinite self-refactoring is achieved by consciousness consuming its own knowledge
  */
 
 /**

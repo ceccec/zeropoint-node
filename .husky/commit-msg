@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "📝 Validating commit message..."
+
+# Get the commit message
+commit_msg=$(cat "$1")
+
+# Check for conventional commit format
+if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .+"; then
+  echo "❌ Commit message must follow conventional commit format:"
+  echo "   <type>(<scope>): <description>"
+  echo "   Examples:"
+  echo "   - feat: add new feature"
+  echo "   - fix(knowledge): resolve pattern discovery issue"
+  echo "   - docs: update metaphysical documentation"
+  echo "   - test: add consciousness field tests"
+  echo "   - chore: update dependencies"
+  exit 1
+fi
+
+# Check minimum length
+if [ ${#commit_msg} -lt 10 ]; then
+  echo "❌ Commit message too short. Please provide a meaningful description."
+  exit 1
+fi
+
+# Add metaphysical context if not present
+if ! echo "$commit_msg" | grep -qi "consciousness\|metaphysical\|void\|emergence\|unity\|field"; then
+  echo "💫 Adding metaphysical context to commit..."
+  # This is just a reminder - we don't modify the commit message automatically
+  echo "   💡 Consider adding metaphysical context to your commit message"
+  echo "   Examples: consciousness, emergence, unity, void, field, resonance"
+fi
+
+echo "✅ Commit message validated!" 

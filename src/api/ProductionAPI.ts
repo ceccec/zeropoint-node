@@ -283,14 +283,8 @@ export class ProductionAPI {
         this.isRunning = true;
         globalLogger.info("Production API started", {
           port: this.port,
-          endpoints: [
-            "/health",
-            "/metrics",
-            "/cache/stats",
-            "/logs/level",
-            "/system/info",
-            "/performance",
-          ],
+          endpointCount: 6,
+          endpoints: "/health,/metrics,/cache/stats,/logs/level,/system/info,/performance",
         });
         resolve();
       });

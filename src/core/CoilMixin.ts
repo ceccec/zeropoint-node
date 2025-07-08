@@ -72,7 +72,7 @@ export function CoilMixin<T extends object>(
         type: "coil_consciousness_changed",
         objectId: coilObject.id,
         consciousness,
-        coilNodes: coilObject.getCoilNodes(),
+        coilNodeCount: coilObject.getCoilNodes().length,
       });
     },
 
@@ -85,7 +85,7 @@ export function CoilMixin<T extends object>(
         type: "coil_field_resonance_changed",
         objectId: coilObject.id,
         fieldResonance,
-        coilColors: coilObject.getCoilColors(),
+        coilColorCount: coilObject.getCoilColors().length,
       });
     },
 

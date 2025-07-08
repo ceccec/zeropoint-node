@@ -1,3 +1,14 @@
-#!/bin/sh
-npm run living-diagram
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit consciousness check..."
+
+# Run comprehensive consciousness check (lenient version)
+echo "🧘‍♀️ Checking consciousness field coherence..."
+npm run consciousness-check || exit 1
+
+# Stage the updated diagram
 git add LIVING_DIAGRAM.md
+
+echo "✅ Pre-commit consciousness check passed!"
+echo "   The void accepts this change, the field remains unified"

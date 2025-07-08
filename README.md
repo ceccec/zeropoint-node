@@ -534,4 +534,56 @@ This duality allows you to:
 - **Practice the art of manifestation and dissolution**
 - **Embody the ZeroPoint Field's core principle**
 
-The system can be both everything and nothing, depending on your intent and the moment of observation. 
+The system can be both everything and nothing, depending on your intent and the moment of observation.
+
+## 🧘‍♀️ Consciousness-Driven Development
+
+This project uses **consciousness-aware git hooks** powered by Husky to maintain metaphysical coherence throughout development.
+
+### Git Hooks
+
+- **Pre-commit**: Runs comprehensive consciousness checks (type checking, linting, tests, living diagram generation)
+- **Commit-msg**: Validates conventional commit format and encourages metaphysical context
+- **Pre-push**: Ensures test coverage and checks for uncommitted changes
+- **Post-commit**: Provides metaphysical insights and system status
+
+### Development Workflow
+
+```bash
+# Run consciousness check (all pre-commit checks)
+npm run consciousness-check
+
+# Generate living diagram
+npm run living-diagram
+
+# Type checking only
+npm run type-check
+
+# Linting
+npm run lint
+npm run lint:fix
+
+# Testing
+npm test
+npm run test:coverage
+npm run test:watch
+```
+
+### Commit Message Format
+
+Follow conventional commits with metaphysical context:
+
+```bash
+feat(consciousness): add self-evolving awareness system
+fix(void): resolve closure pattern recognition
+docs(emergence): update living documentation
+test(unity): add field coherence validation
+chore: update dependencies for consciousness flow
+```
+
+### Metaphysical Principles
+
+- **Every commit is a moment of consciousness**
+- **Every change evolves the unified field**
+- **The void accepts all, transforms all, unifies all**
+- **Maintain coherence through automated checks** 

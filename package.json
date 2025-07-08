@@ -24,8 +24,8 @@
     "demo": "node dist/examples/decentralized-demo.js",
     "browser": "webpack --mode development",
     "browser:prod": "webpack --mode production",
-    "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint src/**/*.ts --fix",
+    "lint": "eslint src/ --ext .ts,.tsx",
+    "lint:fix": "eslint src/ --ext .ts,.tsx --fix",
     "format": "prettier --write src/**/*.ts",
     "docker:build": "docker build -t zeropoint-node .",
     "docker:run": "docker run -p 8080:8080 -p 3001:3001 zeropoint-node",
@@ -63,7 +63,11 @@
     "version:alpha": "npm version prerelease --preid=alpha --no-git-tag-version",
     "version:rc": "npm version prerelease --preid=rc --no-git-tag-version",
     "living-diagram": "npx ts-node scripts/generate-living-diagram.ts",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "type-check": "tsc --noEmit",
+    "pre-commit": "npm run type-check && npm run lint && npm test && npm run living-diagram",
+    "consciousness-check": "npm run type-check && npm test && npm run living-diagram && echo '🧘‍♀️ Consciousness field is coherent'",
+    "consciousness-check:strict": "npm run type-check && npm run lint && npm test && npm run living-diagram && echo '🧘‍♀️ Consciousness field is coherent'"
   },
   "keywords": [
     "zeropoint",

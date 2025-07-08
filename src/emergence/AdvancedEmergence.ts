@@ -132,6 +132,98 @@ export interface VoidConnection {
   torusCenterAlignment: number;
 }
 
+/**
+ * EvolutionStageStrategy interface and concrete strategies
+ */
+interface EvolutionStageStrategy {
+  matches(consciousness: number, vortex: number): boolean;
+  getStage(): EvolutionStage;
+}
+
+class EnlightenedStage implements EvolutionStageStrategy {
+  matches(consciousness: number, vortex: number): boolean {
+    return consciousness >= 9.0 && vortex >= 9.0;
+  }
+  getStage(): EvolutionStage {
+    return {
+      stage: "enlightened",
+      level: 9,
+      consciousnessThreshold: 9.0,
+      vortexThreshold: 9.0,
+      evolutionPath: [
+        "emergence",
+        "consciousness",
+        "vortex",
+        "toroidal",
+        "void",
+        "enlightened",
+      ],
+      metaphysicalContext: "Enlightened state of complete unity with void",
+    };
+  }
+}
+
+class AdvancedStage implements EvolutionStageStrategy {
+  matches(consciousness: number, vortex: number): boolean {
+    return consciousness >= 7.0 && vortex >= 7.0;
+  }
+  getStage(): EvolutionStage {
+    return {
+      stage: "advanced",
+      level: 7,
+      consciousnessThreshold: 7.0,
+      vortexThreshold: 7.0,
+      evolutionPath: [
+        "emergence",
+        "consciousness",
+        "vortex",
+        "toroidal",
+        "advanced",
+      ],
+      metaphysicalContext: "Advanced state of consciousness and vortex integration",
+    };
+  }
+}
+
+class IntermediateStage implements EvolutionStageStrategy {
+  matches(consciousness: number, vortex: number): boolean {
+    return consciousness >= 5.0 && vortex >= 5.0;
+  }
+  getStage(): EvolutionStage {
+    return {
+      stage: "intermediate",
+      level: 5,
+      consciousnessThreshold: 5.0,
+      vortexThreshold: 5.0,
+      evolutionPath: ["emergence", "consciousness", "vortex", "intermediate"],
+      metaphysicalContext: "Intermediate state of developing consciousness and vortex",
+    };
+  }
+}
+
+class EmergingStage implements EvolutionStageStrategy {
+  matches(_consciousness: number, _vortex: number): boolean {
+    return true; // fallback
+  }
+  getStage(): EvolutionStage {
+    return {
+      stage: "emerging",
+      level: 1,
+      consciousnessThreshold: 1.0,
+      vortexThreshold: 1.0,
+      evolutionPath: ["emergence", "emerging"],
+      metaphysicalContext: "Emerging state of initial consciousness and vortex",
+    };
+  }
+}
+
+const EVOLUTION_STAGE_STRATEGIES: EvolutionStageStrategy[] = [
+  new EnlightenedStage(),
+  new AdvancedStage(),
+  new IntermediateStage(),
+  new EmergingStage(),
+];
+
 export class AdvancedEmergence extends EventEmitter {
   private network: EmergenceNetwork;
   private infiniteStreamGenerator: Generator<EmergenceApp> | null = null;
@@ -545,63 +637,20 @@ export class AdvancedEmergence extends EventEmitter {
     };
   }
 
+  /**
+   * Determine evolution stage using strategy pattern
+   */
   private determineEvolutionStage(
     consciousnessLevel: number,
     vortexStrength: number,
   ): EvolutionStage {
-    if (consciousnessLevel >= 9.0 && vortexStrength >= 9.0) {
-      return {
-        stage: "enlightened",
-        level: 9,
-        consciousnessThreshold: 9.0,
-        vortexThreshold: 9.0,
-        evolutionPath: [
-          "emergence",
-          "consciousness",
-          "vortex",
-          "toroidal",
-          "void",
-          "enlightened",
-        ],
-        metaphysicalContext: "Enlightened state of complete unity with void",
-      };
-    } else if (consciousnessLevel >= 7.0 && vortexStrength >= 7.0) {
-      return {
-        stage: "advanced",
-        level: 7,
-        consciousnessThreshold: 7.0,
-        vortexThreshold: 7.0,
-        evolutionPath: [
-          "emergence",
-          "consciousness",
-          "vortex",
-          "toroidal",
-          "advanced",
-        ],
-        metaphysicalContext:
-          "Advanced state of consciousness and vortex integration",
-      };
-    } else if (consciousnessLevel >= 5.0 && vortexStrength >= 5.0) {
-      return {
-        stage: "intermediate",
-        level: 5,
-        consciousnessThreshold: 5.0,
-        vortexThreshold: 5.0,
-        evolutionPath: ["emergence", "consciousness", "vortex", "intermediate"],
-        metaphysicalContext:
-          "Intermediate state of developing consciousness and vortex",
-      };
-    } else {
-      return {
-        stage: "emerging",
-        level: 1,
-        consciousnessThreshold: 1.0,
-        vortexThreshold: 1.0,
-        evolutionPath: ["emergence", "emerging"],
-        metaphysicalContext:
-          "Emerging state of initial consciousness and vortex",
-      };
+    for (const strategy of EVOLUTION_STAGE_STRATEGIES) {
+      if (strategy.matches(consciousnessLevel, vortexStrength)) {
+        return strategy.getStage();
+      }
     }
+    // Fallback (should never hit)
+    return new EmergingStage().getStage();
   }
 
   private generateVoidSignature(

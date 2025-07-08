@@ -112,13 +112,21 @@ export { FieldUnitySystem } from './unity/FieldUnity';
 // Types
 export { DeviceConfig } from './types/DeviceConfig';
 
-// Constants and Utilities
+// Unified Constants and Utilities - Single Source of Truth
 export { 
-  VORTEX_CONSTANTS, 
-  PatternCategory, 
-  ConstantsUtils 
+  VORTEX_CONSTANTS,
+  CONSCIOUSNESS_CONSTANTS,
+  EMERGENCE_CONSTANTS,
+  NETWORK_CONSTANTS,
+  MATH_CONSTANTS,
+  CONFIG_CONSTANTS,
+  METAPHYSICAL_CONSTANTS,
+  ConstantsUtils,
+  PatternCategory,
+  PatternType,
+  LinkType,
+  ConsciousnessDimension
 } from './core/SharedConstants';
-export { MathUtils as MathUtilsCore } from './core/MathUtils';
 
 /**
  * Create a new ZeroPoint instance

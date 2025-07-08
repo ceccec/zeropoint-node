@@ -4,6 +4,10 @@
  * ZeroPoint Learning Analytics
  * Analyzes git history to provide educational insights and learning patterns
  * Now includes live Git event monitoring for real-time learning
+ *
+ * Refactor Note (2024-07-08):
+ * - Pattern extraction, insight generation, and recommendation logic are now modularized.
+ *   See: ./learning-analytics/patternExtraction.js, insightGeneration.js, recommendationEngine.js
  */
 
 const { execSync } = require('child_process');
@@ -13,6 +17,11 @@ const path = require('path');
 // Import ZeroPoint modules for live Git integration
 const { ZeroPoint } = require('../dist/src/core/ZeroPoint');
 const { gitIntegration } = require('../dist/src/utils/GitIntegration');
+
+// Import modularized pattern extraction, insight generation, and recommendation logic
+const patternExtraction = require('../learning-analytics/patternExtraction');
+const insightGeneration = require('../learning-analytics/insightGeneration');
+const recommendationEngine = require('../learning-analytics/recommendationEngine');
 
 // Configuration
 const CONFIG = {
@@ -119,7 +128,7 @@ class LearningAnalytics {
             this.addToPattern(patterns.byDay, commit.date);
             
             // Extract learning patterns
-            this.extractLearningPatterns(commit, patterns.learningPatterns);
+            patternExtraction.extractLearningPatterns(commit, patterns.learningPatterns);
         });
 
         return patterns;
@@ -127,37 +136,6 @@ class LearningAnalytics {
 
     addToPattern(obj, key) {
         obj[key] = (obj[key] || 0) + 1;
-    }
-
-    extractLearningPatterns(commit, patterns) {
-        const message = commit.message.toLowerCase();
-        
-        if (message.includes('learning') || message.includes('learn')) {
-            patterns.push({
-                type: 'explicit_learning',
-                commit: commit.hash,
-                message: commit.message,
-                date: commit.date
-            });
-        }
-        
-        if (message.includes('test') && message.includes('fix')) {
-            patterns.push({
-                type: 'test_driven_fix',
-                commit: commit.hash,
-                message: commit.message,
-                date: commit.date
-            });
-        }
-        
-        if (message.includes('refactor') && message.includes('improve')) {
-            patterns.push({
-                type: 'iterative_improvement',
-                commit: commit.hash,
-                message: commit.message,
-                date: commit.date
-            });
-        }
     }
 
     analyzeDevelopmentVelocity(commits) {
@@ -268,7 +246,7 @@ ${Object.entries(patterns.byType).map(([type, count]) =>
 
 ## 💡 Learning Recommendations
 
-${this.generateRecommendations(patterns, insights)}
+${recommendationEngine.generateRecommendations(patterns, insights)}
 
 ## 🚀 Next Steps
 1. **Review Patterns**: Focus on areas with low activity
@@ -281,36 +259,6 @@ ${this.generateRecommendations(patterns, insights)}
 `;
 
         return report;
-    }
-
-    generateRecommendations(patterns, insights) {
-        const recommendations = [];
-        
-        if (patterns.testDrivenDevelopment < patterns.total * 0.2) {
-            recommendations.push('- 🧪 **Increase Test Coverage**: Add more test-driven development practices');
-        }
-        
-        if (patterns.bugFixes > patterns.total * 0.3) {
-            recommendations.push('- 🔧 **Focus on Prevention**: Reduce bug fixes through better testing and design');
-        }
-        
-        if (patterns.documentation < patterns.total * 0.1) {
-            recommendations.push('- 📚 **Enhance Documentation**: Add more documentation commits');
-        }
-        
-        if (patterns.learningPatterns.length < 5) {
-            recommendations.push('- 🎓 **Document Learning**: Add explicit learning insights to commit messages');
-        }
-        
-        if (insights.metaphysicalContext.voidFieldBalance === 'needs_void_work') {
-            recommendations.push('- 🌀 **Balance Void-Field**: Focus on void system improvements');
-        }
-        
-        if (recommendations.length === 0) {
-            recommendations.push('- 🎉 **Excellent Progress**: Continue current development patterns');
-        }
-        
-        return recommendations.join('\n');
     }
 
     saveAnalysis(patterns, velocity, insights, report) {

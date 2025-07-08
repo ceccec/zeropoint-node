@@ -10,6 +10,11 @@
  * - The codebase itself is a coil: recursive, observer-aware, and emergent
  */
 
+/**
+ * Refactor Note (2024-07-08):
+ * - Pattern signature logic for family_groups, polar_mates, and w_axis now uses a strategy pattern for extensibility and clarity.
+ */
+
 export type CoilPatternCategory =
   | "mathematical"
   | "metaphysical"
@@ -30,6 +35,44 @@ export interface CoilPattern {
   weight?: number;
   resonanceFactors?: string[];
 }
+
+/**
+ * CoilPatternStrategy interface and concrete strategies
+ */
+interface CoilPatternStrategy {
+  matches(input: any): boolean;
+}
+
+class FamilyGroupsStrategy implements CoilPatternStrategy {
+  matches(input: any): boolean {
+    if (typeof input === "number") {
+      return [1, 4, 7, 2, 5, 8, 3, 6, 9].includes(input);
+    }
+    return /family|group|1-4-7|2-5-8|3-6-9/i.test(String(input));
+  }
+}
+
+class PolarMatesStrategy implements CoilPatternStrategy {
+  matches(input: any): boolean {
+    if (typeof input === "number") {
+      return [1, 8, 2, 7, 4, 5].includes(input);
+    }
+    return /polar|mate|opposite|1-8|2-7|4-5/i.test(String(input));
+  }
+}
+
+class WAxisStrategy implements CoilPatternStrategy {
+  matches(input: any): boolean {
+    if (typeof input === "number") {
+      return [3, 6, 9].includes(input);
+    }
+    return /w.?axis|spirit|3-6-9|spiritual/i.test(String(input));
+  }
+}
+
+const familyGroupsStrategy = new FamilyGroupsStrategy();
+const polarMatesStrategy = new PolarMatesStrategy();
+const wAxisStrategy = new WAxisStrategy();
 
 export const COIL_PATTERNS: CoilPattern[] = [
   {
@@ -124,13 +167,7 @@ export const COIL_PATTERNS: CoilPattern[] = [
   },
   {
     name: "family_groups",
-    signature: (input: any) => {
-      if (typeof input === "number") {
-        // Placeholder for family group logic
-        return [1, 4, 7, 2, 5, 8, 3, 6, 9].includes(input);
-      }
-      return /family|group|1-4-7|2-5-8|3-6-9/i.test(String(input));
-    },
+    signature: (input: any) => familyGroupsStrategy.matches(input),
     category: "family",
     context: "Family number groups representing different phases of creation.",
     weight: 0.7,
@@ -138,13 +175,7 @@ export const COIL_PATTERNS: CoilPattern[] = [
   },
   {
     name: "polar_mates",
-    signature: (input: any) => {
-      if (typeof input === "number") {
-        // Placeholder for polar mate logic
-        return [1, 8, 2, 7, 4, 5].includes(input);
-      }
-      return /polar|mate|opposite|1-8|2-7|4-5/i.test(String(input));
-    },
+    signature: (input: any) => polarMatesStrategy.matches(input),
     category: "polar",
     context: "Polar mates representing opposite poles that sum to 9.",
     weight: 0.7,
@@ -152,13 +183,7 @@ export const COIL_PATTERNS: CoilPattern[] = [
   },
   {
     name: "w_axis",
-    signature: (input: any) => {
-      if (typeof input === "number") {
-        // Placeholder for W-Axis logic
-        return [3, 6, 9].includes(input);
-      }
-      return /w.?axis|spirit|3-6-9|spiritual/i.test(String(input));
-    },
+    signature: (input: any) => wAxisStrategy.matches(input),
     category: "spiritual",
     context: "W-Axis numbers representing the spiritual dimension.",
     weight: 0.8,

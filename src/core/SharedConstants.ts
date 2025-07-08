@@ -1,7 +1,7 @@
 /**
  * Shared Constants for ZeroPoint System
  *
- * Centralized repository of all mathematical and metaphysical constants
+ * Centralized repository of all mathematical, metaphysical, and configuration constants
  * used across the ZeroPoint system to eliminate duplication and ensure consistency.
  *
  * This module embodies the principle of unity in diversity - all constants
@@ -140,6 +140,10 @@ export const MATH_CONSTANTS = {
   PI: Math.PI,
   TWO_PI: 2 * Math.PI,
   HALF_PI: Math.PI / 2,
+  E: Math.E,
+
+  // Golden ratio (divine proportion)
+  GOLDEN_RATIO: VORTEX_CONSTANTS.GOLDEN_RATIO,
 
   // Epsilon for floating point comparisons
   EPSILON: 1e-10,
@@ -147,9 +151,74 @@ export const MATH_CONSTANTS = {
   // Infinity handling
   POSITIVE_INFINITY: Infinity,
   NEGATIVE_INFINITY: -Infinity,
+  INFINITY: Infinity,
 
   // Prime numbers (first 10)
   PRIMES: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29] as const,
+
+  // Angular conversions
+  DEG_TO_RAD: Math.PI / 180,
+  RAD_TO_DEG: 180 / Math.PI,
+
+  // Vortex sequence (reference to VORTEX_CONSTANTS)
+  VORTEX_SEQUENCE: VORTEX_CONSTANTS.VORTEX_SEQUENCE,
+} as const;
+
+/**
+ * Configuration Constants
+ */
+export const CONFIG_CONSTANTS = {
+  // Cache configuration
+  GOLDEN_CACHE_SIZE: Math.round(100 * VORTEX_CONSTANTS.GOLDEN_RATIO), // ~162
+  GOLDEN_CACHE_TTL: Math.round(60000 * VORTEX_CONSTANTS.GOLDEN_RATIO), // ~97,080 ms
+  GOLDEN_CACHE_CLEANUP_INTERVAL: Math.round(10000 * VORTEX_CONSTANTS.GOLDEN_RATIO), // ~16,180 ms
+  RESONANCE_CACHE_SIZE: 200,
+  RESONANCE_CACHE_TTL: 300000, // 5 minutes
+
+  // Health monitor configuration
+  HEALTH_CHECK_INTERVAL: 30000, // 30 seconds
+  HEALTH_TIMEOUT: 5000, // 5 seconds
+  HEALTH_ALERT_MEMORY: 80, // %
+  HEALTH_ALERT_CPU: 70, // %
+  HEALTH_ALERT_ERROR_RATE: 5, // %
+  HEALTH_ALERT_RESPONSE_TIME: 1000, // ms
+
+  // Device config defaults
+  DEFAULT_DEVICE_TYPE: 'desktop',
+  DEFAULT_RESONANCE_SENSITIVITY: 0.8,
+  DEFAULT_ALLOW_INCOMING: true,
+  DEFAULT_REQUIRE_AUTH: false,
+  DEFAULT_ENCRYPTION_ENABLED: true,
+  DEFAULT_VORTEX_PRECISION: 0.001,
+  DEFAULT_TOROIDAL_RESOLUTION: 100,
+  DEFAULT_GOLDEN_RATIO_PRECISION: 15,
+  DEFAULT_AUTO_UPDATE_RESONANCE: true,
+  DEFAULT_LOG_LEVEL: 'info',
+  DEFAULT_ENABLE_METAPHYSICAL_INSIGHTS: true,
+  DEFAULT_TOROIDAL_FLOW_RATE: 1.0,
+
+  // Test suite configuration
+  TEST_TIMEOUT: 30000, // ms
+  TEST_COVERAGE_THRESHOLD: 80, // %
+  TEST_PERFORMANCE_THRESHOLD: 1000, // ms
+  TEST_MAX_MEMORY_USAGE: 100 * 1024 * 1024, // 100MB
+
+  // Performance test thresholds
+  UI_OPERATION_MAX_DURATION: 100, // ms
+  NETWORK_MESSAGE_MAX_DURATION: 2000, // ms
+  SCALABILITY_OPS_PER_SEC: 50,
+
+  // PWA configuration
+  PWA_BASE_SIZE: 15, // KB
+  PWA_BUNDLE_SIZE_OPTIMIZED: 12, // KB
+  PWA_BUNDLE_SIZE_STANDARD: 15, // KB
+  PWA_BUNDLE_SIZE_INCREMENT_VORTEX: 3, // KB
+  PWA_BUNDLE_SIZE_INCREMENT_PATTERN: 4, // KB
+  PWA_BUNDLE_SIZE_INCREMENT_OFFLINE: 2, // KB
+  PWA_BUNDLE_SIZE_INCREMENT_SYNC: 3, // KB
+
+  // Miscellaneous
+  FRACTAL_PRECISION: 0.001,
 } as const;
 
 /**
@@ -200,18 +269,18 @@ export class ConstantsUtils {
       VORTEX_CONSTANTS.VORTEX_SEQUENCE[
         index % VORTEX_CONSTANTS.VORTEX_SEQUENCE.length
       ];
-    return value ?? 1; // Default to 1 if undefined
+    return value || 1;
   }
 
   /**
-   * Check if number is in W-Axis
+   * Check if number is in W-axis
    */
   static isWAxisNumber(num: number): boolean {
-    return VORTEX_CONSTANTS.W_AXIS.includes(num as any);
+    return VORTEX_CONSTANTS.W_AXIS.includes(num as 3 | 6 | 9);
   }
 
   /**
-   * Find polar mate for a number
+   * Get polar mate for a number
    */
   static getPolarMate(num: number): number | null {
     for (const [a, b] of VORTEX_CONSTANTS.POLAR_MATES) {
@@ -225,9 +294,9 @@ export class ConstantsUtils {
    * Get family group for a number
    */
   static getFamilyGroup(num: number): number[] | null {
-    for (const group of VORTEX_CONSTANTS.FAMILY_NUMBER_GROUPS as unknown as number[][]) {
-      if (group.includes(num)) {
-        return [...group];
+    for (const group of VORTEX_CONSTANTS.FAMILY_NUMBER_GROUPS) {
+      if ((group as readonly number[]).includes(num)) {
+        return Array.from(group);
       }
     }
     return null;
@@ -237,52 +306,47 @@ export class ConstantsUtils {
    * Calculate digital root
    */
   static digitalRoot(n: number): number {
-    if (n === 0) return 9; // In VBM, 0 = 9
-    return n % 9 || 9;
+    return n === 0 ? 0 : ((n - 1) % 9) + 1;
   }
 
   /**
    * Normalize value to range
    */
   static normalize(value: number, min: number, max: number): number {
-    return Math.max(min, Math.min(max, value));
+    return (value - min) / (max - min);
   }
 
   /**
-   * Check if value is within range
+   * Check if value is in range
    */
   static isInRange(value: number, min: number, max: number): boolean {
     return value >= min && value <= max;
   }
 
   /**
-   * Get metaphysical insight for a constant
+   * Get metaphysical insight for constant
    */
   static getMetaphysicalInsight(constantName: string): string {
     const insights: { [key: string]: string } = {
       VORTEX_SEQUENCE:
-        "The 1-2-4-8-7-5 sequence creates the mobius circuit of infinite flow",
+        "The vortex sequence 1-2-4-8-7-5 represents the flow of consciousness through the toroidal field, creating infinite potential through the mobius circuit.",
       GOLDEN_RATIO:
-        "Phi represents the divine proportion that governs all natural growth patterns",
-      W_AXIS:
-        "The W-Axis is where Spirit emanates from, perpendicular to material flow",
-      POLAR_MATES:
-        "Polar mates represent the duality and balance inherent in creation",
+        "The golden ratio (φ) represents the divine proportion that emerges from the void, creating harmony and balance in all creation.",
+      VOID_CENTER:
+        "The void center (9) represents the aperture between unmanifest and manifest, where all possibilities exist simultaneously.",
       FAMILY_GROUPS:
-        "Each family represents a different phase of the creative process",
-      ZERO: "Zero is the center of the torus where all patterns converge",
+        "Family number groups represent the creative phases of consciousness, each group expressing a different aspect of the unified field.",
+      POLAR_MATES:
+        "Polar mates represent the complementary opposites that sum to 9, embodying the principle of unity through diversity.",
+      W_AXIS:
+        "The W-axis (3-6-9) represents the spiritual dimension that transcends the physical plane, connecting to the void consciousness.",
     };
 
-    return (
-      insights[constantName] ||
-      "This constant embodies a fundamental pattern of creation"
-    );
+    return insights[constantName] || "This constant embodies the unity of all creation through the toroidal field.";
   }
 }
 
-/**
- * Type definitions for constants
- */
+// Type exports for type safety
 export type VortexSequence = typeof VORTEX_CONSTANTS.VORTEX_SEQUENCE;
 export type PatternType =
   (typeof CONSCIOUSNESS_CONSTANTS.PATTERN_TYPES)[number];

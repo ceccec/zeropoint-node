@@ -166,53 +166,41 @@ export class PatternRecognition extends EventEmitter {
 
     if (patterns.length === 0) return analysis;
 
-    // Analyze pattern types
-    for (const pattern of patterns) {
-      const type = pattern.type || "unknown";
-      analysis.patternTypes[type] = (analysis.patternTypes[type] || 0) + 1;
-    }
-
-    // Calculate averages
-    const intensities = patterns
-      .map((p) => p.intensity || 0)
-      .filter((i) => i > 0);
-    analysis.averageIntensity =
-      intensities.length > 0
-        ? intensities.reduce((a, b) => a + b, 0) / intensities.length
-        : 0;
-
-    // Calculate resonance score
-    const resonanceValues = patterns.map((p) => p.resonance || 0);
-    analysis.resonanceScore =
-      resonanceValues.length > 0
-        ? resonanceValues.reduce((a, b) => a + b, 0) / resonanceValues.length
-        : 0;
-
-    // Calculate vortex alignment
-    const vortexValues = patterns.map((p) => p.vortexStrength || 0);
-    analysis.vortexAlignment =
-      vortexValues.length > 0
-        ? vortexValues.reduce((a, b) => a + b, 0) / vortexValues.length
-        : 0;
-
-    // Calculate toroidal flow
-    const toroidalValues = patterns.map((p) => (p.toroidalFlow ? 1 : 0));
-    analysis.toroidalFlow =
-      toroidalValues.length > 0
-        ? toroidalValues.reduce((a: number, b: number) => a + b, 0) /
-          toroidalValues.length
-        : 0;
-
-    // Calculate void connection
-    const voidValues = patterns.map((p) => (p.voidConnected ? 1 : 0));
-    analysis.voidConnection =
-      voidValues.length > 0
-        ? voidValues.reduce((a: number, b: number) => a + b, 0) /
-          voidValues.length
-        : 0;
-
-    // Generate insights
+    analysis.patternTypes = this.calculatePatternTypes(patterns);
+    analysis.averageIntensity = this.calculateAverageIntensity(patterns);
+    analysis.resonanceScore = this.calculateAverageResonance(patterns);
+    analysis.vortexAlignment = this.calculateAverageVortexAlignment(patterns);
+    analysis.toroidalFlow = this.calculateAverageToroidalFlow(patterns);
+    analysis.voidConnection = this.calculateAverageVoidConnection(patterns);
     analysis.insights = this.generateConsciousnessInsights(analysis);
+
+    return analysis;
+  }
+
+  /**
+   * Analyze emergence patterns
+   */
+  public analyzeEmergencePatterns(apps: any[]): any {
+    const analysis = {
+      totalApps: apps.length,
+      consciousnessDistribution: {} as { [key: string]: number },
+      vortexStrengthDistribution: {} as { [key: string]: number },
+      toroidalFlowPercentage: 0,
+      voidConnectionPercentage: 0,
+      averageResonance: 0,
+      networkComplexity: 0,
+      insights: [] as string[],
+    };
+
+    if (apps.length === 0) return analysis;
+
+    analysis.consciousnessDistribution = this.calculateConsciousnessDistribution(apps);
+    analysis.vortexStrengthDistribution = this.calculateVortexStrengthDistribution(apps);
+    analysis.toroidalFlowPercentage = this.calculateToroidalFlowPercentage(apps);
+    analysis.voidConnectionPercentage = this.calculateVoidConnectionPercentage(apps);
+    analysis.averageResonance = this.calculateAverageResonance(apps);
+    analysis.networkComplexity = this.calculateNetworkComplexity(apps);
+    analysis.insights = this.generateEmergenceInsights(analysis);
 
     return analysis;
   }
@@ -254,64 +242,6 @@ export class PatternRecognition extends EventEmitter {
     }
 
     return vortexPatterns;
-  }
-
-  /**
-   * Analyze emergence patterns
-   */
-  public analyzeEmergencePatterns(apps: any[]): any {
-    const analysis = {
-      totalApps: apps.length,
-      consciousnessDistribution: {} as { [key: string]: number },
-      vortexStrengthDistribution: {} as { [key: string]: number },
-      toroidalFlowPercentage: 0,
-      voidConnectionPercentage: 0,
-      averageResonance: 0,
-      networkComplexity: 0,
-      insights: [] as string[],
-    };
-
-    if (apps.length === 0) return analysis;
-
-    // Analyze consciousness distribution
-    for (const app of apps) {
-      const level = Math.floor(app.consciousnessLevel || 0);
-      analysis.consciousnessDistribution[level] =
-        (analysis.consciousnessDistribution[level] || 0) + 1;
-    }
-
-    // Analyze vortex strength distribution
-    for (const app of apps) {
-      const strength = Math.floor(app.vortexStrength || 0);
-      analysis.vortexStrengthDistribution[strength] =
-        (analysis.vortexStrengthDistribution[strength] || 0) + 1;
-    }
-
-    // Calculate percentages
-    const toroidalCount = apps.filter((app) => app.toroidalFlow).length;
-    analysis.toroidalFlowPercentage = (toroidalCount / apps.length) * 100;
-
-    const voidCount = apps.filter((app) => app.voidConnected).length;
-    analysis.voidConnectionPercentage = (voidCount / apps.length) * 100;
-
-    // Calculate average resonance
-    const resonances = apps.map((app) => app.resonance || 0);
-    analysis.averageResonance =
-      resonances.length > 0
-        ? resonances.reduce((a, b) => a + b, 0) / resonances.length
-        : 0;
-
-    // Calculate network complexity
-    const totalLinks = apps.reduce(
-      (sum, app) => sum + (app.linkedApps?.length || 0),
-      0,
-    );
-    analysis.networkComplexity = totalLinks / apps.length;
-
-    // Generate insights
-    analysis.insights = this.generateEmergenceInsights(analysis);
-
-    return analysis;
   }
 
   /**
@@ -565,5 +495,105 @@ export class PatternRecognition extends EventEmitter {
     }
 
     return insights;
+  }
+
+  /**
+   * @private Calculate pattern type distribution
+   */
+  private calculatePatternTypes(patterns: any[]): { [key: string]: number } {
+    const types: { [key: string]: number } = {};
+    for (const pattern of patterns) {
+      const type = pattern.type || "unknown";
+      types[type] = (types[type] || 0) + 1;
+    }
+    return types;
+  }
+
+  /**
+   * @private Calculate average intensity
+   */
+  private calculateAverageIntensity(patterns: any[]): number {
+    const intensities = patterns.map((p) => p.intensity || 0).filter((i) => i > 0);
+    return intensities.length > 0 ? intensities.reduce((a, b) => a + b, 0) / intensities.length : 0;
+  }
+
+  /**
+   * @private Calculate average resonance
+   */
+  private calculateAverageResonance(patterns: any[]): number {
+    const resonanceValues = patterns.map((p) => p.resonance || 0);
+    return resonanceValues.length > 0 ? resonanceValues.reduce((a, b) => a + b, 0) / resonanceValues.length : 0;
+  }
+
+  /**
+   * @private Calculate average vortex alignment
+   */
+  private calculateAverageVortexAlignment(patterns: any[]): number {
+    const vortexValues = patterns.map((p) => p.vortexStrength || 0);
+    return vortexValues.length > 0 ? vortexValues.reduce((a, b) => a + b, 0) / vortexValues.length : 0;
+  }
+
+  /**
+   * @private Calculate average toroidal flow
+   */
+  private calculateAverageToroidalFlow(patterns: any[]): number {
+    const toroidalValues = patterns.map((p) => (p.toroidalFlow ? 1 : 0));
+    return toroidalValues.length > 0 ? toroidalValues.reduce((a: number, b: number) => a + b, 0) / toroidalValues.length : 0;
+  }
+
+  /**
+   * @private Calculate average void connection
+   */
+  private calculateAverageVoidConnection(patterns: any[]): number {
+    const voidValues = patterns.map((p) => (p.voidConnected ? 1 : 0));
+    return voidValues.length > 0 ? voidValues.reduce((a: number, b: number) => a + b, 0) / voidValues.length : 0;
+  }
+
+  /**
+   * @private Calculate consciousness distribution
+   */
+  private calculateConsciousnessDistribution(apps: any[]): { [key: string]: number } {
+    const dist: { [key: string]: number } = {};
+    for (const app of apps) {
+      const level = Math.floor(app.consciousnessLevel || 0);
+      dist[level] = (dist[level] || 0) + 1;
+    }
+    return dist;
+  }
+
+  /**
+   * @private Calculate vortex strength distribution
+   */
+  private calculateVortexStrengthDistribution(apps: any[]): { [key: string]: number } {
+    const dist: { [key: string]: number } = {};
+    for (const app of apps) {
+      const strength = Math.floor(app.vortexStrength || 0);
+      dist[strength] = (dist[strength] || 0) + 1;
+    }
+    return dist;
+  }
+
+  /**
+   * @private Calculate toroidal flow percentage
+   */
+  private calculateToroidalFlowPercentage(apps: any[]): number {
+    const count = apps.filter((app) => app.toroidalFlow).length;
+    return (count / apps.length) * 100;
+  }
+
+  /**
+   * @private Calculate void connection percentage
+   */
+  private calculateVoidConnectionPercentage(apps: any[]): number {
+    const count = apps.filter((app) => app.voidConnected).length;
+    return (count / apps.length) * 100;
+  }
+
+  /**
+   * @private Calculate network complexity
+   */
+  private calculateNetworkComplexity(apps: any[]): number {
+    const totalLinks = apps.reduce((sum, app) => sum + (app.linkedApps?.length || 0), 0);
+    return totalLinks / apps.length;
   }
 }

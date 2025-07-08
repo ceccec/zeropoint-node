@@ -70,11 +70,8 @@ export class FractalMath {
     const coordinates: Array<[number, number, number]> = [];
 
     for (let i = 0; i < count; i++) {
-      const x = MathUtils.calculate("sin", i * MATH_CONSTANTS.GOLDEN_RATIO);
-      const y = MathUtils.calculate("cos", i * MATH_CONSTANTS.GOLDEN_RATIO);
-      const z = MathUtils.calculate("vortex", i);
-
-      coordinates.push([x * scale, y * scale, z * scale]);
+      const [x, y, z] = this.calculateFractalPoint(i, scale);
+      coordinates.push([x, y, z]);
       scale = MathUtils.calculate(
         "multiply",
         scale,
@@ -127,14 +124,7 @@ export class FractalMath {
     point1: [number, number, number],
     point2: [number, number, number],
   ): number {
-    const distance = MathUtils.distance3D(
-      point1[0],
-      point1[1],
-      point1[2],
-      point2[0],
-      point2[1],
-      point2[2],
-    );
+    const distance = this.calculate3DDistance(point1, point2);
     const baseResonance = MathUtils.calculate(
       "divide",
       1,
@@ -242,6 +232,33 @@ export class FractalMath {
         "calculateFractalComplexity",
       ],
     };
+  }
+
+  /**
+   * @private Calculate a single fractal point
+   */
+  private static calculateFractalPoint(i: number, scale: number): [number, number, number] {
+    const x = MathUtils.calculate("sin", i * MATH_CONSTANTS.GOLDEN_RATIO);
+    const y = MathUtils.calculate("cos", i * MATH_CONSTANTS.GOLDEN_RATIO);
+    const z = MathUtils.calculate("vortex", i);
+    return [x * scale, y * scale, z * scale];
+  }
+
+  /**
+   * @private Calculate 3D distance between two points
+   */
+  private static calculate3DDistance(
+    point1: [number, number, number],
+    point2: [number, number, number],
+  ): number {
+    return MathUtils.distance3D(
+      point1[0],
+      point1[1],
+      point1[2],
+      point2[0],
+      point2[1],
+      point2[2],
+    );
   }
 }
 

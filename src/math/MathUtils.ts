@@ -11,16 +11,10 @@
  * - Every calculation is an act of observation
  */
 
-// Mathematical constants
-export const MATH_CONSTANTS = {
-  PI: Math.PI,
-  E: Math.E,
-  GOLDEN_RATIO: 1.618033988749895,
-  INFINITY: Infinity,
-  DEG_TO_RAD: Math.PI / 180,
-  RAD_TO_DEG: 180 / Math.PI,
-  VORTEX_SEQUENCE: [1, 2, 4, 8, 7, 5],
-};
+import { MATH_CONSTANTS } from "../core/SharedConstants";
+
+// Re-export MATH_CONSTANTS for backward compatibility
+export { MATH_CONSTANTS };
 
 export type MathOperation =
   | "add"

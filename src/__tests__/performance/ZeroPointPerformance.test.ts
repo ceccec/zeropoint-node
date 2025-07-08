@@ -133,18 +133,14 @@ describe('ZeroPoint Performance', () => {
       expect(duration).toBeLessThan(1000); // Less than 1 second
     });
 
-    it('should handle consciousness field calculations efficiently', () => {
+    it('should handle consciousness field calculations efficiently', async () => {
       const startTime = process.hrtime.bigint();
       
       // Perform consciousness field operations
       for (let i = 0; i < 500; i++) {
         zeropoint.consciousnessField.calculateResonance();
         zeropoint.consciousnessField.getFieldStrength();
-        zeropoint.consciousnessField.broadcastPattern({
-          type: 'performance_test' as const,
-          content: `Test ${i}`,
-          intensity: 0.5
-        });
+        await zeropoint.consciousnessField.broadcastPattern();
       }
       
       const endTime = process.hrtime.bigint();
@@ -189,8 +185,8 @@ describe('ZeroPoint Performance', () => {
       const startTime = process.hrtime.bigint();
       
       // Process messages concurrently
-      await Promise.all(messages.map(msg => 
-        zeropoint.networkNode.processMessage(msg)
+      await Promise.all(messages.map(() => 
+        zeropoint.networkNode.processMessage()
       ));
       
       const endTime = process.hrtime.bigint();
@@ -208,7 +204,7 @@ describe('ZeroPoint Performance', () => {
         const startTime = process.hrtime.bigint();
         
         // Simulate network operation
-        zeropoint.broadcastPattern({
+        await zeropoint.broadcastPattern({
           type: 'latency_test' as const,
           content: `Latency test ${i}`,
           intensity: 0.5

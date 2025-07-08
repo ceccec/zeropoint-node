@@ -358,7 +358,7 @@ describe('ZeroPoint Performance', () => {
       const iterations = 50; // Further reduced for faster testing
       
       for (let i = 0; i < iterations; i++) {
-        zeropoint.isActive;
+        expect(typeof zeropoint.isActive).toBe('boolean');
         await new Promise(resolve => setTimeout(resolve, 2)); // Reduced delay
       }
       

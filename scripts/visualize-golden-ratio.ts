@@ -13,7 +13,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const PHI = (1 + Math.sqrt(5)) / 2;
-const INV_PHI = 1 / PHI;
 const N = 12; // Number of terms/spiral arcs
 
 // --- Fibonacci Sequence ---

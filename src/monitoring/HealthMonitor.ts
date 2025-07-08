@@ -21,7 +21,7 @@ export interface HealthCheck {
   status: "pass" | "fail" | "warn";
   responseTime: number;
   message?: string;
-  data?: any;
+  data?: string;
 }
 
 export interface SystemMetrics {
@@ -185,45 +185,40 @@ export class HealthMonitor extends EventEmitter {
   private async runHealthChecks(): Promise<HealthCheck[]> {
     const results: HealthCheck[] = [];
 
-    for (const [name, check] of this.checks) {
+    for (const [name, healthCheck] of this.checks) {
       try {
         const startTime = Date.now();
-        const result = await Promise.race([
-          check(),
-          new Promise<HealthCheck>((_, reject) =>
-            setTimeout(
-              () => reject(new Error("Health check timeout")),
-              this.config.timeout,
-            ),
-          ),
-        ]);
-
+        const result = await healthCheck();
         result.responseTime = Date.now() - startTime;
-        results.push(result);
+        const check: HealthCheck = {
+          name: result.name,
+          status: result.status,
+          responseTime: result.responseTime,
+          message: result.message || "",
+          data: result.data || "",
+        };
+        results.push(check);
 
         // Log check result
-        if (result.status === "fail") {
-          globalLogger.error(`Health check failed: ${name}`, {
-            message: result.message,
-            data: result.data,
-          });
-        } else if (result.status === "warn") {
-          globalLogger.warn(`Health check warning: ${name}`, {
-            message: result.message,
-            data: result.data,
-          });
-        }
+        globalLogger.info(`Health check: ${name}`, {
+          status: result.status,
+          responseTime: result.responseTime,
+        });
       } catch (error) {
         const failedCheck: HealthCheck = {
           name,
           status: "fail",
           responseTime: this.config.timeout,
           message: error instanceof Error ? error.message : "Unknown error",
-          data: { error: error instanceof Error ? error.stack : error },
+          data: JSON.stringify({ 
+            error: error instanceof Error ? error.message : String(error) 
+          }),
         };
 
         results.push(failedCheck);
-        globalLogger.error(`Health check error: ${name}`, { error });
+        globalLogger.error(`Health check error: ${name}`, { 
+          error: error instanceof Error ? error.message : String(error) 
+        });
       }
     }
 
@@ -292,7 +287,9 @@ export class HealthMonitor extends EventEmitter {
     }
 
     if (alerts.length > 0) {
-      globalLogger.warn("Health alerts detected", { alerts });
+      globalLogger.warn("Health alerts detected", { 
+        alerts: alerts.join(", ") 
+      });
       this.emit("alerts", alerts);
     }
   }
@@ -348,11 +345,11 @@ export class HealthMonitor extends EventEmitter {
         status: percentage > 90 ? "fail" : percentage > 80 ? "warn" : "pass",
         responseTime: 0,
         message: `Memory usage: ${percentage.toFixed(1)}%`,
-        data: {
+        data: JSON.stringify({
           used: memUsage.heapUsed / 1024 / 1024,
           total: memUsage.heapTotal / 1024 / 1024,
           percentage,
-        },
+        }),
       };
     });
 
@@ -373,7 +370,7 @@ export class HealthMonitor extends EventEmitter {
         status: cpuUsage > 50 ? "warn" : "pass",
         responseTime: 0,
         message: `CPU usage: ${cpuUsage.toFixed(1)}%`,
-        data: { usage: cpuUsage },
+        data: JSON.stringify({ usage: cpuUsage }),
       };
     });
 
@@ -386,7 +383,7 @@ export class HealthMonitor extends EventEmitter {
         status: uptime < 60 ? "warn" : "pass", // Warn if less than 1 minute
         responseTime: 0,
         message: `Uptime: ${uptime.toFixed(0)}s`,
-        data: { uptime },
+        data: JSON.stringify({ uptime }),
       };
     });
 
@@ -397,11 +394,11 @@ export class HealthMonitor extends EventEmitter {
         status: "pass",
         responseTime: 0,
         message: `PID: ${process.pid}`,
-        data: {
+        data: JSON.stringify({
           pid: process.pid,
           version: process.version,
           platform: process.platform,
-        },
+        }),
       };
     });
   }

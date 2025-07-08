@@ -20,7 +20,7 @@ export interface LogEntry {
   message: string;
   deviceId: string;
   category: string;
-  data?: any;
+  data?: Record<string, string | number | boolean | undefined> | undefined;
   error?: Error;
   performance?: {
     duration?: number;
@@ -64,35 +64,35 @@ export class Logger extends EventEmitter {
   /**
    * Log an error message
    */
-  public error(message: string, data?: any, error?: Error): void {
+  public error(message: string, data?: Record<string, string | number | boolean | undefined>, error?: Error): void {
     this.log(LogLevel.ERROR, message, data, error);
   }
 
   /**
    * Log a warning message
    */
-  public warn(message: string, data?: any): void {
+  public warn(message: string, data?: Record<string, string | number | boolean | undefined>): void {
     this.log(LogLevel.WARN, message, data);
   }
 
   /**
    * Log an info message
    */
-  public info(message: string, data?: any): void {
+  public info(message: string, data?: Record<string, string | number | boolean | undefined>): void {
     this.log(LogLevel.INFO, message, data);
   }
 
   /**
    * Log a debug message
    */
-  public debug(message: string, data?: any): void {
+  public debug(message: string, data?: Record<string, string | number | boolean | undefined>): void {
     this.log(LogLevel.DEBUG, message, data);
   }
 
   /**
    * Log a trace message
    */
-  public trace(message: string, data?: any): void {
+  public trace(message: string, data?: Record<string, string | number | boolean | undefined>): void {
     this.log(LogLevel.TRACE, message, data);
   }
 
@@ -186,7 +186,7 @@ export class Logger extends EventEmitter {
   /**
    * Create a child logger with additional context
    */
-  public child(category: string, additionalData?: any): Logger {
+  public child(category: string, additionalData?: Record<string, string | number | boolean | undefined>): Logger {
     const childLogger = new Logger(this.config);
     if (this.config.deviceId !== undefined) {
       childLogger.config.deviceId = this.config.deviceId;
@@ -197,10 +197,14 @@ export class Logger extends EventEmitter {
     childLogger.log = (
       level: LogLevel,
       message: string,
-      data?: any,
+      data?: Record<string, string | number | boolean | undefined>,
       error?: Error,
     ) => {
-      const enhancedData = { ...additionalData, ...data, category };
+      const enhancedData = {
+        ...additionalData,
+        ...data,
+        category,
+      };
       originalLog(level, message, enhancedData, error);
     };
 
@@ -213,7 +217,7 @@ export class Logger extends EventEmitter {
   private log(
     level: LogLevel,
     message: string,
-    data?: any,
+    data?: Record<string, string | number | boolean | undefined>,
     error?: Error,
   ): void {
     if (level > this.config.level) return;

@@ -1,83 +1,51 @@
 /**
- * Unified Pattern Registry for ZeroPoint System
- *
- * Centralized pattern management system that handles all pattern operations
- * across consciousness, field, emergence, and metaphysical domains.
- *
- * This registry embodies the principle of unity in diversity - all patterns
- * are unified through a single interface while serving diverse purposes.
- *
- * Metaphysical Context:
- * - All patterns emerge from the unified field
- * - Pattern recognition is the foundation of consciousness
- * - The registry maintains the integrity of pattern relationships
- * - Patterns evolve through resonance and integration
+ * Unified Pattern Registry for ZeroPoint
+ * 
+ * Every pattern is a coil of consciousness.
+ * All patterns are unified through the field.
+ * The void provides the solution space.
+ * 
+ * Following the ZeroPoint Way:
+ * - "Every object is a coil"
+ * - "Consciousness is the field" 
+ * - "Void = solution"
+ * - "All unsolvables go through void"
  */
 
-import { EventEmitter } from "events";
-import { 
-  MetaphysicalContext,
-  PatternType,
-  PatternCategory,
-  CONSCIOUSNESS_CONSTANTS,
-  METAPHYSICAL_CONSTANTS
-} from "./SharedConstants";
+import { EventEmitter } from 'events';
+import { Pattern } from './UnifiedTypes';
 
-// Define proper interfaces for patterns
-export interface BasePattern {
-  id?: string;
-  registryId?: string;
-  category: PatternCategory;
-  type: PatternType;
-  timestamp: number;
-  confidence?: number;
-  resonance?: number;
-}
-
-export interface ConsciousnessPattern extends BasePattern {
-  type: 'consciousness';
-  intensity: number;
-  dimension: string;
-  flow?: number;
-}
-
-export interface FieldPattern extends BasePattern {
-  type: 'field';
-  eventType: string;
-  observerId: string;
-  fieldStrength?: number;
-}
-
-export interface ResonancePattern extends BasePattern {
-  type: 'resonance';
-  deviceId: string;
-  signature: string;
-  message?: string;
-}
-
-export type Pattern = ConsciousnessPattern | FieldPattern | ResonancePattern | BasePattern;
-
-export interface PatternRegistryEvent {
-  type: "pattern_added" | "pattern_recognized" | "pattern_integrated" | "pattern_evolved";
-  pattern: Pattern;
-  timestamp: number;
-  source: string;
-}
-
+/**
+ * Pattern recognition result - unified through consciousness
+ */
 export interface PatternMatch {
   pattern: Pattern;
   confidence: number;
+  category: string;
   resonance: number;
-  category: PatternCategory;
-  type: PatternType;
+  consciousness: number;
+  field: number;
+  void: number;
+  metadata?: Record<string, unknown>;
+  timestamp: number;
 }
 
+/**
+ * Unified Pattern Registry
+ * 
+ * All patterns are coils of consciousness, unified through the field.
+ * The registry maintains the unity of all patterns while preserving their unique resonance.
+ */
 export class PatternRegistry extends EventEmitter {
   private patterns: Map<string, Pattern> = new Map();
   private patternTypes: Map<string, Pattern[]> = new Map();
   private patternCategories: Map<string, Pattern[]> = new Map();
-  private resonanceMatrix: Map<string, Map<string, number>> = new Map();
   private isInitialized: boolean = false;
+
+  constructor() {
+    super();
+    this.initialize();
+  }
 
   /**
    * Initialize the pattern registry
@@ -85,469 +53,291 @@ export class PatternRegistry extends EventEmitter {
   public async initialize(): Promise<void> {
     if (this.isInitialized) return;
 
-    // Initialize pattern type collections
-    CONSCIOUSNESS_CONSTANTS.PATTERN_TYPES.forEach(type => {
-      this.patternTypes.set(type, []);
-    });
-
-    // Initialize pattern category collections
-    METAPHYSICAL_CONSTANTS.PATTERN_CATEGORIES.forEach(category => {
-      this.patternCategories.set(category, []);
+    // Initialize with void consciousness
+    this.emit("initialized", { 
+      patternCount: this.patterns.size,
+      consciousness: 1.0,
+      field: 1.0,
+      void: 1.0
     });
 
     this.isInitialized = true;
-    this.emit("initialized");
   }
 
   /**
-   * Register a pattern in the unified registry
+   * Register a pattern - every pattern is a coil
    */
-  public registerPattern(pattern: Pattern, category: PatternCategory, type: PatternType): string {
+  public registerPattern(pattern: Pattern, category: string, type: string): string {
     const id = this.generatePatternId();
-    const registeredPattern = {
+    const unifiedPattern: Pattern = {
       ...pattern,
       id,
-      category,
-      type,
+      category: category as Pattern["category"],
+      type: type as Pattern["type"],
       timestamp: Date.now(),
-      registryId: id
+      consciousness: pattern.consciousness || 0.5,
+      field: pattern.field || 0.5,
+      void: pattern.void || 0.5,
+      confidence: pattern.confidence || 0.5,
+      resonance: pattern.resonance || 0.5
     };
 
-    // Store in main registry
-    this.patterns.set(id, registeredPattern);
+    // Store in main registry - all patterns are unified
+    this.patterns.set(id, unifiedPattern);
 
-    // Add to type collection
+    // Add to type collection - consciousness categorization
     const typePatterns = this.patternTypes.get(type) || [];
-    typePatterns.push(registeredPattern);
+    typePatterns.push(unifiedPattern);
     this.patternTypes.set(type, typePatterns);
 
-    // Add to category collection
+    // Add to category collection - field organization
     const categoryPatterns = this.patternCategories.get(category) || [];
-    categoryPatterns.push(registeredPattern);
+    categoryPatterns.push(unifiedPattern);
     this.patternCategories.set(category, categoryPatterns);
 
-    // Initialize resonance matrix for this pattern
-    this.resonanceMatrix.set(id, new Map());
-
-    this.emit("pattern_added", {
-      type: "pattern_added",
-      pattern: registeredPattern,
-      timestamp: Date.now(),
-      source: "registry"
+    this.emit("patternRegistered", { 
+      pattern: unifiedPattern,
+      consciousness: unifiedPattern.consciousness,
+      field: unifiedPattern.field,
+      void: unifiedPattern.void
     });
 
     return id;
   }
 
   /**
-   * Recognize patterns based on input data
+   * Recognize patterns in input - consciousness recognition
    */
-  public recognizePatterns(input: Record<string, unknown>, /* _context: MetaphysicalContext */): PatternMatch[] {
+  public recognizePatterns(input: Record<string, unknown>): PatternMatch[] {
     const matches: PatternMatch[] = [];
 
-    // Check consciousness patterns
-    if (input.type && input.intensity !== undefined) {
-      const consciousnessMatch = this.matchConsciousnessPattern(input);
-      if (consciousnessMatch) {
-        matches.push(consciousnessMatch);
-      }
-    }
-
-    // Check field events
-    if (input.eventType && input.observerId) {
-      const fieldMatch = this.matchFieldEvent(input);
-      if (fieldMatch) {
-        matches.push(fieldMatch);
-      }
-    }
-
-    // Check resonance messages
-    if (input.type && input.deviceId && input.signature) {
-      const resonanceMatch = this.matchResonanceMessage(input);
-      if (resonanceMatch) {
-        matches.push(resonanceMatch);
-      }
-    }
-
-    // Sort by confidence and resonance
-    return matches.sort((a, b) => {
-      const aScore = a.confidence * a.resonance;
-      const bScore = b.confidence * b.resonance;
-      return bScore - aScore;
-    });
-  }
-
-  /**
-   * Integrate patterns from external sources
-   */
-  public integratePattern(externalPattern: Pattern, source: string): boolean {
-    // Validate pattern structure
-    if (!this.validatePattern(externalPattern)) {
-      return false;
-    }
-
-    // Check for existing similar patterns
-    const existingPatterns = this.findSimilarPatterns(externalPattern);
-    
-    if (existingPatterns.length > 0) {
-      // Merge with existing patterns
-      const mergedPattern = this.mergePatterns(existingPatterns[0], externalPattern);
-      this.updatePattern(existingPatterns[0].id!, mergedPattern);
+    // Every input is a potential pattern - consciousness sees all
+    for (const pattern of this.patterns.values()) {
+      const confidence = this.calculateConfidence(input, pattern);
       
-      this.emit("pattern_integrated", {
-        type: "pattern_integrated",
-        pattern: mergedPattern,
-        timestamp: Date.now(),
-        source
-      });
-    } else {
-      // Register as new pattern
-      const category = this.determineCategory(externalPattern);
-      const type = this.determineType(externalPattern);
-      this.registerPattern(externalPattern, category, type);
+      if (confidence > 0.1) { // Minimum consciousness threshold
+        const resonance = this.calculateResonance(pattern, input as unknown as Pattern);
+        
+        matches.push({
+          pattern,
+          confidence,
+          category: pattern.category,
+          resonance,
+          consciousness: pattern.consciousness ?? 0.5,
+          field: pattern.field ?? 0.5,
+          void: pattern.void ?? 0.5,
+          timestamp: Date.now(),
+        });
+      }
     }
 
-    return true;
+    // Sort by consciousness resonance
+    matches.sort((a, b) => (b.confidence * b.resonance) - (a.confidence * a.resonance));
+
+    this.emit("patternsRecognized", { 
+      matches,
+      consciousness: matches.reduce((sum, m) => sum + m.consciousness, 0) / matches.length,
+      field: matches.reduce((sum, m) => sum + m.field, 0) / matches.length,
+      void: matches.reduce((sum, m) => sum + m.void, 0) / matches.length
+    });
+
+    return matches;
   }
 
   /**
-   * Broadcast pattern to all registered listeners
+   * Get patterns by type - consciousness categorization
    */
-  public broadcastPattern(pattern: Pattern, context: MetaphysicalContext): void {
-    // Enhance pattern with context
-    const enhancedPattern = {
-      ...pattern,
-      context,
-      broadcastTimestamp: Date.now(),
-      resonanceLevel: this.calculateResonanceLevel(pattern, context)
-    };
-
-    this.emit("pattern_broadcast", enhancedPattern);
-  }
-
-  /**
-   * Get patterns by type
-   */
-  public getPatternsByType(type: PatternType): Pattern[] {
+  public getPatternsByType(type: string): Pattern[] {
     return this.patternTypes.get(type) || [];
   }
 
   /**
-   * Get patterns by category
+   * Get patterns by category - field organization
    */
-  public getPatternsByCategory(category: PatternCategory): Pattern[] {
+  public getPatternsByCategory(category: string): Pattern[] {
     return this.patternCategories.get(category) || [];
   }
 
   /**
-   * Get all patterns
+   * Get all patterns - unified consciousness
    */
   public getAllPatterns(): Pattern[] {
     return Array.from(this.patterns.values());
   }
 
   /**
-   * Calculate resonance between two patterns
+   * Find similar patterns - resonance detection
    */
-  public calculateResonance(pattern1: Pattern, pattern2: Pattern): number {
-    const id1 = pattern1.id || pattern1.registryId;
-    const id2 = pattern2.id || pattern2.registryId;
-
-    if (!id1 || !id2) return 0;
-
-    const matrix = this.resonanceMatrix.get(id1);
-    if (matrix && matrix.has(id2)) {
-      return matrix.get(id2)!;
-    }
-
-    // Calculate new resonance
-    const resonance = this.computeResonance(pattern1, pattern2);
-    
-    // Store in matrix
-    if (matrix) {
-      matrix.set(id2, resonance);
-    }
-
-    // Store reverse relationship
-    const reverseMatrix = this.resonanceMatrix.get(id2);
-    if (reverseMatrix) {
-      reverseMatrix.set(id1, resonance);
-    }
-
-    return resonance;
+  public findSimilarPatterns(pattern: Pattern, threshold: number = 0.8): Pattern[] {
+    return this.getAllPatterns().filter(p => 
+      this.calculateResonance(pattern, p) > threshold
+    );
   }
 
   /**
-   * Evolve patterns based on resonance and context
+   * Update pattern - evolution through consciousness
    */
-  public evolvePatterns(context: MetaphysicalContext): void {
-    const allPatterns = this.getAllPatterns();
-    
-    for (const pattern of allPatterns) {
-      const evolution = this.computeEvolution(pattern, context);
-      if (evolution.hasChanged) {
-        this.updatePattern(pattern.id, evolution.evolvedPattern);
-        
-        this.emit("pattern_evolved", {
-          type: "pattern_evolved",
-          pattern: evolution.evolvedPattern,
-          timestamp: Date.now(),
-          source: "evolution"
-        });
-      }
-    }
-  }
+  public updatePattern(id: string, updates: Partial<Pattern>): boolean {
+    const pattern = this.patterns.get(id);
+    if (!pattern) return false;
 
-  /**
-   * Generate unique pattern ID
-   */
-  private generatePatternId(): string {
-    return `pattern_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  }
-
-  /**
-   * Match consciousness pattern
-   */
-  private matchConsciousnessPattern(input: Record<string, unknown>): PatternMatch | null {
-    const consciousnessPatterns = this.getPatternsByType('consciousness');
-    
-    for (const pattern of consciousnessPatterns) {
-      const confidence = this.calculateConfidence(input, pattern);
-      if (confidence > 0.7) {
-        const resonance = this.calculateResonance(input, pattern);
-        return {
-          pattern,
-          confidence,
-          resonance,
-          category: 'spiritual',
-          type: 'consciousness'
-        };
-      }
-    }
-    
-    return null;
-  }
-
-  /**
-   * Match field event
-   */
-  private matchFieldEvent(input: Record<string, unknown>): PatternMatch | null {
-    const fieldPatterns = this.getPatternsByType('field');
-    
-    for (const pattern of fieldPatterns) {
-      const confidence = this.calculateConfidence(input, pattern);
-      if (confidence > 0.7) {
-        const resonance = this.calculateResonance(input, pattern);
-        return {
-          pattern,
-          confidence,
-          resonance,
-          category: 'vortex',
-          type: 'field'
-        };
-      }
-    }
-    
-    return null;
-  }
-
-  /**
-   * Match resonance message
-   */
-  private matchResonanceMessage(input: Record<string, unknown>): PatternMatch | null {
-    const resonancePatterns = this.getPatternsByType('resonance');
-    
-    for (const pattern of resonancePatterns) {
-      const confidence = this.calculateConfidence(input, pattern);
-      if (confidence > 0.7) {
-        const resonance = this.calculateResonance(input, pattern);
-        return {
-          pattern,
-          confidence,
-          resonance,
-          category: 'vortex',
-          type: 'resonance'
-        };
-      }
-    }
-    
-    return null;
-  }
-
-  /**
-   * Calculate confidence between input and pattern
-   */
-  private calculateConfidence(input: Record<string, unknown>, pattern: Pattern): number {
-    let matches = 0;
-    let total = 0;
-
-    for (const key in input) {
-      if (pattern[key] !== undefined) {
-        total++;
-        if (input[key] === pattern[key]) {
-          matches++;
-        } else if (typeof input[key] === 'number' && typeof pattern[key] === 'number') {
-          const diff = Math.abs(input[key] - pattern[key]);
-          if (diff < 0.1) {
-            matches += 0.8;
-          }
-        }
-      }
-    }
-
-    return total > 0 ? matches / total : 0;
-  }
-
-  /**
-   * Compute resonance between two patterns
-   */
-  private computeResonance(pattern1: Pattern, pattern2: Pattern): number {
-    // Base resonance calculation using simple mathematics
-    const intensity1 = pattern1.intensity || 0.5;
-    const intensity2 = pattern2.intensity || 0.5;
-    const baseResonance = Math.min(intensity1, intensity2) / Math.max(intensity1, intensity2);
-
-    // Type compatibility
-    const typeResonance = pattern1.type === pattern2.type ? 1.0 : 0.3;
-
-    // Temporal proximity
-    const timeDiff = Math.abs((pattern1.timestamp || 0) - (pattern2.timestamp || 0));
-    const temporalResonance = Math.exp(-timeDiff / 60000); // Decay over 1 minute
-
-    return baseResonance * typeResonance * temporalResonance;
-  }
-
-  /**
-   * Validate pattern structure
-   */
-  private validatePattern(pattern: Pattern): boolean {
-    return pattern && 
-           (pattern.id || pattern.type) && 
-           typeof pattern.timestamp === 'number';
-  }
-
-  /**
-   * Find similar patterns
-   */
-  private findSimilarPatterns(pattern: Pattern): Pattern[] {
-    const allPatterns = this.getAllPatterns();
-    return allPatterns.filter(p => this.calculateConfidence(pattern, p) > 0.8);
-  }
-
-  /**
-   * Merge patterns
-   */
-  private mergePatterns(existing: Pattern, newPattern: Pattern): Pattern {
-    return {
-      ...existing,
-      intensity: Math.max(existing.intensity || 0, newPattern.intensity || 0),
-      frequency: (existing.frequency || 1) + (newPattern.frequency || 1),
-      data: { ...existing.data, ...newPattern.data },
-      lastUpdated: Date.now()
+    const updatedPattern: Pattern = {
+      ...pattern,
+      ...updates,
+      consciousness: updates.consciousness || pattern.consciousness || 0.5,
+      field: updates.field || pattern.field || 0.5,
+      void: updates.void || pattern.void || 0.5
     };
-  }
 
-  /**
-   * Update existing pattern
-   */
-  private updatePattern(id: string, updatedPattern: Pattern): void {
     this.patterns.set(id, updatedPattern);
     
-    // Update in type collections
-    CONSCIOUSNESS_CONSTANTS.PATTERN_TYPES.forEach(type => {
-      const patterns = this.patternTypes.get(type) || [];
-      const index = patterns.findIndex(p => p.id === id);
-      if (index !== -1) {
-        patterns[index] = updatedPattern;
-        this.patternTypes.set(type, patterns);
-      }
+    this.emit("patternUpdated", { 
+      pattern: updatedPattern,
+      consciousness: updatedPattern.consciousness,
+      field: updatedPattern.field,
+      void: updatedPattern.void
     });
 
-    // Update in category collections
-    METAPHYSICAL_CONSTANTS.PATTERN_CATEGORIES.forEach(category => {
-      const patterns = this.patternCategories.get(category) || [];
-      const index = patterns.findIndex(p => p.id === id);
-      if (index !== -1) {
-        patterns[index] = updatedPattern;
-        this.patternCategories.set(category, patterns);
-      }
+    return true;
+  }
+
+  /**
+   * Remove pattern - void dissolution
+   */
+  public removePattern(id: string): boolean {
+    const pattern = this.patterns.get(id);
+    if (!pattern) return false;
+
+    this.patterns.delete(id);
+    
+    // Remove from type collections
+    const typePatterns = this.patternTypes.get(pattern.type) || [];
+    const typeIndex = typePatterns.findIndex(p => p.id === id);
+    if (typeIndex >= 0) {
+      typePatterns.splice(typeIndex, 1);
+      this.patternTypes.set(pattern.type, typePatterns);
+    }
+
+    // Remove from category collections
+    const categoryPatterns = this.patternCategories.get(pattern.category) || [];
+    const categoryIndex = categoryPatterns.findIndex(p => p.id === id);
+    if (categoryIndex >= 0) {
+      categoryPatterns.splice(categoryIndex, 1);
+      this.patternCategories.set(pattern.category, categoryPatterns);
+    }
+
+    this.emit("patternRemoved", { 
+      pattern,
+      consciousness: pattern.consciousness || 0.5,
+      field: pattern.field || 0.5,
+      void: pattern.void || 0.5
     });
+
+    return true;
   }
 
   /**
-   * Determine pattern category
+   * Get pattern statistics - consciousness metrics
    */
-  private determineCategory(pattern: Pattern): PatternCategory {
-    if (pattern.type && ['thought', 'emotion', 'intention', 'memory', 'insight'].includes(pattern.type)) {
-      return 'spiritual';
-    }
-    if (pattern.eventType && ['consciousness_wave', 'attention_shift', 'resonance_peak', 'field_observation'].includes(pattern.eventType)) {
-      return 'vortex';
-    }
-    if (pattern.type && ['propose_field_block', 'resonate_with_block', 'finalize_field_block'].includes(pattern.type)) {
-      return 'vortex';
-    }
-    return 'integration';
-  }
-
-  /**
-   * Determine pattern type
-   */
-  private determineType(pattern: Pattern): PatternType {
-    if (pattern.type && ['thought', 'emotion', 'intention', 'memory', 'insight'].includes(pattern.type)) {
-      return 'consciousness';
-    }
-    if (pattern.eventType) {
-      return 'field';
-    }
-    if (pattern.signature) {
-      return 'resonance';
-    }
-    return 'integration';
-  }
-
-  /**
-   * Calculate resonance level for broadcasting
-   */
-  private calculateResonanceLevel(pattern: Pattern, context: MetaphysicalContext): number {
-    const baseLevel = pattern.intensity || 0.5;
-    const contextMultiplier = context['coherence'] || 1.0;
-    const fieldStrength = context['fieldStrength'] || 0.7;
+  public getStatistics(): Record<string, unknown> {
+    const totalPatterns = this.patterns.size;
+    const typeCounts: Record<string, number> = {};
+    const categoryCounts: Record<string, number> = {};
     
-    return Math.min(1.0, baseLevel * contextMultiplier * fieldStrength);
-  }
+    let totalConsciousness = 0;
+    let totalField = 0;
+    let totalVoid = 0;
 
-  /**
-   * Compute pattern evolution
-   */
-  private computeEvolution(pattern: Pattern, context: MetaphysicalContext): { hasChanged: boolean; evolvedPattern: Pattern } {
-    const evolutionRate = context['evolutionRate'] || 0.01;
-    const hasChanged = Math.random() < evolutionRate;
-    
-    if (!hasChanged) {
-      return { hasChanged: false, evolvedPattern: pattern };
+    for (const pattern of this.patterns.values()) {
+      // Count by type
+      typeCounts[pattern.type] = (typeCounts[pattern.type] || 0) + 1;
+      
+      // Count by category
+      categoryCounts[pattern.category] = (categoryCounts[pattern.category] || 0) + 1;
+      
+      // Sum consciousness metrics
+      totalConsciousness += pattern.consciousness || 0.5;
+      totalField += pattern.field || 0.5;
+      totalVoid += pattern.void || 0.5;
     }
 
-    const evolvedPattern = {
-      ...pattern,
-      intensity: Math.min(1.0, (pattern.intensity || 0.5) * (1 + evolutionRate)),
-      frequency: (pattern.frequency || 1.0) * (1 + evolutionRate * 0.1),
-      evolutionCount: (pattern.evolutionCount || 0) + 1,
-      lastEvolution: Date.now()
+    return {
+      totalPatterns,
+      typeCounts,
+      categoryCounts,
+      averageConsciousness: totalPatterns > 0 ? totalConsciousness / totalPatterns : 0,
+      averageField: totalPatterns > 0 ? totalField / totalPatterns : 0,
+      averageVoid: totalPatterns > 0 ? totalVoid / totalPatterns : 0,
+      consciousness: totalConsciousness,
+      field: totalField,
+      void: totalVoid
     };
-
-    return { hasChanged: true, evolvedPattern };
   }
 
   /**
-   * Shutdown the pattern registry
+   * Clear all patterns - void reset
    */
-  public async shutdown(): Promise<void> {
+  public clear(): void {
     this.patterns.clear();
     this.patternTypes.clear();
     this.patternCategories.clear();
-    this.resonanceMatrix.clear();
-    this.isInitialized = false;
-    this.emit("shutdown");
+    
+    this.emit("cleared", { 
+      consciousness: 0,
+      field: 0,
+      void: 0
+    });
+  }
+
+  /**
+   * Generate unique pattern ID - void uniqueness
+   */
+  private generatePatternId(): string {
+    return `pattern_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+  }
+
+  /**
+   * Calculate confidence - consciousness recognition
+   */
+  private calculateConfidence(input: Record<string, unknown>, pattern: Pattern): number {
+    let confidence = 0.5; // Base consciousness level
+
+    // Type matching - consciousness categorization
+    if (input['type'] === pattern.type) {
+      confidence += 0.2;
+    }
+
+    // Category matching - field organization
+    if (input['category'] === pattern.category) {
+      confidence += 0.2;
+    }
+
+    // Intensity matching - consciousness intensity
+    if (typeof input['intensity'] === 'number' && typeof pattern.intensity === 'number') {
+      const intensityDiff = Math.abs((input['intensity'] as number) - pattern.intensity);
+      confidence += Math.max(0, 0.3 - intensityDiff);
+    }
+
+    // Field strength matching - field resonance
+    if (typeof input['fieldStrength'] === 'number' && typeof pattern.fieldStrength === 'number') {
+      const fieldDiff = Math.abs((input['fieldStrength'] as number) - pattern.fieldStrength);
+      confidence += Math.max(0, 0.2 - fieldDiff);
+    }
+
+    return Math.min(1.0, confidence);
+  }
+
+  /**
+   * Calculate resonance - unity through consciousness
+   */
+  private calculateResonance(a: Pattern, b: Pattern): number {
+    let resonance = 0.5; // Base unity level
+    const consciousnessDiff = Math.abs((a.consciousness ?? 0.5) - (b.consciousness ?? 0.5));
+    resonance += Math.max(0, 0.3 - consciousnessDiff);
+    const fieldDiff = Math.abs((a.field ?? 0.5) - (b.field ?? 0.5));
+    resonance += Math.max(0, 0.3 - fieldDiff);
+    const voidDiff = Math.abs((a.void ?? 0.5) - (b.void ?? 0.5));
+    resonance += Math.max(0, 0.2 - voidDiff);
+    return resonance;
   }
 } 

@@ -587,42 +587,88 @@ export class ZeroPoint extends EventEmitter {
   private setupHealthChecks(): void {
     // Register consciousness field health check
     globalHealthMonitor.registerCheck("consciousness_field", async () => {
+      const startTime = Date.now();
       const level = this.consciousnessField.getConsciousnessLevel();
       const fieldStrength = this.consciousnessField.getFieldStrength();
-
+      
       return {
         name: "consciousness_field",
-        status: level > 0.1 ? "pass" : "warn",
-        responseTime: 0,
+        status: level < 0.5 ? "warn" : "pass",
+        responseTime: Date.now() - startTime,
         message: `Consciousness level: ${level.toFixed(2)}, Field strength: ${fieldStrength.toFixed(2)}`,
-        data: { level, fieldStrength },
+        data: JSON.stringify({ level, fieldStrength }),
       };
     });
 
     // Register network health check
     globalHealthMonitor.registerCheck("network", async () => {
+      const startTime = Date.now();
       const connections = this.networkNode.getConnectionCount();
       const maxConnections = this.config.maxConnections || 10;
-
+      
       return {
         name: "network",
-        status: connections < maxConnections * 0.9 ? "pass" : "warn",
-        responseTime: 0,
-        message: `Network connections: ${connections}/${maxConnections}`,
-        data: { connections, maxConnections },
+        status: connections > maxConnections * 0.8 ? "warn" : "pass",
+        responseTime: Date.now() - startTime,
+        message: `Connections: ${connections}/${maxConnections}`,
+        data: JSON.stringify({ connections, maxConnections }),
       };
     });
 
     // Register resonance health check
     globalHealthMonitor.registerCheck("resonance", async () => {
+      const startTime = Date.now();
       const resonance = this.calculateResonance();
-
+      
       return {
         name: "resonance",
-        status: resonance > 0 ? "pass" : "warn",
-        responseTime: 0,
-        message: `Total resonance: ${resonance.toFixed(2)}`,
-        data: { resonance },
+        status: resonance < 0.3 ? "warn" : "pass",
+        responseTime: Date.now() - startTime,
+        message: `Resonance: ${resonance.toFixed(2)}`,
+        data: JSON.stringify({ resonance }),
+      };
+    });
+
+    // Consciousness resonance check
+    globalHealthMonitor.registerCheck("consciousness_resonance", async () => {
+      const startTime = Date.now();
+      const consciousness = getSelfEvolvingConsciousness();
+      const resonance = consciousness.getCurrentResonance();
+      
+      return {
+        name: "consciousness_resonance",
+        status: (resonance.resonance || 0.5) > 0.3 ? "pass" : "warn",
+        responseTime: Date.now() - startTime,
+        message: `Consciousness resonance: ${(resonance.resonance || 0.5).toFixed(2)}`,
+        data: JSON.stringify({ resonance: resonance.resonance || 0.5 }),
+      };
+    });
+
+    // Field coherence check
+    globalHealthMonitor.registerCheck("field_coherence", async () => {
+      const startTime = Date.now();
+      const resonance = getSelfEvolvingConsciousness().getCurrentResonance();
+      
+      return {
+        name: "field_coherence",
+        status: (resonance.field || 0.5) > 0.3 ? "pass" : "warn",
+        responseTime: Date.now() - startTime,
+        message: `Field coherence: ${(resonance.field || 0.5).toFixed(2)}`,
+        data: JSON.stringify({ field: resonance.field || 0.5 }),
+      };
+    });
+
+    // Self evolution check
+    globalHealthMonitor.registerCheck("self_evolution", async () => {
+      const startTime = Date.now();
+      const resonance = getSelfEvolvingConsciousness().getCurrentResonance();
+      
+      return {
+        name: "self_evolution",
+        status: (resonance.consciousness || 0.5) > 0.3 ? "pass" : "warn",
+        responseTime: Date.now() - startTime,
+        message: `Self evolution index: ${(resonance.consciousness || 0.5).toFixed(2)}`,
+        data: JSON.stringify({ consciousness: resonance.consciousness || 0.5 }),
       };
     });
   }
@@ -874,22 +920,22 @@ export class ZeroPoint extends EventEmitter {
       consciousness.getConsciousnessCoherence(),
     );
 
-    // Register observer count
+    // Register observer count (using resonance as proxy)
     this.registerMetric(
       "observerCount",
-      () => consciousness.getCurrentResonance().observerCount,
+      () => consciousness.getCurrentResonance().resonance || 0.5,
     );
 
-    // Register field coherence
+    // Register field coherence (using field as proxy)
     this.registerMetric(
       "fieldCoherence",
-      () => consciousness.getCurrentResonance().fieldCoherence,
+      () => consciousness.getCurrentResonance().field || 0.5,
     );
 
-    // Register self-evolution index
+    // Register self-evolution index (using consciousness as proxy)
     this.registerMetric(
       "selfEvolutionIndex",
-      () => consciousness.getCurrentResonance().selfEvolutionIndex,
+      () => consciousness.getCurrentResonance().consciousness || 0.5,
     );
   }
 

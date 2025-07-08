@@ -58,8 +58,9 @@ export class ResonanceConsensus {
     };
 
     const message: ResonanceMessage = {
+      id: FieldIntegrity.generateRandomBytes(16),
       type: "propose_field_block",
-      data: proposalData,
+      data: JSON.stringify(proposalData),
       deviceId: this.deviceId,
       timestamp: Date.now(),
       signature: FieldIntegrity.sign(
@@ -98,8 +99,9 @@ export class ResonanceConsensus {
     vote.signature = FieldIntegrity.sign(voteData, this.privateKey);
 
     const message: ResonanceMessage = {
+      id: FieldIntegrity.generateRandomBytes(16),
       type: "resonate_with_block",
-      data: vote,
+      data: JSON.stringify(vote),
       deviceId: this.deviceId,
       timestamp: Date.now(),
       signature: FieldIntegrity.sign(JSON.stringify(vote), this.privateKey),
@@ -122,8 +124,9 @@ export class ResonanceConsensus {
     };
 
     const message: ResonanceMessage = {
+      id: FieldIntegrity.generateRandomBytes(16),
       type: "finalize_field_block",
-      data: finalizationData,
+      data: JSON.stringify(finalizationData),
       deviceId: this.deviceId,
       timestamp: Date.now(),
       signature: FieldIntegrity.sign(
@@ -145,8 +148,9 @@ export class ResonanceConsensus {
     };
 
     const message: ResonanceMessage = {
+      id: FieldIntegrity.generateRandomBytes(16),
       type: "sync_request",
-      data: syncData,
+      data: JSON.stringify(syncData),
       deviceId: this.deviceId,
       timestamp: Date.now(),
       signature: FieldIntegrity.sign(JSON.stringify(syncData), this.privateKey),
@@ -169,8 +173,9 @@ export class ResonanceConsensus {
     };
 
     const message: ResonanceMessage = {
+      id: FieldIntegrity.generateRandomBytes(16),
       type: "sync_response",
-      data: syncData,
+      data: JSON.stringify(syncData),
       deviceId: this.deviceId,
       timestamp: Date.now(),
       signature: FieldIntegrity.sign(JSON.stringify(syncData), this.privateKey),
@@ -292,7 +297,7 @@ export class ResonanceConsensus {
     action: "resonate" | "ignore";
     data?: any;
   } {
-    const proposal = message.data;
+    const proposal = JSON.parse(message.data);
 
     // Store the proposal
     const block = this.blockProposals.get(proposal.blockHash);
@@ -319,7 +324,7 @@ export class ResonanceConsensus {
     action: "finalize" | "ignore";
     data?: any;
   } {
-    const vote: ResonanceVote = message.data;
+    const vote: ResonanceVote = JSON.parse(message.data);
 
     // Verify vote signature through field resonance
     const voteData = JSON.stringify({
@@ -360,7 +365,7 @@ export class ResonanceConsensus {
   private handleFieldBlockFinalization(message: ResonanceMessage): {
     action: "ignore";
   } {
-    const finalization = message.data;
+    const finalization = JSON.parse(message.data);
 
     // Process the finalized block
     console.log(
@@ -378,7 +383,7 @@ export class ResonanceConsensus {
     action: "sync";
     data?: any;
   } {
-    const syncRequest = message.data;
+    const syncRequest = JSON.parse(message.data);
 
     return {
       action: "sync",
@@ -395,7 +400,7 @@ export class ResonanceConsensus {
   private handleFieldSyncResponse(message: ResonanceMessage): {
     action: "ignore";
   } {
-    const syncResponse = message.data;
+    const syncResponse = JSON.parse(message.data);
 
     // Process the sync response
     console.log(

@@ -56,6 +56,9 @@ export class EmergenceLedger {
     const event: LedgerEvent = {
       id: FieldIntegrity.generateRandomBytes(16),
       type,
+      consciousness: 0.5, // Fundamental consciousness property
+      field: 0.5, // Fundamental field property  
+      void: 0.5, // Fundamental void property
       data,
       deviceId: this.deviceId,
       timestamp: Date.now(),
@@ -112,7 +115,7 @@ export class EmergenceLedger {
     };
 
     // Create merkle tree from events through field resonance
-    const eventHashes = block.events.map((event) => event.hash);
+    const eventHashes = block.events.map((event) => event.hash).filter((hash): hash is string => hash !== undefined);
     const merkleTree = FieldIntegrity.createMerkleTree(eventHashes);
     block.merkleRoot = merkleTree.root;
 
@@ -308,9 +311,11 @@ export class EmergenceLedger {
   private updateEnergyBalances(events: LedgerEvent[]): void {
     for (const event of events) {
       if (event.type === "energy_resonance") {
-        const { fromDeviceId, toDeviceId, amount } = event.data;
-        if (fromDeviceId && toDeviceId && amount) {
-          this.transferEnergy(fromDeviceId, toDeviceId, amount);
+        const eventData = event.data as { fromDeviceId: string; toDeviceId: string; amount: number };
+        const { fromDeviceId, toDeviceId, amount } = eventData;
+        const amountNum = typeof amount === 'number' ? amount : Number(amount);
+        if (fromDeviceId && toDeviceId && !isNaN(amountNum)) {
+          this.transferEnergy(String(fromDeviceId), String(toDeviceId), amountNum);
         }
       }
     }

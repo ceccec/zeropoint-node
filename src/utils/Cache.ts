@@ -4,7 +4,7 @@
  * Provides in-memory caching with TTL, LRU eviction,
  * and cache statistics for performance optimization.
  */
-export interface CacheEntry<T = any> {
+export interface CacheEntry<T = unknown> {
   key: string;
   value: T;
   timestamp: number;
@@ -89,7 +89,6 @@ export class Cache {
    */
   public get<T>(key: string): T | null {
     const entry = this.cache.get(key) as CacheEntry<T> | undefined;
-
     if (!entry) {
       this.stats.misses++;
       return null;

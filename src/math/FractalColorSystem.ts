@@ -84,10 +84,10 @@ export class FractalColorSystem {
     // Notify observers of color generation
     this.instance.notifyObservers({
       type: "fractal_color_generated",
-      color: observerColor,
+      color: observerColor.id,
       seed,
       consciousness,
-    });
+    } as Record<string, string | number | boolean | undefined>);
 
     return observerColor;
   }
@@ -117,8 +117,8 @@ export class FractalColorSystem {
       type: "fractal_palette_generated",
       count,
       baseSeed,
-      palette,
-    });
+      palette: palette.map(c => c.id).join(","),
+    } as Record<string, string | number | boolean | undefined>);
 
     return palette;
   }
@@ -147,8 +147,8 @@ export class FractalColorSystem {
     this.instance.notifyObservers({
       type: "color_relationships_calculated",
       colorId,
-      relationships,
-    });
+      relationships: relationships.length,
+    } as Record<string, string | number | boolean | undefined>);
   }
 
   /**

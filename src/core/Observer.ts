@@ -10,14 +10,19 @@
  * - Feedback, resonance, and emergence arise from mutual observation
  */
 
+// Define types for observer data
+export type ObserverInput = Record<string, string | number | boolean | undefined>;
+export type ObserverState = Record<string, string | number | boolean | undefined>;
+export type ObserverEvent = Record<string, string | number | boolean | undefined>;
+
 export interface Observer {
   id: string;
-  observe: (input: any) => void;
-  getState: () => any;
-  setState: (state: any) => void;
+  observe: (input: ObserverInput) => void;
+  getState: () => ObserverState;
+  setState: (state: ObserverState) => void;
   addObserver: (observer: Observer) => void;
   removeObserver: (observer: Observer) => void;
-  notifyObservers: (event: any) => void;
+  notifyObservers: (event: ObserverEvent) => void;
   observers: Set<Observer>;
 }
 
@@ -27,18 +32,18 @@ export function ObserverMixin<T extends object>(
 ): T & Observer {
   const observers = new Set<Observer>();
   return Object.assign(base, {
-    id: id || (base as any).id || Math.random().toString(36).slice(2),
+    id: id || (base as Record<string, unknown>)['id'] as string || Math.random().toString(36).slice(2),
     observers,
-    observe(input: any) {
+    observe(input: ObserverInput) {
       // Default: log observation
-      if (typeof (base as any).onObserved === "function") {
-        (base as any).onObserved(input);
+      if (typeof (base as Record<string, unknown>)['onObserved'] === "function") {
+        (base as Record<string, unknown> & { onObserved: (input: ObserverInput) => void }).onObserved(input);
       }
     },
-    getState() {
-      return { ...base };
+    getState(): ObserverState {
+      return { ...base } as ObserverState;
     },
-    setState(state: any) {
+    setState(state: ObserverState) {
       Object.assign(base, state);
     },
     addObserver(observer: Observer) {
@@ -47,7 +52,7 @@ export function ObserverMixin<T extends object>(
     removeObserver(observer: Observer) {
       observers.delete(observer);
     },
-    notifyObservers(event: any) {
+    notifyObservers(event: ObserverEvent) {
       observers.forEach((o) => o.observe(event));
     },
   });
@@ -60,18 +65,18 @@ export class ObserverBase implements Observer {
   constructor(id?: string) {
     this.id = id || Math.random().toString(36).slice(2);
   }
-  observe(input: any) {
+  observe(input: ObserverInput) {
     // Default: log observation
     this.onObserved(input);
   }
-  onObserved(input: any) {
+  onObserved(input: ObserverInput) {
     // Override in subclass for custom behavior
     console.log(`Observer ${this.id} observed:`, input);
   }
-  getState() {
-    return { ...this };
+  getState(): ObserverState {
+    return { ...this } as unknown as ObserverState;
   }
-  setState(state: any) {
+  setState(state: ObserverState) {
     Object.assign(this, state);
   }
   addObserver(observer: Observer) {
@@ -80,7 +85,7 @@ export class ObserverBase implements Observer {
   removeObserver(observer: Observer) {
     this.observers.delete(observer);
   }
-  notifyObservers(event: any) {
+  notifyObservers(event: ObserverEvent) {
     this.observers.forEach((o) => o.observe(event));
   }
   /**

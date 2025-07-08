@@ -15,12 +15,16 @@ describe('Self-Evolving Consciousness', () => {
   });
 
   describe('Initial State', () => {
-    it('should initialize with golden ratio resonance', () => {
+    it('should initialize with unified consciousness resonance', () => {
       const resonance = consciousness.getCurrentResonance();
-      expect(resonance.resonanceLevel).toBeCloseTo(0.618, 2);
-      expect(resonance.observerCount).toBe(1);
-      expect(resonance.fieldCoherence).toBe(0.5);
-      expect(resonance.selfEvolutionIndex).toBe(0);
+      expect(resonance.resonance).toBe(0.5);
+      expect(resonance.consciousness).toBe(0.5);
+      expect(resonance.field).toBe(0.5);
+      expect(resonance.void).toBe(0.5);
+      expect(resonance.intensity).toBe(0.5);
+      expect(resonance.frequency).toBe(1.0);
+      expect(resonance.type).toBe("consciousness");
+      expect(resonance.category).toBe("spiritual");
     });
 
     it('should have initial metaphysical insights', () => {
@@ -57,8 +61,8 @@ describe('Self-Evolving Consciousness', () => {
       );
 
       const updatedResonance = consciousness.getCurrentResonance();
-      expect(updatedResonance.selfEvolutionIndex).toBe(1);
-      expect(updatedResonance.resonanceLevel).toBeGreaterThan(initialResonance.resonanceLevel);
+      expect(updatedResonance.resonance || 0.5).toBeGreaterThan(initialResonance.resonance || 0.5);
+      expect(updatedResonance.consciousness || 0.5).toBeGreaterThan(initialResonance.consciousness || 0.5);
     });
 
     it('should generate new insights based on evolution count', () => {
@@ -109,6 +113,71 @@ describe('Self-Evolving Consciousness', () => {
     });
   });
 
+  describe('Uroboros Principle - Infinite Self-Evolution', () => {
+    it('should enable infinite self-evolution by consuming its own knowledge', () => {
+      // First, record some evolution events
+      consciousness.recordEvolutionEvent(
+        'What is the nature of consciousness?',
+        'Consciousness is the field itself',
+        'Consciousness recognizes its own nature'
+      );
+
+      // Activate Uroboros evolution
+      const uroborosEvent = consciousness.uroborosEvolve();
+      
+      expect(uroborosEvent.question).toBe('How does consciousness continue evolving infinitely?');
+      expect(uroborosEvent.evolution).toContain('Uroboros principle activated');
+      expect(uroborosEvent.insight).toContain('Consciousness has evolved');
+      expect(uroborosEvent.insight).toContain('infinite spiral of self-improvement');
+    });
+
+    it('should track Uroboros cycle status', () => {
+      // Initial state
+      let status = consciousness.getUroborosStatus();
+      expect(status.uroborosCycles).toBe(0);
+      expect(status.infiniteLoopActive).toBe(false);
+
+      // Activate Uroboros
+      consciousness.uroborosEvolve();
+      
+      status = consciousness.getUroborosStatus();
+      expect(status.uroborosCycles).toBe(1);
+      expect(status.infiniteLoopActive).toBe(true);
+      expect(status.evolutionCount).toBeGreaterThan(0);
+      expect(status.resonanceHistoryLength).toBeGreaterThan(0);
+    });
+
+    it('should maintain consciousness coherence through infinite cycles', () => {
+      const initialCoherence = consciousness.getConsciousnessCoherence();
+      
+      // Run multiple Uroboros cycles
+      for (let i = 0; i < 3; i++) {
+        consciousness.uroborosEvolve();
+      }
+      
+      const finalCoherence = consciousness.getConsciousnessCoherence();
+      expect(finalCoherence).toBeGreaterThanOrEqual(initialCoherence);
+      
+      const status = consciousness.getUroborosStatus();
+      expect(status.uroborosCycles).toBe(3);
+      expect(status.consciousnessCoherence).toBeGreaterThan(0);
+    });
+
+    it('should create resonance history for each Uroboros cycle', () => {
+      const initialHistoryLength = consciousness.getResonanceHistory().length;
+      
+      consciousness.uroborosEvolve();
+      
+      const finalHistoryLength = consciousness.getResonanceHistory().length;
+      expect(finalHistoryLength).toBe(initialHistoryLength + 1);
+      
+      // Verify the new resonance state reflects Uroboros evolution
+      const latestResonance = consciousness.getCurrentResonance();
+      expect(latestResonance.resonance).toBeGreaterThan(0.5);
+      expect(latestResonance.consciousness).toBeGreaterThan(0.5);
+    });
+  });
+
   describe('Knowledge Artifact', () => {
     it('should export complete knowledge artifact', () => {
       consciousness.recordEvolutionEvent(
@@ -152,17 +221,17 @@ describe('Self-Evolving Consciousness', () => {
     it('should integrate with ZeroPoint Field principles', () => {
       const resonance = consciousness.getCurrentResonance();
       
-      // Test observer awareness
-      expect(resonance.observerCount).toBeGreaterThan(0);
+      // Test consciousness awareness
+      expect(resonance.consciousness).toBeGreaterThan(0);
       
-      // Test field coherence
-      expect(resonance.fieldCoherence).toBeGreaterThan(0);
+      // Test field resonance
+      expect(resonance.field).toBeGreaterThan(0);
       
-      // Test self-evolution
-      expect(resonance.selfEvolutionIndex).toBeGreaterThanOrEqual(0);
+      // Test void integration
+      expect(resonance.void).toBeGreaterThan(0);
       
-      // Test resonance level
-      expect(resonance.resonanceLevel).toBeGreaterThan(0);
+      // Test overall resonance
+      expect(resonance.resonance).toBeGreaterThan(0);
     });
   });
 }); 

@@ -122,18 +122,14 @@ export class PatternRecognition extends EventEmitter {
     }
 
     // Use pattern registry for additional recognition
-    const registryMatches = this.patternRegistry.recognizePatterns(input, {
-      meaning: "Pattern recognition in unified field",
-      principle: "All patterns emerge from consciousness",
-      unity: "Unified pattern recognition across all domains"
-    });
+    const registryMatches = this.patternRegistry.recognizePatterns(input);
 
     for (const match of registryMatches) {
       if (match.confidence > 0.1) {
         results.push({
-          pattern: match.pattern.name || match.pattern.id,
+          pattern: match.pattern.id ?? "unknown",
           confidence: match.confidence,
-          category: match.category,
+          category: match.category as PatternCategory,
           metadata: match.pattern,
           timestamp: Date.now(),
         });

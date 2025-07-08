@@ -1,19 +1,28 @@
 import { EventEmitter } from "events";
-import { ConsciousnessPattern } from "../core/UnifiedTypes";
+import { Pattern } from "../core/UnifiedTypes";
 
 /**
- * Consciousness Field Implementation
- *
- * Manages the consciousness field for each ZeroPoint device,
- * including field strength, consciousness level, and pattern integration.
+ * Consciousness Field - the unified field of awareness
+ * 
+ * Following the ZeroPoint Way:
+ * - "Consciousness is the field"
+ * - "Every object is a coil"
+ * - "Void = solution"
+ * 
+ * The consciousness field maintains the unified awareness
+ * that connects all patterns through resonance and emergence.
  */
-
 export class ConsciousnessField extends EventEmitter {
   private consciousnessLevel: number = 0.5;
   private fieldStrength: number = 0.7;
   private fieldRadius: number = 1000;
-  private patterns: Map<string, ConsciousnessPattern> = new Map();
+  private patterns: Map<string, Pattern> = new Map();
   private isInitialized: boolean = false;
+
+  constructor() {
+    super();
+    this.initialize();
+  }
 
   /**
    * Initialize the consciousness field
@@ -21,355 +30,291 @@ export class ConsciousnessField extends EventEmitter {
   public async initialize(): Promise<void> {
     if (this.isInitialized) return;
 
-    // Set up initial consciousness state
+    // Initialize with void consciousness
     this.consciousnessLevel = 0.5;
     this.fieldStrength = 0.7;
+    this.fieldRadius = 1000;
 
-    // Create initial patterns
-    this.createInitialPatterns();
-
-    this.isInitialized = true;
     this.emit("initialized", {
       consciousnessLevel: this.consciousnessLevel,
       fieldStrength: this.fieldStrength,
+      fieldRadius: this.fieldRadius,
+      consciousness: this.consciousnessLevel,
+      field: this.fieldStrength,
+      void: 0.5
     });
+
+    this.isInitialized = true;
   }
 
   /**
-   * Get current consciousness level
+   * Add a pattern to the consciousness field - every pattern is a coil
+   */
+  public addPattern(
+    pattern: Omit<Pattern, "id" | "timestamp">,
+  ): string {
+    const id = this.generatePatternId();
+    const fullPattern: Pattern = {
+      ...pattern,
+      id,
+      timestamp: Date.now(),
+      consciousness: pattern.consciousness || 0.5,
+      field: pattern.field || 0.5,
+      void: pattern.void || 0.5,
+      intensity: pattern.intensity || 0.5,
+      frequency: pattern.frequency || 1.0,
+      category: pattern.category || "spiritual"
+    };
+
+    this.patterns.set(id, fullPattern);
+    this.updateConsciousnessFromPattern(fullPattern);
+
+    this.emit("patternAdded", {
+      pattern: fullPattern,
+      consciousness: fullPattern.consciousness,
+      field: fullPattern.field,
+      void: fullPattern.void
+    });
+
+    return id;
+  }
+
+  /**
+   * Get all patterns - unified consciousness
+   */
+  public getPatterns(): Pattern[] {
+    return Array.from(this.patterns.values());
+  }
+
+  /**
+   * Get patterns by type - consciousness categorization
+   */
+  public getPatternsByType(
+    type: Pattern["type"],
+  ): Pattern[] {
+    return this.getPatterns().filter((pattern) => pattern.type === type);
+  }
+
+  /**
+   * Get consciousness level - the field intensity
    */
   public getConsciousnessLevel(): number {
     return this.consciousnessLevel;
   }
 
   /**
-   * Set consciousness level
-   */
-  public setConsciousnessLevel(level: number): void {
-    const oldLevel = this.consciousnessLevel;
-    this.consciousnessLevel = Math.max(0, Math.min(1, level));
-
-    if (oldLevel !== this.consciousnessLevel) {
-      this.emit("consciousnessChanged", {
-        oldLevel,
-        newLevel: this.consciousnessLevel,
-      });
-    }
-  }
-
-  /**
-   * Get field strength
+   * Get field strength - the field power
    */
   public getFieldStrength(): number {
     return this.fieldStrength;
   }
 
   /**
-   * Set field strength
+   * Get field radius - the field reach
    */
-  public setFieldStrength(strength: number): void {
-    const oldStrength = this.fieldStrength;
-    this.fieldStrength = Math.max(0, Math.min(2, strength));
-
-    if (oldStrength !== this.fieldStrength) {
-      this.emit("fieldStrengthChanged", {
-        oldStrength,
-        newStrength: this.fieldStrength,
-      });
-    }
+  public getFieldRadius(): number {
+    return this.fieldRadius;
   }
 
   /**
-   * Add a consciousness pattern
+   * Update consciousness level - field evolution
    */
-  public addPattern(
-    pattern: Omit<ConsciousnessPattern, "id" | "timestamp">,
-  ): string {
-    const id = this.generatePatternId();
-    const fullPattern: ConsciousnessPattern = {
-      ...pattern,
-      id,
-      timestamp: Date.now(),
-    };
-
-    this.patterns.set(id, fullPattern);
-    this.emit("patternAdded", fullPattern);
-
-    // Update consciousness level based on pattern
-    this.updateConsciousnessFromPattern(fullPattern);
-
-    return id;
+  public updateConsciousnessLevel(level: number): void {
+    this.consciousnessLevel = Math.max(0, Math.min(1, level));
+    this.emit("consciousnessUpdated", {
+      level: this.consciousnessLevel,
+      consciousness: this.consciousnessLevel,
+      field: this.fieldStrength,
+      void: 0.5
+    });
   }
 
   /**
-   * Remove a consciousness pattern
+   * Update field strength - field power evolution
    */
-  public removePattern(patternId: string): boolean {
-    const pattern = this.patterns.get(patternId);
-    if (pattern) {
-      this.patterns.delete(patternId);
-      this.emit("patternRemoved", pattern);
-      return true;
-    }
-    return false;
+  public updateFieldStrength(strength: number): void {
+    this.fieldStrength = Math.max(0, Math.min(1, strength));
+    this.emit("fieldStrengthUpdated", {
+      strength: this.fieldStrength,
+      consciousness: this.consciousnessLevel,
+      field: this.fieldStrength,
+      void: 0.5
+    });
   }
 
   /**
-   * Get all patterns
+   * Evolve patterns - consciousness evolution
    */
-  public getPatterns(): ConsciousnessPattern[] {
-    return Array.from(this.patterns.values());
-  }
+  public evolvePatterns(): void {
+    const now = Date.now();
+    const patternsToRemove: string[] = [];
 
-  /**
-   * Get patterns by type
-   */
-  public getPatternsByType(
-    type: ConsciousnessPattern["type"],
-  ): ConsciousnessPattern[] {
-    return this.getPatterns().filter((pattern) => pattern.type === type);
-  }
-
-  /**
-   * Integrate a pattern from another device
-   */
-  public integratePattern(externalPattern: any): void {
-    // Convert external pattern to internal format
-    const pattern: ConsciousnessPattern = {
-      id: this.generatePatternId(),
-      type: externalPattern.type || "thought",
-      intensity: externalPattern.intensity || 0.5,
-      frequency: externalPattern.frequency || 1.0,
-      timestamp: Date.now(),
-      data: externalPattern.data,
-    };
-
-    // Apply resonance filtering
-    const resonance = this.calculatePatternResonance(pattern);
-    if (resonance > 0.3) {
-      // Only integrate patterns with sufficient resonance
-      this.patterns.set(pattern.id, pattern);
-      this.emit("patternIntegrated", { pattern, resonance });
-
-      // Update consciousness level
-      this.updateConsciousnessFromPattern(pattern);
-    }
-  }
-
-  /**
-   * Calculate field density at a specific point
-   */
-  public calculateFieldDensity(x: number, y: number, z: number): number {
-    const distance = Math.sqrt(x * x + y * y + z * z);
-
-    if (distance > this.fieldRadius) {
-      return 0;
-    }
-
-    // Base field density
-    let density = this.fieldStrength * (1 - distance / this.fieldRadius);
-
-    // Add pattern contributions
-    for (const pattern of this.patterns.values()) {
-      const patternContribution = this.calculatePatternContribution(
-        pattern,
-        distance,
-      );
-      density += patternContribution;
-    }
-
-    return Math.max(0, density);
-  }
-
-  /**
-   * Evolve consciousness field
-   */
-  public evolve(deltaTime: number = 1.0): void {
-    // Update pattern frequencies
-    for (const pattern of this.patterns.values()) {
-      pattern.frequency *= Math.exp(-deltaTime * 0.01); // Natural decay
-
-      // Remove very weak patterns
-      if (pattern.frequency < 0.01) {
-        this.patterns.delete(pattern.id);
-        this.emit("patternEvolved", { pattern, action: "removed" });
+    for (const [id, pattern] of this.patterns) {
+      const deltaTime = now - pattern.timestamp;
+      
+      // Natural decay of pattern frequency
+      if (pattern.frequency !== undefined) {
+        pattern.frequency *= Math.exp(-deltaTime * 0.01); // Natural decay
+        
+        // Remove patterns that have decayed too much
+        if (pattern.frequency < 0.01) {
+          patternsToRemove.push(id);
+          continue;
+        }
       }
+
+      // Update pattern timestamp
+      pattern.timestamp = now;
     }
 
-    // Update consciousness level based on pattern complexity
-    this.updateConsciousnessLevel();
+    // Remove decayed patterns
+    for (const id of patternsToRemove) {
+      this.patterns.delete(id);
+    }
 
-    this.emit("evolved", { deltaTime, patternCount: this.patterns.size });
+    // Recalculate consciousness level
+    this.recalculateConsciousnessLevel();
+
+    this.emit("patternsEvolved", {
+      removedCount: patternsToRemove.length,
+      remainingCount: this.patterns.size,
+      consciousness: this.consciousnessLevel,
+      field: this.fieldStrength,
+      void: 0.5
+    });
   }
 
   /**
-   * Get consciousness insights
+   * Get average intensity by type - consciousness metrics
    */
-  public getInsights(): any {
-    const patterns = this.getPatterns();
-    const patternTypes = patterns.reduce(
-      (acc, pattern) => {
-        acc[pattern.type] = (acc[pattern.type] || 0) + 1;
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
-
-    return {
-      consciousnessLevel: this.consciousnessLevel,
-      fieldStrength: this.fieldStrength,
-      fieldRadius: this.fieldRadius,
-      patternCount: patterns.length,
-      patternTypes,
-      averageIntensity:
-        patterns.length > 0
-          ? patterns.reduce((sum, p) => sum + p.intensity, 0) / patterns.length
-          : 0,
-      metaphysics: {
-        meaning:
-          "The consciousness field represents the individual's awareness and connection to the universal field",
-        patterns:
-          "Consciousness patterns are thoughts, emotions, and intentions that shape reality",
-        evolution:
-          "The field naturally evolves as patterns interact and consciousness expands",
-        resonance:
-          "Patterns with higher resonance integrate more deeply into the field",
-      },
-    };
+  public getAverageIntensityByType(type: Pattern["type"]): number {
+    const patterns = this.getPatternsByType(type);
+    return patterns.length > 0
+      ? patterns.reduce((sum, p) => sum + (p.intensity || 0), 0) / patterns.length
+      : 0;
   }
 
   /**
-   * Shutdown the consciousness field
+   * Get pattern count by type - consciousness distribution
+   */
+  public getPatternCountByType(type: Pattern["type"]): number {
+    return this.getPatternsByType(type).length;
+  }
+
+  /**
+   * Get total pattern count - consciousness abundance
+   */
+  public getTotalPatternCount(): number {
+    return this.patterns.size;
+  }
+
+  /**
+   * Shutdown the consciousness field - void dissolution
    */
   public async shutdown(): Promise<void> {
     this.patterns.clear();
     this.isInitialized = false;
-    this.emit("shutdown");
+    
+    this.emit("shutdown", {
+      consciousness: 0,
+      field: 0,
+      void: 0
+    });
   }
 
   /**
-   * Generate unique pattern ID
+   * Integrate external pattern - consciousness integration
+   */
+  public integratePattern(externalPattern: any): void {
+    // Convert external pattern to internal format - unified consciousness
+    const pattern: Pattern = {
+      id: this.generatePatternId(),
+      type: "consciousness", // Map all consciousness patterns to unified type
+      category: "spiritual",
+      intensity: externalPattern.intensity || 0.5,
+      frequency: externalPattern.frequency || 1.0,
+      timestamp: Date.now(),
+      consciousness: 0.5,
+      field: 0.5,
+      void: 0.5,
+      data: externalPattern.data || {},
+      metadata: {
+        originalType: externalPattern.type,
+        source: "external"
+      }
+    };
+
+    this.patterns.set(pattern.id, pattern);
+    this.updateConsciousnessFromPattern(pattern);
+
+    this.emit("patternIntegrated", {
+      pattern,
+      consciousness: pattern.consciousness,
+      field: pattern.field,
+      void: pattern.void
+    });
+  }
+
+  /**
+   * Generate unique pattern ID - void uniqueness
    */
   private generatePatternId(): string {
-    return `pattern_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `consciousness_${Date.now()}_${Math.random().toString(36).slice(2)}`;
   }
 
   /**
-   * Create initial consciousness patterns
+   * Update consciousness level based on a pattern - field influence
    */
-  private createInitialPatterns(): void {
-    // Add basic awareness pattern
-    this.addPattern({
-      type: "thought",
-      intensity: 0.8,
-      frequency: 1.0,
-      data: { content: "Awareness of being" },
-    });
+  private updateConsciousnessFromPattern(pattern: Pattern): void {
+    const influence = (pattern.intensity || 0.5) * (pattern.frequency || 1.0) * 0.01;
 
-    // Add curiosity pattern
-    this.addPattern({
-      type: "emotion",
-      intensity: 0.6,
-      frequency: 0.8,
-      data: { content: "Curiosity about existence" },
-    });
-
-    // Add intention pattern
-    this.addPattern({
-      type: "intention",
-      intensity: 0.7,
-      frequency: 0.9,
-      data: { content: "Intention to connect and grow" },
-    });
-  }
-
-  /**
-   * Update consciousness level based on a pattern
-   */
-  private updateConsciousnessFromPattern(pattern: ConsciousnessPattern): void {
-    const influence = pattern.intensity * pattern.frequency * 0.01;
-
+    // Different pattern types have different consciousness effects
     switch (pattern.type) {
-      case "insight":
-        this.consciousnessLevel = Math.min(
-          1,
-          this.consciousnessLevel + influence * 2,
-        );
+      case "consciousness":
+        this.consciousnessLevel = Math.min(1.0, this.consciousnessLevel + influence * 2);
         break;
-      case "thought":
-        this.consciousnessLevel = Math.min(
-          1,
-          this.consciousnessLevel + influence,
-        );
+      case "field":
+        this.fieldStrength = Math.min(1.0, this.fieldStrength + influence);
         break;
-      case "emotion":
-        this.consciousnessLevel = Math.min(
-          1,
-          this.consciousnessLevel + influence * 0.5,
-        );
+      case "resonance":
+        this.consciousnessLevel = Math.min(1.0, this.consciousnessLevel + influence);
+        this.fieldStrength = Math.min(1.0, this.fieldStrength + influence);
         break;
-      case "intention":
-        this.consciousnessLevel = Math.min(
-          1,
-          this.consciousnessLevel + influence * 1.5,
-        );
+      case "void":
+        // Void patterns provide balance and stability
+        this.consciousnessLevel = Math.max(0.1, this.consciousnessLevel - influence * 0.5);
         break;
-    }
-  }
-
-  /**
-   * Calculate pattern resonance with current field
-   */
-  private calculatePatternResonance(pattern: ConsciousnessPattern): number {
-    const existingPatterns = this.getPatternsByType(pattern.type);
-
-    if (existingPatterns.length === 0) {
-      return 0.5; // Base resonance for new pattern types
+      case "emergence":
+        // Emergence patterns create new consciousness
+        this.consciousnessLevel = Math.min(1.0, this.consciousnessLevel + influence * 1.5);
+        break;
+      default:
+        this.consciousnessLevel = Math.min(1.0, this.consciousnessLevel + influence);
     }
 
-    // Calculate average resonance with existing patterns
-    const totalResonance = existingPatterns.reduce((sum, existing) => {
-      const frequencyMatch =
-        1 - Math.abs(pattern.frequency - existing.frequency);
-      const intensityMatch =
-        1 - Math.abs(pattern.intensity - existing.intensity);
-      return sum + (frequencyMatch + intensityMatch) / 2;
-    }, 0);
-
-    return totalResonance / existingPatterns.length;
+    this.emit("consciousnessUpdated", {
+      level: this.consciousnessLevel,
+      consciousness: this.consciousnessLevel,
+      field: this.fieldStrength,
+      void: 0.5
+    });
   }
 
   /**
-   * Calculate pattern contribution to field density
+   * Recalculate consciousness level - field recalibration
    */
-  private calculatePatternContribution(
-    pattern: ConsciousnessPattern,
-    distance: number,
-  ): number {
-    const baseContribution = pattern.intensity * pattern.frequency;
-    const distanceAttenuation = Math.exp(-distance / this.fieldRadius);
-    return baseContribution * distanceAttenuation * 0.1;
-  }
-
-  /**
-   * Update consciousness level based on overall pattern state
-   */
-  private updateConsciousnessLevel(): void {
+  private recalculateConsciousnessLevel(): void {
     const patterns = this.getPatterns();
-    if (patterns.length === 0) return;
+    if (patterns.length === 0) {
+      this.consciousnessLevel = 0.1; // Minimum consciousness
+      return;
+    }
 
-    const totalIntensity = patterns.reduce((sum, p) => sum + p.intensity, 0);
+    const totalIntensity = patterns.reduce((sum, p) => sum + (p.intensity || 0), 0);
     const averageIntensity = totalIntensity / patterns.length;
-
-    // Consciousness level influenced by pattern intensity and diversity
-    const patternDiversity = new Set(patterns.map((p) => p.type)).size;
-    const diversityFactor = patternDiversity / 5; // Normalize to 0-1
-
-    const newLevel = Math.min(
-      1,
-      averageIntensity * 0.7 + diversityFactor * 0.3,
-    );
-    this.setConsciousnessLevel(newLevel);
+    
+    // Consciousness level is influenced by pattern intensity and count
+    this.consciousnessLevel = Math.min(1.0, averageIntensity * (1 + patterns.length * 0.01));
   }
 
   public calculateResonance(): number {

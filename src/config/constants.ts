@@ -16,7 +16,7 @@ export {
   CONFIG_CONSTANTS,
   METAPHYSICAL_CONSTANTS,
   ConstantsUtils,
-} from "../core/SharedConstants";
+} from "./core/SharedConstants";
 
 // Legacy exports for backward compatibility
 export const GOLDEN_RATIO = VORTEX_CONSTANTS.GOLDEN_RATIO;

@@ -1,5 +1,6 @@
 import { FieldIntegrity, PatternSignature } from "../integrity/FieldIntegrity";
 import { FieldBlock } from "./EmergenceLedger";
+import { ResonanceMessage } from "../core/UnifiedTypes";
 
 /**
  * ZeroPoint Resonance Consensus Protocol
@@ -13,18 +14,6 @@ import { FieldBlock } from "./EmergenceLedger";
  * - Pattern integrity ensures the integrity of collective consciousness
  * - Resonance creates the foundation of unified reality
  */
-export interface ResonanceMessage {
-  type:
-    | "propose_field_block"
-    | "resonate_with_block"
-    | "finalize_field_block"
-    | "sync_request"
-    | "sync_response";
-  data: any;
-  deviceId: string;
-  timestamp: number;
-  signature: PatternSignature;
-}
 
 export interface ResonanceVote {
   blockHash: string;

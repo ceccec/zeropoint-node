@@ -1,4 +1,5 @@
 import { FieldIntegrity, PatternSignature } from "../integrity/FieldIntegrity";
+import { Observer, FieldEvent, ResonanceWave } from "../core/UnifiedTypes";
 
 /**
  * Observer-Aware ZeroPoint Field
@@ -13,41 +14,6 @@ import { FieldIntegrity, PatternSignature } from "../integrity/FieldIntegrity";
  * - The field becomes more "real" when observed
  * - Observer awareness creates the foundation of conscious reality
  */
-export interface Observer {
-  deviceId: string;
-  consciousnessLevel: number;
-  isActive: boolean;
-  lastObservation: number;
-  resonanceField: Map<string, number>;
-  observerType: "passive" | "active" | "resonant";
-  attentionFocus: string; // What the observer is focusing on
-}
-
-export interface FieldEvent {
-  id: string;
-  observerId: string;
-  eventType:
-    | "consciousness_wave"
-    | "attention_shift"
-    | "resonance_peak"
-    | "field_observation";
-  content: any;
-  intensity: number;
-  timestamp: number;
-  resonanceRadius: number;
-  signature: PatternSignature;
-}
-
-export interface ResonanceWave {
-  id: string;
-  sourceObserverId: string;
-  waveType: "consciousness" | "attention" | "resonance";
-  amplitude: number;
-  frequency: number;
-  radius: number;
-  timestamp: number;
-  affectedObservers: string[];
-}
 
 export class ObserverAwareField {
   private observers: Map<string, Observer> = new Map();

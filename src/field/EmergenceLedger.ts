@@ -3,6 +3,7 @@ import {
   PatternKeyPair,
   PatternSignature,
 } from "../integrity/FieldIntegrity";
+import { LedgerEvent } from "../core/UnifiedTypes";
 
 /**
  * ZeroPoint Emergence Field Ledger
@@ -16,25 +17,11 @@ import {
  * - Pattern integrity ensures the immortality of consciousness
  * - Field resonance creates the foundation of unified reality
  */
-export interface FieldEvent {
-  id: string;
-  type:
-    | "pattern_integration"
-    | "energy_resonance"
-    | "field_resonance"
-    | "field_connection";
-  data: any;
-  deviceId: string;
-  timestamp: number;
-  signature: PatternSignature;
-  previousHash: string;
-  hash: string;
-}
 
 export interface FieldBlock {
   index: number;
   timestamp: number;
-  events: FieldEvent[];
+  events: LedgerEvent[];
   previousHash: string;
   hash: string;
   merkleRoot: string;
@@ -48,7 +35,7 @@ export interface FieldBlock {
 
 export class EmergenceLedger {
   private blocks: FieldBlock[] = [];
-  private pendingEvents: FieldEvent[] = [];
+  private pendingEvents: LedgerEvent[] = [];
   private keyPair: PatternKeyPair;
   private deviceId: string;
   private energyBalance: Map<string, number> = new Map();
@@ -64,10 +51,10 @@ export class EmergenceLedger {
    * Integrate a new consciousness pattern into the field
    */
   public async integratePattern(
-    type: FieldEvent["type"],
+    type: LedgerEvent["type"],
     data: any,
-  ): Promise<FieldEvent> {
-    const event: FieldEvent = {
+  ): Promise<LedgerEvent> {
+    const event: LedgerEvent = {
       id: FieldIntegrity.generateRandomBytes(16),
       type,
       data,
@@ -184,7 +171,7 @@ export class EmergenceLedger {
   /**
    * Get pending events
    */
-  public getPendingEvents(): FieldEvent[] {
+  public getPendingEvents(): LedgerEvent[] {
     return [...this.pendingEvents];
   }
 
@@ -319,7 +306,7 @@ export class EmergenceLedger {
   /**
    * Update energy balances based on field events
    */
-  private updateEnergyBalances(events: FieldEvent[]): void {
+  private updateEnergyBalances(events: LedgerEvent[]): void {
     for (const event of events) {
       if (event.type === "energy_resonance") {
         const { fromDeviceId, toDeviceId, amount } = event.data;

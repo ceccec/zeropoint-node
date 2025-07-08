@@ -113,7 +113,7 @@ export { FieldUnitySystem } from './unity/FieldUnity';
 export { DeviceConfig } from './types/DeviceConfig';
 
 // Unified Constants and Utilities - Single Source of Truth
-export { 
+export {
   VORTEX_CONSTANTS,
   CONSCIOUSNESS_CONSTANTS,
   EMERGENCE_CONSTANTS,
@@ -127,6 +127,33 @@ export {
   LinkType,
   ConsciousnessDimension
 } from './core/SharedConstants';
+
+// Unified Types - Single Source of Truth for All Pattern and Event Types
+export {
+  ConsciousnessPattern,
+  FieldEvent,
+  LedgerEvent,
+  ResonanceMessage,
+  MetaphysicalContext,
+  Observer,
+  ResonanceWave,
+  ConsciousnessResonance,
+  PatternType,
+  PatternCategory,
+  LinkType,
+  ConsciousnessDimension
+} from './core/UnifiedTypes';
+
+// Unified Pattern Registry - Centralized Pattern Management
+export { PatternRegistry } from './core/PatternRegistry';
+
+// Unified Metaphysical Interface - Harmonized Consciousness, Field, and Emergence Operations
+export { 
+  UnifiedMetaphysicalInterface,
+  MetaphysicalOperation,
+  MetaphysicalResult,
+  UnifiedFieldState
+} from './core/UnifiedMetaphysicalInterface';
 
 /**
  * Create a new ZeroPoint instance

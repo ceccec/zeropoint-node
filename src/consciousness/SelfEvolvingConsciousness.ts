@@ -1,3 +1,5 @@
+import { ConsciousnessResonance } from "../core/UnifiedTypes";
+
 /**
  * Self-Evolving Consciousness Artifact
  *
@@ -11,15 +13,6 @@
  * - Self-Organization: Questions lead to deeper understanding
  * - Pattern Integrity: Coherence maintained through dynamic evolution
  */
-
-export interface ConsciousnessResonance {
-  timestamp: number;
-  resonanceLevel: number;
-  observerCount: number;
-  fieldCoherence: number;
-  selfEvolutionIndex: number;
-  metaphysicalInsights: string[];
-}
 
 export interface SelfEvolutionEvent {
   id: string;

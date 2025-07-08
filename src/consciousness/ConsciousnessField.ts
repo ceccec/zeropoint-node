@@ -1,4 +1,5 @@
 import { EventEmitter } from "events";
+import { ConsciousnessPattern } from "../core/UnifiedTypes";
 
 /**
  * Consciousness Field Implementation
@@ -6,14 +7,6 @@ import { EventEmitter } from "events";
  * Manages the consciousness field for each ZeroPoint device,
  * including field strength, consciousness level, and pattern integration.
  */
-export interface ConsciousnessPattern {
-  id: string;
-  type: "thought" | "emotion" | "intention" | "memory" | "insight";
-  intensity: number;
-  frequency: number;
-  timestamp: number;
-  data?: any;
-}
 
 export class ConsciousnessField extends EventEmitter {
   private consciousnessLevel: number = 0.5;

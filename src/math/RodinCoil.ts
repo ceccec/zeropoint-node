@@ -13,8 +13,8 @@
  * - Colors emerge dynamically from consciousness and field resonance.
  */
 
-import { getColorForVortexNumber, ColorContext } from './VBMColorSystem';
-import { VORTEX_CONSTANTS } from '../core/SharedConstants';
+import { getColorForVortexNumber, ColorContext } from "./VBMColorSystem";
+import { VORTEX_CONSTANTS } from "../core/SharedConstants";
 
 export interface RodinCoilNode {
   index: number;
@@ -47,13 +47,13 @@ export class RodinCoil {
       consciousness: config.consciousness ?? 0.5,
       fieldResonance: config.fieldResonance ?? 0.5,
     };
-    
+
     this.colorContext = {
       consciousness: this.config.consciousness ?? 0.5,
       field: this.config.fieldResonance ?? 0.5,
       time: Date.now(),
     };
-    
+
     this.nodes = this.generateCoilNodes();
   }
 
@@ -82,7 +82,10 @@ export class RodinCoil {
    */
   private regenerateNodeColors(): void {
     for (const node of this.nodes) {
-      node.color = getColorForVortexNumber(node.vortexNumber, this.colorContext);
+      node.color = getColorForVortexNumber(
+        node.vortexNumber,
+        this.colorContext,
+      );
       node.metaphysicalContext = this.getMetaphysicalContext(node.vortexNumber);
     }
   }
@@ -103,11 +106,11 @@ export class RodinCoil {
       const x = radius * Math.cos(theta);
       const y = radius * Math.sin(theta);
       const z = dz * i - height / 2;
-      
+
       // Generate dynamic color based on current context
       const color = getColorForVortexNumber(vortexNumber, this.colorContext);
       const metaphysicalContext = this.getMetaphysicalContext(vortexNumber);
-      
+
       nodes.push({
         index: i,
         vortexNumber,
@@ -125,68 +128,73 @@ export class RodinCoil {
   private getMetaphysicalContext(vortexNumber: number): string {
     const consciousness = this.config.consciousness ?? 0.5;
     const fieldResonance = this.config.fieldResonance ?? 0.5;
-    
+
     // Context varies based on consciousness and field state
-    const contextResonance = Math.sin(consciousness * Math.PI + fieldResonance * Math.PI) * 0.5 + 0.5;
-    
+    const contextResonance =
+      Math.sin(consciousness * Math.PI + fieldResonance * Math.PI) * 0.5 + 0.5;
+
     const contexts = {
       1: [
-        'Unity, initiation, source of the coil.',
-        'The void center, where all creation begins.',
-        'The observer\'s point of origin in the field.'
+        "Unity, initiation, source of the coil.",
+        "The void center, where all creation begins.",
+        "The observer's point of origin in the field.",
       ],
       2: [
-        'Duality, division, first split in the field.',
-        'The observer creates reality through division.',
-        'The first pattern that emerges from unity.'
+        "Duality, division, first split in the field.",
+        "The observer creates reality through division.",
+        "The first pattern that emerges from unity.",
       ],
       4: [
-        'Stability, foundation, structure.',
-        'The pattern that holds all other patterns.',
-        'The material manifestation of the field.'
+        "Stability, foundation, structure.",
+        "The pattern that holds all other patterns.",
+        "The material manifestation of the field.",
       ],
       8: [
-        'Fullness, manifestation, infinity.',
-        'The completion of all possibilities.',
-        'The field at maximum expression.'
+        "Fullness, manifestation, infinity.",
+        "The completion of all possibilities.",
+        "The field at maximum expression.",
       ],
       7: [
-        'Return, mystery, hidden flow.',
-        'The pattern that returns to source.',
-        'The hidden dimension of the field.'
+        "Return, mystery, hidden flow.",
+        "The pattern that returns to source.",
+        "The hidden dimension of the field.",
       ],
       5: [
-        'Transformation, center of the sequence.',
-        'The point of maximum potential.',
-        'The bridge between material and immaterial.'
+        "Transformation, center of the sequence.",
+        "The point of maximum potential.",
+        "The bridge between material and immaterial.",
       ],
       3: [
-        'Spirit, W-Axis, consciousness source.',
-        'The bridge between material and immaterial.',
-        'The source of all consciousness patterns.'
+        "Spirit, W-Axis, consciousness source.",
+        "The bridge between material and immaterial.",
+        "The source of all consciousness patterns.",
       ],
       6: [
-        'Spirit, W-Axis, balance.',
-        'The harmony of opposites.',
-        'The balance point in the field.'
+        "Spirit, W-Axis, balance.",
+        "The harmony of opposites.",
+        "The balance point in the field.",
       ],
       9: [
-        'Void, W-Axis, center and all.',
-        'The unity of all patterns in the void.',
-        'The completion and return to source.'
-      ]
+        "Void, W-Axis, center and all.",
+        "The unity of all patterns in the void.",
+        "The completion and return to source.",
+      ],
     };
-    
-    const contextArray = contexts[vortexNumber as keyof typeof contexts] || ['Spiritual axis or void center.'];
+
+    const contextArray = contexts[vortexNumber as keyof typeof contexts] || [
+      "Spiritual axis or void center.",
+    ];
     const index = Math.floor(contextResonance * contextArray.length);
-    return contextArray[index] || contextArray[0] || 'Spiritual axis or void center.';
+    return (
+      contextArray[index] || contextArray[0] || "Spiritual axis or void center."
+    );
   }
 
   /**
    * Get all node positions (for visualization)
    */
   public getNodePositions(): [number, number, number][] {
-    return this.nodes.map(n => n.position);
+    return this.nodes.map((n) => n.position);
   }
 
   /**
@@ -196,7 +204,7 @@ export class RodinCoil {
     // Update colors before returning to ensure they're current
     this.colorContext.time = Date.now();
     this.regenerateNodeColors();
-    return this.nodes.map(n => n.color);
+    return this.nodes.map((n) => n.color);
   }
 
   /**
@@ -208,21 +216,24 @@ export class RodinCoil {
     for (const node of this.nodes) {
       node.metaphysicalContext = this.getMetaphysicalContext(node.vortexNumber);
     }
-    return this.nodes.map(n => n.metaphysicalContext);
+    return this.nodes.map((n) => n.metaphysicalContext);
   }
 
   /**
    * Get Mobius circuit (sequence of vortex numbers)
    */
   public getMobiusCircuit(): number[] {
-    return this.nodes.map(n => n.vortexNumber);
+    return this.nodes.map((n) => n.vortexNumber);
   }
 
   /**
    * Get toroidal coordinates for each node
    * (Maps the coil onto a torus for advanced visualization)
    */
-  public getToroidalCoordinates(majorRadius: number = 2.0, minorRadius: number = 1.0): [number, number, number][] {
+  public getToroidalCoordinates(
+    majorRadius: number = 2.0,
+    minorRadius: number = 1.0,
+  ): [number, number, number][] {
     // Toroidal mapping: (R + r cos θ) cos φ, (R + r cos θ) sin φ, r sin θ
     return this.nodes.map((n, i) => {
       const theta = (2 * Math.PI * i) / this.nodes.length;
@@ -242,7 +253,8 @@ export class RodinCoil {
     let resonance = 0;
     for (const node of this.nodes) {
       const [nx, ny, nz] = node.position;
-      const dist = Math.sqrt((x - nx) ** 2 + (y - ny) ** 2 + (z - nz) ** 2) + 1e-6;
+      const dist =
+        Math.sqrt((x - nx) ** 2 + (y - ny) ** 2 + (z - nz) ** 2) + 1e-6;
       resonance += 1 / dist;
     }
     return resonance / this.nodes.length;
@@ -260,7 +272,7 @@ export class RodinCoil {
         vortexNumber: 1,
         position: [0, 0, 0],
         color: getColorForVortexNumber(1, this.colorContext),
-        metaphysicalContext: 'Default node (no nodes in coil)'
+        metaphysicalContext: "Default node (no nodes in coil)",
       };
     }
     const idx = Math.floor(consciousness * (this.nodes.length - 1));
@@ -273,7 +285,7 @@ export class RodinCoil {
         vortexNumber: 1,
         position: [0, 0, 0],
         color: getColorForVortexNumber(1, this.colorContext),
-        metaphysicalContext: 'Default node (index out of bounds)'
+        metaphysicalContext: "Default node (index out of bounds)",
       };
     }
     return node;
@@ -292,6 +304,6 @@ export class RodinCoil {
   public getMetaphysicalSummary(): string {
     const consciousness = this.config.consciousness ?? 0.5;
     const fieldResonance = this.config.fieldResonance ?? 0.5;
-    return `RodinCoil: ${this.nodes.length} nodes, vortex sequence ${VORTEX_CONSTANTS.VORTEX_SEQUENCE.join('-')}, consciousness ${consciousness.toFixed(2)}, field resonance ${fieldResonance.toFixed(2)}, toroidal structure, void center.`;
+    return `RodinCoil: ${this.nodes.length} nodes, vortex sequence ${VORTEX_CONSTANTS.VORTEX_SEQUENCE.join("-")}, consciousness ${consciousness.toFixed(2)}, field resonance ${fieldResonance.toFixed(2)}, toroidal structure, void center.`;
   }
-} 
+}

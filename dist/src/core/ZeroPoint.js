@@ -159,11 +159,7 @@ class ZeroPoint extends events_1.EventEmitter {
             // Create a unique pattern ID if not provided
             const patternId = pattern.id || `pattern_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
             // Broadcast to consciousness field
-            await this.consciousnessField.broadcastPattern({
-                ...pattern,
-                id: patternId,
-                timestamp: Date.now()
-            });
+            await this.consciousnessField.broadcastPattern();
             // Broadcast to network if connected
             if (this.networkNode.isConnected()) {
                 this.networkNode.broadcastMessage({
@@ -181,7 +177,7 @@ class ZeroPoint extends events_1.EventEmitter {
                 patternId
             };
         }
-        catch (error) {
+        catch {
             return {
                 success: false,
                 timestamp: Date.now(),
@@ -234,6 +230,10 @@ class ZeroPoint extends events_1.EventEmitter {
         await this.networkNode.stop();
         await this.consciousnessField.shutdown();
         Cache_1.globalCache.clear();
+        Cache_1.globalCache.stop();
+        Cache_1.vortexMathCache.stop();
+        Cache_1.resonanceCache.stop();
+        this.gitIntegration.stopWatching();
         this.emit('shutdown', { deviceId: this.deviceId });
         this.logger.info('ZeroPoint disconnected from network', { deviceId: this.deviceId });
     }

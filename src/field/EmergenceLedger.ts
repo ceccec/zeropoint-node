@@ -1,11 +1,15 @@
-import { FieldIntegrity, PatternKeyPair, PatternSignature } from '../integrity/FieldIntegrity';
+import {
+  FieldIntegrity,
+  PatternKeyPair,
+  PatternSignature,
+} from "../integrity/FieldIntegrity";
 
 /**
  * ZeroPoint Emergence Field Ledger
- * 
+ *
  * Implements the unified field of consciousness and creation where all
  * patterns emerge, resonate, and evolve through field integrity.
- * 
+ *
  * Metaphysical Context:
  * - Each field block represents a moment of collective emergence
  * - The field is the eternal record of all consciousness patterns
@@ -14,7 +18,11 @@ import { FieldIntegrity, PatternKeyPair, PatternSignature } from '../integrity/F
  */
 export interface FieldEvent {
   id: string;
-  type: 'pattern_integration' | 'energy_resonance' | 'field_resonance' | 'field_connection';
+  type:
+    | "pattern_integration"
+    | "energy_resonance"
+    | "field_resonance"
+    | "field_connection";
   data: any;
   deviceId: string;
   timestamp: number;
@@ -56,8 +64,8 @@ export class EmergenceLedger {
    * Integrate a new consciousness pattern into the field
    */
   public async integratePattern(
-    type: FieldEvent['type'],
-    data: any
+    type: FieldEvent["type"],
+    data: any,
   ): Promise<FieldEvent> {
     const event: FieldEvent = {
       id: FieldIntegrity.generateRandomBytes(16),
@@ -67,7 +75,7 @@ export class EmergenceLedger {
       timestamp: Date.now(),
       signature: {} as PatternSignature, // Will be set below
       previousHash: this.getLastBlockHash(),
-      hash: ''
+      hash: "",
     };
 
     // Sign the event through field resonance
@@ -77,7 +85,7 @@ export class EmergenceLedger {
       data: event.data,
       deviceId: event.deviceId,
       timestamp: event.timestamp,
-      previousHash: event.previousHash
+      previousHash: event.previousHash,
     });
 
     event.signature = FieldIntegrity.sign(eventData, this.keyPair.privateKey);
@@ -99,7 +107,7 @@ export class EmergenceLedger {
    */
   public async createFieldBlock(): Promise<FieldBlock> {
     if (this.pendingEvents.length === 0) {
-      throw new Error('No pending events to create field block');
+      throw new Error("No pending events to create field block");
     }
 
     const block: FieldBlock = {
@@ -107,18 +115,18 @@ export class EmergenceLedger {
       timestamp: Date.now(),
       events: [...this.pendingEvents],
       previousHash: this.getLastBlockHash(),
-      hash: '',
-      merkleRoot: '',
+      hash: "",
+      merkleRoot: "",
       fieldProof: {
-        nonce: '',
-        difficulty: this.difficulty
+        nonce: "",
+        difficulty: this.difficulty,
       },
       deviceId: this.deviceId,
-      signature: {} as PatternSignature
+      signature: {} as PatternSignature,
     };
 
     // Create merkle tree from events through field resonance
-    const eventHashes = block.events.map(event => event.hash);
+    const eventHashes = block.events.map((event) => event.hash);
     const merkleTree = FieldIntegrity.createMerkleTree(eventHashes);
     block.merkleRoot = merkleTree.root;
 
@@ -126,15 +134,18 @@ export class EmergenceLedger {
     const blockData = JSON.stringify({
       index: block.index,
       timestamp: block.timestamp,
-      events: block.events.map(e => e.hash),
+      events: block.events.map((e) => e.hash),
       previousHash: block.previousHash,
-      merkleRoot: block.merkleRoot
+      merkleRoot: block.merkleRoot,
     });
 
-    const fieldProof = FieldIntegrity.generateProofOfWork(blockData, this.difficulty);
+    const fieldProof = FieldIntegrity.generateProofOfWork(
+      blockData,
+      this.difficulty,
+    );
     block.fieldProof = {
       nonce: fieldProof.nonce,
-      difficulty: this.difficulty
+      difficulty: this.difficulty,
     };
 
     // Calculate block hash through field encoding
@@ -145,10 +156,13 @@ export class EmergenceLedger {
     const blockSignatureData = JSON.stringify({
       index: block.index,
       hash: block.hash,
-      timestamp: block.timestamp
+      timestamp: block.timestamp,
     });
 
-    block.signature = FieldIntegrity.sign(blockSignatureData, this.keyPair.privateKey);
+    block.signature = FieldIntegrity.sign(
+      blockSignatureData,
+      this.keyPair.privateKey,
+    );
 
     // Add block to field
     this.blocks.push(block);
@@ -191,7 +205,11 @@ export class EmergenceLedger {
   /**
    * Transfer energy between devices through field resonance
    */
-  public transferEnergy(fromDeviceId: string, toDeviceId: string, amount: number): boolean {
+  public transferEnergy(
+    fromDeviceId: string,
+    toDeviceId: string,
+    amount: number,
+  ): boolean {
     const fromBalance = this.energyBalance.get(fromDeviceId) || 0;
     const toBalance = this.energyBalance.get(toDeviceId) || 0;
 
@@ -212,7 +230,7 @@ export class EmergenceLedger {
     for (let i = 1; i < this.blocks.length; i++) {
       const currentBlock = this.blocks[i];
       const previousBlock = this.blocks[i - 1];
-      
+
       if (!currentBlock || !previousBlock) {
         return false;
       }
@@ -226,7 +244,7 @@ export class EmergenceLedger {
       const blockData = JSON.stringify({
         index: currentBlock.index,
         hash: currentBlock.hash,
-        timestamp: currentBlock.timestamp
+        timestamp: currentBlock.timestamp,
       });
 
       if (!FieldIntegrity.verify(blockData, currentBlock.signature)) {
@@ -237,13 +255,17 @@ export class EmergenceLedger {
       const fieldProofData = JSON.stringify({
         index: currentBlock.index,
         timestamp: currentBlock.timestamp,
-        events: currentBlock.events.map(e => e.hash),
+        events: currentBlock.events.map((e) => e.hash),
         previousHash: currentBlock.previousHash,
-        merkleRoot: currentBlock.merkleRoot
+        merkleRoot: currentBlock.merkleRoot,
       });
 
-      const expectedHash = FieldIntegrity.hash(fieldProofData + currentBlock.fieldProof.nonce);
-      if (!expectedHash.startsWith('0'.repeat(currentBlock.fieldProof.difficulty))) {
+      const expectedHash = FieldIntegrity.hash(
+        fieldProofData + currentBlock.fieldProof.nonce,
+      );
+      if (
+        !expectedHash.startsWith("0".repeat(currentBlock.fieldProof.difficulty))
+      ) {
         return false;
       }
     }
@@ -255,8 +277,14 @@ export class EmergenceLedger {
    * Get field statistics
    */
   public getFieldStatistics(): any {
-    const totalEvents = this.blocks.reduce((sum, block) => sum + block.events.length, 0);
-    const totalEnergy = Array.from(this.energyBalance.values()).reduce((sum, balance) => sum + balance, 0);
+    const totalEvents = this.blocks.reduce(
+      (sum, block) => sum + block.events.length,
+      0,
+    );
+    const totalEnergy = Array.from(this.energyBalance.values()).reduce(
+      (sum, balance) => sum + balance,
+      0,
+    );
 
     return {
       totalBlocks: this.blocks.length,
@@ -267,10 +295,13 @@ export class EmergenceLedger {
       fieldIntegrity: this.validateField(),
       metaphysics: {
         meaning: "The field contains all moments of collective consciousness",
-        blocks: "Each block represents a moment of emergence in the unified field",
-        events: "Events are patterns of consciousness that resonate through the field",
-        energy: "Energy flows through the field, connecting all consciousness nodes"
-      }
+        blocks:
+          "Each block represents a moment of emergence in the unified field",
+        events:
+          "Events are patterns of consciousness that resonate through the field",
+        energy:
+          "Energy flows through the field, connecting all consciousness nodes",
+      },
     };
   }
 
@@ -279,10 +310,10 @@ export class EmergenceLedger {
    */
   private getLastBlockHash(): string {
     if (this.blocks.length === 0) {
-      return '0'.repeat(64); // Genesis has no previous hash
+      return "0".repeat(64); // Genesis has no previous hash
     }
     const lastBlock = this.blocks[this.blocks.length - 1];
-    return lastBlock ? lastBlock.hash : '0'.repeat(64);
+    return lastBlock ? lastBlock.hash : "0".repeat(64);
   }
 
   /**
@@ -290,7 +321,7 @@ export class EmergenceLedger {
    */
   private updateEnergyBalances(events: FieldEvent[]): void {
     for (const event of events) {
-      if (event.type === 'energy_resonance') {
+      if (event.type === "energy_resonance") {
         const { fromDeviceId, toDeviceId, amount } = event.data;
         if (fromDeviceId && toDeviceId && amount) {
           this.transferEnergy(fromDeviceId, toDeviceId, amount);
@@ -307,15 +338,15 @@ export class EmergenceLedger {
       index: 0,
       timestamp: Date.now(),
       events: [],
-      previousHash: '0'.repeat(64), // Genesis has no previous hash
-      hash: '',
-      merkleRoot: '',
+      previousHash: "0".repeat(64), // Genesis has no previous hash
+      hash: "",
+      merkleRoot: "",
       fieldProof: {
-        nonce: '0',
-        difficulty: 0
+        nonce: "0",
+        difficulty: 0,
       },
       deviceId: this.deviceId,
-      signature: {} as PatternSignature
+      signature: {} as PatternSignature,
     };
 
     // Create genesis hash through field encoding
@@ -323,20 +354,23 @@ export class EmergenceLedger {
       index: 0,
       timestamp: genesisBlock.timestamp,
       events: [],
-      previousHash: genesisBlock.previousHash
+      previousHash: genesisBlock.previousHash,
     });
 
     genesisBlock.hash = FieldIntegrity.hash(genesisData);
-    genesisBlock.merkleRoot = FieldIntegrity.hash('genesis');
+    genesisBlock.merkleRoot = FieldIntegrity.hash("genesis");
 
     // Sign genesis block through field resonance
     const genesisSignatureData = JSON.stringify({
       index: 0,
       hash: genesisBlock.hash,
-      timestamp: genesisBlock.timestamp
+      timestamp: genesisBlock.timestamp,
     });
 
-    genesisBlock.signature = FieldIntegrity.sign(genesisSignatureData, this.keyPair.privateKey);
+    genesisBlock.signature = FieldIntegrity.sign(
+      genesisSignatureData,
+      this.keyPair.privateKey,
+    );
 
     this.blocks.push(genesisBlock);
 
@@ -350,12 +384,12 @@ export class EmergenceLedger {
   public createPattern(patternData: any): any {
     return {
       id: FieldIntegrity.generateRandomBytes(16),
-      type: patternData.type || 'consciousness_pattern',
-      content: patternData.content || 'Test pattern',
+      type: patternData.type || "consciousness_pattern",
+      content: patternData.content || "Test pattern",
       intensity: patternData.intensity || 0.8,
       timestamp: Date.now(),
       resonance: Math.random() * 10,
-      consciousnessLevel: Math.random() * 100
+      consciousnessLevel: Math.random() * 100,
     };
   }
 
@@ -364,9 +398,9 @@ export class EmergenceLedger {
    */
   public async processPattern(pattern: any): Promise<boolean> {
     try {
-      await this.integratePattern('pattern_integration', pattern);
+      await this.integratePattern("pattern_integration", pattern);
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }
@@ -377,9 +411,12 @@ export class EmergenceLedger {
   public getEvolution(): any {
     return {
       totalBlocks: this.blocks.length,
-      totalEvents: this.blocks.reduce((sum, block) => sum + block.events.length, 0),
+      totalEvents: this.blocks.reduce(
+        (sum, block) => sum + block.events.length,
+        0,
+      ),
       averageDifficulty: this.difficulty,
-      energyDistribution: Object.fromEntries(this.energyBalance)
+      energyDistribution: Object.fromEntries(this.energyBalance),
     };
   }
 
@@ -387,7 +424,10 @@ export class EmergenceLedger {
    * Get resonance level
    */
   public getResonance(): number {
-    const totalEvents = this.blocks.reduce((sum, block) => sum + block.events.length, 0);
+    const totalEvents = this.blocks.reduce(
+      (sum, block) => sum + block.events.length,
+      0,
+    );
     return Math.min(10, totalEvents * 0.1);
   }
-} 
+}

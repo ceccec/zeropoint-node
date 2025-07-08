@@ -15,7 +15,7 @@ import { ZeroPoint } from '../core/ZeroPoint';
 export interface KnowledgePattern {
     id: string;
     name: string;
-    category: 'vortex' | 'family' | 'polar' | 'spiritual' | 'void' | 'mathematical' | 'metaphysical' | 'integration' | 'git';
+    category: 'vortex' | 'family' | 'polar' | 'spiritual' | 'void' | 'mathematical' | 'metaphysical' | 'integration' | 'git' | 'test';
     description: string;
     numericalData: any;
     relationships: string[];
@@ -170,5 +170,9 @@ export declare class KnowledgeSystem {
      */
     private analyzeCodeEvolution;
     private handleGitEvent;
+    /**
+     * Get all test patterns
+     */
+    getTestPatterns(): KnowledgePattern[];
 }
 //# sourceMappingURL=KnowledgeSystem.d.ts.map

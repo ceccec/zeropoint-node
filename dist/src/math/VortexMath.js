@@ -212,7 +212,7 @@ class VortexMath {
         // Simple stub for test compatibility
         return Math.abs(n % 9) + 1;
     }
-    getColorForNumber(n = 1, _context) {
+    getColorForNumber(n = 1) {
         // Simple stub for test compatibility
         const r = (n * 30) % 256;
         const g = (n * 60) % 256;

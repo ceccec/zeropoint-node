@@ -60,7 +60,7 @@ class NetworkNode extends events_1.EventEmitter {
             clearInterval(this.discoveryInterval);
         }
         // Close all connections
-        for (const [_deviceId, connection] of this.connections) {
+        for (const [, connection] of this.connections) {
             connection.ws.close();
         }
         this.connections.clear();
@@ -275,7 +275,7 @@ class NetworkNode extends events_1.EventEmitter {
             });
         }, 60000); // Every minute
     }
-    processMessage(_msg) {
+    processMessage() {
         // Simple stub for test compatibility
         return;
     }
@@ -298,7 +298,7 @@ class NetworkNode extends events_1.EventEmitter {
             try {
                 this.sendToConnection(device, broadcastData);
             }
-            catch (error) {
+            catch {
                 // Remove disconnected device
                 this.connections.delete(deviceId);
             }
@@ -319,7 +319,9 @@ class NetworkNode extends events_1.EventEmitter {
             try {
                 device.ws.close();
             }
-            catch (e) { }
+            catch {
+                // Ignore errors when closing connections
+            }
         });
         this.connections.clear();
         // Clear any timers or intervals if present

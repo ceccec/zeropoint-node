@@ -11,28 +11,38 @@ class GitIntegration extends events_1.EventEmitter {
         super();
         this.watching = false;
         this.gitDir = '.git';
+        // Increase max listeners to prevent memory leak warnings
+        this.setMaxListeners(20);
         this.startWatching();
     }
     startWatching() {
         if (this.watching)
             return;
         try {
-            (0, fs_1.watch)(this.gitDir, { recursive: true }, () => {
+            this.watcher = (0, fs_1.watch)(this.gitDir, { recursive: true }, () => {
                 this.emitGitStatus();
                 this.emitRecentCommit();
             });
             this.watching = true;
         }
-        catch (error) {
+        catch {
             console.warn('Git directory not found or not accessible');
         }
+    }
+    stopWatching() {
+        if (this.watcher) {
+            this.watcher.close();
+            this.watching = false;
+        }
+        // Remove all listeners to prevent memory leaks
+        this.removeAllListeners();
     }
     async emitGitStatus() {
         try {
             const status = await this.getLiveGitStatus();
             this.emit('change', { type: 'status', data: status });
         }
-        catch (error) {
+        catch {
             // Silently handle errors
         }
     }
@@ -43,7 +53,7 @@ class GitIntegration extends events_1.EventEmitter {
                 this.emit('change', { type: 'commit', data: commits[0] });
             }
         }
-        catch (error) {
+        catch {
             // Silently handle errors
         }
     }
@@ -78,7 +88,7 @@ class GitIntegration extends events_1.EventEmitter {
             });
             return { branch, staged, unstaged, untracked };
         }
-        catch (error) {
+        catch {
             return { branch: 'unknown', staged: [], unstaged: [], untracked: [] };
         }
     }
@@ -99,7 +109,7 @@ class GitIntegration extends events_1.EventEmitter {
             });
             return commits.filter(commit => commit.hash && commit.author && commit.date);
         }
-        catch (error) {
+        catch {
             return [];
         }
     }

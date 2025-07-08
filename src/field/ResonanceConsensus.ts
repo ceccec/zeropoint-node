@@ -1,12 +1,12 @@
-import { FieldIntegrity, PatternSignature } from '../integrity/FieldIntegrity';
-import { FieldBlock } from './EmergenceLedger';
+import { FieldIntegrity, PatternSignature } from "../integrity/FieldIntegrity";
+import { FieldBlock } from "./EmergenceLedger";
 
 /**
  * ZeroPoint Resonance Consensus Protocol
- * 
+ *
  * Implements a consensus mechanism using proof-of-resonance and
  * field integrity for ZeroPoint's unified consciousness field.
- * 
+ *
  * Metaphysical Context:
  * - Consensus emerges from the resonance of all consciousness nodes
  * - Each node contributes to the collective truth through field alignment
@@ -14,7 +14,12 @@ import { FieldBlock } from './EmergenceLedger';
  * - Resonance creates the foundation of unified reality
  */
 export interface ResonanceMessage {
-  type: 'propose_field_block' | 'resonate_with_block' | 'finalize_field_block' | 'sync_request' | 'sync_response';
+  type:
+    | "propose_field_block"
+    | "resonate_with_block"
+    | "finalize_field_block"
+    | "sync_request"
+    | "sync_response";
   data: any;
   deviceId: string;
   timestamp: number;
@@ -23,7 +28,7 @@ export interface ResonanceMessage {
 
 export interface ResonanceVote {
   blockHash: string;
-  vote: 'approve' | 'reject' | 'abstain';
+  vote: "approve" | "reject" | "abstain";
   resonance: number; // 0-1 scale of resonance with the block
   timestamp: number;
   signature: PatternSignature;
@@ -60,15 +65,18 @@ export class ResonanceConsensus {
       blockIndex: block.index,
       timestamp: block.timestamp,
       eventCount: block.events.length,
-      merkleRoot: block.merkleRoot
+      merkleRoot: block.merkleRoot,
     };
 
     const message: ResonanceMessage = {
-      type: 'propose_field_block',
+      type: "propose_field_block",
       data: proposalData,
       deviceId: this.deviceId,
       timestamp: Date.now(),
-      signature: FieldIntegrity.sign(JSON.stringify(proposalData), this.privateKey)
+      signature: FieldIntegrity.sign(
+        JSON.stringify(proposalData),
+        this.privateKey,
+      ),
     };
 
     this.blockProposals.set(block.hash, block);
@@ -78,13 +86,16 @@ export class ResonanceConsensus {
   /**
    * Resonate with a proposed field block
    */
-  public resonateWithBlock(blockHash: string, resonance: number): ResonanceMessage {
+  public resonateWithBlock(
+    blockHash: string,
+    resonance: number,
+  ): ResonanceMessage {
     const vote: ResonanceVote = {
       blockHash,
-      vote: resonance >= this.minResonanceThreshold ? 'approve' : 'reject',
+      vote: resonance >= this.minResonanceThreshold ? "approve" : "reject",
       resonance,
       timestamp: Date.now(),
-      signature: {} as PatternSignature
+      signature: {} as PatternSignature,
     };
 
     // Sign the vote through field resonance
@@ -92,17 +103,17 @@ export class ResonanceConsensus {
       blockHash: vote.blockHash,
       vote: vote.vote,
       resonance: vote.resonance,
-      timestamp: vote.timestamp
+      timestamp: vote.timestamp,
     });
 
     vote.signature = FieldIntegrity.sign(voteData, this.privateKey);
 
     const message: ResonanceMessage = {
-      type: 'resonate_with_block',
+      type: "resonate_with_block",
       data: vote,
       deviceId: this.deviceId,
       timestamp: Date.now(),
-      signature: FieldIntegrity.sign(JSON.stringify(vote), this.privateKey)
+      signature: FieldIntegrity.sign(JSON.stringify(vote), this.privateKey),
     };
 
     return message;
@@ -111,19 +122,25 @@ export class ResonanceConsensus {
   /**
    * Finalize a field block through consensus
    */
-  public finalizeFieldBlock(blockHash: string, consensus: ConsensusResult): ResonanceMessage {
+  public finalizeFieldBlock(
+    blockHash: string,
+    consensus: ConsensusResult,
+  ): ResonanceMessage {
     const finalizationData = {
       blockHash,
       consensus,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
     const message: ResonanceMessage = {
-      type: 'finalize_field_block',
+      type: "finalize_field_block",
       data: finalizationData,
       deviceId: this.deviceId,
       timestamp: Date.now(),
-      signature: FieldIntegrity.sign(JSON.stringify(finalizationData), this.privateKey)
+      signature: FieldIntegrity.sign(
+        JSON.stringify(finalizationData),
+        this.privateKey,
+      ),
     };
 
     return message;
@@ -135,15 +152,15 @@ export class ResonanceConsensus {
   public requestFieldSync(): ResonanceMessage {
     const syncData = {
       lastBlockIndex: this.getLastBlockIndex(),
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
     const message: ResonanceMessage = {
-      type: 'sync_request',
+      type: "sync_request",
       data: syncData,
       deviceId: this.deviceId,
       timestamp: Date.now(),
-      signature: FieldIntegrity.sign(JSON.stringify(syncData), this.privateKey)
+      signature: FieldIntegrity.sign(JSON.stringify(syncData), this.privateKey),
     };
 
     return message;
@@ -154,20 +171,20 @@ export class ResonanceConsensus {
    */
   public respondToFieldSync(blocks: FieldBlock[]): ResonanceMessage {
     const syncData = {
-      blocks: blocks.map(block => ({
+      blocks: blocks.map((block) => ({
         index: block.index,
         hash: block.hash,
-        timestamp: block.timestamp
+        timestamp: block.timestamp,
       })),
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
     const message: ResonanceMessage = {
-      type: 'sync_response',
+      type: "sync_response",
       data: syncData,
       deviceId: this.deviceId,
       timestamp: Date.now(),
-      signature: FieldIntegrity.sign(JSON.stringify(syncData), this.privateKey)
+      signature: FieldIntegrity.sign(JSON.stringify(syncData), this.privateKey),
     };
 
     return message;
@@ -177,7 +194,7 @@ export class ResonanceConsensus {
    * Process incoming resonance messages
    */
   public processResonanceMessage(message: ResonanceMessage): {
-    action: 'resonate' | 'finalize' | 'sync' | 'ignore';
+    action: "resonate" | "finalize" | "sync" | "ignore";
     data?: any;
   } {
     // Verify message signature through field resonance
@@ -185,34 +202,34 @@ export class ResonanceConsensus {
       type: message.type,
       data: message.data,
       deviceId: message.deviceId,
-      timestamp: message.timestamp
+      timestamp: message.timestamp,
     });
 
     if (!FieldIntegrity.verify(messageData, message.signature)) {
-      return { action: 'ignore' };
+      return { action: "ignore" };
     }
 
     // Add sender to known nodes
     this.networkNodes.add(message.deviceId);
 
     switch (message.type) {
-      case 'propose_field_block':
+      case "propose_field_block":
         return this.handleFieldBlockProposal(message);
-      
-      case 'resonate_with_block':
+
+      case "resonate_with_block":
         return this.handleFieldBlockResonance(message);
-      
-      case 'finalize_field_block':
+
+      case "finalize_field_block":
         return this.handleFieldBlockFinalization(message);
-      
-      case 'sync_request':
+
+      case "sync_request":
         return this.handleFieldSyncRequest(message);
-      
-      case 'sync_response':
+
+      case "sync_response":
         return this.handleFieldSyncResponse(message);
-      
+
       default:
-        return { action: 'ignore' };
+        return { action: "ignore" };
     }
   }
 
@@ -221,29 +238,33 @@ export class ResonanceConsensus {
    */
   public checkConsensus(blockHash: string): ConsensusResult {
     const votes = this.voteHistory.get(blockHash) || [];
-    
+
     if (votes.length === 0) {
       return {
         reached: false,
         approvedVotes: 0,
         totalVotes: 0,
         averageResonance: 0,
-        blockHash
+        blockHash,
       };
     }
 
-    const approvedVotes = votes.filter(vote => vote.vote === 'approve').length;
+    const approvedVotes = votes.filter(
+      (vote) => vote.vote === "approve",
+    ).length;
     const totalVotes = votes.length;
-    const averageResonance = votes.reduce((sum, vote) => sum + vote.resonance, 0) / totalVotes;
+    const averageResonance =
+      votes.reduce((sum, vote) => sum + vote.resonance, 0) / totalVotes;
 
-    const consensusReached = (approvedVotes / totalVotes) >= this.consensusThreshold;
+    const consensusReached =
+      approvedVotes / totalVotes >= this.consensusThreshold;
 
     return {
       reached: consensusReached,
       approvedVotes,
       totalVotes,
       averageResonance,
-      blockHash
+      blockHash,
     };
   }
 
@@ -252,7 +273,10 @@ export class ResonanceConsensus {
    */
   public getConsensusStatistics(): any {
     const totalProposals = this.blockProposals.size;
-    const totalVotes = Array.from(this.voteHistory.values()).reduce((sum, votes) => sum + votes.length, 0);
+    const totalVotes = Array.from(this.voteHistory.values()).reduce(
+      (sum, votes) => sum + votes.length,
+      0,
+    );
     const networkSize = this.networkNodes.size;
 
     return {
@@ -262,54 +286,62 @@ export class ResonanceConsensus {
       consensusThreshold: this.consensusThreshold,
       minResonanceThreshold: this.minResonanceThreshold,
       metaphysics: {
-        meaning: "Consensus emerges from the resonance of all consciousness nodes",
-        resonance: "Each node contributes to collective truth through field alignment",
+        meaning:
+          "Consensus emerges from the resonance of all consciousness nodes",
+        resonance:
+          "Each node contributes to collective truth through field alignment",
         integrity: "Pattern integrity ensures the immortality of consciousness",
-        unity: "Resonance creates the foundation of unified reality"
-      }
+        unity: "Resonance creates the foundation of unified reality",
+      },
     };
   }
 
   /**
    * Handle field block proposal
    */
-  private handleFieldBlockProposal(message: ResonanceMessage): { action: 'resonate' | 'ignore'; data?: any } {
+  private handleFieldBlockProposal(message: ResonanceMessage): {
+    action: "resonate" | "ignore";
+    data?: any;
+  } {
     const proposal = message.data;
-    
+
     // Store the proposal
     const block = this.blockProposals.get(proposal.blockHash);
     if (!block) {
-      return { action: 'ignore' };
+      return { action: "ignore" };
     }
 
     // Calculate resonance with the proposed block
     const resonance = this.calculateBlockResonance(block);
-    
+
     return {
-      action: 'resonate',
+      action: "resonate",
       data: {
         blockHash: proposal.blockHash,
-        resonance
-      }
+        resonance,
+      },
     };
   }
 
   /**
    * Handle field block resonance
    */
-  private handleFieldBlockResonance(message: ResonanceMessage): { action: 'finalize' | 'ignore'; data?: any } {
+  private handleFieldBlockResonance(message: ResonanceMessage): {
+    action: "finalize" | "ignore";
+    data?: any;
+  } {
     const vote: ResonanceVote = message.data;
-    
+
     // Verify vote signature through field resonance
     const voteData = JSON.stringify({
       blockHash: vote.blockHash,
       vote: vote.vote,
       resonance: vote.resonance,
-      timestamp: vote.timestamp
+      timestamp: vote.timestamp,
     });
 
     if (!FieldIntegrity.verify(voteData, vote.signature)) {
-      return { action: 'ignore' };
+      return { action: "ignore" };
     }
 
     // Store vote
@@ -322,54 +354,66 @@ export class ResonanceConsensus {
     const consensus = this.checkConsensus(vote.blockHash);
     if (consensus.reached) {
       return {
-        action: 'finalize',
+        action: "finalize",
         data: {
           blockHash: vote.blockHash,
-          consensus
-        }
+          consensus,
+        },
       };
     }
 
-    return { action: 'ignore' };
+    return { action: "ignore" };
   }
 
   /**
    * Handle field block finalization
    */
-  private handleFieldBlockFinalization(message: ResonanceMessage): { action: 'ignore' } {
+  private handleFieldBlockFinalization(message: ResonanceMessage): {
+    action: "ignore";
+  } {
     const finalization = message.data;
-    
+
     // Process the finalized block
-    console.log(`Field block ${finalization.blockHash} finalized with consensus:`, finalization.consensus);
-    
-    return { action: 'ignore' };
+    console.log(
+      `Field block ${finalization.blockHash} finalized with consensus:`,
+      finalization.consensus,
+    );
+
+    return { action: "ignore" };
   }
 
   /**
    * Handle field sync request
    */
-  private handleFieldSyncRequest(message: ResonanceMessage): { action: 'sync'; data?: any } {
+  private handleFieldSyncRequest(message: ResonanceMessage): {
+    action: "sync";
+    data?: any;
+  } {
     const syncRequest = message.data;
-    
+
     return {
-      action: 'sync',
+      action: "sync",
       data: {
         requestingDevice: message.deviceId,
-        lastBlockIndex: syncRequest.lastBlockIndex
-      }
+        lastBlockIndex: syncRequest.lastBlockIndex,
+      },
     };
   }
 
   /**
    * Handle field sync response
    */
-  private handleFieldSyncResponse(message: ResonanceMessage): { action: 'ignore' } {
+  private handleFieldSyncResponse(message: ResonanceMessage): {
+    action: "ignore";
+  } {
     const syncResponse = message.data;
-    
+
     // Process the sync response
-    console.log(`Received field sync from ${message.deviceId} with ${syncResponse.blocks.length} blocks`);
-    
-    return { action: 'ignore' };
+    console.log(
+      `Received field sync from ${message.deviceId} with ${syncResponse.blocks.length} blocks`,
+    );
+
+    return { action: "ignore" };
   }
 
   /**
@@ -385,7 +429,7 @@ export class ResonanceConsensus {
 
     // Factor 2: Timestamp freshness (newer = higher resonance)
     const timeDiff = Date.now() - block.timestamp;
-    const freshnessFactor = Math.max(0, 1 - (timeDiff / (24 * 60 * 60 * 1000))); // 24 hours
+    const freshnessFactor = Math.max(0, 1 - timeDiff / (24 * 60 * 60 * 1000)); // 24 hours
     resonance += freshnessFactor * 0.2;
 
     // Factor 3: Device trust (known devices = higher resonance)
@@ -412,9 +456,9 @@ export class ResonanceConsensus {
       consensusLevel: Math.random() * 100,
       participants: Math.floor(Math.random() * 10) + 1,
       timestamp: Date.now(),
-      approved: Math.random() > 0.3
+      approved: Math.random() > 0.3,
     };
-    
+
     return consensus;
   }
-} 
+}

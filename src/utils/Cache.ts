@@ -1,6 +1,6 @@
 /**
  * Performance caching system for ZeroPoint
- * 
+ *
  * Provides in-memory caching with TTL, LRU eviction,
  * and cache statistics for performance optimization.
  */
@@ -45,7 +45,7 @@ export class Cache {
     misses: 0,
     sets: 0,
     deletes: 0,
-    evictions: 0
+    evictions: 0,
   };
   private cleanupInterval?: NodeJS.Timeout;
 
@@ -55,7 +55,7 @@ export class Cache {
       defaultTTL: 300000, // 5 minutes
       cleanupInterval: 60000, // 1 minute
       enableStats: true,
-      ...config
+      ...config,
     };
 
     this.startCleanup();
@@ -71,7 +71,7 @@ export class Cache {
       timestamp: Date.now(),
       ttl: ttl || this.config.defaultTTL,
       accessCount: 0,
-      lastAccessed: Date.now()
+      lastAccessed: Date.now(),
     };
 
     // Check if we need to evict entries
@@ -145,7 +145,7 @@ export class Cache {
       misses: 0,
       sets: 0,
       deletes: 0,
-      evictions: 0
+      evictions: 0,
     };
   }
 
@@ -154,13 +154,14 @@ export class Cache {
    */
   public getStats(): CacheStats {
     const totalRequests = this.stats.hits + this.stats.misses;
-    const hitRate = totalRequests > 0 ? (this.stats.hits / totalRequests) * 100 : 0;
+    const hitRate =
+      totalRequests > 0 ? (this.stats.hits / totalRequests) * 100 : 0;
 
     return {
       ...this.stats,
       hitRate,
       size: this.cache.size,
-      maxSize: this.config.maxSize
+      maxSize: this.config.maxSize,
     };
   }
 
@@ -202,7 +203,11 @@ export class Cache {
   /**
    * Get or set a value asynchronously
    */
-  public async getOrSetAsync<T>(key: string, factory: () => Promise<T>, ttl?: number): Promise<T> {
+  public async getOrSetAsync<T>(
+    key: string,
+    factory: () => Promise<T>,
+    ttl?: number,
+  ): Promise<T> {
     const cached = this.get<T>(key);
     if (cached !== null) {
       return cached;
@@ -285,19 +290,30 @@ export class VortexMathCache extends Cache {
     super({
       maxSize: 500,
       defaultTTL: 600000, // 10 minutes
-      cleanupInterval: 300000 // 5 minutes
+      cleanupInterval: 300000, // 5 minutes
     });
   }
 
   /**
    * Cache vortex field calculations
    */
-  public getVortexField(x: number, y: number, z: number, strength: number): number | null {
+  public getVortexField(
+    x: number,
+    y: number,
+    z: number,
+    strength: number,
+  ): number | null {
     const key = `vortex_field_${x.toFixed(3)}_${y.toFixed(3)}_${z.toFixed(3)}_${strength.toFixed(3)}`;
     return this.get<number>(key);
   }
 
-  public setVortexField(x: number, y: number, z: number, strength: number, value: number): void {
+  public setVortexField(
+    x: number,
+    y: number,
+    z: number,
+    strength: number,
+    value: number,
+  ): void {
     const key = `vortex_field_${x.toFixed(3)}_${y.toFixed(3)}_${z.toFixed(3)}_${strength.toFixed(3)}`;
     this.set(key, value, 300000); // 5 minutes TTL
   }
@@ -308,7 +324,7 @@ export class ResonanceCache extends Cache {
     super({
       maxSize: 200,
       defaultTTL: 300000, // 5 minutes
-      cleanupInterval: 300000 // 5 minutes
+      cleanupInterval: 300000, // 5 minutes
     });
   }
 
@@ -331,4 +347,4 @@ export class ResonanceCache extends Cache {
  */
 export const globalCache = new Cache();
 export const vortexMathCache = new VortexMathCache();
-export const resonanceCache = new ResonanceCache(); 
+export const resonanceCache = new ResonanceCache();

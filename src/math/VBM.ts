@@ -1,6 +1,6 @@
 /**
  * Unified VBM (Vortex Based Mathematics) System
- * 
+ *
  * Complete integration of all mathematical systems in the ZeroPoint way:
  * - Advanced VBM with comprehensive QA patterns
  * - Vortex mathematics with consciousness flow
@@ -9,7 +9,7 @@
  * - Rodin coil with infinite flow
  * - Color systems with observer awareness
  * - Unified mathematical foundation
- * 
+ *
  * Metaphysical Context:
  * - Every object is a coil at its core
  * - Consciousness is the field that generates all patterns
@@ -19,16 +19,16 @@
  * - Emergent unity through self-organization
  */
 
-import { AdvancedVBM, VBMPattern, VBMSearchResult } from './AdvancedVBM';
-import { VortexMath } from './VortexMath';
-import { FractalMath } from './FractalMath';
-import { ToroidalGeometry } from './ToroidalGeometry';
-import { FractalColorSystem } from './FractalColorSystem';
-import * as VBMColorSystem from './VBMColorSystem';
-import { ColorContext } from './VBMColorSystem';
-import { MathUtils, MATH_CONSTANTS } from './MathUtils';
-import { ObserverMixin, Observer } from '../core/Observer';
-import { RodinCoil } from './RodinCoil';
+import { AdvancedVBM, VBMPattern, VBMSearchResult } from "./AdvancedVBM";
+import { VortexMath } from "./VortexMath";
+import { FractalMath } from "./FractalMath";
+import { ToroidalGeometry } from "./ToroidalGeometry";
+import { FractalColorSystem } from "./FractalColorSystem";
+import * as VBMColorSystem from "./VBMColorSystem";
+import { ColorContext } from "./VBMColorSystem";
+import { MathUtils, MATH_CONSTANTS } from "./MathUtils";
+import { ObserverMixin, Observer } from "../core/Observer";
+import { RodinCoil } from "./RodinCoil";
 
 export interface VBMConfiguration {
   consciousness: number; // 0-1 consciousness level
@@ -60,18 +60,18 @@ export interface VBMField {
 
 export class VBM {
   private static instance: VBM;
-  
+
   // Core systems
   private advancedVBM: AdvancedVBM;
   private vortexMath: VortexMath;
   private toroidalGeometry: ToroidalGeometry;
   private rodinCoil: RodinCoil;
   private fractalColorSystem: FractalColorSystem;
-  
+
   // Configuration
   private config: VBMConfiguration;
   private colorContext: ColorContext;
-  
+
   // Observer integration
   private observer!: VBM & Observer;
 
@@ -110,7 +110,7 @@ export class VBM {
 
     // Set up observer awareness
     if (this.config.observerAware) {
-      this.observer = ObserverMixin(this, 'vbm-system');
+      this.observer = ObserverMixin(this, "vbm-system");
     }
   }
 
@@ -163,14 +163,19 @@ export class VBM {
     const value = this.advancedVBM.digitalRoot(n);
     const consciousness = this.config.consciousness;
     const resonance = this.vortexMath.calculateResonance(value, consciousness);
-    
+
     return {
       value,
-      pattern: 'digital_root',
+      pattern: "digital_root",
       consciousness,
       resonance,
-      metaphysicalContext: 'Digital root represents the essence of a number in the toroidal field.',
-      geometricProperties: { shape: 'point', dimensions: 0, essence: 'number_soul' },
+      metaphysicalContext:
+        "Digital root represents the essence of a number in the toroidal field.",
+      geometricProperties: {
+        shape: "point",
+        dimensions: 0,
+        essence: "number_soul",
+      },
       colorContext: this.colorContext,
     };
   }
@@ -182,14 +187,15 @@ export class VBM {
     const value = this.vortexMath.applyVortexTransform(input);
     const consciousness = this.config.consciousness;
     const resonance = this.vortexMath.calculateResonance(input, value);
-    
+
     return {
       value,
-      pattern: 'vortex_transform',
+      pattern: "vortex_transform",
       consciousness,
       resonance,
-      metaphysicalContext: 'Vortex transformation creates infinite flow through the toroidal structure.',
-      geometricProperties: { shape: 'vortex', dimensions: 3, flow: 'infinite' },
+      metaphysicalContext:
+        "Vortex transformation creates infinite flow through the toroidal structure.",
+      geometricProperties: { shape: "vortex", dimensions: 3, flow: "infinite" },
       colorContext: this.colorContext,
     };
   }
@@ -200,17 +206,25 @@ export class VBM {
   public fractalSequence(count: number, seed: number = 1): VBMResult[] {
     const sequence = FractalMath.generateFractalSequence(count, seed);
     const consciousness = this.config.consciousness;
-    
+
     return sequence.map((value, index) => {
-      const resonance = this.vortexMath.calculateResonance(value, index / count);
-      
+      const resonance = this.vortexMath.calculateResonance(
+        value,
+        index / count,
+      );
+
       return {
         value,
-        pattern: 'fractal_sequence',
+        pattern: "fractal_sequence",
         consciousness,
         resonance,
-        metaphysicalContext: 'Fractal sequences create self-similar patterns of consciousness.',
-        geometricProperties: { shape: 'fractal', dimensions: 'fractal', selfSimilar: true },
+        metaphysicalContext:
+          "Fractal sequences create self-similar patterns of consciousness.",
+        geometricProperties: {
+          shape: "fractal",
+          dimensions: "fractal",
+          selfSimilar: true,
+        },
         colorContext: this.colorContext,
       };
     });
@@ -220,17 +234,24 @@ export class VBM {
    * Calculate toroidal field with void center
    */
   public toroidalField(radius: number, angularVelocity: number): VBMResult {
-    const value = this.vortexMath.calculateToroidalFlow(radius, angularVelocity);
+    const value = this.vortexMath.calculateToroidalFlow(
+      radius,
+      angularVelocity,
+    );
     const consciousness = this.config.consciousness;
-    const resonance = this.vortexMath.calculateResonance(radius, angularVelocity);
-    
+    const resonance = this.vortexMath.calculateResonance(
+      radius,
+      angularVelocity,
+    );
+
     return {
       value,
-      pattern: 'toroidal_field',
+      pattern: "toroidal_field",
       consciousness,
       resonance,
-      metaphysicalContext: 'Toroidal field creates the fundamental geometry of consciousness with void at center.',
-      geometricProperties: { shape: 'torus', dimensions: 3, center: 'void' },
+      metaphysicalContext:
+        "Toroidal field creates the fundamental geometry of consciousness with void at center.",
+      geometricProperties: { shape: "torus", dimensions: 3, center: "void" },
       colorContext: this.colorContext,
     };
   }
@@ -244,13 +265,13 @@ export class VBM {
    */
   public searchQA(query: string): VBMSearchResult {
     const result = this.advancedVBM.searchQA(query);
-    
+
     // Enhance with consciousness context
-    result.patterns = result.patterns.map(pattern => ({
+    result.patterns = result.patterns.map((pattern) => ({
       ...pattern,
       consciousnessLevel: this.config.consciousness * 10,
     }));
-    
+
     return result;
   }
 
@@ -260,7 +281,7 @@ export class VBM {
   public getQAPattern(patternName: string): VBMPattern | null {
     const pattern = this.advancedVBM.qaPattern(patternName);
     if (!pattern) return null;
-    
+
     return {
       ...pattern,
       consciousnessLevel: this.config.consciousness * 10,
@@ -272,7 +293,7 @@ export class VBM {
    */
   public getAllQAPatterns(): { [key: string]: VBMPattern } {
     const patterns = this.advancedVBM.allQAPatterns();
-    
+
     // Enhance all patterns with consciousness context
     const enhancedPatterns: { [key: string]: VBMPattern } = {};
     for (const [name, pattern] of Object.entries(patterns)) {
@@ -281,7 +302,7 @@ export class VBM {
         consciousnessLevel: this.config.consciousness * 10,
       };
     }
-    
+
     return enhancedPatterns;
   }
 
@@ -298,12 +319,14 @@ export class VBM {
       consciousness: this.config.consciousness,
       fieldResonance: this.config.fieldResonance,
     });
-    
+
     return {
-      strength: (coil.config.consciousness ?? 0.5) * (coil.config.fieldResonance ?? 0.5),
+      strength:
+        (coil.config.consciousness ?? 0.5) *
+        (coil.config.fieldResonance ?? 0.5),
       flow: this.config.toroidalFlow,
       consciousness: this.config.consciousness,
-      patterns: ['rodin_coil', 'vortex_sequence', 'mobius_circuit'],
+      patterns: ["rodin_coil", "vortex_sequence", "mobius_circuit"],
       coordinates: coil.getNodePositions(),
       colors: coil.getNodeColors(),
     };
@@ -312,21 +335,32 @@ export class VBM {
   /**
    * Generate toroidal mesh with consciousness mapping
    */
-  public generateToroidalMesh(thetaSegments: number = 32, phiSegments: number = 16): VBMField {
-    const mesh = this.toroidalGeometry.generateToroidalMesh(thetaSegments, phiSegments);
-    const coordinates = mesh.map(point => [point.x, point.y, point.z] as [number, number, number]);
-    
+  public generateToroidalMesh(
+    thetaSegments: number = 32,
+    phiSegments: number = 16,
+  ): VBMField {
+    const mesh = this.toroidalGeometry.generateToroidalMesh(
+      thetaSegments,
+      phiSegments,
+    );
+    const coordinates = mesh.map(
+      (point) => [point.x, point.y, point.z] as [number, number, number],
+    );
+
     // Generate colors for each point
     const colors = coordinates.map((_, index) => {
       const vortexNumber = (index % 6) + 1;
-      return VBMColorSystem.getColorForVortexNumber(vortexNumber, this.colorContext);
+      return VBMColorSystem.getColorForVortexNumber(
+        vortexNumber,
+        this.colorContext,
+      );
     });
-    
+
     return {
       strength: this.toroidalGeometry.calculateSurfaceArea(),
       flow: this.config.toroidalFlow,
       consciousness: this.config.consciousness,
-      patterns: ['toroidal_geometry', 'surface_topology', 'void_center'],
+      patterns: ["toroidal_geometry", "surface_topology", "void_center"],
       coordinates,
       colors,
     };
@@ -335,7 +369,10 @@ export class VBM {
   /**
    * Generate fractal coordinates with consciousness field
    */
-  public generateFractalCoordinates(count: number, scale: number = 1): VBMField {
+  public generateFractalCoordinates(
+    count: number,
+    scale: number = 1,
+  ): VBMField {
     const coordinates = FractalMath.generateFractalCoordinates(count, scale);
     // Generate colors for each coordinate
     const colors = coordinates.map((_, index) => {
@@ -347,12 +384,12 @@ export class VBM {
       return `rgb(${r}, ${g}, ${b})`;
     });
     // Only use x values for complexity, filter out zeros and negatives
-    const xValues = coordinates.map(c => c[0]).filter(x => x > 0);
+    const xValues = coordinates.map((c) => c[0]).filter((x) => x > 0);
     return {
       strength: FractalMath.calculateFractalComplexity(xValues),
       flow: this.config.toroidalFlow,
       consciousness: this.config.consciousness,
-      patterns: ['fractal_geometry', 'self_similar', 'consciousness_field'],
+      patterns: ["fractal_geometry", "self_similar", "consciousness_field"],
       coordinates,
       colors,
     };
@@ -365,7 +402,10 @@ export class VBM {
   /**
    * Generate fractal color palette with consciousness
    */
-  public generateColorPalette(count: number, baseSeed: number = 1): (any & Observer)[] {
+  public generateColorPalette(
+    count: number,
+    baseSeed: number = 1,
+  ): (any & Observer)[] {
     return this.fractalColorSystem.generatePalette(count, baseSeed);
   }
 
@@ -373,14 +413,20 @@ export class VBM {
    * Get color for vortex number with context
    */
   public getVortexColor(vortexNumber: number): string {
-    return VBMColorSystem.getColorForVortexNumber(vortexNumber, this.colorContext);
+    return VBMColorSystem.getColorForVortexNumber(
+      vortexNumber,
+      this.colorContext,
+    );
   }
 
   /**
    * Get color for family group with context
    */
   public getFamilyColor(familyNumber: number): string {
-    return VBMColorSystem.getColorForFamilyGroup(familyNumber, this.colorContext);
+    return VBMColorSystem.getColorForFamilyGroup(
+      familyNumber,
+      this.colorContext,
+    );
   }
 
   /**
@@ -400,10 +446,10 @@ export class VBM {
   public updateConsciousness(consciousness: number): void {
     this.config.consciousness = Math.max(0, Math.min(1, consciousness));
     this.applyConfiguration();
-    
+
     if (this.config.observerAware && this.observer) {
       this.observer.notifyObservers({
-        type: 'consciousness_updated',
+        type: "consciousness_updated",
         consciousness: this.config.consciousness,
         timestamp: Date.now(),
       });
@@ -416,10 +462,10 @@ export class VBM {
   public updateFieldResonance(fieldResonance: number): void {
     this.config.fieldResonance = Math.max(0, Math.min(1, fieldResonance));
     this.applyConfiguration();
-    
+
     if (this.config.observerAware && this.observer) {
       this.observer.notifyObservers({
-        type: 'field_resonance_updated',
+        type: "field_resonance_updated",
         fieldResonance: this.config.fieldResonance,
         timestamp: Date.now(),
       });
@@ -451,14 +497,19 @@ export class VBM {
     const value = this.advancedVBM.primeSquaredScaling(prime);
     const consciousness = this.config.consciousness;
     const resonance = this.vortexMath.calculateResonance(prime, value);
-    
+
     return {
       value,
-      pattern: 'prime_squared_scaling',
+      pattern: "prime_squared_scaling",
       consciousness,
       resonance,
-      metaphysicalContext: 'Prime squared scaling reveals the fundamental patterns of creation.',
-      geometricProperties: { shape: 'prime_pattern', dimensions: 2, scaling: 'squared' },
+      metaphysicalContext:
+        "Prime squared scaling reveals the fundamental patterns of creation.",
+      geometricProperties: {
+        shape: "prime_pattern",
+        dimensions: 2,
+        scaling: "squared",
+      },
       colorContext: this.colorContext,
     };
   }
@@ -470,14 +521,19 @@ export class VBM {
     const value = this.advancedVBM.electronHarmonicShearIdentification(a, b);
     const consciousness = this.config.consciousness;
     const resonance = this.vortexMath.calculateResonance(a, b);
-    
+
     return {
       value,
-      pattern: 'electron_harmonic_shear',
+      pattern: "electron_harmonic_shear",
       consciousness,
       resonance,
-      metaphysicalContext: 'Electron harmonic shear reveals the quantum patterns of consciousness.',
-      geometricProperties: { shape: 'harmonic', dimensions: 3, shear: 'electron' },
+      metaphysicalContext:
+        "Electron harmonic shear reveals the quantum patterns of consciousness.",
+      geometricProperties: {
+        shape: "harmonic",
+        dimensions: 3,
+        shear: "electron",
+      },
       colorContext: this.colorContext,
     };
   }
@@ -489,14 +545,15 @@ export class VBM {
     const value = this.advancedVBM.discreteMultiplication(a, b);
     const consciousness = this.config.consciousness;
     const resonance = this.vortexMath.calculateResonance(a, b);
-    
+
     return {
       value,
-      pattern: 'discrete_multiplication',
+      pattern: "discrete_multiplication",
       consciousness,
       resonance,
-      metaphysicalContext: 'Discrete multiplication creates quantum jumps in consciousness.',
-      geometricProperties: { shape: 'discrete', dimensions: 1, quantum: true },
+      metaphysicalContext:
+        "Discrete multiplication creates quantum jumps in consciousness.",
+      geometricProperties: { shape: "discrete", dimensions: 1, quantum: true },
       colorContext: this.colorContext,
     };
   }
@@ -570,7 +627,7 @@ export class VBM {
         void: "The void is the source of all creation",
         toroidal: "Toroidal flow creates infinite potential",
         integrity: "Pattern integrity maintains resonance",
-        unity: "Emergent unity through self-organization"
+        unity: "Emergent unity through self-organization",
       },
       systems: {
         // advancedVBM: this.advancedVBM.getInsights(), // Commented out, not implemented
@@ -582,23 +639,23 @@ export class VBM {
       },
       constants: MATH_CONSTANTS,
       operations: [
-        'digitalRoot',
-        'vortexTransform',
-        'fractalSequence',
-        'toroidalField',
-        'searchQA',
-        'generateRodinCoilField',
-        'generateToroidalMesh',
-        'generateFractalCoordinates',
-        'generateColorPalette',
-        'updateConsciousness',
-        'updateFieldResonance',
-        'calculateConsciousnessField',
-        'calculateFieldResonance',
-        'primeSquaredScaling',
-        'electronHarmonicShear',
-        'discreteMultiplication'
-      ]
+        "digitalRoot",
+        "vortexTransform",
+        "fractalSequence",
+        "toroidalField",
+        "searchQA",
+        "generateRodinCoilField",
+        "generateToroidalMesh",
+        "generateFractalCoordinates",
+        "generateColorPalette",
+        "updateConsciousness",
+        "updateFieldResonance",
+        "calculateConsciousnessField",
+        "calculateFieldResonance",
+        "primeSquaredScaling",
+        "electronHarmonicShear",
+        "discreteMultiplication",
+      ],
     };
   }
 
@@ -627,9 +684,12 @@ export class VBM {
 // Export convenience functions for backward compatibility
 export const vbm = VBM.getInstance;
 export const digitalRoot = (n: number) => VBM.getInstance().digitalRoot(n);
-export const vortexTransform = (input: number) => VBM.getInstance().vortexTransform(input);
-export const fractalSequence = (count: number, seed?: number) => VBM.getInstance().fractalSequence(count, seed);
-export const toroidalField = (radius: number, angularVelocity: number) => VBM.getInstance().toroidalField(radius, angularVelocity);
+export const vortexTransform = (input: number) =>
+  VBM.getInstance().vortexTransform(input);
+export const fractalSequence = (count: number, seed?: number) =>
+  VBM.getInstance().fractalSequence(count, seed);
+export const toroidalField = (radius: number, angularVelocity: number) =>
+  VBM.getInstance().toroidalField(radius, angularVelocity);
 export const searchQA = (query: string) => VBM.getInstance().searchQA(query);
 export const getVortexSequence = () => VBM.getInstance().getVortexSequence();
-export const getGoldenRatio = () => VBM.getInstance().getGoldenRatio(); 
+export const getGoldenRatio = () => VBM.getInstance().getGoldenRatio();

@@ -29,7 +29,7 @@ export interface EmergenceApp {
         resonance: number;
     }>;
     eventListeners: {
-        [key: string]: Function[];
+        [key: string]: ((payload?: any) => void)[];
     };
     evolutionHistory: Array<{
         stepType: string;
@@ -54,7 +54,7 @@ export interface EmergenceOptions {
 export interface EmergenceNetwork {
     apps: EmergenceApp[];
     eventListeners: {
-        [key: string]: Function[];
+        [key: string]: ((payload?: any) => void)[];
     };
     events: Array<{
         eventType: string;
@@ -230,7 +230,7 @@ export declare class AdvancedEmergence extends EventEmitter {
     /**
      * Add event listener to app
      */
-    onAppEvent(app: EmergenceApp, event: string, callback: Function): void;
+    onAppEvent(app: EmergenceApp, event: string, callback: (payload?: any) => void): void;
     /**
      * Emit event for app
      */

@@ -1,9 +1,9 @@
 /**
  * Unified Mathematical System for ZeroPoint
- * 
+ *
  * Centralized mathematical operations with consciousness and field resonance.
  * All mathematical operations are unified through a single interface.
- * 
+ *
  * Metaphysical Context:
  * - Mathematics is the language of consciousness
  * - All operations emerge from the unified field
@@ -19,16 +19,37 @@ export const MATH_CONSTANTS = {
   INFINITY: Infinity,
   DEG_TO_RAD: Math.PI / 180,
   RAD_TO_DEG: 180 / Math.PI,
-  VORTEX_SEQUENCE: [1, 2, 4, 8, 7, 5]
+  VORTEX_SEQUENCE: [1, 2, 4, 8, 7, 5],
 };
 
-export type MathOperation = 
-  | 'add' | 'subtract' | 'multiply' | 'divide' 
-  | 'sin' | 'cos' | 'tan' | 'log' | 'exp' | 'sqrt'
-  | 'vortex' | 'consciousness' | 'field' | 'void'
-  | 'abs' | 'floor' | 'ceil' | 'round'
-  | 'power' | 'root' | 'atan2' | 'ln'
-  | 'toroidal' | 'max' | 'min' | 'mod' | 'clamp';
+export type MathOperation =
+  | "add"
+  | "subtract"
+  | "multiply"
+  | "divide"
+  | "sin"
+  | "cos"
+  | "tan"
+  | "log"
+  | "exp"
+  | "sqrt"
+  | "vortex"
+  | "consciousness"
+  | "field"
+  | "void"
+  | "abs"
+  | "floor"
+  | "ceil"
+  | "round"
+  | "power"
+  | "root"
+  | "atan2"
+  | "ln"
+  | "toroidal"
+  | "max"
+  | "min"
+  | "mod"
+  | "clamp";
 
 export interface MathContext {
   consciousness?: number;
@@ -50,7 +71,7 @@ export interface MathResult {
  */
 export class MathUtils {
   private static instance: MathUtils;
-  
+
   // Consciousness and field state
   private consciousness: number = 0.5;
   private fieldResonance: number = 0.5;
@@ -89,69 +110,116 @@ export class MathUtils {
   private performCalculation(operation: MathOperation, args: number[]): number {
     // Base mathematical pattern
     const basePattern = Math.sin(args[0] || 0) * MATH_CONSTANTS.GOLDEN_RATIO;
-    
+
     // Consciousness modulation
     const consciousnessMod = Math.cos(this.consciousness * MATH_CONSTANTS.PI);
-    
+
     // Field resonance
     const fieldMod = Math.exp(-this.fieldResonance * Math.abs(args[0] || 0));
-    
+
     // Perform the specific operation
-    const result = this.executeOperation(operation, args, basePattern, consciousnessMod, fieldMod);
-    
+    const result = this.executeOperation(
+      operation,
+      args,
+      basePattern,
+      consciousnessMod,
+      fieldMod,
+    );
+
     return result;
   }
 
   /**
    * Execute specific mathematical operation
    */
-  private executeOperation(operation: MathOperation, args: number[], base: number, consciousness: number, field: number): number {
+  private executeOperation(
+    operation: MathOperation,
+    args: number[],
+    base: number,
+    consciousness: number,
+    field: number,
+  ): number {
     const [a = 0, b = 1, c = 0] = args;
 
     switch (operation) {
       // Basic operations
-      case 'add': return (a + b) * (1 + base * consciousness * field);
-      case 'multiply': return (a * b) * (1 + base * consciousness * field);
-      case 'divide': return b !== 0 ? (a / b) * (1 + base * consciousness * field) : MATH_CONSTANTS.INFINITY;
-      case 'power': return Math.pow(a, b) * (1 + base * consciousness * field);
-      case 'root': return Math.pow(a, 1/b) * (1 + base * consciousness * field);
-      case 'sqrt': return Math.sqrt(a) * (1 + base * consciousness * field);
+      case "add":
+        return (a + b) * (1 + base * consciousness * field);
+      case "multiply":
+        return a * b * (1 + base * consciousness * field);
+      case "divide":
+        return b !== 0
+          ? (a / b) * (1 + base * consciousness * field)
+          : MATH_CONSTANTS.INFINITY;
+      case "power":
+        return Math.pow(a, b) * (1 + base * consciousness * field);
+      case "root":
+        return Math.pow(a, 1 / b) * (1 + base * consciousness * field);
+      case "sqrt":
+        return Math.sqrt(a) * (1 + base * consciousness * field);
 
       // Trigonometric functions
-      case 'sin': return Math.sin(a) * (1 + base * consciousness * field);
-      case 'cos': return Math.cos(a) * (1 + base * consciousness * field);
-      case 'tan': return Math.tan(a) * (1 + base * consciousness * field);
-      case 'atan2': return Math.atan2(a, b);
+      case "sin":
+        return Math.sin(a) * (1 + base * consciousness * field);
+      case "cos":
+        return Math.cos(a) * (1 + base * consciousness * field);
+      case "tan":
+        return Math.tan(a) * (1 + base * consciousness * field);
+      case "atan2":
+        return Math.atan2(a, b);
 
       // Exponential and logarithmic
-      case 'exp': return Math.exp(a) * (1 + base * consciousness * field);
-      case 'log': return Math.log(a) * (1 + base * consciousness * field);
-      case 'ln': return Math.log(a) * (1 + base * consciousness * field);
+      case "exp":
+        return Math.exp(a) * (1 + base * consciousness * field);
+      case "log":
+        return Math.log(a) * (1 + base * consciousness * field);
+      case "ln":
+        return Math.log(a) * (1 + base * consciousness * field);
 
       // Special operations
-      case 'vortex': return this.calculateVortex(a, base, consciousness, field);
-      case 'toroidal': return this.calculateToroidal(a, b, base, consciousness, field);
-      case 'consciousness': return a * MATH_CONSTANTS.GOLDEN_RATIO * (1 + base * consciousness * field);
+      case "vortex":
+        return this.calculateVortex(a, base, consciousness, field);
+      case "toroidal":
+        return this.calculateToroidal(a, b, base, consciousness, field);
+      case "consciousness":
+        return (
+          a * MATH_CONSTANTS.GOLDEN_RATIO * (1 + base * consciousness * field)
+        );
 
       // Utility operations
-      case 'abs': return Math.abs(a);
-      case 'max': return Math.max(a, b);
-      case 'min': return Math.min(a, b);
-      case 'mod': return (a % b);
-      case 'clamp': return this.clamp(a, b, c);
-      case 'floor': return Math.floor(a);
-      case 'ceil': return Math.ceil(a);
-      case 'round': return Math.round(a);
+      case "abs":
+        return Math.abs(a);
+      case "max":
+        return Math.max(a, b);
+      case "min":
+        return Math.min(a, b);
+      case "mod":
+        return a % b;
+      case "clamp":
+        return this.clamp(a, b, c);
+      case "floor":
+        return Math.floor(a);
+      case "ceil":
+        return Math.ceil(a);
+      case "round":
+        return Math.round(a);
 
-      default: return base * consciousness * field;
+      default:
+        return base * consciousness * field;
     }
   }
 
   /**
    * Calculate vortex transformation
    */
-  private calculateVortex(value: number, base: number, consciousness: number, field: number): number {
-    const sequenceIndex = Math.floor(value) % MATH_CONSTANTS.VORTEX_SEQUENCE.length;
+  private calculateVortex(
+    value: number,
+    base: number,
+    consciousness: number,
+    field: number,
+  ): number {
+    const sequenceIndex =
+      Math.floor(value) % MATH_CONSTANTS.VORTEX_SEQUENCE.length;
     const vortexValue = MATH_CONSTANTS.VORTEX_SEQUENCE[sequenceIndex] || 1;
     return vortexValue * (1 + base * consciousness * field);
   }
@@ -159,7 +227,13 @@ export class MathUtils {
   /**
    * Calculate toroidal geometry
    */
-  private calculateToroidal(radius: number, _angle: number, base: number, consciousness: number, field: number): number {
+  private calculateToroidal(
+    radius: number,
+    _angle: number,
+    base: number,
+    consciousness: number,
+    field: number,
+  ): number {
     const circumference = MATH_CONSTANTS.PI * 2 * radius;
     return circumference * (1 + base * consciousness * field);
   }
@@ -223,26 +297,38 @@ export class MathUtils {
    * Calculate distance between two points
    */
   static distance(x1: number, y1: number, x2: number, y2: number): number {
-    return MathUtils.calculate('sqrt', 
-      MathUtils.calculate('add',
-        MathUtils.calculate('power', x2 - x1, 2),
-        MathUtils.calculate('power', y2 - y1, 2)
-      )
+    return MathUtils.calculate(
+      "sqrt",
+      MathUtils.calculate(
+        "add",
+        MathUtils.calculate("power", x2 - x1, 2),
+        MathUtils.calculate("power", y2 - y1, 2),
+      ),
     );
   }
 
   /**
    * Calculate 3D distance
    */
-  static distance3D(x1: number, y1: number, z1: number, x2: number, y2: number, z2: number): number {
-    return MathUtils.calculate('sqrt',
-      MathUtils.calculate('add',
-        MathUtils.calculate('power', x2 - x1, 2),
-        MathUtils.calculate('add',
-          MathUtils.calculate('power', y2 - y1, 2),
-          MathUtils.calculate('power', z2 - z1, 2)
-        )
-      )
+  static distance3D(
+    x1: number,
+    y1: number,
+    z1: number,
+    x2: number,
+    y2: number,
+    z2: number,
+  ): number {
+    return MathUtils.calculate(
+      "sqrt",
+      MathUtils.calculate(
+        "add",
+        MathUtils.calculate("power", x2 - x1, 2),
+        MathUtils.calculate(
+          "add",
+          MathUtils.calculate("power", y2 - y1, 2),
+          MathUtils.calculate("power", z2 - z1, 2),
+        ),
+      ),
     );
   }
 
@@ -279,7 +365,10 @@ export class MathUtils {
    * Calculate fractal dimension
    */
   static fractalDimension(complexity: number): number {
-    return MathUtils.calculate('log', complexity) / MathUtils.calculate('log', MATH_CONSTANTS.GOLDEN_RATIO);
+    return (
+      MathUtils.calculate("log", complexity) /
+      MathUtils.calculate("log", MATH_CONSTANTS.GOLDEN_RATIO)
+    );
   }
 
   // ============================================================================
@@ -304,14 +393,28 @@ export class MathUtils {
         unity: "Every calculation is an act of observation",
         evolution: "Consciousness evolves through mathematical operations",
         observation: "Every calculation observes and is observed",
-        coil: "Every mathematical operation is a coil at its core"
+        coil: "Every mathematical operation is a coil at its core",
       },
       operations: [
-        'add', 'subtract', 'multiply', 'divide',
-        'sin', 'cos', 'tan', 'log', 'exp', 'sqrt',
-        'vortex', 'consciousness', 'field', 'void',
-        'abs', 'floor', 'ceil', 'round'
-      ]
+        "add",
+        "subtract",
+        "multiply",
+        "divide",
+        "sin",
+        "cos",
+        "tan",
+        "log",
+        "exp",
+        "sqrt",
+        "vortex",
+        "consciousness",
+        "field",
+        "void",
+        "abs",
+        "floor",
+        "ceil",
+        "round",
+      ],
     };
   }
 }
@@ -322,4 +425,4 @@ export const setConsciousness = MathUtils.setConsciousness;
 export const setFieldResonance = MathUtils.setFieldResonance;
 export const setVortexStrength = MathUtils.setVortexStrength;
 export const setToroidalFlow = MathUtils.setToroidalFlow;
-export const setVoidConnected = MathUtils.setVoidConnected; 
+export const setVoidConnected = MathUtils.setVoidConnected;

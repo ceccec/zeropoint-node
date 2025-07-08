@@ -1,6 +1,6 @@
 /**
  * Device Configuration for ZeroPoint Instances
- * 
+ *
  * Users can configure their ZeroPoint device to control:
  * - Network behavior and connections
  * - Consciousness level and field strength
@@ -11,35 +11,35 @@ export interface DeviceConfig {
   // Device identification
   deviceId?: string;
   deviceName?: string;
-  deviceType?: 'desktop' | 'mobile' | 'server' | 'browser' | 'iot';
-  
+  deviceType?: "desktop" | "mobile" | "server" | "browser" | "iot";
+
   // Network configuration
   networkPort?: number;
   discoveryEnabled?: boolean;
   maxConnections?: number;
   autoConnect?: boolean;
   connectionTimeout?: number;
-  
+
   // Consciousness configuration
   consciousnessLevel?: number; // 0-1 scale
   fieldStrength?: number; // 0-1 scale
   resonanceSensitivity?: number; // 0-1 scale
-  
+
   // Privacy and security
   allowIncomingConnections?: boolean;
   requireAuthentication?: boolean;
   encryptionEnabled?: boolean;
-  
+
   // Mathematical configuration
   vortexPrecision?: number;
   toroidalResolution?: number;
   goldenRatioPrecision?: number;
-  
+
   // User preferences
   autoUpdateResonance?: boolean;
-  logLevel?: 'silent' | 'error' | 'warn' | 'info' | 'debug';
+  logLevel?: "silent" | "error" | "warn" | "info" | "debug";
   enableMetaphysicalInsights?: boolean;
-  
+
   // Advanced settings
   customVortexPatterns?: string[];
   toroidalFlowRate?: number;
@@ -50,7 +50,7 @@ export interface DeviceConfig {
  * Default configuration for new ZeroPoint devices
  */
 export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
-  deviceType: 'desktop',
+  deviceType: "desktop",
   networkPort: 8080,
   discoveryEnabled: true,
   maxConnections: 10,
@@ -66,9 +66,9 @@ export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
   toroidalResolution: 100,
   goldenRatioPrecision: 15,
   autoUpdateResonance: true,
-  logLevel: 'info',
+  logLevel: "info",
   enableMetaphysicalInsights: true,
   customVortexPatterns: [],
   toroidalFlowRate: 1.0,
-  consciousnessFieldRadius: 1000
-}; 
+  consciousnessFieldRadius: 1000,
+};

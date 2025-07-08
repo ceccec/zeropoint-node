@@ -69,7 +69,7 @@ export declare class NetworkNode extends EventEmitter {
     private sendToConnection;
     private pingConnections;
     private startDiscovery;
-    processMessage(_msg: any): void;
+    processMessage(): void;
     /**
      * Check if connected to network
      */

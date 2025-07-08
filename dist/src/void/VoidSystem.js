@@ -1,4 +1,17 @@
 "use strict";
+/**
+ * Enhanced Void System Implementation
+ *
+ * The void is the empty center of the torus - the space where everything
+ * and nothing exist simultaneously. It solves problems by recognizing
+ * that the solution exists in the space between the problem and the answer.
+ *
+ * Enhanced with advanced void transformation engine, paradox resolution,
+ * self-creation mechanisms, and advanced torus center coordinates.
+ *
+ * Based on the Ruby gem's void.rb (778 lines) - Complete Implementation
+ */
+// Removed unused imports to fix linting errors
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VoidSystem = void 0;
 class VoidSystem {
@@ -161,23 +174,23 @@ class VoidSystem {
         const infinityType = this.classifyInfinity(infinity);
         switch (infinityType) {
             case 'potential':
-                return this.transformPotentialInfinity(infinity);
+                return this.transformPotentialInfinity();
             case 'consciousness':
-                return this.transformConsciousnessInfinity(infinity);
+                return this.transformConsciousnessInfinity();
             case 'creativity':
-                return this.transformCreativityInfinity(infinity);
+                return this.transformCreativityInfinity();
             case 'possibility':
-                return this.transformPossibilityInfinity(infinity);
+                return this.transformPossibilityInfinity();
             case 'void':
-                return this.transformVoidInfinity(infinity);
+                return this.transformVoidInfinity();
             case 'torusCenter':
-                return this.transformTorusCenterInfinity(infinity);
+                return this.transformTorusCenterInfinity();
             case 'cosmicFlow':
-                return this.transformCosmicFlowInfinity(infinity);
+                return this.transformCosmicFlowInfinity();
             case 'selfCreation':
-                return this.transformSelfCreationInfinity(infinity);
+                return this.transformSelfCreationInfinity();
             default:
-                return this.transformThroughVoidPrinciple(infinity);
+                return this.transformThroughVoidPrinciple();
         }
     }
     /**
@@ -221,9 +234,9 @@ class VoidSystem {
         const consciousnessLevel = this.calculateVoidConsciousness(input);
         const torusCenterAlignment = this.calculateTorusCenterAlignment(input);
         return {
-            frequency: this.calculateVoidFrequency(input),
+            frequency: this.calculateVoidFrequency(),
             amplitude: this.calculateVoidAmplitude(input),
-            phase: this.calculateVoidPhase(input),
+            phase: this.calculateVoidPhase(),
             consciousnessLevel,
             torusCenterAlignment,
             infinitePotential: this.calculateVoidPotential(input),
@@ -273,7 +286,7 @@ class VoidSystem {
         return {
             method: 'void_creation',
             input,
-            output: this.createFromVoid(input),
+            output: this.createFromVoid(),
             transformationPath: ['void', 'creation', 'manifestation'],
             voidResonance: 0.9,
             torusCenterCoordinates: this.advancedTorusCenter(),
@@ -355,7 +368,7 @@ class VoidSystem {
     /**
      * Self creation engine methods
      */
-    createFromVoid(_input) {
+    createFromVoid() {
         return {
             creation: 'self_created_from_void',
             creationMethod: 'void_self_creation',
@@ -366,7 +379,7 @@ class VoidSystem {
             metaphysicalContext: 'Self-creation from void infinite potential'
         };
     }
-    createFromConsciousness(_input) {
+    createFromConsciousness() {
         return {
             creation: 'self_created_from_consciousness',
             creationMethod: 'consciousness_self_creation',
@@ -377,7 +390,7 @@ class VoidSystem {
             metaphysicalContext: 'Self-creation through consciousness awareness'
         };
     }
-    createFromTorus(_input) {
+    createFromTorus() {
         return {
             creation: 'self_created_from_torus',
             creationMethod: 'torus_self_creation',
@@ -388,7 +401,7 @@ class VoidSystem {
             metaphysicalContext: 'Self-creation through torus center geometry'
         };
     }
-    createFromInfinity(_input) {
+    createFromInfinity() {
         return {
             creation: 'self_created_from_infinity',
             creationMethod: 'infinity_self_creation',
@@ -405,7 +418,7 @@ class VoidSystem {
     attemptEnhancedSolution(problem) {
         const voidTransformation = this.voidTransformation(problem);
         const paradoxResolution = this.resolveParadoxThroughVoid(problem);
-        const selfCreation = this.createFromVoid(problem);
+        const selfCreation = this.createFromVoid();
         return {
             solution: `enhanced_solution_to: ${problem}`,
             voidTransformation,
@@ -444,13 +457,13 @@ class VoidSystem {
             return 0.8;
         return 0.1;
     }
-    calculateVoidFrequency(_input) {
+    calculateVoidFrequency() {
         return 1.0; // Base void frequency
     }
     calculateVoidAmplitude(input) {
         return this.calculateVoidDepth(input);
     }
-    calculateVoidPhase(_input) {
+    calculateVoidPhase() {
         return Math.PI / 2; // 90 degrees - void phase
     }
     /**
@@ -591,7 +604,7 @@ class VoidSystem {
     /**
      * Transform potential infinity
      */
-    transformPotentialInfinity(_infinity) {
+    transformPotentialInfinity() {
         return {
             type: 'potential_infinity',
             transformation: 'finite_potential',
@@ -602,7 +615,7 @@ class VoidSystem {
     /**
      * Transform consciousness infinity
      */
-    transformConsciousnessInfinity(_infinity) {
+    transformConsciousnessInfinity() {
         return {
             type: 'consciousness_infinity',
             transformation: 'finite_consciousness',
@@ -613,7 +626,7 @@ class VoidSystem {
     /**
      * Transform creativity infinity
      */
-    transformCreativityInfinity(_infinity) {
+    transformCreativityInfinity() {
         return {
             type: 'creativity_infinity',
             transformation: 'finite_creativity',
@@ -624,7 +637,7 @@ class VoidSystem {
     /**
      * Transform possibility infinity
      */
-    transformPossibilityInfinity(_infinity) {
+    transformPossibilityInfinity() {
         return {
             type: 'possibility_infinity',
             transformation: 'finite_possibility',
@@ -635,7 +648,7 @@ class VoidSystem {
     /**
      * Transform void infinity
      */
-    transformVoidInfinity(_infinity) {
+    transformVoidInfinity() {
         return {
             type: 'void_infinity',
             transformation: 'finite_void',
@@ -646,7 +659,7 @@ class VoidSystem {
     /**
      * Transform torus center infinity
      */
-    transformTorusCenterInfinity(_infinity) {
+    transformTorusCenterInfinity() {
         return {
             type: 'torus_center_infinity',
             transformation: 'finite_torus_center',
@@ -657,7 +670,7 @@ class VoidSystem {
     /**
      * Transform cosmic flow infinity
      */
-    transformCosmicFlowInfinity(_infinity) {
+    transformCosmicFlowInfinity() {
         return {
             type: 'cosmic_flow_infinity',
             transformation: 'finite_cosmic_flow',
@@ -668,7 +681,7 @@ class VoidSystem {
     /**
      * Transform self creation infinity
      */
-    transformSelfCreationInfinity(_infinity) {
+    transformSelfCreationInfinity() {
         return {
             type: 'self_creation_infinity',
             transformation: 'finite_self_creation',
@@ -679,7 +692,7 @@ class VoidSystem {
     /**
      * Transform through void principle
      */
-    transformThroughVoidPrinciple(_infinity) {
+    transformThroughVoidPrinciple() {
         return {
             type: 'unknown_infinity',
             transformation: 'void_principle',
@@ -823,13 +836,13 @@ class VoidSystem {
         return this.voidResonance;
     }
     // Stub resonance calculation methods for test compatibility
-    calculateConsciousnessResonance(_input) {
+    calculateConsciousnessResonance() {
         return 0.5;
     }
-    calculateTorusResonance(_input) {
+    calculateTorusResonance() {
         return 0.5;
     }
-    calculateCreationResonance(_input) {
+    calculateCreationResonance() {
         return 0.5;
     }
 }

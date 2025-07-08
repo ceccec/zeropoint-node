@@ -21,14 +21,17 @@ export interface Observer {
   observers: Set<Observer>;
 }
 
-export function ObserverMixin<T extends object>(base: T, id?: string): T & Observer {
+export function ObserverMixin<T extends object>(
+  base: T,
+  id?: string,
+): T & Observer {
   const observers = new Set<Observer>();
   return Object.assign(base, {
     id: id || (base as any).id || Math.random().toString(36).slice(2),
     observers,
     observe(input: any) {
       // Default: log observation
-      if (typeof (base as any).onObserved === 'function') {
+      if (typeof (base as any).onObserved === "function") {
         (base as any).onObserved(input);
       }
     },
@@ -45,8 +48,8 @@ export function ObserverMixin<T extends object>(base: T, id?: string): T & Obser
       observers.delete(observer);
     },
     notifyObservers(event: any) {
-      observers.forEach(o => o.observe(event));
-    }
+      observers.forEach((o) => o.observe(event));
+    },
   });
 }
 
@@ -78,7 +81,7 @@ export class ObserverBase implements Observer {
     this.observers.delete(observer);
   }
   notifyObservers(event: any) {
-    this.observers.forEach(o => o.observe(event));
+    this.observers.forEach((o) => o.observe(event));
   }
   /**
    * Get awareness level (base returns 0 and false)
@@ -86,7 +89,7 @@ export class ObserverBase implements Observer {
   public getAwareness(): { level: number; isActive: boolean } {
     return {
       level: 0,
-      isActive: false
+      isActive: false,
     };
   }
 }
@@ -106,7 +109,7 @@ export class ConcreteObserver extends ObserverBase {
   public override getAwareness(): { level: number; isActive: boolean } {
     return {
       level: this.awarenessLevel,
-      isActive: this.isActive
+      isActive: this.isActive,
     };
   }
-} 
+}

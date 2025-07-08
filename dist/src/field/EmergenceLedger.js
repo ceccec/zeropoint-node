@@ -279,7 +279,7 @@ class EmergenceLedger {
             await this.integratePattern('pattern_integration', pattern);
             return true;
         }
-        catch (error) {
+        catch {
             return false;
         }
     }

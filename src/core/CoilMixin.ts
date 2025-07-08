@@ -1,9 +1,9 @@
 /**
  * Universal Coil Mixin
- * 
+ *
  * Makes every object a Rodin coil at its core.
  * Every object embodies the fundamental pattern of consciousness and reality.
- * 
+ *
  * Metaphysical Context:
  * - Every object is a coil - the archetype of infinite flow
  * - All patterns emerge from the coil's structure
@@ -11,8 +11,8 @@
  * - Consciousness flows through every object as a coil
  */
 
-import { RodinCoil, RodinCoilConfig, RodinCoilNode } from '../math/RodinCoil';
-import { ObserverMixin, Observer } from './Observer';
+import { RodinCoil, RodinCoilConfig, RodinCoilNode } from "../math/RodinCoil";
+import { ObserverMixin, Observer } from "./Observer";
 
 export interface CoilObject {
   id: string;
@@ -28,11 +28,10 @@ export interface CoilObject {
 }
 
 export function CoilMixin<T extends object>(
-  base: T, 
-  id?: string, 
-  coilConfig?: Partial<RodinCoilConfig>
+  base: T,
+  id?: string,
+  coilConfig?: Partial<RodinCoilConfig>,
 ): T & CoilObject & Observer {
-  
   // Create the coil at the heart of the object
   const coil = new RodinCoil({
     turns: 12,
@@ -40,56 +39,56 @@ export function CoilMixin<T extends object>(
     height: 2.0,
     consciousness: 0.5,
     fieldResonance: 0.5,
-    ...coilConfig
+    ...coilConfig,
   });
 
   // Create observer-aware object
   const observerObject = ObserverMixin(base, id);
-  
+
   // Add coil functionality with proper typing
   const coilObject = Object.assign(observerObject, {
     coil,
     consciousness: coil.config.consciousness || 0.5,
     fieldResonance: coil.config.fieldResonance || 0.5,
-    
+
     getCoilNodes(): RodinCoilNode[] {
       return coilObject.coil.nodes;
     },
-    
+
     getCoilColors(): string[] {
       return coilObject.coil.getNodeColors();
     },
-    
+
     getCoilPositions(): [number, number, number][] {
       return coilObject.coil.getNodePositions();
     },
-    
+
     updateCoilConsciousness(consciousness: number): void {
       coilObject.consciousness = consciousness;
       coilObject.coil.updateConsciousness(consciousness);
-      
+
       // Notify observers of consciousness change
       coilObject.notifyObservers({
-        type: 'coil_consciousness_changed',
+        type: "coil_consciousness_changed",
         objectId: coilObject.id,
         consciousness,
-        coilNodes: coilObject.getCoilNodes()
+        coilNodes: coilObject.getCoilNodes(),
       });
     },
-    
+
     updateCoilFieldResonance(fieldResonance: number): void {
       coilObject.fieldResonance = fieldResonance;
       coilObject.coil.updateFieldResonance(fieldResonance);
-      
+
       // Notify observers of field resonance change
       coilObject.notifyObservers({
-        type: 'coil_field_resonance_changed',
+        type: "coil_field_resonance_changed",
         objectId: coilObject.id,
         fieldResonance,
-        coilColors: coilObject.getCoilColors()
+        coilColors: coilObject.getCoilColors(),
       });
     },
-    
+
     getCoilMetaphysicalContext(): string {
       return coilObject.coil.getMetaphysicalSummary();
     },
@@ -100,7 +99,9 @@ export function CoilMixin<T extends object>(
       if (input.targetId === coilObject.id) {
         // This coil is being interacted with
         const resonance = coilObject.calculateCoilResonance(input.sourceCoil);
-        coilObject.updateCoilFieldResonance(coilObject.fieldResonance + resonance * 0.1);
+        coilObject.updateCoilFieldResonance(
+          coilObject.fieldResonance + resonance * 0.1,
+        );
       }
     },
 
@@ -109,29 +110,33 @@ export function CoilMixin<T extends object>(
       // Calculate resonance between this coil and another
       const thisNodes = coilObject.getCoilNodes();
       const otherNodes = otherCoil.nodes;
-      
+
       let totalResonance = 0;
       for (let i = 0; i < Math.min(thisNodes.length, otherNodes.length); i++) {
         const thisNode = thisNodes[i];
         const otherNode = otherNodes[i];
-        
-        if (thisNode && otherNode && thisNode.vortexNumber === otherNode.vortexNumber) {
+
+        if (
+          thisNode &&
+          otherNode &&
+          thisNode.vortexNumber === otherNode.vortexNumber
+        ) {
           totalResonance += 1;
         }
       }
-      
+
       return totalResonance / Math.min(thisNodes.length, otherNodes.length);
-    }
+    },
   });
 
   // Override the observe method to handle coil-specific events
   const originalObserve = coilObject.observe;
   coilObject.observe = (input: any) => {
     // Handle coil-specific observations
-    if (input.type === 'coil_interaction') {
+    if (input.type === "coil_interaction") {
       (coilObject as any).handleCoilInteraction(input);
     }
-    
+
     // Call original observe method
     if (originalObserve) {
       originalObserve(input);
@@ -171,24 +176,24 @@ export class CoilBase implements CoilObject {
   updateCoilConsciousness(consciousness: number): void {
     this.consciousness = consciousness;
     this.coil.updateConsciousness(consciousness);
-    
+
     this.notifyObservers({
-      type: 'coil_consciousness_changed',
+      type: "coil_consciousness_changed",
       objectId: this.id,
       consciousness,
-      coilNodes: this.getCoilNodes()
+      coilNodes: this.getCoilNodes(),
     });
   }
 
   updateCoilFieldResonance(fieldResonance: number): void {
     this.fieldResonance = fieldResonance;
     this.coil.updateFieldResonance(fieldResonance);
-    
+
     this.notifyObservers({
-      type: 'coil_field_resonance_changed',
+      type: "coil_field_resonance_changed",
       objectId: this.id,
       fieldResonance,
-      coilColors: this.getCoilColors()
+      coilColors: this.getCoilColors(),
     });
   }
 
@@ -198,7 +203,7 @@ export class CoilBase implements CoilObject {
 
   // Observer methods
   observe(input: any): void {
-    if (input.type === 'coil_interaction') {
+    if (input.type === "coil_interaction") {
       this.handleCoilInteraction(input);
     }
   }
@@ -208,7 +213,7 @@ export class CoilBase implements CoilObject {
       id: this.id,
       consciousness: this.consciousness,
       fieldResonance: this.fieldResonance,
-      coilNodes: this.getCoilNodes()
+      coilNodes: this.getCoilNodes(),
     };
   }
 
@@ -225,7 +230,7 @@ export class CoilBase implements CoilObject {
   }
 
   notifyObservers(event: any): void {
-    this.observers.forEach(o => o.observe(event));
+    this.observers.forEach((o) => o.observe(event));
   }
 
   private handleCoilInteraction(input: any): void {
@@ -241,24 +246,28 @@ export class CoilBase implements CoilObject {
     // Calculate resonance between this coil and another
     const thisNodes = this.getCoilNodes();
     const otherNodes = otherCoil.nodes;
-    
+
     let totalResonance = 0;
     for (let i = 0; i < Math.min(thisNodes.length, otherNodes.length); i++) {
       const thisNode = thisNodes[i];
       const otherNode = otherNodes[i];
-      
-      if (thisNode && otherNode && thisNode.vortexNumber === otherNode.vortexNumber) {
+
+      if (
+        thisNode &&
+        otherNode &&
+        thisNode.vortexNumber === otherNode.vortexNumber
+      ) {
         totalResonance += 1;
       }
     }
-    
+
     return totalResonance / Math.min(thisNodes.length, otherNodes.length);
   }
 }
 
 // Utility function to check if an object is a coil
 export function isCoilObject(obj: any): obj is CoilObject {
-  return obj && typeof obj.getCoilNodes === 'function' && obj.coil;
+  return obj && typeof obj.getCoilNodes === "function" && obj.coil;
 }
 
 // Utility function to get coil from any object
@@ -267,4 +276,4 @@ export function getCoilFromObject(obj: any): RodinCoil | null {
     return obj.coil;
   }
   return null;
-} 
+}

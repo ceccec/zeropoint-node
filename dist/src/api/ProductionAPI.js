@@ -44,7 +44,7 @@ class ProductionAPI {
             next();
         });
         // Error handling middleware
-        this.app.use((error, _req, res, _next) => {
+        this.app.use((error, _req, res) => {
             Logger_1.globalLogger.error('API Error', {
                 method: _req.method,
                 path: _req.path,
@@ -69,7 +69,7 @@ class ProductionAPI {
                     healthStatus.status === 'degraded' ? 200 : 503;
                 res.status(statusCode).json(healthStatus);
             }
-            catch (error) {
+            catch {
                 res.status(503).json({
                     status: 'unhealthy',
                     error: 'Health check failed',

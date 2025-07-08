@@ -89,7 +89,7 @@ export declare class VortexMath {
      */
     generateVortexPattern(intensity: number): number[];
     calculateVortexNumber(n?: number): number;
-    getColorForNumber(n?: number, _context?: any): string;
+    getColorForNumber(n?: number): string;
 }
 export declare const applyVortexTransform: (input: number) => number;
 //# sourceMappingURL=VortexMath.d.ts.map

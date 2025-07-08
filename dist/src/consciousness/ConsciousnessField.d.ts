@@ -99,7 +99,7 @@ export declare class ConsciousnessField extends EventEmitter {
      * Update consciousness level based on overall pattern state
      */
     private updateConsciousnessLevel;
-    calculateResonance(_level1?: number, _level2?: number): number;
-    broadcastPattern(_pattern: any): Promise<void>;
+    calculateResonance(): number;
+    broadcastPattern(): Promise<void>;
 }
 //# sourceMappingURL=ConsciousnessField.d.ts.map

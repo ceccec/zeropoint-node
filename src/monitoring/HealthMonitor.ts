@@ -1,14 +1,14 @@
-import { EventEmitter } from 'events';
-import { globalLogger } from '../utils/Logger';
+import { EventEmitter } from "events";
+import { globalLogger } from "../utils/Logger";
 
 /**
  * Health monitoring system for ZeroPoint devices
- * 
+ *
  * Monitors system health, performance, and provides
  * health check endpoints for production deployment.
  */
 export interface HealthStatus {
-  status: 'healthy' | 'degraded' | 'unhealthy';
+  status: "healthy" | "degraded" | "unhealthy";
   timestamp: string;
   uptime: number;
   version: string;
@@ -18,7 +18,7 @@ export interface HealthStatus {
 
 export interface HealthCheck {
   name: string;
-  status: 'pass' | 'fail' | 'warn';
+  status: "pass" | "fail" | "warn";
   responseTime: number;
   message?: string;
   data?: any;
@@ -75,7 +75,7 @@ export class HealthMonitor extends EventEmitter {
 
   constructor(config: Partial<HealthMonitorConfig> = {}) {
     super();
-    
+
     this.config = {
       checkInterval: 30000, // 30 seconds
       timeout: 5000, // 5 seconds
@@ -85,9 +85,9 @@ export class HealthMonitor extends EventEmitter {
         memoryUsage: 80,
         cpuUsage: 70,
         errorRate: 5,
-        responseTime: 1000
+        responseTime: 1000,
       },
-      ...config
+      ...config,
     };
 
     this.metrics = this.initializeMetrics();
@@ -107,12 +107,12 @@ export class HealthMonitor extends EventEmitter {
       this.runHealthChecks();
     }, this.config.checkInterval);
 
-    globalLogger.info('Health monitoring started', {
+    globalLogger.info("Health monitoring started", {
       checkInterval: this.config.checkInterval,
-      timeout: this.config.timeout
+      timeout: this.config.timeout,
     });
 
-    this.emit('started');
+    this.emit("started");
   }
 
   /**
@@ -127,8 +127,8 @@ export class HealthMonitor extends EventEmitter {
       clearInterval(this.checkInterval);
     }
 
-    globalLogger.info('Health monitoring stopped');
-    this.emit('stopped');
+    globalLogger.info("Health monitoring stopped");
+    this.emit("stopped");
   }
 
   /**
@@ -150,9 +150,9 @@ export class HealthMonitor extends EventEmitter {
       status: overallStatus,
       timestamp: new Date().toISOString(),
       uptime: Date.now() - this.startTime,
-      version: process.env['npm_package_version'] || '1.0.0',
+      version: process.env["npm_package_version"] || "1.0.0",
       checks,
-      metrics: this.getCurrentMetrics()
+      metrics: this.getCurrentMetrics(),
     };
 
     return status;
@@ -172,8 +172,11 @@ export class HealthMonitor extends EventEmitter {
    * Check if system is healthy
    */
   public isHealthy(): boolean {
-    return this.metrics.memory.percentage < this.config.alertThresholds.memoryUsage &&
-           this.metrics.cpu.usage < this.config.alertThresholds.cpuUsage;
+    return (
+      this.metrics.memory.percentage <
+        this.config.alertThresholds.memoryUsage &&
+      this.metrics.cpu.usage < this.config.alertThresholds.cpuUsage
+    );
   }
 
   /**
@@ -187,34 +190,36 @@ export class HealthMonitor extends EventEmitter {
         const startTime = Date.now();
         const result = await Promise.race([
           check(),
-          new Promise<HealthCheck>((_, reject) => 
-            setTimeout(() => reject(new Error('Health check timeout')), this.config.timeout)
-          )
+          new Promise<HealthCheck>((_, reject) =>
+            setTimeout(
+              () => reject(new Error("Health check timeout")),
+              this.config.timeout,
+            ),
+          ),
         ]);
-        
+
         result.responseTime = Date.now() - startTime;
         results.push(result);
 
         // Log check result
-        if (result.status === 'fail') {
-          globalLogger.error(`Health check failed: ${name}`, { 
-            message: result.message, 
-            data: result.data 
+        if (result.status === "fail") {
+          globalLogger.error(`Health check failed: ${name}`, {
+            message: result.message,
+            data: result.data,
           });
-        } else if (result.status === 'warn') {
-          globalLogger.warn(`Health check warning: ${name}`, { 
-            message: result.message, 
-            data: result.data 
+        } else if (result.status === "warn") {
+          globalLogger.warn(`Health check warning: ${name}`, {
+            message: result.message,
+            data: result.data,
           });
         }
-
       } catch (error) {
         const failedCheck: HealthCheck = {
           name,
-          status: 'fail',
+          status: "fail",
           responseTime: this.config.timeout,
-          message: error instanceof Error ? error.message : 'Unknown error',
-          data: { error: error instanceof Error ? error.stack : error }
+          message: error instanceof Error ? error.message : "Unknown error",
+          data: { error: error instanceof Error ? error.stack : error },
         };
 
         results.push(failedCheck);
@@ -227,23 +232,25 @@ export class HealthMonitor extends EventEmitter {
       this.checkAlerts(results);
     }
 
-    this.emit('healthCheck', results);
+    this.emit("healthCheck", results);
     return results;
   }
 
   /**
    * Determine overall health status
    */
-  private determineOverallStatus(checks: HealthCheck[]): 'healthy' | 'degraded' | 'unhealthy' {
-    const failedChecks = checks.filter(c => c.status === 'fail').length;
-    const warningChecks = checks.filter(c => c.status === 'warn').length;
+  private determineOverallStatus(
+    checks: HealthCheck[],
+  ): "healthy" | "degraded" | "unhealthy" {
+    const failedChecks = checks.filter((c) => c.status === "fail").length;
+    const warningChecks = checks.filter((c) => c.status === "warn").length;
 
     if (failedChecks > 0) {
-      return 'unhealthy';
+      return "unhealthy";
     } else if (warningChecks > 0 || !this.isHealthy()) {
-      return 'degraded';
+      return "degraded";
     } else {
-      return 'healthy';
+      return "healthy";
     }
   }
 
@@ -256,7 +263,9 @@ export class HealthMonitor extends EventEmitter {
 
     // Memory usage alert
     if (metrics.memory.percentage > this.config.alertThresholds.memoryUsage) {
-      alerts.push(`High memory usage: ${metrics.memory.percentage.toFixed(1)}%`);
+      alerts.push(
+        `High memory usage: ${metrics.memory.percentage.toFixed(1)}%`,
+      );
     }
 
     // CPU usage alert
@@ -265,7 +274,8 @@ export class HealthMonitor extends EventEmitter {
     }
 
     // Error rate alert
-    const totalMessages = metrics.network.messagesSent + metrics.network.messagesReceived;
+    const totalMessages =
+      metrics.network.messagesSent + metrics.network.messagesReceived;
     if (totalMessages > 0) {
       const errorRate = (metrics.network.errors / totalMessages) * 100;
       if (errorRate > this.config.alertThresholds.errorRate) {
@@ -274,14 +284,16 @@ export class HealthMonitor extends EventEmitter {
     }
 
     // Response time alert
-    const avgResponseTime = checks.reduce((sum, check) => sum + check.responseTime, 0) / checks.length;
+    const avgResponseTime =
+      checks.reduce((sum, check) => sum + check.responseTime, 0) /
+      checks.length;
     if (avgResponseTime > this.config.alertThresholds.responseTime) {
       alerts.push(`Slow response time: ${avgResponseTime.toFixed(0)}ms`);
     }
 
     if (alerts.length > 0) {
-      globalLogger.warn('Health alerts detected', { alerts });
-      this.emit('alerts', alerts);
+      globalLogger.warn("Health alerts detected", { alerts });
+      this.emit("alerts", alerts);
     }
   }
 
@@ -292,9 +304,14 @@ export class HealthMonitor extends EventEmitter {
     return {
       memory: { used: 0, total: 0, percentage: 0 },
       cpu: { usage: 0, load: 0 },
-      network: { connections: 0, messagesSent: 0, messagesReceived: 0, errors: 0 },
+      network: {
+        connections: 0,
+        messagesSent: 0,
+        messagesReceived: 0,
+        errors: 0,
+      },
       consciousness: { level: 0, fieldStrength: 0, patterns: 0 },
-      field: { blocks: 0, events: 0, energyBalance: 0 }
+      field: { blocks: 0, events: 0, energyBalance: 0 },
     };
   }
 
@@ -308,12 +325,12 @@ export class HealthMonitor extends EventEmitter {
     this.metrics.memory = {
       used: memUsage.heapUsed / 1024 / 1024, // MB
       total: memUsage.heapTotal / 1024 / 1024, // MB
-      percentage: (memUsage.heapUsed / memUsage.heapTotal) * 100
+      percentage: (memUsage.heapUsed / memUsage.heapTotal) * 100,
     };
 
     this.metrics.cpu = {
       usage: cpuUsage.user / 1000000, // seconds
-      load: process.uptime()
+      load: process.uptime(),
     };
   }
 
@@ -322,65 +339,69 @@ export class HealthMonitor extends EventEmitter {
    */
   private registerDefaultChecks(): void {
     // Memory check
-    this.registerCheck('memory', async (): Promise<HealthCheck> => {
+    this.registerCheck("memory", async (): Promise<HealthCheck> => {
       const memUsage = process.memoryUsage();
       const percentage = (memUsage.heapUsed / memUsage.heapTotal) * 100;
-      
+
       return {
-        name: 'memory',
-        status: percentage > 90 ? 'fail' : percentage > 80 ? 'warn' : 'pass',
+        name: "memory",
+        status: percentage > 90 ? "fail" : percentage > 80 ? "warn" : "pass",
         responseTime: 0,
         message: `Memory usage: ${percentage.toFixed(1)}%`,
         data: {
           used: memUsage.heapUsed / 1024 / 1024,
           total: memUsage.heapTotal / 1024 / 1024,
-          percentage
-        }
+          percentage,
+        },
       };
     });
 
     // CPU check
-    this.registerCheck('cpu', async (): Promise<HealthCheck> => {
+    this.registerCheck("cpu", async (): Promise<HealthCheck> => {
       const startUsage = process.cpuUsage();
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
       const endUsage = process.cpuUsage();
-      
-      const cpuUsage = ((endUsage.user - startUsage.user) + (endUsage.system - startUsage.system)) / 1000000;
-      
+
+      const cpuUsage =
+        (endUsage.user -
+          startUsage.user +
+          (endUsage.system - startUsage.system)) /
+        1000000;
+
       return {
-        name: 'cpu',
-        status: cpuUsage > 50 ? 'warn' : 'pass',
+        name: "cpu",
+        status: cpuUsage > 50 ? "warn" : "pass",
         responseTime: 0,
         message: `CPU usage: ${cpuUsage.toFixed(1)}%`,
-        data: { usage: cpuUsage }
+        data: { usage: cpuUsage },
       };
     });
 
     // Uptime check
-    this.registerCheck('uptime', async (): Promise<HealthCheck> => {
+    this.registerCheck("uptime", async (): Promise<HealthCheck> => {
       const uptime = process.uptime();
-      
+
       return {
-        name: 'uptime',
-        status: uptime < 60 ? 'warn' : 'pass', // Warn if less than 1 minute
+        name: "uptime",
+        status: uptime < 60 ? "warn" : "pass", // Warn if less than 1 minute
         responseTime: 0,
         message: `Uptime: ${uptime.toFixed(0)}s`,
-        data: { uptime }
+        data: { uptime },
       };
     });
 
     // Process check
-    this.registerCheck('process', async (): Promise<HealthCheck> => {
+    this.registerCheck("process", async (): Promise<HealthCheck> => {
       return {
-        name: 'process',
-        status: 'pass',
+        name: "process",
+        status: "pass",
         responseTime: 0,
         message: `PID: ${process.pid}`,
-        data: { 
+        data: {
           pid: process.pid,
           version: process.version,
-          platform: process.platform
-        }
+          platform: process.platform,
+        },
       };
     });
   }
@@ -389,4 +410,4 @@ export class HealthMonitor extends EventEmitter {
 /**
  * Global health monitor instance
  */
-export const globalHealthMonitor = new HealthMonitor(); 
+export const globalHealthMonitor = new HealthMonitor();

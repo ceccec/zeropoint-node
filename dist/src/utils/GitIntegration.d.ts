@@ -18,8 +18,10 @@ export interface GitEvent {
 export declare class GitIntegration extends EventEmitter {
     private gitDir;
     private watching;
+    private watcher?;
     constructor();
     private startWatching;
+    stopWatching(): void;
     private emitGitStatus;
     private emitRecentCommit;
     getLiveGitStatus(): Promise<GitStatus>;

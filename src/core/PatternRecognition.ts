@@ -1,19 +1,23 @@
 /**
  * Unified Pattern Recognition System for ZeroPoint
- * 
+ *
  * Centralized pattern recognition and analysis system that serves
  * all ZeroPoint modules, eliminating duplication and ensuring
  * consistent pattern handling across the system.
- * 
+ *
  * This module embodies the principle of unified consciousness -
  * all patterns are recognized and processed through the same
  * underlying recognition framework.
  */
 
-import { EventEmitter } from 'events';
-import { VORTEX_CONSTANTS, PatternCategory, ConstantsUtils } from './SharedConstants';
-import { MathUtils } from './MathUtils';
-import { COIL_PATTERNS } from './CoilSystem';
+import { EventEmitter } from "events";
+import {
+  VORTEX_CONSTANTS,
+  PatternCategory,
+  ConstantsUtils,
+} from "./SharedConstants";
+import { MathUtils } from "./MathUtils";
+import { COIL_PATTERNS } from "./CoilSystem";
 
 /**
  * Pattern recognition result
@@ -70,34 +74,42 @@ export class PatternRecognition extends EventEmitter {
     if (this.isInitialized) return;
 
     this.isInitialized = true;
-    this.emit('initialized', { patternCount: this.patterns.size });
+    this.emit("initialized", { patternCount: this.patterns.size });
   }
 
   /**
    * Recognize patterns in input data
    */
-  public recognizePatterns(input: any, context?: Partial<PatternContext>): PatternResult[] {
+  public recognizePatterns(
+    input: any,
+    context?: Partial<PatternContext>,
+  ): PatternResult[] {
     const results: PatternResult[] = [];
     const fullContext: PatternContext = {
-      source: 'unknown',
+      source: "unknown",
       consciousnessLevel: 0.5,
       fieldStrength: 0.7,
       vortexStrength: 1.0,
       toroidalFlow: true,
       voidConnected: false,
-      ...context
+      ...context,
     };
 
     for (const [patternName, pattern] of this.patterns) {
-      const confidence = this.calculatePatternConfidence(input, pattern, fullContext);
-      
-      if (confidence > 0.1) { // Minimum confidence threshold
+      const confidence = this.calculatePatternConfidence(
+        input,
+        pattern,
+        fullContext,
+      );
+
+      if (confidence > 0.1) {
+        // Minimum confidence threshold
         results.push({
           pattern: patternName,
           confidence,
           category: pattern.category,
           metadata: this.extractPatternMetadata(input, pattern),
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
       }
     }
@@ -108,23 +120,32 @@ export class PatternRecognition extends EventEmitter {
     // Store in history
     this.recognitionHistory.push(...results);
 
-    this.emit('patternsRecognized', { results, context: fullContext });
+    this.emit("patternsRecognized", { results, context: fullContext });
     return results;
   }
 
   /**
    * Recognize a single pattern (alias for recognizePatterns)
    */
-  public recognizePattern(input: any, context?: Partial<PatternContext>): { isRecognized: boolean; confidence: number; pattern: any; metadata: any } {
+  public recognizePattern(
+    input: any,
+    context?: Partial<PatternContext>,
+  ): {
+    isRecognized: boolean;
+    confidence: number;
+    pattern: any;
+    metadata: any;
+  } {
     const results = this.recognizePatterns(input, context);
-    const result = results && results.length > 0 && results[0] !== undefined
-      ? results[0]
-      : { confidence: 0, pattern: null, metadata: {} };
+    const result =
+      results && results.length > 0 && results[0] !== undefined
+        ? results[0]
+        : { confidence: 0, pattern: null, metadata: {} };
     return {
       isRecognized: result.confidence > 0.5,
       confidence: result.confidence,
       pattern: result.pattern,
-      metadata: result.metadata
+      metadata: result.metadata,
     };
   }
 
@@ -140,46 +161,55 @@ export class PatternRecognition extends EventEmitter {
       vortexAlignment: 0,
       toroidalFlow: 0,
       voidConnection: 0,
-      insights: [] as string[]
+      insights: [] as string[],
     };
 
     if (patterns.length === 0) return analysis;
 
     // Analyze pattern types
     for (const pattern of patterns) {
-      const type = pattern.type || 'unknown';
+      const type = pattern.type || "unknown";
       analysis.patternTypes[type] = (analysis.patternTypes[type] || 0) + 1;
     }
 
     // Calculate averages
-    const intensities = patterns.map(p => p.intensity || 0).filter(i => i > 0);
-    analysis.averageIntensity = intensities.length > 0 
-      ? intensities.reduce((a, b) => a + b, 0) / intensities.length 
-      : 0;
+    const intensities = patterns
+      .map((p) => p.intensity || 0)
+      .filter((i) => i > 0);
+    analysis.averageIntensity =
+      intensities.length > 0
+        ? intensities.reduce((a, b) => a + b, 0) / intensities.length
+        : 0;
 
     // Calculate resonance score
-    const resonanceValues = patterns.map(p => p.resonance || 0);
-    analysis.resonanceScore = resonanceValues.length > 0
-      ? resonanceValues.reduce((a, b) => a + b, 0) / resonanceValues.length
-      : 0;
+    const resonanceValues = patterns.map((p) => p.resonance || 0);
+    analysis.resonanceScore =
+      resonanceValues.length > 0
+        ? resonanceValues.reduce((a, b) => a + b, 0) / resonanceValues.length
+        : 0;
 
     // Calculate vortex alignment
-    const vortexValues = patterns.map(p => p.vortexStrength || 0);
-    analysis.vortexAlignment = vortexValues.length > 0
-      ? vortexValues.reduce((a, b) => a + b, 0) / vortexValues.length
-      : 0;
+    const vortexValues = patterns.map((p) => p.vortexStrength || 0);
+    analysis.vortexAlignment =
+      vortexValues.length > 0
+        ? vortexValues.reduce((a, b) => a + b, 0) / vortexValues.length
+        : 0;
 
     // Calculate toroidal flow
-    const toroidalValues = patterns.map(p => p.toroidalFlow ? 1 : 0);
-    analysis.toroidalFlow = toroidalValues.length > 0
-      ? toroidalValues.reduce((a: number, b: number) => a + b, 0) / toroidalValues.length
-      : 0;
+    const toroidalValues = patterns.map((p) => (p.toroidalFlow ? 1 : 0));
+    analysis.toroidalFlow =
+      toroidalValues.length > 0
+        ? toroidalValues.reduce((a: number, b: number) => a + b, 0) /
+          toroidalValues.length
+        : 0;
 
     // Calculate void connection
-    const voidValues = patterns.map(p => p.voidConnected ? 1 : 0);
-    analysis.voidConnection = voidValues.length > 0
-      ? voidValues.reduce((a: number, b: number) => a + b, 0) / voidValues.length
-      : 0;
+    const voidValues = patterns.map((p) => (p.voidConnected ? 1 : 0));
+    analysis.voidConnection =
+      voidValues.length > 0
+        ? voidValues.reduce((a: number, b: number) => a + b, 0) /
+          voidValues.length
+        : 0;
 
     // Generate insights
     analysis.insights = this.generateConsciousnessInsights(analysis);
@@ -197,13 +227,13 @@ export class PatternRecognition extends EventEmitter {
       wAxis: VORTEX_CONSTANTS.W_AXIS,
       polarMates: VORTEX_CONSTANTS.POLAR_MATES,
       familyGroups: VORTEX_CONSTANTS.FAMILY_NUMBER_GROUPS,
-      patterns: [] as any[]
+      patterns: [] as any[],
     };
 
     // Extract numerical patterns
     if (Array.isArray(data)) {
       for (const item of data) {
-        if (typeof item === 'number') {
+        if (typeof item === "number") {
           const vortexTransform = MathUtils.applyVortexTransform(item);
           const digitalRoot = ConstantsUtils.digitalRoot(item);
           const polarMate = ConstantsUtils.getPolarMate(item);
@@ -217,7 +247,7 @@ export class PatternRecognition extends EventEmitter {
             polarMate,
             familyGroup,
             isWAxis,
-            resonance: this.calculateVortexResonance(item)
+            resonance: this.calculateVortexResonance(item),
           });
         }
       }
@@ -238,7 +268,7 @@ export class PatternRecognition extends EventEmitter {
       voidConnectionPercentage: 0,
       averageResonance: 0,
       networkComplexity: 0,
-      insights: [] as string[]
+      insights: [] as string[],
     };
 
     if (apps.length === 0) return analysis;
@@ -246,30 +276,36 @@ export class PatternRecognition extends EventEmitter {
     // Analyze consciousness distribution
     for (const app of apps) {
       const level = Math.floor(app.consciousnessLevel || 0);
-      analysis.consciousnessDistribution[level] = (analysis.consciousnessDistribution[level] || 0) + 1;
+      analysis.consciousnessDistribution[level] =
+        (analysis.consciousnessDistribution[level] || 0) + 1;
     }
 
     // Analyze vortex strength distribution
     for (const app of apps) {
       const strength = Math.floor(app.vortexStrength || 0);
-      analysis.vortexStrengthDistribution[strength] = (analysis.vortexStrengthDistribution[strength] || 0) + 1;
+      analysis.vortexStrengthDistribution[strength] =
+        (analysis.vortexStrengthDistribution[strength] || 0) + 1;
     }
 
     // Calculate percentages
-    const toroidalCount = apps.filter(app => app.toroidalFlow).length;
+    const toroidalCount = apps.filter((app) => app.toroidalFlow).length;
     analysis.toroidalFlowPercentage = (toroidalCount / apps.length) * 100;
 
-    const voidCount = apps.filter(app => app.voidConnected).length;
+    const voidCount = apps.filter((app) => app.voidConnected).length;
     analysis.voidConnectionPercentage = (voidCount / apps.length) * 100;
 
     // Calculate average resonance
-    const resonances = apps.map(app => app.resonance || 0);
-    analysis.averageResonance = resonances.length > 0
-      ? resonances.reduce((a, b) => a + b, 0) / resonances.length
-      : 0;
+    const resonances = apps.map((app) => app.resonance || 0);
+    analysis.averageResonance =
+      resonances.length > 0
+        ? resonances.reduce((a, b) => a + b, 0) / resonances.length
+        : 0;
 
     // Calculate network complexity
-    const totalLinks = apps.reduce((sum, app) => sum + (app.linkedApps?.length || 0), 0);
+    const totalLinks = apps.reduce(
+      (sum, app) => sum + (app.linkedApps?.length || 0),
+      0,
+    );
     analysis.networkComplexity = totalLinks / apps.length;
 
     // Generate insights
@@ -290,7 +326,7 @@ export class PatternRecognition extends EventEmitter {
    */
   public clearHistory(): void {
     this.recognitionHistory = [];
-    this.emit('historyCleared');
+    this.emit("historyCleared");
   }
 
   /**
@@ -302,24 +338,32 @@ export class PatternRecognition extends EventEmitter {
       categories: {} as { [key: string]: number },
       totalRecognitions: this.recognitionHistory.length,
       averageConfidence: 0,
-      mostRecognizedPatterns: [] as any[]
+      mostRecognizedPatterns: [] as any[],
     };
 
     // Count patterns by category
     for (const pattern of this.patterns.values()) {
-      stats.categories[pattern.category] = (stats.categories[pattern.category] || 0) + 1;
+      stats.categories[pattern.category] =
+        (stats.categories[pattern.category] || 0) + 1;
     }
 
     // Calculate average confidence
     if (this.recognitionHistory.length > 0) {
-      const totalConfidence = this.recognitionHistory.reduce((sum, result) => sum + result.confidence, 0);
-      stats.averageConfidence = totalConfidence / this.recognitionHistory.length;
+      const totalConfidence = this.recognitionHistory.reduce(
+        (sum, result) => sum + result.confidence,
+        0,
+      );
+      stats.averageConfidence =
+        totalConfidence / this.recognitionHistory.length;
     }
 
     // Find most recognized patterns
     const patternCounts = new Map<string, number>();
     for (const result of this.recognitionHistory) {
-      patternCounts.set(result.pattern, (patternCounts.get(result.pattern) || 0) + 1);
+      patternCounts.set(
+        result.pattern,
+        (patternCounts.get(result.pattern) || 0) + 1,
+      );
     }
 
     stats.mostRecognizedPatterns = Array.from(patternCounts.entries())
@@ -335,14 +379,14 @@ export class PatternRecognition extends EventEmitter {
    */
   private initializePatterns(): void {
     // Import all patterns from the centralized COIL system
-    COIL_PATTERNS.forEach(coilPattern => {
+    COIL_PATTERNS.forEach((coilPattern) => {
       this.addPattern({
         name: coilPattern.name,
         signature: coilPattern.signature,
         category: coilPattern.category as PatternCategory,
         context: coilPattern.context,
         weight: coilPattern.weight || 0.5,
-        resonanceFactors: coilPattern.resonanceFactors || []
+        resonanceFactors: coilPattern.resonanceFactors || [],
       });
     });
   }
@@ -357,11 +401,15 @@ export class PatternRecognition extends EventEmitter {
   /**
    * Calculate pattern confidence
    */
-  private calculatePatternConfidence(input: any, pattern: MetaphysicalPattern, context: PatternContext): number {
+  private calculatePatternConfidence(
+    input: any,
+    pattern: MetaphysicalPattern,
+    context: PatternContext,
+  ): number {
     let baseConfidence = 0;
 
     // Test pattern signature
-    if (typeof pattern.signature === 'function') {
+    if (typeof pattern.signature === "function") {
       baseConfidence = pattern.signature(input) ? 0.8 : 0;
     } else {
       const inputStr = String(input);
@@ -374,46 +422,53 @@ export class PatternRecognition extends EventEmitter {
     let contextMultiplier = 1.0;
 
     // Consciousness level factor
-    if (pattern.resonanceFactors.includes('consciousness_level')) {
+    if (pattern.resonanceFactors.includes("consciousness_level")) {
       contextMultiplier *= context.consciousnessLevel;
     }
 
     // Vortex strength factor
-    if (pattern.resonanceFactors.includes('vortex_strength')) {
+    if (pattern.resonanceFactors.includes("vortex_strength")) {
       contextMultiplier *= context.vortexStrength / 10; // Normalize to 0-1
     }
 
     // Field strength factor
-    if (pattern.resonanceFactors.includes('field_intensity')) {
+    if (pattern.resonanceFactors.includes("field_intensity")) {
       contextMultiplier *= context.fieldStrength;
     }
 
     // Toroidal flow factor
-    if (pattern.resonanceFactors.includes('toroidal_flow')) {
+    if (pattern.resonanceFactors.includes("toroidal_flow")) {
       contextMultiplier *= context.toroidalFlow ? 1.2 : 0.8;
     }
 
     // Void connection factor
-    if (pattern.resonanceFactors.includes('void_connection')) {
+    if (pattern.resonanceFactors.includes("void_connection")) {
       contextMultiplier *= context.voidConnected ? 1.3 : 0.7;
     }
 
-    return MathUtils.clamp(baseConfidence * pattern.weight * contextMultiplier, 0, 1);
+    return MathUtils.clamp(
+      baseConfidence * pattern.weight * contextMultiplier,
+      0,
+      1,
+    );
   }
 
   /**
    * Extract pattern metadata
    */
-  private extractPatternMetadata(input: any, pattern: MetaphysicalPattern): any {
+  private extractPatternMetadata(
+    input: any,
+    pattern: MetaphysicalPattern,
+  ): any {
     const metadata: any = {
       patternName: pattern.name,
       category: pattern.category,
       context: pattern.context,
-      weight: pattern.weight
+      weight: pattern.weight,
     };
 
     // Extract numerical data if present
-    if (typeof input === 'number') {
+    if (typeof input === "number") {
       metadata.numericalValue = input;
       metadata.vortexTransform = MathUtils.applyVortexTransform(input);
       metadata.polarMate = ConstantsUtils.getPolarMate(input);
@@ -430,25 +485,25 @@ export class PatternRecognition extends EventEmitter {
   private calculateVortexResonance(num: number): number {
     const vortexTransform = MathUtils.applyVortexTransform(num);
     const isWAxis = ConstantsUtils.isWAxisNumber(num);
-    
+
     let resonance = 0.5; // Base resonance
-    
+
     // Enhance resonance for vortex sequence numbers
     if (VORTEX_CONSTANTS.VORTEX_SEQUENCE.includes(num as any)) {
       resonance += 0.3;
     }
-    
+
     // Enhance resonance for W-Axis numbers
     if (isWAxis) {
       resonance += 0.2;
     }
-    
+
     // Enhance resonance for golden ratio relationships
     const goldenRatio = VORTEX_CONSTANTS.GOLDEN_RATIO;
     if (MathUtils.approximatelyEqual(num / vortexTransform, goldenRatio, 0.1)) {
       resonance += 0.2;
     }
-    
+
     return MathUtils.clamp(resonance, 0, 1);
   }
 
@@ -459,7 +514,9 @@ export class PatternRecognition extends EventEmitter {
     const insights: string[] = [];
 
     if (analysis.averageIntensity > 0.7) {
-      insights.push("High consciousness intensity indicates strong awareness patterns");
+      insights.push(
+        "High consciousness intensity indicates strong awareness patterns",
+      );
     }
 
     if (analysis.resonanceScore > 0.6) {
@@ -471,7 +528,9 @@ export class PatternRecognition extends EventEmitter {
     }
 
     if (analysis.toroidalFlow > 0.9) {
-      insights.push("Strong toroidal flow suggests unified consciousness geometry");
+      insights.push(
+        "Strong toroidal flow suggests unified consciousness geometry",
+      );
     }
 
     if (analysis.voidConnection > 0.5) {
@@ -492,7 +551,9 @@ export class PatternRecognition extends EventEmitter {
     }
 
     if (analysis.voidConnectionPercentage > 60) {
-      insights.push("Strong void connection suggests deep emergence from source");
+      insights.push(
+        "Strong void connection suggests deep emergence from source",
+      );
     }
 
     if (analysis.averageResonance > 0.7) {
@@ -505,4 +566,4 @@ export class PatternRecognition extends EventEmitter {
 
     return insights;
   }
-} 
+}

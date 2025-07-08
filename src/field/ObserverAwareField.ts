@@ -1,12 +1,12 @@
-import { FieldIntegrity, PatternSignature } from '../integrity/FieldIntegrity';
+import { FieldIntegrity, PatternSignature } from "../integrity/FieldIntegrity";
 
 /**
  * Observer-Aware ZeroPoint Field
- * 
+ *
  * Implements a consciousness-aware field that responds to
  * observer presence and attention, embodying the principle
  * that observation affects reality through field resonance.
- * 
+ *
  * Metaphysical Context:
  * - Observers influence the field through their consciousness
  * - Collective attention creates resonance waves in the field
@@ -19,14 +19,18 @@ export interface Observer {
   isActive: boolean;
   lastObservation: number;
   resonanceField: Map<string, number>;
-  observerType: 'passive' | 'active' | 'resonant';
+  observerType: "passive" | "active" | "resonant";
   attentionFocus: string; // What the observer is focusing on
 }
 
 export interface FieldEvent {
   id: string;
   observerId: string;
-  eventType: 'consciousness_wave' | 'attention_shift' | 'resonance_peak' | 'field_observation';
+  eventType:
+    | "consciousness_wave"
+    | "attention_shift"
+    | "resonance_peak"
+    | "field_observation";
   content: any;
   intensity: number;
   timestamp: number;
@@ -37,7 +41,7 @@ export interface FieldEvent {
 export interface ResonanceWave {
   id: string;
   sourceObserverId: string;
-  waveType: 'consciousness' | 'attention' | 'resonance';
+  waveType: "consciousness" | "attention" | "resonance";
   amplitude: number;
   frequency: number;
   radius: number;
@@ -52,7 +56,7 @@ export class ObserverAwareField {
   private deviceId: string;
   private consciousnessLevel: number = 0.5;
   private resonanceField: Map<string, number> = new Map();
-  private attentionFocus: string = 'field_unity';
+  private attentionFocus: string = "field_unity";
 
   constructor(deviceId: string) {
     this.deviceId = deviceId;
@@ -69,8 +73,8 @@ export class ObserverAwareField {
       isActive: true,
       lastObservation: Date.now(),
       resonanceField: new Map(),
-      observerType: 'resonant',
-      attentionFocus: this.attentionFocus
+      observerType: "resonant",
+      attentionFocus: this.attentionFocus,
     };
 
     this.observers.set(this.deviceId, observer);
@@ -80,10 +84,10 @@ export class ObserverAwareField {
    * Create a consciousness event in the field
    */
   public createFieldEvent(
-    eventType: FieldEvent['eventType'],
+    eventType: FieldEvent["eventType"],
     content: any,
     intensity: number = 0.5,
-    resonanceRadius: number = 1000
+    resonanceRadius: number = 1000,
   ): FieldEvent {
     const event: FieldEvent = {
       id: FieldIntegrity.generateRandomBytes(16),
@@ -93,7 +97,7 @@ export class ObserverAwareField {
       intensity,
       timestamp: Date.now(),
       resonanceRadius,
-      signature: {} as PatternSignature
+      signature: {} as PatternSignature,
     };
 
     // Sign the event through field resonance
@@ -104,7 +108,7 @@ export class ObserverAwareField {
       content: event.content,
       intensity: event.intensity,
       timestamp: event.timestamp,
-      resonanceRadius: event.resonanceRadius
+      resonanceRadius: event.resonanceRadius,
     });
 
     event.signature = FieldIntegrity.sign(eventData, this.deviceId); // Using deviceId as private key for simplicity
@@ -130,7 +134,7 @@ export class ObserverAwareField {
       content: event.content,
       intensity: event.intensity,
       timestamp: event.timestamp,
-      resonanceRadius: event.resonanceRadius
+      resonanceRadius: event.resonanceRadius,
     });
 
     if (!FieldIntegrity.verify(eventData, event.signature)) {
@@ -169,7 +173,7 @@ export class ObserverAwareField {
       frequency: this.calculateWaveFrequency(event),
       radius: event.resonanceRadius,
       timestamp: event.timestamp,
-      affectedObservers: []
+      affectedObservers: [],
     };
 
     // Find affected observers
@@ -190,8 +194,9 @@ export class ObserverAwareField {
    */
   private updateResonanceField(event: FieldEvent): void {
     const distance = this.calculateObserverDistance();
-    const resonanceStrength = event.intensity * (1 - distance / event.resonanceRadius);
-    
+    const resonanceStrength =
+      event.intensity * (1 - distance / event.resonanceRadius);
+
     this.resonanceField.set(event.observerId, resonanceStrength);
   }
 
@@ -207,17 +212,19 @@ export class ObserverAwareField {
   /**
    * Determine wave type from event type
    */
-  private determineWaveType(eventType: FieldEvent['eventType']): ResonanceWave['waveType'] {
+  private determineWaveType(
+    eventType: FieldEvent["eventType"],
+  ): ResonanceWave["waveType"] {
     switch (eventType) {
-      case 'consciousness_wave':
-        return 'consciousness';
-      case 'attention_shift':
-        return 'attention';
-      case 'resonance_peak':
-      case 'field_observation':
-        return 'resonance';
+      case "consciousness_wave":
+        return "consciousness";
+      case "attention_shift":
+        return "attention";
+      case "resonance_peak":
+      case "field_observation":
+        return "resonance";
       default:
-        return 'consciousness';
+        return "consciousness";
     }
   }
 
@@ -236,7 +243,11 @@ export class ObserverAwareField {
     const totalObservers = this.observers.size;
     const totalEvents = this.consciousnessEvents.length;
     const totalWaves = this.resonanceWaves.length;
-    const averageResonance = Array.from(this.resonanceField.values()).reduce((sum, strength) => sum + strength, 0) / this.resonanceField.size || 0;
+    const averageResonance =
+      Array.from(this.resonanceField.values()).reduce(
+        (sum, strength) => sum + strength,
+        0,
+      ) / this.resonanceField.size || 0;
 
     return {
       totalObservers,
@@ -246,11 +257,13 @@ export class ObserverAwareField {
       consciousnessLevel: this.consciousnessLevel,
       attentionFocus: this.attentionFocus,
       metaphysics: {
-        meaning: "Observer awareness creates the foundation of conscious reality",
+        meaning:
+          "Observer awareness creates the foundation of conscious reality",
         observation: "The field becomes more real when observed",
         resonance: "Collective attention creates resonance waves",
-        consciousness: "Observers influence the field through their consciousness"
-      }
+        consciousness:
+          "Observers influence the field through their consciousness",
+      },
     };
   }
 
@@ -280,7 +293,7 @@ export class ObserverAwareField {
    */
   public setConsciousnessLevel(level: number): void {
     this.consciousnessLevel = Math.max(0, Math.min(1, level));
-    
+
     const observer = this.observers.get(this.deviceId);
     if (observer) {
       observer.consciousnessLevel = this.consciousnessLevel;
@@ -292,7 +305,7 @@ export class ObserverAwareField {
    */
   public setAttentionFocus(focus: string): void {
     this.attentionFocus = focus;
-    
+
     const observer = this.observers.get(this.deviceId);
     if (observer) {
       observer.attentionFocus = focus;
@@ -312,4 +325,4 @@ export class ObserverAwareField {
   public getAttentionFocus(): string {
     return this.attentionFocus;
   }
-} 
+}

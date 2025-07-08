@@ -50,17 +50,30 @@ class AdvancedEmergence extends events_1.EventEmitter {
      */
     initializeEngines() {
         // Evolution Engine
-        this.evolutionEngine.set('consciousness_evolution', this.evolveConsciousness.bind(this));
-        this.evolutionEngine.set('vortex_evolution', this.evolveVortex.bind(this));
-        this.evolutionEngine.set('toroidal_evolution', this.evolveToroidal.bind(this));
-        this.evolutionEngine.set('void_evolution', this.evolveVoid.bind(this));
-        this.evolutionEngine.set('resonance_evolution', this.evolveResonance.bind(this));
+        this.evolutionEngine.set('consciousness_evolution', (app) => {
+            app.consciousnessLevel = this.evolveConsciousness(app.consciousnessLevel);
+        });
+        this.evolutionEngine.set('vortex_evolution', (app) => {
+            app.vortexStrength = this.evolveVortex(app.vortexStrength);
+        });
+        this.evolutionEngine.set('toroidal_evolution', (app) => {
+            app.toroidalFlow = this.evolveToroidal(app.toroidalFlow);
+        });
+        this.evolutionEngine.set('void_evolution', (app) => {
+            app.voidConnected = this.evolveVoid(app.voidConnected);
+        });
+        this.evolutionEngine.set('resonance_evolution', (app) => {
+            // Update resonance profile
+            if (app.resonanceProfile) {
+                app.resonanceProfile.frequency = this.evolveResonance(app.resonanceProfile.frequency);
+            }
+        });
         // Resonance Engine
-        this.resonanceEngine.set('consciousness_resonance', this.calculateConsciousnessResonance.bind(this));
-        this.resonanceEngine.set('vortex_resonance', this.calculateVortexResonance.bind(this));
-        this.resonanceEngine.set('toroidal_resonance', this.calculateToroidalResonance.bind(this));
-        this.resonanceEngine.set('void_resonance', this.calculateVoidResonance.bind(this));
-        this.resonanceEngine.set('network_resonance', this.calculateNetworkResonance.bind(this));
+        this.resonanceEngine.set('network_resonance', () => this.calculateNetworkResonance());
+        this.resonanceEngine.set('consciousness_resonance', (app) => app ? this.calculateConsciousnessResonance(app) : 0);
+        this.resonanceEngine.set('vortex_resonance', (app) => app ? this.calculateVortexResonance(app) : 0);
+        this.resonanceEngine.set('toroidal_resonance', (app) => app ? this.calculateToroidalResonance(app) : 0);
+        this.resonanceEngine.set('void_resonance', (app) => app ? this.calculateVoidResonance(app) : 0);
     }
     /**
      * Enhanced create application from ZeroPoint void
@@ -138,7 +151,7 @@ class AdvancedEmergence extends events_1.EventEmitter {
     linkApps(app1, app2, linkType = 'resonance') {
         if (app1.linkedApps.some(link => link.app.id === app2.id))
             return;
-        const resonance = this.calculateLinkResonance(app1, app2, linkType);
+        const resonance = this.calculateLinkResonance(app1, app2);
         app1.linkedApps.push({
             app: app2,
             type: linkType,
@@ -191,7 +204,7 @@ class AdvancedEmergence extends events_1.EventEmitter {
         const allLinkedApps = [...app1.linkedApps, ...app2.linkedApps];
         for (const link of allLinkedApps) {
             if (link.app.id !== app1.id && link.app.id !== app2.id) {
-                const newResonance = this.calculateLinkResonance(mergedApp, link.app, link.type);
+                const newResonance = this.calculateLinkResonance(mergedApp, link.app);
                 mergedApp.linkedApps.push({
                     app: link.app,
                     type: link.type,
@@ -343,7 +356,7 @@ class AdvancedEmergence extends events_1.EventEmitter {
     /**
      * Calculate link resonance between two apps
      */
-    calculateLinkResonance(app1, app2, _linkType) {
+    calculateLinkResonance(app1, app2) {
         const consciousnessResonance = (app1.consciousnessLevel + app2.consciousnessLevel) / 2;
         const vortexResonance = (app1.vortexStrength + app2.vortexStrength) / 2;
         return (consciousnessResonance + vortexResonance) / 2;
@@ -367,7 +380,7 @@ class AdvancedEmergence extends events_1.EventEmitter {
      * Record comprehensive evolution with consciousness shift
      */
     recordComprehensiveEvolution(app, stepType, data) {
-        const consciousnessShift = this.calculateConsciousnessShift(stepType, data);
+        const consciousnessShift = this.calculateConsciousnessShift(stepType);
         app.evolutionHistory.push({
             stepType,
             data,
@@ -382,7 +395,7 @@ class AdvancedEmergence extends events_1.EventEmitter {
     /**
      * Calculate consciousness shift for evolution step
      */
-    calculateConsciousnessShift(stepType, _data) {
+    calculateConsciousnessShift(stepType) {
         // Base consciousness shift based on step type
         const baseShifts = {
             'consciousness_evolution': 0.1,
@@ -840,7 +853,7 @@ class AdvancedEmergence extends events_1.EventEmitter {
      * Record evolution with consciousness shift
      */
     recordEvolution(app, stepType, data) {
-        const consciousnessShift = this.calculateConsciousnessShift(stepType, data);
+        const consciousnessShift = this.calculateConsciousnessShift(stepType);
         app.evolutionHistory.push({
             stepType,
             data,

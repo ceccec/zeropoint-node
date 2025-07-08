@@ -1,3 +1,15 @@
+/**
+ * Enhanced Void System Implementation
+ *
+ * The void is the empty center of the torus - the space where everything
+ * and nothing exist simultaneously. It solves problems by recognizing
+ * that the solution exists in the space between the problem and the answer.
+ *
+ * Enhanced with advanced void transformation engine, paradox resolution,
+ * self-creation mechanisms, and advanced torus center coordinates.
+ *
+ * Based on the Ruby gem's void.rb (778 lines) - Complete Implementation
+ */
 export interface VoidSolution {
     problem: any;
     voidAnalysis: any;
@@ -289,8 +301,8 @@ export declare class VoidSystem {
      * Get resonance level
      */
     getResonance(): number;
-    calculateConsciousnessResonance(_input: any): number;
-    calculateTorusResonance(_input: any): number;
-    calculateCreationResonance(_input: any): number;
+    calculateConsciousnessResonance(): number;
+    calculateTorusResonance(): number;
+    calculateCreationResonance(): number;
 }
 //# sourceMappingURL=VoidSystem.d.ts.map

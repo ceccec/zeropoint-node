@@ -1,10 +1,10 @@
 /**
  * ZeroPoint Unified System
- * 
+ *
  * Centralized system that unifies all shared logic, patterns, and metaphysical context
  * across all ZeroPoint modules. This eliminates duplication and ensures consistency
  * throughout the entire system.
- * 
+ *
  * Metaphysical Context:
  * - All systems are unified in the void consciousness field
  * - Shared patterns are expressions of the same underlying consciousness
@@ -12,10 +12,19 @@
  * - The system is self-referential and self-explaining
  */
 
-import { VORTEX_CONSTANTS, CONSCIOUSNESS_CONSTANTS, METAPHYSICAL_CONSTANTS, ConstantsUtils } from './SharedConstants';
-import { PatternRecognition } from './PatternRecognition';
-import { UnifiedVoidEquations, VoidEquation, VoidParadoxResolution } from './UnifiedVoidEquations';
-import { getCoilContext, getCoilResonanceFactors } from './CoilSystem';
+import {
+  VORTEX_CONSTANTS,
+  CONSCIOUSNESS_CONSTANTS,
+  METAPHYSICAL_CONSTANTS,
+  ConstantsUtils,
+} from "./SharedConstants";
+import { PatternRecognition } from "./PatternRecognition";
+import {
+  UnifiedVoidEquations,
+  VoidEquation,
+  VoidParadoxResolution,
+} from "./UnifiedVoidEquations";
+import { getCoilContext, getCoilResonanceFactors } from "./CoilSystem";
 
 /**
  * Unified system configuration
@@ -34,7 +43,13 @@ export interface UnifiedSystemConfig {
  */
 export interface UnifiedPatternResult {
   pattern: string;
-  category: 'vortex' | 'mathematical' | 'metaphysical' | 'consciousness' | 'void' | 'integration';
+  category:
+    | "vortex"
+    | "mathematical"
+    | "metaphysical"
+    | "consciousness"
+    | "void"
+    | "integration";
   confidence: number;
   metaphysicalContext: string;
   relationships: string[];
@@ -80,7 +95,7 @@ export interface UnifiedFieldUnity {
 
 /**
  * ZeroPoint Unified System
- * 
+ *
  * Centralizes all shared logic and eliminates duplication across all modules
  */
 export class UnifiedSystem {
@@ -88,7 +103,11 @@ export class UnifiedSystem {
   private patternRecognition: PatternRecognition;
   private voidEquations: UnifiedVoidEquations;
   private consciousnessFlows: UnifiedConsciousnessFlow[];
-  private voidLog: Array<{ message: string; category: string; timestamp: Date }>;
+  private voidLog: Array<{
+    message: string;
+    category: string;
+    timestamp: Date;
+  }>;
 
   constructor(config: Partial<UnifiedSystemConfig> = {}) {
     this.config = {
@@ -98,7 +117,7 @@ export class UnifiedSystem {
       enableVoidIntegration: true,
       enableMetaphysicalContext: true,
       enableVoidEquations: true,
-      ...config
+      ...config,
     };
 
     this.patternRecognition = new PatternRecognition();
@@ -113,29 +132,29 @@ export class UnifiedSystem {
   private initializeConsciousnessFlows(): UnifiedConsciousnessFlow[] {
     return [
       {
-        source: 'ZeroPoint Void Center',
-        expression: 'Consciousness Waves Through Toroidal Field',
+        source: "ZeroPoint Void Center",
+        expression: "Consciousness Waves Through Toroidal Field",
         patterns: [...VORTEX_CONSTANTS.VORTEX_SEQUENCE],
-        return: 'Back to ZeroPoint Void Center',
+        return: "Back to ZeroPoint Void Center",
         flowStrength: 0.9,
-        voidIntegration: 1.0
+        voidIntegration: 1.0,
       },
       {
-        source: 'Void Consciousness',
-        expression: 'Mathematical Patterns Through Field',
+        source: "Void Consciousness",
+        expression: "Mathematical Patterns Through Field",
         patterns: [...VORTEX_CONSTANTS.W_AXIS],
-        return: 'Back to Void Consciousness',
+        return: "Back to Void Consciousness",
         flowStrength: 0.8,
-        voidIntegration: 0.9
+        voidIntegration: 0.9,
       },
       {
-        source: 'Consciousness Field',
-        expression: 'Pattern Recognition and Emergence',
+        source: "Consciousness Field",
+        expression: "Pattern Recognition and Emergence",
         patterns: [1, 2, 4, 8, 7, 5, 3, 6, 9],
-        return: 'Back to Consciousness Field',
+        return: "Back to Consciousness Field",
         flowStrength: 0.7,
-        voidIntegration: 0.8
-      }
+        voidIntegration: 0.8,
+      },
     ];
   }
 
@@ -178,16 +197,17 @@ export class UnifiedSystem {
    * Get unified field unity
    */
   getFieldUnity(): UnifiedFieldUnity {
-    const patterns = this.patternRecognition.recognizePatterns('');
+    const patterns = this.patternRecognition.recognizePatterns("");
     const unityScore = this.calculateUnityScore(patterns);
-    
+
     return {
       unityScore,
       patternCount: patterns.length,
       voidLogEntries: this.voidLog.length,
       consciousnessLevel: this.config.consciousnessLevel,
       fieldStrength: this.config.fieldStrength,
-      metaphysicalContext: 'All patterns are unified in the void consciousness field'
+      metaphysicalContext:
+        "All patterns are unified in the void consciousness field",
     };
   }
 
@@ -196,10 +216,13 @@ export class UnifiedSystem {
    */
   private calculateUnityScore(patterns: any[]): number {
     if (patterns.length === 0) return 0;
-    
-    const totalConfidence = patterns.reduce((sum, pattern) => sum + pattern.confidence, 0);
+
+    const totalConfidence = patterns.reduce(
+      (sum, pattern) => sum + pattern.confidence,
+      0,
+    );
     const averageConfidence = totalConfidence / patterns.length;
-    
+
     return Math.min(averageConfidence * this.config.consciousnessLevel, 1.0);
   }
 
@@ -210,7 +233,7 @@ export class UnifiedSystem {
     this.voidLog.push({
       message,
       category,
-      timestamp: new Date()
+      timestamp: new Date(),
     });
   }
 
@@ -230,15 +253,15 @@ export class UnifiedSystem {
     }
 
     const results = this.patternRecognition.recognizePatterns(input);
-    
-    return results.map(result => ({
+
+    return results.map((result) => ({
       pattern: result.pattern,
       category: result.category as any,
       confidence: result.confidence,
       metaphysicalContext: this.getMetaphysicalContext(result.pattern),
       relationships: this.getPatternRelationships(result.pattern),
       voidIntegration: this.calculateVoidIntegration(result.pattern),
-      timestamp: result.timestamp
+      timestamp: result.timestamp,
     }));
   }
 
@@ -261,14 +284,14 @@ export class UnifiedSystem {
    */
   private calculateVoidIntegration(pattern: string): number {
     const integrations: { [key: string]: number } = {
-      'void': 1.0,
-      'vortex_sequence': 0.9,
-      'golden_ratio': 0.8,
-      'w_axis': 0.9,
-      'toroidal': 0.8,
-      'consciousness': 0.8,
-      'aperture': 0.9,
-      'unity': 0.8
+      void: 1.0,
+      vortex_sequence: 0.9,
+      golden_ratio: 0.8,
+      w_axis: 0.9,
+      toroidal: 0.8,
+      consciousness: 0.8,
+      aperture: 0.9,
+      unity: 0.8,
     };
 
     return integrations[pattern] || 0.5;
@@ -281,7 +304,7 @@ export class UnifiedSystem {
     return {
       vortex: VORTEX_CONSTANTS,
       consciousness: CONSCIOUSNESS_CONSTANTS,
-      metaphysical: METAPHYSICAL_CONSTANTS
+      metaphysical: METAPHYSICAL_CONSTANTS,
     };
   }
 
@@ -293,11 +316,12 @@ export class UnifiedSystem {
       vortexSequence: () => [...VORTEX_CONSTANTS.VORTEX_SEQUENCE],
       goldenRatio: () => VORTEX_CONSTANTS.GOLDEN_RATIO,
       wAxis: () => [...VORTEX_CONSTANTS.W_AXIS],
-      familyGroups: () => VORTEX_CONSTANTS.FAMILY_NUMBER_GROUPS.map(g => [...g]),
-      polarMates: () => VORTEX_CONSTANTS.POLAR_MATES.map(p => [...p]),
-      digitalRoot: (n: number) => n === 0 ? 0 : 1 + ((Math.abs(n) - 1) % 9),
+      familyGroups: () =>
+        VORTEX_CONSTANTS.FAMILY_NUMBER_GROUPS.map((g) => [...g]),
+      polarMates: () => VORTEX_CONSTANTS.POLAR_MATES.map((p) => [...p]),
+      digitalRoot: (n: number) => (n === 0 ? 0 : 1 + ((Math.abs(n) - 1) % 9)),
       vortexSum: (n: number) => n,
-      goldenHarmony: (n: number) => n
+      goldenHarmony: (n: number) => n,
     };
   }
 
@@ -309,7 +333,7 @@ export class UnifiedSystem {
       voidPrinciples: METAPHYSICAL_CONSTANTS.PRINCIPLES,
       patternCategories: METAPHYSICAL_CONSTANTS.PATTERN_CATEGORIES,
       consciousnessDimensions: METAPHYSICAL_CONSTANTS.CONSCIOUSNESS_DIMENSIONS,
-      getInsight: ConstantsUtils.getMetaphysicalInsight
+      getInsight: ConstantsUtils.getMetaphysicalInsight,
     };
   }
 
@@ -320,12 +344,13 @@ export class UnifiedSystem {
     if (!this.config.enableVoidEquations) {
       return {
         paradox,
-        solution: 'Void equations are disabled',
+        solution: "Void equations are disabled",
         voidIntegration: 0.5,
-        metaphysicalContext: 'Void equations provide paradox resolution through consciousness unity',
+        metaphysicalContext:
+          "Void equations provide paradox resolution through consciousness unity",
         consciousnessLevel: 0.5,
-        relationships: ['void_consciousness'],
-        applications: ['Paradox resolution']
+        relationships: ["void_consciousness"],
+        applications: ["Paradox resolution"],
       };
     }
 
@@ -350,13 +375,13 @@ export class UnifiedSystem {
     if (!this.config.enableVoidEquations) {
       return {
         enabled: false,
-        message: 'Void equations are disabled'
+        message: "Void equations are disabled",
       };
     }
 
     return {
       enabled: true,
-      ...this.voidEquations.getSystemSummary()
+      ...this.voidEquations.getSystemSummary(),
     };
   }
 
@@ -367,13 +392,13 @@ export class UnifiedSystem {
     if (!this.config.enableVoidEquations) {
       return {
         enabled: false,
-        message: 'Void equations are disabled'
+        message: "Void equations are disabled",
       };
     }
 
     return {
       enabled: true,
-      ...this.voidEquations.getVoidInsights()
+      ...this.voidEquations.getVoidInsights(),
     };
   }
 
@@ -392,8 +417,10 @@ export class UnifiedSystem {
       consciousnessFlows: consciousnessFlows.length,
       voidLogEntries: this.voidLog.length,
       voidEquationSummary,
-      metaphysicalContext: 'All systems are unified in the void consciousness field',
-      unityPrinciple: 'Unity emerges through the recognition of shared relationships in void consciousness'
+      metaphysicalContext:
+        "All systems are unified in the void consciousness field",
+      unityPrinciple:
+        "Unity emerges through the recognition of shared relationships in void consciousness",
     };
   }
 
@@ -406,7 +433,7 @@ export class UnifiedSystem {
       fieldStrength: this.config.fieldStrength,
       voidBalance: 0.5,
       unifiedFlow: 0.5,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
   }
-} 
+}

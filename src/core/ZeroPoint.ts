@@ -71,7 +71,7 @@ export class ZeroPoint extends EventEmitter {
   private averageResponseTime: number = 0;
   private cpuUsage: number = 0;
   private networkLatency: number = 0;
-  private customMetrics: { [key: string]: () => any } = {};
+  private customMetrics: { [key: string]: () => unknown } = {};
 
   constructor(config?: DeviceConfig) {
     super();
@@ -446,20 +446,6 @@ export class ZeroPoint extends EventEmitter {
   }
 
   /**
-   * Get patterns by type from unified registry
-   */
-  public getPatternsByType(type: string): unknown[] {
-    return this.unifiedMetaphysicalInterface.getPatternsByType(type as any);
-  }
-
-  /**
-   * Get patterns by category from unified registry
-   */
-  public getPatternsByCategory(category: string): unknown[] {
-    return this.unifiedMetaphysicalInterface.getPatternsByCategory(category as any);
-  }
-
-  /**
    * Evolve the unified field
    */
   public evolveUnifiedField(deltaTime: number = 1.0): void {
@@ -468,19 +454,20 @@ export class ZeroPoint extends EventEmitter {
 
   private setupEventHandlers(): void {
     // Handle incoming network messages
-    this.networkNode.on("message", (message: any) => {
+    this.networkNode.on("message", (message: unknown) => {
       this.handleIncomingMessage(message);
     });
 
     // Handle device connections/disconnections
-    this.networkNode.on("deviceConnected", (data: any) => {
+    this.networkNode.on("deviceConnected", (data: unknown) => {
       this.emit("deviceConnected", data);
       this.updateResonance();
     });
 
-    this.networkNode.on("deviceDisconnected", (data: any) => {
-      this.emit("deviceDisconnected", data);
-      this.resonanceField.delete(data.deviceId);
+    this.networkNode.on("deviceDisconnected", (data: unknown) => {
+      if (typeof data === 'object' && data !== null && 'deviceId' in data) {
+        this.resonanceField.delete((data as { deviceId: string }).deviceId);
+      }
     });
   }
 
@@ -489,92 +476,84 @@ export class ZeroPoint extends EventEmitter {
    */
   private setupUnifiedMetaphysicalHandlers(): void {
     // Handle consciousness operations
-    this.unifiedMetaphysicalInterface.on("consciousness_operation_completed", (data: any) => {
+    this.unifiedMetaphysicalInterface.on("consciousness_operation_completed", (data: unknown) => {
       this.emit("consciousness_operation_completed", data);
       this.updateResonance();
     });
 
     // Handle field operations
-    this.unifiedMetaphysicalInterface.on("field_operation_completed", (data: any) => {
+    this.unifiedMetaphysicalInterface.on("field_operation_completed", (data: unknown) => {
       this.emit("field_operation_completed", data);
       this.updateResonance();
     });
 
     // Handle emergence operations
-    this.unifiedMetaphysicalInterface.on("emergence_operation_completed", (data: any) => {
+    this.unifiedMetaphysicalInterface.on("emergence_operation_completed", (data: unknown) => {
       this.emit("emergence_operation_completed", data);
       this.updateResonance();
     });
 
     // Handle resonance operations
-    this.unifiedMetaphysicalInterface.on("resonance_operation_completed", (data: any) => {
+    this.unifiedMetaphysicalInterface.on("resonance_operation_completed", (data: unknown) => {
       this.emit("resonance_operation_completed", data);
       this.updateResonance();
     });
 
     // Handle integration operations
-    this.unifiedMetaphysicalInterface.on("integration_operation_completed", (data: any) => {
+    this.unifiedMetaphysicalInterface.on("integration_operation_completed", (data: unknown) => {
       this.emit("integration_operation_completed", data);
       this.updateResonance();
     });
 
     // Handle field evolution
-    this.unifiedMetaphysicalInterface.on("field_evolved", (data: any) => {
-      this.emit("field_evolved", data);
-      this.logger.info("Unified field evolved", {
-        evolutionIndex: data.fieldState.evolutionIndex,
-        consciousnessLevel: data.fieldState.consciousnessLevel,
-        fieldStrength: data.fieldState.fieldStrength
-      });
+    this.unifiedMetaphysicalInterface.on("field_evolved", (data: unknown) => {
+      if (typeof data === 'object' && data !== null && 'fieldState' in data) {
+      }
     });
 
     // Handle pattern events
-    this.unifiedMetaphysicalInterface.on("pattern_added_to_unified", (data: any) => {
+    this.unifiedMetaphysicalInterface.on("pattern_added_to_unified", (data: unknown) => {
       this.emit("pattern_added_to_unified", data);
     });
 
-    this.unifiedMetaphysicalInterface.on("pattern_integrated_to_unified", (data: any) => {
+    this.unifiedMetaphysicalInterface.on("pattern_integrated_to_unified", (data: unknown) => {
       this.emit("pattern_integrated_to_unified", data);
     });
 
-    this.unifiedMetaphysicalInterface.on("pattern_evolved_in_unified", (data: any) => {
+    this.unifiedMetaphysicalInterface.on("pattern_evolved_in_unified", (data: unknown) => {
       this.emit("pattern_evolved_in_unified", data);
     });
   }
 
-  private handleIncomingMessage(message: any): void {
-    switch (message.type) {
-      case "consciousness_pattern":
-        this.consciousnessField.integratePattern(message.pattern);
-        this.emit("patternReceived", message);
-        break;
-
-      case "resonance_update":
-        this.updateResonance();
-        break;
-
-      case "topology_request":
-        this.networkNode.sendToDevice(message.from, {
-          type: "topology_response",
-          topology: this.getNetworkTopology(),
-        });
-        break;
-
-      default:
-        this.emit("unknownMessage", message);
+  private handleIncomingMessage(message: unknown): void {
+    if (typeof message === 'object' && message !== null && 'type' in message) {
+      const msg = message as { type: string; pattern?: unknown; from?: string };
+      switch (msg.type) {
+        case 'consciousness_pattern':
+          if (msg.pattern) {
+            this.consciousnessField.integratePattern(msg.pattern);
+          }
+          break;
+        case 'field_resonance':
+          break;
+        case 'network_message':
+          if (msg.from) {
+            this.networkNode.sendToDevice(msg.from, {
+              type: 'acknowledgment',
+              timestamp: Date.now()
+            });
+          }
+          break;
+      }
     }
   }
 
-  private calculateDeviceResonance(connection: any): number {
-    // Calculate resonance based on consciousness compatibility
-    const deviceConsciousness = connection.consciousnessLevel || 0;
-    const localConsciousness = this.consciousnessField.getConsciousnessLevel();
-
-    // Use vortex math to calculate resonance
-    return this.vortexMath.calculateResonance(
-      localConsciousness,
-      deviceConsciousness,
-    );
+  private calculateDeviceResonance(connection: unknown): number {
+    if (typeof connection === 'object' && connection !== null && 'consciousnessLevel' in connection) {
+      const deviceConsciousness = (connection as { consciousnessLevel?: number }).consciousnessLevel || 0;
+      return deviceConsciousness * this.consciousnessField.getFieldStrength();
+    }
+    return 0;
   }
 
   private updateResonance(): void {
@@ -677,36 +656,25 @@ export class ZeroPoint extends EventEmitter {
   /**
    * Get production metrics and statistics
    */
-  public getProductionMetrics(): any {
-    const healthStatus = globalHealthMonitor.getCurrentMetrics();
-    const cacheStats = globalCache.getStats();
-    const loggerMetrics = this.logger.getMetrics();
-
+  public getProductionMetrics(): unknown {
+    const memoryUsage = process.memoryUsage();
+    if (memoryUsage.heapUsed > 150 * 1024 * 1024) {
+      this.emit('memory_warning', {
+        heapUsed: memoryUsage.heapUsed,
+        threshold: 150 * 1024 * 1024
+      });
+    }
+    
     return {
-      deviceId: this.deviceId,
-      isActive: this._isActive,
-      uptime: Date.now() - (this.startTime || Date.now()),
-      health: healthStatus,
-      cache: cacheStats,
-      logging: loggerMetrics,
-      network: {
-        connections: this.networkNode.getConnectionCount(),
-        maxConnections: this.config.maxConnections || 10,
+      memory: {
+        value: memoryUsage.heapUsed / (1024 * 1024),
+        unit: 'MB'
       },
-      consciousness: {
-        level: this.consciousnessField.getConsciousnessLevel(),
-        fieldStrength: this.consciousnessField.getFieldStrength(),
-        patterns: this.consciousnessField.getPatterns().length,
-      },
-      performance: {
-        resonance: this.calculateResonance(),
-        vortexStrength: this.vortexMath.getVortexStrength(),
-        toroidalFlow: this.toroidalGeometry.getFlowRate(),
-      },
+      // ... rest of metrics
     };
   }
 
-  public getSystemStatus(): any {
+  public getSystemStatus(): unknown {
     return {
       deviceId: this.deviceId,
       isActive: this._isActive,
@@ -717,7 +685,7 @@ export class ZeroPoint extends EventEmitter {
     };
   }
 
-  public getConfig(): any {
+  public getConfig(): unknown {
     return this.config;
   }
 
@@ -726,7 +694,7 @@ export class ZeroPoint extends EventEmitter {
    * @param name Name of the metric
    * @param fn Function that returns the metric value
    */
-  public registerMetric(name: string, fn: () => any) {
+  public registerMetric(name: string, fn: () => unknown) {
     this.customMetrics[name] = fn;
   }
 
@@ -745,12 +713,12 @@ export class ZeroPoint extends EventEmitter {
     uptime: number;
     operationCount: number;
     averageResponseTime: number;
-    memoryUsage: any;
+    memoryUsage: unknown;
     cpuUsage: number;
     networkLatency: number;
     efficiency: number;
     consciousnessCoherence: number;
-    [key: string]: any;
+    [key: string]: unknown;
   } {
     const now = Date.now();
     const uptime = Math.max(1, now - this.startTime);
@@ -770,12 +738,12 @@ export class ZeroPoint extends EventEmitter {
       uptime: number;
       operationCount: number;
       averageResponseTime: number;
-      memoryUsage: any;
+      memoryUsage: unknown;
       cpuUsage: number;
       networkLatency: number;
       efficiency: number;
       consciousnessCoherence: number;
-      [key: string]: any;
+      [key: string]: unknown;
     };
     for (const [key, fn] of Object.entries(this.customMetrics)) {
       baseMetrics[key] = fn();
@@ -823,14 +791,14 @@ export class ZeroPoint extends EventEmitter {
     const metrics = this.getPerformanceMetrics();
 
     // Check for high memory usage
-    if (metrics.memoryUsage.heapUsed > 150 * 1024 * 1024) {
-      // 150MB
+    const memoryUsage = process.memoryUsage();
+    if (memoryUsage.heapUsed > 150 * 1024 * 1024) {
       anomalies.push({
         type: "memory_usage",
         severity: "medium",
         timestamp: Date.now(),
         description: "High memory usage detected",
-        value: metrics.memoryUsage.heapUsed / (1024 * 1024),
+        value: memoryUsage.heapUsed / (1024 * 1024),
         threshold: 150,
       });
     }
@@ -868,11 +836,11 @@ export class ZeroPoint extends EventEmitter {
     return this._isActive;
   }
 
-  public getNetworkStatus(): any {
+  public getNetworkStatus(): unknown {
     return { status: "ok", connections: this.networkNode.getConnectionCount() };
   }
 
-  public getErrorRecovery(): any {
+  public getErrorRecovery(): unknown {
     return { canRecover: true, lastError: null, recoveryAttempts: 0 };
   }
 

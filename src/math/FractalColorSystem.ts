@@ -69,9 +69,12 @@ export class FractalColorSystem {
     const observerColor = ObserverMixin(color, color.id);
 
     // Add custom observation behavior for colors
-    observerColor.observe = (input: any) => {
-      if (input.type === "color_interaction") {
-        this.handleColorInteraction(color.id, input);
+    observerColor.observe = (input: unknown) => {
+      if (typeof input === 'object' && input !== null && 'type' in input) {
+        const inputData = input as { type: string };
+        if (inputData.type === "color_interaction") {
+          this.handleColorInteraction(color.id, input);
+        }
       }
     };
 
@@ -222,22 +225,24 @@ export class FractalColorSystem {
   /**
    * Handle color interactions
    */
-  private handleColorInteraction(colorId: string, interaction: any): void {
+  private handleColorInteraction(colorId: string, interaction: unknown): void {
     const color = this.colors.get(colorId);
     if (!color) return;
+    
+    if (typeof interaction === 'object' && interaction !== null && 'type' in interaction) {
+      const interactionData = interaction as { type: string; consciousness?: number };
+      if (interactionData.type === "consciousness_change") {
+        color.consciousness = fractal("clamp", interactionData.consciousness || 0, 0, 10);
+        color.resonance = fractal("consciousness", color.consciousness);
 
-    // Update color based on interaction
-    if (interaction.type === "consciousness_change") {
-      color.consciousness = fractal("clamp", interaction.consciousness, 0, 10);
-      color.resonance = fractal("consciousness", color.consciousness);
-
-      // Notify observers of color change
-      color.notifyObservers({
-        type: "color_consciousness_changed",
-        colorId,
-        consciousness: color.consciousness,
-        resonance: color.resonance,
-      });
+        // Notify observers of color change
+        color.notifyObservers({
+          type: "color_consciousness_changed",
+          colorId,
+          consciousness: color.consciousness,
+          resonance: color.resonance,
+        });
+      }
     }
   }
 
@@ -295,7 +300,7 @@ export class FractalColorSystem {
   /**
    * Get metaphysical insights about the color system
    */
-  public getInsights(): any {
+  public getInsights(): unknown {
     return {
       colorCount: this.colors.size,
       relationshipCount: Array.from(this.colorRelationships.values()).flat()

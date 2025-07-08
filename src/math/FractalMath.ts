@@ -208,7 +208,7 @@ export class FractalMath {
   /**
    * Get fractal insights
    */
-  static getInsights(): any {
+  static getInsights(): unknown {
     return {
       fractalConstants: MATH_CONSTANTS,
       metaphysics: {

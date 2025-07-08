@@ -17,10 +17,10 @@ export interface VBMPattern {
   answer: string;
   metaphysicalContext: string;
   operation: string;
-  numericalData?: any;
+  numericalData?: unknown;
   advancedOperations?: string[];
-  geometricProperties?: any;
-  topologicalFeatures?: any;
+  geometricProperties?: unknown;
+  topologicalFeatures?: unknown;
   consciousnessLevel?: number;
 }
 
@@ -44,8 +44,8 @@ export interface VBMAdvancedOperation {
 export interface VBMGeometry {
   shape: string;
   dimensions: number;
-  properties: any;
-  consciousnessMapping: any;
+  properties: unknown;
+  consciousnessMapping: unknown;
   topologicalFeatures: string[];
   metaphysicalContext: string;
 }
@@ -743,7 +743,7 @@ export class AdvancedVBM {
   /**
    * Get comprehensive system statistics
    */
-  public qaSummary(): any {
+  public qaSummary(): unknown {
     const patterns = Object.values(AdvancedVBM.QA_PATTERNS);
     const operations = new Set(patterns.map((p) => p.operation));
 

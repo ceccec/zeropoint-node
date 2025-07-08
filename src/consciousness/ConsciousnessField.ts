@@ -225,34 +225,36 @@ export class ConsciousnessField extends EventEmitter {
   /**
    * Integrate external pattern - consciousness integration
    */
-  public integratePattern(externalPattern: any): void {
-    // Convert external pattern to internal format - unified consciousness
-    const pattern: Pattern = {
-      id: this.generatePatternId(),
-      type: "consciousness", // Map all consciousness patterns to unified type
-      category: "spiritual",
-      intensity: externalPattern.intensity || 0.5,
-      frequency: externalPattern.frequency || 1.0,
-      timestamp: Date.now(),
-      consciousness: 0.5,
-      field: 0.5,
-      void: 0.5,
-      data: externalPattern.data || {},
-      metadata: {
-        originalType: externalPattern.type,
-        source: "external"
-      }
-    };
+  public integratePattern(externalPattern: unknown): void {
+    // Type guard to ensure externalPattern has the expected structure
+    if (typeof externalPattern === 'object' && externalPattern !== null) {
+      const pattern = externalPattern as {
+        intensity?: number;
+        frequency?: number;
+        data?: Record<string, unknown>;
+        type?: string;
+      };
+      
+      const integratedPattern = {
+        id: `integrated_${Date.now()}`,
+        type: 'consciousness' as const,
+        category: 'integration' as const,
+        content: 'Integrated external pattern',
+        intensity: pattern.intensity || 0.5,
+        frequency: pattern.frequency || 1.0,
+        timestamp: Date.now(),
+        data: pattern.data || {},
+        metadata: {
+          originalType: pattern.type,
+          integrationMethod: 'consciousness_field'
+        }
+      };
+      
+      this.patterns.set(integratedPattern.id, integratedPattern);
+      this.updateConsciousnessFromPattern(integratedPattern);
 
-    this.patterns.set(pattern.id, pattern);
-    this.updateConsciousnessFromPattern(pattern);
-
-    this.emit("patternIntegrated", {
-      pattern,
-      consciousness: pattern.consciousness,
-      field: pattern.field,
-      void: pattern.void
-    });
+      this.emit('patternIntegrated', integratedPattern);
+    }
   }
 
   /**

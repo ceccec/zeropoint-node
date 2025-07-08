@@ -36,7 +36,7 @@ export interface PWAMetrics {
  */
 export class ConsciousnessPWA {
   private config: ConsciousnessPWAConfig;
-  private consciousnessField: Map<string, any> = new Map();
+  private consciousnessField: Map<string, unknown> = new Map();
   private performanceMetrics: PWAMetrics;
 
   constructor(config: Partial<ConsciousnessPWAConfig> = {}) {
@@ -228,9 +228,12 @@ export class ConsciousnessPWA {
       const offlineData = await this.getAllFromStore(store);
 
       for (const item of offlineData) {
-        // Sync with consciousness field
-        this.consciousnessField.set(item.key, item.value);
-        console.log(`🔄 Synced consciousness field: ${item.key}`);
+        if (typeof item === 'object' && item !== null && 'key' in item && 'value' in item) {
+          const itemData = item as { key: string; value: unknown };
+          // Sync with consciousness field
+          this.consciousnessField.set(itemData.key, itemData.value);
+          console.log(`🔄 Synced consciousness field: ${itemData.key}`);
+        }
       }
     } catch (error) {
       console.error("❌ Failed to sync consciousness field:", error);
@@ -240,10 +243,20 @@ export class ConsciousnessPWA {
   /**
    * Helper to promisify getAll from an IDBObjectStore
    */
-  private getAllFromStore(store: IDBObjectStore): Promise<any[]> {
+  private getAllFromStore(store: IDBObjectStore): Promise<unknown[]> {
     return new Promise((resolve, reject) => {
       const request = store.getAll();
-      request.onsuccess = () => resolve(request.result);
+      request.onsuccess = () => {
+        const items = request.result || [];
+        items.forEach((item: unknown) => {
+          if (typeof item === 'object' && item !== null && 'key' in item && 'value' in item) {
+            const itemData = item as { key: string; value: unknown };
+            this.consciousnessField.set(itemData.key, itemData.value);
+            console.log(`🔄 Synced consciousness field: ${itemData.key}`);
+          }
+        });
+        resolve(items);
+      };
       request.onerror = () => reject(request.error);
     });
   }

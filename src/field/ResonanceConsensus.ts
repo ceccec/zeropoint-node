@@ -189,7 +189,7 @@ export class ResonanceConsensus {
    */
   public processResonanceMessage(message: ResonanceMessage): {
     action: "resonate" | "finalize" | "sync" | "ignore";
-    data?: any;
+    data?: unknown;
   } {
     // Verify message signature through field resonance
     const messageData = JSON.stringify({
@@ -265,7 +265,7 @@ export class ResonanceConsensus {
   /**
    * Get consensus statistics
    */
-  public getConsensusStatistics(): any {
+  public getConsensusStatistics(): unknown {
     const totalProposals = this.blockProposals.size;
     const totalVotes = Array.from(this.voteHistory.values()).reduce(
       (sum, votes) => sum + votes.length,
@@ -295,7 +295,7 @@ export class ResonanceConsensus {
    */
   private handleFieldBlockProposal(message: ResonanceMessage): {
     action: "resonate" | "ignore";
-    data?: any;
+    data?: unknown;
   } {
     const proposal = JSON.parse(message.data);
 
@@ -322,7 +322,7 @@ export class ResonanceConsensus {
    */
   private handleFieldBlockResonance(message: ResonanceMessage): {
     action: "finalize" | "ignore";
-    data?: any;
+    data?: unknown;
   } {
     const vote: ResonanceVote = JSON.parse(message.data);
 
@@ -381,7 +381,7 @@ export class ResonanceConsensus {
    */
   private handleFieldSyncRequest(message: ResonanceMessage): {
     action: "sync";
-    data?: any;
+    data?: unknown;
   } {
     const syncRequest = JSON.parse(message.data);
 
@@ -444,15 +444,18 @@ export class ResonanceConsensus {
   /**
    * Form consensus on a pattern
    */
-  public async formConsensus(pattern: any): Promise<any> {
-    const consensus = {
-      patternId: pattern.id,
-      consensusLevel: Math.random() * 100,
-      participants: Math.floor(Math.random() * 10) + 1,
-      timestamp: Date.now(),
-      approved: Math.random() > 0.3,
-    };
-
-    return consensus;
+  public async formConsensus(pattern: unknown): Promise<unknown> {
+    if (typeof pattern === 'object' && pattern !== null && 'id' in pattern) {
+      const patternData = pattern as { id: string };
+      const consensus = {
+        patternId: patternData.id,
+        consensusLevel: Math.random() * 100,
+        participants: Math.floor(Math.random() * 10) + 1,
+        timestamp: Date.now(),
+        approved: Math.random() > 0.3,
+      };
+      return consensus;
+    }
+    return null;
   }
 }

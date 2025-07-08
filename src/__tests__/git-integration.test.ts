@@ -48,7 +48,7 @@ describe("Git Integration", () => {
       }
     });
 
-    it("should emit Git events", (done) => {
+    it("should emit Git events", (done): void => {
       let eventReceived = false;
 
       const eventHandler = (event: GitEvent) => {
@@ -116,7 +116,7 @@ describe("Git Integration", () => {
       }
     });
 
-    it("should handle Git events through ZeroPoint", (done) => {
+    it("should handle Git events through ZeroPoint", (done): void => {
       let eventReceived = false;
 
       const eventHandler = (event: GitEvent) => {
@@ -198,7 +198,7 @@ describe("Git Integration", () => {
   });
 
   describe("Live Git Monitoring", () => {
-    it("should monitor Git events in real-time", (done) => {
+    it("should monitor Git events in real-time", (done): void => {
       let eventCount = 0;
 
       const eventHandler = (event: GitEvent) => {

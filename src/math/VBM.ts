@@ -59,7 +59,7 @@ export interface VBMField {
 }
 
 export class VBM {
-  private static instance: VBM;
+  private static instance: VBM | undefined;
 
   // Core systems
   private advancedVBM: AdvancedVBM;
@@ -405,7 +405,7 @@ export class VBM {
   public generateColorPalette(
     count: number,
     baseSeed: number = 1,
-  ): (any & Observer)[] {
+  ): (unknown & Observer)[] {
     return this.fractalColorSystem.generatePalette(count, baseSeed);
   }
 
@@ -618,7 +618,7 @@ export class VBM {
   /**
    * Get comprehensive VBM insights
    */
-  public getInsights(): any {
+  public getInsights(): unknown {
     return {
       configuration: this.config,
       metaphysics: {
@@ -677,7 +677,7 @@ export class VBM {
    * Reset the singleton instance (for test isolation)
    */
   static resetInstance(): void {
-    VBM.instance = undefined as any;
+    VBM.instance = undefined as VBM | undefined;
   }
 }
 

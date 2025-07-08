@@ -269,7 +269,7 @@ export class VortexMath {
   /**
    * Get vortex insights
    */
-  public getInsights(): any {
+  public getInsights(): unknown {
     return {
       vortexSequence: MATH_CONSTANTS.VORTEX_SEQUENCE,
       goldenRatio: MATH_CONSTANTS.GOLDEN_RATIO,

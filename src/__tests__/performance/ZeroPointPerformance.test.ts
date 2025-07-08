@@ -32,7 +32,7 @@ describe('ZeroPoint Performance', () => {
     if (zeropoint) {
       try {
         await zeropoint.shutdown();
-      } catch (error) {
+      } catch {
         // Ignore shutdown errors
       }
     }

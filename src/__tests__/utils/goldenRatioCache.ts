@@ -24,7 +24,7 @@ export const goldenRatioCache = new GoldenRatioCache();
  * Memoize a function using the golden ratio cache.
  * Key is generated from the function name and arguments, rounded to 3 decimals for stability.
  */
-export function getOrSetGolden<T>(fnName: string, args: any[], factory: () => T): T {
+export function getOrSetGolden<T>(fnName: string, args: unknown[], factory: () => T): T {
   const key = `${fnName}_${args.map(a =>
     typeof a === 'number' ? a.toFixed(3) : JSON.stringify(a)
   ).join('_')}`;

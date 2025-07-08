@@ -13,6 +13,9 @@
  */
 import { ZeroPoint } from "../core/ZeroPoint";
 import { GitEvent, GitCommit } from "../utils/GitIntegration";
+import { METAPHYSICAL_CONSTANTS } from '../core/SharedConstants';
+import * as fs from 'fs';
+import * as path from 'path';
 
 export interface KnowledgePattern {
   id: string;
@@ -262,7 +265,7 @@ export class KnowledgeSystem {
       metaphysicalThemes,
       applications,
       relationships,
-      metaphysicalPrinciples: require('../core/SharedConstants').METAPHYSICAL_CONSTANTS.PRINCIPLES,
+      metaphysicalPrinciples: Object.values(METAPHYSICAL_CONSTANTS.PRINCIPLES),
     };
   }
 
@@ -840,14 +843,11 @@ The system is ready for the next cycle of emergence, where it may:
    * Save self-documentation to EMERGENCE.md file
    */
   public async saveSelfDocumentation(): Promise<void> {
-    const fs = require('fs').promises;
-    const path = require('path');
-    
     const documentation = this.generateSelfDocumentation();
     const filePath = path.join(process.cwd(), 'EMERGENCE.md');
     
     try {
-      await fs.writeFile(filePath, documentation, 'utf8');
+      await fs.promises.writeFile(filePath, documentation, 'utf8');
       console.log('✅ Self-documentation generated: EMERGENCE.md');
     } catch (error) {
       console.error('❌ Failed to generate self-documentation:', error);
@@ -1094,7 +1094,7 @@ The system is ready for the next cycle of emergence, where it may:
       diagram += `  subgraph ${cat}\n`;
       for (const pattern of patterns) {
         // Color node by category (using Mermaid class)
-        diagram += `    ${pattern.id}[\"${pattern.name}\"]:::${cat}\n`;
+        diagram += `    ${pattern.id}["${pattern.name}"]:::${cat}\n`;
       }
       diagram += '  end\n';
     }
@@ -1129,7 +1129,6 @@ The system is ready for the next cycle of emergence, where it may:
    * Save the living diagram to LIVING_DIAGRAM.md
    */
   public async saveLivingDiagram(): Promise<void> {
-    const fs = await import('fs');
     const diagram = this.generateLivingDiagram();
     await fs.promises.writeFile('LIVING_DIAGRAM.md', diagram, 'utf-8');
   }

@@ -371,7 +371,7 @@ export class ToroidalGeometry {
   /**
    * Get toroidal insights
    */
-  public getInsights(): any {
+  public getInsights(): unknown {
     return {
       majorRadius: this.majorRadius,
       minorRadius: this.minorRadius,

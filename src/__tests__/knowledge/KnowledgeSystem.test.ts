@@ -1,4 +1,5 @@
 import { KnowledgeSystem } from '../../knowledge/KnowledgeSystem';
+import type { KnowledgePattern } from '../../knowledge/KnowledgeSystem';
 
 describe('KnowledgeSystem Test Registry', () => {
   let knowledgeSystem: KnowledgeSystem;
@@ -33,8 +34,8 @@ describe('KnowledgeSystem Test Registry', () => {
   });
 
   it('should include the void-matter fraction metaphysical principle', () => {
-    const patterns = Object.values(require('../../knowledge/KnowledgeSystem').KnowledgeSystem.KNOWLEDGE_PATTERNS) as import('../../knowledge/KnowledgeSystem').KnowledgePattern[];
-    const voidMatter = patterns.find((p: import('../../knowledge/KnowledgeSystem').KnowledgePattern) => p.id === 'b7e1a1c0-void-matter-fraction');
+    const patterns = Object.values(KnowledgeSystem.KNOWLEDGE_PATTERNS);
+    const voidMatter = patterns.find((p: KnowledgePattern) => p.id === 'b7e1a1c0-void-matter-fraction');
     expect(voidMatter).toBeDefined();
     expect(voidMatter?.description).toContain('almost entirely void');
     expect(voidMatter?.numericalData['voidFraction']).toBeCloseTo(0.999999999);

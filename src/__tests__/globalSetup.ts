@@ -20,11 +20,11 @@ export default async function globalSetup(): Promise<void> {
     process.env["NODE_ENV"] = "test";
 
     // 2. Clear any existing timers (defensive)
-    const activeTimers = (process as any)._getActiveHandles?.() || [];
+    const activeTimers = (process as { _getActiveHandles?: () => unknown[] })._getActiveHandles?.() || [];
     const timerCount = activeTimers.filter(
-      (handle: any) =>
-        handle.constructor.name === "Timeout" ||
-        handle.constructor.name === "Immediate",
+      (handle: unknown) =>
+        (handle as { constructor: { name: string } }).constructor.name === "Timeout" ||
+        (handle as { constructor: { name: string } }).constructor.name === "Immediate",
     ).length;
 
     if (timerCount > 0) {

@@ -203,7 +203,7 @@ export async function productionStart(config?: Partial<import('./types/DeviceCon
 /**
  * Get metaphysical insights about ZeroPoint
  */
-export function getZeroPointInsights(): any {
+export function getZeroPointInsights(): Record<string, unknown> {
   return {
     name: "ZeroPoint Node",
     version: "1.0.0",

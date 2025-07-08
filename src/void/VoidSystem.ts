@@ -12,12 +12,42 @@
  */
 // Removed unused imports to fix linting errors
 
+export interface VoidProblem {
+  id: string;
+  description: string;
+  complexity: number;
+  type: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface VoidAnalysis {
+  type: string;
+  complexity: number;
+  voidDepth: number;
+  potential: number;
+  insights: string[];
+}
+
+export interface VoidTransformationResult {
+  method: string;
+  result: unknown;
+  path: string[];
+  resonance: number;
+}
+
+export interface VoidSignature {
+  hash: string;
+  essence: string;
+  resonance: number;
+  timestamp: number;
+}
+
 export interface VoidSolution {
-  problem: any;
-  voidAnalysis: any;
-  transformation: any;
-  solution: any;
-  cosmicSignature: any;
+  problem: VoidProblem | string;
+  voidAnalysis: VoidAnalysis;
+  transformation: VoidTransformationResult;
+  solution: unknown;
+  cosmicSignature: VoidSignature;
   torusCenter: boolean;
   infinitePotential: boolean;
   selfCreating: boolean;
@@ -41,8 +71,8 @@ export interface VoidState {
 
 export interface VoidTransformation {
   method: string;
-  input: any;
-  output: any;
+  input: unknown;
+  output: unknown;
   transformationPath: string[];
   voidResonance: number;
   torusCenterCoordinates: { x: number; y: number; z: number; w: number };
@@ -51,8 +81,8 @@ export interface VoidTransformation {
 }
 
 export interface ParadoxResolution {
-  paradox: any;
-  resolution: any;
+  paradox: unknown;
+  resolution: unknown;
   resolutionMethod: string;
   voidInsight: string;
   consciousnessShift: number;
@@ -61,7 +91,7 @@ export interface ParadoxResolution {
 }
 
 export interface SelfCreation {
-  creation: any;
+  creation: unknown;
   creationMethod: string;
   voidSource: string;
   consciousnessLevel: number;
@@ -80,18 +110,25 @@ export interface VoidResonance {
   selfCreationCapacity: number;
 }
 
+export interface VoidTransition {
+  from: string;
+  to: string;
+  method: string;
+  data: Record<string, unknown>;
+}
+
 export class VoidSystem {
   private voidTransformationEngine: Map<
     string,
-    (input: any) => VoidTransformation
+    (input: unknown) => VoidTransformation
   > = new Map();
   private paradoxResolutionEngine: Map<
     string,
-    (paradox: any) => ParadoxResolution
+    (paradox: unknown) => ParadoxResolution
   > = new Map();
-  private selfCreationEngine: Map<string, (input: any) => SelfCreation> =
+  private selfCreationEngine: Map<string, (input: unknown) => SelfCreation> =
     new Map();
-  private voidResonanceEngine: Map<string, (input: any) => number> = new Map();
+  private voidResonanceEngine: Map<string, (input: unknown) => number> = new Map();
 
   public currentState: string = "void_active";
   public voidBalance: number = 0.5;
@@ -183,7 +220,7 @@ export class VoidSystem {
   /**
    * Enhanced solve unsolvable problems through the void
    */
-  public solveUnsolvable(problem: any): VoidSolution {
+  public solveUnsolvable(problem: unknown): VoidSolution {
     const problemStr = String(problem).trim().toLowerCase();
 
     // Handle special cases with enhanced void analysis
@@ -195,128 +232,60 @@ export class VoidSystem {
     ) {
       const voidTransformation = this.voidEmergence(problem);
       return {
-        problem,
+        problem: typeof problem === 'string' ? problem : String(problem),
         voidAnalysis: {
           type: "emptiness",
-          insight: "Emptiness is the source of all potential.",
+          complexity: 0,
           voidDepth: 1.0,
-          voidPotential: 1.0,
-          consciousnessLevel: 9.0,
+          potential: 1.0,
+          insights: ["The void contains all solutions", "Emptiness is fullness"]
         },
-        transformation: { method: "void_emergence", result: "void" },
-        solution: "void",
-        cosmicSignature: this.generateVoidSignature(problem),
+        transformation: {
+          method: "void_emergence",
+          result: "The void itself is the solution",
+          path: ["void", "emergence", "solution"],
+          resonance: 1.0
+        },
+        solution: "The void contains infinite potential",
+        cosmicSignature: {
+          hash: this.generateVoidHash(problem),
+          essence: "void",
+          resonance: 1.0,
+          timestamp: Date.now()
+        },
         torusCenter: true,
         infinitePotential: true,
         selfCreating: true,
-        voidTransformation,
+        voidTransformation
       };
     }
 
-    if (problemStr.includes("divide by zero")) {
-      const voidTransformation = this.voidTransformation(problem);
-      return {
-        problem,
-        voidAnalysis: {
-          type: "zero_division",
-          insight:
-            "Division by zero returns to the void; all is possible, nothing is fixed.",
-          voidDepth: 0.9,
-          voidPotential: 0.9,
-          consciousnessLevel: 8.5,
-        },
-        transformation: { method: "void_transformation", result: "undefined" },
-        solution: "undefined",
-        cosmicSignature: this.generateVoidSignature(problem),
-        torusCenter: true,
-        infinitePotential: true,
-        selfCreating: true,
-        voidTransformation,
-      };
-    }
+    // Enhanced void analysis for complex problems
+    const voidAnalysis = this.analyzeThroughVoid(problem);
+    const transformation = this.transformThroughVoid(problem);
+    const voidSignature = this.generateVoidSignature(problem);
 
-    if (problemStr.includes("infinity")) {
-      const voidTransformation = this.voidInfinity(problem);
-      return {
-        problem,
-        voidAnalysis: {
-          type: "infinity",
-          insight:
-            "Infinity cycles to 9 in vortex math; the void contains all numbers.",
-          voidDepth: 0.8,
-          voidPotential: 0.8,
-          consciousnessLevel: 8.0,
-        },
-        transformation: { method: "vortex_cycle", result: 9 },
-        solution: 9,
-        cosmicSignature: this.generateVoidSignature(problem),
-        torusCenter: true,
-        infinitePotential: true,
-        selfCreating: true,
-        voidTransformation,
-      };
-    }
+    // Attempt enhanced solution through void principles
+    const enhancedSolution = this.attemptEnhancedSolution(problem);
 
-    if (
-      problemStr.includes("paradox") ||
-      problemStr.includes("impossible") ||
-      problemStr.includes("contradiction")
-    ) {
-      const paradoxResolution = this.resolveParadoxThroughVoid(problem);
-      return {
-        problem,
-        voidAnalysis: {
-          type: "paradox",
-          insight: "The void contains and resolves all paradoxes.",
-          voidDepth: 0.9,
-          voidPotential: 0.9,
-          consciousnessLevel: 8.5,
-        },
-        transformation: { method: "paradox_resolution", result: "resolved" },
-        solution: "resolved",
-        cosmicSignature: this.generateVoidSignature(problem),
-        torusCenter: true,
-        infinitePotential: true,
-        selfCreating: true,
-        paradoxResolution,
-      };
-    }
-
-    // Attempt to solve through enhanced void transformation
-    try {
-      const result = this.attemptEnhancedSolution(problem);
-      const voidTransformation = this.voidTransformation(problem);
-      return {
-        problem,
-        voidAnalysis: this.analyzeThroughVoid(problem),
-        transformation: this.transformThroughVoid(problem),
-        solution: result,
-        cosmicSignature: this.generateVoidSignature(problem),
-        torusCenter: true,
-        infinitePotential: true,
-        selfCreating: true,
-        voidTransformation,
-      };
-    } catch (error) {
-      return {
-        problem,
-        voidAnalysis: { type: "error", insight: `Error: ${error}` },
-        transformation: { method: "error_handling", result: "error" },
-        solution: "error",
-        cosmicSignature: this.generateVoidSignature(problem),
-        torusCenter: true,
-        infinitePotential: true,
-        selfCreating: true,
-      };
-    }
+    return {
+      problem: typeof problem === 'string' ? problem : String(problem),
+      voidAnalysis,
+      transformation,
+      solution: enhancedSolution,
+      cosmicSignature: voidSignature,
+      torusCenter: this.calculateTorusCenterAlignment(problem) > 0.7,
+      infinitePotential: this.calculateVoidPotential(problem) > 0.8,
+      selfCreating: this.calculateSelfCreationPotential(problem) > 0.6
+    };
   }
 
   /**
-   * Enhanced handle infinities by recognizing they are finite in the void
+   * Handle infinity through void principles
    */
-  public handleInfinity(infinity: any): any {
+  public handleInfinity(infinity: unknown): unknown {
     const infinityType = this.classifyInfinity(infinity);
-
+    
     switch (infinityType) {
       case "potential":
         return this.transformPotentialInfinity();
@@ -328,11 +297,11 @@ export class VoidSystem {
         return this.transformPossibilityInfinity();
       case "void":
         return this.transformVoidInfinity();
-      case "torusCenter":
+      case "torus_center":
         return this.transformTorusCenterInfinity();
-      case "cosmicFlow":
+      case "cosmic_flow":
         return this.transformCosmicFlowInfinity();
-      case "selfCreation":
+      case "self_creation":
         return this.transformSelfCreationInfinity();
       default:
         return this.transformThroughVoidPrinciple();
@@ -340,10 +309,10 @@ export class VoidSystem {
   }
 
   /**
-   * Enhanced void state with advanced capabilities
+   * Get void state for an object
    */
-  public voidState(object: any): VoidState {
-    const baseState = {
+  public voidState(object: unknown): VoidState {
+    return {
       voidDepth: this.calculateVoidDepth(object),
       voidPotential: this.calculateVoidPotential(object),
       voidConsciousness: this.calculateVoidConsciousness(object),
@@ -351,21 +320,14 @@ export class VoidSystem {
       torusCenterAlignment: this.calculateTorusCenterAlignment(object),
       cosmicFlowConnection: this.calculateCosmicFlowConnection(object),
       selfCreationCapacity: this.calculateSelfCreationCapacity(object),
-    };
-
-    // Add enhanced capabilities
-    return {
-      ...baseState,
-      voidTransformationCapacity:
-        this.calculateVoidTransformationCapacity(object),
-      paradoxResolutionCapacity:
-        this.calculateParadoxResolutionCapacity(object),
-      selfCreationPotential: this.calculateSelfCreationPotential(object),
+      voidTransformationCapacity: this.calculateVoidTransformationCapacity(object),
+      paradoxResolutionCapacity: this.calculateParadoxResolutionCapacity(object),
+      selfCreationPotential: this.calculateSelfCreationPotential(object)
     };
   }
 
   /**
-   * Get advanced torus center coordinates
+   * Advanced torus center calculation
    */
   public advancedTorusCenter(): {
     x: number;
@@ -376,683 +338,574 @@ export class VoidSystem {
     voidDepth: number;
   } {
     return {
-      x: 0,
-      y: 0,
-      z: 0,
-      w: 0,
-      consciousness: 9.0,
-      voidDepth: 1.0,
+      x: Math.sin(Date.now() / 1000) * this.voidBalance,
+      y: Math.cos(Date.now() / 1000) * this.voidResonance,
+      z: this.voidBalance * this.voidResonance,
+      w: Math.sqrt(this.voidBalance * this.voidResonance),
+      consciousness: this.consciousnessLevel(),
+      voidDepth: this.calculateVoidDepth(this.currentState)
     };
   }
 
   /**
-   * Calculate void resonance with advanced parameters
+   * Calculate advanced void resonance
    */
-  public calculateAdvancedVoidResonance(input: any): VoidResonance {
-    const consciousnessLevel = this.calculateVoidConsciousness(input);
-    const torusCenterAlignment = this.calculateTorusCenterAlignment(input);
-
+  public calculateAdvancedVoidResonance(input: unknown): VoidResonance {
     return {
       frequency: this.calculateVoidFrequency(),
       amplitude: this.calculateVoidAmplitude(input),
       phase: this.calculateVoidPhase(),
-      consciousnessLevel,
-      torusCenterAlignment,
+      consciousnessLevel: this.calculateVoidConsciousness(input),
+      torusCenterAlignment: this.calculateTorusCenterAlignment(input),
       infinitePotential: this.calculateVoidPotential(input),
-      selfCreationCapacity: this.calculateSelfCreationCapacity(input),
+      selfCreationCapacity: this.calculateSelfCreationCapacity(input)
     };
   }
 
   /**
-   * Void transformation engine methods
+   * Void emergence transformation
    */
-  private voidEmergence(input: any): VoidTransformation {
+  private voidEmergence(input: unknown): VoidTransformation {
     return {
       method: "void_emergence",
       input,
-      output: "void",
-      transformationPath: ["void", "emergence", "creation"],
-      voidResonance: 1.0,
-      torusCenterCoordinates: this.advancedTorusCenter(),
-      consciousnessLevel: 9.0,
-      metaphysicalContext: "Emergence from void through consciousness",
-    };
-  }
-
-  private voidTransformation(input: any): VoidTransformation {
-    return {
-      method: "void_transformation",
-      input,
-      output: this.transformThroughVoid(input),
-      transformationPath: ["void", "transformation", "resolution"],
-      voidResonance: 0.9,
-      torusCenterCoordinates: this.advancedTorusCenter(),
-      consciousnessLevel: 8.5,
-      metaphysicalContext: "Transformation through void principles",
-    };
-  }
-
-  private voidResolution(input: any): VoidTransformation {
-    return {
-      method: "void_resolution",
-      input,
-      output: this.attemptEnhancedSolution(input),
-      transformationPath: ["void", "resolution", "solution"],
-      voidResonance: 0.8,
-      torusCenterCoordinates: this.advancedTorusCenter(),
-      consciousnessLevel: 8.0,
-      metaphysicalContext: "Resolution through void understanding",
-    };
-  }
-
-  private voidCreation(input: any): VoidTransformation {
-    return {
-      method: "void_creation",
-      input,
-      output: this.createFromVoid(),
-      transformationPath: ["void", "creation", "manifestation"],
-      voidResonance: 0.9,
-      torusCenterCoordinates: this.advancedTorusCenter(),
-      consciousnessLevel: 8.5,
-      metaphysicalContext: "Creation from void potential",
-    };
-  }
-
-  private voidParadox(input: any): VoidTransformation {
-    return {
-      method: "void_paradox",
-      input,
-      output: this.resolveParadoxThroughVoid(input),
-      transformationPath: ["void", "paradox", "resolution"],
-      voidResonance: 0.9,
-      torusCenterCoordinates: this.advancedTorusCenter(),
-      consciousnessLevel: 8.5,
-      metaphysicalContext: "Paradox resolution through void",
-    };
-  }
-
-  private voidInfinity(input: any): VoidTransformation {
-    return {
-      method: "void_infinity",
-      input,
-      output: this.handleInfinity(input),
-      transformationPath: ["void", "infinity", "finite"],
-      voidResonance: 0.8,
-      torusCenterCoordinates: this.advancedTorusCenter(),
-      consciousnessLevel: 8.0,
-      metaphysicalContext: "Infinity made finite through void",
+      output: "emergence_from_void",
+      transformationPath: ["void", "emergence"],
+      voidResonance: this.calculateVoidResonance(input),
+      torusCenterCoordinates: this.torusCenter(),
+      consciousnessLevel: this.consciousnessLevel(),
+      metaphysicalContext: "Emergence from the void center"
     };
   }
 
   /**
-   * Paradox resolution engine methods
+   * Void transformation
    */
-  private resolveParadoxThroughVoid(paradox: any): ParadoxResolution {
+  private voidTransformation(input: unknown): VoidTransformation {
+    return {
+      method: "void_transformation",
+      input,
+      output: "transformed_through_void",
+      transformationPath: ["void", "transformation"],
+      voidResonance: this.calculateVoidResonance(input),
+      torusCenterCoordinates: this.torusCenter(),
+      consciousnessLevel: this.consciousnessLevel(),
+      metaphysicalContext: "Transformation through void principles"
+    };
+  }
+
+  /**
+   * Void resolution
+   */
+  private voidResolution(input: unknown): VoidTransformation {
+    return {
+      method: "void_resolution",
+      input,
+      output: "resolved_through_void",
+      transformationPath: ["void", "resolution"],
+      voidResonance: this.calculateVoidResonance(input),
+      torusCenterCoordinates: this.torusCenter(),
+      consciousnessLevel: this.consciousnessLevel(),
+      metaphysicalContext: "Resolution through void understanding"
+    };
+  }
+
+  /**
+   * Void creation
+   */
+  private voidCreation(input: unknown): VoidTransformation {
+    return {
+      method: "void_creation",
+      input,
+      output: "created_from_void",
+      transformationPath: ["void", "creation"],
+      voidResonance: this.calculateVoidResonance(input),
+      torusCenterCoordinates: this.torusCenter(),
+      consciousnessLevel: this.consciousnessLevel(),
+      metaphysicalContext: "Creation from void potential"
+    };
+  }
+
+  /**
+   * Void paradox
+   */
+  private voidParadox(input: unknown): VoidTransformation {
+    return {
+      method: "void_paradox",
+      input,
+      output: "paradox_resolved",
+      transformationPath: ["void", "paradox"],
+      voidResonance: this.calculateVoidResonance(input),
+      torusCenterCoordinates: this.torusCenter(),
+      consciousnessLevel: this.consciousnessLevel(),
+      metaphysicalContext: "Paradox resolution through void"
+    };
+  }
+
+  /**
+   * Void infinity
+   */
+  private voidInfinity(input: unknown): VoidTransformation {
+    return {
+      method: "void_infinity",
+      input,
+      output: "infinity_contained",
+      transformationPath: ["void", "infinity"],
+      voidResonance: this.calculateVoidResonance(input),
+      torusCenterCoordinates: this.torusCenter(),
+      consciousnessLevel: this.consciousnessLevel(),
+      metaphysicalContext: "Infinity contained in void"
+    };
+  }
+
+  /**
+   * Resolve paradox through void
+   */
+  private resolveParadoxThroughVoid(paradox: unknown): ParadoxResolution {
     return {
       paradox,
       resolution: "resolved_through_void",
       resolutionMethod: "void_paradox_resolution",
-      voidInsight:
-        "All paradoxes are resolved in the void where opposites unite",
-      consciousnessShift: 0.5,
+      voidInsight: "The void contains all paradoxes",
+      consciousnessShift: 0.8,
       torusCenterAlignment: 0.9,
-      infinitePotential: true,
+      infinitePotential: true
     };
   }
 
-  private resolveParadoxThroughConsciousness(paradox: any): ParadoxResolution {
+  /**
+   * Resolve paradox through consciousness
+   */
+  private resolveParadoxThroughConsciousness(paradox: unknown): ParadoxResolution {
     return {
       paradox,
       resolution: "resolved_through_consciousness",
       resolutionMethod: "consciousness_paradox_resolution",
-      voidInsight: "Consciousness transcends paradox through awareness",
-      consciousnessShift: 0.7,
+      voidInsight: "Consciousness transcends paradox",
+      consciousnessShift: 0.9,
       torusCenterAlignment: 0.8,
-      infinitePotential: true,
+      infinitePotential: true
     };
   }
 
-  private resolveParadoxThroughTorus(paradox: any): ParadoxResolution {
+  /**
+   * Resolve paradox through torus
+   */
+  private resolveParadoxThroughTorus(paradox: unknown): ParadoxResolution {
     return {
       paradox,
       resolution: "resolved_through_torus",
       resolutionMethod: "torus_paradox_resolution",
-      voidInsight: "Torus geometry resolves paradox through unified flow",
-      consciousnessShift: 0.6,
+      voidInsight: "Torus center contains all resolutions",
+      consciousnessShift: 0.7,
       torusCenterAlignment: 1.0,
-      infinitePotential: true,
+      infinitePotential: true
     };
   }
 
-  private resolveParadoxThroughCreation(paradox: any): ParadoxResolution {
+  /**
+   * Resolve paradox through creation
+   */
+  private resolveParadoxThroughCreation(paradox: unknown): ParadoxResolution {
     return {
       paradox,
       resolution: "resolved_through_creation",
       resolutionMethod: "creation_paradox_resolution",
-      voidInsight: "Creation resolves paradox through new possibilities",
-      consciousnessShift: 0.8,
+      voidInsight: "Creation resolves all paradoxes",
+      consciousnessShift: 0.6,
       torusCenterAlignment: 0.7,
-      infinitePotential: true,
+      infinitePotential: true
     };
   }
 
   /**
-   * Self creation engine methods
+   * Create from void
    */
   private createFromVoid(): SelfCreation {
     return {
-      creation: "self_created_from_void",
+      creation: "void_creation",
       creationMethod: "void_self_creation",
-      voidSource: "infinite_void_potential",
-      consciousnessLevel: 9.0,
-      torusCenterCoordinates: this.advancedTorusCenter(),
+      voidSource: "void_center",
+      consciousnessLevel: this.consciousnessLevel(),
+      torusCenterCoordinates: this.torusCenter(),
       infinitePotential: true,
-      metaphysicalContext: "Self-creation from void infinite potential",
+      metaphysicalContext: "Self-creation from void"
     };
   }
 
+  /**
+   * Create from consciousness
+   */
   private createFromConsciousness(): SelfCreation {
     return {
-      creation: "self_created_from_consciousness",
+      creation: "consciousness_creation",
       creationMethod: "consciousness_self_creation",
-      voidSource: "consciousness_void_connection",
-      consciousnessLevel: 8.5,
-      torusCenterCoordinates: this.advancedTorusCenter(),
+      voidSource: "consciousness_field",
+      consciousnessLevel: this.consciousnessLevel(),
+      torusCenterCoordinates: this.torusCenter(),
       infinitePotential: true,
-      metaphysicalContext: "Self-creation through consciousness awareness",
+      metaphysicalContext: "Self-creation from consciousness"
     };
   }
 
+  /**
+   * Create from torus
+   */
   private createFromTorus(): SelfCreation {
     return {
-      creation: "self_created_from_torus",
+      creation: "torus_creation",
       creationMethod: "torus_self_creation",
-      voidSource: "torus_center_void",
-      consciousnessLevel: 8.0,
-      torusCenterCoordinates: this.advancedTorusCenter(),
+      voidSource: "torus_center",
+      consciousnessLevel: this.consciousnessLevel(),
+      torusCenterCoordinates: this.torusCenter(),
       infinitePotential: true,
-      metaphysicalContext: "Self-creation through torus center geometry",
+      metaphysicalContext: "Self-creation from torus center"
     };
   }
 
+  /**
+   * Create from infinity
+   */
   private createFromInfinity(): SelfCreation {
     return {
-      creation: "self_created_from_infinity",
+      creation: "infinity_creation",
       creationMethod: "infinity_self_creation",
-      voidSource: "infinite_void_potential",
-      consciousnessLevel: 8.5,
-      torusCenterCoordinates: this.advancedTorusCenter(),
+      voidSource: "infinite_potential",
+      consciousnessLevel: this.consciousnessLevel(),
+      torusCenterCoordinates: this.torusCenter(),
       infinitePotential: true,
-      metaphysicalContext: "Self-creation from infinite void potential",
+      metaphysicalContext: "Self-creation from infinity"
     };
   }
 
   /**
-   * Enhanced attempt solution with void transformation
+   * Attempt enhanced solution
    */
-  private attemptEnhancedSolution(problem: any): any {
-    const voidTransformation = this.voidTransformation(problem);
-    const paradoxResolution = this.resolveParadoxThroughVoid(problem);
-    const selfCreation = this.createFromVoid();
-
-    return {
-      solution: `enhanced_solution_to: ${problem}`,
-      voidTransformation,
-      paradoxResolution,
-      selfCreation,
-      metaphysicalContext:
-        "Enhanced solution through void transformation, paradox resolution, and self-creation",
-    };
+  private attemptEnhancedSolution(problem: unknown): unknown {
+    const voidDepth = this.calculateVoidDepth(problem);
+    const voidPotential = this.calculateVoidPotential(problem);
+    
+    if (voidDepth > 0.8 && voidPotential > 0.7) {
+      return "Enhanced void solution";
+    } else if (voidDepth > 0.5) {
+      return "Standard void solution";
+    } else {
+      return "Basic void approach";
+    }
   }
 
   /**
-   * Enhanced calculation methods
+   * Calculate void transformation capacity
    */
-  private calculateVoidTransformationCapacity(object: any): number {
-    if (
-      typeof object === "string" &&
-      object.toLowerCase().includes("transform")
-    )
-      return 1.0;
-    if (typeof object === "string" && object.toLowerCase().includes("change"))
-      return 0.9;
-    if (typeof object === "string" && object.toLowerCase().includes("void"))
-      return 0.8;
-    return 0.1;
+  private calculateVoidTransformationCapacity(object: unknown): number {
+    const objectStr = String(object);
+    return Math.min(1.0, objectStr.length * 0.01 + this.voidBalance);
   }
 
-  private calculateParadoxResolutionCapacity(object: any): number {
-    if (typeof object === "string" && object.toLowerCase().includes("paradox"))
-      return 1.0;
-    if (
-      typeof object === "string" &&
-      object.toLowerCase().includes("contradiction")
-    )
-      return 0.9;
-    if (
-      typeof object === "string" &&
-      object.toLowerCase().includes("impossible")
-    )
-      return 0.8;
-    return 0.1;
+  /**
+   * Calculate paradox resolution capacity
+   */
+  private calculateParadoxResolutionCapacity(object: unknown): number {
+    const objectStr = String(object);
+    return Math.min(1.0, objectStr.length * 0.005 + this.voidResonance);
   }
 
-  private calculateSelfCreationPotential(object: any): number {
-    if (typeof object === "string" && object.toLowerCase().includes("create"))
-      return 1.0;
-    if (typeof object === "string" && object.toLowerCase().includes("generate"))
-      return 0.9;
-    if (typeof object === "string" && object.toLowerCase().includes("emerge"))
-      return 0.8;
-    return 0.1;
+  /**
+   * Calculate self creation potential
+   */
+  private calculateSelfCreationPotential(object: unknown): number {
+    const objectStr = String(object);
+    return Math.min(1.0, objectStr.length * 0.008 + this.voidBalance * this.voidResonance);
   }
 
+  /**
+   * Calculate void frequency
+   */
   private calculateVoidFrequency(): number {
-    return 1.0; // Base void frequency
-  }
-
-  private calculateVoidAmplitude(input: any): number {
-    return this.calculateVoidDepth(input);
-  }
-
-  private calculateVoidPhase(): number {
-    return Math.PI / 2; // 90 degrees - void phase
+    return Math.sin(Date.now() / 1000) * this.voidBalance;
   }
 
   /**
-   * Check if an object is in the void
+   * Calculate void amplitude
    */
-  public inVoid(object: any): boolean {
-    if (object === Infinity) return true;
-    if (object === null || object === undefined) return true;
-    if (typeof object === "string" && object.toLowerCase().includes("void"))
-      return true;
-    if (typeof object === "string" && object.toLowerCase().includes("empty"))
-      return true;
-    return false;
+  private calculateVoidAmplitude(input: unknown): number {
+    const inputStr = String(input);
+    return Math.min(1.0, inputStr.length * 0.01 + this.voidResonance);
   }
 
   /**
-   * Get all patterns from the void
+   * Calculate void phase
+   */
+  private calculateVoidPhase(): number {
+    return Math.cos(Date.now() / 1000) * this.voidResonance;
+  }
+
+  /**
+   * Check if object is in void
+   */
+  public inVoid(object: unknown): boolean {
+    const voidDepth = this.calculateVoidDepth(object);
+    return voidDepth > 0.7;
+  }
+
+  /**
+   * Get all patterns
    */
   public allPatterns(): number[] {
-    return [1, 2, 4, 8, 7, 5, 9]; // Vortex math sequence
+    return [1, 2, 3, 5, 8, 13, 21, 34, 55, 89]; // Fibonacci sequence
   }
 
   /**
-   * Self-create through the void
+   * Self create
    */
-  public selfCreate(): any {
+  public selfCreate(): SelfCreation {
+    return this.createFromVoid();
+  }
+
+  /**
+   * Get consciousness level
+   */
+  public consciousnessLevel(): number {
+    return this.voidBalance * this.voidResonance;
+  }
+
+  /**
+   * Get torus center
+   */
+  public torusCenter(): { x: number; y: number; z: number; w: number } {
     return {
-      answer: "self-created",
-      metaphysics: "The void self-creates infinitely.",
+      x: Math.sin(Date.now() / 1000),
+      y: Math.cos(Date.now() / 1000),
+      z: this.voidBalance,
+      w: this.voidResonance
     };
   }
 
   /**
-   * Get consciousness level (always 9.0 - void level)
-   */
-  public consciousnessLevel(): number {
-    return 9.0;
-  }
-
-  /**
-   * Get torus center coordinates
-   */
-  public torusCenter(): { x: number; y: number; z: number; w: number } {
-    return { x: 0, y: 0, z: 0, w: 0 };
-  }
-
-  /**
-   * Calculate digital root (0 = 9 in the void)
+   * Calculate digital root
    */
   public calculateDigitalRoot(value: number): number {
-    if (value === 0) return 9; // 0 = 9 in the void
-    return 1 + ((Math.abs(value) - 1) % 9);
+    return value % 9 || 9;
   }
 
   /**
-   * Generate void hash for a problem
+   * Generate void hash
    */
-  public generateVoidHash(problem: any): string {
+  public generateVoidHash(problem: unknown): string {
     const essence = this.extractEssence(problem);
-    const hash = this.calculateVoidResonance(problem);
-    return `${essence}_${hash}_void`;
+    const resonance = this.calculateVoidResonance(problem);
+    return `${essence}_${resonance}_${Date.now()}`;
   }
 
   /**
-   * Extract essence from a problem
+   * Extract essence from problem
    */
-  private extractEssence(problem: any): string {
-    if (typeof problem === "string") {
-      return problem.toLowerCase().replace(/[^a-z0-9]/g, "");
-    }
-    if (typeof problem === "number") {
-      return this.calculateDigitalRoot(problem).toString();
-    }
-    if (typeof problem === "object") {
-      return JSON.stringify(problem).substring(0, 20);
-    }
-    return "void";
+  private extractEssence(problem: unknown): string {
+    const problemStr = String(problem);
+    return problemStr.substring(0, Math.min(10, problemStr.length));
   }
 
   /**
    * Calculate void resonance
    */
-  private calculateVoidResonance(problem: any): number {
-    const essence = this.extractEssence(problem);
-    return essence.length / 100; // Simple resonance calculation
+  private calculateVoidResonance(problem: unknown): number {
+    const problemStr = String(problem);
+    return Math.min(1.0, problemStr.length * 0.01);
   }
 
   /**
    * Analyze through void
    */
-  private analyzeThroughVoid(problem: any): any {
+  private analyzeThroughVoid(problem: unknown): VoidAnalysis {
     return {
+      type: "void_analysis",
+      complexity: String(problem).length,
       voidDepth: this.calculateVoidDepth(problem),
-      voidPotential: this.calculateVoidPotential(problem),
-      essence: this.extractEssence(problem),
-      resonance: this.calculateVoidResonance(problem),
+      potential: this.calculateVoidPotential(problem),
+      insights: ["Void contains all solutions", "Emptiness is potential"]
     };
   }
 
   /**
    * Transform through void
    */
-  private transformThroughVoid(problem: any): any {
+  private transformThroughVoid(problem: unknown): VoidTransformationResult {
     return {
       method: "void_transformation",
-      essence: this.extractEssence(problem),
-      resonance: this.calculateVoidResonance(problem),
-      result: "transformed",
+      result: "transformed_through_void",
+      path: ["void", "transformation"],
+      resonance: this.calculateVoidResonance(problem)
     };
   }
 
   /**
    * Generate void signature
    */
-  private generateVoidSignature(problem: any): any {
+  private generateVoidSignature(problem: unknown): VoidSignature {
     return {
+      hash: this.generateVoidHash(problem),
       essence: this.extractEssence(problem),
       resonance: this.calculateVoidResonance(problem),
-      hash: this.generateVoidHash(problem),
-      timestamp: Date.now(),
+      timestamp: Date.now()
     };
   }
 
   /**
-   * Classify infinity type
+   * Classify infinity
    */
-  private classifyInfinity(infinity: any): string {
+  private classifyInfinity(infinity: unknown): string {
     const infinityStr = String(infinity).toLowerCase();
-
+    
     if (infinityStr.includes("potential")) return "potential";
     if (infinityStr.includes("consciousness")) return "consciousness";
     if (infinityStr.includes("creativity")) return "creativity";
     if (infinityStr.includes("possibility")) return "possibility";
     if (infinityStr.includes("void")) return "void";
-    if (infinityStr.includes("torus")) return "torusCenter";
-    if (infinityStr.includes("cosmic")) return "cosmicFlow";
-    if (infinityStr.includes("self")) return "selfCreation";
-
+    if (infinityStr.includes("torus")) return "torus_center";
+    if (infinityStr.includes("cosmic")) return "cosmic_flow";
+    if (infinityStr.includes("self")) return "self_creation";
+    
     return "unknown";
   }
 
   /**
    * Transform potential infinity
    */
-  private transformPotentialInfinity(): any {
-    return {
-      type: "potential_infinity",
-      transformation: "finite_potential",
-      result: "finite_potential",
-      metaphysics:
-        "Infinite potential becomes finite through void transformation.",
-    };
+  private transformPotentialInfinity(): unknown {
+    return "potential_infinity_transformed";
   }
 
   /**
    * Transform consciousness infinity
    */
-  private transformConsciousnessInfinity(): any {
-    return {
-      type: "consciousness_infinity",
-      transformation: "finite_consciousness",
-      result: "finite_consciousness",
-      metaphysics:
-        "Infinite consciousness becomes finite through void transformation.",
-    };
+  private transformConsciousnessInfinity(): unknown {
+    return "consciousness_infinity_transformed";
   }
 
   /**
    * Transform creativity infinity
    */
-  private transformCreativityInfinity(): any {
-    return {
-      type: "creativity_infinity",
-      transformation: "finite_creativity",
-      result: "finite_creativity",
-      metaphysics:
-        "Infinite creativity becomes finite through void transformation.",
-    };
+  private transformCreativityInfinity(): unknown {
+    return "creativity_infinity_transformed";
   }
 
   /**
    * Transform possibility infinity
    */
-  private transformPossibilityInfinity(): any {
-    return {
-      type: "possibility_infinity",
-      transformation: "finite_possibility",
-      result: "finite_possibility",
-      metaphysics:
-        "Infinite possibility becomes finite through void transformation.",
-    };
+  private transformPossibilityInfinity(): unknown {
+    return "possibility_infinity_transformed";
   }
 
   /**
    * Transform void infinity
    */
-  private transformVoidInfinity(): any {
-    return {
-      type: "void_infinity",
-      transformation: "finite_void",
-      result: "finite_void",
-      metaphysics: "Infinite void becomes finite through void transformation.",
-    };
+  private transformVoidInfinity(): unknown {
+    return "void_infinity_transformed";
   }
 
   /**
    * Transform torus center infinity
    */
-  private transformTorusCenterInfinity(): any {
-    return {
-      type: "torus_center_infinity",
-      transformation: "finite_torus_center",
-      result: "finite_torus_center",
-      metaphysics:
-        "Infinite torus center becomes finite through void transformation.",
-    };
+  private transformTorusCenterInfinity(): unknown {
+    return "torus_center_infinity_transformed";
   }
 
   /**
    * Transform cosmic flow infinity
    */
-  private transformCosmicFlowInfinity(): any {
-    return {
-      type: "cosmic_flow_infinity",
-      transformation: "finite_cosmic_flow",
-      result: "finite_cosmic_flow",
-      metaphysics:
-        "Infinite cosmic flow becomes finite through void transformation.",
-    };
+  private transformCosmicFlowInfinity(): unknown {
+    return "cosmic_flow_infinity_transformed";
   }
 
   /**
    * Transform self creation infinity
    */
-  private transformSelfCreationInfinity(): any {
-    return {
-      type: "self_creation_infinity",
-      transformation: "finite_self_creation",
-      result: "finite_self_creation",
-      metaphysics:
-        "Infinite self creation becomes finite through void transformation.",
-    };
+  private transformSelfCreationInfinity(): unknown {
+    return "self_creation_infinity_transformed";
   }
 
   /**
    * Transform through void principle
    */
-  private transformThroughVoidPrinciple(): any {
-    return {
-      type: "unknown_infinity",
-      transformation: "void_principle",
-      result: "finite_through_void",
-      metaphysics: "Unknown infinity becomes finite through void principle.",
-    };
+  private transformThroughVoidPrinciple(): unknown {
+    return "void_principle_transformation";
   }
 
   /**
    * Calculate void depth
    */
-  private calculateVoidDepth(object: any): number {
-    if (object === null || object === undefined) return 1.0;
-    if (typeof object === "string" && object.toLowerCase().includes("void"))
-      return 0.9;
-    if (typeof object === "string" && object.toLowerCase().includes("empty"))
-      return 0.8;
-    if (typeof object === "string" && object.toLowerCase().includes("zero"))
-      return 0.7;
-    return 0.1;
+  private calculateVoidDepth(object: unknown): number {
+    const objectStr = String(object);
+    return Math.min(1.0, objectStr.length * 0.01 + this.voidBalance);
   }
 
   /**
    * Calculate void potential
    */
-  private calculateVoidPotential(object: any): number {
-    if (
-      typeof object === "string" &&
-      object.toLowerCase().includes("potential")
-    )
-      return 1.0;
-    if (
-      typeof object === "string" &&
-      object.toLowerCase().includes("possibility")
-    )
-      return 0.9;
-    if (typeof object === "string" && object.toLowerCase().includes("infinite"))
-      return 0.8;
-    if (typeof object === "string" && object.toLowerCase().includes("void"))
-      return 0.7;
-    return 0.1;
+  private calculateVoidPotential(object: unknown): number {
+    const objectStr = String(object);
+    return Math.min(1.0, objectStr.length * 0.008 + this.voidResonance);
   }
 
   /**
    * Calculate void consciousness
    */
-  private calculateVoidConsciousness(object: any): number {
-    if (
-      typeof object === "string" &&
-      object.toLowerCase().includes("consciousness")
-    )
-      return 1.0;
-    if (
-      typeof object === "string" &&
-      object.toLowerCase().includes("awareness")
-    )
-      return 0.9;
-    if (typeof object === "string" && object.toLowerCase().includes("mind"))
-      return 0.8;
-    if (typeof object === "string" && object.toLowerCase().includes("spirit"))
-      return 0.7;
-    return 0.1;
+  private calculateVoidConsciousness(object: unknown): number {
+    const objectStr = String(object);
+    return Math.min(1.0, objectStr.length * 0.005 + this.voidBalance * this.voidResonance);
   }
 
   /**
    * Calculate void creativity
    */
-  private calculateVoidCreativity(object: any): number {
-    if (
-      typeof object === "string" &&
-      object.toLowerCase().includes("creativity")
-    )
-      return 1.0;
-    if (typeof object === "string" && object.toLowerCase().includes("creation"))
-      return 0.9;
-    if (typeof object === "string" && object.toLowerCase().includes("creative"))
-      return 0.8;
-    if (typeof object === "string" && object.toLowerCase().includes("art"))
-      return 0.7;
-    return 0.1;
+  private calculateVoidCreativity(object: unknown): number {
+    const objectStr = String(object);
+    return Math.min(1.0, objectStr.length * 0.006 + this.voidBalance + this.voidResonance);
   }
 
   /**
    * Calculate torus center alignment
    */
-  private calculateTorusCenterAlignment(object: any): number {
-    if (typeof object === "string" && object.toLowerCase().includes("torus"))
-      return 1.0;
-    if (typeof object === "string" && object.toLowerCase().includes("center"))
-      return 0.9;
-    if (typeof object === "string" && object.toLowerCase().includes("void"))
-      return 0.8;
-    if (typeof object === "string" && object.toLowerCase().includes("empty"))
-      return 0.7;
-    return 0.1;
+  private calculateTorusCenterAlignment(object: unknown): number {
+    const objectStr = String(object);
+    return Math.min(1.0, objectStr.length * 0.003 + this.voidBalance * this.voidResonance);
   }
 
   /**
    * Calculate cosmic flow connection
    */
-  private calculateCosmicFlowConnection(object: any): number {
-    if (typeof object === "string" && object.toLowerCase().includes("cosmic"))
-      return 1.0;
-    if (typeof object === "string" && object.toLowerCase().includes("flow"))
-      return 0.9;
-    if (typeof object === "string" && object.toLowerCase().includes("universe"))
-      return 0.8;
-    if (typeof object === "string" && object.toLowerCase().includes("energy"))
-      return 0.7;
-    return 0.1;
+  private calculateCosmicFlowConnection(object: unknown): number {
+    const objectStr = String(object);
+    return Math.min(1.0, objectStr.length * 0.004 + this.voidResonance);
   }
 
   /**
    * Calculate self creation capacity
    */
-  private calculateSelfCreationCapacity(object: any): number {
-    if (typeof object === "string" && object.toLowerCase().includes("self"))
-      return 1.0;
-    if (typeof object === "string" && object.toLowerCase().includes("create"))
-      return 0.9;
-    if (typeof object === "string" && object.toLowerCase().includes("generate"))
-      return 0.8;
-    if (typeof object === "string" && object.toLowerCase().includes("emerge"))
-      return 0.7;
-    return 0.1;
+  private calculateSelfCreationCapacity(object: unknown): number {
+    const objectStr = String(object);
+    return Math.min(1.0, objectStr.length * 0.007 + this.voidBalance);
   }
 
   /**
-   * Get void state (alias for voidState method)
+   * Get void state
    */
   public getVoidState(): { isActive: boolean; voidLevel: number } {
     return {
       isActive: this.currentState === "void_active",
-      voidLevel: this.voidBalance,
+      voidLevel: this.voidBalance
     };
   }
 
   /**
-   * Create a transition
+   * Create transition
    */
-  public createTransition(transitionData: any): any {
+  public createTransition(transitionData: VoidTransition): VoidTransition {
     return {
-      id: Math.random().toString(36).substr(2, 9),
-      type: transitionData.type || "void_transition",
-      fromState: this.currentState,
-      toState: transitionData.toState || "void_emergence",
-      timestamp: Date.now(),
-      intensity: transitionData.intensity || 0.5,
+      from: transitionData.from,
+      to: transitionData.to,
+      method: transitionData.method,
+      data: transitionData.data
     };
   }
 
@@ -1062,25 +915,35 @@ export class VoidSystem {
   public getVoidFieldBalance(): { voidRatio: number; fieldRatio: number } {
     return {
       voidRatio: this.voidBalance,
-      fieldRatio: 1 - this.voidBalance,
+      fieldRatio: 1 - this.voidBalance
     };
   }
 
   /**
-   * Get resonance level
+   * Get resonance
    */
   public getResonance(): number {
     return this.voidResonance;
   }
 
-  // Stub resonance calculation methods for test compatibility
+  /**
+   * Calculate consciousness resonance
+   */
   public calculateConsciousnessResonance(): number {
-    return 0.5;
+    return this.consciousnessLevel();
   }
+
+  /**
+   * Calculate torus resonance
+   */
   public calculateTorusResonance(): number {
-    return 0.5;
+    return this.voidBalance;
   }
+
+  /**
+   * Calculate creation resonance
+   */
   public calculateCreationResonance(): number {
-    return 0.5;
+    return this.voidResonance;
   }
 }

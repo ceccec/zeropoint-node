@@ -12,19 +12,19 @@ declare global {
 
   // eslint-disable-next-line no-var
   var testUtils: {
-    createTestPattern: (type: string, content: string) => any;
+    createTestPattern: (type: string, content: string) => unknown;
     waitForEvent: (
-      emitter: any,
+      emitter: unknown,
       event: string,
       timeout: number,
-    ) => Promise<any>;
-    createMockDevice: (config?: any) => any;
+    ) => Promise<unknown>;
+    createMockDevice: (config?: Record<string, unknown>) => unknown;
     createTestNetwork: (
       deviceCount?: number,
-    ) => Promise<{ devices: any[]; ports: number[] }>;
+    ) => Promise<{ devices: unknown[]; ports: number[] }>;
     resetMocks: () => void;
-    createMockNetworkNode: () => any;
-    createMockConsciousnessField: () => any;
+    createMockNetworkNode: () => unknown;
+    createMockConsciousnessField: () => unknown;
   };
 }
 export {};

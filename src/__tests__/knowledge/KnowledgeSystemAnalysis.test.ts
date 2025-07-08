@@ -1,6 +1,7 @@
 import { KnowledgeSystem } from '../../knowledge/KnowledgeSystem';
 import * as fs from 'fs';
 import * as path from 'path';
+import type { KnowledgePattern } from '../../knowledge/KnowledgeSystem';
 
 describe('KnowledgeSystem Codebase Analysis', () => {
   let knowledgeSystem: KnowledgeSystem;
@@ -9,8 +10,8 @@ describe('KnowledgeSystem Codebase Analysis', () => {
     principles: string[];
     missingTests: string[];
     missingPrinciples: string[];
-    suggestedTestPatterns: any[];
-    suggestedPrinciplePatterns: any[];
+    suggestedTestPatterns: KnowledgePattern[];
+    suggestedPrinciplePatterns: KnowledgePattern[];
   };
 
   beforeAll(() => {
@@ -140,7 +141,7 @@ describe('KnowledgeSystem Codebase Analysis', () => {
         name: `Auto-Generated Test: ${testCase.substring(0, 50)}`,
         category: 'test' as const,
         description: `Automatically discovered test case: ${testCase}`,
-        numericalData: null,
+        numericalData: {},
         relationships: ['auto_discovery', 'codebase_analysis'],
         metaphysicalContext: 'This test was discovered through automated codebase analysis and should be reviewed for metaphysical alignment.',
         applications: ['test_coverage', 'knowledge_completeness', 'automated_discovery']
@@ -154,7 +155,7 @@ describe('KnowledgeSystem Codebase Analysis', () => {
         name: `Auto-Generated Principle: ${principle.substring(0, 30)}...`,
         category: 'metaphysical' as const,
         description: `Automatically discovered principle: ${principle.substring(0, 100)}...`,
-        numericalData: null,
+        numericalData: {},
         relationships: ['auto_discovery', 'codebase_analysis', 'metaphysical'],
         metaphysicalContext: 'This principle was discovered through automated codebase analysis and should be reviewed for metaphysical alignment.',
         applications: ['principle_documentation', 'knowledge_completeness', 'automated_discovery']

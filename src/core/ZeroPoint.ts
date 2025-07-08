@@ -25,6 +25,7 @@ import {
 import { UnifiedMetaphysicalInterface } from "./UnifiedMetaphysicalInterface";
 import { PatternRegistry } from "./PatternRegistry";
 import { InfiniteDimensionalRefactor } from "./InfiniteDimensionalRefactor";
+import { Logger } from '../utils/Logger';
 
 /**
  * ZeroPoint - Independent Device Instance
@@ -62,7 +63,7 @@ export class ZeroPoint extends EventEmitter {
   private config: DeviceConfig;
   private _isActive: boolean = false;
   private resonanceField: Map<string, number> = new Map();
-  private logger: any;
+  private logger: Logger;
   private performanceTimer?: string;
   private startTime: number = Date.now();
   private _observer: ConcreteObserver;
@@ -249,7 +250,7 @@ export class ZeroPoint extends EventEmitter {
    * Broadcast a pattern to the network
    */
   public async broadcastPattern(
-    pattern: any,
+    pattern: { id: string; type: string; content: string; intensity?: number; data?: Record<string, unknown> },
   ): Promise<{ success: boolean; timestamp: number; patternId: string }> {
     try {
       // Create a unique pattern ID if not provided
@@ -305,7 +306,7 @@ export class ZeroPoint extends EventEmitter {
   /**
    * Get network topology information
    */
-  public getNetworkTopology(): any {
+  public getNetworkTopology(): Record<string, unknown> {
     const connections = this.networkNode.getConnections();
     const topology = {
       deviceId: this.deviceId,
@@ -351,7 +352,7 @@ export class ZeroPoint extends EventEmitter {
   /**
    * Get metaphysical insights about this ZeroPoint instance
    */
-  public getInsights(): any {
+  public getInsights(): Record<string, unknown> {
     const unifiedFieldState = this.unifiedMetaphysicalInterface.getFieldState();
     const metaphysicalInsights = this.unifiedMetaphysicalInterface.getMetaphysicalInsights();
     
@@ -386,7 +387,7 @@ export class ZeroPoint extends EventEmitter {
   /**
    * Perform consciousness operation through unified interface
    */
-  public async performConsciousnessOperation(operation: string, data: any): Promise<any> {
+  public async performConsciousnessOperation(operation: string, data: unknown): Promise<unknown> {
     const context = {
       meaning: "Consciousness operation in unified field",
       principle: "All consciousness emerges from the unified field",
@@ -404,7 +405,7 @@ export class ZeroPoint extends EventEmitter {
   /**
    * Perform field operation through unified interface
    */
-  public async performFieldOperation(operation: string, data: any): Promise<any> {
+  public async performFieldOperation(operation: string, data: unknown): Promise<unknown> {
     const context = {
       meaning: "Field operation in unified field",
       principle: "All fields are unified through resonance",
@@ -422,7 +423,7 @@ export class ZeroPoint extends EventEmitter {
   /**
    * Perform emergence operation through unified interface
    */
-  public async performEmergenceOperation(operation: string, data: any): Promise<any> {
+  public async performEmergenceOperation(operation: string, data: unknown): Promise<unknown> {
     const context = {
       meaning: "Emergence operation in unified field",
       principle: "Emergence arises from unified field interactions",
@@ -440,21 +441,21 @@ export class ZeroPoint extends EventEmitter {
   /**
    * Get unified field state
    */
-  public getUnifiedFieldState(): any {
-    return this.unifiedMetaphysicalInterface.getFieldState();
+  public getUnifiedFieldState(): Record<string, unknown> {
+    return this.unifiedMetaphysicalInterface.getFieldState() as unknown as Record<string, unknown>;
   }
 
   /**
    * Get patterns by type from unified registry
    */
-  public getPatternsByType(type: string): any[] {
+  public getPatternsByType(type: string): unknown[] {
     return this.unifiedMetaphysicalInterface.getPatternsByType(type as any);
   }
 
   /**
    * Get patterns by category from unified registry
    */
-  public getPatternsByCategory(category: string): any[] {
+  public getPatternsByCategory(category: string): unknown[] {
     return this.unifiedMetaphysicalInterface.getPatternsByCategory(category as any);
   }
 

@@ -66,6 +66,7 @@ describe('ZeroPoint Performance', () => {
       // Create many patterns to test memory management
       for (let i = 0; i < 1000; i++) {
         patterns.push({
+          id: `memory_test_${i}`,
           type: 'memory_test' as const,
           content: `Memory test pattern ${i}`,
           intensity: 0.5,
@@ -176,6 +177,7 @@ describe('ZeroPoint Performance', () => {
 
     it('should handle network message processing efficiently', async () => {
       const messages = Array.from({ length: 100 }, (_, i) => ({
+        id: `performance_test_${i}`,
         type: 'performance_test' as const,
         content: `Message ${i}`,
         timestamp: Date.now(),
@@ -205,6 +207,7 @@ describe('ZeroPoint Performance', () => {
         
         // Simulate network operation
         await zeropoint.broadcastPattern({
+          id: `latency_test_${i}`,
           type: 'latency_test' as const,
           content: `Latency test ${i}`,
           intensity: 0.5
@@ -225,6 +228,7 @@ describe('ZeroPoint Performance', () => {
 
     it('should handle network throughput efficiently', async () => {
       const patterns = Array.from({ length: 200 }, (_, i) => ({
+        id: `throughput_test_${i}`,
         type: 'throughput_test' as const,
         content: `Throughput test ${i}`,
         intensity: 0.6,
@@ -295,6 +299,7 @@ describe('ZeroPoint Performance', () => {
         
         const promises = Array.from({ length: level }, (_, i) => 
           zeropoint.broadcastPattern({
+            id: `concurrent_test_${i}`,
             type: 'concurrent_test' as const,
             content: `Concurrent test ${i}`,
             intensity: 0.5
@@ -371,10 +376,11 @@ describe('ZeroPoint Performance', () => {
       // Perform operations that might allocate memory
       for (let i = 0; i < 100; i++) {
         const pattern = {
+          id: `memory_test_${i}`,
           type: 'memory_test' as const,
           content: `Memory test ${i}`,
           intensity: 0.5,
-          data: new Array(100).fill(i) // Allocate some data
+          data: { values: new Array(100).fill(i) }
         };
         
         allocations.push(pattern);
@@ -394,10 +400,11 @@ describe('ZeroPoint Performance', () => {
       // Create and discard many objects
       for (let i = 0; i < 1000; i++) {
         const tempPattern = {
+          id: `gc_test_${i}`,
           type: 'gc_test' as const,
           content: `GC test ${i}`,
           intensity: 0.5,
-          data: new Array(1000).fill(i)
+          data: { values: new Array(1000).fill(i) }
         };
         
         zeropoint.broadcastPattern(tempPattern);
@@ -446,7 +453,7 @@ describe('ZeroPoint Performance', () => {
       const anomalies = zeropoint.detectPerformanceAnomalies();
       
       expect(anomalies.length).toBeGreaterThanOrEqual(0);
-      anomalies.forEach((anomaly: any) => {
+      anomalies.forEach((anomaly: { type: string; severity: string; timestamp: number }) => {
         expect(anomaly.type).toBeDefined();
         expect(anomaly.severity).toBeDefined();
         expect(anomaly.timestamp).toBeDefined();

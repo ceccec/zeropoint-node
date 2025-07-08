@@ -98,7 +98,7 @@ describe('Automated QA-Driven Tests from Hardcoded Knowledge', () => {
     
     const vortexPattern = knowledgeSystem.getPattern('vortex_sequence');
     expect(vortexPattern).toBeDefined();
-    expect(vortexPattern?.numericalData).toEqual([1, 2, 4, 8, 7, 5]);
+    expect(vortexPattern?.numericalData['sequence']).toEqual([1, 2, 4, 8, 7, 5]);
   });
 
   it('should validate QA usage instructions against actual commands', () => {

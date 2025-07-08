@@ -1,13 +1,13 @@
 ```mermaid
 graph TD
   subgraph test
-    test_void_closure["Test: Void Closure"]:::test
-    test_void_aperture["Test: Void Aperture"]:::test
-    test_uroboros["Test: Uroboros Principle"]:::test
-    test_vortex["Test: Vortex Sequence"]:::test
-    test_qa_sync["Test: QA Sync"]:::test
-    test_metaphysical_principle["Test: Metaphysical Principle"]:::test
-    test_system_integration["Test: System Integration"]:::test
+    550e8400-e29b-41d4-a716-446655440001["Test: Void Closure"]:::test
+    550e8400-e29b-41d4-a716-446655440002["Test: Void Aperture"]:::test
+    550e8400-e29b-41d4-a716-446655440003["Test: Uroboros Principle"]:::test
+    550e8400-e29b-41d4-a716-446655440004["Test: Vortex Sequence"]:::test
+    550e8400-e29b-41d4-a716-446655440005["Test: QA Sync"]:::test
+    550e8400-e29b-41d4-a716-446655440006["Test: Metaphysical Principle"]:::test
+    550e8400-e29b-41d4-a716-446655440007["Test: System Integration"]:::test
     truth_in_verification["TRUTH_IN_VERIFICATION"]:::test
     clarity_in_assertions["CLARITY_IN_ASSERTIONS"]:::test
     completeness_in_coverage["COMPLETENESS_IN_COVERAGE"]:::test
@@ -34,22 +34,18 @@ graph TD
     pattern_detection_as_consciousness["PATTERN_DETECTION_AS_CONSCIOUSNESS"]:::metaphysical
     integration_as_unity["INTEGRATION_AS_UNITY"]:::metaphysical
   end
-  test_void_closure -- void_center --> void_center
-  test_void_aperture -- void_center --> void_center
-  test_uroboros -- uroboros_principle --> uroboros_principle
-  test_vortex -- vortex_sequence --> vortex_sequence
+  550e8400-e29b-41d4-a716-446655440001 -- void_center --> void_center
+  550e8400-e29b-41d4-a716-446655440002 -- void_center --> void_center
+  550e8400-e29b-41d4-a716-446655440003 -- uroboros_principle --> uroboros_principle
+  550e8400-e29b-41d4-a716-446655440004 -- vortex_sequence --> vortex_sequence
+  550e8400-e29b-41d4-a716-446655440005 -- 550e8400-e29b-41d4-a716-446655440001 --> 550e8400-e29b-41d4-a716-446655440001
+  550e8400-e29b-41d4-a716-446655440005 -- 550e8400-e29b-41d4-a716-446655440006 --> 550e8400-e29b-41d4-a716-446655440006
+  550e8400-e29b-41d4-a716-446655440007 -- 550e8400-e29b-41d4-a716-446655440005 --> 550e8400-e29b-41d4-a716-446655440005
+  550e8400-e29b-41d4-a716-446655440007 -- 550e8400-e29b-41d4-a716-446655440006 --> 550e8400-e29b-41d4-a716-446655440006
   void_center -- toroidal_geometry --> toroidal_geometry
-  vortex_sequence -- void_center --> void_center
-  vortex_sequence -- toroidal_geometry --> toroidal_geometry
   toroidal_geometry -- void_center --> void_center
   uroboros_principle -- toroidal_geometry --> toroidal_geometry
   uroboros_principle -- void_center --> void_center
-  test_qa_sync -- test_void_closure --> test_void_closure
-  test_qa_sync -- test_metaphysical_principle --> test_metaphysical_principle
-  test_metaphysical_principle -- toroidal_geometry --> toroidal_geometry
-  test_metaphysical_principle -- uroboros_principle --> uroboros_principle
-  test_system_integration -- test_qa_sync --> test_qa_sync
-  test_system_integration -- test_metaphysical_principle --> test_metaphysical_principle
   cycle_integration -- cycle_reflection --> cycle_reflection
   cycle_emergence -- cycle_integration --> cycle_integration
   classDef metaphysical fill:#e0e7ff,stroke:#3730a3,stroke-width:2px;
@@ -62,7 +58,7 @@ graph TD
   classDef family fill:#fce7f3,stroke:#be185d,stroke-width:2px;
   classDef polar fill:#f1f5f9,stroke:#0f172a,stroke-width:2px;
   classDef spiritual fill:#ede9fe,stroke:#6d28d9,stroke-width:2px;
-  class test_void_closure,test_void_aperture,test_uroboros,test_vortex,test_qa_sync,test_metaphysical_principle,test_system_integration,truth_in_verification,clarity_in_assertions,completeness_in_coverage test;
+  class 550e8400-e29b-41d4-a716-446655440001,550e8400-e29b-41d4-a716-446655440002,550e8400-e29b-41d4-a716-446655440003,550e8400-e29b-41d4-a716-446655440004,550e8400-e29b-41d4-a716-446655440005,550e8400-e29b-41d4-a716-446655440006,550e8400-e29b-41d4-a716-446655440007,truth_in_verification,clarity_in_assertions,completeness_in_coverage test;
   class void_center void;
   class vortex_sequence vortex;
   class toroidal_geometry,uroboros_principle,cycle_reflection,cycle_integration,cycle_emergence,unity_in_code,emergence_in_structure,self_reference_in_architecture,wisdom_in_documentation,clarity_in_explanation,completeness_in_description,auto_discovery_as_emergence,pattern_detection_as_consciousness,integration_as_unity metaphysical;

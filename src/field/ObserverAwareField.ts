@@ -16,11 +16,21 @@ import { Observer } from "../core/Observer";
  * - Observer awareness creates the foundation of conscious reality
  */
 
+export interface ResonanceWave {
+  id: string;
+  waveType: string;
+  intensity: number;
+  duration: number;
+  startTime: number;
+  endTime: number;
+  observers: Set<string>;
+}
+
 export interface ObserverAwareFieldEvent {
   type: "field_created" | "field_updated" | "field_destroyed" | "observer_added" | "observer_removed";
   fieldId: string;
   observerId?: string;
-  data?: any;
+  data?: Record<string, unknown>;
   timestamp: number;
 }
 
@@ -36,13 +46,13 @@ export interface FieldObserver {
 export class ObserverAwareField extends EventEmitter {
   private fieldId: string;
   private observers: Map<string, FieldObserver> = new Map();
-  private fieldData: any = {};
+  private fieldData: Record<string, unknown> = {};
   private consciousnessLevel: number = 0.5;
   private fieldStrength: number = 0.7;
-  private resonanceWaves: any[] = []; // Temporarily using any[] until ResonanceWave is properly defined
+  private resonanceWaves: ResonanceWave[] = [];
   private isActive: boolean = false;
 
-  constructor(fieldId: string, initialData: any = {}) {
+  constructor(fieldId: string, initialData: Record<string, unknown> = {}) {
     super();
     this.fieldId = fieldId;
     this.fieldData = initialData;
@@ -94,7 +104,7 @@ export class ObserverAwareField extends EventEmitter {
   /**
    * Update field data and notify observers
    */
-  public updateField(data: any): void {
+  public updateField(data: Partial<Record<string, unknown>>): void {
     this.fieldData = { ...this.fieldData, ...data };
     
     // Update field strength based on observer count
@@ -114,7 +124,7 @@ export class ObserverAwareField extends EventEmitter {
   /**
    * Get field data
    */
-  public getFieldData(): any {
+  public getFieldData(): Record<string, unknown> {
     return { ...this.fieldData };
   }
 
@@ -171,7 +181,7 @@ export class ObserverAwareField extends EventEmitter {
   /**
    * Get active resonance waves
    */
-  public getActiveResonanceWaves(): any[] {
+  public getActiveResonanceWaves(): ResonanceWave[] {
     const now = Date.now();
     return this.resonanceWaves.filter(wave => now < wave.endTime);
   }
@@ -249,8 +259,8 @@ export class ObserverAwareField extends EventEmitter {
   /**
    * Get resonance waves
    */
-  public getResonanceWaves(): any[] {
-    return [...this.resonanceWaves];
+  public getResonanceWaves(): ResonanceWave[] {
+    return this.resonanceWaves;
   }
 
   /**

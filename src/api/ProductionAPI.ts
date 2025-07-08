@@ -47,7 +47,7 @@ export class ProductionAPI {
     });
 
     // Error handling middleware
-    this.app.use((error: any, _req: Request, res: Response) => {
+    this.app.use((error: Error, _req: Request, res: Response) => {
       globalLogger.error(
         "API Error",
         {
@@ -289,7 +289,7 @@ export class ProductionAPI {
         resolve();
       });
 
-      server.on("error", (error: any) => {
+      server.on("error", (error: Error) => {
         globalLogger.error(
           "Production API failed to start",
           { port: this.port },

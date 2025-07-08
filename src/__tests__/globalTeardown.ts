@@ -15,12 +15,12 @@ import { goldenRatioCache } from "./utils/goldenRatioCache";
 
 // Global variables to track resources that need cleanup
 declare global {
-  const globalHealthMonitor: any;
-  const globalCache: any;
-  const vortexMathCache: any;
-  const resonanceCache: any;
-  const gitIntegration: any;
-  const goldenRatioCache: any;
+  const globalHealthMonitor: unknown;
+  const globalCache: unknown;
+  const vortexMathCache: unknown;
+  const resonanceCache: unknown;
+  const gitIntegration: unknown;
+  const goldenRatioCache: unknown;
 }
 
 /**

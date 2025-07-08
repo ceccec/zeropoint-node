@@ -49,7 +49,12 @@ describe('ZeroPoint Core System', () => {
     });
 
     it('should broadcast patterns', async () => {
-      const pattern = global.testUtils.createTestPattern('consciousness', 'Test pattern content');
+      const pattern = {
+        id: 'test_pattern_1',
+        type: 'consciousness',
+        content: 'Test pattern content',
+        intensity: 0.5
+      };
       const result = await zeropoint.broadcastPattern(pattern);
       expect(result).toBeDefined();
     });
@@ -58,10 +63,10 @@ describe('ZeroPoint Core System', () => {
       const insights = zeropoint.getInsights();
       
       expect(insights).toBeDefined();
-      expect(insights.consciousnessLevel).toBeValidConsciousnessLevel();
-      expect(insights.totalResonance).toBeValidResonance();
-      expect(insights.vortexStrength).toBeValidResonance();
-      expect(insights.toroidalFlow).toBeValidResonance();
+      expect(insights['consciousnessLevel']).toBeValidConsciousnessLevel();
+      expect(insights['totalResonance']).toBeValidResonance();
+      expect(insights['vortexStrength']).toBeValidResonance();
+      expect(insights['toroidalFlow']).toBeValidResonance();
     });
   });
 

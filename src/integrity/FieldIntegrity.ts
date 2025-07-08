@@ -204,7 +204,7 @@ export class FieldIntegrity {
   /**
    * Get metaphysical insights about field integrity
    */
-  public static getInsights(): any {
+  public static getInsights(): Record<string, unknown> {
     return {
       algorithm: "SPHINCS+",
       hashFunction: this.HASH_ALGORITHM,
@@ -290,7 +290,7 @@ export class FieldIntegrity {
   /**
    * Validate a message for integrity
    */
-  public validateMessage(message: any): boolean {
+  public validateMessage(message: Record<string, unknown>): boolean {
     if (!message || typeof message !== "object") {
       return false;
     }
@@ -304,7 +304,7 @@ export class FieldIntegrity {
     }
 
     // Check timestamp is recent
-    const messageAge = Date.now() - message.timestamp;
+    const messageAge = Date.now() - (message['timestamp'] as number);
     if (messageAge > 300000) {
       // 5 minutes
       return false;

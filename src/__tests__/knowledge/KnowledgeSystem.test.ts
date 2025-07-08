@@ -12,16 +12,16 @@ describe('KnowledgeSystem Test Registry', () => {
     expect(testPatterns.length).toBeGreaterThanOrEqual(4); // At least the 4 core test patterns
 
     const ids = testPatterns.map(p => p.id);
-    expect(ids).toContain('test_void_closure');
-    expect(ids).toContain('test_qa_sync');
-    expect(ids).toContain('test_metaphysical_principle');
-    expect(ids).toContain('test_system_integration');
+    expect(ids).toContain('550e8400-e29b-41d4-a716-446655440001'); // Test: Void Closure
+    expect(ids).toContain('550e8400-e29b-41d4-a716-446655440005'); // Test: QA Sync
+    expect(ids).toContain('550e8400-e29b-41d4-a716-446655440006'); // Test: Metaphysical Principle
+    expect(ids).toContain('550e8400-e29b-41d4-a716-446655440007'); // Test: System Integration
   });
 
   it('should have valid structure for all test patterns', () => {
     const testPatterns = knowledgeSystem.getTestPatterns();
     for (const pattern of testPatterns) {
-      expect(pattern.id).toMatch(/^test_/);
+      expect(pattern.id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
       expect(pattern.name).toMatch(/Test/);
       expect(pattern.category).toBe('test');
       expect(typeof pattern.description).toBe('string');

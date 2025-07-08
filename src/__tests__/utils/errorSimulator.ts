@@ -10,7 +10,7 @@ export function simulateCacheMiss(cache: Cache, key: string) {
 /**
  * Simulate a stale cache entry by setting an expired value.
  */
-export function simulateStaleCache(cache: Cache, key: string, value: any) {
+export function simulateStaleCache(cache: Cache, key: string, value: unknown) {
   // Set with negative TTL to force expiration
   cache.set(key, value, -1000);
 }

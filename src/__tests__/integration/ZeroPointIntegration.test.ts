@@ -40,6 +40,7 @@ describe('ZeroPoint Integration Tests', () => {
 
     it('should handle pattern broadcasting', async () => {
       const pattern = {
+        id: 'integration_test_1',
         type: 'integration_test' as const,
         content: 'Integration test pattern',
         intensity: 0.8
@@ -54,7 +55,7 @@ describe('ZeroPoint Integration Tests', () => {
       const insights = zeropoint.getInsights();
       
       expect(topology.consciousnessLevel).toBeValidConsciousnessLevel();
-      expect(insights.consciousnessLevel).toBeValidConsciousnessLevel();
+      expect(insights['consciousnessLevel']).toBeValidConsciousnessLevel();
     });
   });
 
@@ -154,13 +155,13 @@ describe('ZeroPoint Integration Tests', () => {
       const voidSystem = zeropoint.voidSystem;
       
       const transition = voidSystem.createTransition({
-        type: 'void_transition',
-        toState: 'void_emergence',
-        intensity: 0.5
+        from: 'void_active',
+        to: 'void_emergence',
+        method: 'void_transformation',
+        data: { intensity: 0.5 }
       });
       
       expect(transition).toBeDefined();
-      expect(transition.type).toBe('void_transition');
     });
 
     it('should maintain void-field balance', () => {

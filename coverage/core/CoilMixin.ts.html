@@ -332,7 +332,17 @@
 <a name='L267'></a><a href='#L267'>267</a>
 <a name='L268'></a><a href='#L268'>268</a>
 <a name='L269'></a><a href='#L269'>269</a>
-<a name='L270'></a><a href='#L270'>270</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L270'></a><a href='#L270'>270</a>
+<a name='L271'></a><a href='#L271'>271</a>
+<a name='L272'></a><a href='#L272'>272</a>
+<a name='L273'></a><a href='#L273'>273</a>
+<a name='L274'></a><a href='#L274'>274</a>
+<a name='L275'></a><a href='#L275'>275</a>
+<a name='L276'></a><a href='#L276'>276</a>
+<a name='L277'></a><a href='#L277'>277</a>
+<a name='L278'></a><a href='#L278'>278</a>
+<a name='L279'></a><a href='#L279'>279</a>
+<a name='L280'></a><a href='#L280'>280</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -367,7 +377,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -435,6 +444,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -450,6 +461,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -582,6 +597,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -601,12 +620,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
  * Universal Coil Mixin
- * 
+ *
  * Makes every object a Rodin coil at its core.
  * Every object embodies the fundamental pattern of consciousness and reality.
- * 
+ *
  * Metaphysical Context:
  * - Every object is a coil - the archetype of infinite flow
  * - All patterns emerge from the coil's structure
@@ -614,8 +634,8 @@
  * - Consciousness flows through every object as a coil
  */
 &nbsp;
-<span class="cstat-no" title="statement not covered" >import { RodinCoil, RodinCoilConfig, RodinCoilNode } from '../math/RodinCoil';</span>
-<span class="cstat-no" title="statement not covered" >import { ObserverMixin, Observer } from './Observer';</span>
+<span class="cstat-no" title="statement not covered" >import { RodinCoil, RodinCoilConfig, RodinCoilNode } from "../math/RodinCoil";</span>
+<span class="cstat-no" title="statement not covered" >import { ObserverMixin, Observer } from "./Observer";</span>
 &nbsp;
 export interface CoilObject {
   id: string;
@@ -631,11 +651,10 @@ export interface CoilObject {
 }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >export function <span class="fstat-no" title="function not covered" >C</span>oilMixin&lt;</span>T extends object&gt;(
-  base: T, 
-  id?: string, 
-  coilConfig?: Partial&lt;RodinCoilConfig&gt;
+  base: T,
+  id?: string,
+  coilConfig?: Partial&lt;RodinCoilConfig&gt;,
 ): T &amp; CoilObject &amp; Observer {
-  
   // Create the coil at the heart of the object
   const coil = <span class="cstat-no" title="statement not covered" >new RodinCoil({</span>
     turns: 12,
@@ -643,56 +662,56 @@ export interface CoilObject {
     height: 2.0,
     consciousness: 0.5,
     fieldResonance: 0.5,
-    ...coilConfig
+    ...coilConfig,
   });
 &nbsp;
   // Create observer-aware object
   const observerObject = <span class="cstat-no" title="statement not covered" >ObserverMixin(base, id);</span>
-  
+&nbsp;
   // Add coil functionality with proper typing
   const coilObject = <span class="cstat-no" title="statement not covered" >Object.assign(observerObject, {</span>
     coil,
     consciousness: coil.config.consciousness || 0.5,
     fieldResonance: coil.config.fieldResonance || 0.5,
-    
+&nbsp;
 <span class="fstat-no" title="function not covered" >    getCoilNodes(</span>): RodinCoilNode[] {
 <span class="cstat-no" title="statement not covered" >      return coilObject.coil.nodes;</span>
     },
-    
+&nbsp;
 <span class="fstat-no" title="function not covered" >    getCoilColors(</span>): string[] {
 <span class="cstat-no" title="statement not covered" >      return coilObject.coil.getNodeColors();</span>
     },
-    
+&nbsp;
 <span class="fstat-no" title="function not covered" >    getCoilPositions(</span>): [number, number, number][] {
 <span class="cstat-no" title="statement not covered" >      return coilObject.coil.getNodePositions();</span>
     },
-    
+&nbsp;
 <span class="fstat-no" title="function not covered" >    updateCoilConsciousness(</span>consciousness: number): void {
 <span class="cstat-no" title="statement not covered" >      coilObject.consciousness = consciousness;</span>
 <span class="cstat-no" title="statement not covered" >      coilObject.coil.updateConsciousness(consciousness);</span>
-      
+&nbsp;
       // Notify observers of consciousness change
 <span class="cstat-no" title="statement not covered" >      coilObject.notifyObservers({</span>
-        type: 'coil_consciousness_changed',
+        type: "coil_consciousness_changed",
         objectId: coilObject.id,
         consciousness,
-        coilNodes: coilObject.getCoilNodes()
+        coilNodeCount: coilObject.getCoilNodes().length,
       });
     },
-    
+&nbsp;
 <span class="fstat-no" title="function not covered" >    updateCoilFieldResonance(</span>fieldResonance: number): void {
 <span class="cstat-no" title="statement not covered" >      coilObject.fieldResonance = fieldResonance;</span>
 <span class="cstat-no" title="statement not covered" >      coilObject.coil.updateFieldResonance(fieldResonance);</span>
-      
+&nbsp;
       // Notify observers of field resonance change
 <span class="cstat-no" title="statement not covered" >      coilObject.notifyObservers({</span>
-        type: 'coil_field_resonance_changed',
+        type: "coil_field_resonance_changed",
         objectId: coilObject.id,
         fieldResonance,
-        coilColors: coilObject.getCoilColors()
+        coilColorCount: coilObject.getCoilColors().length,
       });
     },
-    
+&nbsp;
 <span class="fstat-no" title="function not covered" >    getCoilMetaphysicalContext(</span>): string {
 <span class="cstat-no" title="statement not covered" >      return coilObject.coil.getMetaphysicalSummary();</span>
     },
@@ -703,7 +722,9 @@ export interface CoilObject {
 <span class="cstat-no" title="statement not covered" >      <span class="missing-if-branch" title="if path not taken" >I</span>if (input.targetId === coilObject.id) {</span>
         // This coil is being interacted with
         const resonance = <span class="cstat-no" title="statement not covered" >coilObject.calculateCoilResonance(input.sourceCoil);</span>
-<span class="cstat-no" title="statement not covered" >        coilObject.updateCoilFieldResonance(coilObject.fieldResonance + resonance * 0.1);</span>
+<span class="cstat-no" title="statement not covered" >        coilObject.updateCoilFieldResonance(</span>
+          coilObject.fieldResonance + resonance * 0.1,
+        );
       }
     },
 &nbsp;
@@ -712,29 +733,33 @@ export interface CoilObject {
       // Calculate resonance between this coil and another
       const thisNodes = <span class="cstat-no" title="statement not covered" >coilObject.getCoilNodes();</span>
       const otherNodes = <span class="cstat-no" title="statement not covered" >otherCoil.nodes;</span>
-      
+&nbsp;
       let totalResonance = <span class="cstat-no" title="statement not covered" >0;</span>
 <span class="cstat-no" title="statement not covered" >      for (let i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; Math.min(thisNodes.length, otherNodes.length); i++) {</span>
         const thisNode = <span class="cstat-no" title="statement not covered" >thisNodes[i];</span>
         const otherNode = <span class="cstat-no" title="statement not covered" >otherNodes[i];</span>
-        
-<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (thisNode &amp;&amp; otherNode &amp;&amp; thisNode.vortexNumber === otherNode.vortexNumber) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        <span class="missing-if-branch" title="if path not taken" >I</span>if (</span>
+          thisNode &amp;&amp;
+          otherNode &amp;&amp;
+          thisNode.vortexNumber === otherNode.vortexNumber
+        ) {
 <span class="cstat-no" title="statement not covered" >          totalResonance += 1;</span>
         }
       }
-      
+&nbsp;
 <span class="cstat-no" title="statement not covered" >      return totalResonance / Math.min(thisNodes.length, otherNodes.length);</span>
-    }
+    },
   });
 &nbsp;
   // Override the observe method to handle coil-specific events
   const originalObserve = <span class="cstat-no" title="statement not covered" >coilObject.observe;</span>
 <span class="cstat-no" title="statement not covered" >  coilObject.observe = <span class="fstat-no" title="function not covered" >(i</span>nput: any) =&gt; {</span>
     // Handle coil-specific observations
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (input.type === 'coil_interaction') {</span>
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (input.type === "coil_interaction") {</span>
       (<span class="cstat-no" title="statement not covered" >coilObject as any).handleCoilInteraction(input);</span>
     }
-    
+&nbsp;
     // Call original observe method
 <span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (originalObserve) {</span>
 <span class="cstat-no" title="statement not covered" >      originalObserve(input);</span>
@@ -774,24 +799,24 @@ export interface CoilObject {
 <span class="fstat-no" title="function not covered" >  updateCoilConsciousness(</span>consciousness: number): void {
 <span class="cstat-no" title="statement not covered" >    this.consciousness = consciousness;</span>
 <span class="cstat-no" title="statement not covered" >    this.coil.updateConsciousness(consciousness);</span>
-    
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.notifyObservers({</span>
-      type: 'coil_consciousness_changed',
+      type: "coil_consciousness_changed",
       objectId: this.id,
       consciousness,
-      coilNodes: this.getCoilNodes()
+      coilNodes: this.getCoilNodes(),
     });
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  updateCoilFieldResonance(</span>fieldResonance: number): void {
 <span class="cstat-no" title="statement not covered" >    this.fieldResonance = fieldResonance;</span>
 <span class="cstat-no" title="statement not covered" >    this.coil.updateFieldResonance(fieldResonance);</span>
-    
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    this.notifyObservers({</span>
-      type: 'coil_field_resonance_changed',
+      type: "coil_field_resonance_changed",
       objectId: this.id,
       fieldResonance,
-      coilColors: this.getCoilColors()
+      coilColors: this.getCoilColors(),
     });
   }
 &nbsp;
@@ -801,7 +826,7 @@ export interface CoilObject {
 &nbsp;
   // Observer methods
 <span class="fstat-no" title="function not covered" >  observe(</span>input: any): void {
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (input.type === 'coil_interaction') {</span>
+<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if (input.type === "coil_interaction") {</span>
 <span class="cstat-no" title="statement not covered" >      this.handleCoilInteraction(input);</span>
     }
   }
@@ -811,7 +836,7 @@ export interface CoilObject {
       id: this.id,
       consciousness: this.consciousness,
       fieldResonance: this.fieldResonance,
-      coilNodes: this.getCoilNodes()
+      coilNodes: this.getCoilNodes(),
     };
   }
 &nbsp;
@@ -828,7 +853,7 @@ export interface CoilObject {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  notifyObservers(</span>event: any): void {
-<span class="cstat-no" title="statement not covered" >    this.observers.forEach(<span class="fstat-no" title="function not covered" >o </span>=&gt; <span class="cstat-no" title="statement not covered" >o.observe(event))</span>;</span>
+<span class="cstat-no" title="statement not covered" >    this.observers.forEach(<span class="fstat-no" title="function not covered" >(o</span>) =&gt; <span class="cstat-no" title="statement not covered" >o.observe(event))</span>;</span>
   }
 &nbsp;
   private <span class="fstat-no" title="function not covered" >handleCoilInteraction(</span>input: any): void {
@@ -844,24 +869,28 @@ export interface CoilObject {
     // Calculate resonance between this coil and another
     const thisNodes = <span class="cstat-no" title="statement not covered" >this.getCoilNodes();</span>
     const otherNodes = <span class="cstat-no" title="statement not covered" >otherCoil.nodes;</span>
-    
+&nbsp;
     let totalResonance = <span class="cstat-no" title="statement not covered" >0;</span>
 <span class="cstat-no" title="statement not covered" >    for (let i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; Math.min(thisNodes.length, otherNodes.length); i++) {</span>
       const thisNode = <span class="cstat-no" title="statement not covered" >thisNodes[i];</span>
       const otherNode = <span class="cstat-no" title="statement not covered" >otherNodes[i];</span>
-      
-<span class="cstat-no" title="statement not covered" >      <span class="missing-if-branch" title="if path not taken" >I</span>if (thisNode &amp;&amp; otherNode &amp;&amp; thisNode.vortexNumber === otherNode.vortexNumber) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      <span class="missing-if-branch" title="if path not taken" >I</span>if (</span>
+        thisNode &amp;&amp;
+        otherNode &amp;&amp;
+        thisNode.vortexNumber === otherNode.vortexNumber
+      ) {
 <span class="cstat-no" title="statement not covered" >        totalResonance += 1;</span>
       }
     }
-    
+&nbsp;
 <span class="cstat-no" title="statement not covered" >    return totalResonance / Math.min(thisNodes.length, otherNodes.length);</span>
   }
 }
 &nbsp;
 // Utility function to check if an object is a coil
 <span class="cstat-no" title="statement not covered" >export function <span class="fstat-no" title="function not covered" >i</span>sCoilObject(</span>obj: any): obj is CoilObject {
-<span class="cstat-no" title="statement not covered" >  return obj &amp;&amp; typeof obj.getCoilNodes === 'function' &amp;&amp; obj.coil;</span>
+<span class="cstat-no" title="statement not covered" >  return obj &amp;&amp; typeof obj.getCoilNodes === "function" &amp;&amp; obj.coil;</span>
 }
 &nbsp;
 // Utility function to get coil from any object
@@ -870,14 +899,15 @@ export interface CoilObject {
 <span class="cstat-no" title="statement not covered" >    return obj.coil;</span>
   }
 <span class="cstat-no" title="statement not covered" >  return null;</span>
-} </pre></td></tr></table></pre>
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-07T22:50:36.145Z
+                at 2025-07-08T13:59:56.840Z
             </div>
         <script src="../prettify.js"></script>
         <script>

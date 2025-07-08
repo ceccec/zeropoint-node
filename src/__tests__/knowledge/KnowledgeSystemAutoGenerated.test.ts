@@ -6,7 +6,7 @@ describe('Auto-Generated Tests from KnowledgeSystem Test Patterns', () => {
   testPatterns.forEach(pattern => {
     it(`Pattern: ${pattern.name} — ${pattern.description}`, () => {
       // Basic field assertions
-      expect(pattern.id).toMatch(/^test_/);
+      expect(pattern.id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
       expect(pattern.name).toMatch(/Test/);
       expect(pattern.category).toBe('test');
       expect(typeof pattern.description).toBe('string');

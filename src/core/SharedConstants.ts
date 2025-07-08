@@ -68,13 +68,18 @@ export const CONSCIOUSNESS_CONSTANTS = {
   MAX_FIELD_STRENGTH: 2,
   DEFAULT_FIELD_STRENGTH: 0.7,
 
-  // Pattern types
+  // Pattern types (expanded to include all metaphysical types)
   PATTERN_TYPES: [
     "thought",
-    "emotion",
+    "emotion", 
     "intention",
     "memory",
     "insight",
+    "consciousness",
+    "field",
+    "resonance",
+    "emergence",
+    "integration",
   ] as const,
 
   // Resonance thresholds
@@ -355,3 +360,11 @@ export type PatternCategory =
   (typeof METAPHYSICAL_CONSTANTS.PATTERN_CATEGORIES)[number];
 export type ConsciousnessDimension =
   (typeof METAPHYSICAL_CONSTANTS.CONSCIOUSNESS_DIMENSIONS)[number];
+
+// Metaphysical context type
+export type MetaphysicalContext = {
+  [key: string]: any;
+  coherence?: number;
+  fieldStrength?: number;
+  evolutionRate?: number;
+};

@@ -1,24 +1,18 @@
 /**
- * Configuration Constants for ZeroPoint Node
- *
- * Re-exports all configuration constants from the centralized SharedConstants.
- * This file maintains backward compatibility while ensuring all constants
- * are unified in the single source of truth.
+ * Configuration Constants for ZeroPoint System
+ * 
+ * Centralized configuration constants that define system behavior,
+ * thresholds, and operational parameters.
  */
 
-// Re-export all constants from SharedConstants
-export {
+import {
   VORTEX_CONSTANTS,
-  CONSCIOUSNESS_CONSTANTS,
-  EMERGENCE_CONSTANTS,
-  NETWORK_CONSTANTS,
-  MATH_CONSTANTS,
   CONFIG_CONSTANTS,
-  METAPHYSICAL_CONSTANTS,
-  ConstantsUtils,
-} from "./core/SharedConstants";
+  NETWORK_CONSTANTS,
+  CONSCIOUSNESS_CONSTANTS
+} from "../core/SharedConstants";
 
-// Legacy exports for backward compatibility
+// Re-export all configuration constants for convenience
 export const GOLDEN_RATIO = VORTEX_CONSTANTS.GOLDEN_RATIO;
 export const GOLDEN_CACHE_SIZE = CONFIG_CONSTANTS.GOLDEN_CACHE_SIZE;
 export const GOLDEN_CACHE_TTL = CONFIG_CONSTANTS.GOLDEN_CACHE_TTL;

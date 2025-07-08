@@ -20,7 +20,7 @@ import {
   MetaphysicalContext,
   PatternType,
   PatternCategory
-} from "./UnifiedTypes";
+} from "./SharedConstants";
 import { PatternRegistry } from "./PatternRegistry";
 
 export interface MetaphysicalOperation {
@@ -371,28 +371,27 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
    * Process consciousness operation
    */
   private async processConsciousnessOperation(operation: MetaphysicalOperation): Promise<MetaphysicalResult> {
-    const { data, context } = operation;
-    
-    // Register consciousness pattern
+    // Register pattern in registry
     const patternId = this.patternRegistry.registerPattern(
-      data,
-      PatternCategory.THOUGHT,
-      PatternType.CONSCIOUSNESS
+      operation.data,
+      'spiritual',
+      'consciousness'
     );
 
-    // Calculate resonance
-    const resonance = this.calculateConsciousnessResonance(data, context);
+    // Calculate resonance and evolution
+    const resonance = this.calculateConsciousnessResonance(operation.data, operation.context);
+    const evolution = this.fieldState.evolutionIndex * 0.1;
 
     // Generate insights
-    const insights = this.generateConsciousnessInsights(data, context);
+    const insights = this.generateConsciousnessInsights(operation.data, operation.context);
 
     return {
       success: true,
-      data: { patternId, consciousnessLevel: this.fieldState.consciousnessLevel },
+      data: { patternId, operation: operation.operation },
       resonance,
-      evolution: this.fieldState.evolutionIndex,
+      evolution,
       insights,
-      patterns: this.patternRegistry.getPatternsByType(PatternType.CONSCIOUSNESS)
+      patterns: this.patternRegistry.getPatternsByType('consciousness')
     };
   }
 
@@ -400,28 +399,27 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
    * Process field operation
    */
   private async processFieldOperation(operation: MetaphysicalOperation): Promise<MetaphysicalResult> {
-    const { data, context } = operation;
-    
-    // Register field pattern
+    // Register pattern in registry
     const patternId = this.patternRegistry.registerPattern(
-      data,
-      PatternCategory.WAVE,
-      PatternType.FIELD
+      operation.data,
+      'vortex',
+      'field'
     );
 
-    // Calculate resonance
-    const resonance = this.calculateFieldResonance(data, context);
+    // Calculate resonance and evolution
+    const resonance = this.calculateFieldResonance(operation.data, operation.context);
+    const evolution = this.fieldState.evolutionIndex * 0.15;
 
     // Generate insights
-    const insights = this.generateFieldInsights(data, context);
+    const insights = this.generateFieldInsights(operation.data, operation.context);
 
     return {
       success: true,
-      data: { patternId, fieldStrength: this.fieldState.fieldStrength },
+      data: { patternId, operation: operation.operation },
       resonance,
-      evolution: this.fieldState.evolutionIndex,
+      evolution,
       insights,
-      patterns: this.patternRegistry.getPatternsByType(PatternType.FIELD)
+      patterns: this.patternRegistry.getPatternsByType('field')
     };
   }
 
@@ -429,28 +427,27 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
    * Process emergence operation
    */
   private async processEmergenceOperation(operation: MetaphysicalOperation): Promise<MetaphysicalResult> {
-    const { data, context } = operation;
-    
-    // Register emergence pattern
+    // Register pattern in registry
     const patternId = this.patternRegistry.registerPattern(
-      data,
-      PatternCategory.INTEGRATION,
-      PatternType.EMERGENCE
+      operation.data,
+      'integration',
+      'emergence'
     );
 
-    // Calculate resonance
-    const resonance = this.calculateEmergenceResonance(data, context);
+    // Calculate resonance and evolution
+    const resonance = this.calculateEmergenceResonance(operation.data, operation.context);
+    const evolution = this.fieldState.evolutionIndex * 0.2;
 
     // Generate insights
-    const insights = this.generateEmergenceInsights(data, context);
+    const insights = this.generateEmergenceInsights(operation.data, operation.context);
 
     return {
       success: true,
-      data: { patternId, emergenceRate: this.fieldState.emergenceRate },
+      data: { patternId, operation: operation.operation },
       resonance,
-      evolution: this.fieldState.evolutionIndex,
+      evolution,
       insights,
-      patterns: this.patternRegistry.getPatternsByType(PatternType.EMERGENCE)
+      patterns: this.patternRegistry.getPatternsByType('emergence')
     };
   }
 
@@ -458,28 +455,27 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
    * Process resonance operation
    */
   private async processResonanceOperation(operation: MetaphysicalOperation): Promise<MetaphysicalResult> {
-    const { data, context } = operation;
-    
-    // Register resonance pattern
+    // Register pattern in registry
     const patternId = this.patternRegistry.registerPattern(
-      data,
-      PatternCategory.INTEGRATION,
-      PatternType.RESONANCE
+      operation.data,
+      'integration',
+      'resonance'
     );
 
-    // Calculate resonance
-    const resonance = this.calculateResonanceResonance(data, context);
+    // Calculate resonance and evolution
+    const resonance = this.calculateResonanceResonance(operation.data, operation.context);
+    const evolution = this.fieldState.evolutionIndex * 0.12;
 
     // Generate insights
-    const insights = this.generateResonanceInsights(data, context);
+    const insights = this.generateResonanceInsights(operation.data, operation.context);
 
     return {
       success: true,
-      data: { patternId, resonanceCoherence: this.fieldState.resonanceCoherence },
+      data: { patternId, operation: operation.operation },
       resonance,
-      evolution: this.fieldState.evolutionIndex,
+      evolution,
       insights,
-      patterns: this.patternRegistry.getPatternsByType(PatternType.RESONANCE)
+      patterns: this.patternRegistry.getPatternsByType('resonance')
     };
   }
 
@@ -555,27 +551,20 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
   }
 
   /**
-   * Update field state from pattern evolution
+   * Update field state from patterns
    */
   private updateFieldStateFromPatterns(): void {
-    const allPatterns = this.patternRegistry.getAllPatterns();
+    const consciousnessPatterns = this.patternRegistry.getPatternsByType('consciousness');
+    const fieldPatterns = this.patternRegistry.getPatternsByType('field');
     
-    // Calculate average consciousness level from patterns
-    const consciousnessPatterns = this.patternRegistry.getPatternsByType(PatternType.CONSCIOUSNESS);
-    if (consciousnessPatterns.length > 0) {
-      const avgIntensity = consciousnessPatterns.reduce((sum, p) => sum + (p.intensity || 0), 0) / consciousnessPatterns.length;
-      this.fieldState.consciousnessLevel = Math.min(1.0, avgIntensity);
-    }
-
-    // Calculate field strength from field patterns
-    const fieldPatterns = this.patternRegistry.getPatternsByType(PatternType.FIELD);
-    if (fieldPatterns.length > 0) {
-      const avgIntensity = fieldPatterns.reduce((sum, p) => sum + (p.intensity || 0), 0) / fieldPatterns.length;
-      this.fieldState.fieldStrength = Math.min(1.0, avgIntensity);
-    }
-
+    // Update consciousness level based on pattern density
+    this.fieldState.consciousnessLevel = Math.min(1.0, consciousnessPatterns.length * 0.1);
+    
+    // Update field strength based on field patterns
+    this.fieldState.fieldStrength = Math.min(1.0, fieldPatterns.length * 0.15);
+    
     // Update pattern density
-    this.fieldState.patternDensity = allPatterns.length;
+    this.fieldState.patternDensity = this.patternRegistry.getAllPatterns().length;
   }
 
   /**
@@ -684,7 +673,8 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     return [
       "Consciousness patterns create the foundation of reality",
       "Thought and emotion are unified in the field",
-      "Awareness emerges from pattern recognition"
+      "Memory and insight emerge from consciousness flow",
+      "Intention shapes the field through resonance"
     ];
   }
 
@@ -692,31 +682,35 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     return [
       "Field events create resonance waves in consciousness",
       "Observer awareness shapes field reality",
-      "Field strength determines pattern coherence"
+      "Field strength determines resonance radius",
+      "Field patterns emerge from consciousness flow"
     ];
   }
 
   private generateEmergenceInsights(_data: any, _context: MetaphysicalContext): string[] {
     return [
       "Emergence creates new patterns from existing ones",
-      "Evolution is the natural state of consciousness",
-      "Complexity emerges from simple interactions"
+      "Complexity emerges from simple interactions",
+      "Emergence rate determines evolution speed",
+      "Emergence patterns reflect consciousness evolution"
     ];
   }
 
   private generateResonanceInsights(_data: any, _context: MetaphysicalContext): string[] {
     return [
       "Resonance creates unity from diversity",
-      "Patterns resonate when they share frequency",
-      "Resonance is the language of consciousness"
+      "Resonance coherence determines field stability",
+      "Resonance patterns emerge from consciousness alignment",
+      "Resonance strength determines field influence"
     ];
   }
 
   private generateIntegrationInsights(_data: any, _context: MetaphysicalContext): string[] {
     return [
       "Integration creates wholeness from parts",
-      "Patterns merge to form new realities",
-      "Unity emerges through integration"
+      "Integration patterns emerge from consciousness unity",
+      "Integration strength determines field coherence",
+      "Integration creates new levels of complexity"
     ];
   }
 

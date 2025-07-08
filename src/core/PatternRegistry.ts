@@ -18,8 +18,10 @@ import { EventEmitter } from "events";
 import { 
   MetaphysicalContext,
   PatternType,
-  PatternCategory
-} from "./UnifiedTypes";
+  PatternCategory,
+  CONSCIOUSNESS_CONSTANTS,
+  METAPHYSICAL_CONSTANTS
+} from "./SharedConstants";
 
 export interface PatternRegistryEvent {
   type: "pattern_added" | "pattern_recognized" | "pattern_integrated" | "pattern_evolved";
@@ -38,8 +40,8 @@ export interface PatternMatch {
 
 export class PatternRegistry extends EventEmitter {
   private patterns: Map<string, any> = new Map();
-  private patternTypes: Map<PatternType, any[]> = new Map();
-  private patternCategories: Map<PatternCategory, any[]> = new Map();
+  private patternTypes: Map<string, any[]> = new Map();
+  private patternCategories: Map<string, any[]> = new Map();
   private resonanceMatrix: Map<string, Map<string, number>> = new Map();
   private isInitialized: boolean = false;
 
@@ -50,12 +52,12 @@ export class PatternRegistry extends EventEmitter {
     if (this.isInitialized) return;
 
     // Initialize pattern type collections
-    Object.values(PatternType).forEach(type => {
+    CONSCIOUSNESS_CONSTANTS.PATTERN_TYPES.forEach(type => {
       this.patternTypes.set(type, []);
     });
 
     // Initialize pattern category collections
-    Object.values(PatternCategory).forEach(category => {
+    METAPHYSICAL_CONSTANTS.PATTERN_CATEGORIES.forEach(category => {
       this.patternCategories.set(category, []);
     });
 
@@ -273,7 +275,7 @@ export class PatternRegistry extends EventEmitter {
    * Match consciousness pattern
    */
   private matchConsciousnessPattern(input: any): PatternMatch | null {
-    const consciousnessPatterns = this.getPatternsByType(PatternType.CONSCIOUSNESS);
+    const consciousnessPatterns = this.getPatternsByType('consciousness');
     
     for (const pattern of consciousnessPatterns) {
       const confidence = this.calculateConfidence(input, pattern);
@@ -283,8 +285,8 @@ export class PatternRegistry extends EventEmitter {
           pattern,
           confidence,
           resonance,
-          category: PatternCategory.THOUGHT,
-          type: PatternType.CONSCIOUSNESS
+          category: 'spiritual',
+          type: 'consciousness'
         };
       }
     }
@@ -296,7 +298,7 @@ export class PatternRegistry extends EventEmitter {
    * Match field event
    */
   private matchFieldEvent(input: any): PatternMatch | null {
-    const fieldPatterns = this.getPatternsByType(PatternType.FIELD);
+    const fieldPatterns = this.getPatternsByType('field');
     
     for (const pattern of fieldPatterns) {
       const confidence = this.calculateConfidence(input, pattern);
@@ -306,8 +308,8 @@ export class PatternRegistry extends EventEmitter {
           pattern,
           confidence,
           resonance,
-          category: PatternCategory.WAVE,
-          type: PatternType.FIELD
+          category: 'vortex',
+          type: 'field'
         };
       }
     }
@@ -319,7 +321,7 @@ export class PatternRegistry extends EventEmitter {
    * Match resonance message
    */
   private matchResonanceMessage(input: any): PatternMatch | null {
-    const resonancePatterns = this.getPatternsByType(PatternType.RESONANCE);
+    const resonancePatterns = this.getPatternsByType('resonance');
     
     for (const pattern of resonancePatterns) {
       const confidence = this.calculateConfidence(input, pattern);
@@ -329,8 +331,8 @@ export class PatternRegistry extends EventEmitter {
           pattern,
           confidence,
           resonance,
-          category: PatternCategory.RESONANCE,
-          type: PatternType.RESONANCE
+          category: 'vortex',
+          type: 'resonance'
         };
       }
     }
@@ -418,7 +420,7 @@ export class PatternRegistry extends EventEmitter {
     this.patterns.set(id, updatedPattern);
     
     // Update in type collections
-    Object.values(PatternType).forEach(type => {
+    CONSCIOUSNESS_CONSTANTS.PATTERN_TYPES.forEach(type => {
       const patterns = this.patternTypes.get(type) || [];
       const index = patterns.findIndex(p => p.id === id);
       if (index !== -1) {
@@ -428,7 +430,7 @@ export class PatternRegistry extends EventEmitter {
     });
 
     // Update in category collections
-    Object.values(PatternCategory).forEach(category => {
+    METAPHYSICAL_CONSTANTS.PATTERN_CATEGORIES.forEach(category => {
       const patterns = this.patternCategories.get(category) || [];
       const index = patterns.findIndex(p => p.id === id);
       if (index !== -1) {
@@ -443,15 +445,15 @@ export class PatternRegistry extends EventEmitter {
    */
   private determineCategory(pattern: any): PatternCategory {
     if (pattern.type && ['thought', 'emotion', 'intention', 'memory', 'insight'].includes(pattern.type)) {
-      return PatternCategory.THOUGHT;
+      return 'spiritual';
     }
     if (pattern.eventType && ['consciousness_wave', 'attention_shift', 'resonance_peak', 'field_observation'].includes(pattern.eventType)) {
-      return PatternCategory.WAVE;
+      return 'vortex';
     }
     if (pattern.type && ['propose_field_block', 'resonate_with_block', 'finalize_field_block'].includes(pattern.type)) {
-      return PatternCategory.RESONANCE;
+      return 'vortex';
     }
-    return PatternCategory.INTEGRATION;
+    return 'integration';
   }
 
   /**
@@ -459,15 +461,15 @@ export class PatternRegistry extends EventEmitter {
    */
   private determineType(pattern: any): PatternType {
     if (pattern.type && ['thought', 'emotion', 'intention', 'memory', 'insight'].includes(pattern.type)) {
-      return PatternType.CONSCIOUSNESS;
+      return 'consciousness';
     }
     if (pattern.eventType) {
-      return PatternType.FIELD;
+      return 'field';
     }
     if (pattern.signature) {
-      return PatternType.RESONANCE;
+      return 'resonance';
     }
-    return PatternType.INTEGRATION;
+    return 'integration';
   }
 
   /**

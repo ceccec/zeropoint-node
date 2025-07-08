@@ -75,39 +75,6 @@ export interface ResonanceMessage {
   signature: PatternSignature;
 }
 
-// Pattern Types (for registry and classification)
-export enum PatternType {
-  CONSCIOUSNESS = "consciousness",
-  FIELD = "field",
-  EMERGENCE = "emergence",
-  RESONANCE = "resonance",
-  INTEGRATION = "integration"
-}
-
-// Pattern Categories (for registry organization)
-export enum PatternCategory {
-  THOUGHT = "thought",
-  EMOTION = "emotion",
-  INTENTION = "intention",
-  MEMORY = "memory",
-  INSIGHT = "insight",
-  WAVE = "wave",
-  SHIFT = "shift",
-  PEAK = "peak",
-  OBSERVATION = "observation",
-  INTEGRATION = "integration",
-  RESONANCE = "resonance",
-  CONNECTION = "connection"
-}
-
-// Link Types (for pattern relationships)
-export enum LinkType {
-  CAUSAL = "causal",
-  RESONANT = "resonant",
-  EMERGENT = "emergent",
-  INTEGRATIVE = "integrative"
-}
-
 // Metaphysical Context (for all major systems)
 export interface MetaphysicalContext {
   meaning: string;

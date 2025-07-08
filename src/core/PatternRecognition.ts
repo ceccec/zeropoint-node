@@ -18,7 +18,7 @@ import {
 import { MathUtils } from "./MathUtils";
 import { COIL_PATTERNS } from "./CoilSystem";
 import { PatternRegistry } from "./PatternRegistry";
-import { PatternCategory } from "./UnifiedTypes";
+import { PatternCategory } from "./SharedConstants";
 
 /**
  * Pattern recognition result
@@ -357,19 +357,18 @@ export class PatternRecognition extends EventEmitter {
    */
   private mapCoilCategoryToUnified(coilCategory: string): PatternCategory {
     const categoryMap: { [key: string]: PatternCategory } = {
-      'mathematical': PatternCategory.INTEGRATION,
-      'metaphysical': PatternCategory.INSIGHT,
-      'consciousness': PatternCategory.THOUGHT,
-      'emergence': PatternCategory.INTEGRATION,
-      'void': PatternCategory.INTEGRATION,
-      'resonance': PatternCategory.RESONANCE,
-      'vortex': PatternCategory.INTEGRATION,
-      'family': PatternCategory.INTEGRATION,
-      'polar': PatternCategory.INTEGRATION,
-      'spiritual': PatternCategory.INSIGHT
+      'mathematical': 'mathematical',
+      'metaphysical': 'metaphysical',
+      'consciousness': 'spiritual',
+      'emergence': 'integration',
+      'void': 'void',
+      'resonance': 'vortex',
+      'vortex': 'vortex',
+      'family': 'family',
+      'polar': 'polar',
+      'spiritual': 'spiritual'
     };
-    
-    return categoryMap[coilCategory] || PatternCategory.INTEGRATION;
+    return categoryMap[coilCategory] || 'integration';
   }
 
   /**

@@ -118,32 +118,13 @@ export {
   CONSCIOUSNESS_CONSTANTS,
   EMERGENCE_CONSTANTS,
   NETWORK_CONSTANTS,
-  MATH_CONSTANTS,
   CONFIG_CONSTANTS,
   METAPHYSICAL_CONSTANTS,
-  ConstantsUtils,
-  PatternCategory,
-  PatternType,
-  LinkType,
-  ConsciousnessDimension
+  ConstantsUtils
 } from './core/SharedConstants';
 
 // Unified Types - Single Source of Truth for All Pattern and Event Types
-export {
-  ConsciousnessPattern,
-  FieldEvent,
-  LedgerEvent,
-  ResonanceMessage,
-  MetaphysicalContext,
-  Observer,
-  ResonanceWave,
-  ConsciousnessResonance,
-  PatternSignature,
-  PatternType,
-  PatternCategory,
-  LinkType,
-  ConsciousnessDimension
-} from './core/UnifiedTypes';
+export * from './types/UnifiedExports';
 
 // Unified Pattern Registry - Centralized Pattern Management
 export { PatternRegistry } from './core/PatternRegistry';

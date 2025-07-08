@@ -42,7 +42,11 @@ describe("Simple ZeroPoint Tests", () => {
 
   test("Mathematical constants should be correct", () => {
     const vortexMath = new VortexMath();
-    const insights = vortexMath.getInsights();
+    const insights = vortexMath.getInsights() as {
+      vortexSequence: number[];
+      goldenRatio: number;
+      vortexCenter: number;
+    };
 
     expect(insights.vortexSequence).toEqual([1, 2, 4, 8, 7, 5]);
     expect(insights.goldenRatio).toBeCloseTo(1.618033988749895);

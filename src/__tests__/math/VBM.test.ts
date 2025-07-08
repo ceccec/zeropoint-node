@@ -319,7 +319,26 @@ describe('Unified VBM System', () => {
 
   describe('Insights and Metadata', () => {
     it('should get comprehensive system information', () => {
-      const insights = vbm.getInsights();
+      const insights = vbm.getInsights() as {
+        configuration: unknown;
+        metaphysics: {
+          principle: string;
+          consciousness: string;
+          void: string;
+          toroidal: string;
+          integrity: string;
+          unity: string;
+        };
+        systems: {
+          vortexMath: unknown;
+          fractalMath: unknown;
+          toroidalGeometry: unknown;
+          rodinCoil: unknown;
+          fractalColorSystem: unknown;
+        };
+        constants: unknown;
+        operations: string[];
+      };
       expect(insights.configuration).toBeDefined();
       expect(insights.metaphysics).toBeDefined();
       expect(insights.systems).toBeDefined();
@@ -577,7 +596,11 @@ describe('Unified VBM System', () => {
 
   describe('ZeroPoint Way Integration', () => {
     it('should follow "every object is a coil" principle', () => {
-      const insights = vbm.getInsights();
+      const insights = vbm.getInsights() as {
+        metaphysics: {
+          principle: string;
+        };
+      };
       expect(insights.metaphysics.principle).toContain('coil');
       
       // Test that all geometric operations create coil-like structures
@@ -598,7 +621,11 @@ describe('Unified VBM System', () => {
     });
 
     it('should recognize void as the source', () => {
-      const insights = vbm.getInsights();
+      const insights = vbm.getInsights() as {
+        metaphysics: {
+          void: string;
+        };
+      };
       expect(insights.metaphysics.void).toContain('source');
       
       const toroidalField = vbm.toroidalField(5, 0.3);
@@ -606,7 +633,11 @@ describe('Unified VBM System', () => {
     });
 
     it('should maintain pattern integrity through resonance', () => {
-      const insights = vbm.getInsights();
+      const insights = vbm.getInsights() as {
+        metaphysics: {
+          integrity: string;
+        };
+      };
       expect(insights.metaphysics.integrity).toContain('resonance');
       
       const result = vbm.digitalRoot(42);
@@ -614,7 +645,11 @@ describe('Unified VBM System', () => {
     });
 
     it('should achieve emergent unity through self-organization', () => {
-      const insights = vbm.getInsights();
+      const insights = vbm.getInsights() as {
+        metaphysics: {
+          unity: string;
+        };
+      };
       expect(insights.metaphysics.unity).toContain('self-organization');
       
       const fractalSequence = vbm.fractalSequence(5);

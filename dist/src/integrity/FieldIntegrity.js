@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FieldIntegrity = void 0;
 const crypto_1 = require("crypto");
 class FieldIntegrity {
+    constructor() {
+        this._integrityLevel = 100;
+    }
     /**
      * Generate pattern key pair using SPHINCS+ (stateless hash-based)
      */
@@ -187,6 +190,47 @@ class FieldIntegrity {
         const messageHash = this.hashMessage(message);
         const expectedSignature = this.createSignature(messageHash, signature.publicKey);
         return signature.signature === expectedSignature;
+    }
+    /**
+     * Get current integrity level
+     */
+    getIntegrityLevel() {
+        return this._integrityLevel;
+    }
+    /**
+     * Set integrity level
+     */
+    setIntegrityLevel(level) {
+        this._integrityLevel = level;
+    }
+    /**
+     * Validate a message for integrity
+     */
+    validateMessage(message) {
+        if (!message || typeof message !== 'object') {
+            return false;
+        }
+        // Basic validation - check for required fields
+        const requiredFields = ['type', 'content', 'timestamp'];
+        for (const field of requiredFields) {
+            if (!(field in message)) {
+                return false;
+            }
+        }
+        // Check timestamp is recent
+        const messageAge = Date.now() - message.timestamp;
+        if (messageAge > 300000) { // 5 minutes
+            return false;
+        }
+        return true;
+    }
+    /**
+     * Validate field integrity
+     */
+    validateField() {
+        // Basic field validation - check if integrity level is within acceptable range
+        const level = this.getIntegrityLevel();
+        return level >= 0 && level <= 100;
     }
 }
 exports.FieldIntegrity = FieldIntegrity;

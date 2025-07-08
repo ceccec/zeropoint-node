@@ -70,6 +70,21 @@ class PatternRecognition extends events_1.EventEmitter {
         return results;
     }
     /**
+     * Recognize a single pattern (alias for recognizePatterns)
+     */
+    recognizePattern(input, context) {
+        const results = this.recognizePatterns(input, context);
+        const result = results && results.length > 0 && results[0] !== undefined
+            ? results[0]
+            : { confidence: 0, pattern: null, metadata: {} };
+        return {
+            isRecognized: result.confidence > 0.5,
+            confidence: result.confidence,
+            pattern: result.pattern,
+            metadata: result.metadata
+        };
+    }
+    /**
      * Analyze consciousness patterns
      */
     analyzeConsciousnessPatterns(patterns) {

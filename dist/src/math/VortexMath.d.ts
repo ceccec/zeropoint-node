@@ -26,7 +26,7 @@ export declare class VortexMath {
     /**
      * Calculate resonance between two consciousness levels using unified math
      */
-    calculateResonance(level1: number, level2: number): number;
+    calculateResonance(level1?: number, level2?: number): number;
     /**
      * Apply vortex transformation to input value using unified math
      */
@@ -88,6 +88,8 @@ export declare class VortexMath {
      * Generate vortex pattern based on intensity
      */
     generateVortexPattern(intensity: number): number[];
+    calculateVortexNumber(n?: number): number;
+    getColorForNumber(n?: number, _context?: any): string;
 }
 export declare const applyVortexTransform: (input: number) => number;
 //# sourceMappingURL=VortexMath.d.ts.map

@@ -16,6 +16,7 @@ import { PatternRecognition } from './PatternRecognition';
 import { UnifiedSystem } from './UnifiedSystem';
 import { ConcreteObserver } from './Observer';
 import { getSelfEvolvingConsciousness } from '../consciousness/SelfEvolvingConsciousness';
+import { gitIntegration, GitEvent, GitStatus, GitCommit } from '../utils/GitIntegration';
 
 /**
  * ZeroPoint - Independent Device Instance
@@ -43,6 +44,7 @@ export class ZeroPoint extends EventEmitter {
   public resonanceConsensus: ResonanceConsensus;
   public unifiedField: UnifiedSystem;
   public patternRecognition: PatternRecognition;
+  public gitIntegration = gitIntegration;
   
   private config: DeviceConfig;
   private _isActive: boolean = false;
@@ -97,6 +99,8 @@ export class ZeroPoint extends EventEmitter {
     this.patternRecognition = new PatternRecognition();
 
     this._observer = new ConcreteObserver();
+
+    this.gitIntegration = gitIntegration;
 
     this.setupEventHandlers();
     this.setupHealthChecks();
@@ -649,5 +653,26 @@ export class ZeroPoint extends EventEmitter {
     
     // Register self-evolution index
     this.registerMetric('selfEvolutionIndex', () => consciousness.getCurrentResonance().selfEvolutionIndex);
+  }
+
+  /**
+   * Subscribe to live Git events
+   */
+  public onGitChange(callback: (event: GitEvent) => void): void {
+    this.gitIntegration.onGitChange(callback);
+  }
+
+  /**
+   * Get live Git status
+   */
+  public async getLiveGitStatus(): Promise<GitStatus> {
+    return await this.gitIntegration.getLiveGitStatus();
+  }
+
+  /**
+   * Get recent commits
+   */
+  public async getRecentCommits(n: number): Promise<GitCommit[]> {
+    return await this.gitIntegration.getRecentCommits(n);
   }
 } 

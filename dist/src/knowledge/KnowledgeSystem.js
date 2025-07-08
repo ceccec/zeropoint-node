@@ -2,11 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KnowledgeSystem = void 0;
 class KnowledgeSystem {
-    constructor() {
+    constructor(zeroPoint) {
         this.questions = [];
-        // Initialize with base patterns if any (empty for now)
-        this.patterns = [];
-        this.patterns = [...this.patterns, ...KnowledgeSystem.EXTRA_PATTERNS];
+        this.gitPatterns = [];
+        this.patterns = [...KnowledgeSystem.EXTRA_PATTERNS];
+        if (zeroPoint) {
+            this.zeroPoint = zeroPoint;
+            // Subscribe to Git events if ZeroPoint is provided
+            this.zeroPoint.onGitChange((event) => {
+                this.handleGitEvent(event);
+            });
+        }
     }
     /**
      * Search knowledge patterns
@@ -163,8 +169,275 @@ class KnowledgeSystem {
     getQuestions() {
         return this.questions;
     }
+    /**
+     * Get question by ID
+     */
     getQuestionById(id) {
         return this.questions.find(q => q.id === id);
+    }
+    /**
+     * Get the most recent git-related knowledge patterns
+     * @param n Number of patterns to retrieve
+     */
+    getRecentGitPatterns(n) {
+        return this.gitPatterns.slice(0, n);
+    }
+    // === GIT-AWARE Q&A SYSTEM ===
+    // Extends the Q&A system with live Git integration for code evolution insights
+    /**
+     * Ask a Git-related question and get comprehensive answers
+     */
+    async askGitQuestion(question) {
+        const gitData = await this.getLiveGitData();
+        const patterns = this.getRecentGitPatterns(10);
+        // Analyze the question and provide contextual answers
+        const answer = this.generateGitAnswer(question, gitData, patterns);
+        const insights = this.extractGitInsights(gitData, patterns);
+        const recommendations = this.generateGitRecommendations(gitData, patterns);
+        return {
+            answer,
+            gitData,
+            patterns,
+            insights,
+            recommendations
+        };
+    }
+    /**
+     * Get live Git data including status, recent commits, and changes
+     */
+    async getLiveGitData() {
+        if (!this.zeroPoint) {
+            return { error: 'ZeroPoint not initialized' };
+        }
+        try {
+            const [status, recentCommits] = await Promise.all([
+                this.zeroPoint.getLiveGitStatus(),
+                this.zeroPoint.getRecentCommits(20)
+            ]);
+            return {
+                status,
+                recentCommits,
+                timestamp: new Date().toISOString(),
+                totalCommits: recentCommits.length
+            };
+        }
+        catch (error) {
+            return { error: error instanceof Error ? error.message : 'Unknown error' };
+        }
+    }
+    /**
+     * Generate contextual answers for Git-related questions
+     */
+    generateGitAnswer(question, gitData, patterns) {
+        const q = question.toLowerCase();
+        if (q.includes('recent') && q.includes('commit')) {
+            return this.answerRecentCommits(gitData);
+        }
+        if (q.includes('what') && q.includes('change')) {
+            return this.answerWhatChanged(gitData);
+        }
+        if (q.includes('development') && q.includes('pattern')) {
+            return this.answerDevelopmentPatterns(patterns);
+        }
+        if (q.includes('file') && q.includes('evolution')) {
+            return this.answerFileEvolution(gitData);
+        }
+        if (q.includes('learning') && q.includes('progress')) {
+            return this.answerLearningProgress(patterns);
+        }
+        return this.answerGeneralGitQuestion(question, gitData, patterns);
+    }
+    /**
+     * Answer questions about recent commits
+     */
+    answerRecentCommits(gitData) {
+        if (gitData.error)
+            return `Unable to access Git data: ${gitData.error}`;
+        const commits = gitData.recentCommits || [];
+        if (commits.length === 0)
+            return "No recent commits found.";
+        const recent = commits.slice(0, 5);
+        let answer = `Recent commits (${recent.length}):\n`;
+        recent.forEach((commit, i) => {
+            answer += `${i + 1}. ${commit.message} (${commit.author}, ${commit.date})\n`;
+        });
+        return answer;
+    }
+    /**
+     * Answer questions about what changed
+     */
+    answerWhatChanged(gitData) {
+        if (gitData.error)
+            return `Unable to access Git data: ${gitData.error}`;
+        const status = gitData.status;
+        if (!status)
+            return "No Git status available.";
+        let answer = "Current changes:\n";
+        if (status.staged && status.staged.length > 0) {
+            answer += `Staged files (${status.staged.length}): ${status.staged.join(', ')}\n`;
+        }
+        if (status.unstaged && status.unstaged.length > 0) {
+            answer += `Modified files (${status.unstaged.length}): ${status.unstaged.join(', ')}\n`;
+        }
+        if (status.untracked && status.untracked.length > 0) {
+            answer += `New files (${status.untracked.length}): ${status.untracked.join(', ')}\n`;
+        }
+        if (!status.staged?.length && !status.unstaged?.length && !status.untracked?.length) {
+            answer = "Working directory is clean - no changes detected.";
+        }
+        return answer;
+    }
+    /**
+     * Answer questions about development patterns
+     */
+    answerDevelopmentPatterns(patterns) {
+        const gitPatterns = patterns.filter(p => p.category === 'git');
+        if (gitPatterns.length === 0)
+            return "No Git development patterns found.";
+        const patternTypes = gitPatterns.reduce((acc, pattern) => {
+            const type = pattern.numericalData?.type || 'unknown';
+            acc[type] = (acc[type] || 0) + 1;
+            return acc;
+        }, {});
+        let answer = "Development patterns detected:\n";
+        Object.entries(patternTypes).forEach(([type, count]) => {
+            answer += `• ${type}: ${count} occurrences\n`;
+        });
+        return answer;
+    }
+    /**
+     * Answer questions about file evolution
+     */
+    answerFileEvolution(gitData) {
+        if (gitData.error)
+            return `Unable to access Git data: ${gitData.error}`;
+        const commits = gitData.recentCommits || [];
+        if (commits.length === 0)
+            return "No commit history available for file evolution analysis.";
+        // Analyze file changes across commits
+        const fileChanges = commits.reduce((acc, commit) => {
+            // This would require parsing commit diffs - simplified for now
+            acc[commit.hash] = 1;
+            return acc;
+        }, {});
+        return `File evolution analysis: ${Object.keys(fileChanges).length} commits analyzed. Recent activity shows ongoing development.`;
+    }
+    /**
+     * Answer questions about learning progress
+     */
+    answerLearningProgress(patterns) {
+        const learningPatterns = patterns.filter(p => p.category === 'git' &&
+            p.numericalData?.type?.includes('learning'));
+        if (learningPatterns.length === 0)
+            return "No explicit learning patterns detected in recent commits.";
+        const learningTypes = learningPatterns.map(p => p.numericalData?.type || 'unknown');
+        const uniqueTypes = [...new Set(learningTypes)];
+        return `Learning progress detected: ${learningPatterns.length} learning-related commits with patterns: ${uniqueTypes.join(', ')}`;
+    }
+    /**
+     * Answer general Git questions
+     */
+    answerGeneralGitQuestion(question, gitData, patterns) {
+        return `Git question: "${question}"\n\nAvailable data:\n` +
+            `• Recent commits: ${gitData.recentCommits?.length || 0}\n` +
+            `• Git patterns: ${patterns.filter(p => p.category === 'git').length}\n` +
+            `• Status: ${gitData.status ? 'Available' : 'Not available'}\n\n` +
+            `Ask specific questions about recent commits, changes, or development patterns for more detailed answers.`;
+    }
+    /**
+     * Extract insights from Git data and patterns
+     */
+    extractGitInsights(gitData, patterns) {
+        const insights = [];
+        if (gitData.recentCommits?.length > 0) {
+            insights.push(`Active development with ${gitData.recentCommits.length} recent commits`);
+        }
+        const gitPatterns = patterns.filter(p => p.category === 'git');
+        if (gitPatterns.length > 0) {
+            insights.push(`Code evolution patterns detected: ${gitPatterns.length} patterns`);
+        }
+        if (gitData.status?.staged?.length > 0) {
+            insights.push(`Changes staged for commit: ${gitData.status.staged.length} files`);
+        }
+        return insights;
+    }
+    /**
+     * Generate recommendations based on Git data
+     */
+    generateGitRecommendations(gitData, patterns) {
+        const recommendations = [];
+        if (gitData.status?.unstaged?.length > 0) {
+            recommendations.push("Consider staging changes for better version control");
+        }
+        if (gitData.status?.untracked?.length > 0) {
+            recommendations.push("Review untracked files and add them to version control if needed");
+        }
+        const learningPatterns = patterns.filter(p => p.category === 'git' && p.numericalData?.type?.includes('learning'));
+        if (learningPatterns.length === 0) {
+            recommendations.push("Consider adding more explicit learning documentation in commits");
+        }
+        return recommendations;
+    }
+    /**
+     * Get comprehensive Git development insights
+     */
+    async getGitDevelopmentInsights() {
+        const gitData = await this.getLiveGitData();
+        const patterns = this.getRecentGitPatterns(20);
+        return {
+            activity: gitData,
+            patterns,
+            insights: this.extractGitInsights(gitData, patterns),
+            recommendations: this.generateGitRecommendations(gitData, patterns),
+            evolution: this.analyzeCodeEvolution(patterns)
+        };
+    }
+    /**
+     * Analyze code evolution from Git patterns
+     */
+    analyzeCodeEvolution(patterns) {
+        const gitPatterns = patterns.filter(p => p.category === 'git');
+        const evolution = {
+            totalPatterns: gitPatterns.length,
+            patternTypes: {},
+            timeDistribution: {},
+            learningIndicators: 0,
+            developmentVelocity: 'steady'
+        };
+        gitPatterns.forEach(pattern => {
+            const type = pattern.numericalData?.type || 'unknown';
+            evolution.patternTypes[type] = (evolution.patternTypes[type] || 0) + 1;
+            if (type.includes('learning')) {
+                evolution.learningIndicators++;
+            }
+        });
+        return evolution;
+    }
+    handleGitEvent(event) {
+        if (event.type === 'commit') {
+            const commit = event.data;
+            const pattern = {
+                id: `git_commit_${commit.hash}`,
+                name: `Git Commit: ${commit.hash.substring(0, 7)}`,
+                category: 'git',
+                description: commit.message,
+                numericalData: {
+                    hash: commit.hash,
+                    author: commit.author,
+                    date: commit.date
+                },
+                relationships: ['code_change'],
+                metaphysicalContext: 'Codebase evolution through git',
+                applications: ['code learning', 'evolution analysis']
+            };
+            // Avoid duplicates
+            if (!this.gitPatterns.find(p => p.id === pattern.id)) {
+                this.gitPatterns.unshift(pattern);
+                // Limit to last 50 git patterns
+                if (this.gitPatterns.length > 50)
+                    this.gitPatterns.pop();
+            }
+        }
     }
 }
 exports.KnowledgeSystem = KnowledgeSystem;

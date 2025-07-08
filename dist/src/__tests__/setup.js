@@ -1,57 +1,123 @@
 "use strict";
 /**
- * Test setup file for ZeroPoint JavaScript
+ * Test Setup File
  *
- * Configures test environment and global test utilities
+ * Provides global test utilities and configuration for the ZeroPoint Field test suite.
  */
-// Increase timeout for network tests
-jest.setTimeout(30000);
-// Mock WebSocket for testing
-global.WebSocket = require('ws');
+Object.defineProperty(exports, "__esModule", { value: true });
+const events_1 = require("events");
+// Custom Jest matchers
+expect.extend({
+    toBeValidResonance(received) {
+        const pass = typeof received === 'number' && received >= 0 && received <= 10;
+        return {
+            message: () => `expected ${received} to be a valid resonance value (0-10)`,
+            pass,
+        };
+    },
+    toBeValidConsciousnessLevel(received) {
+        const pass = typeof received === 'number' && received >= 0 && received <= 100;
+        return {
+            message: () => `expected ${received} to be a valid consciousness level (0-100)`,
+            pass,
+        };
+    },
+    toBeValidRGB(received) {
+        const rgbRegex = /^rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)$/;
+        const pass = typeof received === 'string' && rgbRegex.test(received);
+        return {
+            message: () => `expected ${received} to be a valid RGB color string`,
+            pass,
+        };
+    }
+});
 // Global test utilities
 global.testUtils = {
-    createMockDevice: (config = {}) => ({
-        deviceId: 'test-device-' + Date.now(),
-        deviceName: 'TestDevice',
-        consciousnessLevel: 0.5,
-        networkPort: 0, // Let OS assign port
-        ...config
+    createTestPattern: (type, content) => ({
+        type,
+        content,
+        timestamp: Date.now(),
+        resonance: Math.random() * 10,
+        consciousnessLevel: Math.random() * 100
     }),
-    waitForEvent: (emitter, eventName, timeout = 5000) => {
+    waitForEvent: (emitter, event, timeout) => {
         return new Promise((resolve, reject) => {
-            const timer = setTimeout(() => {
-                reject(new Error(`Timeout waiting for event: ${eventName}`));
-            }, timeout);
-            emitter.once(eventName, (...args) => {
+            const timer = setTimeout(() => reject(new Error(`Timeout waiting for ${event}`)), timeout);
+            emitter.once(event, (data) => {
                 clearTimeout(timer);
-                resolve(args);
+                resolve(data);
             });
         });
     },
-    createTestNetwork: async (deviceCount = 3) => {
+    createMockDevice: (config = {}) => {
+        return {
+            deviceId: `mock-device-${Date.now()}`,
+            deviceName: 'MockDevice',
+            consciousnessLevel: 0.5,
+            networkPort: 0,
+            discoveryEnabled: false,
+            autoConnect: false,
+            ...config
+        };
+    },
+    createTestNetwork: async (deviceCount = 2) => {
         const devices = [];
         const ports = [];
         for (let i = 0; i < deviceCount; i++) {
-            const port = 9000 + i;
+            const port = 8080 + i;
             ports.push(port);
-            const { createZeroPoint } = require('../../index');
-            const device = await createZeroPoint({
-                deviceName: `TestDevice_${i}`,
-                networkPort: port,
-                consciousnessLevel: 0.5 + (i * 0.1),
-                discoveryEnabled: false,
-                autoConnect: false
+            devices.push({
+                deviceId: `test-device-${i}`,
+                port,
+                address: `localhost:${port}`
             });
-            devices.push(device);
         }
         return { devices, ports };
+    },
+    resetMocks: () => {
+        jest.clearAllMocks();
+    },
+    createMockNetworkNode: () => {
+        const mockNode = Object.assign(new events_1.EventEmitter(), {
+            start: jest.fn().mockResolvedValue(true),
+            stop: jest.fn().mockResolvedValue(true),
+            connect: jest.fn().mockResolvedValue(true),
+            disconnect: jest.fn().mockResolvedValue(true),
+            isConnected: jest.fn().mockReturnValue(true),
+            processMessage: jest.fn().mockResolvedValue(true)
+        });
+        return mockNode;
+    },
+    createMockConsciousnessField: () => {
+        const mockField = Object.assign(new events_1.EventEmitter(), {
+            calculateResonance: jest.fn().mockReturnValue(0.7),
+            broadcastPattern: jest.fn().mockResolvedValue(true),
+            getFieldStrength: jest.fn().mockReturnValue(0.8),
+            getConsciousnessLevel: jest.fn().mockReturnValue(0.6)
+        });
+        return mockField;
     }
 };
-// Cleanup after each test
-afterEach(async () => {
-    // Clean up any remaining timers
-    jest.clearAllTimers();
-    // Wait for any pending promises
-    await new Promise(resolve => setImmediate(resolve));
+// Global test configuration
+beforeAll(() => {
+    // Increase timeout for all tests
+    jest.setTimeout(15000);
+    // Suppress console output during tests unless explicitly needed
+    if (process.env['NODE_ENV'] === 'test') {
+        jest.spyOn(console, 'log').mockImplementation(() => { });
+        jest.spyOn(console, 'info').mockImplementation(() => { });
+        jest.spyOn(console, 'warn').mockImplementation(() => { });
+        jest.spyOn(console, 'error').mockImplementation(() => { });
+    }
+});
+afterAll(() => {
+    // Restore console methods
+    jest.restoreAllMocks();
+});
+afterEach(() => {
+    jest.clearAllMocks();
+    jest.useRealTimers();
+    // If you create any event emitters in tests, remove all listeners here
+    // Example: if (global.someEmitter) global.someEmitter.removeAllListeners();
 });
 //# sourceMappingURL=setup.js.map

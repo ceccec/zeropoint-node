@@ -268,5 +268,9 @@ export declare class UnifiedSystem {
         metaphysicalContext: string;
         unityPrinciple: string;
     };
+    /**
+     * Get field state
+     */
+    getFieldState(): any;
 }
 //# sourceMappingURL=UnifiedSystem.d.ts.map

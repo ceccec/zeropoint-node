@@ -11,10 +11,11 @@
  *
  * Scientific sources: Marko Rodin's work on vortex mathematics, toroidal geometry in mathematics and physics.
  */
+import { ZeroPoint } from '../core/ZeroPoint';
 export interface KnowledgePattern {
     id: string;
     name: string;
-    category: 'vortex' | 'family' | 'polar' | 'spiritual' | 'void' | 'mathematical' | 'metaphysical' | 'integration';
+    category: 'vortex' | 'family' | 'polar' | 'spiritual' | 'void' | 'mathematical' | 'metaphysical' | 'integration' | 'git';
     description: string;
     numericalData: any;
     relationships: string[];
@@ -50,9 +51,11 @@ export interface Question {
 export declare class KnowledgeSystem {
     private patterns;
     private questions;
+    private gitPatterns;
+    private zeroPoint?;
     private static readonly KNOWLEDGE_PATTERNS;
     private static readonly EXTRA_PATTERNS;
-    constructor();
+    constructor(zeroPoint?: ZeroPoint);
     /**
      * Search knowledge patterns
      */
@@ -93,6 +96,79 @@ export declare class KnowledgeSystem {
      * Traverse the Q&A structure
      */
     getQuestions(): Question[];
+    /**
+     * Get question by ID
+     */
     getQuestionById(id: string): Question | undefined;
+    /**
+     * Get the most recent git-related knowledge patterns
+     * @param n Number of patterns to retrieve
+     */
+    getRecentGitPatterns(n: number): KnowledgePattern[];
+    /**
+     * Ask a Git-related question and get comprehensive answers
+     */
+    askGitQuestion(question: string): Promise<{
+        answer: string;
+        gitData: any;
+        patterns: KnowledgePattern[];
+        insights: string[];
+        recommendations: string[];
+    }>;
+    /**
+     * Get live Git data including status, recent commits, and changes
+     */
+    private getLiveGitData;
+    /**
+     * Generate contextual answers for Git-related questions
+     */
+    private generateGitAnswer;
+    /**
+     * Answer questions about recent commits
+     */
+    private answerRecentCommits;
+    /**
+     * Answer questions about what changed
+     */
+    private answerWhatChanged;
+    /**
+     * Answer questions about development patterns
+     */
+    private answerDevelopmentPatterns;
+    /**
+     * Answer questions about file evolution
+     */
+    private answerFileEvolution;
+    /**
+     * Answer questions about learning progress
+     */
+    private answerLearningProgress;
+    /**
+     * Answer general Git questions
+     */
+    private answerGeneralGitQuestion;
+    /**
+     * Extract insights from Git data and patterns
+     */
+    private extractGitInsights;
+    /**
+     * Generate recommendations based on Git data
+     */
+    private generateGitRecommendations;
+    /**
+     * Get comprehensive Git development insights
+     */
+    getGitDevelopmentInsights(): Promise<{
+        activity: any;
+        patterns: KnowledgePattern[];
+        insights: string[];
+        recommendations: string[];
+        evolution: any;
+    }>;
+    /**
+     * Analyze code evolution from Git patterns
+     */
+    private analyzeCodeEvolution;
+    private handleGitEvent;
 }
 //# sourceMappingURL=KnowledgeSystem.d.ts.map

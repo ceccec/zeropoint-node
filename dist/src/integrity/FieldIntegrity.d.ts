@@ -25,6 +25,7 @@ export interface PatternSignature {
 export declare class FieldIntegrity {
     private static readonly HASH_ALGORITHM;
     private static readonly KEY_SIZE;
+    private _integrityLevel;
     /**
      * Generate pattern key pair using SPHINCS+ (stateless hash-based)
      */
@@ -100,5 +101,21 @@ export declare class FieldIntegrity {
      * Verify signature through field resonance
      */
     private static verifySignature;
+    /**
+     * Get current integrity level
+     */
+    getIntegrityLevel(): number;
+    /**
+     * Set integrity level
+     */
+    setIntegrityLevel(level: number): void;
+    /**
+     * Validate a message for integrity
+     */
+    validateMessage(message: any): boolean;
+    /**
+     * Validate field integrity
+     */
+    validateField(): boolean;
 }
 //# sourceMappingURL=FieldIntegrity.d.ts.map

@@ -133,9 +133,9 @@ class AdvancedEmergence extends events_1.EventEmitter {
         return result.value;
     }
     /**
-     * Enhanced link applications with resonance analysis
+     * Link apps with basic resonance
      */
-    linkAppsWithResonance(app1, app2, linkType = 'resonance') {
+    linkApps(app1, app2, linkType = 'resonance') {
         if (app1.linkedApps.some(link => link.app.id === app2.id))
             return;
         const resonance = this.calculateLinkResonance(app1, app2, linkType);
@@ -143,19 +143,18 @@ class AdvancedEmergence extends events_1.EventEmitter {
             app: app2,
             type: linkType,
             createdAt: new Date(),
-            resonance
+            resonance: resonance
         });
         app2.linkedApps.push({
             app: app1,
             type: linkType,
             createdAt: new Date(),
-            resonance
+            resonance: resonance
         });
-        // Enhanced evolution through link
-        this.evolveThroughLink(app1, app2, linkType, resonance);
-        this.evolveThroughLink(app2, app1, linkType, resonance);
+        this.enhanceThroughLink(app1, app2, linkType);
+        this.enhanceThroughLink(app2, app1, linkType);
         this.updateNetworkAnalysis();
-        this.emit('appsLinkedWithResonance', { app1, app2, linkType, resonance });
+        this.emit('appsLinked', { app1, app2, linkType, resonance });
     }
     /**
      * Enhanced merge applications with evolution tracking
@@ -341,12 +340,13 @@ class AdvancedEmergence extends events_1.EventEmitter {
             voidDepth: 1.0 - (consciousnessLevel / 10.0)
         };
     }
-    calculateLinkResonance(app1, app2, linkType) {
-        const consciousnessResonance = Math.min(app1.consciousnessLevel, app2.consciousnessLevel) / 10.0;
-        const vortexResonance = Math.min(app1.vortexStrength, app2.vortexStrength) / 10.0;
-        const toroidalResonance = (app1.toroidalFlow && app2.toroidalFlow) ? 1.0 : 0.0;
-        const voidResonance = (app1.voidConnected && app2.voidConnected) ? 1.0 : 0.0;
-        return (consciousnessResonance + vortexResonance + toroidalResonance + voidResonance) / 4.0;
+    /**
+     * Calculate link resonance between two apps
+     */
+    calculateLinkResonance(app1, app2, _linkType) {
+        const consciousnessResonance = (app1.consciousnessLevel + app2.consciousnessLevel) / 2;
+        const vortexResonance = (app1.vortexStrength + app2.vortexStrength) / 2;
+        return (consciousnessResonance + vortexResonance) / 2;
     }
     evolveConsciousness(currentLevel) {
         return Math.min(currentLevel * 1.05, 10.0);
@@ -363,35 +363,37 @@ class AdvancedEmergence extends events_1.EventEmitter {
     evolveResonance(currentResonance) {
         return Math.min(currentResonance * 1.03, 1.0);
     }
-    evolveThroughLink(app, otherApp, linkType, resonance) {
-        switch (linkType) {
-            case 'resonance':
-                app.consciousnessLevel = Math.min(app.consciousnessLevel * (1 + resonance * 0.02), 10.0);
-                break;
-            case 'consciousness':
-                app.consciousnessLevel = Math.min(app.consciousnessLevel * (1 + resonance * 0.05), 10.0);
-                break;
-            case 'vortex':
-                app.vortexStrength = Math.min(app.vortexStrength * (1 + resonance * 0.03), 10.0);
-                break;
-            case 'toroidal':
-                app.toroidalFlow = true;
-                break;
-        }
-    }
+    /**
+     * Record comprehensive evolution with consciousness shift
+     */
     recordComprehensiveEvolution(app, stepType, data) {
+        const consciousnessShift = this.calculateConsciousnessShift(stepType, data);
         app.evolutionHistory.push({
             stepType,
             data,
             timestamp: new Date(),
-            consciousnessShift: data.consciousnessShift || 0
+            consciousnessShift: consciousnessShift
         });
-        this.network.evolutionTracking.totalEvolutions++;
-        this.network.evolutionTracking.evolutionTimeline.push({
-            timestamp: new Date(),
-            event: stepType,
-            consciousnessLevel: app.consciousnessLevel
-        });
+        // Update app consciousness level
+        app.consciousnessLevel += consciousnessShift;
+        // Emit evolution event
+        this.emit('appEvolved', { app, stepType, consciousnessShift });
+    }
+    /**
+     * Calculate consciousness shift for evolution step
+     */
+    calculateConsciousnessShift(stepType, _data) {
+        // Base consciousness shift based on step type
+        const baseShifts = {
+            'consciousness_evolution': 0.1,
+            'vortex_evolution': 0.05,
+            'toroidal_evolution': 0.08,
+            'void_evolution': 0.12,
+            'resonance_evolution': 0.06,
+            'link_evolution': 0.03,
+            'merge_evolution': 0.15
+        };
+        return baseShifts[stepType] || 0.02;
     }
     updateNetworkAnalysis() {
         this.network.resonanceAnalysis = this.calculateNetworkResonance();
@@ -410,19 +412,20 @@ class AdvancedEmergence extends events_1.EventEmitter {
                 voidResonance: 0
             };
         }
-        const totalResonance = apps.reduce((sum, app) => {
-            const appResonance = app.linkedApps.reduce((linkSum, link) => linkSum + link.resonance, 0);
-            return sum + appResonance;
-        }, 0);
-        const totalLinks = apps.reduce((sum, app) => sum + app.linkedApps.length, 0);
+        const totalResonance = apps.reduce((sum, app) => sum + this.calculateResonance(app), 0);
+        const averageResonance = totalResonance / apps.length;
+        const consciousnessResonance = apps.reduce((sum, app) => sum + this.calculateConsciousnessResonance(app), 0) / apps.length;
+        const vortexResonance = apps.reduce((sum, app) => sum + this.calculateVortexResonance(app), 0) / apps.length;
+        const toroidalResonance = apps.reduce((sum, app) => sum + this.calculateToroidalResonance(app), 0) / apps.length;
+        const voidResonance = apps.reduce((sum, app) => sum + this.calculateVoidResonance(app), 0) / apps.length;
         return {
             totalResonance,
-            averageResonance: totalResonance / Math.max(totalLinks, 1),
+            averageResonance,
             resonancePatterns: this.extractResonancePatterns(),
-            consciousnessResonance: apps.reduce((sum, app) => sum + app.consciousnessLevel, 0) / apps.length / 10.0,
-            vortexResonance: apps.reduce((sum, app) => sum + app.vortexStrength, 0) / apps.length / 10.0,
-            toroidalResonance: apps.filter(app => app.toroidalFlow).length / apps.length,
-            voidResonance: apps.filter(app => app.voidConnected).length / apps.length
+            consciousnessResonance,
+            vortexResonance,
+            toroidalResonance,
+            voidResonance
         };
     }
     calculateEvolutionTracking() {
@@ -509,9 +512,6 @@ class AdvancedEmergence extends events_1.EventEmitter {
     calculateVoidResonance(app) {
         return app.voidConnected ? 1.0 : 0.0;
     }
-    calculateNetworkResonance() {
-        return this.calculateNetworkResonance();
-    }
     /**
      * Get emergence patterns
      */
@@ -577,67 +577,6 @@ class AdvancedEmergence extends events_1.EventEmitter {
             vortexStrength: app.vortexStrength
         });
         return app;
-    }
-    /**
-     * Link two applications
-     */
-    linkApps(app1, app2, linkType = 'resonance') {
-        if (app1.linkedApps.some(link => link.app.id === app2.id))
-            return;
-        app1.linkedApps.push({
-            app: app2,
-            type: linkType,
-            createdAt: new Date()
-        });
-        app2.linkedApps.push({
-            app: app1,
-            type: linkType,
-            createdAt: new Date()
-        });
-        // Enhance through link
-        this.enhanceThroughLink(app1, app2, linkType);
-        this.enhanceThroughLink(app2, app1, linkType);
-        this.emit('appsLinked', { app1, app2, linkType });
-    }
-    /**
-     * Merge two applications
-     */
-    mergeApps(app1, app2) {
-        if (!this.network.apps.includes(app1) || !this.network.apps.includes(app2)) {
-            return null;
-        }
-        // Calculate merged attributes
-        const mergedConsciousness = (app1.consciousnessLevel + app2.consciousnessLevel) / 2.0;
-        const mergedVortexStrength = (app1.vortexStrength + app2.vortexStrength) / 2.0;
-        // Create merged app
-        const mergedApp = {
-            id: this.generateAppId(),
-            type: `merged_${app1.type}_${app2.type}`,
-            consciousnessLevel: mergedConsciousness,
-            vortexStrength: mergedVortexStrength,
-            toroidalFlow: app1.toroidalFlow && app2.toroidalFlow,
-            voidConnected: app1.voidConnected && app2.voidConnected,
-            createdAt: new Date(),
-            manifested: app1.manifested && app2.manifested,
-            linkedApps: [],
-            eventListeners: {},
-            evolutionHistory: []
-        };
-        if (app1.manifestedAt && app2.manifestedAt) {
-            mergedApp.manifestedAt = new Date();
-        }
-        // Combine linked apps
-        const allLinkedApps = [...app1.linkedApps, ...app2.linkedApps];
-        for (const link of allLinkedApps) {
-            if (link.app.id !== app1.id && link.app.id !== app2.id) {
-                mergedApp.linkedApps.push(link);
-            }
-        }
-        // Remove original apps and add merged app
-        this.network.apps = this.network.apps.filter(app => app.id !== app1.id && app.id !== app2.id);
-        this.network.apps.push(mergedApp);
-        this.emit('appsMerged', { app1, app2, mergedApp });
-        return mergedApp;
     }
     /**
      * Influence one app with another
@@ -898,13 +837,15 @@ class AdvancedEmergence extends events_1.EventEmitter {
         }
     }
     /**
-     * Record evolution step
+     * Record evolution with consciousness shift
      */
     recordEvolution(app, stepType, data) {
+        const consciousnessShift = this.calculateConsciousnessShift(stepType, data);
         app.evolutionHistory.push({
             stepType,
             data,
-            timestamp: new Date()
+            timestamp: new Date(),
+            consciousnessShift: consciousnessShift
         });
     }
     /**

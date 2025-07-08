@@ -3,11 +3,16 @@
 /**
  * ZeroPoint Learning Analytics
  * Analyzes git history to provide educational insights and learning patterns
+ * Now includes live Git event monitoring for real-time learning
  */
 
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+
+// Import ZeroPoint modules for live Git integration
+const { ZeroPoint } = require('../dist/src/core/ZeroPoint');
+const { gitIntegration } = require('../dist/src/utils/GitIntegration');
 
 // Configuration
 const CONFIG = {
@@ -15,7 +20,8 @@ const CONFIG = {
     outputDir: 'learning-analytics',
     analysisFile: 'git-learning-analysis.json',
     insightsFile: 'learning-insights.md',
-    patternsFile: 'development-patterns.json'
+    patternsFile: 'development-patterns.json',
+    liveEventsFile: 'live-git-events.json'
 };
 
 // Colors for console output
@@ -46,6 +52,9 @@ function execCommand(command) {
 class LearningAnalytics {
     constructor() {
         this.ensureOutputDir();
+        this.liveEvents = [];
+        this.zeroPoint = null;
+        this.isLiveMonitoring = false;
     }
 
     ensureOutputDir() {
@@ -358,42 +367,176 @@ ${this.generateRecommendations(patterns, insights)}
         log(`  • ${CONFIG.outputDir}/${CONFIG.patternsFile}`, 'cyan');
     }
 
-    run() {
-        log(`🚀 Starting ${CONFIG.projectName} Learning Analytics...`, 'bright');
+    /**
+     * Start live Git event monitoring
+     */
+    async startLiveMonitoring() {
+        if (this.isLiveMonitoring) return;
         
         try {
-            // Get git history
-            const commits = this.getGitHistory();
+            log('🚀 Starting Live Git Event Monitoring...', 'cyan');
             
-            if (commits.length === 0) {
-                log('⚠️  No commits found in the last month', 'yellow');
-                return;
-            }
+            // Initialize ZeroPoint for live Git integration
+            this.zeroPoint = new ZeroPoint();
+            await this.zeroPoint.initialize();
             
-            // Analyze patterns
-            const patterns = this.analyzeCommitPatterns(commits);
+            // Subscribe to live Git events
+            this.zeroPoint.onGitChange((event) => {
+                this.handleLiveGitEvent(event);
+            });
             
-            // Analyze velocity
-            const velocity = this.analyzeDevelopmentVelocity(commits);
-            
-            // Generate insights
-            const insights = this.generateZeroPointInsights(patterns, velocity);
-            
-            // Create report
-            const report = this.createEducationalReport(patterns, velocity, insights);
-            
-            // Save analysis
-            this.saveAnalysis(patterns, velocity, insights, report);
-            
-            // Display summary
-            this.displaySummary(patterns, velocity, insights);
-            
-            log('\n🎉 Learning Analytics Complete!', 'green');
+            this.isLiveMonitoring = true;
+            log('✅ Live Git monitoring active', 'green');
             
         } catch (error) {
-            log(`❌ Error during analysis: ${error.message}`, 'red');
-            process.exit(1);
+            log(`❌ Failed to start live monitoring: ${error.message}`, 'red');
         }
+    }
+
+    /**
+     * Handle live Git events and update analysis
+     */
+    handleLiveGitEvent(event) {
+        const timestamp = new Date().toISOString();
+        const eventData = {
+            timestamp,
+            type: event.type,
+            data: event.data
+        };
+        
+        // Store live event
+        this.liveEvents.unshift(eventData);
+        if (this.liveEvents.length > 100) {
+            this.liveEvents.pop(); // Keep only last 100 events
+        }
+        
+        // Log the event
+        log(`📝 Live Git Event: ${event.type} - ${JSON.stringify(event.data).substring(0, 100)}...`, 'yellow');
+        
+        // Update analysis in real-time
+        this.updateLiveAnalysis(eventData);
+        
+        // Save live events to file
+        this.saveLiveEvents();
+    }
+
+    /**
+     * Update analysis based on live Git events
+     */
+    updateLiveAnalysis(eventData) {
+        if (eventData.type === 'commit') {
+            const commit = eventData.data;
+            
+            // Extract learning patterns from live commit
+            const learningPattern = this.extractLearningPatternFromCommit(commit);
+            if (learningPattern) {
+                log(`🧠 Live Learning Pattern: ${learningPattern.type}`, 'magenta');
+            }
+            
+            // Update velocity metrics
+            this.updateVelocityMetrics(commit);
+        }
+    }
+
+    /**
+     * Extract learning patterns from a live commit
+     */
+    extractLearningPatternFromCommit(commit) {
+        const message = commit.message.toLowerCase();
+        
+        if (message.includes('learning') || message.includes('learn')) {
+            return {
+                type: 'explicit_learning',
+                commit: commit.hash,
+                message: commit.message,
+                timestamp: new Date().toISOString()
+            };
+        }
+        
+        if (message.includes('test') && message.includes('fix')) {
+            return {
+                type: 'test_driven_fix',
+                commit: commit.hash,
+                message: commit.message,
+                timestamp: new Date().toISOString()
+            };
+        }
+        
+        if (message.includes('refactor') && message.includes('improve')) {
+            return {
+                type: 'iterative_improvement',
+                commit: commit.hash,
+                message: commit.message,
+                timestamp: new Date().toISOString()
+            };
+        }
+        
+        return null;
+    }
+
+    /**
+     * Update velocity metrics with live commit data
+     */
+    updateVelocityMetrics(commit) {
+        const today = new Date().toISOString().split('T')[0];
+        
+        // This would update the velocity analysis in real-time
+        // For now, we'll log the update
+        log(`⚡ Velocity Update: New commit on ${today}`, 'blue');
+    }
+
+    /**
+     * Save live events to file
+     */
+    saveLiveEvents() {
+        const filePath = path.join(CONFIG.outputDir, CONFIG.liveEventsFile);
+        fs.writeFileSync(filePath, JSON.stringify({
+            timestamp: new Date().toISOString(),
+            totalEvents: this.liveEvents.length,
+            events: this.liveEvents
+        }, null, 2));
+    }
+
+    /**
+     * Get live Git status
+     */
+    async getLiveGitStatus() {
+        if (!this.zeroPoint) return null;
+        return await this.zeroPoint.getLiveGitStatus();
+    }
+
+    /**
+     * Get recent commits
+     */
+    async getRecentCommits(n = 10) {
+        if (!this.zeroPoint) return [];
+        return await this.zeroPoint.getRecentCommits(n);
+    }
+
+    run() {
+        log('🚀 Starting ZeroPoint Field Learning Analytics...', 'bright');
+        
+        // Run traditional analysis
+        const commits = this.getGitHistory();
+        const patterns = this.analyzeCommitPatterns(commits);
+        const velocity = this.analyzeDevelopmentVelocity(commits);
+        const insights = this.generateZeroPointInsights(patterns, velocity);
+        const report = this.createEducationalReport(patterns, velocity, insights);
+        
+        this.saveAnalysis(patterns, velocity, insights, report);
+        this.displaySummary(patterns, velocity, insights);
+        
+        // Start live monitoring
+        this.startLiveMonitoring();
+        
+        log('✅ Analysis saved successfully!', 'green');
+        log('📁 Output Files:', 'cyan');
+        log(`  • ${CONFIG.outputDir}/${CONFIG.analysisFile}`, 'cyan');
+        log(`  • ${CONFIG.outputDir}/${CONFIG.insightsFile}`, 'cyan');
+        log(`  • ${CONFIG.outputDir}/${CONFIG.patternsFile}`, 'cyan');
+        log(`  • ${CONFIG.outputDir}/${CONFIG.liveEventsFile}`, 'cyan');
+        
+        log('\n🎉 Learning Analytics Complete!', 'bright');
     }
 }
 

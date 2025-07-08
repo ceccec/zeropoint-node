@@ -105,5 +105,9 @@ export declare class ResonanceConsensus {
      * Get the index of the last known block
      */
     private getLastBlockIndex;
+    /**
+     * Form consensus on a pattern
+     */
+    formConsensus(pattern: any): Promise<any>;
 }
 //# sourceMappingURL=ResonanceConsensus.d.ts.map

@@ -68,7 +68,7 @@ class FractalColorSystem {
         const palette = [];
         for (let i = 0; i < count; i++) {
             const seed = (0, FractalMath_1.fractal)('multiply', baseSeed, (0, FractalMath_1.fractal)('power', 1.618033988749895, i));
-            const consciousness = (0, FractalMath_1.fractal)('consciousness', i / count);
+            const consciousness = (0, FractalMath_1.fractal)('consciousness', (i + 1) / count);
             const color = this.generateColor(seed, consciousness);
             palette.push(color);
         }

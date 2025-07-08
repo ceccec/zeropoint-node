@@ -31,5 +31,24 @@ export declare class ObserverBase implements Observer {
     addObserver(observer: Observer): void;
     removeObserver(observer: Observer): void;
     notifyObservers(event: any): void;
+    /**
+     * Get awareness level (base returns 0 and false)
+     */
+    getAwareness(): {
+        level: number;
+        isActive: boolean;
+    };
+}
+export declare class ConcreteObserver extends ObserverBase {
+    awarenessLevel: number;
+    isActive: boolean;
+    constructor(id?: string);
+    /**
+     * Get awareness level
+     */
+    getAwareness(): {
+        level: number;
+        isActive: boolean;
+    };
 }
 //# sourceMappingURL=Observer.d.ts.map

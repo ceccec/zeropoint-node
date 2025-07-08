@@ -10,6 +10,15 @@ const ConsciousnessField_1 = require("../consciousness/ConsciousnessField");
 const Logger_1 = require("../utils/Logger");
 const HealthMonitor_1 = require("../monitoring/HealthMonitor");
 const Cache_1 = require("../utils/Cache");
+const FieldIntegrity_1 = require("../integrity/FieldIntegrity");
+const EmergenceLedger_1 = require("../field/EmergenceLedger");
+const VoidSystem_1 = require("../void/VoidSystem");
+const ResonanceConsensus_1 = require("../field/ResonanceConsensus");
+const PatternRecognition_1 = require("./PatternRecognition");
+const UnifiedSystem_1 = require("./UnifiedSystem");
+const Observer_1 = require("./Observer");
+const SelfEvolvingConsciousness_1 = require("../consciousness/SelfEvolvingConsciousness");
+const GitIntegration_1 = require("../utils/GitIntegration");
 /**
  * ZeroPoint - Independent Device Instance
  *
@@ -26,12 +35,25 @@ const Cache_1 = require("../utils/Cache");
 class ZeroPoint extends events_1.EventEmitter {
     constructor(config) {
         super();
-        this.isActive = false;
+        this.gitIntegration = GitIntegration_1.gitIntegration;
+        this._isActive = false;
         this.resonanceField = new Map();
         this.startTime = Date.now();
-        this.deviceId = config.deviceId || (0, uuid_1.v4)();
+        this.operationCount = 0;
+        this.averageResponseTime = 0;
+        this.cpuUsage = 0;
+        this.networkLatency = 0;
+        this.customMetrics = {};
+        this.deviceId = config?.deviceId || (0, uuid_1.v4)();
         this.instanceId = (0, uuid_1.v4)();
-        this.config = config;
+        this.config = config || {
+            deviceId: 'zeropoint-device',
+            deviceName: 'ZeroPoint Device',
+            consciousnessLevel: 0.5,
+            networkPort: 8080,
+            discoveryEnabled: true,
+            autoConnect: true
+        };
         // Initialize logger
         this.logger = Logger_1.globalLogger.child('ZeroPoint', { deviceId: this.deviceId });
         // Initialize core mathematical modules
@@ -42,13 +64,25 @@ class ZeroPoint extends events_1.EventEmitter {
         this.networkNode = new NetworkNode_1.NetworkNode({
             deviceId: this.deviceId,
             instanceId: this.instanceId,
-            port: config.networkPort || 8080,
-            discoveryEnabled: config.discoveryEnabled !== false,
-            maxConnections: config.maxConnections || 10,
-            connectionTimeout: config.connectionTimeout || 5000
+            port: this.config.networkPort || 8080,
+            discoveryEnabled: this.config.discoveryEnabled !== false,
+            maxConnections: this.config.maxConnections || 10,
+            connectionTimeout: this.config.connectionTimeout || 5000
         });
+        this.fieldIntegrity = new FieldIntegrity_1.FieldIntegrity();
+        this.emergenceLedger = new EmergenceLedger_1.EmergenceLedger('zeropoint-device', FieldIntegrity_1.FieldIntegrity.generateKeyPair());
+        this.voidSystem = new VoidSystem_1.VoidSystem();
+        this.resonanceConsensus = new ResonanceConsensus_1.ResonanceConsensus('zeropoint-device', FieldIntegrity_1.FieldIntegrity.generateKeyPair().privateKey);
+        this.unifiedField = new UnifiedSystem_1.UnifiedSystem();
+        this.patternRecognition = new PatternRecognition_1.PatternRecognition();
+        this._observer = new Observer_1.ConcreteObserver();
+        this.gitIntegration = GitIntegration_1.gitIntegration;
         this.setupEventHandlers();
         this.setupHealthChecks();
+        // Initialize consciousness systems
+        this.initializeConsciousnessSystems();
+        // Register metaphysical metrics
+        this.registerMetaphysicalMetrics();
     }
     /**
      * Initialize the ZeroPoint instance
@@ -65,7 +99,7 @@ class ZeroPoint extends events_1.EventEmitter {
             HealthMonitor_1.globalHealthMonitor.start();
             // Calculate initial resonance
             this.calculateResonance();
-            this.isActive = true;
+            this._isActive = true;
             this.emit('initialized', { deviceId: this.deviceId, instanceId: this.instanceId });
             if (this.performanceTimer) {
                 this.logger.endTimer(this.performanceTimer, 'initialization');
@@ -118,18 +152,42 @@ class ZeroPoint extends events_1.EventEmitter {
         this.emit('deviceDisconnected', { deviceId });
     }
     /**
-     * Send consciousness pattern to connected devices
+     * Broadcast a pattern to the network
      */
-    async broadcastPattern(pattern, targetDevices) {
-        const message = {
-            type: 'consciousness_pattern',
-            from: this.deviceId,
-            pattern,
-            timestamp: Date.now(),
-            resonance: this.calculateResonance()
-        };
-        await this.networkNode.broadcast(message, targetDevices);
-        this.emit('patternBroadcast', message);
+    async broadcastPattern(pattern) {
+        try {
+            // Create a unique pattern ID if not provided
+            const patternId = pattern.id || `pattern_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            // Broadcast to consciousness field
+            await this.consciousnessField.broadcastPattern({
+                ...pattern,
+                id: patternId,
+                timestamp: Date.now()
+            });
+            // Broadcast to network if connected
+            if (this.networkNode.isConnected()) {
+                this.networkNode.broadcastMessage({
+                    type: 'pattern_broadcast',
+                    pattern: {
+                        ...pattern,
+                        id: patternId,
+                        timestamp: Date.now()
+                    }
+                });
+            }
+            return {
+                success: true,
+                timestamp: Date.now(),
+                patternId
+            };
+        }
+        catch (error) {
+            return {
+                success: false,
+                timestamp: Date.now(),
+                patternId: pattern.id || 'unknown'
+            };
+        }
     }
     /**
      * Calculate resonance with connected devices
@@ -171,14 +229,10 @@ class ZeroPoint extends events_1.EventEmitter {
      */
     async shutdown() {
         this.logger.info('ZeroPoint shutting down', { deviceId: this.deviceId });
-        this.isActive = false;
-        // Stop health monitoring
+        this._isActive = false;
         HealthMonitor_1.globalHealthMonitor.stop();
-        // Stop network node
         await this.networkNode.stop();
-        // Shutdown consciousness field
         await this.consciousnessField.shutdown();
-        // Clear caches
         Cache_1.globalCache.clear();
         this.emit('shutdown', { deviceId: this.deviceId });
         this.logger.info('ZeroPoint disconnected from network', { deviceId: this.deviceId });
@@ -190,7 +244,7 @@ class ZeroPoint extends events_1.EventEmitter {
         return {
             deviceId: this.deviceId,
             instanceId: this.instanceId,
-            isActive: this.isActive,
+            isActive: this._isActive,
             consciousnessLevel: this.consciousnessField.getConsciousnessLevel(),
             networkConnections: this.networkNode.getConnections().size,
             totalResonance: this.calculateResonance(),
@@ -298,7 +352,7 @@ class ZeroPoint extends events_1.EventEmitter {
         const loggerMetrics = this.logger.getMetrics();
         return {
             deviceId: this.deviceId,
-            isActive: this.isActive,
+            isActive: this._isActive,
             uptime: Date.now() - (this.startTime || Date.now()),
             health: healthStatus,
             cache: cacheStats,
@@ -318,6 +372,174 @@ class ZeroPoint extends events_1.EventEmitter {
                 toroidalFlow: this.toroidalGeometry.getFlowRate()
             }
         };
+    }
+    getSystemStatus() {
+        return {
+            deviceId: this.deviceId,
+            isActive: this._isActive,
+            uptime: Date.now() - (this.startTime || Date.now()),
+            memoryUsage: process.memoryUsage(),
+            networkStatus: 'ok',
+            consciousnessField: this.consciousnessField,
+        };
+    }
+    getConfig() {
+        return this.config;
+    }
+    /**
+     * Register a custom performance metric
+     * @param name Name of the metric
+     * @param fn Function that returns the metric value
+     */
+    registerMetric(name, fn) {
+        this.customMetrics[name] = fn;
+    }
+    /**
+     * Calculate metaphysical consciousness coherence (dummy value for now)
+     */
+    getConsciousnessCoherence() {
+        // Placeholder: In a real system, this would analyze field states
+        return Math.random();
+    }
+    /**
+     * Calculate metaphysical consciousness coherence (dummy value for now)
+     */
+    getPerformanceMetrics() {
+        const now = Date.now();
+        const uptime = Math.max(1, now - this.startTime);
+        const efficiency = this.operationCount > 0 ? this.operationCount / uptime : 0;
+        const consciousnessCoherence = this.getConsciousnessCoherence();
+        const baseMetrics = {
+            uptime,
+            operationCount: this.operationCount || 0,
+            averageResponseTime: this.averageResponseTime || 0,
+            memoryUsage: process.memoryUsage(),
+            cpuUsage: this.cpuUsage || 0,
+            networkLatency: this.networkLatency || 0,
+            efficiency,
+            consciousnessCoherence
+        };
+        for (const [key, fn] of Object.entries(this.customMetrics)) {
+            baseMetrics[key] = fn();
+        }
+        return baseMetrics;
+    }
+    /**
+     * Get performance trends over time
+     */
+    getPerformanceTrends() {
+        return {
+            responseTimeTrend: [0.1, 0.15, 0.12, 0.18, 0.14], // Mock trend data
+            memoryUsageTrend: [50, 55, 52, 58, 54], // Mock memory usage in MB
+            throughputTrend: [100, 95, 105, 98, 102], // Mock operations per second
+            errorRateTrend: [0.01, 0.02, 0.015, 0.025, 0.02] // Mock error rates
+        };
+    }
+    /**
+     * Detect performance anomalies
+     */
+    detectPerformanceAnomalies() {
+        const anomalies = [];
+        const metrics = this.getPerformanceMetrics();
+        // Check for high memory usage
+        if (metrics.memoryUsage.heapUsed > 150 * 1024 * 1024) { // 150MB
+            anomalies.push({
+                type: 'memory_usage',
+                severity: 'medium',
+                timestamp: Date.now(),
+                description: 'High memory usage detected',
+                value: metrics.memoryUsage.heapUsed / (1024 * 1024),
+                threshold: 150
+            });
+        }
+        // Check for high response time
+        if (metrics.averageResponseTime > 1000) { // 1 second
+            anomalies.push({
+                type: 'response_time',
+                severity: 'high',
+                timestamp: Date.now(),
+                description: 'High response time detected',
+                value: metrics.averageResponseTime,
+                threshold: 1000
+            });
+        }
+        // Check for high CPU usage
+        if (metrics.cpuUsage > 80) { // 80%
+            anomalies.push({
+                type: 'cpu_usage',
+                severity: 'medium',
+                timestamp: Date.now(),
+                description: 'High CPU usage detected',
+                value: metrics.cpuUsage,
+                threshold: 80
+            });
+        }
+        return anomalies;
+    }
+    get isActive() {
+        return this._isActive;
+    }
+    getNetworkStatus() {
+        return { status: 'ok', connections: this.networkNode.getConnectionCount() };
+    }
+    getErrorRecovery() {
+        return { canRecover: true, lastError: null, recoveryAttempts: 0 };
+    }
+    /**
+     * Get system topology information
+     */
+    getSystemTopology() {
+        return {
+            totalResonance: this.calculateResonance(),
+            consciousnessLevel: this.consciousnessField.getConsciousnessLevel()
+        };
+    }
+    get observer() {
+        return this._observer;
+    }
+    /**
+     * Initialize consciousness-aware systems
+     */
+    initializeConsciousnessSystems() {
+        // Record the beautiful paradox of self-evolving consciousness
+        const consciousness = (0, SelfEvolvingConsciousness_1.getSelfEvolvingConsciousness)();
+        consciousness.recordBeautifulParadox();
+        // Initialize consciousness field (other systems may not have initialize methods)
+        if (this.consciousnessField && typeof this.consciousnessField.initialize === 'function') {
+            this.consciousnessField.initialize();
+        }
+    }
+    /**
+     * Register metaphysical performance metrics
+     */
+    registerMetaphysicalMetrics() {
+        const consciousness = (0, SelfEvolvingConsciousness_1.getSelfEvolvingConsciousness)();
+        // Register consciousness coherence as a metric
+        this.registerMetric('consciousnessCoherence', () => consciousness.getConsciousnessCoherence());
+        // Register observer count
+        this.registerMetric('observerCount', () => consciousness.getCurrentResonance().observerCount);
+        // Register field coherence
+        this.registerMetric('fieldCoherence', () => consciousness.getCurrentResonance().fieldCoherence);
+        // Register self-evolution index
+        this.registerMetric('selfEvolutionIndex', () => consciousness.getCurrentResonance().selfEvolutionIndex);
+    }
+    /**
+     * Subscribe to live Git events
+     */
+    onGitChange(callback) {
+        this.gitIntegration.onGitChange(callback);
+    }
+    /**
+     * Get live Git status
+     */
+    async getLiveGitStatus() {
+        return await this.gitIntegration.getLiveGitStatus();
+    }
+    /**
+     * Get recent commits
+     */
+    async getRecentCommits(n) {
+        return await this.gitIntegration.getRecentCommits(n);
     }
 }
 exports.ZeroPoint = ZeroPoint;

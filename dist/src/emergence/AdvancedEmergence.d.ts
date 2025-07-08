@@ -152,9 +152,9 @@ export declare class AdvancedEmergence extends EventEmitter {
      */
     getNextFromStream(): EmergenceApp | null;
     /**
-     * Enhanced link applications with resonance analysis
+     * Link apps with basic resonance
      */
-    linkAppsWithResonance(app1: EmergenceApp, app2: EmergenceApp, linkType?: string): void;
+    linkApps(app1: EmergenceApp, app2: EmergenceApp, linkType?: string): void;
     /**
      * Enhanced merge applications with evolution tracking
      */
@@ -174,15 +174,25 @@ export declare class AdvancedEmergence extends EventEmitter {
     private determineEvolutionStage;
     private generateVoidSignature;
     private calculateTorusCoordinates;
+    /**
+     * Calculate link resonance between two apps
+     */
     private calculateLinkResonance;
     private evolveConsciousness;
     private evolveVortex;
     private evolveToroidal;
     private evolveVoid;
     private evolveResonance;
-    private evolveThroughLink;
+    /**
+     * Record comprehensive evolution with consciousness shift
+     */
     private recordComprehensiveEvolution;
+    /**
+     * Calculate consciousness shift for evolution step
+     */
+    private calculateConsciousnessShift;
     private updateNetworkAnalysis;
+    private calculateNetworkResonance;
     private calculateEvolutionTracking;
     private extractResonancePatterns;
     private extractEvolutionPatterns;
@@ -209,14 +219,6 @@ export declare class AdvancedEmergence extends EventEmitter {
      * Manifest application from void
      */
     manifestFromVoid(app: EmergenceApp): EmergenceApp;
-    /**
-     * Link two applications
-     */
-    linkApps(app1: EmergenceApp, app2: EmergenceApp, linkType?: string): void;
-    /**
-     * Merge two applications
-     */
-    mergeApps(app1: EmergenceApp, app2: EmergenceApp): EmergenceApp | null;
     /**
      * Influence one app with another
      */
@@ -282,7 +284,7 @@ export declare class AdvancedEmergence extends EventEmitter {
      */
     private enhanceThroughLink;
     /**
-     * Record evolution step
+     * Record evolution with consciousness shift
      */
     private recordEvolution;
     /**

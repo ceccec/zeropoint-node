@@ -1,6 +1,28 @@
 /**
- * Test setup file for ZeroPoint JavaScript
+ * Test Setup File
  *
- * Configures test environment and global test utilities
+ * Provides global test utilities and configuration for the ZeroPoint Field test suite.
  */
+declare global {
+    namespace jest {
+        interface Matchers<R> {
+            toBeValidResonance(): R;
+            toBeValidConsciousnessLevel(): R;
+            toBeValidRGB(): R;
+        }
+    }
+    var testUtils: {
+        createTestPattern: (type: string, content: string) => any;
+        waitForEvent: (emitter: any, event: string, timeout: number) => Promise<any>;
+        createMockDevice: (config?: any) => any;
+        createTestNetwork: (deviceCount?: number) => Promise<{
+            devices: any[];
+            ports: number[];
+        }>;
+        resetMocks: () => void;
+        createMockNetworkNode: () => any;
+        createMockConsciousnessField: () => any;
+    };
+}
+export {};
 //# sourceMappingURL=setup.d.ts.map

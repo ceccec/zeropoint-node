@@ -60,6 +60,15 @@ export declare class PatternRecognition extends EventEmitter {
      */
     recognizePatterns(input: any, context?: Partial<PatternContext>): PatternResult[];
     /**
+     * Recognize a single pattern (alias for recognizePatterns)
+     */
+    recognizePattern(input: any, context?: Partial<PatternContext>): {
+        isRecognized: boolean;
+        confidence: number;
+        pattern: any;
+        metadata: any;
+    };
+    /**
      * Analyze consciousness patterns
      */
     analyzeConsciousnessPatterns(patterns: any[]): any;

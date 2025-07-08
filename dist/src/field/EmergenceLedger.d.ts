@@ -91,5 +91,21 @@ export declare class EmergenceLedger {
      * Initialize the genesis block through field emergence
      */
     private initializeGenesisBlock;
+    /**
+     * Create a pattern for testing
+     */
+    createPattern(patternData: any): any;
+    /**
+     * Process a pattern through the field
+     */
+    processPattern(pattern: any): Promise<boolean>;
+    /**
+     * Get evolution data
+     */
+    getEvolution(): any;
+    /**
+     * Get resonance level
+     */
+    getResonance(): number;
 }
 //# sourceMappingURL=EmergenceLedger.d.ts.map

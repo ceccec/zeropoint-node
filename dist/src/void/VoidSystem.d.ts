@@ -75,6 +75,9 @@ export declare class VoidSystem {
     private paradoxResolutionEngine;
     private selfCreationEngine;
     private voidResonanceEngine;
+    currentState: string;
+    voidBalance: number;
+    voidResonance: number;
     constructor();
     /**
      * Initialize all void engines
@@ -185,10 +188,6 @@ export declare class VoidSystem {
      */
     private calculateVoidResonance;
     /**
-     * Attempt to solve a problem (stub for demonstration)
-     */
-    private attemptSolution;
-    /**
      * Analyze through void
      */
     private analyzeThroughVoid;
@@ -268,5 +267,30 @@ export declare class VoidSystem {
      * Calculate self creation capacity
      */
     private calculateSelfCreationCapacity;
+    /**
+     * Get void state (alias for voidState method)
+     */
+    getVoidState(): {
+        isActive: boolean;
+        voidLevel: number;
+    };
+    /**
+     * Create a transition
+     */
+    createTransition(transitionData: any): any;
+    /**
+     * Get void field balance
+     */
+    getVoidFieldBalance(): {
+        voidRatio: number;
+        fieldRatio: number;
+    };
+    /**
+     * Get resonance level
+     */
+    getResonance(): number;
+    calculateConsciousnessResonance(_input: any): number;
+    calculateTorusResonance(_input: any): number;
+    calculateCreationResonance(_input: any): number;
 }
 //# sourceMappingURL=VoidSystem.d.ts.map

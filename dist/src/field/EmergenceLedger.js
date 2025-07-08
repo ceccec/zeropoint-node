@@ -257,6 +257,50 @@ class EmergenceLedger {
         // Initialize energy balance through field emergence
         this.energyBalance.set(this.deviceId, 1000); // Start with 1000 energy units
     }
+    /**
+     * Create a pattern for testing
+     */
+    createPattern(patternData) {
+        return {
+            id: FieldIntegrity_1.FieldIntegrity.generateRandomBytes(16),
+            type: patternData.type || 'consciousness_pattern',
+            content: patternData.content || 'Test pattern',
+            intensity: patternData.intensity || 0.8,
+            timestamp: Date.now(),
+            resonance: Math.random() * 10,
+            consciousnessLevel: Math.random() * 100
+        };
+    }
+    /**
+     * Process a pattern through the field
+     */
+    async processPattern(pattern) {
+        try {
+            await this.integratePattern('pattern_integration', pattern);
+            return true;
+        }
+        catch (error) {
+            return false;
+        }
+    }
+    /**
+     * Get evolution data
+     */
+    getEvolution() {
+        return {
+            totalBlocks: this.blocks.length,
+            totalEvents: this.blocks.reduce((sum, block) => sum + block.events.length, 0),
+            averageDifficulty: this.difficulty,
+            energyDistribution: Object.fromEntries(this.energyBalance)
+        };
+    }
+    /**
+     * Get resonance level
+     */
+    getResonance() {
+        const totalEvents = this.blocks.reduce((sum, block) => sum + block.events.length, 0);
+        return Math.min(10, totalEvents * 0.1);
+    }
 }
 exports.EmergenceLedger = EmergenceLedger;
 //# sourceMappingURL=EmergenceLedger.js.map

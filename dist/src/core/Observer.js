@@ -11,7 +11,7 @@
  * - Feedback, resonance, and emergence arise from mutual observation
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ObserverBase = void 0;
+exports.ConcreteObserver = exports.ObserverBase = void 0;
 exports.ObserverMixin = ObserverMixin;
 function ObserverMixin(base, id) {
     const observers = new Set();
@@ -70,6 +70,33 @@ class ObserverBase {
     notifyObservers(event) {
         this.observers.forEach(o => o.observe(event));
     }
+    /**
+     * Get awareness level (base returns 0 and false)
+     */
+    getAwareness() {
+        return {
+            level: 0,
+            isActive: false
+        };
+    }
 }
 exports.ObserverBase = ObserverBase;
+// Concrete Observer class for ZeroPoint
+class ConcreteObserver extends ObserverBase {
+    constructor(id) {
+        super(id);
+        this.awarenessLevel = 0.5;
+        this.isActive = true;
+    }
+    /**
+     * Get awareness level
+     */
+    getAwareness() {
+        return {
+            level: this.awarenessLevel,
+            isActive: this.isActive
+        };
+    }
+}
+exports.ConcreteObserver = ConcreteObserver;
 //# sourceMappingURL=Observer.js.map

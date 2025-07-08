@@ -23,6 +23,7 @@ exports.getVBMColorMap = getVBMColorMap;
 exports.getVBMColorLegend = getVBMColorLegend;
 exports.generateConsciousnessGradient = generateConsciousnessGradient;
 exports.generateFieldResonanceMap = generateFieldResonanceMap;
+exports.getWAxisColor = getWAxisColor;
 /**
  * Generate base color palette dynamically
  */
@@ -140,22 +141,25 @@ function getColorForPattern(pattern, context = {}) {
         default: return baseColors['neutral'] || 'rgb(200,200,200)';
     }
 }
+function clampRGB(value) {
+    return Math.max(0, Math.min(255, Math.round(value)));
+}
 /**
  * Generate resonant color by modulating base color with resonance values
  */
 function generateResonantColor(baseColor, resonance1, resonance2) {
-    // Parse RGB values from base color
-    const rgbMatch = baseColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+    // Parse RGB values from base color - handle both positive and negative numbers
+    const rgbMatch = baseColor.match(/rgb\(([-\d]+),\s*([-\d]+),\s*([-\d]+)\)/);
     if (!rgbMatch)
         return baseColor;
     const [, r, g, b] = rgbMatch;
-    const baseR = parseInt(r || '0');
-    const baseG = parseInt(g || '0');
-    const baseB = parseInt(b || '0');
-    // Apply resonance modulation
-    const modulatedR = Math.round(baseR * (0.5 + resonance1 * 0.5));
-    const modulatedG = Math.round(baseG * (0.5 + resonance2 * 0.5));
-    const modulatedB = Math.round(baseB * (0.5 + (resonance1 + resonance2) * 0.25));
+    const baseR = parseInt(r || '0', 10);
+    const baseG = parseInt(g || '0', 10);
+    const baseB = parseInt(b || '0', 10);
+    // Apply resonance modulation and clamp
+    const modulatedR = clampRGB(baseR * (0.5 + resonance1 * 0.5));
+    const modulatedG = clampRGB(baseG * (0.5 + resonance2 * 0.5));
+    const modulatedB = clampRGB(baseB * (0.5 + (resonance1 + resonance2) * 0.25));
     return `rgb(${modulatedR}, ${modulatedG}, ${modulatedB})`;
 }
 /**
@@ -226,5 +230,17 @@ function generateFieldResonanceMap(fieldStrength, context = {}) {
         map[i] = getColorForVortexNumber(i, fieldContext);
     }
     return map;
+}
+function getWAxisColor(n, context = {}) {
+    const { consciousness = 0.5, field = 0.5 } = context;
+    const baseColors = generateBaseColors(context);
+    // W-Axis colors emerge from spiritual resonance
+    const spiritualResonance = Math.sin(consciousness * Math.PI * 2 + n) * 0.5 + 0.5;
+    switch (n) {
+        case 3: return generateResonantColor(baseColors['gold'] || 'rgb(255,215,0)', spiritualResonance, field);
+        case 6: return generateResonantColor(baseColors['white'] || 'rgb(255,255,255)', spiritualResonance, field);
+        case 9: return generateResonantColor(baseColors['black'] || 'rgb(0,0,0)', spiritualResonance, field);
+        default: return baseColors['neutral'] || 'rgb(200,200,200)';
+    }
 }
 //# sourceMappingURL=VBMColorSystem.js.map

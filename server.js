@@ -183,6 +183,137 @@ app.post('/api/knowledge/ask', (req, res) => {
   });
 });
 
+// === GIT-AWARE Q&A ENDPOINTS ===
+// New endpoints for live Git integration and code evolution insights
+
+app.post('/api/git/ask', async (req, res) => {
+  const { question } = req.body;
+  if (!question) return res.status(400).json({ error: 'Missing Git question' });
+  
+  try {
+    const knowledge = new KnowledgeSystem();
+    const result = await knowledge.askGitQuestion(question);
+    res.json({
+      question,
+      answer: result.answer,
+      insights: result.insights,
+      recommendations: result.recommendations,
+      patterns: result.patterns.length,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/git/insights', async (req, res) => {
+  try {
+    const knowledge = new KnowledgeSystem();
+    const insights = await knowledge.getGitDevelopmentInsights();
+    res.json({
+      activity: insights.activity,
+      patterns: insights.patterns.length,
+      insights: insights.insights,
+      recommendations: insights.recommendations,
+      evolution: insights.evolution,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/git/status', async (req, res) => {
+  try {
+    const { ZeroPoint } = require('./dist/src/core/ZeroPoint');
+    const zeropoint = new ZeroPoint();
+    await zeropoint.initialize();
+    
+    const status = await zeropoint.getLiveGitStatus();
+    const recentCommits = await zeropoint.getRecentCommits(10);
+    
+    res.json({
+      status,
+      recentCommits,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/git/patterns', async (req, res) => {
+  try {
+    const knowledge = new KnowledgeSystem();
+    const patterns = knowledge.getRecentGitPatterns(20);
+    
+    res.json({
+      patterns: patterns.map(p => ({
+        id: p.id,
+        name: p.name,
+        description: p.description,
+        type: p.numericalData?.type || 'unknown',
+        timestamp: p.numericalData?.timestamp || new Date().toISOString()
+      })),
+      total: patterns.length,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/git/analyze', async (req, res) => {
+  const { analysisType } = req.body;
+  if (!analysisType) return res.status(400).json({ error: 'Missing analysis type' });
+  
+  try {
+    const knowledge = new KnowledgeSystem();
+    let result;
+    
+    switch (analysisType) {
+      case 'development_patterns':
+        const patterns = knowledge.getRecentGitPatterns(50);
+        result = {
+          type: 'development_patterns',
+          patterns: patterns.filter(p => p.category === 'git'),
+          summary: `Analyzed ${patterns.length} Git patterns`
+        };
+        break;
+        
+      case 'learning_progress':
+        const learningPatterns = knowledge.getRecentGitPatterns(50)
+          .filter(p => p.category === 'git' && p.numericalData?.type?.includes('learning'));
+        result = {
+          type: 'learning_progress',
+          patterns: learningPatterns,
+          summary: `Found ${learningPatterns.length} learning-related patterns`
+        };
+        break;
+        
+      case 'code_evolution':
+        const evolution = await knowledge.getGitDevelopmentInsights();
+        result = {
+          type: 'code_evolution',
+          evolution: evolution.evolution,
+          insights: evolution.insights,
+          summary: 'Code evolution analysis complete'
+        };
+        break;
+        
+      default:
+        return res.status(400).json({ error: 'Invalid analysis type' });
+    }
+    
+    res.json({
+      ...result,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // PWA routes
 app.get('/observer-network-pwa', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'observer-network-pwa.html'));

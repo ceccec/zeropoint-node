@@ -69,5 +69,18 @@ export declare class NetworkNode extends EventEmitter {
     private sendToConnection;
     private pingConnections;
     private startDiscovery;
+    processMessage(_msg: any): void;
+    /**
+     * Check if connected to network
+     */
+    isConnected(): boolean;
+    /**
+     * Broadcast a message to all connected devices
+     */
+    broadcastMessage(message: any): void;
+    /**
+     * Shutdown the network node and close all connections
+     */
+    shutdown(): Promise<void>;
 }
 //# sourceMappingURL=NetworkNode.d.ts.map

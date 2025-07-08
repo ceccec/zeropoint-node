@@ -72,4 +72,5 @@ export declare function generateConsciousnessGradient(consciousness: number, ste
 export declare function generateFieldResonanceMap(fieldStrength: number, context?: ColorContext): {
     [n: number]: string;
 };
+export declare function getWAxisColor(n: number, context?: ColorContext): string;
 //# sourceMappingURL=VBMColorSystem.d.ts.map

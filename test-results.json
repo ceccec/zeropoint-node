@@ -1,148 +1,17 @@
 {
-  "timestamp": "2025-07-07T21:48:18.727Z",
-  "summary": {
-    "total": 26,
-    "passed": 24,
-    "failed": 2,
-    "successRate": 92.3,
-    "duration": 37
+  "timestamp": "2025-07-08T16:06:29.220Z",
+  "totalTests": 0,
+  "passedTests": 0,
+  "failedTests": 0,
+  "skippedTests": 0,
+  "coverage": 0,
+  "performance": {
+    "averageDuration": 0,
+    "maxDuration": 0,
+    "slowTests": 0
   },
-  "details": [
-    {
-      "name": "Server responds to health check",
-      "passed": false,
-      "timestamp": "2025-07-07T21:48:18.705Z"
-    },
-    {
-      "name": "Main page loads successfully",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.707Z"
-    },
-    {
-      "name": "WebSocket server is ready",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.709Z"
-    },
-    {
-      "name": "Static files are served",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.710Z"
-    },
-    {
-      "name": "HTML has minimal structure",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.711Z"
-    },
-    {
-      "name": "Canvas element is properly configured",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.712Z"
-    },
-    {
-      "name": "UI overlays are minimal",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.713Z"
-    },
-    {
-      "name": "RealityCanvas class is defined",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.714Z"
-    },
-    {
-      "name": "Canvas interaction methods exist",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.716Z"
-    },
-    {
-      "name": "Animation loop is properly configured",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.717Z"
-    },
-    {
-      "name": "Canvas is responsive",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.717Z"
-    },
-    {
-      "name": "Touch interactions are supported",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.718Z"
-    },
-    {
-      "name": "UI overlays are responsive",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.719Z"
-    },
-    {
-      "name": "HTML file size is optimized",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.720Z"
-    },
-    {
-      "name": "No unnecessary dependencies",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.721Z"
-    },
-    {
-      "name": "Canvas rendering is optimized",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.721Z"
-    },
-    {
-      "name": "Uses standard Canvas API",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.722Z"
-    },
-    {
-      "name": "ES6+ features are used appropriately",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.723Z"
-    },
-    {
-      "name": "CSS is modern but compatible",
-      "passed": false,
-      "timestamp": "2025-07-07T21:48:18.723Z"
-    },
-    {
-      "name": "Basic accessibility features",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.724Z"
-    },
-    {
-      "name": "Keyboard navigation support",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.725Z"
-    },
-    {
-      "name": "No inline scripts with user input",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.725Z"
-    },
-    {
-      "name": "Proper event handling",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.726Z"
-    },
-    {
-      "name": "All required files exist",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.726Z"
-    },
-    {
-      "name": "Package.json is valid",
-      "passed": {
-        "crypto": "^1.0.1",
-        "events": "^3.3.0",
-        "express": "^5.1.0",
-        "uuid": "^9.0.1",
-        "ws": "^8.14.2"
-      },
-      "timestamp": "2025-07-07T21:48:18.726Z"
-    },
-    {
-      "name": "Server.js is properly configured",
-      "passed": true,
-      "timestamp": "2025-07-07T21:48:18.727Z"
-    }
-  ]
+  "memory": {
+    "heapUsed": 4514656,
+    "heapTotal": 5603328
+  }
 }

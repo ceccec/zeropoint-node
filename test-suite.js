@@ -14,7 +14,7 @@ const path = require('path');
 // Configuration
 const config = {
   testTimeout: 30000,
-  coverageThreshold: 80,
+  coverageThreshold: 100,
   performanceThreshold: 1000, // ms
   maxMemoryUsage: 100 * 1024 * 1024, // 100MB
   testPatterns: [

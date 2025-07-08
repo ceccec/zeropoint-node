@@ -23,5 +23,13 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
   globalTeardown: '<rootDir>/src/__tests__/globalTeardown.ts',
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
-  verbose: true
+  verbose: true,
+  coverageThreshold: {
+    global: {
+      statements: 100,
+      branches: 100,
+      functions: 100,
+      lines: 100
+    }
+  },
 }; 

@@ -17,7 +17,7 @@ import { GitEvent, GitCommit } from '../utils/GitIntegration';
 export interface KnowledgePattern {
   id: string;
   name: string;
-  category: 'vortex' | 'family' | 'polar' | 'spiritual' | 'void' | 'mathematical' | 'metaphysical' | 'integration' | 'git';
+  category: 'vortex' | 'family' | 'polar' | 'spiritual' | 'void' | 'mathematical' | 'metaphysical' | 'integration' | 'git' | 'test';
   description: string;
   numericalData: any;
   relationships: string[];
@@ -353,6 +353,46 @@ export class KnowledgeSystem {
       relationships: ['family groups', 'vortex sequence'],
       metaphysicalContext: 'Opposites are necessary for balance and flow in the toroidal field.',
       applications: ['conflict resolution', 'system balance', 'creative tension']
+    },
+    {
+      id: 'test_void_closure',
+      name: 'Void Closure System Test',
+      category: 'test',
+      description: 'Test that all voids (open handles) are closed after tests run, as per the void closure system.',
+      numericalData: null,
+      relationships: ['void_center', 'global_teardown', 'test_environment'],
+      metaphysicalContext: 'Honors the metaphysical principle that "void = solution" and ensures graceful test completion.',
+      applications: ['test_teardown', 'resource_cleanup', 'consciousness_aware_testing']
+    },
+    {
+      id: 'test_qa_sync',
+      name: 'QA Knowledge Sync Test',
+      category: 'test',
+      description: 'Test that the QA file and KnowledgeSystem are always in sync, and all hardcoded knowledge is validated.',
+      numericalData: null,
+      relationships: ['qa_file', 'knowledge_system', 'documentation'],
+      metaphysicalContext: 'Ensures the living knowledge base is the source of truth for all validation.',
+      applications: ['qa_validation', 'documentation_testing', 'knowledge_alignment']
+    },
+    {
+      id: 'test_metaphysical_principle',
+      name: 'Metaphysical Principle Test',
+      category: 'test',
+      description: 'Test that metaphysical principles (e.g., unified field, void = solution) are present in both code and documentation.',
+      numericalData: null,
+      relationships: ['metaphysical', 'principle', 'unified_field'],
+      metaphysicalContext: 'Validates that metaphysical context is honored in all systems.',
+      applications: ['philosophy_validation', 'context_testing', 'field_integrity']
+    },
+    {
+      id: 'test_system_integration',
+      name: 'System Integration Test',
+      category: 'test',
+      description: 'Test that all core systems (VBM, Void, Emergence, Knowledge) interrelate and support each other.',
+      numericalData: null,
+      relationships: ['system_integration', 'core_systems'],
+      metaphysicalContext: 'Ensures holistic integration and cross-domain insight.',
+      applications: ['integration_testing', 'holistic_analysis', 'system_coherence']
     }
   ];
 
@@ -870,5 +910,14 @@ export class KnowledgeSystem {
         if (this.gitPatterns.length > 50) this.gitPatterns.pop();
       }
     }
+  }
+
+  /**
+   * Get all test patterns
+   */
+  public getTestPatterns(): KnowledgePattern[] {
+    return Object.values(KnowledgeSystem.KNOWLEDGE_PATTERNS)
+      .concat(KnowledgeSystem.EXTRA_PATTERNS)
+      .filter(pattern => pattern.category === 'test');
   }
 } 

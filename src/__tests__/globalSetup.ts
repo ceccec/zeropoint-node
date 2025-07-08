@@ -49,6 +49,5 @@ export default async function globalSetup(): Promise<void> {
     
   } catch (error) {
     console.error('❌ Error during global setup:', error);
-    // Don't throw - we want tests to run even if setup has issues
   }
 } 

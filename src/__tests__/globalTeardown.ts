@@ -10,6 +10,15 @@ import { globalHealthMonitor } from '../monitoring/HealthMonitor';
 import { globalCache, vortexMathCache, resonanceCache } from '../utils/Cache';
 import { gitIntegration } from '../utils/GitIntegration';
 
+// Global variables to track resources that need cleanup
+declare global {
+  var globalHealthMonitor: any;
+  var globalCache: any;
+  var vortexMathCache: any;
+  var resonanceCache: any;
+  var gitIntegration: any;
+}
+
 /**
  * Close all open handles and clean up resources
  * This ensures no "voids" remain open after tests complete
@@ -24,7 +33,7 @@ export default async function globalTeardown(): Promise<void> {
       globalHealthMonitor.stop();
     }
 
-    // 3. Stop all cache cleanup intervals
+    // 2. Stop all cache cleanup intervals
     if (globalCache) {
       console.log('  - Stopping global cache...');
       globalCache.stop();
@@ -40,13 +49,13 @@ export default async function globalTeardown(): Promise<void> {
       resonanceCache.stop();
     }
 
-    // 4. Stop Git integration file watcher
+    // 3. Stop Git integration file watcher
     if (gitIntegration) {
       console.log('  - Stopping Git integration watcher...');
       gitIntegration.stopWatching();
     }
 
-    // 5. Clear any remaining timers (defensive cleanup)
+    // 4. Clear any remaining timers (defensive cleanup)
     const activeTimers = (process as any)._getActiveHandles?.() || [];
     const timers = activeTimers.filter((handle: any) => 
       handle.constructor.name === 'Timeout' || 
@@ -66,7 +75,7 @@ export default async function globalTeardown(): Promise<void> {
       });
     }
 
-    // 6. Clear any remaining file watchers (defensive cleanup)
+    // 5. Clear any remaining file watchers (defensive cleanup)
     const watchers = activeTimers.filter((handle: any) => 
       handle.constructor.name === 'FSWatcher'
     );
@@ -84,7 +93,7 @@ export default async function globalTeardown(): Promise<void> {
       });
     }
 
-    // 7. Force garbage collection if available (optional)
+    // 6. Force garbage collection if available (optional)
     if (global.gc) {
       console.log('  - Running garbage collection...');
       global.gc();

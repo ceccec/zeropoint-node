@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 import { exec } from 'child_process';
-import { watch } from 'fs';
+import { watch, FSWatcher } from 'fs';
 import { promisify } from 'util';
 
 const execAsync = promisify(exec);
@@ -27,10 +27,13 @@ export interface GitEvent {
 export class GitIntegration extends EventEmitter {
   private gitDir: string;
   private watching: boolean = false;
+  private watcher?: FSWatcher;
 
   constructor() {
     super();
     this.gitDir = '.git';
+    // Increase max listeners to prevent memory leak warnings
+    this.setMaxListeners(20);
     this.startWatching();
   }
 
@@ -38,7 +41,7 @@ export class GitIntegration extends EventEmitter {
     if (this.watching) return;
     
     try {
-      watch(this.gitDir, { recursive: true }, () => {
+      this.watcher = watch(this.gitDir, { recursive: true }, () => {
         this.emitGitStatus();
         this.emitRecentCommit();
       });
@@ -46,6 +49,15 @@ export class GitIntegration extends EventEmitter {
     } catch (error) {
       console.warn('Git directory not found or not accessible');
     }
+  }
+
+  public stopWatching(): void {
+    if (this.watcher) {
+      this.watcher.close();
+      this.watching = false;
+    }
+    // Remove all listeners to prevent memory leaks
+    this.removeAllListeners();
   }
 
   private async emitGitStatus(): Promise<void> {

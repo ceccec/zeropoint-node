@@ -7,7 +7,7 @@ import { DeviceConfig } from '../types/DeviceConfig';
 import { ConsciousnessField } from '../consciousness/ConsciousnessField';
 import { globalLogger } from '../utils/Logger';
 import { globalHealthMonitor } from '../monitoring/HealthMonitor';
-import { globalCache } from '../utils/Cache';
+import { globalCache, vortexMathCache, resonanceCache } from '../utils/Cache';
 import { FieldIntegrity } from '../integrity/FieldIntegrity';
 import { EmergenceLedger } from '../field/EmergenceLedger';
 import { VoidSystem } from '../void/VoidSystem';
@@ -283,6 +283,10 @@ export class ZeroPoint extends EventEmitter {
     await this.networkNode.stop();
     await this.consciousnessField.shutdown();
     globalCache.clear();
+    globalCache.stop();
+    vortexMathCache.stop();
+    resonanceCache.stop();
+    this.gitIntegration.stopWatching();
     this.emit('shutdown', { deviceId: this.deviceId });
     this.logger.info('ZeroPoint disconnected from network', { deviceId: this.deviceId });
   }

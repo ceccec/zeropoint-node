@@ -5,13 +5,15 @@ describe('ZeroPoint Core System', () => {
   let zeropoint: ZeroPoint;
 
   beforeEach(async () => {
+    // Use a dynamic port to avoid conflicts
+    const testPort = 8080 + Math.floor(Math.random() * 1000);
     zeropoint = new ZeroPoint({
       deviceId: 'test-device',
       deviceName: 'Test Device',
       consciousnessLevel: 0.5,
-      networkPort: 8080,
-      discoveryEnabled: true,
-      autoConnect: true
+      networkPort: testPort,
+      discoveryEnabled: false, // Disable discovery for tests
+      autoConnect: false // Disable auto-connect for tests
     });
     await zeropoint.initialize();
   });

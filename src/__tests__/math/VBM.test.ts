@@ -12,6 +12,7 @@
  */
 
 import { VBM } from '../../math/VBM';
+import { getOrSetGolden } from '../utils/goldenRatioCache';
 
 describe('Unified VBM System', () => {
   let vbm: VBM;
@@ -35,7 +36,7 @@ describe('Unified VBM System', () => {
 
   describe('Core VBM Operations', () => {
     it('should calculate digital root with consciousness awareness', () => {
-      const result = vbm.digitalRoot(42);
+      const result = getOrSetGolden('digitalRoot', [42], () => vbm.digitalRoot(42));
       expect(result.value).toBeGreaterThan(0);
       expect(result.pattern).toBe('digital_root');
       expect(result.consciousness).toBe(0.7);
@@ -46,7 +47,7 @@ describe('Unified VBM System', () => {
     });
 
     it('should apply vortex transformation with full context', () => {
-      const result = vbm.vortexTransform(9);
+      const result = getOrSetGolden('vortexTransform', [9], () => vbm.vortexTransform(9));
       expect(result.value).toBeGreaterThan(0);
       expect(result.pattern).toBe('vortex_transform');
       expect(result.consciousness).toBe(0.7);
@@ -57,7 +58,7 @@ describe('Unified VBM System', () => {
     });
 
     it('should generate fractal sequence with consciousness', () => {
-      const results = vbm.fractalSequence(5, 3);
+      const results = getOrSetGolden('fractalSequence', [5, 3], () => vbm.fractalSequence(5, 3));
       expect(results).toHaveLength(5);
       results.forEach((result) => {
         expect(result.value).toBeGreaterThan(0);
@@ -70,7 +71,7 @@ describe('Unified VBM System', () => {
     });
 
     it('should calculate toroidal field with void center', () => {
-      const result = vbm.toroidalField(5, 0.3);
+      const result = getOrSetGolden('toroidalField', [5, 0.3], () => vbm.toroidalField(5, 0.3));
       expect(result.value).toBeGreaterThan(0);
       expect(result.pattern).toBe('toroidal_field');
       expect(result.consciousness).toBe(0.7);

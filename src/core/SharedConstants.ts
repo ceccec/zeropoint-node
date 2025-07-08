@@ -239,6 +239,7 @@ export const METAPHYSICAL_CONSTANTS = {
     GOLDEN_HARMONY: "Phi represents the divine proportion",
     ZERO_APERTURE: "Zero is the aperture between unmanifest and manifest",
     UROBOROS_CYCLE: "The serpent eating its own tail represents infinite self-reference and continuous evolution",
+    VOID_MATTER_FRACTION: 'Every object is almost entirely void; matter is an infinitesimal but nonzero fraction.',
   },
 
   // Pattern categories

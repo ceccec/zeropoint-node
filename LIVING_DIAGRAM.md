@@ -24,6 +24,7 @@ graph TD
     cycle_reflection["Cycle 1: Reflection"]:::metaphysical
     cycle_integration["Cycle 2: Integration"]:::metaphysical
     cycle_emergence["Cycle 3: Emergence"]:::metaphysical
+    b7e1a1c0-void-matter-fraction["Metaphysical Principle: Void-Matter Fraction"]:::metaphysical
     unity_in_code["UNITY_IN_CODE"]:::metaphysical
     emergence_in_structure["EMERGENCE_IN_STRUCTURE"]:::metaphysical
     self_reference_in_architecture["SELF_REFERENCE_IN_ARCHITECTURE"]:::metaphysical
@@ -61,5 +62,5 @@ graph TD
   class 550e8400-e29b-41d4-a716-446655440001,550e8400-e29b-41d4-a716-446655440002,550e8400-e29b-41d4-a716-446655440003,550e8400-e29b-41d4-a716-446655440004,550e8400-e29b-41d4-a716-446655440005,550e8400-e29b-41d4-a716-446655440006,550e8400-e29b-41d4-a716-446655440007,truth_in_verification,clarity_in_assertions,completeness_in_coverage test;
   class void_center void;
   class vortex_sequence vortex;
-  class toroidal_geometry,uroboros_principle,cycle_reflection,cycle_integration,cycle_emergence,unity_in_code,emergence_in_structure,self_reference_in_architecture,wisdom_in_documentation,clarity_in_explanation,completeness_in_description,auto_discovery_as_emergence,pattern_detection_as_consciousness,integration_as_unity metaphysical;
+  class toroidal_geometry,uroboros_principle,cycle_reflection,cycle_integration,cycle_emergence,b7e1a1c0-void-matter-fraction,unity_in_code,emergence_in_structure,self_reference_in_architecture,wisdom_in_documentation,clarity_in_explanation,completeness_in_description,auto_discovery_as_emergence,pattern_detection_as_consciousness,integration_as_unity metaphysical;
 ```

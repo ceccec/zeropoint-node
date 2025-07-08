@@ -31,6 +31,15 @@ describe('KnowledgeSystem Test Registry', () => {
       expect(Array.isArray(pattern.applications)).toBe(true);
     }
   });
+
+  it('should include the void-matter fraction metaphysical principle', () => {
+    const patterns = Object.values(require('../../knowledge/KnowledgeSystem').KnowledgeSystem.KNOWLEDGE_PATTERNS) as import('../../knowledge/KnowledgeSystem').KnowledgePattern[];
+    const voidMatter = patterns.find((p: import('../../knowledge/KnowledgeSystem').KnowledgePattern) => p.id === 'b7e1a1c0-void-matter-fraction');
+    expect(voidMatter).toBeDefined();
+    expect(voidMatter?.description).toContain('almost entirely void');
+    expect(voidMatter?.numericalData['voidFraction']).toBeCloseTo(0.999999999);
+    expect(voidMatter?.numericalData['matterFraction']).toBeCloseTo(0.000000001);
+  });
 });
 
 describe('Cycle Patterns', () => {

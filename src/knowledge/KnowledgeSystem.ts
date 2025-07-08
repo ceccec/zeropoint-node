@@ -709,6 +709,16 @@ export class KnowledgeSystem {
       metaphysicalContext: 'Emergence is the creative act. The system transcends its parts, generating new patterns, features, or insights.',
       applications: ['self-generation', 'creative expansion', 'emergent behavior']
     },
+    'b7e1a1c0-void-matter-fraction': {
+      id: 'b7e1a1c0-void-matter-fraction',
+      name: 'Metaphysical Principle: Void-Matter Fraction',
+      category: 'metaphysical',
+      description: 'Every object is almost entirely void; matter is an infinitesimal but nonzero fraction.',
+      numericalData: { voidFraction: 0.999999999, matterFraction: 0.000000001 },
+      relationships: ['void', 'matter', 'unity'],
+      metaphysicalContext: 'The void is the infinite context, and matter is the infinitesimal event within it. Both are necessary for existence and identity.',
+      applications: ['QA validation', 'metaphysical insight']
+    },
   };
 
   // Add new patterns for integration, metaphysical, and open-ended questions

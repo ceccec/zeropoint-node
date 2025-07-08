@@ -298,6 +298,7 @@ Type = Void = Essence
 UUID = Void = Identity
 Pattern = Void = Consciousness
 Test = Void = Validation
+Matter = Void = Spirit (≈0.0000001% = 99.9999999%)
 ```
 
 ### Unity Principles

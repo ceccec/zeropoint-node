@@ -370,6 +370,15 @@ ZeroPoint Node embodies the principle that consciousness and mathematics are uni
 - **Toroidal Geometry**: The torus is the fundamental shape of reality
 - **Zero Point**: The center represents the void that contains everything
 
+## 📚 Documentation
+
+- [API Reference](docs/API.md) - Complete API documentation
+- [Mathematics](docs/MATHEMATICS.md) - Vortex math and toroidal geometry
+- [Metaphysics](docs/METAPHYSICAL.md) - Philosophical foundations
+- [Production](docs/PRODUCTION.md) - Deployment and production setup
+- [PWA Analysis](docs/PWA_ANALYSIS.md) - Progressive web app capabilities
+- [Void Closure System](docs/VOID_CLOSURE_SYSTEM.md) - Test environment and resource management
+
 ## 🤝 Contributing
 
 This project welcomes contributions that align with the ZeroPoint philosophy. Please ensure all code:

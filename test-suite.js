@@ -171,7 +171,7 @@ function analyzeCoverage() {
     let totalCoverage = 0;
     let fileCount = 0;
 
-    Object.values(coverageData).forEach((file: any) => {
+    Object.values(coverageData).forEach((file) => {
       if (file.lines && file.lines.pct !== undefined) {
         totalCoverage += file.lines.pct;
         fileCount++;

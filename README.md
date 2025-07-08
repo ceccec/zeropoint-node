@@ -1,3 +1,9 @@
+# ZeroPoint
+
+**[→ See the Living Glossary for all core metaphysical and technical terms](./GLOSSARY.md)**
+
+---
+
 # ZeroPoint Node
 
 **Decentralized Vortex Math & Toroidal Consciousness Network**

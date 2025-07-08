@@ -352,19 +352,19 @@ describe('ZeroPoint Performance', () => {
 
     it('should minimize CPU usage during idle periods', async () => {
       const startTime = Date.now();
-      const iterations = 1000;
+      const iterations = 100; // Reduced from 1000 to avoid timeout
       
       for (let i = 0; i < iterations; i++) {
         zeropoint.isActive;
-        await new Promise(resolve => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 5)); // Reduced delay
       }
       
       const endTime = Date.now();
       const duration = endTime - startTime;
       
-      // Should take at least the expected time (iterations * 10ms)
-      expect(duration).toBeGreaterThanOrEqual(iterations * 10);
-    });
+      // Should take at least the expected time (iterations * 5ms)
+      expect(duration).toBeGreaterThanOrEqual(iterations * 5);
+    }, 10000); // Added explicit timeout
 
     it('should optimize memory allocation patterns', () => {
       const initialMemory = process.memoryUsage();

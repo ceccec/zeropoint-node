@@ -16,15 +16,10 @@
 
 import { EventEmitter } from "events";
 import { 
-  ConsciousnessPattern, 
-  FieldEvent, 
-  ResonanceMessage, 
   MetaphysicalContext,
   PatternType,
-  PatternCategory,
-  LinkType
+  PatternCategory
 } from "./UnifiedTypes";
-import { ConstantsUtils } from "./SharedConstants";
 
 export interface PatternRegistryEvent {
   type: "pattern_added" | "pattern_recognized" | "pattern_integrated" | "pattern_evolved";
@@ -111,7 +106,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Recognize patterns based on input data
    */
-  public recognizePatterns(input: any, context: MetaphysicalContext): PatternMatch[] {
+  public recognizePatterns(input: any, _context: MetaphysicalContext): PatternMatch[] {
     const matches: PatternMatch[] = [];
 
     // Check consciousness patterns
@@ -288,7 +283,7 @@ export class PatternRegistry extends EventEmitter {
           pattern,
           confidence,
           resonance,
-          category: PatternCategory.CONSCIOUSNESS,
+          category: PatternCategory.THOUGHT,
           type: PatternType.CONSCIOUSNESS
         };
       }
@@ -311,7 +306,7 @@ export class PatternRegistry extends EventEmitter {
           pattern,
           confidence,
           resonance,
-          category: PatternCategory.FIELD,
+          category: PatternCategory.WAVE,
           type: PatternType.FIELD
         };
       }
@@ -371,11 +366,10 @@ export class PatternRegistry extends EventEmitter {
    * Compute resonance between two patterns
    */
   private computeResonance(pattern1: any, pattern2: any): number {
-    // Base resonance calculation using vortex mathematics
-    const baseResonance = ConstantsUtils.calculateVortexResonance(
-      pattern1.intensity || 0.5,
-      pattern2.intensity || 0.5
-    );
+    // Base resonance calculation using simple mathematics
+    const intensity1 = pattern1.intensity || 0.5;
+    const intensity2 = pattern2.intensity || 0.5;
+    const baseResonance = Math.min(intensity1, intensity2) / Math.max(intensity1, intensity2);
 
     // Type compatibility
     const typeResonance = pattern1.type === pattern2.type ? 1.0 : 0.3;
@@ -449,15 +443,15 @@ export class PatternRegistry extends EventEmitter {
    */
   private determineCategory(pattern: any): PatternCategory {
     if (pattern.type && ['thought', 'emotion', 'intention', 'memory', 'insight'].includes(pattern.type)) {
-      return PatternCategory.CONSCIOUSNESS;
+      return PatternCategory.THOUGHT;
     }
     if (pattern.eventType && ['consciousness_wave', 'attention_shift', 'resonance_peak', 'field_observation'].includes(pattern.eventType)) {
-      return PatternCategory.FIELD;
+      return PatternCategory.WAVE;
     }
     if (pattern.type && ['propose_field_block', 'resonate_with_block', 'finalize_field_block'].includes(pattern.type)) {
       return PatternCategory.RESONANCE;
     }
-    return PatternCategory.METAPHYSICAL;
+    return PatternCategory.INTEGRATION;
   }
 
   /**
@@ -473,7 +467,7 @@ export class PatternRegistry extends EventEmitter {
     if (pattern.signature) {
       return PatternType.RESONANCE;
     }
-    return PatternType.METAPHYSICAL;
+    return PatternType.INTEGRATION;
   }
 
   /**
@@ -481,8 +475,8 @@ export class PatternRegistry extends EventEmitter {
    */
   private calculateResonanceLevel(pattern: any, context: MetaphysicalContext): number {
     const baseLevel = pattern.intensity || 0.5;
-    const contextMultiplier = context.coherence || 1.0;
-    const fieldStrength = context.fieldStrength || 0.7;
+    const contextMultiplier = context['coherence'] || 1.0;
+    const fieldStrength = context['fieldStrength'] || 0.7;
     
     return Math.min(1.0, baseLevel * contextMultiplier * fieldStrength);
   }
@@ -491,7 +485,7 @@ export class PatternRegistry extends EventEmitter {
    * Compute pattern evolution
    */
   private computeEvolution(pattern: any, context: MetaphysicalContext): { hasChanged: boolean; evolvedPattern: any } {
-    const evolutionRate = context.evolutionRate || 0.01;
+    const evolutionRate = context['evolutionRate'] || 0.01;
     const hasChanged = Math.random() < evolutionRate;
     
     if (!hasChanged) {

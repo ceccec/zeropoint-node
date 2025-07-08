@@ -58,7 +58,8 @@ export class Cache {
       ...config,
     };
 
-    this.startCleanup();
+    // Don't start cleanup automatically - only start when explicitly requested
+    // this.startCleanup();
   }
 
   /**
@@ -221,10 +222,12 @@ export class Cache {
   /**
    * Start cleanup interval
    */
-  private startCleanup(): void {
-    this.cleanupInterval = setInterval(() => {
-      this.cleanup();
-    }, this.config.cleanupInterval);
+  public startCleanup(): void {
+    if (!this.cleanupInterval) {
+      this.cleanupInterval = setInterval(() => {
+        this.cleanup();
+      }, this.config.cleanupInterval);
+    }
   }
 
   /**

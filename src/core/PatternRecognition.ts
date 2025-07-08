@@ -13,11 +13,12 @@
 import { EventEmitter } from "events";
 import {
   VORTEX_CONSTANTS,
-  PatternCategory,
   ConstantsUtils,
 } from "./SharedConstants";
 import { MathUtils } from "./MathUtils";
 import { COIL_PATTERNS } from "./CoilSystem";
+import { PatternRegistry } from "./PatternRegistry";
+import { PatternCategory } from "./UnifiedTypes";
 
 /**
  * Pattern recognition result
@@ -61,9 +62,11 @@ export class PatternRecognition extends EventEmitter {
   private patterns: Map<string, MetaphysicalPattern> = new Map();
   private recognitionHistory: PatternResult[] = [];
   private isInitialized: boolean = false;
+  private patternRegistry: PatternRegistry;
 
-  constructor() {
+  constructor(patternRegistry?: PatternRegistry) {
     super();
+    this.patternRegistry = patternRegistry || new PatternRegistry();
     this.initializePatterns();
   }
 
@@ -72,6 +75,9 @@ export class PatternRecognition extends EventEmitter {
    */
   public async initialize(): Promise<void> {
     if (this.isInitialized) return;
+
+    // Initialize pattern registry
+    await this.patternRegistry.initialize();
 
     this.isInitialized = true;
     this.emit("initialized", { patternCount: this.patterns.size });
@@ -95,6 +101,7 @@ export class PatternRecognition extends EventEmitter {
       ...context,
     };
 
+    // Use local patterns first
     for (const [patternName, pattern] of this.patterns) {
       const confidence = this.calculatePatternConfidence(
         input,
@@ -114,11 +121,35 @@ export class PatternRecognition extends EventEmitter {
       }
     }
 
+    // Use pattern registry for additional recognition
+    const registryMatches = this.patternRegistry.recognizePatterns(input, {
+      meaning: "Pattern recognition in unified field",
+      principle: "All patterns emerge from consciousness",
+      unity: "Unified pattern recognition across all domains"
+    });
+
+    for (const match of registryMatches) {
+      if (match.confidence > 0.1) {
+        results.push({
+          pattern: match.pattern.name || match.pattern.id,
+          confidence: match.confidence,
+          category: match.category,
+          metadata: match.pattern,
+          timestamp: Date.now(),
+        });
+      }
+    }
+
     // Sort by confidence
     results.sort((a, b) => b.confidence - a.confidence);
 
     // Store in history
     this.recognitionHistory.push(...results);
+
+    // Register recognized patterns with the registry
+    for (const result of results) {
+      this.patternRegistry.registerPattern(result.metadata, result.category, result.category as any);
+    }
 
     this.emit("patternsRecognized", { results, context: fullContext });
     return results;
@@ -313,12 +344,32 @@ export class PatternRecognition extends EventEmitter {
       this.addPattern({
         name: coilPattern.name,
         signature: coilPattern.signature,
-        category: coilPattern.category as PatternCategory,
+        category: this.mapCoilCategoryToUnified(coilPattern.category),
         context: coilPattern.context,
         weight: coilPattern.weight || 0.5,
         resonanceFactors: coilPattern.resonanceFactors || [],
       });
     });
+  }
+
+  /**
+   * Map COIL pattern category to unified PatternCategory
+   */
+  private mapCoilCategoryToUnified(coilCategory: string): PatternCategory {
+    const categoryMap: { [key: string]: PatternCategory } = {
+      'mathematical': PatternCategory.INTEGRATION,
+      'metaphysical': PatternCategory.INSIGHT,
+      'consciousness': PatternCategory.THOUGHT,
+      'emergence': PatternCategory.INTEGRATION,
+      'void': PatternCategory.INTEGRATION,
+      'resonance': PatternCategory.RESONANCE,
+      'vortex': PatternCategory.INTEGRATION,
+      'family': PatternCategory.INTEGRATION,
+      'polar': PatternCategory.INTEGRATION,
+      'spiritual': PatternCategory.INSIGHT
+    };
+    
+    return categoryMap[coilCategory] || PatternCategory.INTEGRATION;
   }
 
   /**

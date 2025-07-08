@@ -1,6 +1,6 @@
-import { FieldIntegrity, PatternSignature } from "../integrity/FieldIntegrity";
+import { FieldIntegrity } from "../integrity/FieldIntegrity";
 import { FieldBlock } from "./EmergenceLedger";
-import { ResonanceMessage } from "../core/UnifiedTypes";
+import { ResonanceMessage, PatternSignature } from "../core/UnifiedTypes";
 
 /**
  * ZeroPoint Resonance Consensus Protocol

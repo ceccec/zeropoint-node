@@ -1,4 +1,5 @@
 import { createHash, randomBytes } from "crypto";
+import { PatternSignature } from "../core/UnifiedTypes";
 
 /**
  * ZeroPoint Field Integrity System
@@ -19,12 +20,7 @@ export interface PatternKeyPair {
   algorithm: "SPHINCS+" | "DILITHIUM" | "FALCON" | "CRYSTALS-Kyber";
 }
 
-export interface PatternSignature {
-  signature: string;
-  publicKey: string;
-  algorithm: string;
-  timestamp: number;
-}
+
 
 export class FieldIntegrity {
   private static readonly HASH_ALGORITHM = "sha3-512"; // Field-resistant hash

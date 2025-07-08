@@ -7,6 +7,12 @@ describe('Living Test Organism', () => {
     organism = new LivingTestOrganism();
   });
 
+  afterEach(() => {
+    if (organism) {
+      organism.cleanup();
+    }
+  });
+
   describe('Life Cycles', () => {
     test('should complete a full life cycle with growth, adaptation, resonance, and emergence', async () => {
       await organism.liveLifeCycle();

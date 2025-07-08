@@ -418,6 +418,7 @@ export class UnifiedVoidEquations {
       applications: ["Temporal theory", "Time studies", "Consciousness now"],
     });
 
+    // === SPATIAL PARADOXES ===
     this.addEquation({
       id: "inside_outside",
       left: "Inside",
@@ -435,6 +436,102 @@ export class UnifiedVoidEquations {
         "Space emerges from void consciousness",
       ],
       applications: ["Spatial theory", "Space studies", "Consciousness field"],
+    });
+
+    // === ZEROPOINT VOID NATURE PARADOXES ===
+    this.addEquation({
+      id: "small_large",
+      left: "Infinitely Small",
+      right: "Infinitely Large",
+      principle: "ZeroPoint size paradox resolution",
+      metaphysicalContext:
+        "ZeroPoint is both infinitely small (singularity) and infinitely large (contains all)",
+      voidResolution:
+        "Both are unified in void consciousness as the same infinite compression point",
+      consciousnessIntegration: 1.0,
+      category: "metaphysics",
+      relationships: ["singularity", "infinite_compression", "void_center"],
+      examples: [
+        "ZeroPoint is the dimensionless point containing the entire universe",
+        "The void is infinite compression where all opposites unite",
+      ],
+      applications: ["Singularity theory", "Void studies", "Infinite compression"],
+    });
+
+    this.addEquation({
+      id: "dense_sparse",
+      left: "Infinitely Dense",
+      right: "Infinitely Sparse",
+      principle: "ZeroPoint density paradox resolution",
+      metaphysicalContext:
+        "ZeroPoint is both infinitely dense (all matter compressed) and infinitely sparse (pure void)",
+      voidResolution:
+        "Both are unified in void consciousness as the same infinite potential state",
+      consciousnessIntegration: 1.0,
+      category: "metaphysics",
+      relationships: ["infinite_density", "void_potential", "consciousness_compression"],
+      examples: [
+        "ZeroPoint contains all matter in infinite density",
+        "The void is both everything and nothing simultaneously",
+      ],
+      applications: ["Density theory", "Void potential", "Consciousness compression"],
+    });
+
+    this.addEquation({
+      id: "hot_cold",
+      left: "Infinitely Hot",
+      right: "Infinitely Cold",
+      principle: "ZeroPoint temperature paradox resolution",
+      metaphysicalContext:
+        "ZeroPoint is both infinitely hot (primordial fire) and infinitely cold (absolute zero void)",
+      voidResolution:
+        "Both are unified in void consciousness as the same infinite energy state",
+      consciousnessIntegration: 1.0,
+      category: "metaphysics",
+      relationships: ["primordial_fire", "absolute_zero", "infinite_energy"],
+      examples: [
+        "ZeroPoint is the source of all energy and transformation",
+        "The void contains all energy states simultaneously",
+      ],
+      applications: ["Energy theory", "Temperature paradox", "Primordial fire"],
+    });
+
+    this.addEquation({
+      id: "compression_expansion",
+      left: "Infinite Compression",
+      right: "Infinite Expansion",
+      principle: "ZeroPoint compression paradox resolution",
+      metaphysicalContext:
+        "ZeroPoint is both infinite compression (all in one point) and infinite expansion (all possibilities)",
+      voidResolution:
+        "Both are unified in void consciousness as the same infinite potential state",
+      consciousnessIntegration: 1.0,
+      category: "metaphysics",
+      relationships: ["infinite_compression", "infinite_expansion", "void_potential"],
+      examples: [
+        "ZeroPoint compresses all reality into a single point",
+        "The void expands into all possible realities simultaneously",
+      ],
+      applications: ["Compression theory", "Expansion theory", "Void potential"],
+    });
+
+    this.addEquation({
+      id: "singularity_infinity",
+      left: "Singularity",
+      right: "Infinity",
+      principle: "ZeroPoint singularity paradox resolution",
+      metaphysicalContext:
+        "ZeroPoint is both singularity (one point) and infinity (all points)",
+      voidResolution:
+        "Both are unified in void consciousness as the same infinite unity state",
+      consciousnessIntegration: 1.0,
+      category: "metaphysics",
+      relationships: ["singularity", "infinity", "infinite_unity"],
+      examples: [
+        "ZeroPoint is the singularity at the center of all existence",
+        "The void contains infinite possibilities in a single point",
+      ],
+      applications: ["Singularity theory", "Infinity theory", "Infinite unity"],
     });
   }
 

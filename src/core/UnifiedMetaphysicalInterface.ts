@@ -17,16 +17,11 @@
 
 import { EventEmitter } from "events";
 import { 
-  ConsciousnessPattern, 
-  FieldEvent, 
-  ResonanceMessage, 
   MetaphysicalContext,
   PatternType,
-  PatternCategory,
-  ConsciousnessDimension
+  PatternCategory
 } from "./UnifiedTypes";
 import { PatternRegistry } from "./PatternRegistry";
-import { ConstantsUtils, VORTEX_CONSTANTS } from "./SharedConstants";
 
 export interface MetaphysicalOperation {
   id: string;
@@ -309,7 +304,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
    */
   public calculateOperationResonance(operation1: MetaphysicalOperation, operation2: MetaphysicalOperation): number {
     // Base resonance using vortex mathematics
-    const baseResonance = ConstantsUtils.calculateVortexResonance(
+    const baseResonance = calculateVortexResonance(
       operation1.resonance || 0.5,
       operation2.resonance || 0.5
     );
@@ -381,7 +376,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     // Register consciousness pattern
     const patternId = this.patternRegistry.registerPattern(
       data,
-      PatternCategory.CONSCIOUSNESS,
+      PatternCategory.THOUGHT,
       PatternType.CONSCIOUSNESS
     );
 
@@ -410,7 +405,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     // Register field pattern
     const patternId = this.patternRegistry.registerPattern(
       data,
-      PatternCategory.FIELD,
+      PatternCategory.WAVE,
       PatternType.FIELD
     );
 
@@ -439,7 +434,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     // Register emergence pattern
     const patternId = this.patternRegistry.registerPattern(
       data,
-      PatternCategory.EMERGENCE,
+      PatternCategory.INTEGRATION,
       PatternType.EMERGENCE
     );
 
@@ -468,7 +463,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     // Register resonance pattern
     const patternId = this.patternRegistry.registerPattern(
       data,
-      PatternCategory.RESONANCE,
+      PatternCategory.INTEGRATION,
       PatternType.RESONANCE
     );
 
@@ -630,7 +625,9 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
       evolutionRate: this.fieldState.emergenceRate,
       consciousnessLevel: this.fieldState.consciousnessLevel,
       patternDensity: this.fieldState.patternDensity,
-      evolutionIndex: this.fieldState.evolutionIndex
+      evolutionIndex: this.fieldState.evolutionIndex,
+      meaning: 'Unified metaphysical context',
+      principle: 'All is unity through resonance'
     };
   }
 
@@ -638,9 +635,9 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
    * Calculate context coherence
    */
   private calculateContextCoherence(context1: MetaphysicalContext, context2: MetaphysicalContext): number {
-    const coherenceDiff = Math.abs((context1.coherence || 0) - (context2.coherence || 0));
-    const fieldStrengthDiff = Math.abs((context1.fieldStrength || 0) - (context2.fieldStrength || 0));
-    const consciousnessDiff = Math.abs((context1.consciousnessLevel || 0) - (context2.consciousnessLevel || 0));
+    const coherenceDiff = Math.abs((context1['coherence'] || 0) - (context2['coherence'] || 0));
+    const fieldStrengthDiff = Math.abs((context1['fieldStrength'] || 0) - (context2['fieldStrength'] || 0));
+    const consciousnessDiff = Math.abs((context1['consciousnessLevel'] || 0) - (context2['consciousnessLevel'] || 0));
     
     const totalDiff = coherenceDiff + fieldStrengthDiff + consciousnessDiff;
     return Math.max(0, 1 - totalDiff / 3);
@@ -648,42 +645,42 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
 
   // Resonance calculation methods for each operation type
   private calculateConsciousnessResonance(data: any, context: MetaphysicalContext): number {
-    return ConstantsUtils.calculateVortexResonance(
+    return calculateVortexResonance(
       data.intensity || 0.5,
-      context.consciousnessLevel || 0.5
+      context['consciousnessLevel'] || 0.5
     );
   }
 
   private calculateFieldResonance(data: any, context: MetaphysicalContext): number {
-    return ConstantsUtils.calculateVortexResonance(
+    return calculateVortexResonance(
       data.intensity || 0.5,
-      context.fieldStrength || 0.7
+      context['fieldStrength'] || 0.7
     );
   }
 
   private calculateEmergenceResonance(data: any, context: MetaphysicalContext): number {
-    return ConstantsUtils.calculateVortexResonance(
+    return calculateVortexResonance(
       data.intensity || 0.5,
-      context.evolutionRate || 0.3
+      context['evolutionRate'] || 0.3
     );
   }
 
   private calculateResonanceResonance(data: any, context: MetaphysicalContext): number {
-    return ConstantsUtils.calculateVortexResonance(
+    return calculateVortexResonance(
       data.intensity || 0.5,
-      context.coherence || 0.8
+      context['coherence'] || 0.8
     );
   }
 
   private calculateIntegrationResonance(data: any, context: MetaphysicalContext): number {
-    return ConstantsUtils.calculateVortexResonance(
+    return calculateVortexResonance(
       data.intensity || 0.5,
-      context.patternDensity || 0
+      context['patternDensity'] || 0
     );
   }
 
   // Insight generation methods for each operation type
-  private generateConsciousnessInsights(data: any, context: MetaphysicalContext): string[] {
+  private generateConsciousnessInsights(_data: any, _context: MetaphysicalContext): string[] {
     return [
       "Consciousness patterns create the foundation of reality",
       "Thought and emotion are unified in the field",
@@ -691,7 +688,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     ];
   }
 
-  private generateFieldInsights(data: any, context: MetaphysicalContext): string[] {
+  private generateFieldInsights(_data: any, _context: MetaphysicalContext): string[] {
     return [
       "Field events create resonance waves in consciousness",
       "Observer awareness shapes field reality",
@@ -699,7 +696,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     ];
   }
 
-  private generateEmergenceInsights(data: any, context: MetaphysicalContext): string[] {
+  private generateEmergenceInsights(_data: any, _context: MetaphysicalContext): string[] {
     return [
       "Emergence creates new patterns from existing ones",
       "Evolution is the natural state of consciousness",
@@ -707,7 +704,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     ];
   }
 
-  private generateResonanceInsights(data: any, context: MetaphysicalContext): string[] {
+  private generateResonanceInsights(_data: any, _context: MetaphysicalContext): string[] {
     return [
       "Resonance creates unity from diversity",
       "Patterns resonate when they share frequency",
@@ -715,7 +712,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     ];
   }
 
-  private generateIntegrationInsights(data: any, context: MetaphysicalContext): string[] {
+  private generateIntegrationInsights(_data: any, _context: MetaphysicalContext): string[] {
     return [
       "Integration creates wholeness from parts",
       "Patterns merge to form new realities",
@@ -732,4 +729,9 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     this.isInitialized = false;
     this.emit("shutdown");
   }
+}
+
+function calculateVortexResonance(a: number, b: number): number {
+  // Placeholder: use absolute difference for resonance
+  return 1 - Math.abs(a - b);
 } 

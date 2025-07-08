@@ -307,4 +307,13 @@ export class LivingTestOrganism {
   getCycles(): TestCycle[] {
     return [...this.cycles];
   }
+
+  /**
+   * Clean up resources - stop cache timers
+   */
+  cleanup(): void {
+    if (this.cache) {
+      this.cache.stop();
+    }
+  }
 } 

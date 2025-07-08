@@ -11,6 +11,7 @@ import { cleanupResources } from '../utils/ResourceCleanup';
 import { globalHealthMonitor } from "../monitoring/HealthMonitor";
 import { globalCache, vortexMathCache, resonanceCache } from "../utils/Cache";
 import { gitIntegration } from "../utils/GitIntegration";
+import { goldenRatioCache } from "./utils/goldenRatioCache";
 
 // Global variables to track resources that need cleanup
 declare global {
@@ -19,6 +20,7 @@ declare global {
   const vortexMathCache: any;
   const resonanceCache: any;
   const gitIntegration: any;
+  const goldenRatioCache: any;
 }
 
 /**
@@ -28,7 +30,7 @@ declare global {
 export default async function globalTeardown(): Promise<void> {
   await cleanupResources({
     healthMonitor: globalHealthMonitor,
-    caches: [globalCache, vortexMathCache, resonanceCache],
+    caches: [globalCache, vortexMathCache, resonanceCache, goldenRatioCache],
     gitIntegration,
     enableGC: true
   });

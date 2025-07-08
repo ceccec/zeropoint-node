@@ -1,9 +1,8 @@
 import {
   FieldIntegrity,
   PatternKeyPair,
-  PatternSignature,
 } from "../integrity/FieldIntegrity";
-import { LedgerEvent } from "../core/UnifiedTypes";
+import { LedgerEvent, PatternSignature } from "../core/UnifiedTypes";
 
 /**
  * ZeroPoint Emergence Field Ledger

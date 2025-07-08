@@ -138,6 +138,7 @@ export {
   Observer,
   ResonanceWave,
   ConsciousnessResonance,
+  PatternSignature,
   PatternType,
   PatternCategory,
   LinkType,

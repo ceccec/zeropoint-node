@@ -57,19 +57,19 @@ global.testUtils = {
     resonance: Math.random() * 10,
     consciousnessLevel: Math.random() * 100,
   }),
-  waitForEvent: (emitter: any, event: string, timeout: number) => {
+  waitForEvent: (emitter: any, event: string, timeout: number): Promise<unknown> => {
     return new Promise((resolve, reject) => {
       const timer = setTimeout(
         () => reject(new Error(`Timeout waiting for ${event}`)),
         timeout,
       );
-      emitter.once(event, (data: any) => {
+      emitter.once(event, (data: any): void => {
         clearTimeout(timer);
         resolve(data);
       });
     });
   },
-  createMockDevice: (config: any = {}) => {
+  createMockDevice: (config: any = {}): unknown => {
     return {
       deviceId: `mock-device-${Date.now()}`,
       deviceName: "MockDevice",

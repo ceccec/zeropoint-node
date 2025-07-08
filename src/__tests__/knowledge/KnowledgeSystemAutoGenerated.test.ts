@@ -26,8 +26,13 @@ describe('Auto-Generated Tests from KnowledgeSystem Test Patterns', () => {
       });
 
       // If the pattern has a testLogic property, execute it
-      if ((pattern as any).testLogic && typeof (pattern as any).testLogic === 'function') {
-        const result = (pattern as any).testLogic();
+      if (
+        typeof pattern === 'object' &&
+        pattern !== null &&
+        'testLogic' in pattern &&
+        typeof (pattern as { testLogic: unknown }).testLogic === 'function'
+      ) {
+        const result = (pattern as { testLogic: () => boolean }).testLogic();
         expect(result).toBe(true);
       }
     });

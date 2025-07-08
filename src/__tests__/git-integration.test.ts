@@ -23,7 +23,7 @@ describe("Git Integration", () => {
   });
 
   describe("GitIntegration Module", () => {
-    it("should provide live Git status", async () => {
+    it("should provide live Git status", async (): Promise<void> => {
       const status = await gitIntegration.getLiveGitStatus();
 
       expect(status).toBeDefined();
@@ -33,7 +33,7 @@ describe("Git Integration", () => {
       expect(Array.isArray(status.untracked)).toBe(true);
     });
 
-    it("should get recent commits", async () => {
+    it("should get recent commits", async (): Promise<void> => {
       const commits = await gitIntegration.getRecentCommits(5);
 
       expect(Array.isArray(commits)).toBe(true);

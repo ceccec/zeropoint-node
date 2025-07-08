@@ -52,7 +52,7 @@ describe('Automated QA-Driven Tests from Hardcoded Knowledge', () => {
       }));
   };
 
-  it('should contain Q&A pairs that can be validated against KnowledgeSystem', () => {
+  it('should contain Q&A pairs that can be validated against KnowledgeSystem', (): void => {
     const qaPairs = extractQAPairs();
     expect(qaPairs.length).toBeGreaterThan(0);
     
@@ -67,7 +67,7 @@ describe('Automated QA-Driven Tests from Hardcoded Knowledge', () => {
     expect(voidClosureQA?.answer).toContain('global setup/teardown');
   });
 
-  it('should contain code blocks that are syntactically valid', () => {
+  it('should contain code blocks that are syntactically valid', (): void => {
     const codeBlocks = extractCodeBlocks();
     expect(codeBlocks.length).toBeGreaterThan(0);
     

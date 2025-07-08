@@ -30,7 +30,7 @@ export class LivingTestOrganism {
   private cache: GoldenRatioCache;
   private state: OrganismState;
   private cycles: TestCycle[] = [];
-  private memory: Map<string, any> = new Map();
+  private memory: Map<string, unknown> = new Map();
   private growthPatterns: number[] = [];
 
   constructor() {
@@ -81,7 +81,7 @@ export class LivingTestOrganism {
         // Grow consciousness through successful operations
         this.state.consciousness = Math.min(1.0, this.state.consciousness + 0.01);
         
-      } catch (error) {
+      } catch {
         // Learn from failures
         this.state.resilience = Math.min(1.0, this.state.resilience + 0.005);
       }
@@ -143,7 +143,7 @@ export class LivingTestOrganism {
           simulateCacheMiss(this.cache, `goldenRatio_${i + 1}`);
         }
         
-      } catch (error) {
+      } catch {
         // Adapt to errors
         this.state.resilience = Math.min(1.0, this.state.resilience + 0.01);
       }
@@ -194,7 +194,7 @@ export class LivingTestOrganism {
         }
         totalTests++;
         
-      } catch (error) {
+      } catch {
         // Maintain resonance even through errors
         this.state.resilience = Math.min(1.0, this.state.resilience + 0.01);
       }
@@ -246,7 +246,7 @@ export class LivingTestOrganism {
         }
         totalTests++;
         
-      } catch (error) {
+      } catch {
         // Emergence through overcoming challenges
         this.state.consciousness = Math.min(1.0, this.state.consciousness + 0.02);
       }

@@ -63,7 +63,7 @@ export async function cleanupResources(options: CleanupOptions): Promise<void> {
       timers.forEach((timer: any) => {
         try {
           if (timer.unref) timer.unref();
-        } catch {}
+        } catch { /* intentionally empty */ }
       });
     }
 
@@ -76,7 +76,7 @@ export async function cleanupResources(options: CleanupOptions): Promise<void> {
       watchers.forEach((watcher: any) => {
         try {
           if (watcher.close) watcher.close();
-        } catch {}
+        } catch { /* intentionally empty */ }
       });
     }
 

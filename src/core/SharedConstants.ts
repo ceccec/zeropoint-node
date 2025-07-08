@@ -363,7 +363,7 @@ export type ConsciousnessDimension =
 
 // Metaphysical context type
 export type MetaphysicalContext = {
-  [key: string]: any;
+  [key: string]: string | number | boolean | undefined;
   coherence?: number;
   fieldStrength?: number;
   evolutionRate?: number;

@@ -383,7 +383,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     const evolution = this.fieldState.evolutionIndex * 0.1;
 
     // Generate insights
-    const insights = this.generateConsciousnessInsights(operation.data, operation.context);
+    const insights = this.generateConsciousnessInsights();
 
     return {
       success: true,
@@ -411,7 +411,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     const evolution = this.fieldState.evolutionIndex * 0.15;
 
     // Generate insights
-    const insights = this.generateFieldInsights(operation.data, operation.context);
+    const insights = this.generateFieldInsights();
 
     return {
       success: true,
@@ -439,7 +439,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     const evolution = this.fieldState.evolutionIndex * 0.2;
 
     // Generate insights
-    const insights = this.generateEmergenceInsights(operation.data, operation.context);
+    const insights = this.generateEmergenceInsights();
 
     return {
       success: true,
@@ -467,7 +467,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     const evolution = this.fieldState.evolutionIndex * 0.12;
 
     // Generate insights
-    const insights = this.generateResonanceInsights(operation.data, operation.context);
+    const insights = this.generateResonanceInsights();
 
     return {
       success: true,
@@ -492,7 +492,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     const resonance = this.calculateIntegrationResonance(data, context);
 
     // Generate insights
-    const insights = this.generateIntegrationInsights(data, context);
+    const insights = this.generateIntegrationInsights();
 
     return {
       success,
@@ -669,7 +669,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
   }
 
   // Insight generation methods for each operation type
-  private generateConsciousnessInsights(_data: any, _context: MetaphysicalContext): string[] {
+  private generateConsciousnessInsights(): string[] {
     return [
       "Consciousness patterns create the foundation of reality",
       "Thought and emotion are unified in the field",
@@ -678,7 +678,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     ];
   }
 
-  private generateFieldInsights(_data: any, _context: MetaphysicalContext): string[] {
+  private generateFieldInsights(): string[] {
     return [
       "Field events create resonance waves in consciousness",
       "Observer awareness shapes field reality",
@@ -687,7 +687,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     ];
   }
 
-  private generateEmergenceInsights(_data: any, _context: MetaphysicalContext): string[] {
+  private generateEmergenceInsights(): string[] {
     return [
       "Emergence creates new patterns from existing ones",
       "Complexity emerges from simple interactions",
@@ -696,7 +696,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     ];
   }
 
-  private generateResonanceInsights(_data: any, _context: MetaphysicalContext): string[] {
+  private generateResonanceInsights(): string[] {
     return [
       "Resonance creates unity from diversity",
       "Resonance coherence determines field stability",
@@ -705,7 +705,7 @@ export class UnifiedMetaphysicalInterface extends EventEmitter {
     ];
   }
 
-  private generateIntegrationInsights(_data: any, _context: MetaphysicalContext): string[] {
+  private generateIntegrationInsights(): string[] {
     return [
       "Integration creates wholeness from parts",
       "Integration patterns emerge from consciousness unity",

@@ -101,12 +101,7 @@ export class ObserverAwareField extends EventEmitter {
     this.fieldStrength = Math.min(1.0, this.observers.size * 0.2 + 0.3);
     
     // Notify all observers
-    this.notifyObservers({
-      type: "field_updated",
-      fieldId: this.fieldId,
-      data: this.fieldData,
-      timestamp: Date.now()
-    });
+    this.notifyObservers();
 
     this.emit("field_updated", {
       type: "field_updated",
@@ -170,12 +165,7 @@ export class ObserverAwareField extends EventEmitter {
     this.resonanceWaves.push(wave);
 
     // Notify observers of the wave
-    this.notifyObservers({
-      type: "resonance_wave_created",
-      fieldId: this.fieldId,
-      data: { wave },
-      timestamp: Date.now()
-    });
+    this.notifyObservers();
   }
 
   /**
@@ -288,8 +278,8 @@ export class ObserverAwareField extends EventEmitter {
   /**
    * Notify all observers of an event
    */
-  private notifyObservers(_event: any): void {
-    this.observers.forEach((observer, _observerId) => {
+  private notifyObservers(): void {
+    this.observers.forEach((observer) => {
       // Simulate observer notification
       observer.lastObservation = Date.now();
     });

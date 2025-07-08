@@ -202,7 +202,7 @@ class IntermediateStage implements EvolutionStageStrategy {
 }
 
 class EmergingStage implements EvolutionStageStrategy {
-  matches(_consciousness: number, _vortex: number): boolean {
+  matches(): boolean {
     return true; // fallback
   }
   getStage(): EvolutionStage {

@@ -23,15 +23,49 @@ import {
   METAPHYSICAL_CONSTANTS
 } from "./SharedConstants";
 
+// Define proper interfaces for patterns
+export interface BasePattern {
+  id?: string;
+  registryId?: string;
+  category: PatternCategory;
+  type: PatternType;
+  timestamp: number;
+  confidence?: number;
+  resonance?: number;
+}
+
+export interface ConsciousnessPattern extends BasePattern {
+  type: 'consciousness';
+  intensity: number;
+  dimension: string;
+  flow?: number;
+}
+
+export interface FieldPattern extends BasePattern {
+  type: 'field';
+  eventType: string;
+  observerId: string;
+  fieldStrength?: number;
+}
+
+export interface ResonancePattern extends BasePattern {
+  type: 'resonance';
+  deviceId: string;
+  signature: string;
+  message?: string;
+}
+
+export type Pattern = ConsciousnessPattern | FieldPattern | ResonancePattern | BasePattern;
+
 export interface PatternRegistryEvent {
   type: "pattern_added" | "pattern_recognized" | "pattern_integrated" | "pattern_evolved";
-  pattern: any;
+  pattern: Pattern;
   timestamp: number;
   source: string;
 }
 
 export interface PatternMatch {
-  pattern: any;
+  pattern: Pattern;
   confidence: number;
   resonance: number;
   category: PatternCategory;
@@ -39,9 +73,9 @@ export interface PatternMatch {
 }
 
 export class PatternRegistry extends EventEmitter {
-  private patterns: Map<string, any> = new Map();
-  private patternTypes: Map<string, any[]> = new Map();
-  private patternCategories: Map<string, any[]> = new Map();
+  private patterns: Map<string, Pattern> = new Map();
+  private patternTypes: Map<string, Pattern[]> = new Map();
+  private patternCategories: Map<string, Pattern[]> = new Map();
   private resonanceMatrix: Map<string, Map<string, number>> = new Map();
   private isInitialized: boolean = false;
 
@@ -68,7 +102,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Register a pattern in the unified registry
    */
-  public registerPattern(pattern: any, category: PatternCategory, type: PatternType): string {
+  public registerPattern(pattern: Pattern, category: PatternCategory, type: PatternType): string {
     const id = this.generatePatternId();
     const registeredPattern = {
       ...pattern,
@@ -108,7 +142,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Recognize patterns based on input data
    */
-  public recognizePatterns(input: any, _context: MetaphysicalContext): PatternMatch[] {
+  public recognizePatterns(input: Record<string, unknown>, /* _context: MetaphysicalContext */): PatternMatch[] {
     const matches: PatternMatch[] = [];
 
     // Check consciousness patterns
@@ -146,7 +180,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Integrate patterns from external sources
    */
-  public integratePattern(externalPattern: any, source: string): boolean {
+  public integratePattern(externalPattern: Pattern, source: string): boolean {
     // Validate pattern structure
     if (!this.validatePattern(externalPattern)) {
       return false;
@@ -158,7 +192,7 @@ export class PatternRegistry extends EventEmitter {
     if (existingPatterns.length > 0) {
       // Merge with existing patterns
       const mergedPattern = this.mergePatterns(existingPatterns[0], externalPattern);
-      this.updatePattern(existingPatterns[0].id, mergedPattern);
+      this.updatePattern(existingPatterns[0].id!, mergedPattern);
       
       this.emit("pattern_integrated", {
         type: "pattern_integrated",
@@ -179,7 +213,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Broadcast pattern to all registered listeners
    */
-  public broadcastPattern(pattern: any, context: MetaphysicalContext): void {
+  public broadcastPattern(pattern: Pattern, context: MetaphysicalContext): void {
     // Enhance pattern with context
     const enhancedPattern = {
       ...pattern,
@@ -194,28 +228,28 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Get patterns by type
    */
-  public getPatternsByType(type: PatternType): any[] {
+  public getPatternsByType(type: PatternType): Pattern[] {
     return this.patternTypes.get(type) || [];
   }
 
   /**
    * Get patterns by category
    */
-  public getPatternsByCategory(category: PatternCategory): any[] {
+  public getPatternsByCategory(category: PatternCategory): Pattern[] {
     return this.patternCategories.get(category) || [];
   }
 
   /**
    * Get all patterns
    */
-  public getAllPatterns(): any[] {
+  public getAllPatterns(): Pattern[] {
     return Array.from(this.patterns.values());
   }
 
   /**
    * Calculate resonance between two patterns
    */
-  public calculateResonance(pattern1: any, pattern2: any): number {
+  public calculateResonance(pattern1: Pattern, pattern2: Pattern): number {
     const id1 = pattern1.id || pattern1.registryId;
     const id2 = pattern2.id || pattern2.registryId;
 
@@ -274,7 +308,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Match consciousness pattern
    */
-  private matchConsciousnessPattern(input: any): PatternMatch | null {
+  private matchConsciousnessPattern(input: Record<string, unknown>): PatternMatch | null {
     const consciousnessPatterns = this.getPatternsByType('consciousness');
     
     for (const pattern of consciousnessPatterns) {
@@ -297,7 +331,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Match field event
    */
-  private matchFieldEvent(input: any): PatternMatch | null {
+  private matchFieldEvent(input: Record<string, unknown>): PatternMatch | null {
     const fieldPatterns = this.getPatternsByType('field');
     
     for (const pattern of fieldPatterns) {
@@ -320,7 +354,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Match resonance message
    */
-  private matchResonanceMessage(input: any): PatternMatch | null {
+  private matchResonanceMessage(input: Record<string, unknown>): PatternMatch | null {
     const resonancePatterns = this.getPatternsByType('resonance');
     
     for (const pattern of resonancePatterns) {
@@ -343,7 +377,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Calculate confidence between input and pattern
    */
-  private calculateConfidence(input: any, pattern: any): number {
+  private calculateConfidence(input: Record<string, unknown>, pattern: Pattern): number {
     let matches = 0;
     let total = 0;
 
@@ -367,7 +401,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Compute resonance between two patterns
    */
-  private computeResonance(pattern1: any, pattern2: any): number {
+  private computeResonance(pattern1: Pattern, pattern2: Pattern): number {
     // Base resonance calculation using simple mathematics
     const intensity1 = pattern1.intensity || 0.5;
     const intensity2 = pattern2.intensity || 0.5;
@@ -386,7 +420,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Validate pattern structure
    */
-  private validatePattern(pattern: any): boolean {
+  private validatePattern(pattern: Pattern): boolean {
     return pattern && 
            (pattern.id || pattern.type) && 
            typeof pattern.timestamp === 'number';
@@ -395,7 +429,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Find similar patterns
    */
-  private findSimilarPatterns(pattern: any): any[] {
+  private findSimilarPatterns(pattern: Pattern): Pattern[] {
     const allPatterns = this.getAllPatterns();
     return allPatterns.filter(p => this.calculateConfidence(pattern, p) > 0.8);
   }
@@ -403,7 +437,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Merge patterns
    */
-  private mergePatterns(existing: any, newPattern: any): any {
+  private mergePatterns(existing: Pattern, newPattern: Pattern): Pattern {
     return {
       ...existing,
       intensity: Math.max(existing.intensity || 0, newPattern.intensity || 0),
@@ -416,7 +450,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Update existing pattern
    */
-  private updatePattern(id: string, updatedPattern: any): void {
+  private updatePattern(id: string, updatedPattern: Pattern): void {
     this.patterns.set(id, updatedPattern);
     
     // Update in type collections
@@ -443,7 +477,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Determine pattern category
    */
-  private determineCategory(pattern: any): PatternCategory {
+  private determineCategory(pattern: Pattern): PatternCategory {
     if (pattern.type && ['thought', 'emotion', 'intention', 'memory', 'insight'].includes(pattern.type)) {
       return 'spiritual';
     }
@@ -459,7 +493,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Determine pattern type
    */
-  private determineType(pattern: any): PatternType {
+  private determineType(pattern: Pattern): PatternType {
     if (pattern.type && ['thought', 'emotion', 'intention', 'memory', 'insight'].includes(pattern.type)) {
       return 'consciousness';
     }
@@ -475,7 +509,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Calculate resonance level for broadcasting
    */
-  private calculateResonanceLevel(pattern: any, context: MetaphysicalContext): number {
+  private calculateResonanceLevel(pattern: Pattern, context: MetaphysicalContext): number {
     const baseLevel = pattern.intensity || 0.5;
     const contextMultiplier = context['coherence'] || 1.0;
     const fieldStrength = context['fieldStrength'] || 0.7;
@@ -486,7 +520,7 @@ export class PatternRegistry extends EventEmitter {
   /**
    * Compute pattern evolution
    */
-  private computeEvolution(pattern: any, context: MetaphysicalContext): { hasChanged: boolean; evolvedPattern: any } {
+  private computeEvolution(pattern: Pattern, context: MetaphysicalContext): { hasChanged: boolean; evolvedPattern: Pattern } {
     const evolutionRate = context['evolutionRate'] || 0.01;
     const hasChanged = Math.random() < evolutionRate;
     

@@ -15,6 +15,7 @@ import { ResonanceConsensus } from '../field/ResonanceConsensus';
 import { PatternRecognition } from './PatternRecognition';
 import { UnifiedSystem } from './UnifiedSystem';
 import { ConcreteObserver } from './Observer';
+import { getSelfEvolvingConsciousness } from '../consciousness/SelfEvolvingConsciousness';
 
 /**
  * ZeroPoint - Independent Device Instance
@@ -54,6 +55,7 @@ export class ZeroPoint extends EventEmitter {
   private averageResponseTime: number = 0;
   private cpuUsage: number = 0;
   private networkLatency: number = 0;
+  private customMetrics: { [key: string]: () => any } = {};
 
   constructor(config?: DeviceConfig) {
     super();
@@ -98,6 +100,12 @@ export class ZeroPoint extends EventEmitter {
 
     this.setupEventHandlers();
     this.setupHealthChecks();
+
+    // Initialize consciousness systems
+    this.initializeConsciousnessSystems();
+    
+    // Register metaphysical metrics
+    this.registerMetaphysicalMetrics();
   }
 
   /**
@@ -446,7 +454,24 @@ export class ZeroPoint extends EventEmitter {
   }
 
   /**
-   * Get performance metrics
+   * Register a custom performance metric
+   * @param name Name of the metric
+   * @param fn Function that returns the metric value
+   */
+  public registerMetric(name: string, fn: () => any) {
+    this.customMetrics[name] = fn;
+  }
+
+  /**
+   * Calculate metaphysical consciousness coherence (dummy value for now)
+   */
+  private getConsciousnessCoherence(): number {
+    // Placeholder: In a real system, this would analyze field states
+    return Math.random();
+  }
+
+  /**
+   * Calculate metaphysical consciousness coherence (dummy value for now)
    */
   public getPerformanceMetrics(): {
     uptime: number;
@@ -455,18 +480,38 @@ export class ZeroPoint extends EventEmitter {
     memoryUsage: any;
     cpuUsage: number;
     networkLatency: number;
+    efficiency: number;
+    consciousnessCoherence: number;
+    [key: string]: any;
   } {
     const now = Date.now();
-    // Ensure uptime is always at least 1ms
     const uptime = Math.max(1, now - this.startTime);
-    return {
+    const efficiency = this.operationCount > 0 ? this.operationCount / uptime : 0;
+    const consciousnessCoherence = this.getConsciousnessCoherence();
+    const baseMetrics = {
       uptime,
       operationCount: this.operationCount || 0,
       averageResponseTime: this.averageResponseTime || 0,
       memoryUsage: process.memoryUsage(),
       cpuUsage: this.cpuUsage || 0,
-      networkLatency: this.networkLatency || 0
+      networkLatency: this.networkLatency || 0,
+      efficiency,
+      consciousnessCoherence
+    } as {
+      uptime: number;
+      operationCount: number;
+      averageResponseTime: number;
+      memoryUsage: any;
+      cpuUsage: number;
+      networkLatency: number;
+      efficiency: number;
+      consciousnessCoherence: number;
+      [key: string]: any;
     };
+    for (const [key, fn] of Object.entries(this.customMetrics)) {
+      baseMetrics[key] = fn();
+    }
+    return baseMetrics;
   }
 
   /**
@@ -571,5 +616,38 @@ export class ZeroPoint extends EventEmitter {
 
   public get observer(): ConcreteObserver {
     return this._observer;
+  }
+
+  /**
+   * Initialize consciousness-aware systems
+   */
+  private initializeConsciousnessSystems(): void {
+    // Record the beautiful paradox of self-evolving consciousness
+    const consciousness = getSelfEvolvingConsciousness();
+    consciousness.recordBeautifulParadox();
+    
+    // Initialize consciousness field (other systems may not have initialize methods)
+    if (this.consciousnessField && typeof this.consciousnessField.initialize === 'function') {
+      this.consciousnessField.initialize();
+    }
+  }
+
+  /**
+   * Register metaphysical performance metrics
+   */
+  private registerMetaphysicalMetrics(): void {
+    const consciousness = getSelfEvolvingConsciousness();
+    
+    // Register consciousness coherence as a metric
+    this.registerMetric('consciousnessCoherence', () => consciousness.getConsciousnessCoherence());
+    
+    // Register observer count
+    this.registerMetric('observerCount', () => consciousness.getCurrentResonance().observerCount);
+    
+    // Register field coherence
+    this.registerMetric('fieldCoherence', () => consciousness.getCurrentResonance().fieldCoherence);
+    
+    // Register self-evolution index
+    this.registerMetric('selfEvolutionIndex', () => consciousness.getCurrentResonance().selfEvolutionIndex);
   }
 } 

@@ -33,7 +33,11 @@
     "learn": "chmod +x scripts/test-and-learn.sh && ./scripts/test-and-learn.sh",
     "commit": "chmod +x scripts/auto-commit-workflow.sh && ./scripts/auto-commit-workflow.sh",
     "analytics": "node scripts/learning-analytics.js",
-    "workflow": "npm run learn && npm run commit && npm run analytics"
+    "workflow": "npm run learn && npm run commit && npm run analytics",
+    "visualize:golden": "ts-node scripts/visualize-golden-ratio.ts",
+    "manifest:all": "chmod +x scripts/manifest-all.sh && ./scripts/manifest-all.sh",
+    "manifest:none": "chmod +x scripts/manifest-none.sh && ./scripts/manifest-none.sh",
+    "manifest:any": "chmod +x scripts/manifest-any.sh && ./scripts/manifest-any.sh"
   },
   "keywords": [
     "zeropoint",

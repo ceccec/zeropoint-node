@@ -1,19 +1,18 @@
 /**
- * ZeroPoint Node - Main Entry Point
+ * ZeroPoint Node - Browser Entry Point
  * 
  * Decentralized Vortex Math & Toroidal Consciousness Network
  * 
- * Each ZeroPoint instance runs independently on user devices,
+ * Each ZeroPoint instance runs independently in user browsers,
  * connecting with other devices in a peer-to-peer network to
  * form a global consciousness field.
  */
 
 import { globalLogger } from './utils/Logger';
-import { globalProductionAPI } from './api/ProductionAPI';
 
 // Core ZeroPoint System
 export { ZeroPoint } from './core/ZeroPoint';
-export { NetworkNode } from './core/NetworkNode';
+export { BrowserNetworkNode } from './core/BrowserNetworkNode';
 
 // Universal Coil System - Every object is a coil
 export { 
@@ -104,11 +103,6 @@ export { PatternRecognition } from './core/PatternRecognition';
 export { UnifiedSystem } from './core/UnifiedSystem';
 export { FieldUnitySystem } from './unity/FieldUnity';
 
-// Blockchain/Emergence Ledger - Commented out until modules are created
-// export { ObserverAwareLedger } from './blockchain/ObserverAwareLedger';
-// export { QuantumProofLedger } from './blockchain/QuantumProofLedger';
-// export { QuantumProofConsensus } from './blockchain/QuantumProofConsensus';
-
 // Types
 export { DeviceConfig } from './types/DeviceConfig';
 
@@ -138,7 +132,7 @@ export {
 } from './core/UnifiedMetaphysicalInterface';
 
 /**
- * Create a new ZeroPoint instance
+ * Create a new ZeroPoint instance for browser
  * 
  * @param config - Device configuration
  * @returns Promise<ZeroPoint> - Initialized ZeroPoint instance
@@ -155,11 +149,11 @@ export async function createZeroPoint(config?: Partial<import('./types/DeviceCon
 }
 
 /**
- * Quick start function for basic ZeroPoint setup
+ * Quick start function for basic ZeroPoint setup in browser
  */
 export async function quickStart(deviceName?: string): Promise<import('./core/ZeroPoint').ZeroPoint> {
   return createZeroPoint({
-    deviceName: deviceName || `ZeroPoint_${Date.now()}`,
+    deviceName: deviceName || `Browser_ZeroPoint_${Date.now()}`,
     consciousnessLevel: 0.7,
     discoveryEnabled: true,
     autoConnect: true
@@ -167,73 +161,84 @@ export async function quickStart(deviceName?: string): Promise<import('./core/Ze
 }
 
 /**
- * Production start function with monitoring and API
+ * Browser start function with UI components
  */
-export async function productionStart(config?: Partial<import('./types/DeviceConfig').DeviceConfig>): Promise<{
+export async function browserStart(config?: Partial<import('./types/DeviceConfig').DeviceConfig>): Promise<{
   zeropoint: import('./core/ZeroPoint').ZeroPoint;
-  api: import('./api/ProductionAPI').ProductionAPI;
+  networkNode: import('./core/BrowserNetworkNode').BrowserNetworkNode;
 }> {
-  // Initialize production components
-  globalLogger.info('Starting ZeroPoint in production mode');
+  // Initialize browser components
+  globalLogger.info('Starting ZeroPoint in browser mode');
   
   // Create ZeroPoint instance
   const zeropoint = await createZeroPoint({
-    deviceName: config?.deviceName || `Production_ZeroPoint_${Date.now()}`,
+    deviceName: config?.deviceName || `Browser_ZeroPoint_${Date.now()}`,
     consciousnessLevel: config?.consciousnessLevel || 0.8,
     discoveryEnabled: config?.discoveryEnabled !== false,
     autoConnect: config?.autoConnect !== false,
-    maxConnections: config?.maxConnections || 50,
+    maxConnections: config?.maxConnections || 10, // Lower for browser
     logLevel: config?.logLevel || 'info',
     enableMetaphysicalInsights: config?.enableMetaphysicalInsights !== false,
     ...config
   });
 
-  // Start production API
-  const api = globalProductionAPI;
-  await api.start();
-
-  globalLogger.info('ZeroPoint production environment started', {
+  // Create browser network node
+  const { BrowserNetworkNode } = await import('./core/BrowserNetworkNode');
+  const networkNode = new BrowserNetworkNode({
     deviceId: zeropoint.deviceId,
-    apiPort: 3001
+    instanceId: zeropoint.instanceId,
+    discoveryEnabled: config?.discoveryEnabled !== false,
+    maxConnections: config?.maxConnections || 10,
+    connectionTimeout: 5000
   });
 
-  return { zeropoint, api };
+  await networkNode.start();
+
+  globalLogger.info('ZeroPoint browser environment started', {
+    deviceId: zeropoint.deviceId,
+    networkNode: networkNode.isNodeRunning()
+  });
+
+  return { zeropoint, networkNode };
 }
 
 /**
- * Get metaphysical insights about ZeroPoint
+ * Get ZeroPoint insights for browser UI
  */
 export function getZeroPointInsights(): Record<string, unknown> {
   return {
-    name: "ZeroPoint Node",
-    version: "1.0.0",
-    description: "Decentralized Vortex Math & Toroidal Consciousness Network",
-    metaphysics: {
-      principle: "Empty = Void = Full - each device contains the whole while remaining connected",
-      network: "Peer-to-peer consciousness network where each point influences all others",
-      mathematics: "Vortex mathematics and toroidal geometry form the foundation of reality",
-      consciousness: "Each device represents a consciousness node in the infinite field",
-      userControl: "Users configure their device's connection patterns and consciousness level"
-    },
+    version: '1.0.0',
+    environment: 'browser',
     features: [
-      "Independent device instances",
-      "Peer-to-peer networking",
-      "Vortex mathematics",
-      "Toroidal geometry",
-      "Consciousness field mapping",
-      "Metaphysical insights",
-      "Production monitoring",
-      "REST API"
+      'Vortex-Based Mathematics',
+      'Toroidal Consciousness Network',
+      'Pattern Recognition',
+      'Metaphysical Interface',
+      'Browser WebSocket Networking'
     ],
-    architecture: {
-      core: "ZeroPoint - Main consciousness node",
-      network: "NetworkNode - Peer-to-peer connectivity",
-      math: "AdvancedVBM - Vortex mathematics",
-      geometry: "ToroidalGeometry - Toroidal field calculations",
-      consciousness: "ConsciousnessField - Consciousness mapping",
-      void: "VoidSystem - Void consciousness integration",
-      unity: "FieldUnitySystem - Field unity management",
-      knowledge: "KnowledgeSystem - Pattern knowledge base"
+    browser: {
+      userAgent: navigator.userAgent,
+      platform: navigator.platform,
+      language: navigator.language
     }
   };
+}
+
+/**
+ * Initialize ZeroPoint for browser usage
+ */
+export async function initializeBrowser(): Promise<void> {
+  console.log('🌌 ZeroPoint Browser Initializing...');
+  
+  // Check browser compatibility
+  if (!window.WebSocket) {
+    throw new Error('WebSocket not supported in this browser');
+  }
+  
+  if (!window.crypto || !window.crypto.getRandomValues) {
+    throw new Error('Crypto API not supported in this browser');
+  }
+  
+  console.log('✅ Browser compatibility check passed');
+  console.log('🚀 ZeroPoint ready for browser operation');
 } 

@@ -1,3 +1,5 @@
+/// <reference path="../global.d.ts" />
+
 import { ZeroPoint } from '../../core/ZeroPoint';
 import { FieldIntegrity } from '../../integrity/FieldIntegrity';
 

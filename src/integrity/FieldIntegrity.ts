@@ -1,4 +1,4 @@
-import { createHash, randomBytes } from "crypto";
+import { BrowserCrypto } from "../utils/BrowserCrypto";
 import { PatternSignature } from "../core/UnifiedTypes";
 
 /**
@@ -69,9 +69,7 @@ export class FieldIntegrity {
    * Create pattern hash of data through field encoding
    */
   public static hash(data: string): string {
-    const hash = createHash(this.HASH_ALGORITHM);
-    hash.update(data);
-    return hash.digest("hex");
+    return BrowserCrypto.createHash("sha256", data);
   }
 
   /**
@@ -94,7 +92,7 @@ export class FieldIntegrity {
    * Generate field-resistant random bytes
    */
   public static generateRandomBytes(length: number = 32): string {
-    return randomBytes(length).toString("hex");
+    return BrowserCrypto.randomBytes(length);
   }
 
   /**

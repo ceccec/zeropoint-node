@@ -8,6 +8,8 @@
  * - Void System and Unified Field operations
  */
 
+/// <reference path="../global.d.ts" />
+
 import { ZeroPoint } from '../../core/ZeroPoint';
 
 describe('ZeroPoint Integration Tests', () => {
@@ -155,10 +157,11 @@ describe('ZeroPoint Integration Tests', () => {
       const voidSystem = zeropoint.voidSystem;
       
       const transition = voidSystem.createTransition({
-        from: 'void_active',
-        to: 'void_emergence',
-        method: 'void_transformation',
-        data: { intensity: 0.5 }
+        fromState: 'void_active',
+        toState: 'void_emergence',
+        consciousnessLevel: 0.5,
+        voidIntegration: 0.6,
+        metaphysicalContext: 'Test transition'
       });
       
       expect(transition).toBeDefined();
@@ -230,7 +233,7 @@ describe('ZeroPoint Integration Tests', () => {
       const observer = zeropoint.observer;
       
       // Test network connectivity
-      const isConnected = networkNode.isConnected();
+      const isConnected = networkNode.getConnectionStatus();
       expect(typeof isConnected).toBe('boolean');
       
       // Test observer awareness
@@ -240,8 +243,8 @@ describe('ZeroPoint Integration Tests', () => {
 
     it('should maintain network resilience', () => {
       const networkNode = zeropoint.networkNode;
-      const isConnected = networkNode.isConnected();
-      expect(typeof isConnected).toBe('boolean');
+      const connectionStatus = networkNode.getConnectionStatus();
+      expect(typeof connectionStatus).toBe('boolean');
     });
   });
 

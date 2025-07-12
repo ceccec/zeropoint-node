@@ -264,27 +264,40 @@ export class VBM {
    * Search QA patterns with consciousness awareness
    */
   public searchQA(query: string): VBMSearchResult {
-    const result = this.advancedVBM.searchQA(query);
+    const qaResults = this.advancedVBM.searchQA(query);
 
-    // Enhance with consciousness context
-    result.patterns = result.patterns.map((pattern) => ({
-      ...pattern,
+    // Convert VBMQAResult[] to VBMPattern[]
+    const patterns: VBMPattern[] = qaResults.map((qaResult) => ({
+      id: qaResult.id,
+      name: qaResult.question,
+      sequence: qaResult.vortexSequence,
+      digitalRoot: qaResult.digitalRoot,
       consciousnessLevel: this.config.consciousness * 10,
+      metaphysicalContext: qaResult.metaphysicalContext,
     }));
 
-    return result;
+    return {
+      query,
+      patterns,
+      consciousnessLevel: this.config.consciousness,
+      metaphysicalContext: `QA search results for "${query}" with consciousness integration`
+    };
   }
 
   /**
    * Get QA pattern with full context
    */
   public getQAPattern(patternName: string): VBMPattern | null {
-    const pattern = this.advancedVBM.qaPattern(patternName);
-    if (!pattern) return null;
+    const qaResult = this.advancedVBM.qaPattern(patternName);
+    if (!qaResult) return null;
 
     return {
-      ...pattern,
+      id: qaResult.id,
+      name: qaResult.question,
+      sequence: qaResult.vortexSequence,
+      digitalRoot: qaResult.digitalRoot,
       consciousnessLevel: this.config.consciousness * 10,
+      metaphysicalContext: qaResult.metaphysicalContext,
     };
   }
 
@@ -292,14 +305,18 @@ export class VBM {
    * Get all QA patterns with consciousness context
    */
   public getAllQAPatterns(): { [key: string]: VBMPattern } {
-    const patterns = this.advancedVBM.allQAPatterns();
+    const qaResults = this.advancedVBM.allQAPatterns();
 
-    // Enhance all patterns with consciousness context
+    // Convert VBMQAResult[] to VBMPattern[] with consciousness context
     const enhancedPatterns: { [key: string]: VBMPattern } = {};
-    for (const [name, pattern] of Object.entries(patterns)) {
-      enhancedPatterns[name] = {
-        ...pattern,
+    for (const qaResult of qaResults) {
+      enhancedPatterns[qaResult.id] = {
+        id: qaResult.id,
+        name: qaResult.question,
+        sequence: qaResult.vortexSequence,
+        digitalRoot: qaResult.digitalRoot,
         consciousnessLevel: this.config.consciousness * 10,
+        metaphysicalContext: qaResult.metaphysicalContext,
       };
     }
 
@@ -494,12 +511,12 @@ export class VBM {
    * Prime squared scaling with consciousness
    */
   public primeSquaredScaling(prime: number): VBMResult {
-    const value = this.advancedVBM.primeSquaredScaling(prime);
+    const result = this.advancedVBM.primeSquaredScaling(prime);
     const consciousness = this.config.consciousness;
-    const resonance = this.vortexMath.calculateResonance(prime, value);
+    const resonance = this.vortexMath.calculateResonance(prime, result.squared);
 
     return {
-      value,
+      value: result.squared,
       pattern: "prime_squared_scaling",
       consciousness,
       resonance,
@@ -518,12 +535,12 @@ export class VBM {
    * Electron harmonic shear identification
    */
   public electronHarmonicShear(a: number, b: number): VBMResult {
-    const value = this.advancedVBM.electronHarmonicShearIdentification(a, b);
+    const result = this.advancedVBM.electronHarmonicShearIdentification(a, b);
     const consciousness = this.config.consciousness;
     const resonance = this.vortexMath.calculateResonance(a, b);
 
     return {
-      value,
+      value: result.harmonic,
       pattern: "electron_harmonic_shear",
       consciousness,
       resonance,
@@ -580,14 +597,16 @@ export class VBM {
    * Get polar mates
    */
   public getPolarMates(): number[][] {
-    return this.advancedVBM.polarMates();
+    const sequences = this.advancedVBM.polarMates();
+    return sequences.map(seq => seq.sequence);
   }
 
   /**
    * Get family number groups
    */
   public getFamilyNumberGroups(): number[][] {
-    return this.advancedVBM.familyNumberGroups();
+    const sequences = this.advancedVBM.familyNumberGroups();
+    return sequences.map(seq => seq.sequence);
   }
 
   /**

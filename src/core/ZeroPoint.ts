@@ -2,7 +2,7 @@ import { EventEmitter } from "events";
 import { v4 as uuidv4 } from "uuid";
 import { VortexMath } from "../math/VortexMath";
 import { ToroidalGeometry } from "../math/ToroidalGeometry";
-import { NetworkNode } from "./NetworkNode";
+import { BrowserNetworkNode } from "./BrowserNetworkNode";
 import { DeviceConfig } from "../types/DeviceConfig";
 import { ConsciousnessField } from "../consciousness/ConsciousnessField";
 import { globalLogger } from "../utils/Logger";
@@ -48,7 +48,7 @@ export class ZeroPoint extends EventEmitter {
   public readonly vortexMath: VortexMath;
   public readonly toroidalGeometry: ToroidalGeometry;
   public readonly consciousnessField: ConsciousnessField;
-  public readonly networkNode: NetworkNode;
+  public readonly networkNode: BrowserNetworkNode;
   public fieldIntegrity: FieldIntegrity;
   public emergenceLedger: EmergenceLedger;
   public voidSystem: VoidSystem;
@@ -96,10 +96,9 @@ export class ZeroPoint extends EventEmitter {
     this.consciousnessField = new ConsciousnessField();
 
     // Initialize network capabilities
-    this.networkNode = new NetworkNode({
+    this.networkNode = new BrowserNetworkNode({
       deviceId: this.deviceId,
       instanceId: this.instanceId,
-      port: this.config.networkPort || 8080,
       discoveryEnabled: this.config.discoveryEnabled !== false,
       maxConnections: this.config.maxConnections || 10,
       connectionTimeout: this.config.connectionTimeout || 5000,

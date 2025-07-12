@@ -107,13 +107,13 @@ export class TrainingUtils {
   /**
    * Create training data with consciousness context
    */
-  static createTrainingData(input: any, output: any, consciousness?: number, field?: number, void?: number): any {
+  static createTrainingData(input: any, output: any, consciousness?: number, field?: number, voidLevel?: number): any {
     return {
       input,
       output,
       consciousness: consciousness || 0.5,
       field: field || 0.5,
-      void: void || 0.5,
+      void: voidLevel || 0.5,
       timestamp: Date.now()
     };
   }

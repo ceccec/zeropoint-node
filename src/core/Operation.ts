@@ -54,7 +54,7 @@ export const amplify = compose(double, double);
 export const unify: Operation = {
   name: 'unify',
   execute: (subject, context) => {
-    let result = { ...subject };
+    const result = { ...subject };
     
     if (context && context.other) {
       result.unifiedWith = context.other;

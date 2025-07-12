@@ -5,7 +5,7 @@ import { MetatronsCube } from "../MetatronsCube";
 
 describe("SacredGeometryRegistry", () => {
   it("applies metaphysical laws to registered patterns", () => {
-    const lawRegistry = new MetaphysicalLawRegistry();
+    const lawRegistry = MetaphysicalLawRegistry.getInstance();
     lawRegistry.register(LawOfUnity);
     lawRegistry.register(LawOfCorrespondence);
     const registry = new SacredGeometryRegistry(lawRegistry);

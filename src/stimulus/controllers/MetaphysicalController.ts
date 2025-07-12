@@ -49,14 +49,15 @@ export default class MetaphysicalController extends BaseController {
     });
   }
 
-  private updateFieldResonance(): void {
+  private async updateFieldResonance(): Promise<void> {
     const result = this.executeSafely(() => {
       const resonanceMap = generateFieldResonanceMap(0.7);
       return Object.values(resonanceMap).reduce((sum: number, val: any) => sum + val, 0) / Object.keys(resonanceMap).length;
     }, "Field resonance calculation");
 
-    if (result !== null) {
-      UIUtils.safeTextContent(this.fieldResonanceTarget, `Field Resonance: ${result.toFixed(3)}`);
+    const value = result instanceof Promise ? await result : result;
+    if (value !== null && value !== undefined) {
+      UIUtils.safeTextContent(this.fieldResonanceTarget, `Field Resonance: ${value.toFixed(3)}`);
     }
   }
 
@@ -74,15 +75,16 @@ export default class MetaphysicalController extends BaseController {
     );
   }
 
-  private updateColorGradient(): void {
+  private async updateColorGradient(): Promise<void> {
     const result = this.executeSafely(() => {
       return generateConsciousnessGradient(0.8);
     }, "Color gradient generation");
 
-    if (result) {
+    const value = result instanceof Promise ? await result : result;
+    if (value) {
       UIUtils.updateElement(this.colorGradientTarget, {
         textContent: 'Consciousness Gradient',
-        style: { background: `linear-gradient(45deg, ${result.join(', ')})` }
+        style: { background: `linear-gradient(45deg, ${value.join(', ')})` }
       });
     }
   }

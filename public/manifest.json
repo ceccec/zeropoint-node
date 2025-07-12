@@ -1,8 +1,8 @@
 {
-  "name": "Observer Network PWA",
-  "short_name": "ObserverNet",
-  "description": "Real-time visualization of emergent observer patterns and network dynamics",
-  "start_url": "/observer-network-pwa.html",
+  "name": "ZeroPoint Node - Tree of Life",
+  "short_name": "TreeOfLife",
+  "description": "Sacred geometry visualization of the ZeroPoint Node codebase as a Tree of Life",
+  "start_url": "/tree-of-life.html",
   "display": "standalone",
   "background_color": "#1a1a2e",
   "theme_color": "#e94560",
@@ -76,10 +76,10 @@
   ],
   "shortcuts": [
     {
-      "name": "Start Network",
-      "short_name": "Start",
-      "description": "Start the observer network simulation",
-      "url": "/observer-network-pwa.html?action=start",
+      "name": "Tree of Life",
+      "short_name": "Tree",
+      "description": "View the Tree of Life codebase visualization",
+      "url": "/tree-of-life.html",
       "icons": [
         {
           "src": "/icons/icon-96x96.png",
@@ -88,10 +88,22 @@
       ]
     },
     {
-      "name": "View Stats",
-      "short_name": "Stats",
-      "description": "View network statistics",
-      "url": "/observer-network-pwa.html?action=stats",
+      "name": "Consciousness Field",
+      "short_name": "Consciousness",
+      "description": "Focus on consciousness systems",
+      "url": "/tree-of-life.html?focus=consciousness",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Vortex Math",
+      "short_name": "Vortex",
+      "description": "Explore vortex mathematics",
+      "url": "/tree-of-life.html?focus=vortex",
       "icons": [
         {
           "src": "/icons/icon-96x96.png",

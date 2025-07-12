@@ -5,6 +5,11 @@
  */
 
 import "./stimulus/application";
+import { Application } from "stimulus";
+import TreeOfLifeController from "./stimulus/controllers/TreeOfLifeController";
+
+const application = Application.start();
+application.register("tree-of-life", TreeOfLifeController);
 
 // Import only the mathematical modules that work in browser
 import { 

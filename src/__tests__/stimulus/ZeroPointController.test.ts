@@ -241,20 +241,20 @@ describe('ZeroPointController', () => {
     it('should have all required components after initialization', async () => {
       await controller.connect();
 
-      expect(controller.consciousnessField).toBeDefined();
-      expect(controller.vortexMath).toBeDefined();
-      expect(controller.toroidalGeometry).toBeDefined();
-      expect(controller.advancedVBM).toBeDefined();
-      expect(controller.rodinCoil).toBeDefined();
+      expect(controller.consciousnessFieldForTesting).toBeDefined();
+      expect(controller.vortexMathForTesting).toBeDefined();
+      expect(controller.toroidalGeometryForTesting).toBeDefined();
+      expect(controller.advancedVBMForTesting).toBeDefined();
+      expect(controller.rodinCoilForTesting).toBeDefined();
     });
 
     it('should handle component operations correctly', async () => {
       await controller.connect();
 
       // Test that components are properly initialized and can be used
-      expect(typeof controller.consciousnessField.getConsciousnessLevel()).toBe('number');
-      expect(typeof controller.vortexMath.applyVortexTransform(42)).toBe('number');
-      expect(typeof controller.toroidalGeometry.calculateVolume()).toBe('number');
+      expect(typeof controller.consciousnessFieldForTesting.getConsciousnessLevel()).toBe('number');
+      expect(typeof controller.vortexMathForTesting.applyVortexTransform(42)).toBe('number');
+      expect(typeof controller.toroidalGeometryForTesting.calculateVolume()).toBe('number');
     });
   });
 

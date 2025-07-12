@@ -1,51 +1,5 @@
-import { Controller } from "stimulus";
-import { 
-  MathUtils, 
-  MATH_CONSTANTS,
-  fractal,
-  setConsciousness,
-  setFieldResonance,
-  setVortexStrength,
-  setToroidalFlow,
-  setVoidConnected
-} from "../../math/MathUtils";
-
-import { 
-  FractalMath,
-  generateFractalSequence,
-  calculateConsciousnessField,
-  generateFractalColor
-} from "../../math/FractalMath";
-
-import { 
-  VortexMath, 
-  applyVortexTransform 
-} from "../../math/VortexMath";
-
-import { 
-  ToroidalGeometry 
-} from "../../math/ToroidalGeometry";
-
-import { AdvancedVBM } from "../../math/AdvancedVBM";
-import { RodinCoil } from "../../math/RodinCoil";
-
-import { 
-  generateBaseColors,
-  getColorForVortexNumber,
-  getColorForFamilyGroup,
-  getColorForPolarMate,
-  getColorForWAxis,
-  getColorForPattern,
-  getMetaphysicalContextForNumber,
-  getVBMColorMap,
-  getVBMColorLegend,
-  generateConsciousnessGradient,
-  generateFieldResonanceMap
-} from "../../math/VBMColorSystem";
-
-import { FractalColorSystem } from "../../math/FractalColorSystem";
-
-import { ConsciousnessField } from "../../consciousness/ConsciousnessField";
+import BaseController from "../base/BaseController";
+import { UIUtils, ResultUtils, MathUtils } from "../utils/ControllerUtils";
 
 /**
  * ZeroPoint Stimulus Controller
@@ -53,7 +7,7 @@ import { ConsciousnessField } from "../../consciousness/ConsciousnessField";
  * Main controller for the ZeroPoint browser application
  * Integrates mathematical and metaphysical modules with the UI
  */
-export default class ZeroPointController extends Controller {
+export default class ZeroPointController extends BaseController {
   static targets = [
     "status", 
     "insights", 
@@ -72,119 +26,74 @@ export default class ZeroPointController extends Controller {
   declare readonly toroidalGeometryTarget: HTMLElement;
   declare readonly demoOutputTarget: HTMLElement;
 
-  private consciousnessField!: ConsciousnessField;
-  private vortexMath!: VortexMath;
-  private toroidalGeometry!: ToroidalGeometry;
-  private advancedVBM!: AdvancedVBM;
-  private rodinCoil!: RodinCoil;
-
   async connect() {
     console.log("🌌 ZeroPoint Stimulus Controller Connected");
     
-    try {
-      // Initialize components
-      this.consciousnessField = new ConsciousnessField();
-      this.vortexMath = new VortexMath();
-      this.toroidalGeometry = new ToroidalGeometry();
-      this.advancedVBM = new AdvancedVBM();
-      this.rodinCoil = new RodinCoil();
-      
-      // Update status
-      this.statusTarget.textContent = "✅ ZeroPoint Ready";
-      this.statusTarget.className = "status ready";
-      
-      // Load insights
-      this.loadInsights();
-      
-      // Initialize demo components
-      this.initializeDemo();
-      
-    } catch (error) {
-      console.error("❌ ZeroPoint initialization failed:", error);
-      this.statusTarget.textContent = "❌ Initialization Failed";
-      this.statusTarget.className = "status error";
-    }
-  }
-
-  private loadInsights() {
-    const insights = {
-      version: '1.0.0',
-      environment: 'browser',
-      features: [
-        'Vortex-Based Mathematics',
-        'Toroidal Consciousness Network',
-        'Pattern Recognition',
-        'Metaphysical Interface',
-        'Browser WebSocket Networking'
-      ],
-      browser: {
-        userAgent: navigator.userAgent
-      }
-    };
+    const success = await this.initializeComponentsSafely();
     
-    this.insightsTarget.innerHTML = `
-      <h3>ZeroPoint Insights</h3>
-      <p><strong>Version:</strong> ${insights.version}</p>
-      <p><strong>Environment:</strong> ${insights.environment}</p>
-      <p><strong>Features:</strong> ${insights.features.join(", ")}</p>
-      <p><strong>Browser:</strong> ${insights.browser.userAgent}</p>
-    `;
-  }
-
-  private initializeDemo() {
-    try {
-      console.log("✅ Demo components initialized");
-    } catch (error) {
-      console.error("❌ Demo initialization failed:", error);
+    if (success) {
+      this.updateStatus(this.statusTarget, "✅ ZeroPoint Ready", "status ready");
+      this.loadInsights();
+      this.initializeDemo();
+      this.logOperation("ZeroPoint initialization");
+    } else {
+      this.updateStatus(this.statusTarget, "❌ Initialization Failed", "status error");
+      this.logOperation("ZeroPoint initialization", false);
     }
   }
 
-  runMathDemo() {
-    try {
-      console.log("🧮 Running Math Demo...");
-      
-      // Run vortex math
+  private loadInsights(): void {
+    const insights = this.generateInsights();
+    const insightsHTML = this.formatInsightsHTML(insights);
+    UIUtils.safeInnerHTML(this.insightsTarget, insightsHTML);
+  }
+
+  private initializeDemo(): void {
+    this.logOperation("Demo components initialization");
+  }
+
+  runMathDemo(): void {
+    this.logOperation("Math demo execution");
+    
+    const result = this.executeSafely(() => {
       const vortexResult = this.vortexMath.applyVortexTransform(42);
-      
-      // Run toroidal geometry
       const toroidalResult = this.toroidalGeometry.calculateVolume();
-      
-      // Get consciousness level
       const consciousnessLevel = this.consciousnessField.getConsciousnessLevel();
       
-      // Update UI
-      this.demoOutputTarget.innerHTML = `
-        <h4>Math Demo Results</h4>
-        <p><strong>Vortex Math:</strong> ${vortexResult}</p>
-        <p><strong>Toroidal Geometry:</strong> ${toroidalResult}</p>
-        <p><strong>Consciousness Level:</strong> ${consciousnessLevel}</p>
-        <p>✅ Demo completed successfully</p>
-      `;
-      
-    } catch (error) {
-      console.error("❌ Math demo failed:", error);
-      this.demoOutputTarget.innerHTML = `<p>❌ Demo failed: ${error}</p>`;
+      return {
+        "Vortex Math": vortexResult,
+        "Toroidal Geometry": toroidalResult,
+        "Consciousness Level": consciousnessLevel
+      };
+    }, "Math demo execution");
+
+    if (result) {
+      const demoHTML = ResultUtils.formatResultHTML("Math Demo Results", result);
+      UIUtils.safeInnerHTML(this.demoOutputTarget, demoHTML);
+      this.logOperation("Math demo");
+    } else {
+      const errorHTML = ResultUtils.formatErrorHTML("Math Demo", "Execution failed");
+      UIUtils.safeInnerHTML(this.demoOutputTarget, errorHTML);
+      this.logOperation("Math demo", false);
     }
   }
 
-  updateConsciousness() {
-    const level = this.consciousnessField.getConsciousnessLevel();
-    this.consciousnessTarget.textContent = `Consciousness: ${level.toFixed(3)}`;
+  updateConsciousness(): void {
+    this.updateConsciousnessDisplay(this.consciousnessTarget);
   }
 
-  updateVortexMath() {
-    const result = this.vortexMath.applyVortexTransform(Math.random() * 100);
-    this.vortexMathTarget.textContent = `Vortex Result: ${result.toFixed(3)}`;
+  updateVortexMath(): void {
+    this.updateVortexMathDisplay(this.vortexMathTarget);
   }
 
-  updateToroidalGeometry() {
-    const result = this.toroidalGeometry.calculateVolume();
-    this.toroidalGeometryTarget.textContent = `Toroidal Volume: ${result.toFixed(3)}`;
+  updateToroidalGeometry(): void {
+    this.updateToroidalGeometryDisplay(this.toroidalGeometryTarget);
   }
 
-  refreshAll() {
+  refreshAll(): void {
     this.updateConsciousness();
     this.updateVortexMath();
     this.updateToroidalGeometry();
+    this.logOperation("All components refresh");
   }
 } 

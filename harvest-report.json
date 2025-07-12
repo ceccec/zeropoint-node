@@ -1,0 +1,97 @@
+{
+  "timestamp": "2025-07-12T18:48:59.998Z",
+  "transformations": 22,
+  "harvestedModules": 7,
+  "harvestLog": [
+    {
+      "source": "compost/harmonic-legacy.ts",
+      "target": "src/rodin-coil/harmonic48.ts",
+      "category": "mathematical",
+      "confidence": 1,
+      "timestamp": "2025-07-12T18:48:59.996Z"
+    },
+    {
+      "source": "compost/mathematical-legacy.ts",
+      "target": "src/rodin-coil/harmonic32.ts",
+      "category": "mathematical",
+      "confidence": 1,
+      "timestamp": "2025-07-12T18:48:59.996Z"
+    },
+    {
+      "source": "compost/mathematical-legacy.ts",
+      "target": "src/rodin-coil/harmonic32.ts",
+      "category": "mathematical",
+      "confidence": 1,
+      "timestamp": "2025-07-12T18:48:59.997Z"
+    },
+    {
+      "source": "compost/mathematical-legacy.ts",
+      "target": "src/rodin-coil/harmonic32.ts",
+      "category": "mathematical",
+      "confidence": 1,
+      "timestamp": "2025-07-12T18:48:59.997Z"
+    },
+    {
+      "source": "compost/mathematical-legacy.ts",
+      "target": "src/constants/harmonic32.ts",
+      "category": "constant",
+      "confidence": 1,
+      "timestamp": "2025-07-12T18:48:59.997Z"
+    },
+    {
+      "source": "compost/mathematical-legacy.ts",
+      "target": "src/constants/harmonic32.ts",
+      "category": "constant",
+      "confidence": 1,
+      "timestamp": "2025-07-12T18:48:59.997Z"
+    },
+    {
+      "source": "compost/void-legacy.ts",
+      "target": "src/constants/harmonic144.ts",
+      "category": "constant",
+      "confidence": 1,
+      "timestamp": "2025-07-12T18:48:59.997Z"
+    }
+  ],
+  "metaphysicalCycle": "Compost → Seed → Flower → Fruit",
+  "a432Harmonics": {
+    "base": 432,
+    "digitalRoot": 9,
+    "primeFactors": [
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3
+    ],
+    "harmonicRatios": [
+      1,
+      2,
+      3,
+      4,
+      6,
+      8,
+      9,
+      12,
+      16,
+      18,
+      24,
+      27,
+      32,
+      36,
+      48,
+      54,
+      72,
+      81,
+      96,
+      108,
+      144,
+      162,
+      216,
+      324,
+      432
+    ]
+  }
+}

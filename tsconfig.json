@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "types": ["jest", "node"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/__tests__/global.d.ts"],
   "exclude": [
     "node_modules",
     "src/__tests__",

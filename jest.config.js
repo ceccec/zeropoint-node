@@ -25,6 +25,14 @@ module.exports = {
       testEnvironment: 'node',
       testMatch: [
         '<rootDir>/src/__tests__/**/*.test.ts',
+        '<rootDir>/src/1/__tests__/**/*.test.ts',
+        '<rootDir>/src/2/__tests__/**/*.test.ts',
+        '<rootDir>/src/4/__tests__/**/*.test.ts',
+        '<rootDir>/src/5/__tests__/**/*.test.ts',
+        '<rootDir>/src/7/__tests__/**/*.test.ts',
+        '<rootDir>/src/8/__tests__/**/*.test.ts',
+        '<rootDir>/src/9/__tests__/**/*.test.ts',
+        '<rootDir>/src/0/__tests__/**/*.test.ts',
         '!<rootDir>/src/__tests__/stimulus/**/*.test.ts',
         '!<rootDir>/src/__tests__/setup.ts',
         '!<rootDir>/src/__tests__/global.d.ts'

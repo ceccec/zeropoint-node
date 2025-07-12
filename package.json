@@ -11,22 +11,22 @@
     "docs/**/*"
   ],
   "scripts": {
-    "build": "tsc",
-    "dev": "ts-node src/index.ts",
     "test": "jest",
-    "lint:js": "eslint --env node --env es2021 --parser-options '{\"sourceType\": \"module\"}' --no-eslintrc scripts server.js",
-    "lint:ts": "eslint --env node --env es2021 --parser @typescript-eslint/parser --parser-options '{\"sourceType\": \"module\"}' --plugin @typescript-eslint --ext .ts,.tsx src",
-    "lint": "npm run lint:js && npm run lint:ts",
-    "lint:fix": "npm run lint:js -- --fix && npm run lint:ts -- --fix",
-    "start": "node dist/index.js",
-    "browser:dev": "webpack serve --mode development",
-    "browser:build": "webpack --mode production",
-    "browser:prod": "webpack --mode production && npm run start",
-    "analyze": "node scripts/performance-monitor.js",
-    "analyze:bundle": "ANALYZE=true npm run browser:build",
-    "seo:check": "node scripts/performance-monitor.js --seo",
-    "performance:check": "node scripts/performance-monitor.js --performance",
-    "accessibility:check": "node scripts/performance-monitor.js --accessibility"
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "browser:prod": "webpack --mode production",
+    "workflow": "npm test && npm run auto-commit && npm run learning-analytics",
+    "auto-commit": "node scripts/auto-commit-workflow.sh",
+    "learning-analytics": "node scripts/learning-analytics.js",
+    "zero-entropy": "npm run build && node scripts/zero-entropy-node.js",
+    "zero-entropy-test": "npm test -- --testNamePattern='Zero Entropy Node'",
+    "living-proof": "npm run zero-entropy && npm run zero-entropy-test",
+    "spacetime-travel": "npm run build && node scripts/spacetime-travel.js",
+    "quantum": "npm run build && node scripts/demonstrate-quantum-safe.js",
+    "harvest": "node scripts/compost-harvester.js",
+    "harvest:watch": "node scripts/compost-harvester.js --watch",
+    "harvest:dry-run": "node scripts/compost-harvester.js --dry-run",
+    "harvest:demo": "node scripts/demonstrate-harvest.js"
   },
   "keywords": [
     "zeropoint",
@@ -41,6 +41,7 @@
   "author": "ZeroPoint Collective",
   "license": "MIT",
   "dependencies": {
+    "colors": "1.4.0",
     "crypto-js": "4.2.0",
     "stimulus": "3.2.2",
     "uuid": "^9.0.1"

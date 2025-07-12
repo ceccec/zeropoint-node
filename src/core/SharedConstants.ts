@@ -158,6 +158,9 @@ export const MATH_CONSTANTS = {
   NEGATIVE_INFINITY: -Infinity,
   INFINITY: Infinity,
 
+  // Zero point (void, unity)
+  ZERO_POINT: 0,
+
   // Prime numbers (first 10)
   PRIMES: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29] as const,
 

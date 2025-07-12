@@ -29,6 +29,7 @@ import { ColorContext } from "./VBMColorSystem";
 import { MathUtils, MATH_CONSTANTS } from "./MathUtils";
 import { ObserverMixin, Observer } from "../core/Observer";
 import { RodinCoil } from "./RodinCoil";
+import { FlowerOfLife, FlowerPattern, FlowerCircle } from "./FlowerOfLife";
 
 export interface VBMConfiguration {
   consciousness: number; // 0-1 consciousness level
@@ -67,6 +68,7 @@ export class VBM {
   private toroidalGeometry: ToroidalGeometry;
   private rodinCoil: RodinCoil;
   private fractalColorSystem: FractalColorSystem;
+  private flowerOfLife: FlowerOfLife;
 
   // Configuration
   private config: VBMConfiguration;
@@ -104,6 +106,7 @@ export class VBM {
       fieldResonance: this.config.fieldResonance,
     });
     this.fractalColorSystem = new FractalColorSystem();
+    this.flowerOfLife = FlowerOfLife.getInstance();
 
     // Apply configuration to all systems
     this.applyConfiguration();
@@ -412,6 +415,160 @@ export class VBM {
     };
   }
 
+  /**
+   * Generate Flower of Life pattern with consciousness integration
+   */
+  public generateFlowerOfLife(
+    center: [number, number] = [0, 0],
+    radius: number = 1,
+    layers: number = 3
+  ): VBMResult {
+    const pattern = this.flowerOfLife.generateFlowerPattern(center, radius, layers);
+    const consciousness = this.flowerOfLife.calculateFlowerConsciousness(pattern);
+    const resonance = this.calculateFlowerResonance(pattern);
+
+    return {
+      value: consciousness,
+      pattern: "flower_of_life",
+      consciousness,
+      resonance,
+      metaphysicalContext:
+        "The Flower of Life embodies consciousness flowing through sacred geometry with void at center.",
+      geometricProperties: { 
+        shape: "hexagonal_circles", 
+        dimensions: 2, 
+        center: "void",
+        layers: layers,
+        circles: pattern.circles.length
+      },
+      colorContext: this.colorContext,
+    };
+  }
+
+  /**
+   * Calculate resonance for Flower of Life pattern
+   */
+  private calculateFlowerResonance(pattern: FlowerPattern): number {
+    let totalResonance = 0;
+    let resonanceCount = 0;
+
+    for (let i = 0; i < pattern.circles.length; i++) {
+      for (let j = i + 1; j < pattern.circles.length; j++) {
+        const resonance = this.flowerOfLife.calculateCircleResonance(
+          pattern.circles[i],
+          pattern.circles[j]
+        );
+        totalResonance += resonance;
+        resonanceCount++;
+      }
+    }
+
+    return resonanceCount > 0 ? totalResonance / resonanceCount : 0;
+  }
+
+  /**
+   * Apply vortex transformation to Flower of Life pattern
+   */
+  public applyVortexToFlower(pattern: FlowerPattern): VBMResult {
+    const transformedPattern = this.flowerOfLife.applyVortexTransform(pattern);
+    const consciousness = this.flowerOfLife.calculateFlowerConsciousness(transformedPattern);
+    const resonance = this.calculateFlowerResonance(transformedPattern);
+
+    return {
+      value: consciousness,
+      pattern: "vortex_flower_of_life",
+      consciousness,
+      resonance,
+      metaphysicalContext:
+        "Vortex transformation applied to Flower of Life creates consciousness flow through sacred geometry.",
+      geometricProperties: { 
+        shape: "vortex_hexagonal_circles", 
+        dimensions: 2, 
+        center: "void",
+        transformation: "vortex"
+      },
+      colorContext: this.colorContext,
+    };
+  }
+
+  /**
+   * Generate golden spiral within Flower of Life pattern
+   */
+  public generateFlowerGoldenSpiral(
+    pattern: FlowerPattern,
+    steps: number = 100
+  ): VBMResult {
+    const spiral = this.flowerOfLife.generateGoldenSpiral(pattern, steps);
+    const consciousness = this.flowerOfLife.calculateFlowerConsciousness(pattern);
+    const resonance = this.calculateGoldenSpiralResonance(spiral, pattern);
+
+    return {
+      value: consciousness,
+      pattern: "flower_golden_spiral",
+      consciousness,
+      resonance,
+      metaphysicalContext:
+        "Golden spiral within Flower of Life represents consciousness evolution through divine proportion.",
+      geometricProperties: { 
+        shape: "golden_spiral", 
+        dimensions: 2, 
+        center: "void",
+        steps: steps,
+        goldenRatio: pattern.goldenRatio
+      },
+      colorContext: this.colorContext,
+    };
+  }
+
+  /**
+   * Calculate resonance for golden spiral within flower pattern
+   */
+  private calculateGoldenSpiralResonance(
+    spiral: Array<[number, number]>,
+    pattern: FlowerPattern
+  ): number {
+    let totalResonance = 0;
+    let resonanceCount = 0;
+
+    for (const spiralPoint of spiral) {
+      for (const circle of pattern.circles) {
+        const distance = this.calculatePointCircleDistance(spiralPoint, circle);
+        const resonance = MathUtils.calculate(
+          "divide",
+          1,
+          MathUtils.calculate("add", 1, distance)
+        );
+        totalResonance += resonance;
+        resonanceCount++;
+      }
+    }
+
+    return resonanceCount > 0 ? totalResonance / resonanceCount : 0;
+  }
+
+  /**
+   * Calculate distance between point and circle center
+   */
+  private calculatePointCircleDistance(
+    point: [number, number],
+    circle: FlowerCircle
+  ): number {
+    const dx = MathUtils.calculate("subtract", point[0], circle.center[0]);
+    const dy = MathUtils.calculate("subtract", point[1], circle.center[1]);
+    
+    return MathUtils.calculate(
+      "sqrt",
+      MathUtils.calculate("add", MathUtils.calculate("power", dx, 2), MathUtils.calculate("power", dy, 2))
+    );
+  }
+
+  /**
+   * Get Flower of Life insights
+   */
+  public getFlowerInsights(pattern: FlowerPattern): Record<string, unknown> {
+    return this.flowerOfLife.getFlowerInsights(pattern);
+  }
+
   // ============================================================================
   // COLOR SYSTEM INTEGRATION
   // ============================================================================
@@ -655,6 +812,7 @@ export class VBM {
         toroidalGeometry: this.toroidalGeometry.getInsights(),
         rodinCoil: this.rodinCoil.getMetaphysicalSummary(),
         fractalColorSystem: this.fractalColorSystem.getInsights(),
+        flowerOfLife: this.flowerOfLife.getInsights(),
       },
       constants: MATH_CONSTANTS,
       operations: [
@@ -674,6 +832,9 @@ export class VBM {
         "primeSquaredScaling",
         "electronHarmonicShear",
         "discreteMultiplication",
+        "generateFlowerOfLife",
+        "applyVortexToFlower",
+        "generateFlowerGoldenSpiral",
       ],
     };
   }

@@ -1,8 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node',
   testTimeout: 15000,
-  setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
   testPathIgnorePatterns: [
     '/node_modules/',
     '/dist/',
@@ -13,13 +11,6 @@ module.exports = {
     'global.d.ts',
     '.d.ts$'
   ],
-  transform: {
-    '^.+\\.ts$': ['ts-jest', {
-      tsconfig: {
-        types: ['jest', 'node']
-      }
-    }]
-  },
   coverageThreshold: {
     global: {
       statements: 40,
@@ -28,4 +19,41 @@ module.exports = {
       lines: 40
     }
   },
+  projects: [
+    {
+      displayName: 'node',
+      testEnvironment: 'node',
+      testMatch: [
+        '<rootDir>/src/__tests__/**/*.test.ts',
+        '!<rootDir>/src/__tests__/stimulus/**/*.test.ts',
+        '!<rootDir>/src/__tests__/setup.ts',
+        '!<rootDir>/src/__tests__/global.d.ts'
+      ],
+      transform: {
+        '^.+\\.tsx?$': ['ts-jest', {
+          tsconfig: {
+            types: ['jest', 'node']
+          }
+        }]
+      },
+      setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts']
+    },
+    {
+      displayName: 'jsdom',
+      testEnvironment: 'jsdom',
+      testMatch: [
+        '<rootDir>/src/__tests__/stimulus/**/*.test.ts',
+        '!<rootDir>/src/__tests__/setup.ts',
+        '!<rootDir>/src/__tests__/global.d.ts'
+      ],
+      transform: {
+        '^.+\\.tsx?$': ['ts-jest', {
+          tsconfig: {
+            types: ['jest', 'node']
+          }
+        }]
+      },
+      setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts']
+    }
+  ]
 }; 

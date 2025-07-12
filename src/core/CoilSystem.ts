@@ -166,6 +166,19 @@ export const COIL_PATTERNS: CoilPattern[] = [
     resonanceFactors: ["oneness", "singularity", "wholeness"],
   },
   {
+    name: "flower_of_life",
+    signature: /flower\s*of\s*life|sacred\s*geometry|hexagonal|circles/i,
+    category: "mathematical",
+    context: "Sacred geometric pattern of overlapping circles in hexagonal arrangement.",
+    weight: 0.9,
+    resonanceFactors: [
+      "sacred_geometry",
+      "hexagonal_pattern",
+      "circle_resonance",
+      "golden_ratio_harmony",
+    ],
+  },
+  {
     name: "family_groups",
     signature: (input: any) => familyGroupsStrategy.matches(input),
     category: "family",

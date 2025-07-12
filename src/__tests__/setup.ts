@@ -51,13 +51,65 @@ expect.extend({
 // Global test utilities
 declare global {
   var testUtils: {
-    createMockNetworkNode: () => EventEmitter & Record<string, unknown>;
-    createMockConsciousnessField: () => EventEmitter & Record<string, unknown>;
+    createTestPattern: (type: string, content: string) => unknown;
+    waitForEvent: (emitter: unknown, event: string, timeout: number) => Promise<unknown>;
+    createMockDevice: (config?: Record<string, unknown>) => unknown;
+    createTestNetwork: (deviceCount?: number) => Promise<{ devices: unknown[]; ports: number[] }>;
+    resetMocks: () => void;
+    createMockNetworkNode: () => unknown;
+    createMockConsciousnessField: () => unknown;
   };
 }
 
 global.testUtils = {
-  createMockNetworkNode: (): EventEmitter & Record<string, unknown> => {
+  createTestPattern: (type: string, content: string): unknown => ({
+    type,
+    content,
+    timestamp: Date.now(),
+    id: `test_pattern_${Date.now()}`,
+  }),
+  
+  waitForEvent: async (emitter: unknown, event: string, timeout: number): Promise<unknown> => {
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error(`Timeout waiting for event: ${event}`)), timeout);
+      if (emitter && typeof (emitter as EventEmitter).on === 'function') {
+        (emitter as EventEmitter).once(event, (data) => {
+          clearTimeout(timer);
+          resolve(data);
+        });
+      } else {
+        clearTimeout(timer);
+        reject(new Error('Invalid emitter'));
+      }
+    });
+  },
+  
+  createMockDevice: (config?: Record<string, unknown>): unknown => ({
+    id: `mock_device_${Date.now()}`,
+    type: 'test',
+    config: config || {},
+    start: jest.fn().mockResolvedValue(true),
+    stop: jest.fn().mockResolvedValue(true),
+  }),
+  
+  createTestNetwork: async (deviceCount: number = 2): Promise<{ devices: unknown[]; ports: number[] }> => {
+    const devices = [];
+    const ports = [];
+    for (let i = 0; i < deviceCount; i++) {
+      devices.push({
+        id: `test_device_${i}`,
+        port: 8080 + i,
+      });
+      ports.push(8080 + i);
+    }
+    return { devices, ports };
+  },
+  
+  resetMocks: (): void => {
+    jest.clearAllMocks();
+  },
+  
+  createMockNetworkNode: (): unknown => {
     const mockNode = Object.assign(new EventEmitter(), {
       start: jest.fn().mockResolvedValue(true),
       stop: jest.fn().mockResolvedValue(true),
@@ -67,16 +119,17 @@ global.testUtils = {
       getConnectedNodes: jest.fn().mockReturnValue([]),
       isConnected: jest.fn().mockReturnValue(true),
       processMessage: jest.fn().mockResolvedValue(true),
-    }) as unknown as EventEmitter & Record<string, unknown>;
+    });
     return mockNode;
   },
-  createMockConsciousnessField: (): EventEmitter & Record<string, unknown> => {
+  
+  createMockConsciousnessField: (): unknown => {
     const mockField = Object.assign(new EventEmitter(), {
       calculateResonance: jest.fn().mockReturnValue(0.7),
       broadcastPattern: jest.fn().mockResolvedValue(true),
       getFieldStrength: jest.fn().mockReturnValue(0.8),
       getConsciousnessLevel: jest.fn().mockReturnValue(0.6),
-    }) as unknown as EventEmitter & Record<string, unknown>;
+    });
     return mockField;
   },
 };

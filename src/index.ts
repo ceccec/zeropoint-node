@@ -40,41 +40,15 @@ export {
   Observer
 } from './core/Observer';
 
-// Centralized Math System - COIL principle applied to mathematics
-export { 
-  MathUtils, 
-  MATH_CONSTANTS, 
-  MathOperation, 
-  MathContext, 
-  MathResult,
-  fractal,
-  setConsciousness,
-  setFieldResonance,
-  setVortexStrength,
-  setToroidalFlow,
-  setVoidConnected
-} from './math/MathUtils';
-
-// Refactored Math Modules - Specialized layers on unified foundation
-export { 
-  FractalMath,
-  generateFractalSequence,
-  calculateConsciousnessField,
-  generateFractalColor
-} from './math/FractalMath';
-export { 
-  VortexMath, 
-  applyVortexTransform 
-} from './math/VortexMath';
-export { 
-  ToroidalGeometry 
-} from './math/ToroidalGeometry';
-
-// Advanced VBM System
-export { AdvancedVBM } from './math/AdvancedVBM';
-
-// Rodin Coil System
-export { RodinCoil } from './math/RodinCoil';
+// Math systems
+export { MathUtils, MATH_CONSTANTS } from "./math/MathUtils";
+export { VortexMath } from "./math/VortexMath";
+export { FractalMath } from "./math/FractalMath";
+export { ToroidalGeometry } from "./math/ToroidalGeometry";
+export { VBM } from "./math/VBM";
+export { AdvancedVBM } from "./math/AdvancedVBM";
+export { RodinCoil } from "./math/RodinCoil";
+export { FlowerOfLife, flowerOfLife } from "./math/FlowerOfLife";
 
 // Color Systems
 export { 

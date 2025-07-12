@@ -44,6 +44,8 @@ export class VortexMath {
    * Calculate resonance between two consciousness levels using unified math
    */
   public calculateResonance(level1: number = 0, level2: number = 0): number {
+    // If both levels are 0, return unity (1)
+    if (level1 === 0 && level2 === 0) return 1;
     const baseResonance = MathUtils.calculate(
       "divide",
       1,

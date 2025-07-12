@@ -226,6 +226,10 @@ export class VortexMath extends EventEmitter implements Field {
       resonance: this.getCoilResonance(),
       pattern: this.getCoilPattern(),
       sequence: this.getVortexSequence(),
+      vortexSequence: this.getVortexSequence(),
+      goldenRatio: MATH_CONSTANTS.GOLDEN_RATIO,
+      vortexCenter: 9,
+      metaphysics: "Vortex mathematics represents the flow of consciousness",
       metaphysicalContext: "Vortex mathematics represents the flow of consciousness"
     };
   }

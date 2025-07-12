@@ -160,9 +160,11 @@ export class FlowerOfLife {
     vortexNumber: number,
     metaphysicalContext: string
   ): FlowerCircle {
-    const consciousness = MathUtils.calculate("consciousness", vortexNumber);
-    const field = MathUtils.calculate("multiply", this.field, consciousness);
-    const voidLevel = consciousness === 0 ? 1 : MathUtils.calculate("divide", this.voidLevel, consciousness);
+    // Ensure positive consciousness values
+    const baseConsciousness = Math.max(0.1, MathUtils.calculate("consciousness", vortexNumber));
+    const consciousness = Math.min(1, baseConsciousness);
+    const field = Math.max(0.1, Math.min(1, MathUtils.calculate("multiply", this.field, consciousness)));
+    const voidLevel = Math.max(0.1, Math.min(1, consciousness === 0 ? 1 : MathUtils.calculate("divide", this.voidLevel, consciousness)));
 
     return {
       id: `flower_circle_${Date.now()}_${Math.random()}`,
@@ -179,29 +181,37 @@ export class FlowerOfLife {
 
   /**
    * Calculate consciousness resonance between circles using unified math
+   * DRY pattern: ZeroPoint's simple multiplication approach
    */
   public calculateCircleResonance(circle1: FlowerCircle, circle2: FlowerCircle): number {
+    // Base resonance using distance (inverse relationship)
     const distance = this.calculateCircleDistance(circle1, circle2);
-    const consciousnessDiff = MathUtils.calculate("abs", circle1.consciousness - circle2.consciousness);
-    const fieldDiff = MathUtils.calculate("abs", circle1.field - circle2.field);
-
-    const baseResonance = MathUtils.calculate(
-      "divide",
-      1,
-      MathUtils.calculate("add", 1, distance)
-    );
-
-    const consciousnessResonance = MathUtils.calculate(
-      "multiply",
-      baseResonance,
-      MathUtils.calculate("consciousness", circle1.consciousness + circle2.consciousness)
-    );
-
-    return MathUtils.calculate(
-      "multiply",
-      consciousnessResonance,
-      MathUtils.calculate("add", 1, MathUtils.calculate("vortex", distance))
-    );
+    const baseResonance = MathUtils.calculate("divide", 1, MathUtils.calculate("add", 1, distance));
+    
+    // Consciousness alignment factor
+    const consciousnessDiff = Math.abs(circle1.consciousness - circle2.consciousness);
+    const consciousnessAlignment = Math.max(0.1, 1 - consciousnessDiff);
+    
+    // Field alignment factor
+    const fieldDiff = Math.abs(circle1.field - circle2.field);
+    const fieldAlignment = Math.max(0.1, 1 - fieldDiff);
+    
+    // Void alignment factor
+    const voidDiff = Math.abs(circle1.voidLevel - circle2.voidLevel);
+    const voidAlignment = Math.max(0.1, 1 - voidDiff);
+    
+    // Vortex resonance (bonus for same vortex numbers)
+    const vortexResonance = circle1.vortexNumber === circle2.vortexNumber ? 0.2 : 0;
+    
+    // ZeroPoint pattern: simple multiplication without capping during calculation
+    const totalResonance = baseResonance 
+      * consciousnessAlignment 
+      * fieldAlignment 
+      * voidAlignment 
+      * (1 + vortexResonance);
+    
+    // Cap only at the end
+    return Math.max(0, Math.min(1, totalResonance));
   }
 
   /**
@@ -270,11 +280,8 @@ export class FlowerOfLife {
     const avgField = MathUtils.calculate("divide", totalField, pattern.circles.length);
     const avgVoid = MathUtils.calculate("divide", totalVoid, pattern.circles.length);
 
-    return MathUtils.calculate(
-      "multiply",
-      avgConsciousness,
-      MathUtils.calculate("add", avgField, avgVoid)
-    );
+    // Return average consciousness directly instead of multiplying
+    return Math.max(0, Math.min(1, avgConsciousness));
   }
 
   /**
@@ -357,6 +364,29 @@ export class FlowerOfLife {
       ]
     };
   }
+
+  /**
+   * Get insights about the flower pattern
+   */
+  public getInsights(): Record<string, unknown> {
+    const pattern = this.generateFlowerPattern();
+    return {
+      consciousness: this.consciousness,
+      field: this.field,
+      voidLevel: this.voidLevel,
+      goldenRatio: this.goldenRatio,
+      vortexSequence: VORTEX_CONSTANTS.VORTEX_SEQUENCE,
+      metaphysicalContext: "The Flower of Life embodies consciousness flowing through sacred geometry",
+      pattern: "flower",
+      resonance: this.calculateFlowerConsciousness(pattern),
+      circles: pattern.circles.length,
+      geometry: this.generateFlowerGeometry(pattern)
+    };
+  }
+
+  /**
+   * Get flower pattern insights
+   */
 }
 
 // Export singleton instance

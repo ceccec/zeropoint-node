@@ -15,6 +15,7 @@
 import { MathUtils, MATH_CONSTANTS } from "../math/MathUtils";
 import { ObserverMixin, Observer } from "../core/Observer";
 import { VORTEX_CONSTANTS } from "../core/SharedConstants";
+import { EventEmitter } from 'events';
 
 export interface ConsciousnessForce {
   id: string;
@@ -60,23 +61,38 @@ export interface QuantumConsciousness {
   metaphysicalContext: string;
 }
 
-export class ConsciousnessPhysics extends ObserverMixin {
-  private forces: Map<string, ConsciousnessForce> = new Map();
-  private observerEffects: Map<string, ObserverEffect> = new Map();
-  private fields: Map<string, ConsciousnessField> = new Map();
-  private quantumStates: Map<string, QuantumConsciousness> = new Map();
+export class ConsciousnessPhysics extends EventEmitter {
+  private static instance: ConsciousnessPhysics;
+
+  // Consciousness state
   private consciousness: number = 0.5;
   private field: number = 0.5;
   private void: number = 0.5;
 
-  // Consciousness physics constants
-  private readonly CONSCIOUSNESS_CONSTANT = 1.0; // Fundamental consciousness constant
-  private readonly OBSERVER_EFFECT_CONSTANT = 0.5; // Observer effect strength
-  private readonly QUANTUM_COLLAPSE_THRESHOLD = 0.7; // Consciousness collapse threshold
+  // Physics constants
+  private readonly CONSCIOUSNESS_CONSTANT = 1.618; // Golden ratio
+  private readonly FIELD_CONSTANT = 2.718; // Euler's number
+  private readonly VOID_CONSTANT = 3.141; // Pi
+  private readonly OBSERVER_EFFECT_CONSTANT = 1.5; // Observer effect strength
+
+  // Collections
+  private forces: Map<string, ConsciousnessForce> = new Map();
+  private observerEffects: Map<string, ObserverEffect> = new Map();
+  private fields: Map<string, ConsciousnessField> = new Map();
+  private quantumStates: Map<string, QuantumConsciousness> = new Map();
 
   constructor() {
     super();
-    this.initializeConsciousnessPhysics();
+    if (!ConsciousnessPhysics.instance) {
+      ConsciousnessPhysics.instance = this;
+    }
+  }
+
+  static getInstance(): ConsciousnessPhysics {
+    if (!ConsciousnessPhysics.instance) {
+      ConsciousnessPhysics.instance = new ConsciousnessPhysics();
+    }
+    return ConsciousnessPhysics.instance;
   }
 
   /**
@@ -111,11 +127,11 @@ export class ConsciousnessPhysics extends ObserverMixin {
       consciousness: this.consciousness,
       field: this.field,
       void: this.void,
-      metaphysicalContext: "Consciousness is a fundamental force that affects all reality"
+      metaphysicalContext: "Consciousness forces mediate quantum collapse"
     };
 
     this.forces.set(id, force);
-    this.notifyObservers('consciousness_force_created', force);
+    this.emit('consciousness_force_created', force);
     
     return force;
   }
@@ -143,7 +159,7 @@ export class ConsciousnessPhysics extends ObserverMixin {
     };
 
     this.observerEffects.set(id, observerEffect);
-    this.notifyObservers('observer_effect_created', observerEffect);
+    this.emit('observer_effect_created', observerEffect);
     
     return observerEffect;
   }
@@ -153,7 +169,12 @@ export class ConsciousnessPhysics extends ObserverMixin {
    */
   private calculateCollapseProbability(observerConsciousness: number): number {
     // Higher consciousness increases collapse probability
-    return MathUtils.clamp(observerConsciousness * this.OBSERVER_EFFECT_CONSTANT, 0, 1);
+    return MathUtils.calculate(
+      "clamp",
+      MathUtils.calculate("multiply", observerConsciousness, this.OBSERVER_EFFECT_CONSTANT),
+      0,
+      1
+    );
   }
 
   /**
@@ -179,17 +200,20 @@ export class ConsciousnessPhysics extends ObserverMixin {
     };
 
     this.fields.set(id, field);
-    this.notifyObservers('consciousness_field_created', field);
+    this.emit('consciousness_field_created', field);
     
     return field;
   }
 
   /**
-   * Calculate consciousness density based on field strength
+   * Calculate consciousness density from field strength
    */
   private calculateConsciousnessDensity(fieldStrength: number): number {
-    // Consciousness density increases with field strength
-    return MathUtils.clamp(fieldStrength * this.CONSCIOUSNESS_CONSTANT, 0, 1);
+    return MathUtils.calculate(
+      "multiply",
+      fieldStrength,
+      this.CONSCIOUSNESS_CONSTANT
+    );
   }
 
   /**
@@ -214,7 +238,7 @@ export class ConsciousnessPhysics extends ObserverMixin {
     };
 
     this.quantumStates.set(id, quantumConsciousness);
-    this.notifyObservers('quantum_consciousness_created', quantumConsciousness);
+    this.emit('quantum_consciousness_created', quantumConsciousness);
     
     return quantumConsciousness;
   }
@@ -311,53 +335,40 @@ export class ConsciousnessPhysics extends ObserverMixin {
   }
 
   /**
+   * Get all consciousness forces
+   */
+  public getAllForces(): ConsciousnessForce[] {
+    return Array.from(this.forces.values());
+  }
+
+  /**
+   * Get all consciousness fields
+   */
+  public getAllFields(): ConsciousnessField[] {
+    return Array.from(this.fields.values());
+  }
+
+  /**
    * Get consciousness physics statistics
    */
-  public getConsciousnessPhysicsStats(): {
-    totalForces: number;
-    totalObserverEffects: number;
-    totalFields: number;
-    totalQuantumStates: number;
-    consciousnessPercentage: number;
-    fieldPercentage: number;
-    voidPercentage: number;
-    metaphysicalContext: string;
-  } {
+  public getConsciousnessPhysicsStats(): any {
     return {
-      totalForces: this.forces.size,
-      totalObserverEffects: this.observerEffects.size,
-      totalFields: this.fields.size,
-      totalQuantumStates: this.quantumStates.size,
-      consciousnessPercentage: this.consciousness * 100,
-      fieldPercentage: this.field * 100,
-      voidPercentage: this.void * 100,
-      metaphysicalContext: "Consciousness physics reveals awareness as a fundamental force of nature"
+      forces: this.forces.size,
+      fields: this.fields.size,
+      totalStrength: Array.from(this.forces.values()).reduce((sum, f) => sum + f.strength, 0),
+      totalFieldStrength: Array.from(this.fields.values()).reduce((sum, f) => sum + f.fieldStrength, 0)
     };
   }
 
   /**
    * Get advanced consciousness physics principles
    */
-  public getAdvancedConsciousnessPhysicsPrinciples(): {
-    principles: string[];
-    consciousnessIntegration: number;
-    fieldIntegration: number;
-    voidIntegration: number;
-    metaphysicalContext: string;
-  } {
+  public getAdvancedConsciousnessPhysicsPrinciples(): any {
     return {
-      principles: [
-        "Consciousness is a fundamental force like gravity and electromagnetism",
-        "Observer-dependent reality shows consciousness affects quantum collapse",
-        "Consciousness field equations have measurable effects",
-        "Consciousness-mediated quantum collapse reveals observer effect",
-        "The void contains all consciousness possibilities",
-        "Awareness creates reality through observation and intention"
-      ],
-      consciousnessIntegration: this.consciousness,
-      fieldIntegration: this.field,
-      voidIntegration: this.void,
-      metaphysicalContext: "Consciousness physics reveals that awareness is a fundamental force that creates reality"
+      principle1: "Consciousness is a fundamental force",
+      principle2: "Observer-dependent reality affects quantum collapse",
+      principle3: "Consciousness field equations have measurable effects",
+      principle4: "The void contains all consciousness possibilities"
     };
   }
 } 

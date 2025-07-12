@@ -12,27 +12,33 @@
  */
 
 import { MathUtils, MATH_CONSTANTS } from "./MathUtils";
+import { MetaphysicalLawRegistry } from "../laws/MetaphysicalLawRegistry";
+import { Field } from '../core/Field';
+import { EventEmitter } from 'events';
 
-/**
- * Vortex Mathematics Class
- * Specialized vortex operations built on unified MathUtils
- */
-export class VortexMath {
+export class VortexMath extends EventEmitter implements Field {
+  name = 'VortexMath';
+  type = 'Field';
+  dimension = 'space';
+  complexity = 2;
+  isActive = true;
+  supportedOperations = ['create', 'transform', 'observe', 'unify'];
+  tags = ['math', 'vortex', 'field'];
+
   private static instance: VortexMath;
-
-  // Vortex parameters
   private vortexStrength: number = 1.0;
   private fieldIntensity: number = 0.5;
+  private lawRegistry!: MetaphysicalLawRegistry;
 
   constructor() {
+    super();
     if (!VortexMath.instance) {
       VortexMath.instance = this;
+      this.lawRegistry = MetaphysicalLawRegistry.getInstance();
+      this.applyMetaphysicalLaws();
     }
   }
 
-  /**
-   * Get singleton instance
-   */
   static getInstance(): VortexMath {
     if (!VortexMath.instance) {
       VortexMath.instance = new VortexMath();
@@ -40,11 +46,14 @@ export class VortexMath {
     return VortexMath.instance;
   }
 
-  /**
-   * Calculate resonance between two consciousness levels using unified math
-   */
-  public calculateResonance(level1: number = 0, level2: number = 0): number {
-    // If both levels are 0, return unity (1)
+  private applyMetaphysicalLaws(): void {
+    const laws = this.lawRegistry.getAllLaws();
+    laws.forEach(law => {
+      const result = law.apply(this);
+    });
+  }
+
+  calculateResonance(level1: number = 0, level2: number = 0): number {
     if (level1 === 0 && level2 === 0) return 1;
     const baseResonance = MathUtils.calculate(
       "divide",
@@ -69,10 +78,7 @@ export class VortexMath {
     return result;
   }
 
-  /**
-   * Apply vortex transformation to input value using unified math
-   */
-  public applyVortexTransform(input: number): number {
+  applyVortexTransform(input: number): number {
     const vortexModulation = this.calculateVortexModulation(input);
     const consciousnessMod = MathUtils.calculate("consciousness", input);
 
@@ -85,10 +91,7 @@ export class VortexMath {
     return result;
   }
 
-  /**
-   * Calculate vortex efficiency using unified math
-   */
-  public calculateVortexEfficiency(value: number): number {
+  calculateVortexEfficiency(value: number): number {
     const baseEfficiency = MathUtils.calculate(
       "divide",
       value,
@@ -109,13 +112,7 @@ export class VortexMath {
     return result;
   }
 
-  /**
-   * Calculate toroidal flow using unified math
-   */
-  public calculateToroidalFlow(
-    radius: number,
-    angularVelocity: number,
-  ): number {
+  calculateToroidalFlow(radius: number, angularVelocity: number): number {
     const vortexModulation = this.calculateVortexModulation(radius);
 
     const result =
@@ -125,10 +122,7 @@ export class VortexMath {
     return result;
   }
 
-  /**
-   * Set vortex strength using unified math
-   */
-  public setVortexStrength(strength: number): void {
+  setVortexStrength(strength: number): void {
     this.vortexStrength = MathUtils.calculate(
       "max",
       0,
@@ -136,10 +130,7 @@ export class VortexMath {
     );
   }
 
-  /**
-   * Set field intensity using unified math
-   */
-  public setFieldIntensity(intensity: number): void {
+  setFieldIntensity(intensity: number): void {
     this.fieldIntensity = MathUtils.calculate(
       "max",
       0,
@@ -147,23 +138,14 @@ export class VortexMath {
     );
   }
 
-  /**
-   * Get vortex strength (for backward compatibility)
-   */
-  public getVortexStrength(): number {
+  getVortexStrength(): number {
     return this.vortexStrength;
   }
 
-  /**
-   * Get field intensity (for backward compatibility)
-   */
-  public getFieldIntensity(): number {
+  getFieldIntensity(): number {
     return this.fieldIntensity;
   }
 
-  /**
-   * Calculate vortex modulation factor using unified math
-   */
   private calculateVortexModulation(frequency: number): number {
     const baseModulation = MathUtils.calculate(
       "sin",
@@ -188,17 +170,11 @@ export class VortexMath {
     );
   }
 
-  /**
-   * Get vortex sequence
-   */
-  public getVortexSequence(): number[] {
+  getVortexSequence(): number[] {
     return [...MATH_CONSTANTS.VORTEX_SEQUENCE];
   }
 
-  /**
-   * Calculate vortex pattern complexity
-   */
-  public calculateVortexComplexity(pattern: number[]): number {
+  calculateVortexComplexity(pattern: number[]): number {
     if (pattern.length === 0) return 0;
 
     let complexity = 0;
@@ -210,10 +186,7 @@ export class VortexMath {
     return MathUtils.calculate("divide", complexity, pattern.length);
   }
 
-  /**
-   * Generate vortex field coordinates
-   */
-  public generateVortexFieldCoordinates(
+  generateVortexFieldCoordinates(
     count: number,
     radius: number = 1,
   ): Array<[number, number, number]> {
@@ -222,26 +195,12 @@ export class VortexMath {
     for (let i = 0; i < count; i++) {
       const angle = MathUtils.calculate(
         "multiply",
-        i,
         MathUtils.calculate("divide", 2 * Math.PI, count),
+        i,
       );
-      const vortexRadius = MathUtils.calculate(
-        "multiply",
-        radius,
-        MathUtils.calculate("vortex", i),
-      );
-
-      const x = MathUtils.calculate(
-        "multiply",
-        vortexRadius,
-        MathUtils.calculate("cos", angle),
-      );
-      const y = MathUtils.calculate(
-        "multiply",
-        vortexRadius,
-        MathUtils.calculate("sin", angle),
-      );
-      const z = MathUtils.calculate("consciousness", i / count);
+      const x = MathUtils.calculate("multiply", radius, MathUtils.calculate("cos", angle));
+      const y = MathUtils.calculate("multiply", radius, MathUtils.calculate("sin", angle));
+      const z = MathUtils.calculate("multiply", this.vortexStrength, MathUtils.calculate("sin", angle));
 
       coordinates.push([x, y, z]);
     }
@@ -249,126 +208,73 @@ export class VortexMath {
     return coordinates;
   }
 
-  // ============================================================================
-  // COIL IMPLEMENTATION
-  // ============================================================================
-
-  /**
-   * Get coil resonance for vortex mathematics
-   */
   getCoilResonance(): number {
-    return this.vortexStrength * this.fieldIntensity;
+    return this.calculateResonance(this.vortexStrength, this.fieldIntensity);
   }
 
   getCoilPattern(): string {
-    return "vortex_spiral_flow";
+    const resonance = this.getCoilResonance();
+    if (resonance > 0.8) return "unified";
+    if (resonance > 0.5) return "resonant";
+    return "dispersed";
   }
 
-  // ============================================================================
-  // INSIGHTS AND METADATA
-  // ============================================================================
-
-  /**
-   * Get vortex insights
-   */
-  public getInsights(): unknown {
+  getInsights(): unknown {
     return {
-      vortexSequence: MATH_CONSTANTS.VORTEX_SEQUENCE,
-      goldenRatio: MATH_CONSTANTS.GOLDEN_RATIO,
-      vortexCenter: 9,
-      metaphysics: {
-        meaning: "Vortex mathematics represents the flow of consciousness",
-        principle:
-          "All vortex operations emerge from unified mathematical field",
-        void: "The void generates all vortex patterns",
-        unity: "Every vortex is a reflection of the whole",
-        coil: "Every vortex operation is a coil at its core",
-        observation: "Every vortex calculation can observe and be observed",
-      },
-      operations: [
-        "calculateVortexField",
-        "calculateResonance",
-        "generateVortexPattern",
-        "setVortexStrength",
-        "setFieldIntensity",
-        "calculateEnergyFlow",
-      ],
       vortexStrength: this.vortexStrength,
       fieldIntensity: this.fieldIntensity,
+      resonance: this.getCoilResonance(),
+      pattern: this.getCoilPattern(),
+      sequence: this.getVortexSequence(),
+      metaphysicalContext: "Vortex mathematics represents the flow of consciousness"
     };
   }
 
-  /**
-   * Calculate vortex field strength at given coordinates
-   */
-  public calculateVortexField(x: number, y: number, z: number): number {
+  calculateVortexField(x: number, y: number, z: number): number {
     const distance = MathUtils.calculate(
       "sqrt",
-      MathUtils.calculate(
-        "add",
-        MathUtils.calculate(
-          "add",
+      MathUtils.calculate("add",
+        MathUtils.calculate("add",
           MathUtils.calculate("multiply", x, x),
-          MathUtils.calculate("multiply", y, y),
+          MathUtils.calculate("multiply", y, y)
         ),
-        MathUtils.calculate("multiply", z, z),
-      ),
+        MathUtils.calculate("multiply", z, z)
+      )
     );
 
     const vortexModulation = this.calculateVortexModulation(distance);
     const consciousnessMod = MathUtils.calculate("consciousness", distance);
 
-    const fieldStrength = MathUtils.calculate(
+    return MathUtils.calculate(
       "multiply",
-      MathUtils.calculate("multiply", this.vortexStrength, vortexModulation),
-      MathUtils.calculate("add", 1, consciousnessMod),
+      vortexModulation,
+      MathUtils.calculate("add", 1, consciousnessMod)
     );
-
-    return fieldStrength;
   }
 
-  /**
-   * Generate vortex pattern based on intensity
-   */
-  public generateVortexPattern(intensity: number): number[] {
+  generateVortexPattern(intensity: number): number[] {
     const pattern: number[] = [];
-    const sequenceLength = MathUtils.calculate("multiply", intensity, 6);
+    const sequence = this.getVortexSequence();
 
-    for (let i = 0; i < sequenceLength; i++) {
-      const sequenceIndex = MathUtils.calculate("mod", i, 6);
-      const baseValue = MATH_CONSTANTS.VORTEX_SEQUENCE[sequenceIndex] || 1;
-      const intensityMod = MathUtils.calculate(
-        "multiply",
-        baseValue,
-        intensity,
-      );
-      const consciousnessMod = MathUtils.calculate("consciousness", i);
-
-      const patternValue = MathUtils.calculate(
-        "multiply",
-        intensityMod,
-        consciousnessMod,
-      );
-      pattern.push(patternValue);
+    for (let i = 0; i < intensity; i++) {
+      const sequenceIndex = i % sequence.length;
+      const baseValue = sequence[sequenceIndex];
+      const modulatedValue = this.calculateVortexModulation(baseValue);
+      pattern.push(modulatedValue);
     }
 
     return pattern;
   }
 
-  public calculateVortexNumber(n: number = 0): number {
-    // Simple stub for test compatibility
-    return Math.abs(n % 9) + 1;
+  calculateVortexNumber(n: number = 0): number {
+    return this.applyVortexTransform(n);
   }
 
-  public getColorForNumber(n: number = 1): string {
-    // Simple stub for test compatibility
-    const r = (n * 30) % 256;
-    const g = (n * 60) % 256;
-    const b = (n * 90) % 256;
-    return `rgb(${r}, ${g}, ${b})`;
+  getColorForNumber(n: number = 1): string {
+    const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#FFFFFF', '#000000', '#808080'];
+    return colors[(n - 1) % colors.length];
   }
 }
 
-// Export convenience function for backward compatibility
 export const applyVortexTransform = (input: number) =>
   VortexMath.getInstance().applyVortexTransform(input);

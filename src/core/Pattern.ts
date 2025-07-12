@@ -1,5 +1,8 @@
-export interface MetaphysicalLaw {
-  name: string;
+/**
+ * Interface for patterns in the ZeroPoint system
+ */
+export interface Pattern {
+  name?: string;
   id?: string;
   type?: string;
   dimension?: string;
@@ -16,6 +19,4 @@ export interface MetaphysicalLaw {
   requires?: string[];
   metaphysicalCompliance?: any;
   metaphysicalSignature?: any;
-  description: string;
-  apply: <T>(subject: T, context?: any) => T;
 } 

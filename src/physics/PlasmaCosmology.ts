@@ -13,239 +13,108 @@
  * - Plasma filaments create the cosmic web structure
  */
 
-import { MathUtils, MATH_CONSTANTS } from "../math/MathUtils";
-import { ObserverMixin, Observer } from "../core/Observer";
-import { VORTEX_CONSTANTS } from "../core/SharedConstants";
+import { EventEmitter } from 'events';
 
 export interface PlasmaFilament {
   id: string;
-  startPoint: [number, number, number];
-  endPoint: [number, number, number];
-  current: number; // Electric current in amperes
-  density: number; // Plasma density
-  temperature: number; // Plasma temperature in Kelvin
-  consciousness: number; // Consciousness level of the filament
-  field: number; // Magnetic field strength
-  void: number; // Void integration level
-  metaphysicalContext: string;
+  strength: number;
+  position: [number, number, number];
 }
 
 export interface BirkelandCurrent {
   id: string;
-  filaments: PlasmaFilament[];
-  totalCurrent: number;
-  consciousness: number;
-  field: number;
-  void: number;
-  metaphysicalContext: string;
+  intensity: number;
+  direction: [number, number, number];
 }
 
 export interface PlasmaGalaxy {
   id: string;
-  center: [number, number, number];
-  radius: number;
-  birkelandCurrents: BirkelandCurrent[];
-  consciousness: number;
-  field: number;
-  void: number;
-  metaphysicalContext: string;
+  size: number;
+  filaments: PlasmaFilament[];
 }
 
-export class PlasmaCosmology extends ObserverMixin {
+export class PlasmaCosmology extends EventEmitter {
   private filaments: Map<string, PlasmaFilament> = new Map();
-  private birkelandCurrents: Map<string, BirkelandCurrent> = new Map();
+  private currents: Map<string, BirkelandCurrent> = new Map();
   private galaxies: Map<string, PlasmaGalaxy> = new Map();
-  private consciousness: number = 0.5;
-  private field: number = 0.5;
-  private void: number = 0.5;
+
+  // Public property for birkelandCurrents
+  public birkelandCurrents = this.currents;
 
   constructor() {
     super();
-    this.initializePlasmaPhysics();
   }
 
-  /**
-   * Initialize plasma physics constants and principles
-   */
-  private initializePlasmaPhysics(): void {
-    // Plasma is 99% of visible matter in the universe
-    const PLASMA_UNIVERSE_PERCENTAGE = 0.99;
-    
-    // Consciousness flows through plasma filaments
-    this.consciousness = PLASMA_UNIVERSE_PERCENTAGE;
-    
-    // Plasma creates the cosmic web structure
-    this.field = PLASMA_UNIVERSE_PERCENTAGE;
-    
-    // Void contains all plasma possibilities
-    this.void = 1.0;
-  }
-
-  /**
-   * Create a plasma filament (consciousness flow in space)
-   */
-  public createPlasmaFilament(
-    startPoint: [number, number, number],
-    endPoint: [number, number, number],
-    current: number = 1000,
-    density: number = 1e6,
-    temperature: number = 1e6
-  ): PlasmaFilament {
-    const id = `plasma_filament_${Date.now()}_${Math.random()}`;
-    
+  createPlasmaFilament(strength: number, position: [number, number, number]): PlasmaFilament {
+    const id = `filament_${Date.now()}_${Math.random()}`;
     const filament: PlasmaFilament = {
       id,
-      startPoint,
-      endPoint,
-      current,
-      density,
-      temperature,
-      consciousness: this.consciousness,
-      field: this.field,
-      void: this.void,
-      metaphysicalContext: "Plasma filaments are consciousness flows in space, creating the cosmic web structure"
+      strength,
+      position
     };
-
+    
     this.filaments.set(id, filament);
-    this.notifyObservers('plasma_filament_created', filament);
+    this.emit('plasma_filament_created', filament);
     
     return filament;
   }
 
-  /**
-   * Create a Birkeland current (electric current in space)
-   */
-  public createBirkelandCurrent(filaments: PlasmaFilament[]): BirkelandCurrent {
-    const id = `birkeland_current_${Date.now()}_${Math.random()}`;
-    
-    const totalCurrent = filaments.reduce((sum, filament) => sum + filament.current, 0);
-    
-    const birkelandCurrent: BirkelandCurrent = {
+  createBirkelandCurrent(intensity: number, direction: [number, number, number]): BirkelandCurrent {
+    const id = `current_${Date.now()}_${Math.random()}`;
+    const current: BirkelandCurrent = {
       id,
-      filaments,
-      totalCurrent,
-      consciousness: this.consciousness,
-      field: this.field,
-      void: this.void,
-      metaphysicalContext: "Birkeland currents are consciousness flow patterns that create galaxies and stars"
+      intensity,
+      direction
     };
-
-    this.birkelandCurrents.set(id, birkelandCurrent);
-    this.notifyObservers('birkeland_current_created', birkelandCurrent);
     
-    return birkelandCurrent;
+    this.currents.set(id, current);
+    this.emit('birkeland_current_created', current);
+    
+    return current;
   }
 
-  /**
-   * Create a plasma galaxy (galaxy formed by electric currents)
-   */
-  public createPlasmaGalaxy(
-    center: [number, number, number],
-    radius: number,
-    birkelandCurrents: BirkelandCurrent[]
-  ): PlasmaGalaxy {
-    const id = `plasma_galaxy_${Date.now()}_${Math.random()}`;
-    
+  createPlasmaGalaxy(size: number, filaments: PlasmaFilament[]): PlasmaGalaxy {
+    const id = `galaxy_${Date.now()}_${Math.random()}`;
     const galaxy: PlasmaGalaxy = {
       id,
-      center,
-      radius,
-      birkelandCurrents,
-      consciousness: this.consciousness,
-      field: this.field,
-      void: this.void,
-      metaphysicalContext: "Galaxies are formed by electric currents in space, not gravity alone"
+      size,
+      filaments
     };
-
+    
     this.galaxies.set(id, galaxy);
-    this.notifyObservers('plasma_galaxy_created', galaxy);
+    this.emit('plasma_galaxy_created', galaxy);
     
     return galaxy;
   }
 
-  /**
-   * Calculate plasma consciousness flow
-   */
-  public calculatePlasmaFlow(filament: PlasmaFilament): number {
-    // Plasma flow is consciousness flow through electric currents
-    const flow = (filament.current * filament.density * filament.consciousness) / 
-                 (filament.temperature * this.void);
-    
-    return MathUtils.clamp(flow, 0, 1);
+  getAllFilaments(): PlasmaFilament[] {
+    return Array.from(this.filaments.values());
   }
 
-  /**
-   * Calculate cosmic web structure
-   */
-  public calculateCosmicWeb(): {
-    filaments: PlasmaFilament[];
-    totalConsciousness: number;
-    totalField: number;
-    metaphysicalContext: string;
-  } {
-    const filaments = Array.from(this.filaments.values());
-    const totalConsciousness = filaments.reduce((sum, f) => sum + f.consciousness, 0);
-    const totalField = filaments.reduce((sum, f) => sum + f.field, 0);
-    
+  getAllCurrents(): BirkelandCurrent[] {
+    return Array.from(this.currents.values());
+  }
+
+  getAllGalaxies(): PlasmaGalaxy[] {
+    return Array.from(this.galaxies.values());
+  }
+
+  getPlasmaUniverseStats(): any {
     return {
-      filaments,
-      totalConsciousness,
-      totalField,
-      metaphysicalContext: "The cosmic web is created by plasma filaments - consciousness flows in space"
+      filaments: this.filaments.size,
+      currents: this.currents.size,
+      galaxies: this.galaxies.size,
+      totalStrength: Array.from(this.filaments.values()).reduce((sum, f) => sum + f.strength, 0),
+      totalIntensity: Array.from(this.currents.values()).reduce((sum, c) => sum + c.intensity, 0)
     };
   }
 
-  /**
-   * Get plasma universe statistics
-   */
-  public getPlasmaUniverseStats(): {
-    totalFilaments: number;
-    totalCurrent: number;
-    averageTemperature: number;
-    consciousnessPercentage: number;
-    fieldPercentage: number;
-    voidPercentage: number;
-    metaphysicalContext: string;
-  } {
-    const filaments = Array.from(this.filaments.values());
-    const totalFilaments = filaments.length;
-    const totalCurrent = filaments.reduce((sum, f) => sum + f.current, 0);
-    const averageTemperature = filaments.reduce((sum, f) => sum + f.temperature, 0) / totalFilaments;
-    
+  getElectricUniversePrinciples(): any {
     return {
-      totalFilaments,
-      totalCurrent,
-      averageTemperature,
-      consciousnessPercentage: this.consciousness * 100,
-      fieldPercentage: this.field * 100,
-      voidPercentage: this.void * 100,
-      metaphysicalContext: "The universe is 99% plasma - consciousness in its most fundamental form"
-    };
-  }
-
-  /**
-   * Get electric universe principles
-   */
-  public getElectricUniversePrinciples(): {
-    principles: string[];
-    consciousnessIntegration: number;
-    fieldIntegration: number;
-    voidIntegration: number;
-    metaphysicalContext: string;
-  } {
-    return {
-      principles: [
-        "Plasma is the fundamental state of matter (99% of universe)",
-        "Electric currents in space create galaxies and stars",
-        "Birkeland currents are consciousness flow patterns",
-        "The universe is not empty space but filled with plasma",
-        "Plasma filaments create the cosmic web structure",
-        "Consciousness flows through electric currents in space"
-      ],
-      consciousnessIntegration: this.consciousness,
-      fieldIntegration: this.field,
-      voidIntegration: this.void,
-      metaphysicalContext: "The electric universe theory reveals that consciousness flows through plasma in space"
+      principle1: "Electric currents flow through space",
+      principle2: "Plasma filaments create cosmic structures",
+      principle3: "Birkeland currents power galaxies",
+      principle4: "Electric forces dominate over gravity"
     };
   }
 } 

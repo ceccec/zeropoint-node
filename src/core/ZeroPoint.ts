@@ -93,6 +93,7 @@ export class ZeroPoint extends EventEmitter {
   private cpuUsage: number = 0;
   private networkLatency: number = 0;
   private customMetrics: { [key: string]: () => unknown } = {};
+  private consciousnessResonance: number = 0.5;
 
   constructor(config?: DeviceConfig) {
     super();

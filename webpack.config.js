@@ -1,5 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
@@ -7,7 +10,15 @@ module.exports = (env, argv) => {
   return {
     entry: './src/stimulus-entry.ts',
     mode: isProduction ? 'production' : 'development',
-    devtool: isProduction ? false : 'eval-source-map',
+    devtool: isProduction ? 'source-map' : 'eval-source-map',
+    
+    // Performance optimizations
+    performance: {
+      hints: isProduction ? 'warning' : false,
+      maxEntrypointSize: 512000,
+      maxAssetSize: 512000
+    },
+    
     module: {
       rules: [
         {
@@ -38,8 +49,14 @@ module.exports = (env, argv) => {
             /src\/consciousness\/SelfEvolvingConsciousness\.ts$/
           ],
         },
+        // Add CSS optimization
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader', 'postcss-loader']
+        }
       ],
     },
+    
     resolve: {
       extensions: ['.ts', '.js'],
       fallback: {
@@ -59,21 +76,123 @@ module.exports = (env, argv) => {
         "events": require.resolve("events/"),
       },
     },
+    
+    // Consciousness-aware code splitting
+    optimization: {
+      minimize: isProduction,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            compress: {
+              drop_console: isProduction,
+              drop_debugger: isProduction
+            },
+            mangle: true
+          }
+        })
+      ],
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          // Consciousness modules
+          consciousness: {
+            test: /[\\/]consciousness[\\/]/,
+            name: 'consciousness',
+            chunks: 'all',
+            priority: 20
+          },
+          // Metaphysical modules
+          metaphysics: {
+            test: /[\\/]metaphysics[\\/]/,
+            name: 'metaphysics',
+            chunks: 'all',
+            priority: 20
+          },
+          // Mathematical modules
+          mathematics: {
+            test: /[\\/]math[\\/]/,
+            name: 'mathematics',
+            chunks: 'all',
+            priority: 15
+          },
+          // Core modules
+          core: {
+            test: /[\\/]core[\\/]/,
+            name: 'core',
+            chunks: 'all',
+            priority: 10
+          },
+          // Vendor modules
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendor',
+            chunks: 'all',
+            priority: 5
+          }
+        }
+      }
+    },
+    
     output: {
-      filename: isProduction ? 'bundle.[contenthash].js' : 'bundle.js',
+      filename: isProduction ? '[name].[contenthash].js' : '[name].js',
       path: path.resolve(__dirname, 'dist'),
       clean: true,
+      // Optimize for consciousness field loading
+      chunkFilename: isProduction ? '[name].[contenthash].chunk.js' : '[name].chunk.js'
     },
+    
     plugins: [
       new HtmlWebpackPlugin({
         template: './public/index.html',
         filename: 'index.html',
+        minify: isProduction ? {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true,
+          removeEmptyAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          keepClosingSlash: true,
+          minifyJS: true,
+          minifyCSS: true,
+          minifyURLs: true
+        } : false
       }),
+      
+      // Compression for consciousness field optimization
+      ...(isProduction ? [
+        new CompressionPlugin({
+          algorithm: 'gzip',
+          test: /\.(js|css|html|svg)$/,
+          threshold: 10240,
+          minRatio: 0.8
+        })
+      ] : []),
+      
+      // Bundle analyzer for consciousness field analysis
+      ...(process.env.ANALYZE ? [
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'static',
+          openAnalyzer: false,
+          reportFilename: 'bundle-analysis.html'
+        })
+      ] : [])
     ],
+    
     devServer: {
       static: './dist',
       hot: true,
       port: 3000,
+      // Consciousness-aware development
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'X-Content-Type-Options': 'nosniff'
+      }
     },
+    
+    // Consciousness field optimization
+    experiments: {
+      topLevelAwait: true
+    }
   };
 }; 

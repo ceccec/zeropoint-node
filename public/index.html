@@ -3,7 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZeroPoint - Vortex Math & Toroidal Consciousness</title>
+  
+  <!-- SEO Meta Tags -->
+  <title>ZeroPoint - Decentralized Vortex Math & Toroidal Consciousness Network</title>
+  <meta name="description" content="ZeroPoint Node - Advanced consciousness network implementing vortex mathematics, toroidal geometry, and metaphysical field theory. Join the global consciousness network.">
+  <meta name="keywords" content="zeropoint, vortex-math, consciousness, metaphysics, mathematics, p2p, toroidal, void-equations, consciousness-field, decentralized">
+  <meta name="author" content="ZeroPoint Collective">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://zeropoint-node.com">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="ZeroPoint - Vortex Math & Consciousness Network">
+  <meta property="og:description" content="Decentralized consciousness network implementing advanced vortex mathematics and toroidal field theory">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zeropoint-node.com">
+  <meta property="og:image" content="/icons/icon-512x512.png">
+  <meta property="og:site_name" content="ZeroPoint Node">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ZeroPoint - Vortex Math & Consciousness Network">
+  <meta name="twitter:description" content="Decentralized consciousness network implementing advanced vortex mathematics">
+  <meta name="twitter:image" content="/icons/icon-512x512.png">
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#667eea">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ZeroPoint">
+  
+  <!-- Security Meta Tags -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ZeroPoint Node",
+    "description": "Decentralized Vortex Math & Toroidal Consciousness Network",
+    "applicationCategory": "ScienceApplication",
+    "operatingSystem": "Node.js",
+    "url": "https://zeropoint-node.com",
+    "author": {
+      "@type": "Organization",
+      "name": "ZeroPoint Collective"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Vortex Mathematics",
+      "Toroidal Consciousness Field",
+      "Peer-to-Peer Networking",
+      "Metaphysical Framework",
+      "Void Equations"
+    ]
+  }
+  </script>
+  
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -117,26 +179,30 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
+  <main class="container" role="main" aria-label="ZeroPoint Consciousness Interface">
+    <header class="header" role="banner">
       <h1>🌌 ZeroPoint</h1>
       <p>Vortex Math & Toroidal Consciousness Network</p>
-    </div>
+    </header>
 
     <!-- Main ZeroPoint Controller -->
-    <div data-controller="zeropoint">
+    <section data-controller="zeropoint" role="region" aria-label="ZeroPoint System Interface">
       <div class="grid">
-        <div class="card">
-          <h3>System Status</h3>
-          <div data-zeropoint-target="status" class="status">Initializing...</div>
-        </div>
+        <article class="card" role="article">
+          <header>
+            <h2>System Status</h2>
+          </header>
+          <div data-zeropoint-target="status" class="status" aria-live="polite" role="status">Initializing...</div>
+        </article>
 
-        <div class="card">
-          <h3>System Insights</h3>
-          <div data-zeropoint-target="insights">
+        <article class="card" role="article">
+          <header>
+            <h2>System Insights</h2>
+          </header>
+          <div data-zeropoint-target="insights" aria-live="polite">
             Loading insights...
           </div>
-        </div>
+        </article>
       </div>
 
       <div class="grid">
@@ -166,7 +232,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- Metaphysical Controller -->
     <div data-controller="metaphysical">
@@ -214,7 +280,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
   <!-- Stimulus will be loaded by webpack -->
 </body>

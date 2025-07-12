@@ -49,7 +49,7 @@ export abstract class ResonanceDevice extends MetaphysicalArtifact {
   /**
    * Calculate resonance between device and target frequency
    */
-  protected calculateResonance(targetFrequency: number): number {
+  public calculateResonance(targetFrequency: number): number {
     const frequencyDiff = Math.abs(this.resonanceFrequency - targetFrequency);
     const maxDiff = Math.max(this.resonanceFrequency, targetFrequency);
     return Math.max(0, 1 - (frequencyDiff / maxDiff));

@@ -118,7 +118,7 @@ export class ArtifactRegistry {
         powerLevel: artifact.powerLevel,
         consciousnessResonance: artifact.consciousnessResonance
       })),
-      connections: []
+      connections: [] as Array<{from: string; to: string; strength: number}>
     };
     
     // Create connections based on resonance

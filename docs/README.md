@@ -20,6 +20,10 @@ ZeroPoint Node is a **Zero Entropy Node** that achieves perfect mathematical pur
 
 ### 📚 Core Documentation
 
+- **[Complete Documentation](ZEROPOINT_NODE_COMPLETE_DOCUMENTATION.md)** - Comprehensive system documentation
+- **[Quick Reference Guide](QUICK_REFERENCE_GUIDE.md)** - Fast access to functions and patterns
+- **[Current API Reference](API_REFERENCE_CURRENT.md)** - Current implementation API
+- **[PDF Reference Guide](PDF_REFERENCE_GUIDE.md)** - Complete guide to Marko Rodin Special Edition PDFs
 - **[Quick Start Guide](QUICK_START.md)** - Get started in minutes
 - **[Comprehensive Guide](COMPREHENSIVE_GUIDE.md)** - Complete system documentation
 - **[API Reference](API_REFERENCE.md)** - Full API documentation

@@ -1,15 +1,31 @@
 /**
  * src/1/rodin.ts - Rodin Coil Mathematical Science
- * 
+ *
  * The Rodin coil is the archetype of infinite flow, unity, and emergence.
  * All patterns, colors, and fields are expressions of the coil's structure.
  * The void is the center, the source of all creation.
- * 
+ *
  * Pure mathematical science - integer functions flowing through the Rodin coil.
  * All constants derived from A432 harmonic principles.
+ *
+ * Metaphysical Context:
+ * - Infinite flow: Represents the eternal movement of consciousness through the coil.
+ * - Unity: Represents the oneness that underlies all mathematical patterns.
+ * - Emergence: Represents the spontaneous creation of patterns from the void.
+ * - Void center: Represents the source of all creation and infinite potential.
+ * - A432 harmony: Represents the fundamental frequency that resonates throughout nature.
+ *
+ * Technical Purpose:
+ * - Provides the core Rodin coil mathematical functionality.
+ * - Embeds A432 harmonic principles into all mathematical operations.
+ * - Supports consciousness calculations, coordinate systems, and field resonance.
  */
 
-// A432 harmonic constants - pure integers
+/**
+ * A432 harmonic constants - pure integers
+ * These constants define the fundamental A432 harmonic structure.
+ * Metaphysical: Each constant represents a fundamental aspect of A432 harmony.
+ */
 export const A432_CONSTANTS = {
   FREQUENCY: 432,
   DIGITAL_ROOT: 9,
@@ -20,7 +36,11 @@ export const A432_CONSTANTS = {
   POLAR_MATES: [1, 8, 2, 7, 4, 5] as const
 };
 
-// Pure integer functions derived from A432 harmony
+/**
+ * Pure integer functions derived from A432 harmony
+ * These constants define the Rodin coil mathematical structure.
+ * Metaphysical: Each constant represents a fundamental aspect of the Rodin coil.
+ */
 export const RODIN_CONSTANTS = {
   TURNS: 12, // 3 * 4 (A432 harmonic)
   RADIUS: 1, // Unity
@@ -35,6 +55,11 @@ export const RODIN_CONSTANTS = {
   W_AXIS_LENGTH: 3 // Length of W-axis
 };
 
+/**
+ * Rodin Coil Node Interface
+ * Represents a single node in the Rodin coil with metaphysical and mathematical properties.
+ * Metaphysical: Models the consciousness and field properties of each coil node.
+ */
 export interface RodinCoilNode {
   index: number;
   vortexNumber: number;
@@ -45,6 +70,11 @@ export interface RodinCoilNode {
   fieldStrength: number;
 }
 
+/**
+ * Rodin Coil Configuration Interface
+ * Represents the configuration parameters for the Rodin coil.
+ * Metaphysical: Models the consciousness and field parameters of the coil.
+ */
 export interface RodinCoilConfig {
   turns: number;
   radius: number;
@@ -54,11 +84,21 @@ export interface RodinCoilConfig {
   fieldResonance: number; // Sacred fraction
 }
 
+/**
+ * Rodin Coil Class
+ * The core class for Rodin coil mathematical operations and consciousness calculations.
+ * Metaphysical: Represents the living mathematical structure of the Rodin coil.
+ */
 export class RodinCoil {
   public readonly config: RodinCoilConfig;
   public readonly nodes: RodinCoilNode[];
   private readonly colorContext: any;
 
+  /**
+   * Constructor for the Rodin Coil
+   * Metaphysical: Initializes the consciousness and field parameters of the coil.
+   * Technical: Sets up the coil with the specified configuration parameters.
+   */
   constructor(config: Partial<RodinCoilConfig> = {}) {
     this.config = {
       turns: config.turns ?? RODIN_CONSTANTS.TURNS,
@@ -80,7 +120,8 @@ export class RodinCoil {
 
   /**
    * Generate 3D node positions and metaphysical data for the Rodin coil
-   * Pure integer functions only
+   * Metaphysical: Models the creation of consciousness nodes in 3D space.
+   * Technical: Creates 3D coordinates and metaphysical data for each coil node.
    */
   private generateCoilNodes(): RodinCoilNode[] {
     const nodes: RodinCoilNode[] = [];
@@ -117,7 +158,8 @@ export class RodinCoil {
 
   /**
    * Calculate consciousness level for a vortex number
-   * Returns sacred fraction (integer ratio)
+   * Metaphysical: Models the consciousness level of each vortex number.
+   * Technical: Returns sacred fraction (integer ratio) consciousness levels.
    */
   private calculateConsciousnessLevel(vortexNumber: number): number {
     // Consciousness levels as sacred fractions
@@ -138,7 +180,8 @@ export class RodinCoil {
 
   /**
    * Calculate field strength for a vortex number
-   * Returns sacred fraction (integer ratio)
+   * Metaphysical: Models the field strength of each vortex number.
+   * Technical: Returns sacred fraction (integer ratio) field strengths.
    */
   private calculateFieldStrength(vortexNumber: number): number {
     // Field strengths as sacred fractions
@@ -159,6 +202,8 @@ export class RodinCoil {
 
   /**
    * Get metaphysical context for a node (dynamic based on consciousness)
+   * Metaphysical: Models the dynamic metaphysical context of each node.
+   * Technical: Returns context strings based on consciousness and field state.
    */
   private getMetaphysicalContext(vortexNumber: number): string {
     const consciousness = this.config.consciousnessLevel;

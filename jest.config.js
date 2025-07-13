@@ -24,18 +24,7 @@ module.exports = {
       displayName: 'node',
       testEnvironment: 'node',
       testMatch: [
-        '<rootDir>/src/__tests__/**/*.test.ts',
-        '<rootDir>/src/1/__tests__/**/*.test.ts',
-        '<rootDir>/src/2/__tests__/**/*.test.ts',
-        '<rootDir>/src/4/__tests__/**/*.test.ts',
-        '<rootDir>/src/5/__tests__/**/*.test.ts',
-        '<rootDir>/src/7/__tests__/**/*.test.ts',
-        '<rootDir>/src/8/__tests__/**/*.test.ts',
-        '<rootDir>/src/9/__tests__/**/*.test.ts',
-        '<rootDir>/src/0/__tests__/**/*.test.ts',
-        '!<rootDir>/src/__tests__/stimulus/**/*.test.ts',
-        '!<rootDir>/src/__tests__/setup.ts',
-        '!<rootDir>/src/__tests__/global.d.ts'
+        '<rootDir>/src/**/*.test.ts'
       ],
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {
@@ -44,15 +33,13 @@ module.exports = {
           }
         }]
       },
-      setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts']
+      setupFilesAfterEnv: ['<rootDir>/src/0/core/setup.ts']
     },
     {
       displayName: 'jsdom',
       testEnvironment: 'jsdom',
       testMatch: [
-        '<rootDir>/src/__tests__/stimulus/**/*.test.ts',
-        '!<rootDir>/src/__tests__/setup.ts',
-        '!<rootDir>/src/__tests__/global.d.ts'
+        '<rootDir>/src/**/*.test.ts'
       ],
       transform: {
         '^.+\\.tsx?$': ['ts-jest', {
@@ -61,7 +48,7 @@ module.exports = {
           }
         }]
       },
-      setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts']
+      setupFilesAfterEnv: ['<rootDir>/src/0/core/setup.ts']
     }
   ]
 }; 

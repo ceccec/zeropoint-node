@@ -1,0 +1,12 @@
+# PDF Chapter Ranges Template
+# Format: "Chapter Title: start_page-end_page"
+# Example:
+# Introduction: 1-10
+# Chapter 1 - The Beginning: 11-25
+# Chapter 2 - The Middle: 26-45
+# Chapter 3 - The End: 46-60
+
+# Add your chapter ranges below:
+# Chapter 1: 1-20
+# Chapter 2: 21-40
+# Chapter 3: 41-60 

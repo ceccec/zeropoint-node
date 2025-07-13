@@ -14,6 +14,8 @@
     "test": "jest",
     "build": "tsc",
     "dev": "tsc --watch",
+    "start": "node dist/server.js",
+    "dev:server": "ts-node server.ts",
     "browser:prod": "webpack --mode production",
     "workflow": "npm test && npm run auto-commit && npm run learning-analytics",
     "auto-commit": "node scripts/auto-commit-workflow.sh",
@@ -43,6 +45,8 @@
   "dependencies": {
     "colors": "1.4.0",
     "crypto-js": "4.2.0",
+    "pdf-lib": "1.17.1",
+    "pdf-parse": "1.1.1",
     "stimulus": "3.2.2",
     "uuid": "^9.0.1"
   },

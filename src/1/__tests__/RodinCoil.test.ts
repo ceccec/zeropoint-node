@@ -1,4 +1,4 @@
-import { /* exported functions/classes from rodin */ } from '../rodin';
+import { /* exported functions/classes from rodin */ } from '../1/rodin';
 
 // Migrated from compost/__tests__/math/RodinCoil.test.ts
 

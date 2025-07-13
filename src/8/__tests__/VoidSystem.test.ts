@@ -1,4 +1,4 @@
-import { /* exported functions/classes from VoidSystem */ } from '../VoidSystem';
+import { /* exported functions/classes from VoidSystem */ } from '../8/VoidSystem';
 
 // Migrated from compost/__tests__/void/VoidSystem.test.ts
 

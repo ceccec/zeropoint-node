@@ -1,4 +1,4 @@
-import { /* exported functions/classes from SelfEvolvingConsciousness */ } from '../SelfEvolvingConsciousness';
+import { /* exported functions/classes from SelfEvolvingConsciousness */ } from '../7/SelfEvolvingConsciousness';
 
 // Migrated from compost/__tests__/consciousness/SelfEvolvingConsciousness.test.ts
 

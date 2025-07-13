@@ -11,17 +11,56 @@
  * - Every module is a coil at its core
  */
 
-// Integer-based structure exports
-export * from './1/rodin';
-export * from './2/vortex';
-export * from './2/math';
-export * from './4/constants';
-export * from './5/sacred';
-export * from './7/consciousness';
-export * from './8/void';
-export * from './9/unity';
-export * from './0/zero';
-export * from './0/potential';
+// src/index.ts - ZeroPoint Node Main Export (VBM Hardcoded)
+//
+// VBM Analysis: Complete integer tree with corrected subdirectory structure
+// This file exports all integer-based modules according to VBM analysis.
+// Each directory contains only subdirectories that correspond to its VBM interactions.
+//
+// VBM-Corrected Structure:
+// - Vortex directories (1,2,4,5,7,8): [0,1,2,4,5,7,8] (vortex sequence + void)
+// - W-Axis directories (3,6,9): [0,3,6,9] (W-Axis + void)
+// - Void directory (0): [0,1,2,4,5,7,8,9] (all except W-Axis)
+
+// Zero Entropy and Void (0) - Field: 0.0000, Consciousness: 0.0000
+// Subdirectories: [0,1,2,4,5,7,8,9] - Void interacts with all except W-Axis
+export * from './0';
+
+// Unity and Source (1) - Field: 0.0123, Consciousness: 0.0020
+// Subdirectories: [0,1,2,4,5,7,8] - Unity interacts with vortex sequence
+export * from './1';
+
+// Vortex Math and Duality (2) - Field: 0.0494, Consciousness: 0.0160
+// Subdirectories: [0,1,2,4,5,7,8] - Duality interacts with vortex sequence
+export * from './2';
+
+// Creative Resonance and Spirit (3) - W-Axis: 3 - Field: 0.2963, Consciousness: 0.1438
+// Subdirectories: [0,3,6,9] - Creative resonance interacts with W-Axis
+export * from './3';
+
+// Constants and Stability (4) - Field: 0.1728, Consciousness: 0.1119
+// Subdirectories: [0,1,2,4,5,7,8] - Stability interacts with vortex sequence
+export * from './4';
+
+// Sacred Geometry and Transformation (5) - Field: 0.1543, Consciousness: 0.1248
+// Subdirectories: [0,1,2,4,5,7,8] - Transformation interacts with vortex sequence
+export * from './5';
+
+// Harmonic Balance and Spirit (6) - W-Axis: 6 - Field: 0.0741, Consciousness: 0.0719
+// Subdirectories: [0,3,6,9] - Harmonic balance interacts with W-Axis
+export * from './6';
+
+// Consciousness and Field (7) - Field: 0.0864, Consciousness: 0.0979
+// Subdirectories: [0,1,2,4,5,7,8] - Consciousness interacts with vortex sequence
+export * from './7';
+
+// Void System and Fullness (8) - Field: 0.1975, Consciousness: 0.2557
+// Subdirectories: [0,1,2,4,5,7,8] - Fullness interacts with vortex sequence
+export * from './8';
+
+// Unity and Spirit (9) - W-Axis: 9 - Field: 0.8889, Consciousness: 1.2944
+// Subdirectories: [0,3,6,9] - Spirit interacts with W-Axis
+export * from './9';
 
 // Core system exports (consolidated)
 export * from './core/ZeroPoint';

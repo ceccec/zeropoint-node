@@ -421,4 +421,4 @@ export class EmergenceLedger {
     );
     return Math.min(10, totalEvents * 0.1);
   }
-}
+} 

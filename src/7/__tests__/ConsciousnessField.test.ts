@@ -1,4 +1,4 @@
-import { /* exported functions/classes from ConsciousnessField */ } from '../ConsciousnessField';
+import { /* exported functions/classes from ConsciousnessField */ } from '../7/ConsciousnessField';
 
 // Migrated from compost/__tests__/consciousness/ConsciousnessField.test.ts
 

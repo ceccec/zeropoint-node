@@ -1,4 +1,4 @@
-import { /* exported functions/classes from sacred */ } from '../sacred';
+import { /* exported functions/classes from sacred */ } from '../5/sacred';
 
 // Migrated from compost/__tests__/math/FlowerOfLife.test.ts
 

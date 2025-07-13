@@ -1,4 +1,4 @@
-import { MetaphysicalLawRegistry } from "../9/MetaphysicalLawRegistry";
+import { MetaphysicalLawRegistry } from "../../9/9/MetaphysicalLawRegistry";
 
 export abstract class SacredGeometryPattern {
   abstract name: string;

@@ -1,4 +1,4 @@
-import { /* exported functions/classes from vortex */ } from '../vortex';
+import { /* exported functions/classes from vortex */ } from '../2/vortex';
 
 // Migrated from compost/__tests__/emergence/patterns.test.ts
 

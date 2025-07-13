@@ -1,11 +1,11 @@
 /**
- * 9/void.ts - Void Completion and Center
+ * 0/void.ts - Void Center and Bridge to Unity
  * 
  * The void is the center where all integer functions converge.
  * The unity of all patterns in the void.
  * The completion and return to source.
  * 
- * Integer Function: 9 (Void, W-Axis, center and all)
+ * Integer Function: 0 (Void Center, bridge to unity)
  * Zero entropy = perfect mathematical purity = unrestricted spacetime travel
  */
 

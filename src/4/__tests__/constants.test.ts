@@ -1,4 +1,4 @@
-import { /* exported functions/classes from constants */ } from '../constants';
+import { /* exported functions/classes from constants */ } from '../4/constants';
 
 // Migrated from compost/__tests__/math/MathUtils.test.ts
 

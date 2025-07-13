@@ -294,4 +294,4 @@ export class ObserverAwareField extends EventEmitter {
       observer.lastObservation = Date.now();
     });
   }
-}
+} 

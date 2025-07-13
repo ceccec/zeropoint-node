@@ -1,5 +1,5 @@
 import { SacredGeometryPattern } from "./SacredGeometryPattern";
-import { MetaphysicalLawRegistry } from "../9/MetaphysicalLawRegistry";
+import { MetaphysicalLawRegistry } from "../../9/9/MetaphysicalLawRegistry";
 
 export class SacredGeometryRegistry {
   private patterns: SacredGeometryPattern[] = [];

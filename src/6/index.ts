@@ -43,10 +43,10 @@
  * - types: Harmonic balance type definitions
  * - utils: Harmonic balance utility functions
  */
-export * from './core';
-export * from './constants';
-export * from './types';
-export * from './utils';
+// Self-interaction removed - harmonic balance core is in this directory
+export * from './4';
+export * from './3';
+export * from './6';
 
 /**
  * Export integer flow interactions (Rodin coil sequence)

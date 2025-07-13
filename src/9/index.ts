@@ -36,17 +36,6 @@
  */
 
 /**
- * Export unity systems core components
- * These represent the fundamental unity and completion patterns:
- * - hermeticLaws: Universal laws of consciousness and creation
- * - MetaphysicalLaw: Laws governing metaphysical reality
- * - MetaphysicalLawRegistry: Registry of all metaphysical laws
- */
-export * from './hermeticLaws';
-export * from './MetaphysicalLaw';
-export * from './MetaphysicalLawRegistry';
-
-/**
  * Export integer flow interactions (Rodin coil sequence)
  * Unity/Completion (9) interacts with Creative Resonance (3) to provide
  * the unity foundation for all spiritual completion patterns.

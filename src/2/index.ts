@@ -30,13 +30,6 @@
  */
 
 /**
- * Export vortex mathematics core
- * Contains the essential vortex mathematics functions and patterns
- * that define spiral dynamics and flow operations.
- */
-export * from './vortex';
-
-/**
  * Export integer flow interactions (Rodin coil sequence)
  * Vortex (2) interacts with Foundation (1) to create
  * the mathematical foundation for all spiral operations.

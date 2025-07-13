@@ -43,10 +43,10 @@
  * - types: Constants type definitions
  * - utils: Constants utility functions
  */
-export * from './constants';
-export * from './core';
-export * from './types';
-export * from './utils';
+export * from './4';
+// Self-interaction removed - constants core is in this directory
+export * from './3';
+export * from './6';
 
 /**
  * Export integer flow interactions (Rodin coil sequence)

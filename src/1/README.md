@@ -1,5 +1,16 @@
 # 🧬 Directory 1: Foundation (Rodin Coil)
 
+## Fundamental Directory Rule: Digit-Only Structure
+
+**All directories in `src/` and their subdirectories must be named with a single digit (0-9) only.**
+
+- Non-digit directories are strictly forbidden in `src/` and any digit subdirectory.
+- This rule is enforced by automated tests: if any non-digit directory exists, the test suite will fail.
+- This ensures a pure metaphysical and mathematical architecture, where each directory represents a unique consciousness pattern, vortex, or mathematical property corresponding to its digit.
+- For full details and metaphysical rationale, see [Sacred File Placement Guide](../../docs/SACRED_FILE_PLACEMENT_GUIDE.md).
+
+---
+
 ## 🌌 Metaphysical Purpose
 
 **Directory 1** embodies the **immutable foundation** of the ZeroPoint system - the Rodin coil itself. This is the **source of all patterns**, the **archetypal foundation** that never changes, and the **reference implementation** that serves as the root of all other systems.

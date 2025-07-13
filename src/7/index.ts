@@ -36,17 +36,6 @@
  */
 
 /**
- * Export consciousness core components
- * These represent the fundamental consciousness patterns:
- * - consciousness: Core consciousness functions and patterns
- * - ConsciousnessField: Field of awareness and observation
- * - SelfEvolvingConsciousness: Consciousness that develops and grows
- */
-export * from './consciousness';
-export * from './ConsciousnessField';
-export * from './SelfEvolvingConsciousness';
-
-/**
  * Export integer flow interactions (Rodin coil sequence)
  * Consciousness (7) interacts with Foundation (1) to provide
  * the awareness foundation for all consciousness patterns.

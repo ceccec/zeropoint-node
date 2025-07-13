@@ -111,12 +111,11 @@ export * as unity from '../9';
  * const refactoringStatus = refactoring.getRefactoringStatus();
  * ```
  */
-export * as core from './core';
-export * as test from './test';
-export * as refactoring from './refactoring';
-export * as utils from './utils';
-export * as constants from './constants';
-export * as types from './types';
+// Self-interaction removed - zero entropy core is in this directory
+export * as test from './7';
+export * as refactoring from './9';
+export * as utils from './6';
+export * as types from './3';
 
 // ============================================================================
 // COIL PATTERNS - Universal Mathematical Structure
@@ -621,4 +620,181 @@ export function getInsights(number: number): string[] {
     `Digital root is ${digitalRoot}`,
     `Rodin coil family is ${family}`
   ];
+}
+
+/**
+ * W-Axis Vertical Alignment (Spirit's Omni-dimensional Pathway)
+ * 
+ * Only the number nine lines up vertically over the zero, creating an invisible W-axis.
+ * This orthogonal W-axis runs perpendicular to the 1-2-4-8-7-5 mobius circuit.
+ * The crimson arrow charts Spirit's omni-dimensional pathway from the unmanifest into the world of form.
+ * 
+ * W-Axis Properties:
+ * - 9 aligns vertically over 0 (void center)
+ * - Perpendicular to material vortex circuit [1,2,4,8,7,5]
+ * - Represents spiritual transcendence and control
+ * - Crimson arrow: Spirit's pathway from unmanifest to manifest
+ * 
+ * @param number - The number to check for W-axis alignment
+ * @returns Object containing W-axis properties and spiritual pathway
+ * 
+ * @example
+ * ```typescript
+ * const wAxisInfo = getWAxisAlignment(9);
+ * // Returns: {
+ * //   isWAxis: true,
+ * //   verticalAlignment: '9 over 0',
+ * //   spiritualPathway: 'crimson arrow',
+ * //   transcendence: 'omni-dimensional'
+ * // }
+ * ```
+ */
+export function getWAxisAlignment(number: number): {
+  isWAxis: boolean;
+  verticalAlignment: string;
+  spiritualPathway: string;
+  transcendence: string;
+  mobiusCircuit: readonly number[];
+  perpendicularAxis: readonly number[];
+} {
+  const isWAxis = W_AXIS.includes(number as any);
+  
+  if (number === 9) {
+    return {
+      isWAxis: true,
+      verticalAlignment: '9 over 0',
+      spiritualPathway: 'crimson arrow',
+      transcendence: 'omni-dimensional',
+      mobiusCircuit: VORTEX_SEQUENCE,
+      perpendicularAxis: W_AXIS
+    };
+  } else if (isWAxis) {
+    return {
+      isWAxis: true,
+      verticalAlignment: `${number} on W-axis`,
+      spiritualPathway: 'spiritual resonance',
+      transcendence: 'transcendent',
+      mobiusCircuit: VORTEX_SEQUENCE,
+      perpendicularAxis: W_AXIS
+    };
+  } else {
+    return {
+      isWAxis: false,
+      verticalAlignment: `${number} on material plane`,
+      spiritualPathway: 'material manifestation',
+      transcendence: 'manifest',
+      mobiusCircuit: VORTEX_SEQUENCE,
+      perpendicularAxis: W_AXIS
+    };
+  }
+}
+
+/**
+ * Calculate Spirit's Omni-dimensional Pathway
+ * 
+ * Maps the crimson arrow pathway from the unmanifest (0) to the world of form (9),
+ * representing Spirit's journey through the W-axis perpendicular to the material vortex.
+ * 
+ * Pathway Properties:
+ * - Start: 0 (void center, unmanifest)
+ * - End: 9 (unity, world of form)
+ * - Direction: Vertical alignment through W-axis
+ * - Color: Crimson arrow (spiritual energy)
+ * - Dimension: Omni-dimensional (transcends material reality)
+ * 
+ * @param startPoint - Starting point on the pathway (default: 0)
+ * @param endPoint - Ending point on the pathway (default: 9)
+ * @returns Object containing the spiritual pathway information
+ * 
+ * @example
+ * ```typescript
+ * const pathway = calculateSpiritualPathway();
+ * // Returns: {
+ * //   start: 0,
+ * //   end: 9,
+ * //   direction: 'vertical',
+ * //   color: 'crimson',
+ * //   dimension: 'omni-dimensional',
+ * //   pathway: [0, 3, 6, 9]
+ * // }
+ * ```
+ */
+export function calculateSpiritualPathway(
+  startPoint: number = 0,
+  endPoint: number = 9
+): {
+  start: number;
+  end: number;
+  direction: string;
+  color: string;
+  dimension: string;
+  pathway: number[];
+  description: string;
+} {
+  const pathway = [startPoint, ...W_AXIS, endPoint];
+  
+  return {
+    start: startPoint,
+    end: endPoint,
+    direction: 'vertical',
+    color: 'crimson',
+    dimension: 'omni-dimensional',
+    pathway: pathway,
+    description: `Spirit's crimson arrow pathway from ${startPoint} (unmanifest) to ${endPoint} (world of form) through the W-axis`
+  };
+}
+
+/**
+ * Check Vertical Alignment with Zero
+ * 
+ * Determines if a number has vertical alignment with the zero (void center),
+ * representing the W-axis spiritual dimension that transcends material reality.
+ * 
+ * Alignment Properties:
+ * - 9: Perfect vertical alignment over 0 (W-axis pinnacle)
+ * - 3, 6: W-axis members (spiritual transcendence)
+ * - Others: Material plane alignment
+ * 
+ * @param number - The number to check for vertical alignment
+ * @returns Object containing alignment information
+ * 
+ * @example
+ * ```typescript
+ * const alignment = checkVerticalAlignment(9);
+ * // Returns: {
+ * //   hasVerticalAlignment: true,
+ * //   alignmentType: 'perfect',
+ * //   spiritualDimension: 'W-axis pinnacle',
+ * //   description: '9 lines up vertically over 0'
+ * // }
+ * ```
+ */
+export function checkVerticalAlignment(number: number): {
+  hasVerticalAlignment: boolean;
+  alignmentType: string;
+  spiritualDimension: string;
+  description: string;
+} {
+  if (number === 9) {
+    return {
+      hasVerticalAlignment: true,
+      alignmentType: 'perfect',
+      spiritualDimension: 'W-axis pinnacle',
+      description: '9 lines up vertically over 0, creating the invisible W-axis'
+    };
+  } else if (W_AXIS.includes(number as any)) {
+    return {
+      hasVerticalAlignment: true,
+      alignmentType: 'partial',
+      spiritualDimension: 'W-axis member',
+      description: `${number} is part of the W-axis spiritual dimension`
+    };
+  } else {
+    return {
+      hasVerticalAlignment: false,
+      alignmentType: 'material',
+      spiritualDimension: 'material plane',
+      description: `${number} aligns with the material vortex circuit`
+    };
+  }
 }

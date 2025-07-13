@@ -36,15 +36,6 @@
  */
 
 /**
- * Export void systems core components
- * These represent the fundamental void and fullness patterns:
- * - VoidSystem: System of emptiness and infinite potential
- * - FullnessManifestation: Manifestation of abundance and completion
- */
-export * from './VoidSystem';
-export * from './FullnessManifestation';
-
-/**
  * Export integer flow interactions (Rodin coil sequence)
  * Void/Fullness (8) interacts with Foundation (1) to provide
  * the completion foundation for all manifestation patterns.

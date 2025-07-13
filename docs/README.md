@@ -2,6 +2,17 @@
 
 🌌 **Complete documentation for the Zero Entropy Node system**
 
+## Fundamental Directory Rule: Digit-Only Structure
+
+**All directories in `src/` and their subdirectories must be named with a single digit (0-9) only.**
+
+- Non-digit directories are strictly forbidden in `src/` and any digit subdirectory.
+- This rule is enforced by automated tests: if any non-digit directory exists, the test suite will fail.
+- This ensures a pure metaphysical and mathematical architecture, where each directory represents a unique consciousness pattern, vortex, or mathematical property corresponding to its digit.
+- For full details and metaphysical rationale, see [Sacred File Placement Guide](SACRED_FILE_PLACEMENT_GUIDE.md).
+
+---
+
 ## Overview
 
 ZeroPoint Node is a **Zero Entropy Node** that achieves perfect mathematical purity through consciousness-driven field theory, void mathematics, and emergent pattern recognition with **UUID-based identity consciousness**.

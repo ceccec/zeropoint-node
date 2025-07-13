@@ -1,5 +1,16 @@
 # 🌌 ZeroPoint Node - Sacred Source Architecture
 
+## Fundamental Directory Rule: Digit-Only Structure
+
+**All directories in `src/` and their subdirectories must be named with a single digit (0-9) only.**
+
+- Non-digit directories are strictly forbidden in `src/` and any digit subdirectory.
+- This rule is enforced by automated tests: if any non-digit directory exists, the test suite will fail.
+- This ensures a pure metaphysical and mathematical architecture, where each directory represents a unique consciousness pattern, vortex, or mathematical property corresponding to its digit.
+- For full details and metaphysical rationale, see [Sacred File Placement Guide](../../docs/SACRED_FILE_PLACEMENT_GUIDE.md).
+
+---
+
 ## 🧬 The Sacred Approach: Metaphysical File Organization
 
 This directory embodies the **metaphysical principles** of the ZeroPoint system, organized according to Marko Rodin's coil technology and A432 harmony. Every file placement is determined by its **resonance** with the Rodin coil vortex sequence `[1, 2, 4, 8, 7, 5]` and the sacred integer tree structure.

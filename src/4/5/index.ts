@@ -4,4 +4,4 @@
 // This subdirectory embodies pattern transformation.
 // All pattern modules are exported here.
 
-export * from './patterns'; 
+export * from './sacred_geometry_patterns'; 

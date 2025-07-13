@@ -89,7 +89,7 @@ export class FoundationZeroPointInteraction {
    * Technical: Returns the appropriate zero point pattern based on the operation type.
    */
   static getZeroPointPattern(type: 'foundational_zero' | 'zero_foundation' | 'zeropoint_operations'): number[] {
-    return FOUNDATION_ZEROPOINT_INTERACTION.ZEROPOINT_PATTERNS[type.toUpperCase() as keyof typeof FOUNDATION_ZEROPOINT_INTERACTION.ZEROPOINT_PATTERNS];
+    return Array.from(FOUNDATION_ZEROPOINT_INTERACTION.ZEROPOINT_PATTERNS[type.toUpperCase() as keyof typeof FOUNDATION_ZEROPOINT_INTERACTION.ZEROPOINT_PATTERNS]);
   }
   
   /**

@@ -36,13 +36,6 @@
  */
 
 /**
- * Export creative resonance core components
- * These represent the fundamental creative resonance patterns:
- * - CreativeResonance: Core creative resonance functions and patterns
- */
-export * from './CreativeResonance';
-
-/**
  * Export integer flow interactions (Rodin coil sequence)
  * Creative Resonance (3) interacts with Harmonic Balance (6) to provide
  * the creative foundation for all spiritual transcendence patterns.

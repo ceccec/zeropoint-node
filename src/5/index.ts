@@ -36,17 +36,6 @@
  */
 
 /**
- * Export sacred geometry core components
- * These represent the fundamental sacred geometry patterns:
- * - sacred: Core sacred geometry functions and patterns
- * - MetatronsCube: Metatron's cube implementation
- * - SacredGeometryRegistry: Registry of all sacred geometry patterns
- */
-export * from './sacred';
-export * from './MetatronsCube';
-export * from './SacredGeometryRegistry';
-
-/**
  * Export integer flow interactions (Rodin coil sequence)
  * Sacred Geometry (5) interacts with Foundation (1) to provide
  * the geometric foundation for all sacred patterns and proportions.

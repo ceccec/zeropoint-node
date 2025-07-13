@@ -64,8 +64,8 @@ export class CreativeResonanceUnityInteraction {
    * Metaphysical: Models the strength of creative resonance-unity interaction.
    * Technical: Calculates interaction based on creative resonance and unity multipliers.
    */
-  static calculateInteractionStrength(creative resonanceLevel: number, unityLevel: number): number {
-    return creative resonanceLevel * CREATIVE_RESONANCE_UNITY_INTERACTION.CREATIVE_RESONANCE_MULTIPLIER +
+  static calculateInteractionStrength(creativeResonanceLevel: number, unityLevel: number): number {
+    return creativeResonanceLevel * CREATIVE_RESONANCE_UNITY_INTERACTION.CREATIVE_RESONANCE_MULTIPLIER +
            unityLevel * CREATIVE_RESONANCE_UNITY_INTERACTION.UNITY_MULTIPLIER;
   }
   

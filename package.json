@@ -13,6 +13,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
+    "build:worker": "tsc && cp src/*.js dist/src/",
     "dev": "tsc --watch",
     "start": "node dist/server.js",
     "dev:server": "ts-node server.ts",
@@ -28,7 +29,13 @@
     "harvest": "node scripts/compost-harvester.js",
     "harvest:watch": "node scripts/compost-harvester.js --watch",
     "harvest:dry-run": "node scripts/compost-harvester.js --dry-run",
-    "harvest:demo": "node scripts/demonstrate-harvest.js"
+    "harvest:demo": "node scripts/demonstrate-harvest.js",
+    "deploy:worker": "wrangler deploy",
+    "deploy:pages": "wrangler pages deploy public",
+    "deploy:assets": "wrangler r2 object put zeropoint-assets public/*",
+    "deploy:all": "npm run build:worker && npm run deploy:worker && npm run deploy:pages && npm run deploy:assets",
+    "dev:worker": "wrangler dev",
+    "dev:pages": "wrangler pages dev public"
   },
   "keywords": [
     "zeropoint",
@@ -38,7 +45,10 @@
     "decentralized",
     "p2p",
     "metaphysics",
-    "mathematics"
+    "mathematics",
+    "cloudflare",
+    "serverless",
+    "pwa"
   ],
   "author": "ZeroPoint Collective",
   "license": "MIT",
@@ -91,7 +101,8 @@
     "webpack": "5.99.9",
     "webpack-bundle-analyzer": "4.10.2",
     "webpack-cli": "6.0.1",
-    "webpack-dev-server": "5.2.2"
+    "webpack-dev-server": "5.2.2",
+    "wrangler": "3.114.11"
   },
   "engines": {
     "node": ">=18.0.0"

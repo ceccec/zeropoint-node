@@ -64,9 +64,9 @@ export class FoundationSacredGeometryInteraction {
    * Metaphysical: Models the strength of foundation-sacred geometry interaction.
    * Technical: Calculates interaction based on foundation and sacred geometry multipliers.
    */
-  static calculateInteractionStrength(foundationLevel: number, sacred geometryLevel: number): number {
+  static calculateInteractionStrength(foundationLevel: number, sacredGeometryLevel: number): number {
     return foundationLevel * FOUNDATION_SACRED_GEOMETRY_INTERACTION.FOUNDATION_MULTIPLIER +
-           sacred geometryLevel * FOUNDATION_SACRED_GEOMETRY_INTERACTION.SACRED_GEOMETRY_MULTIPLIER;
+           sacredGeometryLevel * FOUNDATION_SACRED_GEOMETRY_INTERACTION.SACRED_GEOMETRY_MULTIPLIER;
   }
   
   /**

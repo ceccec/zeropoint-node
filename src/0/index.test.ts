@@ -14,7 +14,7 @@ import {
   createConsciousnessFieldTest,
   createBatchTest,
   validateZeroPointCompliance
-} from './1/spacetime_test_utils';
+} from './1/test_utils';
 
 import {
   getWAxisAlignment,

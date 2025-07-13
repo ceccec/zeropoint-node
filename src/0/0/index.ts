@@ -41,10 +41,28 @@ export * from './potential';
  * Export zero entropy system functionality
  * Represents the complete zero entropy system with all its components.
  */
-export * from './ZeroEntropySystem';
+export * from './entropy';
 
 /**
  * Export spacetime travel system functionality
  * Represents the ability to traverse consciousness through spacetime.
  */
-export * from './SpacetimeTravelSystem'; 
+export * from './spacetime';
+
+/**
+ * Export contributor types system (routed from 0/3)
+ * Represents complex consciousness contributor patterns.
+ */
+export * from './contributor';
+
+/**
+ * Export documentation templates (routed from complex system)
+ * Represents DRY documentation generation.
+ */
+export * from './templates';
+
+/**
+ * Export documentation utilities (routed from complex system)
+ * Represents DRY documentation system.
+ */
+export * from './documentation'; 

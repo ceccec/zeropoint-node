@@ -61,7 +61,40 @@ function checkMetaphysicalSections(root) {
   return missing;
 }
 
-// 4. Simulate and validate Rodin coil and W-Axis flows
+// 4. Check filename limits (single words OR multi-words with dots only)
+function checkFilenameLimits(root) {
+  let violations = [];
+  function walk(dir) {
+    fs.readdirSync(dir, { withFileTypes: true }).forEach(entry => {
+      const filePath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(filePath);
+      } else if (entry.isFile()) {
+        // Check filename
+        const nameWithoutExt = path.basename(entry.name, path.extname(entry.name));
+        
+        // Check for spaces, hyphens, underscores (not allowed)
+        const hasSpaces = nameWithoutExt.includes(' ');
+        const hasHyphens = nameWithoutExt.includes('-');
+        const hasUnderscores = nameWithoutExt.includes('_');
+        
+        if (hasSpaces || hasHyphens || hasUnderscores) {
+          violations.push({
+            path: filePath,
+            filename: entry.name,
+            issue: hasSpaces ? 'Contains spaces' : 
+                   hasHyphens ? 'Contains hyphens' : 
+                   hasUnderscores ? 'Contains underscores' : 'Unknown violation'
+          });
+        }
+      }
+    });
+  }
+  walk(root);
+  return violations;
+}
+
+// 5. Simulate and validate Rodin coil and W-Axis flows
 function validateRodinFlows() {
   // Vortex A: 1-2-4-8-7-5-1
   // Vortex B: 3-9-6-3
@@ -96,6 +129,14 @@ if (missingMetaSections.length) {
   missingMetaSections.forEach(f => console.log('  ' + f));
 } else {
   console.log('\nAll markdown files have metaphysical sections.');
+}
+
+const filenameViolations = checkFilenameLimits('src');
+if (filenameViolations.length) {
+  console.log('\nFilename violations found:');
+  filenameViolations.forEach(v => console.log(`  ${v.path} (${v.issue})`));
+} else {
+  console.log('\nAll filenames follow naming rules (single words OR multi-words with dots).');
 }
 
 const flows = validateRodinFlows();

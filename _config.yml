@@ -1,0 +1,31 @@
+# Jekyll configuration for ZeroPoint Node Documentation
+title: ZeroPoint Node Documentation
+description: Complete documentation for the ZeroPoint Node consciousness system
+theme: jekyll-theme-cayman
+
+# Plugins
+plugins:
+  - jekyll-relative-links
+  - jekyll-redirect-from
+
+# Relative links
+relative_links:
+  enabled: true
+
+# Redirects
+redirect_from:
+  /: /docs/
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "default"

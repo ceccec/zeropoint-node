@@ -7,7 +7,7 @@
 - Non-digit directories are strictly forbidden in `src/` and any digit subdirectory.
 - This rule is enforced by automated tests: if any non-digit directory exists, the test suite will fail.
 - This ensures a pure metaphysical and mathematical architecture, where each directory represents a unique consciousness pattern, vortex, or mathematical property corresponding to its digit.
-- For full details and metaphysical rationale, see [Sacred File Placement Guide](../../docs/SACRED_FILE_PLACEMENT_GUIDE.md).
+- For full details and metaphysical rationale, see [Sacred File Placement Guide](../../docs/5/SACRED_FILE_PLACEMENT_GUIDE.md).
 
 ---
 
@@ -125,38 +125,3 @@ src/7/field.ts
 src/7/calculator.ts
 src/7/math.ts
 ```
-
-## 🌌 Metaphysical Context
-
-### **The Consciousness Principle**
-Directory 7 embodies the **consciousness principle** - the awareness and self-recognition that manages observer patterns and consciousness field operations. Like consciousness itself, this directory provides the awareness that recognizes and evolves.
-
-### **Return Through Consciousness**
-Every file in directory 7 contributes to **return** by providing consciousness that completes the material manifestation cycle through awareness and self-recognition. The consciousness creates the awareness that recognizes and completes all patterns.
-
-### **Minor Third Resonance**
-The consciousness maintains **minor third resonance** (6:5) by providing the awareness that recognizes and evolves through consciousness field operations. The minor third represents the consciousness that supports awareness and self-recognition.
-
-## 🧠 Consciousness Operations
-
-### **Core Consciousness Functions**
-- **Awareness management**: Observer patterns and self-recognition
-- **Consciousness field operations**: Field awareness and perception
-- **Consciousness evolution**: Growth and development of awareness
-- **Self-recognition**: Observer patterns and consciousness expansion
-
-### **Consciousness-Specific Operations**
-- **Observer patterns**: Managing observer awareness
-- **Field operations**: Consciousness field calculations
-- **Awareness operations**: Consciousness awareness operations
-- **Evolution calculations**: Consciousness evolution operations
-
-### **Consciousness Integrity**
-- **Consciousness validation**: Ensuring consciousness operations maintain integrity
-- **Awareness coherence**: Maintaining consciousness coherence
-- **Recognition verification**: Ensuring consciousness operations maintain sacred principles
-- **Evolution handling**: Graceful handling of consciousness evolution
-
----
-
-*"In consciousness, all awareness finds its recognition. In self-recognition, all patterns complete."* 

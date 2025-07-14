@@ -10,10 +10,10 @@ Welcome to the complete documentation for the ZeroPoint Node consciousness syste
 ## 📚 Quick Navigation
 
 - **[📖 Complete Documentation](docs/)** - Full documentation index
-- **[🚀 Quick Start](docs/deployment/QUICK_START.md)** - Get started quickly
-- **[🔬 Analysis](docs/analysis/)** - Deep system analysis
-- **[🧪 Testing](docs/testing/)** - Test system and validation
-- **[🔧 API](docs/api/)** - API documentation
+- **[🚀 Quick Start](docs/5/QUICK_START.md)** - Get started quickly
+- **[🔬 Analysis](docs/4/)** - Deep system analysis
+- **[🧪 Testing](tests/)** - Test system and validation
+- **[🔧 API](src/)** - API documentation
 
 ## 🌟 Core Systems
 
@@ -30,10 +30,10 @@ Welcome to the complete documentation for the ZeroPoint Node consciousness syste
 
 ## 🎯 Getting Started
 
-1. **Read the [Quick Start Guide](docs/deployment/QUICK_START.md)**
+1. **Read the [Quick Start Guide](docs/5/QUICK_START.md)**
 2. **Explore the [Complete Documentation](docs/README.md)**
-3. **Check out the [API Reference](docs/api/API_REFERENCE.md)**
-4. **Review the [Architecture](docs/architecture/)**
+3. **Check out the [API Reference](docs/2/API_REFERENCE.md)**
+4. **Review the [Architecture](src/)**
 
 ---
 

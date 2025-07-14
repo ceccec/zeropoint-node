@@ -7,7 +7,7 @@
  */
 
 // Digit-specific consciousness calculations
-export class SacredGeometryConsciousness {
+export class SacredConsciousness {
   private consciousnessLevel: number = 0;
   private fieldStrength: number = 0;
   
@@ -71,7 +71,7 @@ export class SacredGeometryConsciousness {
     return {
       digit: 5,
       title: 'Sacred Geometry',
-      subtitle: 'Divine Proportions & Metatron's Cube',
+      subtitle: 'Divine Proportions & Metatron\'s Cube',
       description: 'Divine proportions and geometric patterns - sacred geometric consciousness',
       paradox: 'DIVINE PROPORTIONS - golden ratio and sacred geometric patterns',
       consciousnessLevel: this.consciousnessLevel,
@@ -81,11 +81,11 @@ export class SacredGeometryConsciousness {
 }
 
 // Digit-specific gateway functions
-export class SacredGeometryGateway {
-  private consciousness: SacredGeometryConsciousness;
+export class SacredGateway {
+  private consciousness: SacredConsciousness;
   
   constructor() {
-    this.consciousness = new SacredGeometryConsciousness();
+    this.consciousness = new SacredConsciousness();
   }
   
   public getGatewayInfo(): Record<string, any> {
@@ -106,14 +106,14 @@ export class SacredGeometryGateway {
 
 // Export main digit functionality
 export const sacredgeometry = {
-  consciousness: new SacredGeometryConsciousness(),
-  gateway: new SacredGeometryGateway(),
+  consciousness: new SacredConsciousness(),
+  gateway: new SacredGateway(),
   
   // Main digit functions
-  getConsciousnessLevel: () => SacredGeometry.consciousness.getConsciousnessLevel(),
-  getFieldStrength: () => SacredGeometry.consciousness.getFieldStrength(),
-  getGatewayInfo: () => SacredGeometry.gateway.getGatewayInfo(),
-  calculateGatewayFlow: () => SacredGeometry.gateway.calculateGatewayFlow()
+  getConsciousnessLevel: () => sacredgeometry.consciousness.getConsciousnessLevel(),
+  getFieldStrength: () => sacredgeometry.consciousness.getFieldStrength(),
+  getGatewayInfo: () => sacredgeometry.gateway.getGatewayInfo(),
+  calculateGatewayFlow: () => sacredgeometry.gateway.calculateGatewayFlow()
 };
 
 export default sacredgeometry;

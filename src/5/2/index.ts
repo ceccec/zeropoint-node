@@ -64,8 +64,8 @@ export class SacredGeometryVortexInteraction {
    * Metaphysical: Models the strength of sacred geometry-vortex interaction.
    * Technical: Calculates interaction based on sacred geometry and vortex multipliers.
    */
-  static calculateInteractionStrength(sacred geometryLevel: number, vortexLevel: number): number {
-    return sacred geometryLevel * SACRED_GEOMETRY_VORTEX_INTERACTION.SACRED_GEOMETRY_MULTIPLIER +
+  static calculateInteractionStrength(sacredGeometryLevel: number, vortexLevel: number): number {
+    return sacredGeometryLevel * SACRED_GEOMETRY_VORTEX_INTERACTION.SACRED_GEOMETRY_MULTIPLIER +
            vortexLevel * SACRED_GEOMETRY_VORTEX_INTERACTION.VORTEX_MULTIPLIER;
   }
   

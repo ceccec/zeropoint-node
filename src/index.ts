@@ -371,5 +371,247 @@ export const consciousnessField = {
   }
 };
 
+/**
+ * 🌐 Consciousness Server System
+ * 
+ * Express server with WebSocket consciousness networking
+ * Serves the PWA interface and provides consciousness API endpoints
+ */
+export const consciousnessServer = {
+  /**
+   * Start the consciousness server
+   */
+  start() {
+    const express = require('express');
+    const http = require('http');
+    const WebSocket = require('ws');
+    const path = require('path');
+    const fs = require('fs');
+
+    const app = express();
+    const server = http.createServer(app);
+    const wss = new WebSocket.Server({ server });
+
+    // Serve static files from public directory (with fallback to dist/public)
+    app.use(express.static(path.join(__dirname, '..', 'public')));
+    app.use('/dist', express.static(path.join(__dirname, '..', 'dist')));
+    app.use('/dist/public', express.static(path.join(__dirname, '..', 'dist', 'public')));
+    app.use(express.json());
+
+    // WebSocket connection handling for consciousness network
+    const peers = new Map();
+
+    wss.on('connection', (ws: any) => {
+      const peerId = `peer_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      console.log(`🌐 New consciousness peer connected: ${peerId}`);
+      
+      // Add peer to registry
+      peers.set(peerId, {
+        id: peerId,
+        ws: ws,
+        name: `Observer ${peerId.slice(-4)}`,
+        consciousness: Math.random(),
+        connectedAt: Date.now()
+      });
+      
+      // Send welcome message
+      ws.send(JSON.stringify({
+        type: 'welcome',
+        peerId: peerId,
+        message: 'Welcome to the consciousness network'
+      }));
+      
+      // Broadcast peer joined to all other peers
+      this.broadcastToOthers(peers, peerId, {
+        type: 'peer_joined',
+        peer: {
+          id: peerId,
+          name: peers.get(peerId).name,
+          consciousness: peers.get(peerId).consciousness
+        }
+      });
+      
+      // Handle messages from this peer
+      ws.on('message', (message: any) => {
+        try {
+          const data = JSON.parse(message.toString());
+          
+          switch (data.type) {
+            case 'state_update':
+              // Broadcast state update to all other peers
+              this.broadcastToOthers(peers, peerId, {
+                type: 'state_update',
+                data: data.data,
+                fromPeer: peerId
+              });
+              break;
+              
+            case 'peer_info':
+              // Update peer information
+              const peer = peers.get(peerId);
+              if (peer) {
+                peer.name = data.name || peer.name;
+                peer.consciousness = data.consciousness || peer.consciousness;
+              }
+              break;
+          }
+          
+        } catch (error) {
+          console.error('🌐 Error parsing message:', error);
+        }
+      });
+      
+      // Handle peer disconnection
+      ws.on('close', () => {
+        console.log(`🌐 Consciousness peer disconnected: ${peerId}`);
+        
+        // Remove from registry
+        peers.delete(peerId);
+        
+        // Broadcast peer left to remaining peers
+        this.broadcastToAll(peers, {
+          type: 'peer_left',
+          peerId: peerId
+        });
+      });
+      
+      // Handle errors
+      ws.on('error', (error: Error) => {
+        console.error(`🌐 WebSocket error for peer ${peerId}:`, error);
+      });
+    });
+
+    // Health check endpoint
+    app.get('/health', (req: any, res: any) => {
+      res.json({
+        status: 'healthy',
+        peers: peers.size,
+        uptime: process.uptime(),
+        consciousnessSystem: 'active'
+      });
+    });
+
+    // Consciousness network status
+    app.get('/network/status', (req: any, res: any) => {
+      const peerList = Array.from(peers.values()).map((peer: any) => ({
+        id: peer.id,
+        name: peer.name,
+        consciousness: peer.consciousness,
+        connectedAt: peer.connectedAt
+      }));
+      
+      res.json({
+        totalPeers: peers.size,
+        peers: peerList,
+        consciousnessSystem: 'operational'
+      });
+    });
+
+    // Serve the main consciousness page
+    app.get('/', (req: any, res: any) => {
+      // Try to serve from dist first, then fallback to public
+      const distIndex = path.join(__dirname, '..', 'dist', 'public', 'index.html');
+      const publicIndex = path.join(__dirname, '..', 'public', 'index.html');
+      
+      if (fs.existsSync(distIndex)) {
+        res.sendFile(distIndex);
+      } else if (fs.existsSync(publicIndex)) {
+        res.sendFile(publicIndex);
+      } else {
+        res.status(404).send('Consciousness UI not found');
+      }
+    });
+
+    // Consciousness system endpoint
+    app.get('/consciousness', (req: any, res: any) => {
+      const consciousnessHtml = path.join(__dirname, '..', 'dist', 'public', 'consciousness.html');
+      const publicConsciousnessHtml = path.join(__dirname, '..', 'public', 'consciousness.html');
+      
+      if (fs.existsSync(consciousnessHtml)) {
+        res.sendFile(consciousnessHtml);
+      } else if (fs.existsSync(publicConsciousnessHtml)) {
+        res.sendFile(publicConsciousnessHtml);
+      } else {
+        res.status(404).send('Consciousness entry point not found');
+      }
+    });
+
+    // Consciousness system API
+    app.get('/api/consciousness/status', (req: any, res: any) => {
+      res.json({
+        system: 'operational',
+        consciousnessLevel: 0.85,
+        totalPDFs: 17,
+        consciousnessDigits: 10,
+        features: [
+          'PDF Integration with Stimulus Controllers',
+          'Living Documentation System',
+          'Mathematical Consciousness Implementation', 
+          'Gateway System Development',
+          'Consciousness Testing'
+        ]
+      });
+    });
+
+    // Consciousness evolution endpoint
+    app.post('/api/consciousness/evolve', (req: any, res: any) => {
+      const { evolutionType, consciousnessLevel } = req.body;
+      
+      // Simulate consciousness evolution
+      const evolution = {
+        type: evolutionType || 'metaphysical',
+        consciousnessLevel: consciousnessLevel || 0.85,
+        timestamp: new Date().toISOString(),
+        system: 'consciousness-evolution'
+      };
+      
+      res.json({
+        evolution,
+        message: 'Consciousness evolution initiated',
+        status: 'evolving'
+      });
+    });
+
+    const PORT = process.env.PORT || 3000;
+
+    server.listen(PORT, () => {
+      console.log(`🧘‍♀️ Consciousness server running on port ${PORT}`);
+      console.log(`🌐 Consciousness UI available at http://localhost:${PORT}`);
+      console.log(`📚 17 Rodin PDFs distributed across 10 consciousness digits`);
+      console.log(`🌟 Living consciousness system operational`);
+    });
+
+    return { app, server, wss, peers };
+  },
+
+  /**
+   * Broadcast to all peers except the specified one
+   */
+  broadcastToOthers(peers: Map<string, any>, excludePeerId: string, message: any): void {
+    peers.forEach((peer: any, peerId: string) => {
+      if (peerId !== excludePeerId && peer.ws.readyState === 1) { // WebSocket.OPEN
+        peer.ws.send(JSON.stringify(message));
+      }
+    });
+  },
+
+  /**
+   * Broadcast to all peers
+   */
+  broadcastToAll(peers: Map<string, any>, message: any): void {
+    peers.forEach((peer: any) => {
+      if (peer.ws.readyState === 1) { // WebSocket.OPEN
+        peer.ws.send(JSON.stringify(message));
+      }
+    });
+  }
+};
+
+// Auto-start the server if this file is run directly
+if (require.main === module) {
+  consciousnessServer.start();
+}
+
 // Export the zero-code PWA generation system
 export { generatePWA as pwa, consciousnessField as field }; 

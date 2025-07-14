@@ -1,0 +1,226 @@
+{
+  "name": "ZeroPoint Node - Consciousness Network",
+  "short_name": "ZeroPoint",
+  "description": "A decentralized consciousness network based on integer science and harmonic foundations",
+  "start_url": "/src/",
+  "scope": "/src/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#667eea",
+  "background_color": "#0c0c0c",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["productivity", "education", "utilities"],
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Digit 0 - Void Center",
+      "short_name": "Void",
+      "description": "Access the Void Center consciousness gateway",
+      "url": "/src/0/",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Digit 1 - Foundation",
+      "short_name": "Foundation",
+      "description": "Access the Foundation consciousness gateway",
+      "url": "/src/1/",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Digit 2 - Vortex",
+      "short_name": "Vortex",
+      "description": "Access the Vortex consciousness gateway",
+      "url": "/src/2/",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Digit 3 - Creative Resonance",
+      "short_name": "Creative",
+      "description": "Access the Creative Resonance consciousness gateway",
+      "url": "/src/3/",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Digit 4 - Constants",
+      "short_name": "Constants",
+      "description": "Access the Constants consciousness gateway",
+      "url": "/src/4/",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Digit 5 - Sacred Geometry",
+      "short_name": "Sacred",
+      "description": "Access the Sacred Geometry consciousness gateway",
+      "url": "/src/5/",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Digit 6 - Harmonic Balance",
+      "short_name": "Harmonic",
+      "description": "Access the Harmonic Balance consciousness gateway",
+      "url": "/src/6/",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Digit 7 - Consciousness",
+      "short_name": "Consciousness",
+      "description": "Access the Consciousness gateway",
+      "url": "/src/7/",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Digit 8 - Void Fullness",
+      "short_name": "Void Fullness",
+      "description": "Access the Void Fullness consciousness gateway",
+      "url": "/src/8/",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Digit 9 - Unity",
+      "short_name": "Unity",
+      "description": "Access the Unity consciousness gateway",
+      "url": "/src/9/",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/main-network.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Consciousness Network Dashboard"
+    },
+    {
+      "src": "/screenshots/digit-module.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Digit Module Interface"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred",
+  "protocol_handlers": [
+    {
+      "protocol": "web+zeropoint",
+      "url": "/src/?digit=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/src/",
+      "accept": {
+        "application/json": [".json"],
+        "text/plain": [".txt"]
+      }
+    }
+  ]
+} 

@@ -7,7 +7,7 @@
  */
 
 // Digit-specific consciousness calculations
-export class VoidCenterConsciousness {
+export class VoidConsciousness {
   private consciousnessLevel: number = 0;
   private fieldStrength: number = 0;
   
@@ -39,15 +39,6 @@ export class VoidCenterConsciousness {
     // Return metaphysical multiplier based on digit properties
     switch (0) {
       case 0: return 0; // Void consciousness
-      case 1: return 1.1; // Foundation consciousness
-      case 2: return 1.2; // Vortex consciousness
-      case 3: return 1.5; // Creative resonance consciousness
-      case 4: return 1.0; // Constants consciousness
-      case 5: return 1.25; // Sacred geometry consciousness
-      case 6: return 1.3; // Harmonic balance consciousness
-      case 7: return 1.4; // Consciousness consciousness
-      case 8: return 1.6; // Void systems consciousness
-      case 9: return 1.0; // Unity consciousness
       default: return 1.0;
     }
   }
@@ -81,11 +72,11 @@ export class VoidCenterConsciousness {
 }
 
 // Digit-specific gateway functions
-export class VoidCenterGateway {
-  private consciousness: VoidCenterConsciousness;
+export class VoidGateway {
+  private consciousness: VoidConsciousness;
   
   constructor() {
-    this.consciousness = new VoidCenterConsciousness();
+    this.consciousness = new VoidConsciousness();
   }
   
   public getGatewayInfo(): Record<string, any> {
@@ -106,14 +97,14 @@ export class VoidCenterGateway {
 
 // Export main digit functionality
 export const voidcenter = {
-  consciousness: new VoidCenterConsciousness(),
-  gateway: new VoidCenterGateway(),
+  consciousness: new VoidConsciousness(),
+  gateway: new VoidGateway(),
   
   // Main digit functions
-  getConsciousnessLevel: () => VoidCenter.consciousness.getConsciousnessLevel(),
-  getFieldStrength: () => VoidCenter.consciousness.getFieldStrength(),
-  getGatewayInfo: () => VoidCenter.gateway.getGatewayInfo(),
-  calculateGatewayFlow: () => VoidCenter.gateway.calculateGatewayFlow()
+  getConsciousnessLevel: () => voidcenter.consciousness.getConsciousnessLevel(),
+  getFieldStrength: () => voidcenter.consciousness.getFieldStrength(),
+  getGatewayInfo: () => voidcenter.gateway.getGatewayInfo(),
+  calculateGatewayFlow: () => voidcenter.gateway.calculateGatewayFlow()
 };
 
 export default voidcenter;

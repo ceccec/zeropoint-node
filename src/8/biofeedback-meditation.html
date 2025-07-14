@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biofeedback Meditation PWA</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #2c5364);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 16px;
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 0.5em;
+    }
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+    .panel {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+    .panel h3 {
+      margin-top: 0;
+      color: #00ffc6;
+    }
+    .biofeedback-values {
+      font-size: 1.2em;
+      margin-bottom: 16px;
+    }
+    .chart {
+      width: 100%;
+      height: 120px;
+      background: #222;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .bar {
+      width: 2px;
+      margin-right: 1px;
+      background: #00ffc6;
+      display: inline-block;
+      vertical-align: bottom;
+    }
+    .controls {
+      text-align: center;
+      margin: 24px 0;
+    }
+    button {
+      background: #00ffc6;
+      color: #222;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 24px;
+      font-size: 1em;
+      margin: 0 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #00bfae;
+    }
+    .audio-panel, .vis-panel {
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .audio-status, .vis-status {
+      margin-top: 12px;
+      font-size: 1.1em;
+      color: #00ffc6;
+    }
+    @media (max-width: 900px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧘‍♂️ Biofeedback Meditation</h1>
+    <h2>Live, Feedback-Driven Meditation & Visualization</h2>
+    <div class="dashboard">
+      <div class="panel">
+        <h3>Biofeedback Input</h3>
+        <div class="biofeedback-values">
+          Heart Rate: <span id="hr-val">--</span> bpm<br>
+          EEG: <span id="eeg-val">--</span> Hz
+        </div>
+        <div>
+          <div>Heart Rate</div>
+          <div class="chart" id="hr-chart"></div>
+        </div>
+        <div>
+          <div>EEG</div>
+          <div class="chart" id="eeg-chart"></div>
+        </div>
+        <div class="controls">
+          <button id="start-btn">Start Simulation</button>
+          <button id="stop-btn" disabled>Stop</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Audio & 3D Visualization</h3>
+        <div class="audio-panel">
+          <div>Audio Amplitude: <span id="audio-amp">--</span></div>
+          <div>Audio Frequency: <span id="audio-freq">--</span> Hz</div>
+          <div class="audio-status" id="audio-status">Audio idle</div>
+        </div>
+        <div class="vis-panel">
+          <div>Color Intensity: <span id="vis-color">--</span></div>
+          <div>Animation Speed: <span id="vis-speed">--</span></div>
+          <div class="vis-status" id="vis-status">Visualization idle</div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Meditation Guidance</h3>
+      <p>As your heart rate and EEG change, the meditation soundscape and 3D visualization will respond in real time. Try to slow your breath and relax to see the effects!</p>
+      <p><em>(This demo uses simulated data. Real device integration is possible via the API.)</em></p>
+    </div>
+  </div>
+  <script>
+    // --- Simulation State ---
+    let simInterval = null;
+    let running = false;
+    let hrHistory = [];
+    let eegHistory = [];
+    const maxHistory = 120;
+    // Audio/vis state
+    let audioAmp = 0;
+    let audioFreq = 0;
+    let visColor = 0;
+    let visSpeed = 0;
+
+    // --- DOM Elements ---
+    const hrVal = document.getElementById('hr-val');
+    const eegVal = document.getElementById('eeg-val');
+    const hrChart = document.getElementById('hr-chart');
+    const eegChart = document.getElementById('eeg-chart');
+    const audioAmpEl = document.getElementById('audio-amp');
+    const audioFreqEl = document.getElementById('audio-freq');
+    const visColorEl = document.getElementById('vis-color');
+    const visSpeedEl = document.getElementById('vis-speed');
+    const audioStatus = document.getElementById('audio-status');
+    const visStatus = document.getElementById('vis-status');
+    const startBtn = document.getElementById('start-btn');
+    const stopBtn = document.getElementById('stop-btn');
+
+    // --- Simulation Functions ---
+    function simulateBiofeedback() {
+      // Heart rate: 60-100 bpm, EEG: 8-40 Hz
+      const hr = 60 + Math.round(Math.random() * 40);
+      const eeg = 8 + Math.random() * 32;
+      hrHistory.push(hr);
+      eegHistory.push(eeg);
+      if (hrHistory.length > maxHistory) hrHistory.shift();
+      if (eegHistory.length > maxHistory) eegHistory.shift();
+      updateBiofeedbackDisplay(hr, eeg);
+      updateAudioVis(hr, eeg);
+    }
+    function updateBiofeedbackDisplay(hr, eeg) {
+      hrVal.textContent = hr;
+      eegVal.textContent = eeg.toFixed(1);
+      drawChart(hrChart, hrHistory, 40, 100, '#00ffc6');
+      drawChart(eegChart, eegHistory, 8, 40, '#ff00ff');
+    }
+    function drawChart(chartEl, data, min, max, color) {
+      chartEl.innerHTML = '';
+      for (let i = 0; i < data.length; i++) {
+        const val = data[i];
+        const pct = (val - min) / (max - min);
+        const h = Math.max(8, pct * 100);
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.height = h + 'px';
+        bar.style.background = color;
+        chartEl.appendChild(bar);
+      }
+    }
+    function updateAudioVis(hr, eeg) {
+      // Audio: amplitude = hr/100, freq = 432+eeg
+      audioAmp = Math.min(1, hr / 100);
+      audioFreq = 432 + eeg;
+      visColor = Math.min(1, eeg / 40);
+      visSpeed = hr / 80;
+      audioAmpEl.textContent = audioAmp.toFixed(2);
+      audioFreqEl.textContent = audioFreq.toFixed(1);
+      visColorEl.textContent = visColor.toFixed(2);
+      visSpeedEl.textContent = visSpeed.toFixed(2);
+      audioStatus.textContent = `Audio: ${audioAmp > 0.7 ? 'Active' : 'Calm'} | Freq: ${audioFreq.toFixed(1)} Hz`;
+      visStatus.textContent = `Visualization: ${visSpeed > 1.2 ? 'Fast' : 'Smooth'} | Color: ${visColor.toFixed(2)}`;
+    }
+    // --- Controls ---
+    startBtn.onclick = () => {
+      if (running) return;
+      running = true;
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+      simInterval = setInterval(simulateBiofeedback, 1000);
+      audioStatus.textContent = 'Audio: Running';
+      visStatus.textContent = 'Visualization: Running';
+    };
+    stopBtn.onclick = () => {
+      if (!running) return;
+      running = false;
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+      clearInterval(simInterval);
+      audioStatus.textContent = 'Audio idle';
+      visStatus.textContent = 'Visualization idle';
+    };
+    // --- Init ---
+    updateBiofeedbackDisplay(0, 0);
+    updateAudioVis(0, 0);
+  </script>
+</body>
+</html> 

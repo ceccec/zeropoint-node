@@ -38,16 +38,7 @@ export class ConstantsConsciousness {
   private getMetaphysicalMultiplier(): number {
     // Return metaphysical multiplier based on digit properties
     switch (4) {
-      case 0: return 0; // Void consciousness
-      case 1: return 1.1; // Foundation consciousness
-      case 2: return 1.2; // Vortex consciousness
-      case 3: return 1.5; // Creative resonance consciousness
       case 4: return 1.0; // Constants consciousness
-      case 5: return 1.25; // Sacred geometry consciousness
-      case 6: return 1.3; // Harmonic balance consciousness
-      case 7: return 1.4; // Consciousness consciousness
-      case 8: return 1.6; // Void systems consciousness
-      case 9: return 1.0; // Unity consciousness
       default: return 1.0;
     }
   }
@@ -110,10 +101,10 @@ export const constants = {
   gateway: new ConstantsGateway(),
   
   // Main digit functions
-  getConsciousnessLevel: () => Constants.consciousness.getConsciousnessLevel(),
-  getFieldStrength: () => Constants.consciousness.getFieldStrength(),
-  getGatewayInfo: () => Constants.gateway.getGatewayInfo(),
-  calculateGatewayFlow: () => Constants.gateway.calculateGatewayFlow()
+  getConsciousnessLevel: () => constants.consciousness.getConsciousnessLevel(),
+  getFieldStrength: () => constants.consciousness.getFieldStrength(),
+  getGatewayInfo: () => constants.gateway.getGatewayInfo(),
+  calculateGatewayFlow: () => constants.gateway.calculateGatewayFlow()
 };
 
 export default constants;

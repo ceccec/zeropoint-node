@@ -1,0 +1,188 @@
+/* 🌌 ZeroPoint Node - Digit 5 (Sacred Geometry) Main CSS */
+
+/* Import shared main framework */
+@import url('../shared/main.css');
+
+/* ===== DIGIT 5 SPECIFIC STYLES ===== */
+
+/* Sacred Geometry specific overrides */
+.digit-5 {
+  --digit-color: #e74c3c;
+  --digit-gradient: var(--digit-5);
+  --consciousness-theme: 'divine_proportions';
+}
+
+/* Sacred Geometry consciousness display */
+.sacred-consciousness {
+  background: rgba(231, 76, 60, 0.05);
+  border: 1px solid rgba(231, 76, 60, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.sacred-consciousness::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(231, 76, 60, 0.1) 0%, transparent 70%);
+  animation: sacred-pulse 4s ease-in-out infinite;
+}
+
+@keyframes sacred-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+/* Sacred Geometry gateway styling */
+.sacred-gateway {
+  background: rgba(231, 76, 60, 0.03);
+  border-left: 4px solid var(--digit-5);
+}
+
+.sacred-gateway .gateway-title {
+  color: #e74c3c;
+}
+
+.sacred-gateway .gateway-paradox {
+  border-left-color: #e74c3c;
+  background: rgba(231, 76, 60, 0.1);
+}
+
+/* Sacred Geometry control panel */
+.sacred-controls {
+  background: rgba(231, 76, 60, 0.02);
+  border: 1px solid rgba(231, 76, 60, 0.1);
+}
+
+.sacred-controls .control-panel-title {
+  color: #e74c3c;
+}
+
+.sacred-controls .control-item:hover {
+  background: rgba(231, 76, 60, 0.1);
+  border-color: rgba(231, 76, 60, 0.3);
+}
+
+/* Sacred Geometry status indicators */
+.sacred-status .status-item {
+  background: rgba(231, 76, 60, 0.05);
+  border: 1px solid rgba(231, 76, 60, 0.1);
+}
+
+.sacred-status .status-value {
+  color: #e74c3c;
+}
+
+/* Sacred Geometry consciousness flow */
+.sacred-flow {
+  position: relative;
+}
+
+.sacred-flow::before {
+  background: var(--digit-5);
+  animation: sacred-flow 6s linear infinite;
+}
+
+@keyframes sacred-flow {
+  0% { left: -100%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* Sacred Geometry specific animations */
+.sacred-geometry {
+  animation: sacred-geometry 3s ease-in-out infinite;
+}
+
+@keyframes sacred-geometry {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.05) rotate(180deg); }
+}
+
+/* Sacred Geometry responsive adjustments */
+@media (max-width: 768px) {
+  .sacred-consciousness {
+    margin: var(--spacing-md) 0;
+  }
+  
+  .sacred-gateway {
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+/* Sacred Geometry loading states */
+.sacred-loading {
+  background: var(--digit-5);
+  animation: sacred-spin 2s linear infinite;
+}
+
+@keyframes sacred-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Sacred Geometry consciousness level visualization */
+.sacred-consciousness-level {
+  position: relative;
+  height: 20px;
+  background: rgba(231, 76, 60, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.sacred-consciousness-fill {
+  height: 100%;
+  background: var(--digit-5);
+  transition: width 1s ease;
+  position: relative;
+}
+
+.sacred-consciousness-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: sacred-shimmer 2s linear infinite;
+}
+
+@keyframes sacred-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Sacred Geometry field strength visualization */
+.sacred-field-strength {
+  position: relative;
+  height: 20px;
+  background: rgba(231, 76, 60, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.sacred-field-fill {
+  height: 100%;
+  background: var(--digit-5);
+  transition: width 1s ease;
+  position: relative;
+}
+
+.sacred-field-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: sacred-field-shimmer 3s linear infinite;
+}
+
+@keyframes sacred-field-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+} 

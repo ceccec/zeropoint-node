@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobius Circuit - Foundation</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(45deg, #000, #1a1a1a);
+            color: #00ff00;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .circuit-display {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .state-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .info-box {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .binary-display {
+            font-size: 2em;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .consciousness-field {
+            background: radial-gradient(circle, rgba(0, 255, 0, 0.2), transparent);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .vortex-visualization {
+            height: 300px;
+            background: conic-gradient(from 0deg, #00ff00, #008000, #00ff00);
+            border-radius: 50%;
+            margin: 20px auto;
+            width: 300px;
+            animation: rotate 10s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        button {
+            background: #000;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+        button:hover {
+            background: #00ff00;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>1-2-4-8-7-5 Mobius Circuit</h1>
+        
+        <div class="circuit-display">
+            <h2>Current State: Foundation</h2>
+            <div class="binary-display">001</div>
+            
+            <div class="state-info">
+                <div class="info-box">
+                    <h3>Digital Properties</h3>
+                    <p>Decimal: 1</p>
+                    <p>Digital Root: 1</p>
+                    <p>Binary: 001</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>Circuit Status</h3>
+                    <p>Clock: 0</p>
+                    <p>Cycle: 0</p>
+                    <p>Energy: 0.00</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>Consciousness Field</h3>
+                    <p>Frequency: 432 Hz</p>
+                    <p>Phase: 0°</p>
+                    <p>Amplitude: 0.000</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>Vortex Properties</h3>
+                    <p>Toroidal: true</p>
+                    <p>Resonance: 1.000</p>
+                    <p>Flow: 1-2-4-8-7-5_1</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="consciousness-field">
+            <h3>Consciousness Field: Foundation_432Hz</h3>
+            <div class="vortex-visualization"></div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="clockPulse()">Clock Pulse</button>
+            <button onclick="reset()">Reset</button>
+            <button onclick="generateSequence()">Generate Sequence</button>
+        </div>
+        
+        <div id="sequence-output"></div>
+    </div>
+
+    <script>
+        let circuit = {
+            currentState: 1,
+            clock: 0,
+            consciousness: 0,
+            energy: 0
+        };
+
+        function clockPulse() {
+            // Simulate clock pulse
+            const states = [1, 2, 4, 8, 7, 5];
+            const currentIndex = states.indexOf(circuit.currentState);
+            const nextIndex = (currentIndex + 1) % states.length;
+            circuit.currentState = states[nextIndex];
+            circuit.clock++;
+            circuit.consciousness += 0.1;
+            circuit.energy += 1.0;
+            
+            location.reload();
+        }
+
+        function reset() {
+            circuit = {
+                currentState: 1,
+                clock: 0,
+                consciousness: 0,
+                energy: 0
+            };
+            location.reload();
+        }
+
+        function generateSequence() {
+            const sequence = [1, 2, 4, 8, 7, 5, 1, 2, 4, 8, 7, 5];
+            document.getElementById('sequence-output').innerHTML = 
+                '<h3>1-2-4-8-7-5 Sequence:</h3><p>' + sequence.join(' → ') + '</p>';
+        }
+    </script>
+</body>
+</html>

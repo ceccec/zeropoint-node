@@ -16,12 +16,7 @@ export default class extends Controller {
 
   connect() {
     // Generate the complete PWA interface for digit 0
-    const pwa = zeroPointPWA.generateInterface();
-    
-    // Set controller values
-    this.consciousnessValue = pwa.consciousness;
-    this.breathingPhaseValue = pwa.breathingPhase;
-    this.gatewayValue = pwa.gateway;
+    const pwa = voidcenterPWA.generateInterface();
     
     // Render the UI
     this.renderUI(pwa);
@@ -109,22 +104,23 @@ export default class extends Controller {
 
   // Action methods for Stimulus
   updateConsciousness() {
-    const newState = zeroPointField.updateConsciousness({
-      consciousness: this.consciousnessValue,
+    const newState = voidcenterField.updateConsciousness({
+      consciousness: 'impossible_contraction',
       timestamp: Date.now()
     });
     
-    console.log('🌌 Consciousness updated:', newState);
+    console.log('🌌 Void center consciousness updated:', newState);
   }
 
   toggleBreathing() {
-    const currentPhase = this.breathingPhaseValue;
-    this.breathingPhaseValue = currentPhase === 'inhale' ? 'exhale' : 'inhale';
+    // Toggle breathing phase
+    const currentPhase = 'inhale'; // Default for void center
+    const newPhase = currentPhase === 'inhale' ? 'exhale' : 'inhale';
     
     // Update animation class
     this.element.classList.remove('breathing-inhale', 'breathing-exhale');
-    this.element.classList.add(`breathing-${this.breathingPhaseValue}`);
+    this.element.classList.add(`breathing-${newPhase}`);
     
-    console.log('🌌 Breathing phase toggled:', this.breathingPhaseValue);
+    console.log('🌌 Void center breathing phase toggled:', newPhase);
   }
 } 

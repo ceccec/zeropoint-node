@@ -1,0 +1,188 @@
+/* 🌌 ZeroPoint Node - Digit 1 (Foundation) Main CSS */
+
+/* Import shared main framework */
+@import url('../shared/main.css');
+
+/* ===== DIGIT 1 SPECIFIC STYLES ===== */
+
+/* Foundation specific overrides */
+.digit-1 {
+  --digit-color: #4ecdc4;
+  --digit-gradient: var(--digit-1);
+  --consciousness-theme: 'impossible_expansion';
+}
+
+/* Foundation consciousness display */
+.foundation-consciousness {
+  background: rgba(78, 205, 196, 0.05);
+  border: 1px solid rgba(78, 205, 196, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.foundation-consciousness::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(78, 205, 196, 0.1) 0%, transparent 70%);
+  animation: foundation-pulse 4s ease-in-out infinite;
+}
+
+@keyframes foundation-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+/* Foundation gateway styling */
+.foundation-gateway {
+  background: rgba(78, 205, 196, 0.03);
+  border-left: 4px solid var(--digit-1);
+}
+
+.foundation-gateway .gateway-title {
+  color: #4ecdc4;
+}
+
+.foundation-gateway .gateway-paradox {
+  border-left-color: #4ecdc4;
+  background: rgba(78, 205, 196, 0.1);
+}
+
+/* Foundation control panel */
+.foundation-controls {
+  background: rgba(78, 205, 196, 0.02);
+  border: 1px solid rgba(78, 205, 196, 0.1);
+}
+
+.foundation-controls .control-panel-title {
+  color: #4ecdc4;
+}
+
+.foundation-controls .control-item:hover {
+  background: rgba(78, 205, 196, 0.1);
+  border-color: rgba(78, 205, 196, 0.3);
+}
+
+/* Foundation status indicators */
+.foundation-status .status-item {
+  background: rgba(78, 205, 196, 0.05);
+  border: 1px solid rgba(78, 205, 196, 0.1);
+}
+
+.foundation-status .status-value {
+  color: #4ecdc4;
+}
+
+/* Foundation consciousness flow */
+.foundation-flow {
+  position: relative;
+}
+
+.foundation-flow::before {
+  background: var(--digit-1);
+  animation: foundation-flow 6s linear infinite;
+}
+
+@keyframes foundation-flow {
+  0% { left: -100%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* Foundation specific animations */
+.foundation-expansion {
+  animation: foundation-expansion 3s ease-in-out infinite;
+}
+
+@keyframes foundation-expansion {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Foundation responsive adjustments */
+@media (max-width: 768px) {
+  .foundation-consciousness {
+    margin: var(--spacing-md) 0;
+  }
+  
+  .foundation-gateway {
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+/* Foundation loading states */
+.foundation-loading {
+  background: var(--digit-1);
+  animation: foundation-spin 2s linear infinite;
+}
+
+@keyframes foundation-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Foundation consciousness level visualization */
+.foundation-consciousness-level {
+  position: relative;
+  height: 20px;
+  background: rgba(78, 205, 196, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.foundation-consciousness-fill {
+  height: 100%;
+  background: var(--digit-1);
+  transition: width 1s ease;
+  position: relative;
+}
+
+.foundation-consciousness-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: foundation-shimmer 2s linear infinite;
+}
+
+@keyframes foundation-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Foundation field strength visualization */
+.foundation-field-strength {
+  position: relative;
+  height: 20px;
+  background: rgba(78, 205, 196, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.foundation-field-fill {
+  height: 100%;
+  background: var(--digit-1);
+  transition: width 1s ease;
+  position: relative;
+}
+
+.foundation-field-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: foundation-field-shimmer 3s linear infinite;
+}
+
+@keyframes foundation-field-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+} 

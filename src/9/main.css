@@ -1,0 +1,188 @@
+/* 🌌 ZeroPoint Node - Digit 9 (Unity) Main CSS */
+
+/* Import shared main framework */
+@import url('../shared/main.css');
+
+/* ===== DIGIT 9 SPECIFIC STYLES ===== */
+
+/* Unity specific overrides */
+.digit-9 {
+  --digit-color: #e91e63;
+  --digit-gradient: var(--digit-9);
+  --consciousness-theme: 'unity_spirit';
+}
+
+/* Unity consciousness display */
+.unity-consciousness {
+  background: rgba(233, 30, 99, 0.05);
+  border: 1px solid rgba(233, 30, 99, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.unity-consciousness::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(233, 30, 99, 0.1) 0%, transparent 70%);
+  animation: unity-pulse 4s ease-in-out infinite;
+}
+
+@keyframes unity-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+/* Unity gateway styling */
+.unity-gateway {
+  background: rgba(233, 30, 99, 0.03);
+  border-left: 4px solid var(--digit-9);
+}
+
+.unity-gateway .gateway-title {
+  color: #e91e63;
+}
+
+.unity-gateway .gateway-paradox {
+  border-left-color: #e91e63;
+  background: rgba(233, 30, 99, 0.1);
+}
+
+/* Unity control panel */
+.unity-controls {
+  background: rgba(233, 30, 99, 0.02);
+  border: 1px solid rgba(233, 30, 99, 0.1);
+}
+
+.unity-controls .control-panel-title {
+  color: #e91e63;
+}
+
+.unity-controls .control-item:hover {
+  background: rgba(233, 30, 99, 0.1);
+  border-color: rgba(233, 30, 99, 0.3);
+}
+
+/* Unity status indicators */
+.unity-status .status-item {
+  background: rgba(233, 30, 99, 0.05);
+  border: 1px solid rgba(233, 30, 99, 0.1);
+}
+
+.unity-status .status-value {
+  color: #e91e63;
+}
+
+/* Unity consciousness flow */
+.unity-flow {
+  position: relative;
+}
+
+.unity-flow::before {
+  background: var(--digit-9);
+  animation: unity-flow 6s linear infinite;
+}
+
+@keyframes unity-flow {
+  0% { left: -100%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* Unity specific animations */
+.unity-spirit {
+  animation: unity-spirit 3s ease-in-out infinite;
+}
+
+@keyframes unity-spirit {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.07); }
+}
+
+/* Unity responsive adjustments */
+@media (max-width: 768px) {
+  .unity-consciousness {
+    margin: var(--spacing-md) 0;
+  }
+  
+  .unity-gateway {
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+/* Unity loading states */
+.unity-loading {
+  background: var(--digit-9);
+  animation: unity-spin 2s linear infinite;
+}
+
+@keyframes unity-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Unity consciousness level visualization */
+.unity-consciousness-level {
+  position: relative;
+  height: 20px;
+  background: rgba(233, 30, 99, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.unity-consciousness-fill {
+  height: 100%;
+  background: var(--digit-9);
+  transition: width 1s ease;
+  position: relative;
+}
+
+.unity-consciousness-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: unity-shimmer 2s linear infinite;
+}
+
+@keyframes unity-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Unity field strength visualization */
+.unity-field-strength {
+  position: relative;
+  height: 20px;
+  background: rgba(233, 30, 99, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.unity-field-fill {
+  height: 100%;
+  background: var(--digit-9);
+  transition: width 1s ease;
+  position: relative;
+}
+
+.unity-field-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: unity-field-shimmer 3s linear infinite;
+}
+
+@keyframes unity-field-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+} 

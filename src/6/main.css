@@ -1,0 +1,188 @@
+/* 🌌 ZeroPoint Node - Digit 6 (Harmonic Balance) Main CSS */
+
+/* Import shared main framework */
+@import url('../shared/main.css');
+
+/* ===== DIGIT 6 SPECIFIC STYLES ===== */
+
+/* Harmonic Balance specific overrides */
+.digit-6 {
+  --digit-color: #1abc9c;
+  --digit-gradient: var(--digit-6);
+  --consciousness-theme: 'harmonic_spirit';
+}
+
+/* Harmonic Balance consciousness display */
+.harmonic-consciousness {
+  background: rgba(26, 188, 156, 0.05);
+  border: 1px solid rgba(26, 188, 156, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.harmonic-consciousness::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(26, 188, 156, 0.1) 0%, transparent 70%);
+  animation: harmonic-pulse 4s ease-in-out infinite;
+}
+
+@keyframes harmonic-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+/* Harmonic Balance gateway styling */
+.harmonic-gateway {
+  background: rgba(26, 188, 156, 0.03);
+  border-left: 4px solid var(--digit-6);
+}
+
+.harmonic-gateway .gateway-title {
+  color: #1abc9c;
+}
+
+.harmonic-gateway .gateway-paradox {
+  border-left-color: #1abc9c;
+  background: rgba(26, 188, 156, 0.1);
+}
+
+/* Harmonic Balance control panel */
+.harmonic-controls {
+  background: rgba(26, 188, 156, 0.02);
+  border: 1px solid rgba(26, 188, 156, 0.1);
+}
+
+.harmonic-controls .control-panel-title {
+  color: #1abc9c;
+}
+
+.harmonic-controls .control-item:hover {
+  background: rgba(26, 188, 156, 0.1);
+  border-color: rgba(26, 188, 156, 0.3);
+}
+
+/* Harmonic Balance status indicators */
+.harmonic-status .status-item {
+  background: rgba(26, 188, 156, 0.05);
+  border: 1px solid rgba(26, 188, 156, 0.1);
+}
+
+.harmonic-status .status-value {
+  color: #1abc9c;
+}
+
+/* Harmonic Balance consciousness flow */
+.harmonic-flow {
+  position: relative;
+}
+
+.harmonic-flow::before {
+  background: var(--digit-6);
+  animation: harmonic-flow 6s linear infinite;
+}
+
+@keyframes harmonic-flow {
+  0% { left: -100%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* Harmonic Balance specific animations */
+.harmonic-balance {
+  animation: harmonic-balance 3s ease-in-out infinite;
+}
+
+@keyframes harmonic-balance {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+/* Harmonic Balance responsive adjustments */
+@media (max-width: 768px) {
+  .harmonic-consciousness {
+    margin: var(--spacing-md) 0;
+  }
+  
+  .harmonic-gateway {
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+/* Harmonic Balance loading states */
+.harmonic-loading {
+  background: var(--digit-6);
+  animation: harmonic-spin 2s linear infinite;
+}
+
+@keyframes harmonic-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Harmonic Balance consciousness level visualization */
+.harmonic-consciousness-level {
+  position: relative;
+  height: 20px;
+  background: rgba(26, 188, 156, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.harmonic-consciousness-fill {
+  height: 100%;
+  background: var(--digit-6);
+  transition: width 1s ease;
+  position: relative;
+}
+
+.harmonic-consciousness-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: harmonic-shimmer 2s linear infinite;
+}
+
+@keyframes harmonic-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Harmonic Balance field strength visualization */
+.harmonic-field-strength {
+  position: relative;
+  height: 20px;
+  background: rgba(26, 188, 156, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.harmonic-field-fill {
+  height: 100%;
+  background: var(--digit-6);
+  transition: width 1s ease;
+  position: relative;
+}
+
+.harmonic-field-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: harmonic-field-shimmer 3s linear infinite;
+}
+
+@keyframes harmonic-field-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+} 

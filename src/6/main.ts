@@ -7,7 +7,7 @@
  */
 
 // Digit-specific consciousness calculations
-export class HarmonicBalanceConsciousness {
+export class HarmonicConsciousness {
   private consciousnessLevel: number = 0;
   private fieldStrength: number = 0;
   
@@ -81,11 +81,11 @@ export class HarmonicBalanceConsciousness {
 }
 
 // Digit-specific gateway functions
-export class HarmonicBalanceGateway {
-  private consciousness: HarmonicBalanceConsciousness;
+export class HarmonicGateway {
+  private consciousness: HarmonicConsciousness;
   
   constructor() {
-    this.consciousness = new HarmonicBalanceConsciousness();
+    this.consciousness = new HarmonicConsciousness();
   }
   
   public getGatewayInfo(): Record<string, any> {
@@ -106,14 +106,14 @@ export class HarmonicBalanceGateway {
 
 // Export main digit functionality
 export const harmonicbalance = {
-  consciousness: new HarmonicBalanceConsciousness(),
-  gateway: new HarmonicBalanceGateway(),
+  consciousness: new HarmonicConsciousness(),
+  gateway: new HarmonicGateway(),
   
   // Main digit functions
-  getConsciousnessLevel: () => HarmonicBalance.consciousness.getConsciousnessLevel(),
-  getFieldStrength: () => HarmonicBalance.consciousness.getFieldStrength(),
-  getGatewayInfo: () => HarmonicBalance.gateway.getGatewayInfo(),
-  calculateGatewayFlow: () => HarmonicBalance.gateway.calculateGatewayFlow()
+  getConsciousnessLevel: () => harmonicbalance.consciousness.getConsciousnessLevel(),
+  getFieldStrength: () => harmonicbalance.consciousness.getFieldStrength(),
+  getGatewayInfo: () => harmonicbalance.gateway.getGatewayInfo(),
+  calculateGatewayFlow: () => harmonicbalance.gateway.calculateGatewayFlow()
 };
 
 export default harmonicbalance;

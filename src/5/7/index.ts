@@ -64,8 +64,8 @@ export class SacredGeometryConsciousnessInteraction {
    * Metaphysical: Models the strength of sacred geometry-consciousness interaction.
    * Technical: Calculates interaction based on sacred geometry and consciousness multipliers.
    */
-  static calculateInteractionStrength(sacred geometryLevel: number, consciousnessLevel: number): number {
-    return sacred geometryLevel * SACRED_GEOMETRY_CONSCIOUSNESS_INTERACTION.SACRED_GEOMETRY_MULTIPLIER +
+  static calculateInteractionStrength(sacredGeometryLevel: number, consciousnessLevel: number): number {
+    return sacredGeometryLevel * SACRED_GEOMETRY_CONSCIOUSNESS_INTERACTION.SACRED_GEOMETRY_MULTIPLIER +
            consciousnessLevel * SACRED_GEOMETRY_CONSCIOUSNESS_INTERACTION.CONSCIOUSNESS_MULTIPLIER;
   }
   

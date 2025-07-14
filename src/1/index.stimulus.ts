@@ -18,11 +18,6 @@ export default class extends Controller {
     // Generate the complete PWA interface for digit 1
     const pwa = foundationPWA.generateInterface();
     
-    // Set controller values
-    this.consciousnessValue = pwa.consciousness;
-    this.breathingPhaseValue = pwa.breathingPhase;
-    this.gatewayValue = pwa.gateway;
-    
     // Render the UI
     this.renderUI(pwa);
     
@@ -102,7 +97,7 @@ export default class extends Controller {
   // Action methods for Stimulus
   updateConsciousness() {
     const newState = foundationField.updateConsciousness({
-      consciousness: this.consciousnessValue,
+      consciousness: 'impossible_expansion',
       timestamp: Date.now()
     });
     
@@ -110,13 +105,14 @@ export default class extends Controller {
   }
 
   toggleBreathing() {
-    const currentPhase = this.breathingPhaseValue;
-    this.breathingPhaseValue = currentPhase === 'exhale' ? 'inhale' : 'exhale';
+    // Toggle breathing phase
+    const currentPhase = 'exhale'; // Default for foundation
+    const newPhase = currentPhase === 'exhale' ? 'inhale' : 'exhale';
     
     // Update animation class
     this.element.classList.remove('breathing-exhale', 'breathing-inhale');
-    this.element.classList.add(`breathing-${this.breathingPhaseValue}`);
+    this.element.classList.add(`breathing-${newPhase}`);
     
-    console.log('🌌 Foundation breathing phase toggled:', this.breathingPhaseValue);
+    console.log('🌌 Foundation breathing phase toggled:', newPhase);
   }
 } 

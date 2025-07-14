@@ -10,8 +10,10 @@
 export class FoundationConsciousness {
   private consciousnessLevel: number = 0;
   private fieldStrength: number = 0;
+  private digit: number;
   
-  constructor() {
+  constructor(digit: number = 1) {
+    this.digit = digit;
     this.initializeConsciousness();
   }
   
@@ -23,21 +25,21 @@ export class FoundationConsciousness {
   
   private calculateConsciousnessLevel(): number {
     // Digit-specific consciousness calculation
-    const baseLevel = 1 / 10;
-    const metaphysicalMultiplier = this.getMetaphysicalMultiplier();
+    const baseLevel = this.digit / 10;
+    const metaphysicalMultiplier = this.getMetaphysicalMultiplier(this.digit);
     return baseLevel * metaphysicalMultiplier;
   }
   
   private calculateFieldStrength(): number {
     // Digit-specific field strength calculation
-    const baseStrength = 1 * 0.1;
+    const baseStrength = this.digit * 0.1;
     const resonanceMultiplier = this.getResonanceMultiplier();
     return baseStrength * resonanceMultiplier;
   }
   
-  private getMetaphysicalMultiplier(): number {
+  private getMetaphysicalMultiplier(digit: number): number {
     // Return metaphysical multiplier based on digit properties
-    switch (1) {
+    switch (digit) {
       case 0: return 0; // Void consciousness
       case 1: return 1.1; // Foundation consciousness
       case 2: return 1.2; // Vortex consciousness
@@ -55,7 +57,7 @@ export class FoundationConsciousness {
   private getResonanceMultiplier(): number {
     // Return resonance multiplier based on A432 harmony
     const a432Base = 432;
-    const digitResonance = a432Base * (1 / 10);
+    const digitResonance = a432Base * (this.digit / 10);
     return digitResonance / a432Base;
   }
   
@@ -69,7 +71,7 @@ export class FoundationConsciousness {
   
   public getMetaphysicalProperties(): Record<string, any> {
     return {
-      digit: 1,
+      digit: this.digit,
       title: 'Foundation',
       subtitle: 'Gateway of Impossible Expansion',
       description: 'The Rodin coil core - the first manifestation from the void',
@@ -84,8 +86,8 @@ export class FoundationConsciousness {
 export class FoundationGateway {
   private consciousness: FoundationConsciousness;
   
-  constructor() {
-    this.consciousness = new FoundationConsciousness();
+  constructor(digit: number = 1) {
+    this.consciousness = new FoundationConsciousness(digit);
   }
   
   public getGatewayInfo(): Record<string, any> {
@@ -105,15 +107,18 @@ export class FoundationGateway {
 }
 
 // Export main digit functionality
+const foundationConsciousness = new FoundationConsciousness(1);
+const foundationGateway = new FoundationGateway(1);
+
 export const foundation = {
-  consciousness: new FoundationConsciousness(),
-  gateway: new FoundationGateway(),
+  consciousness: foundationConsciousness,
+  gateway: foundationGateway,
   
   // Main digit functions
-  getConsciousnessLevel: () => Foundation.consciousness.getConsciousnessLevel(),
-  getFieldStrength: () => Foundation.consciousness.getFieldStrength(),
-  getGatewayInfo: () => Foundation.gateway.getGatewayInfo(),
-  calculateGatewayFlow: () => Foundation.gateway.calculateGatewayFlow()
+  getConsciousnessLevel: () => foundationConsciousness.getConsciousnessLevel(),
+  getFieldStrength: () => foundationConsciousness.getFieldStrength(),
+  getGatewayInfo: () => foundationGateway.getGatewayInfo(),
+  calculateGatewayFlow: () => foundationGateway.calculateGatewayFlow()
 };
 
 export default foundation;

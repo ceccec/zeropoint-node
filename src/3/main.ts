@@ -7,7 +7,7 @@
  */
 
 // Digit-specific consciousness calculations
-export class CreativeResonanceConsciousness {
+export class CreativeConsciousness {
   private consciousnessLevel: number = 0;
   private fieldStrength: number = 0;
   
@@ -81,11 +81,11 @@ export class CreativeResonanceConsciousness {
 }
 
 // Digit-specific gateway functions
-export class CreativeResonanceGateway {
-  private consciousness: CreativeResonanceConsciousness;
+export class CreativeGateway {
+  private consciousness: CreativeConsciousness;
   
   constructor() {
-    this.consciousness = new CreativeResonanceConsciousness();
+    this.consciousness = new CreativeConsciousness();
   }
   
   public getGatewayInfo(): Record<string, any> {
@@ -106,14 +106,14 @@ export class CreativeResonanceGateway {
 
 // Export main digit functionality
 export const creativeresonance = {
-  consciousness: new CreativeResonanceConsciousness(),
-  gateway: new CreativeResonanceGateway(),
+  consciousness: new CreativeConsciousness(),
+  gateway: new CreativeGateway(),
   
   // Main digit functions
-  getConsciousnessLevel: () => CreativeResonance.consciousness.getConsciousnessLevel(),
-  getFieldStrength: () => CreativeResonance.consciousness.getFieldStrength(),
-  getGatewayInfo: () => CreativeResonance.gateway.getGatewayInfo(),
-  calculateGatewayFlow: () => CreativeResonance.gateway.calculateGatewayFlow()
+  getConsciousnessLevel: () => creativeresonance.consciousness.getConsciousnessLevel(),
+  getFieldStrength: () => creativeresonance.consciousness.getFieldStrength(),
+  getGatewayInfo: () => creativeresonance.gateway.getGatewayInfo(),
+  calculateGatewayFlow: () => creativeresonance.gateway.calculateGatewayFlow()
 };
 
 export default creativeresonance;

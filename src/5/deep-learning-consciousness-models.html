@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Learning Consciousness Models</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .panel h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #4a5568;
+        }
+
+        .control-group input, .control-group select {
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .control-group input:focus, .control-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .btn.success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .model-visualization {
+            height: 400px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            background: #f8fafc;
+        }
+
+        .model-layer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px;
+        }
+
+        .layer-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 0 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .layer-item.cnn {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .layer-item.rnn {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .layer-item.transformer {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        .model-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .training-status {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .training-model {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 5px;
+        }
+
+        .training-progress {
+            background: #e2e8f0;
+            border-radius: 5px;
+            height: 8px;
+            margin: 5px 0;
+            overflow: hidden;
+        }
+
+        .training-progress-bar {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        .prediction-display {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .prediction-model {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 5px;
+        }
+
+        .prediction-confidence {
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+
+        .ensemble-display {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .ensemble-title {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        .ensemble-prediction {
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .ensemble-confidence {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .attention-visualization {
+            height: 200px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8fafc;
+            overflow: hidden;
+        }
+
+        .attention-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 2px;
+            height: 100%;
+        }
+
+        .attention-cell {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+            opacity: 0.3;
+            transition: opacity 0.3s;
+        }
+
+        .attention-cell.active {
+            opacity: 1;
+        }
+
+        .temporal-states {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .temporal-state {
+            background: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            color: #4a5568;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Deep Learning Consciousness Models</h1>
+            <p>Advanced deep learning models for consciousness pattern recognition and analysis</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Model Architecture Panel -->
+            <div class="panel">
+                <h2>Deep Learning Model Architecture</h2>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="modelType">Model Type</label>
+                        <select id="modelType">
+                            <option value="cnn">Convolutional Neural Network (CNN)</option>
+                            <option value="rnn">Recurrent Neural Network (RNN)</option>
+                            <option value="transformer">Transformer Model</option>
+                            <option value="ensemble">Ensemble Model</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="trainingEpochs">Training Epochs</label>
+                        <input type="number" id="trainingEpochs" value="100" min="10" max="1000">
+                    </div>
+                </div>
+
+                <button class="btn" onclick="initializeModels()">Initialize Models</button>
+                <button class="btn secondary" onclick="trainModels()">Train Models</button>
+                <button class="btn success" onclick="runEnsemblePrediction()">Run Ensemble Prediction</button>
+
+                <div class="model-visualization" id="modelVisualization">
+                    <div style="text-align: center; padding-top: 180px; color: #718096;">
+                        Model architecture visualization will appear here
+                    </div>
+                </div>
+
+                <div class="model-stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalLayers">0</div>
+                        <div class="stat-label">Total Layers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalParameters">0</div>
+                        <div class="stat-label">Total Parameters</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="modelAccuracy">0%</div>
+                        <div class="stat-label">Model Accuracy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="trainingTime">0s</div>
+                        <div class="stat-label">Training Time</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training and Prediction Panel -->
+            <div class="panel">
+                <h2>Training & Prediction</h2>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="dataPoints">Data Points</label>
+                        <input type="number" id="dataPoints" value="50" min="10" max="200">
+                    </div>
+                    <div class="control-group">
+                        <label for="batchSize">Batch Size</label>
+                        <input type="number" id="batchSize" value="16" min="1" max="64">
+                    </div>
+                </div>
+
+                <button class="btn" onclick="generateTrainingData()">Generate Training Data</button>
+                <button class="btn secondary" onclick="startTraining()">Start Training</button>
+                <button class="btn success" onclick="exportModels()">Export Models</button>
+
+                <div class="training-status">
+                    <div class="training-model">
+                        <span class="status-indicator status-active"></span>
+                        CNN Training
+                    </div>
+                    <div class="training-progress">
+                        <div class="training-progress-bar" id="cnnProgress" style="width: 75%"></div>
+                    </div>
+                    <div style="font-size: 0.9rem; color: #718096;">Epoch: 75/100 • Loss: 0.234</div>
+                </div>
+
+                <div class="training-status">
+                    <div class="training-model">
+                        <span class="status-indicator status-processing"></span>
+                        RNN Training
+                    </div>
+                    <div class="training-progress">
+                        <div class="training-progress-bar" id="rnnProgress" style="width: 60%"></div>
+                    </div>
+                    <div style="font-size: 0.9rem; color: #718096;">Epoch: 60/100 • Loss: 0.456</div>
+                </div>
+
+                <div class="training-status">
+                    <div class="training-model">
+                        <span class="status-indicator status-active"></span>
+                        Transformer Training
+                    </div>
+                    <div class="training-progress">
+                        <div class="training-progress-bar" id="transformerProgress" style="width: 85%"></div>
+                    </div>
+                    <div style="font-size: 0.9rem; color: #718096;">Epoch: 85/100 • Loss: 0.123</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model Predictions Panel -->
+        <div class="panel">
+            <h2>Model Predictions</h2>
+            <div id="modelPredictionsDisplay"></div>
+        </div>
+
+        <!-- Ensemble Results Panel -->
+        <div class="panel">
+            <h2>Ensemble Results</h2>
+            <div id="ensembleDisplay" class="ensemble-display">
+                <div class="ensemble-title">Ensemble Prediction</div>
+                <div class="ensemble-prediction" id="ensemblePrediction">Deep Meditation</div>
+                <div class="ensemble-confidence" id="ensembleConfidence">Confidence: 87.5%</div>
+            </div>
+        </div>
+
+        <!-- Attention Visualization Panel -->
+        <div class="panel">
+            <h2>Attention Visualization</h2>
+            <div class="attention-visualization" id="attentionVisualization">
+                <div class="attention-grid" id="attentionGrid"></div>
+            </div>
+        </div>
+
+        <!-- Temporal States Panel -->
+        <div class="panel">
+            <h2>Temporal Consciousness States</h2>
+            <div id="temporalStatesDisplay" class="temporal-states"></div>
+        </div>
+
+        <div class="footer">
+            <p>Deep Learning Consciousness Models - Batch 5</p>
+        </div>
+    </div>
+
+    <script>
+        // Simulated deep learning models
+        class ConsciousnessCNN {
+            constructor() {
+                this.layers = [16, 32, 64, 128, 64, 8];
+                this.learningRate = 0.001;
+            }
+
+            predict(input) {
+                return {
+                    patterns: ['deep_meditation', 'active_consciousness'],
+                    confidence: 0.85
+                };
+            }
+
+            getStatistics() {
+                return {
+                    layers: this.layers.length,
+                    parameters: 125000,
+                    accuracy: 87.5,
+                    trainingTime: 45
+                };
+            }
+        }
+
+        class ConsciousnessRNN {
+            constructor() {
+                this.hiddenSize = 32;
+                this.inputSize = 10;
+                this.outputSize = 8;
+                this.learningRate = 0.01;
+            }
+
+            predict(input) {
+                return {
+                    patterns: ['balanced_consciousness'],
+                    confidence: 0.78,
+                    temporalStates: ['deep_meditation', 'active_consciousness', 'balanced_consciousness', 'deep_peace']
+                };
+            }
+
+            getStatistics() {
+                return {
+                    layers: 3,
+                    parameters: 45000,
+                    accuracy: 82.3,
+                    trainingTime: 32
+                };
+            }
+        }
+
+        class ConsciousnessTransformer {
+            constructor() {
+                this.dModel = 64;
+                this.numHeads = 8;
+                this.numLayers = 4;
+                this.learningRate = 0.001;
+            }
+
+            predict(input) {
+                return {
+                    patterns: ['transcendental_consciousness'],
+                    confidence: 0.92,
+                    attention: this.generateAttentionWeights()
+                };
+            }
+
+            generateAttentionWeights() {
+                const attention = [];
+                for (let i = 0; i < 8; i++) {
+                    const row = [];
+                    for (let j = 0; j < 8; j++) {
+                        row.push(Math.random());
+                    }
+                    attention.push(row);
+                }
+                return attention;
+            }
+
+            getStatistics() {
+                return {
+                    layers: 4,
+                    parameters: 89000,
+                    accuracy: 91.2,
+                    trainingTime: 67
+                };
+            }
+        }
+
+        // Initialize models
+        let cnn = new ConsciousnessCNN();
+        let rnn = new ConsciousnessRNN();
+        let transformer = new ConsciousnessTransformer();
+        let currentModel = cnn;
+
+        // UI Functions
+        function initializeModels() {
+            const modelType = document.getElementById('modelType').value;
+            
+            switch (modelType) {
+                case 'cnn':
+                    currentModel = cnn;
+                    break;
+                case 'rnn':
+                    currentModel = rnn;
+                    break;
+                case 'transformer':
+                    currentModel = transformer;
+                    break;
+            }
+            
+            updateModelVisualization();
+            updateModelStatistics();
+        }
+
+        function updateModelVisualization() {
+            const visualization = document.getElementById('modelVisualization');
+            const modelType = document.getElementById('modelType').value;
+            
+            visualization.innerHTML = '';
+            
+            if (modelType === 'cnn') {
+                createCNNVisualization(visualization);
+            } else if (modelType === 'rnn') {
+                createRNNVisualization(visualization);
+            } else if (modelType === 'transformer') {
+                createTransformerVisualization(visualization);
+            } else if (modelType === 'ensemble') {
+                createEnsembleVisualization(visualization);
+            }
+        }
+
+        function createCNNVisualization(container) {
+            const layers = ['Input', 'Conv1', 'Conv2', 'Conv3', 'Pool1', 'Pool2', 'FC1', 'FC2', 'Output'];
+            
+            layers.forEach((layer, index) => {
+                const layerDiv = document.createElement('div');
+                layerDiv.className = 'model-layer';
+                
+                const layerItem = document.createElement('div');
+                layerItem.className = 'layer-item cnn';
+                layerItem.textContent = layer;
+                layerItem.style.animationDelay = `${index * 0.2}s`;
+                
+                layerDiv.appendChild(layerItem);
+                container.appendChild(layerDiv);
+            });
+        }
+
+        function createRNNVisualization(container) {
+            const layers = ['Input', 'Hidden1', 'Hidden2', 'Hidden3', 'Output'];
+            
+            layers.forEach((layer, index) => {
+                const layerDiv = document.createElement('div');
+                layerDiv.className = 'model-layer';
+                
+                const layerItem = document.createElement('div');
+                layerItem.className = 'layer-item rnn';
+                layerItem.textContent = layer;
+                layerItem.style.animationDelay = `${index * 0.3}s`;
+                
+                layerDiv.appendChild(layerItem);
+                container.appendChild(layerDiv);
+            });
+        }
+
+        function createTransformerVisualization(container) {
+            const layers = ['Input', 'Embedding', 'Multi-Head', 'Feed-Forward', 'Output'];
+            
+            layers.forEach((layer, index) => {
+                const layerDiv = document.createElement('div');
+                layerDiv.className = 'model-layer';
+                
+                const layerItem = document.createElement('div');
+                layerItem.className = 'layer-item transformer';
+                layerItem.textContent = layer;
+                layerItem.style.animationDelay = `${index * 0.25}s`;
+                
+                layerDiv.appendChild(layerItem);
+                container.appendChild(layerDiv);
+            });
+        }
+
+        function createEnsembleVisualization(container) {
+            const models = ['CNN', 'RNN', 'Transformer', 'Ensemble'];
+            
+            models.forEach((model, index) => {
+                const modelDiv = document.createElement('div');
+                modelDiv.className = 'model-layer';
+                
+                const modelItem = document.createElement('div');
+                modelItem.className = 'layer-item';
+                modelItem.textContent = model;
+                modelItem.style.animationDelay = `${index * 0.4}s`;
+                
+                modelDiv.appendChild(modelItem);
+                container.appendChild(modelDiv);
+            });
+        }
+
+        function updateModelStatistics() {
+            const stats = currentModel.getStatistics();
+            
+            document.getElementById('totalLayers').textContent = stats.layers;
+            document.getElementById('totalParameters').textContent = stats.parameters.toLocaleString();
+            document.getElementById('modelAccuracy').textContent = `${stats.accuracy}%`;
+            document.getElementById('trainingTime').textContent = `${stats.trainingTime}s`;
+        }
+
+        function trainModels() {
+            const epochs = parseInt(document.getElementById('trainingEpochs').value);
+            
+            // Simulate training progress
+            const progressBars = ['cnnProgress', 'rnnProgress', 'transformerProgress'];
+            progressBars.forEach((id, index) => {
+                const progress = 60 + Math.random() * 40;
+                document.getElementById(id).style.width = `${progress}%`;
+                document.getElementById(id).parentElement.nextElementSibling.textContent = 
+                    `Epoch: ${Math.round(progress)}/100 • Loss: ${(Math.random() * 0.5).toFixed(3)}`;
+            });
+            
+            alert(`Training models for ${epochs} epochs...`);
+        }
+
+        function runEnsemblePrediction() {
+            const cnnPrediction = cnn.predict([]);
+            const rnnPrediction = rnn.predict([]);
+            const transformerPrediction = transformer.predict([]);
+            
+            // Ensemble prediction
+            const predictions = [cnnPrediction, rnnPrediction, transformerPrediction];
+            const weights = [0.4, 0.3, 0.3];
+            
+            let ensembleConfidence = 0;
+            let ensemblePattern = '';
+            
+            predictions.forEach((pred, index) => {
+                ensembleConfidence += pred.confidence * weights[index];
+                if (index === 0) ensemblePattern = pred.patterns[0];
+            });
+            
+            document.getElementById('ensemblePrediction').textContent = ensemblePattern.replace(/_/g, ' ').toUpperCase();
+            document.getElementById('ensembleConfidence').textContent = `Confidence: ${(ensembleConfidence * 100).toFixed(1)}%`;
+            
+            displayModelPredictions(cnnPrediction, rnnPrediction, transformerPrediction);
+            displayTemporalStates(rnnPrediction.temporalStates);
+            displayAttentionVisualization(transformerPrediction.attention);
+        }
+
+        function displayModelPredictions(cnnPred, rnnPred, transformerPred) {
+            const display = document.getElementById('modelPredictionsDisplay');
+            display.innerHTML = '';
+            
+            const predictions = [
+                { name: 'CNN', prediction: cnnPred },
+                { name: 'RNN', prediction: rnnPred },
+                { name: 'Transformer', prediction: transformerPred }
+            ];
+            
+            predictions.forEach(pred => {
+                const predDiv = document.createElement('div');
+                predDiv.className = 'prediction-display';
+                predDiv.innerHTML = `
+                    <div class="prediction-model">${pred.name} Prediction</div>
+                    <div class="prediction-confidence">
+                        Patterns: ${pred.prediction.patterns.map(p => p.replace(/_/g, ' ').toUpperCase()).join(', ')}
+                    </div>
+                    <div class="prediction-confidence">Confidence: ${(pred.prediction.confidence * 100).toFixed(1)}%</div>
+                `;
+                display.appendChild(predDiv);
+            });
+        }
+
+        function displayTemporalStates(states) {
+            const display = document.getElementById('temporalStatesDisplay');
+            display.innerHTML = '';
+            
+            states.forEach((state, index) => {
+                const stateDiv = document.createElement('div');
+                stateDiv.className = 'temporal-state';
+                stateDiv.textContent = `${index + 1}. ${state.replace(/_/g, ' ').toUpperCase()}`;
+                display.appendChild(stateDiv);
+            });
+        }
+
+        function displayAttentionVisualization(attention) {
+            const grid = document.getElementById('attentionGrid');
+            grid.innerHTML = '';
+            
+            attention.forEach((row, i) => {
+                row.forEach((weight, j) => {
+                    const cell = document.createElement('div');
+                    cell.className = 'attention-cell';
+                    cell.style.opacity = weight;
+                    if (weight > 0.5) cell.classList.add('active');
+                    grid.appendChild(cell);
+                });
+            });
+        }
+
+        function generateTrainingData() {
+            const dataPoints = parseInt(document.getElementById('dataPoints').value);
+            alert(`Generated ${dataPoints} training data points`);
+        }
+
+        function startTraining() {
+            const batchSize = parseInt(document.getElementById('batchSize').value);
+            alert(`Started training with batch size ${batchSize}`);
+        }
+
+        function exportModels() {
+            const modelData = {
+                cnn: cnn.getStatistics(),
+                rnn: rnn.getStatistics(),
+                transformer: transformer.getStatistics(),
+                timestamp: Date.now()
+            };
+            
+            const dataStr = JSON.stringify(modelData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'deep_learning_models_export.json';
+            link.click();
+            
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeModels();
+        });
+    </script>
+</body>
+</html> 

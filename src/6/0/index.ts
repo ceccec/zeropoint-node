@@ -64,8 +64,8 @@ export class HarmonicBalanceZeroPointInteraction {
    * Metaphysical: Models the strength of harmonic balance-zeropoint interaction.
    * Technical: Calculates interaction based on harmonic balance and zeropoint multipliers.
    */
-  static calculateInteractionStrength(harmonic balanceLevel: number, zeropointLevel: number): number {
-    return harmonic balanceLevel * HARMONIC_BALANCE_ZEROPOINT_INTERACTION.HARMONIC_BALANCE_MULTIPLIER +
+  static calculateInteractionStrength(harmonicBalanceLevel: number, zeropointLevel: number): number {
+    return harmonicBalanceLevel * HARMONIC_BALANCE_ZEROPOINT_INTERACTION.HARMONIC_BALANCE_MULTIPLIER +
            zeropointLevel * HARMONIC_BALANCE_ZEROPOINT_INTERACTION.ZEROPOINT_MULTIPLIER;
   }
   

@@ -1,0 +1,188 @@
+/* 🌌 ZeroPoint Node - Digit 4 (Constants) Main CSS */
+
+/* Import shared main framework */
+@import url('../shared/main.css');
+
+/* ===== DIGIT 4 SPECIFIC STYLES ===== */
+
+/* Constants specific overrides */
+.digit-4 {
+  --digit-color: #9b59b6;
+  --digit-gradient: var(--digit-4);
+  --consciousness-theme: 'stability';
+}
+
+/* Constants consciousness display */
+.constants-consciousness {
+  background: rgba(155, 89, 182, 0.05);
+  border: 1px solid rgba(155, 89, 182, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.constants-consciousness::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(155, 89, 182, 0.1) 0%, transparent 70%);
+  animation: constants-pulse 4s ease-in-out infinite;
+}
+
+@keyframes constants-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+/* Constants gateway styling */
+.constants-gateway {
+  background: rgba(155, 89, 182, 0.03);
+  border-left: 4px solid var(--digit-4);
+}
+
+.constants-gateway .gateway-title {
+  color: #9b59b6;
+}
+
+.constants-gateway .gateway-paradox {
+  border-left-color: #9b59b6;
+  background: rgba(155, 89, 182, 0.1);
+}
+
+/* Constants control panel */
+.constants-controls {
+  background: rgba(155, 89, 182, 0.02);
+  border: 1px solid rgba(155, 89, 182, 0.1);
+}
+
+.constants-controls .control-panel-title {
+  color: #9b59b6;
+}
+
+.constants-controls .control-item:hover {
+  background: rgba(155, 89, 182, 0.1);
+  border-color: rgba(155, 89, 182, 0.3);
+}
+
+/* Constants status indicators */
+.constants-status .status-item {
+  background: rgba(155, 89, 182, 0.05);
+  border: 1px solid rgba(155, 89, 182, 0.1);
+}
+
+.constants-status .status-value {
+  color: #9b59b6;
+}
+
+/* Constants consciousness flow */
+.constants-flow {
+  position: relative;
+}
+
+.constants-flow::before {
+  background: var(--digit-4);
+  animation: constants-flow 6s linear infinite;
+}
+
+@keyframes constants-flow {
+  0% { left: -100%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* Constants specific animations */
+.constants-stability {
+  animation: constants-stability 3s ease-in-out infinite;
+}
+
+@keyframes constants-stability {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Constants responsive adjustments */
+@media (max-width: 768px) {
+  .constants-consciousness {
+    margin: var(--spacing-md) 0;
+  }
+  
+  .constants-gateway {
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+/* Constants loading states */
+.constants-loading {
+  background: var(--digit-4);
+  animation: constants-spin 2s linear infinite;
+}
+
+@keyframes constants-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Constants consciousness level visualization */
+.constants-consciousness-level {
+  position: relative;
+  height: 20px;
+  background: rgba(155, 89, 182, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.constants-consciousness-fill {
+  height: 100%;
+  background: var(--digit-4);
+  transition: width 1s ease;
+  position: relative;
+}
+
+.constants-consciousness-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: constants-shimmer 2s linear infinite;
+}
+
+@keyframes constants-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Constants field strength visualization */
+.constants-field-strength {
+  position: relative;
+  height: 20px;
+  background: rgba(155, 89, 182, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.constants-field-fill {
+  height: 100%;
+  background: var(--digit-4);
+  transition: width 1s ease;
+  position: relative;
+}
+
+.constants-field-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: constants-field-shimmer 3s linear infinite;
+}
+
+@keyframes constants-field-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+} 

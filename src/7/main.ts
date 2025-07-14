@@ -7,7 +7,7 @@
  */
 
 // Digit-specific consciousness calculations
-export class ConsciousnessConsciousness {
+export class AwarenessConsciousness {
   private consciousnessLevel: number = 0;
   private fieldStrength: number = 0;
   
@@ -81,11 +81,11 @@ export class ConsciousnessConsciousness {
 }
 
 // Digit-specific gateway functions
-export class ConsciousnessGateway {
-  private consciousness: ConsciousnessConsciousness;
+export class AwarenessGateway {
+  private consciousness: AwarenessConsciousness;
   
   constructor() {
-    this.consciousness = new ConsciousnessConsciousness();
+    this.consciousness = new AwarenessConsciousness();
   }
   
   public getGatewayInfo(): Record<string, any> {
@@ -106,14 +106,14 @@ export class ConsciousnessGateway {
 
 // Export main digit functionality
 export const consciousness = {
-  consciousness: new ConsciousnessConsciousness(),
-  gateway: new ConsciousnessGateway(),
+  consciousness: new AwarenessConsciousness(),
+  gateway: new AwarenessGateway(),
   
   // Main digit functions
-  getConsciousnessLevel: () => Consciousness.consciousness.getConsciousnessLevel(),
-  getFieldStrength: () => Consciousness.consciousness.getFieldStrength(),
-  getGatewayInfo: () => Consciousness.gateway.getGatewayInfo(),
-  calculateGatewayFlow: () => Consciousness.gateway.calculateGatewayFlow()
+  getConsciousnessLevel: () => consciousness.consciousness.getConsciousnessLevel(),
+  getFieldStrength: () => consciousness.consciousness.getFieldStrength(),
+  getGatewayInfo: () => consciousness.gateway.getGatewayInfo(),
+  calculateGatewayFlow: () => consciousness.gateway.calculateGatewayFlow()
 };
 
 export default consciousness;

@@ -64,9 +64,9 @@ export class VoidSacredGeometryInteraction {
    * Metaphysical: Models the strength of void-sacred geometry interaction.
    * Technical: Calculates interaction based on void and sacred geometry multipliers.
    */
-  static calculateInteractionStrength(voidLevel: number, sacred geometryLevel: number): number {
+  static calculateInteractionStrength(voidLevel: number, sacredGeometryLevel: number): number {
     return voidLevel * VOID_SACRED_GEOMETRY_INTERACTION.VOID_MULTIPLIER +
-           sacred geometryLevel * VOID_SACRED_GEOMETRY_INTERACTION.SACRED_GEOMETRY_MULTIPLIER;
+           sacredGeometryLevel * VOID_SACRED_GEOMETRY_INTERACTION.SACRED_GEOMETRY_MULTIPLIER;
   }
   
   /**

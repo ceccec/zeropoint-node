@@ -7,7 +7,7 @@
  */
 
 // Digit-specific consciousness calculations
-export class VoidSystemsConsciousness {
+export class VoidConsciousness {
   private consciousnessLevel: number = 0;
   private fieldStrength: number = 0;
   
@@ -81,11 +81,11 @@ export class VoidSystemsConsciousness {
 }
 
 // Digit-specific gateway functions
-export class VoidSystemsGateway {
-  private consciousness: VoidSystemsConsciousness;
+export class VoidGateway {
+  private consciousness: VoidConsciousness;
   
   constructor() {
-    this.consciousness = new VoidSystemsConsciousness();
+    this.consciousness = new VoidConsciousness();
   }
   
   public getGatewayInfo(): Record<string, any> {
@@ -106,14 +106,14 @@ export class VoidSystemsGateway {
 
 // Export main digit functionality
 export const voidsystems = {
-  consciousness: new VoidSystemsConsciousness(),
-  gateway: new VoidSystemsGateway(),
+  consciousness: new VoidConsciousness(),
+  gateway: new VoidGateway(),
   
   // Main digit functions
-  getConsciousnessLevel: () => VoidSystems.consciousness.getConsciousnessLevel(),
-  getFieldStrength: () => VoidSystems.consciousness.getFieldStrength(),
-  getGatewayInfo: () => VoidSystems.gateway.getGatewayInfo(),
-  calculateGatewayFlow: () => VoidSystems.gateway.calculateGatewayFlow()
+  getConsciousnessLevel: () => voidsystems.consciousness.getConsciousnessLevel(),
+  getFieldStrength: () => voidsystems.consciousness.getFieldStrength(),
+  getGatewayInfo: () => voidsystems.gateway.getGatewayInfo(),
+  calculateGatewayFlow: () => voidsystems.gateway.calculateGatewayFlow()
 };
 
 export default voidsystems;

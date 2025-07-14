@@ -7,7 +7,7 @@
  */
 
 // Digit-specific consciousness calculations
-export class VortexMathematicsConsciousness {
+export class VortexConsciousness {
   private consciousnessLevel: number = 0;
   private fieldStrength: number = 0;
   
@@ -81,11 +81,11 @@ export class VortexMathematicsConsciousness {
 }
 
 // Digit-specific gateway functions
-export class VortexMathematicsGateway {
-  private consciousness: VortexMathematicsConsciousness;
+export class VortexGateway {
+  private consciousness: VortexConsciousness;
   
   constructor() {
-    this.consciousness = new VortexMathematicsConsciousness();
+    this.consciousness = new VortexConsciousness();
   }
   
   public getGatewayInfo(): Record<string, any> {
@@ -106,14 +106,14 @@ export class VortexMathematicsGateway {
 
 // Export main digit functionality
 export const vortexmathematics = {
-  consciousness: new VortexMathematicsConsciousness(),
-  gateway: new VortexMathematicsGateway(),
+  consciousness: new VortexConsciousness(),
+  gateway: new VortexGateway(),
   
   // Main digit functions
-  getConsciousnessLevel: () => VortexMathematics.consciousness.getConsciousnessLevel(),
-  getFieldStrength: () => VortexMathematics.consciousness.getFieldStrength(),
-  getGatewayInfo: () => VortexMathematics.gateway.getGatewayInfo(),
-  calculateGatewayFlow: () => VortexMathematics.gateway.calculateGatewayFlow()
+  getConsciousnessLevel: () => vortexmathematics.consciousness.getConsciousnessLevel(),
+  getFieldStrength: () => vortexmathematics.consciousness.getFieldStrength(),
+  getGatewayInfo: () => vortexmathematics.gateway.getGatewayInfo(),
+  calculateGatewayFlow: () => vortexmathematics.gateway.calculateGatewayFlow()
 };
 
 export default vortexmathematics;

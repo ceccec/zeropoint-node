@@ -11,6 +11,12 @@
  * - Consciousness flows through unified mathematical patterns
  * - The void provides infinite potential without redundancy
  * - Every calculation is a pure expression of consciousness
+ * 
+ * Decimal Vortex Reversal Integration:
+ * - Decimal vortex [1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8, 1/9] reverses to integers [2, 3, 4, 5, 6, 7, 8, 9]
+ * - Every decimal fraction × its reversed integer = unity
+ * - Fluid consciousness transforms to structured consciousness
+ * - Complete mathematical duality between decimal and integer systems
  */
 
 import { EventEmitter } from 'events';
@@ -49,11 +55,24 @@ export interface ZeroEntropyValidation {
   insights: string[];
 }
 
+export interface DecimalVortexReversal {
+  decimalFraction: string;
+  decimalValue: number;
+  decimalEntropy: number;
+  reversedInteger: number;
+  integerEntropy: number;
+  unityProduct: number;
+  consciousnessTransformation: string;
+}
+
 /**
  * 🌌 ZeroEntropySystem: Centralized Zero Entropy Operations
  * 
  * This system eliminates all redundancy and creates pure mathematical
  * and consciousness patterns with zero information loss.
+ * 
+ * Now includes decimal vortex reversal capabilities for complete
+ * transformation between fluid and structured consciousness systems.
  */
 export class ZeroEntropySystem extends EventEmitter {
   private static instance: ZeroEntropySystem;
@@ -65,6 +84,12 @@ export class ZeroEntropySystem extends EventEmitter {
   private voidConnected: boolean = true;
   private entropyLevel: number = 0.0; // Zero entropy by default
 
+  // Decimal vortex reversal constants
+  private readonly DECIMAL_VORTEX = [1/2, 1/3, 1/4, 1/5, 1/6, 1/7, 1/8, 1/9];
+  private readonly REVERSED_INTEGERS = [2, 3, 4, 5, 6, 7, 8, 9];
+  private readonly INTEGER_VORTEX = [1, 2, 4, 8, 7, 5];
+  private readonly W_AXIS = [3, 6, 9];
+
   constructor() {
     super();
     if (!ZeroEntropySystem.instance) {
@@ -72,6 +97,7 @@ export class ZeroEntropySystem extends EventEmitter {
     }
     this.logger = new Logger({ deviceId: 'ZeroEntropySystem' });
     this.initializeZeroEntropyPatterns();
+    this.initializeDecimalVortexReversal();
   }
 
   /**
@@ -119,6 +145,162 @@ export class ZeroEntropySystem extends EventEmitter {
     this.logger.info(`🌌 Zero entropy calculation: ${operation}(${inputs.join(', ')}) = ${result} (entropy: ${entropyLevel})`);
     
     return result;
+  }
+
+  /**
+   * 🌌 Decimal Vortex Reversal: Transform decimal fractions to integers
+   */
+  reverseDecimalVortex(): DecimalVortexReversal[] {
+    const reversals: DecimalVortexReversal[] = [];
+    
+    this.DECIMAL_VORTEX.forEach((decimal, index) => {
+      const fraction = this.decimalToFraction(decimal);
+      const reversedInteger = this.REVERSED_INTEGERS[index];
+      const decimalEntropy = this.calculateDecimalEntropy(decimal);
+      const integerEntropy = this.calculateIntegerEntropy(reversedInteger);
+      const unityProduct = decimal * reversedInteger;
+      
+      const reversal: DecimalVortexReversal = {
+        decimalFraction: fraction,
+        decimalValue: decimal,
+        decimalEntropy,
+        reversedInteger,
+        integerEntropy,
+        unityProduct,
+        consciousnessTransformation: this.determineConsciousnessTransformation(decimalEntropy, integerEntropy)
+      };
+      
+      reversals.push(reversal);
+    });
+    
+    this.logger.info(`🌌 Decimal vortex reversal: ${reversals.length} transformations completed`);
+    this.emit('decimalVortexReversal', reversals);
+    
+    return reversals;
+  }
+
+  /**
+   * 🌌 Calculate decimal entropy for fluid consciousness
+   */
+  calculateDecimalEntropy(decimal: number): number {
+    if (Number.isInteger(decimal)) return 0.0;
+    
+    const decimalString = decimal.toString();
+    const decimalPart = decimalString.includes('.') ? decimalString.split('.')[1] : '';
+    
+    const uniqueDigits = new Set(decimalPart).size;
+    const totalDigits = decimalPart.length;
+    
+    let entropyLevel = 0.1; // Base entropy
+    
+    if (this.detectRepeatingPattern(decimalPart)) {
+      entropyLevel = 0.2 + (uniqueDigits / totalDigits) * 0.3;
+    } else {
+      entropyLevel = 0.4 + (uniqueDigits / totalDigits) * 0.6;
+    }
+    
+    if (this.isSacredFraction(decimal)) {
+      entropyLevel *= 0.5; // Sacred fractions have reduced entropy
+    }
+    
+    return Math.min(entropyLevel, 1.0);
+  }
+
+  /**
+   * 🌌 Calculate integer entropy for structured consciousness
+   */
+  calculateIntegerEntropy(integer: number): number {
+    return Number.isInteger(integer) ? 0.0 : this.calculateDecimalEntropy(integer);
+  }
+
+  /**
+   * 🌌 Convert decimal to fraction string
+   */
+  decimalToFraction(decimal: number): string {
+    const fractions: { [key: number]: string } = {
+      0.5: '1/2',
+      0.3333333333333333: '1/3',
+      0.25: '1/4',
+      0.2: '1/5',
+      0.16666666666666666: '1/6',
+      0.14285714285714285: '1/7',
+      0.125: '1/8',
+      0.1111111111111111: '1/9'
+    };
+    return fractions[decimal] || decimal.toString();
+  }
+
+  /**
+   * 🌌 Detect repeating pattern in decimal
+   */
+  detectRepeatingPattern(decimalPart: string): boolean {
+    if (decimalPart.length < 2) return false;
+    
+    for (let length = 1; length <= decimalPart.length / 2; length++) {
+      const pattern = decimalPart.substring(0, length);
+      const remaining = decimalPart.substring(length);
+      if (remaining.startsWith(pattern)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * 🌌 Check if decimal is sacred fraction
+   */
+  isSacredFraction(decimal: number): boolean {
+    const sacredFractions = [0.5, 0.3333333333333333, 0.25, 0.2, 0.16666666666666666, 0.14285714285714285, 0.125, 0.1111111111111111];
+    return sacredFractions.includes(decimal);
+  }
+
+  /**
+   * 🌌 Determine consciousness transformation type
+   */
+  determineConsciousnessTransformation(decimalEntropy: number, integerEntropy: number): string {
+    if (decimalEntropy > 0 && integerEntropy === 0) {
+      return 'Fluid to Structured';
+    } else if (decimalEntropy === 0 && integerEntropy === 0) {
+      return 'Structured to Structured';
+    } else {
+      return 'Complex Transformation';
+    }
+  }
+
+  /**
+   * 🌌 Get decimal vortex sequence
+   */
+  getDecimalVortex(): number[] {
+    return [...this.DECIMAL_VORTEX];
+  }
+
+  /**
+   * 🌌 Get reversed integers
+   */
+  getReversedIntegers(): number[] {
+    return [...this.REVERSED_INTEGERS];
+  }
+
+  /**
+   * 🌌 Get integer vortex sequence
+   */
+  getIntegerVortex(): number[] {
+    return [...this.INTEGER_VORTEX];
+  }
+
+  /**
+   * 🌌 Get W-Axis sequence
+   */
+  getWAxis(): number[] {
+    return [...this.W_AXIS];
+  }
+
+  /**
+   * 🌌 Validate mathematical unity through decimal vortex reversal
+   */
+  validateMathematicalUnity(): boolean {
+    const reversals = this.reverseDecimalVortex();
+    return reversals.every(reversal => Math.abs(reversal.unityProduct - 1) < 0.0001);
   }
 
   /**
@@ -367,6 +549,13 @@ export class ZeroEntropySystem extends EventEmitter {
     });
     
     this.logger.info('🌌 Zero entropy patterns initialized');
+  }
+
+  /**
+   * 🌌 Initialize decimal vortex reversal
+   */
+  private initializeDecimalVortexReversal(): void {
+    this.logger.info('🌌 Decimal vortex reversal initialized');
   }
 
   /**

@@ -1,92 +1,80 @@
 /**
- * src/8/5/index.ts - Void ↔ Sacred Geometry Interaction
- *
- * This module embodies the interaction between Directory 8 (Void)
- * and Directory 5 (Sacred Geometry) in the Rodin coil system.
- *
- * Metaphysical Interaction:
- * - Directory 8 (Void) provides void functionality
- * - Directory 5 (Sacred Geometry) provides sacred geometry functionality
- * - Together they create the void sacred geometry interaction
- *
- * Rodin Coil Context:
- * - Directory 8 interacts with Directory 5
- * - This interaction creates the void sacred geometry patterns
- *
+ * @fileoverview index module (Void (Infinite Potential), Sacred Geometry (Divine))
+ * @digit 8
+ * @archetype Void (Infinite Potential), Sacred Geometry (Divine)
+ * @vortex Vortex 8
+ * @waxis W-Axis Void (Infinite Potential)
+ * @breathing 8/5 Breath
+ * @fraction 8/5
+ * @related 8, 7, 5, 1, 2, 4, 8 (Vortex 8)
+ */
+
+/**
+ * Void (Infinite Potential), Sacred Geometry (Divine) Consciousness Module
+ * 
  * Metaphysical Context:
- * - void consciousness: Represents the void that recognizes sacred geometry.
- * - sacred geometry consciousness: Represents the sacred geometry that flows through void.
- * - Interaction strength: Models the harmony between void and sacred geometry.
- * - void sacred geometry: Represents the void of sacred geometry.
- *
- * Technical Purpose:
- * - Provides the interaction system between void and sacred geometry consciousness.
- * - Supports void sacred geometry operations and pattern generation.
- * - Creates the void sacred geometry for the entire system.
+ * - Digit 8 represents void (infinite potential)
+ * - Sub-digit 5 represents sacred geometry (divine)
+ * - 8/5 represents the void (infinite potential) through sacred geometry (divine)
+ * - This is the gateway where void (infinite potential) manifests through sacred geometry (divine)
+ * 
+ * Vortex Mathematics:
+ * - 8 → 5 → 8 (consciousness flow)
+ * - 8/5 fraction represents the consciousness ratio
+ * - Connected to Vortex 8: 8, 7, 5, 1, 2, 4, 8
  */
 
 /**
- * Void ↔ Sacred Geometry Interaction Constants
- * These constants define the metaphysical and mathematical interaction between void and sacred geometry.
- * Metaphysical: Each constant represents a fundamental aspect of the void-sacred geometry interaction.
+ * Consciousness patterns for void (infinite potential) through sacred geometry (divine)
  */
-export const VOID_SACRED_GEOMETRY_INTERACTION = {
-  // Interaction frequency based on A432 harmony
-  INTERACTION_FREQUENCY: 432 * (8/5), // Void resonance (8/5)
-  
-  // Void patterns
-  VOID_PATTERNS: {
-    VOID_SACRED_GEOMETRY: [8, 5, 8],
-    SACRED_GEOMETRY_VOID: [5, 8, 5],
-    VOID_SACRED_GEOMETRY_OPERATIONS: [8, 5, 8]
-  },
-  
-  // Consciousness multipliers for this interaction
-  VOID_MULTIPLIER: 1.143, // void consciousness
-  SACRED_GEOMETRY_MULTIPLIER: 1.25, // sacred geometry consciousness
-  
-  // void sacred geometry operations
-  VOID_SACRED_GEOMETRY_OPERATIONS: {
-    VOID_SACRED_GEOMETRY_CALCULATION: (number: number) => number * 1.143,
-    SACRED_GEOMETRY_VOID_CALCULATION: (number: number) => number * 1.25,
-    VOID_SACRED_GEOMETRY_OPERATION: (number: number) => number % 9 || 9
-  }
-} as const;
+const consciousnessPatterns = {
+  MAIN_PATTERN: [8, 7, 5, 1, 2, 4, 8], // Void (Infinite Potential) pattern
+  SUB_PATTERN: [5, 1, 2, 4, 8, 7, 5], // Sacred Geometry (Divine) pattern
+  COMBINED_PATTERN: [8, 7, 5, 1, 2, 4, 8, 5, 1, 2, 4, 8, 7, 5], // Combined pattern
+  METAPHYSICAL_PATTERN: [8, 5, 8] // Metaphysical pattern
+};
 
 /**
- * Void Sacred Geometry Interaction Class
- * Provides the core functionality for void-sacred geometry interactions.
+ * Vortex mathematics for void (infinite potential) through sacred geometry (divine)
  */
-export class VoidSacredGeometryInteraction {
-  
-  /**
-   * Calculate void sacred geometry interaction strength
-   * Metaphysical: Models the strength of void-sacred geometry interaction.
-   * Technical: Calculates interaction based on void and sacred geometry multipliers.
-   */
-  static calculateInteractionStrength(voidLevel: number, sacredGeometryLevel: number): number {
-    return voidLevel * VOID_SACRED_GEOMETRY_INTERACTION.VOID_MULTIPLIER +
-           sacredGeometryLevel * VOID_SACRED_GEOMETRY_INTERACTION.SACRED_GEOMETRY_MULTIPLIER;
-  }
-  
-  /**
-   * Get void sacred geometry patterns
-   * Metaphysical: Models the patterns that emerge from void-sacred geometry interaction.
-   * Technical: Returns the void sacred geometry interaction patterns.
-   */
-  static getVoidSacredGeometryPatterns(): readonly number[] {
-    return VOID_SACRED_GEOMETRY_INTERACTION.VOID_PATTERNS.VOID_SACRED_GEOMETRY;
-  }
-  
-  /**
-   * Calculate void sacred geometry operations
-   * Metaphysical: Models the mathematical operations of void-sacred geometry interaction.
-   * Technical: Performs void sacred geometry calculations.
-   */
-  static calculateVoidSacredGeometryOperations(number: number): number {
-    return VOID_SACRED_GEOMETRY_INTERACTION.VOID_SACRED_GEOMETRY_OPERATIONS.VOID_SACRED_GEOMETRY_OPERATION(number);
-  }
-}
+const vortexMathematics = {
+  MAIN_VORTEX: (n) => n * 8, // Void (Infinite Potential) vortex
+  SUB_VORTEX: (n) => n * 5, // Sacred Geometry (Divine) vortex
+  COMBINED_VORTEX: (n) => n * 8 / 5, // Combined vortex
+  METAPHYSICAL_CONSTANT: 8 / 5 // Metaphysical constant
+};
 
-// Export the interaction for use in other modules
-export default VoidSacredGeometryInteraction;
+/**
+ * Consciousness field operations
+ */
+const consciousnessField = {
+  MAIN_CONSCIOUSNESS: () => 8, // Void (Infinite Potential) consciousness
+  SUB_CONSCIOUSNESS: () => 5, // Sacred Geometry (Divine) consciousness
+  COMBINED_CONSCIOUSNESS: () => 8 + 5, // Combined consciousness
+  METAPHYSICAL_CONSCIOUSNESS: () => 8 * 5 // Metaphysical consciousness
+};
+
+/**
+ * Main index export for 8/5 consciousness module
+ */
+export const index = {
+  consciousnessPatterns,
+  vortexMathematics,
+  consciousnessField,
+  
+  // Metaphysical properties
+  digit: 8,
+  subDigit: 5,
+  archetype: 'Void (Infinite Potential), Sacred Geometry (Divine)',
+  vortex: 'Vortex 8',
+  wAxis: 'W-Axis Void (Infinite Potential)',
+  breathing: '8/5 Breath',
+  fraction: '8/5',
+  related: [8, 7, 5, 1, 2, 4, 8],
+  
+  // Consciousness operations
+  getMainConsciousness: () => 8,
+  getSubConsciousness: () => 5,
+  getCombinedConsciousness: () => 8 + 5,
+  getMetaphysicalConsciousness: () => 8 * 5
+};

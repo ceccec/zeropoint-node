@@ -1,92 +1,80 @@
 /**
- * src/1/2/index.ts - Foundation ↔ Vortex Interaction
- *
- * This module embodies the interaction between Directory 1 (Foundation)
- * and Directory 2 (Vortex) in the Rodin coil system.
- *
- * Metaphysical Interaction:
- * - Directory 1 (Foundation) provides foundation functionality
- * - Directory 2 (Vortex) provides vortex functionality
- * - Together they create the foundation vortex interaction
- *
- * Rodin Coil Context:
- * - Directory 1 interacts with Directory 2
- * - This interaction creates the foundation vortex patterns
- *
+ * @fileoverview index module (Foundation (Source), Vortex (Flow))
+ * @digit 1
+ * @archetype Foundation (Source), Vortex (Flow)
+ * @vortex Vortex 1
+ * @waxis W-Axis Foundation (Source)
+ * @breathing 1/2 Breath
+ * @fraction 1/2
+ * @related 1, 2, 4, 8, 7, 5, 1 (Vortex 1)
+ */
+
+/**
+ * Foundation (Source), Vortex (Flow) Consciousness Module
+ * 
  * Metaphysical Context:
- * - foundation consciousness: Represents the foundation that recognizes vortex.
- * - vortex consciousness: Represents the vortex that flows through foundation.
- * - Interaction strength: Models the harmony between foundation and vortex.
- * - foundation vortex: Represents the foundation of vortex.
- *
- * Technical Purpose:
- * - Provides the interaction system between foundation and vortex consciousness.
- * - Supports foundation vortex operations and pattern generation.
- * - Creates the foundation vortex for the entire system.
+ * - Digit 1 represents foundation (source)
+ * - Sub-digit 2 represents vortex (flow)
+ * - 1/2 represents the foundation (source) through vortex (flow)
+ * - This is the gateway where foundation (source) manifests through vortex (flow)
+ * 
+ * Vortex Mathematics:
+ * - 1 → 2 → 1 (consciousness flow)
+ * - 1/2 fraction represents the consciousness ratio
+ * - Connected to Vortex 1: 1, 2, 4, 8, 7, 5, 1
  */
 
 /**
- * Foundation ↔ Vortex Interaction Constants
- * These constants define the metaphysical and mathematical interaction between foundation and vortex.
- * Metaphysical: Each constant represents a fundamental aspect of the foundation-vortex interaction.
+ * Consciousness patterns for foundation (source) through vortex (flow)
  */
-export const FOUNDATION_VORTEX_INTERACTION = {
-  // Interaction frequency based on A432 harmony
-  INTERACTION_FREQUENCY: 432 * (1/2), // Foundation resonance (1/2)
-  
-  // Foundation patterns
-  FOUNDATION_PATTERNS: {
-    FOUNDATION_VORTEX: [1, 2, 1],
-    VORTEX_FOUNDATION: [2, 1, 2],
-    FOUNDATION_VORTEX_OPERATIONS: [1, 2, 1]
-  },
-  
-  // Consciousness multipliers for this interaction
-  FOUNDATION_MULTIPLIER: 1.1, // foundation consciousness
-  VORTEX_MULTIPLIER: 1.2, // vortex consciousness
-  
-  // foundation vortex operations
-  FOUNDATION_VORTEX_OPERATIONS: {
-    FOUNDATION_VORTEX_CALCULATION: (number: number) => number * 1.1,
-    VORTEX_FOUNDATION_CALCULATION: (number: number) => number * 1.2,
-    FOUNDATION_VORTEX_OPERATION: (number: number) => number % 9 || 9
-  }
-} as const;
+const consciousnessPatterns = {
+  MAIN_PATTERN: [1, 2, 4, 8, 7, 5, 1], // Foundation (Source) pattern
+  SUB_PATTERN: [2, 4, 8, 7, 5, 1, 2], // Vortex (Flow) pattern
+  COMBINED_PATTERN: [1, 2, 4, 8, 7, 5, 1, 2, 4, 8, 7, 5, 1, 2], // Combined pattern
+  METAPHYSICAL_PATTERN: [1, 2, 1] // Metaphysical pattern
+};
 
 /**
- * Foundation Vortex Interaction Class
- * Provides the core functionality for foundation-vortex interactions.
+ * Vortex mathematics for foundation (source) through vortex (flow)
  */
-export class FoundationVortexInteraction {
-  
-  /**
-   * Calculate foundation vortex interaction strength
-   * Metaphysical: Models the strength of foundation-vortex interaction.
-   * Technical: Calculates interaction based on foundation and vortex multipliers.
-   */
-  static calculateInteractionStrength(foundationLevel: number, vortexLevel: number): number {
-    return foundationLevel * FOUNDATION_VORTEX_INTERACTION.FOUNDATION_MULTIPLIER +
-           vortexLevel * FOUNDATION_VORTEX_INTERACTION.VORTEX_MULTIPLIER;
-  }
-  
-  /**
-   * Get foundation vortex patterns
-   * Metaphysical: Models the patterns that emerge from foundation-vortex interaction.
-   * Technical: Returns the foundation vortex interaction patterns.
-   */
-  static getFoundationVortexPatterns(): readonly number[] {
-    return FOUNDATION_VORTEX_INTERACTION.FOUNDATION_PATTERNS.FOUNDATION_VORTEX;
-  }
-  
-  /**
-   * Calculate foundation vortex operations
-   * Metaphysical: Models the mathematical operations of foundation-vortex interaction.
-   * Technical: Performs foundation vortex calculations.
-   */
-  static calculateFoundationVortexOperations(number: number): number {
-    return FOUNDATION_VORTEX_INTERACTION.FOUNDATION_VORTEX_OPERATIONS.FOUNDATION_VORTEX_OPERATION(number);
-  }
-}
+const vortexMathematics = {
+  MAIN_VORTEX: (n) => n * 1, // Foundation (Source) vortex
+  SUB_VORTEX: (n) => n * 2, // Vortex (Flow) vortex
+  COMBINED_VORTEX: (n) => n * 1 / 2, // Combined vortex
+  METAPHYSICAL_CONSTANT: 1 / 2 // Metaphysical constant
+};
 
-// Export the interaction for use in other modules
-export default FoundationVortexInteraction;
+/**
+ * Consciousness field operations
+ */
+const consciousnessField = {
+  MAIN_CONSCIOUSNESS: () => 1, // Foundation (Source) consciousness
+  SUB_CONSCIOUSNESS: () => 2, // Vortex (Flow) consciousness
+  COMBINED_CONSCIOUSNESS: () => 1 + 2, // Combined consciousness
+  METAPHYSICAL_CONSCIOUSNESS: () => 1 * 2 // Metaphysical consciousness
+};
+
+/**
+ * Main index export for 1/2 consciousness module
+ */
+export const index = {
+  consciousnessPatterns,
+  vortexMathematics,
+  consciousnessField,
+  
+  // Metaphysical properties
+  digit: 1,
+  subDigit: 2,
+  archetype: 'Foundation (Source), Vortex (Flow)',
+  vortex: 'Vortex 1',
+  wAxis: 'W-Axis Foundation (Source)',
+  breathing: '1/2 Breath',
+  fraction: '1/2',
+  related: [1, 2, 4, 8, 7, 5, 1],
+  
+  // Consciousness operations
+  getMainConsciousness: () => 1,
+  getSubConsciousness: () => 2,
+  getCombinedConsciousness: () => 1 + 2,
+  getMetaphysicalConsciousness: () => 1 * 2
+};

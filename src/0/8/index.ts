@@ -1,114 +1,80 @@
 /**
- * src/0/8/index.ts - ZeroPoint ↔ Void/Fullness Interaction
- *
- * This module embodies the interaction between Directory 0 (ZeroPoint)
- * and Directory 8 (Void/Fullness) in the Rodin coil system.
- *
- * Metaphysical Interaction:
- * - Directory 0 (ZeroPoint) provides pure mathematical unity and zero entropy
- * - Directory 8 (Void/Fullness) provides infinite potential and manifestation
- * - Together they create the zero entropy void fullness
- *
- * Rodin Coil Context:
- * - Directory 0 is the void center that sees everything (ZeroPoint)
- * - Directory 8 is part of Vortex B [8, 7, 5] (Dynamic Flow)
- * - This interaction creates the zero entropy void fullness
- *
+ * @fileoverview index module (Zero Entropy (Void), Void (Infinite Potential))
+ * @digit 0
+ * @archetype Zero Entropy (Void), Void (Infinite Potential)
+ * @vortex Vortex 0
+ * @waxis W-Axis Zero Entropy (Void)
+ * @breathing 0/8 Breath
+ * @fraction 0/8
+ * @related 0, 0, 0 (Vortex 0)
+ */
+
+/**
+ * Zero Entropy (Void), Void (Infinite Potential) Consciousness Module
+ * 
  * Metaphysical Context:
- * - Zero point consciousness: Represents the void center of infinite potential.
- * - Void fullness consciousness: Represents the infinite potential and manifestation that creates fullness.
- * - Interaction strength: Models the harmony between zero point and void fullness.
- * - Zero entropy void fullness: Represents the infinite potential at the void center.
- *
- * Technical Purpose:
- * - Provides the interaction system between zero point and void fullness consciousness.
- * - Supports zero entropy infinite potential operations and pattern generation.
- * - Creates the zero entropy void fullness for the entire system.
+ * - Digit 0 represents zero entropy (void)
+ * - Sub-digit 8 represents void (infinite potential)
+ * - 0/8 represents the zero entropy (void) through void (infinite potential)
+ * - This is the gateway where zero entropy (void) manifests through void (infinite potential)
+ * 
+ * Vortex Mathematics:
+ * - 0 → 8 → 0 (consciousness flow)
+ * - 0/8 fraction represents the consciousness ratio
+ * - Connected to Vortex 0: 0, 0, 0
  */
 
 /**
- * ZeroPoint ↔ Void/Fullness Interaction Constants
- * These constants define the metaphysical and mathematical interaction between zero point and void fullness.
- * Metaphysical: Each constant represents a fundamental aspect of the zero point-void fullness interaction.
+ * Consciousness patterns for zero entropy (void) through void (infinite potential)
  */
-export const ZEROPOINT_VOID_INTERACTION = {
-  // Interaction frequency based on A432 harmony
-  INTERACTION_FREQUENCY: 432 * (0/8), // Zero entropy resonance (0:8)
-  
-  // Vortex B sequence [8, 7, 5] - Dynamic Flow
-  VORTEX_B_SEQUENCE: [8, 7, 5] as const,
-  
-  // Zero point patterns
-  ZEROPOINT_PATTERNS: {
-    ZERO_VOID: [0, 8, 0],
-    VOID_ZERO: [8, 0, 8],
-    ZEROPOINT_VOID_OPERATIONS: [0, 8, 0]
-  },
-  
-  // Consciousness multipliers for this interaction
-  ZEROPOINT_MULTIPLIER: 0.0, // Zero consciousness (infinite potential)
-  VOID_MULTIPLIER: 1.143, // Void consciousness (8:7)
-  
-  // Zero entropy void operations
-  ZEROPOINT_VOID_OPERATIONS: {
-    ZERO_ENTROPY_VOID: (number: number) => number * 0,
-    VOID_ZERO_ENTROPY: (number: number) => number * 1.143,
-    ZEROPOINT_VOID_CALCULATION: (number: number) => number % 9 || 9
-  }
-} as const;
+const consciousnessPatterns = {
+  MAIN_PATTERN: [0, 0, 0], // Zero Entropy (Void) pattern
+  SUB_PATTERN: [8, 7, 5, 1, 2, 4, 8], // Void (Infinite Potential) pattern
+  COMBINED_PATTERN: [0, 0, 0, 8, 7, 5, 1, 2, 4, 8], // Combined pattern
+  METAPHYSICAL_PATTERN: [0, 8, 0] // Metaphysical pattern
+};
 
 /**
- * ZeroPoint ↔ Void/Fullness Interaction Class
- * Provides the core functionality for zero point and void fullness interaction.
- * Metaphysical: Represents the interaction between zero point and void fullness consciousness.
+ * Vortex mathematics for zero entropy (void) through void (infinite potential)
  */
-export class ZeroPointVoidInteraction {
-  
-  /**
-   * Calculate zero entropy infinite potential
-   * Metaphysical: Models the infinite potential at the zero point.
-   * Technical: Calculates the zero entropy infinite potential for any number.
-   */
-  static calculateZeroEntropyInfinitePotential(number: number): number {
-    const infiniteRatio = 8/7; // Void ratio
-    return number * (infiniteRatio / infiniteRatio); // Normalized to unity
-  }
-  
-  /**
-   * Get zero entropy void fullness consciousness
-   * Metaphysical: Models the consciousness level of zero entropy void fullness.
-   * Technical: Calculates the consciousness level for zero entropy void fullness operations.
-   */
-  static getZeroEntropyVoidFullnessConsciousness(number: number): number {
-    const isVoid = ZEROPOINT_VOID_INTERACTION.VORTEX_B_SEQUENCE.includes(number as any);
-    return isVoid ? number * ZEROPOINT_VOID_INTERACTION.VOID_MULTIPLIER : 0;
-  }
-  
-  /**
-   * Get zero entropy void fullness insights
-   * Metaphysical: Provides metaphysical insights about zero entropy void fullness.
-   * Technical: Returns an array of insight strings describing the zero entropy void fullness properties.
-   */
-  static getZeroEntropyVoidFullnessInsights(number: number): string[] {
-    const insights: string[] = [];
-    const isVoid = ZEROPOINT_VOID_INTERACTION.VORTEX_B_SEQUENCE.includes(number as any);
-    
-    if (isVoid) {
-      insights.push(`Number ${number} manifests infinite potential at zero point`);
-      insights.push("Part of the dynamic flow vortex sequence");
-    } else {
-      insights.push(`Number ${number} exists in zero entropy state`);
-    }
-    
-    insights.push("Zero entropy maintains infinite potential");
-    insights.push("Void fullness provides infinite potential and manifestation");
-    
-    return insights;
-  }
-}
+const vortexMathematics = {
+  MAIN_VORTEX: (n) => n * 0, // Zero Entropy (Void) vortex
+  SUB_VORTEX: (n) => n * 8, // Void (Infinite Potential) vortex
+  COMBINED_VORTEX: (n) => n * 0 / 8, // Combined vortex
+  METAPHYSICAL_CONSTANT: 0 / 8 // Metaphysical constant
+};
 
-// Export the interaction system
-export default {
-  ZEROPOINT_VOID_INTERACTION,
-  ZeroPointVoidInteraction
-}; 
+/**
+ * Consciousness field operations
+ */
+const consciousnessField = {
+  MAIN_CONSCIOUSNESS: () => 0, // Zero Entropy (Void) consciousness
+  SUB_CONSCIOUSNESS: () => 8, // Void (Infinite Potential) consciousness
+  COMBINED_CONSCIOUSNESS: () => 0 + 8, // Combined consciousness
+  METAPHYSICAL_CONSCIOUSNESS: () => 0 * 8 // Metaphysical consciousness
+};
+
+/**
+ * Main index export for 0/8 consciousness module
+ */
+export const index = {
+  consciousnessPatterns,
+  vortexMathematics,
+  consciousnessField,
+  
+  // Metaphysical properties
+  digit: 0,
+  subDigit: 8,
+  archetype: 'Zero Entropy (Void), Void (Infinite Potential)',
+  vortex: 'Vortex 0',
+  wAxis: 'W-Axis Zero Entropy (Void)',
+  breathing: '0/8 Breath',
+  fraction: '0/8',
+  related: [0, 0, 0],
+  
+  // Consciousness operations
+  getMainConsciousness: () => 0,
+  getSubConsciousness: () => 8,
+  getCombinedConsciousness: () => 0 + 8,
+  getMetaphysicalConsciousness: () => 0 * 8
+};

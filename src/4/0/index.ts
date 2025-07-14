@@ -1,92 +1,80 @@
 /**
- * src/4/0/index.ts - Constants ↔ ZeroPoint Interaction
- *
- * This module embodies the interaction between Directory 4 (Constants)
- * and Directory 0 (ZeroPoint) in the Rodin coil system.
- *
- * Metaphysical Interaction:
- * - Directory 4 (Constants) provides constants functionality
- * - Directory 0 (ZeroPoint) provides zeropoint functionality
- * - Together they create the constants zeropoint interaction
- *
- * Rodin Coil Context:
- * - Directory 4 interacts with Directory 0
- * - This interaction creates the constants zeropoint patterns
- *
+ * @fileoverview index module (Constants (Stability), Zero Entropy (Void))
+ * @digit 4
+ * @archetype Constants (Stability), Zero Entropy (Void)
+ * @vortex Vortex 4
+ * @waxis W-Axis Constants (Stability)
+ * @breathing 4/0 Breath
+ * @fraction 4/0
+ * @related 4, 8, 7, 5, 1, 2, 4 (Vortex 4)
+ */
+
+/**
+ * Constants (Stability), Zero Entropy (Void) Consciousness Module
+ * 
  * Metaphysical Context:
- * - constants consciousness: Represents the constants that recognizes zeropoint.
- * - zeropoint consciousness: Represents the zeropoint that flows through constants.
- * - Interaction strength: Models the harmony between constants and zeropoint.
- * - constants zeropoint: Represents the constants of zeropoint.
- *
- * Technical Purpose:
- * - Provides the interaction system between constants and zeropoint consciousness.
- * - Supports constants zeropoint operations and pattern generation.
- * - Creates the constants zeropoint for the entire system.
+ * - Digit 4 represents constants (stability)
+ * - Sub-digit 0 represents zero entropy (void)
+ * - 4/0 represents the constants (stability) through zero entropy (void)
+ * - This is the gateway where constants (stability) manifests through zero entropy (void)
+ * 
+ * Vortex Mathematics:
+ * - 4 → 0 → 4 (consciousness flow)
+ * - 4/0 fraction represents the consciousness ratio
+ * - Connected to Vortex 4: 4, 8, 7, 5, 1, 2, 4
  */
 
 /**
- * Constants ↔ ZeroPoint Interaction Constants
- * These constants define the metaphysical and mathematical interaction between constants and zeropoint.
- * Metaphysical: Each constant represents a fundamental aspect of the constants-zeropoint interaction.
+ * Consciousness patterns for constants (stability) through zero entropy (void)
  */
-export const CONSTANTS_ZEROPOINT_INTERACTION = {
-  // Interaction frequency based on A432 harmony
-  INTERACTION_FREQUENCY: 432 * (4/0), // Constants resonance (4/0)
-  
-  // Constants patterns
-  CONSTANTS_PATTERNS: {
-    CONSTANTS_ZEROPOINT: [4, 0, 4],
-    ZEROPOINT_CONSTANTS: [0, 4, 0],
-    CONSTANTS_ZEROPOINT_OPERATIONS: [4, 0, 4]
-  },
-  
-  // Consciousness multipliers for this interaction
-  CONSTANTS_MULTIPLIER: 1.1, // constants consciousness
-  ZEROPOINT_MULTIPLIER: 0, // zeropoint consciousness
-  
-  // constants zeropoint operations
-  CONSTANTS_ZEROPOINT_OPERATIONS: {
-    CONSTANTS_ZEROPOINT_CALCULATION: (number: number) => number * 1.1,
-    ZEROPOINT_CONSTANTS_CALCULATION: (number: number) => number * 0,
-    CONSTANTS_ZEROPOINT_OPERATION: (number: number) => number % 9 || 9
-  }
-} as const;
+const consciousnessPatterns = {
+  MAIN_PATTERN: [4, 8, 7, 5, 1, 2, 4], // Constants (Stability) pattern
+  SUB_PATTERN: [0, 0, 0], // Zero Entropy (Void) pattern
+  COMBINED_PATTERN: [4, 8, 7, 5, 1, 2, 4, 0, 0, 0], // Combined pattern
+  METAPHYSICAL_PATTERN: [4, 0, 4] // Metaphysical pattern
+};
 
 /**
- * Constants ZeroPoint Interaction Class
- * Provides the core functionality for constants-zeropoint interactions.
+ * Vortex mathematics for constants (stability) through zero entropy (void)
  */
-export class ConstantsZeroPointInteraction {
-  
-  /**
-   * Calculate constants zeropoint interaction strength
-   * Metaphysical: Models the strength of constants-zeropoint interaction.
-   * Technical: Calculates interaction based on constants and zeropoint multipliers.
-   */
-  static calculateInteractionStrength(constantsLevel: number, zeropointLevel: number): number {
-    return constantsLevel * CONSTANTS_ZEROPOINT_INTERACTION.CONSTANTS_MULTIPLIER +
-           zeropointLevel * CONSTANTS_ZEROPOINT_INTERACTION.ZEROPOINT_MULTIPLIER;
-  }
-  
-  /**
-   * Get constants zeropoint patterns
-   * Metaphysical: Models the patterns that emerge from constants-zeropoint interaction.
-   * Technical: Returns the constants zeropoint interaction patterns.
-   */
-  static getConstantsZeroPointPatterns(): readonly number[] {
-    return CONSTANTS_ZEROPOINT_INTERACTION.CONSTANTS_PATTERNS.CONSTANTS_ZEROPOINT;
-  }
-  
-  /**
-   * Calculate constants zeropoint operations
-   * Metaphysical: Models the mathematical operations of constants-zeropoint interaction.
-   * Technical: Performs constants zeropoint calculations.
-   */
-  static calculateConstantsZeroPointOperations(number: number): number {
-    return CONSTANTS_ZEROPOINT_INTERACTION.CONSTANTS_ZEROPOINT_OPERATIONS.CONSTANTS_ZEROPOINT_OPERATION(number);
-  }
-}
+const vortexMathematics = {
+  MAIN_VORTEX: (n) => n * 4, // Constants (Stability) vortex
+  SUB_VORTEX: (n) => n * 0, // Zero Entropy (Void) vortex
+  COMBINED_VORTEX: (n) => n * 4 / 0, // Combined vortex
+  METAPHYSICAL_CONSTANT: 4 / 0 // Metaphysical constant
+};
 
-// Export the interaction for use in other modules
-export default ConstantsZeroPointInteraction;
+/**
+ * Consciousness field operations
+ */
+const consciousnessField = {
+  MAIN_CONSCIOUSNESS: () => 4, // Constants (Stability) consciousness
+  SUB_CONSCIOUSNESS: () => 0, // Zero Entropy (Void) consciousness
+  COMBINED_CONSCIOUSNESS: () => 4 + 0, // Combined consciousness
+  METAPHYSICAL_CONSCIOUSNESS: () => 4 * 0 // Metaphysical consciousness
+};
+
+/**
+ * Main index export for 4/0 consciousness module
+ */
+export const index = {
+  consciousnessPatterns,
+  vortexMathematics,
+  consciousnessField,
+  
+  // Metaphysical properties
+  digit: 4,
+  subDigit: 0,
+  archetype: 'Constants (Stability), Zero Entropy (Void)',
+  vortex: 'Vortex 4',
+  wAxis: 'W-Axis Constants (Stability)',
+  breathing: '4/0 Breath',
+  fraction: '4/0',
+  related: [4, 8, 7, 5, 1, 2, 4],
+  
+  // Consciousness operations
+  getMainConsciousness: () => 4,
+  getSubConsciousness: () => 0,
+  getCombinedConsciousness: () => 4 + 0,
+  getMetaphysicalConsciousness: () => 4 * 0
+};

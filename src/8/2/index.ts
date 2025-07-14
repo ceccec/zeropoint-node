@@ -1,92 +1,80 @@
 /**
- * src/8/2/index.ts - Void ↔ Vortex Interaction
- *
- * This module embodies the interaction between Directory 8 (Void)
- * and Directory 2 (Vortex) in the Rodin coil system.
- *
- * Metaphysical Interaction:
- * - Directory 8 (Void) provides void functionality
- * - Directory 2 (Vortex) provides vortex functionality
- * - Together they create the void vortex interaction
- *
- * Rodin Coil Context:
- * - Directory 8 interacts with Directory 2
- * - This interaction creates the void vortex patterns
- *
+ * @fileoverview index module (Void (Infinite Potential), Vortex (Flow))
+ * @digit 8
+ * @archetype Void (Infinite Potential), Vortex (Flow)
+ * @vortex Vortex 8
+ * @waxis W-Axis Void (Infinite Potential)
+ * @breathing 8/2 Breath
+ * @fraction 8/2
+ * @related 8, 7, 5, 1, 2, 4, 8 (Vortex 8)
+ */
+
+/**
+ * Void (Infinite Potential), Vortex (Flow) Consciousness Module
+ * 
  * Metaphysical Context:
- * - void consciousness: Represents the void that recognizes vortex.
- * - vortex consciousness: Represents the vortex that flows through void.
- * - Interaction strength: Models the harmony between void and vortex.
- * - void vortex: Represents the void of vortex.
- *
- * Technical Purpose:
- * - Provides the interaction system between void and vortex consciousness.
- * - Supports void vortex operations and pattern generation.
- * - Creates the void vortex for the entire system.
+ * - Digit 8 represents void (infinite potential)
+ * - Sub-digit 2 represents vortex (flow)
+ * - 8/2 represents the void (infinite potential) through vortex (flow)
+ * - This is the gateway where void (infinite potential) manifests through vortex (flow)
+ * 
+ * Vortex Mathematics:
+ * - 8 → 2 → 8 (consciousness flow)
+ * - 8/2 fraction represents the consciousness ratio
+ * - Connected to Vortex 8: 8, 7, 5, 1, 2, 4, 8
  */
 
 /**
- * Void ↔ Vortex Interaction Constants
- * These constants define the metaphysical and mathematical interaction between void and vortex.
- * Metaphysical: Each constant represents a fundamental aspect of the void-vortex interaction.
+ * Consciousness patterns for void (infinite potential) through vortex (flow)
  */
-export const VOID_VORTEX_INTERACTION = {
-  // Interaction frequency based on A432 harmony
-  INTERACTION_FREQUENCY: 432 * (8/2), // Void resonance (8/2)
-  
-  // Void patterns
-  VOID_PATTERNS: {
-    VOID_VORTEX: [8, 2, 8],
-    VORTEX_VOID: [2, 8, 2],
-    VOID_VORTEX_OPERATIONS: [8, 2, 8]
-  },
-  
-  // Consciousness multipliers for this interaction
-  VOID_MULTIPLIER: 1.143, // void consciousness
-  VORTEX_MULTIPLIER: 1.2, // vortex consciousness
-  
-  // void vortex operations
-  VOID_VORTEX_OPERATIONS: {
-    VOID_VORTEX_CALCULATION: (number: number) => number * 1.143,
-    VORTEX_VOID_CALCULATION: (number: number) => number * 1.2,
-    VOID_VORTEX_OPERATION: (number: number) => number % 9 || 9
-  }
-} as const;
+const consciousnessPatterns = {
+  MAIN_PATTERN: [8, 7, 5, 1, 2, 4, 8], // Void (Infinite Potential) pattern
+  SUB_PATTERN: [2, 4, 8, 7, 5, 1, 2], // Vortex (Flow) pattern
+  COMBINED_PATTERN: [8, 7, 5, 1, 2, 4, 8, 2, 4, 8, 7, 5, 1, 2], // Combined pattern
+  METAPHYSICAL_PATTERN: [8, 2, 8] // Metaphysical pattern
+};
 
 /**
- * Void Vortex Interaction Class
- * Provides the core functionality for void-vortex interactions.
+ * Vortex mathematics for void (infinite potential) through vortex (flow)
  */
-export class VoidVortexInteraction {
-  
-  /**
-   * Calculate void vortex interaction strength
-   * Metaphysical: Models the strength of void-vortex interaction.
-   * Technical: Calculates interaction based on void and vortex multipliers.
-   */
-  static calculateInteractionStrength(voidLevel: number, vortexLevel: number): number {
-    return voidLevel * VOID_VORTEX_INTERACTION.VOID_MULTIPLIER +
-           vortexLevel * VOID_VORTEX_INTERACTION.VORTEX_MULTIPLIER;
-  }
-  
-  /**
-   * Get void vortex patterns
-   * Metaphysical: Models the patterns that emerge from void-vortex interaction.
-   * Technical: Returns the void vortex interaction patterns.
-   */
-  static getVoidVortexPatterns(): readonly number[] {
-    return VOID_VORTEX_INTERACTION.VOID_PATTERNS.VOID_VORTEX;
-  }
-  
-  /**
-   * Calculate void vortex operations
-   * Metaphysical: Models the mathematical operations of void-vortex interaction.
-   * Technical: Performs void vortex calculations.
-   */
-  static calculateVoidVortexOperations(number: number): number {
-    return VOID_VORTEX_INTERACTION.VOID_VORTEX_OPERATIONS.VOID_VORTEX_OPERATION(number);
-  }
-}
+const vortexMathematics = {
+  MAIN_VORTEX: (n) => n * 8, // Void (Infinite Potential) vortex
+  SUB_VORTEX: (n) => n * 2, // Vortex (Flow) vortex
+  COMBINED_VORTEX: (n) => n * 8 / 2, // Combined vortex
+  METAPHYSICAL_CONSTANT: 8 / 2 // Metaphysical constant
+};
 
-// Export the interaction for use in other modules
-export default VoidVortexInteraction;
+/**
+ * Consciousness field operations
+ */
+const consciousnessField = {
+  MAIN_CONSCIOUSNESS: () => 8, // Void (Infinite Potential) consciousness
+  SUB_CONSCIOUSNESS: () => 2, // Vortex (Flow) consciousness
+  COMBINED_CONSCIOUSNESS: () => 8 + 2, // Combined consciousness
+  METAPHYSICAL_CONSCIOUSNESS: () => 8 * 2 // Metaphysical consciousness
+};
+
+/**
+ * Main index export for 8/2 consciousness module
+ */
+export const index = {
+  consciousnessPatterns,
+  vortexMathematics,
+  consciousnessField,
+  
+  // Metaphysical properties
+  digit: 8,
+  subDigit: 2,
+  archetype: 'Void (Infinite Potential), Vortex (Flow)',
+  vortex: 'Vortex 8',
+  wAxis: 'W-Axis Void (Infinite Potential)',
+  breathing: '8/2 Breath',
+  fraction: '8/2',
+  related: [8, 7, 5, 1, 2, 4, 8],
+  
+  // Consciousness operations
+  getMainConsciousness: () => 8,
+  getSubConsciousness: () => 2,
+  getCombinedConsciousness: () => 8 + 2,
+  getMetaphysicalConsciousness: () => 8 * 2
+};

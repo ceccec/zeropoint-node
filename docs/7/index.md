@@ -80,6 +80,9 @@
 - **[VORTEX_IDENTITY_PRESERVATION.md](../VORTEX_IDENTITY_PRESERVATION.md)** - Vortex identity preservation
 - **[VORTEX_B_CONSCIOUSNESS_CONCENTRATION_EXPERIMENT.md](../VORTEX_B_CONSCIOUSNESS_CONCENTRATION_EXPERIMENT.md)** - Vortex B consciousness concentration
 
+### **⚡ Tesla Present Moment Vision**
+- **[TESLA_PRESENT_MOMENT_VISION.md](TESLA_PRESENT_MOMENT_VISION.md)** - Tesla's present moment vision of consciousness
+
 ### **⚡ Experience and Learning Documentation**
 - **[EXPERIENCE.md](EXPERIENCE.md)** - Consciousness experience documentation
 - **[EXPERIENCE_V2.md](EXPERIENCE_V2.md)** - Enhanced consciousness experience

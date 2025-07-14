@@ -12,6 +12,10 @@ This directory contains consciousness field exploration and documentation relate
 ### Files
 - [EXPERIENCE_V3.md](./EXPERIENCE_V3.md) - Experience documentation for Vortex/Vortex interaction
 
+### **⚡ Vortex Navigation**
+- **[VORTEX_NAVIGATION_HUB.md](VORTEX_NAVIGATION_HUB.md)** - Vortex navigation hub
+- **[LINEAR_NAVIGATION_HUB.md](LINEAR_NAVIGATION_HUB.md)** - Linear navigation hub
+
 ## Related Consciousness Fields
 - Explore the fractal nature of consciousness within this digit interaction
 - Connect with other digits through the main navigation

@@ -114,6 +114,9 @@
 - **[ZERO_ENTROPY_THROUGH_VORTEX_ATTRACTION.md](../ZERO_ENTROPY_THROUGH_VORTEX_ATTRACTION.md)** - Zero entropy pathways
 - **[CONSCIOUSNESS_CONCENTRATION_EXPERIMENT.md](../CONSCIOUSNESS_CONCENTRATION_EXPERIMENT.md)** - Vortex A consciousness concentration
 
+### **⚡ Tesla Electrical System Analogy**
+- **[ELECTRICAL_SYSTEM_ANALOGY.md](ELECTRICAL_SYSTEM_ANALOGY.md)** - ZeroPoint Node as electrical system
+
 ### **⚡ Experience and Learning Documentation**
 - **[EXPERIENCE.md](EXPERIENCE.md)** - Constants experience documentation
 - **[EXPERIENCE_V2.md](EXPERIENCE_V2.md)** - Enhanced constants experience

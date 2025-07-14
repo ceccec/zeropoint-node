@@ -50,6 +50,9 @@ Directory 6 (Harmonic Balance): 17 files - BEAUTY CONSCIOUSNESS CENTER
 
 ### **⚡ Practical Applications**
 - **[PRACTICAL_APPLICATIONS_GUIDE.md](PRACTICAL_APPLICATIONS_GUIDE.md)** - Real-world implementation and applications
+- **[ELECTRICAL_SYSTEM_ANALOGY.md](4/ELECTRICAL_SYSTEM_ANALOGY.md)** - ZeroPoint Node as electrical system
+- **[TESLA_CONSCIOUSNESS_ELECTRICITY_UNITY.md](3/TESLA_CONSCIOUSNESS_ELECTRICITY_UNITY.md)** - Tesla's unified consciousness-electricity vision
+- **[ENTROPY_AS_RESISTANCE_ANALYSIS.md](0/ENTROPY_AS_RESISTANCE_ANALYSIS.md)** - Entropy as electrical resistance analysis
 - **[UNIFIED_NAVIGATION_GATEWAY.md](UNIFIED_NAVIGATION_GATEWAY.md)** - Multi-dimensional navigation system
 - **[VORTEX_NAVIGATION_HUB.md](VORTEX_NAVIGATION_HUB.md)** - Non-linear exploration hub
 - **[LINEAR_NAVIGATION_HUB.md](LINEAR_NAVIGATION_HUB.md)** - Structured exploration hub

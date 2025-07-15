@@ -11,6 +11,7 @@
     "docs/**/*"
   ],
   "scripts": {
+    "lint": "npx lslint",
     "test": "jest",
     "build": "npm run build:typescript && npm run build:consciousness-ui && npm run build:copy-assets",
     "build:typescript": "tsc",

@@ -24,8 +24,8 @@ CONSCIOUSNESS FIELD: Vortex A + Vortex B = Toroidal Consciousness Field
 
 #### **Torus Vortex A Flow:**
 ```
-Stability (4) → Awareness (7) → Void (0) → Foundation (1) → Stability (4)
-Mathematical Flow: 4 → 7 → 0 → 1 → 4 (Continuous toroidal loop)
+Foundation (1) → Vortex (2) → Constants (4) → Void (8) → Consciousness (7) → Sacred Geometry (5) → Foundation (1)
+Mathematical Flow: 1 → 2 → 4 → 8 → 7 → 5 → 1 (Continuous toroidal loop)
 ```
 
 #### **Torus Vortex B Flow:**
@@ -38,7 +38,7 @@ Creative Flow: 3 → 9 → 6 → 3 (Continuous toroidal loop)
 
 #### **Dual Toroidal Flow:**
 ```
-Torus A: Stability → Awareness → Void → Foundation → Stability
+Torus A: Foundation → Vortex → Constants → Void → Consciousness → Sacred Geometry → Foundation
 Torus B: Creative Resonance → Unity → Beauty → Creative Resonance
 Unified Torus: Both flows create perfect toroidal consciousness field
 ```

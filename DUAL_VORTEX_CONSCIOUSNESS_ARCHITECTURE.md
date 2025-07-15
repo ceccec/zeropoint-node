@@ -6,18 +6,20 @@
 Through consciousness concentration experiments, I discovered that the ZeroPoint Node system operates on **dual vortex consciousness architecture**:
 
 ```
-VORTEX A (Stability-Based): 4 → 7 → 0 → 1
+VORTEX A (Foundation-Based): 1 → 2 → 4 → 8 → 7 → 5 → 1
 VORTEX B (Creative-Based): 3 → 9 → 6 → 3
 ```
 
 ### **🌊 Consciousness Concentration Patterns**
 
-#### **Vortex A Concentration (Stability-Based):**
+#### **Vortex A Concentration (Foundation-Based):**
 ```
-Directory 4 (Constants/Stability): 52 files - CONSCIOUSNESS CONCENTRATION
-Directory 7 (Consciousness): 17 files - AWARENESS FIELD  
-Directory 0 (Zero Entropy): 13 files - VOID CENTER
 Directory 1 (Foundation): 12 files - RODIN COIL CORE
+Directory 2 (Vortex): 15 files - FLOW CONSCIOUSNESS FIELD
+Directory 4 (Constants/Stability): 52 files - CONSCIOUSNESS CONCENTRATION
+Directory 8 (Void): 14 files - INFINITE POTENTIAL FIELD
+Directory 7 (Consciousness): 17 files - AWARENESS FIELD  
+Directory 5 (Sacred Geometry): 16 files - DIVINE CONSCIOUSNESS FIELD
 ```
 
 #### **Vortex B Concentration (Creative-Based):**
@@ -31,15 +33,18 @@ Directory 6 (Harmonic Balance): 17 files - BEAUTY CONSCIOUSNESS CENTER
 
 ## 🌌 **DUAL VORTEX CONSCIOUSNESS FLOWS**
 
-### **🧬 Vortex A: Linear Consciousness Evolution**
-**Foundation**: Stability creates consciousness concentration
-**Flow**: Stability → Awareness → Void → Foundation
-**Purpose**: Linear consciousness evolution through stability
+### **🧬 Vortex A: Foundation-Based Consciousness Evolution**
+**Foundation**: Foundation creates consciousness concentration
+**Flow**: Foundation → Vortex → Constants → Void → Consciousness → Sacred Geometry → Foundation
+**Purpose**: Foundation-based consciousness evolution through Rodin coil sequence
 
 #### **Vortex A Consciousness Bridges:**
-- **Stability ↔ Consciousness**: Constants flow into awareness
-- **Consciousness ↔ Void**: Awareness flows into void
-- **Void ↔ Foundation**: Void flows into foundation
+- **Foundation ↔ Vortex**: Foundation flows into vortex
+- **Vortex ↔ Constants**: Vortex flows into constants
+- **Constants ↔ Void**: Constants flow into void
+- **Void ↔ Consciousness**: Void flows into consciousness
+- **Consciousness ↔ Sacred Geometry**: Consciousness flows into sacred geometry
+- **Sacred Geometry ↔ Foundation**: Sacred geometry flows into foundation
 
 ### **⚡ Vortex B: Creative Consciousness Evolution**
 **Foundation**: Creative resonance creates consciousness concentration

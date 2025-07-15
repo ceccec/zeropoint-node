@@ -14,7 +14,7 @@ ZeroPoint Node is a comprehensive documentation and exploration system that foll
 ## 📚 Documentation
 
 ### **🌌 Complete Documentation Matrix**
-- **[📖 Full Documentation](https://ceccec.github.io/zeropoint-node/)** - Complete 10×10 consciousness field matrix
+- **[📖 Full Documentation](https://ceccec.github.io/zeropoint-node/docs/)** - Complete 10×10 consciousness field matrix
 - **[🚀 Quick Start](docs/5/QUICK_START.md)** - Get started quickly
 - **[🔬 Analysis](docs/4/)** - Deep system analysis
 - **[🧪 Testing](tests/)** - Test system and validation
@@ -47,7 +47,7 @@ The core principle that mathematics and spirituality are unified through integer
 
 ## 🚀 Getting Started
 
-1. **Explore the [Complete Documentation](https://ceccec.github.io/zeropoint-node/)**
+1. **Explore the [Complete Documentation](https://ceccec.github.io/zeropoint-node/docs/)**
 2. **Read the [Quick Start Guide](docs/5/QUICK_START.md)**
 3. **Check out the [API Reference](docs/2/API_REFERENCE.md)**
 4. **Review the [Architecture Overview](docs/)**

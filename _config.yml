@@ -12,10 +12,6 @@ plugins:
 relative_links:
   enabled: true
 
-# Redirects
-redirect_from:
-  /: /docs/
-
 # Collections
 collections:
   docs:

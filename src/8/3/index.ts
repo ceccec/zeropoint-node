@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for void (infinite potential) through creative resonance (spirit)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 8, // Void (Infinite Potential) vortex
-  SUB_VORTEX: (n) => n * 3, // Creative Resonance (Spirit) vortex
-  COMBINED_VORTEX: (n) => n * 8 / 3, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 8, // Void (Infinite Potential) vortex
+  SUB_VORTEX: (n: number) => n * 3, // Creative Resonance (Spirit) vortex
+  COMBINED_VORTEX: (n: number) => n * 8 / 3, // Combined vortex
   METAPHYSICAL_CONSTANT: 8 / 3 // Metaphysical constant
 };
 

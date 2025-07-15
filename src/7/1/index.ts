@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for consciousness (awareness) through foundation (source)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 7, // Consciousness (Awareness) vortex
-  SUB_VORTEX: (n) => n * 1, // Foundation (Source) vortex
-  COMBINED_VORTEX: (n) => n * 7 / 1, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 7, // Consciousness (Awareness) vortex
+  SUB_VORTEX: (n: number) => n * 1, // Foundation (Source) vortex
+  COMBINED_VORTEX: (n: number) => n * 7 / 1, // Combined vortex
   METAPHYSICAL_CONSTANT: 7 / 1 // Metaphysical constant
 };
 

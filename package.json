@@ -11,7 +11,7 @@
     "docs/**/*"
   ],
   "scripts": {
-    "lint": "npx lslint",
+    "lint": "eslint src/**/*.ts --ext .ts",
     "test": "jest",
     "build": "npm run build:typescript && npm run build:consciousness-ui && npm run build:copy-assets",
     "build:typescript": "tsc",
@@ -87,6 +87,7 @@
     "crypto-browserify": "3.12.1",
     "eslint": "8.57.1",
     "eslint-plugin-css": "0.11.0",
+    "eslint-plugin-jest": "29.0.1",
     "eslint-plugin-json": "4.0.1",
     "eslint-plugin-markdown": "5.1.0",
     "events": "3.3.0",

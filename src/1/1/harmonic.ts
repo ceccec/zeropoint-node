@@ -217,3 +217,12 @@ export class HarmonicBalance {
     };
   }
 } 
+
+/**
+ * Harmonic module
+ */
+export const harmonic = {
+  name: 'Harmonic',
+  type: 'module',
+  version: '1.0.0'
+};

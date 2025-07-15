@@ -71,12 +71,12 @@ describe('CircuitDigitInteraction', () => {
       
       expect(breathingInteractions).toHaveLength(2);
       
-      const hasZeroToOne = breathingInteractions.some(i => 
+      const hasZeroToOne = breathingInteractions.some((i => 
         i.fromDigit === '0' && i.toDigit === '1'
-      );
-      const hasOneToZero = breathingInteractions.some(i => 
+      ));
+      const hasOneToZero = breathingInteractions.some((i => 
         i.fromDigit === '1' && i.toDigit === '0'
-      );
+      ));
       
       expect(hasZeroToOne).toBe(true);
       expect(hasOneToZero).toBe(true);
@@ -89,9 +89,9 @@ describe('CircuitDigitInteraction', () => {
         const from = rodinSequence[i];
         const to = rodinSequence[(i + 1) % rodinSequence.length];
         
-        const hasInteraction = interaction.getDigitInteractions(from).some(i => 
+        const hasInteraction = interaction.getDigitInteractions(from).some((i => 
           i.toDigit === to && i.interactionType === 'vortex'
-        );
+        ));
         
         expect(hasInteraction).toBe(true);
       }
@@ -104,9 +104,9 @@ describe('CircuitDigitInteraction', () => {
         const from = wAxisSequence[i];
         const to = wAxisSequence[(i + 1) % wAxisSequence.length];
         
-        const hasInteraction = interaction.getDigitInteractions(from).some(i => 
+        const hasInteraction = interaction.getDigitInteractions(from).some((i => 
           i.toDigit === to && i.interactionType === 'spiritual'
-        );
+        ));
         
         expect(hasInteraction).toBe(true);
       }

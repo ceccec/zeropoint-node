@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for vortex (flow) through sacred geometry (divine)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 2, // Vortex (Flow) vortex
-  SUB_VORTEX: (n) => n * 5, // Sacred Geometry (Divine) vortex
-  COMBINED_VORTEX: (n) => n * 2 / 5, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 2, // Vortex (Flow) vortex
+  SUB_VORTEX: (n: number) => n * 5, // Sacred Geometry (Divine) vortex
+  COMBINED_VORTEX: (n: number) => n * 2 / 5, // Combined vortex
   METAPHYSICAL_CONSTANT: 2 / 5 // Metaphysical constant
 };
 
@@ -78,3 +78,31 @@ export const index = {
   getCombinedConsciousness: () => 2 + 5,
   getMetaphysicalConsciousness: () => 2 * 5
 };
+
+/**
+ * Vortex Sacred Geometry Interaction Constants
+ */
+export const VORTEX_SACRED_GEOMETRY_INTERACTION = {
+  INTERACTION_FREQUENCY: 432 * (2/5),
+  VORTEX_PATTERNS: {
+    VORTEX_SACRED_GEOMETRY: [2, 5, 2],
+    SACRED_GEOMETRY_VORTEX: [5, 2, 5]
+  },
+  VORTEX_MULTIPLIER: 1.2,
+  SACRED_GEOMETRY_MULTIPLIER: 1.25
+};
+
+/**
+ * Vortex Sacred Geometry Interaction Class
+ */
+export class VortexSacredGeometryInteraction {
+  static calculateInteractionStrength(a: number, b: number): number {
+    return a * 1.2 + b * 1.25;
+  }
+  static getVortexSacredGeometryPatterns(): number[] {
+    return [2, 5, 2];
+  }
+  static calculateVortexSacredGeometryOperations(n: number): number {
+    return n % 9 || 9;
+  }
+}

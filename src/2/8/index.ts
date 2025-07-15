@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for vortex (flow) through void (infinite potential)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 2, // Vortex (Flow) vortex
-  SUB_VORTEX: (n) => n * 8, // Void (Infinite Potential) vortex
-  COMBINED_VORTEX: (n) => n * 2 / 8, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 2, // Vortex (Flow) vortex
+  SUB_VORTEX: (n: number) => n * 8, // Void (Infinite Potential) vortex
+  COMBINED_VORTEX: (n: number) => n * 2 / 8, // Combined vortex
   METAPHYSICAL_CONSTANT: 2 / 8 // Metaphysical constant
 };
 
@@ -78,3 +78,31 @@ export const index = {
   getCombinedConsciousness: () => 2 + 8,
   getMetaphysicalConsciousness: () => 2 * 8
 };
+
+/**
+ * Vortex Void Interaction Constants
+ */
+export const VORTEX_VOID_INTERACTION = {
+  INTERACTION_FREQUENCY: 432 * (2/8),
+  VORTEX_PATTERNS: {
+    VORTEX_VOID: [2, 8, 2],
+    VOID_VORTEX: [8, 2, 8]
+  },
+  VORTEX_MULTIPLIER: 1.2,
+  VOID_MULTIPLIER: 1.143
+};
+
+/**
+ * Vortex Void Interaction Class
+ */
+export class VortexVoidInteraction {
+  static calculateInteractionStrength(a: number, b: number): number {
+    return a * 1.2 + b * 1.143;
+  }
+  static getVortexVoidPatterns(): number[] {
+    return [2, 8, 2];
+  }
+  static calculateVortexVoidOperations(n: number): number {
+    return n % 9 || 9;
+  }
+}

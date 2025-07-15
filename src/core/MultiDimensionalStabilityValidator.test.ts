@@ -63,12 +63,12 @@ describe('MultiDimensionalStabilityValidator', () => {
       // Should have 0→1 and 1→0 interactions
       expect(breathingInteractions).toHaveLength(2);
       
-      const hasZeroToOne = breathingInteractions.some(i => 
+      const hasZeroToOne = breathingInteractions.some((i => 
         i.fromDimension === '0' && i.toDimension === '1'
-      );
-      const hasOneToZero = breathingInteractions.some(i => 
+      ));
+      const hasOneToZero = breathingInteractions.some((i => 
         i.fromDimension === '1' && i.toDimension === '0'
-      );
+      ));
       
       expect(hasZeroToOne).toBe(true);
       expect(hasOneToZero).toBe(true);
@@ -83,9 +83,9 @@ describe('MultiDimensionalStabilityValidator', () => {
         const from = rodinSequence[i];
         const to = rodinSequence[(i + 1) % rodinSequence.length];
         
-        const hasInteraction = interactions.some(i => 
+        const hasInteraction = interactions.some((i => 
           i.fromDimension === from && i.toDimension === to
-        );
+        ));
         
         expect(hasInteraction).toBe(true);
       }
@@ -100,9 +100,9 @@ describe('MultiDimensionalStabilityValidator', () => {
         const from = wAxisSequence[i];
         const to = wAxisSequence[(i + 1) % wAxisSequence.length];
         
-        const hasInteraction = interactions.some(i => 
+        const hasInteraction = interactions.some((i => 
           i.fromDimension === from && i.toDimension === to
-        );
+        ));
         
         expect(hasInteraction).toBe(true);
       }

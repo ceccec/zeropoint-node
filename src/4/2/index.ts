@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for constants (stability) through vortex (flow)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 4, // Constants (Stability) vortex
-  SUB_VORTEX: (n) => n * 2, // Vortex (Flow) vortex
-  COMBINED_VORTEX: (n) => n * 4 / 2, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 4, // Constants (Stability) vortex
+  SUB_VORTEX: (n: number) => n * 2, // Vortex (Flow) vortex
+  COMBINED_VORTEX: (n: number) => n * 4 / 2, // Combined vortex
   METAPHYSICAL_CONSTANT: 4 / 2 // Metaphysical constant
 };
 
@@ -78,3 +78,31 @@ export const index = {
   getCombinedConsciousness: () => 4 + 2,
   getMetaphysicalConsciousness: () => 4 * 2
 };
+
+/**
+ * Constants Vortex Interaction Constants
+ */
+export const CONSTANTS_VORTEX_INTERACTION = {
+  INTERACTION_FREQUENCY: 432 * (4/2),
+  CONSTANTS_PATTERNS: {
+    CONSTANTS_VORTEX: [4, 2, 4],
+    VORTEX_CONSTANTS: [2, 4, 2]
+  },
+  CONSTANTS_MULTIPLIER: 11/10, // 1.1
+  VORTEX_MULTIPLIER: 6/5 // 1.2
+};
+
+/**
+ * Constants Vortex Interaction Class
+ */
+export class ConstantsVortexInteraction {
+  static calculateInteractionStrength(a: number, b: number): number {
+    return a * (11/10) + b * (6/5);
+  }
+  static getConstantsVortexPatterns(): number[] {
+    return [4, 2, 4];
+  }
+  static calculateConstantsVortexOperations(n: number): number {
+    return n % 9 || 9;
+  }
+}

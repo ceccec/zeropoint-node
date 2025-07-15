@@ -56,12 +56,12 @@ describe('PdfAnalysis', () => {
       expect(concepts).toBeInstanceOf(Array);
       expect(concepts.length).toBeGreaterThan(0);
       
-      concepts.forEach(concept => {
+      concepts.forEach((concept => {
         expect(concept).toHaveProperty('concept');
         expect(concept).toHaveProperty('count');
         expect(typeof concept.concept).toBe('string');
         expect(typeof concept.count).toBe('number');
-      });
+      }));
     });
 
     it('should sort concepts by count in descending order', () => {
@@ -87,9 +87,9 @@ describe('PdfAnalysis', () => {
   describe('getConceptsByFrequency', () => {
     it('should return concepts with minimum count', () => {
       const concepts = pdfAnalysis.getConceptsByFrequency(5);
-      concepts.forEach(concept => {
+      concepts.forEach((concept => {
         expect(concept.count).toBeGreaterThanOrEqual(5);
-      });
+      }));
     });
   });
 
@@ -97,9 +97,9 @@ describe('PdfAnalysis', () => {
     it('should find passages containing search term', () => {
       const passages = pdfAnalysis.searchKeyPassages('vortex');
       expect(passages).toBeInstanceOf(Array);
-      passages.forEach(passage => {
+      passages.forEach((passage => {
         expect(passage.toLowerCase()).toContain('vortex');
-      });
+      }));
     });
 
     it('should return empty array for non-existent term', () => {
@@ -112,12 +112,12 @@ describe('PdfAnalysis', () => {
     it('should return chapters containing specified concept', () => {
       const chapters = pdfAnalysis.getChaptersWithConcept('torus');
       expect(chapters).toBeInstanceOf(Array);
-      chapters.forEach(chapter => {
-        const hasConcept = chapter.relatedConcepts.some(concept => 
+      chapters.forEach((chapter => {
+        const hasConcept = chapter.relatedConcepts.some((concept => 
           concept.concept.toLowerCase().includes('torus')
-        );
+        ));
         expect(hasConcept).toBe(true);
-      });
+      }));
     });
   });
 
@@ -141,10 +141,10 @@ describe('PdfAnalysis', () => {
       expect(titles).toBeInstanceOf(Array);
       expect(titles.length).toBe(pdfAnalysis.getTotalChapters());
       
-      titles.forEach(title => {
+      titles.forEach((title => {
         expect(typeof title).toBe('string');
         expect(title).toContain('Chapter_');
-      });
+      }));
     });
   });
 

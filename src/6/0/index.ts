@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for harmonic balance (equilibrium) through zero entropy (void)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 6, // Harmonic Balance (Equilibrium) vortex
-  SUB_VORTEX: (n) => n * 0, // Zero Entropy (Void) vortex
-  COMBINED_VORTEX: (n) => n * 6 / 0, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 6, // Harmonic Balance (Equilibrium) vortex
+  SUB_VORTEX: (n: number) => n * 0, // Zero Entropy (Void) vortex
+  COMBINED_VORTEX: (n: number) => n * 6 / 0, // Combined vortex
   METAPHYSICAL_CONSTANT: 6 / 0 // Metaphysical constant
 };
 
@@ -78,3 +78,31 @@ export const index = {
   getCombinedConsciousness: () => 6 + 0,
   getMetaphysicalConsciousness: () => 6 * 0
 };
+
+/**
+ * Harmonic Balance ZeroPoint Interaction Constants
+ */
+export const HARMONIC_BALANCE_ZEROPOINT_INTERACTION = {
+  INTERACTION_FREQUENCY: 432 * (6/0),
+  HARMONIC_BALANCE_PATTERNS: {
+    HARMONIC_BALANCE_ZEROPOINT: [6, 0, 6],
+    ZEROPOINT_HARMONIC_BALANCE: [0, 6, 0]
+  },
+  HARMONIC_BALANCE_MULTIPLIER: 1.5,
+  ZEROPOINT_MULTIPLIER: 0
+};
+
+/**
+ * Harmonic Balance ZeroPoint Interaction Class
+ */
+export class HarmonicBalanceZeroPointInteraction {
+  static calculateInteractionStrength(a: number, b: number): number {
+    return a * 1.5 + b * 0;
+  }
+  static getHarmonicBalanceZeroPointPatterns(): number[] {
+    return [6, 0, 6];
+  }
+  static calculateHarmonicBalanceZeroPointOperations(n: number): number {
+    return n % 9 || 9;
+  }
+}

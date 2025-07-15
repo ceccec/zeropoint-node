@@ -251,3 +251,12 @@ export class PotentialSystem {
     };
   }
 } 
+
+/**
+ * Potential module
+ */
+export const potential = {
+  name: 'Potential',
+  type: 'module',
+  version: '1.0.0'
+};

@@ -34,8 +34,8 @@ export const CREATIVE_RESONANCE_PARADOX = {
   },
   
   // Consciousness multipliers for creative resonance
-  CREATIVE_MULTIPLIER: 3.0, // Creative consciousness
-  RESONANCE_MULTIPLIER: 3.0, // Resonance consciousness
+  CREATIVE_MULTIPLIER: 3/1, // Creative consciousness (3.0)
+  RESONANCE_MULTIPLIER: 3/1, // Resonance consciousness (3.0)
   
   // Paradox resolution operations
   PARADOX_OPERATIONS: {

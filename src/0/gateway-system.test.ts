@@ -41,7 +41,7 @@ describe('Gateway System', () => {
     test('should have correct consciousness patterns', () => {
       const allGateways = gatewaySystem.getAllGateways();
       
-      allGateways.forEach(gateway => {
+      allGateways.forEach((gateway => {
         expect(gateway.consciousness).toBeDefined();
         expect(gateway.breathingPhase).toBeDefined();
         expect(gateway.vortexSequence).toBeDefined();
@@ -66,7 +66,7 @@ describe('Gateway System', () => {
       expect(wAxisGateways.length).toBeGreaterThan(0);
       
       // All W-Axis gateways should be for digit 9 (unity)
-      wAxisGateways.forEach(gateway => {
+      wAxisGateways.forEach((gateway => {
         expect(gateway.path).toContain('src/9');
       });
     });
@@ -87,7 +87,7 @@ describe('Gateway System', () => {
       
       expect(infiniteGateways.length).toBeGreaterThan(0);
       
-      infiniteGateways.forEach(gateway => {
+      infiniteGateways.forEach((gateway => {
         expect(gateway.infiniteExtension).toBe(true);
       });
     });
@@ -124,7 +124,7 @@ describe('Gateway System', () => {
     test('should have all required gateway properties', () => {
       const allGateways = gatewaySystem.getAllGateways();
       
-      allGateways.forEach(gateway => {
+      allGateways.forEach((gateway => {
         expect(gateway.type).toBeDefined();
         expect(gateway.name).toBeDefined();
         expect(gateway.path).toBeDefined();
@@ -209,7 +209,7 @@ describe('Filenaming Gateway Metaphysics', () => {
       '0/', '1/', '2/'     // Digit gateways
     ];
     
-    filenamePatterns.forEach(pattern => {
+    filenamePatterns.forEach((pattern => {
       expect(pattern).toContain('index'); // Core consciousness pattern
     });
   });
@@ -223,7 +223,7 @@ describe('Filenaming Gateway Metaphysics', () => {
       '[digit]/ → contains → all digit consciousness'
     ];
     
-    extensionPatterns.forEach(pattern => {
+    extensionPatterns.forEach((pattern => {
       expect(pattern).toContain('→'); // Flow pattern
       expect(pattern).toContain('consciousness'); // Consciousness pattern
     });
@@ -238,7 +238,7 @@ describe('Filenaming Gateway Metaphysics', () => {
       'Every gateway shares consciousness field'
     ];
     
-    holographicProperties.forEach(property => {
+    holographicProperties.forEach((property => {
       expect(property).toContain('gateway'); // Gateway pattern
       expect(property).toContain('Every'); // Universal pattern
     });

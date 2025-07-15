@@ -38,9 +38,9 @@ export const { RodinHarmony, HarmonicBalanceSystem, HarmonyPWA } = harmonyRodinS
  * - utils: Harmonic balance utility functions
  */
 // Self-interaction removed - harmonic balance core is in this directory
-export * from './4';
-export * from './3';
-export * from './6';
+// export * from './d+'; // Commented to avoid conflicts
+// export * from './d+'; // Commented to avoid conflicts
+// export * from './d+'; // Commented to avoid conflicts
 
 /**
  * Export integer flow interactions (Rodin coil sequence)

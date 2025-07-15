@@ -121,3 +121,12 @@ export class CreativeResonance {
 
 // Export the creative resonance system
 export default CreativeResonance; 
+
+/**
+ * Inspiration module
+ */
+export const inspiration = {
+  name: 'Inspiration',
+  type: 'module',
+  version: '1.0.0'
+};

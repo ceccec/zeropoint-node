@@ -218,3 +218,12 @@ export class StabilityFoundation {
     };
   }
 } 
+
+/**
+ * Stability module
+ */
+export const stability = {
+  name: 'Stability',
+  type: 'module',
+  version: '1.0.0'
+};

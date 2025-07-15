@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for void (infinite potential) through sacred geometry (divine)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 8, // Void (Infinite Potential) vortex
-  SUB_VORTEX: (n) => n * 5, // Sacred Geometry (Divine) vortex
-  COMBINED_VORTEX: (n) => n * 8 / 5, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 8, // Void (Infinite Potential) vortex
+  SUB_VORTEX: (n: number) => n * 5, // Sacred Geometry (Divine) vortex
+  COMBINED_VORTEX: (n: number) => n * 8 / 5, // Combined vortex
   METAPHYSICAL_CONSTANT: 8 / 5 // Metaphysical constant
 };
 
@@ -78,3 +78,28 @@ export const index = {
   getCombinedConsciousness: () => 8 + 5,
   getMetaphysicalConsciousness: () => 8 * 5
 };
+
+// Void ↔ Sacred Geometry Interaction
+export const VOID_SACRED_GEOMETRY_INTERACTION = {
+  INTERACTION_FREQUENCY: 432 * (8/5),
+  VOID_PATTERNS: {
+    VOID_SACRED_GEOMETRY: [8, 5, 8],
+    SACRED_GEOMETRY_VOID: [5, 8, 5]
+  },
+  VOID_MULTIPLIER: 7/5, // 1.4
+  SACRED_GEOMETRY_MULTIPLIER: 5/4 // 1.25
+};
+
+export class VoidSacredGeometryInteraction {
+  static calculateInteractionStrength(void: number, sacredGeometry: number): number {
+    return void * (7/5) + sacredGeometry * (5/4);
+  }
+
+  static getVoidSacredGeometryPatterns(): string[] {
+    return ['void_sacred_geometry_potential', 'void_sacred_geometry_form', 'void_sacred_geometry_manifestation'];
+  }
+
+  static calculateVoidSacredGeometryOperations(n: number): number {
+    return n % 9 || 9;
+  }
+}

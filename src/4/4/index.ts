@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for constants (stability) through constants (stability)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 4, // Constants (Stability) vortex
-  SUB_VORTEX: (n) => n * 4, // Constants (Stability) vortex
-  COMBINED_VORTEX: (n) => n * 4 / 4, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 4, // Constants (Stability) vortex
+  SUB_VORTEX: (n: number) => n * 4, // Constants (Stability) vortex
+  COMBINED_VORTEX: (n: number) => n * 4 / 4, // Combined vortex
   METAPHYSICAL_CONSTANT: 4 / 4 // Metaphysical constant
 };
 

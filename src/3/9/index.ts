@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for creative resonance (spirit) through unity (integration)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 3, // Creative Resonance (Spirit) vortex
-  SUB_VORTEX: (n) => n * 9, // Unity (Integration) vortex
-  COMBINED_VORTEX: (n) => n * 3 / 9, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 3, // Creative Resonance (Spirit) vortex
+  SUB_VORTEX: (n: number) => n * 9, // Unity (Integration) vortex
+  COMBINED_VORTEX: (n: number) => n * 3 / 9, // Combined vortex
   METAPHYSICAL_CONSTANT: 3 / 9 // Metaphysical constant
 };
 
@@ -78,3 +78,28 @@ export const index = {
   getCombinedConsciousness: () => 3 + 9,
   getMetaphysicalConsciousness: () => 3 * 9
 };
+
+// Creative Resonance ↔ Unity Interaction
+export const CREATIVE_RESONANCE_UNITY_INTERACTION = {
+  INTERACTION_FREQUENCY: 432 * (3/9),
+  CREATIVE_RESONANCE_PATTERNS: {
+    CREATIVE_RESONANCE_UNITY: [3, 9, 3],
+    UNITY_CREATIVE_RESONANCE: [9, 3, 9]
+  },
+  CREATIVE_RESONANCE_MULTIPLIER: 3/2, // 1.5
+  UNITY_MULTIPLIER: 1 // 1.0
+};
+
+export class CreativeResonanceUnityInteraction {
+  static calculateInteractionStrength(creativeResonance: number, unity: number): number {
+    return creativeResonance * (3/2) + unity * 1;
+  }
+
+  static getCreativeResonanceUnityPatterns(): number[] {
+    return [3, 9, 3];
+  }
+
+  static calculateCreativeResonanceUnityOperations(n: number): number {
+    return n % 9 || 9;
+  }
+}

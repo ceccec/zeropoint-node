@@ -28,3 +28,13 @@ export const metaphysicalPatterns: MetaphysicalPattern[] = COIL_PATTERNS.map(
     context: pattern.context,
   }),
 );
+
+
+/**
+ * Patterns module
+ */
+export const patterns = {
+  name: 'Patterns',
+  type: 'module',
+  version: '1.0.0'
+};

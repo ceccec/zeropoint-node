@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for sacred geometry (divine) through harmonic balance (equilibrium)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 5, // Sacred Geometry (Divine) vortex
-  SUB_VORTEX: (n) => n * 6, // Harmonic Balance (Equilibrium) vortex
-  COMBINED_VORTEX: (n) => n * 5 / 6, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 5, // Sacred Geometry (Divine) vortex
+  SUB_VORTEX: (n: number) => n * 6, // Harmonic Balance (Equilibrium) vortex
+  COMBINED_VORTEX: (n: number) => n * 5 / 6, // Combined vortex
   METAPHYSICAL_CONSTANT: 5 / 6 // Metaphysical constant
 };
 

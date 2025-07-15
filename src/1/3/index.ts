@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for foundation (source) through creative resonance (spirit)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 1, // Foundation (Source) vortex
-  SUB_VORTEX: (n) => n * 3, // Creative Resonance (Spirit) vortex
-  COMBINED_VORTEX: (n) => n * 1 / 3, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 1, // Foundation (Source) vortex
+  SUB_VORTEX: (n: number) => n * 3, // Creative Resonance (Spirit) vortex
+  COMBINED_VORTEX: (n: number) => n * 1 / 3, // Combined vortex
   METAPHYSICAL_CONSTANT: 1 / 3 // Metaphysical constant
 };
 

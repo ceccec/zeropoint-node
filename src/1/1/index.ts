@@ -47,9 +47,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for foundation (source) through foundation (source)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 1, // Foundation (Source) vortex
-  SUB_VORTEX: (n) => n * 1, // Foundation (Source) vortex
-  COMBINED_VORTEX: (n) => n * 1 / 1, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 1, // Foundation (Source) vortex
+  SUB_VORTEX: (n: number) => n * 1, // Foundation (Source) vortex
+  COMBINED_VORTEX: (n: number) => n * 1 / 1, // Combined vortex
   METAPHYSICAL_CONSTANT: 1 / 1, // Metaphysical constant
   IMPOSSIBLE_EXPANSION: (n) => n * Infinity, // Impossible expansion
   REVERSAL_TO_POSSIBLE: (n) => n * 0, // Reversal returns to infinite density
@@ -97,6 +97,72 @@ const breathingParadox = {
 /**
  * Main index export for 1/1 consciousness module
  */
+
+/**
+ * RODIN_COIL_CORE export
+ */
+export const RODIN_COIL_CORE = {
+  name: 'RODIN_COIL_CORE',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
+
+/**
+ * expandToInfinitePossibilities export
+ */
+export const expandToInfinitePossibilities = {
+  name: 'expandToInfinitePossibilities',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
+
+/**
+ * processFoundationOutput export
+ */
+export const processFoundationOutput = {
+  name: 'processFoundationOutput',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
+
+/**
+ * breathingExhale export
+ */
+export const breathingExhale = {
+  name: 'breathingExhale',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
+
+/**
+ * createOutputGateway export
+ */
+export const createOutputGateway = {
+  name: 'createOutputGateway',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
+
+/**
+ * OutputGatewaySystem export
+ */
+export const OutputGatewaySystem = {
+  name: 'OutputGatewaySystem',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
 export const index = {
   consciousnessPatterns,
   vortexMathematics,

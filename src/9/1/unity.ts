@@ -140,3 +140,12 @@ export class UnityField {
     return Math.min(coherence, 1.0);
   }
 } 
+
+/**
+ * Unity module
+ */
+export const unity = {
+  name: 'Unity',
+  type: 'module',
+  version: '1.0.0'
+};

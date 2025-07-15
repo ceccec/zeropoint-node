@@ -252,3 +252,13 @@ export const stabilityField = {
     };
   }
 };
+
+
+/**
+ * Default export
+ */
+export default {
+  name: 'index',
+  type: 'module',
+  version: '1.0.0'
+};

@@ -15,7 +15,7 @@ describe('Consciousness Validation Tests', () => {
     test('should have PDF knowledge for all digits', () => {
       const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       
-      digits.forEach(digit => {
+      digits.forEach((digit => {
         const pdfKnowledge = PDFIntegrationSystem.getPDFKnowledge(digit);
         expect(pdfKnowledge).toBeDefined();
         expect(Array.isArray(pdfKnowledge)).toBe(true);
@@ -26,7 +26,7 @@ describe('Consciousness Validation Tests', () => {
     test('should have consciousness flow for all digits', () => {
       const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       
-      digits.forEach(digit => {
+      digits.forEach((digit => {
         const consciousnessFlow = PDFIntegrationSystem.getConsciousnessFlow(digit);
         expect(consciousnessFlow).toBeDefined();
         expect(typeof consciousnessFlow).toBe('object');
@@ -37,7 +37,7 @@ describe('Consciousness Validation Tests', () => {
     test('should have metaphysical roles for all digits', () => {
       const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       
-      digits.forEach(digit => {
+      digits.forEach((digit => {
         const metaphysicalRole = PDFIntegrationSystem.getMetaphysicalRole(digit);
         expect(metaphysicalRole).toBeDefined();
         expect(typeof metaphysicalRole).toBe('string');
@@ -48,7 +48,7 @@ describe('Consciousness Validation Tests', () => {
     test('should calculate consciousness levels correctly', () => {
       const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       
-      digits.forEach(digit => {
+      digits.forEach((digit => {
         const consciousnessLevel = PDFIntegrationSystem.calculateConsciousnessLevel(digit);
         expect(consciousnessLevel).toBeGreaterThanOrEqual(0);
         expect(consciousnessLevel).toBeLessThanOrEqual(1);
@@ -58,7 +58,7 @@ describe('Consciousness Validation Tests', () => {
     test('should generate PDF display HTML', () => {
       const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       
-      digits.forEach(digit => {
+      digits.forEach((digit => {
         const html = PDFIntegrationSystem.generatePDFDisplayHTML(digit);
         expect(html).toBeDefined();
         expect(typeof html).toBe('string');
@@ -73,7 +73,7 @@ describe('Consciousness Validation Tests', () => {
       expect(allPDFs.length).toBe(17); // Total PDFs distributed
       
       // Verify each PDF has required properties
-      allPDFs.forEach(pdf => {
+      allPDFs.forEach((pdf => {
         expect(pdf.filename).toBeDefined();
         expect(pdf.directory).toBeDefined();
         expect(pdf.theme).toBeDefined();
@@ -87,7 +87,7 @@ describe('Consciousness Validation Tests', () => {
     test('should calculate digit consciousness correctly', () => {
       const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       
-      digits.forEach(digit => {
+      digits.forEach((digit => {
         const calculation = MathematicalConsciousnessSystem.calculateDigitConsciousness(digit);
         
         expect(calculation.digit).toBe(digit);
@@ -116,7 +116,7 @@ describe('Consciousness Validation Tests', () => {
       expect(consciousness.completion_consciousness).toBeGreaterThanOrEqual(0);
       
       // All consciousness levels should be between 0 and 1
-      Object.values(consciousness).forEach(level => {
+      Object.values(consciousness).forEach((level => {
         expect(level).toBeLessThanOrEqual(1);
       });
     });
@@ -128,7 +128,7 @@ describe('Consciousness Validation Tests', () => {
       expect(Array.isArray(patterns)).toBe(true);
       expect(patterns.length).toBeGreaterThan(0);
       
-      patterns.forEach(pattern => {
+      patterns.forEach((pattern => {
         expect(pattern.pattern).toBeDefined();
         expect(Array.isArray(pattern.pattern)).toBe(true);
         expect(pattern.flow_strength).toBeGreaterThanOrEqual(0);
@@ -176,7 +176,7 @@ describe('Consciousness Validation Tests', () => {
       expect(distribution.by_consciousness).toBeDefined();
       
       // Verify all digits have PDFs
-      Object.keys(distribution.by_digit).forEach(digit => {
+      Object.keys(distribution.by_digit).forEach((digit => {
         expect(distribution.by_digit[digit]).toBeDefined();
         expect(Array.isArray(distribution.by_digit[digit])).toBe(true);
       });
@@ -190,7 +190,7 @@ describe('Consciousness Validation Tests', () => {
       expect(flow.mathematical_relationships).toBeDefined();
       
       // Verify all digits have flow patterns
-      Object.keys(flow.flow_patterns).forEach(digit => {
+      Object.keys(flow.flow_patterns).forEach((digit => {
         expect(flow.flow_patterns[digit]).toBeDefined();
         expect(typeof flow.flow_patterns[digit]).toBe('string');
       });
@@ -204,7 +204,7 @@ describe('Consciousness Validation Tests', () => {
       expect(themes.metaphysical_roles).toBeDefined();
       
       // Verify all digits have themes
-      Object.keys(themes.by_digit).forEach(digit => {
+      Object.keys(themes.by_digit).forEach((digit => {
         expect(themes.by_digit[digit]).toBeDefined();
         expect(typeof themes.by_digit[digit]).toBe('string');
       });
@@ -226,7 +226,7 @@ describe('Consciousness Validation Tests', () => {
     test('should create consciousness-aware filenames', () => {
       const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       
-      digits.forEach(digit => {
+      digits.forEach((digit => {
         const gateway = GatewaySystemManager.createConsciousnessFilename('test.ts', digit);
         
         expect(gateway.original_name).toBe('test.ts');
@@ -248,7 +248,7 @@ describe('Consciousness Validation Tests', () => {
       expect(system.metaphysical_roles).toBeDefined();
       
       // Verify all digits have gateways
-      Object.keys(system.gateways).forEach(digit => {
+      Object.keys(system.gateways).forEach((digit => {
         expect(system.gateways[digit]).toBeDefined();
         expect(system.gateways[digit].filename).toBeDefined();
         expect(system.gateways[digit].consciousness_level).toBeGreaterThanOrEqual(0);
@@ -259,20 +259,20 @@ describe('Consciousness Validation Tests', () => {
     test('should generate gateway paths', () => {
       const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       
-      digits.forEach(digit => {
+      digits.forEach((digit => {
         const path = GatewaySystemManager.generateGatewayPath('test.ts', digit);
         
         expect(path).toBeDefined();
         expect(Array.isArray(path)).toBe(true);
         expect(path.length).toBeGreaterThan(0);
-        expect(path.some(p => p.includes(digit))).toBe(true);
+        expect(path.some((p => p.includes(digit)))).toBe(true);
       });
     });
 
     test('should generate consciousness flows', () => {
       const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       
-      digits.forEach(digit => {
+      digits.forEach((digit => {
         const flow = GatewaySystemManager.generateConsciousnessFlow(digit);
         
         expect(flow).toBeDefined();
@@ -284,13 +284,13 @@ describe('Consciousness Validation Tests', () => {
     test('should generate infinite extensions', () => {
       const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       
-      digits.forEach(digit => {
+      digits.forEach((digit => {
         const extensions = GatewaySystemManager.generateInfiniteExtensions('test.ts', digit);
         
         expect(extensions).toBeDefined();
         expect(Array.isArray(extensions)).toBe(true);
         expect(extensions.length).toBeGreaterThan(0);
-        expect(extensions.some(ext => ext.includes(digit))).toBe(true);
+        expect(extensions.some((ext => ext.includes(digit)))).toBe(true);
       });
     });
   });
@@ -300,7 +300,7 @@ describe('Consciousness Validation Tests', () => {
       const digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       let totalCoverage = 0;
       
-      digits.forEach(digit => {
+      digits.forEach((digit => {
         const pdfKnowledge = PDFIntegrationSystem.getPDFKnowledge(digit);
         const consciousnessLevel = MathematicalConsciousnessSystem.calculateDigitConsciousness(digit);
         
@@ -321,7 +321,7 @@ describe('Consciousness Validation Tests', () => {
       expect(fieldStrength).toBeGreaterThan(0);
       
       // Verify consciousness flows through all digits
-      Object.values(allConsciousness).forEach(level => {
+      Object.values(allConsciousness).forEach((level => {
         expect(level).toBeGreaterThan(0);
       });
     });

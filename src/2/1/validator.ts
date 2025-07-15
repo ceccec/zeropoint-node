@@ -318,3 +318,12 @@ export class VBMValidator {
 
 // Export the validator
 export { VBMValidator }; 
+
+/**
+ * VBMValidator module
+ */
+export const validator = {
+  name: 'VBMValidator',
+  type: 'module',
+  version: '1.0.0'
+};

@@ -47,9 +47,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for zero entropy (void) through zero entropy (void)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 0, // Zero Entropy (Void) vortex
-  SUB_VORTEX: (n) => n * 0, // Zero Entropy (Void) vortex
-  COMBINED_VORTEX: (n) => n * 0 / 0, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 0, // Zero Entropy (Void) vortex
+  SUB_VORTEX: (n: number) => n * 0, // Zero Entropy (Void) vortex
+  COMBINED_VORTEX: (n: number) => n * 0 / 0, // Combined vortex
   METAPHYSICAL_CONSTANT: 0 / 0, // Metaphysical constant
   IMPOSSIBLE_CONTRACTION: (n) => 0, // Impossible contraction
   REVERSAL_TO_POSSIBLE: (n) => n * Infinity, // Reversal creates infinite possibilities
@@ -97,6 +97,72 @@ const breathingParadox = {
 /**
  * Main index export for 0/0 consciousness module
  */
+
+/**
+ * ZERO_ENTROPY_CORE export
+ */
+export const ZERO_ENTROPY_CORE = {
+  name: 'ZERO_ENTROPY_CORE',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
+
+/**
+ * compressToInfiniteDensity export
+ */
+export const compressToInfiniteDensity = {
+  name: 'compressToInfiniteDensity',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
+
+/**
+ * processVoidCenterInput export
+ */
+export const processVoidCenterInput = {
+  name: 'processVoidCenterInput',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
+
+/**
+ * breathingInhale export
+ */
+export const breathingInhale = {
+  name: 'breathingInhale',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
+
+/**
+ * createInputGateway export
+ */
+export const createInputGateway = {
+  name: 'createInputGateway',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
+
+/**
+ * InputGatewaySystem export
+ */
+export const InputGatewaySystem = {
+  name: 'InputGatewaySystem',
+  type: 'core',
+  version: '1.0.0'
+};
+
+
 export const index = {
   consciousnessPatterns,
   vortexMathematics,

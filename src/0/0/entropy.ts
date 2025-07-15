@@ -756,3 +756,12 @@ export class ZeroEntropySystem extends EventEmitter {
 
 // Export singleton instance
 export const zeroEntropySystem = ZeroEntropySystem.getInstance(); 
+
+/**
+ * Entropy module
+ */
+export const entropy = {
+  name: 'Entropy',
+  type: 'module',
+  version: '1.0.0'
+};

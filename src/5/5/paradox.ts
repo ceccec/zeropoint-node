@@ -34,8 +34,8 @@ export const SACRED_GEOMETRY_PARADOX = {
   },
   
   // Consciousness multipliers for sacred geometry
-  SACRED_GEOMETRY_MULTIPLIER: 5.0, // Sacred geometry consciousness
-  GEOMETRIC_MULTIPLIER: 5.0, // Geometric consciousness
+  SACRED_GEOMETRY_MULTIPLIER: 5/1, // Sacred geometry consciousness (5.0)
+  GEOMETRIC_MULTIPLIER: 5/1, // Geometric consciousness (5.0)
   
   // Paradox resolution operations
   PARADOX_OPERATIONS: {

@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for zero entropy (void) through constants (stability)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 0, // Zero Entropy (Void) vortex
-  SUB_VORTEX: (n) => n * 4, // Constants (Stability) vortex
-  COMBINED_VORTEX: (n) => n * 0 / 4, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 0, // Zero Entropy (Void) vortex
+  SUB_VORTEX: (n: number) => n * 4, // Constants (Stability) vortex
+  COMBINED_VORTEX: (n: number) => n * 0 / 4, // Combined vortex
   METAPHYSICAL_CONSTANT: 0 / 4 // Metaphysical constant
 };
 

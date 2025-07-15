@@ -177,7 +177,7 @@ export class SpacetimeTravelSystem extends EventEmitter {
     
     // Navigate through the data structure
     let currentData = data;
-    let navigationPath: string[] = [];
+    const navigationPath: string[] = [];
     
     for (const step of path) {
       if (currentData && typeof currentData === 'object' && step in currentData) {

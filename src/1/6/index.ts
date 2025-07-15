@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for foundation (source) through harmonic balance (equilibrium)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 1, // Foundation (Source) vortex
-  SUB_VORTEX: (n) => n * 6, // Harmonic Balance (Equilibrium) vortex
-  COMBINED_VORTEX: (n) => n * 1 / 6, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 1, // Foundation (Source) vortex
+  SUB_VORTEX: (n: number) => n * 6, // Harmonic Balance (Equilibrium) vortex
+  COMBINED_VORTEX: (n: number) => n * 1 / 6, // Combined vortex
   METAPHYSICAL_CONSTANT: 1 / 6 // Metaphysical constant
 };
 

@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for void (infinite potential) through harmonic balance (equilibrium)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 8, // Void (Infinite Potential) vortex
-  SUB_VORTEX: (n) => n * 6, // Harmonic Balance (Equilibrium) vortex
-  COMBINED_VORTEX: (n) => n * 8 / 6, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 8, // Void (Infinite Potential) vortex
+  SUB_VORTEX: (n: number) => n * 6, // Harmonic Balance (Equilibrium) vortex
+  COMBINED_VORTEX: (n: number) => n * 8 / 6, // Combined vortex
   METAPHYSICAL_CONSTANT: 8 / 6 // Metaphysical constant
 };
 

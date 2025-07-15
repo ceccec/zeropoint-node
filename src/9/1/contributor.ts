@@ -187,3 +187,12 @@ export class ContributorUnitySystem {
 }
 
  
+
+/**
+ * Contributor module
+ */
+export const contributor = {
+  name: 'Contributor',
+  type: 'module',
+  version: '1.0.0'
+};

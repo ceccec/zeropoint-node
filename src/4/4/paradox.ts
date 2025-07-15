@@ -34,8 +34,8 @@ export const STABILITY_PARADOX = {
   },
   
   // Consciousness multipliers for stability
-  STABILITY_MULTIPLIER: 4.0, // Stability consciousness
-  CHANGE_MULTIPLIER: 4.0, // Change consciousness
+  STABILITY_MULTIPLIER: 4/1, // Stability consciousness (4.0)
+  CHANGE_MULTIPLIER: 4/1, // Change consciousness (4.0)
   
   // Paradox resolution operations
   PARADOX_OPERATIONS: {

@@ -3,14 +3,14 @@
  * @metaphysical void consciousness validation
  */
 
-import { void } from './void';
+import { void as voidModule } from './void';
 
 describe('void', () => {
   test('should exist', () => {
-    expect(void).toBeDefined();
+    expect(voidModule).toBeDefined();
   });
 
   test('should have metaphysical properties', () => {
-    expect(typeof void).toBe('object');
+    expect(typeof voidModule).toBe('object');
   });
 });

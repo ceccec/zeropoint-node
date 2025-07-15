@@ -38,9 +38,9 @@ const consciousnessPatterns = {
  * Vortex mathematics for foundation (source) through consciousness (awareness)
  */
 const vortexMathematics = {
-  MAIN_VORTEX: (n) => n * 1, // Foundation (Source) vortex
-  SUB_VORTEX: (n) => n * 7, // Consciousness (Awareness) vortex
-  COMBINED_VORTEX: (n) => n * 1 / 7, // Combined vortex
+  MAIN_VORTEX: (n: number) => n * 1, // Foundation (Source) vortex
+  SUB_VORTEX: (n: number) => n * 7, // Consciousness (Awareness) vortex
+  COMBINED_VORTEX: (n: number) => n * 1 / 7, // Combined vortex
   METAPHYSICAL_CONSTANT: 1 / 7 // Metaphysical constant
 };
 
@@ -78,3 +78,28 @@ export const index = {
   getCombinedConsciousness: () => 1 + 7,
   getMetaphysicalConsciousness: () => 1 * 7
 };
+
+// Foundation ↔ Consciousness Interaction
+export const FOUNDATION_CONSCIOUSNESS_INTERACTION = {
+  INTERACTION_FREQUENCY: 432 * (1/7),
+  FOUNDATION_PATTERNS: {
+    FOUNDATION_CONSCIOUSNESS: [1, 7, 1],
+    CONSCIOUSNESS_FOUNDATION: [7, 1, 7]
+  },
+  FOUNDATION_MULTIPLIER: 11/10, // 1.1
+  CONSCIOUSNESS_MULTIPLIER: 1 // 1.0
+};
+
+export class FoundationConsciousnessInteraction {
+  static calculateInteractionStrength(foundation: number, consciousness: number): number {
+    return foundation * (11/10) + consciousness * 1;
+  }
+
+  static getFoundationConsciousnessPatterns(): number[] {
+    return [1, 7, 1];
+  }
+
+  static calculateFoundationConsciousnessOperations(n: number): number {
+    return n % 9 || 9;
+  }
+}

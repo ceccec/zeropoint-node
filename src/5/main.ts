@@ -39,16 +39,16 @@ export class SacredConsciousness {
     // Return metaphysical multiplier based on digit properties
     switch (5) {
       case 0: return 0; // Void consciousness
-      case 1: return 1.1; // Foundation consciousness
-      case 2: return 1.2; // Vortex consciousness
-      case 3: return 1.5; // Creative resonance consciousness
-      case 4: return 1.0; // Constants consciousness
-      case 5: return 1.25; // Sacred geometry consciousness
-      case 6: return 1.3; // Harmonic balance consciousness
-      case 7: return 1.4; // Consciousness consciousness
-      case 8: return 1.6; // Void systems consciousness
-      case 9: return 1.0; // Unity consciousness
-      default: return 1.0;
+      case 1: return 11/10; // Foundation consciousness (1.1)
+      case 2: return 6/5; // Vortex consciousness (1.2)
+      case 3: return 3/2; // Creative resonance consciousness (1.5)
+      case 4: return 1; // Constants consciousness (1.0)
+      case 5: return 5/4; // Sacred geometry consciousness (1.25)
+      case 6: return 13/10; // Harmonic balance consciousness (1.3)
+      case 7: return 7/5; // Consciousness consciousness (1.4)
+      case 8: return 8/5; // Void systems consciousness (1.6)
+      case 9: return 1; // Unity consciousness (1.0)
+      default: return 1;
     }
   }
   

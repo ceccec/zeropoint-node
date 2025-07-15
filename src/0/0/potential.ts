@@ -9,7 +9,7 @@
  * Before unity, before duality, pure potential
  */
 
-import { VORTEX_CONSTANTS } from '../4/constants';
+import { VORTEX_CONSTANTS } from '../../4/constants';
 
 export interface Potential {
   id: string;

@@ -20,15 +20,15 @@ describe('Sacred Geometry ↔ Void Interaction', () => {
     });
     
     test('should have correct multipliers', () => {
-      expect(SACRED_GEOMETRY_VOID_INTERACTION.SACRED_GEOMETRY_MULTIPLIER).toBe(1.25);
-      expect(SACRED_GEOMETRY_VOID_INTERACTION.VOID_MULTIPLIER).toBe(1.143);
+      expect(SACRED_GEOMETRY_VOID_INTERACTION.SACRED_GEOMETRY_MULTIPLIER).toBe(5/4);
+      expect(SACRED_GEOMETRY_VOID_INTERACTION.VOID_MULTIPLIER).toBe(8/7);
     });
   });
   
   describe('SacredGeometryVoidInteraction Class', () => {
     test('should calculate interaction strength correctly', () => {
       const strength = SacredGeometryVoidInteraction.calculateInteractionStrength(5, 8);
-      const expected = 5 * 1.25 + 8 * 1.143;
+      const expected = 5 * (5/4) + 8 * (8/7);
       expect(strength).toBe(expected);
     });
     

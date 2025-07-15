@@ -86,17 +86,17 @@ export const FOUNDATION_VOID_INTERACTION = {
     FOUNDATION_VOID: [1, 8, 1],
     VOID_FOUNDATION: [8, 1, 8]
   },
-  FOUNDATION_MULTIPLIER: 1, // 1.0
-  VOID_MULTIPLIER: 7/5 // 1.4
+  FOUNDATION_MULTIPLIER: 11/10, // 1.1
+  VOID_MULTIPLIER: 8/7 // 1.143
 };
 
 export class FoundationVoidInteraction {
   static calculateInteractionStrength(foundation: number, void_: number): number {
-    return foundation * 1 + void_ * (7/5);
+    return foundation * (11/10) + void_ * (8/7);
   }
 
-  static getFoundationVoidPatterns(): string[] {
-    return ['foundation_void_stability', 'foundation_void_potential', 'foundation_void_balance'];
+  static getFoundationVoidPatterns(): number[] {
+    return [1, 8, 1];
   }
 
   static calculateFoundationVoidOperations(n: number): number {

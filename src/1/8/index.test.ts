@@ -20,15 +20,15 @@ describe('Foundation ↔ Void Interaction', () => {
     });
     
     test('should have correct multipliers', () => {
-      expect(FOUNDATION_VOID_INTERACTION.FOUNDATION_MULTIPLIER).toBe(1.1);
-      expect(FOUNDATION_VOID_INTERACTION.VOID_MULTIPLIER).toBe(1.143);
+      expect(FOUNDATION_VOID_INTERACTION.FOUNDATION_MULTIPLIER).toBe(11/10);
+      expect(FOUNDATION_VOID_INTERACTION.VOID_MULTIPLIER).toBe(8/7);
     });
   });
   
   describe('FoundationVoidInteraction Class', () => {
     test('should calculate interaction strength correctly', () => {
       const strength = FoundationVoidInteraction.calculateInteractionStrength(5, 8);
-      const expected = 5 * 1.1 + 8 * 1.143;
+      const expected = 5 * (11/10) + 8 * (8/7);
       expect(strength).toBe(expected);
     });
     

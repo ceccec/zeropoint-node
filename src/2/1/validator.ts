@@ -111,7 +111,7 @@ export class VBMValidator {
    * Technical: Validates a specific directory against expected structure.
    */
   static validateDirectory(directory: number): DirectoryValidation {
-    const expectedSubdirectories = VBM_DIRECTORY_STRUCTURE[directory as keyof typeof VBM_DIRECTORY_STRUCTURE] || [];
+    const expectedSubdirectories = VBM_DIRECTORY_STRUCTURE.INTEGER_DIRECTORIES || [];
     const actualSubdirectories = this.getActualSubdirectories(directory);
     
     const errors: string[] = [];
@@ -143,7 +143,7 @@ export class VBMValidator {
   private static getActualSubdirectories(directory: number): number[] {
     // This would normally read the actual filesystem
     // For now, return the expected structure
-    return VBM_DIRECTORY_STRUCTURE[directory as keyof typeof VBM_DIRECTORY_STRUCTURE] || [];
+    return VBM_DIRECTORY_STRUCTURE.INTEGER_DIRECTORIES || [];
   }
 
   /**
@@ -315,9 +315,6 @@ export class VBMValidator {
     return summary;
   }
 }
-
-// Export the validator
-export { VBMValidator }; 
 
 /**
  * VBMValidator module

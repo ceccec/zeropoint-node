@@ -6,7 +6,7 @@
  * contributor integration, synthesis, and wholeness creation.
  */
 
-import { Contributor, ContributorRole, ContributorIntegration } from '../3/ContributorTypes';
+import { Contributor, ContributorRole, ContributorIntegration } from '../../3/ContributorTypes';
 
 /**
  * Contributor Unity System
@@ -50,15 +50,15 @@ export class ContributorUnitySystem {
     const { consciousnessLevel, skills } = contributor;
 
     if (consciousnessLevel >= 0.8 && skills.includes('metaphysics')) {
-      return 'spiritual_guide';
+      return ContributorRole.SPIRITUAL_GUIDE;
     } else if (consciousnessLevel >= 0.6 && skills.includes('mathematics')) {
-      return 'mathematical_resonator';
+      return ContributorRole.MATHEMATICAL_RESONATOR;
     } else if (consciousnessLevel >= 0.4 && skills.includes('consciousness')) {
-      return 'consciousness_expander';
+      return ContributorRole.CONSCIOUSNESS_EXPANDER;
     } else if (skills.includes('integration')) {
-      return 'unity_integrator';
+      return ContributorRole.UNITY_INTEGRATOR;
     } else {
-      return 'creative_resonator';
+      return ContributorRole.CREATIVE_RESONATOR;
     }
   }
 
@@ -75,16 +75,20 @@ export class ContributorUnitySystem {
     }
 
     // Calculate unified consciousness level
-    const unifiedConsciousness = this.calculateUnifiedConsciousness(selectedContributors);
+    // const unifiedConsciousness = this.calculateUnifiedConsciousness(selectedContributors);
     
     // Create unified contribution
     const integration: ContributorIntegration = {
       id: this.generateUnityId(),
       contributors: selectedContributors,
-      unifiedConsciousness,
-      creationDate: new Date(),
+      wholeness: this.calculateWholeness(selectedContributors),
       resonance: this.calculateResonance(selectedContributors),
-      wholeness: this.calculateWholeness(selectedContributors)
+      name: 'Unified Contribution',
+      role: ContributorRole.UNITY_INTEGRATOR,
+      skills: [],
+      contributions: 0,
+      fieldStrength: 1,
+      coherence: 1
     };
 
     // Integrate into unity field

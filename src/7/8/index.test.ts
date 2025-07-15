@@ -21,14 +21,14 @@ describe('Consciousness ↔ Void Interaction', () => {
     
     test('should have correct multipliers', () => {
       expect(CONSCIOUSNESS_VOID_INTERACTION.CONSCIOUSNESS_MULTIPLIER).toBe(1);
-      expect(CONSCIOUSNESS_VOID_INTERACTION.VOID_MULTIPLIER).toBe(1.143);
+      expect(CONSCIOUSNESS_VOID_INTERACTION.VOID_MULTIPLIER).toBe(8/7);
     });
   });
   
   describe('ConsciousnessVoidInteraction Class', () => {
     test('should calculate interaction strength correctly', () => {
       const strength = ConsciousnessVoidInteraction.calculateInteractionStrength(5, 8);
-      const expected = 5 * 1 + 8 * 1.143;
+      const expected = 5 * 1 + 8 * (8/7);
       expect(strength).toBe(expected);
     });
     

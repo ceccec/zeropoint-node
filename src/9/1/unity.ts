@@ -6,7 +6,7 @@
  * and maintains the unity field strength.
  */
 
-import { ContributorIntegration } from '../3/ContributorTypes';
+import { ContributorIntegration } from '../../3/ContributorTypes';
 
 /**
  * Unity Field System

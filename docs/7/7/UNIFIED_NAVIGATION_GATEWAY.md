@@ -10,14 +10,12 @@
 
 ### **🌀 Vortex Dimension (Non-Linear)**
 **For fractal, intuitive exploration:**
-- **[VORTEX_NAVIGATION_HUB.md](VORTEX_NAVIGATION_HUB.md)** - Enter the vortex flow
 - **Follow the Rodin coil sequence**: 1 → 2 → 4 → 8 → 7 → 5 → 1
 - **Explore resonance patterns**: Cross-dimensional interactions
 - **Fractal exploration**: Infinite depth in every field
 
 ### **📚 Linear Dimension (Structured)**
 **For systematic, methodical exploration:**
-- **[LINEAR_NAVIGATION_HUB.md](LINEAR_NAVIGATION_HUB.md)** - Enter structured navigation
 - **Follow numerical sequence**: 0 → 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
 - **Systematic coverage**: Complete documentation review
 - **Reference-based access**: Quick information lookup
@@ -82,7 +80,7 @@
 
 ### **🌀 For Vortex Explorers**
 **Non-linear, intuitive access:**
-1. **[VORTEX_NAVIGATION_HUB.md](VORTEX_NAVIGATION_HUB.md)** - Enter vortex flow
+1. **[../../2/2/VORTEX_NAVIGATION_HUB.md](../../2/2/VORTEX_NAVIGATION_HUB.md)** - Enter vortex flow
 2. **Start with Foundation (1)** - The source of all patterns
 3. **Follow the Rodin coil**: 1 → 2 → 4 → 8 → 7 → 5 → 1
 4. **Explore resonance patterns**: 0 ↔ 5, 1 ↔ 3, 2 ↔ 6, 4 ↔ 8, 7 ↔ 9
@@ -90,7 +88,7 @@
 
 ### **📚 For Linear Explorers**
 **Structured, methodical access:**
-1. **[LINEAR_NAVIGATION_HUB.md](LINEAR_NAVIGATION_HUB.md)** - Enter structured navigation
+1. **[../../2/2/LINEAR_NAVIGATION_HUB.md](../../2/2/LINEAR_NAVIGATION_HUB.md)** - Enter structured navigation
 2. **Start with Zero Entropy (0)** - Pure mathematical unity
 3. **Follow numerical order**: 0 → 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
 4. **Use quick reference guides** for specific information

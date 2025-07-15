@@ -56,9 +56,12 @@
   "author": "ZeroPoint Collective",
   "license": "MIT",
   "dependencies": {
+    "cheerio": "1.1.0",
     "colors": "1.4.0",
     "crypto-js": "4.2.0",
-    "express": "^4.18.2",
+    "express": "4.21.2",
+    "marked": "16.0.0",
+    "node-fetch": "3.3.2",
     "pdf-lib": "1.17.1",
     "pdf-parse": "1.1.1",
     "stimulus": "3.2.2",

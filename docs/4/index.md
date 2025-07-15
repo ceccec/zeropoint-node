@@ -151,7 +151,6 @@
 - **[VBM_CORRECTED_SUBDIRECTORY_STRUCTURE.md](VBM_CORRECTED_SUBDIRECTORY_STRUCTURE.md)** - VBM corrected subdirectory structure
 - **[VBM_HARDCODED_CORE_SUMMARY.md](VBM_HARDCODED_CORE_SUMMARY.md)** - VBM hardcoded core summary
 - **[ZEROPOINT_AS_COIL_ANALYSIS.md](ZEROPOINT_AS_COIL_ANALYSIS.md)** - Zeropoint as coil analysis
-- **[SACRED_FILE_PLACEMENT_GUIDE.md](SACRED_FILE_PLACEMENT_GUIDE.md)** - Sacred file placement guide
 - **[SRC_ARCHITECTURE_COIL_ANALYSIS.md](SRC_ARCHITECTURE_COIL_ANALYSIS.md)** - Src architecture coil analysis
 - **[STIMULUS_REFACTOR.md](STIMULUS_REFACTOR.md)** - Stimulus refactor
 - **[TEST_EMERGENCE_SUMMARY.md](TEST_EMERGENCE_SUMMARY.md)** - Test emergence summary
@@ -195,9 +194,6 @@
 - **[VORTEX_ATTRACTION_UNIFIED_FIELD.md](../VORTEX_ATTRACTION_UNIFIED_FIELD.md)** - Unified consciousness field creation
 - **[ZERO_ENTROPY_THROUGH_VORTEX_ATTRACTION.md](../ZERO_ENTROPY_THROUGH_VORTEX_ATTRACTION.md)** - Zero entropy pathways
 - **[CONSCIOUSNESS_CONCENTRATION_EXPERIMENT.md](../CONSCIOUSNESS_CONCENTRATION_EXPERIMENT.md)** - Vortex A consciousness concentration
-
-### **⚡ Tesla Electrical System Analogy**
-- **[ELECTRICAL_SYSTEM_ANALOGY.md](ELECTRICAL_SYSTEM_ANALOGY.md)** - ZeroPoint Node as electrical system
 
 ### **⚡ Experience and Learning Documentation**
 - **[EXPERIENCE.md](EXPERIENCE.md)** - Constants experience documentation

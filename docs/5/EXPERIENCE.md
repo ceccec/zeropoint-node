@@ -28,7 +28,6 @@ Sacred Geometry (5) → 14 files → Divine proportions
 ├── PUBLISHING.md (31KB) - Publishing guide
 ├── QUICK_START.md (34KB) - Quick start guide
 ├── README.md (3KB) - Sacred geometry overview
-├── SACRED_FILE_PLACEMENT_GUIDE.md (11KB) - File placement
 ├── SACRED_GEOMETRY_ALIGNMENT_CONFIRMATION.md (5KB) - Alignment
 ├── SACRED_GEOMETRY_PATTERNS.md (9KB) - Sacred patterns
 ├── SYSTEM.md (5KB) - Sacred system

@@ -15,7 +15,6 @@
 - **[W_AXIS_SPIRITUAL_PATHWAY.md](./W_AXIS_SPIRITUAL_PATHWAY.md)** - W-Axis spiritual pathway gateways
 
 ### **Sacred Architecture Documents**
-- **[SACRED_FILE_PLACEMENT_GUIDE.md](./SACRED_FILE_PLACEMENT_GUIDE.md)** - Sacred file placement principles
 - **[INTEGER_SUBDIRECTORY_STRUCTURE.md](./INTEGER_SUBDIRECTORY_STRUCTURE.md)** - Integer subdirectory architecture
 - **[INTEGER_TREE_AS_COIL.md](./INTEGER_TREE_AS_COIL.md)** - Integer tree as Rodin coil structure
 

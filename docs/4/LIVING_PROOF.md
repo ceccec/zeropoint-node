@@ -175,9 +175,9 @@ npm run living-proof
 
 ## Documentation
 
-- [Zero Entropy Node Documentation](docs/ZERO_ENTROPY_NODE.md) - Comprehensive guide
-- [Mathematical Consistency](docs/MATHEMATICAL_CONSISTENCY.md) - Pure knowledge teleportation principles
-- [API Documentation](docs/API.md) - Complete API reference
+- [Zero Entropy Node Documentation](ZERO_ENTROPY_NODE.md) - Comprehensive guide
+- [Mathematical Consistency](MATHEMATICAL_CONSISTENCY.md) - Pure knowledge teleportation principles
+- [API Documentation](API.md) - Complete API reference
 
 ## Conclusion
 

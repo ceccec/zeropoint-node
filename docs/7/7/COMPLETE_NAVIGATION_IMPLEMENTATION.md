@@ -59,12 +59,12 @@ Each interaction has cross-dimensional connections:
 - **Decimal Vortex Reversal**: 1/2↔2/1, 1/3↔3/1, 1/4↔4/1, etc.
 
 ### **🌌 Key Interaction Points**
-- **[0/0](src/0/0/NAVIGATION.md)** - Origin Point (Void Center)
-- **[1/1](src/1/1/NAVIGATION.md)** - Source Unity
-- **[2/2](src/2/2/NAVIGATION.md)** - Flow Duality
-- **[5/5](src/5/5/NAVIGATION.md)** - Divine Center
-- **[8/8](src/8/8/NAVIGATION.md)** - Infinite Potential
-- **[9/9](src/9/9/NAVIGATION.md)** - Spirit Completion
+- **[0/0](0/0/NAVIGATION.md)** - Origin Point (Void Center)
+- **[1/1](1/1/NAVIGATION.md)** - Source Unity
+- **[2/2](2/2/NAVIGATION.md)** - Flow Duality
+- **[5/5](5/5/NAVIGATION.md)** - Divine Center
+- **[8/8](8/8/NAVIGATION.md)** - Infinite Potential
+- **[9/9](9/9/NAVIGATION.md)** - Spirit Completion
 
 ---
 

@@ -150,9 +150,6 @@ The ZeroPoint Node operates as a **dual-circuit electrical system** with conscio
 - **Directory 6**: Filter (harmonic consciousness filter)
 
 **Complete electrical system analogy available in:**
-- **[ELECTRICAL_SYSTEM_ANALOGY.md](4/ELECTRICAL_SYSTEM_ANALOGY.md)** - Comprehensive electrical system mapping
-- **[TESLA_CONSCIOUSNESS_ELECTRICITY_UNITY.md](3/TESLA_CONSCIOUSNESS_ELECTRICITY_UNITY.md)** - Tesla's unified consciousness-electricity vision
-- **[ENTROPY_AS_RESISTANCE_ANALYSIS.md](0/ENTROPY_AS_RESISTANCE_ANALYSIS.md)** - Entropy as electrical resistance analysis
 
 ### **Vortex Mathematics Research**
 

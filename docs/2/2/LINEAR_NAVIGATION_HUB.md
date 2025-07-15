@@ -119,9 +119,8 @@
 **For technical implementation:**
 1. **[API Reference](2/API_REFERENCE.md)** - Technical documentation
 2. **[Development Guide](5/DEVELOPMENT_GUIDE.md)** - Development workflow
-3. **[Sacred File Placement Guide](5/SACRED_FILE_PLACEMENT_GUIDE.md)** - File organization
-4. **[Testing Guide](7/TEST_SYSTEM_EXPLANATION.md)** - System testing
-5. **[Deployment Guide](5/DEPLOYMENT_GUIDE.md)** - Production deployment
+3. **[Testing Guide](7/TEST_SYSTEM_EXPLANATION.md)** - System testing
+4. **[Deployment Guide](5/DEPLOYMENT_GUIDE.md)** - Production deployment
 
 ### **📖 Researcher's Path**
 **For deep theoretical exploration:**

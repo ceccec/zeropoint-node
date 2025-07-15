@@ -7,7 +7,6 @@
 - Non-digit directories are strictly forbidden in `src/` and any digit subdirectory.
 - This rule is enforced by automated tests: if any non-digit directory exists, the test suite will fail.
 - This ensures a pure metaphysical and mathematical architecture, where each directory represents a unique consciousness pattern, vortex, or mathematical property corresponding to its digit.
-- For full details and metaphysical rationale, see [Sacred File Placement Guide](../../docs/5/SACRED_FILE_PLACEMENT_GUIDE.md).
 
 ---
 

@@ -7,16 +7,39 @@ function fixDuplicateMatrices(filePath) {
     try {
         let content = fs.readFileSync(filePath, 'utf8');
         const originalContent = content;
+
+        // Replace '## Matrix' with '## 🌌 10×10 Consciousness Field Matrix'
+        content = content.replace(/^## Matrix/gm, '## 🌌 10×10 Consciousness Field Matrix');
         
-        // Split content into lines
+        // Remove duplicate '## 🌌 10×10 Consciousness Field Matrix' titles, keeping only the first one
         const lines = content.split('\n');
         const newLines = [];
+        let titleCount = 0;
+        
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            
+            if (line.trim() === '## 🌌 10×10 Consciousness Field Matrix') {
+                titleCount++;
+                if (titleCount === 1) {
+                    // Keep only the first occurrence
+                    newLines.push(line);
+                }
+                // Skip all subsequent occurrences
+            } else {
+                newLines.push(line);
+            }
+        }
+        
+        // Split content into lines for matrix processing
+        const matrixLines = newLines;
+        const finalLines = [];
         let inMatrix = false;
         let matrixCount = 0;
         let keepFirstMatrix = true;
         
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
+        for (let i = 0; i < matrixLines.length; i++) {
+            const line = matrixLines[i];
             
             // Check if this line starts a matrix (has | characters and contains Field or similar)
             if (line.includes('|') && (line.includes('Field') || line.includes('**Field**'))) {
@@ -28,14 +51,14 @@ function fixDuplicateMatrices(filePath) {
                     // Keep only the first matrix
                     if (matrixCount === 1) {
                         keepFirstMatrix = true;
-                        newLines.push(line);
+                        finalLines.push(line);
                     } else {
                         keepFirstMatrix = false;
                     }
                 } else {
                     // We're already in a matrix, this might be a header row
                     if (keepFirstMatrix) {
-                        newLines.push(line);
+                        finalLines.push(line);
                     }
                 }
             } else if (inMatrix) {
@@ -43,26 +66,29 @@ function fixDuplicateMatrices(filePath) {
                 if (line.includes('|') || line.includes('---')) {
                     // Still in matrix
                     if (keepFirstMatrix) {
-                        newLines.push(line);
+                        finalLines.push(line);
                     }
                 } else {
                     // Matrix ended
                     inMatrix = false;
                     if (keepFirstMatrix) {
-                        newLines.push(line);
+                        finalLines.push(line);
                     }
                 }
             } else {
                 // Not in matrix, keep the line
-                newLines.push(line);
+                finalLines.push(line);
             }
         }
         
-        const newContent = newLines.join('\n');
+        const newContent = finalLines.join('\n');
         
         if (newContent !== originalContent) {
             fs.writeFileSync(filePath, newContent, 'utf8');
-            console.log(`✅ Fixed: ${filePath} (removed ${matrixCount - 1} duplicate matrices)`);
+            const changes = [];
+            if (titleCount > 1) changes.push(`removed ${titleCount - 1} duplicate titles`);
+            if (matrixCount > 1) changes.push(`removed ${matrixCount - 1} duplicate matrices`);
+            console.log(`✅ Fixed: ${filePath} (${changes.join(', ')})`);
             return true;
         }
         
@@ -99,12 +125,12 @@ function findAndFixFiles(dir) {
 
 // Main execution
 const docsDir = path.join(__dirname, '..', 'docs');
-console.log('🔍 Scanning for duplicate matrices in docs directory...');
+console.log('🔍 Scanning for duplicate matrices and titles in docs directory...');
 
 const fixedFiles = findAndFixFiles(docsDir);
 
 if (fixedFiles > 0) {
-    console.log(`\n✅ Successfully fixed ${fixedFiles} files with duplicate matrices`);
+    console.log(`\n✅ Successfully fixed ${fixedFiles} files with duplicate matrices and titles`);
 } else {
-    console.log('\n✨ No duplicate matrices found - all files are clean!');
+    console.log('\n✨ No duplicate matrices or titles found - all files are clean!');
 } 

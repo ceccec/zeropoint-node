@@ -23,32 +23,75 @@ function generateMatrix(digit) {
 }
 
 function updateMatrixInFile(filePath, digit) {
-  let content = fs.readFileSync(filePath, 'utf8');
-  const matrix = generateMatrix(digit);
-  const matrixSection = '## Matrix\n\n' + matrix;
-  if (content.includes('## Matrix')) {
-    // Replace existing matrix section
-    content = content.replace(/## Matrix[\s\S]*?(?=\n\n|$)/, matrixSection);
-  } else {
-    // Insert after first header or after frontmatter
-    const insertPos = content.indexOf('---') !== -1
-      ? content.indexOf('\n\n', content.indexOf('---')) + 2
-      : content.indexOf('\n\n') + 2;
-    content = content.slice(0, insertPos) + matrixSection + '\n\n' + content.slice(insertPos);
+  try {
+    let content = fs.readFileSync(filePath, 'utf8');
+    const matrix = generateMatrix(digit);
+    const matrixSection = '## Matrix\n\n' + matrix;
+    
+    if (content.includes('## Matrix')) {
+      // Replace existing matrix section
+      const matrixStart = content.indexOf('## Matrix');
+      const matrixEnd = content.indexOf('\n\n', matrixStart);
+      const beforeMatrix = content.substring(0, matrixStart);
+      const afterMatrix = content.substring(matrixEnd);
+      content = beforeMatrix + matrixSection + afterMatrix;
+    } else {
+      // Insert after first section
+      const insertPos = content.indexOf('---') !== -1
+        ? content.indexOf('\n\n', content.indexOf('---')) + 2
+        : content.indexOf('\n\n') + 2;
+      content = content.slice(0, insertPos) + matrixSection + '\n\n' + content.slice(insertPos);
+    }
+    
+    fs.writeFileSync(filePath, content, 'utf8');
+    return true;
+  } catch (error) {
+    console.error(`Error updating ${filePath}:`, error.message);
+    return false;
   }
-  fs.writeFileSync(filePath, content, 'utf8');
 }
 
-function processAll() {
-  for (const d1 of digits) {
-    const mainIndex = path.join('docs', d1, 'index.md');
-    if (fs.existsSync(mainIndex)) updateMatrixInFile(mainIndex, d1);
-    for (const d2 of digits) {
-      const subIndex = path.join('docs', d1, d2, 'index.md');
-      if (fs.existsSync(subIndex)) updateMatrixInFile(subIndex, d2);
+function processAllFiles() {
+  console.log('🔍 Checking and generating 10×10 navigation matrices...\n');
+  
+  let updated = 0;
+  let checked = 0;
+  
+  // Process main digit directories (0-9)
+  for (const digit of digits) {
+    const indexPath = path.join('docs', digit, 'index.md');
+    if (fs.existsSync(indexPath)) {
+      checked++;
+      console.log(`📝 Updating ${digit}/index.md...`);
+      if (updateMatrixInFile(indexPath, digit)) {
+        updated++;
+      }
     }
   }
-  console.log('Navigation matrices checked and updated.');
+  
+  // Process subdirectory index.md files
+  for (const rowDigit of digits) {
+    for (const colDigit of digits) {
+      const subIndexPath = path.join('docs', rowDigit, colDigit, 'index.md');
+      if (fs.existsSync(subIndexPath)) {
+        checked++;
+        console.log(`📝 Updating ${rowDigit}/${colDigit}/index.md...`);
+        if (updateMatrixInFile(subIndexPath, colDigit)) {
+          updated++;
+        }
+      }
+    }
+  }
+  
+  console.log(`\n📊 Summary:`);
+  console.log(`   Checked: ${checked} files`);
+  console.log(`   Updated: ${updated} files`);
+  
+  return { checked, updated };
 }
 
-if (require.main === module) processAll(); 
+if (require.main === module) {
+  processAllFiles();
+}
+
+module.exports = { generateMatrix, updateMatrixInFile, processAllFiles }; 

@@ -3,107 +3,108 @@
 const fs = require('fs');
 const path = require('path');
 
-const digits = [...Array(10).keys()].map(String);
-
-function fixDuplicateMatrix(filePath) {
-  try {
-    let content = fs.readFileSync(filePath, 'utf8');
-    
-    // Check if there are multiple matrix sections
-    const matrixMatches = content.match(/## Matrix\n\n/g);
-    if (matrixMatches && matrixMatches.length > 1) {
-      console.log(`Fixing duplicate matrices in ${filePath}`);
-      
-      // Find the first matrix section (malformed)
-      const firstMatrixStart = content.indexOf('## Matrix\n\n');
-      const firstMatrixEnd = content.indexOf('\n\n', firstMatrixStart + 12);
-      
-      // Find the second matrix section (properly formatted)
-      const secondMatrixStart = content.indexOf('## Matrix\n\n', firstMatrixEnd);
-      
-      if (secondMatrixStart !== -1) {
-        // Remove the first matrix section
-        const beforeFirst = content.substring(0, firstMatrixStart);
-        const afterSecond = content.substring(secondMatrixStart);
+function fixDuplicateMatrices(filePath) {
+    try {
+        let content = fs.readFileSync(filePath, 'utf8');
+        const originalContent = content;
         
-        content = beforeFirst + afterSecond;
+        // Split content into lines
+        const lines = content.split('\n');
+        const newLines = [];
+        let inMatrix = false;
+        let matrixCount = 0;
+        let keepFirstMatrix = true;
         
-        fs.writeFileSync(filePath, content, 'utf8');
-        return true;
-      }
-    }
-    
-    // Also check for malformed matrix without proper table formatting
-    if (content.includes('## Matrix\n\n') && content.includes('| **Field**')) {
-      const matrixStart = content.indexOf('## Matrix\n\n');
-      const malformedEnd = content.indexOf('| **Field**', matrixStart + 12);
-      
-      if (malformedEnd !== -1) {
-        console.log(`Fixing malformed matrix in ${filePath}`);
-        
-        // Find the properly formatted matrix
-        const properMatrixStart = content.indexOf('| **Field**', malformedEnd);
-        const properMatrixEnd = content.indexOf('\n\n', properMatrixStart);
-        
-        if (properMatrixEnd !== -1) {
-          // Keep only the properly formatted matrix
-          const beforeMatrix = content.substring(0, matrixStart);
-          const afterMatrix = content.substring(properMatrixEnd);
-          
-          content = beforeMatrix + '## Matrix\n\n' + content.substring(properMatrixStart, properMatrixEnd) + afterMatrix;
-          
-          fs.writeFileSync(filePath, content, 'utf8');
-          return true;
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            
+            // Check if this line starts a matrix (has | characters and contains Field or similar)
+            if (line.includes('|') && (line.includes('Field') || line.includes('**Field**'))) {
+                if (!inMatrix) {
+                    // Starting a new matrix
+                    inMatrix = true;
+                    matrixCount++;
+                    
+                    // Keep only the first matrix
+                    if (matrixCount === 1) {
+                        keepFirstMatrix = true;
+                        newLines.push(line);
+                    } else {
+                        keepFirstMatrix = false;
+                    }
+                } else {
+                    // We're already in a matrix, this might be a header row
+                    if (keepFirstMatrix) {
+                        newLines.push(line);
+                    }
+                }
+            } else if (inMatrix) {
+                // Check if we're still in the matrix
+                if (line.includes('|') || line.includes('---')) {
+                    // Still in matrix
+                    if (keepFirstMatrix) {
+                        newLines.push(line);
+                    }
+                } else {
+                    // Matrix ended
+                    inMatrix = false;
+                    if (keepFirstMatrix) {
+                        newLines.push(line);
+                    }
+                }
+            } else {
+                // Not in matrix, keep the line
+                newLines.push(line);
+            }
         }
-      }
+        
+        const newContent = newLines.join('\n');
+        
+        if (newContent !== originalContent) {
+            fs.writeFileSync(filePath, newContent, 'utf8');
+            console.log(`✅ Fixed: ${filePath} (removed ${matrixCount - 1} duplicate matrices)`);
+            return true;
+        }
+        
+        return false;
+    } catch (error) {
+        console.error(`❌ Error processing ${filePath}:`, error.message);
+        return false;
+    }
+}
+
+function findAndFixFiles(dir) {
+    let fixedCount = 0;
+    
+    function processDirectory(currentDir) {
+        const items = fs.readdirSync(currentDir);
+        
+        for (const item of items) {
+            const fullPath = path.join(currentDir, item);
+            const stat = fs.statSync(fullPath);
+            
+            if (stat.isDirectory()) {
+                processDirectory(fullPath);
+            } else if (item === 'index.md') {
+                if (fixDuplicateMatrices(fullPath)) {
+                    fixedCount++;
+                }
+            }
+        }
     }
     
-    return false;
-  } catch (error) {
-    console.error(`Error fixing ${filePath}:`, error.message);
-    return false;
-  }
+    processDirectory(dir);
+    return fixedCount;
 }
 
-function processAllFiles() {
-  console.log('🔧 Fixing duplicate matrices...\n');
-  
-  let fixed = 0;
-  let checked = 0;
-  
-  // Process main digit directories (0-9)
-  for (const digit of digits) {
-    const indexPath = path.join('docs', digit, 'index.md');
-    if (fs.existsSync(indexPath)) {
-      checked++;
-      if (fixDuplicateMatrix(indexPath)) {
-        fixed++;
-      }
-    }
-  }
-  
-  // Process subdirectory index.md files
-  for (const rowDigit of digits) {
-    for (const colDigit of digits) {
-      const subIndexPath = path.join('docs', rowDigit, colDigit, 'index.md');
-      if (fs.existsSync(subIndexPath)) {
-        checked++;
-        if (fixDuplicateMatrix(subIndexPath)) {
-          fixed++;
-        }
-      }
-    }
-  }
-  
-  console.log(`\n📊 Summary:`);
-  console.log(`   Checked: ${checked} files`);
-  console.log(`   Fixed: ${fixed} files`);
-  
-  return { checked, fixed };
-}
+// Main execution
+const docsDir = path.join(__dirname, '..', 'docs');
+console.log('🔍 Scanning for duplicate matrices in docs directory...');
 
-if (require.main === module) {
-  processAllFiles();
-}
+const fixedFiles = findAndFixFiles(docsDir);
 
-module.exports = { fixDuplicateMatrix, processAllFiles }; 
+if (fixedFiles > 0) {
+    console.log(`\n✅ Successfully fixed ${fixedFiles} files with duplicate matrices`);
+} else {
+    console.log('\n✨ No duplicate matrices found - all files are clean!');
+} 

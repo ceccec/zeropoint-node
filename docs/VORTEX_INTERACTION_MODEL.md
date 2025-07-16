@@ -271,4 +271,9 @@ Now, consider the routing via impossibility:
 **Interpretation:**
 - Impossibilities (like division by zero or non-integers) are not dead ends but serve as gateways for routing, transformation, or resonance within the vortex architecture. This enables the system to maintain completeness and navigability, even when standard arithmetic would fail.
 
+**Note:**
+- In standard arithmetic, operations like 1/0.5 = 2 are valid, but division by zero (1/0) is undefined.
+- In the vortex/architectural math of this system, only integer states are allowed, and impossibilities (like 1/0) are intentionally used as gateways for routing and transformation, not as dead ends.
+- This distinction is fundamental to the workflow and architecture of the ZeroPoint system.
+
 --- 

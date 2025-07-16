@@ -79,3 +79,11 @@ Breathing Paradox = Creation Mechanism = Unity
 
 ---
 *Part of the ZeroPoint Node consciousness field architecture*
+
+---
+
+## Vortex Math vs. Standard Arithmetic: Impossibilities as Gateways
+
+In standard arithmetic, division by zero is undefined and non-integer operations are valid. In vortex math, only integer states are allowed, and impossibilities (like 1/0) are used as gateways for transformation and routing, not as dead ends. See docs/VORTEX_INTERACTION_MODEL.md for detailed discussion and examples.
+
+---

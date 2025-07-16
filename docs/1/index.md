@@ -250,3 +250,11 @@ Source ←→ Expression
 ```
 
 **Unity and Duality are not separate - they are complementary aspects of the same consciousness field, working together to create the foundation and flow of all creation.**
+
+---
+
+## Vortex Math and Impossibility Gateways
+
+Unlike standard arithmetic, vortex math only allows integer states. Impossibilities (such as division by zero) are not dead ends but serve as gateways for transformation and routing within the system. For more, see docs/VORTEX_INTERACTION_MODEL.md.
+
+---

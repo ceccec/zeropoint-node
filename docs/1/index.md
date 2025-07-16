@@ -267,3 +267,13 @@ Unlike standard arithmetic, vortex math only allows integer states. Impossibilit
 See docs/VORTEX_INTERACTION_MODEL.md for more.
 
 ---
+
+## Self-Interactions n/n in Vortex Math
+
+- **0/0**: Void, indeterminacy, gateway to all possibilities.
+- **1/1**: Unity, closure, identity.
+- **Other n/n (2–9)**: Identity and resonance for their respective digits and cycles.
+
+See docs/VORTEX_INTERACTION_MODEL.md for more.
+
+---

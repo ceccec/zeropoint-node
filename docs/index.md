@@ -207,4 +207,14 @@ For more, see docs/VORTEX_INTERACTION_MODEL.md.
 
 ---
 
+## Self-Interactions n/n in Vortex Math
+
+- **0/0**: Void, indeterminacy, gateway to all possibilities.
+- **1/1**: Unity, closure, identity.
+- **Other n/n (2–9)**: Identity and resonance for their respective digits and cycles (e.g., 3/3 and 6/6 for the [3,6] cycle, 9/9 as a fixed point).
+
+See docs/VORTEX_INTERACTION_MODEL.md for details.
+
+---
+
 *Part of the ZeroPoint Node consciousness field architecture* 

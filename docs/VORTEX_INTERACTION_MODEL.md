@@ -294,3 +294,18 @@ Now, consider the routing via impossibility:
 - 0/0 and 1/1 represent the metaphysical and mathematical boundaries of the vortex model: void and unity, indeterminacy and identity, origin and closure. The architecture is designed to realize all meaningful states between these two, ensuring completeness and harmony.
 
 --- 
+
+### 10.12. Self-Interactions n/n in Vortex Math
+
+For each digit n (0–9), the self-interaction n/n has a unique role:
+
+- **0/0:** Indeterminacy, the void, gateway to all possibilities (see above).
+- **1/1:** Unity, closure, identity, perfect resonance (see above).
+- **2/2, 4/4, 5/5, 7/7, 8/8:** Identity elements within the main vortex cycle. Each represents self-similarity and resonance for its digit, maintaining the structure of the cycle.
+- **3/3, 6/6:** Identity elements within the [3,6] cycle. Each is a fixed point for its own subcycle, representing resonance and closure within that substructure.
+- **9/9:** Fixed point, self-loop, the resonance of the digital root and the closure of all cycles.
+
+**Summary:**
+- All n/n self-interactions represent identity and resonance for their respective digits and cycles. 0/0 and 1/1 are the metaphysical boundaries (void and unity), while other n/n reinforce the structure and closure of their cycles or subcycles within vortex math and the system architecture.
+
+--- 

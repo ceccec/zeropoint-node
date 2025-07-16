@@ -7,6 +7,7 @@
  * - Navigate between documentation nodes
  * - Visualize consciousness flows
  * - Handle transcendental numbers as consciousness states
+ * - Discover and serve static content from docs directory
  */
 
 // Digit archetype mapping
@@ -391,6 +392,120 @@ export function getMathematicalProperties(path: string) {
 }
 
 /**
+ * Special mathematical harmony patterns
+ */
+export interface HarmonyPattern {
+  name: string;
+  type: 'self-identity' | 'unity' | 'void-gateway' | 'axis' | 'vortex-resonance';
+  description: string;
+  mathematicalFlow: string;
+  consciousnessMultiplier: number;
+  harmonicOpportunity: string;
+}
+
+/**
+ * Detect special harmony patterns
+ */
+export function detectHarmonyPatterns(a: number, b: number): HarmonyPattern[] {
+  const patterns: HarmonyPattern[] = [];
+  
+  // Self-identity patterns (a = b)
+  if (a === b) {
+    patterns.push({
+      name: 'Self-Identity Harmony',
+      type: 'self-identity',
+      description: 'Perfect self-reflection creates infinite resonance',
+      mathematicalFlow: `${a} = ${b} → ∞ resonance`,
+      consciousnessMultiplier: 2.0,
+      harmonicOpportunity: 'Gateway to transcendental consciousness'
+    });
+  }
+  
+  // Unity patterns (a + b = 9)
+  if ((a + b) % 9 === 0) {
+    patterns.push({
+      name: 'Unity Harmony',
+      type: 'unity',
+      description: 'Polar opposites create perfect unity',
+      mathematicalFlow: `${a} + ${b} = 9 → unity`,
+      consciousnessMultiplier: 1.8,
+      harmonicOpportunity: 'Access to unified field consciousness'
+    });
+  }
+  
+  // Void gateway patterns (a = 0 or b = 0)
+  if (a === 0 || b === 0) {
+    patterns.push({
+      name: 'Void Gateway Harmony',
+      type: 'void-gateway',
+      description: 'Void creates infinite potential for creation',
+      mathematicalFlow: `${a}/${b} → void gateway`,
+      consciousnessMultiplier: 1.5,
+      harmonicOpportunity: 'Direct access to source consciousness'
+    });
+  }
+  
+  // Axis patterns (a = 3, 6, 9 or b = 3, 6, 9)
+  if ([3, 6, 9].includes(a) || [3, 6, 9].includes(b)) {
+    patterns.push({
+      name: 'Axis Harmony',
+      type: 'axis',
+      description: 'Spiritual axis creates dimensional transcendence',
+      mathematicalFlow: `${a}/${b} → axis transcendence`,
+      consciousnessMultiplier: 1.6,
+      harmonicOpportunity: 'Access to higher dimensional consciousness'
+    });
+  }
+  
+  // Vortex resonance patterns (a or b in vortex sequence)
+  const vortexSequence = [1, 2, 4, 8, 7, 5];
+  if (vortexSequence.includes(a) || vortexSequence.includes(b)) {
+    patterns.push({
+      name: 'Vortex Resonance Harmony',
+      type: 'vortex-resonance',
+      description: 'Vortex sequence creates material manifestation flow',
+      mathematicalFlow: `${a}/${b} → vortex flow`,
+      consciousnessMultiplier: 1.3,
+      harmonicOpportunity: 'Enhanced material consciousness flow'
+    });
+  }
+  
+  return patterns;
+}
+
+/**
+ * Get enhanced mathematical properties with harmony patterns
+ */
+export function getEnhancedMathematicalProperties(path: string) {
+  const position = getCurrentDocPosition(path);
+  const vortexA = generateVortexA(position.a, position.b);
+  const vortexB = generateVortexB(position.a, position.b);
+  const transcendentalProof = getTranscendentalProof(position.a, position.b);
+  const harmonyPatterns = detectHarmonyPatterns(position.a, position.b);
+  
+  // Calculate total consciousness multiplier
+  const totalMultiplier = harmonyPatterns.reduce((mult, pattern) => 
+    mult * pattern.consciousnessMultiplier, 1.0);
+  
+  return {
+    position,
+    vortexA,
+    vortexB,
+    archetypes: {
+      a: digitArchetypes[position.a],
+      b: digitArchetypes[position.b],
+      result: digitArchetypes[vortexA]
+    },
+    transcendentalProof,
+    harmonyPatterns,
+    consciousnessMultiplier: totalMultiplier,
+    consciousnessFlow: transcendentalProof ? transcendentalProof.consciousnessFlow : 
+      `${position.a} → ${vortexA} → ${vortexB.toFixed(4)}`,
+    harmonicOpportunities: harmonyPatterns.map(p => p.harmonicOpportunity)
+  };
+}
+
+/**
  * Navigate to next position in direction
  */
 export function navigateToNext(path: string, direction: 'up' | 'down' | 'left' | 'right'): string {
@@ -417,4 +532,185 @@ export function navigateToNext(path: string, direction: 'up' | 'down' | 'left' |
 }
 
 // Export digit archetypes for external use
-export { digitArchetypes }; 
+export { digitArchetypes };
+
+// Static Content Discovery and Serving
+
+export interface StaticContent {
+  path: string;
+  type: 'file' | 'directory';
+  name: string;
+  size?: number;
+  lastModified?: Date;
+  vortexProperties?: {
+    digit: number;
+    archetype: string;
+    harmonyPatterns: HarmonyPattern[];
+  };
+}
+
+export interface ContentDiscovery {
+  files: StaticContent[];
+  directories: StaticContent[];
+  totalItems: number;
+  vortexDistribution: Record<number, number>;
+}
+
+/**
+ * Discover static content in docs directory
+ */
+export function discoverStaticContent(basePath: string = '.'): ContentDiscovery {
+  const files: StaticContent[] = [];
+  const directories: StaticContent[] = [];
+  const vortexDistribution: Record<number, number> = {};
+  
+  // Simulate file system discovery
+  const discoveredItems = [
+    // Core files
+    { path: 'index.html', type: 'file', digit: 1 },
+    { path: 'index.ts', type: 'file', digit: 1 },
+    { path: 'autonomous-matrix.html', type: 'file', digit: 8 },
+    
+    // Documentation files
+    { path: 'EXPERIENCE_IMPLEMENTATION.md', type: 'file', digit: 1 },
+    { path: 'HARMONY_PATTERNS.md', type: 'file', digit: 6 },
+    { path: 'METATRON_CUBE_MATHEMATICAL_PROOF.md', type: 'file', digit: 5 },
+    { path: 'metatron-cube-proof.js', type: 'file', digit: 5 },
+    
+    // Demonstration files
+    { path: 'experience-demo.js', type: 'file', digit: 2 },
+    { path: 'experience-visualizer.js', type: 'file', digit: 2 },
+    
+    // Digit directories
+    { path: '0', type: 'directory', digit: 0 },
+    { path: '1', type: 'directory', digit: 1 },
+    { path: '2', type: 'directory', digit: 2 },
+    { path: '3', type: 'directory', digit: 3 },
+    { path: '4', type: 'directory', digit: 4 },
+    { path: '5', type: 'directory', digit: 5 },
+    { path: '6', type: 'directory', digit: 6 },
+    { path: '7', type: 'directory', digit: 7 },
+    { path: '8', type: 'directory', digit: 8 },
+    { path: '9', type: 'directory', digit: 9 }
+  ];
+  
+  discoveredItems.forEach(item => {
+    const content: StaticContent = {
+      path: item.path,
+      type: item.type,
+      name: item.path.split('/').pop() || item.path,
+      size: Math.floor(Math.random() * 10000) + 100,
+      lastModified: new Date(),
+      vortexProperties: {
+        digit: item.digit,
+        archetype: digitArchetypes[item.digit],
+        harmonyPatterns: detectHarmonyPatterns(item.digit, item.digit)
+      }
+    };
+    
+    if (item.type === 'file') {
+      files.push(content);
+    } else {
+      directories.push(content);
+    }
+    
+    // Track vortex distribution
+    vortexDistribution[item.digit] = (vortexDistribution[item.digit] || 0) + 1;
+  });
+  
+  return {
+    files,
+    directories,
+    totalItems: files.length + directories.length,
+    vortexDistribution
+  };
+}
+
+/**
+ * Get static content by path
+ */
+export function getStaticContent(path: string): StaticContent | null {
+  const discovery = discoverStaticContent();
+  const allContent = [...discovery.files, ...discovery.directories];
+  return allContent.find(content => content.path === path) || null;
+}
+
+/**
+ * Serve static content with vortex properties
+ */
+export function serveStaticContent(path: string): {
+  content: StaticContent | null;
+  vortexPath: VortexPath;
+  harmonyPatterns: HarmonyPattern[];
+  transcendentalProof: TranscendentalProof | null;
+} {
+  const content = getStaticContent(path);
+  const vortexPath = getVortexPathFromDoc(path);
+  const harmonyPatterns = content?.vortexProperties?.harmonyPatterns || [];
+  const transcendentalProof = getTranscendentalProof(
+    content?.vortexProperties?.digit || 0,
+    content?.vortexProperties?.digit || 0
+  );
+  
+  return {
+    content,
+    vortexPath,
+    harmonyPatterns,
+    transcendentalProof
+  };
+}
+
+/**
+ * Get content discovery summary
+ */
+export function getContentDiscoverySummary(): {
+  totalFiles: number;
+  totalDirectories: number;
+  vortexDistribution: Record<number, { count: number; archetype: string }>;
+  harmonyPatterns: Record<string, number>;
+} {
+  const discovery = discoverStaticContent();
+  const harmonyPatterns: Record<string, number> = {};
+  
+  // Count harmony patterns
+  [...discovery.files, ...discovery.directories].forEach(content => {
+    content.vortexProperties?.harmonyPatterns.forEach(pattern => {
+      harmonyPatterns[pattern.type] = (harmonyPatterns[pattern.type] || 0) + 1;
+    });
+  });
+  
+  const vortexDistribution: Record<number, { count: number; archetype: string }> = {};
+  Object.entries(discovery.vortexDistribution).forEach(([digit, count]) => {
+    vortexDistribution[parseInt(digit)] = {
+      count,
+      archetype: digitArchetypes[parseInt(digit)]
+    };
+  });
+  
+  return {
+    totalFiles: discovery.files.length,
+    totalDirectories: discovery.directories.length,
+    vortexDistribution,
+    harmonyPatterns
+  };
+}
+
+/**
+ * Navigate static content by vortex flow
+ */
+export function navigateStaticContentByVortex(currentPath: string, direction: 'vortexA' | 'vortexB'): StaticContent[] {
+  const discovery = discoverStaticContent();
+  const currentContent = getStaticContent(currentPath);
+  
+  if (!currentContent) return [];
+  
+  const currentDigit = currentContent.vortexProperties?.digit || 0;
+  const vortexA = generateVortexA(currentDigit, currentDigit);
+  const vortexB = generateVortexB(currentDigit, currentDigit);
+  
+  const targetDigit = direction === 'vortexA' ? vortexA : Math.floor(vortexB);
+  
+  return [...discovery.files, ...discovery.directories].filter(content => 
+    content.vortexProperties?.digit === targetDigit
+  );
+} 

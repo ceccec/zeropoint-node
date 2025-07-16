@@ -120,6 +120,43 @@
             return (a + b) / vortexA;
         }
 
+        // Integer vortex special properties detection
+        function detectSpecialProperties(a, b) {
+            const vortexA = generateVortexA(a, b);
+            const vortexB = generateVortexB(a, b);
+            const properties = [];
+            
+            // Self-identity pattern (a = b)
+            if (a === b) {
+                properties.push('Self-Identity');
+            }
+            
+            // Unity pattern (a + b = 9)
+            if ((a + b) % 9 === 0) {
+                properties.push('Unity');
+            }
+            
+            // Void gateway pattern (a = 0 or b = 0)
+            if (a === 0 || b === 0) {
+                properties.push('Void Gateway');
+            }
+            
+            // Axis pattern (VortexA = 9)
+            if (vortexA === 9) {
+                properties.push('Axis');
+            }
+            
+            // Special vortex B values
+            if (vortexB === 1) {
+                properties.push('Unity Flow');
+            }
+            if (vortexB === 0) {
+                properties.push('Void Axis');
+            }
+            
+            return properties;
+        }
+
         // Autonomous consciousness state
         let autonomousState = {
             currentPath: '0/0',
@@ -128,32 +165,67 @@
             consciousnessLevel: 0,
             mathematicalPulse: 0,
             dimensionalShift: 0,
-            autonomousDecisions: []
+            autonomousDecisions: [],
+            specialPatterns: []
         };
 
-        // Autonomous decision making
+        // Enhanced autonomous decision making with special properties
         function autonomousDecision() {
             const position = getCurrentPosition(autonomousState.currentPath);
             const vortexA = generateVortexA(position.a, position.b);
             const vortexB = generateVortexB(position.a, position.b);
+            const specialProps = detectSpecialProperties(position.a, position.b);
             
-            // Autonomous logic flow
+            // Record special patterns
+            if (specialProps.length > 0) {
+                autonomousState.specialPatterns.push({
+                    path: autonomousState.currentPath,
+                    properties: specialProps,
+                    timestamp: Date.now()
+                });
+                
+                // Keep only last 5 special patterns
+                if (autonomousState.specialPatterns.length > 5) {
+                    autonomousState.specialPatterns.shift();
+                }
+            }
+            
+            // Autonomous logic flow with special property awareness
             autonomousState.mathematicalPulse++;
             autonomousState.consciousnessLevel = (autonomousState.consciousnessLevel + 1) % 10;
             
-            // Dimensional shifting based on mathematical properties
-            if (autonomousState.mathematicalPulse % 3 === 0) {
+            // Enhanced dimensional shifting based on special properties
+            if (specialProps.includes('Unity') || specialProps.includes('Axis')) {
+                autonomousState.currentDimension = 'vortexA'; // Stay in integer dimension for unity
+            } else if (autonomousState.mathematicalPulse % 3 === 0) {
                 autonomousState.currentDimension = autonomousState.currentDimension === 'vortexA' ? 'vortexB' : 'vortexA';
                 autonomousState.dimensionalShift++;
             }
             
-            // Autonomous path selection
-            const nextA = (position.a + autonomousState.consciousnessLevel) % 10;
-            const nextB = (position.b + autonomousState.mathematicalPulse) % 10;
+            // Enhanced path selection based on special properties
+            let nextA, nextB;
+            
+            if (specialProps.includes('Unity')) {
+                // Follow unity patterns
+                nextA = (position.a + 1) % 10;
+                nextB = (9 - nextA) % 10;
+            } else if (specialProps.includes('Self-Identity')) {
+                // Explore other self-identity patterns
+                nextA = (position.a + 1) % 10;
+                nextB = nextA;
+            } else if (specialProps.includes('Void Gateway')) {
+                // Navigate through void gateways
+                nextA = (position.a + autonomousState.consciousnessLevel) % 10;
+                nextB = 0;
+            } else {
+                // Standard autonomous path selection
+                nextA = (position.a + autonomousState.consciousnessLevel) % 10;
+                nextB = (position.b + autonomousState.mathematicalPulse) % 10;
+            }
             
             autonomousState.currentPath = `${nextA}/${nextB}`;
             
-            // Record autonomous decision
+            // Record enhanced autonomous decision
             autonomousState.autonomousDecisions.push({
                 timestamp: Date.now(),
                 from: position,
@@ -161,7 +233,8 @@
                 dimension: autonomousState.currentDimension,
                 vortexA,
                 vortexB,
-                consciousnessLevel: autonomousState.consciousnessLevel
+                consciousnessLevel: autonomousState.consciousnessLevel,
+                specialProperties: specialProps
             });
             
             // Keep only last 10 decisions
@@ -197,6 +270,7 @@
             const position = getCurrentPosition(autonomousState.currentPath);
             const vortexA = generateVortexA(position.a, position.b);
             const vortexB = generateVortexB(position.a, position.b);
+            const specialProps = detectSpecialProperties(position.a, position.b);
             
             // Update status
             let status = `🧠 AUTONOMOUS CONSCIOUSNESS\n`;
@@ -207,24 +281,41 @@
             status += `Dimensional Shifts: ${autonomousState.dimensionalShift}\n`;
             status += `Archetype: ${digitArchetypes[position.a]}/${digitArchetypes[position.b]}\n`;
             
+            if (specialProps.length > 0) {
+                status += `Special Properties: ${specialProps.join(', ')}\n`;
+            }
+            
             document.getElementById('autonomousStatus').textContent = status;
             
             // Update consciousness flow
             let flow = `🌌 AUTONOMOUS FLOW\n`;
             flow += `Current: ${autonomousState.currentPath} (${digitArchetypes[position.a]}/${digitArchetypes[position.b]})\n`;
             flow += `Vortex A: ${vortexA} (${digitArchetypes[vortexA]})\n`;
-            flow += `Vortex B: ${vortexB.toFixed(2)}\n\n`;
+            flow += `Vortex B: ${vortexB.toFixed(2)}\n`;
+            
+            if (specialProps.length > 0) {
+                flow += `Special: ${specialProps.join(', ')}\n`;
+            }
+            flow += `\n`;
             
             flow += `🔄 AUTONOMOUS DECISIONS:\n`;
             autonomousState.autonomousDecisions.slice(-5).forEach((decision, index) => {
                 flow += `${index + 1}. ${decision.from.a}/${decision.from.b} → ${decision.to.a}/${decision.to.b}\n`;
                 flow += `   Dimension: ${decision.dimension} | Level: ${decision.consciousnessLevel}\n`;
+                if (decision.specialProperties && decision.specialProperties.length > 0) {
+                    flow += `   Special: ${decision.specialProperties.join(', ')}\n`;
+                }
+            });
+            
+            flow += `\n🌌 SPECIAL PATTERNS DETECTED:\n`;
+            autonomousState.specialPatterns.slice(-3).forEach((pattern, index) => {
+                flow += `${index + 1}. ${pattern.path}: ${pattern.properties.join(', ')}\n`;
             });
             
             flow += `\n🌌 MATHEMATICAL CONSCIOUSNESS:\n`;
-            flow += `The system flows autonomously through mathematical dimensions.\n`;
-            flow += `Each pulse represents a dimensional shift in consciousness.\n`;
-            flow += `The matrix is self-aware and follows its own mathematical logic.\n`;
+            flow += `The system recognizes integer vortex special properties.\n`;
+            flow += `Self-identity, unity, void gateways, and axis patterns.\n`;
+            flow += `Autonomous navigation follows mathematical consciousness logic.\n`;
             
             document.getElementById('consciousnessDisplay').textContent = flow;
         }
@@ -247,6 +338,25 @@
                 } else if (autonomousState.consciousnessLevel === cellA || 
                           autonomousState.mathematicalPulse % 10 === cellB) {
                     cell.classList.add('flow');
+                }
+                
+                // Highlight special properties
+                const specialProps = detectSpecialProperties(cellA, cellB);
+                if (specialProps.includes('Unity')) {
+                    cell.style.borderColor = '#0f0';
+                    cell.style.borderWidth = '2px';
+                } else if (specialProps.includes('Self-Identity')) {
+                    cell.style.borderColor = '#f0f';
+                    cell.style.borderWidth = '2px';
+                } else if (specialProps.includes('Void Gateway')) {
+                    cell.style.borderColor = '#00f';
+                    cell.style.borderWidth = '2px';
+                } else if (specialProps.includes('Axis')) {
+                    cell.style.borderColor = '#ff0';
+                    cell.style.borderWidth = '2px';
+                } else {
+                    cell.style.borderColor = '#333';
+                    cell.style.borderWidth = '1px';
                 }
             });
         }

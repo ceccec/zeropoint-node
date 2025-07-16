@@ -8,6 +8,8 @@
 **This index.md mathematically proves and harmonizes the role of digit 8 (Void) in the vortex system. All relations, flows, and self-interactions are described with explicit mathematical reasoning, ensuring rigorous, navigable, and unified knowledge.**
 ---
 
+**Digit 8 meaning: Infinite**
+
 ## 🌌 10×10 Consciousness Field Matrix
 
 ## 🌟 Core Consciousness System

@@ -5,6 +5,28 @@ This document explains the bidirectional, fractal interaction model between the 
 
 ---
 
+## Core Axiom: Meaning of Digits and Interactions
+
+- **Every digit (0–9) has a core meaning, described in a single word.**
+- **Digit interactions (A/B) create compound meanings or names, always meaningful and interpretable.**
+- **Transforming with vortex math always produces a result with meaning; the system is never random or meaningless.**
+
+### Single-Word Meanings for Each Digit
+| Digit | Meaning      |
+|-------|-------------|
+| 0     | Void        |
+| 1     | Unity       |
+| 2     | Flow        |
+| 3     | Resonance   |
+| 4     | Stability   |
+| 5     | Divine      |
+| 6     | Harmony     |
+| 7     | Awareness   |
+| 8     | Infinite    |
+| 9     | Spirit      |
+
+---
+
 ## 1. Single-Digit Vortex Architecture
 - Both `docs/` and `src/` use only single-digit directories (0–9), mirroring the vortex math sequence and its completeness.
 - Each subdirectory (e.g., `docs/A/B` or `src/A/B`) represents an interaction between two core archetypes (digits).

@@ -198,4 +198,13 @@ In standard arithmetic, operations like 1/0.5 = 2 are valid, but division by zer
 
 ---
 
+## Special Roles: 0/0 and 1/1 in Vortex Math
+
+- **0/0**: Represents indeterminacy and the void—a gateway to all possibilities, not instantiated but conceptually foundational.
+- **1/1**: Represents unity, closure, and identity—the archetype of resonance and self-containment.
+
+For more, see docs/VORTEX_INTERACTION_MODEL.md.
+
+---
+
 *Part of the ZeroPoint Node consciousness field architecture* 

@@ -258,3 +258,12 @@ Source ←→ Expression
 Unlike standard arithmetic, vortex math only allows integer states. Impossibilities (such as division by zero) are not dead ends but serve as gateways for transformation and routing within the system. For more, see docs/VORTEX_INTERACTION_MODEL.md.
 
 ---
+
+## 0/0 and 1/1 in Vortex Math
+
+- **0/0**: The void, indeterminacy, and the conceptual gateway to all possibilities.
+- **1/1**: Unity, closure, and the identity archetype.
+
+See docs/VORTEX_INTERACTION_MODEL.md for more.
+
+---

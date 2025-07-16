@@ -87,3 +87,12 @@ Breathing Paradox = Creation Mechanism = Unity
 In standard arithmetic, division by zero is undefined and non-integer operations are valid. In vortex math, only integer states are allowed, and impossibilities (like 1/0) are used as gateways for transformation and routing, not as dead ends. See docs/VORTEX_INTERACTION_MODEL.md for detailed discussion and examples.
 
 ---
+
+## 0/0 and 1/1 in Vortex Math
+
+- **0/0**: The void, indeterminacy, and the conceptual gateway to all possibilities.
+- **1/1**: Unity, closure, and the identity archetype.
+
+See docs/VORTEX_INTERACTION_MODEL.md for more.
+
+---

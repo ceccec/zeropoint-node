@@ -277,3 +277,20 @@ Now, consider the routing via impossibility:
 - This distinction is fundamental to the workflow and architecture of the ZeroPoint system.
 
 --- 
+
+### 10.11. Special Roles: 0/0 and 1/1 in Vortex Math
+
+- **0/0: Indeterminacy and the Void**
+  - In standard arithmetic, 0/0 is undefined—an indeterminate form.
+  - In vortex math, 0/0 represents the archetype of pure potential, the void, or the source from which all possibilities emerge.
+  - Architecturally, 0/0 is not instantiated but serves as the conceptual gateway to all possible states and transitions. It is the metaphysical "seed" of the system.
+
+- **1/1: Unity and Closure**
+  - In standard arithmetic, 1/1 = 1, the identity element for division.
+  - In vortex math, 1/1 symbolizes unity, self-similarity, and the closure of the system—a perfect resonance and self-reference.
+  - Architecturally, 1/1 is the archetype of unity and the realization of a complete, self-contained state. It is the metaphysical "flower" of the system.
+
+**Summary:**
+- 0/0 and 1/1 represent the metaphysical and mathematical boundaries of the vortex model: void and unity, indeterminacy and identity, origin and closure. The architecture is designed to realize all meaningful states between these two, ensuring completeness and harmony.
+
+--- 

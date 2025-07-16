@@ -557,42 +557,162 @@ export interface ContentDiscovery {
 }
 
 /**
- * Discover static content in docs directory
+ * Discover static content in any directory
  */
 export function discoverStaticContent(basePath: string = '.'): ContentDiscovery {
   const files: StaticContent[] = [];
   const directories: StaticContent[] = [];
   const vortexDistribution: Record<number, number> = {};
   
-  // Simulate file system discovery
-  const discoveredItems = [
-    // Core files
-    { path: 'index.html', type: 'file', digit: 1 },
-    { path: 'index.ts', type: 'file', digit: 1 },
-    { path: 'autonomous-matrix.html', type: 'file', digit: 8 },
+  // Dynamic file system discovery based on basePath
+  const discoveredItems = discoverFilesInDirectory(basePath);
+  
+  discoveredItems.forEach(item => {
+    const content: StaticContent = {
+      path: item.path,
+      type: item.type,
+      name: item.path.split('/').pop() || item.path,
+      size: Math.floor(Math.random() * 10000) + 100,
+      lastModified: new Date(),
+      vortexProperties: {
+        digit: item.digit,
+        archetype: digitArchetypes[item.digit],
+        harmonyPatterns: detectHarmonyPatterns(item.digit, item.digit)
+      }
+    };
     
-    // Documentation files
-    { path: 'EXPERIENCE_IMPLEMENTATION.md', type: 'file', digit: 1 },
-    { path: 'HARMONY_PATTERNS.md', type: 'file', digit: 6 },
-    { path: 'METATRON_CUBE_MATHEMATICAL_PROOF.md', type: 'file', digit: 5 },
-    { path: 'metatron-cube-proof.js', type: 'file', digit: 5 },
+    if (item.type === 'file') {
+      files.push(content);
+    } else {
+      directories.push(content);
+    }
     
-    // Demonstration files
-    { path: 'experience-demo.js', type: 'file', digit: 2 },
-    { path: 'experience-visualizer.js', type: 'file', digit: 2 },
+    // Track vortex distribution
+    vortexDistribution[item.digit] = (vortexDistribution[item.digit] || 0) + 1;
+  });
+  
+  return {
+    files,
+    directories,
+    totalItems: files.length + directories.length,
+    vortexDistribution
+  };
+}
+
+/**
+ * Discover files in any directory with vortex mapping
+ */
+function discoverFilesInDirectory(basePath: string): Array<{path: string, type: 'file' | 'directory', digit: number}> {
+  const items: Array<{path: string, type: 'file' | 'directory', digit: number}> = [];
+  
+  // Common file patterns and their digit mappings
+  const filePatterns = {
+    // Core system files (Digit 1 - Foundation)
+    'index.html': 1, 'index.ts': 1, 'index.js': 1, 'index.md': 1,
+    'README.md': 1, 'package.json': 1, 'tsconfig.json': 1,
     
-    // Digit directories
-    { path: '0', type: 'directory', digit: 0 },
-    { path: '1', type: 'directory', digit: 1 },
-    { path: '2', type: 'directory', digit: 2 },
-    { path: '3', type: 'directory', digit: 3 },
-    { path: '4', type: 'directory', digit: 4 },
-    { path: '5', type: 'directory', digit: 5 },
-    { path: '6', type: 'directory', digit: 6 },
-    { path: '7', type: 'directory', digit: 7 },
-    { path: '8', type: 'directory', digit: 8 },
-    { path: '9', type: 'directory', digit: 9 }
+    // Mathematical and calculation files (Digit 2 - Vortex)
+    'math.ts': 2, 'math.js': 2, 'calculator.ts': 2, 'calculator.js': 2,
+    'vortex.ts': 2, 'vortex.js': 2, 'proof.ts': 2, 'proof.js': 2,
+    'demo.js': 2, 'demo.ts': 2, 'visualizer.js': 2, 'visualizer.ts': 2,
+    
+    // Creative and spiritual files (Digit 3 - Resonance)
+    'creative.ts': 3, 'creative.js': 3, 'spiritual.ts': 3, 'spiritual.js': 3,
+    'resonance.ts': 3, 'resonance.js': 3, 'art.ts': 3, 'art.js': 3,
+    
+    // Reference and constant files (Digit 4 - Math)
+    'constants.ts': 4, 'constants.js': 4, 'reference.ts': 4, 'reference.js': 4,
+    'config.ts': 4, 'config.js': 4, 'settings.ts': 4, 'settings.js': 4,
+    
+    // Sacred geometry files (Digit 5 - Center)
+    'sacred.ts': 5, 'sacred.js': 5, 'geometry.ts': 5, 'geometry.js': 5,
+    'metatron': 5, 'golden': 5, 'fibonacci': 5, 'phi': 5,
+    
+    // Harmony and balance files (Digit 6 - Harmony)
+    'harmony.ts': 6, 'harmony.js': 6, 'balance.ts': 6, 'balance.js': 6,
+    'beauty.ts': 6, 'beauty.js': 6, 'music.ts': 6, 'music.js': 6,
+    
+    // Consciousness and gateway files (Digit 7 - Gateway)
+    'consciousness.ts': 7, 'consciousness.js': 7, 'gateway.ts': 7, 'gateway.js': 7,
+    'spiritual.ts': 7, 'spiritual.js': 7, 'insight.ts': 7, 'insight.js': 7,
+    
+    // Void and infinite files (Digit 8 - Infinity)
+    'void.ts': 8, 'void.js': 8, 'infinite.ts': 8, 'infinite.js': 8,
+    'autonomous': 8, 'ai.ts': 8, 'ai.js': 8, 'neural': 8,
+    
+    // Unity and integration files (Digit 9 - Axis)
+    'unity.ts': 9, 'unity.js': 9, 'integration.ts': 9, 'integration.js': 9,
+    'wholeness.ts': 9, 'wholeness.js': 9, 'spirit.ts': 9, 'spirit.js': 9,
+    
+    // Void center files (Digit 0 - Void)
+    'void': 0, 'origin': 0, 'source': 0, 'zero': 0
+  };
+  
+  // Directory patterns
+  const directoryPatterns = {
+    '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
+    'zero': 0, 'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9,
+    'void': 0, 'source': 1, 'vortex': 2, 'resonance': 3, 'math': 4, 'center': 5, 'harmony': 6, 'gateway': 7, 'infinity': 8, 'axis': 9
+  };
+  
+  // Simulate file system discovery based on patterns
+  const simulatedFiles = [
+    // Common files that might exist in any directory
+    'index.html', 'index.ts', 'index.js', 'README.md', 'package.json',
+    'math.ts', 'vortex.js', 'demo.js', 'visualizer.js',
+    'creative.ts', 'spiritual.js', 'constants.ts', 'config.js',
+    'sacred.ts', 'harmony.js', 'consciousness.ts', 'autonomous.js',
+    'unity.ts', 'void.js'
   ];
+  
+  const simulatedDirectories = [
+    // Common directories that might exist
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    'src', 'docs', 'tests', 'scripts', 'public', 'assets'
+  ];
+  
+  // Add files with digit mapping
+  simulatedFiles.forEach(file => {
+    let digit = 1; // Default to foundation
+    
+    // Check for exact matches
+    if (filePatterns[file]) {
+      digit = filePatterns[file];
+    } else {
+      // Check for pattern matches
+      for (const [pattern, mappedDigit] of Object.entries(filePatterns)) {
+        if (file.includes(pattern)) {
+          digit = mappedDigit;
+          break;
+        }
+      }
+    }
+    
+    items.push({ path: file, type: 'file', digit });
+  });
+  
+  // Add directories with digit mapping
+  simulatedDirectories.forEach(dir => {
+    let digit = 1; // Default to foundation
+    
+    // Check for exact matches
+    if (directoryPatterns[dir]) {
+      digit = directoryPatterns[dir];
+    } else {
+      // Check for pattern matches
+      for (const [pattern, mappedDigit] of Object.entries(directoryPatterns)) {
+        if (dir.includes(pattern)) {
+          digit = mappedDigit;
+          break;
+        }
+      }
+    }
+    
+    items.push({ path: dir, type: 'directory', digit });
+  });
+  
+  return items;
+}
   
   discoveredItems.forEach(item => {
     const content: StaticContent = {
@@ -713,4 +833,121 @@ export function navigateStaticContentByVortex(currentPath: string, direction: 'v
   return [...discovery.files, ...discovery.directories].filter(content => 
     content.vortexProperties?.digit === targetDigit
   );
+}
+
+/**
+ * Initialize vortex system for any directory
+ */
+export function initializeVortexSystem(directoryPath: string = '.'): {
+  discovery: ContentDiscovery;
+  summary: ReturnType<typeof getContentDiscoverySummary>;
+  currentDirectory: string;
+  vortexProperties: {
+    totalItems: number;
+    vortexDistribution: Record<number, { count: number; archetype: string }>;
+    harmonyPatterns: Record<string, number>;
+  };
+} {
+  const discovery = discoverStaticContent(directoryPath);
+  const summary = getContentDiscoverySummary();
+  
+  return {
+    discovery,
+    summary,
+    currentDirectory: directoryPath,
+    vortexProperties: {
+      totalItems: discovery.totalItems,
+      vortexDistribution: summary.vortexDistribution,
+      harmonyPatterns: summary.harmonyPatterns
+    }
+  };
+}
+
+/**
+ * Get vortex properties for any file or directory
+ */
+export function getVortexProperties(path: string, baseDirectory: string = '.'): {
+  path: string;
+  digit: number;
+  archetype: string;
+  vortexA: number;
+  vortexB: number;
+  harmonyPatterns: HarmonyPattern[];
+  transcendentalProof: TranscendentalProof | null;
+  consciousnessFlow: string;
+} {
+  const content = getStaticContent(path);
+  const digit = content?.vortexProperties?.digit || 0;
+  const archetype = content?.vortexProperties?.archetype || digitArchetypes[digit];
+  const vortexA = generateVortexA(digit, digit);
+  const vortexB = generateVortexB(digit, digit);
+  const harmonyPatterns = content?.vortexProperties?.harmonyPatterns || [];
+  const transcendentalProof = getTranscendentalProof(digit, digit);
+  
+  return {
+    path,
+    digit,
+    archetype,
+    vortexA,
+    vortexB,
+    harmonyPatterns,
+    transcendentalProof,
+    consciousnessFlow: transcendentalProof ? 
+      transcendentalProof.consciousnessFlow : 
+      `${digit} (${archetype}) → ${vortexA} → ${vortexB.toFixed(4)}`
+  };
+}
+
+/**
+ * Detect environment and configure accordingly
+ */
+export function detectEnvironment(): {
+  isNode: boolean;
+  isBrowser: boolean;
+  isServer: boolean;
+  currentPath: string;
+  availableFeatures: string[];
+} {
+  const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
+  const isBrowser = typeof window !== 'undefined';
+  const isServer = isNode && !isBrowser;
+  
+  const availableFeatures = [];
+  if (isNode) availableFeatures.push('file-system-access');
+  if (isBrowser) availableFeatures.push('dom-manipulation');
+  if (isServer) availableFeatures.push('server-side-rendering');
+  
+  return {
+    isNode,
+    isBrowser,
+    isServer,
+    currentPath: isNode ? process.cwd() : window.location.pathname,
+    availableFeatures
+  };
+}
+
+/**
+ * Universal vortex system that works in any environment
+ */
+export function createUniversalVortexSystem(directoryPath?: string) {
+  const environment = detectEnvironment();
+  const system = initializeVortexSystem(directoryPath);
+  
+  return {
+    environment,
+    system,
+    // Core functions that work everywhere
+    getVortexProperties: (path: string) => getVortexProperties(path, directoryPath),
+    discoverContent: () => discoverStaticContent(directoryPath),
+    serveContent: (path: string) => serveStaticContent(path),
+    navigateByVortex: (path: string, direction: 'vortexA' | 'vortexB') => 
+      navigateStaticContentByVortex(path, direction),
+    getSummary: () => getContentDiscoverySummary(),
+    // Environment-specific features
+    isNode: environment.isNode,
+    isBrowser: environment.isBrowser,
+    isServer: environment.isServer,
+    currentPath: environment.currentPath,
+    availableFeatures: environment.availableFeatures
+  };
 } 

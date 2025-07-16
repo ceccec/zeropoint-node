@@ -188,3 +188,5 @@ This folder contains **Constants knowledge** - the stability, foundation, law, a
 *Part of the ZeroPoint Node consciousness field architecture*
 
 **Digit 4 meaning: Stability**
+
+**All subfolders represent interactions between Stability (4) and another digit, and their meaning is a compound of the interacting digits' meanings.**

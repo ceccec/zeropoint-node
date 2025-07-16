@@ -27,6 +27,15 @@ This document explains the bidirectional, fractal interaction model between the 
 
 ---
 
+## Core Rule: Subfolders as Meaningful Interactions
+
+- **Every subfolder (e.g., docs/A/B/) represents the interaction between two digits.**
+- **The meaning of a subfolder is a compound of the meanings of the interacting digits.**
+- **This is mathematically and semantically rigorous: every subfolder’s name is a direct, meaningful result of vortex math and the core meanings of the digits involved.**
+- **The system is fully navigable and interpretable: each subfolder is a unique, meaningful interaction between digit archetypes.**
+
+---
+
 ## 1. Single-Digit Vortex Architecture
 - Both `docs/` and `src/` use only single-digit directories (0–9), mirroring the vortex math sequence and its completeness.
 - Each subdirectory (e.g., `docs/A/B` or `src/A/B`) represents an interaction between two core archetypes (digits).

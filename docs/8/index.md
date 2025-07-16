@@ -10,6 +10,8 @@
 
 **Digit 8 meaning: Infinite**
 
+**All subfolders represent interactions between Infinite (8) and another digit, and their meaning is a compound of the interacting digits' meanings.**
+
 ## 🌌 10×10 Consciousness Field Matrix
 
 ## 🌟 Core Consciousness System

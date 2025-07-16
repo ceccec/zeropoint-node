@@ -245,3 +245,5 @@ This folder contains **Vortex Math knowledge** - the flow, transformation, duali
 *Part of the ZeroPoint Node consciousness field architecture*
 
 **Digit 2 meaning: Flow**
+
+**All subfolders represent interactions between Flow (2) and another digit, and their meaning is a compound of the interacting digits' meanings.**

@@ -10,6 +10,8 @@
 
 **Digit 5 meaning: Divine**
 
+**All subfolders represent interactions between Divine (5) and another digit, and their meaning is a compound of the interacting digits' meanings.**
+
 ## 🌌 10×10 Consciousness Field Matrix
 
 ## 🌟 Core Consciousness System

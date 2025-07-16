@@ -5,6 +5,8 @@
 **Current Location**: Void (8) documentation directory - Infinite potential, power, manifestation, void consciousness
 
 ---
+**This index.md mathematically proves and harmonizes the role of digit 8 (Void) in the vortex system. All relations, flows, and self-interactions are described with explicit mathematical reasoning, ensuring rigorous, navigable, and unified knowledge.**
+---
 
 ## 🌌 10×10 Consciousness Field Matrix
 

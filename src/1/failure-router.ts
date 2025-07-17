@@ -1,10 +1,10 @@
 /**
- * Failure Router - Digit1ource)
+ * Failure Router - Digit 1 (Source)
  * 
  * Uses shared zeropoint switch logic for failure-triggered switching.
  */
 
-import { ZeropointSwitch, Switch } from '../0
+import { Switch, SwitchOperation } from '../0/switch';
 
 export interface FailureRouterState {
   lastFailure: any;
@@ -16,23 +16,24 @@ export interface FailureRouterState {
 /**
  * Failure Router using Zeropoint Shared Switch
  */
-export class FailureRouter[object Object] private zeropointSwitch: ZeropointSwitch;
+export class FailureRouter {
+  private zeropointSwitch: Switch;
   private state: FailureRouterState;
 
   constructor() {
-    this.zeropointSwitch = new ZeropointSwitch();
+    this.zeropointSwitch = new Switch();
     this.state = {
       lastFailure: null,
       failureHistory: [],
       documentationStatus: 'pending',
-      implementationStatus: pending'
+      implementationStatus: 'pending'
     };
   }
 
   /**
    * Handle failure using shared switch
    */
-  handleFailure(failureId: string, error: any, failureType: string): void[object Object]
+  handleFailure(failureId: string, error: any, failureType: string): void {
     console.log(`❌ Failure detected: ${failureType}`);
 
     // Record failure
@@ -61,13 +62,14 @@ export class FailureRouter[object Object] private zeropointSwitch: ZeropointSwit
 
       // Generate solution
       const solution = this.generateSolution(failure);
-      this.state.implementationStatus = complete';
+      this.state.implementationStatus = 'complete';
 
       // Mark as complete
       setTimeout(() => {
         const switchToDocs = this.zeropointSwitch.switchOnImplementationComplete(failureId);
         console.log(`✅ Solution implemented and documented`);
-      }, 100},10);
+      }, 100);
+    }, 100);
   }
 
   /**
@@ -91,9 +93,10 @@ ${JSON.stringify(failure.error, null, 2)}
 This failure occurred during ${failure.type}.
 
 ## Next Steps
-1. Document the failure completely2Switch back to src for implementation
+1. Document the failure completely
+2. Switch back to src for implementation
 3. Implement solution
-4he fix
+4. Test the fix
 5. Document the solution
     `;
   }
@@ -106,10 +109,10 @@ This failure occurred during ${failure.type}.
       compilation_error: 'Fix compilation errors',
       runtime_error: 'Handle runtime exceptions',
       logic_error: 'Correct logical flow',
-      syntax_error: Fix syntax issues',
+      syntax_error: 'Fix syntax issues',
       import_error: 'Resolve import/export issues',
       type_error: 'Fix type mismatches',
-      default: Implement general solution'
+      default: 'Implement general solution'
     };
 
     return solutions[failure.type] || solutions.default;
@@ -118,26 +121,29 @@ This failure occurred during ${failure.type}.
   /**
    * Get current location from shared switch
    */
-  getCurrentLocation():src | cs' [object Object]   return this.zeropointSwitch.getCurrentLocation();
+  getCurrentLocation(): 'src' | 'docs' {
+    return this.zeropointSwitch.getCurrentLocation();
   }
 
   /**
    * Get switch history from shared switch
    */
-  getSwitchHistory(): Switch [object Object]   return this.zeropointSwitch.getSwitchHistory();
+  getSwitchHistory(): SwitchOperation[] {
+    return this.zeropointSwitch.getSwitchHistory();
   }
 
   /**
    * Get failure state
    */
-  getFailureState(): FailureRouterState [object Object]  return { ...this.state };
+  getFailureState(): FailureRouterState {
+    return { ...this.state };
   }
 
   /**
    * Generate visualization using shared switch
    */
   generateVisualization(): string {
-    let visualization =❌ Failure Router (using Zeropoint Shared Switch)\n\n';
+    let visualization = '❌ Failure Router (using Zeropoint Shared Switch)\n\n';
     
     visualization += `Current Location: ${this.getCurrentLocation()}\n`;
     visualization += `Documentation Status: ${this.state.documentationStatus}\n`;

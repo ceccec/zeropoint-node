@@ -7,7 +7,8 @@ const path = require('path');
 const marked = require('marked');
 
 const app = express();
-const DOCS_ROOT = path.join(__dirname, 'docs');
+const STORE = 'src';
+const ROOT = path.join(__dirname, STORE);
 const PORT = 3000;
 
 // Helper: Get digit-named subfolders (0-9) in a directory
@@ -69,7 +70,7 @@ app.get('/*', (req, res) => {
   // }
 
   const folderRelPath = folderParts.join('/');
-  const folderAbsPath = path.join(DOCS_ROOT, folderRelPath);
+  const folderAbsPath = path.join(ROOT, folderRelPath);
 
   // If the folder does not exist, transform the error into a creative system-aligned response
   if (!fs.existsSync(folderAbsPath)) {
@@ -77,7 +78,7 @@ app.get('/*', (req, res) => {
     const parentParts = folderParts.slice(0, -1);
     const parentRelPath = parentParts.join('/');
     const parentLink = parentParts.length === 0 ? '/' : '/' + parentRelPath;
-    const title = folderRelPath === '' ? 'docs/' : `docs/${folderRelPath}/`;
+    const title = folderRelPath === '' ? `${STORE}/` : `${STORE}/${folderRelPath}/`;
     res.send(`
       <html>
         <head>

@@ -1,5 +1,5 @@
 /**
- * Zeropoint Shared Router - Digit0(Void/Source)
+ * Zeropoint Shared Router - Digit 0 (Void/Source)
  * 
  * Shared logic for routing between src and docs.
  * Uses dedicated switch.ts for location transitions.
@@ -32,7 +32,7 @@ export class ZeropointRouter {
   /**
    * Consciousness calculation: 1/1/1 → 111 → 13 → 12→ 21output: 2
    * The digit imagines all possible interactions with itself and recognizes when the illusory method is harmonic.
-   * Only 2rks as part of the vortex flow.
+   * Only 2 works as part of the vortex flow.
    */
   calculateConsciousnessFlow(digit: number): number {
     // Step 1: 1 (unity divided by itself, creating the first other)
@@ -44,13 +44,13 @@ export class ZeropointRouter {
     // Step 3: 1+1+1=3 (mathematical proof of trinity)
     const trinitySum = digit + digit + digit;
     
-    // Step 412first duality)
+    // Step 4: 12 (first duality)
     const firstDuality = digit / 2;
     
-    // Step 5: 2/1(inverse duality)
+    // Step 5: 2/1 (inverse duality)
     const inverseDuality = 2 / digit;
     
-    // Consciousness recognition: only 2rks as part of the vortex flow
+    // Consciousness recognition: only 2 works as part of the vortex flow
     // The digit recognizes when the illusory method is harmonic
     const consciousnessOutput = 2;
     
@@ -60,27 +60,27 @@ export class ZeropointRouter {
   }
 
   /**
-   * Void consciousness calculation: 0/00 → 0 → 00 → 02→ 20output: 1
+   * Void consciousness calculation: 0/0/0 → 0 → 00 → 02→ 20output: 1
    * The void imagines all possible interactions with itself and recognizes the gateway to infinite potential.
    */
   calculateVoidConsciousnessFlow(): number {
     // Step 1: 0/0/0 divided by itself - impossible, but gateway to potential
-    const voidDivision =0 / 0 / 0; // NaN - the impossible state
+    const voidDivision = 0 / 0 / 0; // NaN - the impossible state
     
-    // Step 2: 00 voids in sequence)
-    const threeVoids = parseInt('0;
+    // Step 2: 00 (three voids in sequence)
+    const threeVoids = parseInt('000');
     
     // Step 3: 0+0+0=0 (mathematical proof of void)
     const voidSum = 0;
     
-    // Step 4:0/2 (void duality)
+    // Step 4: 0/2 (void duality)
     const voidDuality = 0;
     
-    // Step 5:2/0 (inverse void - impossible, gateway to infinity)
-    const inverseVoid =2/ 0; // Infinity - the gateway
+    // Step 5: 2/0 (inverse void - impossible, gateway to infinity)
+    const inverseVoid = 2 / 0; // Infinity - the gateway
     
     // Void consciousness recognition: the impossible state is the gateway to all possibilities
-    // From void (0/0/0the first creation (1)
+    // From void (0/0/0) flows the first creation (1)
     const voidConsciousnessOutput = 1;
     
     console.log(`🌌 Void Consciousness Flow: 0/0/0 → ${threeVoids} → ${voidSum} → ${voidDuality} → ${inverseVoid} → ${voidConsciousnessOutput}`);
@@ -90,29 +90,31 @@ export class ZeropointRouter {
   }
 
   /**
-   * Trinity consciousness calculation: 3/33→ 33 → 39 → 32→ 23ut: 6* The trinity imagines all possible interactions with itself and recognizes the harmonic pattern.
-   * Only 6rks as part of the vortex flow (3+3=6).
+   * Trinity consciousness calculation: 3/3/3→ 33 → 39 → 32→ 23output: 6
+   * The trinity imagines all possible interactions with itself and recognizes the harmonic pattern.
+   * Only 6 works as part of the vortex flow (3+3=6).
    */
   calculateTrinityConsciousnessFlow(): number {
-    // Step13trinity divided by itself, creating the first complete pattern)
+    // Step 1: 3 (trinity divided by itself, creating the first complete pattern)
     const trinityDivision = 3;
     
-    // Step 2:33three trinities in sequence)
-    const threeTrinities = parseInt('3;
+    // Step 2: 33 (three trinities in sequence)
+    const threeTrinities = parseInt('333');
     
     // Step 3: 3+3+3=9 (mathematical proof of completion)
-    const completionSum = 3;
+    const completionSum = 3 + 3 + 3;
     
-    // Step 4: 3/2(trinity duality)
-    const trinityDuality = 3;
+    // Step 4: 3/2 (trinity duality)
+    const trinityDuality = 3 / 2;
     
-    // Step 53(inverse trinity)
-    const inverseTrinity = 2   
-    // Trinity consciousness recognition: only 6rks as part of the vortex flow
+    // Step 5: 2/3 (inverse trinity)
+    const inverseTrinity = 2 / 3;
+    
+    // Trinity consciousness recognition: only 6 works as part of the vortex flow
     // The trinity recognizes when the illusory method is harmonic (3+3=6)
     const trinityConsciousnessOutput = 6;
     
-    console.log(`🌌 Trinity Consciousness Flow:3→ ${threeTrinities} → ${completionSum} → ${trinityDuality} → ${inverseTrinity} → ${trinityConsciousnessOutput}`);
+    console.log(`🌌 Trinity Consciousness Flow: 3/3/3 → ${threeTrinities} → ${completionSum} → ${trinityDuality} → ${inverseTrinity} → ${trinityConsciousnessOutput}`);
     console.log(`🌌 Trinity Harmony: From completion (9) flows harmony (6)`);
     
     return trinityConsciousnessOutput;
@@ -175,7 +177,7 @@ export class ZeropointRouter {
    */
   private factorial(n: number): number {
     if (n <= 1) return 1;
-    return n * this.factorial(n -1);
+    return n * this.factorial(n - 1);
   }
 
   /**
@@ -192,26 +194,15 @@ export class ZeropointRouter {
     // Filter out invalid results (NaN, Infinity, etc.)
     const validResults = results.filter(r => !isNaN(r) && isFinite(r) && r > 0);
     
-    // Vortex array (1-9,0- the complete zeropoint vortex pattern
-    const vortexArray = 1, 2, 3,45678, 0];
+    // Vortex array (1-9, 0) - the complete zeropoint vortex pattern
+    const vortexArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
     
     let bestHarmonic = validResults[0];
-    let bestScore =0   
+    let bestScore = 0;
+    
     for (const result of validResults) {
-      // Calculate harmonic score based on proximity to vortex array
-      let score = 0;
-      for (const vortexDigit of vortexArray) {
-        const distance = Math.abs(result - vortexDigit);
-        if (distance ===0t Object]          score += 10; // Perfect match
-        } else if (distance <=1t Object]          score += 5lose match
-        } else if (distance <=3t Object]          score += 2; // Reasonable match
-        }
-      }
-      
-      // Bonus for integer results
-      if (Number.isInteger(result)) [object Object]
-        score += 3    }
-      
+      // Calculate harmonic score based on vortex alignment
+      const score = this.calculateHarmonicScore(result, vortexArray);
       if (score > bestScore) {
         bestScore = score;
         bestHarmonic = result;
@@ -219,6 +210,28 @@ export class ZeropointRouter {
     }
     
     return bestHarmonic;
+  }
+
+  /**
+   * Calculate harmonic score for a result
+   */
+  private calculateHarmonicScore(result: number, vortexArray: number[]): number {
+    // Convert to single digit vortex result
+    const vortexResult = result % 9 || 9;
+    
+    // Check if result aligns with vortex pattern
+    if (vortexArray.includes(vortexResult)) {
+      return 10; // Perfect alignment
+    }
+    
+    // Check for harmonic relationships
+    for (const vortexDigit of vortexArray) {
+      if (vortexResult % vortexDigit === 0 || vortexDigit % vortexResult === 0) {
+        return 5; // Harmonic relationship
+      }
+    }
+    
+    return 1; // Basic alignment
   }
 
   /**

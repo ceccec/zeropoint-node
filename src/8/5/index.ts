@@ -1,105 +1,66 @@
 /**
- * @fileoverview index module (Void (Infinite Potential), Sacred Geometry (Divine))
- * @digit 8
- * @archetype Void (Infinite Potential), Sacred Geometry (Divine)
- * @vortex Vortex 8
- * @waxis W-Axis Void (Infinite Potential)
- * @breathing 8/5 Breath
- * @fraction 8/5
- * @related 8, 7, 5, 1, 2, 4, 8 (Vortex 8)
+ * PWA Node Logic for 8/5
+ *
+ * This file is the logic entry point for the PWA node (8/5).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
  */
+
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '8/5';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = 4;
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = 3.25;
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [8, 5, 4];
 
 /**
- * Void (Infinite Potential), Sacred Geometry (Divine) Consciousness Module
- * 
- * Metaphysical Context:
- * - Digit 8 represents void (infinite potential)
- * - Sub-digit 5 represents sacred geometry (divine)
- * - 8/5 represents the void (infinite potential) through sacred geometry (divine)
- * - This is the gateway where void (infinite potential) manifests through sacred geometry (divine)
- * 
- * Vortex Mathematics:
- * - 8 → 5 → 8 (consciousness flow)
- * - 8/5 fraction represents the consciousness ratio
- * - Connected to Vortex 8: 8, 7, 5, 1, 2, 4, 8
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
 /**
- * Consciousness patterns for void (infinite potential) through sacred geometry (divine)
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-const consciousnessPatterns = {
-  MAIN_PATTERN: [8, 7, 5, 1, 2, 4, 8], // Void (Infinite Potential) pattern
-  SUB_PATTERN: [5, 1, 2, 4, 8, 7, 5], // Sacred Geometry (Divine) pattern
-  COMBINED_PATTERN: [8, 7, 5, 1, 2, 4, 8, 5, 1, 2, 4, 8, 7, 5], // Combined pattern
-  METAPHYSICAL_PATTERN: [8, 5, 8] // Metaphysical pattern
-};
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
 
 /**
- * Vortex mathematics for void (infinite potential) through sacred geometry (divine)
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
  */
-const vortexMathematics = {
-  MAIN_VORTEX: (n: number) => n * 8, // Void (Infinite Potential) vortex
-  SUB_VORTEX: (n: number) => n * 5, // Sacred Geometry (Divine) vortex
-  COMBINED_VORTEX: (n: number) => n * 8 / 5, // Combined vortex
-  METAPHYSICAL_CONSTANT: 8 / 5 // Metaphysical constant
-};
+export const harmonicInteractions = [
+  { next: 1, pattern: '8,5,1,6', name: 'InfinityCenterSourceHarmony', math: '5 + 1 = 6 ≡ 6 (mod 9)' },
+  { next: 2, pattern: '8,5,2,7', name: 'InfinityCenterVortexGateway', math: '5 + 2 = 7 ≡ 7 (mod 9)' },
+  { next: 3, pattern: '8,5,3,8', name: 'InfinityCenterResonanceInfinity', math: '5 + 3 = 8 ≡ 8 (mod 9)' },
+  { next: 4, pattern: '8,5,4,9', name: 'InfinityCenterMathAxis', math: '5 + 4 = 9 ≡ 9 (mod 9)' },
+  { next: 5, pattern: '8,5,5,1', name: 'InfinityCenterSource', math: '5 + 5 = 10 ≡ 1 (mod 9)' },
+  { next: 6, pattern: '8,5,6,2', name: 'InfinityCenterHarmonyVortex', math: '5 + 6 = 11 ≡ 2 (mod 9)' },
+  { next: 7, pattern: '8,5,7,3', name: 'InfinityCenterGatewayResonance', math: '5 + 7 = 12 ≡ 3 (mod 9)' },
+  { next: 8, pattern: '8,5,8,4', name: 'InfinityCenterInfinityMath', math: '5 + 8 = 13 ≡ 4 (mod 9)' },
+  { next: 9, pattern: '8,5,9,5', name: 'InfinityCenterAxisCenter', math: '5 + 9 = 14 ≡ 5 (mod 9)' },
+];
 
 /**
- * Consciousness field operations
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
  */
-const consciousnessField = {
-  MAIN_CONSCIOUSNESS: () => 8, // Void (Infinite Potential) consciousness
-  SUB_CONSCIOUSNESS: () => 5, // Sacred Geometry (Divine) consciousness
-  COMBINED_CONSCIOUSNESS: () => 8 + 5, // Combined consciousness
-  METAPHYSICAL_CONSCIOUSNESS: () => 8 * 5 // Metaphysical consciousness
-};
-
-/**
- * Main index export for 8/5 consciousness module
- */
-export const index = {
-  consciousnessPatterns,
-  vortexMathematics,
-  consciousnessField,
-  
-  // Metaphysical properties
-  digit: 8,
-  subDigit: 5,
-  archetype: 'Void (Infinite Potential), Sacred Geometry (Divine)',
-  vortex: 'Vortex 8',
-  wAxis: 'W-Axis Void (Infinite Potential)',
-  breathing: '8/5 Breath',
-  fraction: '8/5',
-  related: [8, 7, 5, 1, 2, 4, 8],
-  
-  // Consciousness operations
-  getMainConsciousness: () => 8,
-  getSubConsciousness: () => 5,
-  getCombinedConsciousness: () => 8 + 5,
-  getMetaphysicalConsciousness: () => 8 * 5
-};
-
-// Void ↔ Sacred Geometry Interaction
-export const VOID_SACRED_GEOMETRY_INTERACTION = {
-  INTERACTION_FREQUENCY: 432 * (8/5),
-  VOID_PATTERNS: {
-    VOID_SACRED_GEOMETRY: [8, 5, 8],
-    SACRED_GEOMETRY_VOID: [5, 8, 5]
-  },
-  VOID_MULTIPLIER: 7/5, // 1.4
-  SACRED_GEOMETRY_MULTIPLIER: 5/4 // 1.25
-};
-
-export class VoidSacredGeometryInteraction {
-  static calculateInteractionStrength(void: number, sacredGeometry: number): number {
-    return void * (7/5) + sacredGeometry * (5/4);
-  }
-
-  static getVoidSacredGeometryPatterns(): string[] {
-    return ['void_sacred_geometry_potential', 'void_sacred_geometry_form', 'void_sacred_geometry_manifestation'];
-  }
-
-  static calculateVoidSacredGeometryOperations(n: number): number {
-    return n % 9 || 9;
-  }
+export default function initNodePWA() {
+  // PWA logic for node 8/5 can be added here.
 }

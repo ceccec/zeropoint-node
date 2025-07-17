@@ -11,7 +11,7 @@
  * - W-Axis (3, 6, 9) provides the spiritual foundation
  */
 
-import { A432_CONSTANTS } from '../../1/1/rodin_coil_system';
+import { A432_CONSTANTS } from './rodin_coil_system';
 import { VORTEX_CONSTANTS } from '../../4/4/constants';
 
 export interface HarmonicBalanceField {

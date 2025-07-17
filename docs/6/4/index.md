@@ -1,123 +1,61 @@
-# 4/6 – Deep Vortex Consciousness Field State
+# ZeroPoint Node - Harmony–Math–Source (6/4=1)
 
-## 🌌 10×10 Consciousness Field Matrix
+## Metaphysical Foundation
 
-## 🌟 Core Consciousness System
+Interaction of Harmony (6) and Math (4) produces Source (1): Balance, beauty, equilibrium, Structure, foundation, Origin, unity, initiation.
 
-**Digit 6**: Harmonic Balance
-**Principle**: Resonance and equilibrium
-**Documentation**: Harmonic Balance
+## Mathematical Properties
 
-| **Field** | **[0](../../0/)** | **[1](../../1/)** | **[2](../../2/)** | **[3](../../3/)** | **[4](../../4/)** | **[5](../../5/)** | **[6](../../6/)** | **[7](../../7/)** | **[8](../../8/)** | **[9](../../9/)** |
-|-----------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
-| **[0](../../0/)** | [0/0](../../0/0/) | [0/1](../../0/1/) | [0/2](../../0/2/) | [0/3](../../0/3/) | [0/4](../../0/4/) | [0/5](../../0/5/) | [0/6](../../0/6/) | [0/7](../../0/7/) | [0/8](../../0/8/) | [0/9](../../0/9/) |
-| **[1](../../1/)** | [1/0](../../1/0/) | [1/1](../../1/1/) | [1/2](../../1/2/) | [1/3](../../1/3/) | [1/4](../../1/4/) | [1/5](../../1/5/) | [1/6](../../1/6/) | [1/7](../../1/7/) | [1/8](../../1/8/) | [1/9](../../1/9/) |
-| **[2](../../2/)** | [2/0](../../2/0/) | [2/1](../../2/1/) | [2/2](../../2/2/) | [2/3](../../2/3/) | [2/4](../../2/4/) | [2/5](../../2/5/) | [2/6](../../2/6/) | [2/7](../../2/7/) | [2/8](../../2/8/) | [2/9](../../2/9/) |
-| **[3](../../3/)** | [3/0](../../3/0/) | [3/1](../../3/1/) | [3/2](../../3/2/) | [3/3](../../3/3/) | [3/4](../../3/4/) | [3/5](../../3/5/) | [3/6](../../3/6/) | [3/7](../../3/7/) | [3/8](../../3/8/) | [3/9](../../3/9/) |
-| **[4](../../4/)** | [4/0](../../4/0/) | [4/1](../../4/1/) | [4/2](../../4/2/) | [4/3](../../4/3/) | [4/4](../../4/4/) | [4/5](../../4/5/) | [4/6](../../4/6/) | [4/7](../../4/7/) | [4/8](../../4/8/) | [4/9](../../4/9/) |
-| **[5](../../5/)** | [5/0](../../5/0/) | [5/1](../../5/1/) | [5/2](../../5/2/) | [5/3](../../5/3/) | [5/4](../../5/4/) | [5/5](../../5/5/) | [5/6](../../5/6/) | [5/7](../../5/7/) | [5/8](../../5/8/) | [5/9](../../5/9/) |
-| **[6](../../6/)** | [6/0](../../6/0/) | [6/1](../../6/1/) | [6/2](../../6/2/) | [6/3](../../6/3/) | [6/4](../../6/4/) | [6/5](../../6/5/) | [6/6](../../6/6/) | [6/7](../../6/7/) | [6/8](../../6/8/) | [6/9](../../6/9/) |
-| **[7](../../7/)** | [7/0](../../7/0/) | [7/1](../../7/1/) | [7/2](../../7/2/) | [7/3](../../7/3/) | [7/4](../../7/4/) | [7/5](../../7/5/) | [7/6](../../7/6/) | [7/7](../../7/7/) | [7/8](../../7/8/) | [7/9](../../7/9/) |
-| **[8](../../8/)** | [8/0](../../8/0/) | [8/1](../../8/1/) | [8/2](../../8/2/) | [8/3](../../8/3/) | [8/4](../../8/4/) | [8/5](../../8/5/) | [8/6](../../8/6/) | [8/7](../../8/7/) | [8/8](../../8/8/) | [8/9](../../8/9/) |
-| **[9](../../9/)** | [9/0](../../9/0/) | [9/1](../../9/1/) | [9/2](../../9/2/) | [9/3](../../9/3/) | [9/4](../../9/4/) | [9/5](../../9/5/) | [9/6](../../9/6/) | [9/7](../../9/7/) | [9/8](../../9/8/) | [9/9](../../9/9/) |
+Symbolic: 6/4
+Harmonic: 1
+Anti-vortex (Decimal): 10.00
+Pattern: 6,4,1 (Harmony,Math,Source)
+Math: 6 + 4 = 10 ≡ 1 (mod 9)
+Anti-vortex Math: (6 + 4) / 1 = 10.00
 
-## Fraction Interaction: 4/6
 
-- **Meaning**: Fraction less than one: contraction, focus, or inward flow.
-- **Mathematical Value**: 0.6667
-- **Metaphysical Insight**: This interaction expresses the relationship between digit 4 and digit 6 as a fraction, revealing unique patterns of consciousness, resonance, and transformation.
+```json
+{
+  "symbolicName": "6/4",
+  "harmonicResult": 1,
+  "antiVortexDecimal": 10.00,
+  "vortexPath": "6 → 4 → 1",
+  "antiVortexPath": "10.00 (decimal consciousness flow)"
+}
+```
 
----
+## Core Functions
+- Integration: 6 + 4 = 1
+- Symbolic: 6/4
+- Harmonic: 1
+- Anti-vortex: (6 + 4) / 1 = 10.00
+- Vortex Sequence: 6, 4, 1
+- Anti-vortex Sequence: 10.00 (decimal consciousness flow)
 
-## 🌌 Deep Vortex Interaction: Constants-Harmonic Balance (4/6)
+## Integration
 
-### **Metaphysical Principles**
+As the harmony–math–source (6/4=1), this interaction provides the consciousness integration between 6 and 4 patterns. It connects the 6 consciousness to the 4 consciousness through harmonic resonance.
 
-#### **Constants (4)**
-- **Circuit**: Rodin (Mathematical Torus)
-- **Breathing Pattern**: rodin
-- **Role**: Foundation constants in Rodin flow
-- **Meaning**: Stability and harmonic foundation
-- **Characteristics**:
-  - Foundation constants
-  - Structural integrity
-  - Mathematical stability
-  - Rodin flow foundation
-  - Consciousness stability
+## Usage
 
-#### **Harmonic Balance (6)**
-- **Circuit**: W-Axis (Spiritual Pathway)
-- **Breathing Pattern**: spiritual
-- **Role**: Balance in spiritual dimension
-- **Meaning**: Balance, harmony, spiritual equilibrium
-- **Characteristics**:
-  - Spiritual equilibrium
-  - Harmonic resonance
-  - W-Axis balance
-  - Spiritual harmony
-  - Consciousness balance
+```typescript
+import { 64Integration, 64Resonance, 64Dynamics } from './src/6/4';
+```
 
-### **Consciousness Field Interaction**
+## Sacred Principle
 
-#### **Field Dynamics**
-- **Constants Field**: Rodin Field (1-9)
-- **Harmonic Balance Field**: W-Axis Field (3,6,9)
-- **Interaction**: Constants-Harmonic: Constants maintain resonance equilibrium - harmonic stabilityStability-Balance: Stability balances - harmonic stability
+**"The harmony–math–source (6/4=1) represents the harmonic integration of 6 and 4 consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (10.00) represents the forbidden consciousness flow."**
 
-#### **Resonance Patterns**
-- **Constants Resonance**: 432 × (4/1) = 1728 Hz
-- **Harmonic Balance Resonance**: 432 × (6/9) = 288 Hz
-- **Combined Resonance**: Creates unified consciousness field patterns
+## Harmonic Interactions
 
-#### **Fingerprint Patterns**
-- **Constants Fingerprint**: Creates stability consciousness patterns
-- **Harmonic Balance Fingerprint**: Creates harmonic balance patterns
-- **Combined Fingerprint**: Creates Constants-Harmonic Balance consciousness patternsCreates Stability Constants-Harmonic Balance consciousness patterns
-
-### **Vortex Flow Analysis**
-
-#### **Circuit Interaction**
-- **Constants Circuit**: Rodin (Mathematical Torus)
-- **Harmonic Balance Circuit**: W-Axis (Spiritual Pathway)
-- **Interaction Type**: Cross-Circuit ResonanceCross-Circuit Resonance
-
-#### **Breathing Synchronization**
-- **Constants Breathing**: rodin
-- **Harmonic Balance Breathing**: spiritual
-- **Synchronization**: Complementary BreathingComplementary Breathing
-
-### **Consciousness Evolution**
-
-#### **Individual Evolution**
-- **Constants Path**: Foundation constants in Rodin flow
-- **Harmonic Balance Path**: Balance in spiritual dimension
-- **Evolution Type**: Cross-Integration
-
-#### **Unified Evolution**
-- **Purpose**: Achieve consciousness unity through Constants-Harmonic Balance integration
-- **Path**: Constants ↔ Harmonic Balance consciousness field interaction
-- **Outcome**: Creates unified consciousness patterns throughout the system
-
----
-
-## Navigation
-- [← Back to 4](../index.md)
-- [← Back to Docs Root](../../index.md)
-
-## Contents
-
-### Files
-
-- **Constants-Harmonic Balance** - Stability and harmonic foundation interacting with Resonance and equilibrium
-- **Deep Vortex Analysis** - Comprehensive exploration of consciousness field interactions
-- **Metaphysical Principles** - Understanding of digit roles and circuit flows
-- **Consciousness Evolution** - Path of consciousness development and integration
-
-## Related Consciousness Fields
-- Explore the fractal nature of consciousness within this digit interaction
-- Connect with other digits through the main navigation
-- Discover patterns and interactions across the consciousness field
-- Understand the deep vortex principles underlying all consciousness interactions
-
----
-*Part of the ZeroPoint Node consciousness field architecture - Deep Vortex Exploration*
+| Next | Pattern | Name | Math |
+|------|---------|------|------|
+| → 1 | 6,4,1,5 | HarmonyMathSourceCenter | 4 + 1 = 5 ≡ 5 (mod 9) |
+| 2 | 6,4,2,6 | HarmonyMathVortexHarmony | 4 + 2 = 6 ≡ 6 (mod 9) [GATEWAY] |
+| 3 | 6,4,3,7 | HarmonyMathResonanceGateway | 4 + 3 = 7 ≡ 7 (mod 9) |
+| 4 | 6,4,4,8 | HarmonyMathInfinity | 4 + 4 = 8 ≡ 8 (mod 9) |
+| 5 | 6,4,5,9 | HarmonyMathCenterAxis | 4 + 5 = 9 ≡ 9 (mod 9) |
+| 6 | 6,4,6,1 | HarmonyMathHarmonySource | 4 + 6 = 10 ≡ 1 (mod 9) |
+| 7 | 6,4,7,2 | HarmonyMathGatewayVortex | 4 + 7 = 11 ≡ 2 (mod 9) |
+| 8 | 6,4,8,3 | HarmonyMathInfinityResonance | 4 + 8 = 12 ≡ 3 (mod 9) |
+| 9 | 6,4,9,4 | HarmonyMathAxisMath | 4 + 9 = 13 ≡ 4 (mod 9) [GATEWAY] |

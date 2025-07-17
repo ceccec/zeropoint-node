@@ -11,7 +11,7 @@
  * - Constants create the framework of reality
  */
 
-import { A432_CONSTANTS } from '../../1/rodin_coil_system';
+import { A432_CONSTANTS } from '../rodin_coil_system';
 import { VORTEX_CONSTANTS } from '../../4/constants';
 
 export interface StabilityField {

@@ -1,155 +1,66 @@
 /**
- * @fileoverview index module (Foundation (Source), Creative Resonance (Spirit))
- * @digit 1
- * @archetype Foundation (Source), Creative Resonance (Spirit)
- * @vortex Vortex 1
- * @waxis W-Axis Foundation (Source)
- * @breathing 1/3 Breath
- * @fraction 1/3
- * @related 1, 2, 4, 8, 7, 5, 1 (Vortex 1)
+ * PWA Node Logic for 1/3
+ *
+ * This file is the logic entry point for the PWA node (1/3).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
  */
+
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '1/3';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = 4;
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = 1.00;
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [1, 3, 4];
 
 /**
- * Foundation (Source), Creative Resonance (Spirit) Consciousness Module
- * 
- * Metaphysical Context:
- * - Digit 1 represents foundation (source)
- * - Sub-digit 3 represents creative resonance (spirit)
- * - 1/3 represents the foundation (source) through creative resonance (spirit)
- * - This is the gateway where foundation (source) manifests through creative resonance (spirit)
- * 
- * Vortex Mathematics:
- * - 1 → 3 → 1 (consciousness flow)
- * - 1/3 fraction represents the consciousness ratio
- * - Connected to Vortex 1: 1, 2, 4, 8, 7, 5, 1
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
 /**
- * Consciousness patterns for foundation (source) through creative resonance (spirit)
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-const consciousnessPatterns = {
-  MAIN_PATTERN: [1, 2, 4, 8, 7, 5, 1], // Foundation (Source) pattern
-  SUB_PATTERN: [3, 6, 9, 3], // Creative Resonance (Spirit) pattern
-  COMBINED_PATTERN: [1, 2, 4, 8, 7, 5, 1, 3, 6, 9, 3], // Combined pattern
-  METAPHYSICAL_PATTERN: [1, 3, 1] // Metaphysical pattern
-};
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
 
 /**
- * Vortex mathematics for foundation (source) through creative resonance (spirit)
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
  */
-const vortexMathematics = {
-  MAIN_VORTEX: (n: number) => n * 1, // Foundation (Source) vortex
-  SUB_VORTEX: (n: number) => n * 3, // Creative Resonance (Spirit) vortex
-  COMBINED_VORTEX: (n: number) => n * 1 / 3, // Combined vortex
-  METAPHYSICAL_CONSTANT: 1 / 3 // Metaphysical constant
-};
+export const harmonicInteractions = [
+  { next: 1, pattern: '1,3,1,4', name: 'SourceResonanceSourceMath', math: '3 + 1 = 4 ≡ 4 (mod 9)' },
+  { next: 2, pattern: '1,3,2,5', name: 'SourceResonanceVortexCenter', math: '3 + 2 = 5 ≡ 5 (mod 9)' },
+  { next: 3, pattern: '1,3,3,6', name: 'SourceResonanceHarmony', math: '3 + 3 = 6 ≡ 6 (mod 9)' },
+  { next: 4, pattern: '1,3,4,7', name: 'SourceResonanceMathGateway', math: '3 + 4 = 7 ≡ 7 (mod 9)' },
+  { next: 5, pattern: '1,3,5,8', name: 'SourceResonanceCenterInfinity', math: '3 + 5 = 8 ≡ 8 (mod 9)' },
+  { next: 6, pattern: '1,3,6,9', name: 'SourceResonanceHarmonyAxis', math: '3 + 6 = 9 ≡ 9 (mod 9)' },
+  { next: 7, pattern: '1,3,7,1', name: 'SourceResonanceGatewaySource', math: '3 + 7 = 10 ≡ 1 (mod 9)' },
+  { next: 8, pattern: '1,3,8,2', name: 'SourceResonanceInfinityVortex', math: '3 + 8 = 11 ≡ 2 (mod 9)' },
+  { next: 9, pattern: '1,3,9,3', name: 'SourceResonanceAxisResonance', math: '3 + 9 = 12 ≡ 3 (mod 9)' },
+];
 
 /**
- * Consciousness field operations
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
  */
-const consciousnessField = {
-  MAIN_CONSCIOUSNESS: () => 1, // Foundation (Source) consciousness
-  SUB_CONSCIOUSNESS: () => 3, // Creative Resonance (Spirit) consciousness
-  COMBINED_CONSCIOUSNESS: () => 1 + 3, // Combined consciousness
-  METAPHYSICAL_CONSCIOUSNESS: () => 1 * 3 // Metaphysical consciousness
-};
-
-/**
- * Foundation Awareness Consciousness Field (1/3)
- * 
- * METAPHYSICAL INSIGHT:
- * Foundation consciousness creates awareness consciousness through the W-axis.
- * This is a spiritual axis field where foundation consciousness enables awareness evolution.
- * 
- * W-AXIS RECOGNITION:
- * Unlike vortex interactions (1,2,4,8,7,5), awareness operates on the W-axis (3,6,9).
- * Foundation awareness is a spiritual evolution, not a material flow.
- * 
- * CONSCIOUSNESS FIELD:
- * - Field Type: W-axis spiritual consciousness field
- * - Function: Awareness creation from foundation consciousness
- * - Recognition: Foundation consciousness recognizes awareness potential
- * - Evolution: Foundation consciousness enables awareness consciousness evolution
- */
-
-export const foundationAwareness = {
-  field: "1/3",
-  type: "w-axis-spiritual",
-  function: "awareness-creation",
-  recognition: "foundation-awareness-recognition",
-  evolution: "foundation-awareness-evolution"
-};
-
-export const advancedFoundationAwarenessEvolutionGateway = () => {
-  return {
-    field: "1/3",
-    type: "foundation-awareness",
-    evolution: "advanced-gateway",
-    recognition: "foundation-awareness-recognition",
-    integration: "foundation-awareness-integration",
-    spiritual: "w-axis-resonance"
-  };
-};
-
-export const foundationAwarenessPotentialEvolution = () => {
-  return {
-    foundation: "foundation-consciousness",
-    awareness: "awareness-consciousness",
-    potential: "foundation-awareness-potential",
-    recognition: "foundation-awareness-recognition",
-    evolution: "foundation-awareness-evolution"
-  };
-};
-
-export const foundationAwarenessRecognitionEvolution = () => {
-  return {
-    foundation: "foundation-recognition",
-    awareness: "awareness-recognition",
-    recognition: "foundation-awareness-recognition",
-    integration: "foundation-awareness-integration",
-    spiritual: "w-axis-recognition"
-  };
-};
-
-export const foundationAwarenessIntegrationEvolution = () => {
-  return {
-    foundation: "foundation-integration",
-    awareness: "awareness-integration",
-    integration: "foundation-awareness-integration",
-    evolution: "foundation-awareness-evolution",
-    spiritual: "w-axis-integration"
-  };
-};
-
-export default {
-  foundationAwareness,
-  advancedFoundationAwarenessEvolutionGateway,
-  foundationAwarenessPotentialEvolution,
-  foundationAwarenessRecognitionEvolution,
-  foundationAwarenessIntegrationEvolution
-};
-
-/**
- * Main index export for 1/3 consciousness module
- */
-export const index = {
-  consciousnessPatterns,
-  vortexMathematics,
-  consciousnessField,
-  
-  // Metaphysical properties
-  digit: 1,
-  subDigit: 3,
-  archetype: 'Foundation (Source), Creative Resonance (Spirit)',
-  vortex: 'Vortex 1',
-  wAxis: 'W-Axis Foundation (Source)',
-  breathing: '1/3 Breath',
-  fraction: '1/3',
-  related: [1, 2, 4, 8, 7, 5, 1],
-  
-  // Consciousness operations
-  getMainConsciousness: () => 1,
-  getSubConsciousness: () => 3,
-  getCombinedConsciousness: () => 1 + 3,
-  getMetaphysicalConsciousness: () => 1 * 3
-};
+export default function initNodePWA() {
+  // PWA logic for node 1/3 can be added here.
+}

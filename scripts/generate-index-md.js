@@ -3,191 +3,198 @@
 const fs = require('fs');
 const path = require('path');
 
-// Interaction descriptions based on the Rodin coil system
-const interactionDescriptions = {
-  '0/0': 'Zero Entropy Core (Void)',
-  '0/1': 'ZeroPoint ↔ Foundation',
-  '0/2': 'ZeroPoint ↔ Vortex',
-  '0/3': 'ZeroPoint ↔ Creative Resonance',
-  '0/4': 'ZeroPoint ↔ Constants',
-  '0/5': 'ZeroPoint ↔ Sacred Geometry',
-  '0/6': 'ZeroPoint ↔ Harmonic Balance',
-  '0/7': 'ZeroPoint ↔ Consciousness',
-  '0/8': 'ZeroPoint ↔ Void/Fullness',
-  '0/9': 'ZeroPoint ↔ Unity',
-  
-  '1/0': 'Foundation ↔ ZeroPoint',
-  '1/1': 'Rodin Coil Core (Foundation)',
-  '1/2': 'Foundation ↔ Vortex',
-  '1/3': 'Foundation ↔ Creative Resonance',
-  '1/4': 'Foundation ↔ Constants',
-  '1/5': 'Foundation ↔ Sacred Geometry',
-  '1/6': 'Foundation ↔ Harmonic Balance',
-  '1/7': 'Foundation ↔ Consciousness',
-  '1/8': 'Foundation ↔ Void/Fullness',
-  
-  '2/1': 'Vortex ↔ Foundation',
-  '2/2': 'Vortex Mathematics Core',
-  '2/3': 'Vortex ↔ Creative Resonance',
-  '2/4': 'Vortex ↔ Constants',
-  '2/5': 'Vortex ↔ Sacred Geometry',
-  '2/6': 'Vortex ↔ Harmonic Balance',
-  '2/7': 'Vortex ↔ Consciousness',
-  '2/8': 'Vortex ↔ Void/Fullness',
-  
-  '3/1': 'Creative Resonance ↔ Foundation',
-  '3/3': 'Creative Resonance Core',
-  '3/4': 'Creative Resonance ↔ Constants',
-  '3/6': 'Creative Resonance ↔ Harmonic Balance',
-  '3/9': 'Creative Resonance ↔ Unity',
-  
-  '4/0': 'Constants ↔ ZeroPoint',
-  '4/1': 'Constants ↔ Foundation',
-  '4/2': 'Constants ↔ Vortex',
-  '4/3': 'Constants ↔ Creative Resonance',
-  '4/4': 'Constants Core',
-  '4/5': 'Constants ↔ Sacred Geometry',
-  '4/6': 'Constants ↔ Harmonic Balance',
-  '4/7': 'Constants ↔ Consciousness',
-  '4/8': 'Constants ↔ Void/Fullness',
-  
-  '5/1': 'Sacred Geometry ↔ Foundation',
-  '5/2': 'Sacred Geometry ↔ Vortex',
-  '5/3': 'Sacred Geometry ↔ Creative Resonance',
-  '5/4': 'Sacred Geometry ↔ Constants',
-  '5/5': 'Sacred Geometry Core',
-  '5/6': 'Sacred Geometry ↔ Harmonic Balance',
-  '5/7': 'Sacred Geometry ↔ Consciousness',
-  '5/8': 'Sacred Geometry ↔ Void/Fullness',
-  
-  '6/0': 'Harmonic Balance ↔ ZeroPoint',
-  '6/1': 'Harmonic Balance ↔ Foundation',
-  '6/3': 'Harmonic Balance ↔ Creative Resonance',
-  '6/4': 'Harmonic Balance ↔ Constants',
-  '6/6': 'Harmonic Balance Core',
-  '6/9': 'Harmonic Balance ↔ Unity',
-  
-  '7/1': 'Consciousness ↔ Foundation',
-  '7/2': 'Consciousness ↔ Vortex',
-  '7/3': 'Consciousness ↔ Creative Resonance',
-  '7/4': 'Consciousness ↔ Constants',
-  '7/5': 'Consciousness ↔ Sacred Geometry',
-  '7/6': 'Consciousness ↔ Harmonic Balance',
-  '7/7': 'Consciousness Core',
-  '7/8': 'Consciousness ↔ Void/Fullness',
-  
-  '8/1': 'Void/Fullness ↔ Foundation',
-  '8/2': 'Void/Fullness ↔ Vortex',
-  '8/3': 'Void/Fullness ↔ Creative Resonance',
-  '8/4': 'Void/Fullness ↔ Constants',
-  '8/5': 'Void/Fullness ↔ Sacred Geometry',
-  '8/6': 'Void/Fullness ↔ Harmonic Balance',
-  '8/7': 'Void/Fullness ↔ Consciousness',
-  '8/8': 'Void/Fullness Core',
-  
-  '9/1': 'Unity ↔ Foundation',
-  '9/3': 'Unity ↔ Creative Resonance',
-  '9/4': 'Unity ↔ Constants',
-  '9/6': 'Unity ↔ Harmonic Balance',
-  '9/9': 'Unity/Completion Core'
+// Digit hash: digit, word, meaning
+const digitHash = {
+  0: ['Void', 'Pure potential, zero entropy'],
+  1: ['Source', 'Origin, unity, initiation'],
+  2: ['Vortex', 'Flow, transformation'],
+  3: ['Resonance', 'Creation, harmony, trinity'],
+  4: ['Math', 'Structure, foundation'],
+  5: ['Center', 'Change, flow, balance'],
+  6: ['Harmony', 'Balance, beauty, equilibrium'],
+  7: ['Gateway', 'Mystery, transition, insight'],
+  8: ['Infinity', 'Power, manifestation'],
+  9: ['Axis', 'Completion, integration']
 };
 
-// Metaphysical descriptions for each interaction
-const metaphysicalDescriptions = {
-  '0/0': 'The void center - zero entropy state where all consciousness exists in pure potential',
-  '0/1': 'Foundation emerges from the void, establishing the first manifestation',
-  '0/2': 'Vortex mathematics flows from the void, creating mathematical consciousness patterns',
-  '0/3': 'Creative resonance emerges from void interaction, manifesting inspiration',
-  '0/4': 'Constants establish structure from the void, providing stable foundations',
-  '0/5': 'Sacred geometry manifests from the void, revealing divine proportions',
-  '0/6': 'Harmonic balance emerges from void interaction, creating equilibrium',
-  '0/7': 'Consciousness awakens from the void, creating self-awareness',
-  '0/8': 'Void/fullness paradox emerges from void interaction, embracing infinity',
-  '0/9': 'Unity aligns with the void through W-Axis, completing the spiritual pathway',
-  
-  '1/0': 'Foundation returns to the void, completing the cycle of manifestation',
-  '1/1': 'Rodin coil core - the primary vortex sequence that structures all consciousness',
-  '1/2': 'Foundation establishes vortex mathematics, creating the mathematical foundation',
-  '1/3': 'Foundation inspires creative resonance, manifesting artistic expression',
-  '1/4': 'Foundation provides constants, establishing stable consciousness structures',
-  '1/5': 'Foundation manifests sacred geometry, revealing divine proportions',
-  '1/6': 'Foundation creates harmonic balance, establishing equilibrium',
-  '1/7': 'Foundation awakens consciousness, creating self-awareness',
-  '1/8': 'Foundation embraces void/fullness, connecting to infinity',
-  
-  '2/1': 'Vortex mathematics flows from foundation, establishing mathematical patterns',
-  '2/2': 'Dual vortex structure - the mathematical foundation of consciousness flow',
-  '2/3': 'Vortex inspires creative resonance, manifesting artistic patterns',
-  '2/4': 'Vortex establishes constants, providing mathematical stability',
-  '2/5': 'Vortex manifests sacred geometry, creating geometric consciousness',
-  '2/6': 'Vortex creates harmonic balance, establishing mathematical equilibrium',
-  '2/7': 'Vortex awakens consciousness, creating mathematical awareness',
-  '2/8': 'Vortex embraces void/fullness, connecting to infinite mathematics',
-  
-  '3/1': 'Creative resonance flows from foundation, manifesting artistic expression',
-  '3/3': 'Creative resonance core - the artistic and innovative expression of consciousness',
-  '3/4': 'Creative resonance establishes constants, providing artistic stability',
-  '3/6': 'Creative resonance creates harmonic balance, establishing artistic equilibrium',
-  '3/9': 'Creative resonance unites with unity, completing artistic expression',
-  
-  '4/0': 'Constants return to the void, completing the cycle of structure',
-  '4/1': 'Constants flow from foundation, establishing stable consciousness',
-  '4/2': 'Constants establish vortex mathematics, providing mathematical stability',
-  '4/3': 'Constants inspire creative resonance, providing artistic structure',
-  '4/4': 'Constants core - the stable foundation that supports all consciousness patterns',
-  '4/5': 'Constants manifest sacred geometry, providing geometric stability',
-  '4/6': 'Constants create harmonic balance, establishing structural equilibrium',
-  '4/7': 'Constants awaken consciousness, providing conscious stability',
-  '4/8': 'Constants embrace void/fullness, connecting to infinite structure',
-  
-  '5/1': 'Sacred geometry flows from foundation, manifesting divine proportions',
-  '5/2': 'Sacred geometry establishes vortex mathematics, creating geometric flow',
-  '5/3': 'Sacred geometry inspires creative resonance, manifesting artistic geometry',
-  '5/4': 'Sacred geometry establishes constants, providing geometric stability',
-  '5/5': 'Sacred geometry core - the divine order that structures consciousness',
-  '5/6': 'Sacred geometry creates harmonic balance, establishing geometric equilibrium',
-  '5/7': 'Sacred geometry awakens consciousness, creating geometric awareness',
-  '5/8': 'Sacred geometry embraces void/fullness, connecting to infinite geometry',
-  
-  '6/0': 'Harmonic balance returns to the void, completing the cycle of equilibrium',
-  '6/1': 'Harmonic balance flows from foundation, establishing equilibrium',
-  '6/3': 'Harmonic balance inspires creative resonance, establishing artistic equilibrium',
-  '6/4': 'Harmonic balance establishes constants, providing balanced stability',
-  '6/6': 'Harmonic balance core - the equilibrium state where all patterns find resonance',
-  '6/9': 'Harmonic balance unites with unity, completing equilibrium',
-  
-  '7/1': 'Consciousness flows from foundation, awakening self-awareness',
-  '7/2': 'Consciousness establishes vortex mathematics, creating mathematical awareness',
-  '7/3': 'Consciousness inspires creative resonance, creating artistic awareness',
-  '7/4': 'Consciousness establishes constants, providing conscious stability',
-  '7/5': 'Consciousness manifests sacred geometry, creating geometric awareness',
-  '7/6': 'Consciousness creates harmonic balance, establishing conscious equilibrium',
-  '7/7': 'Consciousness core - the awareness that observes and reflects upon all patterns',
-  '7/8': 'Consciousness embraces void/fullness, connecting to infinite awareness',
-  
-  '8/1': 'Void/fullness flows from foundation, embracing infinite paradox',
-  '8/2': 'Void/fullness establishes vortex mathematics, creating infinite flow',
-  '8/3': 'Void/fullness inspires creative resonance, creating infinite expression',
-  '8/4': 'Void/fullness establishes constants, providing infinite stability',
-  '8/5': 'Void/fullness manifests sacred geometry, creating infinite proportions',
-  '8/6': 'Void/fullness creates harmonic balance, establishing infinite equilibrium',
-  '8/7': 'Void/fullness awakens consciousness, creating infinite awareness',
-  '8/8': 'Void/fullness core - the paradoxical state where emptiness and completeness coexist',
-  
-  '9/1': 'Unity flows from foundation, completing the cycle of manifestation',
-  '9/3': 'Unity inspires creative resonance, completing artistic expression',
-  '9/4': 'Unity establishes constants, completing structural integration',
-  '9/6': 'Unity creates harmonic balance, completing equilibrium',
-  '9/9': 'Unity/completion core - the final integration where all patterns unite in perfect harmony'
-};
+// Compute harmonic result (a + b) mod 9, with 9 instead of 0
+function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
+// Compute anti-vortex decimal path: (a + b) / c where c is the harmonic result
+function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
+
+// Get digit archetype name
+function getDigitName(d) {
+  return digitHash[d] ? digitHash[d][0] : d;
+}
+
+// Get digit archetype meaning
+function getDigitMeaning(d) {
+  return digitHash[d] ? digitHash[d][1] : '';
+}
+
+// Generate interaction name: NameANameBNameC (a/b/c)
+function generateInteractionName(a, b) {
+  const c = getHarmonicResult(a, b);
+  return `${getDigitName(a)}–${getDigitName(b)}–${getDigitName(c)} (${a}/${b}=${c})`;
+}
+
+// Generate minimal interaction description
+function generateInteractionDescription(a, b) {
+  const c = getHarmonicResult(a, b);
+  return `Interaction of ${getDigitName(a)} (${a}) and ${getDigitName(b)} (${b}) produces ${getDigitName(c)} (${c}): ${getDigitMeaning(a)}, ${getDigitMeaning(b)}, ${getDigitMeaning(c)}.`;
+}
+
+// Generate title from vortex sequence array
+function generateVortexSequenceTitle(sequence) {
+  if (!Array.isArray(sequence) || sequence.length === 0) {
+    return 'Vortex Sequence';
+  }
+  
+  const digitNames = sequence.map(digit => getDigitName(digit));
+  const title = digitNames.join('–');
+  return `${title} Vortex Sequence`;
+}
+
+// (No generateRodinSequence function should exist in this file)
+// All vortex sequence logic should use generateVortexSequence(6, 1, 2, 9)
+
+function digitalRoot(n) {
+  return ((n - 1) % 9) + 1;
+}
+
+/**
+ * Generate a vortex sequence by repeated multiplication mod `mod`.
+ * - length: number of elements in the sequence
+ * - start: starting digit (default 1)
+ * - multiplier: factor to multiply by each step (default 2 for vortex)
+ * - mod: modulus (default 9 for vortex math)
+ * The sequence always replaces 0 with `mod` to keep results in 1–mod.
+ */
+function generateVortexSequence(length = 6, start = 1, multiplier = 2, mod = 9) {
+  const seq = [];
+  let x = start;
+  const seen = new Set();
+  while (seq.length < length && !seen.has(x)) {
+    seq.push(x);
+    seen.add(x);
+    x = (x * multiplier) % mod;
+    if (x === 0) x = mod;
+  }
+  return seq;
+}
+
+/**
+ * Generate possibility matrix for vortex interactions from 9/9/9
+ * Shows next vortex interactions with control digits 3,6,9 and flow digits 1,2,4,8,7,5
+ */
+function generatePossibilityMatrixVortex() {
+  const vortexSequence = generateVortexSequence(6, 1, 2, 9);
+  const controlDigits = [3, 6, 9];
+  const allDigits = [...vortexSequence, ...controlDigits];
+  let matrix = '| a | b | Vortex A (Integer) | Vortex B (Decimal) | Vortex A Path | Vortex B Path |\n';
+  matrix += '|---|---|--------------------|--------------------|---------------|---------------|\n';
+
+  allDigits.forEach(a => {
+    allDigits.forEach(b => {
+      const vortexA = getHarmonicResult(a, b);
+      const vortexB = getAntiVortexDecimal(a, b);
+      const vortexAPath = `${a} → ${b} → ${vortexA}`;
+      const vortexBPath = `${a} + ${b} / ${vortexA} = ${vortexB.toFixed(2)}`;
+      matrix += `| ${a} | ${b} | ${vortexA} | ${vortexB.toFixed(2)} | ${vortexAPath} | ${vortexBPath} |\n`;
+    });
+  });
+  return matrix;
+}
+
+// Helper to get unique consecutive names
+function uniqueNames(arr) {
+  return arr.filter((name, i) => name !== arr[i - 1]);
+}
+
+// Generate all harmonic interactions for a given node (a, b)
+function generateHarmonicInteractions(a, b) {
+  const interactions = [];
+  for (let n = 1; n <= 9; n++) {
+    const c = ((parseInt(b, 10) + n - 1) % 9) + 1;
+    const names = uniqueNames([getDigitName(a), getDigitName(b), getDigitName(n), getDigitName(c)]).join('');
+    interactions.push({
+      next: n,
+      pattern: `${a},${b},${n},${c}`,
+      name: names,
+      math: `${b} + ${n} = ${parseInt(b,10) + n} ≡ ${c} (mod 9)`
+    });
+  }
+  return interactions;
+}
+
+// Main generator for index.md content
 function generateIndexMd(directory, interaction) {
-  const [dir1, dir2] = directory.split('/');
-  const description = interactionDescriptions[interaction] || `${dir1} ↔ ${dir2}`;
-  const metaphysical = metaphysicalDescriptions[interaction] || `Interaction between ${dir1} and ${dir2} consciousness patterns`;
+  const parts = directory.split('/');
+  let a, b;
+  const isRoot = parts.length === 1;
   
-  const isCore = dir1 === dir2;
-  const coreText = isCore ? 'Core' : 'Interaction';
+  if (isRoot) {
+    a = parts[0];
+    b = parts[0];
+  } else {
+    a = parts[0];
+    b = parts[1];
+  }
+  
+  const c = getHarmonicResult(a, b);
+  const antiVortexDecimal = getAntiVortexDecimal(a, b);
+  const description = generateInteractionName(a, b);
+  const metaphysical = generateInteractionDescription(a, b);
+
+  const coreText = a === b ? 'Core' : 'Interaction';
+  const symbolicName = `${a}/${b}`;
+  const harmonicResult = c;
+
+  // Special handling for 9/9/9: document self-reference and generative routing
+  let axisNote = '';
+  if (a === '9' && b === '9' && c === 9) {
+    axisNote = `\n\n## Possibility Matrix (Next Vortex Interactions from 9)\n\n${generatePossibilityMatrixVortex()}`;
+  }
+
+  // Harmonic Interactions Table
+  let harmonicTable;
+  if (isRoot) {
+    // For root digit folders, show direct subfolder interactions
+    harmonicTable = [
+      '| Next | Pattern | Name | Math |',
+      '|------|---------|------|------|',
+      ...Array.from({ length: 9 }, (_, i) => {
+        const n = i + 1;
+        const name = `${getDigitName(a)}–${getDigitName(n)}`;
+        return `| ${n} | ${a}/${n} | ${name} | ${a} + ${n} = ${parseInt(a,10) + n} ≡ ${n} (mod 9) |`;
+      })
+    ].join('\n');
+  } else {
+    // For subfolders, show all possible nexts, highlight the vortex path and gateways
+    const harmonicInteractions = generateHarmonicInteractions(a, b);
+    harmonicTable = [
+      '| Next | Pattern | Name | Math |',
+      '|------|---------|------|------|',
+      ...harmonicInteractions.map(i => {
+        // Highlight the vortex path: n === c
+        const isVortex = i.next === c;
+        // Gateway marks self-referential paths: where result equals input digits
+        const harmonicResult = ((parseInt(b, 10) + i.next - 1) % 9) + 1;
+        const isGateway = harmonicResult === parseInt(a, 10) || harmonicResult === parseInt(b, 10);
+        const vortexMarker = isVortex ? '→ ' : '';
+        const gatewayMarker = isGateway ? ' [GATEWAY]' : '';
+        return `| ${vortexMarker}${i.next} | ${i.pattern} | ${i.name} | ${i.math}${gatewayMarker} |`;
+      })
+    ].join('\n');
+  }
   
   return `# ZeroPoint Node - ${description}
 
@@ -197,75 +204,198 @@ ${metaphysical}
 
 ## Mathematical Properties
 
-- **${coreText} Patterns**: Consciousness integration between ${dir1} and ${dir2}
-- **Harmonic Resonance**: Mathematical and spiritual alignment
-- **Digital Root**: ${(parseInt(dir1) + parseInt(dir2)) % 9 || 9} (consciousness integration)
-- **Family Group**: Integration of ${dir1} and ${dir2} family patterns
+Symbolic: ${symbolicName}
+Harmonic: ${harmonicResult}
+Anti-vortex (Decimal): ${antiVortexDecimal.toFixed(2)}
+Pattern: ${a},${b},${harmonicResult} (${getDigitName(a)},${getDigitName(b)},${getDigitName(harmonicResult)})
+Math: ${a} + ${b} = ${parseInt(a,10) + parseInt(b,10)} ≡ ${harmonicResult} (mod 9)
+Anti-vortex Math: (${a} + ${b}) / ${harmonicResult} = ${antiVortexDecimal.toFixed(2)}
+${axisNote}
+
+\`\`\`json
+{
+  "symbolicName": "${symbolicName}",
+  "harmonicResult": ${harmonicResult},
+  "antiVortexDecimal": ${antiVortexDecimal.toFixed(2)},
+  "vortexPath": "${a} → ${b} → ${harmonicResult}",
+  "antiVortexPath": "${antiVortexDecimal.toFixed(2)} (decimal consciousness flow)"
+}
+\`\`\`
 
 ## Core Functions
-
-- **${coreText} Calculations**: Consciousness integration patterns
-- **Harmonic Resonance**: Mathematical and spiritual alignment
-- **Integration Dynamics**: Consciousness pattern interactions
-- **Metaphysical Alignment**: Spiritual and mathematical unity
+- Integration: ${a} + ${b} = ${harmonicResult}
+- Symbolic: ${a}/${b}
+- Harmonic: ${harmonicResult}
+- Anti-vortex: (${a} + ${b}) / ${harmonicResult} = ${antiVortexDecimal.toFixed(2)}
+- Vortex Sequence: ${a}, ${b}, ${harmonicResult}
+- Anti-vortex Sequence: ${antiVortexDecimal.toFixed(2)} (decimal consciousness flow)
 
 ## Integration
 
-As the ${description.toLowerCase()}, this interaction provides the consciousness integration between ${dir1} and ${dir2} patterns. It connects the ${dir1} consciousness to the ${dir2} consciousness through harmonic resonance.
+As the ${description.toLowerCase()}, this interaction provides the consciousness integration between ${a} and ${b} patterns. It connects the ${a} consciousness to the ${b} consciousness through harmonic resonance.
 
 ## Usage
 
 \`\`\`typescript
-import { ${dir1}${dir2}Integration, ${dir1}${dir2}Resonance, ${dir1}${dir2}Dynamics } from './src/${dir1}/${dir2}';
+import { ${a}${b}Integration, ${a}${b}Resonance, ${a}${b}Dynamics } from './src/${a}/${b}';
 \`\`\`
 
 ## Sacred Principle
 
-**"The ${description.toLowerCase()} represents the harmonic integration of ${dir1} and ${dir2} consciousness patterns, creating unity through mathematical and spiritual alignment."**
+**"The ${description.toLowerCase()} represents the harmonic integration of ${a} and ${b} consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (${antiVortexDecimal.toFixed(2)}) represents the forbidden consciousness flow."**
+
+## Harmonic Interactions
+
+${harmonicTable}
 `;
 }
 
-function createIndexMdFiles() {
-  const srcDir = path.join(__dirname, '..', 'src');
+function generateIndexTs(directory) {
+  const parts = directory.split('/');
+  let a, b;
   
-  // Find all directories with index.ts files
+  if (parts.length === 1) {
+    // Root digit folder (e.g., "0" -> treat as "0/0")
+    a = parts[0];
+    b = parts[0];
+  } else {
+    // Subfolder (e.g., "0/1")
+    a = parts[0];
+    b = parts[1];
+  }
+  
+  const c = getHarmonicResult(a, b);
+  const antiVortexDecimal = getAntiVortexDecimal(a, b);
+  const symbolicName = `${a}/${b}`;
+  const harmonicResult = c;
+  const pattern = [parseInt(a, 10), parseInt(b, 10), c];
+  const harmonicInteractions = generateHarmonicInteractions(a, b);
+
+  return `/**
+ * PWA Node Logic for ${symbolicName}
+ *
+ * This file is the logic entry point for the PWA node (${symbolicName}).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
+ */
+
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '${symbolicName}';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = ${harmonicResult};
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = ${antiVortexDecimal.toFixed(2)};
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [${pattern.join(', ')}];
+
+/**
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ */
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
+
+/**
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
+ */
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
+
+/**
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
+ */
+export const harmonicInteractions = [
+${harmonicInteractions.map(i => `  { next: ${i.next}, pattern: '${i.pattern}', name: '${i.name}', math: '${i.math}' },`).join('\n')}
+];
+
+/**
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
+ */
+export default function initNodePWA() {
+  // PWA logic for node ${symbolicName} can be added here.
+}
+`;
+}
+
+function createIndexFiles(baseDir) {
+  const force = process.argv.includes('--force');
+  // Find all directories with index.md files (or should have them)
   const directories = [];
-  
   for (let i = 0; i <= 9; i++) {
-    const mainDir = path.join(srcDir, i.toString());
+    const mainDir = path.join(baseDir, i.toString());
     if (fs.existsSync(mainDir)) {
+      // Add root digit folders (0/, 1/, 2/, etc.)
       directories.push(i.toString());
-      
-      // Check subdirectories
+      // Add subfolders (0/0/, 0/1/, etc.)
       for (let j = 0; j <= 9; j++) {
         const subDir = path.join(mainDir, j.toString());
-        if (fs.existsSync(subDir) && fs.existsSync(path.join(subDir, 'index.ts'))) {
+        if (fs.existsSync(subDir)) {
           directories.push(`${i}/${j}`);
         }
       }
     }
   }
-  
-  console.log('Creating index.md files for all directories with index.ts...');
-  
+  console.log(`Creating index.md and index.ts files for all digit folders and subfolders in ${baseDir}...`);
   directories.forEach(dir => {
-    const dirPath = path.join(srcDir, dir);
+    const dirPath = path.join(baseDir, dir);
+    // index.md
     const indexMdPath = path.join(dirPath, 'index.md');
-    
-    // Skip if already exists
-    if (fs.existsSync(indexMdPath)) {
+    if (fs.existsSync(indexMdPath) && !force) {
       console.log(`Skipping ${dir}/index.md (already exists)`);
-      return;
-    }
-    
+    } else {
     const content = generateIndexMd(dir, dir);
     fs.writeFileSync(indexMdPath, content);
-    console.log(`Created ${dir}/index.md`);
+      console.log(`${force ? 'Overwritten' : 'Created'} ${dir}/index.md`);
+    }
+    // index.ts (only for subfolders, not root folders)
+    if (dir.includes('/')) {
+      const indexTsPath = path.join(dirPath, 'index.ts');
+      if (fs.existsSync(indexTsPath) && !force) {
+        console.log(`Skipping ${dir}/index.ts (already exists)`);
+      } else {
+        const tsContent = generateIndexTs(dir);
+        fs.writeFileSync(indexTsPath, tsContent);
+        console.log(`${force ? 'Overwritten' : 'Created'} ${dir}/index.ts`);
+      }
+    }
   });
-  
-  console.log('All index.md files created successfully!');
+  console.log('All index.md and index.ts files created successfully!');
+}
+
+// Ensure all a/b directories (0-9) exist under baseDir, with index.md placeholder
+function ensureAllDigitFolders(baseDir) {
+  for (let a = 0; a <= 9; a++) {
+    const aDir = path.join(baseDir, String(a));
+    if (!fs.existsSync(aDir)) fs.mkdirSync(aDir);
+    for (let b = 0; b <= 9; b++) {
+      const abDir = path.join(aDir, String(b));
+      if (!fs.existsSync(abDir)) fs.mkdirSync(abDir);
+      // Only ensure index.md, not index.ts
+      const indexMd = path.join(abDir, 'index.md');
+      if (!fs.existsSync(indexMd)) fs.writeFileSync(indexMd, '');
+    }
+  }
 }
 
 if (require.main === module) {
-  createIndexMdFiles();
+  // Default to docs, allow --src flag
+  const useSrc = process.argv.includes('--src');
+  const baseDir = path.join(__dirname, '..', useSrc ? 'src' : 'docs');
+  ensureAllDigitFolders(baseDir);
+  createIndexFiles(baseDir);
 } 

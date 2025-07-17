@@ -20,7 +20,7 @@ describe('Creative Resonance ↔ Unity Interaction', () => {
     });
     
     test('should have correct multipliers', () => {
-      expect(CREATIVE_RESONANCE_UNITY_INTERACTION.CREATIVE_RESONANCE_MULTIPLIER).toBe(1.5);
+      expect(CREATIVE_RESONANCE_UNITY_INTERACTION.CREATIVE_RESONANCE_MULTIPLIER).toEqual({ numerator: 3, denominator: 2 });
       expect(CREATIVE_RESONANCE_UNITY_INTERACTION.UNITY_MULTIPLIER).toBe(1);
     });
   });
@@ -28,7 +28,7 @@ describe('Creative Resonance ↔ Unity Interaction', () => {
   describe('CreativeResonanceUnityInteraction Class', () => {
     test('should calculate interaction strength correctly', () => {
       const strength = CreativeResonanceUnityInteraction.calculateInteractionStrength(5, 8);
-      const expected = 5 * 1.5 + 8 * 1;
+      const expected = 5 * 3 / 2 + 8 * 1;
       expect(strength).toBe(expected);
     });
     

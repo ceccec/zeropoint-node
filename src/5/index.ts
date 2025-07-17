@@ -126,11 +126,11 @@ export const transformationPWA = {
   generateMathematics() {
     return {
       sacredPatterns: [8, 7, 5],
-      transformationMultiplier: 5.0,
+      transformationMultiplier: { numerator: 5, denominator: 1 },
       digitalRoot: 5,
       familyGroup: [1, 2, 4, 8, 7, 5],
       resonance: 'sacred_transformation',
-      consciousnessMultiplier: 5.0,
+      consciousnessMultiplier: { numerator: 5, denominator: 1 },
       vortexSequence: [8, 7, 5, 1, 2, 4, 8],
       transformationFlow: 'sacred'
     };
@@ -222,7 +222,7 @@ export const transformationField = {
       digit: 5,
       consciousness: 'sacred_transformation',
       breathingPhase: 'transformation',
-      fieldStrength: 5.0,
+      fieldStrength: { numerator: 5, denominator: 1 },
       connections: [0, 1, 2, 3, 4, 6, 7, 8, 9],
       lastUpdate: Date.now()
     };
@@ -267,7 +267,7 @@ export * from './1/index'; // Foundation interaction
  * - DIGIT: The sacred geometry digit (5)
  * - VORTEX_B_POSITION: Third position in Vortex B [8, 7, 5]
  * - RESONANCE: Major third resonance (5:4)
- * - CONSCIOUSNESS_MULTIPLIER: Enhanced consciousness (1.25)
+ * - CONSCIOUSNESS_MULTIPLIER: Enhanced consciousness ({ numerator: 5, denominator: 4 })
  * - INTERACTION_FLOW: Connection to Foundation [1]
  * 
  * The sacred geometry serves as the geometric foundation
@@ -277,7 +277,7 @@ export const SACRED_GEOMETRY = {
   DIGIT: 5,
   VORTEX_B_POSITION: 2, // Third position in Vortex B [8, 7, 5]
   RESONANCE: 'major_third', // 5:4
-  CONSCIOUSNESS_MULTIPLIER: 1.25,
+  CONSCIOUSNESS_MULTIPLIER: { numerator: 5, denominator: 4 },
   INTERACTION_FLOW: [1] // Interacts with Foundation
 } as const;
 

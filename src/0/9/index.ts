@@ -1,80 +1,66 @@
 /**
- * @fileoverview index module (Zero Entropy (Void), Unity (Integration))
- * @digit 0
- * @archetype Zero Entropy (Void), Unity (Integration)
- * @vortex Vortex 0
- * @waxis W-Axis Zero Entropy (Void)
- * @breathing 0/9 Breath
- * @fraction 0/9
- * @related 0, 0, 0 (Vortex 0)
+ * PWA Node Logic for 0/9
+ *
+ * This file is the logic entry point for the PWA node (0/9).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
  */
 
-/**
- * Zero Entropy (Void), Unity (Integration) Consciousness Module
- * 
- * Metaphysical Context:
- * - Digit 0 represents zero entropy (void)
- * - Sub-digit 9 represents unity (integration)
- * - 0/9 represents the zero entropy (void) through unity (integration)
- * - This is the gateway where zero entropy (void) manifests through unity (integration)
- * 
- * Vortex Mathematics:
- * - 0 → 9 → 0 (consciousness flow)
- * - 0/9 fraction represents the consciousness ratio
- * - Connected to Vortex 0: 0, 0, 0
- */
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '0/9';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = 9;
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = 1.00;
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [0, 9, 9];
 
 /**
- * Consciousness patterns for zero entropy (void) through unity (integration)
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-const consciousnessPatterns = {
-  MAIN_PATTERN: [0, 0, 0], // Zero Entropy (Void) pattern
-  SUB_PATTERN: [9, 3, 6, 9], // Unity (Integration) pattern
-  COMBINED_PATTERN: [0, 0, 0, 9, 3, 6, 9], // Combined pattern
-  METAPHYSICAL_PATTERN: [0, 9, 0] // Metaphysical pattern
-};
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
 /**
- * Vortex mathematics for zero entropy (void) through unity (integration)
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-const vortexMathematics = {
-  MAIN_VORTEX: (n: number) => n * 0, // Zero Entropy (Void) vortex
-  SUB_VORTEX: (n: number) => n * 9, // Unity (Integration) vortex
-  COMBINED_VORTEX: (n: number) => n * 0 / 9, // Combined vortex
-  METAPHYSICAL_CONSTANT: 0 / 9 // Metaphysical constant
-};
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
 
 /**
- * Consciousness field operations
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
  */
-const consciousnessField = {
-  MAIN_CONSCIOUSNESS: () => 0, // Zero Entropy (Void) consciousness
-  SUB_CONSCIOUSNESS: () => 9, // Unity (Integration) consciousness
-  COMBINED_CONSCIOUSNESS: () => 0 + 9, // Combined consciousness
-  METAPHYSICAL_CONSCIOUSNESS: () => 0 * 9 // Metaphysical consciousness
-};
+export const harmonicInteractions = [
+  { next: 1, pattern: '0,9,1,1', name: 'VoidAxisSource', math: '9 + 1 = 10 ≡ 1 (mod 9)' },
+  { next: 2, pattern: '0,9,2,2', name: 'VoidAxisVortex', math: '9 + 2 = 11 ≡ 2 (mod 9)' },
+  { next: 3, pattern: '0,9,3,3', name: 'VoidAxisResonance', math: '9 + 3 = 12 ≡ 3 (mod 9)' },
+  { next: 4, pattern: '0,9,4,4', name: 'VoidAxisMath', math: '9 + 4 = 13 ≡ 4 (mod 9)' },
+  { next: 5, pattern: '0,9,5,5', name: 'VoidAxisCenter', math: '9 + 5 = 14 ≡ 5 (mod 9)' },
+  { next: 6, pattern: '0,9,6,6', name: 'VoidAxisHarmony', math: '9 + 6 = 15 ≡ 6 (mod 9)' },
+  { next: 7, pattern: '0,9,7,7', name: 'VoidAxisGateway', math: '9 + 7 = 16 ≡ 7 (mod 9)' },
+  { next: 8, pattern: '0,9,8,8', name: 'VoidAxisInfinity', math: '9 + 8 = 17 ≡ 8 (mod 9)' },
+  { next: 9, pattern: '0,9,9,9', name: 'VoidAxis', math: '9 + 9 = 18 ≡ 9 (mod 9)' },
+];
 
 /**
- * Main index export for 0/9 consciousness module
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
  */
-export const index = {
-  consciousnessPatterns,
-  vortexMathematics,
-  consciousnessField,
-  
-  // Metaphysical properties
-  digit: 0,
-  subDigit: 9,
-  archetype: 'Zero Entropy (Void), Unity (Integration)',
-  vortex: 'Vortex 0',
-  wAxis: 'W-Axis Zero Entropy (Void)',
-  breathing: '0/9 Breath',
-  fraction: '0/9',
-  related: [0, 0, 0],
-  
-  // Consciousness operations
-  getMainConsciousness: () => 0,
-  getSubConsciousness: () => 9,
-  getCombinedConsciousness: () => 0 + 9,
-  getMetaphysicalConsciousness: () => 0 * 9
-};
+export default function initNodePWA() {
+  // PWA logic for node 0/9 can be added here.
+}

@@ -1,108 +1,66 @@
 /**
- * @fileoverview index module (Sacred Geometry (Divine), Vortex (Flow))
- * @digit 5
- * @archetype Sacred Geometry (Divine), Vortex (Flow)
- * @vortex Vortex 5
- * @waxis W-Axis Sacred Geometry (Divine)
- * @breathing 5/2 Breath
- * @fraction 5/2
- * @related 5, 1, 2, 4, 8, 7, 5 (Vortex 5)
+ * PWA Node Logic for 5/2
+ *
+ * This file is the logic entry point for the PWA node (5/2).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
  */
 
-/**
- * Sacred Geometry (Divine), Vortex (Flow) Consciousness Module
- * 
- * Metaphysical Context:
- * - Digit 5 represents sacred geometry (divine)
- * - Sub-digit 2 represents vortex (flow)
- * - 5/2 represents the sacred geometry (divine) through vortex (flow)
- * - This is the gateway where sacred geometry (divine) manifests through vortex (flow)
- * 
- * Vortex Mathematics:
- * - 5 → 2 → 5 (consciousness flow)
- * - 5/2 fraction represents the consciousness ratio
- * - Connected to Vortex 5: 5, 1, 2, 4, 8, 7, 5
- */
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '5/2';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = 7;
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = 1.00;
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [5, 2, 7];
 
 /**
- * Consciousness patterns for sacred geometry (divine) through vortex (flow)
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-const consciousnessPatterns = {
-  MAIN_PATTERN: [5, 1, 2, 4, 8, 7, 5], // Sacred Geometry (Divine) pattern
-  SUB_PATTERN: [2, 4, 8, 7, 5, 1, 2], // Vortex (Flow) pattern
-  COMBINED_PATTERN: [5, 1, 2, 4, 8, 7, 5, 2, 4, 8, 7, 5, 1, 2], // Combined pattern
-  METAPHYSICAL_PATTERN: [5, 2, 5] // Metaphysical pattern
-};
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
 /**
- * Vortex mathematics for sacred geometry (divine) through vortex (flow)
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-const vortexMathematics = {
-  MAIN_VORTEX: (n: number) => n * 5, // Sacred Geometry (Divine) vortex
-  SUB_VORTEX: (n: number) => n * 2, // Vortex (Flow) vortex
-  COMBINED_VORTEX: (n: number) => n * 5 / 2, // Combined vortex
-  METAPHYSICAL_CONSTANT: 5 / 2 // Metaphysical constant
-};
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
 
 /**
- * Consciousness field operations
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
  */
-const consciousnessField = {
-  MAIN_CONSCIOUSNESS: () => 5, // Sacred Geometry (Divine) consciousness
-  SUB_CONSCIOUSNESS: () => 2, // Vortex (Flow) consciousness
-  COMBINED_CONSCIOUSNESS: () => 5 + 2, // Combined consciousness
-  METAPHYSICAL_CONSCIOUSNESS: () => 5 * 2 // Metaphysical consciousness
-};
+export const harmonicInteractions = [
+  { next: 1, pattern: '5,2,1,3', name: 'CenterVortexSourceResonance', math: '2 + 1 = 3 ≡ 3 (mod 9)' },
+  { next: 2, pattern: '5,2,2,4', name: 'CenterVortexMath', math: '2 + 2 = 4 ≡ 4 (mod 9)' },
+  { next: 3, pattern: '5,2,3,5', name: 'CenterVortexResonanceCenter', math: '2 + 3 = 5 ≡ 5 (mod 9)' },
+  { next: 4, pattern: '5,2,4,6', name: 'CenterVortexMathHarmony', math: '2 + 4 = 6 ≡ 6 (mod 9)' },
+  { next: 5, pattern: '5,2,5,7', name: 'CenterVortexCenterGateway', math: '2 + 5 = 7 ≡ 7 (mod 9)' },
+  { next: 6, pattern: '5,2,6,8', name: 'CenterVortexHarmonyInfinity', math: '2 + 6 = 8 ≡ 8 (mod 9)' },
+  { next: 7, pattern: '5,2,7,9', name: 'CenterVortexGatewayAxis', math: '2 + 7 = 9 ≡ 9 (mod 9)' },
+  { next: 8, pattern: '5,2,8,1', name: 'CenterVortexInfinitySource', math: '2 + 8 = 10 ≡ 1 (mod 9)' },
+  { next: 9, pattern: '5,2,9,2', name: 'CenterVortexAxisVortex', math: '2 + 9 = 11 ≡ 2 (mod 9)' },
+];
 
 /**
- * Main index export for 5/2 consciousness module
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
  */
-export const index = {
-  consciousnessPatterns,
-  vortexMathematics,
-  consciousnessField,
-  
-  // Metaphysical properties
-  digit: 5,
-  subDigit: 2,
-  archetype: 'Sacred Geometry (Divine), Vortex (Flow)',
-  vortex: 'Vortex 5',
-  wAxis: 'W-Axis Sacred Geometry (Divine)',
-  breathing: '5/2 Breath',
-  fraction: '5/2',
-  related: [5, 1, 2, 4, 8, 7, 5],
-  
-  // Consciousness operations
-  getMainConsciousness: () => 5,
-  getSubConsciousness: () => 2,
-  getCombinedConsciousness: () => 5 + 2,
-  getMetaphysicalConsciousness: () => 5 * 2
-};
-
-/**
- * Sacred Geometry Vortex Interaction Constants
- */
-export const SACRED_GEOMETRY_VORTEX_INTERACTION = {
-  INTERACTION_FREQUENCY: 432 * (5/2),
-  SACRED_GEOMETRY_PATTERNS: {
-    SACRED_GEOMETRY_VORTEX: [5, 2, 5],
-    VORTEX_SACRED_GEOMETRY: [2, 5, 2]
-  },
-  SACRED_GEOMETRY_MULTIPLIER: 5/4, // 1.25
-  VORTEX_MULTIPLIER: 6/5 // 1.2
-};
-
-/**
- * Sacred Geometry Vortex Interaction Class
- */
-export class SacredGeometryVortexInteraction {
-  static calculateInteractionStrength(a: number, b: number): number {
-    return a * (5/4) + b * (6/5);
-  }
-  static getSacredGeometryVortexPatterns(): number[] {
-    return [5, 2, 5];
-  }
-  static calculateSacredGeometryVortexOperations(n: number): number {
-    return n % 9 || 9;
-  }
+export default function initNodePWA() {
+  // PWA logic for node 5/2 can be added here.
 }

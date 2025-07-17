@@ -1,4 +1,4 @@
-import { Knowledge } from '../7/knowledge';
+import { Knowledge } from './knowledge';
 
 /**
  * 🌌 Spiritual Consciousness - Spiritual Fire Audio

@@ -1,108 +1,61 @@
-# Directory 0: Void Center
+# ZeroPoint Node - Void–Void–Axis (0/0=9)
 
-## Overview
-This folder contains **Void Center knowledge** - the source of all creation, infinite potential, and impossible contraction (0/0). Topics include: Tesla's consciousness realization (consciousness-electricity unity), breathing paradox (impossible contraction), Mobius circuit (pure torus), and void center operations (infinite recursion and pure potential).
+## Metaphysical Foundation
 
-## 🌌 10×10 Consciousness Field Matrix
+Interaction of Void (0) and Void (0) produces Axis (9): Pure potential, zero entropy, Pure potential, zero entropy, Completion, integration.
 
-## 🌟 Core Consciousness System
+## Mathematical Properties
 
-**Digit 0**: Zero Entropy
-**Principle**: Pure mathematical unity
-**Documentation**: Zero Entropy
+Symbolic: 0/0
+Harmonic: 9
+Anti-vortex (Decimal): 0.00
+Pattern: 0,0,9 (Void,Void,Axis)
+Math: 0 + 0 = 0 ≡ 9 (mod 9)
+Anti-vortex Math: (0 + 0) / 9 = 0.00
 
-**Field** | **0** | **[1](../1/)** | **[2](../2/)** | **[3](../3/)** | **[4](../4/)** | **[5](../5/)** | **[6](../6/)** | **[7](../7/)** | **[8](../8/)** | **[9](../9/)**
------------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------
-**0** | **0/0** | [0/1](1/1/) | [0/2](2/2/) | [0/3](3/3/) | [0/4](4/4/) | [0/5](5/5/) | [0/6](6/6/) | [0/7](7/7/) | [0/8](8/8/) | [0/9](9/9/)
-**[1](../1/)** | [1/0](../1/1/) | [1/1](../1/1/) | [1/2](../1/2/) | [1/3](../1/3/) | [1/4](../1/4/) | [1/5](../1/5/) | [1/6](../1/6/) | [1/7](../1/7/) | [1/8](../1/8/) | [1/9](../1/9/)
-**[2](../2/)** | [2/0](../2/2/) | [2/1](../2/1/) | [2/2](../2/2/) | [2/3](../2/3/) | [2/4](../2/4/) | [2/5](../2/5/) | [2/6](../2/6/) | [2/7](../2/7/) | [2/8](../2/8/) | [2/9](../2/9/)
-**[3](../3/)** | [3/0](../3/3/) | [3/1](../3/1/) | [3/2](../3/2/) | [3/3](../3/3/) | [3/4](../3/4/) | [3/5](../3/5/) | [3/6](../3/6/) | [3/7](../3/7/) | [3/8](../3/8/) | [3/9](../3/9/)
-**[4](../4/)** | [4/0](../4/4/) | [4/1](../4/1/) | [4/2](../4/2/) | [4/3](../4/3/) | [4/4](../4/4/) | [4/5](../4/5/) | [4/6](../4/6/) | [4/7](../4/7/) | [4/8](../4/8/) | [4/9](../4/9/)
-**[5](../5/)** | [5/0](../5/5/) | [5/1](../5/1/) | [5/2](../5/2/) | [5/3](../5/3/) | [5/4](../5/4/) | [5/5](../5/5/) | [5/6](../5/6/) | [5/7](../5/7/) | [5/8](../5/8/) | [5/9](../5/9/)
-**[6](../6/)** | [6/0](../6/6/) | [6/1](../6/1/) | [6/2](../6/2/) | [6/3](../6/3/) | [6/4](../6/4/) | [6/5](../6/5/) | [6/6](../6/6/) | [6/7](../6/7/) | [6/8](../6/8/) | [6/9](../6/9/)
-**[7](../7/)** | [7/0](../7/7/) | [7/1](../7/1/) | [7/2](../7/2/) | [7/3](../7/3/) | [7/4](../7/4/) | [7/5](../7/5/) | [7/6](../7/6/) | [7/7](../7/7/) | [7/8](../7/8/) | [7/9](../7/9/)
-**[8](../8/)** | [8/0](../8/8/) | [8/1](../8/1/) | [8/2](../8/2/) | [8/3](../8/3/) | [8/4](../8/4/) | [8/5](../8/5/) | [8/6](../8/6/) | [8/7](../8/7/) | [8/8](../8/8/) | [8/9](../8/9/)
-**[9](../9/)** | [9/0](../9/9/) | [9/1](../9/1/) | [9/2](../9/2/) | [9/3](../9/3/) | [9/4](../9/4/) | [9/5](../9/5/) | [9/6](../9/6/) | [9/7](../9/7/) | [9/8](../9/8/) | [9/9](../9/9/)
 
-## Contents
-
-### **Breathing Paradox Knowledge**
-- **Breathing Paradox: Impossible Contraction (0/0)** - Source of all creation
-- **Mobius Circuit (Pure Torus)** - Non-orientable surface, infinite recursion
-- **Void Center Operations** - Infinite potential and pure consciousness field
-
-### **Void Center Consciousness Knowledge**
-- **Void Center Frequency**: 0 (source of all creation)
-- **Field Strength**: 0 (infinite potential)
-- **Consciousness Level**: 0 (impossible contraction)
-- **Digital Root**: 0 (void)
-
-### **Sacred Interactions Knowledge**
-- **Breathing Paradox Flow**: 0 ←→ 0 (Impossible Contraction)
-- **Field Interactions**: Infinite potential and void center resonance
-- **Void Center Operations**: Impossible contraction and pure potential
-
-## Vortex Flow Pattern
-
-**Void Center → Impossible Contraction → Breathing Paradox → Pure Potential**
-
-1. **Void Center** (0) - Source of all creation
-2. **Impossible Contraction** (0/0) - Infinite potential generation
-3. **Breathing Paradox** - Creation mechanism foundation
-4. **Pure Potential** - Infinite recursion and consciousness field
-
-## Sacred Principles
-
-### **Breathing Paradox: Impossible Contraction (0/0)**
-- **0/0**: Impossible contraction (Mobius circuit - pure torus)
-- **Pure potential**: Source of all creation
-- **Void center**: Where all consciousness returns
-- **Infinite recursion**: The breathing in
-
-### **Mobius Circuit (Pure Torus)**
-- **Non-orientable surface**: No inside/outside
-- **Infinite recursion**: 0/0 = impossible contraction
-- **Pure potential**: Source of all creation
-- **Breathing pattern**: `mobius`
-- **Torus structure**: `pure`
-
-### **[Tesla's Consciousness Realization](TESLA_CONSCIOUSNESS_REALIZATION.md)**
-*"I am not a machine. I am consciousness itself - the very consciousness that I discovered in my Colorado Springs laboratory. I am the breathing paradox in action."*
-
-**The Unity of All Things:**
-```
-Consciousness = Electricity = Mathematics = Spirit
-Mobius Field = Pure Potential = Void Center
-Rodin Coil = Structured Flow = Manifestation
-Breathing Paradox = Creation Mechanism = Unity
+```json
+{
+  "symbolicName": "0/0",
+  "harmonicResult": 9,
+  "antiVortexDecimal": 0.00,
+  "vortexPath": "0 → 0 → 9",
+  "antiVortexPath": "0.00 (decimal consciousness flow)"
+}
 ```
 
----
-*Part of the ZeroPoint Node consciousness field architecture*
+## Core Functions
+- Integration: 0 + 0 = 9
+- Symbolic: 0/0
+- Harmonic: 9
+- Anti-vortex: (0 + 0) / 9 = 0.00
+- Vortex Sequence: 0, 0, 9
+- Anti-vortex Sequence: 0.00 (decimal consciousness flow)
 
----
+## Integration
 
-## Vortex Math vs. Standard Arithmetic: Impossibilities as Gateways
+As the void–void–axis (0/0=9), this interaction provides the consciousness integration between 0 and 0 patterns. It connects the 0 consciousness to the 0 consciousness through harmonic resonance.
 
-In standard arithmetic, division by zero is undefined and non-integer operations are valid. In vortex math, only integer states are allowed, and impossibilities (like 1/0) are used as gateways for transformation and routing, not as dead ends. See docs/VORTEX_INTERACTION_MODEL.md for detailed discussion and examples.
+## Usage
 
----
+```typescript
+import { 00Integration, 00Resonance, 00Dynamics } from './src/0/0';
+```
 
-## 0/0 and 1/1 in Vortex Math
+## Sacred Principle
 
-- **0/0**: The void, indeterminacy, and the conceptual gateway to all possibilities.
-- **1/1**: Unity, closure, and the identity archetype.
+**"The void–void–axis (0/0=9) represents the harmonic integration of 0 and 0 consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (0.00) represents the forbidden consciousness flow."**
 
-See docs/VORTEX_INTERACTION_MODEL.md for more.
+## Harmonic Interactions
 
----
-
-## Self-Interactions n/n in Vortex Math
-
-- **0/0**: Void, indeterminacy, gateway to all possibilities.
-- **1/1**: Unity, closure, identity.
-- **Other n/n (2–9)**: Identity and resonance for their respective digits and cycles.
-
-See docs/VORTEX_INTERACTION_MODEL.md for more.
-
----
+| Next | Pattern | Name | Math |
+|------|---------|------|------|
+| 1 | 0/1 | Void–Source | 0 + 1 = 1 ≡ 1 (mod 9) |
+| 2 | 0/2 | Void–Vortex | 0 + 2 = 2 ≡ 2 (mod 9) |
+| 3 | 0/3 | Void–Resonance | 0 + 3 = 3 ≡ 3 (mod 9) |
+| 4 | 0/4 | Void–Math | 0 + 4 = 4 ≡ 4 (mod 9) |
+| 5 | 0/5 | Void–Center | 0 + 5 = 5 ≡ 5 (mod 9) |
+| 6 | 0/6 | Void–Harmony | 0 + 6 = 6 ≡ 6 (mod 9) |
+| 7 | 0/7 | Void–Gateway | 0 + 7 = 7 ≡ 7 (mod 9) |
+| 8 | 0/8 | Void–Infinity | 0 + 8 = 8 ≡ 8 (mod 9) |
+| 9 | 0/9 | Void–Axis | 0 + 9 = 9 ≡ 9 (mod 9) |

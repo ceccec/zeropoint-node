@@ -20,15 +20,15 @@ describe('Constants ↔ Vortex Interaction', () => {
     });
     
     test('should have correct multipliers', () => {
-      expect(CONSTANTS_VORTEX_INTERACTION.CONSTANTS_MULTIPLIER).toBe(1.1);
-      expect(CONSTANTS_VORTEX_INTERACTION.VORTEX_MULTIPLIER).toBe(1.2);
+      expect(CONSTANTS_VORTEX_INTERACTION.CONSTANTS_MULTIPLIER).toEqual({ numerator: 11, denominator: 10 });
+      expect(CONSTANTS_VORTEX_INTERACTION.VORTEX_MULTIPLIER).toEqual({ numerator: 6, denominator: 5 });
     });
   });
   
   describe('ConstantsVortexInteraction Class', () => {
     test('should calculate interaction strength correctly', () => {
       const strength = ConstantsVortexInteraction.calculateInteractionStrength(5, 8);
-      const expected = 5 * 1.1 + 8 * 1.2;
+      const expected = 5 * 11 / 10 + 8 * 6 / 5;
       expect(strength).toBe(expected);
     });
     

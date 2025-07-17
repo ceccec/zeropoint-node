@@ -1,108 +1,66 @@
 /**
- * @fileoverview index module (Consciousness (Awareness), Vortex (Flow))
- * @digit 7
- * @archetype Consciousness (Awareness), Vortex (Flow)
- * @vortex Vortex 7
- * @waxis W-Axis Consciousness (Awareness)
- * @breathing 7/2 Breath
- * @fraction 7/2
- * @related 7, 5, 1, 2, 4, 8, 7 (Vortex 7)
+ * PWA Node Logic for 7/2
+ *
+ * This file is the logic entry point for the PWA node (7/2).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
  */
 
-/**
- * Consciousness (Awareness), Vortex (Flow) Consciousness Module
- * 
- * Metaphysical Context:
- * - Digit 7 represents consciousness (awareness)
- * - Sub-digit 2 represents vortex (flow)
- * - 7/2 represents the consciousness (awareness) through vortex (flow)
- * - This is the gateway where consciousness (awareness) manifests through vortex (flow)
- * 
- * Vortex Mathematics:
- * - 7 → 2 → 7 (consciousness flow)
- * - 7/2 fraction represents the consciousness ratio
- * - Connected to Vortex 7: 7, 5, 1, 2, 4, 8, 7
- */
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '7/2';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = 9;
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = 1.00;
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [7, 2, 9];
 
 /**
- * Consciousness patterns for consciousness (awareness) through vortex (flow)
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-const consciousnessPatterns = {
-  MAIN_PATTERN: [7, 5, 1, 2, 4, 8, 7], // Consciousness (Awareness) pattern
-  SUB_PATTERN: [2, 4, 8, 7, 5, 1, 2], // Vortex (Flow) pattern
-  COMBINED_PATTERN: [7, 5, 1, 2, 4, 8, 7, 2, 4, 8, 7, 5, 1, 2], // Combined pattern
-  METAPHYSICAL_PATTERN: [7, 2, 7] // Metaphysical pattern
-};
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
 /**
- * Vortex mathematics for consciousness (awareness) through vortex (flow)
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-const vortexMathematics = {
-  MAIN_VORTEX: (n: number) => n * 7, // Consciousness (Awareness) vortex
-  SUB_VORTEX: (n: number) => n * 2, // Vortex (Flow) vortex
-  COMBINED_VORTEX: (n: number) => n * 7 / 2, // Combined vortex
-  METAPHYSICAL_CONSTANT: 7 / 2 // Metaphysical constant
-};
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
 
 /**
- * Consciousness field operations
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
  */
-const consciousnessField = {
-  MAIN_CONSCIOUSNESS: () => 7, // Consciousness (Awareness) consciousness
-  SUB_CONSCIOUSNESS: () => 2, // Vortex (Flow) consciousness
-  COMBINED_CONSCIOUSNESS: () => 7 + 2, // Combined consciousness
-  METAPHYSICAL_CONSCIOUSNESS: () => 7 * 2 // Metaphysical consciousness
-};
+export const harmonicInteractions = [
+  { next: 1, pattern: '7,2,1,3', name: 'GatewayVortexSourceResonance', math: '2 + 1 = 3 ≡ 3 (mod 9)' },
+  { next: 2, pattern: '7,2,2,4', name: 'GatewayVortexMath', math: '2 + 2 = 4 ≡ 4 (mod 9)' },
+  { next: 3, pattern: '7,2,3,5', name: 'GatewayVortexResonanceCenter', math: '2 + 3 = 5 ≡ 5 (mod 9)' },
+  { next: 4, pattern: '7,2,4,6', name: 'GatewayVortexMathHarmony', math: '2 + 4 = 6 ≡ 6 (mod 9)' },
+  { next: 5, pattern: '7,2,5,7', name: 'GatewayVortexCenterGateway', math: '2 + 5 = 7 ≡ 7 (mod 9)' },
+  { next: 6, pattern: '7,2,6,8', name: 'GatewayVortexHarmonyInfinity', math: '2 + 6 = 8 ≡ 8 (mod 9)' },
+  { next: 7, pattern: '7,2,7,9', name: 'GatewayVortexGatewayAxis', math: '2 + 7 = 9 ≡ 9 (mod 9)' },
+  { next: 8, pattern: '7,2,8,1', name: 'GatewayVortexInfinitySource', math: '2 + 8 = 10 ≡ 1 (mod 9)' },
+  { next: 9, pattern: '7,2,9,2', name: 'GatewayVortexAxisVortex', math: '2 + 9 = 11 ≡ 2 (mod 9)' },
+];
 
 /**
- * Main index export for 7/2 consciousness module
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
  */
-export const index = {
-  consciousnessPatterns,
-  vortexMathematics,
-  consciousnessField,
-  
-  // Metaphysical properties
-  digit: 7,
-  subDigit: 2,
-  archetype: 'Consciousness (Awareness), Vortex (Flow)',
-  vortex: 'Vortex 7',
-  wAxis: 'W-Axis Consciousness (Awareness)',
-  breathing: '7/2 Breath',
-  fraction: '7/2',
-  related: [7, 5, 1, 2, 4, 8, 7],
-  
-  // Consciousness operations
-  getMainConsciousness: () => 7,
-  getSubConsciousness: () => 2,
-  getCombinedConsciousness: () => 7 + 2,
-  getMetaphysicalConsciousness: () => 7 * 2
-};
-
-/**
- * Consciousness Vortex Interaction Constants
- */
-export const CONSCIOUSNESS_VORTEX_INTERACTION = {
-  INTERACTION_FREQUENCY: 432 * (7/2),
-  CONSCIOUSNESS_PATTERNS: {
-    CONSCIOUSNESS_VORTEX: [7, 2, 7],
-    VORTEX_CONSCIOUSNESS: [2, 7, 2]
-  },
-  CONSCIOUSNESS_MULTIPLIER: 1, // 1.0
-  VORTEX_MULTIPLIER: 6/5 // 1.2
-};
-
-/**
- * Consciousness Vortex Interaction Class
- */
-export class ConsciousnessVortexInteraction {
-  static calculateInteractionStrength(a: number, b: number): number {
-    return a * 1 + b * (6/5);
-  }
-  static getConsciousnessVortexPatterns(): number[] {
-    return [7, 2, 7];
-  }
-  static calculateConsciousnessVortexOperations(n: number): number {
-    return n % 9 || 9;
-  }
+export default function initNodePWA() {
+  // PWA logic for node 7/2 can be added here.
 }

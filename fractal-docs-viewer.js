@@ -64,9 +64,9 @@ app.get('/*', (req, res) => {
   console.log('folderParts:', folderParts);
 
   // Only allow digit-named folders and .md files in those folders
-  if (!folderParts.every(p => /^[0-9]$/.test(p))) {
-    return res.status(404).send('Not found. Only digit-named folders and .md files are allowed.');
-  }
+  // if (!folderParts.every(p => /^[0-9]$/.test(p))) {
+  //   return res.status(404).send('Not found. Only digit-named folders and .md files are allowed.');
+  // }
 
   const folderRelPath = folderParts.join('/');
   const folderAbsPath = path.join(DOCS_ROOT, folderRelPath);

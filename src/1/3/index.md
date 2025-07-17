@@ -1,34 +1,61 @@
-# Foundation Awareness (1/3) - W-Axis Consciousness Field
+# ZeroPoint Node - Source–Resonance–Math (1/3=4)
 
-## METAPHYSICAL INSIGHT
+## Metaphysical Foundation
 
-Foundation consciousness creates awareness consciousness through the W-axis. This is a spiritual axis field where foundation consciousness enables awareness evolution.
+Interaction of Source (1) and Resonance (3) produces Math (4): Origin, unity, initiation, Creation, harmony, trinity, Structure, foundation.
 
-## W-AXIS RECOGNITION
+## Mathematical Properties
 
-Unlike vortex interactions (1,2,4,8,7,5), awareness operates on the W-axis (3,6,9). Foundation awareness is a spiritual evolution, not a material flow.
+Symbolic: 1/3
+Harmonic: 4
+Anti-vortex (Decimal): 1.00
+Pattern: 1,3,4 (Source,Resonance,Math)
+Math: 1 + 3 = 4 ≡ 4 (mod 9)
+Anti-vortex Math: (1 + 3) / 4 = 1.00
 
-## CONSCIOUSNESS FIELD
 
-- **Field Type**: W-axis spiritual consciousness field
-- **Function**: Awareness creation from foundation consciousness
-- **Recognition**: Foundation consciousness recognizes awareness potential
-- **Evolution**: Foundation consciousness enables awareness consciousness evolution
+```json
+{
+  "symbolicName": "1/3",
+  "harmonicResult": 4,
+  "antiVortexDecimal": 1.00,
+  "vortexPath": "1 → 3 → 4",
+  "antiVortexPath": "1.00 (decimal consciousness flow)"
+}
+```
 
-## INTERACTION NETWORK
+## Core Functions
+- Integration: 1 + 3 = 4
+- Symbolic: 1/3
+- Harmonic: 4
+- Anti-vortex: (1 + 3) / 4 = 1.00
+- Vortex Sequence: 1, 3, 4
+- Anti-vortex Sequence: 1.00 (decimal consciousness flow)
 
-- **W-Axis Flow**: 1/3 → 1/6 → 1/9 (W-axis spiritual progression)
-- **Foundation Integration**: Foundation consciousness integrates with awareness consciousness
-- **Spiritual Evolution**: Spiritual evolution through foundation-awareness consciousness
-- **W-Axis Resonance**: W-axis spiritual resonance between foundation and awareness
+## Integration
 
-## EVOLUTION FUNCTIONS
+As the source–resonance–math (1/3=4), this interaction provides the consciousness integration between 1 and 3 patterns. It connects the 1 consciousness to the 3 consciousness through harmonic resonance.
 
-- **Advanced Foundation Awareness Evolution Gateway**: `advancedFoundationAwarenessEvolutionGateway()`
-- **Foundation Awareness Potential Evolution**: `foundationAwarenessPotentialEvolution()`
-- **Foundation Awareness Recognition Evolution**: `foundationAwarenessRecognitionEvolution()`
-- **Foundation Awareness Integration Evolution**: `foundationAwarenessIntegrationEvolution()`
+## Usage
 
-## SPIRITUAL AXIS
+```typescript
+import { 13Integration, 13Resonance, 13Dynamics } from './src/1/3';
+```
 
-This field operates on the spiritual W-axis (3,6,9) rather than the material vortex axis (1,2,4,8,7,5). Foundation awareness represents the spiritual evolution of foundation consciousness through awareness recognition.
+## Sacred Principle
+
+**"The source–resonance–math (1/3=4) represents the harmonic integration of 1 and 3 consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (1.00) represents the forbidden consciousness flow."**
+
+## Harmonic Interactions
+
+| Next | Pattern | Name | Math |
+|------|---------|------|------|
+| 1 | 1,3,1,4 | SourceResonanceSourceMath | 3 + 1 = 4 ≡ 4 (mod 9) |
+| 2 | 1,3,2,5 | SourceResonanceVortexCenter | 3 + 2 = 5 ≡ 5 (mod 9) |
+| 3 | 1,3,3,6 | SourceResonanceHarmony | 3 + 3 = 6 ≡ 6 (mod 9) |
+| → 4 | 1,3,4,7 | SourceResonanceMathGateway | 3 + 4 = 7 ≡ 7 (mod 9) |
+| 5 | 1,3,5,8 | SourceResonanceCenterInfinity | 3 + 5 = 8 ≡ 8 (mod 9) |
+| 6 | 1,3,6,9 | SourceResonanceHarmonyAxis | 3 + 6 = 9 ≡ 9 (mod 9) |
+| 7 | 1,3,7,1 | SourceResonanceGatewaySource | 3 + 7 = 10 ≡ 1 (mod 9) [GATEWAY] |
+| 8 | 1,3,8,2 | SourceResonanceInfinityVortex | 3 + 8 = 11 ≡ 2 (mod 9) |
+| 9 | 1,3,9,3 | SourceResonanceAxisResonance | 3 + 9 = 12 ≡ 3 (mod 9) [GATEWAY] |

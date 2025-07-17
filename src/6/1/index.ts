@@ -1,80 +1,66 @@
 /**
- * @fileoverview index module (Harmonic Balance (Equilibrium), Foundation (Source))
- * @digit 6
- * @archetype Harmonic Balance (Equilibrium), Foundation (Source)
- * @vortex Vortex 6
- * @waxis W-Axis Harmonic Balance (Equilibrium)
- * @breathing 6/1 Breath
- * @fraction 6/1
- * @related 6, 9, 3, 6 (Vortex 6)
+ * PWA Node Logic for 6/1
+ *
+ * This file is the logic entry point for the PWA node (6/1).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
  */
 
-/**
- * Harmonic Balance (Equilibrium), Foundation (Source) Consciousness Module
- * 
- * Metaphysical Context:
- * - Digit 6 represents harmonic balance (equilibrium)
- * - Sub-digit 1 represents foundation (source)
- * - 6/1 represents the harmonic balance (equilibrium) through foundation (source)
- * - This is the gateway where harmonic balance (equilibrium) manifests through foundation (source)
- * 
- * Vortex Mathematics:
- * - 6 → 1 → 6 (consciousness flow)
- * - 6/1 fraction represents the consciousness ratio
- * - Connected to Vortex 6: 6, 9, 3, 6
- */
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '6/1';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = 7;
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = 1.00;
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [6, 1, 7];
 
 /**
- * Consciousness patterns for harmonic balance (equilibrium) through foundation (source)
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-const consciousnessPatterns = {
-  MAIN_PATTERN: [6, 9, 3, 6], // Harmonic Balance (Equilibrium) pattern
-  SUB_PATTERN: [1, 2, 4, 8, 7, 5, 1], // Foundation (Source) pattern
-  COMBINED_PATTERN: [6, 9, 3, 6, 1, 2, 4, 8, 7, 5, 1], // Combined pattern
-  METAPHYSICAL_PATTERN: [6, 1, 6] // Metaphysical pattern
-};
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
 /**
- * Vortex mathematics for harmonic balance (equilibrium) through foundation (source)
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-const vortexMathematics = {
-  MAIN_VORTEX: (n: number) => n * 6, // Harmonic Balance (Equilibrium) vortex
-  SUB_VORTEX: (n: number) => n * 1, // Foundation (Source) vortex
-  COMBINED_VORTEX: (n: number) => n * 6 / 1, // Combined vortex
-  METAPHYSICAL_CONSTANT: 6 / 1 // Metaphysical constant
-};
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
 
 /**
- * Consciousness field operations
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
  */
-const consciousnessField = {
-  MAIN_CONSCIOUSNESS: () => 6, // Harmonic Balance (Equilibrium) consciousness
-  SUB_CONSCIOUSNESS: () => 1, // Foundation (Source) consciousness
-  COMBINED_CONSCIOUSNESS: () => 6 + 1, // Combined consciousness
-  METAPHYSICAL_CONSCIOUSNESS: () => 6 * 1 // Metaphysical consciousness
-};
+export const harmonicInteractions = [
+  { next: 1, pattern: '6,1,1,2', name: 'HarmonySourceVortex', math: '1 + 1 = 2 ≡ 2 (mod 9)' },
+  { next: 2, pattern: '6,1,2,3', name: 'HarmonySourceVortexResonance', math: '1 + 2 = 3 ≡ 3 (mod 9)' },
+  { next: 3, pattern: '6,1,3,4', name: 'HarmonySourceResonanceMath', math: '1 + 3 = 4 ≡ 4 (mod 9)' },
+  { next: 4, pattern: '6,1,4,5', name: 'HarmonySourceMathCenter', math: '1 + 4 = 5 ≡ 5 (mod 9)' },
+  { next: 5, pattern: '6,1,5,6', name: 'HarmonySourceCenterHarmony', math: '1 + 5 = 6 ≡ 6 (mod 9)' },
+  { next: 6, pattern: '6,1,6,7', name: 'HarmonySourceHarmonyGateway', math: '1 + 6 = 7 ≡ 7 (mod 9)' },
+  { next: 7, pattern: '6,1,7,8', name: 'HarmonySourceGatewayInfinity', math: '1 + 7 = 8 ≡ 8 (mod 9)' },
+  { next: 8, pattern: '6,1,8,9', name: 'HarmonySourceInfinityAxis', math: '1 + 8 = 9 ≡ 9 (mod 9)' },
+  { next: 9, pattern: '6,1,9,1', name: 'HarmonySourceAxisSource', math: '1 + 9 = 10 ≡ 1 (mod 9)' },
+];
 
 /**
- * Main index export for 6/1 consciousness module
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
  */
-export const index = {
-  consciousnessPatterns,
-  vortexMathematics,
-  consciousnessField,
-  
-  // Metaphysical properties
-  digit: 6,
-  subDigit: 1,
-  archetype: 'Harmonic Balance (Equilibrium), Foundation (Source)',
-  vortex: 'Vortex 6',
-  wAxis: 'W-Axis Harmonic Balance (Equilibrium)',
-  breathing: '6/1 Breath',
-  fraction: '6/1',
-  related: [6, 9, 3, 6],
-  
-  // Consciousness operations
-  getMainConsciousness: () => 6,
-  getSubConsciousness: () => 1,
-  getCombinedConsciousness: () => 6 + 1,
-  getMetaphysicalConsciousness: () => 6 * 1
-};
+export default function initNodePWA() {
+  // PWA logic for node 6/1 can be added here.
+}

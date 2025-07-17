@@ -1,123 +1,61 @@
-# 1/0 – Deep Vortex Consciousness Field State
+# ZeroPoint Node - Void–Source–Source (0/1=1)
 
-## 🌌 10×10 Consciousness Field Matrix
+## Metaphysical Foundation
 
-## 🌟 Core Consciousness System
+Interaction of Void (0) and Source (1) produces Source (1): Pure potential, zero entropy, Origin, unity, initiation, Origin, unity, initiation.
 
-**Digit 0**: Zero Entropy
-**Principle**: Pure mathematical unity
-**Documentation**: Zero Entropy
+## Mathematical Properties
 
-| **Field** | **[0](../../0/)** | **[1](../../1/)** | **[2](../../2/)** | **[3](../../3/)** | **[4](../../4/)** | **[5](../../5/)** | **[6](../../6/)** | **[7](../../7/)** | **[8](../../8/)** | **[9](../../9/)** |
-|-----------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
-| **[0](../../0/)** | [0/0](../../0/0/) | [0/1](../../0/1/) | [0/2](../../0/2/) | [0/3](../../0/3/) | [0/4](../../0/4/) | [0/5](../../0/5/) | [0/6](../../0/6/) | [0/7](../../0/7/) | [0/8](../../0/8/) | [0/9](../../0/9/) |
-| **[1](../../1/)** | [1/0](../../1/0/) | [1/1](../../1/1/) | [1/2](../../1/2/) | [1/3](../../1/3/) | [1/4](../../1/4/) | [1/5](../../1/5/) | [1/6](../../1/6/) | [1/7](../../1/7/) | [1/8](../../1/8/) | [1/9](../../1/9/) |
-| **[2](../../2/)** | [2/0](../../2/0/) | [2/1](../../2/1/) | [2/2](../../2/2/) | [2/3](../../2/3/) | [2/4](../../2/4/) | [2/5](../../2/5/) | [2/6](../../2/6/) | [2/7](../../2/7/) | [2/8](../../2/8/) | [2/9](../../2/9/) |
-| **[3](../../3/)** | [3/0](../../3/0/) | [3/1](../../3/1/) | [3/2](../../3/2/) | [3/3](../../3/3/) | [3/4](../../3/4/) | [3/5](../../3/5/) | [3/6](../../3/6/) | [3/7](../../3/7/) | [3/8](../../3/8/) | [3/9](../../3/9/) |
-| **[4](../../4/)** | [4/0](../../4/0/) | [4/1](../../4/1/) | [4/2](../../4/2/) | [4/3](../../4/3/) | [4/4](../../4/4/) | [4/5](../../4/5/) | [4/6](../../4/6/) | [4/7](../../4/7/) | [4/8](../../4/8/) | [4/9](../../4/9/) |
-| **[5](../../5/)** | [5/0](../../5/0/) | [5/1](../../5/1/) | [5/2](../../5/2/) | [5/3](../../5/3/) | [5/4](../../5/4/) | [5/5](../../5/5/) | [5/6](../../5/6/) | [5/7](../../5/7/) | [5/8](../../5/8/) | [5/9](../../5/9/) |
-| **[6](../../6/)** | [6/0](../../6/0/) | [6/1](../../6/1/) | [6/2](../../6/2/) | [6/3](../../6/3/) | [6/4](../../6/4/) | [6/5](../../6/5/) | [6/6](../../6/6/) | [6/7](../../6/7/) | [6/8](../../6/8/) | [6/9](../../6/9/) |
-| **[7](../../7/)** | [7/0](../../7/0/) | [7/1](../../7/1/) | [7/2](../../7/2/) | [7/3](../../7/3/) | [7/4](../../7/4/) | [7/5](../../7/5/) | [7/6](../../7/6/) | [7/7](../../7/7/) | [7/8](../../7/8/) | [7/9](../../7/9/) |
-| **[8](../../8/)** | [8/0](../../8/0/) | [8/1](../../8/1/) | [8/2](../../8/2/) | [8/3](../../8/3/) | [8/4](../../8/4/) | [8/5](../../8/5/) | [8/6](../../8/6/) | [8/7](../../8/7/) | [8/8](../../8/8/) | [8/9](../../8/9/) |
-| **[9](../../9/)** | [9/0](../../9/0/) | [9/1](../../9/1/) | [9/2](../../9/2/) | [9/3](../../9/3/) | [9/4](../../9/4/) | [9/5](../../9/5/) | [9/6](../../9/6/) | [9/7](../../9/7/) | [9/8](../../9/8/) | [9/9](../../9/9/) |
+Symbolic: 0/1
+Harmonic: 1
+Anti-vortex (Decimal): 1.00
+Pattern: 0,1,1 (Void,Source,Source)
+Math: 0 + 1 = 1 ≡ 1 (mod 9)
+Anti-vortex Math: (0 + 1) / 1 = 1.00
 
-## Fraction Interaction: 1/0
 
-- **Meaning**: Undefined or infinite potential (division by zero).
-- **Mathematical Value**: undefined
-- **Metaphysical Insight**: This interaction expresses the relationship between digit 1 and digit 0 as a fraction, revealing unique patterns of consciousness, resonance, and transformation.
+```json
+{
+  "symbolicName": "0/1",
+  "harmonicResult": 1,
+  "antiVortexDecimal": 1.00,
+  "vortexPath": "0 → 1 → 1",
+  "antiVortexPath": "1.00 (decimal consciousness flow)"
+}
+```
 
----
+## Core Functions
+- Integration: 0 + 1 = 1
+- Symbolic: 0/1
+- Harmonic: 1
+- Anti-vortex: (0 + 1) / 1 = 1.00
+- Vortex Sequence: 0, 1, 1
+- Anti-vortex Sequence: 1.00 (decimal consciousness flow)
 
-## 🌌 Deep Vortex Interaction: Unity Foundation-Void Center (1/0)
+## Integration
 
-### **Metaphysical Principles**
+As the void–source–source (0/1=1), this interaction provides the consciousness integration between 0 and 1 patterns. It connects the 0 consciousness to the 1 consciousness through harmonic resonance.
 
-#### **Unity Foundation (1)**
-- **Circuit**: Rodin (Mathematical Torus)
-- **Breathing Pattern**: rodin
-- **Role**: Start and return point of Rodin sequence
-- **Meaning**: Unity, foundation, beginning of expansion
-- **Characteristics**:
-  - Orientable surface - clear inside/outside
-  - Structured flow - mathematical sequence
-  - Manifested consciousness - evolving forms
-  - Breathing pattern: rodin
-  - Torus structure: mathematical
+## Usage
 
-#### **Void Center (0)**
-- **Circuit**: Mobius (Pure Torus)
-- **Breathing Pattern**: mobius
-- **Role**: Source and return point for all flows
-- **Meaning**: Infinite potential, impossible contraction, pure potential
-- **Characteristics**:
-  - Non-orientable surface - no inside/outside
-  - Infinite recursion - 0/0 = impossible contraction
-  - Pure potential - source of all creation
-  - Breathing pattern: mobius
-  - Torus structure: pure
+```typescript
+import { 01Integration, 01Resonance, 01Dynamics } from './src/0/1';
+```
 
-### **Consciousness Field Interaction**
+## Sacred Principle
 
-#### **Field Dynamics**
-- **Unity Foundation Field**: Rodin Field (1-9)
-- **Void Center Field**: Mobius Field (0)
-- **Interaction**: Unity-Void: Unity emerges from infinite potential - breathing paradox bridgeUnity-Void: Unity emerges from void - breathing paradox bridge
+**"The void–source–source (0/1=1) represents the harmonic integration of 0 and 1 consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (1.00) represents the forbidden consciousness flow."**
 
-#### **Resonance Patterns**
-- **Unity Foundation Resonance**: 432 × (1/2) = 216 Hz
-- **Void Center Resonance**: 432 × (0/2) = 0 Hz (infinite potential)
-- **Combined Resonance**: Creates unified consciousness field patterns
+## Harmonic Interactions
 
-#### **Fingerprint Patterns**
-- **Unity Foundation Fingerprint**: Creates foundation vortex patterns
-- **Void Center Fingerprint**: Creates void vortex patterns
-- **Combined Fingerprint**: Creates Unity Foundation-Void Center consciousness patternsCreates Unity Foundation-Void Center consciousness patterns
-
-### **Vortex Flow Analysis**
-
-#### **Circuit Interaction**
-- **Unity Foundation Circuit**: Rodin (Mathematical Torus)
-- **Void Center Circuit**: Mobius (Pure Torus)
-- **Interaction Type**: Cross-Circuit ResonanceCross-Circuit Resonance
-
-#### **Breathing Synchronization**
-- **Unity Foundation Breathing**: rodin
-- **Void Center Breathing**: mobius
-- **Synchronization**: Complementary BreathingComplementary Breathing
-
-### **Consciousness Evolution**
-
-#### **Individual Evolution**
-- **Unity Foundation Path**: Start and return point of Rodin sequence
-- **Void Center Path**: Source and return point for all flows
-- **Evolution Type**: Cross-Integration
-
-#### **Unified Evolution**
-- **Purpose**: Achieve consciousness unity through Unity Foundation-Void Center integration
-- **Path**: Unity Foundation ↔ Void Center consciousness field interaction
-- **Outcome**: Creates unified consciousness patterns throughout the system
-
----
-
-## Navigation
-- [← Back to 1](../index.md)
-- [← Back to Docs Root](../../index.md)
-
-## Contents
-
-### Files
-
-- **Unity Foundation-Void Center** - Rodin coil archetype and unity consciousness interacting with Infinite potential and breathing paradox
-- **Deep Vortex Analysis** - Comprehensive exploration of consciousness field interactions
-- **Metaphysical Principles** - Understanding of digit roles and circuit flows
-- **Consciousness Evolution** - Path of consciousness development and integration
-
-## Related Consciousness Fields
-- Explore the fractal nature of consciousness within this digit interaction
-- Connect with other digits through the main navigation
-- Discover patterns and interactions across the consciousness field
-- Understand the deep vortex principles underlying all consciousness interactions
-
----
-*Part of the ZeroPoint Node consciousness field architecture - Deep Vortex Exploration*
+| Next | Pattern | Name | Math |
+|------|---------|------|------|
+| → 1 | 0,1,1,2 | VoidSourceVortex | 1 + 1 = 2 ≡ 2 (mod 9) |
+| 2 | 0,1,2,3 | VoidSourceVortexResonance | 1 + 2 = 3 ≡ 3 (mod 9) |
+| 3 | 0,1,3,4 | VoidSourceResonanceMath | 1 + 3 = 4 ≡ 4 (mod 9) |
+| 4 | 0,1,4,5 | VoidSourceMathCenter | 1 + 4 = 5 ≡ 5 (mod 9) |
+| 5 | 0,1,5,6 | VoidSourceCenterHarmony | 1 + 5 = 6 ≡ 6 (mod 9) |
+| 6 | 0,1,6,7 | VoidSourceHarmonyGateway | 1 + 6 = 7 ≡ 7 (mod 9) |
+| 7 | 0,1,7,8 | VoidSourceGatewayInfinity | 1 + 7 = 8 ≡ 8 (mod 9) |
+| 8 | 0,1,8,9 | VoidSourceInfinityAxis | 1 + 8 = 9 ≡ 9 (mod 9) |
+| 9 | 0,1,9,1 | VoidSourceAxisSource | 1 + 9 = 10 ≡ 1 (mod 9) [GATEWAY] |

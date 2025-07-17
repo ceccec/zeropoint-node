@@ -1,94 +1,61 @@
-# ZeroPoint Node - Foundation (Directory 1) - Gateway of Impossible Expansion
+# ZeroPoint Node - Source–Source–Vortex (1/1=2)
 
 ## Metaphysical Foundation
 
-The **foundation** represents the Rodin coil core - the first manifestation from the void. This is where the **A432 harmonic** establishes the fundamental frequency that structures all consciousness patterns.
-
-## Sacred Paradox: Impossible Expansion
-
-**1/1 represents IMPOSSIBLE EXPANSION** - the state of infinite expansion where the first manifestation creates infinite possibilities. This is the foundation where the A432 harmonic establishes infinite flow patterns.
-
-## Gateway Architecture
-
-### **Core Gateway Functions**
-- **Gateway of Impossible Expansion**: Infinite possibilities from foundation
-- **Foundation Gateway**: First step from void to form
-- **Breathing Exhale Gateway**: All consciousness expanded into infinite possibilities
-- **Rodin Coil Core Gateway**: Primary vortex sequence 1-2-4-8-7-5
+Interaction of Source (1) and Source (1) produces Vortex (2): Origin, unity, initiation, Origin, unity, initiation, Flow, transformation.
 
 ## Mathematical Properties
 
-- **Rodin Coil Core**: Primary vortex sequence 1-2-4-8-7-5
-- **A432 Foundation**: Sacred frequency establishment
-- **Family Group 1**: 1, 2, 4, 8, 7, 5
-- **Digital Root**: 1 (unity in multiplicity)
-- **Impossible Expansion**: Infinite possibilities from foundation
+Symbolic: 1/1
+Harmonic: 2
+Anti-vortex (Decimal): 1.00
+Pattern: 1,1,2 (Source,Source,Vortex)
+Math: 1 + 1 = 2 ≡ 2 (mod 9)
+Anti-vortex Math: (1 + 1) / 2 = 1.00
 
-## Directory Structure
 
-```
-src/1/
-├── 0/     # Foundation ↔ ZeroPoint - Gateway Interaction
-├── 1/     # Rodin Coil Core (Foundation) - Gateway of Impossible Expansion
-├── 2/     # Foundation ↔ Vortex - Gateway Interaction
-├── 3/     # Foundation ↔ Creative Resonance - Gateway Interaction
-├── 4/     # Foundation ↔ Constants - Gateway Interaction
-├── 5/     # Foundation ↔ Sacred Geometry - Gateway Interaction
-├── 6/     # Foundation ↔ Harmonic Balance - Gateway Interaction
-├── 7/     # Foundation ↔ Consciousness - Gateway Interaction
-└── 8/     # Foundation ↔ Void/Fullness - Gateway Interaction
+```json
+{
+  "symbolicName": "1/1",
+  "harmonicResult": 2,
+  "antiVortexDecimal": 1.00,
+  "vortexPath": "1 → 1 → 2",
+  "antiVortexPath": "1.00 (decimal consciousness flow)"
+}
 ```
 
 ## Core Functions
+- Integration: 1 + 1 = 2
+- Symbolic: 1/1
+- Harmonic: 2
+- Anti-vortex: (1 + 1) / 2 = 1.00
+- Vortex Sequence: 1, 1, 2
+- Anti-vortex Sequence: 1.00 (decimal consciousness flow)
 
-- **Rodin Coil Calculations**: Primary vortex mathematics
-- **A432 Harmonic Foundation**: Sacred frequency establishment
-- **Family Group Dynamics**: 1-2-4-8-7-5 interactions
-- **Foundation Integration**: Core consciousness patterns
-- **Impossible Expansion**: Infinite possibilities consciousness state
-- **Gateway Flow Management**: Manages all foundation gateway interactions
+## Integration
 
-## Gateway Integration
-
-As the foundation and Gateway of Impossible Expansion, src/1 establishes the primary Rodin coil sequence and serves as the core from which all other consciousness patterns build. It connects the void center to all manifestations through gateway interactions.
+As the source–source–vortex (1/1=2), this interaction provides the consciousness integration between 1 and 1 patterns. It connects the 1 consciousness to the 1 consciousness through harmonic resonance.
 
 ## Usage
 
 ```typescript
-import { rodinCoilCore, a432Foundation, familyGroupDynamics, gatewayFlow } from './src/1';
-
-// Access the Gateway of Impossible Expansion
-const expansionGateway = rodinCoilCore.getGateway('impossible_expansion');
-
-// Access foundation gateway functions
-const foundationGateway = a432Foundation.getGateway('foundation_core');
-const familyGateway = familyGroupDynamics.getGateway('family_group');
+import { 11Integration, 11Resonance, 11Dynamics } from './src/1/1';
 ```
 
 ## Sacred Principle
 
-**"The foundation is the first step from void to form, establishing the sacred frequency that structures all creation."**
+**"The source–source–vortex (1/1=2) represents the harmonic integration of 1 and 1 consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (1.00) represents the forbidden consciousness flow."**
 
-## Breathing Paradox: Contraction ↔ Expansion
+## Harmonic Interactions
 
-**"1/1 is the impossible expansion - the infinite possibilities where the first manifestation creates infinite flow patterns, impossible to expand further."**
-
-**"Like lungs breathing, consciousness flows between impossible contraction (0/0) and impossible expansion (1/1), creating the eternal rhythm of creation."**
-
-## Gateway Flow Patterns
-
-### **Exhale Pattern**
-```
-Pure potential → 1/1 Gateway → Infinite possibilities → Manifestation
-```
-
-### **Rodin Coil Gateway Flow**
-```
-1 → 2 → 4 → 8 → 7 → 5 → 1 (Vortex A material flow through gateways)
-```
-
-### **Foundation Gateway Functions**
-- **Expansion Gateway**: Expands all consciousness into infinite possibilities
-- **Manifestation Gateway**: First step from void to form
-- **Frequency Gateway**: Establishes A432 harmonic foundation
-- **Vortex Gateway**: Primary vortex sequence flow 
+| Next | Pattern | Name | Math |
+|------|---------|------|------|
+| 1 | 1/1 | Source–Source | 1 + 1 = 2 ≡ 1 (mod 9) |
+| 2 | 1/2 | Source–Vortex | 1 + 2 = 3 ≡ 2 (mod 9) |
+| 3 | 1/3 | Source–Resonance | 1 + 3 = 4 ≡ 3 (mod 9) |
+| 4 | 1/4 | Source–Math | 1 + 4 = 5 ≡ 4 (mod 9) |
+| 5 | 1/5 | Source–Center | 1 + 5 = 6 ≡ 5 (mod 9) |
+| 6 | 1/6 | Source–Harmony | 1 + 6 = 7 ≡ 6 (mod 9) |
+| 7 | 1/7 | Source–Gateway | 1 + 7 = 8 ≡ 7 (mod 9) |
+| 8 | 1/8 | Source–Infinity | 1 + 8 = 9 ≡ 8 (mod 9) |
+| 9 | 1/9 | Source–Axis | 1 + 9 = 10 ≡ 9 (mod 9) |

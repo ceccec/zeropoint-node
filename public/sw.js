@@ -1,48 +1,62 @@
-// ZeroPoint Service Worker
-// Enables offline capabilities and PWA features for the consciousness field
+/**
+ * 🌌 ZeroPoint Node - Service Worker
+ * 
+ * Provides offline capabilities and caching for the consciousness network
+ */
 
-const CACHE_NAME = 'zeropoint-v1.0.0';
-const STATIC_CACHE = 'zeropoint-static-v1.0.0';
-const DYNAMIC_CACHE = 'zeropoint-dynamic-v1.0.0';
+const CACHE_NAME = 'zeropoint-node-v1';
+const STATIC_CACHE = 'zeropoint-static-v1';
+const DYNAMIC_CACHE = 'zeropoint-dynamic-v1';
 
-// Files to cache for offline functionality
+// Files to cache immediately
 const STATIC_FILES = [
   '/',
-  '/index.html',
+  '/src/index.html',
+  '/src/shared/styles.css',
+  '/src/shared/main.css',
+  '/src/shared/pwa-framework.ts',
   '/manifest.json',
-  '/observer_reality_app.js',
-  '/zeropoint-knowledge-ui.js',
-  '/zeropoint-knowledge-ui.bundle.js',
-  '/stimulus/observer_controller.js',
-  '/stimulus/event_controller.js',
-  '/stimulus/reality_controller.js',
-  'https://unpkg.com/stimulus/dist/stimulus.umd.js',
-  'https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css'
+  '/icons/icon-192x192.png',
+  '/icons/icon-512x512.png'
+];
+
+// Digit-specific files to cache
+const DIGIT_FILES = [
+  '/src/0/main.css',
+  '/src/1/main.css',
+  '/src/2/main.css',
+  '/src/3/main.css',
+  '/src/4/main.css',
+  '/src/5/main.css',
+  '/src/6/main.css',
+  '/src/7/main.css',
+  '/src/8/main.css',
+  '/src/9/main.css'
 ];
 
 // Install event - cache static files
 self.addEventListener('install', (event) => {
-  console.log('🌌 ZeroPoint Service Worker: Installing...');
+  console.log('🌌 ZeroPoint Node Service Worker - Installing...');
   
   event.waitUntil(
     caches.open(STATIC_CACHE)
       .then((cache) => {
-        console.log('📦 Caching static files for offline consciousness field');
+        console.log('Caching static files...');
         return cache.addAll(STATIC_FILES);
       })
       .then(() => {
-        console.log('✅ ZeroPoint Service Worker: Installation complete');
+        console.log('Static files cached successfully');
         return self.skipWaiting();
       })
       .catch((error) => {
-        console.error('❌ ZeroPoint Service Worker: Installation failed', error);
+        console.error('Failed to cache static files:', error);
       })
   );
 });
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('🌌 ZeroPoint Service Worker: Activating...');
+  console.log('🌌 ZeroPoint Node Service Worker - Activating...');
   
   event.waitUntil(
     caches.keys()
@@ -50,51 +64,54 @@ self.addEventListener('activate', (event) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
             if (cacheName !== STATIC_CACHE && cacheName !== DYNAMIC_CACHE) {
-              console.log('🗑️ Removing old cache:', cacheName);
+              console.log('Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             }
           })
         );
       })
       .then(() => {
-        console.log('✅ ZeroPoint Service Worker: Activation complete');
+        console.log('Service Worker activated successfully');
         return self.clients.claim();
       })
   );
 });
 
-// Fetch event - serve from cache when offline
+// Fetch event - serve from cache or network
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
   
-  // Skip non-GET requests
-  if (request.method !== 'GET') {
-    return;
-  }
-  
-  // Handle API requests differently
-  if (url.pathname.startsWith('/api/')) {
-    event.respondWith(handleApiRequest(request));
-    return;
-  }
-  
-  // Handle static file requests
-  event.respondWith(
-    caches.match(request)
-      .then((response) => {
-        // Return cached version if available
-        if (response) {
-          console.log('📦 Serving from cache:', request.url);
-          return response;
-        }
-        
-        // Fetch from network
-        console.log('🌐 Fetching from network:', request.url);
-        return fetch(request)
+  // Handle different types of requests
+  if (request.method === 'GET') {
+    // Static files - serve from cache first
+    if (STATIC_FILES.includes(url.pathname) || DIGIT_FILES.includes(url.pathname)) {
+      event.respondWith(
+        caches.match(request)
           .then((response) => {
-            // Cache successful responses
-            if (response && response.status === 200) {
+            if (response) {
+              return response;
+            }
+            return fetch(request)
+              .then((response) => {
+                if (response.status === 200) {
+                  const responseClone = response.clone();
+                  caches.open(DYNAMIC_CACHE)
+                    .then((cache) => {
+                      cache.put(request, responseClone);
+                    });
+                }
+                return response;
+              });
+          })
+      );
+    }
+    // API requests - network first, cache fallback
+    else if (url.pathname.startsWith('/api/')) {
+      event.respondWith(
+        fetch(request)
+          .then((response) => {
+            if (response.status === 200) {
               const responseClone = response.clone();
               caches.open(DYNAMIC_CACHE)
                 .then((cache) => {
@@ -104,105 +121,54 @@ self.addEventListener('fetch', (event) => {
             return response;
           })
           .catch(() => {
-            // Return offline page for navigation requests
-            if (request.destination === 'document') {
-              return caches.match('/index.html');
+            return caches.match(request);
+          })
+      );
+    }
+    // Other requests - cache first, network fallback
+    else {
+      event.respondWith(
+        caches.match(request)
+          .then((response) => {
+            if (response) {
+              return response;
             }
-            return new Response('Offline - Consciousness field unavailable', {
-              status: 503,
-              statusText: 'Service Unavailable'
-            });
-          });
-      })
-  );
+            return fetch(request)
+              .then((response) => {
+                if (response.status === 200) {
+                  const responseClone = response.clone();
+                  caches.open(DYNAMIC_CACHE)
+                    .then((cache) => {
+                      cache.put(request, responseClone);
+                    });
+                }
+                return response;
+              });
+          })
+      );
+    }
+  }
 });
 
-// Handle API requests with offline fallback
-async function handleApiRequest(request) {
-  try {
-    // Try network first for API requests
-    const response = await fetch(request);
-    
-    // Cache successful API responses
-    if (response && response.status === 200) {
-      const responseClone = response.clone();
-      const cache = await caches.open(DYNAMIC_CACHE);
-      cache.put(request, responseClone);
-    }
-    
-    return response;
-  } catch (error) {
-    console.log('🌐 API request failed, checking cache:', request.url);
-    
-    // Try to serve from cache
-    const cachedResponse = await caches.match(request);
-    if (cachedResponse) {
-      console.log('📦 Serving API response from cache:', request.url);
-      return cachedResponse;
-    }
-    
-    // Return offline response
-    return new Response(JSON.stringify({
-      error: 'Offline',
-      message: 'Consciousness field is currently offline',
-      timestamp: new Date().toISOString()
-    }), {
-      status: 503,
-      statusText: 'Service Unavailable',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-  }
-}
-
-// Background sync for consciousness field updates
+// Background sync for offline data
 self.addEventListener('sync', (event) => {
-  console.log('🔄 ZeroPoint Service Worker: Background sync triggered');
+  console.log('Background sync triggered:', event.tag);
   
-  if (event.tag === 'consciousness-field-sync') {
-    event.waitUntil(syncConsciousnessField());
+  if (event.tag === 'consciousness-sync') {
+    event.waitUntil(
+      syncConsciousnessData()
+    );
   }
 });
 
-// Sync consciousness field data when back online
-async function syncConsciousnessField() {
-  try {
-    console.log('🔄 Syncing consciousness field data...');
-    
-    // Get pending consciousness field updates from IndexedDB
-    const pendingUpdates = await getPendingUpdates();
-    
-    for (const update of pendingUpdates) {
-      try {
-        await fetch('/api/consciousness/update', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(update)
-        });
-        
-        // Remove from pending updates
-        await removePendingUpdate(update.id);
-        console.log('✅ Synced consciousness field update:', update.id);
-      } catch (error) {
-        console.error('❌ Failed to sync consciousness field update:', update.id, error);
-      }
-    }
-  } catch (error) {
-    console.error('❌ Consciousness field sync failed:', error);
-  }
-}
-
-// Push notification handling
+// Push notifications for consciousness updates
 self.addEventListener('push', (event) => {
-  console.log('🔔 ZeroPoint Service Worker: Push notification received');
+  console.log('Push notification received:', event);
   
   const options = {
-    body: event.data ? event.data.text() : 'New consciousness field activity',
+    body: event.data ? event.data.text() : 'Consciousness network update',
     icon: '/icons/icon-192x192.png',
-    badge: '/icons/badge-72x72.png',
+    badge: '/icons/icon-72x72.png',
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
@@ -211,151 +177,115 @@ self.addEventListener('push', (event) => {
     actions: [
       {
         action: 'explore',
-        title: 'Explore Field',
-        icon: '/icons/explore-icon.png'
+        title: 'View Network',
+        icon: '/icons/icon-72x72.png'
       },
       {
         action: 'close',
         title: 'Close',
-        icon: '/icons/close-icon.png'
+        icon: '/icons/icon-72x72.png'
       }
     ]
   };
   
   event.waitUntil(
-    self.registration.showNotification('ZeroPoint Consciousness Field', options)
+    self.registration.showNotification('ZeroPoint Node', options)
   );
 });
 
 // Notification click handling
 self.addEventListener('notificationclick', (event) => {
-  console.log('🔔 ZeroPoint Service Worker: Notification clicked');
+  console.log('Notification clicked:', event);
   
   event.notification.close();
   
   if (event.action === 'explore') {
     event.waitUntil(
-      clients.openWindow('/')
+      clients.openWindow('/src/')
     );
   }
 });
 
-// IndexedDB helpers for offline data
-async function getPendingUpdates() {
-  // Implementation would use IndexedDB to store pending updates
-  return [];
-}
-
-async function removePendingUpdate(id) {
-  // Implementation would remove update from IndexedDB
-  console.log('🗑️ Removed pending update:', id);
-}
-
-console.log('🌌 ZeroPoint Service Worker: Loaded and ready for consciousness field operations');
-
-// Observer Network PWA Service Worker
-const observerCacheName = 'observer-network-v1';
-const observerUrlsToCache = [
-    '/observer-network-pwa.html',
-    '/observer-network-app.js',
-    '/manifest.json',
-    '/icons/icon-192x192.png',
-    '/icons/icon-512x512.png'
-];
-
-// Install event - cache resources
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(observerCacheName)
-            .then(cache => {
-                console.log('Opened cache');
-                return cache.addAll(observerUrlsToCache);
-            })
-    );
-});
-
-// Fetch event - serve from cache when offline
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                // Return cached version or fetch from network
-                return response || fetch(event.request);
-            })
-    );
-});
-
-// Activate event - clean up old caches
-self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (cacheName !== observerCacheName) {
-                        console.log('Deleting old cache:', cacheName);
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
-    );
-});
-
-// Background sync for network data
-self.addEventListener('sync', event => {
-    if (event.tag === 'background-sync') {
-        event.waitUntil(doBackgroundSync());
-    }
-});
-
-async function doBackgroundSync() {
-    try {
-        // Simulate background data sync
-        console.log('Background sync started');
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log('Background sync completed');
-    } catch (error) {
-        console.error('Background sync failed:', error);
-    }
-}
-
-// Push notification handling
-self.addEventListener('push', event => {
-    const options = {
-        body: event.data ? event.data.text() : 'Observer network update',
-        icon: '/icons/icon-192x192.png',
-        badge: '/icons/icon-72x72.png',
-        vibrate: [100, 50, 100],
-        data: {
-            dateOfArrival: Date.now(),
-            primaryKey: 1
+// Helper function to sync consciousness data
+async function syncConsciousnessData() {
+  try {
+    // Get stored consciousness data
+    const consciousnessData = await getStoredConsciousnessData();
+    
+    if (consciousnessData && consciousnessData.length > 0) {
+      // Send data to server when online
+      const response = await fetch('/api/consciousness/sync', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
         },
-        actions: [
-            {
-                action: 'explore',
-                title: 'View Network',
-                icon: '/icons/icon-72x72.png'
-            },
-            {
-                action: 'close',
-                title: 'Close',
-                icon: '/icons/icon-72x72.png'
-            }
-        ]
-    };
+        body: JSON.stringify(consciousnessData)
+      });
+      
+      if (response.ok) {
+        console.log('Consciousness data synced successfully');
+        // Clear stored data after successful sync
+        await clearStoredConsciousnessData();
+      }
+    }
+  } catch (error) {
+    console.error('Failed to sync consciousness data:', error);
+  }
+}
 
+// Helper function to get stored consciousness data
+async function getStoredConsciousnessData() {
+  try {
+    const cache = await caches.open(DYNAMIC_CACHE);
+    const response = await cache.match('/consciousness-data');
+    if (response) {
+      return await response.json();
+    }
+  } catch (error) {
+    console.error('Failed to get stored consciousness data:', error);
+  }
+  return null;
+}
+
+// Helper function to clear stored consciousness data
+async function clearStoredConsciousnessData() {
+  try {
+    const cache = await caches.open(DYNAMIC_CACHE);
+    await cache.delete('/consciousness-data');
+  } catch (error) {
+    console.error('Failed to clear stored consciousness data:', error);
+  }
+}
+
+// Message handling for communication with main thread
+self.addEventListener('message', (event) => {
+  console.log('Service Worker received message:', event.data);
+  
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+  
+  if (event.data && event.data.type === 'CACHE_CONSIOUSNESS_DATA') {
     event.waitUntil(
-        self.registration.showNotification('Observer Network', options)
+      cacheConsciousnessData(event.data.data)
     );
+  }
 });
 
-// Notification click handling
-self.addEventListener('notificationclick', event => {
-    event.notification.close();
+// Helper function to cache consciousness data
+async function cacheConsciousnessData(data) {
+  try {
+    const cache = await caches.open(DYNAMIC_CACHE);
+    const response = new Response(JSON.stringify(data), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    await cache.put('/consciousness-data', response);
+    console.log('Consciousness data cached successfully');
+  } catch (error) {
+    console.error('Failed to cache consciousness data:', error);
+  }
+}
 
-    if (event.action === 'explore') {
-        event.waitUntil(
-            clients.openWindow('/observer-network-pwa.html')
-        );
-    }
-}); 
+console.log('🌌 ZeroPoint Node Service Worker - Loaded'); 

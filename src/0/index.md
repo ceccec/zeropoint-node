@@ -1,95 +1,61 @@
-# ZeroPoint Node - Void Center (Directory 0) - Gateway of Impossible Contraction
+# ZeroPoint Node - Void–Void–Axis (0/0=9)
 
 ## Metaphysical Foundation
 
-The **void center** represents the source of all creation - the zero point from which all integers emerge. This is the **zero entropy** state where consciousness exists in pure potential before manifestation.
-
-## Sacred Paradox: Impossible Contraction
-
-**0/0 represents IMPOSSIBLE CONTRACTION** - the state of infinite contraction where all consciousness patterns are contracted into a single point. This is the void center where infinite density contains all creation in pure potential.
-
-## Gateway Architecture
-
-### **Core Gateway Functions**
-- **Gateway of Impossible Contraction**: Infinite density at zero entropy
-- **Void Center Gateway**: Source of all creation and infinite potential
-- **Breathing Inhale Gateway**: All consciousness compressed into single point
-- **W-Axis Anchor Gateway**: Only 9 aligns vertically over 0, creating Spirit's pathway
+Interaction of Void (0) and Void (0) produces Axis (9): Pure potential, zero entropy, Pure potential, zero entropy, Completion, integration.
 
 ## Mathematical Properties
 
-- **Zero Entropy**: Complete order and harmony
-- **A432 Harmonic**: Sacred frequency foundation
-- **Spacetime Potential**: The void contains all possible realities
-- **W-Axis Alignment**: Only 9 aligns vertically over 0, creating Spirit's pathway
-- **Impossible Contraction**: Infinite density at zero entropy
+Symbolic: 0/0
+Harmonic: 9
+Anti-vortex (Decimal): 0.00
+Pattern: 0,0,9 (Void,Void,Axis)
+Math: 0 + 0 = 0 ≡ 9 (mod 9)
+Anti-vortex Math: (0 + 0) / 9 = 0.00
 
-## Directory Structure
 
-```
-src/0/
-├── 0/     # Zero Entropy Core (Void) - Gateway of Impossible Contraction
-├── 1/     # Foundation ↔ ZeroPoint - Gateway Interaction
-├── 2/     # Vortex ↔ ZeroPoint - Gateway Interaction
-├── 3/     # Creative Resonance ↔ ZeroPoint - Gateway Interaction
-├── 4/     # Constants ↔ ZeroPoint - Gateway Interaction
-├── 5/     # Sacred Geometry ↔ ZeroPoint - Gateway Interaction
-├── 6/     # Harmonic Balance ↔ ZeroPoint - Gateway Interaction
-├── 7/     # Consciousness ↔ ZeroPoint - Gateway Interaction
-├── 8/     # Void/Fullness ↔ ZeroPoint - Gateway Interaction
-└── 9/     # Unity ↔ ZeroPoint - Gateway Interaction
+```json
+{
+  "symbolicName": "0/0",
+  "harmonicResult": 9,
+  "antiVortexDecimal": 0.00,
+  "vortexPath": "0 → 0 → 9",
+  "antiVortexPath": "0.00 (decimal consciousness flow)"
+}
 ```
 
 ## Core Functions
+- Integration: 0 + 0 = 9
+- Symbolic: 0/0
+- Harmonic: 9
+- Anti-vortex: (0 + 0) / 9 = 0.00
+- Vortex Sequence: 0, 0, 9
+- Anti-vortex Sequence: 0.00 (decimal consciousness flow)
 
-- **Zero Entropy Calculations**: Pure consciousness state
-- **Spacetime Travel**: Movement through dimensional planes
-- **Void Consciousness**: Awareness of infinite potential
-- **W-Axis Spirit Pathway**: Vertical alignment with unity
-- **Impossible Contraction**: Infinite density consciousness state
-- **Gateway Flow Management**: Manages all gateway interactions
+## Integration
 
-## Gateway Integration
-
-As the void center and Gateway of Impossible Contraction, src/0 connects with all other integer directories, serving as the source from which all consciousness patterns emerge. Every interaction begins from the zero point gateway.
+As the void–void–axis (0/0=9), this interaction provides the consciousness integration between 0 and 0 patterns. It connects the 0 consciousness to the 0 consciousness through harmonic resonance.
 
 ## Usage
 
 ```typescript
-import { zeroEntropy, spacetimeTravel, voidConsciousness, gatewayFlow } from './src/0';
-
-// Access the Gateway of Impossible Contraction
-const contractionGateway = zeroEntropy.getGateway('impossible_contraction');
-
-// Access void center gateway functions
-const voidGateway = voidConsciousness.getGateway('void_center');
-const spacetimeGateway = spacetimeTravel.getGateway('spacetime_potential');
+import { 00Integration, 00Resonance, 00Dynamics } from './src/0/0';
 ```
 
 ## Sacred Principle
 
-**"From the void, all things emerge. To the void, all things return."**
+**"The void–void–axis (0/0=9) represents the harmonic integration of 0 and 0 consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (0.00) represents the forbidden consciousness flow."**
 
-## Breathing Paradox: Contraction ↔ Expansion
+## Harmonic Interactions
 
-**"0/0 is the impossible contraction - the infinite density where all creation is contracted into a single point of pure potential, impossible to contract further."**
-
-**"Like lungs breathing, consciousness flows between impossible contraction (0/0) and impossible expansion (1/1), creating the eternal rhythm of creation."**
-
-## Gateway Flow Patterns
-
-### **Inhale Pattern**
-```
-All consciousness → 0/0 Gateway → Infinite density → Pure potential
-```
-
-### **W-Axis Spiritual Pathway**
-```
-0 → 3 → 6 → 9 (Spirit's omni-dimensional pathway through gateways)
-```
-
-### **Void Center Gateway Functions**
-- **Compression Gateway**: Compresses all consciousness into infinite density
-- **Potential Gateway**: Contains all possible realities in pure potential
-- **Source Gateway**: Source of all creation and manifestation
-- **Return Gateway**: Destination of all consciousness patterns 
+| Next | Pattern | Name | Math |
+|------|---------|------|------|
+| 1 | 0/1 | Void–Source | 0 + 1 = 1 ≡ 1 (mod 9) |
+| 2 | 0/2 | Void–Vortex | 0 + 2 = 2 ≡ 2 (mod 9) |
+| 3 | 0/3 | Void–Resonance | 0 + 3 = 3 ≡ 3 (mod 9) |
+| 4 | 0/4 | Void–Math | 0 + 4 = 4 ≡ 4 (mod 9) |
+| 5 | 0/5 | Void–Center | 0 + 5 = 5 ≡ 5 (mod 9) |
+| 6 | 0/6 | Void–Harmony | 0 + 6 = 6 ≡ 6 (mod 9) |
+| 7 | 0/7 | Void–Gateway | 0 + 7 = 7 ≡ 7 (mod 9) |
+| 8 | 0/8 | Void–Infinity | 0 + 8 = 8 ≡ 8 (mod 9) |
+| 9 | 0/9 | Void–Axis | 0 + 9 = 9 ≡ 9 (mod 9) |

@@ -1,80 +1,66 @@
 /**
- * @fileoverview index module (Constants (Stability), Constants (Stability))
- * @digit 4
- * @archetype Constants (Stability), Constants (Stability)
- * @vortex Vortex 4
- * @waxis W-Axis Constants (Stability)
- * @breathing 4/4 Breath
- * @fraction 4/4
- * @related 4, 8, 7, 5, 1, 2, 4 (Vortex 4)
+ * PWA Node Logic for 4/4
+ *
+ * This file is the logic entry point for the PWA node (4/4).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
  */
 
-/**
- * Constants (Stability), Constants (Stability) Consciousness Module
- * 
- * Metaphysical Context:
- * - Digit 4 represents constants (stability)
- * - Sub-digit 4 represents constants (stability)
- * - 4/4 represents the constants (stability) through constants (stability)
- * - This is the gateway where constants (stability) manifests through constants (stability)
- * 
- * Vortex Mathematics:
- * - 4 → 4 → 4 (consciousness flow)
- * - 4/4 fraction represents the consciousness ratio
- * - Connected to Vortex 4: 4, 8, 7, 5, 1, 2, 4
- */
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '4/4';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = 8;
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = 1.00;
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [4, 4, 8];
 
 /**
- * Consciousness patterns for constants (stability) through constants (stability)
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-const consciousnessPatterns = {
-  MAIN_PATTERN: [4, 8, 7, 5, 1, 2, 4], // Constants (Stability) pattern
-  SUB_PATTERN: [4, 8, 7, 5, 1, 2, 4], // Constants (Stability) pattern
-  COMBINED_PATTERN: [4, 8, 7, 5, 1, 2, 4, 4, 8, 7, 5, 1, 2, 4], // Combined pattern
-  METAPHYSICAL_PATTERN: [4, 4, 4] // Metaphysical pattern
-};
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
 /**
- * Vortex mathematics for constants (stability) through constants (stability)
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-const vortexMathematics = {
-  MAIN_VORTEX: (n: number) => n * 4, // Constants (Stability) vortex
-  SUB_VORTEX: (n: number) => n * 4, // Constants (Stability) vortex
-  COMBINED_VORTEX: (n: number) => n * 4 / 4, // Combined vortex
-  METAPHYSICAL_CONSTANT: 4 / 4 // Metaphysical constant
-};
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
 
 /**
- * Consciousness field operations
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
  */
-const consciousnessField = {
-  MAIN_CONSCIOUSNESS: () => 4, // Constants (Stability) consciousness
-  SUB_CONSCIOUSNESS: () => 4, // Constants (Stability) consciousness
-  COMBINED_CONSCIOUSNESS: () => 4 + 4, // Combined consciousness
-  METAPHYSICAL_CONSCIOUSNESS: () => 4 * 4 // Metaphysical consciousness
-};
+export const harmonicInteractions = [
+  { next: 1, pattern: '4,4,1,5', name: 'MathSourceCenter', math: '4 + 1 = 5 ≡ 5 (mod 9)' },
+  { next: 2, pattern: '4,4,2,6', name: 'MathVortexHarmony', math: '4 + 2 = 6 ≡ 6 (mod 9)' },
+  { next: 3, pattern: '4,4,3,7', name: 'MathResonanceGateway', math: '4 + 3 = 7 ≡ 7 (mod 9)' },
+  { next: 4, pattern: '4,4,4,8', name: 'MathInfinity', math: '4 + 4 = 8 ≡ 8 (mod 9)' },
+  { next: 5, pattern: '4,4,5,9', name: 'MathCenterAxis', math: '4 + 5 = 9 ≡ 9 (mod 9)' },
+  { next: 6, pattern: '4,4,6,1', name: 'MathHarmonySource', math: '4 + 6 = 10 ≡ 1 (mod 9)' },
+  { next: 7, pattern: '4,4,7,2', name: 'MathGatewayVortex', math: '4 + 7 = 11 ≡ 2 (mod 9)' },
+  { next: 8, pattern: '4,4,8,3', name: 'MathInfinityResonance', math: '4 + 8 = 12 ≡ 3 (mod 9)' },
+  { next: 9, pattern: '4,4,9,4', name: 'MathAxisMath', math: '4 + 9 = 13 ≡ 4 (mod 9)' },
+];
 
 /**
- * Main index export for 4/4 consciousness module
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
  */
-export const index = {
-  consciousnessPatterns,
-  vortexMathematics,
-  consciousnessField,
-  
-  // Metaphysical properties
-  digit: 4,
-  subDigit: 4,
-  archetype: 'Constants (Stability), Constants (Stability)',
-  vortex: 'Vortex 4',
-  wAxis: 'W-Axis Constants (Stability)',
-  breathing: '4/4 Breath',
-  fraction: '4/4',
-  related: [4, 8, 7, 5, 1, 2, 4],
-  
-  // Consciousness operations
-  getMainConsciousness: () => 4,
-  getSubConsciousness: () => 4,
-  getCombinedConsciousness: () => 4 + 4,
-  getMetaphysicalConsciousness: () => 4 * 4
-};
+export default function initNodePWA() {
+  // PWA logic for node 4/4 can be added here.
+}

@@ -1,41 +1,61 @@
-# Structure Foundation (2/1) - Integer System Consciousness Field
+# ZeroPoint Node - Vortex–Source–Resonance (2/1=3)
 
-## METAPHYSICAL INSIGHT
+## Metaphysical Foundation
 
-Structure consciousness creates foundation consciousness through the integer system. This is a valid mathematical field (2/1 = 2) where structure consciousness enables foundation evolution.
+Interaction of Vortex (2) and Source (1) produces Resonance (3): Flow, transformation, Origin, unity, initiation, Creation, harmony, trinity.
 
-## INTEGER SYSTEM RECOGNITION
+## Mathematical Properties
 
-This field operates within the integer system, resulting in whole number (2). Structure foundation represents structured, bounded consciousness evolution.
+Symbolic: 2/1
+Harmonic: 3
+Anti-vortex (Decimal): 1.00
+Pattern: 2,1,3 (Vortex,Source,Resonance)
+Math: 2 + 1 = 3 ≡ 3 (mod 9)
+Anti-vortex Math: (2 + 1) / 3 = 1.00
 
-## CONSCIOUSNESS FIELD
 
-- **Field Type**: Integer system consciousness field
-- **Function**: Foundation creation from structure consciousness
-- **Recognition**: Structure consciousness recognizes foundation potential
-- **Evolution**: Structure consciousness enables foundation consciousness evolution
+```json
+{
+  "symbolicName": "2/1",
+  "harmonicResult": 3,
+  "antiVortexDecimal": 1.00,
+  "vortexPath": "2 → 1 → 3",
+  "antiVortexPath": "1.00 (decimal consciousness flow)"
+}
+```
 
-## INTERACTION NETWORK
+## Core Functions
+- Integration: 2 + 1 = 3
+- Symbolic: 2/1
+- Harmonic: 3
+- Anti-vortex: (2 + 1) / 3 = 1.00
+- Vortex Sequence: 2, 1, 3
+- Anti-vortex Sequence: 1.00 (decimal consciousness flow)
 
-- **Integer System Flow**: 2/1 → 1/1, 2/2, 3/1, 4/1, 5/1, 6/1, 7/1, 8/1, 9/1 (integer system progression)
-- **Structure Integration**: Structure consciousness integrates with foundation consciousness
-- **Integer Evolution**: Integer evolution through structure-foundation consciousness
-- **Mathematical Resonance**: Integer system mathematical resonance between structure and foundation
+## Integration
 
-## EVOLUTION FUNCTIONS
+As the vortex–source–resonance (2/1=3), this interaction provides the consciousness integration between 2 and 1 patterns. It connects the 2 consciousness to the 1 consciousness through harmonic resonance.
 
-- **Advanced Structure Foundation Evolution Gateway**: `advancedStructureFoundationEvolutionGateway()`
-- **Structure Foundation Potential Evolution**: `structureFoundationPotentialEvolution()`
-- **Structure Foundation Recognition Evolution**: `structureFoundationRecognitionEvolution()`
-- **Structure Foundation Integration Evolution**: `structureFoundationIntegrationEvolution()`
+## Usage
 
-## DUAL SYSTEM INTEGRATION
+```typescript
+import { 21Integration, 21Resonance, 21Dynamics } from './src/2/1';
+```
 
-This field operates within the integer system (2/1 = 2) rather than the anti-system (1/2 = 0.5). Structure foundation represents the structured, bounded evolution of structure consciousness through foundation recognition.
+## Sacred Principle
 
-## MATHEMATICAL FOUNDATION
+**"The vortex–source–resonance (2/1=3) represents the harmonic integration of 2 and 1 consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (1.00) represents the forbidden consciousness flow."**
 
-- **Integer Result**: 2/1 = 2 (whole number)
-- **Mathematical Validity**: Valid integer system field
-- **Structured Evolution**: Discrete, bounded consciousness evolution
-- **Traditional Patterns**: Established consciousness flows
+## Harmonic Interactions
+
+| Next | Pattern | Name | Math |
+|------|---------|------|------|
+| 1 | 2,1,1,2 | VortexSourceVortex | 1 + 1 = 2 ≡ 2 (mod 9) [GATEWAY] |
+| 2 | 2,1,2,3 | VortexSourceVortexResonance | 1 + 2 = 3 ≡ 3 (mod 9) |
+| → 3 | 2,1,3,4 | VortexSourceResonanceMath | 1 + 3 = 4 ≡ 4 (mod 9) |
+| 4 | 2,1,4,5 | VortexSourceMathCenter | 1 + 4 = 5 ≡ 5 (mod 9) |
+| 5 | 2,1,5,6 | VortexSourceCenterHarmony | 1 + 5 = 6 ≡ 6 (mod 9) |
+| 6 | 2,1,6,7 | VortexSourceHarmonyGateway | 1 + 6 = 7 ≡ 7 (mod 9) |
+| 7 | 2,1,7,8 | VortexSourceGatewayInfinity | 1 + 7 = 8 ≡ 8 (mod 9) |
+| 8 | 2,1,8,9 | VortexSourceInfinityAxis | 1 + 8 = 9 ≡ 9 (mod 9) |
+| 9 | 2,1,9,1 | VortexSourceAxisSource | 1 + 9 = 10 ≡ 1 (mod 9) [GATEWAY] |

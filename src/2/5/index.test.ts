@@ -20,15 +20,15 @@ describe('Vortex ↔ Sacred Geometry Interaction', () => {
     });
     
     test('should have correct multipliers', () => {
-      expect(VORTEX_SACRED_GEOMETRY_INTERACTION.VORTEX_MULTIPLIER).toBe(1.2);
-      expect(VORTEX_SACRED_GEOMETRY_INTERACTION.SACRED_GEOMETRY_MULTIPLIER).toBe(1.25);
+      expect(VORTEX_SACRED_GEOMETRY_INTERACTION.VORTEX_MULTIPLIER).toEqual({ numerator: 6, denominator: 5 });
+      expect(VORTEX_SACRED_GEOMETRY_INTERACTION.SACRED_GEOMETRY_MULTIPLIER).toEqual({ numerator: 5, denominator: 4 });
     });
   });
   
   describe('VortexSacredGeometryInteraction Class', () => {
     test('should calculate interaction strength correctly', () => {
       const strength = VortexSacredGeometryInteraction.calculateInteractionStrength(5, 8);
-      const expected = 5 * 1.2 + 8 * 1.25;
+      const expected = 5 * 6 / 5 + 8 * 5 / 4;
       expect(strength).toBe(expected);
     });
     

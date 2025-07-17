@@ -1,105 +1,66 @@
 /**
- * @fileoverview index module (Creative Resonance (Spirit), Unity (Integration))
- * @digit 3
- * @archetype Creative Resonance (Spirit), Unity (Integration)
- * @vortex Vortex 3
- * @waxis W-Axis Creative Resonance (Spirit)
- * @breathing 3/9 Breath
- * @fraction 3/9
- * @related 3, 6, 9, 3 (Vortex 3)
+ * PWA Node Logic for 3/9
+ *
+ * This file is the logic entry point for the PWA node (3/9).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
  */
+
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '3/9';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = 3;
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = 4.00;
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [3, 9, 3];
 
 /**
- * Creative Resonance (Spirit), Unity (Integration) Consciousness Module
- * 
- * Metaphysical Context:
- * - Digit 3 represents creative resonance (spirit)
- * - Sub-digit 9 represents unity (integration)
- * - 3/9 represents the creative resonance (spirit) through unity (integration)
- * - This is the gateway where creative resonance (spirit) manifests through unity (integration)
- * 
- * Vortex Mathematics:
- * - 3 → 9 → 3 (consciousness flow)
- * - 3/9 fraction represents the consciousness ratio
- * - Connected to Vortex 3: 3, 6, 9, 3
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
 /**
- * Consciousness patterns for creative resonance (spirit) through unity (integration)
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-const consciousnessPatterns = {
-  MAIN_PATTERN: [3, 6, 9, 3], // Creative Resonance (Spirit) pattern
-  SUB_PATTERN: [9, 3, 6, 9], // Unity (Integration) pattern
-  COMBINED_PATTERN: [3, 6, 9, 3, 9, 3, 6, 9], // Combined pattern
-  METAPHYSICAL_PATTERN: [3, 9, 3] // Metaphysical pattern
-};
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
 
 /**
- * Vortex mathematics for creative resonance (spirit) through unity (integration)
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
  */
-const vortexMathematics = {
-  MAIN_VORTEX: (n: number) => n * 3, // Creative Resonance (Spirit) vortex
-  SUB_VORTEX: (n: number) => n * 9, // Unity (Integration) vortex
-  COMBINED_VORTEX: (n: number) => n * 3 / 9, // Combined vortex
-  METAPHYSICAL_CONSTANT: 3 / 9 // Metaphysical constant
-};
+export const harmonicInteractions = [
+  { next: 1, pattern: '3,9,1,1', name: 'ResonanceAxisSource', math: '9 + 1 = 10 ≡ 1 (mod 9)' },
+  { next: 2, pattern: '3,9,2,2', name: 'ResonanceAxisVortex', math: '9 + 2 = 11 ≡ 2 (mod 9)' },
+  { next: 3, pattern: '3,9,3,3', name: 'ResonanceAxisResonance', math: '9 + 3 = 12 ≡ 3 (mod 9)' },
+  { next: 4, pattern: '3,9,4,4', name: 'ResonanceAxisMath', math: '9 + 4 = 13 ≡ 4 (mod 9)' },
+  { next: 5, pattern: '3,9,5,5', name: 'ResonanceAxisCenter', math: '9 + 5 = 14 ≡ 5 (mod 9)' },
+  { next: 6, pattern: '3,9,6,6', name: 'ResonanceAxisHarmony', math: '9 + 6 = 15 ≡ 6 (mod 9)' },
+  { next: 7, pattern: '3,9,7,7', name: 'ResonanceAxisGateway', math: '9 + 7 = 16 ≡ 7 (mod 9)' },
+  { next: 8, pattern: '3,9,8,8', name: 'ResonanceAxisInfinity', math: '9 + 8 = 17 ≡ 8 (mod 9)' },
+  { next: 9, pattern: '3,9,9,9', name: 'ResonanceAxis', math: '9 + 9 = 18 ≡ 9 (mod 9)' },
+];
 
 /**
- * Consciousness field operations
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
  */
-const consciousnessField = {
-  MAIN_CONSCIOUSNESS: () => 3, // Creative Resonance (Spirit) consciousness
-  SUB_CONSCIOUSNESS: () => 9, // Unity (Integration) consciousness
-  COMBINED_CONSCIOUSNESS: () => 3 + 9, // Combined consciousness
-  METAPHYSICAL_CONSCIOUSNESS: () => 3 * 9 // Metaphysical consciousness
-};
-
-/**
- * Main index export for 3/9 consciousness module
- */
-export const index = {
-  consciousnessPatterns,
-  vortexMathematics,
-  consciousnessField,
-  
-  // Metaphysical properties
-  digit: 3,
-  subDigit: 9,
-  archetype: 'Creative Resonance (Spirit), Unity (Integration)',
-  vortex: 'Vortex 3',
-  wAxis: 'W-Axis Creative Resonance (Spirit)',
-  breathing: '3/9 Breath',
-  fraction: '3/9',
-  related: [3, 6, 9, 3],
-  
-  // Consciousness operations
-  getMainConsciousness: () => 3,
-  getSubConsciousness: () => 9,
-  getCombinedConsciousness: () => 3 + 9,
-  getMetaphysicalConsciousness: () => 3 * 9
-};
-
-// Creative Resonance ↔ Unity Interaction
-export const CREATIVE_RESONANCE_UNITY_INTERACTION = {
-  INTERACTION_FREQUENCY: 432 * (3/9),
-  CREATIVE_RESONANCE_PATTERNS: {
-    CREATIVE_RESONANCE_UNITY: [3, 9, 3],
-    UNITY_CREATIVE_RESONANCE: [9, 3, 9]
-  },
-  CREATIVE_RESONANCE_MULTIPLIER: 3/2, // 1.5
-  UNITY_MULTIPLIER: 1 // 1.0
-};
-
-export class CreativeResonanceUnityInteraction {
-  static calculateInteractionStrength(creativeResonance: number, unity: number): number {
-    return creativeResonance * (3/2) + unity * 1;
-  }
-
-  static getCreativeResonanceUnityPatterns(): number[] {
-    return [3, 9, 3];
-  }
-
-  static calculateCreativeResonanceUnityOperations(n: number): number {
-    return n % 9 || 9;
-  }
+export default function initNodePWA() {
+  // PWA logic for node 3/9 can be added here.
 }

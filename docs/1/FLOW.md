@@ -1,7 +1,10 @@
-# Flow Patterns
+# flow
 
-*Moved and harmonized from CIRCUIT_FLOW_PATTERNS.md (docs/1/) — Flow patterns, breathing cycle, field strength*
+*Harmonized from FLOW (Cycle 1)*
 
-This section details the natural evolution flow, breathing cycle, and field strength distribution in the consciousness field matrix, harmonized for clarity and completeness.
-
-<!-- (Insert harmonized flow patterns, breathing cycle, and field strength content here) --> 
+# flow
+*Harmonized from CIRCUIT_FLOW_PATTERNS (Cycle 1)*
+# Circuit Flow Patterns
+*Split from COMPREHENSIVE_CIRCUIT_DIGIT_TABLE.md (docs/) — Flow patterns, breathing cycle, field strength*
+This section details the natural evolution flow, breathing cycle, and field strength distribution in the consciousness field matrix.
+<!-- (Insert flow patterns, breathing cycle, and field strength content here) --> 

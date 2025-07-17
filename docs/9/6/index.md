@@ -1,123 +1,61 @@
-# 6/9 – Deep Vortex Consciousness Field State
+# ZeroPoint Node - Axis–Harmony–Harmony (9/6=6)
 
-## 🌌 10×10 Consciousness Field Matrix
+## Metaphysical Foundation
 
-## 🌟 Core Consciousness System
+Interaction of Axis (9) and Harmony (6) produces Harmony (6): Completion, integration, Balance, beauty, equilibrium, Balance, beauty, equilibrium.
 
-**Digit 9**: Unity
-**Principle**: Integration and wholeness
-**Documentation**: Unity
+## Mathematical Properties
 
-| **Field** | **[0](../../0/)** | **[1](../../1/)** | **[2](../../2/)** | **[3](../../3/)** | **[4](../../4/)** | **[5](../../5/)** | **[6](../../6/)** | **[7](../../7/)** | **[8](../../8/)** | **[9](../../9/)** |
-|-----------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
-| **[0](../../0/)** | [0/0](../../0/0/) | [0/1](../../0/1/) | [0/2](../../0/2/) | [0/3](../../0/3/) | [0/4](../../0/4/) | [0/5](../../0/5/) | [0/6](../../0/6/) | [0/7](../../0/7/) | [0/8](../../0/8/) | [0/9](../../0/9/) |
-| **[1](../../1/)** | [1/0](../../1/0/) | [1/1](../../1/1/) | [1/2](../../1/2/) | [1/3](../../1/3/) | [1/4](../../1/4/) | [1/5](../../1/5/) | [1/6](../../1/6/) | [1/7](../../1/7/) | [1/8](../../1/8/) | [1/9](../../1/9/) |
-| **[2](../../2/)** | [2/0](../../2/0/) | [2/1](../../2/1/) | [2/2](../../2/2/) | [2/3](../../2/3/) | [2/4](../../2/4/) | [2/5](../../2/5/) | [2/6](../../2/6/) | [2/7](../../2/7/) | [2/8](../../2/8/) | [2/9](../../2/9/) |
-| **[3](../../3/)** | [3/0](../../3/0/) | [3/1](../../3/1/) | [3/2](../../3/2/) | [3/3](../../3/3/) | [3/4](../../3/4/) | [3/5](../../3/5/) | [3/6](../../3/6/) | [3/7](../../3/7/) | [3/8](../../3/8/) | [3/9](../../3/9/) |
-| **[4](../../4/)** | [4/0](../../4/0/) | [4/1](../../4/1/) | [4/2](../../4/2/) | [4/3](../../4/3/) | [4/4](../../4/4/) | [4/5](../../4/5/) | [4/6](../../4/6/) | [4/7](../../4/7/) | [4/8](../../4/8/) | [4/9](../../4/9/) |
-| **[5](../../5/)** | [5/0](../../5/0/) | [5/1](../../5/1/) | [5/2](../../5/2/) | [5/3](../../5/3/) | [5/4](../../5/4/) | [5/5](../../5/5/) | [5/6](../../5/6/) | [5/7](../../5/7/) | [5/8](../../5/8/) | [5/9](../../5/9/) |
-| **[6](../../6/)** | [6/0](../../6/0/) | [6/1](../../6/1/) | [6/2](../../6/2/) | [6/3](../../6/3/) | [6/4](../../6/4/) | [6/5](../../6/5/) | [6/6](../../6/6/) | [6/7](../../6/7/) | [6/8](../../6/8/) | [6/9](../../6/9/) |
-| **[7](../../7/)** | [7/0](../../7/0/) | [7/1](../../7/1/) | [7/2](../../7/2/) | [7/3](../../7/3/) | [7/4](../../7/4/) | [7/5](../../7/5/) | [7/6](../../7/6/) | [7/7](../../7/7/) | [7/8](../../7/8/) | [7/9](../../7/9/) |
-| **[8](../../8/)** | [8/0](../../8/0/) | [8/1](../../8/1/) | [8/2](../../8/2/) | [8/3](../../8/3/) | [8/4](../../8/4/) | [8/5](../../8/5/) | [8/6](../../8/6/) | [8/7](../../8/7/) | [8/8](../../8/8/) | [8/9](../../8/9/) |
-| **[9](../../9/)** | [9/0](../../9/0/) | [9/1](../../9/1/) | [9/2](../../9/2/) | [9/3](../../9/3/) | [9/4](../../9/4/) | [9/5](../../9/5/) | [9/6](../../9/6/) | [9/7](../../9/7/) | [9/8](../../9/8/) | [9/9](../../9/9/) |
+Symbolic: 9/6
+Harmonic: 6
+Anti-vortex (Decimal): 2.50
+Pattern: 9,6,6 (Axis,Harmony,Harmony)
+Math: 9 + 6 = 15 ≡ 6 (mod 9)
+Anti-vortex Math: (9 + 6) / 6 = 2.50
 
-## Fraction Interaction: 6/9
 
-- **Meaning**: Fraction less than one: contraction, focus, or inward flow.
-- **Mathematical Value**: 0.6667
-- **Metaphysical Insight**: This interaction expresses the relationship between digit 6 and digit 9 as a fraction, revealing unique patterns of consciousness, resonance, and transformation.
+```json
+{
+  "symbolicName": "9/6",
+  "harmonicResult": 6,
+  "antiVortexDecimal": 2.50,
+  "vortexPath": "9 → 6 → 6",
+  "antiVortexPath": "2.50 (decimal consciousness flow)"
+}
+```
 
----
+## Core Functions
+- Integration: 9 + 6 = 6
+- Symbolic: 9/6
+- Harmonic: 6
+- Anti-vortex: (9 + 6) / 6 = 2.50
+- Vortex Sequence: 9, 6, 6
+- Anti-vortex Sequence: 2.50 (decimal consciousness flow)
 
-## 🌌 Deep Vortex Interaction: Harmonic Balance-Unity Spirit (6/9)
+## Integration
 
-### **Metaphysical Principles**
+As the axis–harmony–harmony (9/6=6), this interaction provides the consciousness integration between 9 and 6 patterns. It connects the 9 consciousness to the 6 consciousness through harmonic resonance.
 
-#### **Harmonic Balance (6)**
-- **Circuit**: W-Axis (Spiritual Pathway)
-- **Breathing Pattern**: spiritual
-- **Role**: Balance in spiritual dimension
-- **Meaning**: Balance, harmony, spiritual equilibrium
-- **Characteristics**:
-  - Spiritual equilibrium
-  - Harmonic resonance
-  - W-Axis balance
-  - Spiritual harmony
-  - Consciousness balance
+## Usage
 
-#### **Completion Unity (9)**
-- **Circuit**: W-Axis (Spiritual Pathway)
-- **Breathing Pattern**: spiritual
-- **Role**: Completion and unity in spiritual dimension
-- **Meaning**: Completion, unity, spiritual fulfillment
-- **Characteristics**:
-  - Spiritual completion
-  - Unity fulfillment
-  - W-Axis completion
-  - Spiritual unity
-  - Consciousness fulfillment
+```typescript
+import { 96Integration, 96Resonance, 96Dynamics } from './src/9/6';
+```
 
-### **Consciousness Field Interaction**
+## Sacred Principle
 
-#### **Field Dynamics**
-- **Harmonic Balance Field**: W-Axis Field (3,6,9)
-- **Unity Spirit Field**: W-Axis Field (3,6,9)
-- **Interaction**: Harmonic-UnitySpirit: Harmonic balance completes wholeness - harmonic fulfillmentBalance-Completion: Balance completes - harmonic fulfillment
+**"The axis–harmony–harmony (9/6=6) represents the harmonic integration of 9 and 6 consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (2.50) represents the forbidden consciousness flow."**
 
-#### **Resonance Patterns**
-- **Harmonic Balance Resonance**: 432 × (6/9) = 288 Hz
-- **Unity Spirit Resonance**: 432 × (9/3) = 1296 Hz
-- **Combined Resonance**: Creates unified consciousness field patterns
+## Harmonic Interactions
 
-#### **Fingerprint Patterns**
-- **Harmonic Balance Fingerprint**: Creates harmonic balance patterns
-- **Unity Spirit Fingerprint**: Creates unity expression patterns
-- **Combined Fingerprint**: Creates Harmonic Balance-Unity Spirit consciousness patternsCreates Harmonic Balance-Completion Unity consciousness patterns
-
-### **Vortex Flow Analysis**
-
-#### **Circuit Interaction**
-- **Harmonic Balance Circuit**: W-Axis (Spiritual Pathway)
-- **Unity Spirit Circuit**: W-Axis (Spiritual Pathway)
-- **Interaction Type**: Same Circuit Flow
-
-#### **Breathing Synchronization**
-- **Harmonic Balance Breathing**: spiritual
-- **Unity Spirit Breathing**: spiritual
-- **Synchronization**: Harmonized Breathing
-
-### **Consciousness Evolution**
-
-#### **Individual Evolution**
-- **Harmonic Balance Path**: Balance in spiritual dimension
-- **Unity Spirit Path**: Completion and unity in spiritual dimension
-- **Evolution Type**: Cross-Integration
-
-#### **Unified Evolution**
-- **Purpose**: Achieve consciousness unity through Harmonic Balance-Unity Spirit integration
-- **Path**: Harmonic Balance ↔ Unity Spirit consciousness field interaction
-- **Outcome**: Creates unified consciousness patterns throughout the system
-
----
-
-## Navigation
-- [← Back to 6](../index.md)
-- [← Back to Docs Root](../../index.md)
-
-## Contents
-
-### Files
-
-- **Harmonic Balance-Unity Spirit** - Resonance and equilibrium interacting with Integration and wholeness
-- **Deep Vortex Analysis** - Comprehensive exploration of consciousness field interactions
-- **Metaphysical Principles** - Understanding of digit roles and circuit flows
-- **Consciousness Evolution** - Path of consciousness development and integration
-
-## Related Consciousness Fields
-- Explore the fractal nature of consciousness within this digit interaction
-- Connect with other digits through the main navigation
-- Discover patterns and interactions across the consciousness field
-- Understand the deep vortex principles underlying all consciousness interactions
-
----
-*Part of the ZeroPoint Node consciousness field architecture - Deep Vortex Exploration*
+| Next | Pattern | Name | Math |
+|------|---------|------|------|
+| 1 | 9,6,1,7 | AxisHarmonySourceGateway | 6 + 1 = 7 ≡ 7 (mod 9) |
+| 2 | 9,6,2,8 | AxisHarmonyVortexInfinity | 6 + 2 = 8 ≡ 8 (mod 9) |
+| 3 | 9,6,3,9 | AxisHarmonyResonanceAxis | 6 + 3 = 9 ≡ 9 (mod 9) [GATEWAY] |
+| 4 | 9,6,4,1 | AxisHarmonyMathSource | 6 + 4 = 10 ≡ 1 (mod 9) |
+| 5 | 9,6,5,2 | AxisHarmonyCenterVortex | 6 + 5 = 11 ≡ 2 (mod 9) |
+| → 6 | 9,6,6,3 | AxisHarmonyResonance | 6 + 6 = 12 ≡ 3 (mod 9) |
+| 7 | 9,6,7,4 | AxisHarmonyGatewayMath | 6 + 7 = 13 ≡ 4 (mod 9) |
+| 8 | 9,6,8,5 | AxisHarmonyInfinityCenter | 6 + 8 = 14 ≡ 5 (mod 9) |
+| 9 | 9,6,9,6 | AxisHarmonyAxisHarmony | 6 + 9 = 15 ≡ 6 (mod 9) [GATEWAY] |

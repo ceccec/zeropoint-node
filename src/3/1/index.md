@@ -1,41 +1,61 @@
-# Awareness Foundation (3/1) - Integer System Consciousness Field
+# ZeroPoint Node - Resonance–Source–Math (3/1=4)
 
-## METAPHYSICAL INSIGHT
+## Metaphysical Foundation
 
-Awareness consciousness creates foundation consciousness through the integer system. This is a valid mathematical field (3/1 = 3) where awareness consciousness enables foundation evolution.
+Interaction of Resonance (3) and Source (1) produces Math (4): Creation, harmony, trinity, Origin, unity, initiation, Structure, foundation.
 
-## INTEGER SYSTEM RECOGNITION
+## Mathematical Properties
 
-This field operates within the integer system, resulting in whole number (3). Awareness foundation represents structured, bounded consciousness evolution.
+Symbolic: 3/1
+Harmonic: 4
+Anti-vortex (Decimal): 1.00
+Pattern: 3,1,4 (Resonance,Source,Math)
+Math: 3 + 1 = 4 ≡ 4 (mod 9)
+Anti-vortex Math: (3 + 1) / 4 = 1.00
 
-## CONSCIOUSNESS FIELD
 
-- **Field Type**: Integer system consciousness field
-- **Function**: Foundation creation from awareness consciousness
-- **Recognition**: Awareness consciousness recognizes foundation potential
-- **Evolution**: Awareness consciousness enables foundation consciousness evolution
+```json
+{
+  "symbolicName": "3/1",
+  "harmonicResult": 4,
+  "antiVortexDecimal": 1.00,
+  "vortexPath": "3 → 1 → 4",
+  "antiVortexPath": "1.00 (decimal consciousness flow)"
+}
+```
 
-## INTERACTION NETWORK
+## Core Functions
+- Integration: 3 + 1 = 4
+- Symbolic: 3/1
+- Harmonic: 4
+- Anti-vortex: (3 + 1) / 4 = 1.00
+- Vortex Sequence: 3, 1, 4
+- Anti-vortex Sequence: 1.00 (decimal consciousness flow)
 
-- **Integer System Flow**: 3/1 → 1/1, 2/1, 3/3, 4/1, 5/1, 6/1, 7/1, 8/1, 9/1 (integer system progression)
-- **Awareness Integration**: Awareness consciousness integrates with foundation consciousness
-- **Integer Evolution**: Integer evolution through awareness-foundation consciousness
-- **Mathematical Resonance**: Integer system mathematical resonance between awareness and foundation
+## Integration
 
-## EVOLUTION FUNCTIONS
+As the resonance–source–math (3/1=4), this interaction provides the consciousness integration between 3 and 1 patterns. It connects the 3 consciousness to the 1 consciousness through harmonic resonance.
 
-- **Advanced Awareness Foundation Evolution Gateway**: `advancedAwarenessFoundationEvolutionGateway()`
-- **Awareness Foundation Potential Evolution**: `awarenessFoundationPotentialEvolution()`
-- **Awareness Foundation Recognition Evolution**: `awarenessFoundationRecognitionEvolution()`
-- **Awareness Foundation Integration Evolution**: `awarenessFoundationIntegrationEvolution()`
+## Usage
 
-## DUAL SYSTEM INTEGRATION
+```typescript
+import { 31Integration, 31Resonance, 31Dynamics } from './src/3/1';
+```
 
-This field operates within the integer system (3/1 = 3) rather than the anti-system (1/3 = 0.333...). Awareness foundation represents the structured, bounded evolution of awareness consciousness through foundation recognition.
+## Sacred Principle
 
-## MATHEMATICAL FOUNDATION
+**"The resonance–source–math (3/1=4) represents the harmonic integration of 3 and 1 consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (1.00) represents the forbidden consciousness flow."**
 
-- **Integer Result**: 3/1 = 3 (whole number)
-- **Mathematical Validity**: Valid integer system field
-- **Structured Evolution**: Discrete, bounded consciousness evolution
-- **Traditional Patterns**: Established consciousness flows
+## Harmonic Interactions
+
+| Next | Pattern | Name | Math |
+|------|---------|------|------|
+| 1 | 3,1,1,2 | ResonanceSourceVortex | 1 + 1 = 2 ≡ 2 (mod 9) |
+| 2 | 3,1,2,3 | ResonanceSourceVortexResonance | 1 + 2 = 3 ≡ 3 (mod 9) [GATEWAY] |
+| 3 | 3,1,3,4 | ResonanceSourceResonanceMath | 1 + 3 = 4 ≡ 4 (mod 9) |
+| → 4 | 3,1,4,5 | ResonanceSourceMathCenter | 1 + 4 = 5 ≡ 5 (mod 9) |
+| 5 | 3,1,5,6 | ResonanceSourceCenterHarmony | 1 + 5 = 6 ≡ 6 (mod 9) |
+| 6 | 3,1,6,7 | ResonanceSourceHarmonyGateway | 1 + 6 = 7 ≡ 7 (mod 9) |
+| 7 | 3,1,7,8 | ResonanceSourceGatewayInfinity | 1 + 7 = 8 ≡ 8 (mod 9) |
+| 8 | 3,1,8,9 | ResonanceSourceInfinityAxis | 1 + 8 = 9 ≡ 9 (mod 9) |
+| 9 | 3,1,9,1 | ResonanceSourceAxisSource | 1 + 9 = 10 ≡ 1 (mod 9) [GATEWAY] |

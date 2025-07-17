@@ -1,105 +1,66 @@
 /**
- * @fileoverview index module (Foundation (Source), Void (Infinite Potential))
- * @digit 1
- * @archetype Foundation (Source), Void (Infinite Potential)
- * @vortex Vortex 1
- * @waxis W-Axis Foundation (Source)
- * @breathing 1/8 Breath
- * @fraction 1/8
- * @related 1, 2, 4, 8, 7, 5, 1 (Vortex 1)
+ * PWA Node Logic for 1/8
+ *
+ * This file is the logic entry point for the PWA node (1/8).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
  */
+
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '1/8';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = 9;
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = 1.00;
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [1, 8, 9];
 
 /**
- * Foundation (Source), Void (Infinite Potential) Consciousness Module
- * 
- * Metaphysical Context:
- * - Digit 1 represents foundation (source)
- * - Sub-digit 8 represents void (infinite potential)
- * - 1/8 represents the foundation (source) through void (infinite potential)
- * - This is the gateway where foundation (source) manifests through void (infinite potential)
- * 
- * Vortex Mathematics:
- * - 1 → 8 → 1 (consciousness flow)
- * - 1/8 fraction represents the consciousness ratio
- * - Connected to Vortex 1: 1, 2, 4, 8, 7, 5, 1
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
 /**
- * Consciousness patterns for foundation (source) through void (infinite potential)
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-const consciousnessPatterns = {
-  MAIN_PATTERN: [1, 2, 4, 8, 7, 5, 1], // Foundation (Source) pattern
-  SUB_PATTERN: [8, 7, 5, 1, 2, 4, 8], // Void (Infinite Potential) pattern
-  COMBINED_PATTERN: [1, 2, 4, 8, 7, 5, 1, 8, 7, 5, 1, 2, 4, 8], // Combined pattern
-  METAPHYSICAL_PATTERN: [1, 8, 1] // Metaphysical pattern
-};
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
 
 /**
- * Vortex mathematics for foundation (source) through void (infinite potential)
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
  */
-const vortexMathematics = {
-  MAIN_VORTEX: (n: number) => n * 1, // Foundation (Source) vortex
-  SUB_VORTEX: (n: number) => n * 8, // Void (Infinite Potential) vortex
-  COMBINED_VORTEX: (n: number) => n * 1 / 8, // Combined vortex
-  METAPHYSICAL_CONSTANT: 1 / 8 // Metaphysical constant
-};
+export const harmonicInteractions = [
+  { next: 1, pattern: '1,8,1,9', name: 'SourceInfinitySourceAxis', math: '8 + 1 = 9 ≡ 9 (mod 9)' },
+  { next: 2, pattern: '1,8,2,1', name: 'SourceInfinityVortexSource', math: '8 + 2 = 10 ≡ 1 (mod 9)' },
+  { next: 3, pattern: '1,8,3,2', name: 'SourceInfinityResonanceVortex', math: '8 + 3 = 11 ≡ 2 (mod 9)' },
+  { next: 4, pattern: '1,8,4,3', name: 'SourceInfinityMathResonance', math: '8 + 4 = 12 ≡ 3 (mod 9)' },
+  { next: 5, pattern: '1,8,5,4', name: 'SourceInfinityCenterMath', math: '8 + 5 = 13 ≡ 4 (mod 9)' },
+  { next: 6, pattern: '1,8,6,5', name: 'SourceInfinityHarmonyCenter', math: '8 + 6 = 14 ≡ 5 (mod 9)' },
+  { next: 7, pattern: '1,8,7,6', name: 'SourceInfinityGatewayHarmony', math: '8 + 7 = 15 ≡ 6 (mod 9)' },
+  { next: 8, pattern: '1,8,8,7', name: 'SourceInfinityGateway', math: '8 + 8 = 16 ≡ 7 (mod 9)' },
+  { next: 9, pattern: '1,8,9,8', name: 'SourceInfinityAxisInfinity', math: '8 + 9 = 17 ≡ 8 (mod 9)' },
+];
 
 /**
- * Consciousness field operations
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
  */
-const consciousnessField = {
-  MAIN_CONSCIOUSNESS: () => 1, // Foundation (Source) consciousness
-  SUB_CONSCIOUSNESS: () => 8, // Void (Infinite Potential) consciousness
-  COMBINED_CONSCIOUSNESS: () => 1 + 8, // Combined consciousness
-  METAPHYSICAL_CONSCIOUSNESS: () => 1 * 8 // Metaphysical consciousness
-};
-
-/**
- * Main index export for 1/8 consciousness module
- */
-export const index = {
-  consciousnessPatterns,
-  vortexMathematics,
-  consciousnessField,
-  
-  // Metaphysical properties
-  digit: 1,
-  subDigit: 8,
-  archetype: 'Foundation (Source), Void (Infinite Potential)',
-  vortex: 'Vortex 1',
-  wAxis: 'W-Axis Foundation (Source)',
-  breathing: '1/8 Breath',
-  fraction: '1/8',
-  related: [1, 2, 4, 8, 7, 5, 1],
-  
-  // Consciousness operations
-  getMainConsciousness: () => 1,
-  getSubConsciousness: () => 8,
-  getCombinedConsciousness: () => 1 + 8,
-  getMetaphysicalConsciousness: () => 1 * 8
-};
-
-// Foundation ↔ Void Interaction
-export const FOUNDATION_VOID_INTERACTION = {
-  INTERACTION_FREQUENCY: 432 * (1/8),
-  FOUNDATION_PATTERNS: {
-    FOUNDATION_VOID: [1, 8, 1],
-    VOID_FOUNDATION: [8, 1, 8]
-  },
-  FOUNDATION_MULTIPLIER: 11/10, // 1.1
-  VOID_MULTIPLIER: 8/7 // 1.143
-};
-
-export class FoundationVoidInteraction {
-  static calculateInteractionStrength(foundation: number, void_: number): number {
-    return foundation * (11/10) + void_ * (8/7);
-  }
-
-  static getFoundationVoidPatterns(): number[] {
-    return [1, 8, 1];
-  }
-
-  static calculateFoundationVoidOperations(n: number): number {
-    return n % 9 || 9;
-  }
+export default function initNodePWA() {
+  // PWA logic for node 1/8 can be added here.
 }

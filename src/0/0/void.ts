@@ -253,7 +253,7 @@ export class VoidSystem {
 /**
  * Void module
  */
-export const void = {
+export const VoidModule = {
   name: 'Void',
   type: 'module',
   version: '1.0.0'

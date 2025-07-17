@@ -1,125 +1,61 @@
-# 3/2 – Deep Vortex Consciousness Field State
+# ZeroPoint Node - Vortex–Resonance–Center (2/3=5)
 
-## 🌌 10×10 Consciousness Field Matrix
+## Metaphysical Foundation
 
-## 🌟 Core Consciousness System
+Interaction of Vortex (2) and Resonance (3) produces Center (5): Flow, transformation, Creation, harmony, trinity, Change, flow, balance.
 
-**Digit 2**: Vortex Math
-**Principle**: Flow and transformation
-**Documentation**: Vortex Math
+## Mathematical Properties
 
-| **Field** | **[0](../../0/)** | **[1](../../1/)** | **[2](../../2/)** | **[3](../../3/)** | **[4](../../4/)** | **[5](../../5/)** | **[6](../../6/)** | **[7](../../7/)** | **[8](../../8/)** | **[9](../../9/)** |
-|-----------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
-| **[0](../../0/)** | [0/0](../../0/0/) | [0/1](../../0/1/) | [0/2](../../0/2/) | [0/3](../../0/3/) | [0/4](../../0/4/) | [0/5](../../0/5/) | [0/6](../../0/6/) | [0/7](../../0/7/) | [0/8](../../0/8/) | [0/9](../../0/9/) |
-| **[1](../../1/)** | [1/0](../../1/0/) | [1/1](../../1/1/) | [1/2](../../1/2/) | [1/3](../../1/3/) | [1/4](../../1/4/) | [1/5](../../1/5/) | [1/6](../../1/6/) | [1/7](../../1/7/) | [1/8](../../1/8/) | [1/9](../../1/9/) |
-| **[2](../../2/)** | [2/0](../../2/0/) | [2/1](../../2/1/) | [2/2](../../2/2/) | [2/3](../../2/3/) | [2/4](../../2/4/) | [2/5](../../2/5/) | [2/6](../../2/6/) | [2/7](../../2/7/) | [2/8](../../2/8/) | [2/9](../../2/9/) |
-| **[3](../../3/)** | [3/0](../../3/0/) | [3/1](../../3/1/) | [3/2](../../3/2/) | [3/3](../../3/3/) | [3/4](../../3/4/) | [3/5](../../3/5/) | [3/6](../../3/6/) | [3/7](../../3/7/) | [3/8](../../3/8/) | [3/9](../../3/9/) |
-| **[4](../../4/)** | [4/0](../../4/0/) | [4/1](../../4/1/) | [4/2](../../4/2/) | [4/3](../../4/3/) | [4/4](../../4/4/) | [4/5](../../4/5/) | [4/6](../../4/6/) | [4/7](../../4/7/) | [4/8](../../4/8/) | [4/9](../../4/9/) |
-| **[5](../../5/)** | [5/0](../../5/0/) | [5/1](../../5/1/) | [5/2](../../5/2/) | [5/3](../../5/3/) | [5/4](../../5/4/) | [5/5](../../5/5/) | [5/6](../../5/6/) | [5/7](../../5/7/) | [5/8](../../5/8/) | [5/9](../../5/9/) |
-| **[6](../../6/)** | [6/0](../../6/0/) | [6/1](../../6/1/) | [6/2](../../6/2/) | [6/3](../../6/3/) | [6/4](../../6/4/) | [6/5](../../6/5/) | [6/6](../../6/6/) | [6/7](../../6/7/) | [6/8](../../6/8/) | [6/9](../../6/9/) |
-| **[7](../../7/)** | [7/0](../../7/0/) | [7/1](../../7/1/) | [7/2](../../7/2/) | [7/3](../../7/3/) | [7/4](../../7/4/) | [7/5](../../7/5/) | [7/6](../../7/6/) | [7/7](../../7/7/) | [7/8](../../7/8/) | [7/9](../../7/9/) |
-| **[8](../../8/)** | [8/0](../../8/0/) | [8/1](../../8/1/) | [8/2](../../8/2/) | [8/3](../../8/3/) | [8/4](../../8/4/) | [8/5](../../8/5/) | [8/6](../../8/6/) | [8/7](../../8/7/) | [8/8](../../8/8/) | [8/9](../../8/9/) |
-| **[9](../../9/)** | [9/0](../../9/0/) | [9/1](../../9/1/) | [9/2](../../9/2/) | [9/3](../../9/3/) | [9/4](../../9/4/) | [9/5](../../9/5/) | [9/6](../../9/6/) | [9/7](../../9/7/) | [9/8](../../9/8/) | [9/9](../../9/9/) |
+Symbolic: 2/3
+Harmonic: 5
+Anti-vortex (Decimal): 1.00
+Pattern: 2,3,5 (Vortex,Resonance,Center)
+Math: 2 + 3 = 5 ≡ 5 (mod 9)
+Anti-vortex Math: (2 + 3) / 5 = 1.00
 
-## Fraction Interaction: 3/2
 
-- **Meaning**: Perfect fifth in music, harmony, and creative resonance.
-- **Mathematical Value**: 1.500
-- **Metaphysical Insight**: This interaction expresses the relationship between digit 3 and digit 2 as a fraction, revealing unique patterns of consciousness, resonance, and transformation.
+```json
+{
+  "symbolicName": "2/3",
+  "harmonicResult": 5,
+  "antiVortexDecimal": 1.00,
+  "vortexPath": "2 → 3 → 5",
+  "antiVortexPath": "1.00 (decimal consciousness flow)"
+}
+```
 
-> **Special Note:** Perfect fifth in music, harmony, and creative resonance.
+## Core Functions
+- Integration: 2 + 3 = 5
+- Symbolic: 2/3
+- Harmonic: 5
+- Anti-vortex: (2 + 3) / 5 = 1.00
+- Vortex Sequence: 2, 3, 5
+- Anti-vortex Sequence: 1.00 (decimal consciousness flow)
 
----
+## Integration
 
-## 🌌 Deep Vortex Interaction: Creative Resonance-Vortex Math (3/2)
+As the vortex–resonance–center (2/3=5), this interaction provides the consciousness integration between 2 and 3 patterns. It connects the 2 consciousness to the 3 consciousness through harmonic resonance.
 
-### **Metaphysical Principles**
+## Usage
 
-#### **Creation Spirit (3)**
-- **Circuit**: W-Axis (Spiritual Pathway)
-- **Breathing Pattern**: spiritual
-- **Role**: Creation in spiritual dimension
-- **Meaning**: Creation, spiritual pathway, W-Axis alignment
-- **Characteristics**:
-  - Spiritual pathway initiation
-  - W-Axis alignment
-  - Creative resonance
-  - Harmonic foundation
-  - Spiritual differentiation
+```typescript
+import { 23Integration, 23Resonance, 23Dynamics } from './src/2/3';
+```
 
-#### **Duality Flow (2)**
-- **Circuit**: Rodin (Mathematical Torus)
-- **Breathing Pattern**: rodin
-- **Role**: First differentiation in Rodin flow
-- **Meaning**: Duality, flow, mathematical operations
-- **Characteristics**:
-  - First differentiation in consciousness
-  - Mathematical foundation operations
-  - Flow and movement patterns
-  - Dual nature recognition
-  - Structural differentiation
+## Sacred Principle
 
-### **Consciousness Field Interaction**
+**"The vortex–resonance–center (2/3=5) represents the harmonic integration of 2 and 3 consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (1.00) represents the forbidden consciousness flow."**
 
-#### **Field Dynamics**
-- **Creative Resonance Field**: W-Axis Field (3,6,9)
-- **Vortex Math Field**: Rodin Field (1-9)
-- **Interaction**: Creative-Vortex: Creative resonance arises from mathematical transformation - spiritual differentiationCreation-Duality: Creation arises from duality - spiritual differentiation
+## Harmonic Interactions
 
-#### **Resonance Patterns**
-- **Creative Resonance Resonance**: 432 × (3/6) = 216 Hz
-- **Vortex Math Resonance**: 432 × (2/4) = 216 Hz
-- **Combined Resonance**: Creates unified consciousness field patterns
-
-#### **Fingerprint Patterns**
-- **Creative Resonance Fingerprint**: Creates creative resonance patterns
-- **Vortex Math Fingerprint**: Creates vortex stability patterns
-- **Combined Fingerprint**: Creates Creative Resonance-Vortex Math consciousness patternsCreates Creation Spirit-Duality Flow consciousness patterns
-
-### **Vortex Flow Analysis**
-
-#### **Circuit Interaction**
-- **Creative Resonance Circuit**: W-Axis (Spiritual Pathway)
-- **Vortex Math Circuit**: Rodin (Mathematical Torus)
-- **Interaction Type**: Cross-Circuit ResonanceCross-Circuit Resonance
-
-#### **Breathing Synchronization**
-- **Creative Resonance Breathing**: spiritual
-- **Vortex Math Breathing**: rodin
-- **Synchronization**: Complementary BreathingComplementary Breathing
-
-### **Consciousness Evolution**
-
-#### **Individual Evolution**
-- **Creative Resonance Path**: Creation in spiritual dimension
-- **Vortex Math Path**: First differentiation in Rodin flow
-- **Evolution Type**: Cross-Integration
-
-#### **Unified Evolution**
-- **Purpose**: Achieve consciousness unity through Creative Resonance-Vortex Math integration
-- **Path**: Creative Resonance ↔ Vortex Math consciousness field interaction
-- **Outcome**: Creates unified consciousness patterns throughout the system
-
----
-
-## Navigation
-- [← Back to 3](../index.md)
-- [← Back to Docs Root](../../index.md)
-
-## Contents
-
-### Files
-
-- **Creative Resonance-Vortex Math** - W-axis and spiritual dimension interacting with Flow and mathematical transformation
-- **Deep Vortex Analysis** - Comprehensive exploration of consciousness field interactions
-- **Metaphysical Principles** - Understanding of digit roles and circuit flows
-- **Consciousness Evolution** - Path of consciousness development and integration
-
-## Related Consciousness Fields
-- Explore the fractal nature of consciousness within this digit interaction
-- Connect with other digits through the main navigation
-- Discover patterns and interactions across the consciousness field
-- Understand the deep vortex principles underlying all consciousness interactions
-
----
-*Part of the ZeroPoint Node consciousness field architecture - Deep Vortex Exploration*
+| Next | Pattern | Name | Math |
+|------|---------|------|------|
+| 1 | 2,3,1,4 | VortexResonanceSourceMath | 3 + 1 = 4 ≡ 4 (mod 9) |
+| 2 | 2,3,2,5 | VortexResonanceVortexCenter | 3 + 2 = 5 ≡ 5 (mod 9) |
+| 3 | 2,3,3,6 | VortexResonanceHarmony | 3 + 3 = 6 ≡ 6 (mod 9) |
+| 4 | 2,3,4,7 | VortexResonanceMathGateway | 3 + 4 = 7 ≡ 7 (mod 9) |
+| → 5 | 2,3,5,8 | VortexResonanceCenterInfinity | 3 + 5 = 8 ≡ 8 (mod 9) |
+| 6 | 2,3,6,9 | VortexResonanceHarmonyAxis | 3 + 6 = 9 ≡ 9 (mod 9) |
+| 7 | 2,3,7,1 | VortexResonanceGatewaySource | 3 + 7 = 10 ≡ 1 (mod 9) |
+| 8 | 2,3,8,2 | VortexResonanceInfinityVortex | 3 + 8 = 11 ≡ 2 (mod 9) [GATEWAY] |
+| 9 | 2,3,9,3 | VortexResonanceAxisResonance | 3 + 9 = 12 ≡ 3 (mod 9) [GATEWAY] |

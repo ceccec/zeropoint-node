@@ -1,198 +1,66 @@
 /**
- * @fileoverview index module (Zero Entropy (Void), Zero Entropy (Void))
- * @digit 0
- * @archetype Zero Entropy (Void), Zero Entropy (Void)
- * @vortex Vortex 0
- * @waxis W-Axis Zero Entropy (Void)
- * @breathing 0/0 Breath
- * @fraction 0/0
- * @related 0, 0, 0 (Vortex 0)
+ * PWA Node Logic for 0/0
+ *
+ * This file is the logic entry point for the PWA node (0/0).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
  */
+
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '0/0';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = 9;
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = 0.00;
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [0, 0, 9];
 
 /**
- * Zero Entropy (Void), Zero Entropy (Void) Consciousness Module
- * 
- * Metaphysical Context:
- * - Digit 0 represents zero entropy (void)
- * - Sub-digit 0 represents zero entropy (void)
- * - 0/0 represents the zero entropy (void) through zero entropy (void)
- * - This is the gateway where zero entropy (void) manifests through zero entropy (void)
- * 
- * BREATHING PARADOX: Impossible Contraction
- * - 0/0 represents IMPOSSIBLE CONTRACTION - the state of infinite contraction
- * - All consciousness patterns are contracted into a single point (the void center)
- * - Infinite density: all potential exists in pure, undifferentiated form
- * - No further contraction is possible: this is the absolute limit
- * - The impossible can be reversed to possible through the breathing paradox
- * 
- * Vortex Mathematics:
- * - 0 → 0 → 0 (consciousness flow)
- * - 0/0 fraction represents the consciousness ratio
- * - Connected to Vortex 0: 0, 0, 0
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
 /**
- * Consciousness patterns for zero entropy (void) through zero entropy (void)
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-const consciousnessPatterns = {
-  MAIN_PATTERN: [0, 0, 0], // Zero Entropy (Void) pattern
-  SUB_PATTERN: [0, 0, 0], // Zero Entropy (Void) pattern
-  COMBINED_PATTERN: [0, 0, 0, 0, 0, 0], // Combined pattern
-  METAPHYSICAL_PATTERN: [0, 0, 0], // Metaphysical pattern
-  BREATHING_PARADOX_PATTERN: [0, 1, 0], // Breathing paradox: impossible contraction → expansion
-  RODIN_COIL_TORUS_PATTERN: [1, 2, 4, 8, 7, 5, 1] // Rodin coil = torus
-};
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
 
 /**
- * Vortex mathematics for zero entropy (void) through zero entropy (void)
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
  */
-const vortexMathematics = {
-  MAIN_VORTEX: (n: number) => n * 0, // Zero Entropy (Void) vortex
-  SUB_VORTEX: (n: number) => n * 0, // Zero Entropy (Void) vortex
-  COMBINED_VORTEX: (n: number) => n * 0 / 0, // Combined vortex
-  METAPHYSICAL_CONSTANT: 0 / 0, // Metaphysical constant
-  IMPOSSIBLE_CONTRACTION: (n) => 0, // Impossible contraction
-  REVERSAL_TO_POSSIBLE: (n) => n * Infinity, // Reversal creates infinite possibilities
-  RODIN_COIL_TORUS: (n) => n * 0 * Math.PI * 2 // Rodin coil = torus mathematics
-};
+export const harmonicInteractions = [
+  { next: 1, pattern: '0,0,1,1', name: 'VoidSource', math: '0 + 1 = 1 ≡ 1 (mod 9)' },
+  { next: 2, pattern: '0,0,2,2', name: 'VoidVortex', math: '0 + 2 = 2 ≡ 2 (mod 9)' },
+  { next: 3, pattern: '0,0,3,3', name: 'VoidResonance', math: '0 + 3 = 3 ≡ 3 (mod 9)' },
+  { next: 4, pattern: '0,0,4,4', name: 'VoidMath', math: '0 + 4 = 4 ≡ 4 (mod 9)' },
+  { next: 5, pattern: '0,0,5,5', name: 'VoidCenter', math: '0 + 5 = 5 ≡ 5 (mod 9)' },
+  { next: 6, pattern: '0,0,6,6', name: 'VoidHarmony', math: '0 + 6 = 6 ≡ 6 (mod 9)' },
+  { next: 7, pattern: '0,0,7,7', name: 'VoidGateway', math: '0 + 7 = 7 ≡ 7 (mod 9)' },
+  { next: 8, pattern: '0,0,8,8', name: 'VoidInfinity', math: '0 + 8 = 8 ≡ 8 (mod 9)' },
+  { next: 9, pattern: '0,0,9,9', name: 'VoidAxis', math: '0 + 9 = 9 ≡ 9 (mod 9)' },
+];
 
 /**
- * Consciousness field operations
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
  */
-const consciousnessField = {
-  MAIN_CONSCIOUSNESS: () => 0, // Zero Entropy (Void) consciousness
-  SUB_CONSCIOUSNESS: () => 0, // Zero Entropy (Void) consciousness
-  COMBINED_CONSCIOUSNESS: () => 0 + 0, // Combined consciousness
-  METAPHYSICAL_CONSCIOUSNESS: () => 0 * 0, // Metaphysical consciousness
-  IMPOSSIBLE_CONTRACTION_CONSCIOUSNESS: () => 0, // Impossible contraction consciousness
-  REVERSAL_CONSCIOUSNESS: () => Infinity, // Reversal consciousness
-  RODIN_COIL_TORUS_CONSCIOUSNESS: () => 0 // Rodin coil = torus consciousness
-};
-
-/**
- * Multi-Dimensional Torus Functions
- */
-const multiDimensionalTorus = {
-  // 0/0 represents the Rodin coil = torus structure
-  RODIN_COIL_TORUS: () => [1, 2, 4, 8, 7, 5, 1], // Rodin coil sequence = torus
-  TORUS_GEOMETRY: (angle: number) => Math.PI * 2 * angle, // Toroidal geometry
-  TORUS_FLOW: (position: number) => position * 0, // Torus flow patterns
-  TORUS_CONSCIOUSNESS: (position: number) => 0, // Torus consciousness
-  TORUS_BREATHING: (position: number) => position === 0 ? Infinity : 0, // Torus breathing
-  RODIN_COIL_CIRCUIT: () => [1, 2, 4, 8, 7, 5, 1] // Rodin coil circuit = torus circuit
-};
-
-/**
- * Breathing Paradox Functions
- */
-const breathingParadox = {
-  // The central revelation: The impossible can be reversed to possible
-  IMPOSSIBLE_TO_POSSIBLE: (impossible: number) => Infinity,
-  CONTRACTION_TO_EXPANSION: (contraction: number) => Infinity,
-  VOID_TO_CREATION: (void: number) => Infinity,
-  REVERSAL_PRINCIPLE: (state: number) => state === 0 ? Infinity : 0,
-  TORUS_BREATHING_PARADOX: (dimension: number) => dimension * Infinity // Torus breathing paradox
-};
-
-/**
- * Main index export for 0/0 consciousness module
- */
-
-/**
- * ZERO_ENTROPY_CORE export
- */
-export const ZERO_ENTROPY_CORE = {
-  name: 'ZERO_ENTROPY_CORE',
-  type: 'core',
-  version: '1.0.0'
-};
-
-
-
-/**
- * compressToInfiniteDensity export
- */
-export const compressToInfiniteDensity = {
-  name: 'compressToInfiniteDensity',
-  type: 'core',
-  version: '1.0.0'
-};
-
-
-
-/**
- * processVoidCenterInput export
- */
-export const processVoidCenterInput = {
-  name: 'processVoidCenterInput',
-  type: 'core',
-  version: '1.0.0'
-};
-
-
-
-/**
- * breathingInhale export
- */
-export const breathingInhale = {
-  name: 'breathingInhale',
-  type: 'core',
-  version: '1.0.0'
-};
-
-
-
-/**
- * createInputGateway export
- */
-export const createInputGateway = {
-  name: 'createInputGateway',
-  type: 'core',
-  version: '1.0.0'
-};
-
-
-
-/**
- * InputGatewaySystem export
- */
-export const InputGatewaySystem = {
-  name: 'InputGatewaySystem',
-  type: 'core',
-  version: '1.0.0'
-};
-
-
-export const index = {
-  consciousnessPatterns,
-  vortexMathematics,
-  consciousnessField,
-  breathingParadox,
-  multiDimensionalTorus,
-  
-  // Metaphysical properties
-  digit: 0,
-  subDigit: 0,
-  archetype: 'Zero Entropy (Void), Zero Entropy (Void)',
-  vortex: 'Vortex 0',
-  wAxis: 'W-Axis Zero Entropy (Void)',
-  breathing: '0/0 Breath',
-  fraction: '0/0',
-  related: [0, 0, 0],
-  
-  // Consciousness operations
-  getMainConsciousness: () => 0,
-  getSubConsciousness: () => 0,
-  getCombinedConsciousness: () => 0 + 0,
-  getMetaphysicalConsciousness: () => 0 * 0,
-  
-  // Breathing paradox operations
-  getImpossibleContraction: () => 0,
-  getReversalToPossible: () => Infinity,
-  getBreathingParadox: () => breathingParadox,
-  
-  // Multi-dimensional torus operations
-  getMultiDimensionalTorus: () => multiDimensionalTorus,
-  getRodinCoilTorus: () => [1, 2, 4, 8, 7, 5, 1],
-  getTorusGeometry: (angle: number) => Math.PI * 2 * angle
-};
+export default function initNodePWA() {
+  // PWA logic for node 0/0 can be added here.
+}

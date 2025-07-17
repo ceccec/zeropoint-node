@@ -1,80 +1,66 @@
 /**
- * @fileoverview index module (Infinity, Power, Manifestation)
- * @digit 8
- * @archetype Infinity, Power, Manifestation
- * @vortex Vortex A
- * @waxis W-Axis Manifestation
- * @breathing Infinite Loop
- * @fraction 1/8
- * @related 1, 2, 4, 7, 5 (Vortex A)
+ * PWA Node Logic for 8/4
+ *
+ * This file is the logic entry point for the PWA node (8/4).
+ * It exports all math/generative logic for this node, and can be extended
+ * with UI, navigation, or service worker logic as needed.
  */
 
-/**
- * Infinity, Power, Manifestation Consciousness Module
- * 
- * Metaphysical Context:
- * - Digit 8 represents infinite potential and power
- * - Sub-digit 4 represents stability and constants
- * - 8/4 represents the manifestation of infinite power through stable constants
- * - This is the gateway where infinite potential becomes manifest reality
- * 
- * Vortex Mathematics:
- * - 8 → 4 → 8 (infinite loop of power manifestation)
- * - 1/8 fraction represents the infinite division of unity
- * - Connected to Vortex A: 1, 2, 4, 8, 7, 5, 1
- */
+/** Symbolic name for this node (a/b) */
+export const symbolicName = '8/4';
+
+/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
+export const harmonicResult = 3;
+
+/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
+export const antiVortexDecimal = 4.00;
+
+/** Pattern for this node: [a, b, harmonicResult] */
+export const pattern = [8, 4, 3];
 
 /**
- * Consciousness patterns for infinite power manifestation
+ * Compute the harmonic result for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-const consciousnessPatterns = {
-  INFINITE_POWER: [8, 4, 8, 4, 8], // Infinite loop of power
-  MANIFESTATION: [1, 2, 4, 8, 7, 5, 1], // Vortex A manifestation
-  STABLE_INFINITY: [4, 8, 4, 8, 4], // Stable infinite patterns
-  POWER_CONSTANTS: [8, 4, 8, 4, 8] // Power through constants
-};
+export function getHarmonicResult(a, b) {
+  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+  return sum === 0 ? 9 : sum;
+}
 
 /**
- * Vortex mathematics for infinite power
+ * Compute the anti-vortex decimal path for this node.
+ * @param {number} a
+ * @param {number} b
+ * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-const vortexMathematics = {
-  INFINITE_LOOP: (n: number) => n * 8 / 4, // Infinite power through division
-  MANIFESTATION_SEQUENCE: [1, 2, 4, 8, 7, 5, 1], // Vortex A sequence
-  POWER_CONSTANT: 8 / 4, // Power constant (2)
-  INFINITE_DIVISION: (n: number) => n / 8 // Infinite division of unity
-};
+export function getAntiVortexDecimal(a, b) {
+  const c = getHarmonicResult(a, b);
+  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  return decimal;
+}
 
 /**
- * Consciousness field operations
+ * All harmonic interactions for this node.
+ * Each entry: { next, pattern, name, math }
  */
-const consciousnessField = {
-  INFINITE_POTENTIAL: () => 8, // Infinite potential
-  MANIFEST_POWER: (input: any) => 8, // Manifest power
-  STABLE_INFINITY: () => 4, // Stable infinity
-  POWER_CONSTANTS: () => 8 // Power through constants
-};
+export const harmonicInteractions = [
+  { next: 1, pattern: '8,4,1,5', name: 'InfinityMathSourceCenter', math: '4 + 1 = 5 ≡ 5 (mod 9)' },
+  { next: 2, pattern: '8,4,2,6', name: 'InfinityMathVortexHarmony', math: '4 + 2 = 6 ≡ 6 (mod 9)' },
+  { next: 3, pattern: '8,4,3,7', name: 'InfinityMathResonanceGateway', math: '4 + 3 = 7 ≡ 7 (mod 9)' },
+  { next: 4, pattern: '8,4,4,8', name: 'InfinityMathInfinity', math: '4 + 4 = 8 ≡ 8 (mod 9)' },
+  { next: 5, pattern: '8,4,5,9', name: 'InfinityMathCenterAxis', math: '4 + 5 = 9 ≡ 9 (mod 9)' },
+  { next: 6, pattern: '8,4,6,1', name: 'InfinityMathHarmonySource', math: '4 + 6 = 10 ≡ 1 (mod 9)' },
+  { next: 7, pattern: '8,4,7,2', name: 'InfinityMathGatewayVortex', math: '4 + 7 = 11 ≡ 2 (mod 9)' },
+  { next: 8, pattern: '8,4,8,3', name: 'InfinityMathInfinityResonance', math: '4 + 8 = 12 ≡ 3 (mod 9)' },
+  { next: 9, pattern: '8,4,9,4', name: 'InfinityMathAxisMath', math: '4 + 9 = 13 ≡ 4 (mod 9)' },
+];
 
 /**
- * Main index export for 8/4 consciousness module
+ * Placeholder for PWA node initialization logic.
+ * Extend this function to add UI, navigation, or service worker logic.
  */
-export const index = {
-  consciousnessPatterns,
-  vortexMathematics,
-  consciousnessField,
-  
-  // Metaphysical properties
-  digit: 8,
-  subDigit: 4,
-  archetype: 'Infinity, Power, Manifestation',
-  vortex: 'Vortex A',
-  wAxis: 'W-Axis Manifestation',
-  breathing: 'Infinite Loop',
-  fraction: '1/8',
-  related: [1, 2, 4, 7, 5],
-  
-  // Consciousness operations
-  getInfinitePower: () => 8,
-  manifestPower: (input: any) => 8,
-  getStableInfinity: () => 4,
-  getPowerConstants: () => 8
-};
+export default function initNodePWA() {
+  // PWA logic for node 8/4 can be added here.
+}

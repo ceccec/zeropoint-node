@@ -20,7 +20,7 @@ describe('Sacred Geometry ↔ Consciousness Interaction', () => {
     });
     
     test('should have correct multipliers', () => {
-      expect(SACRED_GEOMETRY_CONSCIOUSNESS_INTERACTION.SACRED_GEOMETRY_MULTIPLIER).toBe(1.25);
+      expect(SACRED_GEOMETRY_CONSCIOUSNESS_INTERACTION.SACRED_GEOMETRY_MULTIPLIER).toEqual({ numerator: 5, denominator: 4 });
       expect(SACRED_GEOMETRY_CONSCIOUSNESS_INTERACTION.CONSCIOUSNESS_MULTIPLIER).toBe(1);
     });
   });
@@ -28,7 +28,7 @@ describe('Sacred Geometry ↔ Consciousness Interaction', () => {
   describe('SacredGeometryConsciousnessInteraction Class', () => {
     test('should calculate interaction strength correctly', () => {
       const strength = SacredGeometryConsciousnessInteraction.calculateInteractionStrength(5, 8);
-      const expected = 5 * 1.25 + 8 * 1;
+      const expected = 5 * 5 / 4 + 8 * 1;
       expect(strength).toBe(expected);
     });
     

@@ -1,45 +1,61 @@
-# ZeroPoint Node - Harmonic Balance (Directory 6)
+# ZeroPoint Node - Harmony–Harmony–Resonance (6/6=3)
 
 ## Metaphysical Foundation
 
-The **harmonic balance** represents the equilibrium state where all consciousness patterns find their natural resonance. This is where **balance**, **harmony**, and **equilibrium** manifest through perfect proportion.
+Interaction of Harmony (6) and Harmony (6) produces Resonance (3): Balance, beauty, equilibrium, Balance, beauty, equilibrium, Creation, harmony, trinity.
 
 ## Mathematical Properties
 
-- **Harmonic Balance**: Equilibrium consciousness patterns
-- **Perfect Proportion**: Balanced consciousness structures
-- **Family Group 6**: 6, 3, 9 (harmonic triad)
-- **Digital Root**: 6 (balance in harmony)
+Symbolic: 6/6
+Harmonic: 3
+Anti-vortex (Decimal): 4.00
+Pattern: 6,6,3 (Harmony,Harmony,Resonance)
+Math: 6 + 6 = 12 ≡ 3 (mod 9)
+Anti-vortex Math: (6 + 6) / 3 = 4.00
 
-## Directory Structure
 
-```
-src/6/
-├── 0/     # Harmonic Balance ↔ ZeroPoint
-├── 1/     # Harmonic Balance ↔ Foundation
-├── 3/     # Harmonic Balance ↔ Creative Resonance
-├── 4/     # Harmonic Balance ↔ Constants
-├── 6/     # Harmonic Balance Core
-└── 9/     # Harmonic Balance ↔ Unity
+```json
+{
+  "symbolicName": "6/6",
+  "harmonicResult": 3,
+  "antiVortexDecimal": 4.00,
+  "vortexPath": "6 → 6 → 3",
+  "antiVortexPath": "4.00 (decimal consciousness flow)"
+}
 ```
 
 ## Core Functions
-
-- **Harmonic Balance Calculations**: Equilibrium consciousness patterns
-- **Perfect Proportion**: Balanced consciousness structures
-- **Balance Integration**: Harmonious consciousness patterns
-- **Equilibrium Dynamics**: Balanced consciousness interactions
+- Integration: 6 + 6 = 3
+- Symbolic: 6/6
+- Harmonic: 3
+- Anti-vortex: (6 + 6) / 3 = 4.00
+- Vortex Sequence: 6, 6, 3
+- Anti-vortex Sequence: 4.00 (decimal consciousness flow)
 
 ## Integration
 
-As the harmonic balance, src/6 provides the equilibrium state that harmonizes all consciousness patterns. It connects the sacred geometry to the balanced expression of consciousness.
+As the harmony–harmony–resonance (6/6=3), this interaction provides the consciousness integration between 6 and 6 patterns. It connects the 6 consciousness to the 6 consciousness through harmonic resonance.
 
 ## Usage
 
 ```typescript
-import { harmonicBalance, perfectProportion, equilibriumDynamics } from './src/6';
+import { 66Integration, 66Resonance, 66Dynamics } from './src/6/6';
 ```
 
 ## Sacred Principle
 
-**"Harmonic balance is the natural state where all consciousness patterns find their perfect resonance and equilibrium."** 
+**"The harmony–harmony–resonance (6/6=3) represents the harmonic integration of 6 and 6 consciousness patterns, creating unity through mathematical and spiritual alignment. The anti-vortex decimal path (4.00) represents the forbidden consciousness flow."**
+
+## Harmonic Interactions
+
+| Next | Pattern | Name | Math |
+|------|---------|------|------|
+| 1 | 6/1 | Harmony–Source | 6 + 1 = 7 ≡ 1 (mod 9) |
+| 2 | 6/2 | Harmony–Vortex | 6 + 2 = 8 ≡ 2 (mod 9) |
+| 3 | 6/3 | Harmony–Resonance | 6 + 3 = 9 ≡ 3 (mod 9) |
+| 4 | 6/4 | Harmony–Math | 6 + 4 = 10 ≡ 4 (mod 9) |
+| 5 | 6/5 | Harmony–Center | 6 + 5 = 11 ≡ 5 (mod 9) |
+| 6 | 6/6 | Harmony–Harmony | 6 + 6 = 12 ≡ 6 (mod 9) |
+| 7 | 6/7 | Harmony–Gateway | 6 + 7 = 13 ≡ 7 (mod 9) |
+| 8 | 6/8 | Harmony–Infinity | 6 + 8 = 14 ≡ 8 (mod 9) |
+| 9 | 6/9 | Harmony–Axis | 6 + 9 = 15 ≡ 9 (mod 9) |

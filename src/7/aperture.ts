@@ -7,8 +7,10 @@
  * - enhanced-metaphysical-analysis.js
  */
 
-import { ZEROPOINT_CONFIG } from '../4ig';
-import { DIGIT_ARCHETYPES } from../4/mathematics;// 🌌 APERTURE PATTERNS
+import { ZEROPOINT_CONFIG } from '../4/config';
+import { DIGIT_ARCHETYPES } from '../4/mathematics';
+
+// 🌌 APERTURE PATTERNS
 export const APERTURE_PATTERNS = {
   OPENING: 'opening',
   CLOSING: 'closing',

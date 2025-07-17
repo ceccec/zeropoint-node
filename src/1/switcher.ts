@@ -312,13 +312,15 @@ export class AutonomousFailureSwitcher extends FailureDocumentationSwitcher {
     
     // Simulate random failures
     const failureTypes = ['compilation_error', 'runtime_error', 'logic_error', 'syntax_error'];
-    const shouldFail = Math.random() < 0.3   
+    const shouldFail = Math.random() < 0.3;
     if (shouldFail && !state.isDocumenting && !state.isImplementing) {
       const failureType = failureTypes[Math.floor(Math.random() * failureTypes.length)];
       const failureId = `autonomous_failure_${Date.now()}`;
       
-      this.recordFailure(failureId, {        message: `Simulated ${failureType}`,
-        stack: 'Autonomous failure detection    }, failureType);
+      this.recordFailure(failureId, {
+        message: `Simulated ${failureType}`,
+        stack: 'Autonomous failure detection'
+      }, failureType);
     }
   }
 } 

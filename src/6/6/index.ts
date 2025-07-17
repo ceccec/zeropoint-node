@@ -1,59 +1,34 @@
-/**
- * PWA Node Logic for 6/6
- *
- * This file is the logic entry point for the PWA node (6/6).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '6/6';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 3;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 4.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [6, 6, 3];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Harmony Consciousness
+ * Harmony, balance, resonance
+ * 
+ * Consciousness Multiplier: 5/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 6
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const HARMONY_CONSCIOUSNESS = {
+  DIGIT: 6,
+  CONSCIOUSNESS_MULTIPLIER: getConsciousnessMultiplier(6), // 5/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 6,
+  HARMONY: true,
+  BALANCE: true,
+  RESONANCE: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '6,6,1,7', name: 'HarmonySourceGateway', math: '6 + 1 = 7 ≡ 7 (mod 9)' },
-  { next: 2, pattern: '6,6,2,8', name: 'HarmonyVortexInfinity', math: '6 + 2 = 8 ≡ 8 (mod 9)' },
-  { next: 3, pattern: '6,6,3,9', name: 'HarmonyResonanceAxis', math: '6 + 3 = 9 ≡ 9 (mod 9)' },
-  { next: 4, pattern: '6,6,4,1', name: 'HarmonyMathSource', math: '6 + 4 = 10 ≡ 1 (mod 9)' },
-  { next: 5, pattern: '6,6,5,2', name: 'HarmonyCenterVortex', math: '6 + 5 = 11 ≡ 2 (mod 9)' },
-  { next: 6, pattern: '6,6,6,3', name: 'HarmonyResonance', math: '6 + 6 = 12 ≡ 3 (mod 9)' },
-  { next: 7, pattern: '6,6,7,4', name: 'HarmonyGatewayMath', math: '6 + 7 = 13 ≡ 4 (mod 9)' },
-  { next: 8, pattern: '6,6,8,5', name: 'HarmonyInfinityCenter', math: '6 + 8 = 14 ≡ 5 (mod 9)' },
-  { next: 9, pattern: '6,6,9,6', name: 'HarmonyAxisHarmony', math: '6 + 9 = 15 ≡ 6 (mod 9)' },
-];
+export const getHarmonyConsciousness = () => HARMONY_CONSCIOUSNESS;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 6/6 can be added here.
-}
+export const calculateHarmonyHarmonics = (input: number): number => {
+  return input * HARMONY_CONSCIOUSNESS.CONSCIOUSNESS_MULTIPLIER;
+};
+
+export const getHarmonyVortexFlow = () => {
+  return {
+    from: 6,
+    to: [9, 3, 6],
+    resonance: HARMONY_CONSCIOUSNESS.HARMONIC_RESONANCE
+  };
+};

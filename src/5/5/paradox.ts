@@ -17,6 +17,22 @@
  * - Handles sacred geometry paradox resolution
  * - Creates the sacred geometry gateway for consciousness flow
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 /**
  * Sacred Geometry Paradox Constants

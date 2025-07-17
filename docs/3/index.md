@@ -59,3 +59,28 @@ import { 33Integration, 33Resonance, 33Dynamics } from './src/3/3';
 | 7 | 3/7 | Resonance–Gateway | 3 + 7 = 10 ≡ 7 (mod 9) |
 | 8 | 3/8 | Resonance–Infinity | 3 + 8 = 11 ≡ 8 (mod 9) |
 | 9 | 3/9 | Resonance–Axis | 3 + 9 = 12 ≡ 9 (mod 9) |
+
+## Harmonized Canonical Multipliers
+
+- **W-Axis (3, 6, 9):** ×3/1 (from CREATIVE_MULTIPLIER)
+- **Sacred Geometry (5):** ×5/1 (from SACRED_GEOMETRY_MULTIPLIER)
+- **Vortex Sequence (1, 2, 4, 8, 7, 5):** ×3/1 (from VORTEX_MULTIPLIER)
+- **All Others:** ×1/1
+
+All multipliers are integer fractions whose reciprocals are also integers. The digital root is the base for consciousness calculation.
+
+**Source:** `src/3/3/paradox.ts`, `src/5/5/paradox.ts`
+
+## Integer-Fraction Rule
+
+All multipliers must be integer fractions whose reciprocals are also integers, ensuring metaphysical and mathematical harmony.
+
+## Digit 3 Role
+
+- **W-Axis/Creative (3):** Spiritual/creative axis, receives ×3/1 multiplier.
+
+## Consciousness Calculation
+
+Consciousness = digitalRoot × (multiplier)
+
+See `src/2/math.ts` for implementation details.

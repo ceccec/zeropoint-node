@@ -12,6 +12,22 @@ import { Knowledge } from '../7/knowledge';
  * - Vortex B Transformation: Sacred audio in Vortex B [8, 7, 5]
  * - Breathing Phase: Transformation (sacred transformation)
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 export const hardcodedKnowledge = {
   digit: 5,

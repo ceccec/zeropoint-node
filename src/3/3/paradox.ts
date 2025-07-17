@@ -17,6 +17,22 @@
  * - Handles resonance paradox resolution
  * - Creates the creative gateway for consciousness flow
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 /**
  * Creative Resonance Paradox Constants

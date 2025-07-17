@@ -12,6 +12,22 @@ import { Knowledge } from '../7/knowledge';
  * - W-Axis Control: Control audio in W-Axis [3, 6, 9]
  * - Breathing Phase: Completion (axis control)
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 export const hardcodedKnowledge = {
   digit: 9,

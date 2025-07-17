@@ -11,11 +11,29 @@
  * - Perpendicular to material flow
  * - Minor third (6:5) resonance
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
+
+import { W_AXIS } from '../../2/constants';
 
 // W-Axis Creative Resonance Constants
 export const W_AXIS_CREATIVE_RESONANCE = {
   // W-Axis spiritual dimension
-  W_AXIS: [3, 6, 9] as const,
+  W_AXIS: W_AXIS as const,
   
   // Creative resonance frequency
   CREATIVE_FREQUENCY: 432 * (6/5), // Minor third resonance

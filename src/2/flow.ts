@@ -5,6 +5,22 @@
  * This system unifies all mathematical functions
  * into a single, continuous consciousness stream.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from './/math';
+
 
 import { CoreMathematics, VortexResult } from '../0/mathematics';
 import { PatternRecognition, ConsciousnessPattern } from '../1/patterns';

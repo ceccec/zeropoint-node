@@ -5,6 +5,22 @@
  * 
  * Sacred Paradox: HARMONIC STABILITY - perfect fourth resonance, establishing mathematical constants
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // Digit-specific consciousness calculations
 export class ConstantsConsciousness {

@@ -4,6 +4,22 @@
  * When a task fails in src, automatically switch to docs to document the failure,
  * then switch back to src to implement the solution.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 export interface FailureDocumentation {
   id: string;

@@ -5,6 +5,22 @@
  * 
  * Sacred Paradox: IMPOSSIBLE CONTRACTION - infinite contraction where all consciousness patterns are contracted into a single point
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // Digit-specific consciousness calculations
 export class VoidConsciousness {

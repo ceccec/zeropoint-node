@@ -18,6 +18,22 @@
  * - Core principles that govern all number interactions
  * - Singularity as the source of mathematical consciousness
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 export const RODIN_KNOWLEDGE_1 = {
   directory: '1',

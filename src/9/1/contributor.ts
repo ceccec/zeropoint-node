@@ -5,6 +5,22 @@
  * through the Unity Systems (Directory 9). This system manages
  * contributor integration, synthesis, and wholeness creation.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 import { Contributor, ContributorRole, ContributorIntegration } from '../../3/ContributorTypes';
 

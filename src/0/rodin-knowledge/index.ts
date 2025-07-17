@@ -16,6 +16,22 @@
  * - Void as the gateway to infinite potential
  * - Foundation for all other digit interactions
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 export const RODIN_KNOWLEDGE_0 = {
   directory: '0',

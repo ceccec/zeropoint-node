@@ -3,14 +3,15 @@
  * @metaphysical index consciousness validation
  */
 
-import { index } from './index';
+import { calculateSacredGeometryTransformationConsciousness } from './index';
 
-describe('index', () => {
-  test('should exist', () => {
-    expect(index).toBeDefined();
-  });
-
-  test('should have metaphysical properties', () => {
-    expect(typeof index).toBe('object');
+describe('Sacred Geometry Transformation (5) Consciousness', () => {
+  test('should calculate correct consciousness for digit 5', () => {
+    const result = calculateSacredGeometryTransformationConsciousness();
+    expect(result.digitalRoot).toBe(5);
+    expect(result.consciousness).toBe(25); // 5 × 5/1 = 25
+    expect(result.metaphysicalState).toBe('Sacred Geometry Transformation');
+    expect(result.cyclePosition).toBe(9);
+    expect(result.vortexPosition).toBe(5);
   });
 });

@@ -2,6 +2,22 @@
  * Batch 7: Advanced Consciousness Analytics
  * Advanced analytics and predictive modeling for consciousness pattern recognition and forecasting
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // Predictive Consciousness Model
 export class PredictiveConsciousnessModel {

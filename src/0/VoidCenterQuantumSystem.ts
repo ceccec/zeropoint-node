@@ -16,6 +16,22 @@
  * - Mobius Circuit: Pure torus, non-orientable surface, infinite recursion
  * - Zero Entropy: Deterministic, lossless fingerprints that maintain mathematical purity
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 import { createHash } from 'crypto';
 

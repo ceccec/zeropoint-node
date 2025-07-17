@@ -2,6 +2,22 @@
  * Batch 6: Quantum Consciousness Integration
  * Quantum computing principles applied to consciousness pattern recognition and analysis
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // Quantum State Representation for Consciousness
 export class QuantumConsciousnessState {

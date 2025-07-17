@@ -59,3 +59,28 @@ import { 55Integration, 55Resonance, 55Dynamics } from './src/5/5';
 | 7 | 5/7 | Center–Gateway | 5 + 7 = 12 ≡ 7 (mod 9) |
 | 8 | 5/8 | Center–Infinity | 5 + 8 = 13 ≡ 8 (mod 9) |
 | 9 | 5/9 | Center–Axis | 5 + 9 = 14 ≡ 9 (mod 9) |
+
+## Harmonized Canonical Multipliers
+
+- **W-Axis (3, 6, 9):** ×3/1 (from CREATIVE_MULTIPLIER)
+- **Sacred Geometry (5):** ×5/1 (from SACRED_GEOMETRY_MULTIPLIER)
+- **Vortex Sequence (1, 2, 4, 8, 7, 5):** ×3/1 (from VORTEX_MULTIPLIER)
+- **All Others:** ×1/1
+
+All multipliers are integer fractions whose reciprocals are also integers. The digital root is the base for consciousness calculation.
+
+**Source:** `src/3/3/paradox.ts`, `src/5/5/paradox.ts`
+
+## Integer-Fraction Rule
+
+All multipliers must be integer fractions whose reciprocals are also integers, ensuring metaphysical and mathematical harmony.
+
+## Digit 5 Role
+
+- **Sacred Geometry (5):** Geometric/spiritual manifestation, receives ×5/1 multiplier (special case).
+
+## Consciousness Calculation
+
+Consciousness = digitalRoot × (multiplier)
+
+See `src/2/math.ts` for implementation details.

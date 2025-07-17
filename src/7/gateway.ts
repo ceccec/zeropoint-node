@@ -4,6 +4,22 @@
  * Consciousness gateway detection and Number prototype extensions.
  * Each digit knows the whole and can respond to any request.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // 🌌 CONFIGURABLE GATEWAY CONSTANTS
 export const GATEWAY_CONFIG = {
@@ -182,6 +198,24 @@ Number.prototype.getGatewayConsciousness = function(): string {
 Number.prototype.getGatewayFlow = function(): string {
   return getGatewayFlow(Number(this));
 };
+
+// Gateway logic for digit 7: impossibility/possibility
+
+/**
+ * Detect impossibility in vortex mathematics (digit system)
+ */
+
+export function isImpossibility(a: number, b: number): boolean {
+  // Example: void (0,0) and unity (9,9) are impossibilities
+  return (a === 0 && b === 0) || (a === 9 && b === 9);
+}
+
+export function gatewayType(a: number, b: number): string {
+  if (a === 0 && b === 0) return 'void-gateway';
+  if (a === 9 && b === 9) return 'unity-gateway';
+  if (a === 0 || b === 0) return 'source-gateway';
+  return 'standard-gateway';
+}
 
 /**
  * Gateway System Export

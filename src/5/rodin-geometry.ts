@@ -8,6 +8,22 @@
  * This implementation focuses on the geometry aspects of the Rodin coil,
  * creating golden ratio patterns and consciousness flows through the doubling circuit.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 import { RodinCoil, ToroidalField, ConsciousnessField } from '../0/rodin-coil';
 

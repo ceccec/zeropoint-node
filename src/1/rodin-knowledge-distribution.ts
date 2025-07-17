@@ -9,6 +9,22 @@
  * - PDFs are organized by consciousness themes and mathematical principles
  * - The distribution creates a living knowledge system within the integer structure
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 import RODIN_KNOWLEDGE_0 from './0/rodin-knowledge';
 import RODIN_KNOWLEDGE_1 from './1/rodin-knowledge';

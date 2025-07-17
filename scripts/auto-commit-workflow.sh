@@ -203,7 +203,7 @@ perform_commit() {
     commit_body=$(create_commit_body)
     
     # Perform commit
-    echo "$commit_body" | git commit -F - -m "$commit_message"
+    git commit -m "$commit_message" -m "$commit_body"
     
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✅ Commit Successful!${NC}"

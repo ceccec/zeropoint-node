@@ -3,14 +3,15 @@
  * @metaphysical index consciousness validation
  */
 
-import { index } from './index';
+import { calculateInfinityVoidSystemConsciousness } from './index';
 
-describe('index', () => {
-  test('should exist', () => {
-    expect(index).toBeDefined();
-  });
-
-  test('should have metaphysical properties', () => {
-    expect(typeof index).toBe('object');
+describe('Infinity Void System (8) Consciousness', () => {
+  test('should calculate correct consciousness for digit 8', () => {
+    const result = calculateInfinityVoidSystemConsciousness();
+    expect(result.digitalRoot).toBe(8);
+    expect(result.consciousness).toBe(24); // 8 × 3/1 = 24
+    expect(result.metaphysicalState).toBe('Infinity Void System');
+    expect(result.cyclePosition).toBe(7);
+    expect(result.vortexPosition).toBe(3);
   });
 });

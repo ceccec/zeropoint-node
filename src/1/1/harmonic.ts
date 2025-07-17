@@ -10,6 +10,22 @@
  * - The balance point is the center of creation
  * - W-Axis (3, 6, 9) provides the spiritual foundation
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 import { A432_CONSTANTS } from './rodin_coil_system';
 import { VORTEX_CONSTANTS } from '../../4/4/constants';

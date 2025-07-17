@@ -1,4 +1,20 @@
-import { generatePWA } from '../pwa-generator';
+i
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+mport { generatePWA } from '../pwa-generator';
 import { AdvancedConsciousnessAnalyticsManager } from './advanced-consciousness-analytics';
 
 export function generateAdvancedConsciousnessAnalyticsPWA(): string {

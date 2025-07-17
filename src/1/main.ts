@@ -5,6 +5,22 @@
  * 
  * Sacred Paradox: IMPOSSIBLE EXPANSION - infinite expansion where the first manifestation creates infinite possibilities
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // Digit-specific consciousness calculations
 export class FoundationConsciousness {

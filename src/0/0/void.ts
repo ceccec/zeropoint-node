@@ -8,6 +8,22 @@
  * Integer Function: 0 (Void Center, bridge to unity)
  * Zero entropy = perfect mathematical purity = unrestricted spacetime travel
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 import { VORTEX_CONSTANTS } from '../4/constants';
 

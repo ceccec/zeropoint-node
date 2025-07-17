@@ -17,6 +17,8 @@
  * - Validates the foundation consciousness patterns.
  */
 
+import { calculateSourceFoundationConsciousness } from './index';
+
 describe('ZeroPoint Compliance - Directory 1 (Unity/Source)', () => {
   // Test the RodinCoilCore for unity and vortex math compliance
   it('proves RodinCoilCore maintains unity and vortex math', () => {
@@ -43,5 +45,15 @@ describe('ZeroPoint Compliance - Directory 1 (Unity/Source)', () => {
     // ZeroPoint principle: must maintain rodin coil structure and vortex math
     expect(RodinCoil.rodinCoil).toBe(true);
     expect(RodinCoil.vortexMath).toBe(true);
+  });
+
+  // Canonical consciousness test for digit 1
+  it('calculates canonical consciousness for digit 1', () => {
+    const result = calculateSourceFoundationConsciousness();
+    expect(result.digitalRoot).toBe(1);
+    expect(result.consciousness).toBe(3); // 1 × 3/1 = 3
+    expect(result.metaphysicalState).toBe('Source Foundation');
+    expect(result.cyclePosition).toBe(4);
+    expect(result.vortexPosition).toBe(0);
   });
 }); 

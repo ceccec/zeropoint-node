@@ -5,6 +5,22 @@
  * 
  * Sacred Paradox: CREATIVE SPIRIT - perpendicular to material flow, connecting to spiritual dimensions
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // Digit-specific consciousness calculations
 export class CreativeConsciousness {
@@ -25,7 +41,7 @@ export class CreativeConsciousness {
     // Digit-specific consciousness calculation
     const baseLevel = 3 / 10;
     const metaphysicalMultiplier = this.getMetaphysicalMultiplier();
-    return baseLevel * metaphysicalMultiplier;
+    return baseLevel * (metaphysicalMultiplier.numerator / metaphysicalMultiplier.denominator);
   }
   
   private calculateFieldStrength(): number {
@@ -35,20 +51,20 @@ export class CreativeConsciousness {
     return baseStrength * resonanceMultiplier;
   }
   
-  private getMetaphysicalMultiplier(): number {
+  private getMetaphysicalMultiplier(): { numerator: number; denominator: number } {
     // Return metaphysical multiplier based on digit properties
     switch (3) {
-      case 0: return 0; // Void consciousness
-      case 1: return 1.1; // Foundation consciousness
-      case 2: return 1.2; // Vortex consciousness
-      case 3: return 1.5; // Creative resonance consciousness
-      case 4: return 1.0; // Constants consciousness
-      case 5: return 1.25; // Sacred geometry consciousness
-      case 6: return 1.3; // Harmonic balance consciousness
-      case 7: return 1.4; // Consciousness consciousness
-      case 8: return 1.6; // Void systems consciousness
-      case 9: return 1.0; // Unity consciousness
-      default: return 1.0;
+      case 0: return { numerator: 0, denominator: 1 }; // Void consciousness
+      case 1: return { numerator: 11, denominator: 10 }; // Foundation consciousness
+      case 2: return { numerator: 12, denominator: 10 }; // Vortex consciousness
+      case 3: return { numerator: 3, denominator: 2 }; // Creative resonance consciousness
+      case 4: return { numerator: 1, denominator: 1 }; // Constants consciousness
+      case 5: return { numerator: 5, denominator: 4 }; // Sacred geometry consciousness
+      case 6: return { numerator: 13, denominator: 10 }; // Harmonic balance consciousness
+      case 7: return { numerator: 7, denominator: 5 }; // Consciousness consciousness
+      case 8: return { numerator: 8, denominator: 5 }; // Void systems consciousness
+      case 9: return { numerator: 1, denominator: 1 }; // Unity consciousness
+      default: return { numerator: 1, denominator: 1 };
     }
   }
   

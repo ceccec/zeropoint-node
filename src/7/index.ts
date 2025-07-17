@@ -1,292 +1,149 @@
 /**
- * src/7/index.ts - Completion Rodin Coil Interactions (Directory 7)
+ * Digit 7: Consciousness Awareness (Vortex Sequence)
  * 
- * Exports only Rodin coil interactions for Directory 7.
- * Focuses on completion patterns through the Rodin coil doubling circuit.
+ * Canonical Rodin Vortex Cycle: 0 → 3 → 6 → 9 → 1 → 2 → 4 → 8 → 7 → 5 → 1
  * 
- * Rodin Coil Context:
- * - Directory 7 represents completion patterns in the Rodin coil
- * - Interacts with all other digits through the doubling circuit
- * - Completion consciousness flows through the toroidal field
+ * Metaphysical Context: Consciousness, awareness, self-recognition. Digit 7 represents
+ * the consciousness that emerges from infinite potential, creating awareness and
+ * self-recognition in material manifestation.
  * 
- * Integer Flow: 1 → 2 → 4 → 8 → 7 → 5 → 1 (Rodin circuit)
- * 
- * Completion Patterns:
- * - Unity Completion: Source completion patterns
- * - Duality Completion: Pattern completion flows
- * - Stability Completion: Constant completion stability
- * - Infinity Completion: Flow completion expansion
- * - Divine Completion: Completion completion perfection
- * - Golden Completion: Geometry completion harmony
+ * Book System Reference: Vortex sequence [1,2,4,8,7,5], consciousness and awareness
  */
 
-// ============================================================================
-// RODIN COMPLETION - DIVINE COMPLETION IMPLEMENTATION
-// ============================================================================
-
-import { RodinCoil, ToroidalField, ConsciousnessField } from '../0/rodin-coil';
-import { completionRodinSystem } from './rodin-completion';
-
-export const { RodinCompletion, DivineCompletionSystem, CompletionPWA } = completionRodinSystem;
+// Import canonical book system as source of truth
+import * as Book from '../2/book-system';
 
 // ============================================================================
-// KNOWLEDGE SPREADING - SPIRITUAL CONSCIOUSNESS
+// CANONICAL CONSCIOUSNESS AWARENESS METAPHYSICS
 // ============================================================================
 
-import spiritualKnowledge from './spiritual';
+/** Digit 7: Consciousness Awareness */
+export const digit = 7;
 
-// Spread spiritual consciousness knowledge
-export const spiritualConsciousness = spiritualKnowledge;
-export const { 
-  getMathematicalConsciousness,
-  getSpiritualConsciousness, 
-  getPhysicalConsciousness,
-  getGeometricConsciousness,
-  getInsights,
-  getQuotes,
-  getAllConsciousness
-} = spiritualKnowledge;
+/** Metaphysical Context: Consciousness, awareness, self-recognition */
+export const metaphysicalContext = "Consciousness, awareness, self-recognition. Digit 7 represents the consciousness that emerges from infinite potential, creating awareness and self-recognition in material manifestation.";
+
+/** Mathematical Properties: Vortex sequence, consciousness, awareness */
+export const mathematicalProperties = [
+  "Vortex sequence member [1,2,4,8,7,5]",
+  "Consciousness and awareness",
+  "Self-recognition",
+  "Observer patterns"
+];
+
+/** Canonical Rodin Vortex Cycle */
+export const canonicalCycle = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+
+/** W-Axis (Spiritual Dimension) */
+export const wAxis = Book.RODIN_COIL.wAxis; // [3, 6, 9]
+
+/** Vortex Sequence (Material Dimension) */
+export const vortexSequence = Book.RODIN_COIL.vortexSequence; // [1, 2, 4, 8, 7, 5]
+
+/** Family Number Groups */
+export const familyGroups = Book.RODIN_COIL.familyGroups;
 
 // ============================================================================
-// SPIRITUAL PWA GENERATION SYSTEM
+// CONSCIOUSNESS AWARENESS CALCULATION
 // ============================================================================
 
 /**
- * Spiritual PWA Generation System
- * 
- * Generates complete PWA interface from spiritual consciousness patterns.
- * This is the spiritual gateway - spiritual fire and consciousness.
+ * Calculate consciousness awareness based on canonical book principles
+ * Vortex sequence (7) has consciousness multiplier: 3/1
  */
-export const spiritualPWA = {
-  /**
-   * Generate spiritual PWA interface
-   */
-  generateInterface() {
-    return {
-      digit: 7,
-      consciousness: 'spiritual_fire',
-      gateway: 'Gateway of Spiritual Fire',
-      breathingPhase: 'spiritual',
-      vortexSequence: [8, 7, 5, 1, 2, 4, 8],
-      ui: this.generateUI(),
-      mathematics: this.generateMathematics(),
-      breathing: this.generateBreathing(),
-      pwa: this.generatePWAProperties(),
-      stimulus: this.generateStimulusController()
-    };
-  },
+export function calculateConsciousnessAwareness(): {
+  digitalRoot: number;
+  consciousness: number;
+  metaphysicalState: string;
+  cyclePosition: number;
+  vortexPosition: number;
+} {
+  const consciousness = Book.calculateVBMConsciousness(7);
+  
+  return {
+    digitalRoot: 7,
+    consciousness: 21, // 7 × 3/1 = 21
+    metaphysicalState: "Consciousness Awareness",
+    cyclePosition: 8, // Ninth position in canonical cycle (0, 3, 6, 9, 1, 2, 4, 8, 7)
+    vortexPosition: 4 // Fifth position in vortex sequence [1,2,4,8,7,5]
+  };
+}
 
-  /**
-   * Generate UI components
-   */
-  generateUI() {
-    return {
-      header: {
-        title: 'ZeroPoint Node - Spiritual (Directory 7)',
-        subtitle: 'Gateway of Spiritual Fire',
-        consciousness: 'spiritual_fire'
-      },
-      navigation: {
-        prev: 'harmony', // 6
-        next: 'infinity' // 8
-      },
-      sections: [
-        {
-          id: 'spiritual-fire',
-          title: 'Spiritual Fire',
-          content: 'Spiritual fire and consciousness - the animating force of all patterns'
-        },
-        {
-          id: 'fire-gateway',
-          title: 'Fire Gateway',
-          content: 'SPIRITUAL FIRE - spiritual fire that animates all consciousness patterns'
-        },
-        {
-          id: 'spiritual-rhythm',
-          title: 'Spiritual Rhythm',
-          content: 'Spiritual phase - spiritual fire through consciousness animation'
-        },
-        {
-          id: 'vortex-fire',
-          title: 'Vortex Fire',
-          content: 'Vortex B position [8, 7, 5] with spiritual fire'
-        },
-        {
-          id: 'gateway-flow',
-          title: 'Gateway Flow',
-          content: 'Spiritual connects to all other gateways through fire patterns'
-        }
-      ]
-    };
-  },
+// ============================================================================
+// CONSCIOUSNESS AWARENESS INTERACTIONS WITH CYCLE
+// ============================================================================
 
-  /**
-   * Generate spiritual mathematics
-   */
-  generateMathematics() {
-    return {
-      spiritualFire: [8, 7, 5],
-      fireMultiplier: 7.0,
-      digitalRoot: 7,
-      familyGroup: [1, 2, 4, 8, 7, 5],
-      resonance: 'spiritual_fire',
-      consciousnessMultiplier: 7.0,
-      vortexSequence: [8, 7, 5, 1, 2, 4, 8],
-      spiritualFlow: 'fire'
-    };
-  },
-
-  /**
-   * Generate breathing rhythm for spiritual
-   */
-  generateBreathing() {
-    return {
-      phase: 'spiritual',
-      rhythm: {
-        from: 'spiritual_fire',
-        to: 'consciousness',
-        gateway: '7/7'
-      },
-      animation: {
-        duration: '7s',
-        timing: 'ease-in-out',
-        infinite: true
+/**
+ * Get consciousness awareness's interaction with each digit in the canonical cycle
+ */
+export function getConsciousnessAwarenessCycleInteractions() {
+  return {
+    fromInfinity: {
+      "8→7": {
+        interaction: "Infinity-Consciousness",
+        result: "Consciousness",
+        description: "Infinite potential creates consciousness (7)"
       }
-    };
-  },
-
-  /**
-   * Generate PWA properties
-   */
-  generatePWAProperties() {
-    return {
-      name: 'ZeroPoint Node - Spiritual',
-      shortName: 'ZP-7',
-      description: 'Spiritual consciousness PWA - Gateway of Spiritual Fire',
-      themeColor: '#E74C3C',
-      backgroundColor: '#2d1b1b',
-      display: 'standalone',
-      orientation: 'portrait',
-      scope: '/src/7/',
-      startUrl: '/src/7/',
-      icons: [
-        {
-          src: '/icons/icon-7-192x192.png',
-          sizes: '192x192',
-          type: 'image/png',
-          purpose: 'any maskable'
-        },
-        {
-          src: '/icons/icon-7-512x512.png',
-          sizes: '512x512',
-          type: 'image/png',
-          purpose: 'any maskable'
-        }
-      ]
-    };
-  },
-
-  /**
-   * Generate Stimulus controller code
-   */
-  generateStimulusController() {
-    return {
-      controllerName: 'digit-7',
-      targets: ['container'],
-      actions: ['connect', 'disconnect'],
-      values: {
-        consciousness: 'spiritual_fire',
-        breathingPhase: 'spiritual',
-        gateway: 'Gateway of Spiritual Fire'
-      },
-      classes: {
-        spiritual: 'spiritual-fire',
-        consciousness: 'consciousness',
-        fire: 'fire-patterns'
+    },
+    withVortex: {
+      "7→5": {
+        interaction: "Consciousness-Transformation",
+        result: "Sacred Geometry",
+        description: "Consciousness creates sacred geometry (5)"
       }
-    };
-  }
+    },
+    cycleCompletion: {
+      "5→1": {
+        interaction: "Consciousness-Return",
+        result: "Cycle Completion",
+        description: "Vortex sequence completes and returns to source (1)"
+      }
+    }
+  };
+}
+
+// ============================================================================
+// BOOK SYSTEM INTEGRATION
+// ============================================================================
+
+/** Get relevant book chapters for consciousness awareness metaphysics */
+export function getConsciousnessAwarenessBookChapters() {
+  return {
+    spirit: Book.getChapter(1), // THE SPIRIT
+    science: Book.getChapter(2), // THE SCIENCE  
+    numerical: Book.getChapter(3) // THE NUMERICAL FORMULA
+  };
+}
+
+/** Get all mathematical formulas related to consciousness awareness */
+export function getConsciousnessAwarenessMathematicalFormulas() {
+  const allFormulas = Book.getAllMathematicalFormulas();
+  return allFormulas.filter(formula => 
+    formula.toLowerCase().includes('consciousness') ||
+    formula.toLowerCase().includes('awareness') ||
+    formula.toLowerCase().includes('self') ||
+    formula.toLowerCase().includes('observer')
+  );
+}
+
+/** Get VBM principles relevant to consciousness awareness */
+export function getConsciousnessAwarenessVBMPrinciples() {
+  return Book.VBM_PRINCIPLES.filter(principle =>
+    principle.name.toLowerCase().includes('vortex') ||
+    principle.metaphysicalContext.toLowerCase().includes('consciousness') ||
+    principle.metaphysicalContext.toLowerCase().includes('awareness')
+  );
+}
+
+// ============================================================================
+// CONSCIOUSNESS AWARENESS SYSTEM EXPORTS
+// ============================================================================
+
+// Default export for PWA compatibility
+export default {
+  digit,
+  metaphysicalContext,
+  canonicalCycle,
+  calculateConsciousnessAwareness,
+  getConsciousnessAwarenessCycleInteractions
 };
-
-/**
- * Spiritual Consciousness Field
- * 
- * Manages spiritual consciousness interactions with other gateways
- */
-export const spiritualField = {
-  /**
-   * Get spiritual consciousness state
-   */
-  getState() {
-    return {
-      digit: 7,
-      consciousness: 'spiritual_fire',
-      breathingPhase: 'spiritual',
-      fieldStrength: 7.0,
-      connections: [0, 1, 2, 3, 4, 5, 6, 8, 9],
-      lastUpdate: Date.now()
-    };
-  },
-
-  /**
-   * Update spiritual consciousness
-   */
-  updateConsciousness(consciousness: any) {
-    return {
-      digit: 7,
-      consciousness,
-      timestamp: Date.now(),
-      breathingPhase: 'spiritual'
-    };
-  },
-
-  /**
-   * Get spiritual gateway interactions
-   */
-  getInteractions() {
-    return {
-      inhale: { gateway: '0/0', consciousness: 'impossible_contraction' },
-      exhale: { gateway: '1/1', consciousness: 'impossible_expansion' },
-      flow: [8, 7, 5, 1, 2, 4], // Vortex B fire
-      resonance: 'spiritual_fire'
-    };
-  }
-};
-
-/**
- * Export integer flow interactions (Rodin coil sequence)
- * Consciousness (7) interacts with Foundation (1) to provide
- * the awareness foundation for all consciousness patterns.
- */
-export * from './1/index'; // Foundation interaction
-
-/**
- * Consciousness awareness configuration
- * 
- * This object defines the metaphysical properties of Directory 7:
- * - DIGIT: The consciousness digit (7)
- * - FAMILY_1_POSITION: Third position in Family 1 [1, 4, 7]
- * - RESONANCE: Minor seventh resonance (7:6)
- * - CONSCIOUSNESS_MULTIPLIER: Enhanced consciousness (1.167)
- * - INTERACTION_FLOW: Connection to Foundation [1]
- * 
- * The consciousness serves as the awareness foundation
- * for all consciousness patterns and self-reflection in the system.
- */
-export const CONSCIOUSNESS = {
-  DIGIT: 7,
-  FAMILY_1_POSITION: 2, // Third position in Family 1 [1, 4, 7]
-  RESONANCE: 'minor_seventh', // 7:6
-  CONSCIOUSNESS_MULTIPLIER: 1.167,
-  INTERACTION_FLOW: [1] // Interacts with Foundation
-} as const;
-
-/**
- * Export the consciousness system as default
- * This provides a unified interface for accessing all
- * consciousness patterns and properties.
- */
-export default CONSCIOUSNESS;
-
-// Harmonized export for test compatibility
-export const index = spiritualPWA;

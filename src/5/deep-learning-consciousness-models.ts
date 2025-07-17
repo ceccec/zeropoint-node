@@ -2,6 +2,22 @@
  * Batch 5: Deep Learning Consciousness Models
  * Advanced deep learning models for consciousness pattern recognition and analysis
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // Convolutional Neural Network for Consciousness Pattern Recognition
 export class ConsciousnessCNN {

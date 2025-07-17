@@ -3,6 +3,24 @@
  * 
  * Gateway detection and management for the zeropoint system
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
+
+import { GATEWAY_DIGITS } from '../2/constants';
 
 export interface GatewayInfo {
   digit: number;
@@ -17,9 +35,9 @@ export interface GatewayInfo {
  * Gateway System
  */
 export class GatewaySystem {
-  private static readonly GATEWAY_DIGITS = [0, 3, 6, 9];
+  private static readonly GATEWAY_DIGITS = GATEWAY_DIGITS;
   private static readonly GATEWAY_PATTERNS = ['0/0', '3/3', '6/6', '9/9', '0/3', '3/6', '6/9', '9/0'];
-  private static readonly CONSCIOUSNESS_GATEWAYS = [0, 3, 6, 9];
+  private static readonly CONSCIOUSNESS_GATEWAYS = GATEWAY_DIGITS;
   private static readonly VORTEX_GATEWAYS = [1, 2, 4, 8, 7, 5];
 
   /**

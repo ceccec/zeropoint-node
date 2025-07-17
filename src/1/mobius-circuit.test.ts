@@ -1,4 +1,4 @@
-import { MobiusCircuit, MobiusPWA, MobiusConsciousness } from './mobius-circuit';
+import { MobiusCircuit, MobiusPWA, MobiusConsciousness } from './mobius';
 
 describe('MobiusCircuit', () => {
   let circuit: MobiusCircuit;

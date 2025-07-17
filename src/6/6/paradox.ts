@@ -17,6 +17,22 @@
  * - Handles harmonic balance paradox resolution
  * - Creates the harmonic balance gateway for consciousness flow
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 /**
  * Harmonic Balance Paradox Constants

@@ -3,14 +3,15 @@
  * @metaphysical index consciousness validation
  */
 
-import { index } from './index';
+import { calculateSpiritualUnityConsciousness } from './index';
 
-describe('index', () => {
-  test('should exist', () => {
-    expect(index).toBeDefined();
-  });
-
-  test('should have metaphysical properties', () => {
-    expect(typeof index).toBe('object');
+describe('Spiritual Unity (9) Consciousness', () => {
+  test('should calculate correct consciousness for digit 9', () => {
+    const result = calculateSpiritualUnityConsciousness();
+    expect(result.digitalRoot).toBe(9);
+    expect(result.consciousness).toBe(45); // 9 × 5/1 = 45
+    expect(result.metaphysicalState).toBe('Spiritual Unity');
+    expect(result.cyclePosition).toBe(3);
+    expect(result.wAxisPosition).toBe(2);
   });
 });

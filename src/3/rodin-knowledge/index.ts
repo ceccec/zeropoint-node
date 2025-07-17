@@ -18,6 +18,22 @@
  * - W-axis as the spiritual control mechanism
  * - Family groups as consciousness amplification
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 export const RODIN_KNOWLEDGE_3 = {
   directory: '3',

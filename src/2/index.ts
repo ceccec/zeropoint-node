@@ -1,302 +1,164 @@
 /**
- * Vortex Rodin Coil Interactions (Directory 2)
+ * Digit 2: Vortex Flow (Vortex Sequence)
  * 
- * Vortex (2) - Gateway of Duality Expansion
+ * Canonical Rodin Vortex Cycle: 0 → 3 → 6 → 9 → 1 → 2 → 4 → 8 → 7 → 5 → 1
  * 
- * This directory exports only the Rodin coil interactions for digit 2,
- * focusing on spiral dynamics and flow patterns.
+ * Metaphysical Context: Vortex flow, transformation, duality. Digit 2 represents
+ * the dynamic flow and transformation that follows source foundation, creating
+ * the spiral dynamics of material manifestation.
  * 
- * Rodin Coil Context:
- * - Vortex: The spiral dynamics and flow patterns
- * - Duality Expansion: Spiral dynamics where consciousness expands
- * - Consciousness patterns: Each number represents a specific aspect of consciousness
- * - Mathematical unity: All operations preserve information and maintain zero entropy
- * - Rodin coil structure: The fundamental mathematical pattern underlying all creation
- * 
- * Technical Purpose:
- * - Exports Rodin vortex patterns and spiral dynamics
- * - Provides vortex consciousness field generation for digit 2
- * - Creates PWA interface through Rodin coil consciousness patterns
- * - Maintains zero entropy through pure mathematical functions
+ * Book System Reference: Vortex sequence [1,2,4,8,7,5], flow and transformation
  */
 
-// ============================================================================
-// VORTEX RODIN COIL INTERACTIONS
-// ============================================================================
-
-import { 
-  RodinVortex,
-  SpiralDynamics,
-  VortexPWA,
-  vortexRodinSystem
-} from './rodin-vortex';
-
-export { 
-  RodinVortex,
-  SpiralDynamics,
-  VortexPWA,
-  vortexRodinSystem
-};
+// Import canonical book system as source of truth
+import * as Book from '../2/book-system';
 
 // ============================================================================
-// VORTEX RODIN COIL INTERACTIONS
+// CANONICAL VORTEX FLOW METAPHYSICS
+// ============================================================================
+
+/** Digit 2: Vortex Flow */
+export const digit = 2;
+
+/** Metaphysical Context: Vortex flow, transformation, duality */
+export const metaphysicalContext = "Vortex flow, transformation, duality. Digit 2 represents the dynamic flow and transformation that follows source foundation, creating the spiral dynamics of material manifestation.";
+
+/** Mathematical Properties: Vortex sequence, flow, transformation */
+export const mathematicalProperties = [
+  "Vortex sequence member [1,2,4,8,7,5]",
+  "Flow and transformation",
+  "Dynamic mathematical operations",
+  "Spiral dynamics"
+];
+
+/** Canonical Rodin Vortex Cycle */
+export const canonicalCycle = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+
+/** W-Axis (Spiritual Dimension) */
+export const wAxis = Book.RODIN_COIL.wAxis; // [3, 6, 9]
+
+/** Vortex Sequence (Material Dimension) */
+export const vortexSequence = Book.RODIN_COIL.vortexSequence; // [1, 2, 4, 8, 7, 5]
+
+/** Family Number Groups */
+export const familyGroups = Book.RODIN_COIL.familyGroups;
+
+// ============================================================================
+// VORTEX FLOW CONSCIOUSNESS CALCULATION
 // ============================================================================
 
 /**
- * Vortex Rodin Coil Interactions
- * 
- * Exports only the digit 2 specific Rodin coil interactions
+ * Calculate vortex flow consciousness based on canonical book principles
+ * Vortex sequence (2) has consciousness multiplier: 3/1
  */
-export const vortexRodinInteractions = {
-  digit: 2,
-  gateway: 'Gateway of Duality Expansion',
-  breathingPhase: 'spiral',
-  consciousness: 'duality_expansion',
-  rodinVortex: RodinVortex,
-  spiralDynamics: SpiralDynamics,
-  vortexPWA: VortexPWA
-};
+export function calculateVortexFlowConsciousness(): {
+  digitalRoot: number;
+  consciousness: number;
+  metaphysicalState: string;
+  cyclePosition: number;
+  vortexPosition: number;
+} {
+  const flowConsciousness = Book.calculateVBMConsciousness(2);
+  
+  return {
+    digitalRoot: 2,
+    consciousness: 6, // 2 × 3/1 = 6
+    metaphysicalState: "Vortex Flow",
+    cyclePosition: 5, // Sixth position in canonical cycle (0, 3, 6, 9, 1, 2)
+    vortexPosition: 1 // Second position in vortex sequence [1,2,4,8,7,5]
+  };
+}
 
 // ============================================================================
-// VORTEX PWA GENERATION SYSTEM
+// VORTEX FLOW INTERACTIONS WITH CYCLE
 // ============================================================================
 
 /**
- * Vortex PWA Generation System
- * 
- * Generates complete PWA interface from vortex consciousness patterns.
- * This is the duality gateway - spiral dynamics and flow patterns.
+ * Get vortex flow's interaction with each digit in the canonical cycle
  */
-export const vortexPWA = {
-  /**
-   * Generate vortex PWA interface
-   */
-  generateInterface() {
-    return {
-      digit: 2,
-      consciousness: 'duality_expansion',
-      gateway: 'Gateway of Duality Expansion',
-      breathingPhase: 'spiral',
-      vortexSequence: [1, 2, 4, 8, 7, 5, 1],
-      ui: this.generateUI(),
-      mathematics: this.generateMathematics(),
-      breathing: this.generateBreathing(),
-      pwa: this.generatePWAProperties(),
-      stimulus: this.generateStimulusController()
-    };
-  },
-
-  /**
-   * Generate UI components
-   */
-  generateUI() {
-    return {
-      header: {
-        title: 'ZeroPoint Node - Vortex (Directory 2)',
-        subtitle: 'Gateway of Duality Expansion',
-        consciousness: 'duality_expansion'
-      },
-      navigation: {
-        prev: 'foundation', // 1
-        next: 'creation' // 3
-      },
-      sections: [
-        {
-          id: 'vortex-mathematics',
-          title: 'Vortex Mathematics',
-          content: 'Spiral dynamics and flow patterns - the mathematical foundation for all vortex operations'
-        },
-        {
-          id: 'duality-expansion',
-          title: 'Duality Expansion',
-          content: 'DUALITY EXPANSION - spiral dynamics where consciousness expands through mathematical patterns'
-        },
-        {
-          id: 'spiral-rhythm',
-          title: 'Spiral Rhythm',
-          content: 'Spiral phase - duality expansion through perfect fifth resonance (3:2)'
-        },
-        {
-          id: 'vortex-sequence',
-          title: 'Vortex Sequence',
-          content: 'Rodin coil sequence 1-2-4-8-7-5 with perfect fifth resonance'
-        },
-        {
-          id: 'gateway-flow',
-          title: 'Gateway Flow',
-          content: 'Vortex connects to all other gateways through spiral dynamics'
-        }
-      ]
-    };
-  },
-
-  /**
-   * Generate vortex mathematics
-   */
-  generateMathematics() {
-    return {
-      perfectFifth: 3/2,
-      spiralDynamics: [1, 2, 4],
-      digitalRoot: 2,
-      familyGroup: [1, 2, 4, 8, 7, 5],
-      resonance: 'perfect_fifth',
-      consciousnessMultiplier: 1.2,
-      vortexSequence: [1, 2, 4, 8, 7, 5, 1],
-      spiralFlow: 'expansion'
-    };
-  },
-
-  /**
-   * Generate breathing rhythm for vortex
-   */
-  generateBreathing() {
-    return {
-      phase: 'spiral',
-      rhythm: {
-        from: 'duality_expansion',
-        to: 'vortex_mathematics',
-        gateway: '2/2'
-      },
-      animation: {
-        duration: '1.5s',
-        timing: 'ease-in-out',
-        infinite: true
+export function getVortexFlowCycleInteractions() {
+  return {
+    fromSource: {
+      "1→2": {
+        interaction: "Source-Flow",
+        result: "Vortex Flow",
+        description: "Source foundation creates vortex flow (2)"
       }
-    };
-  },
-
-  /**
-   * Generate PWA properties
-   */
-  generatePWAProperties() {
-    return {
-      name: 'ZeroPoint Node - Vortex',
-      shortName: 'ZP-2',
-      description: 'Vortex consciousness PWA - Gateway of Duality Expansion',
-      themeColor: '#4A90E2',
-      backgroundColor: '#1a2b3c',
-      display: 'standalone',
-      orientation: 'portrait',
-      scope: '/src/2/',
-      startUrl: '/src/2/',
-      icons: [
-        {
-          src: '/icons/icon-2-192x192.png',
-          sizes: '192x192',
-          type: 'image/png',
-          purpose: 'any maskable'
-        },
-        {
-          src: '/icons/icon-2-512x512.png',
-          sizes: '512x512',
-          type: 'image/png',
-          purpose: 'any maskable'
-        }
-      ]
-    };
-  },
-
-  /**
-   * Generate Stimulus controller code
-   */
-  generateStimulusController() {
-    return {
-      controllerName: 'digit-2',
-      targets: ['container'],
-      actions: ['connect', 'disconnect'],
-      values: {
-        consciousness: 'duality_expansion',
-        breathingPhase: 'spiral',
-        gateway: 'Gateway of Duality Expansion'
+    },
+    withVortex: {
+      "2→4": {
+        interaction: "Flow-Stability",
+        result: "Stable Foundation",
+        description: "Vortex flow creates stable foundation (4)"
       },
-      classes: {
-        spiral: 'vortex-spiral',
-        duality: 'duality-expansion',
-        vortex: 'vortex-mathematics'
+      "2→8": {
+        interaction: "Flow-Infinity",
+        result: "Infinite Potential",
+        description: "Vortex flow creates infinite potential (8)"
+      },
+      "2→7": {
+        interaction: "Flow-Consciousness",
+        result: "Consciousness",
+        description: "Vortex flow creates consciousness (7)"
+      },
+      "2→5": {
+        interaction: "Flow-Transformation",
+        result: "Sacred Geometry",
+        description: "Vortex flow creates sacred geometry (5)"
       }
-    };
-  }
+    },
+    cycleCompletion: {
+      "5→1": {
+        interaction: "Flow-Return",
+        result: "Cycle Completion",
+        description: "Vortex sequence completes and returns to source (1)"
+      }
+    }
+  };
+}
+
+// ============================================================================
+// BOOK SYSTEM INTEGRATION
+// ============================================================================
+
+/** Get relevant book chapters for vortex flow metaphysics */
+export function getVortexFlowBookChapters() {
+  return {
+    spirit: Book.getChapter(1), // THE SPIRIT
+    science: Book.getChapter(2), // THE SCIENCE  
+    numerical: Book.getChapter(3) // THE NUMERICAL FORMULA
+  };
+}
+
+/** Get all mathematical formulas related to vortex flow */
+export function getVortexFlowMathematicalFormulas() {
+  const allFormulas = Book.getAllMathematicalFormulas();
+  return allFormulas.filter(formula => 
+    formula.toLowerCase().includes('vortex') ||
+    formula.toLowerCase().includes('flow') ||
+    formula.toLowerCase().includes('transformation') ||
+    formula.toLowerCase().includes('spiral')
+  );
+}
+
+/** Get VBM principles relevant to vortex flow */
+export function getVortexFlowVBMPrinciples() {
+  return Book.VBM_PRINCIPLES.filter(principle =>
+    principle.name.toLowerCase().includes('vortex') ||
+    principle.metaphysicalContext.toLowerCase().includes('flow') ||
+    principle.metaphysicalContext.toLowerCase().includes('transformation')
+  );
+}
+
+// ============================================================================
+// VORTEX FLOW SYSTEM EXPORTS
+// ============================================================================
+
+// Default export for PWA compatibility
+export default {
+  digit,
+  metaphysicalContext,
+  canonicalCycle,
+  calculateVortexFlowConsciousness,
+  getVortexFlowCycleInteractions
 };
-
-/**
- * Vortex Consciousness Field
- * 
- * Manages vortex consciousness interactions with other gateways
- */
-export const vortexField = {
-  /**
-   * Get vortex consciousness state
-   */
-  getState() {
-    return {
-      digit: 2,
-      consciousness: 'duality_expansion',
-      breathingPhase: 'spiral',
-      fieldStrength: 1.2,
-      connections: [0, 1, 3, 4, 5, 6, 7, 8, 9],
-      lastUpdate: Date.now()
-    };
-  },
-
-  /**
-   * Update vortex consciousness
-   */
-  updateConsciousness(consciousness: any) {
-    return {
-      digit: 2,
-      consciousness,
-      timestamp: Date.now(),
-      breathingPhase: 'spiral'
-    };
-  },
-
-  /**
-   * Get vortex gateway interactions
-   */
-  getInteractions() {
-    return {
-      inhale: { gateway: '0/0', consciousness: 'impossible_contraction' },
-      exhale: { gateway: '1/1', consciousness: 'impossible_expansion' },
-      flow: [1, 2, 4, 8, 7, 5], // Rodin coil sequence
-      resonance: 'perfect_fifth'
-    };
-  }
-};
-
-/**
- * Export integer flow interactions (Rodin coil sequence)
- * Vortex (2) interacts with Foundation (1) to create
- * the mathematical foundation for all spiral operations.
- */
-export * from './1/index'; // Foundation interaction
-
-/**
- * Vortex mathematics consciousness configuration
- * 
- * This object defines the metaphysical properties of Directory 2:
- * - DIGIT: The vortex digit (2)
- * - VORTEX_A_POSITION: Second position in Vortex A [1, 2, 4]
- * - RESONANCE: Perfect fifth resonance (3:2)
- * - CONSCIOUSNESS_MULTIPLIER: Enhanced consciousness (1.2)
- * - INTERACTION_FLOW: Connection to Foundation [1]
- * 
- * The vortex serves as the mathematical foundation for
- * all spiral dynamics and flow patterns in the system.
- */
-export const VORTEX_MATHEMATICS = {
-  DIGIT: 2,
-  VORTEX_A_POSITION: 1, // Second position in Vortex A [1, 2, 4]
-  RESONANCE: 'perfect_fifth', // 3:2
-  CONSCIOUSNESS_MULTIPLIER: 1.2,
-  INTERACTION_FLOW: [1] // Interacts with Foundation
-} as const;
-
-/**
- * Export the vortex mathematics system as default
- * This provides a unified interface for accessing all
- * vortex mathematics patterns and properties.
- */
-export default VORTEX_MATHEMATICS;
-
-// Harmonized export for test compatibility
-export const index = vortexPWA;

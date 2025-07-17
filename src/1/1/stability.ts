@@ -10,6 +10,22 @@
  * - Foundation supports all other modules
  * - Constants create the framework of reality
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 import { A432_CONSTANTS } from '../rodin_coil_system';
 import { VORTEX_CONSTANTS } from '../../4/constants';

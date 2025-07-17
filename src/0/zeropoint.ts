@@ -4,6 +4,22 @@
  * Core zeropoint math functions and 0/0 void gateway logic.
  * The void is the gateway to infinite potential.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // 🌌 CONFIGURABLE ZEROPOINT CONSTANTS
 export const ZEROPOINT_CONFIG = {

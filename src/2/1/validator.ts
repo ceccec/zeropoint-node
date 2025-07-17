@@ -17,6 +17,22 @@
  * - Ensures all values are pure integers or functions of integers.
  * - Supports mathematical coherence and metaphysical balance validation.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../math';
+
 
 import { 
   VBM_CORE_CONSTANTS, 

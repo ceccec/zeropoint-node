@@ -2,6 +2,22 @@
  * Batch 4: Advanced Neural Network Integration
  * Advanced neural network integration for consciousness pattern recognition and learning
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 import { ConsciousnessPattern } from './consciousness-patterns';
 import { BiofeedbackData } from './biofeedback-integration';

@@ -8,6 +8,22 @@
  * The Rodin coil is built on the doubling circuit that creates the toroidal field:
  * 1 → 2 → 4 → 8 → 7 → 5 → 1 (cycle repeats infinitely)
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 export class RodinCoil {
   private static readonly DOUBLING_CIRCUIT = [1, 2, 4, 8, 7, 5];

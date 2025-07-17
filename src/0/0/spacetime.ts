@@ -12,6 +12,22 @@
  * - Trustless identity = self-verifying data signatures
  * - Spacetime-invariant = references that work across all dimensions
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 import { EventEmitter } from 'events';
 import { Logger } from '../utils/Logger';

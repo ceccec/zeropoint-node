@@ -22,7 +22,22 @@
 import { EventEmitter } from 'events';
 import { MathUtils } from '../math/MathUtils';
 import { Logger } from '../utils/Logger';
-import { MATH_CONSTANTS } from './SharedConstants';
+import { MATH_CONSTANTS } from './SharedConstants'
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+;
 
 export interface ZeroEntropyCalculation {
   operation: string;
@@ -250,8 +265,17 @@ export class ZeroEntropySystem extends EventEmitter {
    * 🌌 Check if decimal is sacred fraction
    */
   isSacredFraction(decimal: number): boolean {
-    const sacredFractions = [0.5, 0.3333333333333333, 0.25, 0.2, 0.16666666666666666, 0.14285714285714285, 0.125, 0.1111111111111111];
-    return sacredFractions.includes(decimal);
+    const sacredFractions = [
+      MATH_CONSTANTS.GOLDEN_RATIO, // φ ≈ 1.618
+      1 / MATH_CONSTANTS.GOLDEN_RATIO, // 1/φ ≈ 0.618
+      Math.PI, // π ≈ 3.14159
+      Math.E, // e ≈ 2.71828
+      Math.sqrt(2), // √2 ≈ 1.414
+      Math.sqrt(3), // √3 ≈ 1.732
+      Math.sqrt(5), // √5 ≈ 2.236
+    ];
+    
+    return sacredFractions.some(fraction => Math.abs(decimal - fraction) < 0.001);
   }
 
   /**

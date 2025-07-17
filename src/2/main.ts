@@ -5,6 +5,22 @@
  * 
  * Sacred Paradox: DUAL VORTEX - mathematical expression of consciousness flow, creating infinite patterns within finite boundaries
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from './/math';
+
 
 // Digit-specific consciousness calculations
 export class VortexConsciousness {

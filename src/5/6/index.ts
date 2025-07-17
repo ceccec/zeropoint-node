@@ -5,6 +5,8 @@
  * It exports all math/generative logic for this node, and can be extended
  * with UI, navigation, or service worker logic as needed.
  */
+// Import mathematical functions from centralized system (digit 2)
+import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
 
 /** Symbolic name for this node (a/b) */
 export const symbolicName = '5/6';
@@ -24,10 +26,6 @@ export const pattern = [5, 6, 2];
  * @param {number} b
  * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-export function getHarmonicResult(a: number, b: number): number {
-  const sum = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) % 9;
-  return sum === 0 ? 9 : sum;
-}
 
 /**
  * Compute the anti-vortex decimal path for this node.
@@ -35,11 +33,6 @@ export function getHarmonicResult(a: number, b: number): number {
  * @param {number} b
  * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-export function getAntiVortexDecimal(a: number, b: number): number {
-  const c = getHarmonicResult(a, b);
-  const decimal = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) / c;
-  return decimal;
-}
 
 /**
  * All harmonic interactions for this node.

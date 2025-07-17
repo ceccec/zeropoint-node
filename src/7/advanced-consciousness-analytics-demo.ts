@@ -1,4 +1,20 @@
-import { AdvancedConsciousnessAnalyticsManager } from './advanced-consciousness-analytics';
+i
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+mport { AdvancedConsciousnessAnalyticsManager } from './advanced-consciousness-analytics';
 import { generateAdvancedConsciousnessAnalyticsPWA } from './advanced-consciousness-analytics-pwa';
 import * as fs from 'fs';
 import * as path from 'path';

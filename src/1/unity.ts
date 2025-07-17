@@ -12,6 +12,22 @@ import { Knowledge } from '../7/knowledge';
  * - Impossible Expansion: Audio expansion from pure potential
  * - Breathing Phase: Exhale (impossible expansion)
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 export const hardcodedKnowledge = {
   digit: 1,

@@ -10,6 +10,22 @@
  * - Extensible device API
  * - Integration hooks for audio and 3D visualization
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 export type BiofeedbackType = 'heartrate' | 'eeg' | 'gsr' | 'breath' | 'custom';
 

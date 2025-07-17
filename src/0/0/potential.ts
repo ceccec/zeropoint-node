@@ -8,6 +8,22 @@
  * Integer Function: 0 (Zero, pure potential, infinite possibilities)
  * Before unity, before duality, pure potential
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 import { VORTEX_CONSTANTS } from '../../4/constants';
 

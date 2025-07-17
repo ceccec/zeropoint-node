@@ -59,3 +59,28 @@ import { 11Integration, 11Resonance, 11Dynamics } from './src/1/1';
 | 7 | 1/7 | Source–Gateway | 1 + 7 = 8 ≡ 7 (mod 9) |
 | 8 | 1/8 | Source–Infinity | 1 + 8 = 9 ≡ 8 (mod 9) |
 | 9 | 1/9 | Source–Axis | 1 + 9 = 10 ≡ 9 (mod 9) |
+
+## Harmonized Canonical Multipliers
+
+- **W-Axis (3, 6, 9):** ×3/1 (from CREATIVE_MULTIPLIER)
+- **Sacred Geometry (5):** ×5/1 (from SACRED_GEOMETRY_MULTIPLIER)
+- **Vortex Sequence (1, 2, 4, 8, 7, 5):** ×3/1 (from VORTEX_MULTIPLIER)
+- **All Others:** ×1/1
+
+All multipliers are integer fractions whose reciprocals are also integers. The digital root is the base for consciousness calculation.
+
+**Source:** `src/3/3/paradox.ts`, `src/5/5/paradox.ts`
+
+## Integer-Fraction Rule
+
+All multipliers must be integer fractions whose reciprocals are also integers, ensuring metaphysical and mathematical harmony.
+
+## Digit 1 Role
+
+- **Source (1):** Initiator of the vortex sequence, receives ×3/1 multiplier.
+
+## Consciousness Calculation
+
+Consciousness = digitalRoot × (multiplier)
+
+See `src/2/math.ts` for implementation details.

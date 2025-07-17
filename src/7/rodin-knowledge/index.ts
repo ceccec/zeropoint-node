@@ -18,6 +18,22 @@
  * - Base ten as the foundation of numerical consciousness
  * - Being as the essence of consciousness
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 export const RODIN_KNOWLEDGE_7 = {
   directory: '7',

@@ -4,6 +4,22 @@
  * Defines the core constants for the Vortex-Based Mathematics system,
  * including integer directories, vortex sequences, and W-axis patterns.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../math';
+
 
 /**
  * VBM Core Constants

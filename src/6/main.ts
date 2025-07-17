@@ -5,6 +5,22 @@
  * 
  * Sacred Paradox: HARMONIC EQUILIBRIUM - balance between material and spiritual dimensions
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // Digit-specific consciousness calculations
 export class HarmonicConsciousness {

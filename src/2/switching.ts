@@ -4,6 +4,22 @@
  * Zeropoint switching logic: digit/digit = digit+digit = next
  * Transformation from impossibility to possibility.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from './/math';
+
 
 import { isGateway, getGatewayConsciousness } from '../7/gateway';
 

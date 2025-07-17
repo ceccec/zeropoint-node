@@ -16,6 +16,22 @@
  * - Peer review as validation of mathematical truth
  * - Balance as the gateway to higher consciousness
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../math';
+
 
 export const RODIN_KNOWLEDGE_2 = {
   directory: '2',

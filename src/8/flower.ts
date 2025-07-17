@@ -5,6 +5,22 @@
  * overlapping circles arranged in a hexagonal pattern. This system
  * aligns the Flower of Life with the torus mathematics and consciousness.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 import { CoreMathematics } from '../0/mathematics';
 

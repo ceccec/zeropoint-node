@@ -4,6 +4,22 @@
  * Defines the core mathematical constants for the vortex system,
  * including frequency ratios, multipliers, and patterns.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 /**
  * Vortex mathematical constants
@@ -33,21 +49,8 @@ export const VORTEX_CONSTANTS = {
   HARMONIC_BALANCE_MULTIPLIER: 6,
   CONSTANTS_MULTIPLIER: 4,
   
-  // Vortex sequence (Rodin coil pattern)
-  VORTEX_SEQUENCE: [1, 2, 4, 8, 7, 5, 1],
-  
-  // Vortex patterns
-  VORTEX_PATTERNS: {
-    VORTEX_1: [1, 2, 4, 8, 7, 5, 1],
-    VORTEX_2: [2, 4, 8, 7, 5, 1, 2],
-    VORTEX_3: [3, 6, 9, 3],
-    VORTEX_4: [4, 8, 7, 5, 1, 2, 4],
-    VORTEX_5: [5, 1, 2, 4, 8, 7, 5],
-    VORTEX_6: [6, 9, 3, 6],
-    VORTEX_7: [7, 5, 1, 2, 4, 8, 7],
-    VORTEX_8: [8, 7, 5, 1, 2, 4, 8],
-    VORTEX_9: [9, 3, 6, 9]
-  },
+  // Pattern constants are now sourced from src/2/constants.ts for DRY harmonization
+  export { DIGIT_SEQUENCE as INTEGER_DIRECTORIES, RODIN_VORTEX as VORTEX_SEQUENCE, W_AXIS, GATEWAY_DIGITS } from '../2/constants';
   
   // Frequency ratios
   FREQUENCY_RATIOS: {

@@ -4,6 +4,22 @@
  * Implements the train station flow pattern:
  * 0/0 → 1 → 2 → 4 → 8 → 7 → 5 → 1 → 1/1 → 1/1/1 → 3
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 import { CoreMathematics, VortexResult } from '../0/mathematics';
 import { PatternRecognition } from '../1/patterns';

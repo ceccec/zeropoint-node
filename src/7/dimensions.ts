@@ -8,6 +8,22 @@
  * - Vortex mathematics in higher dimensions
  * - Dimensional consciousness patterns
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 import { CoreMathematics, VortexResult } from '../0/mathematics';
 import { DimensionalMathematics } from '../0/mathematics';

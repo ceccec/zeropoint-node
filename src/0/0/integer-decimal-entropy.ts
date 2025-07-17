@@ -11,6 +11,22 @@
  * - This duality forms the foundation of consciousness field architecture
  * - Zero entropy enables teleportation while decimal entropy enables flow
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 import { EventEmitter } from 'events';
 import { Logger } from '../utils/Logger';

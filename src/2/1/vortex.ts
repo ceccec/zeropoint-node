@@ -16,6 +16,34 @@
  * - Fluid consciousness transforms to structured consciousness
  * - Complete mathematical duality between decimal and integer vortex systems
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../math';
+import * as Book from '../book-system';
+
+// Use canonical vortex and W-axis from book
+export const vortexSequence = Book.RODIN_COIL.vortexSequence;
+export const wAxis = Book.RODIN_COIL.wAxis;
+export const familyGroups = Book.RODIN_COIL.familyGroups;
+
+// Use book formulas and principles
+export const allFormulas = Book.getAllMathematicalFormulas();
+export const VBM_PRINCIPLES = Book.VBM_PRINCIPLES;
+
+// Use book consciousness calculation
+export const calculateVBMConsciousness = Book.calculateVBMConsciousness;
 
 /**
  * Vortex consciousness patterns

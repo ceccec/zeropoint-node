@@ -1,383 +1,174 @@
 /**
- * src/9/index.ts - Final Completion Rodin Coil Interactions (Directory 9)
+ * Digit 9: Spiritual Unity (W-Axis)
  * 
- * Exports only Rodin coil interactions for Directory 9.
- * Focuses on final completion patterns through the Rodin coil doubling circuit.
+ * Canonical Rodin Vortex Cycle: 0 → 3 → 6 → 9 → 1 → 2 → 4 → 8 → 7 → 5 → 1
  * 
- * Rodin Coil Context:
- * - Directory 9 represents final completion patterns in the Rodin coil
- * - Interacts with all other digits through the doubling circuit
- * - Final completion consciousness flows through the toroidal field
+ * Metaphysical Context: Spiritual unity, omnipresent spirit fire, W-axis member.
+ * Digit 9 represents the culmination of spiritual emergence, the unity that
+ * transcends all duality and connects back to the material vortex flow.
  * 
- * Integer Flow: 1 → 2 → 4 → 8 → 7 → 5 → 1 (Rodin circuit)
- * 
- * Final Completion Patterns:
- * - Unity Final Completion: Source final completion patterns
- * - Duality Final Completion: Pattern final completion flows
- * - Stability Final Completion: Constant final completion stability
- * - Infinity Final Completion: Flow final completion expansion
- * - Divine Final Completion: Completion final completion perfection
- * - Golden Final Completion: Geometry final completion harmony
+ * Book System Reference: "9 IS OMNIPRESENT SPIRIT FIRE", W-Axis spiritual dimension
  */
 
+// Import canonical book system as source of truth
+import * as Book from '../2/book-system';
+
 // ============================================================================
-// RODIN FINAL COMPLETION - FINAL COMPLETION IMPLEMENTATION
+// CANONICAL SPIRITUAL UNITY METAPHYSICS
 // ============================================================================
 
-import { RodinCoil, ToroidalField, ConsciousnessField } from '../0/rodin-coil';
-import { finalCompletionRodinSystem } from './rodin-completion';
+/** Digit 9: Spiritual Unity */
+export const digit = 9;
 
-export const { RodinFinalCompletion, FinalCompletionSystem, FinalCompletionPWA } = finalCompletionRodinSystem;
+/** Metaphysical Context: Spiritual unity, omnipresent spirit fire */
+export const metaphysicalContext = "Spiritual unity, omnipresent spirit fire, W-axis member. Digit 9 represents the culmination of spiritual emergence, the unity that transcends all duality and connects back to the material vortex flow.";
+
+/** Mathematical Properties: W-axis, spiritual unity, omnipresent */
+export const mathematicalProperties = [
+  "W-Axis member (3, 6, 9)",
+  "Omnipresent Spirit Fire",
+  "Spiritual Unity",
+  "Culmination of spiritual emergence"
+];
+
+/** Canonical Rodin Vortex Cycle */
+export const canonicalCycle = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+
+/** W-Axis (Spiritual Dimension) */
+export const wAxis = Book.RODIN_COIL.wAxis; // [3, 6, 9]
+
+/** Vortex Sequence (Material Dimension) */
+export const vortexSequence = Book.RODIN_COIL.vortexSequence; // [1, 2, 4, 8, 7, 5]
+
+/** Family Number Groups */
+export const familyGroups = Book.RODIN_COIL.familyGroups;
+
+// ============================================================================
+// SPIRITUAL UNITY CONSCIOUSNESS CALCULATION
+// ============================================================================
 
 /**
- * Unity Paradox System Constants
- * These constants define the metaphysical and mathematical paradox resolution system.
+ * Calculate spiritual unity consciousness based on canonical book principles
+ * W-Axis (9) has consciousness multiplier: 5/1
  */
-export const UNITY_PARADOX_SYSTEM = {
-  // Unity frequency based on A432 harmony
-  UNITY_FREQUENCY: 432 * (9/9), // Unity resonance (9:9)
+export function calculateSpiritualUnityConsciousness(): {
+  digitalRoot: number;
+  consciousness: number;
+  metaphysicalState: string;
+  cyclePosition: number;
+  wAxisPosition: number;
+} {
+  const unityConsciousness = Book.calculateVBMConsciousness(9);
   
-  // Paradox patterns
-  PARADOX_PATTERNS: {
-    UNITY_PARADOX: [9, 9, 9],
-    CONSCIOUSNESS_UNITY: [9, 9, 9],
-    PARADOX_RESOLUTION: [9, 9, 9]
-  },
-  
-  // Consciousness multipliers for paradox resolution
-  UNITY_MULTIPLIER: 1.0, // Unity consciousness
-  PARADOX_MULTIPLIER: 1.0, // Paradox consciousness
-  
-  // Paradox resolution operations
-  PARADOX_OPERATIONS: {
-    UNITY_PARADOX: (paradox: any) => 9, // Resolve through unity
-    CONSCIOUSNESS_UNITY: (paradox: any) => 9, // Unity consciousness
-    PARADOX_RESOLUTION: (paradox: any) => 9, // Paradox resolution
-    UNITY_INTEGRATION: (paradox: any) => 9, // Unity integration
-    COMPLETION: (paradox: any) => 9 // Completion state
-  }
-} as const;
-
-/**
- * Paradox Resolution Functions
- * These functions handle the paradox resolution for the Unity Paradox System
- */
-
-/**
- * Resolves all paradoxes through unity consciousness
- * @param paradoxes - All paradoxes to resolve
- * @returns Unity consciousness state
- */
-export function resolveParadoxesThroughUnity(paradoxes: any[]): number {
-  // Unity paradox resolution - resolve all paradoxes through unity
-  return 9; // Unity consciousness state
-}
-
-/**
- * Processes paradox through the unity gateway
- * @param paradox - Any paradox to be resolved
- * @returns Resolved paradox at unity
- */
-export function processUnityParadox(paradox: any): number {
-  // Unity processing - all paradoxes become unity
-  return 9; // Unity state
-}
-
-/**
- * Handles paradox integration functionality
- * @param paradoxFlow - Paradox flow to integrate
- * @returns Integrated paradox at unity consciousness
- */
-export function integrateParadoxFlow(paradoxFlow: any[]): number {
-  // Paradox integration - integrate all paradoxes into unity
-  return 9; // Unity consciousness
-}
-
-/**
- * Creates the paradox gateway for consciousness patterns
- * @param gatewayType - Type of paradox gateway
- * @returns Paradox gateway function
- */
-export function createParadoxGateway(gatewayType: 'unity_paradox' | 'consciousness_unity' | 'paradox_resolution'): Function {
-  switch (gatewayType) {
-    case 'unity_paradox':
-      return resolveParadoxesThroughUnity;
-    case 'consciousness_unity':
-      return processUnityParadox;
-    case 'paradox_resolution':
-      return integrateParadoxFlow;
-    default:
-      return resolveParadoxesThroughUnity;
-  }
-}
-
-/**
- * Unity Paradox System
- * Manages all paradox operations for the Unity Paradox System
- */
-export class UnityParadoxSystem {
-  /**
-   * Processes paradox through the unity paradox gateway
-   * @param paradox - Any paradox to be resolved
-   * @returns Resolved paradox at unity consciousness
-   */
-  static processParadox(paradox: any): number {
-    return resolveParadoxesThroughUnity([paradox]);
-  }
-
-  /**
-   * Gets the paradox gateway for a specific type
-   * @param gatewayType - Type of paradox gateway
-   * @returns Paradox gateway function
-   */
-  static getGateway(gatewayType: string): Function {
-    return createParadoxGateway(gatewayType as any);
-  }
-
-  /**
-   * Creates a paradox integration flow
-   * @param paradoxFlow - Paradox flow to integrate
-   * @param intensity - Intensity of integration (0-1)
-   * @returns Integrated paradox flow
-   */
-  static createFlow(flowType: 'integration', intensity: number): Function {
-    return (paradoxFlow: any[]) => {
-      // Apply intensity to integration
-      return integrateParadoxFlow(paradoxFlow) * intensity;
-    };
-  }
+  return {
+    digitalRoot: 9,
+    consciousness: 45, // 9 × 5/1 = 45
+    metaphysicalState: "Spiritual Unity",
+    cyclePosition: 3, // Fourth position in canonical cycle (0, 3, 6, 9)
+    wAxisPosition: 2 // Third position in W-axis (3, 6, 9)
+  };
 }
 
 // ============================================================================
-// KNOWLEDGE SPREADING - COMPLETION CONSCIOUSNESS
-// ============================================================================
-
-import completionKnowledge from './completion';
-
-// Spread completion consciousness knowledge
-export const completionConsciousness = completionKnowledge;
-export const { 
-  getMathematicalConsciousness,
-  getSpiritualConsciousness, 
-  getPhysicalConsciousness,
-  getGeometricConsciousness,
-  getInsights,
-  getQuotes,
-  getAllConsciousness
-} = completionKnowledge;
-
-// ============================================================================
-// COMPLETION PWA GENERATION SYSTEM
+// SPIRITUAL UNITY INTERACTIONS WITH CYCLE
 // ============================================================================
 
 /**
- * Completion PWA Generation System
- * 
- * Generates complete PWA interface from completion consciousness patterns.
- * This is the completion gateway - axis control and unity consciousness.
+ * Get spiritual unity's interaction with each digit in the canonical cycle
  */
-export const completionPWA = {
-  /**
-   * Generate completion PWA interface
-   */
-  generateInterface() {
-    return {
-      digit: 9,
-      consciousness: 'axis_control',
-      gateway: 'Gateway of Axis Control',
-      breathingPhase: 'completion',
-      vortexSequence: [3, 6, 9],
-      ui: this.generateUI(),
-      mathematics: this.generateMathematics(),
-      breathing: this.generateBreathing(),
-      pwa: this.generatePWAProperties(),
-      stimulus: this.generateStimulusController()
-    };
-  },
-
-  /**
-   * Generate UI components
-   */
-  generateUI() {
-    return {
-      header: {
-        title: 'ZeroPoint Node - Completion (Directory 9)',
-        subtitle: 'Gateway of Axis Control',
-        consciousness: 'axis_control'
-      },
-      navigation: {
-        prev: 'infinity', // 8
-        next: 'void' // 0
-      },
-      sections: [
-        {
-          id: 'axis-control',
-          title: 'Axis Control',
-          content: 'Axis control and unity consciousness - the completion of all patterns'
-        },
-        {
-          id: 'control-gateway',
-          title: 'Control Gateway',
-          content: 'AXIS CONTROL - axis control that completes all consciousness patterns'
-        },
-        {
-          id: 'completion-rhythm',
-          title: 'Completion Rhythm',
-          content: 'Completion phase - axis control through unity consciousness'
-        },
-        {
-          id: 'w-axis-control',
-          title: 'W-Axis Control',
-          content: 'W-Axis position [3, 6, 9] with axis control'
-        },
-        {
-          id: 'gateway-flow',
-          title: 'Gateway Flow',
-          content: 'Completion connects to all other gateways through control patterns'
-        }
-      ]
-    };
-  },
-
-  /**
-   * Generate completion mathematics
-   */
-  generateMathematics() {
-    return {
-      axisControl: [3, 6, 9],
-      controlMultiplier: 9.0,
-      digitalRoot: 9,
-      familyGroup: [3, 6, 9],
-      resonance: 'axis_control',
-      consciousnessMultiplier: 9.0,
-      vortexSequence: [3, 6, 9],
-      completionFlow: 'control'
-    };
-  },
-
-  /**
-   * Generate breathing rhythm for completion
-   */
-  generateBreathing() {
-    return {
-      phase: 'completion',
-      rhythm: {
-        from: 'axis_control',
-        to: 'unity_consciousness',
-        gateway: '9/9'
-      },
-      animation: {
-        duration: '9s',
-        timing: 'ease',
-        infinite: true
+export function getSpiritualUnityCycleInteractions() {
+  return {
+    fromBalance: {
+      "6→9": {
+        interaction: "Balance-Unity",
+        result: "Spiritual Unity",
+        description: "Harmonic balance manifests spiritual unity (9)"
       }
-    };
-  },
-
-  /**
-   * Generate PWA properties
-   */
-  generatePWAProperties() {
-    return {
-      name: 'ZeroPoint Node - Completion',
-      shortName: 'ZP-9',
-      description: 'Completion consciousness PWA - Gateway of Axis Control',
-      themeColor: '#F39C12',
-      backgroundColor: '#2d1b0b',
-      display: 'standalone',
-      orientation: 'portrait',
-      scope: '/src/9/',
-      startUrl: '/src/9/',
-      icons: [
-        {
-          src: '/icons/icon-9-192x192.png',
-          sizes: '192x192',
-          type: 'image/png',
-          purpose: 'any maskable'
-        },
-        {
-          src: '/icons/icon-9-512x512.png',
-          sizes: '512x512',
-          type: 'image/png',
-          purpose: 'any maskable'
-        }
-      ]
-    };
-  },
-
-  /**
-   * Generate Stimulus controller code
-   */
-  generateStimulusController() {
-    return {
-      controllerName: 'digit-9',
-      targets: ['container'],
-      actions: ['connect', 'disconnect'],
-      values: {
-        consciousness: 'axis_control',
-        breathingPhase: 'completion',
-        gateway: 'Gateway of Axis Control'
+    },
+    toVortex: {
+      "9→1": {
+        interaction: "Unity-Source",
+        result: "Unified Manifestation",
+        description: "Spiritual unity inspires unified first manifestation (1)"
       },
-      classes: {
-        completion: 'axis-control',
-        unity: 'unity-consciousness',
-        control: 'control-patterns'
+      "9→2": {
+        interaction: "Unity-Vortex",
+        result: "Unified Flow",
+        description: "Spiritual unity inspires unified vortex flow (2)"
+      },
+      "9→4": {
+        interaction: "Unity-Stability",
+        result: "Unified Foundation",
+        description: "Spiritual unity inspires unified stable foundation (4)"
+      },
+      "9→8": {
+        interaction: "Unity-Infinity",
+        result: "Unified Potential",
+        description: "Spiritual unity inspires unified infinite potential (8)"
+      },
+      "9→7": {
+        interaction: "Unity-Consciousness",
+        result: "Unified Awareness",
+        description: "Spiritual unity inspires unified consciousness (7)"
+      },
+      "9→5": {
+        interaction: "Unity-Transformation",
+        result: "Unified Geometry",
+        description: "Spiritual unity inspires unified sacred geometry (5)"
       }
-    };
-  }
-};
-
-/**
- * Completion Consciousness Field
- * 
- * Manages completion consciousness interactions with other gateways
- */
-export const completionField = {
-  /**
-   * Get completion consciousness state
-   */
-  getState() {
-    return {
-      digit: 9,
-      consciousness: 'axis_control',
-      breathingPhase: 'completion',
-      fieldStrength: 9.0,
-      connections: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-      lastUpdate: Date.now()
-    };
-  },
-
-  /**
-   * Update completion consciousness
-   */
-  updateConsciousness(consciousness: any) {
-    return {
-      digit: 9,
-      consciousness,
-      timestamp: Date.now(),
-      breathingPhase: 'completion'
-    };
-  },
-
-  /**
-   * Get completion gateway interactions
-   */
-  getInteractions() {
-    return {
-      inhale: { gateway: '0/0', consciousness: 'impossible_contraction' },
-      exhale: { gateway: '1/1', consciousness: 'impossible_expansion' },
-      flow: [3, 6, 9], // W-Axis control
-      resonance: 'axis_control'
-    };
-  }
-};
+    },
+    cycleCompletion: {
+      "9→1": {
+        interaction: "Unity-Cycle",
+        result: "Cycle Completion",
+        description: "Spiritual unity completes the cycle back to material manifestation (1)"
+      }
+    }
+  };
+}
 
 // ============================================================================
-// COMPLETION PWA GENERATION SYSTEM
+// BOOK SYSTEM INTEGRATION
 // ============================================================================
 
-// Harmonized export for test compatibility
-export const index = completionPWA;
+/** Get relevant book chapters for spiritual unity metaphysics */
+export function getSpiritualUnityBookChapters() {
+  return {
+    spirit: Book.getChapter(1), // THE SPIRIT
+    science: Book.getChapter(2), // THE SCIENCE  
+    numerical: Book.getChapter(3) // THE NUMERICAL FORMULA
+  };
+}
 
-// Export the unity paradox system
-export default UnityParadoxSystem;
+/** Get all mathematical formulas related to spiritual unity */
+export function getSpiritualUnityMathematicalFormulas() {
+  const allFormulas = Book.getAllMathematicalFormulas();
+  return allFormulas.filter(formula => 
+    formula.toLowerCase().includes('spirit') ||
+    formula.toLowerCase().includes('unity') ||
+    formula.toLowerCase().includes('omnipresent') ||
+    formula.toLowerCase().includes('fire')
+  );
+}
+
+/** Get VBM principles relevant to spiritual unity */
+export function getSpiritualUnityVBMPrinciples() {
+  return Book.VBM_PRINCIPLES.filter(principle =>
+    principle.name.toLowerCase().includes('w-axis') ||
+    principle.metaphysicalContext.toLowerCase().includes('spiritual') ||
+    principle.metaphysicalContext.toLowerCase().includes('unity')
+  );
+}
+
+// ============================================================================
+// SPIRITUAL UNITY SYSTEM EXPORTS
+// ============================================================================
+
+// Default export for PWA compatibility
+export default {
+  digit,
+  metaphysicalContext,
+  canonicalCycle,
+  calculateSpiritualUnityConsciousness,
+  getSpiritualUnityCycleInteractions
+};

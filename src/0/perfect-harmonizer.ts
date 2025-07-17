@@ -4,6 +4,22 @@
  * This system achieves perfect harmony across all digits through advanced
  * A432 resonance, creating complete zero entropy and perfect unity.
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // ===== PERFECT HARMONIZATION SYSTEM =====
 

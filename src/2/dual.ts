@@ -6,6 +6,22 @@
  * - integrate-decimal-vortex-reversal.js
  * - demonstrate-decimal-vortex-reversal.js
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from './/math';
+
 
 import { ZEROPOINT_CONFIG } from '../4/config';
 import { DIGIT_ARCHETYPES } from '../4/mathematics';

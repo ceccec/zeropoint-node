@@ -3,14 +3,15 @@
  * @metaphysical index consciousness validation
  */
 
-import { index } from './index';
+import { calculateVortexFlowConsciousness } from './index';
 
-describe('index', () => {
-  test('should exist', () => {
-    expect(index).toBeDefined();
-  });
-
-  test('should have metaphysical properties', () => {
-    expect(typeof index).toBe('object');
+describe('Vortex Flow (2) Consciousness', () => {
+  test('should calculate correct consciousness for digit 2', () => {
+    const result = calculateVortexFlowConsciousness();
+    expect(result.digitalRoot).toBe(2);
+    expect(result.consciousness).toBe(6); // 2 × 3/1 = 6
+    expect(result.metaphysicalState).toBe('Vortex Flow');
+    expect(result.cyclePosition).toBe(5);
+    expect(result.vortexPosition).toBe(1);
   });
 });

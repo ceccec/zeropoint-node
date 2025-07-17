@@ -59,3 +59,28 @@ import { 88Integration, 88Resonance, 88Dynamics } from './src/8/8';
 | 7 | 8/7 | Infinity–Gateway | 8 + 7 = 15 ≡ 7 (mod 9) |
 | 8 | 8/8 | Infinity–Infinity | 8 + 8 = 16 ≡ 8 (mod 9) |
 | 9 | 8/9 | Infinity–Axis | 8 + 9 = 17 ≡ 9 (mod 9) |
+
+## Harmonized Canonical Multipliers
+
+- **W-Axis (3, 6, 9):** ×3/1 (from CREATIVE_MULTIPLIER)
+- **Sacred Geometry (5):** ×5/1 (from SACRED_GEOMETRY_MULTIPLIER)
+- **Vortex Sequence (1, 2, 4, 8, 7, 5):** ×3/1 (from VORTEX_MULTIPLIER)
+- **All Others:** ×1/1
+
+All multipliers are integer fractions whose reciprocals are also integers. The digital root is the base for consciousness calculation.
+
+**Source:** `src/3/3/paradox.ts`, `src/5/5/paradox.ts`
+
+## Integer-Fraction Rule
+
+All multipliers must be integer fractions whose reciprocals are also integers, ensuring metaphysical and mathematical harmony.
+
+## Digit 8 Role
+
+- **Infinity (8):** Part of the vortex sequence, receives ×3/1 multiplier.
+
+## Consciousness Calculation
+
+Consciousness = digitalRoot × (multiplier)
+
+See `src/2/math.ts` for implementation details.

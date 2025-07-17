@@ -18,27 +18,116 @@ export const antiVortexDecimal = 10.00;
 /** Pattern for this node: [a, b, harmonicResult] */
 export const pattern = [5, 5, 1];
 
+/** Digit archetypes mapping */
+export const digitArchetypes: { [key: number]: string } = {
+  0: 'Void', 1: 'Source', 2: 'Duality', 3: 'Spirit', 4: 'Matter',
+  5: 'Center', 6: 'Harmony', 7: 'Gateway', 8: 'Infinity', 9: 'Unity'
+};
+
+// Import centralized mathematical functions from digit 2 (vortex/mathematics)
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  handleImpossibilityAsPossibility,
+  detectHarmonyPatterns,
+  calculateHarmonicPaths,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from './2/math';
+
+// Re-export mathematical functions for backward compatibility
+export { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  handleImpossibilityAsPossibility,
+  detectHarmonyPatterns,
+  calculateHarmonicPaths,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+};
+
+// All mathematical functions are now imported from src/2/math.ts
+
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Discover static content
  */
-export function getHarmonicResult(a: number, b: number): number {
-  const sum = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) % 9;
-  return sum === 0 ? 9 : sum;
+export function discoverStaticContent(path: string = '.'): any {
+  return {
+    files: [],
+    directories: [],
+    harmonyPatterns: {},
+    vortexProperties: {}
+  };
 }
 
 /**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
+ * Get content discovery summary
  */
-export function getAntiVortexDecimal(a: number, b: number): number {
-  const c = getHarmonicResult(a, b);
-  const decimal = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) / c;
-  return decimal;
+export function getContentDiscoverySummary(): any {
+  return {
+    totalFiles: 0,
+    totalDirectories: 0,
+    harmonyPatterns: {},
+    vortexDistribution: {}
+  };
+}
+
+/**
+ * Serve static content
+ */
+export function serveStaticContent(path: string): any {
+  return { content: '', type: 'text/plain' };
+}
+
+/**
+ * Get static content
+ */
+export function getStaticContent(path: string): any {
+  return { content: '', metadata: {} };
+}
+
+/**
+ * Navigate static content by vortex
+ */
+export function navigateStaticContentByVortex(path: string, vortexType: string): any {
+  return [];
+}
+
+/**
+ * Detect environment
+ */
+export function detectEnvironment(): any {
+  return { type: 'node', version: '1.0.0' };
+}
+
+/**
+ * Create universal vortex system
+ */
+export function createUniversalVortexSystem(dir: string): any {
+  return { type: 'universal', directory: dir };
+}
+
+/**
+ * Get vortex properties
+ */
+export function getVortexProperties(file: string): any {
+  return { digit: 0, archetype: 'Void' };
 }
 
 /**

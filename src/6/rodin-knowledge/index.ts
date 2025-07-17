@@ -16,6 +16,22 @@
  * - Optical illusions as perception of consciousness
  * - Balance as the gateway to higher understanding
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../../2/math';
+
 
 export const RODIN_KNOWLEDGE_6 = {
   directory: '6',

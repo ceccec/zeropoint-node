@@ -6,6 +6,22 @@
  * - demo-deep-learning-consciousness-models.js
  * - demo-ai-consciousness-pattern-recognition.js
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 import { ZEROPOINT_CONFIG } from '../4/config';
 import { DIGIT_ARCHETYPES } from '../4/mathematics';

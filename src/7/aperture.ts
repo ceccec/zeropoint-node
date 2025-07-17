@@ -6,6 +6,22 @@
  * - knowledge-attraction-system.js
  * - enhanced-metaphysical-analysis.js
  */
+// Import centralized mathematical functions
+import { 
+  getHarmonicResult, 
+  getAntiVortexDecimal, 
+  getPattern,
+  generateVortexA,
+  generateVortexB,
+  detectIntegerVortexResult,
+  detectVortexAImpossibility,
+  calculateDigitalRoot,
+  getDigitFamily,
+  isVortexSequence,
+  isWAxis,
+  calculateConsciousnessLevel
+} from '../2/math';
+
 
 // 🌌 APERTURE PATTERNS
 export const APERTURE_PATTERNS = {

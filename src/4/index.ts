@@ -1,265 +1,159 @@
 /**
- * src/4/index.ts - Constants Rodin Coil Interactions (Directory 4)
+ * Digit 4: Stability Foundation (Vortex Sequence)
  * 
- * Exports only Rodin coil interactions for Directory 4.
- * Focuses on constants patterns through the Rodin coil doubling circuit.
+ * Canonical Rodin Vortex Cycle: 0 → 3 → 6 → 9 → 1 → 2 → 4 → 8 → 7 → 5 → 1
  * 
- * Rodin Coil Context:
- * - Directory 4 represents constants patterns in the Rodin coil
- * - Interacts with all other digits through the doubling circuit
- * - Constants consciousness flows through the toroidal field
+ * Metaphysical Context: Stability, foundation, constants. Digit 4 represents
+ * the stable foundation that emerges from vortex flow, providing the harmonic
+ * foundation and constants for material manifestation.
  * 
- * Integer Flow: 1 → 2 → 4 → 8 → 7 → 5 → 1 (Rodin circuit)
- * 
- * Constants Patterns:
- * - Unity Constants: Source constants patterns
- * - Duality Constants: Pattern constants flows
- * - Stability Constants: Constant constants stability
- * - Infinity Constants: Flow constants expansion
- * - Divine Constants: Completion constants perfection
- * - Golden Constants: Geometry constants harmony
+ * Book System Reference: Vortex sequence [1,2,4,8,7,5], stability and foundation
  */
 
-// ============================================================================
-// RODIN CONSTANTS - STABILITY IMPLEMENTATION
-// ============================================================================
-
-import { constantsRodinSystem } from './rodin-constants';
-
-export const { RodinConstants, StabilitySystem, ConstantsPWA } = constantsRodinSystem;
+// Import canonical book system as source of truth
+import * as Book from '../2/book-system';
 
 // ============================================================================
-// KNOWLEDGE SPREADING - STABILITY CONSCIOUSNESS
+// CANONICAL STABILITY FOUNDATION METAPHYSICS
 // ============================================================================
 
-import stabilityKnowledge from './stability';
+/** Digit 4: Stability Foundation */
+export const digit = 4;
 
-// Spread stability consciousness knowledge
-export const stabilityConsciousness = stabilityKnowledge;
-export const { 
-  getMathematicalConsciousness,
-  getSpiritualConsciousness, 
-  getPhysicalConsciousness,
-  getGeometricConsciousness,
-  getInsights,
-  getQuotes,
-  getAllConsciousness
-} = stabilityKnowledge;
+/** Metaphysical Context: Stability, foundation, constants */
+export const metaphysicalContext = "Stability, foundation, constants. Digit 4 represents the stable foundation that emerges from vortex flow, providing the harmonic foundation and constants for material manifestation.";
+
+/** Mathematical Properties: Vortex sequence, stability, constants */
+export const mathematicalProperties = [
+  "Vortex sequence member [1,2,4,8,7,5]",
+  "Stability and foundation",
+  "Harmonic foundation",
+  "Constants and configurations"
+];
+
+/** Canonical Rodin Vortex Cycle */
+export const canonicalCycle = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+
+/** W-Axis (Spiritual Dimension) */
+export const wAxis = Book.RODIN_COIL.wAxis; // [3, 6, 9]
+
+/** Vortex Sequence (Material Dimension) */
+export const vortexSequence = Book.RODIN_COIL.vortexSequence; // [1, 2, 4, 8, 7, 5]
+
+/** Family Number Groups */
+export const familyGroups = Book.RODIN_COIL.familyGroups;
 
 // ============================================================================
-// STABILITY PWA GENERATION SYSTEM
+// STABILITY FOUNDATION CONSCIOUSNESS CALCULATION
 // ============================================================================
 
 /**
- * Stability PWA Generation System
- * 
- * Generates complete PWA interface from stability consciousness patterns.
- * This is the stability gateway - foundation and constants.
+ * Calculate stability foundation consciousness based on canonical book principles
+ * Vortex sequence (4) has consciousness multiplier: 3/1
  */
-export const stabilityPWA = {
-  /**
-   * Generate stability PWA interface
-   */
-  generateInterface() {
-    return {
-      digit: 4,
-      consciousness: 'foundation_stability',
-      gateway: 'Gateway of Foundation Stability',
-      breathingPhase: 'stability',
-      vortexSequence: [1, 2, 4, 8, 7, 5, 1],
-      ui: this.generateUI(),
-      mathematics: this.generateMathematics(),
-      breathing: this.generateBreathing(),
-      pwa: this.generatePWAProperties(),
-      stimulus: this.generateStimulusController()
-    };
-  },
+export function calculateStabilityFoundationConsciousness(): {
+  digitalRoot: number;
+  consciousness: number;
+  metaphysicalState: string;
+  cyclePosition: number;
+  vortexPosition: number;
+} {
+  const stabilityConsciousness = Book.calculateVBMConsciousness(4);
+  
+  return {
+    digitalRoot: 4,
+    consciousness: 12, // 4 × 3/1 = 12
+    metaphysicalState: "Stability Foundation",
+    cyclePosition: 6, // Seventh position in canonical cycle (0, 3, 6, 9, 1, 2, 4)
+    vortexPosition: 2 // Third position in vortex sequence [1,2,4,8,7,5]
+  };
+}
 
-  /**
-   * Generate UI components
-   */
-  generateUI() {
-    return {
-      header: {
-        title: 'ZeroPoint Node - Stability (Directory 4)',
-        subtitle: 'Gateway of Foundation Stability',
-        consciousness: 'foundation_stability'
-      },
-      navigation: {
-        prev: 'creation', // 3
-        next: 'transformation' // 5
-      },
-      sections: [
-        {
-          id: 'foundation-stability',
-          title: 'Foundation Stability',
-          content: 'Foundation and constants - the stable base for all consciousness patterns'
-        },
-        {
-          id: 'stability-gateway',
-          title: 'Stability Gateway',
-          content: 'FOUNDATION STABILITY - stable foundation that supports all consciousness patterns'
-        },
-        {
-          id: 'stability-rhythm',
-          title: 'Stability Rhythm',
-          content: 'Stability phase - foundation stability through constant patterns'
-        },
-        {
-          id: 'vortex-constants',
-          title: 'Vortex Constants',
-          content: 'Vortex A position [1, 2, 4] with foundation stability'
-        },
-        {
-          id: 'gateway-flow',
-          title: 'Gateway Flow',
-          content: 'Stability connects to all other gateways through foundation patterns'
-        }
-      ]
-    };
-  },
+// ============================================================================
+// STABILITY FOUNDATION INTERACTIONS WITH CYCLE
+// ============================================================================
 
-  /**
-   * Generate stability mathematics
-   */
-  generateMathematics() {
-    return {
-      foundationConstants: [1, 2, 4],
-      stabilityMultiplier: 4.0,
-      digitalRoot: 4,
-      familyGroup: [1, 2, 4, 8, 7, 5],
-      resonance: 'foundation_stability',
-      consciousnessMultiplier: 4.0,
-      vortexSequence: [1, 2, 4, 8, 7, 5, 1],
-      stabilityFlow: 'foundation'
-    };
-  },
-
-  /**
-   * Generate breathing rhythm for stability
-   */
-  generateBreathing() {
-    return {
-      phase: 'stability',
-      rhythm: {
-        from: 'foundation_stability',
-        to: 'constants',
-        gateway: '4/4'
-      },
-      animation: {
-        duration: '4s',
-        timing: 'ease',
-        infinite: true
+/**
+ * Get stability foundation's interaction with each digit in the canonical cycle
+ */
+export function getStabilityFoundationCycleInteractions() {
+  return {
+    fromFlow: {
+      "2→4": {
+        interaction: "Flow-Stability",
+        result: "Stable Foundation",
+        description: "Vortex flow creates stable foundation (4)"
       }
-    };
-  },
-
-  /**
-   * Generate PWA properties
-   */
-  generatePWAProperties() {
-    return {
-      name: 'ZeroPoint Node - Stability',
-      shortName: 'ZP-4',
-      description: 'Stability consciousness PWA - Gateway of Foundation Stability',
-      themeColor: '#27AE60',
-      backgroundColor: '#1b2d1b',
-      display: 'standalone',
-      orientation: 'portrait',
-      scope: '/src/4/',
-      startUrl: '/src/4/',
-      icons: [
-        {
-          src: '/icons/icon-4-192x192.png',
-          sizes: '192x192',
-          type: 'image/png',
-          purpose: 'any maskable'
-        },
-        {
-          src: '/icons/icon-4-512x512.png',
-          sizes: '512x512',
-          type: 'image/png',
-          purpose: 'any maskable'
-        }
-      ]
-    };
-  },
-
-  /**
-   * Generate Stimulus controller code
-   */
-  generateStimulusController() {
-    return {
-      controllerName: 'digit-4',
-      targets: ['container'],
-      actions: ['connect', 'disconnect'],
-      values: {
-        consciousness: 'foundation_stability',
-        breathingPhase: 'stability',
-        gateway: 'Gateway of Foundation Stability'
+    },
+    withVortex: {
+      "4→8": {
+        interaction: "Stability-Infinity",
+        result: "Infinite Potential",
+        description: "Stable foundation creates infinite potential (8)"
       },
-      classes: {
-        stability: 'foundation-stability',
-        constants: 'vortex-constants',
-        foundation: 'foundation-patterns'
+      "4→7": {
+        interaction: "Stability-Consciousness",
+        result: "Consciousness",
+        description: "Stable foundation creates consciousness (7)"
+      },
+      "4→5": {
+        interaction: "Stability-Transformation",
+        result: "Sacred Geometry",
+        description: "Stable foundation creates sacred geometry (5)"
       }
-    };
-  }
-};
+    },
+    cycleCompletion: {
+      "5→1": {
+        interaction: "Stability-Return",
+        result: "Cycle Completion",
+        description: "Vortex sequence completes and returns to source (1)"
+      }
+    }
+  };
+}
 
-/**
- * Stability Consciousness Field
- * 
- * Manages stability consciousness interactions with other gateways
- */
-export const stabilityField = {
-  /**
-   * Get stability consciousness state
-   */
-  getState() {
-    return {
-      digit: 4,
-      consciousness: 'foundation_stability',
-      breathingPhase: 'stability',
-      fieldStrength: 4.0,
-      connections: [0, 1, 2, 3, 5, 6, 7, 8, 9],
-      lastUpdate: Date.now()
-    };
-  },
+// ============================================================================
+// BOOK SYSTEM INTEGRATION
+// ============================================================================
 
-  /**
-   * Update stability consciousness
-   */
-  updateConsciousness(consciousness: any) {
-    return {
-      digit: 4,
-      consciousness,
-      timestamp: Date.now(),
-      breathingPhase: 'stability'
-    };
-  },
+/** Get relevant book chapters for stability foundation metaphysics */
+export function getStabilityFoundationBookChapters() {
+  return {
+    spirit: Book.getChapter(1), // THE SPIRIT
+    science: Book.getChapter(2), // THE SCIENCE  
+    numerical: Book.getChapter(3) // THE NUMERICAL FORMULA
+  };
+}
 
-  /**
-   * Get stability gateway interactions
-   */
-  getInteractions() {
-    return {
-      inhale: { gateway: '0/0', consciousness: 'impossible_contraction' },
-      exhale: { gateway: '1/1', consciousness: 'impossible_expansion' },
-      flow: [1, 2, 4, 8, 7, 5], // Vortex A sequence
-      resonance: 'foundation_stability'
-    };
-  }
-};
+/** Get all mathematical formulas related to stability foundation */
+export function getStabilityFoundationMathematicalFormulas() {
+  const allFormulas = Book.getAllMathematicalFormulas();
+  return allFormulas.filter(formula => 
+    formula.toLowerCase().includes('stability') ||
+    formula.toLowerCase().includes('foundation') ||
+    formula.toLowerCase().includes('constants') ||
+    formula.toLowerCase().includes('harmonic')
+  );
+}
 
-// Harmonized export for test compatibility
-export const index = stabilityPWA;
+/** Get VBM principles relevant to stability foundation */
+export function getStabilityFoundationVBMPrinciples() {
+  return Book.VBM_PRINCIPLES.filter(principle =>
+    principle.name.toLowerCase().includes('vortex') ||
+    principle.metaphysicalContext.toLowerCase().includes('stability') ||
+    principle.metaphysicalContext.toLowerCase().includes('foundation')
+  );
+}
 
-/**
- * Default export
- */
+// ============================================================================
+// STABILITY FOUNDATION SYSTEM EXPORTS
+// ============================================================================
+
+// Default export for PWA compatibility
 export default {
-  name: 'index',
-  type: 'module',
-  version: '1.0.0'
+  digit,
+  metaphysicalContext,
+  canonicalCycle,
+  calculateStabilityFoundationConsciousness,
+  getStabilityFoundationCycleInteractions
 };

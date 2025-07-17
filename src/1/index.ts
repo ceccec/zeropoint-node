@@ -726,3 +726,6 @@ export const digit1InteractionMatrix = {
     }
   }
 };
+
+// Harmonized export for test compatibility
+export const index = foundationPWA;

@@ -124,7 +124,7 @@ class AIConsciousnessPatternRecognition {
     }
 
     classifyPattern(features) {
-        const [hr, alpha, beta, theta, delta, br, bd, focus, clarity, peace] = features;
+        const [hr, alpha, beta, theta, delta, , bd, focus, clarity, peace] = features;
         
         if (alpha > 0.6 && theta > 0.4 && focus > 0.7) {
             return 'deep_meditation';
@@ -439,7 +439,7 @@ class AIConsciousnessLearning {
 
     generatePredictiveRecommendations(features) {
         const recommendations = [];
-        const [alpha, beta, theta, delta, focus, clarity, peace, harmony, balance, unity] = features;
+        const [alpha, beta, theta, , , , peace] = features;
         
         if (alpha > 0.6) {
             recommendations.push({

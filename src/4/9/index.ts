@@ -24,8 +24,8 @@ export const pattern = [4, 9, 4];
  * @param {number} b
  * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-export function getHarmonicResult(a, b) {
-  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+export function getHarmonicResult(a: number, b: number): number {
+  const sum = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) % 9;
   return sum === 0 ? 9 : sum;
 }
 
@@ -35,9 +35,9 @@ export function getHarmonicResult(a, b) {
  * @param {number} b
  * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-export function getAntiVortexDecimal(a, b) {
+export function getAntiVortexDecimal(a: number, b: number): number {
   const c = getHarmonicResult(a, b);
-  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  const decimal = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) / c;
   return decimal;
 }
 

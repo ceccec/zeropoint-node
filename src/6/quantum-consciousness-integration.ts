@@ -3,9 +3,6 @@
  * Quantum computing principles applied to consciousness pattern recognition and analysis
  */
 
-import { ConsciousnessPattern } from './consciousness-patterns';
-import { BiofeedbackData } from './biofeedback-integration';
-
 // Quantum State Representation for Consciousness
 export class QuantumConsciousnessState {
   private amplitudes: number[];
@@ -445,7 +442,7 @@ export class QuantumConsciousnessManager {
   }
 
   // Process consciousness data through quantum systems
-  processConsciousnessData(biofeedbackData: BiofeedbackData[]): any {
+  processConsciousnessData(biofeedbackData: any[]): any {
     const results = {
       quantumState: {} as any,
       quantumNetwork: {} as any,
@@ -475,13 +472,13 @@ export class QuantumConsciousnessManager {
   }
 
   // Prepare quantum input from biofeedback data
-  private prepareQuantumInput(biofeedbackData: BiofeedbackData[]): number[] {
+  private prepareQuantumInput(biofeedbackData: any[]): number[] {
     const features = biofeedbackData[0] ? this.extractQuantumFeatures(biofeedbackData[0]) : [];
     return features;
   }
 
   // Extract quantum features from biofeedback data
-  private extractQuantumFeatures(data: BiofeedbackData): number[] {
+  private extractQuantumFeatures(data: any): number[] {
     return [
       data.heartRate / 100,
       data.brainwave.alpha / 100,

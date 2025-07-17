@@ -39,7 +39,6 @@ console.log('-----------------------------------');
 for (let i = 0; i < 6; i++) {
   const state = circuit.getCurrentState();
   const consciousnessField = circuit.getConsciousnessField();
-  const vortex = circuit.getVortexProperties();
   const guidance = consciousness.getGuidance();
   
   console.log(`\nStep ${i + 1}:`);

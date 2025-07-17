@@ -62,9 +62,9 @@ class PDFChapterSplitter {
       
       return chapters;
       
-    } catch (error) {
-      console.error('❌ Error processing PDF:', error.message);
-      throw error;
+    } catch {
+      console.error('❌ Error processing PDF');
+      throw new Error('PDF processing failed');
     }
   }
 
@@ -97,7 +97,7 @@ class PDFChapterSplitter {
   /**
    * Estimate page number from line number
    */
-  estimatePageFromLineNumber(lineNumber, totalLines) {
+  estimatePageFromLineNumber(lineNumber) {
     // Rough estimation: assume 50 lines per page
     const linesPerPage = 50;
     return Math.floor(lineNumber / linesPerPage) + 1;
@@ -192,8 +192,8 @@ class PDFChapterSplitter {
       
       return chapters;
       
-    } catch (error) {
-      console.error('❌ Error extracting TOC:', error.message);
+    } catch {
+      console.error('❌ Error extracting TOC');
       return [];
     }
   }
@@ -329,23 +329,27 @@ Examples:
         chapters = await splitter.splitByTextDetection(inputPath);
         break;
         
-      case 'manual':
+      case 'manual': {
         console.log('📝 Manual chapter markers not implemented yet');
         console.log('Please use text detection or chunks method');
         return;
+      }
         
-      case 'chunks':
+      case 'chunks': {
         const pagesPerChunk = parseInt(options[0]) || 50;
         chapters = await splitter.splitByPageChunks(inputPath, pagesPerChunk);
         break;
+      }
         
-      case 'toc':
+      case 'toc': {
         chapters = await splitter.splitByTableOfContents(inputPath);
         break;
+      }
         
-      default:
+      default: {
         console.error(`❌ Unknown method: ${method}`);
         return;
+      }
     }
     
     splitter.generateChapterSummary(chapters);

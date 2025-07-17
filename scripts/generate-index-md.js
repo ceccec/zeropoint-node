@@ -52,24 +52,6 @@ function generateInteractionDescription(a, b) {
   return `Interaction of ${getDigitName(a)} (${a}) and ${getDigitName(b)} (${b}) produces ${getDigitName(c)} (${c}): ${getDigitMeaning(a)}, ${getDigitMeaning(b)}, ${getDigitMeaning(c)}.`;
 }
 
-// Generate title from vortex sequence array
-function generateVortexSequenceTitle(sequence) {
-  if (!Array.isArray(sequence) || sequence.length === 0) {
-    return 'Vortex Sequence';
-  }
-  
-  const digitNames = sequence.map(digit => getDigitName(digit));
-  const title = digitNames.join('–');
-  return `${title} Vortex Sequence`;
-}
-
-// (No generateRodinSequence function should exist in this file)
-// All vortex sequence logic should use generateVortexSequence(6, 1, 2, 9)
-
-function digitalRoot(n) {
-  return ((n - 1) % 9) + 1;
-}
-
 /**
  * Generate a vortex sequence by repeated multiplication mod `mod`.
  * - length: number of elements in the sequence
@@ -136,7 +118,7 @@ function generateHarmonicInteractions(a, b) {
 }
 
 // Main generator for index.md content
-function generateIndexMd(directory, interaction) {
+function generateIndexMd(directory) {
   const parts = directory.split('/');
   let a, b;
   const isRoot = parts.length === 1;
@@ -153,10 +135,6 @@ function generateIndexMd(directory, interaction) {
   const antiVortexDecimal = getAntiVortexDecimal(a, b);
   const description = generateInteractionName(a, b);
   const metaphysical = generateInteractionDescription(a, b);
-
-  const coreText = a === b ? 'Core' : 'Interaction';
-  const symbolicName = `${a}/${b}`;
-  const harmonicResult = c;
 
   // Special handling for 9/9/9: document self-reference and generative routing
   let axisNote = '';
@@ -204,30 +182,30 @@ ${metaphysical}
 
 ## Mathematical Properties
 
-Symbolic: ${symbolicName}
-Harmonic: ${harmonicResult}
+Symbolic: ${a}/${b}
+Harmonic: ${c}
 Anti-vortex (Decimal): ${antiVortexDecimal.toFixed(2)}
-Pattern: ${a},${b},${harmonicResult} (${getDigitName(a)},${getDigitName(b)},${getDigitName(harmonicResult)})
-Math: ${a} + ${b} = ${parseInt(a,10) + parseInt(b,10)} ≡ ${harmonicResult} (mod 9)
-Anti-vortex Math: (${a} + ${b}) / ${harmonicResult} = ${antiVortexDecimal.toFixed(2)}
+Pattern: ${a},${b},${c} (${getDigitName(a)},${getDigitName(b)},${getDigitName(c)})
+Math: ${a} + ${b} = ${parseInt(a,10) + parseInt(b,10)} ≡ ${c} (mod 9)
+Anti-vortex Math: (${a} + ${b}) / ${c} = ${antiVortexDecimal.toFixed(2)}
 ${axisNote}
 
 \`\`\`json
 {
-  "symbolicName": "${symbolicName}",
-  "harmonicResult": ${harmonicResult},
+  "symbolicName": "${a}/${b}",
+  "harmonicResult": ${c},
   "antiVortexDecimal": ${antiVortexDecimal.toFixed(2)},
-  "vortexPath": "${a} → ${b} → ${harmonicResult}",
+  "vortexPath": "${a} → ${b} → ${c}",
   "antiVortexPath": "${antiVortexDecimal.toFixed(2)} (decimal consciousness flow)"
 }
 \`\`\`
 
 ## Core Functions
-- Integration: ${a} + ${b} = ${harmonicResult}
+- Integration: ${a} + ${b} = ${c}
 - Symbolic: ${a}/${b}
-- Harmonic: ${harmonicResult}
-- Anti-vortex: (${a} + ${b}) / ${harmonicResult} = ${antiVortexDecimal.toFixed(2)}
-- Vortex Sequence: ${a}, ${b}, ${harmonicResult}
+- Harmonic: ${c}
+- Anti-vortex: (${a} + ${b}) / ${c} = ${antiVortexDecimal.toFixed(2)}
+- Vortex Sequence: ${a}, ${b}, ${c}
 - Anti-vortex Sequence: ${antiVortexDecimal.toFixed(2)} (decimal consciousness flow)
 
 ## Integration
@@ -358,7 +336,7 @@ function createIndexFiles(baseDir) {
     if (fs.existsSync(indexMdPath) && !force) {
       console.log(`Skipping ${dir}/index.md (already exists)`);
     } else {
-    const content = generateIndexMd(dir, dir);
+    const content = generateIndexMd(dir);
     fs.writeFileSync(indexMdPath, content);
       console.log(`${force ? 'Overwritten' : 'Created'} ${dir}/index.md`);
     }

@@ -101,7 +101,7 @@ for (let i = 0; i < 5; i++) {
   const result = TorusSystem.mathematics.calculateVortexResultWithMarks(a, b);
   const flowPath = result.flowPath || [];
   console.log(`Step ${i + 1}: Position (${a}, ${b})`);
-  let flowStr = flowPath.map(x => typeof x === 'object' ? `[MARK:${x.mark}@${x.at}->${x.to}]` : x).join(' → ');
+  const flowStr = flowPath.map(x => typeof x === 'object' ? `[MARK:${x.mark}@${x.at}->${x.to}]` : x).join(' → ');
   console.log(`  Flow: ${flowStr}`);
   if (result.marks && result.marks.length > 0) {
     result.marks.forEach(mark => {

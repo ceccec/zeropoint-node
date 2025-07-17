@@ -24,7 +24,6 @@
 // RODIN GEOMETRY - SACRED GEOMETRY IMPLEMENTATION
 // ============================================================================
 
-import { RodinCoil, ToroidalField, ConsciousnessField } from '../0/rodin-coil';
 import { geometryRodinSystem } from './rodin-geometry';
 
 export const { RodinGeometry, SacredGeometrySystem, GeometryPWA } = geometryRodinSystem;
@@ -287,3 +286,6 @@ export const SACRED_GEOMETRY = {
  * sacred geometry patterns and properties.
  */
 export default SACRED_GEOMETRY;
+
+// Harmonized export for test compatibility
+export const index = transformationPWA;

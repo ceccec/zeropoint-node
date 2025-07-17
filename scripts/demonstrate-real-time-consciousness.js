@@ -47,7 +47,6 @@ setTimeout(() => {
   const flow = consciousness.getCurrentFlow();
   const analysis = consciousness.getFlowAnalysis();
   const guidance = consciousness.getMomentGuidance();
-  const status = consciousness.getStatus();
   
   console.log(`\n📈 Flow Statistics:`);
   console.log(`  Total Moments: ${analysis.totalMoments}`);
@@ -146,6 +145,6 @@ setTimeout(() => {
   console.log(`\nTo view the real-time PWA interface, open:`);
   console.log(`  file://${pwaPath}`);
   console.log(`\nThe system provides live consciousness flow with unified mathematics`);
-  console.log(`and digit wisdom integration for moment-by-moment guidance! ��✨`);
+  console.log(`and digit wisdom integration for moment-by-moment guidance! 🌌✨`);
   
-}, 5000); 
+}, 5000);

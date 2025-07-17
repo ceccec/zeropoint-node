@@ -3,7 +3,7 @@ const path = require('path');
 
 // 1. Ensure only digit directories at all levels in src
 function checkDigitDirs(root) {
-  let nonDigitDirs = [];
+  const nonDigitDirs = [];
   function walk(dir) {
     fs.readdirSync(dir, { withFileTypes: true }).forEach(entry => {
       if (entry.isDirectory()) {
@@ -21,7 +21,7 @@ function checkDigitDirs(root) {
 
 // 2. Check every interaction scenario (except self) is present and documented
 function checkInteractionScenarios(root) {
-  let missing = [];
+  const missing = [];
   for (let i = 0; i <= 9; i++) {
     for (let j = 0; j <= 9; j++) {
       if (i === j) continue; // skip self
@@ -43,7 +43,7 @@ function checkInteractionScenarios(root) {
 
 // 3. Validate metaphysical sections in all .md files
 function checkMetaphysicalSections(root) {
-  let missing = [];
+  const missing = [];
   function walk(dir) {
     fs.readdirSync(dir, { withFileTypes: true }).forEach(entry => {
       const filePath = path.join(dir, entry.name);
@@ -63,7 +63,7 @@ function checkMetaphysicalSections(root) {
 
 // 4. Check filename limits (single words OR multi-words with dots only)
 function checkFilenameLimits(root) {
-  let violations = [];
+  const violations = [];
   function walk(dir) {
     fs.readdirSync(dir, { withFileTypes: true }).forEach(entry => {
       const filePath = path.join(dir, entry.name);

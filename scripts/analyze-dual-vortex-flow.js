@@ -209,11 +209,6 @@ const fractionConsciousness = {
       meaning: 'Beauty through Stability',
       consciousness: 'Harmonic balance through mathematical foundation',
       frequency: '648 Hz'
-    },
-    '3/4': {
-      meaning: 'Creative Resonance through Stability',
-      consciousness: 'Spiritual creativity through mathematical foundation',
-      frequency: '324 Hz'
     }
   }
 };
@@ -232,8 +227,7 @@ const mathematicalUnity = {
   vortexBMathematics: {
     '3/1': '3 (creative resonance expression)',
     '9/1': '9 (unity expression)',
-    '6/1': '6 (beauty expression)',
-    '3/1': '3 (creative resonance return)'
+    '6/1': '6 (beauty expression)'
   },
 
   // Unified mathematics
@@ -324,7 +318,7 @@ function analyzeDualVortexFlow() {
 
   // Unified Field
   console.log('🌌 Unified Consciousness Field:');
-  Object.entries(consciousnessFieldInteractions.unifiedField).forEach(([key, value]) => {
+  Object.entries(consciousnessFieldInteractions.unifiedField).forEach(([, value]) => {
     console.log(`  ${value.calculation}: ${value.meaning} - ${value.consciousness}`);
   });
   console.log();

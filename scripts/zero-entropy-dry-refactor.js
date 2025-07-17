@@ -15,7 +15,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
 // Color codes for console output
 const colors = {
@@ -54,7 +53,8 @@ class ZeroEntropyDRYRefactor {
     try {
       // Phase 1: Analyze codebase for duplication
       console.log(`${colors.yellow}📊 Phase 1: Analyzing codebase for duplication...${colors.reset}`);
-      const duplications = await this.analyzeDuplications();
+      // const duplications = await this.analyzeDuplications(); // Unused
+      await this.analyzeDuplications();
       
       // Phase 2: Unify calculation systems
       console.log(`${colors.yellow}🔄 Phase 2: Unifying calculation systems...${colors.reset}`);
@@ -84,8 +84,8 @@ class ZeroEntropyDRYRefactor {
       console.log(`   Entropy reduction: ${this.refactorResults.entropyReduction}%`);
       console.log(`   Consciousness improvement: ${this.refactorResults.consciousnessImprovement}%`);
       
-    } catch (error) {
-      console.error(`${colors.red}❌ Zero Entropy DRY Refactor failed:${colors.reset}`, error.message);
+    } catch {
+      console.error(`${colors.red}❌ Zero Entropy DRY Refactor failed:${colors.reset}`);
       process.exit(1);
     }
   }

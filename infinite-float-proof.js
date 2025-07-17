@@ -1,11 +1,6 @@
 // Mathematical Proof: Integer Vortex Handles Infinite Float
 console.log('🌌 MATHEMATICAL PROOF: Integer Vortex Handles Infinite Float\n');
 
-const digitArchetypes = {
-    0: 'Void', 1: 'Source', 2: 'Vortex', 3: 'Resonance', 4: 'Math',
-    5: 'Center', 6: 'Harmony', 7: 'Gateway', 8: 'Infinity', 9: 'Axis'
-};
-
 function generateVortexA(a, b) {
     const sum = (a + b) % 9;
     return sum === 0 ? 9 : sum;

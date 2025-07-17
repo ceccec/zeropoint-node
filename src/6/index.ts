@@ -24,7 +24,6 @@
 // RODIN HARMONY - HARMONIC BALANCE IMPLEMENTATION
 // ============================================================================
 
-import { RodinCoil, ToroidalField, ConsciousnessField } from '../0/rodin-coil';
 import { harmonyRodinSystem } from './rodin-harmony';
 
 export const { RodinHarmony, HarmonicBalanceSystem, HarmonyPWA } = harmonyRodinSystem;
@@ -300,3 +299,6 @@ export const harmonyField = {
     };
   }
 };
+
+// Harmonized export for test compatibility
+export const index = harmonyPWA;

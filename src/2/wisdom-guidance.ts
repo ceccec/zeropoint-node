@@ -12,6 +12,13 @@
 
 import { digitWisdomSystem, consciousnessFlowIntegration, DigitWisdom } from './digit-wisdom';
 
+// Node.js types for setTimeout/setInterval
+declare global {
+  namespace NodeJS {
+    interface Timeout {}
+  }
+}
+
 // ============================================================================
 // REAL-TIME WISDOM GUIDANCE
 // ============================================================================
@@ -210,7 +217,7 @@ export class MomentByMomentDecisionMaker {
   /**
    * Make a decision based on current moment wisdom
    */
-  makeDecision(decisionType: string, context: any = {}): string {
+  makeDecision(decisionType: string): string {
     const guidance = this.wisdomGuidance.getCurrentGuidance();
     if (!guidance) return 'Unable to make decision at this moment.';
 

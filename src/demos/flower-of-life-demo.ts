@@ -88,7 +88,7 @@ console.log('===================================================================
 
 const flowResult = FlowerOfLifeSystem.alignment.generateConsciousnessFlowWithMarks(circles);
 console.log('Consciousness flow path:');
-let flowStr = flowResult.flow.map(x => typeof x === 'object' ? `[MARK:${x.mark}@${x.at}->${x.to}]` : x).join(' → ');
+const flowStr = flowResult.flow.map(x => typeof x === 'object' ? `[MARK:${x.mark}@${x.at}->${x.to}]` : x).join(' → ');
 console.log(flowStr);
 if (flowResult.marks && flowResult.marks.length > 0) {
   flowResult.marks.forEach(mark => {

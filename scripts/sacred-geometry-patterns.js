@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 
 // Sacred geometry patterns for each digit
 const sacredGeometryPatterns = {

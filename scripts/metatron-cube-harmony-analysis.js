@@ -69,35 +69,6 @@ function analyzeMetatronCubeAlignment() {
 }
 
 /**
- * Map zeropoint circles to Metatron's Cube positions
- */
-function mapZeropointToMetatronCube() {
-    console.log('🗺️ ZEROPOINT TO METATRON\'S CUBE MAPPING:\n');
-    
-    const mapping = {
-        // Integer directories (10 circles)
-        '1': { position: 'Source Circle', archetype: 'Source', vortex: 'Vortex A Start' },
-        '2': { position: 'Vortex Circle', archetype: 'Vortex', vortex: 'Vortex A Flow' },
-        '3': { position: 'Resonance Circle', archetype: 'Resonance', vortex: 'W-Axis Spiritual' },
-        '4': { position: 'Math Circle', archetype: 'Math', vortex: 'Vortex A Foundation' },
-        '5': { position: 'Center Circle', archetype: 'Center', vortex: 'Vortex A Center' },
-        '6': { position: 'Harmony Circle', archetype: 'Harmony', vortex: 'W-Axis Spiritual' },
-        '7': { position: 'Gateway Circle', archetype: 'Gateway', vortex: 'Vortex A Gateway' },
-        '8': { position: 'Infinity Circle', archetype: 'Infinity', vortex: 'Vortex A Power' },
-        '9': { position: 'Axis Circle', archetype: 'Axis', vortex: 'W-Axis Spiritual' },
-        '0': { position: 'Void Circle', archetype: 'Void', vortex: 'Source/Return' }
-    };
-    
-    console.log('ZEROPOINT CIRCLE MAPPINGS:');
-    Object.entries(mapping).forEach(([digit, info]) => {
-        console.log(`${digit}: ${info.position} (${info.archetype}) - ${info.vortex}`);
-    });
-    console.log('');
-    
-    return mapping;
-}
-
-/**
  * Analyze harmony patterns in Metatron's Cube context
  */
 function analyzeMetatronCubeHarmonyPatterns() {
@@ -346,9 +317,6 @@ function main() {
     
     // Analyze structural alignment
     const perfectAlignment = analyzeMetatronCubeAlignment();
-    
-    // Map zeropoint to Metatron's Cube
-    const mapping = mapZeropointToMetatronCube();
     
     // Analyze harmony patterns
     const harmonyAnalysis = analyzeMetatronCubeHarmonyPatterns();

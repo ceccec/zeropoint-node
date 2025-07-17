@@ -96,7 +96,6 @@ function addMissingExports() {
     const subDigit = parseInt(pathParts[digitIndex + 1]);
     
     // Check for missing exports and add them
-    const missingExports = [];
     
     // Check for interaction constants
     if (testContent.includes('_INTERACTION') && !indexContent.includes('_INTERACTION')) {

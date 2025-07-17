@@ -10,29 +10,7 @@
  * that give rise to the entire system in 3D space.
  */
 
-// VBM Constants - Pure Integer Functions
-const VBM_CONSTANTS = {
-  // A432 harmonic foundation
-  A432_FREQUENCY: 432,
-  A432_DIGITAL_ROOT: 9,
-  
-  // Vortex sequence (mobius circuit) - Material manifestation
-  VORTEX_SEQUENCE: [1, 2, 4, 8, 7, 5],
-  
-  // W-Axis (spiritual dimension) - Spiritual transcendence
-  W_AXIS: [3, 6, 9],
-  
-  // Integer tree directories - Complete mathematical set
-  INTEGER_DIRECTORIES: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-  
-  // Golden ratio via A432 (integer approximation)
-  GOLDEN_RATIO_NUMERATOR: 432,
-  GOLDEN_RATIO_DENOMINATOR: 267,
-  
-  // Pi approximation via A432 (integer approximation)
-  PI_NUMERATOR: 432,
-  PI_DENOMINATOR: 137,
-};
+import * as THREE from 'three';
 
 // VBM Root System - Fundamental Mathematical Relationships
 const VBM_ROOT_SYSTEM = {
@@ -266,14 +244,11 @@ class IntegerTree3DVisualizer {
    * Create a node with appropriate geometry and material
    */
   createNode(value, x, y, z, type) {
-    let geometry, material, color;
-    
-    // Determine size based on field strength
-    const fieldStrength = VBM_ROOT_SYSTEM.ROOT_FIELD_STRENGTHS[value] || 0;
-    const size = Math.max(0.2, fieldStrength / 1000);
+    const size = 0.5;
+    let geometry;
     
     // Determine color based on type and value
-    color = this.getRootColor(value);
+    const color = this.getRootColor(value);
     
     // Create geometry based on type
     switch (type) {
@@ -294,7 +269,7 @@ class IntegerTree3DVisualizer {
     }
     
     // Create material
-    material = new THREE.MeshPhongMaterial({
+    const material = new THREE.MeshPhongMaterial({
       color: color,
       transparent: true,
       opacity: 0.8,
@@ -316,7 +291,7 @@ class IntegerTree3DVisualizer {
       type: type,
       mesh: mesh,
       originalPosition: { x, y, z },
-      fieldStrength: fieldStrength,
+      fieldStrength: VBM_ROOT_SYSTEM.ROOT_FIELD_STRENGTHS[value] || 0,
       consciousness: VBM_ROOT_SYSTEM.ROOT_CONSCIOUSNESS[value] || 0
     };
   }
@@ -473,7 +448,7 @@ class IntegerTree3DVisualizer {
     this.time += 0.01;
     
     // Animate nodes
-    this.nodes.forEach((node, index) => {
+    this.nodes.forEach((node) => {
       const originalPos = node.originalPosition;
       const amplitude = node.fieldStrength / 1000;
       const frequency = node.consciousness / 1000;

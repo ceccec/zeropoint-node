@@ -20,8 +20,8 @@ export interface MetaphysicalPattern {
 }
 
 // Export the centralized COIL patterns
-export const metaphysicalPatterns: MetaphysicalPattern[] = Object.entries(COIL_PATTERNS).map(
-  ([name, pattern]) => ({
+export const metaphysicalPatterns: MetaphysicalPattern[] = Object.keys(COIL_PATTERNS).map(
+  (name) => ({
     name,
     signature: /.*/, // Default regex for compatibility
     context: `Pattern for ${name}`,

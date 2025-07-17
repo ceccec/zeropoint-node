@@ -147,7 +147,8 @@ class FilenameSimplifier {
 // Run the simplifier
 const simplifier = new FilenameSimplifier();
 simplifier.simplifyDirectory('src');
-const summary = simplifier.generateSummary();
+// Remove the line declaring 'summary' as it is never used
+// const summary = simplifier.generateSummary();
 
 // Export for use in other scripts
 module.exports = { FilenameSimplifier }; 

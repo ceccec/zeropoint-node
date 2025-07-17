@@ -4,7 +4,6 @@ const path = require('path');
 function generateIndexContent(dirPath) {
     const dirName = path.basename(dirPath);
     const parentPath = path.dirname(dirPath);
-    const relativePath = path.relative('docs', dirPath);
     
     return `# ${dirName} Directory
 
@@ -58,7 +57,7 @@ function generateContentsList(dirPath) {
         }
         
         return content || '\n*No files or subdirectories found*\n';
-    } catch (error) {
+    } catch {
         return '\n*Unable to read directory contents*\n';
     }
 }
@@ -82,8 +81,8 @@ function findMissingIndexFiles() {
                     scanDirectory(itemPath);
                 }
             });
-        } catch (error) {
-            console.error(`Error scanning ${dirPath}:`, error.message);
+        } catch {
+            console.error(`Error scanning ${dirPath}`);
         }
     }
     
@@ -115,8 +114,8 @@ function main() {
             fs.writeFileSync(indexPath, content);
             console.log(`✅ Created: ${indexPath}`);
             created++;
-        } catch (error) {
-            console.error(`❌ Error creating index.md for ${dirPath}:`, error.message);
+        } catch {
+            console.error(`\u274c Error creating index.md for ${dirPath}`);
         }
     });
     

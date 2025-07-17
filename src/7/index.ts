@@ -287,3 +287,6 @@ export const CONSCIOUSNESS = {
  * consciousness patterns and properties.
  */
 export default CONSCIOUSNESS;
+
+// Harmonized export for test compatibility
+export const index = spiritualPWA;

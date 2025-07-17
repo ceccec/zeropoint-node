@@ -66,7 +66,7 @@ class SrcConsolidator {
   readFileContent(filePath) {
     try {
       return fs.readFileSync(filePath, 'utf8');
-    } catch (error) {
+    } catch {
       return null;
     }
   }
@@ -146,13 +146,13 @@ class SrcConsolidator {
           
           console.log(`✅ Consolidated: ${item} → ${targetFile}`);
           console.log(`   Reason: ${this.getConsolidationReason(item)}`);
-        } catch (error) {
+        } catch {
           this.errors.push({
             path: fullPath,
             filename: item,
-            error: error.message
+            error: 'Unknown error'
           });
-          console.log(`❌ Error consolidating ${item}: ${error.message}`);
+          console.log(`❌ Error consolidating ${item}: Unknown error`);
         }
       }
     });
@@ -198,7 +198,7 @@ class SrcConsolidator {
 // Run the consolidator
 const consolidator = new SrcConsolidator();
 consolidator.consolidateDirectory('src');
-const summary = consolidator.generateSummary();
+consolidator.generateSummary();
 
 // Export for use in other scripts
 module.exports = { SrcConsolidator }; 

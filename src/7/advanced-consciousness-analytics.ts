@@ -3,9 +3,6 @@
  * Advanced analytics and predictive modeling for consciousness pattern recognition and forecasting
  */
 
-import { ConsciousnessPattern } from './consciousness-patterns';
-import { BiofeedbackData } from './biofeedback-integration';
-
 // Predictive Consciousness Model
 export class PredictiveConsciousnessModel {
   private historicalData: any[];
@@ -834,7 +831,7 @@ export class AdvancedConsciousnessAnalyticsManager {
   }
 
   // Process consciousness data through advanced analytics
-  processConsciousnessData(biofeedbackData: BiofeedbackData[]): any {
+  processConsciousnessData(biofeedbackData: any[]): any {
     const results = {
       predictiveAnalysis: {} as any,
       clusteringAnalysis: {} as any,
@@ -867,7 +864,7 @@ export class AdvancedConsciousnessAnalyticsManager {
   }
 
   // Prepare data for analytics
-  private prepareAnalyticsData(biofeedbackData: BiofeedbackData[]): any[] {
+  private prepareAnalyticsData(biofeedbackData: any[]): any[] {
     return biofeedbackData.map(data => ({
       consciousnessState: this.determineConsciousnessState(data),
       meditation: data.meditation,
@@ -878,7 +875,7 @@ export class AdvancedConsciousnessAnalyticsManager {
   }
 
   // Determine consciousness state from biofeedback data
-  private determineConsciousnessState(data: BiofeedbackData): string {
+  private determineConsciousnessState(data: any): string {
     const meditationLevel = (data.meditation.focus + data.meditation.clarity + data.meditation.peace) / 3;
     const alphaDominance = data.brainwave.alpha > (data.brainwave.beta + data.brainwave.theta + data.brainwave.delta) / 3;
     const breathingStability = data.breathing.rate >= 8 && data.breathing.rate <= 12;

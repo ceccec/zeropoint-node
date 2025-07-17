@@ -219,7 +219,7 @@ function harmonizeMultiWordFile(filePath, cycle) {
       let wordConsciousness = analysis.consciousness;
       
       // Check if word matches any consciousness keywords
-      Object.entries(consciousnessPriority).forEach(([type, mapping]) => {
+      Object.entries(consciousnessPriority).forEach(([, mapping]) => {
         if (mapping.keywords.some(keyword => wordLower.includes(keyword))) {
           wordDigit = mapping.digit;
           wordConsciousness = mapping.keywords.join(', ');

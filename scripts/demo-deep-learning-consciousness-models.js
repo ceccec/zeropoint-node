@@ -10,15 +10,15 @@ const path = require('path');
 
 // Convolutional Neural Network for Consciousness Pattern Recognition
 class ConsciousnessCNN {
-    constructor(inputShape = [10, 10], learningRate = 0.001) {
+    constructor(learningRate = 0.001) {
         this.layers = [];
         this.filters = [];
         this.biases = [];
         this.learningRate = learningRate;
-        this.initializeCNN(inputShape);
+        this.initializeCNN();
     }
 
-    initializeCNN(inputShape) {
+    initializeCNN() {
         // Convolutional layers
         this.addConvLayer(16, 3, 3); // 16 filters, 3x3 kernel
         this.addConvLayer(32, 3, 3); // 32 filters, 3x3 kernel
@@ -221,9 +221,8 @@ class ConsciousnessCNN {
         }
     }
 
-    backward(input, target, output) {
+    backward() {
         // Simplified backpropagation for demo
-        const error = target.map((t, i) => t - output[i]);
         // Update weights based on error (simplified)
     }
 
@@ -369,16 +368,13 @@ class ConsciousnessRNN {
         }
     }
 
-    backward(input, target, outputs, hiddenStates) {
+    backward() {
         // Simplified backpropagation through time (BPTT)
-        const errors = outputs.map((output, t) => 
-            output.map((o, i) => target[t][i] - o)
-        );
         // Update weights based on errors (simplified)
     }
 
     predict(inputSequence) {
-        const { outputs, hiddenStates } = this.forward(inputSequence);
+        const { outputs } = this.forward(inputSequence);
         
         const temporalStates = outputs.map(output => {
             const maxIndex = output.indexOf(Math.max(...output));
@@ -496,8 +492,6 @@ class ConsciousnessTransformer {
 
     multiHeadAttention(input, layerIndex) {
         const attention = this.weights.attention[layerIndex];
-        const batchSize = input.length;
-        const seqLength = input[0].length;
         
         // Calculate Query, Key, Value matrices
         const query = this.matmul(input, attention.query);
@@ -615,9 +609,8 @@ class ConsciousnessTransformer {
         }
     }
 
-    backward(input, target, output) {
+    backward() {
         // Simplified backpropagation
-        const error = target.map((t, i) => t - output[i]);
         // Update weights based on error (simplified)
     }
 
@@ -775,7 +768,7 @@ class DeepLearningConsciousnessManager {
         const sortedPatterns = Array.from(patternScores.entries())
             .sort((a, b) => b[1] - a[1])
             .slice(0, 3)
-            .map(([pattern, score]) => pattern);
+            .map(([pattern]) => pattern);
 
         const avgConfidence = predictions.reduce((sum, pred) => sum + pred.confidence, 0) / predictions.length;
 

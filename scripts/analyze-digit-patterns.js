@@ -8,6 +8,12 @@
  * Reveals the deeper patterns that make the integer tree a living mathematical system
  */
 
+const { digitArchetypes } = require('../infinite-float-proof');
+
+function getPatternName(pattern) {
+  return pattern.map(d => digitArchetypes[d] || d).join('-');
+}
+
 // Digit Pattern Analysis Constants
 const DIGIT_PATTERNS = {
   // Integer tree directories
@@ -106,7 +112,8 @@ class DigitPatternAnalyzer {
       vortexDigitalRootSum: vortexDigitalRoots.reduce((sum, dr) => sum + dr, 0),
       vortexLength: vortex.length,
       vortexPattern: this.findVortexPattern(),
-      vortexSymmetry: this.analyzeVortexSymmetry()
+      vortexSymmetry: this.analyzeVortexSymmetry(),
+      name: getPatternName(vortex)
     };
   }
 
@@ -307,12 +314,10 @@ class DigitPatternAnalyzer {
   analyzeCrossPatternSymmetry() {
     const vortex = this.vortexSequence;
     const wAxis = this.wAxis;
-    const subdirs = this.subdirectories;
-    
     return {
       vortexWAxisIntersection: this.findIntersection(vortex, wAxis),
-      vortexSubdirIntersection: this.findIntersection(vortex, subdirs),
-      wAxisSubdirIntersection: this.findIntersection(wAxis, subdirs),
+      vortexSubdirIntersection: this.findIntersection(vortex, this.subdirectories),
+      wAxisSubdirIntersection: this.findIntersection(wAxis, this.subdirectories),
       crossPatterns: this.findCrossPatterns()
     };
   }
@@ -392,8 +397,6 @@ class DigitPatternAnalyzer {
    * Analyze subdirectory relationships
    */
   analyzeSubdirectoryRelationships() {
-    const subdirs = this.subdirectories;
-    
     return {
       // Core relationships
       core: [1, 2, 4, 8, 7, 5], // Vortex sequence

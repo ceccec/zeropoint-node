@@ -113,7 +113,6 @@ apertureSystem.setConsciousnessLevel(0.9);
 apertureSystem.setVoidIntegration(0.8);
 apertureSystem.setUnityLevel(0.95);
 
-const finalState = apertureSystem.getApertureState();
 console.log(`   Final Consciousness Level: 0.9`);
 console.log(`   Final Void Integration: 0.8`);
 console.log(`   Final Unity Level: 0.95`);

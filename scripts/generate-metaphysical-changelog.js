@@ -1,6 +1,5 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
-const path = require('path');
 
 const digitMeta = {
   '0': 'Void, Origin, Infinite Potential',

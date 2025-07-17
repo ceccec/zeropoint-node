@@ -21,7 +21,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
 // A432 Harmonic Foundation
 const A432_HARMONICS = {
@@ -295,29 +294,26 @@ class CompostHarvester {
   /**
    * Write transformed content to target location
    */
-  writeTransformedContent(targetPath, content, pattern) {
+  writeTransformedContent(targetPath, content) {
     const targetDir = path.dirname(targetPath);
     
     if (!fs.existsSync(targetDir)) {
       fs.mkdirSync(targetDir, { recursive: true });
     }
     
-    const header = this.generateTransformationHeader(pattern);
+    const header = this.generateTransformationHeader();
     const fullContent = `${header}\n\n${content}`;
     
     fs.writeFileSync(targetPath, fullContent);
-    console.log(`✅ Transformed: ${pattern.file} → ${targetPath}`);
+    console.log(`✅ Transformed: ${targetPath}`);
   }
 
   /**
    * Generate transformation header
    */
-  generateTransformationHeader(pattern) {
+  generateTransformationHeader() {
     return `/**
- * Harvested from compost: ${pattern.file}
- * Category: ${pattern.category}
- * Confidence: ${pattern.confidence.toFixed(2)}
- * Target Directory: ${pattern.targetDir} (${INTEGER_DIRECTORIES[pattern.targetDir]})
+ * Harvested from compost
  * Harvested: ${new Date().toISOString()}
  * 
  * This module was automatically extracted from legacy code
@@ -326,7 +322,7 @@ class CompostHarvester {
   }
 
   // Transformation Methods
-  extractMathematicalCore(content, pattern) {
+  extractMathematicalCore(content) {
     // Extract mathematical functions and constants
     const mathRegex = /(?:export\s+)?(?:function|const|class)\s+(\w+)\s*[=:]\s*(?:function|\([^)]*\)\s*=>|.*)/g;
     const matches = [...content.matchAll(mathRegex)];
@@ -343,7 +339,7 @@ class CompostHarvester {
     return transformed;
   }
 
-  extractHarmonicFlow(content, pattern) {
+  extractHarmonicFlow(content) {
     // Extract flow and transformation patterns
     const flowRegex = /(?:export\s+)?(?:function|const)\s+(\w+Flow|\w+Transform|\w+Vortex)\s*[=:]/g;
     const matches = [...content.matchAll(flowRegex)];
@@ -360,7 +356,7 @@ class CompostHarvester {
     return transformed;
   }
 
-  extractHarmonicConstants(content, pattern) {
+  extractHarmonicConstants(content) {
     // Extract constants and values
     const constRegex = /(?:export\s+)?const\s+(\w+)\s*=\s*([^;]+);/g;
     const matches = [...content.matchAll(constRegex)];
@@ -377,7 +373,7 @@ class CompostHarvester {
     return transformed;
   }
 
-  extractGeometricPatterns(content, pattern) {
+  extractGeometricPatterns(content) {
     // Extract geometric and pattern-related code
     const geoRegex = /(?:export\s+)?(?:function|class)\s+(\w*[Gg]eo\w*|\w*[Pp]attern\w*|\w*[Ss]hape\w*)\s*[=:]/g;
     const matches = [...content.matchAll(geoRegex)];
@@ -394,7 +390,7 @@ class CompostHarvester {
     return transformed;
   }
 
-  extractConsciousnessPatterns(content, pattern) {
+  extractConsciousnessPatterns(content) {
     // Extract consciousness and awareness patterns
     const consciousnessRegex = /(?:export\s+)?(?:function|class)\s+(\w*[Cc]onscious\w*|\w*[Aa]ware\w*|\w*[Mm]ind\w*)\s*[=:]/g;
     const matches = [...content.matchAll(consciousnessRegex)];
@@ -411,7 +407,7 @@ class CompostHarvester {
     return transformed;
   }
 
-  extractVoidPatterns(content, pattern) {
+  extractVoidPatterns(content) {
     // Extract void and potential patterns
     const voidRegex = /(?:export\s+)?(?:function|class)\s+(\w*[Vv]oid\w*|\w*[Ee]mpty\w*|\w*[Pp]otential\w*)\s*[=:]/g;
     const matches = [...content.matchAll(voidRegex)];
@@ -428,7 +424,7 @@ class CompostHarvester {
     return transformed;
   }
 
-  extractUnityPatterns(content, pattern) {
+  extractUnityPatterns(content) {
     // Extract unity and integration patterns
     const unityRegex = /(?:export\s+)?(?:function|class)\s+(\w*[Uu]nity\w*|\w*[Ii]ntegrate\w*|\w*[Ww]hole\w*)\s*[=:]/g;
     const matches = [...content.matchAll(unityRegex)];
@@ -445,7 +441,7 @@ class CompostHarvester {
     return transformed;
   }
 
-  extractZeroEntropyPatterns(content, pattern) {
+  extractZeroEntropyPatterns(content) {
     // Extract zero entropy and mathematical purity patterns
     const zeroRegex = /(?:export\s+)?(?:function|class)\s+(\w*[Zz]ero\w*|\w*[Ee]ntropy\w*|\w*[Pp]ure\w*)\s*[=:]/g;
     const matches = [...content.matchAll(zeroRegex)];

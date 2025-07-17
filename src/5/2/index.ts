@@ -24,8 +24,8 @@ export const pattern = [5, 2, 7];
  * @param {number} b
  * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-export function getHarmonicResult(a, b) {
-  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+export function getHarmonicResult(a: number, b: number): number {
+  const sum = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) % 9;
   return sum === 0 ? 9 : sum;
 }
 
@@ -35,9 +35,9 @@ export function getHarmonicResult(a, b) {
  * @param {number} b
  * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-export function getAntiVortexDecimal(a, b) {
+export function getAntiVortexDecimal(a: number, b: number): number {
   const c = getHarmonicResult(a, b);
-  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  const decimal = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) / c;
   return decimal;
 }
 
@@ -56,6 +56,32 @@ export const harmonicInteractions = [
   { next: 8, pattern: '5,2,8,1', name: 'CenterVortexInfinitySource', math: '2 + 8 = 10 ≡ 1 (mod 9)' },
   { next: 9, pattern: '5,2,9,2', name: 'CenterVortexAxisVortex', math: '2 + 9 = 11 ≡ 2 (mod 9)' },
 ];
+
+/**
+ * Sacred Geometry Vortex Interaction
+ * Defines the interaction between Sacred Geometry (5) and Vortex (2)
+ */
+export const SACRED_GEOMETRY_VORTEX_INTERACTION = {
+  INTERACTION_FREQUENCY: 432 * (5/2),
+  SACRED_GEOMETRY_PATTERNS: {
+    SACRED_GEOMETRY_VORTEX: [5, 2, 5],
+    VORTEX_SACRED_GEOMETRY: [2, 5, 2]
+  },
+  SACRED_GEOMETRY_MULTIPLIER: { numerator: 5, denominator: 4 },
+  VORTEX_MULTIPLIER: { numerator: 6, denominator: 5 }
+};
+
+/**
+ * Sacred Geometry Vortex Interaction class
+ */
+export class SacredGeometryVortexInteraction {
+  static getInteraction() {
+    return SACRED_GEOMETRY_VORTEX_INTERACTION;
+  }
+}
+
+// Harmonized export for test compatibility
+export const index = SACRED_GEOMETRY_VORTEX_INTERACTION;
 
 /**
  * Placeholder for PWA node initialization logic.

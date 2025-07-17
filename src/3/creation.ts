@@ -1,5 +1,3 @@
-import { Knowledge } from '../7/knowledge';
-
 /**
  * 🌌 Creation Consciousness - Spiritual Pathway Audio
  *

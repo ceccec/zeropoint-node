@@ -163,7 +163,7 @@ class ConsciousnessUI {
     patterns.push(...metaphysicalMatches.map(match => ({ type: 'metaphysical', term: match })));
     
     // Extract mathematical patterns
-    const mathMatches = content.match(/\d+|\+|\-|\*|\/|\(|\)/g) || [];
+    const mathMatches = content.match(/\d+|\+|-|\*|\/|\(|\)/g) || [];
     patterns.push(...mathMatches.map(match => ({ type: 'mathematical', symbol: match })));
     
     return patterns;

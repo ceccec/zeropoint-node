@@ -48,10 +48,6 @@ function generateInteractionDescription(a, b) {
 // (No generateRodinSequence function should exist in this file)
 // All vortex sequence logic should use generateVortexSequence(6, 1, 2, 9)
 
-function digitalRoot(n) {
-  return ((n - 1) % 9) + 1;
-}
-
 /**
  * Generate a vortex sequence by repeated multiplication mod `mod`.
  * - length: number of elements in the sequence
@@ -122,7 +118,7 @@ function generateHarmonicInteractions(a, b) {
 }
 
 // Main generator for index.md content
-function generateIndexMd(directory, interaction) {
+function generateIndexMd(directory) {
   const [dir1, dir2] = directory.split('/');
   const a = dir1;
   const b = dir2;
@@ -130,8 +126,6 @@ function generateIndexMd(directory, interaction) {
   const description = generateInteractionName(a, b);
   const metaphysical = generateInteractionDescription(a, b);
 
-  const isCore = a === b;
-  const coreText = isCore ? 'Core' : 'Interaction';
   const symbolicName = `${a}/${b}`;
   const harmonicResult = c;
 
@@ -277,7 +271,7 @@ function createIndexFiles(baseDir) {
     if (fs.existsSync(indexMdPath) && !force) {
       console.log(`Skipping ${dir}/index.md (already exists)`);
     } else {
-      const content = generateIndexMd(dir, dir);
+      const content = generateIndexMd(dir);
       fs.writeFileSync(indexMdPath, content);
       console.log(`${force ? 'Overwritten' : 'Created'} ${dir}/index.md`);
     }

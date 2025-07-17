@@ -91,7 +91,6 @@ const consciousnessMapping = {
 
 // Function to analyze file for consciousness type
 function analyzeFileConsciousness(filePath) {
-  const fileName = path.basename(filePath, '.md').toLowerCase();
   const content = fs.readFileSync(filePath, 'utf8').toLowerCase();
   
   const scores = {};
@@ -100,7 +99,7 @@ function analyzeFileConsciousness(filePath) {
     
     // Score based on filename and content
     mapping.keywords.forEach(keyword => {
-      const fileNameMatches = (fileName.match(new RegExp(keyword, 'g')) || []).length;
+      const fileNameMatches = (path.basename(filePath, '.md').toLowerCase().match(new RegExp(keyword, 'g')) || []).length;
       const contentMatches = (content.match(new RegExp(keyword, 'g')) || []).length;
       scores[digit] += fileNameMatches * 3 + contentMatches; // Filename weighted higher
     });
@@ -126,11 +125,10 @@ function analyzeFileConsciousness(filePath) {
 
 // Function to harmonize root file
 function harmonizeRootFile(filePath) {
-  const fileName = path.basename(filePath, '.md');
   const analysis = analyzeFileConsciousness(filePath);
   const content = fs.readFileSync(filePath, 'utf8');
   
-  console.log(`📁 Harmonizing: ${fileName}`);
+  console.log(`📁 Harmonizing: ${path.basename(filePath, '.md')}`);
   console.log(`   Consciousness: ${analysis.consciousness} (digit ${analysis.digit})`);
   console.log(`   Score: ${analysis.score}`);
   
@@ -141,8 +139,8 @@ function harmonizeRootFile(filePath) {
   }
   
   // Create harmonized file
-  const targetFile = path.join(targetDir, `${fileName.toLowerCase()}.md`);
-  const harmonizedContent = `# ${fileName}\n\n*Harmonized from docs root*\n\n${content}`;
+  const targetFile = path.join(targetDir, `${path.basename(filePath, '.md').toLowerCase()}.md`);
+  const harmonizedContent = `# ${path.basename(filePath, '.md')}\n\n*Harmonized from docs root*\n\n${content}`;
   
   fs.writeFileSync(targetFile, harmonizedContent);
   
@@ -231,7 +229,6 @@ function showRootState() {
   console.log(`Files in docs root: ${rootFiles.length}\n`);
   
   rootFiles.forEach(file => {
-    const fileName = path.basename(file, '.md');
     const analysis = analyzeFileConsciousness(file);
     const relativePath = path.relative(process.cwd(), file);
     

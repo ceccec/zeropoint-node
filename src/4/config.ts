@@ -63,14 +63,14 @@ export function updateConfig(newConfig: Partial<typeof ZEROPOINT_CONFIG>): void 
 /**
  * Get configuration value
  */
-export function getConfigValue(key: keyof typeof ZEROPOINT_CONFIG): any {
+export function getConfigValue(key: keyof typeof ZEROPOINT_CONFIG) {
   return ZEROPOINT_CONFIG[key];
 }
 
 /**
  * Set configuration value
  */
-export function setConfigValue(key: keyof typeof ZEROPOINT_CONFIG, value: any): void {
+export function setConfigValue(key: keyof typeof ZEROPOINT_CONFIG, value: unknown): void {
   (ZEROPOINT_CONFIG as any)[key] = value;
 }
 

@@ -7,7 +7,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
 class DocsLinkChecker {
   constructor() {
@@ -43,7 +42,7 @@ class DocsLinkChecker {
   fileExists(filePath) {
     try {
       return fs.existsSync(filePath);
-    } catch (error) {
+    } catch {
       return false;
     }
   }
@@ -111,8 +110,8 @@ class DocsLinkChecker {
       });
 
       return links.length;
-    } catch (error) {
-      console.error(`Error processing ${filePath}:`, error.message);
+    } catch {
+      console.error(`Error processing ${filePath}`);
       return 0;
     }
   }

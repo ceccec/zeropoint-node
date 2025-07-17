@@ -15,58 +15,6 @@
 const fs = require('fs');
 const path = require('path');
 
-// Generate colors based on digit patterns and mathematical properties
-function generateDigitColors(digit) {
-  // Base colors for different metaphysical properties
-  const baseColors = {
-    void: '#000000',      // Black for void/zero
-    foundation: '#1a1a1a', // Dark gray for foundation
-    vortex: '#ff6b6b',    // Red for vortex flow
-    spiritual: '#4ecdc4',  // Teal for spiritual dimensions
-    constants: '#45b7d1',  // Blue for mathematical constants
-    sacred: '#96ceb4',    // Green for sacred geometry
-    consciousness: '#feca57', // Yellow for consciousness
-    unity: '#ff9ff3'      // Pink for unity
-  };
-  
-  // Calculate colors based on digit properties
-  const isVoid = digit === 0;
-  const isFoundation = digit === 1;
-  const isVortex = [2, 4, 8, 7, 5].includes(digit);
-  const isSpiritual = [3, 6, 9].includes(digit);
-  const isConstants = digit === 4;
-  const isSacred = digit === 5;
-  const isConsciousness = digit === 7;
-  const isUnity = digit === 9;
-  
-  // Calculate primary color based on digit's main property
-  let primaryColor;
-  if (isVoid) primaryColor = baseColors.void;
-  else if (isFoundation) primaryColor = baseColors.foundation;
-  else if (isVortex) primaryColor = baseColors.vortex;
-  else if (isSpiritual) primaryColor = baseColors.spiritual;
-  else if (isConstants) primaryColor = baseColors.constants;
-  else if (isSacred) primaryColor = baseColors.sacred;
-  else if (isConsciousness) primaryColor = baseColors.consciousness;
-  else if (isUnity) primaryColor = baseColors.unity;
-  else primaryColor = `hsl(${digit * 36}, 70%, 50%)`; // Fallback based on digit
-  
-  // Calculate secondary color based on digit's resonance
-  const resonance = (digit * 432) % 360; // A432 harmonic resonance
-  const secondaryColor = `hsl(${resonance}, 60%, 60%)`;
-  
-  // Calculate accent color based on digit's mathematical properties
-  const digitalRoot = digit === 0 ? 0 : ((digit - 1) % 9) + 1;
-  const accentHue = (digitalRoot * 40) % 360;
-  const accentColor = `hsl(${accentHue}, 80%, 70%)`;
-  
-  return {
-    primary: primaryColor,
-    secondary: secondaryColor,
-    accent: accentColor
-  };
-}
-
 // Metaphysical titles and descriptions for each digit
 const DIGIT_METADATA = {
   0: {
@@ -131,17 +79,23 @@ const DIGIT_METADATA = {
   }
 };
 
+// Define DIGIT_COLORS or remove the reference to fix the undefined error
+const DIGIT_COLORS = {
+  0: '#000000', 1: '#1a1a1a', 2: '#ff6b6b', 3: '#4ecdc4',
+  4: '#45b7d1', 5: '#96ceb4', 6: '#feca57', 7: '#ff9ff3',
+  8: '#a8e6cf', 9: '#dcedc1'
+};
+
 function readFileContent(filePath) {
   try {
     return fs.readFileSync(filePath, 'utf8');
-  } catch (error) {
+  } catch {
     return '';
   }
 }
 
-function extractMetaphysicalContent(indexMdPath, readmeMdPath) {
+function extractMetaphysicalContent(indexMdPath) {
   const indexContent = readFileContent(indexMdPath);
-  const readmeContent = readFileContent(readmeMdPath);
   
   // Extract key sections from markdown content
   const sections = {
@@ -591,8 +545,7 @@ function generateFrontendFiles() {
     
     // Read metaphysical content
     const indexMdPath = path.join(digitPath, 'index.md');
-    const readmeMdPath = path.join(digitPath, 'README.md');
-    const content = extractMetaphysicalContent(indexMdPath, readmeMdPath);
+    const content = extractMetaphysicalContent(indexMdPath);
     
     // Generate files
     const metadata = DIGIT_METADATA[digit];

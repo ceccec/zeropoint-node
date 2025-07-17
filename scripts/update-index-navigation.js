@@ -28,9 +28,9 @@ function getPrevNext(digit) {
   return { prev, next };
 }
 
-function getBreadcrumb(digit, relPath) {
+function getBreadcrumb(digit) {
   return VORTEX_CYCLE.map(d => {
-    const link = `[${d}](${relPath ? relPath + '../'.repeat(1) + d + '/index.md' : '../' + d + '/index.md'})`;
+    const link = `[${d}](../${d}/index.md)`;
     return d == digit ? `**${link}**` : link;
   }).join(' → ');
 }
@@ -39,27 +39,23 @@ function getCompoundMeaning(a, b) {
   return `${DIGIT_MEANINGS[a]}/${DIGIT_MEANINGS[b]}`;
 }
 
-function getDigitLink(d, relPath) {
-  return `[${d}](${relPath ? relPath + '../'.repeat(1) + d + '/index.md' : '../' + d + '/index.md'})`;
-}
-
-function getFractionLink(a, b, relPath) {
+function getFractionLink(a, b) {
   return `[${a}/${b}](${b}/index.md)`;
 }
 
-function updateIndex(filePath, digit, parentPath) {
+function updateIndex(filePath, digit) {
   let content = fs.readFileSync(filePath, 'utf8');
   // Remove old navigation section (between --- NAVIGATION START --- and --- NAVIGATION END ---)
   content = content.replace(/--- NAVIGATION START ---[\s\S]*?--- NAVIGATION END ---\n?/g, '');
 
   const { prev, next } = getPrevNext(digit);
-  const topLink = parentPath ? `[Top](${parentPath}/index.md)` : '[Top: Vortex Model](../VORTEX_INTERACTION_MODEL.md)';
-  const breadcrumb = getBreadcrumb(digit, parentPath);
+  const topLink = '[Top: Vortex Model](../VORTEX_INTERACTION_MODEL.md)';
+  const breadcrumb = getBreadcrumb(digit);
 
   // Subfolder links (down)
   let downLinks = '';
   for (let sub = 0; sub <= 9; sub++) {
-    const fracLink = getFractionLink(digit, sub, parentPath);
+    const fracLink = getFractionLink(digit, sub);
     downLinks += `- ${fracLink}: ${getCompoundMeaning(digit, sub)}\n`;
   }
 
@@ -70,9 +66,6 @@ function updateIndex(filePath, digit, parentPath) {
   }
   if (digit == 0) gatewayLinks += '\n**Special:** 0/0 (impossibility)\n';
   if (digit == 1) gatewayLinks += '\n**Special:** 1/1 (unity)\n';
-
-  const prevLink = prev !== null ? getDigitLink(prev, parentPath) : 'N/A';
-  const nextLink = next !== null ? getDigitLink(next, parentPath) : 'N/A';
 
   const navSection =
 `--- NAVIGATION START ---
@@ -91,15 +84,15 @@ ${downLinks}--- NAVIGATION END ---
   fs.writeFileSync(filePath, content, 'utf8');
 }
 
-function walk(dir, parentPath = null) {
+function walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     if (entry.isDirectory() && /^\d$/.test(entry.name)) {
       const subdir = path.join(dir, entry.name);
       const indexPath = path.join(subdir, 'index.md');
       if (fs.existsSync(indexPath)) {
-        updateIndex(indexPath, entry.name, path.relative(subdir, dir));
+        updateIndex(indexPath, entry.name);
       }
-      walk(subdir, path.relative(subdir, dir));
+      walk(subdir);
     }
   }
 }

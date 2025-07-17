@@ -45,8 +45,8 @@ async function extractTextFromPDF(pdfPath) {
     const dataBuffer = fs.readFileSync(pdfPath);
     const data = await pdfParse(dataBuffer);
     return data.text;
-  } catch (error) {
-    console.error(`Error extracting text from ${pdfPath}:`, error.message);
+  } catch {
+    console.error(`Error extracting text from ${pdfPath}`);
     return '';
   }
 }
@@ -60,7 +60,6 @@ function analyzeZeropointContent(text, chapterName) {
   };
 
   // Search for zeropoint-related terms
-  const lowerText = text.toLowerCase();
   
   // Find mentions of zeropoint
   const zeropointRegex = /zeropoint|zero\s*point|zero-point/gi;
@@ -201,4 +200,4 @@ ${sortedConcepts.map(([concept, count]) => `- **${concept}**: ${count} mentions`
   console.log(`📝 Markdown summary saved to: ${markdownPath}`);
 }
 
-main().catch(console.error); 
+main().catch(() => console.error('Error in main execution')); 

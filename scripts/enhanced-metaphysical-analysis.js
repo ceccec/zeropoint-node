@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 
 // Enhanced metaphysical archetypes with deeper consciousness patterns
 const enhancedDigitMeta = {
@@ -227,7 +226,6 @@ function generateEnhancedAnalysis() {
   
   for (let d = 0; d <= 9; d++) {
     const digit = String(d);
-    const meta = enhancedDigitMeta[digit];
     const digitalRoot = consciousnessCalculations.digitalRoot(d);
     const vortexA = consciousnessCalculations.vortexA(d);
     const vortexB = consciousnessCalculations.vortexB(d);

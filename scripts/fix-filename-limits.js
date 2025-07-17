@@ -122,7 +122,7 @@ class FilenameLimitFixer {
 // Run the fixer
 const fixer = new FilenameLimitFixer();
 fixer.fixDirectory('src');
-const summary = fixer.generateSummary();
+fixer.generateSummary();
 
 // Export for use in other scripts
 module.exports = { FilenameLimitFixer }; 

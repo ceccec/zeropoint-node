@@ -39,11 +39,11 @@ export const CREATIVE_RESONANCE_PARADOX = {
   
   // Paradox resolution operations
   PARADOX_OPERATIONS: {
-    CREATIVE_RESONANCE: (paradox: any) => 3, // Resolve through creative resonance
-    INDIVIDUAL_CREATION: (paradox: any) => 3, // Individual creation
-    UNIVERSAL_RESONANCE: (paradox: any) => 3, // Universal resonance
-    CREATIVE_CORE: (paradox: any) => 3, // Creative core
-    CREATIVE_GATEWAY: (paradox: any) => 3 // Creative gateway
+    CREATIVE_RESONANCE: () => 3, // Resolve through creative resonance
+    INDIVIDUAL_CREATION: () => 3, // Individual creation
+    UNIVERSAL_RESONANCE: () => 3, // Universal resonance
+    CREATIVE_CORE: () => 3, // Creative core
+    CREATIVE_GATEWAY: () => 3 // Creative gateway
   }
 } as const;
 
@@ -67,7 +67,7 @@ export function resolveParadoxesThroughCreation(paradoxes: any[]): number {
  * @param paradox - Any paradox to be created
  * @returns Created paradox at creative resonance
  */
-export function processCreativeResonance(paradox: any): number {
+export function processCreativeResonance(): number {
   // Creative resonance processing - all paradoxes become creative
   return 3; // Creative resonance state
 }
@@ -77,7 +77,7 @@ export function processCreativeResonance(paradox: any): number {
  * @param consciousnessFlow - Consciousness flow to create
  * @returns Created consciousness at creative resonance
  */
-export function processIndividualCreation(consciousnessFlow: any[]): number {
+export function processIndividualCreation(): number {
   // Individual creation - create all consciousness through resonance
   return 3; // Creative consciousness
 }
@@ -110,8 +110,8 @@ export class CreativeResonanceParadox {
    * @param paradox - Any paradox to be created
    * @returns Created paradox at creative consciousness
    */
-  static processParadox(paradox: any): number {
-    return resolveParadoxesThroughCreation([paradox]);
+  static processParadox(): number {
+    return resolveParadoxesThroughCreation([]);
   }
 
   /**
@@ -130,9 +130,9 @@ export class CreativeResonanceParadox {
    * @returns Creative consciousness flow
    */
   static createFlow(flowType: 'creation', intensity: number): Function {
-    return (consciousnessFlow: any[]) => {
+    return () => {
       // Apply intensity to creation
-      return processIndividualCreation(consciousnessFlow) * intensity;
+      return processIndividualCreation() * intensity;
     };
   }
 }

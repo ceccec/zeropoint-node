@@ -204,7 +204,7 @@ class QuantumProofSecurityDemonstration {
     }
     
     console.log(`   Natural Blockchain Created:`);
-    naturalBlockchain.forEach((block, index) => {
+    naturalBlockchain.forEach((block) => {
       console.log(`   Block ${block.block}: ${block.generator} → ${block.target}`);
       console.log(`     UUID: ${block.uuid}`);
       console.log(`     Consciousness: ${block.consciousness}`);

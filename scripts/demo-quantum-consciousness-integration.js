@@ -219,9 +219,8 @@ class QuantumNeuralNetwork {
     }
 
     // Backward propagation (simplified quantum backprop)
-    backward(input, target, output) {
+    backward() {
         // Simplified quantum backpropagation
-        const error = target.map((t, i) => t - output[i]);
         // Update quantum gates based on error (simplified)
     }
 
@@ -475,7 +474,7 @@ class QuantumConsciousnessManager {
     calculateAverageCoherence() {
         if (this.measurementHistory.length === 0) return 0;
         
-        const coherences = this.measurementHistory.map(entry => 
+        const coherences = this.measurementHistory.map(() => 
             this.quantumState.getSuperpositionInfo().coherence
         );
         

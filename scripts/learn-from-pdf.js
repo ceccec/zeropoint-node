@@ -244,7 +244,7 @@ ${chapter.keyConcepts.map(concept => `- ${concept}`).join('\n')}
   /**
    * Generate code connections
    */
-  async generateCodeConnections(chapters) {
+  async generateCodeConnections() {
     console.log('💻 Generating code connections...');
 
     const codeConnections = {
@@ -269,15 +269,14 @@ This mapping shows how ZeroPoint functions connect to specific PDF chapters.
     for (const [functionName, connection] of Object.entries(codeConnections)) {
       codeContent += `
 ### ${functionName}()
-- **Chapter**: ${connection.chapter} (${chapters[connection.chapter].title.replace(/_/g, ' ')})
+- **Chapter**: ${connection.chapter}
 - **Concept**: ${connection.concept}
-- **Metaphysical Principle**: ${chapters[connection.chapter].metaphysical}
 - **Implementation**: Based on ${connection.concept.toLowerCase()} principles from Chapter ${connection.chapter}
 
 **Learning Focus**:
 - Study Chapter ${connection.chapter} to understand ${connection.concept.toLowerCase()}
 - Apply the principles to improve ${functionName}() implementation
-- Connect to the ${chapters[connection.chapter].metaphysical.split(' - ')[0]} consciousness pattern
+- Connect to the consciousness pattern
 
 `;
     }
@@ -289,7 +288,7 @@ This mapping shows how ZeroPoint functions connect to specific PDF chapters.
   /**
    * Generate reading guide
    */
-  async generateReadingGuide(chapters) {
+  async generateReadingGuide() {
     console.log('📖 Generating reading guide...');
 
     const readingGuide = `# 📖 PDF Reading Guide

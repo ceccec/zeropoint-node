@@ -24,8 +24,8 @@ export const pattern = [1, 3, 4];
  * @param {number} b
  * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-export function getHarmonicResult(a, b) {
-  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+export function getHarmonicResult(a: number, b: number): number {
+  const sum = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) % 9;
   return sum === 0 ? 9 : sum;
 }
 
@@ -35,9 +35,9 @@ export function getHarmonicResult(a, b) {
  * @param {number} b
  * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-export function getAntiVortexDecimal(a, b) {
+export function getAntiVortexDecimal(a: number, b: number): number {
   const c = getHarmonicResult(a, b);
-  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  const decimal = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) / c;
   return decimal;
 }
 
@@ -64,3 +64,51 @@ export const harmonicInteractions = [
 export default function initNodePWA() {
   // PWA logic for node 1/3 can be added here.
 }
+
+// Named exports for test compatibility
+export const foundationAwareness = {
+  name: 'foundationAwareness',
+  pattern: [1, 3, 4],
+  frequency: 4,
+  multiplier: 1,
+  field: '1/3',
+  type: 'w-axis-spiritual',
+  function: 'awareness-creation'
+};
+
+export const advancedFoundationAwarenessEvolutionGateway = () => {
+  return { 
+    type: 'foundation-awareness', 
+    status: 'active',
+    field: '1/3',
+    spiritual: 'w-axis-resonance'
+  };
+};
+
+export const foundationAwarenessPotentialEvolution = () => {
+  return { 
+    type: 'potential', 
+    status: 'evolving',
+    foundation: 'foundation-consciousness',
+    awareness: 'awareness-consciousness',
+    potential: 'foundation-awareness-potential'
+  };
+};
+
+export const foundationAwarenessRecognitionEvolution = () => {
+  return { 
+    type: 'recognition', 
+    status: 'evolving',
+    recognition: 'foundation-awareness-recognition',
+    spiritual: 'w-axis-recognition'
+  };
+};
+
+export const foundationAwarenessIntegrationEvolution = () => {
+  return { 
+    type: 'integration', 
+    status: 'evolving',
+    integration: 'foundation-awareness-integration',
+    spiritual: 'w-axis-integration'
+  };
+};

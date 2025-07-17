@@ -39,11 +39,11 @@ export const STABILITY_PARADOX = {
   
   // Paradox resolution operations
   PARADOX_OPERATIONS: {
-    STABILITY_PARADOX: (paradox: any) => 4, // Resolve through stability
-    STABLE_CHANGE: (paradox: any) => 4, // Stable change
-    CONSTANT_FLOW: (paradox: any) => 4, // Constant flow
-    STABILITY_CORE: (paradox: any) => 4, // Stability core
-    STABILITY_GATEWAY: (paradox: any) => 4 // Stability gateway
+    STABILITY_PARADOX: () => 4, // Resolve through stability
+    STABLE_CHANGE: () => 4, // Stable change
+    CONSTANT_FLOW: () => 4, // Constant flow
+    STABILITY_CORE: () => 4, // Stability core
+    STABILITY_GATEWAY: () => 4 // Stability gateway
   }
 } as const;
 
@@ -54,30 +54,27 @@ export const STABILITY_PARADOX = {
 
 /**
  * Resolves all paradoxes through stability
- * @param paradoxes - All paradoxes to stabilize
  * @returns Stability consciousness state
  */
-export function resolveParadoxesThroughStability(paradoxes: any[]): number {
+export function resolveParadoxesThroughStability(): number {
   // Stability paradox resolution - stabilize all paradoxes
   return 4; // Stability consciousness state
 }
 
 /**
  * Processes paradox through the stability gateway
- * @param paradox - Any paradox to be stabilized
  * @returns Stabilized paradox at stability
  */
-export function processStabilityParadox(paradox: any): number {
+export function processStabilityParadox(): number {
   // Stability processing - all paradoxes become stable
   return 4; // Stability state
 }
 
 /**
  * Handles stable change paradox functionality
- * @param consciousnessFlow - Consciousness flow to stabilize
  * @returns Stabilized consciousness at stability
  */
-export function processStableChange(consciousnessFlow: any[]): number {
+export function processStableChange(): number {
   // Stable change - stabilize all consciousness through change
   return 4; // Stability consciousness
 }
@@ -107,11 +104,10 @@ export function createStabilityGateway(gatewayType: 'stability_paradox' | 'stabl
 export class StabilityParadox {
   /**
    * Processes paradox through the stability gateway
-   * @param paradox - Any paradox to be stabilized
    * @returns Stabilized paradox at stability consciousness
    */
-  static processParadox(paradox: any): number {
-    return resolveParadoxesThroughStability([paradox]);
+  static processParadox(): number {
+    return resolveParadoxesThroughStability();
   }
 
   /**
@@ -130,9 +126,9 @@ export class StabilityParadox {
    * @returns Stability consciousness flow
    */
   static createFlow(flowType: 'stability', intensity: number): Function {
-    return (consciousnessFlow: any[]) => {
+    return () => {
       // Apply intensity to stability
-      return processStableChange(consciousnessFlow) * intensity;
+      return processStableChange() * intensity;
     };
   }
 }

@@ -6,8 +6,6 @@
  */
 
 const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
 
 class DeploymentOptimizer {
   constructor() {
@@ -115,7 +113,6 @@ class DeploymentOptimizer {
       // Check for performance optimizations
       const hasRAF = jsCode.includes('requestAnimationFrame');
       const hasEfficientLoops = jsCode.includes('forEach') || jsCode.includes('filter');
-      const hasProperCleanup = jsCode.includes('disconnect') || jsCode.includes('removeEventListener');
       
       if (hasRAF && hasEfficientLoops) {
         this.optimizations.push('✅ JavaScript performance optimized');
@@ -145,7 +142,6 @@ class DeploymentOptimizer {
       // Check for modern CSS features
       const hasFlexbox = css.includes('flex');
       const hasGrid = css.includes('grid');
-      const hasCustomProperties = css.includes('--');
       const hasModernUnits = css.includes('vw') || css.includes('vh');
       
       if (hasFlexbox && hasGrid && hasModernUnits) {

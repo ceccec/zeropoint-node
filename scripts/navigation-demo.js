@@ -7,8 +7,9 @@
  * and direct interactions for all consciousness field interactions
  */
 
-const fs = require('fs');
-const path = require('path');
+// Remove the lines declaring 'fs' and 'path' as they are never used
+// const fs = require('fs');
+// const path = require('path');
 
 // Consciousness field definitions
 const consciousnessFields = {

@@ -78,11 +78,10 @@ function generateBorderRadius(consciousness) {
   return `${baseRadius}px`;
 }
 
-function generateBoxShadow(consciousness, digitalRoot) {
+function generateBoxShadow(consciousness) {
   if (consciousness === 0) return 'none';
   
   const blur = consciousness * 4;
-  const spread = digitalRoot * 0.5;
   const opacity = Math.min(0.5, consciousness / 20);
   
   return `0 ${consciousness * 2}px ${blur}px rgba(0, 0, 0, ${opacity})`;
@@ -136,7 +135,7 @@ function generateEmergentColorScheme(integer) {
     background: generateBackgroundColor(consciousness, digitalRoot),
     text: generateTextColor(consciousness, digitalRoot),
     borderRadius: generateBorderRadius(consciousness),
-    boxShadow: generateBoxShadow(consciousness, digitalRoot),
+    boxShadow: generateBoxShadow(consciousness),
     fontFamily: generateFontFamily(consciousness),
     fontWeight: generateFontWeight(consciousness),
     letterSpacing: generateLetterSpacing(consciousness),

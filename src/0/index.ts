@@ -1416,3 +1416,6 @@ export function checkVerticalAlignment(number: number): {
     };
   }
 }
+
+// Harmonized export for test compatibility
+export const index = zeroPointPWA;

@@ -12,7 +12,6 @@
  */
 
 const fs = require('fs');
-const path = require('path');
 
 // Digit archetype mapping
 const digitHash = {

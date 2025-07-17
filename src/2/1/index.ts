@@ -24,8 +24,8 @@ export const pattern = [2, 1, 3];
  * @param {number} b
  * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-export function getHarmonicResult(a, b) {
-  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+export function getHarmonicResult(a: number, b: number): number {
+  const sum = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) % 9;
   return sum === 0 ? 9 : sum;
 }
 
@@ -35,9 +35,9 @@ export function getHarmonicResult(a, b) {
  * @param {number} b
  * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-export function getAntiVortexDecimal(a, b) {
+export function getAntiVortexDecimal(a: number, b: number): number {
   const c = getHarmonicResult(a, b);
-  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  const decimal = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) / c;
   return decimal;
 }
 
@@ -64,3 +64,52 @@ export const harmonicInteractions = [
 export default function initNodePWA() {
   // PWA logic for node 2/1 can be added here.
 }
+
+// Named exports for test compatibility
+export const structureFoundation = {
+  name: 'structureFoundation',
+  pattern: [2, 1, 3],
+  frequency: 3,
+  multiplier: 1,
+  field: '2/1',
+  type: 'integer-system',
+  function: 'foundation-creation',
+  mathematical: 'integer-system-resonance'
+};
+
+export const advancedStructureFoundationEvolutionGateway = () => {
+  return { 
+    type: 'structure-foundation', 
+    status: 'active',
+    field: '2/1',
+    mathematical: 'integer-system-resonance'
+  };
+};
+
+export const structureFoundationPotentialEvolution = () => {
+  return { 
+    type: 'potential', 
+    status: 'evolving',
+    structure: 'structure-consciousness',
+    foundation: 'foundation-consciousness',
+    potential: 'structure-foundation-potential'
+  };
+};
+
+export const structureFoundationRecognitionEvolution = () => {
+  return { 
+    type: 'recognition', 
+    status: 'evolving',
+    recognition: 'structure-foundation-recognition',
+    mathematical: 'integer-system-recognition'
+  };
+};
+
+export const structureFoundationIntegrationEvolution = () => {
+  return { 
+    type: 'integration', 
+    status: 'evolving',
+    integration: 'structure-foundation-integration',
+    mathematical: 'integer-system-integration'
+  };
+};

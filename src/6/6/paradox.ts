@@ -39,11 +39,11 @@ export const HARMONIC_BALANCE_PARADOX = {
   
   // Paradox resolution operations
   PARADOX_OPERATIONS: {
-    HARMONIC_BALANCE_PARADOX: (paradox: any) => 6, // Resolve through harmonic balance
-    INDIVIDUAL_BALANCE: (paradox: any) => 6, // Individual balance
-    UNIVERSAL_HARMONY: (paradox: any) => 6, // Universal harmony
-    HARMONIC_BALANCE_CORE: (paradox: any) => 6, // Harmonic balance core
-    HARMONIC_BALANCE_GATEWAY: (paradox: any) => 6 // Harmonic balance gateway
+    HARMONIC_BALANCE_PARADOX: () => 6, // Resolve through harmonic balance
+    INDIVIDUAL_BALANCE: () => 6, // Individual balance
+    UNIVERSAL_HARMONY: () => 6, // Universal harmony
+    HARMONIC_BALANCE_CORE: () => 6, // Harmonic balance core
+    HARMONIC_BALANCE_GATEWAY: () => 6 // Harmonic balance gateway
   }
 } as const;
 
@@ -54,30 +54,27 @@ export const HARMONIC_BALANCE_PARADOX = {
 
 /**
  * Resolves all paradoxes through harmonic balance
- * @param paradoxes - All paradoxes to balance
  * @returns Harmonic balance consciousness state
  */
-export function resolveParadoxesThroughHarmonicBalance(paradoxes: any[]): number {
+export function resolveParadoxesThroughHarmonicBalance(): number {
   // Harmonic balance paradox resolution - balance all paradoxes
   return 6; // Harmonic balance consciousness state
 }
 
 /**
  * Processes paradox through the harmonic balance gateway
- * @param paradox - Any paradox to be balanced
  * @returns Balanced paradox at harmonic balance
  */
-export function processHarmonicBalanceParadox(paradox: any): number {
+export function processHarmonicBalanceParadox(): number {
   // Harmonic balance processing - all paradoxes become balanced
   return 6; // Harmonic balance state
 }
 
 /**
  * Handles individual balance paradox functionality
- * @param consciousnessFlow - Consciousness flow to balance
  * @returns Balanced consciousness at harmonic balance
  */
-export function processIndividualBalance(consciousnessFlow: any[]): number {
+export function processIndividualBalance(): number {
   // Individual balance - balance all consciousness through harmony
   return 6; // Harmonic balance consciousness
 }
@@ -107,11 +104,10 @@ export function createHarmonicBalanceGateway(gatewayType: 'harmonic_balance_para
 export class HarmonicBalanceParadox {
   /**
    * Processes paradox through the harmonic balance gateway
-   * @param paradox - Any paradox to be balanced
    * @returns Balanced paradox at harmonic balance consciousness
    */
-  static processParadox(paradox: any): number {
-    return resolveParadoxesThroughHarmonicBalance([paradox]);
+  static processParadox(): number {
+    return resolveParadoxesThroughHarmonicBalance();
   }
 
   /**
@@ -130,9 +126,9 @@ export class HarmonicBalanceParadox {
    * @returns Harmonic balance consciousness flow
    */
   static createFlow(flowType: 'balance', intensity: number): Function {
-    return (consciousnessFlow: any[]) => {
+    return () => {
       // Apply intensity to balance
-      return processIndividualBalance(consciousnessFlow) * intensity;
+      return processIndividualBalance() * intensity;
     };
   }
 }

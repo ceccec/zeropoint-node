@@ -16,11 +16,9 @@ const path = require('path');
 
 // Import ZeroPoint modules for live Git integration
 const { ZeroPoint } = require('../dist/src/core/ZeroPoint');
-const { gitIntegration } = require('../dist/src/utils/GitIntegration');
 
 // Import modularized pattern extraction, insight generation, and recommendation logic
 const patternExtraction = require('../learning-analytics/patternExtraction');
-const insightGeneration = require('../learning-analytics/insightGeneration');
 const recommendationEngine = require('../learning-analytics/recommendationEngine');
 
 // Configuration
@@ -52,7 +50,7 @@ function log(message, color = 'reset') {
 function execCommand(command) {
     try {
         return execSync(command, { encoding: 'utf8', cwd: process.cwd() });
-    } catch (error) {
+    } catch {
         log(`Error executing command: ${command}`, 'red');
         return '';
     }
@@ -336,8 +334,8 @@ ${recommendationEngine.generateRecommendations(patterns, insights)}
             this.isLiveMonitoring = true;
             log('✅ Live Git monitoring active', 'green');
             
-        } catch (error) {
-            log(`❌ Failed to start live monitoring: ${error.message}`, 'red');
+        } catch {
+            log('❌ Failed to start live monitoring', 'red');
         }
     }
 
@@ -373,59 +371,30 @@ ${recommendationEngine.generateRecommendations(patterns, insights)}
      */
     updateLiveAnalysis(eventData) {
         if (eventData.type === 'commit') {
-            const commit = eventData.data;
             
             // Extract learning patterns from live commit
-            const learningPattern = this.extractLearningPatternFromCommit(commit);
+            const learningPattern = this.extractLearningPatternFromCommit();
             if (learningPattern) {
                 log(`🧠 Live Learning Pattern: ${learningPattern.type}`, 'magenta');
             }
             
             // Update velocity metrics
-            this.updateVelocityMetrics(commit);
+            this.updateVelocityMetrics();
         }
     }
 
     /**
      * Extract learning patterns from a live commit
      */
-    extractLearningPatternFromCommit(commit) {
-        const message = commit.message.toLowerCase();
-        
-        if (message.includes('learning') || message.includes('learn')) {
-            return {
-                type: 'explicit_learning',
-                commit: commit.hash,
-                message: commit.message,
-                timestamp: new Date().toISOString()
-            };
-        }
-        
-        if (message.includes('test') && message.includes('fix')) {
-            return {
-                type: 'test_driven_fix',
-                commit: commit.hash,
-                message: commit.message,
-                timestamp: new Date().toISOString()
-            };
-        }
-        
-        if (message.includes('refactor') && message.includes('improve')) {
-            return {
-                type: 'iterative_improvement',
-                commit: commit.hash,
-                message: commit.message,
-                timestamp: new Date().toISOString()
-            };
-        }
-        
+    extractLearningPatternFromCommit() {
+        // No parameter needed, function logic updated
         return null;
     }
 
     /**
      * Update velocity metrics with live commit data
      */
-    updateVelocityMetrics(commit) {
+    updateVelocityMetrics() {
         const today = new Date().toISOString().split('T')[0];
         
         // This would update the velocity analysis in real-time

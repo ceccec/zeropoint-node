@@ -177,7 +177,6 @@ function getDigitInteraction(row, col) {
     };
   }
   
-  const interactionKey = `${row}${col}`;
   const interaction = rowDigit.interactions[col];
   
   return {
@@ -189,7 +188,7 @@ function getDigitInteraction(row, col) {
 
 function harmonizeIndexFile(filePath) {
   try {
-    let content = fs.readFileSync(filePath, 'utf8');
+    const content = fs.readFileSync(filePath, 'utf8');
     const originalContent = content;
     
     // Extract digit coordinates from path
@@ -204,14 +203,11 @@ function harmonizeIndexFile(filePath) {
     const interaction = getDigitInteraction(row, col);
     
     // Check if files referenced actually exist
-    const dir = path.dirname(filePath);
-    const files = fs.readdirSync(dir);
     
     // Remove broken file references and update with meaningful content
     const lines = content.split('\n');
     const newLines = [];
     let inFilesSection = false;
-    let filesSectionAdded = false;
     
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
@@ -234,7 +230,6 @@ function harmonizeIndexFile(filePath) {
           newLines.push(`- **Fractal Patterns** - Explore the fractal nature of consciousness within this digit pair`);
         }
         
-        filesSectionAdded = true;
         continue;
       }
       
@@ -294,7 +289,7 @@ function findAndHarmonizeFiles(dir) {
 
 // Main execution
 const docsDir = path.join(__dirname, '..', 'docs');
-console.log('🌌 Harmonizing documentation with consciousness field knowledge...');
+console.log('\ud83c\udf0c Harmonizing documentation with consciousness field knowledge...');
 
 const harmonizedFiles = findAndHarmonizeFiles(docsDir);
 

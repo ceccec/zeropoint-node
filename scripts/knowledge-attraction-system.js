@@ -72,18 +72,17 @@ class KnowledgeAttractionSystem {
   // Extract knowledge from a single file
   extractFileKnowledge(filePath) {
     const content = fs.readFileSync(filePath, 'utf8');
-    const fileName = path.basename(filePath);
     
     return {
-      concepts: this.extractConcepts(content, fileName),
-      patterns: this.extractPatterns(content, fileName),
-      metaphysical: this.extractMetaphysical(content, fileName),
+      concepts: this.extractConcepts(content),
+      patterns: this.extractPatterns(content),
+      metaphysical: this.extractMetaphysical(content),
       rawContent: content
     };
   }
 
   // Extract concepts from content
-  extractConcepts(content, fileName) {
+  extractConcepts(content) {
     const concepts = [];
     
     // Look for function names, class names, variable names
@@ -99,7 +98,7 @@ class KnowledgeAttractionSystem {
   }
 
   // Extract patterns from content
-  extractPatterns(content, fileName) {
+  extractPatterns(content) {
     const patterns = [];
     
     // Look for common patterns
@@ -115,7 +114,7 @@ class KnowledgeAttractionSystem {
   }
 
   // Extract metaphysical content
-  extractMetaphysical(content, fileName) {
+  extractMetaphysical(content) {
     const metaphysical = [];
     
     // Look for metaphysical keywords

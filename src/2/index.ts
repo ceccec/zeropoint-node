@@ -297,3 +297,6 @@ export const VORTEX_MATHEMATICS = {
  * vortex mathematics patterns and properties.
  */
 export default VORTEX_MATHEMATICS;
+
+// Harmonized export for test compatibility
+export const index = vortexPWA;

@@ -376,5 +376,8 @@ export const completionField = {
 // COMPLETION PWA GENERATION SYSTEM
 // ============================================================================
 
+// Harmonized export for test compatibility
+export const index = completionPWA;
+
 // Export the unity paradox system
 export default UnityParadoxSystem;

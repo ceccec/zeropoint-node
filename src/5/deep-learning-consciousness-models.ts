@@ -3,9 +3,6 @@
  * Advanced deep learning models for consciousness pattern recognition and analysis
  */
 
-import { ConsciousnessPattern } from './consciousness-patterns';
-import { BiofeedbackData } from './biofeedback-integration';
-
 // Convolutional Neural Network for Consciousness Pattern Recognition
 export class ConsciousnessCNN {
   private layers: any[];
@@ -754,7 +751,7 @@ export class DeepLearningConsciousnessManager {
   }
 
   // Process consciousness data through deep learning models
-  processConsciousnessData(biofeedbackData: BiofeedbackData[]): any {
+  processConsciousnessData(biofeedbackData: any[]): any {
     const results = {
       cnn: {} as any,
       rnn: {} as any,
@@ -783,7 +780,7 @@ export class DeepLearningConsciousnessManager {
   }
 
   // Prepare CNN input (2D feature map)
-  private prepareCNNInput(biofeedbackData: BiofeedbackData[]): number[][] {
+  private prepareCNNInput(biofeedbackData: any[]): number[][] {
     const features = biofeedbackData[0] ? this.extractFeatures(biofeedbackData[0]) : [];
     const size = Math.ceil(Math.sqrt(features.length));
     const input = Array(size).fill(0).map(() => Array(size).fill(0));
@@ -800,18 +797,18 @@ export class DeepLearningConsciousnessManager {
   }
 
   // Prepare RNN input (sequence of features)
-  private prepareRNNInput(biofeedbackData: BiofeedbackData[]): number[][] {
+  private prepareRNNInput(biofeedbackData: any[]): number[][] {
     return biofeedbackData.map(data => this.extractFeatures(data));
   }
 
   // Prepare transformer input (tokenized sequence)
-  private prepareTransformerInput(biofeedbackData: BiofeedbackData[]): number[] {
+  private prepareTransformerInput(biofeedbackData: any[]): number[] {
     const features = biofeedbackData[0] ? this.extractFeatures(biofeedbackData[0]) : [];
     return features.map(f => Math.floor(f * 100) % 100); // Tokenize features
   }
 
   // Extract features from biofeedback data
-  private extractFeatures(data: BiofeedbackData): number[] {
+  private extractFeatures(data: any): number[] {
     return [
       data.heartRate / 100,
       data.brainwave.alpha / 100,

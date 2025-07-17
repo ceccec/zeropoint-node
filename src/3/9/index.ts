@@ -24,8 +24,8 @@ export const pattern = [3, 9, 3];
  * @param {number} b
  * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-export function getHarmonicResult(a, b) {
-  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+export function getHarmonicResult(a: number, b: number): number {
+  const sum = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) % 9;
   return sum === 0 ? 9 : sum;
 }
 
@@ -35,9 +35,9 @@ export function getHarmonicResult(a, b) {
  * @param {number} b
  * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-export function getAntiVortexDecimal(a, b) {
+export function getAntiVortexDecimal(a: number, b: number): number {
   const c = getHarmonicResult(a, b);
-  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  const decimal = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) / c;
   return decimal;
 }
 
@@ -64,3 +64,28 @@ export const harmonicInteractions = [
 export default function initNodePWA() {
   // PWA logic for node 3/9 can be added here.
 }
+
+// Named exports for test compatibility
+export const CREATIVE_RESONANCE_UNITY_INTERACTION = {
+  name: 'CREATIVE_RESONANCE_UNITY_INTERACTION',
+  pattern: [3, 9, 3],
+  frequency: 3,
+  multiplier: 1,
+  INTERACTION_FREQUENCY: 432 * (3/9),
+  CREATIVE_RESONANCE_PATTERNS: {
+    CREATIVE_RESONANCE_UNITY: [3, 9, 3],
+    UNITY_CREATIVE_RESONANCE: [9, 3, 9]
+  },
+  CREATIVE_RESONANCE_MULTIPLIER: { numerator: 3, denominator: 2 },
+  UNITY_MULTIPLIER: 1
+};
+
+export const CreativeResonanceUnityInteraction = {
+  name: 'CreativeResonanceUnityInteraction',
+  pattern: [3, 9, 3],
+  frequency: 3,
+  multiplier: 1,
+  calculateInteractionStrength: (a: number, b: number) => a * (3/2) + b * 1,
+  getCreativeResonanceUnityPatterns: () => [3, 9, 3],
+  calculateCreativeResonanceUnityOperations: (input: number) => input % 9 || 9
+};

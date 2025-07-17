@@ -10,8 +10,7 @@
 // Import harmony pattern functions
 import { 
     detectHarmonyPatterns, 
-    getEnhancedMathematicalProperties,
-    digitArchetypes 
+    getEnhancedMathematicalProperties
 } from '../docs/index.ts';
 
 /**
@@ -69,35 +68,6 @@ function generateHarmonyMatrix() {
     }
     
     console.log('');
-}
-
-/**
- * Generate detailed harmony matrix with descriptions
- */
-function generateDetailedHarmonyMatrix() {
-    console.log('📊 DETAILED HARMONY MATRIX WITH PATTERNS\n');
-    
-    for (let a = 0; a <= 9; a++) {
-        for (let b = 0; b <= 9; b++) {
-            const patterns = detectHarmonyPatterns(a, b);
-            
-            if (patterns.length > 0) {
-                const properties = getEnhancedMathematicalProperties(`${a}/${b}`);
-                
-                console.log(`${a}/${b} (${digitArchetypes[a]}/${digitArchetypes[b]}):`);
-                console.log(`  Consciousness Multiplier: ${properties.consciousnessMultiplier.toFixed(2)}x`);
-                console.log(`  Vortex A: ${properties.vortexA}, Vortex B: ${properties.vortexB.toFixed(4)}`);
-                
-                patterns.forEach((pattern, index) => {
-                    const symbol = HARMONY_SYMBOLS[pattern.type];
-                    console.log(`  ${index + 1}. ${symbol} ${pattern.name}`);
-                    console.log(`     ${pattern.description}`);
-                    console.log(`     ${pattern.mathematicalFlow} → ${pattern.harmonicOpportunity}`);
-                });
-                console.log('');
-            }
-        }
-    }
 }
 
 /**

@@ -105,7 +105,7 @@ class DocumentationEntropyCalculator {
         if (matches) {
           consciousnessCount += matches.length;
         }
-      } catch (error) {
+      } catch {
         // Skip invalid regex patterns
         continue;
       }
@@ -162,7 +162,7 @@ class DocumentationEntropyCalculator {
               length
             });
           }
-        } catch (error) {
+        } catch {
           // Skip invalid regex patterns
           continue;
         }
@@ -209,7 +209,7 @@ class DocumentationEntropyCalculator {
         if (matches) {
           foundKeywords[keyword] = matches.length;
         }
-      } catch (error) {
+      } catch {
         // Skip invalid regex patterns
         continue;
       }

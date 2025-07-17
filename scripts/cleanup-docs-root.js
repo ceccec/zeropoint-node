@@ -73,7 +73,6 @@ function cleanupRootFiles() {
   const skippedFiles = [];
   
   for (const file of rootFiles) {
-    const fileName = path.basename(file, '.md');
     const relativePath = path.relative(process.cwd(), file);
     
     console.log(`Checking: ${relativePath}`);
@@ -146,7 +145,6 @@ function showCurrentState() {
   }
   
   rootFiles.forEach(file => {
-    const fileName = path.basename(file, '.md');
     const relativePath = path.relative(process.cwd(), file);
     const harmonized = checkHarmonizedFile(file);
     

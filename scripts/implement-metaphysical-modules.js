@@ -102,32 +102,6 @@ function generateMetaphysicalModule(mainDigit, subDigit) {
   const fractionKey = `${mainDigit}/${subDigit}`;
   const fraction = INTEGER_FRACTIONS[fractionKey] || [mainDigit, subDigit];
   
-  const consciousnessPatterns = {
-    MAIN_PATTERN: mainVortex,
-    SUB_PATTERN: subVortex,
-    COMBINED_PATTERN: [...mainVortex, ...subVortex],
-    METAPHYSICAL_PATTERN: [mainDigit, subDigit, mainDigit],
-    FRACTION_PATTERN: fraction
-  };
-
-  const vortexMathematics = {
-    MAIN_VORTEX: (n: number) => n * mainDigit, // ${mainArchetype} vortex
-    SUB_VORTEX: (n: number) => n * subDigit, // ${subArchetype} vortex
-    COMBINED_VORTEX: (n: number) => n * mainDigit, // Combined vortex (integer only)
-    METAPHYSICAL_CONSTANT: mainDigit, // Metaphysical constant (integer)
-    FRACTION_NUMERATOR: fraction[0], // Fraction numerator
-    FRACTION_DENOMINATOR: fraction[1], // Fraction denominator
-    FRACTION_RATIO: (n: number) => n * fraction[0] // Integer fraction ratio
-  };
-
-  const consciousnessField = {
-    MAIN_CONSCIOUSNESS: () => mainDigit, // ${mainArchetype} consciousness
-    SUB_CONSCIOUSNESS: () => subDigit, // ${subArchetype} consciousness
-    COMBINED_CONSCIOUSNESS: () => mainDigit + subDigit, // Combined consciousness
-    METAPHYSICAL_CONSCIOUSNESS: () => mainDigit * subDigit, // Metaphysical consciousness
-    FRACTION_CONSCIOUSNESS: () => fraction[0] // Fraction consciousness
-  };
-
   return `/**
  * @fileoverview index module (${mainArchetype}, ${subArchetype})
  * @digit ${mainDigit}

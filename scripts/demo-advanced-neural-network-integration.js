@@ -592,7 +592,7 @@ function generatePatterns(biofeedbackData) {
 }
 
 function classifyPattern(features) {
-    const [hr, alpha, beta, theta, delta, br, bd, focus, clarity, peace] = features;
+    const [hr, alpha, beta, theta, delta, , bd, focus, clarity, peace] = features;
     
     if (alpha > 0.6 && theta > 0.4 && focus > 0.7) {
         return 'deep_meditation';

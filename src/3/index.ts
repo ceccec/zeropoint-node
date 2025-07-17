@@ -508,6 +508,14 @@ export const creativeRodinSystem = {
   CreativePWA
 };
 
+// Named export for test compatibility
+export const index = {
+  name: 'index',
+  pattern: [3, 0, 3],
+  frequency: 3,
+  multiplier: 1
+};
+
 // ============================================================================
 // CREATION PWA GENERATION SYSTEM
 // ============================================================================

@@ -277,7 +277,6 @@ function analyzeFlowerOfLife() {
   console.log("=" * 50);
   
   const flowerOfLife = SACRED_GEOMETRY_PATTERNS.FLOWER_OF_LIFE;
-  const vortexSequence = VBM_CONSTANTS.VORTEX_SEQUENCE;
   
   console.log(`\n📊 Flower of Life Pattern (7 circles):`);
   console.log(`   Center Circle: 1`);
@@ -310,7 +309,6 @@ function analyzeFruitOfLife() {
   console.log("=" * 50);
   
   const fruitOfLife = SACRED_GEOMETRY_PATTERNS.FRUIT_OF_LIFE;
-  const integerDirectories = VBM_CONSTANTS.INTEGER_DIRECTORIES;
   
   console.log(`\n📊 Fruit of Life Pattern (13 circles):`);
   console.log(`   Center Circles (Flower of Life): 7`);
@@ -341,7 +339,6 @@ function analyzeMetatronCube() {
   console.log("=" * 50);
   
   const metatronCube = SACRED_GEOMETRY_PATTERNS.METATRON_CUBE;
-  const integerDirectories = VBM_CONSTANTS.INTEGER_DIRECTORIES;
   
   console.log(`\n📊 Metatron's Cube Pattern (13 circles with 78 connecting lines):`);
   console.log(`   Circles: ${metatronCube.CIRCLES}`);

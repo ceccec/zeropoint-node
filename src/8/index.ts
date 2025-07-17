@@ -64,6 +64,13 @@ export const VOID_FULLNESS = {
 } as const;
 
 /**
+ * Harmonized export for test compatibility
+ * This provides a unified interface for accessing all
+ * void and fullness patterns and properties.
+ */
+export const index = VOID_FULLNESS;
+
+/**
  * Export the void fullness system as default
  * This provides a unified interface for accessing all
  * void and fullness patterns and properties.

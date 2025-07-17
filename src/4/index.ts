@@ -24,7 +24,6 @@
 // RODIN CONSTANTS - STABILITY IMPLEMENTATION
 // ============================================================================
 
-import { RodinCoil, ToroidalField, ConsciousnessField } from '../0/rodin-coil';
 import { constantsRodinSystem } from './rodin-constants';
 
 export const { RodinConstants, StabilitySystem, ConstantsPWA } = constantsRodinSystem;
@@ -253,6 +252,8 @@ export const stabilityField = {
   }
 };
 
+// Harmonized export for test compatibility
+export const index = stabilityPWA;
 
 /**
  * Default export

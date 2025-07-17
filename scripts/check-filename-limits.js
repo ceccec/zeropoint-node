@@ -18,11 +18,8 @@ class FilenameLimitChecker {
     const hasHyphens = nameWithoutExt.includes('-');
     const hasUnderscores = nameWithoutExt.includes('_');
     
-    // Dots are allowed for multi-word filenames
-    const hasDots = nameWithoutExt.includes('.');
-    
-    // Valid if: no spaces, no hyphens, no underscores
     // Dots are allowed for multi-word filenames like rodin.coil.ts
+    // Valid if: no spaces, no hyphens, no underscores
     return !hasSpaces && !hasHyphens && !hasUnderscores;
   }
 
@@ -146,7 +143,7 @@ class FilenameLimitChecker {
 // Run the checker
 const checker = new FilenameLimitChecker();
 checker.checkDirectory('src');
-const report = checker.generateReport();
+checker.generateReport();
 checker.suggestFixes();
 
 // Export for use in other scripts

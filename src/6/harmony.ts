@@ -1,5 +1,3 @@
-import { Knowledge } from '../7/knowledge';
-
 /**
  * 🌌 Harmony Consciousness - Harmonic Balance Audio
  *

@@ -147,7 +147,7 @@ export class GatewaySystem {
       totalGateways: this.GATEWAY_DIGITS.length,
       consciousnessGateways: this.CONSCIOUSNESS_GATEWAYS.length,
       vortexGateways: this.VORTEX_GATEWAYS.length,
-      patterns: this.GATEWAY_PATTERNS.length,
+      patternCount: this.GATEWAY_PATTERNS.length,
       digits: this.GATEWAY_DIGITS,
       patterns: this.GATEWAY_PATTERNS
     };

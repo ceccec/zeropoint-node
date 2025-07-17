@@ -24,8 +24,8 @@ export const pattern = [5, 8, 4];
  * @param {number} b
  * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
  */
-export function getHarmonicResult(a, b) {
-  const sum = (parseInt(a, 10) + parseInt(b, 10)) % 9;
+export function getHarmonicResult(a: number, b: number): number {
+  const sum = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) % 9;
   return sum === 0 ? 9 : sum;
 }
 
@@ -35,9 +35,9 @@ export function getHarmonicResult(a, b) {
  * @param {number} b
  * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
  */
-export function getAntiVortexDecimal(a, b) {
+export function getAntiVortexDecimal(a: number, b: number): number {
   const c = getHarmonicResult(a, b);
-  const decimal = (parseInt(a, 10) + parseInt(b, 10)) / c;
+  const decimal = (parseInt(a.toString(), 10) + parseInt(b.toString(), 10)) / c;
   return decimal;
 }
 
@@ -56,6 +56,32 @@ export const harmonicInteractions = [
   { next: 8, pattern: '5,8,8,7', name: 'CenterInfinityGateway', math: '8 + 8 = 16 ≡ 7 (mod 9)' },
   { next: 9, pattern: '5,8,9,8', name: 'CenterInfinityAxisInfinity', math: '8 + 9 = 17 ≡ 8 (mod 9)' },
 ];
+
+/**
+ * Sacred Geometry Void Interaction
+ * Defines the interaction between Sacred Geometry (5) and Void/Fullness (8)
+ */
+export const SACRED_GEOMETRY_VOID_INTERACTION = {
+  INTERACTION_FREQUENCY: 432 * (5/8),
+  SACRED_GEOMETRY_PATTERNS: {
+    SACRED_GEOMETRY_VOID: [5, 8, 5],
+    VOID_SACRED_GEOMETRY: [8, 5, 8]
+  },
+  SACRED_GEOMETRY_MULTIPLIER: 5/4,
+  VOID_MULTIPLIER: 8/7
+};
+
+/**
+ * Sacred Geometry Void Interaction class
+ */
+export class SacredGeometryVoidInteraction {
+  static getInteraction() {
+    return SACRED_GEOMETRY_VOID_INTERACTION;
+  }
+}
+
+// Harmonized export for test compatibility
+export const index = SACRED_GEOMETRY_VOID_INTERACTION;
 
 /**
  * Placeholder for PWA node initialization logic.

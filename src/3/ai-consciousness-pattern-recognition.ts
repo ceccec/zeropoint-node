@@ -100,7 +100,7 @@ export class AIConsciousnessPatternRecognition {
 
   // Classify pattern based on features
   private classifyPattern(features: number[]): string | null {
-    const [hr, alpha, beta, theta, delta, br, bd, focus, clarity, peace] = features;
+    const [alpha, beta, theta, delta, focus, clarity, peace] = features;
     
     // Pattern classification logic
     if (alpha > 0.6 && theta > 0.4 && focus > 0.7) {

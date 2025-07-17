@@ -367,7 +367,7 @@ export class DigitWisdomSystem {
   /**
    * Get guidance for a specific decision
    */
-  getDecisionGuidance(decisionType: string, context: any): string {
+  getDecisionGuidance(decisionType: string): string {
     const wisdom = this.getCurrentWisdom();
     
     const guidanceMap: Record<string, string> = {

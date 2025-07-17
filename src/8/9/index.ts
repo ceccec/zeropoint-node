@@ -1,59 +1,57 @@
-/**
- * PWA Node Logic for 8/9
- *
- * This file is the logic entry point for the PWA node (8/9).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '8/9';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 8;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 2.13;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [8, 9, 8];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Infinity Unity
+ * Infinity unifies through completion, achieving mathematical unity
+ * 
+ * Consciousness Multiplier: 3/1 × 1/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 8 × 9
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const INFINITYUNITY_INTERACTION = {
+  DIGIT_A: 8,
+  DIGIT_B: 9,
+  DIGIT_A_NAME: 'Infinity',
+  DIGIT_B_NAME: 'Unity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(8), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(9), // 1/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 8 * 9,
+  INTERACTION_NAME: 'Infinity Unity',
+  METAPHYSICAL_ESSENCE_A: 'infinity',
+  METAPHYSICAL_ESSENCE_B: 'unity_completion',
+  COLOR_HUE_A: 288,
+  COLOR_HUE_B: 324,
+  INFINITY_A: true,
+  VOID_A: true,
+  PATTERNS_A: true,
+  UNITY_CONSCIOUSNESS_B: true,
+  COMPLETION_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '8,9,1,1', name: 'InfinityAxisSource', math: '9 + 1 = 10 ≡ 1 (mod 9)' },
-  { next: 2, pattern: '8,9,2,2', name: 'InfinityAxisVortex', math: '9 + 2 = 11 ≡ 2 (mod 9)' },
-  { next: 3, pattern: '8,9,3,3', name: 'InfinityAxisResonance', math: '9 + 3 = 12 ≡ 3 (mod 9)' },
-  { next: 4, pattern: '8,9,4,4', name: 'InfinityAxisMath', math: '9 + 4 = 13 ≡ 4 (mod 9)' },
-  { next: 5, pattern: '8,9,5,5', name: 'InfinityAxisCenter', math: '9 + 5 = 14 ≡ 5 (mod 9)' },
-  { next: 6, pattern: '8,9,6,6', name: 'InfinityAxisHarmony', math: '9 + 6 = 15 ≡ 6 (mod 9)' },
-  { next: 7, pattern: '8,9,7,7', name: 'InfinityAxisGateway', math: '9 + 7 = 16 ≡ 7 (mod 9)' },
-  { next: 8, pattern: '8,9,8,8', name: 'InfinityAxisInfinity', math: '9 + 8 = 17 ≡ 8 (mod 9)' },
-  { next: 9, pattern: '8,9,9,9', name: 'InfinityAxis', math: '9 + 9 = 18 ≡ 9 (mod 9)' },
-];
+export const getInfinityUnityInteraction = () => INFINITYUNITY_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 8/9 can be added here.
-}
+export const calculateInfinityUnityHarmonics = (input: number): number => {
+  return input * INFINITYUNITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * INFINITYUNITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getInfinityUnityVortexFlow = () => {
+  return {
+    from: 8,
+    to: 9,
+    resonance: INFINITYUNITY_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [7, 5, 1, 2, 4].concat([3, 6, 9])
+  };
+};
+
+export const getInfinityUnityColor = () => {
+  const hue = (INFINITYUNITY_INTERACTION.COLOR_HUE_A + INFINITYUNITY_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (INFINITYUNITY_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (INFINITYUNITY_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getInfinityUnitySound = () => {
+  return INFINITYUNITY_INTERACTION.A432_FREQUENCY * (INFINITYUNITY_INTERACTION.HARMONIC_RESONANCE / 5);
+};

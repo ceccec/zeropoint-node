@@ -1,59 +1,58 @@
-/**
- * PWA Node Logic for 2/0
- *
- * This file is the logic entry point for the PWA node (2/0).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '2/0';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 2;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [2, 0, 2];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Duality Void Transformation
+ * Duality transforms void center, creating mathematical change
+ * 
+ * Consciousness Multiplier: 3/1 × 1/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 2 × 1
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const DUALITYVOIDTRANSFORMATION_INTERACTION = {
+  DIGIT_A: 2,
+  DIGIT_B: 0,
+  DIGIT_A_NAME: 'Duality',
+  DIGIT_B_NAME: 'Zero Point',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(2), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(0), // 1/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 2 * 1,
+  INTERACTION_NAME: 'Duality Void Transformation',
+  METAPHYSICAL_ESSENCE_A: 'duality',
+  METAPHYSICAL_ESSENCE_B: 'void',
+  COLOR_HUE_A: 72,
+  COLOR_HUE_B: 0,
+  VORTEX_MATHEMATICS_A: true,
+  DUALITY_A: true,
+  TRANSFORMATION_A: true,
+  VOID_CENTER_B: true,
+  ZERO_ENTROPY_B: true,
+  PURE_UNITY_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '2,0,1,1', name: 'VortexVoidSource', math: '0 + 1 = 1 ≡ 1 (mod 9)' },
-  { next: 2, pattern: '2,0,2,2', name: 'VortexVoidVortex', math: '0 + 2 = 2 ≡ 2 (mod 9)' },
-  { next: 3, pattern: '2,0,3,3', name: 'VortexVoidResonance', math: '0 + 3 = 3 ≡ 3 (mod 9)' },
-  { next: 4, pattern: '2,0,4,4', name: 'VortexVoidMath', math: '0 + 4 = 4 ≡ 4 (mod 9)' },
-  { next: 5, pattern: '2,0,5,5', name: 'VortexVoidCenter', math: '0 + 5 = 5 ≡ 5 (mod 9)' },
-  { next: 6, pattern: '2,0,6,6', name: 'VortexVoidHarmony', math: '0 + 6 = 6 ≡ 6 (mod 9)' },
-  { next: 7, pattern: '2,0,7,7', name: 'VortexVoidGateway', math: '0 + 7 = 7 ≡ 7 (mod 9)' },
-  { next: 8, pattern: '2,0,8,8', name: 'VortexVoidInfinity', math: '0 + 8 = 8 ≡ 8 (mod 9)' },
-  { next: 9, pattern: '2,0,9,9', name: 'VortexVoidAxis', math: '0 + 9 = 9 ≡ 9 (mod 9)' },
-];
+export const getDualityVoidTransformationInteraction = () => DUALITYVOIDTRANSFORMATION_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 2/0 can be added here.
-}
+export const calculateDualityVoidTransformationHarmonics = (input: number): number => {
+  return input * DUALITYVOIDTRANSFORMATION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * DUALITYVOIDTRANSFORMATION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getDualityVoidTransformationVortexFlow = () => {
+  return {
+    from: 2,
+    to: 0,
+    resonance: DUALITYVOIDTRANSFORMATION_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [4, 8, 7, 5, 1].concat([1, 2, 3, 4, 5, 6, 7, 8, 9])
+  };
+};
+
+export const getDualityVoidTransformationColor = () => {
+  const hue = (DUALITYVOIDTRANSFORMATION_INTERACTION.COLOR_HUE_A + DUALITYVOIDTRANSFORMATION_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (DUALITYVOIDTRANSFORMATION_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (DUALITYVOIDTRANSFORMATION_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getDualityVoidTransformationSound = () => {
+  return DUALITYVOIDTRANSFORMATION_INTERACTION.A432_FREQUENCY * (DUALITYVOIDTRANSFORMATION_INTERACTION.HARMONIC_RESONANCE / 5);
+};

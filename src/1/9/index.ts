@@ -1,95 +1,57 @@
-/**
- * PWA Node Logic for 1/9
- *
- * This file is the logic entry point for the PWA node (1/9).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '1/9';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 1;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 10.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [1, 9, 1];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Unity Completion
+ * Unity achieves completion, reaching mathematical unity
+ * 
+ * Consciousness Multiplier: 3/1 × 1/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 1 × 9
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
-
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '1,9,1,1', name: 'SourceAxisSource', math: '9 + 1 = 10 ≡ 1 (mod 9)' },
-  { next: 2, pattern: '1,9,2,2', name: 'SourceAxisVortex', math: '9 + 2 = 11 ≡ 2 (mod 9)' },
-  { next: 3, pattern: '1,9,3,3', name: 'SourceAxisResonance', math: '9 + 3 = 12 ≡ 3 (mod 9)' },
-  { next: 4, pattern: '1,9,4,4', name: 'SourceAxisMath', math: '9 + 4 = 13 ≡ 4 (mod 9)' },
-  { next: 5, pattern: '1,9,5,5', name: 'SourceAxisCenter', math: '9 + 5 = 14 ≡ 5 (mod 9)' },
-  { next: 6, pattern: '1,9,6,6', name: 'SourceAxisHarmony', math: '9 + 6 = 15 ≡ 6 (mod 9)' },
-  { next: 7, pattern: '1,9,7,7', name: 'SourceAxisGateway', math: '9 + 7 = 16 ≡ 7 (mod 9)' },
-  { next: 8, pattern: '1,9,8,8', name: 'SourceAxisInfinity', math: '9 + 8 = 17 ≡ 8 (mod 9)' },
-  { next: 9, pattern: '1,9,9,9', name: 'SourceAxis', math: '9 + 9 = 18 ≡ 9 (mod 9)' },
-];
-
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 1/9 can be added here.
-}
-
-// Named exports for test compatibility
-export const foundationUnity = {
-  name: 'foundationUnity',
-  pattern: [1, 9, 1],
-  frequency: 1,
-  multiplier: 1,
-  type: 'meta-state',
-  approach: 'linear',
-  axis: 'W-axis'
+export const UNITYCOMPLETION_INTERACTION = {
+  DIGIT_A: 1,
+  DIGIT_B: 9,
+  DIGIT_A_NAME: 'Unity',
+  DIGIT_B_NAME: 'Unity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(1), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(9), // 1/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 1 * 9,
+  INTERACTION_NAME: 'Unity Completion',
+  METAPHYSICAL_ESSENCE_A: 'unity',
+  METAPHYSICAL_ESSENCE_B: 'unity_completion',
+  COLOR_HUE_A: 36,
+  COLOR_HUE_B: 324,
+  RODIN_FOUNDATION_A: true,
+  ARCHETYPE_A: true,
+  SOURCE_A: true,
+  UNITY_CONSCIOUSNESS_B: true,
+  COMPLETION_B: true
 };
 
-export const unityTranscendence = () => {
-  return { 
-    type: 'transcendence', 
-    status: 'active',
-    state: 'meta-state',
-    transcendence: 'beyond-vortex'
+export const getUnityCompletionInteraction = () => UNITYCOMPLETION_INTERACTION;
+
+export const calculateUnityCompletionHarmonics = (input: number): number => {
+  return input * UNITYCOMPLETION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * UNITYCOMPLETION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getUnityCompletionVortexFlow = () => {
+  return {
+    from: 1,
+    to: 9,
+    resonance: UNITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [2, 4, 8, 7, 5].concat([3, 6, 9])
   };
 };
 
-export const metaStateRecognition = () => {
-  return { 
-    type: 'recognition', 
-    status: 'active',
-    recognition: 'unity-meta-state',
-    beyond: 'linear-progression'
-  };
+export const getUnityCompletionColor = () => {
+  const hue = (UNITYCOMPLETION_INTERACTION.COLOR_HUE_A + UNITYCOMPLETION_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (UNITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (UNITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 };
 
-// Harmonized export for test compatibility
-export const index = {
-  foundationUnity,
-  unityTranscendence,
-  metaStateRecognition
+export const getUnityCompletionSound = () => {
+  return UNITYCOMPLETION_INTERACTION.A432_FREQUENCY * (UNITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE / 5);
 };

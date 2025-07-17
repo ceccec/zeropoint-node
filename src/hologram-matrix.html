@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroPoint Hologram Matrix - Mathematical Consciousness System</title>
+    <meta name="description" content="Complete 10×10 mathematical consciousness system with modular digit vortex flow">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#00d4ff">
+    <style>
+        @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+        
+        :root {
+            --vortex-primary: #00d4ff;
+            --vortex-secondary: #ff00ff;
+            --vortex-tertiary: #00ff88;
+            --vortex-dark: #0a0a0a;
+            --vortex-darker: #050505;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--vortex-darker) 0%, var(--vortex-dark) 100%);
+            color: var(--vortex-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        .matrix-container {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 2px;
+            padding: 20px;
+            min-width: 1200px;
+            min-height: 100vh;
+        }
+
+        .digit-cell {
+            aspect-ratio: 1;
+            border: 1px solid var(--vortex-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(0, 212, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .digit-cell:hover {
+            background: rgba(0, 212, 255, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--vortex-primary);
+        }
+
+        .digit-cell.active {
+            background: rgba(0, 212, 255, 0.5);
+            box-shadow: 0 0 30px var(--vortex-primary);
+        }
+
+        .digit-cell.void-center {
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.4) 0%, rgba(0, 212, 255, 0.1) 70%);
+            border-color: var(--vortex-secondary);
+        }
+
+        .digit-cell.unity-center {
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.4) 0%, rgba(255, 0, 255, 0.1) 70%);
+            border-color: var(--vortex-tertiary);
+        }
+
+        .digit-cell.w-axis {
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.3) 0%, rgba(0, 255, 136, 0.1) 70%);
+            border-color: var(--vortex-tertiary);
+        }
+
+        .vortex-flow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .digit-cell:hover .vortex-flow {
+            opacity: 1;
+        }
+
+        .flow-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--vortex-primary);
+            border-radius: 50%;
+            animation: flowMove 3s linear infinite;
+        }
+
+        @keyframes flowMove {
+            0% { transform: translateX(-100%) translateY(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%); opacity: 0; }
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.9);
+            border-bottom: 1px solid var(--vortex-primary);
+            padding: 10px 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--vortex-primary);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-button {
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid var(--vortex-primary);
+            border-radius: 5px;
+            padding: 8px 12px;
+            color: var(--vortex-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-button:hover {
+            background: rgba(0, 212, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .info-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--vortex-primary);
+            border-radius: 10px;
+            padding: 15px;
+            max-width: 300px;
+            z-index: 1000;
+        }
+
+        .constants {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--vortex-primary);
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 1000;
+        }
+
+        .constant-item {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .pwa-status {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--vortex-primary);
+            border-radius: 10px;
+            padding: 10px 20px;
+            z-index: 1000;
+            font-size: 0.9rem;
+        }
+
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid var(--vortex-primary);
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .install-button {
+            background: var(--vortex-primary);
+            color: var(--vortex-dark);
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">ZeroPoint Hologram Matrix</div>
+        <div class="controls">
+            <div class="control-button" onclick="resetMatrix()">Reset</div>
+            <div class="control-button" onclick="toggleFlow()">Toggle Flow</div>
+            <div class="control-button" onclick="exportMatrix()">Export</div>
+        </div>
+    </div>
+
+    <div class="pwa-status" id="pwaStatus">
+        PWA Status: Checking...
+    </div>
+
+    <div class="install-prompt" id="installPrompt">
+        <div>Install ZeroPoint Matrix as PWA</div>
+        <button class="install-button" onclick="installPWA()">Install</button>
+    </div>
+
+    <div class="matrix-container" id="matrixContainer">
+        <!-- Matrix will be generated by JavaScript -->
+    </div>
+
+    <div class="info-panel">
+        <h3>Matrix Information</h3>
+        <p><strong>Total Cells:</strong> <span id="totalCells">100</span></p>
+        <p><strong>Active Flows:</strong> <span id="activeFlows">0</span></p>
+        <p><strong>Vortex Centers:</strong> 0/0 (Void), 1/1 (Unity)</p>
+        <p><strong>W-Axis:</strong> 3/3, 6/6, 9/9</p>
+    </div>
+
+    <div class="constants">
+        <h3>Mathematical Constants</h3>
+        <div class="constant-item">π ≈ 3.14159...</div>
+        <div class="constant-item">e ≈ 2.71828...</div>
+        <div class="constant-item">φ ≈ 1.61803...</div>
+        <div class="constant-item">A432 = 432 Hz</div>
+        <div class="constant-item">Vortex Flow: ∞</div>
+    </div>
+
+    <script src="/digit-vortex-system.js"></script>
+    <script>
+        let flowActive = false;
+        let installPromptEvent = null;
+
+        // PWA Installation
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            installPromptEvent = e;
+            document.getElementById('installPrompt').style.display = 'block';
+            document.getElementById('pwaStatus').textContent = 'PWA Status: Ready to install';
+        });
+
+        function installPWA() {
+            if (installPromptEvent) {
+                installPromptEvent.prompt();
+                installPromptEvent.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('PWA installed successfully');
+                        document.getElementById('pwaStatus').textContent = 'PWA Status: Installed';
+                        document.getElementById('installPrompt').style.display = 'none';
+                    }
+                });
+            }
+        }
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('Service Worker registered:', registration);
+                    document.getElementById('pwaStatus').textContent = 'PWA Status: Active';
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                    document.getElementById('pwaStatus').textContent = 'PWA Status: Failed';
+                });
+        }
+
+        // Matrix Generation
+        function generateMatrix() {
+            const container = document.getElementById('matrixContainer');
+            container.innerHTML = '';
+
+            for (let row = 0; row < 10; row++) {
+                for (let col = 0; col < 10; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'digit-cell';
+                    cell.textContent = `${row}/${col}`;
+                    
+                    // Special styling for key positions
+                    if (row === 0 && col === 0) {
+                        cell.classList.add('void-center');
+                        cell.title = 'Void Center - Holographic Singularity';
+                    } else if (row === 1 && col === 1) {
+                        cell.classList.add('unity-center');
+                        cell.title = 'Unity Center - Material Foundation';
+                    } else if ((row === 3 && col === 3) || (row === 6 && col === 6) || (row === 9 && col === 9)) {
+                        cell.classList.add('w-axis');
+                        cell.title = 'W-Axis - Spiritual Dimension';
+                    }
+
+                    // Add vortex flow animation
+                    const flow = document.createElement('div');
+                    flow.className = 'vortex-flow';
+                    for (let i = 0; i < 3; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'flow-particle';
+                        particle.style.left = Math.random() * 100 + '%';
+                        particle.style.top = Math.random() * 100 + '%';
+                        particle.style.animationDelay = Math.random() * 3 + 's';
+                        flow.appendChild(particle);
+                    }
+                    cell.appendChild(flow);
+
+                    // Click handler
+                    cell.addEventListener('click', () => {
+                        navigateToDigit(row, col);
+                    });
+
+                    container.appendChild(cell);
+                }
+            }
+        }
+
+        function navigateToDigit(row, col) {
+            const url = `/${row}/${col}/index.html`;
+            console.log(`Navigating to: ${url}`);
+            
+            // Try to open in iframe or new window
+            try {
+                window.open(url, '_blank');
+            } catch (error) {
+                console.log('Navigation failed:', error);
+            }
+        }
+
+        function resetMatrix() {
+            const cells = document.querySelectorAll('.digit-cell');
+            cells.forEach(cell => {
+                cell.classList.remove('active');
+            });
+            document.getElementById('activeFlows').textContent = '0';
+        }
+
+        function toggleFlow() {
+            flowActive = !flowActive;
+            const cells = document.querySelectorAll('.digit-cell');
+            cells.forEach(cell => {
+                const flow = cell.querySelector('.vortex-flow');
+                if (flow) {
+                    flow.style.opacity = flowActive ? '1' : '0';
+                }
+            });
+            document.getElementById('activeFlows').textContent = flowActive ? cells.length : '0';
+        }
+
+        function exportMatrix() {
+            const matrixData = {
+                timestamp: new Date().toISOString(),
+                totalCells: 100,
+                activeFlows: flowActive ? 100 : 0,
+                vortexCenters: ['0/0', '1/1'],
+                wAxis: ['3/3', '6/6', '9/9']
+            };
+            
+            const dataStr = JSON.stringify(matrixData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'zeropoint-matrix-export.json';
+            link.click();
+            
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            generateMatrix();
+            console.log('🌌 ZeroPoint Hologram Matrix initialized');
+        });
+
+        // Handle messages from digit interfaces
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'navigate') {
+                const [row, col] = event.data.to.split('/').map(Number);
+                navigateToDigit(row, col);
+            }
+        });
+    </script>
+</body>
+</html> 

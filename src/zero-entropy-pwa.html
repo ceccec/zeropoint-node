@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Entropy PWA - Torus Network Consciousness System</title>
+    <meta name="description" content="Zero entropy PWA using torus network for hologram knowledge interactions">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#00d4ff">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #00d4ff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            cursor: none; /* Hide default cursor */
+        }
+
+        .torus-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            perspective: 1000px;
+        }
+
+        .torus-visualization {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0deg);
+            width: 600px;
+            height: 600px;
+            border: 2px solid #00d4ff;
+            border-radius: 50%;
+            animation: torusRotate 20s linear infinite;
+        }
+
+        @keyframes torusRotate {
+            0% { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(0deg); }
+            100% { transform: translate(-50%, -50%) rotateX(60deg) rotateZ(360deg); }
+        }
+
+        .torus-node {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #00d4ff;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .torus-node:hover {
+            background: #ff00ff;
+            transform: scale(2);
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        .torus-node.void-center {
+            background: #00ff88;
+            box-shadow: 0 0 15px #00ff88;
+        }
+
+        .torus-node.unity-center {
+            background: #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .torus-node.w-axis {
+            background: #00d4ff;
+            box-shadow: 0 0 15px #00d4ff;
+        }
+
+        .flow-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, #00d4ff, #ff00ff, #00ff88);
+            animation: flowPulse 3s ease-in-out infinite;
+            z-index: 5;
+        }
+
+        @keyframes flowPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Flow Capture Cursor */
+        .flow-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00d4ff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            transition: all 0.1s ease;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 70%);
+        }
+
+        .flow-cursor.capturing {
+            width: 40px;
+            height: 40px;
+            border-color: #ff00ff;
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.4) 0%, transparent 70%);
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        .flow-cursor.merging {
+            width: 60px;
+            height: 60px;
+            border-color: #00ff88;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.5) 0%, transparent 70%);
+            box-shadow: 0 0 30px #00ff88;
+        }
+
+        /* Flow Trail */
+        .flow-trail {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #00d4ff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999;
+            animation: trailFade 2s ease-out forwards;
+        }
+
+        @keyframes trailFade {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+
+        /* Flow Capture Indicator */
+        .flow-capture-indicator {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 1001;
+            display: none;
+            text-align: center;
+        }
+
+        .flow-capture-indicator.active {
+            display: block;
+            animation: capturePulse 1s ease-in-out infinite;
+        }
+
+        @keyframes capturePulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        .entropy-display {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 100;
+        }
+
+        .entropy-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ff88;
+            text-align: center;
+        }
+
+        .interaction-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 100;
+            min-width: 300px;
+        }
+
+        .interaction-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .control-button {
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00d4ff;
+            border-radius: 5px;
+            padding: 8px 12px;
+            color: #00d4ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-button:hover {
+            background: rgba(0, 212, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .node-selector {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .node-input {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00d4ff;
+            border-radius: 5px;
+            padding: 5px;
+            color: #00d4ff;
+            width: 60px;
+            text-align: center;
+        }
+
+        .interaction-result {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff88;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .consciousness-flow {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 100;
+        }
+
+        .flow-indicator {
+            width: 200px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .flow-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #ff00ff, #00ff88);
+            width: 0%;
+            animation: flowFill 4s ease-in-out infinite;
+        }
+
+        @keyframes flowFill {
+            0%, 100% { width: 30%; }
+            50% { width: 70%; }
+        }
+
+        .torus-info {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 15px;
+            z-index: 100;
+            max-width: 300px;
+        }
+
+        .pwa-status {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 20px;
+            z-index: 200;
+            text-align: center;
+            display: none;
+        }
+
+        /* Flow Efficiency Indicator */
+        .flow-efficiency {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00ff88;
+            border-radius: 10px;
+            padding: 10px 20px;
+            z-index: 100;
+            font-size: 0.9rem;
+        }
+
+        .efficiency-bar {
+            width: 150px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+
+        .efficiency-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Flow Capture Cursor -->
+    <div class="flow-cursor" id="flowCursor"></div>
+    
+    <!-- Flow Capture Indicator -->
+    <div class="flow-capture-indicator" id="flowCaptureIndicator">
+        <div>Flow Captured</div>
+        <div style="font-size: 0.9rem; color: #888;">Merging with Torus</div>
+    </div>
+
+    <div class="torus-container">
+        <div class="torus-visualization" id="torusVisualization">
+            <!-- Torus nodes will be generated here -->
+        </div>
+        
+        <div class="entropy-display">
+            <div>Entropy Level</div>
+            <div class="entropy-value" id="entropyValue">0</div>
+            <div style="font-size: 0.9rem; color: #888;">Zero Entropy State</div>
+        </div>
+
+        <div class="flow-efficiency">
+            <div>Flow Efficiency</div>
+            <div class="efficiency-bar">
+                <div class="efficiency-fill" id="efficiencyFill"></div>
+            </div>
+            <div id="efficiencyValue" style="font-size: 0.8rem;">DRY: 100%</div>
+        </div>
+
+        <div class="interaction-panel">
+            <h3>Zero Entropy Interactions</h3>
+            <div class="interaction-controls">
+                <div class="control-button" onclick="resetTorus()">Reset</div>
+                <div class="control-button" onclick="exportTorus()">Export</div>
+                <div class="control-button" onclick="toggleFlow()">Toggle Flow</div>
+            </div>
+            
+            <div class="node-selector">
+                <input type="text" class="node-input" id="sourceNode" placeholder="0/0" value="0/0">
+                <span style="color: #00d4ff;">→</span>
+                <input type="text" class="node-input" id="targetNode" placeholder="1/1" value="1/1">
+                <div class="control-button" onclick="performInteraction()">Interact</div>
+            </div>
+            
+            <div class="interaction-result" id="interactionResult" style="display: none;">
+                <!-- Interaction results will appear here -->
+            </div>
+        </div>
+
+        <div class="consciousness-flow">
+            <div>Consciousness Flow</div>
+            <div class="flow-indicator">
+                <div class="flow-fill"></div>
+            </div>
+            <div id="flowValue" style="font-size: 0.9rem;">Total: 0</div>
+        </div>
+
+        <div class="torus-info">
+            <h3>Torus Network Info</h3>
+            <div id="torusInfo">
+                <div>Nodes: 100</div>
+                <div>Radius: 4</div>
+                <div>Thickness: 1</div>
+                <div>Flow Patterns: 20</div>
+            </div>
+        </div>
+
+        <div class="pwa-status" id="pwaStatus">
+            <div>Zero Entropy PWA</div>
+            <div style="font-size: 0.9rem; margin: 10px 0;">Torus Network Active</div>
+            <div class="control-button" onclick="hideStatus()">Continue</div>
+        </div>
+    </div>
+
+    <script src="/zero-entropy-torus.js"></script>
+    <script>
+        let flowActive = true;
+        let selectedNodes = [];
+        let flowCaptureActive = false;
+        let flowEfficiency = 100;
+        let lastMouseX = 0;
+        let lastMouseY = 0;
+        let flowTrailCount = 0;
+
+        // Flow Capture System
+        function initializeFlowCapture() {
+            const cursor = document.getElementById('flowCursor');
+            const indicator = document.getElementById('flowCaptureIndicator');
+            
+            // Mouse movement tracking
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+                
+                // Create flow trail
+                if (flowCaptureActive) {
+                    createFlowTrail(e.clientX, e.clientY);
+                }
+                
+                // Calculate flow efficiency using single digits
+                const deltaX = e.clientX - lastMouseX;
+                const deltaY = e.clientY - lastMouseY;
+                const speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                
+                if (speed > 0) {
+                    updateFlowEfficiency(speed);
+                }
+                
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+            });
+            
+            // Touch events for mobile
+            document.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                cursor.style.left = touch.clientX - 10 + 'px';
+                cursor.style.top = touch.clientY - 10 + 'px';
+                
+                if (flowCaptureActive) {
+                    createFlowTrail(touch.clientX, touch.clientY);
+                }
+            });
+            
+            // Flow capture activation
+            document.addEventListener('mousedown', activateFlowCapture);
+            document.addEventListener('touchstart', activateFlowCapture);
+            document.addEventListener('mouseup', deactivateFlowCapture);
+            document.addEventListener('touchend', deactivateFlowCapture);
+        }
+
+        function activateFlowCapture() {
+            flowCaptureActive = true;
+            const cursor = document.getElementById('flowCursor');
+            cursor.classList.add('capturing');
+            
+            // Show capture indicator
+            const indicator = document.getElementById('flowCaptureIndicator');
+            indicator.classList.add('active');
+            
+            console.log('🌊 Flow capture activated');
+        }
+
+        function deactivateFlowCapture() {
+            flowCaptureActive = false;
+            const cursor = document.getElementById('flowCursor');
+            cursor.classList.remove('capturing');
+            
+            // Hide capture indicator
+            const indicator = document.getElementById('flowCaptureIndicator');
+            indicator.classList.remove('active');
+            
+            // Merge flow with torus
+            mergeFlowWithTorus();
+            
+            console.log('🌊 Flow capture deactivated');
+        }
+
+        function createFlowTrail(x, y) {
+            if (flowTrailCount > 50) return; // Limit trail density
+            
+            const trail = document.createElement('div');
+            trail.className = 'flow-trail';
+            trail.style.left = x + 'px';
+            trail.style.top = y + 'px';
+            document.body.appendChild(trail);
+            
+            flowTrailCount++;
+            
+            // Remove trail after animation
+            setTimeout(() => {
+                trail.remove();
+                flowTrailCount--;
+            }, 2000);
+        }
+
+        function mergeFlowWithTorus() {
+            const cursor = document.getElementById('flowCursor');
+            cursor.classList.add('merging');
+            
+            // Update torus with captured flow
+            const capturedFlow = {
+                timestamp: Date.now(),
+                efficiency: flowEfficiency,
+                entropyChange: 0, // Maintain zero entropy
+                flowPattern: 'captured'
+            };
+            
+            // Add to torus flow
+            if (window.zeroEntropyTorus) {
+                window.zeroEntropyTorus.torusFlow.push({
+                    type: 'captured',
+                    data: capturedFlow
+                });
+            }
+            
+            // Update efficiency display
+            updateEfficiencyDisplay();
+            
+            setTimeout(() => {
+                cursor.classList.remove('merging');
+            }, 1000);
+            
+            console.log('🌊 Flow merged with torus, efficiency:', flowEfficiency);
+        }
+
+        function updateFlowEfficiency(speed) {
+            // Calculate efficiency using single digits
+            const baseEfficiency = Math.min(100, speed * 2); // Single digit multiplication
+            const smoothness = Math.abs(speed - (lastSpeed || 0));
+            flowEfficiency = Math.max(0, baseEfficiency - smoothness);
+            
+            updateEfficiencyDisplay();
+        }
+
+        function updateEfficiencyDisplay() {
+            const fill = document.getElementById('efficiencyFill');
+            const value = document.getElementById('efficiencyValue');
+            
+            fill.style.width = flowEfficiency + '%';
+            value.textContent = `DRY: ${Math.round(flowEfficiency)}%`; // Round to integer
+        }
+
+        // Initialize torus visualization using single digits
+        function initializeTorusVisualization() {
+            const container = document.getElementById('torusVisualization');
+            container.innerHTML = '';
+
+            // Create 100 nodes in torus pattern using single digits
+            for (let row = 0; row < 10; row++) {
+                for (let col = 0; col < 10; col++) {
+                    const node = document.createElement('div');
+                    node.className = 'torus-node';
+                    node.id = `node-${row}-${col}`;
+                    node.title = `${row}/${col}`;
+                    
+                    // Position nodes in torus pattern using single digits
+                    const theta = row * 2; // Single digit multiplication
+                    const phi = col * 2;   // Single digit multiplication
+                    const radius = 250; // Single digit base
+                    const thickness = 60; // Single digit base
+                    
+                    const x = (radius + thickness) * Math.cos(theta);
+                    const y = (radius + thickness) * Math.sin(theta);
+                    
+                    node.style.left = (300 + x) + 'px';
+                    node.style.top = (300 + y) + 'px';
+                    
+                    // Special styling for key nodes
+                    if (row === 0 && col === 0) {
+                        node.classList.add('void-center');
+                    } else if (row === 1 && col === 1) {
+                        node.classList.add('unity-center');
+                    } else if (row === 3 || row === 6 || row === 9) {
+                        node.classList.add('w-axis');
+                    }
+                    
+                    // Click handler with flow capture
+                    node.addEventListener('click', () => {
+                        selectNode(row, col);
+                        // Trigger flow capture
+                        activateFlowCapture();
+                        setTimeout(deactivateFlowCapture, 500);
+                    });
+                    
+                    container.appendChild(node);
+                }
+            }
+
+            // Create flow lines
+            createFlowLines();
+        }
+
+        // Create flow lines between nodes
+        function createFlowLines() {
+            const container = document.getElementById('torusVisualization');
+            
+            // Create toroidal flow lines
+            for (let ring = 0; ring < 10; ring++) {
+                for (let col = 0; col < 10; col++) {
+                    const nextCol = (col + 1) % 10;
+                    createFlowLine(ring, col, ring, nextCol);
+                }
+            }
+            
+            // Create poloidal flow lines
+            for (let poloidal = 0; poloidal < 10; poloidal++) {
+                for (let row = 0; row < 10; row++) {
+                    const nextRow = (row + 1) % 10;
+                    createFlowLine(row, poloidal, nextRow, poloidal);
+                }
+            }
+        }
+
+        // Create individual flow line
+        function createFlowLine(row1, col1, row2, col2) {
+            const container = document.getElementById('torusVisualization');
+            const line = document.createElement('div');
+            line.className = 'flow-line';
+            
+            const node1 = document.getElementById(`node-${row1}-${col1}`);
+            const node2 = document.getElementById(`node-${row2}-${col2}`);
+            
+            if (node1 && node2) {
+                const rect1 = node1.getBoundingClientRect();
+                const rect2 = node2.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+                
+                const x1 = rect1.left + rect1.width/2 - containerRect.left;
+                const y1 = rect1.top + rect1.height/2 - containerRect.top;
+                const x2 = rect2.left + rect2.width/2 - containerRect.left;
+                const y2 = rect2.top + rect2.height/2 - containerRect.top;
+                
+                const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+                
+                line.style.width = length + 'px';
+                line.style.left = x1 + 'px';
+                line.style.top = y1 + 'px';
+                line.style.transform = `rotate(${angle}deg)`;
+                line.style.transformOrigin = '0 0';
+                
+                container.appendChild(line);
+            }
+        }
+
+        // Select node for interaction
+        function selectNode(row, col) {
+            const nodeId = `${row}/${col}`;
+            selectedNodes.push(nodeId);
+            
+            if (selectedNodes.length === 2) {
+                document.getElementById('sourceNode').value = selectedNodes[0];
+                document.getElementById('targetNode').value = selectedNodes[1];
+                selectedNodes = [];
+            }
+            
+            // Highlight selected node
+            const node = document.getElementById(`node-${row}-${col}`);
+            node.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                node.style.transform = 'scale(1)';
+            }, 500);
+        }
+
+        // Perform zero entropy interaction
+        function performInteraction() {
+            const sourceNode = document.getElementById('sourceNode').value;
+            const targetNode = document.getElementById('targetNode').value;
+            
+            if (!sourceNode || !targetNode) {
+                alert('Please select source and target nodes');
+                return;
+            }
+            
+            const interaction = window.zeroEntropyTorus.performZeroEntropyInteraction(sourceNode, targetNode);
+            
+            if (interaction) {
+                displayInteractionResult(interaction);
+                updateTorusDisplay();
+            }
+        }
+
+        // Display interaction result using single digits
+        function displayInteractionResult(interaction) {
+            const resultDiv = document.getElementById('interactionResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <div><strong>Interaction:</strong> ${interaction.source} → ${interaction.target}</div>
+                <div><strong>Consciousness Flow:</strong> ${interaction.consciousnessFlow}</div>
+                <div><strong>Entropy Change:</strong> ${interaction.entropyChange}</div>
+                <div><strong>Position:</strong> (${Math.round(interaction.torusPosition.x)}, ${Math.round(interaction.torusPosition.y)}, ${Math.round(interaction.torusPosition.z)})</div>
+                <div><strong>Flow Efficiency:</strong> ${Math.round(flowEfficiency)}%</div>
+            `;
+        }
+
+        // Update torus display
+        function updateTorusDisplay() {
+            const torusState = window.zeroEntropyTorus.getTorusState();
+            document.getElementById('entropyValue').textContent = torusState.entropyLevel;
+            
+            const totalFlow = window.zeroEntropyTorus.calculateTotalConsciousnessFlow();
+            document.getElementById('flowValue').textContent = `Total: ${Math.round(totalFlow)}`;
+            
+            const torusInfo = document.getElementById('torusInfo');
+            torusInfo.innerHTML = `
+                <div>Nodes: ${torusState.nodeCount}</div>
+                <div>Radius: ${torusState.torusRadius}</div>
+                <div>Thickness: ${torusState.torusThickness}</div>
+                <div>Flow Patterns: ${torusState.flowCount}</div>
+            `;
+        }
+
+        // Reset torus
+        function resetTorus() {
+            window.zeroEntropyTorus = new ZeroEntropyTorus();
+            window.zeroEntropyTorus.initializeTorus();
+            initializeTorusVisualization();
+            updateTorusDisplay();
+            document.getElementById('interactionResult').style.display = 'none';
+            flowEfficiency = 100;
+            updateEfficiencyDisplay();
+        }
+
+        // Export torus data
+        function exportTorus() {
+            const data = window.zeroEntropyTorus.exportTorusData();
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'zero-entropy-torus-export.json';
+            link.click();
+            
+            URL.revokeObjectURL(url);
+        }
+
+        // Toggle flow visibility
+        function toggleFlow() {
+            flowActive = !flowActive;
+            const lines = document.querySelectorAll('.flow-line');
+            lines.forEach(line => {
+                line.style.opacity = flowActive ? '1' : '0.1';
+            });
+        }
+
+        // Hide status
+        function hideStatus() {
+            document.getElementById('pwaStatus').style.display = 'none';
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait for torus to initialize
+            setTimeout(() => {
+                initializeTorusVisualization();
+                initializeFlowCapture();
+                updateTorusDisplay();
+                updateEfficiencyDisplay();
+                document.getElementById('pwaStatus').style.display = 'block';
+            }, 1000);
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('Zero Entropy PWA Service Worker registered:', registration);
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed:', error);
+                });
+        }
+    </script>
+</body>
+</html> 

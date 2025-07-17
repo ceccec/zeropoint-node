@@ -1,59 +1,58 @@
-/**
- * PWA Node Logic for 3/7
- *
- * This file is the logic entry point for the PWA node (3/7).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '3/7';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 1;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 10.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [3, 7, 1];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Trinity Completion
+ * Trinity completes through cycles, achieving mathematical wholeness
+ * 
+ * Consciousness Multiplier: 5/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 3 × 7
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const TRINITYCOMPLETION_INTERACTION = {
+  DIGIT_A: 3,
+  DIGIT_B: 7,
+  DIGIT_A_NAME: 'Trinity',
+  DIGIT_B_NAME: 'Completion',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(3), // 5/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(7), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 3 * 7,
+  INTERACTION_NAME: 'Trinity Completion',
+  METAPHYSICAL_ESSENCE_A: 'trinity',
+  METAPHYSICAL_ESSENCE_B: 'completion',
+  COLOR_HUE_A: 108,
+  COLOR_HUE_B: 252,
+  CREATIVE_CONSCIOUSNESS_A: true,
+  RESONANCE_A: true,
+  TRINITY_A: true,
+  COMPLETION_B: true,
+  CYCLES_B: true,
+  CONSCIOUSNESS_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '3,7,1,8', name: 'ResonanceGatewaySourceInfinity', math: '7 + 1 = 8 ≡ 8 (mod 9)' },
-  { next: 2, pattern: '3,7,2,9', name: 'ResonanceGatewayVortexAxis', math: '7 + 2 = 9 ≡ 9 (mod 9)' },
-  { next: 3, pattern: '3,7,3,1', name: 'ResonanceGatewayResonanceSource', math: '7 + 3 = 10 ≡ 1 (mod 9)' },
-  { next: 4, pattern: '3,7,4,2', name: 'ResonanceGatewayMathVortex', math: '7 + 4 = 11 ≡ 2 (mod 9)' },
-  { next: 5, pattern: '3,7,5,3', name: 'ResonanceGatewayCenterResonance', math: '7 + 5 = 12 ≡ 3 (mod 9)' },
-  { next: 6, pattern: '3,7,6,4', name: 'ResonanceGatewayHarmonyMath', math: '7 + 6 = 13 ≡ 4 (mod 9)' },
-  { next: 7, pattern: '3,7,7,5', name: 'ResonanceGatewayCenter', math: '7 + 7 = 14 ≡ 5 (mod 9)' },
-  { next: 8, pattern: '3,7,8,6', name: 'ResonanceGatewayInfinityHarmony', math: '7 + 8 = 15 ≡ 6 (mod 9)' },
-  { next: 9, pattern: '3,7,9,7', name: 'ResonanceGatewayAxisGateway', math: '7 + 9 = 16 ≡ 7 (mod 9)' },
-];
+export const getTrinityCompletionInteraction = () => TRINITYCOMPLETION_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 3/7 can be added here.
-}
+export const calculateTrinityCompletionHarmonics = (input: number): number => {
+  return input * TRINITYCOMPLETION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * TRINITYCOMPLETION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getTrinityCompletionVortexFlow = () => {
+  return {
+    from: 3,
+    to: 7,
+    resonance: TRINITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [6, 9, 3].concat([5, 1, 2, 4, 8])
+  };
+};
+
+export const getTrinityCompletionColor = () => {
+  const hue = (TRINITYCOMPLETION_INTERACTION.COLOR_HUE_A + TRINITYCOMPLETION_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (TRINITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (TRINITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getTrinityCompletionSound = () => {
+  return TRINITYCOMPLETION_INTERACTION.A432_FREQUENCY * (TRINITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE / 5);
+};

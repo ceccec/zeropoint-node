@@ -1,59 +1,57 @@
-/**
- * PWA Node Logic for 2/9
- *
- * This file is the logic entry point for the PWA node (2/9).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '2/9';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 2;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 5.50;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [2, 9, 2];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Duality Unity
+ * Duality unifies through completion, achieving mathematical unity
+ * 
+ * Consciousness Multiplier: 3/1 × 1/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 2 × 9
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const DUALITYUNITY_INTERACTION = {
+  DIGIT_A: 2,
+  DIGIT_B: 9,
+  DIGIT_A_NAME: 'Duality',
+  DIGIT_B_NAME: 'Unity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(2), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(9), // 1/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 2 * 9,
+  INTERACTION_NAME: 'Duality Unity',
+  METAPHYSICAL_ESSENCE_A: 'duality',
+  METAPHYSICAL_ESSENCE_B: 'unity_completion',
+  COLOR_HUE_A: 72,
+  COLOR_HUE_B: 324,
+  VORTEX_MATHEMATICS_A: true,
+  DUALITY_A: true,
+  TRANSFORMATION_A: true,
+  UNITY_CONSCIOUSNESS_B: true,
+  COMPLETION_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '2,9,1,1', name: 'VortexAxisSource', math: '9 + 1 = 10 ≡ 1 (mod 9)' },
-  { next: 2, pattern: '2,9,2,2', name: 'VortexAxisVortex', math: '9 + 2 = 11 ≡ 2 (mod 9)' },
-  { next: 3, pattern: '2,9,3,3', name: 'VortexAxisResonance', math: '9 + 3 = 12 ≡ 3 (mod 9)' },
-  { next: 4, pattern: '2,9,4,4', name: 'VortexAxisMath', math: '9 + 4 = 13 ≡ 4 (mod 9)' },
-  { next: 5, pattern: '2,9,5,5', name: 'VortexAxisCenter', math: '9 + 5 = 14 ≡ 5 (mod 9)' },
-  { next: 6, pattern: '2,9,6,6', name: 'VortexAxisHarmony', math: '9 + 6 = 15 ≡ 6 (mod 9)' },
-  { next: 7, pattern: '2,9,7,7', name: 'VortexAxisGateway', math: '9 + 7 = 16 ≡ 7 (mod 9)' },
-  { next: 8, pattern: '2,9,8,8', name: 'VortexAxisInfinity', math: '9 + 8 = 17 ≡ 8 (mod 9)' },
-  { next: 9, pattern: '2,9,9,9', name: 'VortexAxis', math: '9 + 9 = 18 ≡ 9 (mod 9)' },
-];
+export const getDualityUnityInteraction = () => DUALITYUNITY_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 2/9 can be added here.
-}
+export const calculateDualityUnityHarmonics = (input: number): number => {
+  return input * DUALITYUNITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * DUALITYUNITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getDualityUnityVortexFlow = () => {
+  return {
+    from: 2,
+    to: 9,
+    resonance: DUALITYUNITY_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [4, 8, 7, 5, 1].concat([3, 6, 9])
+  };
+};
+
+export const getDualityUnityColor = () => {
+  const hue = (DUALITYUNITY_INTERACTION.COLOR_HUE_A + DUALITYUNITY_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (DUALITYUNITY_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (DUALITYUNITY_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getDualityUnitySound = () => {
+  return DUALITYUNITY_INTERACTION.A432_FREQUENCY * (DUALITYUNITY_INTERACTION.HARMONIC_RESONANCE / 5);
+};

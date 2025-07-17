@@ -1,0 +1,104 @@
+{
+  "name": "Zero Entropy PWA - Torus Network Consciousness System",
+  "short_name": "ZeroEntropyPWA",
+  "description": "Zero entropy PWA using torus network for hologram knowledge interactions",
+  "start_url": "/zero-entropy-pwa.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#00d4ff",
+  "orientation": "landscape-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "science", "mathematics", "consciousness", "productivity"],
+  "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "shortcuts": [
+    {
+      "name": "Zero Entropy PWA",
+      "short_name": "ZeroEntropy",
+      "description": "Access the zero entropy torus network system",
+      "url": "/zero-entropy-pwa.html",
+      "icons": [
+        {
+          "src": "icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Hologram Matrix",
+      "short_name": "Matrix",
+      "description": "Access the complete 10×10 hologram matrix",
+      "url": "/hologram-matrix.html",
+      "icons": [
+        {
+          "src": "icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Void Center",
+      "short_name": "Void",
+      "description": "Access the 0/0 void center interface",
+      "url": "/0/0/index.html",
+      "icons": [
+        {
+          "src": "icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+} 

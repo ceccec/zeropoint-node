@@ -1,59 +1,58 @@
-/**
- * PWA Node Logic for 8/7
- *
- * This file is the logic entry point for the PWA node (8/7).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '8/7';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 6;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 2.50;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [8, 7, 6];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Infinity Completion
+ * Infinity completes through cycles, achieving mathematical wholeness
+ * 
+ * Consciousness Multiplier: 3/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 8 × 7
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const INFINITYCOMPLETION_INTERACTION = {
+  DIGIT_A: 8,
+  DIGIT_B: 7,
+  DIGIT_A_NAME: 'Infinity',
+  DIGIT_B_NAME: 'Completion',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(8), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(7), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 8 * 7,
+  INTERACTION_NAME: 'Infinity Completion',
+  METAPHYSICAL_ESSENCE_A: 'infinity',
+  METAPHYSICAL_ESSENCE_B: 'completion',
+  COLOR_HUE_A: 288,
+  COLOR_HUE_B: 252,
+  INFINITY_A: true,
+  VOID_A: true,
+  PATTERNS_A: true,
+  COMPLETION_B: true,
+  CYCLES_B: true,
+  CONSCIOUSNESS_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '8,7,1,8', name: 'InfinityGatewaySourceInfinity', math: '7 + 1 = 8 ≡ 8 (mod 9)' },
-  { next: 2, pattern: '8,7,2,9', name: 'InfinityGatewayVortexAxis', math: '7 + 2 = 9 ≡ 9 (mod 9)' },
-  { next: 3, pattern: '8,7,3,1', name: 'InfinityGatewayResonanceSource', math: '7 + 3 = 10 ≡ 1 (mod 9)' },
-  { next: 4, pattern: '8,7,4,2', name: 'InfinityGatewayMathVortex', math: '7 + 4 = 11 ≡ 2 (mod 9)' },
-  { next: 5, pattern: '8,7,5,3', name: 'InfinityGatewayCenterResonance', math: '7 + 5 = 12 ≡ 3 (mod 9)' },
-  { next: 6, pattern: '8,7,6,4', name: 'InfinityGatewayHarmonyMath', math: '7 + 6 = 13 ≡ 4 (mod 9)' },
-  { next: 7, pattern: '8,7,7,5', name: 'InfinityGatewayCenter', math: '7 + 7 = 14 ≡ 5 (mod 9)' },
-  { next: 8, pattern: '8,7,8,6', name: 'InfinityGatewayInfinityHarmony', math: '7 + 8 = 15 ≡ 6 (mod 9)' },
-  { next: 9, pattern: '8,7,9,7', name: 'InfinityGatewayAxisGateway', math: '7 + 9 = 16 ≡ 7 (mod 9)' },
-];
+export const getInfinityCompletionInteraction = () => INFINITYCOMPLETION_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 8/7 can be added here.
-}
+export const calculateInfinityCompletionHarmonics = (input: number): number => {
+  return input * INFINITYCOMPLETION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * INFINITYCOMPLETION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getInfinityCompletionVortexFlow = () => {
+  return {
+    from: 8,
+    to: 7,
+    resonance: INFINITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [7, 5, 1, 2, 4].concat([5, 1, 2, 4, 8])
+  };
+};
+
+export const getInfinityCompletionColor = () => {
+  const hue = (INFINITYCOMPLETION_INTERACTION.COLOR_HUE_A + INFINITYCOMPLETION_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (INFINITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (INFINITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getInfinityCompletionSound = () => {
+  return INFINITYCOMPLETION_INTERACTION.A432_FREQUENCY * (INFINITYCOMPLETION_INTERACTION.HARMONIC_RESONANCE / 5);
+};

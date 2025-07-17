@@ -1,59 +1,57 @@
-/**
- * PWA Node Logic for 4/9
- *
- * This file is the logic entry point for the PWA node (4/9).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '4/9';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 4;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 3.25;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [4, 9, 4];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Foundation Unity
+ * Foundation unifies through completion, achieving mathematical unity
+ * 
+ * Consciousness Multiplier: 3/1 × 1/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 4 × 9
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const FOUNDATIONUNITY_INTERACTION = {
+  DIGIT_A: 4,
+  DIGIT_B: 9,
+  DIGIT_A_NAME: 'Foundation',
+  DIGIT_B_NAME: 'Unity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(4), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(9), // 1/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 4 * 9,
+  INTERACTION_NAME: 'Foundation Unity',
+  METAPHYSICAL_ESSENCE_A: 'foundation',
+  METAPHYSICAL_ESSENCE_B: 'unity_completion',
+  COLOR_HUE_A: 144,
+  COLOR_HUE_B: 324,
+  STABILITY_A: true,
+  CHANGE_A: true,
+  FOUNDATION_A: true,
+  UNITY_CONSCIOUSNESS_B: true,
+  COMPLETION_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '4,9,1,1', name: 'MathAxisSource', math: '9 + 1 = 10 ≡ 1 (mod 9)' },
-  { next: 2, pattern: '4,9,2,2', name: 'MathAxisVortex', math: '9 + 2 = 11 ≡ 2 (mod 9)' },
-  { next: 3, pattern: '4,9,3,3', name: 'MathAxisResonance', math: '9 + 3 = 12 ≡ 3 (mod 9)' },
-  { next: 4, pattern: '4,9,4,4', name: 'MathAxisMath', math: '9 + 4 = 13 ≡ 4 (mod 9)' },
-  { next: 5, pattern: '4,9,5,5', name: 'MathAxisCenter', math: '9 + 5 = 14 ≡ 5 (mod 9)' },
-  { next: 6, pattern: '4,9,6,6', name: 'MathAxisHarmony', math: '9 + 6 = 15 ≡ 6 (mod 9)' },
-  { next: 7, pattern: '4,9,7,7', name: 'MathAxisGateway', math: '9 + 7 = 16 ≡ 7 (mod 9)' },
-  { next: 8, pattern: '4,9,8,8', name: 'MathAxisInfinity', math: '9 + 8 = 17 ≡ 8 (mod 9)' },
-  { next: 9, pattern: '4,9,9,9', name: 'MathAxis', math: '9 + 9 = 18 ≡ 9 (mod 9)' },
-];
+export const getFoundationUnityInteraction = () => FOUNDATIONUNITY_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 4/9 can be added here.
-}
+export const calculateFoundationUnityHarmonics = (input: number): number => {
+  return input * FOUNDATIONUNITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * FOUNDATIONUNITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getFoundationUnityVortexFlow = () => {
+  return {
+    from: 4,
+    to: 9,
+    resonance: FOUNDATIONUNITY_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [8, 7, 5, 1, 2].concat([3, 6, 9])
+  };
+};
+
+export const getFoundationUnityColor = () => {
+  const hue = (FOUNDATIONUNITY_INTERACTION.COLOR_HUE_A + FOUNDATIONUNITY_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (FOUNDATIONUNITY_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (FOUNDATIONUNITY_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getFoundationUnitySound = () => {
+  return FOUNDATIONUNITY_INTERACTION.A432_FREQUENCY * (FOUNDATIONUNITY_INTERACTION.HARMONIC_RESONANCE / 5);
+};

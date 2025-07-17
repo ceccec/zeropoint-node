@@ -36,6 +36,30 @@
  * Copyright 2021 - Science to Sage | Karen Elkins
  */
 
+/**
+ * Get consciousness multiplier for a given digit based on canonical Rodin vortex mathematics
+ * 
+ * Canonical Consciousness Multipliers:
+ * - 0: Void = 1/1
+ * - 3, 6, 9: W-Axis (Spiritual) = 5/1
+ * - 5: Sacred Geometry = 5/1
+ * - 1, 2, 4, 8, 7: Vortex Sequence (Material) = 3/1
+ * - All others: 1/1
+ */
+export function getConsciousnessMultiplier(digit: number): number {
+  // Void center
+  if (digit === 0) return 1/1;
+  
+  // W-Axis (Spiritual) and Sacred Geometry
+  if (digit === 3 || digit === 6 || digit === 9 || digit === 5) return 5/1;
+  
+  // Vortex Sequence (Material)
+  if (digit === 1 || digit === 2 || digit === 4 || digit === 8 || digit === 7) return 3/1;
+  
+  // Default
+  return 1/1;
+}
+
 // ============================================================================
 // CORE INTERFACES
 // ============================================================================

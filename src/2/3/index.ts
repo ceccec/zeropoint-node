@@ -1,67 +1,58 @@
-/**
- * PWA Node Logic for 2/3
- *
- * This file is the logic entry point for the PWA node (2/3).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '2/3';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 5;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [2, 3, 5];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Duality Trinity Mathematics
+ * Duality creates through trinity, manifesting mathematical forms
+ * 
+ * Consciousness Multiplier: 3/1 × 5/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 2 × 3
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const DUALITYTRINITYMATHEMATICS_INTERACTION = {
+  DIGIT_A: 2,
+  DIGIT_B: 3,
+  DIGIT_A_NAME: 'Duality',
+  DIGIT_B_NAME: 'Trinity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(2), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(3), // 5/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 2 * 3,
+  INTERACTION_NAME: 'Duality Trinity Mathematics',
+  METAPHYSICAL_ESSENCE_A: 'duality',
+  METAPHYSICAL_ESSENCE_B: 'trinity',
+  COLOR_HUE_A: 72,
+  COLOR_HUE_B: 108,
+  VORTEX_MATHEMATICS_A: true,
+  DUALITY_A: true,
+  TRANSFORMATION_A: true,
+  CREATIVE_CONSCIOUSNESS_B: true,
+  RESONANCE_B: true,
+  TRINITY_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '2,3,1,4', name: 'VortexResonanceSourceMath', math: '3 + 1 = 4 ≡ 4 (mod 9)' },
-  { next: 2, pattern: '2,3,2,5', name: 'VortexResonanceVortexCenter', math: '3 + 2 = 5 ≡ 5 (mod 9)' },
-  { next: 3, pattern: '2,3,3,6', name: 'VortexResonanceHarmony', math: '3 + 3 = 6 ≡ 6 (mod 9)' },
-  { next: 4, pattern: '2,3,4,7', name: 'VortexResonanceMathGateway', math: '3 + 4 = 7 ≡ 7 (mod 9)' },
-  { next: 5, pattern: '2,3,5,8', name: 'VortexResonanceCenterInfinity', math: '3 + 5 = 8 ≡ 8 (mod 9)' },
-  { next: 6, pattern: '2,3,6,9', name: 'VortexResonanceHarmonyAxis', math: '3 + 6 = 9 ≡ 9 (mod 9)' },
-  { next: 7, pattern: '2,3,7,1', name: 'VortexResonanceGatewaySource', math: '3 + 7 = 10 ≡ 1 (mod 9)' },
-  { next: 8, pattern: '2,3,8,2', name: 'VortexResonanceInfinityVortex', math: '3 + 8 = 11 ≡ 2 (mod 9)' },
-  { next: 9, pattern: '2,3,9,3', name: 'VortexResonanceAxisResonance', math: '3 + 9 = 12 ≡ 3 (mod 9)' },
-];
+export const getDualityTrinityMathematicsInteraction = () => DUALITYTRINITYMATHEMATICS_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 2/3 can be added here.
-}
+export const calculateDualityTrinityMathematicsHarmonics = (input: number): number => {
+  return input * DUALITYTRINITYMATHEMATICS_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * DUALITYTRINITYMATHEMATICS_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
 
-// Named export for test compatibility
-export const index = {
-  name: 'index',
-  pattern: [2, 3, 5],
-  frequency: 5,
-  multiplier: 1
+export const getDualityTrinityMathematicsVortexFlow = () => {
+  return {
+    from: 2,
+    to: 3,
+    resonance: DUALITYTRINITYMATHEMATICS_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [4, 8, 7, 5, 1].concat([6, 9, 3])
+  };
+};
+
+export const getDualityTrinityMathematicsColor = () => {
+  const hue = (DUALITYTRINITYMATHEMATICS_INTERACTION.COLOR_HUE_A + DUALITYTRINITYMATHEMATICS_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (DUALITYTRINITYMATHEMATICS_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (DUALITYTRINITYMATHEMATICS_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getDualityTrinityMathematicsSound = () => {
+  return DUALITYTRINITYMATHEMATICS_INTERACTION.A432_FREQUENCY * (DUALITYTRINITYMATHEMATICS_INTERACTION.HARMONIC_RESONANCE / 5);
 };

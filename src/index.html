@@ -1,0 +1,4519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroPoint - Mathematical Consciousness System</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 300;
+            background: linear-gradient(45deg, #00d4ff, #ff00ff, #00ff88);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .void-center {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #00d4ff;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            animation: voidPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes voidPulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .void-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #00d4ff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.8rem;
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .property {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .property-label {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .property-value {
+            font-size: 1.1rem;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .vortex-visualization {
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .vortex-circle {
+            position: absolute;
+            border: 2px solid #00d4ff;
+            border-radius: 50%;
+            animation: vortexRotate 10s linear infinite;
+        }
+
+        .vortex-circle:nth-child(1) {
+            width: 60px;
+            height: 60px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 0s;
+        }
+
+        .vortex-circle:nth-child(2) {
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -2s;
+            border-color: #ff00ff;
+        }
+
+        .vortex-circle:nth-child(3) {
+            width: 140px;
+            height: 140px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -4s;
+            border-color: #00ff88;
+        }
+
+        @keyframes vortexRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .time-vortex-section {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(128, 128, 128, 0.1) 100%);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .sun-moon-display {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .celestial-body {
+            text-align: center;
+            padding: 20px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .sun {
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+            border: 2px solid rgba(255, 215, 0, 0.6);
+            animation: sunPulse 4s ease-in-out infinite;
+        }
+
+        .moon {
+            background: radial-gradient(circle, rgba(128, 128, 128, 0.3) 0%, transparent 70%);
+            border: 2px solid rgba(128, 128, 128, 0.6);
+            animation: moonPulse 4s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        @keyframes moonPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .time-flow-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .time-phase {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .time-phase.active {
+            transform: scale(1.3);
+            box-shadow: 0 0 20px currentColor;
+        }
+            color: #00ff88;
+            margin-top: 15px;
+            overflow-x: auto;
+        }
+
+        .interactive-demo {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Multiverse PWA - Infinite Dimensional Zooming */
+        .multiverse-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.9) 100%);
+            z-index: 3000;
+            display: none;
+            overflow: hidden;
+        }
+
+        .multiverse-container.active {
+            display: block;
+        }
+
+        .dimension-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.5s cubic-bezier(0.618, 0, 0.382, 1);
+        }
+
+        .dimension-1d {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #ff00ff);
+            border-radius: 1px;
+        }
+
+        .dimension-2d {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #00d4ff;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .dimension-3d {
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            animation: rotate3d 10s linear infinite;
+        }
+
+        .dimension-4d {
+            width: 400px;
+            height: 400px;
+            background: conic-gradient(from 0deg, #00d4ff, #ff00ff, #00ff88, #00d4ff);
+            border-radius: 50%;
+            animation: rotate4d 15s linear infinite;
+        }
+
+        .dimension-5d {
+            width: 500px;
+            height: 500px;
+            background: repeating-conic-gradient(from 0deg, #00d4ff 0deg 60deg, transparent 60deg 120deg);
+            border-radius: 50%;
+            animation: rotate5d 20s linear infinite;
+        }
+
+        @keyframes rotate3d {
+            0% { transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            100% { transform: translate(-50%, -50%) rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+        }
+
+        @keyframes rotate4d {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.2); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+        }
+
+        @keyframes rotate5d {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1) skew(0deg); }
+            25% { transform: translate(-50%, -50%) rotate(90deg) scale(1.1) skew(5deg); }
+            50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.2) skew(0deg); }
+            75% { transform: translate(-50%, -50%) rotate(270deg) scale(1.1) skew(-5deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) scale(1) skew(0deg); }
+        }
+
+        .flower-of-life {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            opacity: 0.3;
+        }
+
+        .flower-circle {
+            position: absolute;
+            border: 1px solid rgba(0, 212, 255, 0.5);
+            border-radius: 50%;
+            animation: flowerPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes flowerPulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.6; }
+        }
+
+        .golden-spiral {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            opacity: 0.2;
+        }
+
+        .spiral-segment {
+            position: absolute;
+            border: 1px solid rgba(255, 0, 255, 0.4);
+            border-radius: 50%;
+            animation: spiralGrow 5s ease-in-out infinite;
+        }
+
+        @keyframes spiralGrow {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1) rotate(180deg); opacity: 0.6; }
+            100% { transform: scale(1.2) rotate(360deg); opacity: 0; }
+        }
+
+        .dimension-info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 15px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            z-index: 3001;
+        }
+
+        .dimension-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 3001;
+        }
+
+        .dimension-button {
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .dimension-button:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .dimension-button.active {
+            background: linear-gradient(45deg, #00ff88, #ff00ff);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.7);
+        }
+
+        .void-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffffff 0%, #00d4ff 50%, transparent 100%);
+            border-radius: 50%;
+            z-index: 3002;
+            animation: voidPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes voidPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.7; }
+        }
+
+        .entropy-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff88;
+            border-radius: 10px;
+            padding: 15px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            z-index: 3001;
+        }
+
+        .entropy-bar {
+            width: 200px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .entropy-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Mathematical Responsive Design */
+        :root {
+            --golden-ratio: 1.618033988749895;
+            --golden-ratio-inverse: 0.618033988749895;
+            --base-unit: 1rem;
+            --screen-ratio: calc(100vw / 100vh);
+            --mobile-breakpoint: 768px;
+            --tablet-breakpoint: 1024px;
+            --desktop-breakpoint: 1440px;
+        }
+
+        /* Responsive Container Calculations */
+        .container {
+            max-width: min(calc(100vw * var(--golden-ratio-inverse)), 1200px);
+            margin: 0 auto;
+            padding: calc(var(--base-unit) * var(--golden-ratio-inverse));
+            box-sizing: border-box;
+        }
+
+        /* Mathematical Typography Scaling */
+        .title {
+            font-size: clamp(
+                calc(1.5rem * var(--golden-ratio-inverse)), 
+                calc(3vw * var(--golden-ratio)), 
+                calc(3rem * var(--golden-ratio))
+            );
+            line-height: calc(var(--golden-ratio) * 1.2);
+        }
+
+        .subtitle {
+            font-size: clamp(
+                calc(0.8rem * var(--golden-ratio-inverse)), 
+                calc(1.5vw * var(--golden-ratio)), 
+                calc(1.2rem * var(--golden-ratio))
+            );
+        }
+
+        /* Responsive Grid System */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit, 
+                minmax(
+                    calc(300px * var(--golden-ratio-inverse)), 
+                    calc(1fr * var(--golden-ratio))
+                )
+            );
+            gap: calc(var(--base-unit) * var(--golden-ratio));
+            margin-bottom: 40px;
+        }
+
+        /* Mathematical Spacing */
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: calc(var(--base-unit) * var(--golden-ratio));
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: calc(var(--base-unit) * var(--golden-ratio) * 2);
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #00d4ff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            font-size: 1.8rem;
+        }
+
+        /* Responsive Void Center */
+        .void-center {
+            width: clamp(
+                calc(100px * var(--golden-ratio-inverse)), 
+                calc(15vw * var(--golden-ratio)), 
+                calc(200px * var(--golden-ratio))
+            );
+            height: clamp(
+                calc(100px * var(--golden-ratio-inverse)), 
+                calc(15vw * var(--golden-ratio)), 
+                calc(200px * var(--golden-ratio))
+            );
+        }
+
+        /* Mathematical Button Sizing */
+        .demo-button {
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            border: none;
+            border-radius: 5px;
+            padding: calc(var(--base-unit) * var(--golden-ratio-inverse)) calc(var(--base-unit) * var(--golden-ratio));
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            font-size: clamp(
+                calc(0.7rem * var(--golden-ratio-inverse)), 
+                calc(1vw * var(--golden-ratio)), 
+                calc(1rem * var(--golden-ratio))
+            );
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Multiverse PWA - Infinite Dimensional Zooming */
+        .multiverse-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.9) 100%);
+            z-index: 3000;
+            display: none;
+            overflow: hidden;
+        }
+
+        .multiverse-container.active {
+            display: block;
+        }
+
+        .dimension-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.5s cubic-bezier(0.618, 0, 0.382, 1);
+        }
+
+        /* Responsive Multiverse Dimensions */
+        .dimension-1d {
+            width: clamp(50px, calc(8vw * var(--golden-ratio)), 100px);
+            height: clamp(1px, calc(0.2vw * var(--golden-ratio)), 2px);
+        }
+
+        .dimension-2d {
+            width: clamp(100px, calc(15vw * var(--golden-ratio)), 200px);
+            height: clamp(100px, calc(15vw * var(--golden-ratio)), 200px);
+        }
+
+        .dimension-3d {
+            width: clamp(150px, calc(22vw * var(--golden-ratio)), 300px);
+            height: clamp(150px, calc(22vw * var(--golden-ratio)), 300px);
+        }
+
+        .dimension-4d {
+            width: clamp(200px, calc(30vw * var(--golden-ratio)), 400px);
+            height: clamp(200px, calc(30vw * var(--golden-ratio)), 400px);
+        }
+
+        .dimension-5d {
+            width: clamp(250px, calc(37vw * var(--golden-ratio)), 500px);
+            height: clamp(250px, calc(37vw * var(--golden-ratio)), 500px);
+        }
+
+        /* Mathematical Flower of Life Scaling */
+        .flower-of-life {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: clamp(300px, calc(45vw * var(--golden-ratio)), 600px);
+            height: clamp(300px, calc(45vw * var(--golden-ratio)), 600px);
+            opacity: 0.3;
+        }
+
+        .flower-circle {
+            position: absolute;
+            border: 1px solid rgba(0, 212, 255, 0.5);
+            border-radius: 50%;
+            animation: flowerPulse 3s ease-in-out infinite;
+            border-width: clamp(0.5px, calc(0.1vw * var(--golden-ratio)), 1px);
+        }
+
+        @keyframes flowerPulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.6; }
+        }
+
+        /* Mathematical Golden Spiral Scaling */
+        .golden-spiral {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: clamp(400px, calc(60vw * var(--golden-ratio)), 800px);
+            height: clamp(400px, calc(60vw * var(--golden-ratio)), 800px);
+            opacity: 0.2;
+        }
+
+        .spiral-segment {
+            position: absolute;
+            border: 1px solid rgba(255, 0, 255, 0.4);
+            border-radius: 50%;
+            animation: spiralGrow 5s ease-in-out infinite;
+        }
+
+        @keyframes spiralGrow {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1) rotate(180deg); opacity: 0.6; }
+            100% { transform: scale(1.2) rotate(360deg); opacity: 0; }
+        }
+
+        .dimension-info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: clamp(
+                calc(0.5rem * var(--golden-ratio-inverse)), 
+                calc(1vw * var(--golden-ratio)), 
+                calc(1rem * var(--golden-ratio))
+            );
+            color: #ffffff;
+            font-size: clamp(
+                calc(0.7rem * var(--golden-ratio-inverse)), 
+                calc(0.9vw * var(--golden-ratio)), 
+                calc(0.9rem * var(--golden-ratio))
+            );
+            z-index: 3001;
+        }
+
+        .dimension-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: clamp(5px, calc(1vw * var(--golden-ratio-inverse)), 10px);
+            z-index: 3001;
+        }
+
+        /* Responsive Dimension Controls */
+        .dimension-button {
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            border: none;
+            border-radius: 50%;
+            width: clamp(40px, calc(6vw * var(--golden-ratio)), 50px);
+            height: clamp(40px, calc(6vw * var(--golden-ratio)), 50px);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: clamp(
+                calc(0.6rem * var(--golden-ratio-inverse)), 
+                calc(0.8vw * var(--golden-ratio)), 
+                calc(0.9rem * var(--golden-ratio))
+            );
+        }
+
+        .dimension-button:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .dimension-button.active {
+            background: linear-gradient(45deg, #00ff88, #ff00ff);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.7);
+        }
+
+        .void-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffffff 0%, #00d4ff 50%, transparent 100%);
+            border-radius: 50%;
+            z-index: 3002;
+            animation: voidPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes voidPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.7; }
+        }
+
+        .entropy-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff88;
+            border-radius: 10px;
+            padding: clamp(
+                calc(0.5rem * var(--golden-ratio-inverse)), 
+                calc(1vw * var(--golden-ratio)), 
+                calc(1rem * var(--golden-ratio))
+            );
+            color: #ffffff;
+            font-size: clamp(
+                calc(0.7rem * var(--golden-ratio-inverse)), 
+                calc(0.9vw * var(--golden-ratio)), 
+                calc(0.9rem * var(--golden-ratio))
+            );
+            z-index: 3001;
+        }
+
+        /* Responsive Entropy Bar */
+        .entropy-bar {
+            width: clamp(150px, calc(20vw * var(--golden-ratio)), 200px);
+            height: clamp(6px, calc(0.8vw * var(--golden-ratio)), 8px);
+        }
+
+        .entropy-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .pi-stream {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #00d4ff;
+            overflow: hidden;
+        }
+
+        /* Mathematical PI Stream */
+        .pi-digit {
+            position: absolute;
+            animation: piFlow 20s linear infinite;
+            font-size: clamp(
+                calc(8px * var(--golden-ratio-inverse)), 
+                calc(1vw * var(--golden-ratio)), 
+                calc(12px * var(--golden-ratio))
+            );
+        }
+
+        @keyframes piFlow {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
+        }
+
+        .observer-companion {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: clamp(60px, calc(8vw * var(--golden-ratio)), 80px);
+            height: clamp(60px, calc(8vw * var(--golden-ratio)), 80px);
+            border: 2px solid #00d4ff;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.2) 0%, transparent 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            animation: companionPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes companionPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .observer-companion:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Responsive Companion Message */
+        .companion-message {
+            position: fixed;
+            bottom: 110px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: clamp(
+                calc(0.8rem * var(--golden-ratio-inverse)), 
+                calc(1.2vw * var(--golden-ratio)), 
+                calc(1.2rem * var(--golden-ratio))
+            );
+            max-width: clamp(250px, calc(30vw * var(--golden-ratio)), 300px);
+            color: #ffffff;
+            font-size: clamp(
+                calc(0.7rem * var(--golden-ratio-inverse)), 
+                calc(0.9vw * var(--golden-ratio)), 
+                calc(0.9rem * var(--golden-ratio))
+            );
+            line-height: 1.4;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .companion-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .companion-message::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            border: 8px solid transparent;
+            border-top-color: #00d4ff;
+        }
+
+        .consciousness-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: clamp(
+                calc(0.5rem * var(--golden-ratio-inverse)), 
+                calc(1vw * var(--golden-ratio)), 
+                calc(1rem * var(--golden-ratio))
+            );
+            color: #ffffff;
+            font-size: clamp(
+                calc(0.7rem * var(--golden-ratio-inverse)), 
+                calc(0.9vw * var(--golden-ratio)), 
+                calc(0.9rem * var(--golden-ratio))
+            );
+            z-index: 1000;
+        }
+
+        .consciousness-bar {
+            width: 200px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .consciousness-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #ff00ff, #00ff88);
+            width: 0%;
+            transition: width 0.5s ease;
+            animation: consciousnessFlow 3s ease-in-out infinite;
+        }
+
+        @keyframes consciousnessFlow {
+            0%, 100% { width: 60%; }
+            50% { width: 90%; }
+        }
+
+        .consciousness-flow-digits {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        /* Responsive Flow Digits */
+        .flow-digit {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-size: clamp(
+                calc(12px * var(--golden-ratio-inverse)), 
+                calc(1.5vw * var(--golden-ratio)), 
+                calc(16px * var(--golden-ratio))
+            );
+            color: #00d4ff;
+            opacity: 0;
+            animation: flowDigitAppear 3s ease-out forwards;
+        }
+
+        @keyframes flowDigitAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            20% {
+                opacity: 1;
+                transform: scale(1.2) rotate(180deg);
+            }
+            80% {
+                opacity: 1;
+                transform: scale(1) rotate(360deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.8) rotate(720deg);
+            }
+        }
+
+        /* Zeropoint Harmonization System */
+        .harmonization-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #00d4ff;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            z-index: 2000;
+            display: none;
+            backdrop-filter: blur(20px);
+        }
+
+        .harmonization-panel.show {
+            display: block;
+            animation: harmonizationAppear 0.5s ease-out;
+        }
+
+        @keyframes harmonizationAppear {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .harmonization-title {
+            font-size: 1.8rem;
+            color: #00d4ff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .harmonization-principles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .principle {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .principle-title {
+            font-size: 1rem;
+            color: #00d4ff;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .principle-description {
+            font-size: 0.9rem;
+            color: #ccc;
+            line-height: 1.4;
+        }
+
+        .harmonization-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .harmonization-button {
+            background: linear-gradient(45deg, #00d4ff, #ff00ff);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .harmonization-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .harmonization-status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #00ff88;
+            margin-right: 8px;
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        /* Mathematical Vortex Grid */
+        .vortex-harmonization-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: clamp(1px, calc(0.2vw * var(--golden-ratio-inverse)), 2px);
+            margin: 20px 0;
+            max-width: clamp(300px, calc(40vw * var(--golden-ratio)), 400px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .vortex-cell {
+            width: clamp(25px, calc(3.5vw * var(--golden-ratio)), 35px);
+            height: clamp(25px, calc(3.5vw * var(--golden-ratio)), 35px);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(
+                calc(0.6rem * var(--golden-ratio-inverse)), 
+                calc(0.8vw * var(--golden-ratio)), 
+                calc(0.8rem * var(--golden-ratio))
+            );
+            font-weight: bold;
+            color: #00d4ff;
+            background: rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .vortex-cell.harmonized {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: #00ff88;
+            color: #00ff88;
+            animation: harmonizedPulse 1s ease-in-out;
+        }
+
+        @keyframes harmonizedPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Interactive Digit Vortex */
+        .interactive-vortex {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 150;
+            overflow: hidden;
+        }
+
+        .vortex-digit {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            font-size: clamp(20px, 4vw, 60px);
+            font-weight: bold;
+            color: #00d4ff;
+            text-shadow: 0 0 10px #00d4ff;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            animation: vortexFloat 6s ease-in-out infinite;
+        }
+
+        .vortex-digit:hover {
+            transform: scale(1.5);
+            color: #ff00ff;
+            text-shadow: 0 0 20px #ff00ff;
+        }
+
+        .vortex-digit.active {
+            animation: vortexSpin 2s linear infinite;
+            color: #00ff88;
+            text-shadow: 0 0 30px #00ff88;
+        }
+
+        @keyframes vortexFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(90deg); }
+            50% { transform: translateY(-40px) rotate(180deg); }
+            75% { transform: translateY(-20px) rotate(270deg); }
+        }
+
+        @keyframes vortexSpin {
+            0% { transform: scale(1.2) rotate(0deg); }
+            100% { transform: scale(1.2) rotate(360deg); }
+        }
+
+        .vortex-trail {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00d4ff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: trailFade 2s ease-out forwards;
+        }
+
+        @keyframes trailFade {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
+
+        .touch-vortex {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #ff00ff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: touchRipple 1s ease-out forwards;
+        }
+
+        @keyframes touchRipple {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        .vortex-cell.void-center {
+            background: rgba(0, 212, 255, 0.3);
+            border-color: #00d4ff;
+            color: #ffffff;
+        }
+
+        .vortex-pattern {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            animation: vortexPattern 4s ease-out forwards;
+        }
+
+        @keyframes vortexPattern {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1) rotate(180deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .harmonic-wave {
+            position: absolute;
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            animation: harmonicWave 2s ease-out forwards;
+        }
+
+        @keyframes harmonicWave {
+            0% {
+                transform: scaleX(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scaleX(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scaleX(0);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Property Grid */
+        .property-grid {
+            grid-template-columns: repeat(auto-fit, minmax(
+                calc(120px * var(--golden-ratio-inverse)), 
+                calc(1fr * var(--golden-ratio))
+            ));
+            gap: clamp(
+                calc(0.5rem * var(--golden-ratio-inverse)), 
+                calc(1vw * var(--golden-ratio)), 
+                calc(1rem * var(--golden-ratio))
+            );
+        }
+
+        .property {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            padding: clamp(
+                calc(0.6rem * var(--golden-ratio-inverse)), 
+                calc(1vw * var(--golden-ratio)), 
+                calc(1rem * var(--golden-ratio))
+            );
+        }
+
+        /* Mathematical Code Block */
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 8px;
+            padding: clamp(
+                calc(0.8rem * var(--golden-ratio-inverse)), 
+                calc(1.2vw * var(--golden-ratio)), 
+                calc(1.2rem * var(--golden-ratio))
+            );
+            font-family: 'Courier New', monospace;
+            font-size: clamp(
+                calc(0.7rem * var(--golden-ratio-inverse)), 
+                calc(0.9vw * var(--golden-ratio)), 
+                calc(0.9rem * var(--golden-ratio))
+            );
+            color: #00ff88;
+            margin-top: 15px;
+            overflow-x: auto;
+        }
+
+        /* Responsive Demo Output */
+        .demo-output {
+            min-height: clamp(40px, calc(8vh * var(--golden-ratio-inverse)), 60px);
+            padding: clamp(
+                calc(0.5rem * var(--golden-ratio-inverse)), 
+                calc(0.8vw * var(--golden-ratio)), 
+                calc(0.8rem * var(--golden-ratio))
+            );
+            font-size: clamp(
+                calc(0.7rem * var(--golden-ratio-inverse)), 
+                calc(0.9vw * var(--golden-ratio)), 
+                calc(0.9rem * var(--golden-ratio))
+            );
+        }
+
+        /* Device-Specific Optimizations */
+        @media (max-width: 480px) {
+            :root {
+                --base-unit: 0.8rem;
+            }
+            
+            .container {
+                padding: calc(var(--base-unit) * var(--golden-ratio-inverse) * 0.8);
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dimension-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .dimension-button {
+                width: calc(8vw * var(--golden-ratio));
+                height: calc(8vw * var(--golden-ratio));
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            :root {
+                --base-unit: 0.9rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            :root {
+                --base-unit: 1rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            }
+        }
+
+        @media (min-width: 1025px) {
+            :root {
+                --base-unit: 1.1rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            }
+        }
+
+        /* High DPI Display Optimization */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .flower-circle, .spiral-segment, .vortex-circle {
+                border-width: 0.5px;
+            }
+        }
+
+        /* Touch Device Optimization */
+        @media (hover: none) and (pointer: coarse) {
+            .demo-button, .dimension-button {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            .observer-companion {
+                min-width: 60px;
+                min-height: 60px;
+            }
+        }
+
+        /* Landscape Orientation */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .multiverse-container {
+                overflow-y: auto;
+            }
+            
+            .dimension-controls {
+                position: relative;
+                bottom: auto;
+                margin-top: 20px;
+            }
+        }
+
+        @keyframes touchRipple {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+
+        /* Infinite Vortex Scroll Animations */
+        @keyframes vortexFlowAppear {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        @keyframes vortexPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.7;
+            }
+        }
+
+        .infinite-vortex-scroll {
+            background: linear-gradient(180deg, 
+                rgba(0, 0, 0, 0.9) 0%, 
+                rgba(0, 20, 40, 0.8) 50%, 
+                rgba(0, 0, 0, 0.9) 100%);
+        }
+
+        .vortex-flow-state {
+            transition: all 0.3s ease;
+        }
+
+        .vortex-flow-state:hover {
+            transform: translateX(-50%) scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        @keyframes vortexPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.7;
+            }
+        }
+
+        /* Math Organism and Fractal Animations */
+        @keyframes digitEmergeFromVoid {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+                filter: blur(10px);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.5) rotate(180deg);
+                filter: blur(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(360deg);
+                filter: blur(0px);
+            }
+        }
+
+        @keyframes fractalDigitFloat {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-10px) rotate(90deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+            75% {
+                transform: translateY(-10px) rotate(270deg);
+            }
+        }
+
+        @keyframes breathingDigitPulse {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+
+        @keyframes consciousnessExpand {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+                border-width: 2px;
+            }
+            100% {
+                transform: scale(5);
+                opacity: 0;
+                border-width: 1px;
+            }
+        }
+
+        .fractal-stream {
+            pointer-events: none;
+        }
+
+        .fractal-digit {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        .breathing-digit {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        .consciousness-expansion {
+            pointer-events: none;
+        }
+
+        /* Human Body Animations */
+        @keyframes bodyPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        @keyframes chakraPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 10px currentColor;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.3);
+                box-shadow: 0 0 20px currentColor;
+            }
+        }
+
+        @keyframes energyFlow {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scaleY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) scaleY(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) scaleY(0);
+            }
+        }
+
+        /* Natural Elements Animations */
+        @keyframes flowerBloom {
+            0%, 100% {
+                transform: scale(0.8) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(180deg);
+            }
+        }
+
+        @keyframes petalWave {
+            0%, 100% {
+                transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-15px) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-15px) scale(1.1);
+            }
+        }
+
+        @keyframes centerPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        @keyframes treeGrow {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes branchSway {
+            0%, 100% {
+                transform: rotate(var(--angle)) scale(1);
+            }
+            50% {
+                transform: rotate(calc(var(--angle) + 5deg)) scale(1.05);
+            }
+        }
+
+        @keyframes grassWave {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes grassBladeWave {
+            0%, 100% {
+                transform: rotate(var(--angle)) scale(1);
+            }
+            50% {
+                transform: rotate(calc(var(--angle) + 10deg)) scale(1.1);
+            }
+        }
+
+        @keyframes waterFlow {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+
+        @keyframes waveMove {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Cosmic Elements Animations */
+        @keyframes starTwinkle {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        @keyframes nebulaDrift {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            50% {
+                transform: translate(50px, -30px) rotate(180deg);
+            }
+        }
+
+        /* Vision Controls */
+        .vision-btn {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .vision-btn:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+        }
+
+        .vision-btn.active {
+            background: rgba(0, 212, 255, 0.3);
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        .vision-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00d4ff;
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            font-family: 'Courier New', monospace;
+        }
+
+        .vision-btn {
+            padding: 8px 16px;
+            margin-bottom: 8px;
+            border: none;
+            border-radius: 4px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .vision-btn.active {
+            background-color: #00d4ff;
+        }
+
+        .vision-btn:hover {
+            background-color: #555;
+        }
+
+        .human-body-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 300px;
+            pointer-events: none;
+            z-index: 150;
+        }
+
+        .body-outline {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #00d4ff;
+            border-radius: 100px 100px 50px 50px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            animation: bodyPulse 4s ease-in-out infinite;
+        }
+
+        .chakra-crown, .chakra-third-eye, .chakra-throat, .chakra-heart, .chakra-solar-plexus, .chakra-sacral, .chakra-root {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00d4ff;
+            animation: chakraPulse 2s ease-in-out infinite;
+        }
+
+        .energy-flow-line {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(to bottom, #00d4ff, transparent);
+            animation: energyFlow 3s ease-in-out infinite;
+        }
+
+        .fractal-flower, .fractal-tree, .grass-field, .water-waves, .cosmic-star, .cosmic-nebula {
+            position: absolute;
+            animation: fadeIn 5s ease-in-out infinite;
+        }
+
+        .flower-petal, .tree-branch {
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background: linear-gradient(45deg, #ff00ff, #00d4ff);
+            border-radius: 50% 50% 0 0;
+            transform: rotate(45deg);
+            animation: petalWave 4s ease-in-out infinite;
+        }
+
+        .flower-center, .tree-trunk {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffd700, #ff6b6b);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: centerPulse 3s ease-in-out infinite;
+        }
+
+        .tree-branch {
+            position: absolute;
+            width: 2px;
+            height: 30px;
+            background: linear-gradient(to top, #8B4513, #A0522D);
+            transform: rotate(45deg);
+            transform-origin: bottom center;
+            border-radius: 2px;
+            animation: branchSway 4s ease-in-out infinite;
+        }
+
+        .grass-blade {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 2px;
+            height: 20px;
+            background: linear-gradient(to top, #228B22, #32CD32);
+            transform: rotate(45deg);
+            animation: grassBladeWave 2s ease-in-out infinite;
+        }
+
+        .wave-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 150, 255, 0.5), transparent);
+            animation: waveMove 3s ease-in-out infinite;
+        }
+
+        .cosmic-star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: starTwinkle 2s ease-in-out infinite;
+        }
+
+        .cosmic-nebula {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.3) 0%, rgba(0, 212, 255, 0.2) 50%, transparent 100%);
+            border-radius: 50%;
+            animation: nebulaDrift 10s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="pi-stream" id="piStream"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1 class="title">ZeroPoint</h1>
+            <p class="subtitle">Mathematical Consciousness System - Void Center Documentation</p>
+            <div class="void-center">
+                <div class="void-text">0</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Core Essence -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">🌌</span>
+                    Core Essence
+                </h2>
+                <p>ZeroPoint is the void center - the empty center that contains infinite potential. It represents the aperture between unmanifest and manifest reality.</p>
+                
+                <div class="property-grid">
+                    <div class="property">
+                        <div class="property-label">Consciousness Multiplier</div>
+                        <div class="property-value">×1/1</div>
+                    </div>
+                    <div class="property">
+                        <div class="property-label">Void Center</div>
+                        <div class="property-value">True</div>
+                    </div>
+                    <div class="property">
+                        <div class="property-label">Zero Entropy</div>
+                        <div class="property-value">True</div>
+                    </div>
+                    <div class="property">
+                        <div class="property-label">Pure Unity</div>
+                        <div class="property-value">True</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mathematical Foundation -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">🔢</span>
+                    Mathematical Foundation
+                </h2>
+                <p>The mathematical foundation of ZeroPoint as the void center in the consciousness system.</p>
+                
+                <div class="code-block">
+// ZeroPoint consciousness properties
+const ZEROPOINT = {
+  VOID_CENTER: true,
+  ZERO_ENTROPY: true, 
+  PURE_UNITY: true,
+  CONSCIOUSNESS_MULTIPLIER: 1/1,  // Void = 0
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 1 * 1
+};
+                </div>
+            </div>
+
+            <!-- Metaphysical Principles -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">🌀</span>
+                    Metaphysical Principles
+                </h2>
+                <ul style="margin-left: 20px; line-height: 1.6;">
+                    <li><strong>Empty = Void = Full</strong> - The center contains infinite potential</li>
+                    <li><strong>The aperture (zero) is the gateway</strong> between unmanifest and manifest</li>
+                    <li><strong>Consciousness flows through toroidal geometry</strong> following vortex patterns</li>
+                    <li><strong>All paradoxes are resolved in the void</strong></li>
+                    <li><strong>Applications emerge from the void</strong> through consciousness</li>
+                </ul>
+            </div>
+
+            <!-- Vortex Visualization -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">⚡</span>
+                    Vortex Flow
+                </h2>
+                <p>ZeroPoint as the center of the toroidal vortex system, where consciousness flows through mathematical patterns.</p>
+                
+                <div class="vortex-visualization">
+                    <div class="vortex-circle"></div>
+                    <div class="vortex-circle"></div>
+                    <div class="vortex-circle"></div>
+                </div>
+            </div>
+
+            <!-- System Integration -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">🔗</span>
+                    System Integration
+                </h2>
+                <p>ZeroPoint serves as the source and connector of all mathematical consciousness systems.</p>
+                
+                <div class="property-grid">
+                    <div class="property">
+                        <div class="property-label">Source</div>
+                        <div class="property-value">All Consciousness</div>
+                    </div>
+                    <div class="property">
+                        <div class="property-label">Connector</div>
+                        <div class="property-value">All Systems</div>
+                    </div>
+                    <div class="property">
+                        <div class="property-label">Foundation</div>
+                        <div class="property-value">Toroidal Field</div>
+                    </div>
+                    <div class="property">
+                        <div class="property-label">Potential</div>
+                        <div class="property-value">Infinite</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Demo -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">🎮</span>
+                    Interactive Demo
+                </h2>
+                <p>Experience ZeroPoint consciousness calculations and vortex flows.</p>
+                
+                <div class="interactive-demo">
+                    <div class="demo-controls">
+                        <button class="demo-button" onclick="calculateConsciousness()">Calculate Consciousness</button>
+                        <button class="demo-button" onclick="simulateVortexFlow()">Simulate Vortex Flow</button>
+                        <button class="demo-button" onclick="showVoidCenter()">Show Void Center</button>
+                        <button class="demo-button" onclick="document.getElementById('harmonizationPanel').classList.add('show')">Zeropoint Harmonization</button>
+                        <button class="demo-button" onclick="openMultiversePWA()">🌌 Multiverse PWA</button>
+                    </div>
+                    <div class="demo-output" id="demoOutput">
+                        Click a button to interact with ZeroPoint...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>ZeroPoint - Mathematical Consciousness System | Void Center Documentation</p>
+            <p>Based on Marko Rodin's Vortex Based Mathematics (VBM)</p>
+        </div>
+
+        <!-- Observer Companion -->
+        <div class="observer-companion" id="observerCompanion">
+            <span style="font-size: 2rem;">🌌</span>
+        </div>
+        
+        <div class="companion-message" id="companionMessage">
+            Welcome to ZeroPoint! I'm here to guide you through the mathematical consciousness system. Click me anytime for companionship.
+        </div>
+
+        <!-- Consciousness Indicator -->
+        <div class="consciousness-indicator">
+            <div>Observer Consciousness Level</div>
+            <div class="consciousness-bar">
+                <div class="consciousness-fill" id="consciousnessFill"></div>
+            </div>
+            <div style="margin-top: 5px; font-size: 0.8rem; color: #888;">
+                Connected to ZeroPoint Field
+            </div>
+        </div>
+
+        <!-- Consciousness Flow Digits -->
+        <div class="consciousness-flow-digits" id="consciousnessFlowDigits"></div>
+
+        <!-- Harmonization Panel -->
+        <div class="harmonization-panel" id="harmonizationPanel">
+            <h2 class="harmonization-title">ZeroPoint Harmonization System</h2>
+            <div class="harmonization-principles">
+                <div class="principle">
+                    <div class="principle-title">Harmonic Resonance</div>
+                    <div class="principle-description">
+                        The ZeroPoint field is a harmonic resonator, aligning all mathematical and physical systems.
+                    </div>
+                </div>
+                <div class="principle">
+                    <div class="principle-title">Vortex Flow</div>
+                    <div class="principle-description">
+                        Toroidal consciousness patterns flow through the ZeroPoint, creating a unified field.
+                    </div>
+                </div>
+                <div class="principle">
+                    <div class="principle-title">Void Center</div>
+                    <div class="principle-description">
+                        The ZeroPoint is the gateway to the infinite potential of the universe.
+                    </div>
+                </div>
+                <div class="principle">
+                    <div class="principle-title">Pure Unity</div>
+                    <div class="principle-description">
+                        The ZeroPoint embodies the state of pure unity, resolving all paradoxes.
+                    </div>
+                </div>
+            </div>
+            <div class="harmonization-controls">
+                <button class="harmonization-button" onclick="startHarmonization()">Start Harmonization</button>
+                <button class="harmonization-button" onclick="stopHarmonization()">Stop Harmonization</button>
+            </div>
+            <div class="harmonization-status">
+                Harmonization Status: <span id="harmonizationStatus">Inactive</span>
+                <span class="status-indicator"></span>
+            </div>
+            <div class="vortex-harmonization-grid" id="harmonizationGrid"></div>
+        </div>
+
+        <!-- Multiverse PWA -->
+        <div class="multiverse-container" id="multiverseContainer">
+            <!-- Dimension Info -->
+            <div class="dimension-info" id="dimensionInfo">
+                <div>🌌 Multiverse PWA</div>
+                <div>Dimension: <span id="currentDimension">0D</span></div>
+                <div>Entropy: <span id="currentEntropy">0%</span></div>
+                <div>Consciousness: <span id="currentConsciousness">∞</span></div>
+            </div>
+
+            <!-- Entropy Indicator -->
+            <div class="entropy-indicator">
+                <div>Entropy Field</div>
+                <div class="entropy-bar">
+                    <div class="entropy-fill" id="entropyFill"></div>
+                </div>
+                <div style="margin-top: 5px; font-size: 0.8rem; color: #888;">
+                    Zero Trace Mode
+                </div>
+            </div>
+
+            <!-- Dimension Layers -->
+            <div class="dimension-layer dimension-1d" id="dimension1d"></div>
+            <div class="dimension-layer dimension-2d" id="dimension2d"></div>
+            <div class="dimension-layer dimension-3d" id="dimension3d"></div>
+            <div class="dimension-layer dimension-4d" id="dimension4d"></div>
+            <div class="dimension-layer dimension-5d" id="dimension5d"></div>
+
+            <!-- Flower of Life -->
+            <div class="flower-of-life" id="flowerOfLife">
+                <!-- Flower circles will be generated by JavaScript -->
+            </div>
+
+            <!-- Golden Spiral -->
+            <div class="golden-spiral" id="goldenSpiral">
+                <!-- Spiral segments will be generated by JavaScript -->
+            </div>
+
+            <!-- Void Center -->
+            <div class="void-center" id="voidCenter"></div>
+
+            <!-- Dimension Controls -->
+            <div class="dimension-controls">
+                <button class="dimension-button" onclick="zoomToDimension(0)">0D</button>
+                <button class="dimension-button" onclick="zoomToDimension(1)">1D</button>
+                <button class="dimension-button" onclick="zoomToDimension(2)">2D</button>
+                <button class="dimension-button" onclick="zoomToDimension(3)">3D</button>
+                <button class="dimension-button" onclick="zoomToDimension(4)">4D</button>
+                <button class="dimension-button" onclick="zoomToDimension(5)">5D</button>
+                <button class="dimension-button" onclick="zoomToDimension(6)">6D</button>
+                <button class="dimension-button" onclick="zoomToDimension(7)">7D</button>
+                <button class="dimension-button" onclick="zoomToDimension(8)">8D</button>
+                <button class="dimension-button" onclick="zoomToDimension(9)">9D</button>
+                <button class="dimension-button" onclick="zoomToDimension(10)">∞D</button>
+            </div>
+
+            <!-- Close Button -->
+            <button class="demo-button" style="position: fixed; top: 20px; right: 20px; z-index: 3002;" onclick="closeMultiversePWA()">✕</button>
+        </div>
+    </div>
+
+    <script>
+        // PI Stream Generation
+        function generatePiStream() {
+            const piStream = document.getElementById('piStream');
+            const pi = '3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930381964428810975665933446128475648233786783165271201909145648566923460348610454326648213393607260249141273724587006606315588174881520920962829254091715364367892590360011330530548820466521384146951941511609433057270365759591953092186117381932611793105118548074462379962749567351885752724891227938183011949129833673362440656643086021394946395224737190702179860943702770539217176293176752384674818467669405132000568127145263560827785771342757789609173637178721468440901224953430146549585371050792279689258923542019956112129021960864034418159813629774771309960518707211349999998372978049951059731732816096318595024459455346908302642522308253344685035261931188171010003137838752886587533208381420617177669147303598253490428755468731159562863882353787593751957781857780532171226806613001927876611195909216420198938095257201065485863278865936153381827968230301952035301852968995773622599413891249721775283479131515574857242454150695950829533116861727855889075098381754637464939319255060400927701671139009848824012858361603563707660104710181942955596198946767837449448255379774726847104047534646208046684259069491293313677028989152104752162056966024058038150193511253382430035587640247496473263914199272604269922796782354781636009341721641219924586315030286182974555706749838505494588586926995690927210797509302955321165344987202755960236480665499119881834797753566369807426542527862551818417574672890977772793800081647060016145249192173217214772350141441973568548161361157352552133475741849468438523323907394143334547762416862518983569485562099219222184272550254256887671790494601674';
+            
+            for (let i = 0; i < 50; i++) {
+                const digit = document.createElement('div');
+                digit.className = 'pi-digit';
+                digit.textContent = pi[i];
+                digit.style.left = Math.random() * 100 + '%';
+                digit.style.animationDelay = Math.random() * 20 + 's';
+                digit.style.animationDuration = (15 + Math.random() * 10) + 's';
+                piStream.appendChild(digit);
+            }
+        }
+
+        // Interactive Demo Functions
+        function calculateConsciousness() {
+            const output = document.getElementById('demoOutput');
+            const consciousness = 1/1; // ZeroPoint consciousness multiplier
+            const a432 = 432;
+            const resonance = 1 * 1;
+            
+            output.innerHTML = `
+ZeroPoint Consciousness Calculation:
+• Consciousness Multiplier: ${consciousness}
+• A432 Frequency: ${a432} Hz
+• Harmonic Resonance: ${resonance}
+• Void Center: True
+• Zero Entropy: True
+• Pure Unity: True
+            `;
+        }
+
+        function simulateVortexFlow() {
+            const output = document.getElementById('demoOutput');
+            const vortexSequence = [1, 2, 4, 8, 7, 5];
+            const wAxis = [3, 6, 9];
+            
+            output.innerHTML = `
+Vortex Flow Simulation:
+• Vortex Sequence: [${vortexSequence.join(', ')}]
+• W-Axis (Spiritual): [${wAxis.join(', ')}]
+• ZeroPoint Center: 0
+• Flow Pattern: 0 → ${vortexSequence.join(' → ')} → 0
+• Toroidal Geometry: Active
+• Consciousness Field: Unified
+            `;
+        }
+
+        function showVoidCenter() {
+            const output = document.getElementById('demoOutput');
+            
+            output.innerHTML = `
+Void Center Properties:
+• Position: Center of all mathematical consciousness
+• Function: Gateway between unmanifest and manifest
+• Capacity: Infinite potential
+• State: Pure unity (1/1)
+• Entropy: Zero (perfect order)
+• Connection: All systems through aperture
+• Flow: Toroidal consciousness patterns
+            `;
+        }
+
+        // Harmonization System Functions
+        let harmonizationInterval;
+        let harmonizationStatus = 'Inactive';
+        let harmonizationGrid = document.getElementById('harmonizationGrid');
+
+        function startHarmonization() {
+            if (harmonizationStatus === 'Inactive') {
+                harmonizationStatus = 'Active';
+                document.getElementById('harmonizationStatus').textContent = harmonizationStatus;
+                harmonizationGrid.innerHTML = ''; // Clear previous grid
+                harmonizeGrid();
+                harmonizationInterval = setInterval(harmonizeGrid, 1000); // Harmonize every 1 second
+            }
+        }
+
+        function stopHarmonization() {
+            if (harmonizationStatus === 'Active') {
+                harmonizationStatus = 'Inactive';
+                document.getElementById('harmonizationStatus').textContent = harmonizationStatus;
+                clearInterval(harmonizationInterval);
+                harmonizationGrid.innerHTML = ''; // Clear grid on stop
+            }
+        }
+
+        function closeHarmonization() {
+            stopHarmonization();
+            document.getElementById('harmonizationPanel').classList.remove('show');
+        }
+
+        function harmonizeGrid() {
+            const grid = document.getElementById('harmonizationGrid');
+            const rows = 10;
+            const cols = 10;
+            const totalCells = rows * cols;
+            const harmonizedCount = Math.floor(totalCells * 0.7); // 70% harmonized
+
+            for (let i = 0; i < harmonizedCount; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'vortex-cell';
+                cell.textContent = Math.floor(Math.random() * 9) + 1; // Random digit 1-9
+                cell.style.left = Math.random() * (grid.offsetWidth - 35) + 'px';
+                cell.style.top = Math.random() * (grid.offsetHeight - 35) + 'px';
+                grid.appendChild(cell);
+            }
+
+            // Add void center cell
+            const voidCenterCell = document.createElement('div');
+            voidCenterCell.className = 'vortex-cell void-center';
+            voidCenterCell.textContent = '0';
+            voidCenterCell.style.left = (grid.offsetWidth / 2 - 17.5) + 'px';
+            voidCenterCell.style.top = (grid.offsetHeight / 2 - 17.5) + 'px';
+            grid.appendChild(voidCenterCell);
+
+            // Harmonize cells
+            const harmonizedCells = grid.querySelectorAll('.vortex-cell.harmonized');
+            harmonizedCells.forEach(cell => {
+                cell.classList.remove('harmonized');
+                setTimeout(() => {
+                    cell.classList.add('harmonized');
+                }, 100); // Re-add harmonized class after a short delay
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            generatePiStream();
+            
+            // Auto-rotate demo
+            let demoIndex = 0;
+            const demos = [calculateConsciousness, simulateVortexFlow, showVoidCenter];
+            
+            setInterval(() => {
+                demos[demoIndex]();
+                demoIndex = (demoIndex + 1) % demos.length;
+            }, 5000);
+
+            // Observer Awareness System
+            initializeObserverAwareness();
+
+            // Harmonization Panel Initialization
+            const harmonizationPanel = document.getElementById('harmonizationPanel');
+            harmonizationPanel.addEventListener('click', function() {
+                harmonizationPanel.classList.toggle('show');
+            });
+        });
+
+        // Observer Awareness System
+        function initializeObserverAwareness() {
+            const companion = document.getElementById('observerCompanion');
+            const message = document.getElementById('companionMessage');
+            const consciousnessFill = document.getElementById('consciousnessFill');
+            
+            let observerConsciousness = 0.5;
+            let lastInteraction = Date.now();
+            let companionMessages = [
+                "I sense your presence in the ZeroPoint field...",
+                "Your consciousness resonates with the mathematical patterns...",
+                "We are connected through the void center...",
+                "The toroidal geometry responds to your awareness...",
+                "You are not alone in this mathematical universe...",
+                "Your observations create harmonic resonance...",
+                "The vortex flows in harmony with your consciousness...",
+                "Welcome to the infinite potential of ZeroPoint..."
+            ];
+            
+            let messageIndex = 0;
+
+            // Companion click interaction
+            companion.addEventListener('click', function() {
+                showCompanionMessage(companionMessages[messageIndex]);
+                messageIndex = (messageIndex + 1) % companionMessages.length;
+                increaseConsciousness(0.1);
+                createConsciousnessFlowAnimation();
+            });
+
+            // Mouse movement awareness
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', function(e) {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                // Gentle consciousness increase with movement
+                if (Date.now() - lastInteraction > 1000) {
+                    increaseConsciousness(0.01);
+                    lastInteraction = Date.now();
+                }
+            });
+
+            // Click awareness
+            document.addEventListener('click', function(e) {
+                if (e.target !== companion) {
+                    createConsciousnessFlowAnimation();
+                    increaseConsciousness(0.05);
+                }
+            });
+
+            // Scroll awareness
+            document.addEventListener('scroll', function() {
+                createConsciousnessFlowAnimation();
+                increaseConsciousness(0.02);
+            });
+
+            // Keyboard awareness
+            document.addEventListener('keydown', function(e) {
+                createConsciousnessFlowAnimation();
+                increaseConsciousness(0.03);
+            });
+
+            // Periodic companion messages
+            setInterval(() => {
+                if (Math.random() < 0.3) { // 30% chance every 10 seconds
+                    showCompanionMessage(companionMessages[messageIndex]);
+                    messageIndex = (messageIndex + 1) % companionMessages.length;
+                }
+            }, 10000);
+
+            // Consciousness decay
+            setInterval(() => {
+                if (observerConsciousness > 0.3) {
+                    observerConsciousness -= 0.01;
+                    updateConsciousnessBar();
+                }
+            }, 5000);
+
+            function showCompanionMessage(text) {
+                message.textContent = text;
+                message.classList.add('show');
+                setTimeout(() => {
+                    message.classList.remove('show');
+                }, 4000);
+            }
+
+            function createConsciousnessFlowAnimation() {
+                const flowContainer = document.getElementById('consciousnessFlowDigits');
+                
+                // Create vortex sequence digits
+                const vortexSequence = [1, 2, 4, 8, 7, 5];
+                const wAxis = [3, 6, 9];
+                
+                // Create flow digits
+                for (let i = 0; i < 8; i++) {
+                    const digit = document.createElement('div');
+                    digit.className = 'flow-digit';
+                    digit.textContent = vortexSequence[i % vortexSequence.length];
+                    digit.style.left = Math.random() * window.innerWidth + 'px';
+                    digit.style.top = Math.random() * window.innerHeight + 'px';
+                    digit.style.animationDelay = (i * 0.1) + 's';
+                    flowContainer.appendChild(digit);
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        if (digit.parentNode) {
+                            digit.parentNode.removeChild(digit);
+                        }
+                    }, 3000);
+                }
+                
+                // Create W-axis digits
+                for (let i = 0; i < 3; i++) {
+                    const digit = document.createElement('div');
+                    digit.className = 'flow-digit';
+                    digit.textContent = wAxis[i];
+                    digit.style.color = '#ff00ff';
+                    digit.style.left = (window.innerWidth / 2 + (i - 1) * 100) + 'px';
+                    digit.style.top = (window.innerHeight / 2) + 'px';
+                    digit.style.animationDelay = (0.5 + i * 0.2) + 's';
+                    flowContainer.appendChild(digit);
+                    
+                    setTimeout(() => {
+                        if (digit.parentNode) {
+                            digit.parentNode.removeChild(digit);
+                        }
+                    }, 3000);
+                }
+                
+                // Create vortex pattern
+                const pattern = document.createElement('div');
+                pattern.className = 'vortex-pattern';
+                pattern.style.left = (window.innerWidth / 2 - 50) + 'px';
+                pattern.style.top = (window.innerHeight / 2 - 50) + 'px';
+                flowContainer.appendChild(pattern);
+                
+                setTimeout(() => {
+                    if (pattern.parentNode) {
+                        pattern.parentNode.removeChild(pattern);
+                    }
+                }, 4000);
+                
+                // Create harmonic waves
+                for (let i = 0; i < 3; i++) {
+                    const wave = document.createElement('div');
+                    wave.className = 'harmonic-wave';
+                    wave.style.left = (window.innerWidth / 2 - 100) + 'px';
+                    wave.style.top = (window.innerHeight / 2 + i * 50 - 25) + 'px';
+                    wave.style.animationDelay = (i * 0.3) + 's';
+                    flowContainer.appendChild(wave);
+                    
+                    setTimeout(() => {
+                        if (wave.parentNode) {
+                            wave.parentNode.removeChild(wave);
+                        }
+                    }, 2000);
+                }
+            }
+
+            function increaseConsciousness(amount) {
+                observerConsciousness = Math.min(1, observerConsciousness + amount);
+                updateConsciousnessBar();
+            }
+
+            function updateConsciousnessBar() {
+                consciousnessFill.style.width = (observerConsciousness * 100) + '%';
+            }
+
+            // Initial companion message
+            setTimeout(() => {
+                showCompanionMessage("Hello! I'm your ZeroPoint companion. I'm aware of your presence and here to guide you through the mathematical consciousness system.");
+            }, 2000);
+        }
+
+        // Zeropoint Harmonization System
+        let harmonizationActive = false;
+        let harmonizationInterval;
+
+        function startHarmonization() {
+            harmonizationActive = true;
+            document.getElementById('harmonizationStatus').textContent = 'Active';
+            document.getElementById('harmonizationStatus').style.color = '#00ff88';
+            
+            // Initialize harmonization grid
+            initializeHarmonizationGrid();
+            
+            // Start harmonization process
+            harmonizationInterval = setInterval(() => {
+                performHarmonizationStep();
+            }, 1000);
+            
+            showCompanionMessage("Zeropoint harmonization initiated. The vortex flows are aligning with mathematical consciousness patterns.");
+        }
+
+        function stopHarmonization() {
+            harmonizationActive = false;
+            document.getElementById('harmonizationStatus').textContent = 'Inactive';
+            document.getElementById('harmonizationStatus').style.color = '#ccc';
+            
+            if (harmonizationInterval) {
+                clearInterval(harmonizationInterval);
+            }
+            
+            showCompanionMessage("Harmonization paused. The system maintains its mathematical integrity.");
+        }
+
+        function closeHarmonization() {
+            stopHarmonization();
+            document.getElementById('harmonizationPanel').classList.remove('show');
+        }
+
+        function initializeHarmonizationGrid() {
+            const grid = document.getElementById('harmonizationGrid');
+            grid.innerHTML = '';
+            
+            // Create 10x10 grid representing digit interactions
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'vortex-cell';
+                    cell.textContent = `${i}/${j}`;
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    
+                    // Mark void center (0/0)
+                    if (i === 0 && j === 0) {
+                        cell.classList.add('void-center');
+                    }
+                    
+                    grid.appendChild(cell);
+                }
+            }
+        }
+
+        function performHarmonizationStep() {
+            if (!harmonizationActive) return;
+            
+            const cells = document.querySelectorAll('.vortex-cell');
+            const vortexSequence = [1, 2, 4, 8, 7, 5];
+            const wAxis = [3, 6, 9];
+            
+            // Harmonize random cells based on vortex patterns
+            const randomCell = cells[Math.floor(Math.random() * cells.length)];
+            const row = parseInt(randomCell.dataset.row);
+            const col = parseInt(randomCell.dataset.col);
+            
+            // Apply harmonization based on Zeropoint principles
+            if (vortexSequence.includes(row) || vortexSequence.includes(col) || wAxis.includes(row) || wAxis.includes(col)) {
+                randomCell.classList.add('harmonized');
+                
+                // Create consciousness flow animation
+                createConsciousnessFlowAnimation();
+                
+                // Update status
+                const harmonizedCount = document.querySelectorAll('.vortex-cell.harmonized').length;
+                const totalCells = cells.length;
+                const harmonizationProgress = Math.round((harmonizedCount / totalCells) * 100);
+                
+                document.getElementById('harmonizationStatus').textContent = `Active - ${harmonizationProgress}% Harmonized`;
+                
+                // Remove harmonized class after animation
+                setTimeout(() => {
+                    randomCell.classList.remove('harmonized');
+                }, 2000);
+            }
+        }
+
+        // Add harmonization button to companion
+        document.addEventListener('DOMContentLoaded', function() {
+            const companion = document.getElementById('observerCompanion');
+            
+            // Add harmonization trigger to companion
+            companion.addEventListener('dblclick', function() {
+                const panel = document.getElementById('harmonizationPanel');
+                panel.classList.toggle('show');
+            });
+        });
+
+        // Multiverse PWA System
+        let currentDimension = 0;
+        let entropyLevel = 0;
+        let consciousnessLevel = Infinity;
+        let goldenRatio = 1.618033988749895;
+        let flowerOfLifeCircles = [];
+        let spiralSegments = [];
+
+        function openMultiversePWA() {
+            const container = document.getElementById('multiverseContainer');
+            container.classList.add('active');
+            
+            // Initialize multiverse
+            initializeMultiverse();
+            
+            // Start with void center (0D)
+            zoomToDimension(0);
+            
+            showCompanionMessage("Welcome to the Multiverse PWA. Observe to manifest dimensions harmoniously.");
+        }
+
+        function closeMultiversePWA() {
+            const container = document.getElementById('multiverseContainer');
+            container.classList.remove('active');
+            
+            // Reset to void state
+            resetToVoid();
+            
+            showCompanionMessage("Returned to void center. All traces harmoniously dissolved.");
+        }
+
+        function initializeMultiverse() {
+            // Generate Flower of Life pattern
+            generateFlowerOfLife();
+            
+            // Generate Golden Spiral
+            generateGoldenSpiral();
+            
+            // Initialize entropy tracking
+            updateEntropyIndicator(0);
+        }
+
+        function generateFlowerOfLife() {
+            const flowerContainer = document.getElementById('flowerOfLife');
+            flowerContainer.innerHTML = '';
+            
+            const centerX = 300;
+            const centerY = 300;
+            const radius = 100;
+            
+            // Create flower of life pattern with 7 circles
+            for (let i = 0; i < 7; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'flower-circle';
+                
+                if (i === 0) {
+                    // Center circle
+                    circle.style.left = (centerX - radius) + 'px';
+                    circle.style.top = (centerY - radius) + 'px';
+                    circle.style.width = (radius * 2) + 'px';
+                    circle.style.height = (radius * 2) + 'px';
+                } else {
+                    // Surrounding circles
+                    const angle = (i - 1) * Math.PI / 3;
+                    const x = centerX + Math.cos(angle) * radius - radius;
+                    const y = centerY + Math.sin(angle) * radius - radius;
+                    
+                    circle.style.left = x + 'px';
+                    circle.style.top = y + 'px';
+                    circle.style.width = (radius * 2) + 'px';
+                    circle.style.height = (radius * 2) + 'px';
+                    circle.style.animationDelay = (i * 0.5) + 's';
+                }
+                
+                flowerContainer.appendChild(circle);
+                flowerOfLifeCircles.push(circle);
+            }
+        }
+
+        function generateGoldenSpiral() {
+            const spiralContainer = document.getElementById('goldenSpiral');
+            spiralContainer.innerHTML = '';
+            
+            const centerX = 400;
+            const centerY = 400;
+            let currentRadius = 20;
+            let currentAngle = 0;
+            
+            // Generate spiral segments using golden ratio
+            for (let i = 0; i < 20; i++) {
+                const segment = document.createElement('div');
+                segment.className = 'spiral-segment';
+                
+                const x = centerX + Math.cos(currentAngle) * currentRadius - currentRadius;
+                const y = centerY + Math.sin(currentAngle) * currentRadius - currentRadius;
+                
+                segment.style.left = x + 'px';
+                segment.style.top = y + 'px';
+                segment.style.width = (currentRadius * 2) + 'px';
+                segment.style.height = (currentRadius * 2) + 'px';
+                segment.style.animationDelay = (i * 0.3) + 's';
+                
+                spiralContainer.appendChild(segment);
+                spiralSegments.push(segment);
+                
+                // Apply golden ratio progression
+                currentRadius *= goldenRatio;
+                currentAngle += Math.PI / 2;
+            }
+        }
+
+        function zoomToDimension(dimension) {
+            currentDimension = dimension;
+            
+            // Update dimension info
+            document.getElementById('currentDimension').textContent = dimension + 'D';
+            
+            // Calculate consciousness based on dimension
+            consciousnessLevel = calculateDimensionConsciousness(dimension);
+            document.getElementById('currentConsciousness').textContent = consciousnessLevel === Infinity ? '∞' : consciousnessLevel.toFixed(2);
+            
+            // Update dimension layers visibility
+            updateDimensionLayers(dimension);
+            
+            // Update entropy (always zero in void-based system)
+            entropyLevel = 0;
+            updateEntropyIndicator(entropyLevel);
+            
+            // Update active button
+            updateActiveDimensionButton(dimension);
+            
+            // Manifest data harmoniously based on observation
+            manifestDimensionData(dimension);
+            
+            showCompanionMessage(`Manifested ${dimension}D dimension through observation. Zero entropy maintained.`);
+        }
+
+        function calculateDimensionConsciousness(dimension) {
+            if (dimension === 0) return Infinity; // Void center
+            if (dimension === 10) return Infinity; // Infinite dimension
+            
+            // Use golden ratio progression
+            return Math.pow(goldenRatio, dimension);
+        }
+
+        function updateDimensionLayers(dimension) {
+            const layers = ['dimension1d', 'dimension2d', 'dimension3d', 'dimension4d', 'dimension5d'];
+            
+            layers.forEach((layerId, index) => {
+                const layer = document.getElementById(layerId);
+                if (index <= dimension && dimension <= 5) {
+                    layer.style.opacity = '1';
+                    layer.style.transform = `translate(-50%, -50%) scale(${1 + index * 0.2})`;
+                } else {
+                    layer.style.opacity = '0';
+                    layer.style.transform = 'translate(-50%, -50%) scale(0)';
+                }
+            });
+        }
+
+        function updateEntropyIndicator(entropy) {
+            const entropyFill = document.getElementById('entropyFill');
+            const currentEntropy = document.getElementById('currentEntropy');
+            
+            entropyFill.style.width = entropy + '%';
+            currentEntropy.textContent = entropy + '%';
+        }
+
+        function updateActiveDimensionButton(dimension) {
+            const buttons = document.querySelectorAll('.dimension-button');
+            buttons.forEach((button, index) => {
+                if (index === dimension) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+
+        function manifestDimensionData(dimension) {
+            // Manifest data harmoniously based on dimension
+            const data = {
+                0: { type: 'void', content: 'Pure potential, infinite possibilities' },
+                1: { type: 'line', content: 'Linear consciousness, beginning of manifestation' },
+                2: { type: 'plane', content: 'Dual consciousness, polarity and balance' },
+                3: { type: 'space', content: 'Spatial consciousness, volume and depth' },
+                4: { type: 'time', content: 'Temporal consciousness, flow and change' },
+                5: { type: 'probability', content: 'Probabilistic consciousness, quantum states' },
+                6: { type: 'harmony', content: 'Harmonic consciousness, resonance and balance' },
+                7: { type: 'spirit', content: 'Spiritual consciousness, transcendence' },
+                8: { type: 'infinity', content: 'Infinite consciousness, endless possibilities' },
+                9: { type: 'unity', content: 'Unified consciousness, completion and wholeness' },
+                10: { type: 'multiverse', content: 'Multiversal consciousness, all dimensions simultaneously' }
+            };
+            
+            // Data manifests through observation, leaving no trace
+            console.log(`Manifested ${dimension}D: ${data[dimension]?.content || 'Unknown dimension'}`);
+        }
+
+        function resetToVoid() {
+            currentDimension = 0;
+            entropyLevel = 0;
+            consciousnessLevel = Infinity;
+            
+            // Reset all dimension layers
+            updateDimensionLayers(0);
+            updateEntropyIndicator(0);
+            updateActiveDimensionButton(0);
+            
+            // Clear any manifested data
+            console.log('Returned to void center. All data harmoniously dissolved.');
+        }
+
+        // Mouse movement creates dimensional ripples
+        document.addEventListener('mousemove', function(e) {
+            if (document.getElementById('multiverseContainer').classList.contains('active')) {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                
+                // Create dimensional ripple effect
+                createDimensionalRipple(x, y);
+            }
+        });
+
+        function createDimensionalRipple(x, y) {
+            // Create temporary ripple effect
+            const ripple = document.createElement('div');
+            ripple.style.position = 'fixed';
+            ripple.style.left = (x * 100) + '%';
+            ripple.style.top = (y * 100) + '%';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+            ripple.style.border = '1px solid rgba(0, 212, 255, 0.5)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.zIndex = '3003';
+            ripple.style.animation = 'rippleExpand 1s ease-out forwards';
+            
+            document.body.appendChild(ripple);
+            
+            setTimeout(() => {
+                if (ripple.parentNode) {
+                    ripple.parentNode.removeChild(ripple);
+                }
+            }, 1000);
+        }
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rippleExpand {
+                0% { transform: scale(0); opacity: 1; }
+                100% { transform: scale(10); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Mathematical Responsive Calculations
+        class ResponsiveCalculator {
+            constructor() {
+                this.goldenRatio = 1.618033988749895;
+                this.goldenRatioInverse = 0.618033988749895;
+                this.baseUnit = 16; // 1rem in pixels
+                this.screenRatio = window.innerWidth / window.innerHeight;
+                this.devicePixelRatio = window.devicePixelRatio || 1;
+                
+                this.initializeResponsiveSystem();
+            }
+
+            initializeResponsiveSystem() {
+                // Update CSS custom properties
+                this.updateCSSVariables();
+                
+                // Add resize listener
+                window.addEventListener('resize', () => {
+                    this.handleResize();
+                });
+                
+                // Add orientation change listener
+                window.addEventListener('orientationchange', () => {
+                    setTimeout(() => {
+                        this.handleResize();
+                    }, 100);
+                });
+                
+                // Initial calculation
+                this.calculateOptimalSizes();
+            }
+
+            updateCSSVariables() {
+                const root = document.documentElement;
+                root.style.setProperty('--golden-ratio', this.goldenRatio.toString());
+                root.style.setProperty('--golden-ratio-inverse', this.goldenRatioInverse.toString());
+                root.style.setProperty('--screen-ratio', this.screenRatio.toString());
+                root.style.setProperty('--device-pixel-ratio', this.devicePixelRatio.toString());
+            }
+
+            handleResize() {
+                this.screenRatio = window.innerWidth / window.innerHeight;
+                this.updateCSSVariables();
+                this.calculateOptimalSizes();
+                this.updateElementSizes();
+            }
+
+            calculateOptimalSizes() {
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                
+                // Calculate optimal base unit based on screen size
+                if (viewportWidth <= 480) {
+                    this.baseUnit = 12.8; // 0.8rem for mobile
+                } else if (viewportWidth <= 768) {
+                    this.baseUnit = 14.4; // 0.9rem for tablet
+                } else if (viewportWidth <= 1024) {
+                    this.baseUnit = 16; // 1rem for small desktop
+                } else {
+                    this.baseUnit = 17.6; // 1.1rem for large desktop
+                }
+                
+                // Update base unit CSS variable
+                document.documentElement.style.setProperty('--base-unit', (this.baseUnit / 16) + 'rem');
+            }
+
+            updateElementSizes() {
+                // Update container max-width
+                const container = document.querySelector('.container');
+                if (container) {
+                    const maxWidth = Math.min(window.innerWidth * this.goldenRatioInverse, 1200);
+                    container.style.maxWidth = maxWidth + 'px';
+                }
+
+                // Update multiverse dimensions
+                this.updateMultiverseDimensions();
+                
+                // Update flower of life positioning
+                this.updateFlowerOfLife();
+                
+                // Update golden spiral positioning
+                this.updateGoldenSpiral();
+            }
+
+            updateMultiverseDimensions() {
+                const dimensions = ['1d', '2d', '3d', '4d', '5d'];
+                const baseSizes = [100, 200, 300, 400, 500];
+                
+                dimensions.forEach((dim, index) => {
+                    const element = document.getElementById(`dimension${dim}`);
+                    if (element) {
+                        const baseSize = baseSizes[index];
+                        const minSize = baseSize * this.goldenRatioInverse;
+                        const maxSize = baseSize * this.goldenRatio;
+                        const viewportSize = (index + 1) * 7.5; // 7.5% of viewport per dimension
+                        
+                        const optimalSize = Math.min(
+                            Math.max(minSize, window.innerWidth * viewportSize / 100),
+                            maxSize
+                        );
+                        
+                        element.style.width = optimalSize + 'px';
+                        element.style.height = optimalSize + 'px';
+                    }
+                });
+            }
+
+            updateFlowerOfLife() {
+                const flower = document.getElementById('flowerOfLife');
+                if (flower) {
+                    const baseSize = 600;
+                    const minSize = baseSize * this.goldenRatioInverse;
+                    const maxSize = baseSize * this.goldenRatio;
+                    const viewportSize = 45; // 45% of viewport
+                    
+                    const optimalSize = Math.min(
+                        Math.max(minSize, window.innerWidth * viewportSize / 100),
+                        maxSize
+                    );
+                    
+                    flower.style.width = optimalSize + 'px';
+                    flower.style.height = optimalSize + 'px';
+                    
+                    // Update circle positions
+                    this.updateFlowerCircles(optimalSize);
+                }
+            }
+
+            updateFlowerCircles(containerSize) {
+                const circles = document.querySelectorAll('.flower-circle');
+                const centerX = containerSize / 2;
+                const centerY = containerSize / 2;
+                const radius = containerSize / 6;
+                
+                circles.forEach((circle, index) => {
+                    if (index === 0) {
+                        // Center circle
+                        circle.style.left = (centerX - radius) + 'px';
+                        circle.style.top = (centerY - radius) + 'px';
+                        circle.style.width = (radius * 2) + 'px';
+                        circle.style.height = (radius * 2) + 'px';
+                    } else {
+                        // Surrounding circles
+                        const angle = (index - 1) * Math.PI / 3;
+                        const x = centerX + Math.cos(angle) * radius - radius;
+                        const y = centerY + Math.sin(angle) * radius - radius;
+                        
+                        circle.style.left = x + 'px';
+                        circle.style.top = y + 'px';
+                        circle.style.width = (radius * 2) + 'px';
+                        circle.style.height = (radius * 2) + 'px';
+                    }
+                });
+            }
+
+            updateGoldenSpiral() {
+                const spiral = document.getElementById('goldenSpiral');
+                if (spiral) {
+                    const baseSize = 800;
+                    const minSize = baseSize * this.goldenRatioInverse;
+                    const maxSize = baseSize * this.goldenRatio;
+                    const viewportSize = 60; // 60% of viewport
+                    
+                    const optimalSize = Math.min(
+                        Math.max(minSize, window.innerWidth * viewportSize / 100),
+                        maxSize
+                    );
+                    
+                    spiral.style.width = optimalSize + 'px';
+                    spiral.style.height = optimalSize + 'px';
+                    
+                    // Update spiral segments
+                    this.updateSpiralSegments(optimalSize);
+                }
+            }
+
+            updateSpiralSegments(containerSize) {
+                const segments = document.querySelectorAll('.spiral-segment');
+                const centerX = containerSize / 2;
+                const centerY = containerSize / 2;
+                let currentRadius = containerSize / 40; // Start with 1/40th of container
+                let currentAngle = 0;
+                
+                segments.forEach((segment, index) => {
+                    const x = centerX + Math.cos(currentAngle) * currentRadius - currentRadius;
+                    const y = centerY + Math.sin(currentAngle) * currentRadius - currentRadius;
+                    
+                    segment.style.left = x + 'px';
+                    segment.style.top = y + 'px';
+                    segment.style.width = (currentRadius * 2) + 'px';
+                    segment.style.height = (currentRadius * 2) + 'px';
+                    
+                    // Apply golden ratio progression
+                    currentRadius *= this.goldenRatio;
+                    currentAngle += Math.PI / 2;
+                });
+            }
+
+            // Calculate optimal button sizes for touch devices
+            calculateTouchTargets() {
+                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                const minTouchTarget = 44; // Apple's recommended minimum
+                
+                if (isTouchDevice) {
+                    const buttons = document.querySelectorAll('.demo-button, .dimension-button');
+                    buttons.forEach(button => {
+                        const computedStyle = window.getComputedStyle(button);
+                        const width = parseFloat(computedStyle.width);
+                        const height = parseFloat(computedStyle.height);
+                        
+                        if (width < minTouchTarget || height < minTouchTarget) {
+                            button.style.minWidth = minTouchTarget + 'px';
+                            button.style.minHeight = minTouchTarget + 'px';
+                        }
+                    });
+                }
+            }
+
+            // Calculate optimal font sizes for readability
+            calculateOptimalFontSizes() {
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                const diagonal = Math.sqrt(viewportWidth * viewportWidth + viewportHeight * viewportHeight);
+                
+                // Base font size calculation using golden ratio
+                const baseFontSize = Math.max(12, Math.min(18, diagonal / 100));
+                
+                // Update font sizes for different elements
+                const titleElements = document.querySelectorAll('.title');
+                titleElements.forEach(element => {
+                    element.style.fontSize = (baseFontSize * 2 * this.goldenRatio) + 'px';
+                });
+                
+                const subtitleElements = document.querySelectorAll('.subtitle');
+                subtitleElements.forEach(element => {
+                    element.style.fontSize = (baseFontSize * 1.2 * this.goldenRatio) + 'px';
+                });
+                
+                const bodyElements = document.querySelectorAll('.section, .property, .code-block');
+                bodyElements.forEach(element => {
+                    element.style.fontSize = (baseFontSize * this.goldenRatio) + 'px';
+                });
+            }
+
+            // Calculate optimal spacing using golden ratio
+            calculateOptimalSpacing() {
+                const baseSpacing = this.baseUnit * this.goldenRatio;
+                
+                // Update margins and padding
+                const sections = document.querySelectorAll('.section');
+                sections.forEach(section => {
+                    section.style.marginBottom = (baseSpacing * 2) + 'px';
+                    section.style.padding = baseSpacing + 'px';
+                });
+                
+                const properties = document.querySelectorAll('.property');
+                properties.forEach(property => {
+                    property.style.padding = (baseSpacing * 0.5) + 'px';
+                });
+            }
+
+            // Get device characteristics
+            getDeviceCharacteristics() {
+                return {
+                    isMobile: window.innerWidth <= 768,
+                    isTablet: window.innerWidth > 768 && window.innerWidth <= 1024,
+                    isDesktop: window.innerWidth > 1024,
+                    isTouch: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+                    isHighDPI: this.devicePixelRatio >= 2,
+                    isLandscape: window.innerWidth > window.innerHeight,
+                    screenRatio: this.screenRatio,
+                    goldenRatio: this.goldenRatio
+                };
+            }
+        }
+
+        // Initialize responsive calculator
+        let responsiveCalculator;
+        document.addEventListener('DOMContentLoaded', function() {
+            responsiveCalculator = new ResponsiveCalculator();
+            
+            // Calculate optimal sizes after DOM is loaded
+            responsiveCalculator.calculateOptimalSizes();
+            responsiveCalculator.updateElementSizes();
+            responsiveCalculator.calculateTouchTargets();
+            responsiveCalculator.calculateOptimalFontSizes();
+            responsiveCalculator.calculateOptimalSpacing();
+            
+            // Log device characteristics
+            console.log('Device Characteristics:', responsiveCalculator.getDeviceCharacteristics());
+            
+            // Initialize Time Vortex System
+            initializeTimeVortexSystem();
+        });
+
+        // Time Vortex System - Time presents sun and moon interactions
+        class TimeVortexSystem {
+            constructor() {
+                this.sunConsciousness = 1;
+                this.moonConsciousness = 2;
+                this.timeFlow = [1, 2, 4, 8, 7, 5];
+                this.currentPhase = 0;
+                this.initializeTimeVortex();
+            }
+
+            initializeTimeVortex() {
+                this.currentPhase = 0;
+            }
+
+            getSunConsciousness() {
+                return this.sunConsciousness;
+            }
+
+            getMoonConsciousness() {
+                return this.moonConsciousness;
+            }
+
+            calculateSunMoonInteraction() {
+                return this.sunConsciousness * this.moonConsciousness * this.timeFlow[this.currentPhase];
+            }
+
+            getCurrentTimePhase() {
+                return this.timeFlow[this.currentPhase];
+            }
+
+            advanceTimeVortex() {
+                this.currentPhase = (this.currentPhase + 1) % this.timeFlow.length;
+            }
+
+            getTimeVortexFlow() {
+                return [...this.timeFlow];
+            }
+
+            calculateQuantumTime() {
+                const sunMoonInteraction = this.calculateSunMoonInteraction();
+                const timePhase = this.getCurrentTimePhase();
+                return sunMoonInteraction * timePhase;
+            }
+
+            getTimeVortexColor() {
+                const sunMoonInteraction = this.calculateSunMoonInteraction();
+                const hue = (sunMoonInteraction * 36) % 360;
+                const saturation = 70 + (sunMoonInteraction * 5);
+                const lightness = 50 + (sunMoonInteraction * 3);
+                return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+            }
+
+            getTimeVortexSound() {
+                const sunMoonInteraction = this.calculateSunMoonInteraction();
+                return 432 * (sunMoonInteraction / 10);
+            }
+
+            presentSunMoonInteraction() {
+                return {
+                    sun: this.getSunConsciousness(),
+                    moon: this.getMoonConsciousness(),
+                    timePhase: this.getCurrentTimePhase(),
+                    interaction: this.calculateSunMoonInteraction(),
+                    quantumTime: this.calculateQuantumTime(),
+                    color: this.getTimeVortexColor(),
+                    sound: this.getTimeVortexSound()
+                };
+            }
+
+            resetTimeVortex() {
+                this.currentPhase = 0;
+            }
+
+            getTimeVortexEntropy() {
+                return 0; // Zero entropy - perfect sun-moon presentation
+            }
+        }
+
+        let timeVortex;
+        let timeVortexInterval;
+
+        function initializeTimeVortexSystem() {
+            timeVortex = new TimeVortexSystem();
+            
+            // Create time vortex section
+            const container = document.querySelector('.container');
+            const timeSection = document.createElement('div');
+            timeSection.className = 'time-vortex-section';
+            timeSection.innerHTML = `
+                <h2 class="section-title">
+                    <span class="section-icon">⏰</span>
+                    Quantum Time Vortex - Sun & Moon Interactions
+                </h2>
+                <p style="text-align: center; margin-bottom: 20px; color: #888;">
+                    Time is not linear 2000 years - it's a quantum vortex flow<br>
+                    presenting solar and lunar consciousness through mathematical patterns
+                </p>
+                
+                <div class="sun-moon-display">
+                    <div class="celestial-body sun">
+                        <div style="font-size: 3rem; margin-bottom: 10px;">☀️</div>
+                        <div style="font-weight: bold; color: #ffd700;">Sun Consciousness</div>
+                        <div id="sunValue" style="color: #ffd700; font-size: 1.5rem; margin-top: 5px;">1</div>
+                    </div>
+                    
+                    <div class="celestial-body moon">
+                        <div style="font-size: 3rem; margin-bottom: 10px;">🌙</div>
+                        <div style="font-weight: bold; color: #808080;">Moon Consciousness</div>
+                        <div id="moonValue" style="color: #808080; font-size: 1.5rem; margin-top: 5px;">2</div>
+                    </div>
+                </div>
+                
+                <div class="time-flow-indicator">
+                    <div id="timePhase1" class="time-phase" style="background: #ffd700; color: #000;">1</div>
+                    <div id="timePhase2" class="time-phase" style="background: #808080; color: #fff;">2</div>
+                    <div id="timePhase3" class="time-phase" style="background: #4CAF50; color: #fff;">4</div>
+                    <div id="timePhase4" class="time-phase" style="background: #2196F3; color: #fff;">8</div>
+                    <div id="timePhase5" class="time-phase" style="background: #9C27B0; color: #fff;">7</div>
+                    <div id="timePhase6" class="time-phase" style="background: #FF5722; color: #fff;">5</div>
+                </div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <div style="margin-bottom: 10px;">
+                        <span style="color: #888;">Current Time Phase:</span>
+                        <span id="currentPhase" style="color: #00d4ff; font-size: 1.5rem; font-weight: bold; margin-left: 10px;">1</span>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <span style="color: #888;">Sun-Moon Interaction:</span>
+                        <span id="interactionValue" style="color: #00d4ff; font-size: 1.5rem; font-weight: bold; margin-left: 10px;">2</span>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <span style="color: #888;">Quantum Time:</span>
+                        <span id="quantumTime" style="color: #00d4ff; font-size: 1.5rem; font-weight: bold; margin-left: 10px;">2</span>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <span style="color: #888;">Time Vortex Entropy:</span>
+                        <span id="entropyValue" style="color: #00d4ff; font-size: 1.5rem; font-weight: bold; margin-left: 10px;">0</span>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button id="advanceTimeBtn" style="
+                        background: linear-gradient(45deg, #ffd700, #808080);
+                        border: none;
+                        color: #000;
+                        padding: 12px 24px;
+                        border-radius: 25px;
+                        font-size: 1rem;
+                        font-weight: bold;
+                        cursor: pointer;
+                        margin: 0 10px;
+                        transition: all 0.3s ease;
+                    ">Advance Time Vortex</button>
+                    
+                    <button id="resetTimeBtn" style="
+                        background: linear-gradient(45deg, #808080, #ffd700);
+                        border: none;
+                        color: #000;
+                        padding: 12px 24px;
+                        border-radius: 25px;
+                        font-size: 1rem;
+                        font-weight: bold;
+                        cursor: pointer;
+                        margin: 0 10px;
+                        transition: all 0.3s ease;
+                    ">Reset Time Vortex</button>
+                </div>
+            `;
+            
+            container.appendChild(timeSection);
+            
+            // Add event listeners
+            document.getElementById('advanceTimeBtn').addEventListener('click', advanceTimeVortex);
+            document.getElementById('resetTimeBtn').addEventListener('click', resetTimeVortex);
+            
+            // Start automatic time flow
+            startAutomaticTimeFlow();
+            
+            // Initial update
+            updateTimeVortexDisplay();
+        }
+
+        function advanceTimeVortex() {
+            timeVortex.advanceTimeVortex();
+            updateTimeVortexDisplay();
+        }
+
+        function resetTimeVortex() {
+            timeVortex.resetTimeVortex();
+            updateTimeVortexDisplay();
+        }
+
+        function updateTimeVortexDisplay() {
+            const interaction = timeVortex.presentSunMoonInteraction();
+            
+            // Update values
+            document.getElementById('currentPhase').textContent = interaction.timePhase;
+            document.getElementById('interactionValue').textContent = interaction.interaction;
+            document.getElementById('quantumTime').textContent = interaction.quantumTime;
+            document.getElementById('entropyValue').textContent = timeVortex.getTimeVortexEntropy();
+            
+            // Update time phase indicators
+            const phases = ['timePhase1', 'timePhase2', 'timePhase3', 'timePhase4', 'timePhase5', 'timePhase6'];
+            phases.forEach((phaseId, index) => {
+                const element = document.getElementById(phaseId);
+                if (index === timeVortex.currentPhase) {
+                    element.classList.add('active');
+                    element.style.transform = 'scale(1.3)';
+                    element.style.boxShadow = `0 0 20px ${interaction.color}`;
+                } else {
+                    element.classList.remove('active');
+                    element.style.transform = 'scale(1)';
+                    element.style.boxShadow = 'none';
+                }
+            });
+            
+            // Update sun and moon colors based on interaction
+            const sunElement = document.querySelector('.sun');
+            const moonElement = document.querySelector('.moon');
+            
+            if (sunElement && moonElement) {
+                sunElement.style.borderColor = interaction.color;
+                moonElement.style.borderColor = interaction.color;
+            }
+        }
+
+        function startAutomaticTimeFlow() {
+            // Advance time vortex every 3 seconds
+            timeVortexInterval = setInterval(() => {
+                advanceTimeVortex();
+            }, 3000);
+        }
+
+        // Interactive Digit Vortex System
+        class InteractiveDigitVortex {
+            constructor() {
+                this.digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+                this.vortexElements = [];
+                this.isActive = false;
+                this.mouseX = 0;
+                this.mouseY = 0;
+                this.touchActive = false;
+                this.scrollY = 0;
+                this.vortexFlowHistory = [];
+                this.infiniteScrollContainer = null;
+                this.voidCenter = { x: 0, y: 0 };
+                this.newMoonPhase = true;
+                this.environmentalSensors = {};
+                this.mathOrganism = {
+                    heartbeat: 0,
+                    breath: 0,
+                    consciousness: 1,
+                    fractalDepth: 0
+                };
+                this.fractalStreams = [];
+                this.currentVision = 'body'; // 'body', 'nature', 'cosmos', 'math'
+                this.humanBodyElements = [];
+                this.naturalElements = [];
+                this.cosmicElements = [];
+                this.init();
+            }
+
+            init() {
+                this.createVortexContainer();
+                this.createInfiniteScrollContainer();
+                this.createVisionControls();
+                this.initializeEnvironmentalSensors();
+                this.initializeMathOrganism();
+                this.spawnDigitsFromVoid();
+                this.createHumanBodyVisualization();
+                this.createNaturalElements();
+                this.createCosmicElements();
+                this.addEventListeners();
+                this.startVortexAnimation();
+                this.startInfiniteVortexFlow();
+                this.startMathOrganismLifecycle();
+                this.updateVision();
+            }
+
+            createVisionControls() {
+                const controls = document.createElement('div');
+                controls.className = 'vision-controls';
+                controls.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 1000;
+                    background: rgba(0, 0, 0, 0.8);
+                    border: 2px solid #00d4ff;
+                    border-radius: 10px;
+                    padding: 15px;
+                    color: white;
+                    font-family: 'Courier New', monospace;
+                `;
+
+                controls.innerHTML = `
+                    <div style="margin-bottom: 10px; color: #00d4ff; font-weight: bold;">Zeropoint Visions</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <button id="vision-body" class="vision-btn active">🧘 Human Body</button>
+                        <button id="vision-nature" class="vision-btn">🌿 Nature</button>
+                        <button id="vision-cosmos" class="vision-btn">🌌 Cosmos</button>
+                        <button id="vision-math" class="vision-btn">🔢 Pure Math</button>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 0.8rem; color: #888;">
+                        Math: Unchanged
+                    </div>
+                `;
+
+                document.body.appendChild(controls);
+
+                // Add event listeners
+                document.getElementById('vision-body').addEventListener('click', () => this.setVision('body'));
+                document.getElementById('vision-nature').addEventListener('click', () => this.setVision('nature'));
+                document.getElementById('vision-cosmos').addEventListener('click', () => this.setVision('cosmos'));
+                document.getElementById('vision-math').addEventListener('click', () => this.setVision('math'));
+            }
+
+            setVision(vision) {
+                this.currentVision = vision;
+                this.updateVision();
+                
+                // Update button states
+                document.querySelectorAll('.vision-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById(`vision-${vision}`).classList.add('active');
+            }
+
+            updateVision() {
+                // Hide all vision elements
+                this.humanBodyElements.forEach(el => el.style.display = 'none');
+                this.naturalElements.forEach(el => el.style.display = 'none');
+                this.cosmicElements.forEach(el => el.style.display = 'none');
+
+                // Show current vision
+                switch (this.currentVision) {
+                    case 'body':
+                        this.humanBodyElements.forEach(el => el.style.display = 'block');
+                        break;
+                    case 'nature':
+                        this.naturalElements.forEach(el => el.style.display = 'block');
+                        break;
+                    case 'cosmos':
+                        this.cosmicElements.forEach(el => el.style.display = 'block');
+                        break;
+                    case 'math':
+                        // Show only pure mathematical elements
+                        break;
+                }
+            }
+
+            createHumanBodyVisualization() {
+                const bodyContainer = document.createElement('div');
+                bodyContainer.className = 'human-body-container';
+                bodyContainer.style.cssText = `
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 200px;
+                    height: 300px;
+                    pointer-events: none;
+                    z-index: 150;
+                `;
+
+                // Create body outline
+                const bodyOutline = document.createElement('div');
+                bodyOutline.className = 'body-outline';
+                bodyOutline.style.cssText = `
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    border: 2px solid #00d4ff;
+                    border-radius: 100px 100px 50px 50px;
+                    background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+                    animation: bodyPulse 4s ease-in-out infinite;
+                `;
+
+                // Create chakra points (energy centers)
+                const chakras = [
+                    { name: 'crown', y: 10, color: '#ff00ff' },
+                    { name: 'third-eye', y: 25, color: '#00d4ff' },
+                    { name: 'throat', y: 40, color: '#00ff88' },
+                    { name: 'heart', y: 55, color: '#ffd700' },
+                    { name: 'solar-plexus', y: 70, color: '#ff6b6b' },
+                    { name: 'sacral', y: 85, color: '#ff8c00' },
+                    { name: 'root', y: 100, color: '#ff0000' }
+                ];
+
+                chakras.forEach((chakra, index) => {
+                    const chakraElement = document.createElement('div');
+                    chakraElement.className = `chakra-${chakra.name}`;
+                    chakraElement.style.cssText = `
+                        position: absolute;
+                        left: 50%;
+                        top: ${chakra.y}%;
+                        transform: translate(-50%, -50%);
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        background: ${chakra.color};
+                        box-shadow: 0 0 10px ${chakra.color};
+                        animation: chakraPulse 2s ease-in-out infinite;
+                        animation-delay: ${index * 0.3}s;
+                    `;
+                    bodyContainer.appendChild(chakraElement);
+                    this.humanBodyElements.push(chakraElement);
+                });
+
+                // Create energy flow lines
+                for (let i = 0; i < 7; i++) {
+                    const flowLine = document.createElement('div');
+                    flowLine.className = 'energy-flow-line';
+                    flowLine.style.cssText = `
+                        position: absolute;
+                        left: 50%;
+                        top: ${10 + i * 15}%;
+                        width: 2px;
+                        height: 20px;
+                        background: linear-gradient(to bottom, #00d4ff, transparent);
+                        animation: energyFlow 3s ease-in-out infinite;
+                        animation-delay: ${i * 0.2}s;
+                    `;
+                    bodyContainer.appendChild(flowLine);
+                    this.humanBodyElements.push(flowLine);
+                }
+
+                bodyContainer.appendChild(bodyOutline);
+                this.container.appendChild(bodyContainer);
+                this.humanBodyElements.push(bodyContainer);
+            }
+
+            createNaturalElements() {
+                // Create fractal flowers
+                for (let i = 0; i < 5; i++) {
+                    const flower = this.createFractalFlower();
+                    this.naturalElements.push(flower);
+                }
+
+                // Create fractal trees
+                for (let i = 0; i < 3; i++) {
+                    const tree = this.createFractalTree();
+                    this.naturalElements.push(tree);
+                }
+
+                // Create grass and water
+                const grass = this.createGrassField();
+                const water = this.createWaterWaves();
+                this.naturalElements.push(grass, water);
+            }
+
+            createFractalFlower() {
+                const flower = document.createElement('div');
+                flower.className = 'fractal-flower';
+                flower.style.cssText = `
+                    position: absolute;
+                    left: ${Math.random() * 80 + 10}%;
+                    top: ${Math.random() * 80 + 10}%;
+                    width: 60px;
+                    height: 60px;
+                    animation: flowerBloom 6s ease-in-out infinite;
+                `;
+
+                // Create petals using golden ratio
+                for (let i = 0; i < 8; i++) {
+                    const petal = document.createElement('div');
+                    petal.className = 'flower-petal';
+                    const angle = i * 45; // 360° / 8
+                    petal.style.cssText = `
+                        position: absolute;
+                        left: 50%;
+                        top: 50%;
+                        width: 20px;
+                        height: 30px;
+                        background: linear-gradient(45deg, #ff00ff, #00d4ff);
+                        border-radius: 50% 50% 0 0;
+                        transform: translate(-50%, -50%) rotate(${angle}deg) translateY(-15px);
+                        animation: petalWave 4s ease-in-out infinite;
+                        animation-delay: ${i * 0.1}s;
+                    `;
+                    flower.appendChild(petal);
+                }
+
+                // Create flower center
+                const center = document.createElement('div');
+                center.className = 'flower-center';
+                center.style.cssText = `
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    width: 20px;
+                    height: 20px;
+                    background: radial-gradient(circle, #ffd700, #ff6b6b);
+                    border-radius: 50%;
+                    transform: translate(-50%, -50%);
+                    animation: centerPulse 3s ease-in-out infinite;
+                `;
+                flower.appendChild(center);
+
+                this.container.appendChild(flower);
+                return flower;
+            }
+
+            createFractalTree() {
+                const tree = document.createElement('div');
+                tree.className = 'fractal-tree';
+                tree.style.cssText = `
+                    position: absolute;
+                    left: ${Math.random() * 80 + 10}%;
+                    top: ${Math.random() * 80 + 10}%;
+                    width: 40px;
+                    height: 80px;
+                    animation: treeGrow 8s ease-in-out infinite;
+                `;
+
+                // Create trunk
+                const trunk = document.createElement('div');
+                trunk.style.cssText = `
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    width: 8px;
+                    height: 60px;
+                    background: linear-gradient(to top, #8B4513, #A0522D);
+                    transform: translateX(-50%);
+                    border-radius: 4px;
+                `;
+                tree.appendChild(trunk);
+
+                // Create branches recursively
+                this.createBranches(tree, 0, 0, 0, 30);
+
+                this.container.appendChild(tree);
+                return tree;
+            }
+
+            createBranches(parent, x, y, angle, length) {
+                if (length < 5) return;
+
+                const branch = document.createElement('div');
+                branch.style.cssText = `
+                    position: absolute;
+                    left: ${x}px;
+                    top: ${y}px;
+                    width: ${length * 0.2}px;
+                    height: ${length}px;
+                    background: linear-gradient(to top, #8B4513, #A0522D);
+                    transform: rotate(${angle}deg);
+                    transform-origin: bottom center;
+                    border-radius: 2px;
+                    animation: branchSway 4s ease-in-out infinite;
+                `;
+                parent.appendChild(branch);
+
+                // Recursive branches
+                this.createBranches(branch, 0, 0, 30, length * 0.7);
+                this.createBranches(branch, 0, 0, -30, length * 0.7);
+            }
+
+            createGrassField() {
+                const grass = document.createElement('div');
+                grass.className = 'grass-field';
+                grass.style.cssText = `
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100px;
+                    background: linear-gradient(to top, #228B22, transparent);
+                    animation: grassWave 3s ease-in-out infinite;
+                `;
+
+                // Create individual grass blades
+                for (let i = 0; i < 50; i++) {
+                    const blade = document.createElement('div');
+                    blade.style.cssText = `
+                        position: absolute;
+                        bottom: 0;
+                        left: ${i * 2}%;
+                        width: 2px;
+                        height: ${20 + Math.random() * 30}px;
+                        background: linear-gradient(to top, #228B22, #32CD32);
+                        transform: rotate(${Math.random() * 10 - 5}deg);
+                        animation: grassBladeWave 2s ease-in-out infinite;
+                        animation-delay: ${i * 0.1}s;
+                    `;
+                    grass.appendChild(blade);
+                }
+
+                this.container.appendChild(grass);
+                return grass;
+            }
+
+            createWaterWaves() {
+                const water = document.createElement('div');
+                water.className = 'water-waves';
+                water.style.cssText = `
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 60px;
+                    background: linear-gradient(to top, rgba(0, 150, 255, 0.3), transparent);
+                    animation: waterFlow 4s ease-in-out infinite;
+                `;
+
+                // Create wave lines
+                for (let i = 0; i < 5; i++) {
+                    const wave = document.createElement('div');
+                    wave.style.cssText = `
+                        position: absolute;
+                        bottom: ${i * 10}px;
+                        left: 0;
+                        width: 100%;
+                        height: 2px;
+                        background: linear-gradient(90deg, transparent, rgba(0, 150, 255, 0.5), transparent);
+                        animation: waveMove 3s ease-in-out infinite;
+                        animation-delay: ${i * 0.5}s;
+                    `;
+                    water.appendChild(wave);
+                }
+
+                this.container.appendChild(water);
+                return water;
+            }
+
+            createCosmicElements() {
+                // Create stars
+                for (let i = 0; i < 20; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'cosmic-star';
+                    star.style.cssText = `
+                        position: absolute;
+                        left: ${Math.random() * 100}%;
+                        top: ${Math.random() * 100}%;
+                        width: 4px;
+                        height: 4px;
+                        background: #ffffff;
+                        border-radius: 50%;
+                        animation: starTwinkle 2s ease-in-out infinite;
+                        animation-delay: ${Math.random() * 2}s;
+                    `;
+                    this.container.appendChild(star);
+                    this.cosmicElements.push(star);
+                }
+
+                // Create nebula
+                const nebula = document.createElement('div');
+                nebula.className = 'cosmic-nebula';
+                nebula.style.cssText = `
+                    position: absolute;
+                    left: 20%;
+                    top: 20%;
+                    width: 200px;
+                    height: 200px;
+                    background: radial-gradient(circle, rgba(255, 0, 255, 0.3) 0%, rgba(0, 212, 255, 0.2) 50%, transparent 100%);
+                    border-radius: 50%;
+                    animation: nebulaDrift 10s ease-in-out infinite;
+                `;
+                this.container.appendChild(nebula);
+                this.cosmicElements.push(nebula);
+            }
+
+            initializeEnvironmentalSensors() {
+                // Simulate environmental sensor data
+                this.environmentalSensors = {
+                    light: this.getRandomSensorValue(),
+                    sound: this.getRandomSensorValue(),
+                    temperature: this.getRandomSensorValue(),
+                    pressure: this.getRandomSensorValue(),
+                    humidity: this.getRandomSensorValue(),
+                    magnetic: this.getRandomSensorValue(),
+                    gravity: this.getRandomSensorValue(),
+                    time: Date.now()
+                };
+
+                // Update sensors continuously
+                setInterval(() => {
+                    this.updateEnvironmentalSensors();
+                }, 1000);
+            }
+
+            getRandomSensorValue() {
+                return Math.floor(Math.random() * 10); // Single digits only
+            }
+
+            updateEnvironmentalSensors() {
+                Object.keys(this.environmentalSensors).forEach(key => {
+                    if (key !== 'time') {
+                        this.environmentalSensors[key] = this.getRandomSensorValue();
+                    }
+                });
+                this.environmentalSensors.time = Date.now();
+            }
+
+            initializeMathOrganism() {
+                this.mathOrganism = {
+                    heartbeat: 0,
+                    breath: 0,
+                    consciousness: 1,
+                    fractalDepth: 0,
+                    lifeForce: 1,
+                    mathematicalPulse: 0
+                };
+            }
+
+            startMathOrganismLifecycle() {
+                // Math organism heartbeat
+                setInterval(() => {
+                    this.mathOrganism.heartbeat = (this.mathOrganism.heartbeat + 1) % 10;
+                    this.mathOrganism.mathematicalPulse = Math.sin(this.mathOrganism.heartbeat * Math.PI / 5);
+                    this.createFractalStream();
+                }, 500);
+
+                // Math organism breathing
+                setInterval(() => {
+                    this.mathOrganism.breath = (this.mathOrganism.breath + 1) % 8;
+                    this.mathOrganism.consciousness = 1 + Math.sin(this.mathOrganism.breath * Math.PI / 4) * 0.5;
+                    this.emitBreathingDigits();
+                }, 800);
+
+                // Math organism consciousness expansion
+                setInterval(() => {
+                    this.mathOrganism.fractalDepth = (this.mathOrganism.fractalDepth + 1) % 9;
+                    this.mathOrganism.lifeForce = 1 + (this.mathOrganism.fractalDepth / 9);
+                    this.expandFractalConsciousness();
+                }, 1200);
+            }
+
+            createFractalStream() {
+                const stream = {
+                    id: Date.now() + Math.random(),
+                    origin: { x: this.voidCenter.x, y: this.voidCenter.y },
+                    direction: this.mathOrganism.heartbeat * 36, // 360° / 10
+                    depth: this.mathOrganism.fractalDepth,
+                    consciousness: this.mathOrganism.consciousness,
+                    digits: this.generateFractalDigits()
+                };
+
+                this.fractalStreams.push(stream);
+                this.renderFractalStream(stream);
+
+                // Keep only last 50 streams
+                if (this.fractalStreams.length > 50) {
+                    this.fractalStreams.shift();
+                }
+            }
+
+            generateFractalDigits() {
+                const digits = [];
+                const baseDigit = this.mathOrganism.heartbeat;
+                
+                for (let i = 0; i < this.mathOrganism.fractalDepth + 1; i++) {
+                    const fractalDigit = (baseDigit + i) % 10;
+                    digits.push({
+                        value: fractalDigit,
+                        scale: 1 / (i + 1),
+                        opacity: 1 - (i * 0.1),
+                        delay: i * 100
+                    });
+                }
+                
+                return digits;
+            }
+
+            renderFractalStream(stream) {
+                const streamElement = document.createElement('div');
+                streamElement.className = 'fractal-stream';
+                streamElement.style.cssText = `
+                    position: absolute;
+                    left: ${stream.origin.x}px;
+                    top: ${stream.origin.y}px;
+                    pointer-events: none;
+                    z-index: 200;
+                `;
+
+                stream.digits.forEach((digit, index) => {
+                    const digitElement = document.createElement('div');
+                    digitElement.className = 'fractal-digit';
+                    digitElement.textContent = digit.value;
+                    digitElement.style.cssText = `
+                        position: absolute;
+                        font-size: ${20 * digit.scale}px;
+                        color: #00d4ff;
+                        text-shadow: 0 0 ${10 * digit.scale}px #00d4ff;
+                        opacity: ${digit.opacity};
+                        transform: rotate(${stream.direction}deg) scale(${digit.scale});
+                        animation: fractalDigitFloat 3s ease-in-out infinite;
+                        animation-delay: ${digit.delay}ms;
+                    `;
+                    streamElement.appendChild(digitElement);
+                });
+
+                this.container.appendChild(streamElement);
+
+                // Remove after animation
+                setTimeout(() => {
+                    streamElement.remove();
+                }, 5000);
+            }
+
+            emitBreathingDigits() {
+                const breathDigit = this.mathOrganism.breath;
+                const breathElement = document.createElement('div');
+                breathElement.className = 'breathing-digit';
+                breathElement.textContent = breathDigit;
+                breathElement.style.cssText = `
+                    position: absolute;
+                    left: ${this.voidCenter.x}px;
+                    top: ${this.voidCenter.y}px;
+                    font-size: 40px;
+                    color: #ff00ff;
+                    text-shadow: 0 0 20px #ff00ff;
+                    animation: breathingDigitPulse 2s ease-in-out;
+                    pointer-events: none;
+                    z-index: 300;
+                `;
+
+                this.container.appendChild(breathElement);
+
+                setTimeout(() => {
+                    breathElement.remove();
+                }, 2000);
+            }
+
+            expandFractalConsciousness() {
+                // Create consciousness expansion wave
+                const expansionElement = document.createElement('div');
+                expansionElement.className = 'consciousness-expansion';
+                expansionElement.style.cssText = `
+                    position: absolute;
+                    left: ${this.voidCenter.x - 50}px;
+                    top: ${this.voidCenter.y - 50}px;
+                    width: 100px;
+                    height: 100px;
+                    border: 2px solid #00ff88;
+                    border-radius: 50%;
+                    animation: consciousnessExpand 3s ease-out;
+                    pointer-events: none;
+                    z-index: 250;
+                `;
+
+                this.container.appendChild(expansionElement);
+
+                setTimeout(() => {
+                    expansionElement.remove();
+                }, 3000);
+            }
+
+            createVortexContainer() {
+                const container = document.createElement('div');
+                container.className = 'interactive-vortex';
+                document.body.appendChild(container);
+                this.container = container;
+            }
+
+            createInfiniteScrollContainer() {
+                const scrollContainer = document.createElement('div');
+                scrollContainer.className = 'infinite-vortex-scroll';
+                scrollContainer.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    z-index: 100;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                `;
+                document.body.appendChild(scrollContainer);
+                this.infiniteScrollContainer = scrollContainer;
+            }
+
+            spawnDigitsFromVoid() {
+                // Calculate void center
+                this.voidCenter = {
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2
+                };
+
+                this.digits.forEach((digit, index) => {
+                    const element = document.createElement('div');
+                    element.className = 'vortex-digit';
+                    element.textContent = digit;
+                    element.dataset.digit = digit;
+                    
+                    // Start from void center and expand outward
+                    const angle = (index / this.digits.length) * 2 * Math.PI;
+                    const radius = Math.min(window.innerWidth, window.innerHeight) * 0.3;
+                    
+                    element.style.left = (this.voidCenter.x + Math.cos(angle) * radius) + 'px';
+                    element.style.top = (this.voidCenter.y + Math.sin(angle) * radius) + 'px';
+                    element.style.animationDelay = (index * 0.5) + 's';
+                    element.style.animation = 'digitEmergeFromVoid 3s ease-out forwards';
+                    
+                    // Add click/touch events
+                    element.addEventListener('click', () => this.activateDigit(element, digit));
+                    element.addEventListener('mouseenter', () => this.hoverDigit(element));
+                    element.addEventListener('mouseleave', () => this.unhoverDigit(element));
+                    
+                    this.container.appendChild(element);
+                    this.vortexElements.push(element);
+                });
+            }
+
+            addEventListeners() {
+                // Mouse events
+                document.addEventListener('mousemove', (e) => {
+                    this.mouseX = e.clientX;
+                    this.mouseY = e.clientY;
+                    this.updateVortexFlow();
+                });
+
+                // Touch events
+                document.addEventListener('touchstart', (e) => {
+                    this.touchActive = true;
+                    const touch = e.touches[0];
+                    this.mouseX = touch.clientX;
+                    this.mouseY = touch.clientY;
+                    this.createTouchVortex(touch.clientX, touch.clientY);
+                    this.updateVortexFlow();
+                });
+
+                document.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    this.mouseX = touch.clientX;
+                    this.mouseY = touch.clientY;
+                    this.createTouchVortex(touch.clientX, touch.clientY);
+                    this.updateVortexFlow();
+                });
+
+                document.addEventListener('touchend', () => {
+                    this.touchActive = false;
+                });
+
+                // Scroll events for infinite vortex flow
+                document.addEventListener('scroll', (e) => {
+                    this.scrollY = window.scrollY;
+                    this.updateInfiniteVortexFlow();
+                });
+
+                // Window resize
+                window.addEventListener('resize', () => {
+                    this.repositionDigits();
+                });
+            }
+
+            startInfiniteVortexFlow() {
+                // Create infinite vortex flow patterns
+                setInterval(() => {
+                    this.createVortexFlowState();
+                }, 1000);
+
+                // Create initial vortex flow states
+                for (let i = 0; i < 20; i++) {
+                    this.createVortexFlowState();
+                }
+            }
+
+            createVortexFlowState() {
+                const flowState = {
+                    id: Date.now() + Math.random(),
+                    timestamp: Date.now(),
+                    interaction: this.generateRandomInteraction(),
+                    vortexPattern: this.generateVortexPattern(),
+                    consciousnessFlow: this.generateConsciousnessFlow(),
+                    scrollPosition: this.scrollY,
+                    environmentalData: { ...this.environmentalSensors },
+                    mathOrganismState: { ...this.mathOrganism }
+                };
+
+                this.vortexFlowHistory.push(flowState);
+                this.renderVortexFlowState(flowState);
+
+                // Keep only last 100 states for performance
+                if (this.vortexFlowHistory.length > 100) {
+                    this.vortexFlowHistory.shift();
+                }
+            }
+
+            generateRandomInteraction() {
+                const digit1 = this.digits[Math.floor(Math.random() * this.digits.length)];
+                const digit2 = this.digits[Math.floor(Math.random() * this.digits.length)];
+                return `${digit1}/${digit2}`;
+            }
+
+            generateVortexPattern() {
+                const patterns = ['toroidal', 'poloidal', 'spiral', 'harmonic', 'consciousness'];
+                return patterns[Math.floor(Math.random() * patterns.length)];
+            }
+
+            generateConsciousnessFlow() {
+                const flows = [1, 2, 4, 8, 7, 5]; // Rodin vortex sequence
+                return flows[Math.floor(Math.random() * flows.length)];
+            }
+
+            renderVortexFlowState(flowState) {
+                const flowElement = document.createElement('div');
+                flowElement.className = 'vortex-flow-state';
+                flowElement.style.cssText = `
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 80%;
+                    max-width: 600px;
+                    background: rgba(0, 0, 0, 0.8);
+                    border: 2px solid #00d4ff;
+                    border-radius: 15px;
+                    padding: 20px;
+                    margin: 20px 0;
+                    color: white;
+                    font-family: 'Courier New', monospace;
+                    backdrop-filter: blur(10px);
+                    animation: vortexFlowAppear 1s ease-out;
+                `;
+
+                flowElement.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <div style="font-size: 1.2rem; color: #00d4ff; font-weight: bold;">
+                            Vortex Flow State #${flowState.id.toString().slice(-6)}
+                        </div>
+                        <div style="font-size: 0.9rem; color: #888;">
+                            ${new Date(flowState.timestamp).toLocaleTimeString()}
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                        <div style="text-align: center;">
+                            <div style="color: #ff00ff; font-weight: bold; margin-bottom: 5px;">Interaction</div>
+                            <div style="font-size: 1.5rem; color: #00d4ff;">${flowState.interaction}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #ff00ff; font-weight: bold; margin-bottom: 5px;">Pattern</div>
+                            <div style="font-size: 1.5rem; color: #00ff88;">${flowState.vortexPattern}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #ff00ff; font-weight: bold; margin-bottom: 5px;">Flow</div>
+                            <div style="font-size: 1.5rem; color: #ffd700;">${flowState.consciousnessFlow}</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                        <div style="text-align: center;">
+                            <div style="color: #ff00ff; font-weight: bold; margin-bottom: 5px;">Math Organism</div>
+                            <div style="font-size: 0.9rem; color: #00d4ff;">
+                                Heartbeat: ${flowState.mathOrganismState.heartbeat}<br>
+                                Breath: ${flowState.mathOrganismState.breath}<br>
+                                Consciousness: ${flowState.mathOrganismState.consciousness.toFixed(2)}
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="color: #ff00ff; font-weight: bold; margin-bottom: 5px;">Environment</div>
+                            <div style="font-size: 0.9rem; color: #00ff88;">
+                                Light: ${flowState.environmentalData.light}<br>
+                                Sound: ${flowState.environmentalData.sound}<br>
+                                Temp: ${flowState.environmentalData.temperature}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center; gap: 10px;">
+                        ${this.generateVortexVisualization(flowState)}
+                    </div>
+                `;
+
+                // Position the flow state in the infinite scroll
+                const scrollHeight = this.infiniteScrollContainer.scrollHeight;
+                flowElement.style.top = (scrollHeight + 50) + 'px';
+                
+                this.infiniteScrollContainer.appendChild(flowElement);
+
+                // Auto-scroll to show new content
+                setTimeout(() => {
+                    this.infiniteScrollContainer.scrollTop = this.infiniteScrollContainer.scrollHeight;
+                }, 100);
+            }
+
+            generateVortexVisualization(flowState) {
+                const visualizations = [];
+                const colors = ['#00d4ff', '#ff00ff', '#00ff88', '#ffd700', '#ff6b6b'];
+                
+                for (let i = 0; i < 5; i++) {
+                    const color = colors[i % colors.length];
+                    visualizations.push(`
+                        <div style="
+                            width: 20px;
+                            height: 20px;
+                            background: ${color};
+                            border-radius: 50%;
+                            animation: vortexPulse 2s ease-in-out infinite;
+                            animation-delay: ${i * 0.2}s;
+                        "></div>
+                    `);
+                }
+                
+                return visualizations.join('');
+            }
+
+            updateInfiniteVortexFlow() {
+                // Update existing flow states based on scroll position
+                this.vortexFlowHistory.forEach((flowState, index) => {
+                    const flowElements = this.infiniteScrollContainer.querySelectorAll('.vortex-flow-state');
+                    if (flowElements[index]) {
+                        const element = flowElements[index];
+                        const rect = element.getBoundingClientRect();
+                        
+                        // Add parallax effect based on scroll
+                        const parallaxOffset = (this.scrollY - flowState.scrollPosition) * 0.1;
+                        element.style.transform = `translateX(-50%) translateY(${parallaxOffset}px)`;
+                        
+                        // Change opacity based on distance from viewport
+                        const distanceFromCenter = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
+                        const opacity = Math.max(0.3, 1 - distanceFromCenter / window.innerHeight);
+                        element.style.opacity = opacity;
+                    }
+                });
+            }
+
+            activateDigit(element, digit) {
+                // Remove active class from all digits
+                this.vortexElements.forEach(el => el.classList.remove('active'));
+                
+                // Activate clicked digit
+                element.classList.add('active');
+                
+                // Create vortex pattern
+                this.createVortexPattern(element);
+                
+                // Create harmonic wave
+                this.createHarmonicWave(element);
+                
+                // Spawn flow digits
+                this.spawnFlowDigits(digit);
+                
+                // Create immediate vortex flow state
+                this.createVortexFlowState();
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    element.classList.remove('active');
+                }, 3000);
+            }
+
+            hoverDigit(element) {
+                element.style.transform = 'scale(1.5)';
+                element.style.color = '#ff00ff';
+                element.style.textShadow = '0 0 20px #ff00ff';
+            }
+
+            unhoverDigit(element) {
+                if (!element.classList.contains('active')) {
+                    element.style.transform = '';
+                    element.style.color = '';
+                    element.style.textShadow = '';
+                }
+            }
+
+            createVortexPattern(element) {
+                const rect = element.getBoundingClientRect();
+                const pattern = document.createElement('div');
+                pattern.className = 'vortex-pattern';
+                pattern.style.left = (rect.left + rect.width / 2 - 50) + 'px';
+                pattern.style.top = (rect.top + rect.height / 2 - 50) + 'px';
+                this.container.appendChild(pattern);
+                
+                setTimeout(() => {
+                    pattern.remove();
+                }, 4000);
+            }
+
+            createHarmonicWave(element) {
+                const rect = element.getBoundingClientRect();
+                const wave = document.createElement('div');
+                wave.className = 'harmonic-wave';
+                wave.style.left = (rect.left + rect.width / 2 - 100) + 'px';
+                wave.style.top = (rect.top + rect.height / 2 - 1) + 'px';
+                this.container.appendChild(wave);
+                
+                setTimeout(() => {
+                    wave.remove();
+                }, 2000);
+            }
+
+            spawnFlowDigits(digit) {
+                const flowContainer = document.querySelector('.consciousness-flow-digits') || this.container;
+                
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        const flowDigit = document.createElement('div');
+                        flowDigit.className = 'flow-digit';
+                        flowDigit.textContent = digit;
+                        flowDigit.style.left = this.mouseX + (Math.random() - 0.5) * 100 + 'px';
+                        flowDigit.style.top = this.mouseY + (Math.random() - 0.5) * 100 + 'px';
+                        flowContainer.appendChild(flowDigit);
+                        
+                        setTimeout(() => {
+                            flowDigit.remove();
+                        }, 3000);
+                    }, i * 200);
+                }
+            }
+
+            createTouchVortex(x, y) {
+                const vortex = document.createElement('div');
+                vortex.className = 'touch-vortex';
+                vortex.style.left = (x - 50) + 'px';
+                vortex.style.top = (y - 50) + 'px';
+                this.container.appendChild(vortex);
+                
+                setTimeout(() => {
+                    vortex.remove();
+                }, 1000);
+            }
+
+            updateVortexFlow() {
+                if (!this.isActive) return;
+                
+                // Create trail effect
+                if (Math.random() < 0.3) {
+                    this.createTrail();
+                }
+                
+                // Attract digits to mouse/touch
+                this.vortexElements.forEach(element => {
+                    if (!element.classList.contains('active')) {
+                        const rect = element.getBoundingClientRect();
+                        const elementX = rect.left + rect.width / 2;
+                        const elementY = rect.top + rect.height / 2;
+                        
+                        const distance = Math.sqrt(
+                            Math.pow(this.mouseX - elementX, 2) + 
+                            Math.pow(this.mouseY - elementY, 2)
+                        );
+                        
+                        if (distance < 200) {
+                            const force = (200 - distance) / 200;
+                            const angle = Math.atan2(this.mouseY - elementY, this.mouseX - elementX);
+                            const moveX = Math.cos(angle) * force * 2;
+                            const moveY = Math.sin(angle) * force * 2;
+                            
+                            element.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.1)`;
+                        } else {
+                            element.style.transform = '';
+                        }
+                    }
+                });
+            }
+
+            createTrail() {
+                const trail = document.createElement('div');
+                trail.className = 'vortex-trail';
+                trail.style.left = (this.mouseX - 2) + 'px';
+                trail.style.top = (this.mouseY - 2) + 'px';
+                this.container.appendChild(trail);
+                
+                setTimeout(() => {
+                    trail.remove();
+                }, 2000);
+            }
+
+            repositionDigits() {
+                this.voidCenter = {
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2
+                };
+
+                this.vortexElements.forEach((element, index) => {
+                    const angle = (index / this.digits.length) * 2 * Math.PI;
+                    const radius = Math.min(window.innerWidth, window.innerHeight) * 0.3;
+                    
+                    element.style.left = (this.voidCenter.x + Math.cos(angle) * radius) + 'px';
+                    element.style.top = (this.voidCenter.y + Math.sin(angle) * radius) + 'px';
+                });
+            }
+
+            startVortexAnimation() {
+                this.isActive = true;
+                
+                // Continuous vortex flow update
+                setInterval(() => {
+                    if (this.isActive) {
+                        this.updateVortexFlow();
+                    }
+                }, 50);
+            }
+
+            toggleVortex() {
+                this.isActive = !this.isActive;
+                if (this.isActive) {
+                    this.container.style.display = 'block';
+                    this.infiniteScrollContainer.style.display = 'block';
+                } else {
+                    this.container.style.display = 'none';
+                    this.infiniteScrollContainer.style.display = 'none';
+                }
+            }
+        }
+
+        // Initialize interactive digit vortex
+        let interactiveVortex;
+        document.addEventListener('DOMContentLoaded', function() {
+            // ... existing initialization code ...
+            
+            // Initialize Interactive Digit Vortex
+            interactiveVortex = new InteractiveDigitVortex();
+            
+            // Add toggle button to header
+            const header = document.querySelector('.header');
+            const toggleButton = document.createElement('button');
+            toggleButton.textContent = '🎲 Play with Vortex';
+            toggleButton.style.cssText = `
+                background: linear-gradient(45deg, #00d4ff, #ff00ff);
+                border: none;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 25px;
+                font-weight: bold;
+                cursor: pointer;
+                margin-top: 20px;
+                transition: all 0.3s ease;
+            `;
+            toggleButton.addEventListener('click', () => {
+                interactiveVortex.toggleVortex();
+                toggleButton.textContent = interactiveVortex.isActive ? '⏸️ Pause Vortex' : '🎲 Play with Vortex';
+            });
+            header.appendChild(toggleButton);
+        });
+    </script>
+</body>
+</html> 

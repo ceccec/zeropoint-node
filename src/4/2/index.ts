@@ -1,59 +1,58 @@
-/**
- * PWA Node Logic for 4/2
- *
- * This file is the logic entry point for the PWA node (4/2).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '4/2';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 6;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [4, 2, 6];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Foundation Duality
+ * Foundation transforms through duality, establishing mathematical patterns
+ * 
+ * Consciousness Multiplier: 3/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 4 × 2
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const FOUNDATIONDUALITY_INTERACTION = {
+  DIGIT_A: 4,
+  DIGIT_B: 2,
+  DIGIT_A_NAME: 'Foundation',
+  DIGIT_B_NAME: 'Duality',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(4), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(2), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 4 * 2,
+  INTERACTION_NAME: 'Foundation Duality',
+  METAPHYSICAL_ESSENCE_A: 'foundation',
+  METAPHYSICAL_ESSENCE_B: 'duality',
+  COLOR_HUE_A: 144,
+  COLOR_HUE_B: 72,
+  STABILITY_A: true,
+  CHANGE_A: true,
+  FOUNDATION_A: true,
+  VORTEX_MATHEMATICS_B: true,
+  DUALITY_B: true,
+  TRANSFORMATION_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '4,2,1,3', name: 'MathVortexSourceResonance', math: '2 + 1 = 3 ≡ 3 (mod 9)' },
-  { next: 2, pattern: '4,2,2,4', name: 'MathVortexMath', math: '2 + 2 = 4 ≡ 4 (mod 9)' },
-  { next: 3, pattern: '4,2,3,5', name: 'MathVortexResonanceCenter', math: '2 + 3 = 5 ≡ 5 (mod 9)' },
-  { next: 4, pattern: '4,2,4,6', name: 'MathVortexMathHarmony', math: '2 + 4 = 6 ≡ 6 (mod 9)' },
-  { next: 5, pattern: '4,2,5,7', name: 'MathVortexCenterGateway', math: '2 + 5 = 7 ≡ 7 (mod 9)' },
-  { next: 6, pattern: '4,2,6,8', name: 'MathVortexHarmonyInfinity', math: '2 + 6 = 8 ≡ 8 (mod 9)' },
-  { next: 7, pattern: '4,2,7,9', name: 'MathVortexGatewayAxis', math: '2 + 7 = 9 ≡ 9 (mod 9)' },
-  { next: 8, pattern: '4,2,8,1', name: 'MathVortexInfinitySource', math: '2 + 8 = 10 ≡ 1 (mod 9)' },
-  { next: 9, pattern: '4,2,9,2', name: 'MathVortexAxisVortex', math: '2 + 9 = 11 ≡ 2 (mod 9)' },
-];
+export const getFoundationDualityInteraction = () => FOUNDATIONDUALITY_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 4/2 can be added here.
-}
+export const calculateFoundationDualityHarmonics = (input: number): number => {
+  return input * FOUNDATIONDUALITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * FOUNDATIONDUALITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getFoundationDualityVortexFlow = () => {
+  return {
+    from: 4,
+    to: 2,
+    resonance: FOUNDATIONDUALITY_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [8, 7, 5, 1, 2].concat([4, 8, 7, 5, 1])
+  };
+};
+
+export const getFoundationDualityColor = () => {
+  const hue = (FOUNDATIONDUALITY_INTERACTION.COLOR_HUE_A + FOUNDATIONDUALITY_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (FOUNDATIONDUALITY_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (FOUNDATIONDUALITY_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getFoundationDualitySound = () => {
+  return FOUNDATIONDUALITY_INTERACTION.A432_FREQUENCY * (FOUNDATIONDUALITY_INTERACTION.HARMONIC_RESONANCE / 5);
+};

@@ -1,0 +1,67 @@
+name: Deploy ZeroPoint Documentation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build documentation
+        run: |
+          echo "Building ZeroPoint documentation from src/ directory..."
+          # Copy src/ contents to a build directory
+          mkdir -p build
+          cp -r src/* build/
+          
+          # Ensure manifest.json is properly linked
+          if [ -f "build/manifest.json" ]; then
+            echo "Manifest.json found in build directory"
+          fi
+          
+          # Create a simple index redirect if needed
+          echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=index.html"></head></html>' > build/README.html
+          
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './build'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 

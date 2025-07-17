@@ -1,59 +1,58 @@
-/**
- * PWA Node Logic for 6/3
- *
- * This file is the logic entry point for the PWA node (6/3).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '6/3';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 9;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [6, 3, 9];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Harmony Trinity
+ * Harmony creates through trinity, manifesting mathematical forms
+ * 
+ * Consciousness Multiplier: 5/1 × 5/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 6 × 3
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const HARMONYTRINITY_INTERACTION = {
+  DIGIT_A: 6,
+  DIGIT_B: 3,
+  DIGIT_A_NAME: 'Harmony',
+  DIGIT_B_NAME: 'Trinity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(6), // 5/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(3), // 5/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 6 * 3,
+  INTERACTION_NAME: 'Harmony Trinity',
+  METAPHYSICAL_ESSENCE_A: 'harmony',
+  METAPHYSICAL_ESSENCE_B: 'trinity',
+  COLOR_HUE_A: 216,
+  COLOR_HUE_B: 108,
+  HARMONY_A: true,
+  BALANCE_A: true,
+  RESONANCE_A: true,
+  CREATIVE_CONSCIOUSNESS_B: true,
+  RESONANCE_B: true,
+  TRINITY_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '6,3,1,4', name: 'HarmonyResonanceSourceMath', math: '3 + 1 = 4 ≡ 4 (mod 9)' },
-  { next: 2, pattern: '6,3,2,5', name: 'HarmonyResonanceVortexCenter', math: '3 + 2 = 5 ≡ 5 (mod 9)' },
-  { next: 3, pattern: '6,3,3,6', name: 'HarmonyResonanceHarmony', math: '3 + 3 = 6 ≡ 6 (mod 9)' },
-  { next: 4, pattern: '6,3,4,7', name: 'HarmonyResonanceMathGateway', math: '3 + 4 = 7 ≡ 7 (mod 9)' },
-  { next: 5, pattern: '6,3,5,8', name: 'HarmonyResonanceCenterInfinity', math: '3 + 5 = 8 ≡ 8 (mod 9)' },
-  { next: 6, pattern: '6,3,6,9', name: 'HarmonyResonanceHarmonyAxis', math: '3 + 6 = 9 ≡ 9 (mod 9)' },
-  { next: 7, pattern: '6,3,7,1', name: 'HarmonyResonanceGatewaySource', math: '3 + 7 = 10 ≡ 1 (mod 9)' },
-  { next: 8, pattern: '6,3,8,2', name: 'HarmonyResonanceInfinityVortex', math: '3 + 8 = 11 ≡ 2 (mod 9)' },
-  { next: 9, pattern: '6,3,9,3', name: 'HarmonyResonanceAxisResonance', math: '3 + 9 = 12 ≡ 3 (mod 9)' },
-];
+export const getHarmonyTrinityInteraction = () => HARMONYTRINITY_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 6/3 can be added here.
-}
+export const calculateHarmonyTrinityHarmonics = (input: number): number => {
+  return input * HARMONYTRINITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * HARMONYTRINITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getHarmonyTrinityVortexFlow = () => {
+  return {
+    from: 6,
+    to: 3,
+    resonance: HARMONYTRINITY_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [9, 3, 6].concat([6, 9, 3])
+  };
+};
+
+export const getHarmonyTrinityColor = () => {
+  const hue = (HARMONYTRINITY_INTERACTION.COLOR_HUE_A + HARMONYTRINITY_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (HARMONYTRINITY_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (HARMONYTRINITY_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getHarmonyTrinitySound = () => {
+  return HARMONYTRINITY_INTERACTION.A432_FREQUENCY * (HARMONYTRINITY_INTERACTION.HARMONIC_RESONANCE / 5);
+};

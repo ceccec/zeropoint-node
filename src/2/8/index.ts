@@ -1,97 +1,58 @@
-/**
- * PWA Node Logic for 2/8
- *
- * This file is the logic entry point for the PWA node (2/8).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '2/8';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 1;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 10.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [2, 8, 1];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Duality Infinity
+ * Duality patterns through infinity, expanding mathematical consciousness
+ * 
+ * Consciousness Multiplier: 3/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 2 × 8
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
-
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '2,8,1,9', name: 'VortexInfinitySourceAxis', math: '8 + 1 = 9 ≡ 9 (mod 9)' },
-  { next: 2, pattern: '2,8,2,1', name: 'VortexInfinityVortexSource', math: '8 + 2 = 10 ≡ 1 (mod 9)' },
-  { next: 3, pattern: '2,8,3,2', name: 'VortexInfinityResonanceVortex', math: '8 + 3 = 11 ≡ 2 (mod 9)' },
-  { next: 4, pattern: '2,8,4,3', name: 'VortexInfinityMathResonance', math: '8 + 4 = 12 ≡ 3 (mod 9)' },
-  { next: 5, pattern: '2,8,5,4', name: 'VortexInfinityCenterMath', math: '8 + 5 = 13 ≡ 4 (mod 9)' },
-  { next: 6, pattern: '2,8,6,5', name: 'VortexInfinityHarmonyCenter', math: '8 + 6 = 14 ≡ 5 (mod 9)' },
-  { next: 7, pattern: '2,8,7,6', name: 'VortexInfinityGatewayHarmony', math: '8 + 7 = 15 ≡ 6 (mod 9)' },
-  { next: 8, pattern: '2,8,8,7', name: 'VortexInfinityGateway', math: '8 + 8 = 16 ≡ 7 (mod 9)' },
-  { next: 9, pattern: '2,8,9,8', name: 'VortexInfinityAxisInfinity', math: '8 + 9 = 17 ≡ 8 (mod 9)' },
-];
-
-/**
- * Vortex Void Interaction
- * Defines the interaction between Vortex (2) and Void/Fullness (8)
- */
-export const VORTEX_VOID_INTERACTION = {
-  INTERACTION_FREQUENCY: 432 * (2/8),
-  VORTEX_PATTERNS: {
-    VORTEX_VOID: [2, 8, 2],
-    VOID_VORTEX: [8, 2, 8]
-  },
-  VORTEX_MULTIPLIER: 1.2,
-  VOID_MULTIPLIER: 1.143
+export const DUALITYINFINITY_INTERACTION = {
+  DIGIT_A: 2,
+  DIGIT_B: 8,
+  DIGIT_A_NAME: 'Duality',
+  DIGIT_B_NAME: 'Infinity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(2), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(8), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 2 * 8,
+  INTERACTION_NAME: 'Duality Infinity',
+  METAPHYSICAL_ESSENCE_A: 'duality',
+  METAPHYSICAL_ESSENCE_B: 'infinity',
+  COLOR_HUE_A: 72,
+  COLOR_HUE_B: 288,
+  VORTEX_MATHEMATICS_A: true,
+  DUALITY_A: true,
+  TRANSFORMATION_A: true,
+  INFINITY_B: true,
+  VOID_B: true,
+  PATTERNS_B: true
 };
 
-/**
- * Vortex Void Interaction class
- */
-export class VortexVoidInteraction {
-  static getInteraction() {
-    return VORTEX_VOID_INTERACTION;
-  }
+export const getDualityInfinityInteraction = () => DUALITYINFINITY_INTERACTION;
 
-  static calculateInteractionStrength(a: number, b: number): number {
-    return a * 1.2 + b * 1.143; // Return weighted sum as expected
-  }
+export const calculateDualityInfinityHarmonics = (input: number): number => {
+  return input * DUALITYINFINITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * DUALITYINFINITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
 
-  static getVortexVoidPatterns() {
-    return [2, 8, 2]; // Return specific pattern as expected
-  }
+export const getDualityInfinityVortexFlow = () => {
+  return {
+    from: 2,
+    to: 8,
+    resonance: DUALITYINFINITY_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [4, 8, 7, 5, 1].concat([7, 5, 1, 2, 4])
+  };
+};
 
-  static calculateVortexVoidOperations(input: number): number {
-    return input % 9 || 9; // Return modulo 9 as expected
-  }
-}
+export const getDualityInfinityColor = () => {
+  const hue = (DUALITYINFINITY_INTERACTION.COLOR_HUE_A + DUALITYINFINITY_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (DUALITYINFINITY_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (DUALITYINFINITY_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
 
-// Harmonized export for test compatibility
-export const index = VORTEX_VOID_INTERACTION;
-
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 2/8 can be added here.
-}
+export const getDualityInfinitySound = () => {
+  return DUALITYINFINITY_INTERACTION.A432_FREQUENCY * (DUALITYINFINITY_INTERACTION.HARMONIC_RESONANCE / 5);
+};

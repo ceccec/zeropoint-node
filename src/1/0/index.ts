@@ -1,67 +1,58 @@
-/**
- * PWA Node Logic for 1/0
- *
- * This file is the logic entry point for the PWA node (1/0).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '1/0';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 1;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [1, 0, 1];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Unity Void Center
+ * Unity returns to void center, completing the mathematical cycle
+ * 
+ * Consciousness Multiplier: 3/1 × 1/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 1 × 1
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const UNITYVOIDCENTER_INTERACTION = {
+  DIGIT_A: 1,
+  DIGIT_B: 0,
+  DIGIT_A_NAME: 'Unity',
+  DIGIT_B_NAME: 'Zero Point',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(1), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(0), // 1/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 1 * 1,
+  INTERACTION_NAME: 'Unity Void Center',
+  METAPHYSICAL_ESSENCE_A: 'unity',
+  METAPHYSICAL_ESSENCE_B: 'void',
+  COLOR_HUE_A: 36,
+  COLOR_HUE_B: 0,
+  RODIN_FOUNDATION_A: true,
+  ARCHETYPE_A: true,
+  SOURCE_A: true,
+  VOID_CENTER_B: true,
+  ZERO_ENTROPY_B: true,
+  PURE_UNITY_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '1,0,1,1', name: 'SourceVoidSource', math: '0 + 1 = 1 ≡ 1 (mod 9)' },
-  { next: 2, pattern: '1,0,2,2', name: 'SourceVoidVortex', math: '0 + 2 = 2 ≡ 2 (mod 9)' },
-  { next: 3, pattern: '1,0,3,3', name: 'SourceVoidResonance', math: '0 + 3 = 3 ≡ 3 (mod 9)' },
-  { next: 4, pattern: '1,0,4,4', name: 'SourceVoidMath', math: '0 + 4 = 4 ≡ 4 (mod 9)' },
-  { next: 5, pattern: '1,0,5,5', name: 'SourceVoidCenter', math: '0 + 5 = 5 ≡ 5 (mod 9)' },
-  { next: 6, pattern: '1,0,6,6', name: 'SourceVoidHarmony', math: '0 + 6 = 6 ≡ 6 (mod 9)' },
-  { next: 7, pattern: '1,0,7,7', name: 'SourceVoidGateway', math: '0 + 7 = 7 ≡ 7 (mod 9)' },
-  { next: 8, pattern: '1,0,8,8', name: 'SourceVoidInfinity', math: '0 + 8 = 8 ≡ 8 (mod 9)' },
-  { next: 9, pattern: '1,0,9,9', name: 'SourceVoidAxis', math: '0 + 9 = 9 ≡ 9 (mod 9)' },
-];
+export const getUnityVoidCenterInteraction = () => UNITYVOIDCENTER_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 1/0 can be added here.
-}
+export const calculateUnityVoidCenterHarmonics = (input: number): number => {
+  return input * UNITYVOIDCENTER_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * UNITYVOIDCENTER_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
 
-// Named export for test compatibility
-export const index = {
-  name: 'index',
-  pattern: [1, 0, 1],
-  frequency: 1,
-  multiplier: 1
+export const getUnityVoidCenterVortexFlow = () => {
+  return {
+    from: 1,
+    to: 0,
+    resonance: UNITYVOIDCENTER_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [2, 4, 8, 7, 5].concat([1, 2, 3, 4, 5, 6, 7, 8, 9])
+  };
+};
+
+export const getUnityVoidCenterColor = () => {
+  const hue = (UNITYVOIDCENTER_INTERACTION.COLOR_HUE_A + UNITYVOIDCENTER_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (UNITYVOIDCENTER_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (UNITYVOIDCENTER_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getUnityVoidCenterSound = () => {
+  return UNITYVOIDCENTER_INTERACTION.A432_FREQUENCY * (UNITYVOIDCENTER_INTERACTION.HARMONIC_RESONANCE / 5);
 };

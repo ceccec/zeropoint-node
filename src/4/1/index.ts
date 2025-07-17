@@ -1,59 +1,58 @@
-/**
- * PWA Node Logic for 4/1
- *
- * This file is the logic entry point for the PWA node (4/1).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '4/1';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 5;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [4, 1, 5];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Foundation Unity Source
+ * Foundation flows from unity, building mathematical source
+ * 
+ * Consciousness Multiplier: 3/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 4 × 1
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const FOUNDATIONUNITYSOURCE_INTERACTION = {
+  DIGIT_A: 4,
+  DIGIT_B: 1,
+  DIGIT_A_NAME: 'Foundation',
+  DIGIT_B_NAME: 'Unity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(4), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(1), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 4 * 1,
+  INTERACTION_NAME: 'Foundation Unity Source',
+  METAPHYSICAL_ESSENCE_A: 'foundation',
+  METAPHYSICAL_ESSENCE_B: 'unity',
+  COLOR_HUE_A: 144,
+  COLOR_HUE_B: 36,
+  STABILITY_A: true,
+  CHANGE_A: true,
+  FOUNDATION_A: true,
+  RODIN_FOUNDATION_B: true,
+  ARCHETYPE_B: true,
+  SOURCE_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '4,1,1,2', name: 'MathSourceVortex', math: '1 + 1 = 2 ≡ 2 (mod 9)' },
-  { next: 2, pattern: '4,1,2,3', name: 'MathSourceVortexResonance', math: '1 + 2 = 3 ≡ 3 (mod 9)' },
-  { next: 3, pattern: '4,1,3,4', name: 'MathSourceResonanceMath', math: '1 + 3 = 4 ≡ 4 (mod 9)' },
-  { next: 4, pattern: '4,1,4,5', name: 'MathSourceMathCenter', math: '1 + 4 = 5 ≡ 5 (mod 9)' },
-  { next: 5, pattern: '4,1,5,6', name: 'MathSourceCenterHarmony', math: '1 + 5 = 6 ≡ 6 (mod 9)' },
-  { next: 6, pattern: '4,1,6,7', name: 'MathSourceHarmonyGateway', math: '1 + 6 = 7 ≡ 7 (mod 9)' },
-  { next: 7, pattern: '4,1,7,8', name: 'MathSourceGatewayInfinity', math: '1 + 7 = 8 ≡ 8 (mod 9)' },
-  { next: 8, pattern: '4,1,8,9', name: 'MathSourceInfinityAxis', math: '1 + 8 = 9 ≡ 9 (mod 9)' },
-  { next: 9, pattern: '4,1,9,1', name: 'MathSourceAxisSource', math: '1 + 9 = 10 ≡ 1 (mod 9)' },
-];
+export const getFoundationUnitySourceInteraction = () => FOUNDATIONUNITYSOURCE_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 4/1 can be added here.
-}
+export const calculateFoundationUnitySourceHarmonics = (input: number): number => {
+  return input * FOUNDATIONUNITYSOURCE_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * FOUNDATIONUNITYSOURCE_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getFoundationUnitySourceVortexFlow = () => {
+  return {
+    from: 4,
+    to: 1,
+    resonance: FOUNDATIONUNITYSOURCE_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [8, 7, 5, 1, 2].concat([2, 4, 8, 7, 5])
+  };
+};
+
+export const getFoundationUnitySourceColor = () => {
+  const hue = (FOUNDATIONUNITYSOURCE_INTERACTION.COLOR_HUE_A + FOUNDATIONUNITYSOURCE_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (FOUNDATIONUNITYSOURCE_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (FOUNDATIONUNITYSOURCE_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getFoundationUnitySourceSound = () => {
+  return FOUNDATIONUNITYSOURCE_INTERACTION.A432_FREQUENCY * (FOUNDATIONUNITYSOURCE_INTERACTION.HARMONIC_RESONANCE / 5);
+};

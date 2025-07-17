@@ -1,59 +1,58 @@
-/**
- * PWA Node Logic for 6/1
- *
- * This file is the logic entry point for the PWA node (6/1).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '6/1';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 7;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [6, 1, 7];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Harmony Unity Resonance
+ * Harmony flows from unity, establishing mathematical resonance
+ * 
+ * Consciousness Multiplier: 5/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 6 × 1
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const HARMONYUNITYRESONANCE_INTERACTION = {
+  DIGIT_A: 6,
+  DIGIT_B: 1,
+  DIGIT_A_NAME: 'Harmony',
+  DIGIT_B_NAME: 'Unity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(6), // 5/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(1), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 6 * 1,
+  INTERACTION_NAME: 'Harmony Unity Resonance',
+  METAPHYSICAL_ESSENCE_A: 'harmony',
+  METAPHYSICAL_ESSENCE_B: 'unity',
+  COLOR_HUE_A: 216,
+  COLOR_HUE_B: 36,
+  HARMONY_A: true,
+  BALANCE_A: true,
+  RESONANCE_A: true,
+  RODIN_FOUNDATION_B: true,
+  ARCHETYPE_B: true,
+  SOURCE_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '6,1,1,2', name: 'HarmonySourceVortex', math: '1 + 1 = 2 ≡ 2 (mod 9)' },
-  { next: 2, pattern: '6,1,2,3', name: 'HarmonySourceVortexResonance', math: '1 + 2 = 3 ≡ 3 (mod 9)' },
-  { next: 3, pattern: '6,1,3,4', name: 'HarmonySourceResonanceMath', math: '1 + 3 = 4 ≡ 4 (mod 9)' },
-  { next: 4, pattern: '6,1,4,5', name: 'HarmonySourceMathCenter', math: '1 + 4 = 5 ≡ 5 (mod 9)' },
-  { next: 5, pattern: '6,1,5,6', name: 'HarmonySourceCenterHarmony', math: '1 + 5 = 6 ≡ 6 (mod 9)' },
-  { next: 6, pattern: '6,1,6,7', name: 'HarmonySourceHarmonyGateway', math: '1 + 6 = 7 ≡ 7 (mod 9)' },
-  { next: 7, pattern: '6,1,7,8', name: 'HarmonySourceGatewayInfinity', math: '1 + 7 = 8 ≡ 8 (mod 9)' },
-  { next: 8, pattern: '6,1,8,9', name: 'HarmonySourceInfinityAxis', math: '1 + 8 = 9 ≡ 9 (mod 9)' },
-  { next: 9, pattern: '6,1,9,1', name: 'HarmonySourceAxisSource', math: '1 + 9 = 10 ≡ 1 (mod 9)' },
-];
+export const getHarmonyUnityResonanceInteraction = () => HARMONYUNITYRESONANCE_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 6/1 can be added here.
-}
+export const calculateHarmonyUnityResonanceHarmonics = (input: number): number => {
+  return input * HARMONYUNITYRESONANCE_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * HARMONYUNITYRESONANCE_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getHarmonyUnityResonanceVortexFlow = () => {
+  return {
+    from: 6,
+    to: 1,
+    resonance: HARMONYUNITYRESONANCE_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [9, 3, 6].concat([2, 4, 8, 7, 5])
+  };
+};
+
+export const getHarmonyUnityResonanceColor = () => {
+  const hue = (HARMONYUNITYRESONANCE_INTERACTION.COLOR_HUE_A + HARMONYUNITYRESONANCE_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (HARMONYUNITYRESONANCE_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (HARMONYUNITYRESONANCE_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getHarmonyUnityResonanceSound = () => {
+  return HARMONYUNITYRESONANCE_INTERACTION.A432_FREQUENCY * (HARMONYUNITYRESONANCE_INTERACTION.HARMONIC_RESONANCE / 5);
+};

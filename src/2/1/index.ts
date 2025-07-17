@@ -1,108 +1,58 @@
-/**
- * PWA Node Logic for 2/1
- *
- * This file is the logic entry point for the PWA node (2/1).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '2/1';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 3;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [2, 1, 3];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Duality Unity Vortex
+ * Duality flows from unity, establishing mathematical foundation
+ * 
+ * Consciousness Multiplier: 3/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 2 × 1
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
-
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '2,1,1,2', name: 'VortexSourceVortex', math: '1 + 1 = 2 ≡ 2 (mod 9)' },
-  { next: 2, pattern: '2,1,2,3', name: 'VortexSourceVortexResonance', math: '1 + 2 = 3 ≡ 3 (mod 9)' },
-  { next: 3, pattern: '2,1,3,4', name: 'VortexSourceResonanceMath', math: '1 + 3 = 4 ≡ 4 (mod 9)' },
-  { next: 4, pattern: '2,1,4,5', name: 'VortexSourceMathCenter', math: '1 + 4 = 5 ≡ 5 (mod 9)' },
-  { next: 5, pattern: '2,1,5,6', name: 'VortexSourceCenterHarmony', math: '1 + 5 = 6 ≡ 6 (mod 9)' },
-  { next: 6, pattern: '2,1,6,7', name: 'VortexSourceHarmonyGateway', math: '1 + 6 = 7 ≡ 7 (mod 9)' },
-  { next: 7, pattern: '2,1,7,8', name: 'VortexSourceGatewayInfinity', math: '1 + 7 = 8 ≡ 8 (mod 9)' },
-  { next: 8, pattern: '2,1,8,9', name: 'VortexSourceInfinityAxis', math: '1 + 8 = 9 ≡ 9 (mod 9)' },
-  { next: 9, pattern: '2,1,9,1', name: 'VortexSourceAxisSource', math: '1 + 9 = 10 ≡ 1 (mod 9)' },
-];
-
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 2/1 can be added here.
-}
-
-// Named exports for test compatibility
-export const structureFoundation = {
-  name: 'structureFoundation',
-  pattern: [2, 1, 3],
-  frequency: 3,
-  multiplier: 1,
-  field: '2/1',
-  type: 'integer-system',
-  function: 'foundation-creation',
-  mathematical: 'integer-system-resonance'
+export const DUALITYUNITYVORTEX_INTERACTION = {
+  DIGIT_A: 2,
+  DIGIT_B: 1,
+  DIGIT_A_NAME: 'Duality',
+  DIGIT_B_NAME: 'Unity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(2), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(1), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 2 * 1,
+  INTERACTION_NAME: 'Duality Unity Vortex',
+  METAPHYSICAL_ESSENCE_A: 'duality',
+  METAPHYSICAL_ESSENCE_B: 'unity',
+  COLOR_HUE_A: 72,
+  COLOR_HUE_B: 36,
+  VORTEX_MATHEMATICS_A: true,
+  DUALITY_A: true,
+  TRANSFORMATION_A: true,
+  RODIN_FOUNDATION_B: true,
+  ARCHETYPE_B: true,
+  SOURCE_B: true
 };
 
-export const advancedStructureFoundationEvolutionGateway = () => {
-  return { 
-    type: 'structure-foundation', 
-    status: 'active',
-    field: '2/1',
-    mathematical: 'integer-system-resonance'
+export const getDualityUnityVortexInteraction = () => DUALITYUNITYVORTEX_INTERACTION;
+
+export const calculateDualityUnityVortexHarmonics = (input: number): number => {
+  return input * DUALITYUNITYVORTEX_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * DUALITYUNITYVORTEX_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getDualityUnityVortexVortexFlow = () => {
+  return {
+    from: 2,
+    to: 1,
+    resonance: DUALITYUNITYVORTEX_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [4, 8, 7, 5, 1].concat([2, 4, 8, 7, 5])
   };
 };
 
-export const structureFoundationPotentialEvolution = () => {
-  return { 
-    type: 'potential', 
-    status: 'evolving',
-    structure: 'structure-consciousness',
-    foundation: 'foundation-consciousness',
-    potential: 'structure-foundation-potential'
-  };
+export const getDualityUnityVortexColor = () => {
+  const hue = (DUALITYUNITYVORTEX_INTERACTION.COLOR_HUE_A + DUALITYUNITYVORTEX_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (DUALITYUNITYVORTEX_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (DUALITYUNITYVORTEX_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 };
 
-export const structureFoundationRecognitionEvolution = () => {
-  return { 
-    type: 'recognition', 
-    status: 'evolving',
-    recognition: 'structure-foundation-recognition',
-    mathematical: 'integer-system-recognition'
-  };
-};
-
-export const structureFoundationIntegrationEvolution = () => {
-  return { 
-    type: 'integration', 
-    status: 'evolving',
-    integration: 'structure-foundation-integration',
-    mathematical: 'integer-system-integration'
-  };
+export const getDualityUnityVortexSound = () => {
+  return DUALITYUNITYVORTEX_INTERACTION.A432_FREQUENCY * (DUALITYUNITYVORTEX_INTERACTION.HARMONIC_RESONANCE / 5);
 };

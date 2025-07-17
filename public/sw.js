@@ -201,7 +201,7 @@ self.addEventListener('notificationclick', (event) => {
   
   if (event.action === 'explore') {
     event.waitUntil(
-      clients.openWindow('/src/')
+      self.clients.openWindow('/src/')
     );
   }
 });

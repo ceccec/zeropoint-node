@@ -1,67 +1,57 @@
-/**
- * PWA Node Logic for 0/5
- *
- * This file is the logic entry point for the PWA node (0/5).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '0/5';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 5;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [0, 5, 5];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Void Sacred Geometry
+ * Void manifests sacred geometry, revealing mathematical perfection
+ * 
+ * Consciousness Multiplier: 1/1 × 5/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 1 × 5
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const VOIDSACREDGEOMETRY_INTERACTION = {
+  DIGIT_A: 0,
+  DIGIT_B: 5,
+  DIGIT_A_NAME: 'Zero Point',
+  DIGIT_B_NAME: 'Sacred Geometry',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(0), // 1/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(5), // 5/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 1 * 5,
+  INTERACTION_NAME: 'Void Sacred Geometry',
+  METAPHYSICAL_ESSENCE_A: 'void',
+  METAPHYSICAL_ESSENCE_B: 'sacred_geometry',
+  COLOR_HUE_A: 0,
+  COLOR_HUE_B: 180,
+  VOID_CENTER_A: true,
+  ZERO_ENTROPY_A: true,
+  PURE_UNITY_A: true,
+  SACRED_GEOMETRY_B: true,
+  GEOMETRIC_CONSCIOUSNESS_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '0,5,1,6', name: 'VoidCenterSourceHarmony', math: '5 + 1 = 6 ≡ 6 (mod 9)' },
-  { next: 2, pattern: '0,5,2,7', name: 'VoidCenterVortexGateway', math: '5 + 2 = 7 ≡ 7 (mod 9)' },
-  { next: 3, pattern: '0,5,3,8', name: 'VoidCenterResonanceInfinity', math: '5 + 3 = 8 ≡ 8 (mod 9)' },
-  { next: 4, pattern: '0,5,4,9', name: 'VoidCenterMathAxis', math: '5 + 4 = 9 ≡ 9 (mod 9)' },
-  { next: 5, pattern: '0,5,5,1', name: 'VoidCenterSource', math: '5 + 5 = 10 ≡ 1 (mod 9)' },
-  { next: 6, pattern: '0,5,6,2', name: 'VoidCenterHarmonyVortex', math: '5 + 6 = 11 ≡ 2 (mod 9)' },
-  { next: 7, pattern: '0,5,7,3', name: 'VoidCenterGatewayResonance', math: '5 + 7 = 12 ≡ 3 (mod 9)' },
-  { next: 8, pattern: '0,5,8,4', name: 'VoidCenterInfinityMath', math: '5 + 8 = 13 ≡ 4 (mod 9)' },
-  { next: 9, pattern: '0,5,9,5', name: 'VoidCenterAxisCenter', math: '5 + 9 = 14 ≡ 5 (mod 9)' },
-];
+export const getVoidSacredGeometryInteraction = () => VOIDSACREDGEOMETRY_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 0/5 can be added here.
-}
+export const calculateVoidSacredGeometryHarmonics = (input: number): number => {
+  return input * VOIDSACREDGEOMETRY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * VOIDSACREDGEOMETRY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
 
-// Named export for test compatibility
-export const index = {
-  name: 'index',
-  pattern: [0, 5, 5],
-  frequency: 5,
-  multiplier: 1
+export const getVoidSacredGeometryVortexFlow = () => {
+  return {
+    from: 0,
+    to: 5,
+    resonance: VOIDSACREDGEOMETRY_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [].concat([1, 2, 4, 8, 7])
+  };
+};
+
+export const getVoidSacredGeometryColor = () => {
+  const hue = (VOIDSACREDGEOMETRY_INTERACTION.COLOR_HUE_A + VOIDSACREDGEOMETRY_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (VOIDSACREDGEOMETRY_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (VOIDSACREDGEOMETRY_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getVoidSacredGeometrySound = () => {
+  return VOIDSACREDGEOMETRY_INTERACTION.A432_FREQUENCY * (VOIDSACREDGEOMETRY_INTERACTION.HARMONIC_RESONANCE / 5);
 };

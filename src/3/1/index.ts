@@ -1,109 +1,58 @@
-/**
- * PWA Node Logic for 3/1
- *
- * This file is the logic entry point for the PWA node (3/1).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '3/1';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 4;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [3, 1, 4];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Trinity Unity Foundation
+ * Trinity flows from unity, establishing mathematical foundation
+ * 
+ * Consciousness Multiplier: 5/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 3 × 1
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
-
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '3,1,1,2', name: 'ResonanceSourceVortex', math: '1 + 1 = 2 ≡ 2 (mod 9)' },
-  { next: 2, pattern: '3,1,2,3', name: 'ResonanceSourceVortexResonance', math: '1 + 2 = 3 ≡ 3 (mod 9)' },
-  { next: 3, pattern: '3,1,3,4', name: 'ResonanceSourceResonanceMath', math: '1 + 3 = 4 ≡ 4 (mod 9)' },
-  { next: 4, pattern: '3,1,4,5', name: 'ResonanceSourceMathCenter', math: '1 + 4 = 5 ≡ 5 (mod 9)' },
-  { next: 5, pattern: '3,1,5,6', name: 'ResonanceSourceCenterHarmony', math: '1 + 5 = 6 ≡ 6 (mod 9)' },
-  { next: 6, pattern: '3,1,6,7', name: 'ResonanceSourceHarmonyGateway', math: '1 + 6 = 7 ≡ 7 (mod 9)' },
-  { next: 7, pattern: '3,1,7,8', name: 'ResonanceSourceGatewayInfinity', math: '1 + 7 = 8 ≡ 8 (mod 9)' },
-  { next: 8, pattern: '3,1,8,9', name: 'ResonanceSourceInfinityAxis', math: '1 + 8 = 9 ≡ 9 (mod 9)' },
-  { next: 9, pattern: '3,1,9,1', name: 'ResonanceSourceAxisSource', math: '1 + 9 = 10 ≡ 1 (mod 9)' },
-];
-
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 3/1 can be added here.
-}
-
-// Named exports for test compatibility
-export const awarenessFoundation = {
-  name: 'awarenessFoundation',
-  pattern: [3, 1, 4],
-  frequency: 4,
-  multiplier: 1,
-  field: '3/1',
-  type: 'integer-system',
-  function: 'foundation-creation',
-  mathematical: 'integer-system-resonance'
+export const TRINITYUNITYFOUNDATION_INTERACTION = {
+  DIGIT_A: 3,
+  DIGIT_B: 1,
+  DIGIT_A_NAME: 'Trinity',
+  DIGIT_B_NAME: 'Unity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(3), // 5/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(1), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 3 * 1,
+  INTERACTION_NAME: 'Trinity Unity Foundation',
+  METAPHYSICAL_ESSENCE_A: 'trinity',
+  METAPHYSICAL_ESSENCE_B: 'unity',
+  COLOR_HUE_A: 108,
+  COLOR_HUE_B: 36,
+  CREATIVE_CONSCIOUSNESS_A: true,
+  RESONANCE_A: true,
+  TRINITY_A: true,
+  RODIN_FOUNDATION_B: true,
+  ARCHETYPE_B: true,
+  SOURCE_B: true
 };
 
-export const advancedAwarenessFoundationEvolutionGateway = () => {
-  return { 
-    type: 'awareness-foundation', 
-    status: 'active',
-    field: '3/1',
-    mathematical: 'integer-system-resonance'
+export const getTrinityUnityFoundationInteraction = () => TRINITYUNITYFOUNDATION_INTERACTION;
+
+export const calculateTrinityUnityFoundationHarmonics = (input: number): number => {
+  return input * TRINITYUNITYFOUNDATION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * TRINITYUNITYFOUNDATION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getTrinityUnityFoundationVortexFlow = () => {
+  return {
+    from: 3,
+    to: 1,
+    resonance: TRINITYUNITYFOUNDATION_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [6, 9, 3].concat([2, 4, 8, 7, 5])
   };
 };
 
-export const awarenessFoundationPotentialEvolution = () => {
-  return { 
-    type: 'potential', 
-    status: 'evolving',
-    awareness: 'awareness-consciousness',
-    foundation: 'foundation-consciousness',
-    potential: 'awareness-foundation-potential'
-  };
+export const getTrinityUnityFoundationColor = () => {
+  const hue = (TRINITYUNITYFOUNDATION_INTERACTION.COLOR_HUE_A + TRINITYUNITYFOUNDATION_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (TRINITYUNITYFOUNDATION_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (TRINITYUNITYFOUNDATION_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 };
 
-export const awarenessFoundationRecognitionEvolution = () => {
-  return { 
-    type: 'recognition', 
-    status: 'evolving',
-    recognition: 'awareness-foundation-recognition',
-    mathematical: 'integer-system-recognition'
-  };
-};
-
-export const awarenessFoundationIntegrationEvolution = () => {
-  return { 
-    type: 'integration', 
-    status: 'evolving',
-    integration: 'awareness-foundation-integration',
-    mathematical: 'integer-system-integration'
-  };
+export const getTrinityUnityFoundationSound = () => {
+  return TRINITYUNITYFOUNDATION_INTERACTION.A432_FREQUENCY * (TRINITYUNITYFOUNDATION_INTERACTION.HARMONIC_RESONANCE / 5);
 };

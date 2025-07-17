@@ -1,59 +1,58 @@
-/**
- * PWA Node Logic for 4/7
- *
- * This file is the logic entry point for the PWA node (4/7).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '4/7';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 2;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 5.50;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [4, 7, 2];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Foundation Completion
+ * Foundation completes through cycles, achieving mathematical wholeness
+ * 
+ * Consciousness Multiplier: 3/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 4 × 7
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const FOUNDATIONCOMPLETION_INTERACTION = {
+  DIGIT_A: 4,
+  DIGIT_B: 7,
+  DIGIT_A_NAME: 'Foundation',
+  DIGIT_B_NAME: 'Completion',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(4), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(7), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 4 * 7,
+  INTERACTION_NAME: 'Foundation Completion',
+  METAPHYSICAL_ESSENCE_A: 'foundation',
+  METAPHYSICAL_ESSENCE_B: 'completion',
+  COLOR_HUE_A: 144,
+  COLOR_HUE_B: 252,
+  STABILITY_A: true,
+  CHANGE_A: true,
+  FOUNDATION_A: true,
+  COMPLETION_B: true,
+  CYCLES_B: true,
+  CONSCIOUSNESS_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '4,7,1,8', name: 'MathGatewaySourceInfinity', math: '7 + 1 = 8 ≡ 8 (mod 9)' },
-  { next: 2, pattern: '4,7,2,9', name: 'MathGatewayVortexAxis', math: '7 + 2 = 9 ≡ 9 (mod 9)' },
-  { next: 3, pattern: '4,7,3,1', name: 'MathGatewayResonanceSource', math: '7 + 3 = 10 ≡ 1 (mod 9)' },
-  { next: 4, pattern: '4,7,4,2', name: 'MathGatewayMathVortex', math: '7 + 4 = 11 ≡ 2 (mod 9)' },
-  { next: 5, pattern: '4,7,5,3', name: 'MathGatewayCenterResonance', math: '7 + 5 = 12 ≡ 3 (mod 9)' },
-  { next: 6, pattern: '4,7,6,4', name: 'MathGatewayHarmonyMath', math: '7 + 6 = 13 ≡ 4 (mod 9)' },
-  { next: 7, pattern: '4,7,7,5', name: 'MathGatewayCenter', math: '7 + 7 = 14 ≡ 5 (mod 9)' },
-  { next: 8, pattern: '4,7,8,6', name: 'MathGatewayInfinityHarmony', math: '7 + 8 = 15 ≡ 6 (mod 9)' },
-  { next: 9, pattern: '4,7,9,7', name: 'MathGatewayAxisGateway', math: '7 + 9 = 16 ≡ 7 (mod 9)' },
-];
+export const getFoundationCompletionInteraction = () => FOUNDATIONCOMPLETION_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 4/7 can be added here.
-}
+export const calculateFoundationCompletionHarmonics = (input: number): number => {
+  return input * FOUNDATIONCOMPLETION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * FOUNDATIONCOMPLETION_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getFoundationCompletionVortexFlow = () => {
+  return {
+    from: 4,
+    to: 7,
+    resonance: FOUNDATIONCOMPLETION_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [8, 7, 5, 1, 2].concat([5, 1, 2, 4, 8])
+  };
+};
+
+export const getFoundationCompletionColor = () => {
+  const hue = (FOUNDATIONCOMPLETION_INTERACTION.COLOR_HUE_A + FOUNDATIONCOMPLETION_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (FOUNDATIONCOMPLETION_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (FOUNDATIONCOMPLETION_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getFoundationCompletionSound = () => {
+  return FOUNDATIONCOMPLETION_INTERACTION.A432_FREQUENCY * (FOUNDATIONCOMPLETION_INTERACTION.HARMONIC_RESONANCE / 5);
+};

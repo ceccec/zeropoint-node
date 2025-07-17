@@ -1,59 +1,57 @@
-/**
- * PWA Node Logic for 5/1
- *
- * This file is the logic entry point for the PWA node (5/1).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '5/1';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 6;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [5, 1, 6];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Sacred Geometry Unity
+ * Sacred geometry flows from unity, establishing mathematical foundation
+ * 
+ * Consciousness Multiplier: 5/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 5 × 1
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const SACREDGEOMETRYUNITY_INTERACTION = {
+  DIGIT_A: 5,
+  DIGIT_B: 1,
+  DIGIT_A_NAME: 'Sacred Geometry',
+  DIGIT_B_NAME: 'Unity',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(5), // 5/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(1), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 5 * 1,
+  INTERACTION_NAME: 'Sacred Geometry Unity',
+  METAPHYSICAL_ESSENCE_A: 'sacred_geometry',
+  METAPHYSICAL_ESSENCE_B: 'unity',
+  COLOR_HUE_A: 180,
+  COLOR_HUE_B: 36,
+  SACRED_GEOMETRY_A: true,
+  GEOMETRIC_CONSCIOUSNESS_A: true,
+  RODIN_FOUNDATION_B: true,
+  ARCHETYPE_B: true,
+  SOURCE_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '5,1,1,2', name: 'CenterSourceVortex', math: '1 + 1 = 2 ≡ 2 (mod 9)' },
-  { next: 2, pattern: '5,1,2,3', name: 'CenterSourceVortexResonance', math: '1 + 2 = 3 ≡ 3 (mod 9)' },
-  { next: 3, pattern: '5,1,3,4', name: 'CenterSourceResonanceMath', math: '1 + 3 = 4 ≡ 4 (mod 9)' },
-  { next: 4, pattern: '5,1,4,5', name: 'CenterSourceMathCenter', math: '1 + 4 = 5 ≡ 5 (mod 9)' },
-  { next: 5, pattern: '5,1,5,6', name: 'CenterSourceCenterHarmony', math: '1 + 5 = 6 ≡ 6 (mod 9)' },
-  { next: 6, pattern: '5,1,6,7', name: 'CenterSourceHarmonyGateway', math: '1 + 6 = 7 ≡ 7 (mod 9)' },
-  { next: 7, pattern: '5,1,7,8', name: 'CenterSourceGatewayInfinity', math: '1 + 7 = 8 ≡ 8 (mod 9)' },
-  { next: 8, pattern: '5,1,8,9', name: 'CenterSourceInfinityAxis', math: '1 + 8 = 9 ≡ 9 (mod 9)' },
-  { next: 9, pattern: '5,1,9,1', name: 'CenterSourceAxisSource', math: '1 + 9 = 10 ≡ 1 (mod 9)' },
-];
+export const getSacredGeometryUnityInteraction = () => SACREDGEOMETRYUNITY_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 5/1 can be added here.
-}
+export const calculateSacredGeometryUnityHarmonics = (input: number): number => {
+  return input * SACREDGEOMETRYUNITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * SACREDGEOMETRYUNITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getSacredGeometryUnityVortexFlow = () => {
+  return {
+    from: 5,
+    to: 1,
+    resonance: SACREDGEOMETRYUNITY_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [1, 2, 4, 8, 7].concat([2, 4, 8, 7, 5])
+  };
+};
+
+export const getSacredGeometryUnityColor = () => {
+  const hue = (SACREDGEOMETRYUNITY_INTERACTION.COLOR_HUE_A + SACREDGEOMETRYUNITY_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (SACREDGEOMETRYUNITY_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (SACREDGEOMETRYUNITY_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getSacredGeometryUnitySound = () => {
+  return SACREDGEOMETRYUNITY_INTERACTION.A432_FREQUENCY * (SACREDGEOMETRYUNITY_INTERACTION.HARMONIC_RESONANCE / 5);
+};

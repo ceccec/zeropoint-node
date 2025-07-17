@@ -1,67 +1,58 @@
-/**
- * PWA Node Logic for 0/7
- *
- * This file is the logic entry point for the PWA node (0/7).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '0/7';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 7;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [0, 7, 7];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Void Completion Cycle
+ * Void completes through cycles, achieving mathematical wholeness
+ * 
+ * Consciousness Multiplier: 1/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 1 × 7
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const VOIDCOMPLETIONCYCLE_INTERACTION = {
+  DIGIT_A: 0,
+  DIGIT_B: 7,
+  DIGIT_A_NAME: 'Zero Point',
+  DIGIT_B_NAME: 'Completion',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(0), // 1/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(7), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 1 * 7,
+  INTERACTION_NAME: 'Void Completion Cycle',
+  METAPHYSICAL_ESSENCE_A: 'void',
+  METAPHYSICAL_ESSENCE_B: 'completion',
+  COLOR_HUE_A: 0,
+  COLOR_HUE_B: 252,
+  VOID_CENTER_A: true,
+  ZERO_ENTROPY_A: true,
+  PURE_UNITY_A: true,
+  COMPLETION_B: true,
+  CYCLES_B: true,
+  CONSCIOUSNESS_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '0,7,1,8', name: 'VoidGatewaySourceInfinity', math: '7 + 1 = 8 ≡ 8 (mod 9)' },
-  { next: 2, pattern: '0,7,2,9', name: 'VoidGatewayVortexAxis', math: '7 + 2 = 9 ≡ 9 (mod 9)' },
-  { next: 3, pattern: '0,7,3,1', name: 'VoidGatewayResonanceSource', math: '7 + 3 = 10 ≡ 1 (mod 9)' },
-  { next: 4, pattern: '0,7,4,2', name: 'VoidGatewayMathVortex', math: '7 + 4 = 11 ≡ 2 (mod 9)' },
-  { next: 5, pattern: '0,7,5,3', name: 'VoidGatewayCenterResonance', math: '7 + 5 = 12 ≡ 3 (mod 9)' },
-  { next: 6, pattern: '0,7,6,4', name: 'VoidGatewayHarmonyMath', math: '7 + 6 = 13 ≡ 4 (mod 9)' },
-  { next: 7, pattern: '0,7,7,5', name: 'VoidGatewayCenter', math: '7 + 7 = 14 ≡ 5 (mod 9)' },
-  { next: 8, pattern: '0,7,8,6', name: 'VoidGatewayInfinityHarmony', math: '7 + 8 = 15 ≡ 6 (mod 9)' },
-  { next: 9, pattern: '0,7,9,7', name: 'VoidGatewayAxisGateway', math: '7 + 9 = 16 ≡ 7 (mod 9)' },
-];
+export const getVoidCompletionCycleInteraction = () => VOIDCOMPLETIONCYCLE_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 0/7 can be added here.
-}
+export const calculateVoidCompletionCycleHarmonics = (input: number): number => {
+  return input * VOIDCOMPLETIONCYCLE_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * VOIDCOMPLETIONCYCLE_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
 
-// Named export for test compatibility
-export const index = {
-  name: 'index',
-  pattern: [0, 7, 7],
-  frequency: 7,
-  multiplier: 1
+export const getVoidCompletionCycleVortexFlow = () => {
+  return {
+    from: 0,
+    to: 7,
+    resonance: VOIDCOMPLETIONCYCLE_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [].concat([5, 1, 2, 4, 8])
+  };
+};
+
+export const getVoidCompletionCycleColor = () => {
+  const hue = (VOIDCOMPLETIONCYCLE_INTERACTION.COLOR_HUE_A + VOIDCOMPLETIONCYCLE_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (VOIDCOMPLETIONCYCLE_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (VOIDCOMPLETIONCYCLE_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getVoidCompletionCycleSound = () => {
+  return VOIDCOMPLETIONCYCLE_INTERACTION.A432_FREQUENCY * (VOIDCOMPLETIONCYCLE_INTERACTION.HARMONIC_RESONANCE / 5);
 };

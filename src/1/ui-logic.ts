@@ -10,7 +10,7 @@ export interface UIInteraction {
   type: 'tap' | 'swipe' | 'pinch' | 'rotate' | 'voice' | 'gesture';
   intensity: number;
   position?: { x: number; y: number };
-  data?: any;
+  data?: Record<string, string | number | boolean>;
 }
 
 export interface UIRenderData {
@@ -19,6 +19,14 @@ export interface UIRenderData {
   consciousness: number[][];
   vortex_flows: number[][][];
   book_references: BookReference[][];
+}
+
+export interface AnimationStep {
+  step: number;
+  position: { i: number; j: number };
+  color: string;
+  frequency: number;
+  consciousness: number;
 }
 
 export class UILogic {
@@ -31,7 +39,7 @@ export class UILogic {
   }
   
   // Generate harmonic matrix data for UI rendering
-  public generateMatrixData(deviceData?: DeviceData): UIRenderData {
+  public generateMatrixData(): UIRenderData {
     const colors: string[][] = [];
     const sounds: number[][] = [];
     const consciousness: number[][] = [];
@@ -129,16 +137,16 @@ export class UILogic {
   }
   
   // Get book reference for any UI element
-  public getElementReference(element: any): BookReference {
+  public getElementReference(element: Record<string, unknown> | number): BookReference {
     if (typeof element === 'number') {
       return bookReference.getNumberReference(element);
     }
     
-    if (element.consciousness) {
+    if ('consciousness' in element && typeof element.consciousness === 'number') {
       return bookReference.getNumberReference(element.consciousness);
     }
     
-    if (element.frequency) {
+    if ('frequency' in element && typeof element.frequency === 'number') {
       return bookReference.getNumberReference(element.frequency);
     }
     
@@ -170,9 +178,9 @@ export class UILogic {
   }
   
   // Get animation data for UI transitions
-  public getAnimationData(fromData: UIRenderData, toData: UIRenderData): any {
+  public getAnimationData(fromData: UIRenderData, toData: UIRenderData): AnimationStep[] {
     const animation_steps = 60; // 60fps animation
-    const animations: any[] = [];
+    const animations: AnimationStep[] = [];
     
     for (let i = 0; i < this.MATRIX_SIZE; i++) {
       for (let j = 0; j < this.MATRIX_SIZE; j++) {

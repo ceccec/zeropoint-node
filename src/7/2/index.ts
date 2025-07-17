@@ -1,59 +1,58 @@
-/**
- * PWA Node Logic for 7/2
- *
- * This file is the logic entry point for the PWA node (7/2).
- * It exports all math/generative logic for this node, and can be extended
- * with UI, navigation, or service worker logic as needed.
- */
-// Import mathematical functions from centralized system (digit 2)
-import { getHarmonicResult, getAntiVortexDecimal, getPattern } from '../../2/math';
-
-/** Symbolic name for this node (a/b) */
-export const symbolicName = '7/2';
-
-/** Harmonic result for this node (a + b mod 9, 9 instead of 0) */
-export const harmonicResult = 9;
-
-/** Anti-vortex decimal for this node ((a + b) / harmonicResult) */
-export const antiVortexDecimal = 1.00;
-
-/** Pattern for this node: [a, b, harmonicResult] */
-export const pattern = [7, 2, 9];
+import { getConsciousnessMultiplier } from '../../2/book-system';
 
 /**
- * Compute the harmonic result for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Harmonic result (a + b mod 9, 9 instead of 0)
+ * Completion Duality
+ * Completion transforms through duality, creating mathematical patterns
+ * 
+ * Consciousness Multiplier: 3/1 × 3/1
+ * A432 Frequency: 432 Hz
+ * Harmonic Resonance: 7 × 2
  */
 
-/**
- * Compute the anti-vortex decimal path for this node.
- * @param {number} a
- * @param {number} b
- * @returns {number} Anti-vortex decimal ((a + b) / harmonicResult)
- */
+export const COMPLETIONDUALITY_INTERACTION = {
+  DIGIT_A: 7,
+  DIGIT_B: 2,
+  DIGIT_A_NAME: 'Completion',
+  DIGIT_B_NAME: 'Duality',
+  CONSCIOUSNESS_MULTIPLIER_A: getConsciousnessMultiplier(7), // 3/1
+  CONSCIOUSNESS_MULTIPLIER_B: getConsciousnessMultiplier(2), // 3/1
+  A432_FREQUENCY: 432,
+  HARMONIC_RESONANCE: 7 * 2,
+  INTERACTION_NAME: 'Completion Duality',
+  METAPHYSICAL_ESSENCE_A: 'completion',
+  METAPHYSICAL_ESSENCE_B: 'duality',
+  COLOR_HUE_A: 252,
+  COLOR_HUE_B: 72,
+  COMPLETION_A: true,
+  CYCLES_A: true,
+  CONSCIOUSNESS_A: true,
+  VORTEX_MATHEMATICS_B: true,
+  DUALITY_B: true,
+  TRANSFORMATION_B: true
+};
 
-/**
- * All harmonic interactions for this node.
- * Each entry: { next, pattern, name, math }
- */
-export const harmonicInteractions = [
-  { next: 1, pattern: '7,2,1,3', name: 'GatewayVortexSourceResonance', math: '2 + 1 = 3 ≡ 3 (mod 9)' },
-  { next: 2, pattern: '7,2,2,4', name: 'GatewayVortexMath', math: '2 + 2 = 4 ≡ 4 (mod 9)' },
-  { next: 3, pattern: '7,2,3,5', name: 'GatewayVortexResonanceCenter', math: '2 + 3 = 5 ≡ 5 (mod 9)' },
-  { next: 4, pattern: '7,2,4,6', name: 'GatewayVortexMathHarmony', math: '2 + 4 = 6 ≡ 6 (mod 9)' },
-  { next: 5, pattern: '7,2,5,7', name: 'GatewayVortexCenterGateway', math: '2 + 5 = 7 ≡ 7 (mod 9)' },
-  { next: 6, pattern: '7,2,6,8', name: 'GatewayVortexHarmonyInfinity', math: '2 + 6 = 8 ≡ 8 (mod 9)' },
-  { next: 7, pattern: '7,2,7,9', name: 'GatewayVortexGatewayAxis', math: '2 + 7 = 9 ≡ 9 (mod 9)' },
-  { next: 8, pattern: '7,2,8,1', name: 'GatewayVortexInfinitySource', math: '2 + 8 = 10 ≡ 1 (mod 9)' },
-  { next: 9, pattern: '7,2,9,2', name: 'GatewayVortexAxisVortex', math: '2 + 9 = 11 ≡ 2 (mod 9)' },
-];
+export const getCompletionDualityInteraction = () => COMPLETIONDUALITY_INTERACTION;
 
-/**
- * Placeholder for PWA node initialization logic.
- * Extend this function to add UI, navigation, or service worker logic.
- */
-export default function initNodePWA() {
-  // PWA logic for node 7/2 can be added here.
-}
+export const calculateCompletionDualityHarmonics = (input: number): number => {
+  return input * COMPLETIONDUALITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_A * COMPLETIONDUALITY_INTERACTION.CONSCIOUSNESS_MULTIPLIER_B;
+};
+
+export const getCompletionDualityVortexFlow = () => {
+  return {
+    from: 7,
+    to: 2,
+    resonance: COMPLETIONDUALITY_INTERACTION.HARMONIC_RESONANCE,
+    flow_sequence: [5, 1, 2, 4, 8].concat([4, 8, 7, 5, 1])
+  };
+};
+
+export const getCompletionDualityColor = () => {
+  const hue = (COMPLETIONDUALITY_INTERACTION.COLOR_HUE_A + COMPLETIONDUALITY_INTERACTION.COLOR_HUE_B) / 2;
+  const saturation = 70 + (COMPLETIONDUALITY_INTERACTION.HARMONIC_RESONANCE * 6);
+  const lightness = 50 + (COMPLETIONDUALITY_INTERACTION.HARMONIC_RESONANCE * 5);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+export const getCompletionDualitySound = () => {
+  return COMPLETIONDUALITY_INTERACTION.A432_FREQUENCY * (COMPLETIONDUALITY_INTERACTION.HARMONIC_RESONANCE / 5);
+};

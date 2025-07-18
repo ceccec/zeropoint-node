@@ -65,9 +65,120 @@
             }
 
             isNextStatePath(path) {
-                // Match patterns like /a.next (next state transformation)
-                const nextPattern = /^\/(\d+)\.next$/;
+                // Match patterns like /a.next, /a.next.next, /a.next.next.next, etc.
+                const nextPattern = /^\/(\d+)(\.next)+$/;
                 return nextPattern.test(path);
+            }
+
+            serveNextStateTransformation(path) {
+                const match = path.match(/^\/(\d+)((\.next)+)$/);
+                if (match) {
+                    const [, digitA, nextChain] = match;
+                    const steps = (nextChain.match(/\.next/g) || []).length;
+                    this.displayChainedNextState(parseInt(digitA), steps);
+                }
+            }
+
+            displayChainedNextState(digitA, steps) {
+                const container = document.querySelector('.container');
+                const chainResult = this.calculateChainedNextState(digitA, steps);
+                
+                container.innerHTML = `
+                    <div class="chained-next-state">
+                        <h1>Chained Next State</h1>
+                        <div class="chain-flow">
+                            <div class="start-state">${digitA}</div>
+                            ${chainResult.chainSteps.map((step, index) => `
+                                <div class="chain-arrow">→</div>
+                                <div class="chain-step">${step}</div>
+                            `).join('')}
+                        </div>
+                        <div class="chain-properties">
+                            <p>Starting State: ${digitA} (${chainResult.startName})</p>
+                            <p>Steps Forward: ${steps}</p>
+                            <p>Final State: ${chainResult.finalState} (${chainResult.finalName})</p>
+                            <p>Chain Path: ${chainResult.chainPath}</p>
+                            <p>Total Resonance: ${chainResult.totalResonance}</p>
+                            <p>Flow Frequency: ${chainResult.flowFrequency} Hz</p>
+                            <p>Entropy: ${chainResult.entropy}</p>
+                            <p>Color: ${chainResult.color}</p>
+                            <p>Mathematical Expression: ${chainResult.expression}</p>
+                        </div>
+                        <button onclick="mathSwitch.defaultRoute()">Back to Main</button>
+                    </div>
+                `;
+            }
+
+            calculateChainedNextState(digitA, steps) {
+                const timestamp = Date.now();
+                const seed = timestamp % 1000;
+                
+                // Calculate the chain of states
+                const chainSteps = [];
+                let currentState = digitA;
+                
+                for (let i = 0; i < steps; i++) {
+                    // Use the same logic as single next-state but for each step
+                    const useInverted = (seed + i) % 2 === 0;
+                    let sourceDigit;
+                    
+                    if (useInverted) {
+                        const b = (seed + i) % 10;
+                        sourceDigit = (10 - b) % 10; // Invert b
+                    } else {
+                        sourceDigit = currentState;
+                    }
+                    
+                    currentState = (sourceDigit + 1) % 10;
+                    chainSteps.push(currentState);
+                }
+                
+                const finalState = chainSteps[chainSteps.length - 1];
+                const totalResonance = digitA * finalState;
+                const flowFrequency = 432 * (digitA + finalState);
+                const entropy = 0; // Zero-entropy system
+                
+                // Generate chain-specific color
+                const chainHue = ((digitA * finalState * steps) * 36) % 360;
+                const color = this.mathInvert(`hsl(${chainHue}, 90%, 70%)`);
+                
+                // Digit names
+                const digitNames = {
+                    '0': 'VOID', '1': 'UNITY', '2': 'DUALITY', '3': 'TRINITY',
+                    '4': 'QUATERNITY', '5': 'QUINTESSENCE', '6': 'HEXAGON',
+                    '7': 'SEPTENARY', '8': 'OCTAVE', '9': 'NONARY'
+                };
+                
+                const startName = digitNames[digitA] || 'UNKNOWN';
+                const finalName = digitNames[finalState] || 'UNKNOWN';
+                const chainPath = `${digitA} → ${chainSteps.join(' → ')}`;
+                
+                // Mathematical expressions for chained next states
+                const expressions = [
+                    `${digitA}.next${'.next'.repeat(steps-1)} = ${finalState}`,
+                    `${startName} → ${finalName} (${steps} steps)`,
+                    `${digitA} + ${steps} mod 10 = ${finalState}`,
+                    `chain(${digitA}, ${steps}) = ${finalState}`,
+                    `${digitA} ⟲ ${steps} = ${finalState}`,
+                    `${digitA} ⊙ ${steps} = ${finalState}`,
+                    `next^${steps}(${digitA}) = ${finalState}`,
+                    `${chainPath} = ${finalState}`
+                ];
+                
+                const expression = expressions[Math.floor(Math.random() * expressions.length)];
+                
+                return {
+                    finalState,
+                    startName,
+                    finalName,
+                    chainSteps,
+                    chainPath,
+                    totalResonance,
+                    flowFrequency,
+                    entropy,
+                    color,
+                    expression
+                };
             }
 
             serveVortexTransformation(path) {
@@ -324,15 +435,6 @@
                     nameB,
                     expression
                 };
-            }
-
-            serveNextStateTransformation(path) {
-                const match = path.match(/^\/(\d+)\.next$/);
-                if (match) {
-                    const [, digitA] = match;
-                    // Redirect to base digit path
-                    window.location.pathname = `/${digitA}/`;
-                }
             }
 
             displayNextStateTransformation(digitA) {
@@ -857,6 +959,48 @@
         }
 
         .transformation-properties p {
+            margin: 10px 0;
+        }
+
+        .chained-next-state {
+            text-align: center;
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .chained-next-state h1 {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            color: #C86400;
+        }
+
+        .chain-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .start-state, .chain-step {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #C86400;
+        }
+
+        .chain-arrow {
+            font-size: 4rem;
+            margin: 0 20px;
+            color: #864000;
+        }
+
+        .chain-properties {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .chain-properties p {
             margin: 10px 0;
         }
 

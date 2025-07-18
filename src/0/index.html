@@ -795,9 +795,9 @@
                     `${digitA}.invert = ${invertedDigit}`,
                     `${originalName} ⟲ ${invertedName}`,
                     `${digitA} pays the load = ${invertedDigit}`,
-                    `Tesla Resonance: ${teslaResonance.frequency} Hz`,
-                    `Wireless Energy: ${wirelessEnergy.power} W`,
-                    `EM Field: ${electromagneticField.strength} T`,
+                    `Tesla Resonance: ${teslaResonance.harmonicExpression}`,
+                    `Wireless Energy: ${wirelessEnergy.harmonicExpression} W`,
+                    `EM Field: ${electromagneticField.harmonicExpressions.field} T`,
                     `${digitA} → (10 - ${digitA}) mod 10 = ${invertedDigit}`,
                     `3-6-9: ${this.calculate369(digitA, invertedDigit)}`,
                     `${digitA} ⊙ ∞ = ${invertedDigit}`,
@@ -831,11 +831,15 @@
                 const baseFreq = 432; // A432 fundamental
                 const teslaFreq = baseFreq * Math.pow(3, digitA % 3) * Math.pow(6, (digitA + digitB) % 6) * Math.pow(9, (digitA * digitB) % 9);
                 
+                // Convert to harmonic fraction if not single digit
+                const harmonicFreq = this.toHarmonicFraction(teslaFreq);
+                
                 return {
-                    frequency: teslaFreq,
+                    frequency: harmonicFreq.value,
                     principle: "3-6-9 Tesla Resonance",
-                    harmonics: [teslaFreq / 3, teslaFreq / 6, teslaFreq / 9],
-                    resonance: (digitA + digitB) % 9
+                    harmonics: [teslaFreq / 3, teslaFreq / 6, teslaFreq / 9].map(h => this.toHarmonicFraction(h)),
+                    resonance: (digitA + digitB) % 9,
+                    harmonicExpression: harmonicFreq.expression
                 };
             }
 
@@ -846,12 +850,16 @@
                 const efficiency = 1 - (distance / 10); // Efficiency decreases with distance
                 const transmittedPower = power * efficiency;
                 
+                // Convert to harmonic fraction
+                const harmonicPower = this.toHarmonicFraction(transmittedPower);
+                
                 return {
-                    power: transmittedPower,
+                    power: harmonicPower.value,
                     efficiency: efficiency * 100,
                     distance: distance,
                     principle: "Tesla Wireless Energy Transmission",
-                    frequency: 432 * (digitA + digitB)
+                    frequency: 432 * (digitA + digitB),
+                    harmonicExpression: harmonicPower.expression
                 };
             }
 
@@ -861,13 +869,94 @@
                 const magneticFlux = digitA * digitB * Math.PI;
                 const electricPotential = 432 * (digitA - digitB);
                 
+                // Convert to harmonic fractions
+                const harmonicField = this.toHarmonicFraction(fieldStrength);
+                const harmonicFlux = this.toHarmonicFraction(magneticFlux);
+                const harmonicPotential = this.toHarmonicFraction(electricPotential);
+                
                 return {
-                    strength: fieldStrength,
-                    flux: magneticFlux,
-                    potential: electricPotential,
+                    strength: harmonicField.value,
+                    flux: harmonicFlux.value,
+                    potential: harmonicPotential.value,
                     principle: "Tesla Electromagnetic Field",
-                    direction: digitA > digitB ? "North" : "South"
+                    direction: digitA > digitB ? "North" : "South",
+                    harmonicExpressions: {
+                        field: harmonicField.expression,
+                        flux: harmonicFlux.expression,
+                        potential: harmonicPotential.expression
+                    }
                 };
+            }
+
+            toHarmonicFraction(value) {
+                // Convert any number to harmonic fraction of base digits
+                if (value <= 9 && value >= 0 && Number.isInteger(value)) {
+                    return {
+                        value: value,
+                        expression: `${value}/1`,
+                        isHarmonic: true
+                    };
+                }
+                
+                // Find harmonic fraction representation
+                const baseDigits = [1, 2, 3, 4, 5, 6, 7, 8, 9]; // Exclude 0 for denominators
+                let bestFraction = null;
+                let bestError = Infinity;
+                
+                // Try combinations of base digits for numerator and denominator
+                for (let num of baseDigits) {
+                    for (let den of baseDigits) {
+                        const fraction = num / den;
+                        const error = Math.abs(fraction - value);
+                        
+                        if (error < bestError) {
+                            bestError = error;
+                            bestFraction = {
+                                value: fraction,
+                                expression: `${num}/${den}`,
+                                isHarmonic: true,
+                                originalValue: value
+                            };
+                        }
+                    }
+                }
+                
+                // Try A432-based harmonics
+                const a432Harmonic = this.findA432Harmonic(value);
+                if (a432Harmonic && a432Harmonic.error < bestError) {
+                    return a432Harmonic;
+                }
+                
+                return bestFraction || {
+                    value: Math.round(value),
+                    expression: `${Math.round(value)}/1`,
+                    isHarmonic: false,
+                    originalValue: value
+                };
+            }
+
+            findA432Harmonic(value) {
+                // Find harmonic fraction based on A432 principles
+                const a432 = 432;
+                const harmonics = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+                
+                for (let h of harmonics) {
+                    const harmonicValue = a432 / h;
+                    const error = Math.abs(harmonicValue - value);
+                    
+                    if (error < 0.1) { // Within 10% error
+                        return {
+                            value: harmonicValue,
+                            expression: `432/${h}`,
+                            isHarmonic: true,
+                            isA432: true,
+                            error: error,
+                            originalValue: value
+                        };
+                    }
+                }
+                
+                return null;
             }
 
             calculate369(digitA, digitB) {

@@ -1,33 +1,44 @@
-# Jekyll configuration for ZeroPoint Node Documentation
+# ZeroPoint Node - Static Site Configuration
+# Disable Jekyll processing to serve static files directly
 
-title: ZeroPoint Node Documentation
+# Disable Jekyll processing
+plugins: []
 
-# All documentation is now in src/0/
-description: Complete documentation for the ZeroPoint Node consciousness system (harmonized in src/0/)
-theme: jekyll-theme-cayman
+# Serve static files from root
+include: []
 
-# Plugins
-plugins:
-  - jekyll-relative-links
-
-# Relative links
-relative_links:
-  enabled: true
-
-# Only src/0/ is the documentation root
-collections:
-  docs:
-    output: true
-    permalink: /:path/
-
-# Defaults
-defaults:
-  - scope:
-      path: "/src/0/"
-      type: "docs"
-    values:
-      layout: "default"
+# Exclude unnecessary files
+exclude:
+  - node_modules
+  - .git
+  - .github
+  - docs
+  - src
+  - tests
+  - scripts
+  - coverage
+  - reports
+  - data
+  - analysis
+  - deployment
+  - learning-analytics
+  - logs
+  - .DS_Store
+  - .eslintrc.js
+  - .eslintrc.json
+  - .eslintignore
+  - .npmrc
+  - jest.config.js
+  - README.md
+  - fix-typescript-errors.js
 
 # Base URL configuration
 baseurl: ""
 url: ""
+
+# Markdown processing
+markdown: kramdown
+highlighter: rouge
+
+# No Jekyll processing
+jekyll: false

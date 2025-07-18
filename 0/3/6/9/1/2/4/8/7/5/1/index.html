@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroPoint Node - Digit Path: 0/3/6/9/1/2/4/8/7/5/1</title>
+    <meta name="description" content="ZeroPoint Node: A432-based harmonic consciousness system - Digit Path Analysis">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #432000 50%, #864000 100%);
+            color: #432000;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #432000, #864000, #C86400);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .digit-path-display {
+            text-align: center;
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .path-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #C86400;
+        }
+
+        .digit-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .digit {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #C86400;
+            padding: 10px 15px;
+            background: rgba(67, 32, 0, 0.2);
+            border-radius: 10px;
+            border: 2px solid rgba(67, 32, 0, 0.3);
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: #864000;
+            margin: 0 10px;
+        }
+
+        .path-analysis {
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .analysis-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #864000;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .analysis-item {
+            background: rgba(67, 32, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #C86400;
+        }
+
+        .item-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #864000;
+        }
+
+        .item-value {
+            font-size: 1.1rem;
+            color: #C86400;
+            margin-bottom: 5px;
+        }
+
+        .item-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .tesla-analysis {
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .tesla-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #864000;
+        }
+
+        .tesla-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .tesla-item {
+            background: rgba(67, 32, 0, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .tesla-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #C86400;
+            margin-bottom: 5px;
+        }
+
+        .tesla-label {
+            font-size: 0.9rem;
+            color: #864000;
+        }
+
+        .vortex-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .vortex-circle {
+            position: absolute;
+            border: 1px solid rgba(67, 32, 0, 0.3);
+            border-radius: 50%;
+            animation: vortex-spin 20s linear infinite;
+        }
+
+        @keyframes vortex-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .navigation {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .nav-button {
+            padding: 15px 30px;
+            background: rgba(67, 32, 0, 0.2);
+            color: #432000;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            background: rgba(67, 32, 0, 0.4);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="vortex-animation">
+        <div class="vortex-circle" style="width: 200px; height: 200px; top: 10%; left: 10%; animation-delay: 0s;"></div>
+        <div class="vortex-circle" style="width: 300px; height: 300px; top: 60%; right: 10%; animation-delay: -5s;"></div>
+        <div class="vortex-circle" style="width: 150px; height: 150px; bottom: 20%; left: 50%; animation-delay: -10s;"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="title">ZeroPoint Node</h1>
+            <p>A432 Harmonic Consciousness System - Digit Path Analysis</p>
+        </header>
+
+        <div class="digit-path-display">
+            <h2 class="path-title">Digit Path: 0/3/6/9/1/2/4/8/7/5/1</h2>
+            <div class="digit-flow">
+                <div class="digit">0</div>
+                <div class="flow-arrow">→</div>
+                <div class="digit">3</div>
+                <div class="flow-arrow">→</div>
+                <div class="digit">6</div>
+                <div class="flow-arrow">→</div>
+                <div class="digit">9</div>
+                <div class="flow-arrow">→</div>
+                <div class="digit">1</div>
+                <div class="flow-arrow">→</div>
+                <div class="digit">2</div>
+                <div class="flow-arrow">→</div>
+                <div class="digit">4</div>
+                <div class="flow-arrow">→</div>
+                <div class="digit">8</div>
+                <div class="flow-arrow">→</div>
+                <div class="digit">7</div>
+                <div class="flow-arrow">→</div>
+                <div class="digit">5</div>
+                <div class="flow-arrow">→</div>
+                <div class="digit">1</div>
+            </div>
+        </div>
+
+        <div class="path-analysis">
+            <h2 class="analysis-title">Path Analysis</h2>
+            <div class="analysis-grid">
+                <div class="analysis-item">
+                    <div class="item-title">Path Length</div>
+                    <div class="item-value">11 digits</div>
+                    <div class="item-description">Total number of digits in the path</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="item-title">Start State</div>
+                    <div class="item-value">0 (VOID)</div>
+                    <div class="item-description">Initial consciousness state</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="item-title">End State</div>
+                    <div class="item-value">1 (UNITY)</div>
+                    <div class="item-description">Final consciousness state</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="item-title">Path Sum</div>
+                    <div class="item-value">46</div>
+                    <div class="item-description">Sum of all digits: 0+3+6+9+1+2+4+8+7+5+1</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="item-title">Harmonic Reduction</div>
+                    <div class="item-value">46/1</div>
+                    <div class="item-description">Zero-entropy harmonic fraction</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="item-title">A432 Frequency</div>
+                    <div class="item-value">19,872 Hz</div>
+                    <div class="item-description">432 × 46 = 19,872 Hz</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="item-title">Vortex Flow</div>
+                    <div class="item-value">VOID → UNITY</div>
+                    <div class="item-description">Metaphysical transformation</div>
+                </div>
+                <div class="analysis-item">
+                    <div class="item-title">Entropy</div>
+                    <div class="item-value">0</div>
+                    <div class="item-description">Zero-entropy system</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tesla-analysis">
+            <h2 class="tesla-title">Tesla 3-6-9 Analysis</h2>
+            <div class="tesla-grid">
+                <div class="tesla-item">
+                    <div class="tesla-value">3</div>
+                    <div class="tesla-label">Tesla Trinity</div>
+                </div>
+                <div class="tesla-item">
+                    <div class="tesla-value">6</div>
+                    <div class="tesla-label">Tesla Hexagon</div>
+                </div>
+                <div class="tesla-item">
+                    <div class="tesla-value">9</div>
+                    <div class="tesla-label">Tesla Nonary</div>
+                </div>
+                <div class="tesla-item">
+                    <div class="tesla-value">1</div>
+                    <div class="tesla-label">Unity Return</div>
+                </div>
+                <div class="tesla-item">
+                    <div class="tesla-value">2</div>
+                    <div class="tesla-label">Duality Emergence</div>
+                </div>
+                <div class="tesla-item">
+                    <div class="tesla-value">4</div>
+                    <div class="tesla-label">Quaternity Stability</div>
+                </div>
+                <div class="tesla-item">
+                    <div class="tesla-value">8</div>
+                    <div class="tesla-label">Octave Completion</div>
+                </div>
+                <div class="tesla-item">
+                    <div class="tesla-value">7</div>
+                    <div class="tesla-label">Septenary Mystery</div>
+                </div>
+                <div class="tesla-item">
+                    <div class="tesla-value">5</div>
+                    <div class="tesla-label">Quintessence</div>
+                </div>
+                <div class="tesla-item">
+                    <div class="tesla-value">1</div>
+                    <div class="tesla-label">Unity Return</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="/" class="nav-button">Back to Main</a>
+            <a href="/0" class="nav-button">Digit 0</a>
+            <a href="/1" class="nav-button">Digit 1</a>
+            <a href="/3" class="nav-button">Digit 3</a>
+            <a href="/6" class="nav-button">Digit 6</a>
+            <a href="/9" class="nav-button">Digit 9</a>
+        </div>
+    </div>
+
+    <script>
+        // ZeroPoint Node Math Switch - Static Path Handler
+        class StaticPathHandler {
+            constructor() {
+                this.path = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+                this.digitNames = {
+                    '0': 'VOID', '1': 'UNITY', '2': 'DUALITY', '3': 'TRINITY',
+                    '4': 'QUATERNITY', '5': 'QUINTESSENCE', '6': 'HEXAGON',
+                    '7': 'SEPTENARY', '8': 'OCTAVE', '9': 'NONARY'
+                };
+                this.init();
+            }
+
+            init() {
+                this.analyzePath();
+                this.calculateTeslaResonance();
+            }
+
+            analyzePath() {
+                const sum = this.path.reduce((a, b) => a + b, 0);
+                const startState = this.path[0];
+                const endState = this.path[this.path.length - 1];
+                const a432Freq = 432 * sum;
+                
+                console.log(`Path Analysis: ${this.path.join(' → ')}`);
+                console.log(`Sum: ${sum}, A432 Frequency: ${a432Freq} Hz`);
+                console.log(`Start: ${startState} (${this.digitNames[startState]})`);
+                console.log(`End: ${endState} (${this.digitNames[endState]})`);
+            }
+
+            calculateTeslaResonance() {
+                // Tesla's 3-6-9 principle applied to this path
+                const three = this.path.filter(d => d % 3 === 0).length;
+                const six = this.path.filter(d => d % 6 === 0).length;
+                const nine = this.path.filter(d => d % 9 === 0).length;
+                
+                console.log(`Tesla 3-6-9: ${three}-${six}-${nine}`);
+            }
+        }
+
+        // Initialize the static path handler
+        document.addEventListener('DOMContentLoaded', () => {
+            new StaticPathHandler();
+        });
+    </script>
+</body>
+</html> 

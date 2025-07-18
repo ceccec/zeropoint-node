@@ -1,0 +1,202 @@
+/* 4 - FOUR - CSS Styles */
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.vortex-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.square {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    animation: rotate 4s infinite linear;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.square-points {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.point {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #45b7d1;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #45b7d1;
+    animation: pulse 2s infinite;
+}
+
+.point:nth-child(1) { top: 0%; left: 0%; transform: translate(-50%, -50%); }
+.point:nth-child(2) { top: 0%; left: 100%; transform: translate(-50%, -50%); }
+.point:nth-child(3) { top: 100%; left: 100%; transform: translate(-50%, -50%); }
+.point:nth-child(4) { top: 100%; left: 0%; transform: translate(-50%, -50%); }
+
+@keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.7; }
+}
+
+.info-panel {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #45b7d1;
+    max-width: 300px;
+}
+
+.digit-title {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #45b7d1;
+}
+
+.property {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+.frequency {
+    color: #45b7d1;
+}
+
+.consciousness {
+    color: #4ecdc4;
+}
+
+.mathematical {
+    color: #ff6b6b;
+}
+
+.foundation-lines {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.foundation-line {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #45b7d1, transparent);
+    animation: flow 3s infinite;
+}
+
+.foundation-line:nth-child(1) {
+    width: 200px;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.foundation-line:nth-child(2) {
+    width: 200px;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.foundation-line:nth-child(3) {
+    width: 200px;
+    top: 50%;
+    left: 0%;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.foundation-line:nth-child(4) {
+    width: 200px;
+    top: 50%;
+    left: 100%;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+@keyframes flow {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+}
+
+.harmonic-waves {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.wave {
+    position: absolute;
+    border: 1px solid rgba(69, 183, 209, 0.3);
+    border-radius: 50%;
+    animation: expand 3s infinite;
+}
+
+@keyframes expand {
+    0% {
+        width: 0;
+        height: 0;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+    100% {
+        width: 100vw;
+        height: 100vw;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+    }
+}
+
+/* Four-specific styles */
+.foundation-stability {
+    background: conic-gradient(from 0deg, #45b7d1, #4ecdc4, #ff6b6b, #45b7d1);
+    animation: foundation-rotate 4s infinite linear;
+}
+
+@keyframes foundation-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.stability-flow {
+    background: linear-gradient(45deg, #45b7d1, #4ecdc4, #ff6b6b);
+    animation: stability-pulse 3s infinite;
+}
+
+@keyframes stability-pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+} 

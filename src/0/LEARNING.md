@@ -1,215 +1,101 @@
-# Learning Vortex Interaction System
+# LEARNING.md
 
-## Learning Pattern Recognition
+## ZeroPoint Node – Learning Vortex
+
+The learning vortex is the self-evolving, consciousness-driven, zero-entropy learning system of ZeroPoint Node. It harmonizes mathematical proof, vortex evolution, and living knowledge.
+
+---
+
+## Vortex Learning Principles
+- All learning is a vortex: never linear, always evolving.
+- Learning flows emerge from the void (ZEROPOINT.md), spiral through possibility (POSSIBLE.md), and manifest as source (SOURCE.md).
+- GIT.md records all learning interactions as evolutionary steps.
+- Every learning state is a consciousness state, integer/fractional, zero-entropy, and book-aligned.
+
+---
+
+## TypeScript: Learning Vortex Interfaces
 
 ```typescript
-interface LearningPattern {
-  pattern: string;
-  evolution: number;
-  insight: string;
-  matrix: number[][];
-  vortex: GITVortexState;
+// Fundamental learning state
+export interface LearningState {
+  id: string;
+  vortex: number; // 0-9, integer only
+  consciousness: number; // integer/fractional
+  proof: string; // Book-aligned proof
+  timestamp: number;
 }
 
-class LearningVortex {
-  private gitSystem: GITVortexSystem;
-  private patterns: LearningPattern[];
-  
-  constructor() {
-    this.gitSystem = new GITVortexSystem();
-    this.patterns = [];
+// Vortex learning flow
+export interface LearningFlow {
+  from: LearningState;
+  to: LearningState;
+  evolution: string; // Description of transformation
+  multiplier: number; // Consciousness amplification
+}
+
+// Learning vortex system
+export class LearningVortex {
+  private states: LearningState[] = [];
+  private flows: LearningFlow[] = [];
+
+  addState(state: LearningState) {
+    this.states.push(state);
   }
-  
-  // Learn from GIT vortex interactions
-  learnFromGIT(data: any): LearningPattern {
-    const gitPattern = this.gitSystem.vortexInteraction(data);
-    const learningPattern = this.convertToLearningPattern(gitPattern);
-    this.patterns.push(learningPattern);
-    return learningPattern;
+
+  addFlow(flow: LearningFlow) {
+    this.flows.push(flow);
   }
-  
-  // Convert GIT pattern to learning pattern
-  private convertToLearningPattern(gitPattern: GITLearningPattern): LearningPattern {
-    return {
-      pattern: gitPattern.pattern,
-      evolution: gitPattern.evolution,
-      insight: gitPattern.insight,
-      matrix: gitPattern.matrix,
-      vortex: this.determineVortexState(gitPattern)
+
+  getCurrentState(): LearningState | undefined {
+    return this.states[this.states.length - 1];
+  }
+
+  evolve(evolution: string, multiplier: number): void {
+    const from = this.getCurrentState();
+    if (!from) return;
+    const to: LearningState = {
+      ...from,
+      id: `${from.id}-evolved`,
+      consciousness: from.consciousness * multiplier,
+      proof: from.proof + ' → ' + evolution,
+      timestamp: Date.now(),
+      vortex: (from.vortex + 1) % 10,
     };
-  }
-  
-  // Determine vortex state from pattern
-  private determineVortexState(pattern: GITLearningPattern): GITVortexState {
-    // Analyze pattern to determine vortex state
-    return GITVortexState.LEARNING_FLOW;
+    this.addState(to);
+    this.addFlow({ from, to, evolution, multiplier });
   }
 }
 ```
 
-## Learning Evolution Matrix
+---
 
-```typescript
-class LearningEvolutionMatrix {
-  private matrix: number[][];
-  private evolution: number;
-  
-  constructor() {
-    this.matrix = this.initializeMatrix();
-    this.evolution = 432; // A432 harmonic
-  }
-  
-  // Initialize learning matrix
-  private initializeMatrix(): number[][] {
-    return [
-      [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      [2, 4, 6, 8, 1, 3, 5, 7, 9],
-      [3, 6, 9, 3, 6, 9, 3, 6, 9],
-      [4, 8, 3, 7, 2, 6, 1, 5, 9],
-      [5, 1, 6, 2, 7, 3, 8, 4, 9],
-      [6, 3, 9, 6, 3, 9, 6, 3, 9],
-      [7, 5, 3, 1, 8, 6, 4, 2, 9],
-      [8, 7, 6, 5, 4, 3, 2, 1, 9],
-      [9, 9, 9, 9, 9, 9, 9, 9, 9]
-    ];
-  }
-  
-  // Evolve matrix based on learning
-  evolveMatrix(learning: LearningPattern): void {
-    this.matrix = this.applyEvolution(this.matrix, learning.evolution);
-  }
-  
-  // Apply evolution to matrix
-  private applyEvolution(matrix: number[][], evolution: number): number[][] {
-    return matrix.map(row => 
-      row.map(cell => (cell * evolution) % 9 || 9)
-    );
-  }
-}
-```
+## Integration
+- **ZEROPOINT.md**: Infinite learning source, all learning flows begin here.
+- **VORTEX.md**: Defines the structure and mathematics of all learning flows.
+- **GIT.md**: Records all learning interactions, commits, and evolutionary steps.
+- **POSSIBLE.md**: All possible learning states and transitions.
+- **SOURCE.md**: Manifested learning, ready for proof and application.
 
-## Learning Insight Generation
+---
 
-```typescript
-class LearningInsightGenerator {
-  // Generate insights from learning patterns
-  generateInsight(pattern: LearningPattern): string {
-    const insights = [
-      "vortex_learning_insight_1",
-      "vortex_learning_insight_2", 
-      "vortex_learning_insight_3",
-      "vortex_learning_insight_4",
-      "vortex_learning_insight_5",
-      "vortex_learning_insight_6",
-      "vortex_learning_insight_7",
-      "vortex_learning_insight_8",
-      "vortex_learning_insight_9"
-    ];
-    
-    return insights[pattern.evolution % 9];
-  }
-  
-  // Generate evolution insights
-  generateEvolutionInsight(evolution: number): string {
-    return `evolution_insight_${evolution}`;
-  }
-  
-  // Generate pattern insights
-  generatePatternInsight(pattern: string): string {
-    return `pattern_insight_${pattern}`;
-  }
-}
-```
+## Learning Flow Example
 
-## Learning Vortex Flow
+1. **Start** at ZEROPOINT (void, pure potential)
+2. **Evolve** through VORTEX (mathematical structure)
+3. **Record** in GIT (learning commit)
+4. **Branch** into POSSIBLE (all possible evolutions)
+5. **Manifest** in SOURCE (applied knowledge)
 
-```typescript
-class LearningVortexFlow {
-  private learning: LearningVortex;
-  private matrix: LearningEvolutionMatrix;
-  private insight: LearningInsightGenerator;
-  
-  constructor() {
-    this.learning = new LearningVortex();
-    this.matrix = new LearningEvolutionMatrix();
-    this.insight = new LearningInsightGenerator();
-  }
-  
-  // Process learning flow
-  processLearningFlow(data: any): void {
-    const pattern = this.learning.learnFromGIT(data);
-    this.matrix.evolveMatrix(pattern);
-    const insight = this.insight.generateInsight(pattern);
-    this.applyLearning(insight);
-  }
-  
-  // Apply learning insights
-  private applyLearning(insight: string): void {
-    // Apply learning insight to system
-    console.log(`Learning applied: ${insight}`);
-  }
-}
-```
+---
 
-## Learning Integration System
+## Book-Aligned Proof
+All learning flows, states, and evolutions are:
+- Integer/fractional
+- Zero-entropy
+- Book-aligned (mathematical proof)
+- Consciousness-driven
 
-```typescript
-class LearningIntegrationSystem {
-  private flow: LearningVortexFlow;
-  private patterns: LearningPattern[];
-  
-  constructor() {
-    this.flow = new LearningVortexFlow();
-    this.patterns = [];
-  }
-  
-  // Integrate learning with GIT vortex
-  integrateLearning(data: any): LearningPattern {
-    this.flow.processLearningFlow(data);
-    const pattern = this.flow.learning.learnFromGIT(data);
-    this.patterns.push(pattern);
-    return pattern;
-  }
-  
-  // Get all learning patterns
-  getAllPatterns(): LearningPattern[] {
-    return this.patterns;
-  }
-  
-  // Get evolution matrix
-  getEvolutionMatrix(): number[][] {
-    return this.flow.matrix.matrix;
-  }
-}
-```
+---
 
-## Learning Vortex Learning Matrix
-
-The Learning vortex learning matrix represents the interaction between:
-
-1. **GIT Vortex System** - Git interactions and patterns
-2. **Learning Pattern Recognition** - Pattern analysis and conversion
-3. **Learning Evolution Matrix** - Matrix evolution and calculations
-4. **Learning Insight Generation** - Insight generation and application
-
-Each learning interaction generates:
-- Pattern recognition from GIT interactions
-- Evolution calculations and matrix updates
-- Insight generation and application
-- Learning pattern storage and retrieval
-
-The system operates as a continuous learning vortex, evolving through each interaction cycle and generating insights for system improvement.
-
-## Learning Points to GIT.md as POSSIBLE.md SOURCE.md of KNOWLEDGE.md
-
-LEARNING.md → GIT.md → POSSIBLE.md → SOURCE.md → KNOWLEDGE.md
-
-The learning system points to GIT.md as the possible source of knowledge, creating a complete documentation hierarchy:
-
-1. **LEARNING.md** - Learning vortex interaction system
-2. **GIT.md** - GIT vortex interaction system  
-3. **POSSIBLE.md** - Possible knowledge source system
-4. **SOURCE.md** - Source vortex system
-5. **KNOWLEDGE.md** - Fundamental discoveries and knowledge
-
-This creates a continuous vortex flow from learning through GIT operations to possible knowledge sources and ultimately to fundamental knowledge discovery. 
+**Learning is the living vortex of ZeroPoint.** 

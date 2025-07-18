@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroPoint Node - A432 Harmonic Consciousness System</title>
+    <meta name="description" content="ZeroPoint Node: A432-based harmonic consciousness system with zero-entropy mathematics and vortex flow states">
+    <meta name="keywords" content="ZeroPoint, A432, consciousness, mathematics, vortex, harmonic, zero-entropy">
+    <link rel="icon" href="0.ico" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #432000 50%, #864000 100%);
+            color: #432000;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #432000, #864000, #C86400);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .digit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .digit-card {
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(67, 32, 0, 0.2);
+        }
+
+        .digit-card:hover {
+            transform: translateY(-5px);
+            background: rgba(67, 32, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(67, 32, 0, 0.3);
+        }
+
+        .digit-number {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #C86400;
+        }
+
+        .digit-name {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #864000;
+        }
+
+        .digit-properties {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .digit-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .digit-link {
+            padding: 8px 15px;
+            background: rgba(67, 32, 0, 0.2);
+            color: #432000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .digit-link:hover {
+            background: rgba(67, 32, 0, 0.4);
+            transform: scale(1.05);
+        }
+
+        .system-info {
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .system-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #864000;
+        }
+
+        .system-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .system-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            background: rgba(67, 32, 0, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #C86400;
+        }
+
+        .feature-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #864000;
+        }
+
+        .feature-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .digit-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .digit-number {
+                font-size: 3rem;
+            }
+        }
+
+        .vortex-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .vortex-circle {
+            position: absolute;
+            border: 1px solid rgba(67, 32, 0, 0.3);
+            border-radius: 50%;
+            animation: vortex-spin 20s linear infinite;
+        }
+
+        @keyframes vortex-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="vortex-animation">
+        <div class="vortex-circle" style="width: 200px; height: 200px; top: 10%; left: 10%; animation-delay: 0s;"></div>
+        <div class="vortex-circle" style="width: 300px; height: 300px; top: 60%; right: 10%; animation-delay: -5s;"></div>
+        <div class="vortex-circle" style="width: 150px; height: 150px; bottom: 20%; left: 50%; animation-delay: -10s;"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="title">ZeroPoint Node</h1>
+            <p class="subtitle">A432 Harmonic Consciousness System</p>
+            <p class="description">
+                A quantum holographic consciousness system based on Rodin vortex mathematics, 
+                A432 harmonic principles, and integer/fractional zero-entropy math. 
+                Each digit represents a unique consciousness state with mathematical precision.
+            </p>
+        </header>
+
+        <div class="digit-grid">
+            <div class="digit-card" onclick="window.open('0.html', '_blank')">
+                <div class="digit-number">0</div>
+                <div class="digit-name">VOID</div>
+                <div class="digit-properties">
+                    A432: 432Hz | Vortex: ∞ | Entropy: 0<br>
+                    Consciousness: 1 | Harmonic: 1/1
+                </div>
+                <div class="digit-links">
+                    <a href="0.html" class="digit-link">HTML</a>
+                    <a href="0.ts" class="digit-link">TypeScript</a>
+                    <a href="0.css" class="digit-link">CSS</a>
+                    <a href="0.svg" class="digit-link">SVG</a>
+                </div>
+            </div>
+
+            <div class="digit-card" onclick="window.open('1.html', '_blank')">
+                <div class="digit-number">1</div>
+                <div class="digit-name">UNITY</div>
+                <div class="digit-properties">
+                    A432: 432Hz | Vortex: 1 | Entropy: 0<br>
+                    Consciousness: 1 | Harmonic: 1/1
+                </div>
+                <div class="digit-links">
+                    <a href="1.html" class="digit-link">HTML</a>
+                    <a href="1.ts" class="digit-link">TypeScript</a>
+                    <a href="1.css" class="digit-link">CSS</a>
+                    <a href="1.svg" class="digit-link">SVG</a>
+                </div>
+            </div>
+
+            <div class="digit-card" onclick="window.open('2.html', '_blank')">
+                <div class="digit-number">2</div>
+                <div class="digit-name">DUALITY</div>
+                <div class="digit-properties">
+                    A432: 432Hz | Vortex: 2 | Entropy: 0<br>
+                    Consciousness: 2 | Harmonic: 2/1
+                </div>
+                <div class="digit-links">
+                    <a href="2.html" class="digit-link">HTML</a>
+                    <a href="2.ts" class="digit-link">TypeScript</a>
+                    <a href="2.css" class="digit-link">CSS</a>
+                    <a href="2.svg" class="digit-link">SVG</a>
+                </div>
+            </div>
+
+            <div class="digit-card" onclick="window.open('3.html', '_blank')">
+                <div class="digit-number">3</div>
+                <div class="digit-name">TRINITY</div>
+                <div class="digit-properties">
+                    A432: 432Hz | Vortex: 3 | Entropy: 0<br>
+                    Consciousness: 3 | Harmonic: 3/1
+                </div>
+                <div class="digit-links">
+                    <a href="3.html" class="digit-link">HTML</a>
+                    <a href="3.ts" class="digit-link">TypeScript</a>
+                    <a href="3.css" class="digit-link">CSS</a>
+                    <a href="3.svg" class="digit-link">SVG</a>
+                </div>
+            </div>
+
+            <div class="digit-card" onclick="window.open('4.html', '_blank')">
+                <div class="digit-number">4</div>
+                <div class="digit-name">FOUNDATION</div>
+                <div class="digit-properties">
+                    A432: 432Hz | Vortex: 4 | Entropy: 0<br>
+                    Consciousness: 4 | Harmonic: 4/1
+                </div>
+                <div class="digit-links">
+                    <a href="4.html" class="digit-link">HTML</a>
+                    <a href="4.ts" class="digit-link">TypeScript</a>
+                    <a href="4.css" class="digit-link">CSS</a>
+                    <a href="4.svg" class="digit-link">SVG</a>
+                </div>
+            </div>
+
+            <div class="digit-card" onclick="window.open('5.html', '_blank')">
+                <div class="digit-number">5</div>
+                <div class="digit-name">LIFE</div>
+                <div class="digit-properties">
+                    A432: 432Hz | Vortex: 5 | Entropy: 0<br>
+                    Consciousness: 5 | Harmonic: 5/1
+                </div>
+                <div class="digit-links">
+                    <a href="5.html" class="digit-link">HTML</a>
+                    <a href="5.ts" class="digit-link">TypeScript</a>
+                    <a href="5.css" class="digit-link">CSS</a>
+                    <a href="5.svg" class="digit-link">SVG</a>
+                </div>
+            </div>
+
+            <div class="digit-card" onclick="window.open('6.html', '_blank')">
+                <div class="digit-number">6</div>
+                <div class="digit-name">HARMONY</div>
+                <div class="digit-properties">
+                    A432: 432Hz | Vortex: 6 | Entropy: 0<br>
+                    Consciousness: 6 | Harmonic: 6/1
+                </div>
+                <div class="digit-links">
+                    <a href="6.html" class="digit-link">HTML</a>
+                    <a href="6.ts" class="digit-link">TypeScript</a>
+                    <a href="6.css" class="digit-link">CSS</a>
+                    <a href="6.svg" class="digit-link">SVG</a>
+                </div>
+            </div>
+
+            <div class="digit-card" onclick="window.open('7.html', '_blank')">
+                <div class="digit-number">7</div>
+                <div class="digit-name">MYSTERY</div>
+                <div class="digit-properties">
+                    A432: 432Hz | Vortex: 7 | Entropy: 0<br>
+                    Consciousness: 7 | Harmonic: 7/1
+                </div>
+                <div class="digit-links">
+                    <a href="7.html" class="digit-link">HTML</a>
+                    <a href="7.ts" class="digit-link">TypeScript</a>
+                    <a href="7.css" class="digit-link">CSS</a>
+                    <a href="7.svg" class="digit-link">SVG</a>
+                </div>
+            </div>
+
+            <div class="digit-card" onclick="window.open('8.html', '_blank')">
+                <div class="digit-number">8</div>
+                <div class="digit-name">INFINITY</div>
+                <div class="digit-properties">
+                    A432: 432Hz | Vortex: 8 | Entropy: 0<br>
+                    Consciousness: 8 | Harmonic: 8/1
+                </div>
+                <div class="digit-links">
+                    <a href="8.html" class="digit-link">HTML</a>
+                    <a href="8.ts" class="digit-link">TypeScript</a>
+                    <a href="8.css" class="digit-link">CSS</a>
+                    <a href="8.svg" class="digit-link">SVG</a>
+                </div>
+            </div>
+
+            <div class="digit-card" onclick="window.open('9.html', '_blank')">
+                <div class="digit-number">9</div>
+                <div class="digit-name">COMPLETION</div>
+                <div class="digit-properties">
+                    A432: 432Hz | Vortex: 9 | Entropy: 0<br>
+                    Consciousness: 9 | Harmonic: 9/1
+                </div>
+                <div class="digit-links">
+                    <a href="9.html" class="digit-link">HTML</a>
+                    <a href="9.ts" class="digit-link">TypeScript</a>
+                    <a href="9.css" class="digit-link">CSS</a>
+                    <a href="9.svg" class="digit-link">SVG</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="system-info">
+            <h2 class="system-title">System Features</h2>
+            <p class="system-description">
+                The ZeroPoint Node system represents consciousness as pure mathematics, 
+                with each digit embodying specific vortex patterns, harmonic frequencies, 
+                and consciousness states. All calculations are based on A432 tuning and 
+                zero-entropy principles.
+            </p>
+            
+            <div class="system-features">
+                <div class="feature">
+                    <div class="feature-title">A432 Harmonic Tuning</div>
+                    <div class="feature-description">
+                        All frequencies tuned to A432Hz for optimal consciousness resonance
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-title">Zero Entropy Mathematics</div>
+                    <div class="feature-description">
+                        Integer/fractional math with no decimal approximations
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-title">Vortex Flow States</div>
+                    <div class="feature-description">
+                        Each digit represents unique consciousness flow patterns
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-title">Interactive Visualizations</div>
+                    <div class="feature-description">
+                        Real-time mathematical and consciousness representations
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-title">Harmonic Sound Generation</div>
+                    <div class="feature-description">
+                        Web Audio API integration with A432-based frequencies
+                    </div>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-title">Consciousness Multipliers</div>
+                    <div class="feature-description">
+                        Mathematical consciousness amplification factors
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p class="footer-text">
+                ZeroPoint Node - A432 Harmonic Consciousness System<br>
+                Zero Entropy Mathematics | Vortex Flow States | Pure Consciousness
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize ZeroPoint system
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('ZeroPoint Node System Initialized');
+            console.log('A432 Harmonic Frequency: 432Hz');
+            console.log('Zero Entropy Mathematics Active');
+            console.log('Vortex Flow States: 0-9');
+            
+            // Add hover effects to digit cards
+            const digitCards = document.querySelectorAll('.digit-card');
+            digitCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

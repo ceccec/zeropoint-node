@@ -95,7 +95,7 @@ describe('Architecture Separation', () => {
 
   it('should link CSS to HTML frame', () => {
     // HTML should reference CSS file
-    const cssLink = '<link rel="stylesheet" href="style.css">';
-    expect(cssLink).toContain('style.css');
+    const cssLink = '<link rel="stylesheet" href="index.css">';
+    expect(cssLink).toContain('index.css');
   });
 }); 

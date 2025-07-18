@@ -25,8 +25,10 @@
             handleRouting() {
                 const path = window.location.pathname;
                 
-                // Check for direct digit interactions: a.b or b.a
-                if (this.isDirectDigitInteraction(path)) {
+                // Check for next-state transformations: a.next
+                if (this.isNextStatePath(path)) {
+                    this.serveNextStateTransformation(path);
+                } else if (this.isDirectDigitInteraction(path)) {
                     this.serveDirectDigitInteraction(path);
                 } else if (this.isVortexPath(path)) {
                     this.serveVortexTransformation(path);
@@ -60,6 +62,12 @@
                 // Match patterns like /a.b or /b.a (direct digit interaction)
                 const directPattern = /^\/(\d+)\.(\d+)$/;
                 return directPattern.test(path);
+            }
+
+            isNextStatePath(path) {
+                // Match patterns like /a.next (next state transformation)
+                const nextPattern = /^\/(\d+)\.next$/;
+                return nextPattern.test(path);
             }
 
             serveVortexTransformation(path) {
@@ -314,6 +322,112 @@
                     color,
                     nameA,
                     nameB,
+                    expression
+                };
+            }
+
+            serveNextStateTransformation(path) {
+                const match = path.match(/^\/(\d+)\.next$/);
+                if (match) {
+                    const [, digitA] = match;
+                    this.displayNextStateTransformation(parseInt(digitA));
+                }
+            }
+
+            displayNextStateTransformation(digitA) {
+                const container = document.querySelector('.container');
+                const nextState = this.calculateNextState(digitA);
+                
+                container.innerHTML = `
+                    <div class="next-state-transformation">
+                        <h1>Next State Transformation</h1>
+                        <div class="state-flow">
+                            <div class="current-state">${digitA}</div>
+                            <div class="next-arrow">→</div>
+                            <div class="next-state">${nextState.nextDigit}</div>
+                        </div>
+                        <div class="transformation-properties">
+                            <p>Current State: ${digitA} (${nextState.currentName})</p>
+                            <p>Next State: ${nextState.nextDigit} (${nextState.nextName})</p>
+                            <p>Transformation Type: ${nextState.transformationType}</p>
+                            <p>Inverted Source: ${nextState.invertedSource}</p>
+                            <p>Flow Frequency: ${nextState.flowFrequency} Hz</p>
+                            <p>State Resonance: ${nextState.stateResonance}</p>
+                            <p>Entropy: ${nextState.entropy}</p>
+                            <p>Color: ${nextState.color}</p>
+                            <p>Mathematical Expression: ${nextState.expression}</p>
+                        </div>
+                        <button onclick="mathSwitch.defaultRoute()">Back to Main</button>
+                    </div>
+                `;
+            }
+
+            calculateNextState(digitA) {
+                // Calculate next state based on [a|b.invert].next
+                const timestamp = Date.now();
+                const seed = timestamp % 1000;
+                
+                // Determine if we use a or b.invert
+                const useInverted = seed % 2 === 0;
+                let sourceDigit, transformationType, invertedSource;
+                
+                if (useInverted) {
+                    // Use b.invert where b is a random digit
+                    const b = seed % 10;
+                    sourceDigit = (10 - b) % 10; // Invert b
+                    transformationType = 'Inverted';
+                    invertedSource = b;
+                } else {
+                    // Use a directly
+                    sourceDigit = digitA;
+                    transformationType = 'Direct';
+                    invertedSource = 'None';
+                }
+                
+                // Calculate next state
+                const nextDigit = (sourceDigit + 1) % 10;
+                const flowFrequency = 432 * (digitA + nextDigit);
+                const stateResonance = digitA * nextDigit;
+                const entropy = 0; // Zero-entropy system
+                
+                // Generate next-state specific color
+                const nextStateHue = ((digitA * nextDigit) * 36) % 360;
+                const color = this.mathInvert(`hsl(${nextStateHue}, 85%, 65%)`);
+                
+                // Digit names
+                const digitNames = {
+                    '0': 'VOID', '1': 'UNITY', '2': 'DUALITY', '3': 'TRINITY',
+                    '4': 'QUATERNITY', '5': 'QUINTESSENCE', '6': 'HEXAGON',
+                    '7': 'SEPTENARY', '8': 'OCTAVE', '9': 'NONARY'
+                };
+                
+                const currentName = digitNames[digitA] || 'UNKNOWN';
+                const nextName = digitNames[nextDigit] || 'UNKNOWN';
+                
+                // Mathematical expressions for next state
+                const expressions = [
+                    `${digitA}.next = ${nextDigit}`,
+                    `${currentName} → ${nextName}`,
+                    `${digitA} + 1 mod 10 = ${nextDigit}`,
+                    `${digitA}.next = [${digitA}|${invertedSource}.invert].next`,
+                    `${digitA} ⟲ ${nextDigit}`,
+                    `${digitA} ⊙ 1 = ${nextDigit}`,
+                    `${digitA} ⊕ 1 = ${nextDigit}`,
+                    `next(${digitA}) = ${nextDigit}`
+                ];
+                
+                const expression = expressions[Math.floor(Math.random() * expressions.length)];
+                
+                return {
+                    nextDigit,
+                    currentName,
+                    nextName,
+                    transformationType,
+                    invertedSource,
+                    flowFrequency,
+                    stateResonance,
+                    entropy,
+                    color,
                     expression
                 };
             }
@@ -700,6 +814,48 @@
         }
 
         .interaction-properties p {
+            margin: 10px 0;
+        }
+
+        .next-state-transformation {
+            text-align: center;
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .next-state-transformation h1 {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            color: #C86400;
+        }
+
+        .state-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .current-state, .next-state {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #C86400;
+        }
+
+        .next-arrow {
+            font-size: 4rem;
+            margin: 0 20px;
+            color: #864000;
+        }
+
+        .transformation-properties {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .transformation-properties p {
             margin: 10px 0;
         }
 

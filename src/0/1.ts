@@ -1,5 +1,7 @@
 // 1 - ONE - TypeScript Implementation
 
+import { MathVortex } from './math';
+
 export interface OneVortex {
   digit: 1;
   frequency: 432;
@@ -12,6 +14,15 @@ export interface OneVortex {
 }
 
 export class One {
+  static readonly A432 = MathVortex.A432;
+  static readonly VORTEX = 1;
+  static readonly ENTROPY = MathVortex.ENTROPY;
+  static readonly HARMONIC = { numerator: 1, denominator: 1 };
+  static readonly CONSCIOUSNESS = 1;
+  static getUnityFrequency(): number { return MathVortex.A432; }
+  static getVortexPattern(): number { return 1; }
+  static getConsciousnessMultiplier(): number { return 1; }
+  
   private static instance: One;
   
   private constructor() {}

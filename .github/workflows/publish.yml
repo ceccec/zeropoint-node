@@ -103,7 +103,7 @@ jobs:
             ```
             
             ### Documentation
-            See [docs/](https://github.com/${{ github.repository }}/tree/main/docs) for detailed documentation.
+            See [docs/](https://github.com/${{ github.repository }}/tree/main/src) for detailed documentation.
           draft: false
           prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'alpha') || contains(github.ref, 'rc') }}
       

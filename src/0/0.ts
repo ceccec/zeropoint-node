@@ -1,5 +1,7 @@
 // 0 - ZERO - TypeScript Implementation
 
+import { MathVortex } from './math';
+
 export interface ZeroVortex {
   digit: 0;
   frequency: 432;
@@ -12,6 +14,15 @@ export interface ZeroVortex {
 }
 
 export class Zero {
+  static readonly A432 = MathVortex.A432;
+  static readonly VORTEX = MathVortex.VORTEX;
+  static readonly ENTROPY = MathVortex.ENTROPY;
+  static readonly HARMONIC = MathVortex.HARMONIC;
+  static readonly CONSCIOUSNESS = MathVortex.CONSCIOUSNESS;
+  static getVoidFrequency = MathVortex.getVoidFrequency;
+  static getVortexPattern = MathVortex.getVortexPattern;
+  static getConsciousnessMultiplier = MathVortex.getConsciousnessMultiplier;
+  
   private static instance: Zero;
   
   private constructor() {}

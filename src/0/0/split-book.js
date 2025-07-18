@@ -31,7 +31,7 @@ const extractWords = (content) => {
   mathConcepts.forEach(concept => words.add(concept));
   
   // Extract individual words from content
-  const wordMatches = content.match(/\b[A-Z][a-z]+(?:\-[A-Z][a-z]+)*\b/g);
+  const wordMatches = content.match(/\b[A-Z][a-z]+(?:-[A-Z][a-z]+)*\b/g);
   if (wordMatches) {
     wordMatches.forEach(word => {
       if (word.length > 2) {

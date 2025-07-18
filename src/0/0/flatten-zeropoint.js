@@ -14,7 +14,6 @@ class ZeropointFlattener {
   // Generate Zeropoint unique name
   generateZeropointName(filePath, index = 0) {
     const relativePath = path.relative(this.baseDir, filePath);
-    const dir = path.dirname(relativePath);
     const ext = path.extname(filePath);
     const baseName = path.basename(filePath, ext);
     
@@ -43,7 +42,6 @@ class ZeropointFlattener {
   // Create unique identifier
   createUniqueId(filePath, index) {
     const parts = filePath.split(path.sep);
-    const dirLevel = parts.length - 1;
     const fileName = parts[parts.length - 1];
     
     // Create identifier from path structure

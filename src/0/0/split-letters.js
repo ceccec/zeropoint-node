@@ -14,8 +14,6 @@ const extractLetters = (word) => {
 
 // Generate individual LETTER.md files
 const generateLetterFiles = (wordFile, wordIndex, totalWords) => {
-  const wordPath = path.join(wordsDir, wordFile);
-  const wordContent = fs.readFileSync(wordPath, 'utf8');
   const wordName = wordFile.replace('.md', '');
   const letters = extractLetters(wordName);
   

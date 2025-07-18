@@ -1,6 +1,9 @@
 # Jekyll configuration for ZeroPoint Node Documentation
+
 title: ZeroPoint Node Documentation
-description: Complete documentation for the ZeroPoint Node consciousness system
+
+# All documentation is now in src/0/
+description: Complete documentation for the ZeroPoint Node consciousness system (harmonized in src/0/)
 theme: jekyll-theme-cayman
 
 # Plugins
@@ -12,20 +15,20 @@ plugins:
 relative_links:
   enabled: true
 
-# Collections
+# Only src/0/ is the documentation root
 collections:
   docs:
     output: true
-    permalink: /docs/:path/
+    permalink: /src/0/:path/
 
 # Defaults
 defaults:
   - scope:
-      path: ""
+      path: "src/0/"
       type: "docs"
     values:
       layout: "default"
 
 # Redirects
 redirect_from:
-  "/": "/docs/"
+  "/": "/src/0/"

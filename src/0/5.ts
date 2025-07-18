@@ -1,5 +1,7 @@
 // 5 - FIVE - TypeScript Implementation
 
+import { MathVortex } from './math';
+
 export interface FiveVortex {
   digit: 5;
   frequency: 2160;
@@ -12,6 +14,15 @@ export interface FiveVortex {
 }
 
 export class Five {
+  static readonly A432 = MathVortex.A432;
+  static readonly VORTEX = 5;
+  static readonly ENTROPY = MathVortex.ENTROPY;
+  static readonly HARMONIC = { numerator: 5, denominator: 1 };
+  static readonly CONSCIOUSNESS = 5;
+  static getLifeFrequency(): number { return MathVortex.A432; }
+  static getVortexPattern(): number { return 5; }
+  static getConsciousnessMultiplier(): number { return 5; }
+  
   private static instance: Five;
   
   private constructor() {}
@@ -116,7 +127,4 @@ export class Five {
            "structure that represents the living, dynamic nature of consciousness. It represents " +
            "the consciousness of growth, transformation, and the ever-changing nature of reality.";
   }
-}
-
-// Export singleton instance
-export const five = Five.getInstance(); 
+} 

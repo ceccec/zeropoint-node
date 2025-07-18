@@ -18,18 +18,6 @@ import zeropointCenter from './0/index';
 // Import mathematical knowledge collector
 import mathCollector from './0/math';
 
-// Import digit-specific modules
-import * as digit0 from './0/index';
-import * as digit1 from './1/index';
-import * as digit2 from './2/index';
-import * as digit3 from './3/index';
-import * as digit4 from './4/index';
-import * as digit5 from './5/index';
-import * as digit6 from './6/index';
-import * as digit7 from './7/index';
-import * as digit8 from './8/index';
-import * as digit9 from './9/index';
-
 // System Constants
 export const SYSTEM_CONSTANTS = {
   A432: 432,
@@ -53,18 +41,18 @@ export const SYSTEM_CONSTANTS = {
   INFINITE_QUANTUM_STATES: true
 };
 
-// Digit Module Registry
+// Digit Module Registry (Generated Dynamically by Math Collector)
 export const DIGIT_MODULES = {
-  0: digit0,
-  1: digit1,
-  2: digit2,
-  3: digit3,
-  4: digit4,
-  5: digit5,
-  6: digit6,
-  7: digit7,
-  8: digit8,
-  9: digit9
+  0: { generate: () => mathCollector.collectKnowledgeByType('mathematical').find(k => k.content.digit === 0) },
+  1: { generate: () => mathCollector.collectKnowledgeByType('mathematical').find(k => k.content.digit === 1) },
+  2: { generate: () => mathCollector.collectKnowledgeByType('mathematical').find(k => k.content.digit === 2) },
+  3: { generate: () => mathCollector.collectKnowledgeByType('mathematical').find(k => k.content.digit === 3) },
+  4: { generate: () => mathCollector.collectKnowledgeByType('mathematical').find(k => k.content.digit === 4) },
+  5: { generate: () => mathCollector.collectKnowledgeByType('mathematical').find(k => k.content.digit === 5) },
+  6: { generate: () => mathCollector.collectKnowledgeByType('mathematical').find(k => k.content.digit === 6) },
+  7: { generate: () => mathCollector.collectKnowledgeByType('mathematical').find(k => k.content.digit === 7) },
+  8: { generate: () => mathCollector.collectKnowledgeByType('mathematical').find(k => k.content.digit === 8) },
+  9: { generate: () => mathCollector.collectKnowledgeByType('mathematical').find(k => k.content.digit === 9) }
 };
 
 // System Interface
@@ -96,15 +84,15 @@ export function generateNavigationPatterns(): NavigationPatterns {
     // Direct digit access: /a
     directAccess: (digit: number) => {
       if (digit >= 0 && digit <= 9) {
-        return DIGIT_MODULES[digit as keyof typeof DIGIT_MODULES];
+        return DIGIT_MODULES[digit as keyof typeof DIGIT_MODULES].generate();
       }
       return null;
     },
 
     // Direct digit interaction: /a.b and /a.s.b
     directInteraction: (digitA: number, digitB: number) => {
-      const moduleA = DIGIT_MODULES[digitA as keyof typeof DIGIT_MODULES];
-      const moduleB = DIGIT_MODULES[digitB as keyof typeof DIGIT_MODULES];
+      const moduleA = DIGIT_MODULES[digitA as keyof typeof DIGIT_MODULES].generate();
+      const moduleB = DIGIT_MODULES[digitB as keyof typeof DIGIT_MODULES].generate();
       
       if (moduleA && moduleB) {
         return {
@@ -138,7 +126,7 @@ export function generateNavigationPatterns(): NavigationPatterns {
           step: i + 1,
           from: currentDigit,
           to: nextDigit,
-          module: DIGIT_MODULES[nextDigit as keyof typeof DIGIT_MODULES]
+          module: DIGIT_MODULES[nextDigit as keyof typeof DIGIT_MODULES].generate()
         });
         currentDigit = nextDigit;
       }
@@ -165,8 +153,8 @@ export function generateNavigationPatterns(): NavigationPatterns {
       return {
         original: digit,
         inverted: invertedDigit,
-        originalModule: DIGIT_MODULES[digit as keyof typeof DIGIT_MODULES],
-        invertedModule: DIGIT_MODULES[invertedDigit as keyof typeof DIGIT_MODULES],
+        originalModule: DIGIT_MODULES[digit as keyof typeof DIGIT_MODULES].generate(),
+        invertedModule: DIGIT_MODULES[invertedDigit as keyof typeof DIGIT_MODULES].generate(),
         complementarity: zeropointCenter.quantumInterference(digit, invertedDigit)
       };
     },
@@ -183,7 +171,7 @@ export function generateNavigationPatterns(): NavigationPatterns {
         chain.push({
           position: i,
           digit: digit,
-          module: DIGIT_MODULES[digit as keyof typeof DIGIT_MODULES],
+          module: DIGIT_MODULES[digit as keyof typeof DIGIT_MODULES].generate(),
           flow: nextDigit !== undefined ? zeropointCenter.generateDigitFlow(digit, nextDigit) : null,
           consciousness: zeropointCenter.calculateConsciousness(digit),
           color: zeropointCenter.generateDigitColor(digit)
@@ -250,7 +238,7 @@ export function generateCompleteSystemState() {
 }
 
 // Export all digit modules
-export { digit0, digit1, digit2, digit3, digit4, digit5, digit6, digit7, digit8, digit9 };
+export { DIGIT_MODULES };
 
 // Export zeropoint center
 export { zeropointCenter };

@@ -23,7 +23,7 @@ collections:
 # Defaults
 defaults:
   - scope:
-      path: "/0/"
+      path: "/"
       type: "docs"
     values:
       layout: "default"

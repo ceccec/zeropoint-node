@@ -61,8 +61,8 @@
             }
 
             isDirectDigitInteraction(path) {
-                // Match patterns like /a.b or /b.a (direct digit interaction)
-                const directPattern = /^\/(\d+)\.(\d+)$/;
+                // Match patterns like /a.b or /a.s.b (direct digit interaction with self)
+                const directPattern = /^\/(\d+)\.(s\.)?(\d+)$/;
                 return directPattern.test(path);
             }
 
@@ -365,28 +365,30 @@
             }
 
             serveDirectDigitInteraction(path) {
-                const match = path.match(/^\/(\d+)\.(\d+)$/);
+                const match = path.match(/^\/(\d+)\.(s\.)?(\d+)$/);
                 if (match) {
-                    const [, digitA, digitB] = match;
-                    this.displayDirectDigitInteraction(parseInt(digitA), parseInt(digitB));
+                    const [, digitA, selfFlag, digitB] = match;
+                    this.displayDirectDigitInteraction(parseInt(digitA), parseInt(digitB), !!selfFlag);
                 }
             }
 
-            displayDirectDigitInteraction(digitA, digitB) {
+            displayDirectDigitInteraction(digitA, digitB, isSelfTransformation) {
                 const container = document.querySelector('.container');
-                const interaction = this.calculateDirectDigitInteraction(digitA, digitB);
+                const interaction = this.calculateDirectDigitInteraction(digitA, digitB, isSelfTransformation);
                 
                 container.innerHTML = `
                     <div class="direct-interaction">
-                        <h1>Direct Digit Interaction</h1>
+                        <h1>${isSelfTransformation ? 'Self-Transformation' : 'Direct Digit Interaction'}</h1>
                         <div class="interaction-flow">
                             <div class="digit-a">${digitA}</div>
-                            <div class="interaction-symbol">•</div>
+                            <div class="interaction-symbol">${isSelfTransformation ? '⟲' : '•'}</div>
                             <div class="digit-b">${digitB}</div>
                         </div>
                         <div class="interaction-properties">
                             <p>Digit A: ${digitA} (${interaction.nameA})</p>
                             <p>Digit B: ${digitB} (${interaction.nameB})</p>
+                            <p>Transformation Type: ${interaction.transformationType}</p>
+                            <p>Self-Application: ${interaction.selfApplication}</p>
                             <p>Interaction Product: ${interaction.product}</p>
                             <p>Harmonic Sum: ${interaction.harmonicSum}</p>
                             <p>Resonance Field: ${interaction.resonanceField}</p>
@@ -399,7 +401,7 @@
                 `;
             }
 
-            calculateDirectDigitInteraction(digitA, digitB) {
+            calculateDirectDigitInteraction(digitA, digitB, isSelfTransformation) {
                 const product = digitA * digitB;
                 const harmonicSum = digitA + digitB;
                 const resonanceField = product % 10;
@@ -419,8 +421,22 @@
                 const nameA = digitNames[digitA] || 'UNKNOWN';
                 const nameB = digitNames[digitB] || 'UNKNOWN';
                 
+                const transformationType = isSelfTransformation ? 'Self-Transformation' : 'Direct Interaction';
+                const selfApplication = isSelfTransformation ? 
+                    `${digitA} applies its own properties to transform ${digitB}` : 
+                    'Standard digit interaction';
+                
                 // Mathematical expressions for direct interactions
-                const expressions = [
+                const expressions = isSelfTransformation ? [
+                    `${digitA}.s.${digitB} = ${product}`,
+                    `${nameA} ⟲ ${nameB} = ${product}`,
+                    `${digitA} applies self to ${digitB} = ${product}`,
+                    `${digitA} ⊙ ${digitB} = ${resonanceField}`,
+                    `${digitA} ⊕ ${digitB} = ${(digitA + digitB) % 10}`,
+                    `${digitA}² + ${digitB}² = ${digitA*digitA + digitB*digitB}`,
+                    `self(${digitA}) × ${digitB} = ${product}`,
+                    `${digitA} ⊗ ${digitB} = ${(digitA * digitB) % 10}`
+                ] : [
                     `${digitA} • ${digitB} = ${product}`,
                     `${nameA} × ${nameB} = ${product}`,
                     `${digitA} + ${digitB} = ${harmonicSum}`,
@@ -441,6 +457,8 @@
                     color,
                     nameA,
                     nameB,
+                    transformationType,
+                    selfApplication,
                     expression
                 };
             }

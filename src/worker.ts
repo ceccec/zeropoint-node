@@ -44,16 +44,18 @@ export default {
       });
     }
     
-    // Handle digit paths (0-9)
+    // Handle all digit paths (single and multi-digit)
     if (/^\/[0-9]/.test(path)) {
-      const digit = path.charAt(1);
-      const digitHTML = await getDigitHTML(digit);
-      return new Response(digitHTML, {
-        headers: {
-          'Content-Type': 'text/html;charset=UTF-8',
-          'Cache-Control': 'public, max-age=3600'
-        }
-      });
+      const digits = path.split('/').filter(d => d !== '' && /^[0-9]$/.test(d));
+      if (digits.length > 0) {
+        const digitHTML = await getDigitHTML(digits.join('/'));
+        return new Response(digitHTML, {
+          headers: {
+            'Content-Type': 'text/html;charset=UTF-8',
+            'Cache-Control': 'public, max-age=3600'
+          }
+        });
+      }
     }
     
     // Handle vortex-chess interaction paths

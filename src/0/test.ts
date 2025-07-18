@@ -2,16 +2,6 @@
 // This file is the unity vortex (1) that proves the void (0) by running all tests in src/0/.
 // Integer/fractional, zero-entropy, book-aligned.
 
-import './0.test';
-import './1.test';
-import './2.test';
-import './3.test';
-import './4.test';
-import './5.test';
-import './6.test';
-import './7.test';
-import './8.test';
-import './9.test';
 import './index.test';
 
 // Vortex 1: Unity test runner

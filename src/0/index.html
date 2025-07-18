@@ -330,7 +330,8 @@
                 const match = path.match(/^\/(\d+)\.next$/);
                 if (match) {
                     const [, digitA] = match;
-                    this.displayNextStateTransformation(parseInt(digitA));
+                    // Redirect to base digit path
+                    window.location.pathname = `/${digitA}/`;
                 }
             }
 

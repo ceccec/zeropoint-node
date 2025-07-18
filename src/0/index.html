@@ -133,7 +133,21 @@
                     '8': 'hsl(288, 70%, 50%)',
                     '9': 'hsl(324, 70%, 50%)'
                 };
-                return colors[digit] || 'hsl(0, 70%, 50%)';
+                return this.mathInvert(colors[digit] || 'hsl(0, 70%, 50%)');
+            }
+
+            mathInvert(color) {
+                // Extract HSL values
+                const match = color.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/);
+                if (!match) return color;
+                
+                const [, h, s, l] = match.map(Number);
+                
+                // Math invert: add 180 to hue, invert lightness
+                const invertedHue = (h + 180) % 360;
+                const invertedLightness = 100 - l;
+                
+                return `hsl(${invertedHue}, ${s}%, ${invertedLightness}%)`;
             }
         }
 

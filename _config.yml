@@ -14,9 +14,6 @@ plugins:
 relative_links:
   enabled: true
 
-# Serve from src/ directory
-source: src
-
 # Only src/0/ is the documentation root
 collections:
   docs:

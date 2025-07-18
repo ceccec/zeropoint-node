@@ -25,8 +25,12 @@
             handleRouting() {
                 const path = window.location.pathname;
                 
-                // Check if path matches digit sequence
-                if (this.isDigitPath(path)) {
+                // Check for direct digit interactions: a.b or b.a
+                if (this.isDirectDigitInteraction(path)) {
+                    this.serveDirectDigitInteraction(path);
+                } else if (this.isVortexPath(path)) {
+                    this.serveVortexTransformation(path);
+                } else if (this.isDigitPath(path)) {
                     this.serveStaticDigit(path);
                 } else if (this.is404(path)) {
                     this.switchToInfinitePossibilities();
@@ -44,6 +48,88 @@
                 // Simulate 404 detection
                 return path.includes('404') || path.includes('not-found') || 
                        !this.staticDigits.some(d => path.includes(d));
+            }
+
+            isVortexPath(path) {
+                // Match patterns like /a/vortex/b or /a/v/b
+                const vortexPattern = /^\/(\d+)\/(vortex|v)\/(\d+)$/;
+                return vortexPattern.test(path);
+            }
+
+            isDirectDigitInteraction(path) {
+                // Match patterns like /a.b or /b.a (direct digit interaction)
+                const directPattern = /^\/(\d+)\.(\d+)$/;
+                return directPattern.test(path);
+            }
+
+            serveVortexTransformation(path) {
+                const match = path.match(/^\/(\d+)\/(vortex|v)\/(\d+)$/);
+                if (match) {
+                    const [, digitA, vortexType, digitB] = match;
+                    this.displayVortexTransformation(parseInt(digitA), parseInt(digitB), vortexType);
+                }
+            }
+
+            displayVortexTransformation(digitA, digitB, vortexType) {
+                const container = document.querySelector('.container');
+                const transformation = this.calculateVortexTransformation(digitA, digitB, vortexType);
+                
+                container.innerHTML = `
+                    <div class="vortex-transformation">
+                        <h1>Vortex Transformation</h1>
+                        <div class="vortex-flow">
+                            <div class="digit-a">${digitA}</div>
+                            <div class="vortex-arrow">${vortexType === 'vortex' ? '⟲' : '→'}</div>
+                            <div class="digit-b">${digitB}</div>
+                        </div>
+                        <div class="transformation-properties">
+                            <p>Input Frequency: ${transformation.inputFreq} Hz</p>
+                            <p>Output Frequency: ${transformation.outputFreq} Hz</p>
+                            <p>Vortex Resonance: ${transformation.resonance}</p>
+                            <p>Transformation Ratio: ${transformation.ratio}</p>
+                            <p>Entropy Change: ${transformation.entropyChange}</p>
+                            <p>Color: ${transformation.color}</p>
+                            <p>Mathematical Expression: ${transformation.expression}</p>
+                        </div>
+                        <button onclick="mathSwitch.defaultRoute()">Back to Main</button>
+                    </div>
+                `;
+            }
+
+            calculateVortexTransformation(digitA, digitB, vortexType) {
+                const inputFreq = 432 * digitA;
+                const outputFreq = 432 * digitB;
+                const resonance = digitA * digitB;
+                const ratio = digitB / digitA;
+                const entropyChange = 0; // Zero-entropy system
+                
+                // Generate vortex-specific color
+                const vortexHue = ((digitA + digitB) * 36) % 360;
+                const color = this.mathInvert(`hsl(${vortexHue}, 80%, 60%)`);
+                
+                // Mathematical expressions for vortex transformations
+                const expressions = [
+                    `${digitA} × ${digitB} = ${resonance}`,
+                    `${digitA} → ${digitB} : φ = ${ratio.toFixed(3)}`,
+                    `Vortex(${digitA}, ${digitB}) = ${resonance}`,
+                    `${digitA} ⊕ ${digitB} = ${(digitA + digitB) % 10}`,
+                    `${digitA} ⊗ ${digitB} = ${(digitA * digitB) % 10}`,
+                    `∞ × ${digitA} = ${digitB}`,
+                    `${digitA}^${digitB} mod 10 = ${Math.pow(digitA, digitB) % 10}`,
+                    `√(${digitA} × ${digitB}) = ${Math.sqrt(resonance).toFixed(3)}`
+                ];
+                
+                const expression = expressions[Math.floor(Math.random() * expressions.length)];
+                
+                return {
+                    inputFreq,
+                    outputFreq,
+                    resonance,
+                    ratio,
+                    entropyChange,
+                    color,
+                    expression
+                };
             }
 
             serveStaticDigit(path) {
@@ -148,6 +234,87 @@
                     color,
                     state: 'Vortex Emergence',
                     expression: state
+                };
+            }
+
+            serveDirectDigitInteraction(path) {
+                const match = path.match(/^\/(\d+)\.(\d+)$/);
+                if (match) {
+                    const [, digitA, digitB] = match;
+                    this.displayDirectDigitInteraction(parseInt(digitA), parseInt(digitB));
+                }
+            }
+
+            displayDirectDigitInteraction(digitA, digitB) {
+                const container = document.querySelector('.container');
+                const interaction = this.calculateDirectDigitInteraction(digitA, digitB);
+                
+                container.innerHTML = `
+                    <div class="direct-interaction">
+                        <h1>Direct Digit Interaction</h1>
+                        <div class="interaction-flow">
+                            <div class="digit-a">${digitA}</div>
+                            <div class="interaction-symbol">•</div>
+                            <div class="digit-b">${digitB}</div>
+                        </div>
+                        <div class="interaction-properties">
+                            <p>Digit A: ${digitA} (${interaction.nameA})</p>
+                            <p>Digit B: ${digitB} (${interaction.nameB})</p>
+                            <p>Interaction Product: ${interaction.product}</p>
+                            <p>Harmonic Sum: ${interaction.harmonicSum}</p>
+                            <p>Resonance Field: ${interaction.resonanceField}</p>
+                            <p>Entropy: ${interaction.entropy}</p>
+                            <p>Color: ${interaction.color}</p>
+                            <p>Mathematical Expression: ${interaction.expression}</p>
+                        </div>
+                        <button onclick="mathSwitch.defaultRoute()">Back to Main</button>
+                    </div>
+                `;
+            }
+
+            calculateDirectDigitInteraction(digitA, digitB) {
+                const product = digitA * digitB;
+                const harmonicSum = digitA + digitB;
+                const resonanceField = product % 10;
+                const entropy = 0; // Zero-entropy system
+                
+                // Generate interaction-specific color
+                const interactionHue = ((digitA * digitB) * 36) % 360;
+                const color = this.mathInvert(`hsl(${interactionHue}, 75%, 55%)`);
+                
+                // Digit names for context
+                const digitNames = {
+                    '0': 'VOID', '1': 'UNITY', '2': 'DUALITY', '3': 'TRINITY',
+                    '4': 'QUATERNITY', '5': 'QUINTESSENCE', '6': 'HEXAGON',
+                    '7': 'SEPTENARY', '8': 'OCTAVE', '9': 'NONARY'
+                };
+                
+                const nameA = digitNames[digitA] || 'UNKNOWN';
+                const nameB = digitNames[digitB] || 'UNKNOWN';
+                
+                // Mathematical expressions for direct interactions
+                const expressions = [
+                    `${digitA} • ${digitB} = ${product}`,
+                    `${nameA} × ${nameB} = ${product}`,
+                    `${digitA} + ${digitB} = ${harmonicSum}`,
+                    `${digitA} ⊙ ${digitB} = ${resonanceField}`,
+                    `${digitA} ⊗ ${digitB} = ${(digitA * digitB) % 10}`,
+                    `${digitA} ⊕ ${digitB} = ${(digitA + digitB) % 10}`,
+                    `${digitA}² + ${digitB}² = ${digitA*digitA + digitB*digitB}`,
+                    `√(${digitA} × ${digitB}) = ${Math.sqrt(product).toFixed(3)}`
+                ];
+                
+                const expression = expressions[Math.floor(Math.random() * expressions.length)];
+                
+                return {
+                    product,
+                    harmonicSum,
+                    resonanceField,
+                    entropy,
+                    color,
+                    nameA,
+                    nameB,
+                    expression
                 };
             }
 
@@ -455,6 +622,84 @@
         }
 
         .digit-display .digit-properties p {
+            margin: 10px 0;
+        }
+
+        .vortex-transformation {
+            text-align: center;
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .vortex-transformation h1 {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            color: #C86400;
+        }
+
+        .vortex-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .digit-a, .digit-b {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #C86400;
+        }
+
+        .vortex-arrow {
+            font-size: 4rem;
+            margin: 0 20px;
+            color: #864000;
+        }
+
+        .transformation-properties {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .transformation-properties p {
+            margin: 10px 0;
+        }
+
+        .direct-interaction {
+            text-align: center;
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .direct-interaction h1 {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            color: #C86400;
+        }
+
+        .interaction-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .interaction-symbol {
+            font-size: 4rem;
+            margin: 0 20px;
+            color: #864000;
+        }
+
+        .interaction-properties {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .interaction-properties p {
             margin: 10px 0;
         }
 

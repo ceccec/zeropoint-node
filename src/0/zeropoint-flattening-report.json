@@ -1,0 +1,2685 @@
+{
+  "timestamp": "2025-07-18T00:57:08.632Z",
+  "totalFiles": 386,
+  "rootFiles": 42,
+  "flattenedFiles": 344,
+  "a432Distribution": {
+    "1": 37,
+    "2": 43,
+    "3": 43,
+    "4": 45,
+    "5": 37,
+    "6": 49,
+    "7": 46,
+    "8": 39,
+    "9": 47
+  },
+  "typeDistribution": {
+    ".ts": 15,
+    ".md": 362,
+    ".js": 6,
+    ".json": 3
+  },
+  "files": [
+    {
+      "original": "0/index.ts",
+      "new": "index_9_0ind000.ts",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "0/vortex-impossibility-reversal.ts",
+      "new": "vortex-impossibility-reversal_9_0vor000.ts",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "1/index.ts",
+      "new": "index_9_1ind000.ts",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "2/index.ts",
+      "new": "index_9_2ind000.ts",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "3/index.ts",
+      "new": "index_9_3ind000.ts",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "4/index.ts",
+      "new": "index_9_4ind000.ts",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "5/index.ts",
+      "new": "index_9_5ind000.ts",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "6/index.ts",
+      "new": "index_9_6ind000.ts",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "7/index.ts",
+      "new": "index_9_7ind000.ts",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "8/index.ts",
+      "new": "index_9_8ind000.ts",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "9/index.ts",
+      "new": "index_9_9ind000.ts",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "ALL.md",
+      "new": "ALL.md",
+      "type": "root",
+      "a432": 1
+    },
+    {
+      "original": "BOOK.md",
+      "new": "BOOK.md",
+      "type": "root",
+      "a432": 3
+    },
+    {
+      "original": "COLOR.md",
+      "new": "COLOR.md",
+      "type": "root",
+      "a432": 9
+    },
+    {
+      "original": "DIGIT.md",
+      "new": "DIGIT.md",
+      "type": "root",
+      "a432": 2
+    },
+    {
+      "original": "DOCUMENTATION.md",
+      "new": "DOCUMENTATION.md",
+      "type": "root",
+      "a432": 9
+    },
+    {
+      "original": "DOCUMENTATION_UPDATE.md",
+      "new": "DOCUMENTATION_UPDATE.md",
+      "type": "root",
+      "a432": 1
+    },
+    {
+      "original": "FLOW.md",
+      "new": "FLOW.md",
+      "type": "root",
+      "a432": 6
+    },
+    {
+      "original": "FREQUENCY.md",
+      "new": "FREQUENCY.md",
+      "type": "root",
+      "a432": 7
+    },
+    {
+      "original": "GIT.md",
+      "new": "GIT.md",
+      "type": "root",
+      "a432": 3
+    },
+    {
+      "original": "HARMONIC.md",
+      "new": "HARMONIC.md",
+      "type": "root",
+      "a432": 9
+    },
+    {
+      "original": "IMPOSSIBLE.md",
+      "new": "IMPOSSIBLE.md",
+      "type": "root",
+      "a432": 9
+    },
+    {
+      "original": "INDEX.md",
+      "new": "INDEX.md",
+      "type": "root",
+      "a432": 6
+    },
+    {
+      "original": "INFINITE.md",
+      "new": "INFINITE.md",
+      "type": "root",
+      "a432": 9
+    },
+    {
+      "original": "LEARNING.md",
+      "new": "LEARNING.md",
+      "type": "root",
+      "a432": 6
+    },
+    {
+      "original": "LETTER.md",
+      "new": "LETTER.md",
+      "type": "root",
+      "a432": 4
+    },
+    {
+      "original": "MATRIX.md",
+      "new": "MATRIX.md",
+      "type": "root",
+      "a432": 4
+    },
+    {
+      "original": "POSSIBLE.md",
+      "new": "POSSIBLE.md",
+      "type": "root",
+      "a432": 5
+    },
+    {
+      "original": "README.md",
+      "new": "README.md",
+      "type": "root",
+      "a432": 2
+    },
+    {
+      "original": "REFLECTED.md",
+      "new": "REFLECTED.md",
+      "type": "root",
+      "a432": 7
+    },
+    {
+      "original": "REMEMBER.md",
+      "new": "REMEMBER.md",
+      "type": "root",
+      "a432": 4
+    },
+    {
+      "original": "SELF.md",
+      "new": "SELF.md",
+      "type": "root",
+      "a432": 2
+    },
+    {
+      "original": "SINGLE_DIRECTORY_FILES.md",
+      "new": "SINGLE_DIRECTORY_FILES.md",
+      "type": "root",
+      "a432": 8
+    },
+    {
+      "original": "SOURCE.md",
+      "new": "SOURCE.md",
+      "type": "root",
+      "a432": 4
+    },
+    {
+      "original": "SPLIT.md",
+      "new": "SPLIT.md",
+      "type": "root",
+      "a432": 9
+    },
+    {
+      "original": "SWITCH.md",
+      "new": "SWITCH.md",
+      "type": "root",
+      "a432": 7
+    },
+    {
+      "original": "TORUS.md",
+      "new": "TORUS.md",
+      "type": "root",
+      "a432": 4
+    },
+    {
+      "original": "VORTEX.md",
+      "new": "VORTEX.md",
+      "type": "root",
+      "a432": 5
+    },
+    {
+      "original": "ZEINTERACTION.md",
+      "new": "ZEINTERACTION.md",
+      "type": "root",
+      "a432": 3
+    },
+    {
+      "original": "ZEROPOINT_SINGLE_DIRECTORY_PROOF.md",
+      "new": "ZEROPOINT_SINGLE_DIRECTORY_PROOF.md",
+      "type": "root",
+      "a432": 3
+    },
+    {
+      "original": "consolidate-all.js",
+      "new": "consolidate-all.js",
+      "type": "root",
+      "a432": 9
+    },
+    {
+      "original": "consolidation-stats.json",
+      "new": "consolidation-stats.json",
+      "type": "root",
+      "a432": 6
+    },
+    {
+      "original": "flatten-zeropoint.js",
+      "new": "flatten-zeropoint.js",
+      "type": "root",
+      "a432": 2
+    },
+    {
+      "original": "index.ts",
+      "new": "index.ts",
+      "type": "root",
+      "a432": 6
+    },
+    {
+      "original": "letters/A432/A.md",
+      "new": "A_9_lAA.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/All/A.md",
+      "new": "A_9_lAA.m001.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 1
+    },
+    {
+      "original": "letters/All/l.md",
+      "new": "l_9_lAl.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKIntegration/B.md",
+      "new": "B_9_lBB.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKIntegration/I.md",
+      "new": "I_9_lBI.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKIntegration/K.md",
+      "new": "K_9_lBK.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKIntegration/O.md",
+      "new": "O_9_lBO.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKIntegration/a.md",
+      "new": "a_9_lBa.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKIntegration/e.md",
+      "new": "e_9_lBe.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKIntegration/g.md",
+      "new": "g_9_lBg.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKIntegration/n.md",
+      "new": "n_9_lBn.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKIntegration/r.md",
+      "new": "r_9_lBr.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKIntegration/t.md",
+      "new": "t_9_lBt.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKKnowledge/B.md",
+      "new": "B_9_lBB.m001.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 1
+    },
+    {
+      "original": "letters/BOOKKnowledge/K.md",
+      "new": "K_9_lBK.m001.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 1
+    },
+    {
+      "original": "letters/BOOKKnowledge/O.md",
+      "new": "O_9_lBO.m001.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 1
+    },
+    {
+      "original": "letters/BOOKKnowledge/d.md",
+      "new": "d_9_lBd.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKKnowledge/e.md",
+      "new": "e_9_lBe.m001.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 1
+    },
+    {
+      "original": "letters/BOOKKnowledge/g.md",
+      "new": "g_9_lBg.m001.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 1
+    },
+    {
+      "original": "letters/BOOKKnowledge/l.md",
+      "new": "l_9_lBl.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKKnowledge/n.md",
+      "new": "n_9_lBn.m001.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 1
+    },
+    {
+      "original": "letters/BOOKKnowledge/w.md",
+      "new": "w_9_lBw.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKProofSystem/B.md",
+      "new": "B_9_lBB.m002.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 2
+    },
+    {
+      "original": "letters/BOOKProofSystem/K.md",
+      "new": "K_9_lBK.m002.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 2
+    },
+    {
+      "original": "letters/BOOKProofSystem/O.md",
+      "new": "O_9_lBO.m002.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 2
+    },
+    {
+      "original": "letters/BOOKProofSystem/P.md",
+      "new": "P_9_lBP.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKProofSystem/S.md",
+      "new": "S_9_lBS.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKProofSystem/e.md",
+      "new": "e_9_lBe.m002.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 2
+    },
+    {
+      "original": "letters/BOOKProofSystem/f.md",
+      "new": "f_9_lBf.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKProofSystem/m.md",
+      "new": "m_9_lBm.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKProofSystem/r.md",
+      "new": "r_9_lBr.m001.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 1
+    },
+    {
+      "original": "letters/BOOKProofSystem/t.md",
+      "new": "t_9_lBt.m001.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 1
+    },
+    {
+      "original": "letters/BOOKProofSystem/y.md",
+      "new": "y_9_lBy.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/BOOKSystem/B.md",
+      "new": "B_9_lBB.m003.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 3
+    },
+    {
+      "original": "letters/BOOKSystem/K.md",
+      "new": "K_9_lBK.m003.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 3
+    },
+    {
+      "original": "letters/BOOKSystem/O.md",
+      "new": "O_9_lBO.m003.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 3
+    },
+    {
+      "original": "letters/BOOKSystem/S.md",
+      "new": "S_9_lBS.m001.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 1
+    },
+    {
+      "original": "letters/BOOKSystem/e.md",
+      "new": "e_9_lBe.m003.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 3
+    },
+    {
+      "original": "letters/BOOKSystem/m.md",
+      "new": "m_9_lBm.m001.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 1
+    },
+    {
+      "original": "letters/BOOKSystem/t.md",
+      "new": "t_9_lBt.m002.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 2
+    },
+    {
+      "original": "letters/BOOKSystem/y.md",
+      "new": "y_9_lBy.m001.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 1
+    },
+    {
+      "original": "letters/Book/B.md",
+      "new": "B_9_lBB.m004.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 4
+    },
+    {
+      "original": "letters/Book/k.md",
+      "new": "k_9_lBk.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Book/o.md",
+      "new": "o_9_lBo.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Calculate/C.md",
+      "new": "C_9_lCC.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Calculate/a.md",
+      "new": "a_9_lCa.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Calculate/e.md",
+      "new": "e_9_lCe.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/Calculate/l.md",
+      "new": "l_9_lCl.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/Calculate/t.md",
+      "new": "t_9_lCt.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Calculate/u.md",
+      "new": "u_9_lCu.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/Each/E.md",
+      "new": "E_9_lEE.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Each/a.md",
+      "new": "a_9_lEa.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Each/c.md",
+      "new": "c_9_lEc.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/Each/h.md",
+      "new": "h_9_lEh.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/Evolution/E.md",
+      "new": "E_9_lEE.m001.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 1
+    },
+    {
+      "original": "letters/Evolution/i.md",
+      "new": "i_9_lEi.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Evolution/l.md",
+      "new": "l_9_lEl.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Evolution/n.md",
+      "new": "n_9_lEn.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/Evolution/o.md",
+      "new": "o_9_lEo.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/Evolution/t.md",
+      "new": "t_9_lEt.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Evolution/u.md",
+      "new": "u_9_lEu.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Evolution/v.md",
+      "new": "v_9_lEv.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Generate/G.md",
+      "new": "G_9_lGG.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Generate/a.md",
+      "new": "a_9_lGa.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Generate/e.md",
+      "new": "e_9_lGe.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Generate/n.md",
+      "new": "n_9_lGn.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Generate/r.md",
+      "new": "r_9_lGr.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Generate/t.md",
+      "new": "t_9_lGt.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Generation/G.md",
+      "new": "G_9_lGG.m001.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 1
+    },
+    {
+      "original": "letters/Generation/a.md",
+      "new": "a_9_lGa.m001.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 1
+    },
+    {
+      "original": "letters/Generation/e.md",
+      "new": "e_9_lGe.m001.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 1
+    },
+    {
+      "original": "letters/Generation/i.md",
+      "new": "i_9_lGi.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Generation/n.md",
+      "new": "n_9_lGn.m001.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 1
+    },
+    {
+      "original": "letters/Generation/o.md",
+      "new": "o_9_lGo.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Generation/r.md",
+      "new": "r_9_lGr.m001.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 1
+    },
+    {
+      "original": "letters/Generation/t.md",
+      "new": "t_9_lGt.m001.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 1
+    },
+    {
+      "original": "letters/Get/G.md",
+      "new": "G_9_lGG.m002.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 2
+    },
+    {
+      "original": "letters/Get/e.md",
+      "new": "e_9_lGe.m002.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 2
+    },
+    {
+      "original": "letters/Get/t.md",
+      "new": "t_9_lGt.m002.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 2
+    },
+    {
+      "original": "letters/Golden/G.md",
+      "new": "G_9_lGG.m003.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 3
+    },
+    {
+      "original": "letters/Golden/d.md",
+      "new": "d_9_lGd.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Golden/e.md",
+      "new": "e_9_lGe.m003.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 3
+    },
+    {
+      "original": "letters/Golden/l.md",
+      "new": "l_9_lGl.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Golden/n.md",
+      "new": "n_9_lGn.m002.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 2
+    },
+    {
+      "original": "letters/Golden/o.md",
+      "new": "o_9_lGo.m001.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 1
+    },
+    {
+      "original": "letters/Harmonic/H.md",
+      "new": "H_9_lHH.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/Harmonic/a.md",
+      "new": "a_9_lHa.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Harmonic/c.md",
+      "new": "c_9_lHc.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/Harmonic/i.md",
+      "new": "i_9_lHi.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Harmonic/m.md",
+      "new": "m_9_lHm.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/Harmonic/n.md",
+      "new": "n_9_lHn.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Harmonic/o.md",
+      "new": "o_9_lHo.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Harmonic/r.md",
+      "new": "r_9_lHr.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Initialize/I.md",
+      "new": "I_9_lII.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Initialize/a.md",
+      "new": "a_9_lIa.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/Initialize/e.md",
+      "new": "e_9_lIe.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/Initialize/l.md",
+      "new": "l_9_lIl.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Initialize/n.md",
+      "new": "n_9_lIn.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/Initialize/t.md",
+      "new": "t_9_lIt.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Initialize/z.md",
+      "new": "z_9_lIz.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Integrate/I.md",
+      "new": "I_9_lII.m001.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 1
+    },
+    {
+      "original": "letters/Integrate/a.md",
+      "new": "a_9_lIa.m001.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 1
+    },
+    {
+      "original": "letters/Integrate/e.md",
+      "new": "e_9_lIe.m001.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 1
+    },
+    {
+      "original": "letters/Integrate/g.md",
+      "new": "g_9_lIg.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Integrate/n.md",
+      "new": "n_9_lIn.m001.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 1
+    },
+    {
+      "original": "letters/Integrate/r.md",
+      "new": "r_9_lIr.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Integrate/t.md",
+      "new": "t_9_lIt.m001.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 1
+    },
+    {
+      "original": "letters/Integration/I.md",
+      "new": "I_9_lII.m002.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 2
+    },
+    {
+      "original": "letters/Integration/a.md",
+      "new": "a_9_lIa.m002.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 2
+    },
+    {
+      "original": "letters/Integration/e.md",
+      "new": "e_9_lIe.m002.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 2
+    },
+    {
+      "original": "letters/Integration/g.md",
+      "new": "g_9_lIg.m001.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 1
+    },
+    {
+      "original": "letters/Integration/n.md",
+      "new": "n_9_lIn.m002.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 2
+    },
+    {
+      "original": "letters/Integration/o.md",
+      "new": "o_9_lIo.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Integration/r.md",
+      "new": "r_9_lIr.m001.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 1
+    },
+    {
+      "original": "letters/Integration/t.md",
+      "new": "t_9_lIt.m002.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 2
+    },
+    {
+      "original": "letters/Knowledge/K.md",
+      "new": "K_9_lKK.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/Knowledge/d.md",
+      "new": "d_9_lKd.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Knowledge/e.md",
+      "new": "e_9_lKe.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Knowledge/g.md",
+      "new": "g_9_lKg.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Knowledge/l.md",
+      "new": "l_9_lKl.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/Knowledge/n.md",
+      "new": "n_9_lKn.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Knowledge/o.md",
+      "new": "o_9_lKo.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/Knowledge/w.md",
+      "new": "w_9_lKw.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/MASTER_INDEX.md",
+      "new": "MASTER_INDEX_9_lMAS000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/Mathematical/M.md",
+      "new": "M_9_lMM.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Mathematical/a.md",
+      "new": "a_9_lMa.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Mathematical/c.md",
+      "new": "c_9_lMc.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Mathematical/e.md",
+      "new": "e_9_lMe.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/Mathematical/h.md",
+      "new": "h_9_lMh.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Mathematical/i.md",
+      "new": "i_9_lMi.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Mathematical/l.md",
+      "new": "l_9_lMl.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Mathematical/t.md",
+      "new": "t_9_lMt.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/Mathematics/M.md",
+      "new": "M_9_lMM.m001.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 1
+    },
+    {
+      "original": "letters/Mathematics/a.md",
+      "new": "a_9_lMa.m001.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 1
+    },
+    {
+      "original": "letters/Mathematics/c.md",
+      "new": "c_9_lMc.m001.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 1
+    },
+    {
+      "original": "letters/Mathematics/e.md",
+      "new": "e_9_lMe.m001.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 1
+    },
+    {
+      "original": "letters/Mathematics/h.md",
+      "new": "h_9_lMh.m001.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 1
+    },
+    {
+      "original": "letters/Mathematics/i.md",
+      "new": "i_9_lMi.m001.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 1
+    },
+    {
+      "original": "letters/Mathematics/s.md",
+      "new": "s_9_lMs.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Mathematics/t.md",
+      "new": "t_9_lMt.m001.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 1
+    },
+    {
+      "original": "letters/Matrix/M.md",
+      "new": "M_9_lMM.m002.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 2
+    },
+    {
+      "original": "letters/Matrix/a.md",
+      "new": "a_9_lMa.m002.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 2
+    },
+    {
+      "original": "letters/Matrix/i.md",
+      "new": "i_9_lMi.m002.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 2
+    },
+    {
+      "original": "letters/Matrix/r.md",
+      "new": "r_9_lMr.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/Matrix/t.md",
+      "new": "t_9_lMt.m002.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 2
+    },
+    {
+      "original": "letters/Matrix/x.md",
+      "new": "x_9_lMx.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Pattern/P.md",
+      "new": "P_9_lPP.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Pattern/a.md",
+      "new": "a_9_lPa.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Pattern/e.md",
+      "new": "e_9_lPe.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Pattern/n.md",
+      "new": "n_9_lPn.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Pattern/r.md",
+      "new": "r_9_lPr.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Pattern/t.md",
+      "new": "t_9_lPt.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Process/P.md",
+      "new": "P_9_lPP.m001.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 1
+    },
+    {
+      "original": "letters/Process/c.md",
+      "new": "c_9_lPc.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Process/e.md",
+      "new": "e_9_lPe.m001.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 1
+    },
+    {
+      "original": "letters/Process/o.md",
+      "new": "o_9_lPo.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Process/r.md",
+      "new": "r_9_lPr.m001.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 1
+    },
+    {
+      "original": "letters/Process/s.md",
+      "new": "s_9_lPs.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/Proof/P.md",
+      "new": "P_9_lPP.m002.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 2
+    },
+    {
+      "original": "letters/Proof/f.md",
+      "new": "f_9_lPf.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/Proof/o.md",
+      "new": "o_9_lPo.m001.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 1
+    },
+    {
+      "original": "letters/Proof/r.md",
+      "new": "r_9_lPr.m002.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 2
+    },
+    {
+      "original": "letters/Ratio/R.md",
+      "new": "R_9_lRR.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/Ratio/a.md",
+      "new": "a_9_lRa.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Ratio/i.md",
+      "new": "i_9_lRi.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/Ratio/o.md",
+      "new": "o_9_lRo.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Ratio/t.md",
+      "new": "t_9_lRt.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Recognition/R.md",
+      "new": "R_9_lRR.m001.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 1
+    },
+    {
+      "original": "letters/Recognition/c.md",
+      "new": "c_9_lRc.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Recognition/e.md",
+      "new": "e_9_lRe.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Recognition/g.md",
+      "new": "g_9_lRg.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Recognition/i.md",
+      "new": "i_9_lRi.m001.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 1
+    },
+    {
+      "original": "letters/Recognition/n.md",
+      "new": "n_9_lRn.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Recognition/o.md",
+      "new": "o_9_lRo.m001.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 1
+    },
+    {
+      "original": "letters/Recognition/t.md",
+      "new": "t_9_lRt.m001.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 1
+    },
+    {
+      "original": "letters/Rodin/R.md",
+      "new": "R_9_lRR.m002.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 2
+    },
+    {
+      "original": "letters/Rodin/d.md",
+      "new": "d_9_lRd.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Rodin/i.md",
+      "new": "i_9_lRi.m002.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 2
+    },
+    {
+      "original": "letters/Rodin/n.md",
+      "new": "n_9_lRn.m001.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 1
+    },
+    {
+      "original": "letters/Rodin/o.md",
+      "new": "o_9_lRo.m002.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 2
+    },
+    {
+      "original": "letters/System/S.md",
+      "new": "S_9_lSS.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/System/e.md",
+      "new": "e_9_lSe.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/System/m.md",
+      "new": "m_9_lSm.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/System/t.md",
+      "new": "t_9_lSt.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/System/y.md",
+      "new": "y_9_lSy.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/The/T.md",
+      "new": "T_9_lTT.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/The/e.md",
+      "new": "e_9_lTe.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/The/h.md",
+      "new": "h_9_lTh.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/Theorem/T.md",
+      "new": "T_9_lTT.m001.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 1
+    },
+    {
+      "original": "letters/Theorem/e.md",
+      "new": "e_9_lTe.m001.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 1
+    },
+    {
+      "original": "letters/Theorem/h.md",
+      "new": "h_9_lTh.m001.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 1
+    },
+    {
+      "original": "letters/Theorem/m.md",
+      "new": "m_9_lTm.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Theorem/o.md",
+      "new": "o_9_lTo.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/Theorem/r.md",
+      "new": "r_9_lTr.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Theorems/T.md",
+      "new": "T_9_lTT.m002.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 2
+    },
+    {
+      "original": "letters/Theorems/e.md",
+      "new": "e_9_lTe.m002.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 2
+    },
+    {
+      "original": "letters/Theorems/h.md",
+      "new": "h_9_lTh.m002.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 2
+    },
+    {
+      "original": "letters/Theorems/m.md",
+      "new": "m_9_lTm.m001.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 1
+    },
+    {
+      "original": "letters/Theorems/o.md",
+      "new": "o_9_lTo.m001.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 1
+    },
+    {
+      "original": "letters/Theorems/r.md",
+      "new": "r_9_lTr.m001.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 1
+    },
+    {
+      "original": "letters/Theorems/s.md",
+      "new": "s_9_lTs.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/Unity/U.md",
+      "new": "U_9_lUU.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Unity/i.md",
+      "new": "i_9_lUi.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Unity/n.md",
+      "new": "n_9_lUn.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/Unity/t.md",
+      "new": "t_9_lUt.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Unity/y.md",
+      "new": "y_9_lUy.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Vortex/V.md",
+      "new": "V_9_lVV.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/Vortex/e.md",
+      "new": "e_9_lVe.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/Vortex/o.md",
+      "new": "o_9_lVo.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Vortex/r.md",
+      "new": "r_9_lVr.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/Vortex/t.md",
+      "new": "t_9_lVt.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Vortex/x.md",
+      "new": "x_9_lVx.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/Zero-Entropy/Z.md",
+      "new": "Z_9_lZZ.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/Zero-Entropy/e.md",
+      "new": "e_9_lZe.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Zero-Entropy/n.md",
+      "new": "n_9_lZn.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/Zero-Entropy/o.md",
+      "new": "o_9_lZo.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/Zero-Entropy/p.md",
+      "new": "p_9_lZp.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/Zero-Entropy/r.md",
+      "new": "r_9_lZr.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/Zero-Entropy/t.md",
+      "new": "t_9_lZt.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/Zero-Entropy/y.md",
+      "new": "y_9_lZy.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/consciousness/c.md",
+      "new": "c_9_lcc.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/consciousness/e.md",
+      "new": "e_9_lce.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/consciousness/i.md",
+      "new": "i_9_lci.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/consciousness/n.md",
+      "new": "n_9_lcn.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/consciousness/o.md",
+      "new": "o_9_lco.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/consciousness/s.md",
+      "new": "s_9_lcs.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/consciousness/u.md",
+      "new": "u_9_lcu.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/fraction/a.md",
+      "new": "a_9_lfa.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/fraction/c.md",
+      "new": "c_9_lfc.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/fraction/f.md",
+      "new": "f_9_lff.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/fraction/i.md",
+      "new": "i_9_lfi.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/fraction/n.md",
+      "new": "n_9_lfn.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/fraction/o.md",
+      "new": "o_9_lfo.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/fraction/r.md",
+      "new": "r_9_lfr.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/fraction/t.md",
+      "new": "t_9_lft.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/fractional/a.md",
+      "new": "a_9_lfa.m001.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 1
+    },
+    {
+      "original": "letters/fractional/c.md",
+      "new": "c_9_lfc.m001.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 1
+    },
+    {
+      "original": "letters/fractional/f.md",
+      "new": "f_9_lff.m001.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 1
+    },
+    {
+      "original": "letters/fractional/i.md",
+      "new": "i_9_lfi.m001.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 1
+    },
+    {
+      "original": "letters/fractional/l.md",
+      "new": "l_9_lfl.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/fractional/n.md",
+      "new": "n_9_lfn.m001.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 1
+    },
+    {
+      "original": "letters/fractional/o.md",
+      "new": "o_9_lfo.m001.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 1
+    },
+    {
+      "original": "letters/fractional/r.md",
+      "new": "r_9_lfr.m001.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 1
+    },
+    {
+      "original": "letters/fractional/t.md",
+      "new": "t_9_lft.m001.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 1
+    },
+    {
+      "original": "letters/frequency/c.md",
+      "new": "c_9_lfc.m002.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 2
+    },
+    {
+      "original": "letters/frequency/e.md",
+      "new": "e_9_lfe.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/frequency/f.md",
+      "new": "f_9_lff.m002.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 2
+    },
+    {
+      "original": "letters/frequency/n.md",
+      "new": "n_9_lfn.m002.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 2
+    },
+    {
+      "original": "letters/frequency/q.md",
+      "new": "q_9_lfq.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/frequency/r.md",
+      "new": "r_9_lfr.m002.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 2
+    },
+    {
+      "original": "letters/frequency/u.md",
+      "new": "u_9_lfu.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/frequency/y.md",
+      "new": "y_9_lfy.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/golden-ratio/a.md",
+      "new": "a_9_lga.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/golden-ratio/d.md",
+      "new": "d_9_lgd.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/golden-ratio/e.md",
+      "new": "e_9_lge.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/golden-ratio/g.md",
+      "new": "g_9_lgg.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/golden-ratio/i.md",
+      "new": "i_9_lgi.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/golden-ratio/l.md",
+      "new": "l_9_lgl.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/golden-ratio/n.md",
+      "new": "n_9_lgn.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/golden-ratio/o.md",
+      "new": "o_9_lgo.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/golden-ratio/r.md",
+      "new": "r_9_lgr.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/golden-ratio/t.md",
+      "new": "t_9_lgt.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/integer/e.md",
+      "new": "e_9_lie.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/integer/g.md",
+      "new": "g_9_lig.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/integer/i.md",
+      "new": "i_9_lii.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/integer/n.md",
+      "new": "n_9_lin.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/integer/r.md",
+      "new": "r_9_lir.m000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "letters/integer/t.md",
+      "new": "t_9_lit.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/resonance/a.md",
+      "new": "a_9_lra.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/resonance/c.md",
+      "new": "c_9_lrc.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/resonance/e.md",
+      "new": "e_9_lre.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/resonance/n.md",
+      "new": "n_9_lrn.m000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "letters/resonance/o.md",
+      "new": "o_9_lro.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/resonance/r.md",
+      "new": "r_9_lrr.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "letters/resonance/s.md",
+      "new": "s_9_lrs.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/trinity/i.md",
+      "new": "i_9_lti.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/trinity/n.md",
+      "new": "n_9_ltn.m000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "letters/trinity/r.md",
+      "new": "r_9_ltr.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/trinity/t.md",
+      "new": "t_9_ltt.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/trinity/y.md",
+      "new": "y_9_lty.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/zeropoint/e.md",
+      "new": "e_9_lze.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/zeropoint/i.md",
+      "new": "i_9_lzi.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/zeropoint/n.md",
+      "new": "n_9_lzn.m000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "letters/zeropoint/o.md",
+      "new": "o_9_lzo.m000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "letters/zeropoint/p.md",
+      "new": "p_9_lzp.m000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "letters/zeropoint/r.md",
+      "new": "r_9_lzr.m000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "letters/zeropoint/t.md",
+      "new": "t_9_lzt.m000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "letters/zeropoint/z.md",
+      "new": "z_9_lzz.m000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "prove-single-directory.js",
+      "new": "prove-single-directory.js",
+      "type": "root",
+      "a432": 2
+    },
+    {
+      "original": "prove-zeropoint-naming.js",
+      "new": "prove-zeropoint-naming.js",
+      "type": "root",
+      "a432": 6
+    },
+    {
+      "original": "sandbox.ts",
+      "new": "sandbox.ts",
+      "type": "root",
+      "a432": 1
+    },
+    {
+      "original": "single-directory-proof.json",
+      "new": "single-directory-proof.json",
+      "type": "root",
+      "a432": 9
+    },
+    {
+      "original": "split-book.js",
+      "new": "split-book.js",
+      "type": "root",
+      "a432": 5
+    },
+    {
+      "original": "split-letters.js",
+      "new": "split-letters.js",
+      "type": "root",
+      "a432": 6
+    },
+    {
+      "original": "words/A432.md",
+      "new": "A432_9_wA43000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "words/All.md",
+      "new": "All_9_wAll000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "words/BOOKIntegration.md",
+      "new": "BOOKIntegration_9_wBOO000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "words/BOOKKnowledge.md",
+      "new": "BOOKKnowledge_9_wBOO000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "words/BOOKProofSystem.md",
+      "new": "BOOKProofSystem_9_wBOO000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "words/BOOKSystem.md",
+      "new": "BOOKSystem_9_wBOO000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "words/Book.md",
+      "new": "Book_9_wBoo000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "words/Calculate.md",
+      "new": "Calculate_9_wCal000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "words/Each.md",
+      "new": "Each_9_wEac000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "words/Evolution.md",
+      "new": "Evolution_9_wEvo000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "words/Generate.md",
+      "new": "Generate_9_wGen000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "words/Generation.md",
+      "new": "Generation_9_wGen000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "words/Get.md",
+      "new": "Get_9_wGet000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "words/Golden.md",
+      "new": "Golden_9_wGol000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "words/Harmonic.md",
+      "new": "Harmonic_9_wHar000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "words/INDEX.md",
+      "new": "INDEX_9_wIND000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "words/Initialize.md",
+      "new": "Initialize_9_wIni000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "words/Integrate.md",
+      "new": "Integrate_9_wInt000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "words/Integration.md",
+      "new": "Integration_9_wInt000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "words/Knowledge.md",
+      "new": "Knowledge_9_wKno000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "words/Mathematical.md",
+      "new": "Mathematical_9_wMat000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "words/Mathematics.md",
+      "new": "Mathematics_9_wMat000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "words/Matrix.md",
+      "new": "Matrix_9_wMat000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "words/Pattern.md",
+      "new": "Pattern_9_wPat000.md",
+      "type": "flattened",
+      "a432": 9,
+      "index": 0
+    },
+    {
+      "original": "words/Process.md",
+      "new": "Process_9_wPro000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "words/Proof.md",
+      "new": "Proof_9_wPro000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "words/Ratio.md",
+      "new": "Ratio_9_wRat000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "words/Recognition.md",
+      "new": "Recognition_9_wRec000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "words/Rodin.md",
+      "new": "Rodin_9_wRod000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "words/System.md",
+      "new": "System_9_wSys000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "words/The.md",
+      "new": "The_9_wThe000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "words/Theorem.md",
+      "new": "Theorem_9_wThe000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "words/Theorems.md",
+      "new": "Theorems_9_wThe000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "words/Unity.md",
+      "new": "Unity_9_wUni000.md",
+      "type": "flattened",
+      "a432": 7,
+      "index": 0
+    },
+    {
+      "original": "words/Vortex.md",
+      "new": "Vortex_9_wVor000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "words/Zero-Entropy.md",
+      "new": "Zero-Entropy_9_wZer000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "words/consciousness.md",
+      "new": "consciousness_9_wcon000.md",
+      "type": "flattened",
+      "a432": 5,
+      "index": 0
+    },
+    {
+      "original": "words/fraction.md",
+      "new": "fraction_9_wfra000.md",
+      "type": "flattened",
+      "a432": 2,
+      "index": 0
+    },
+    {
+      "original": "words/fractional.md",
+      "new": "fractional_9_wfra000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "words/frequency.md",
+      "new": "frequency_9_wfre000.md",
+      "type": "flattened",
+      "a432": 6,
+      "index": 0
+    },
+    {
+      "original": "words/golden-ratio.md",
+      "new": "golden-ratio_9_wgol000.md",
+      "type": "flattened",
+      "a432": 1,
+      "index": 0
+    },
+    {
+      "original": "words/integer.md",
+      "new": "integer_9_wint000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "words/resonance.md",
+      "new": "resonance_9_wres000.md",
+      "type": "flattened",
+      "a432": 4,
+      "index": 0
+    },
+    {
+      "original": "words/trinity.md",
+      "new": "trinity_9_wtri000.md",
+      "type": "flattened",
+      "a432": 3,
+      "index": 0
+    },
+    {
+      "original": "words/zeropoint.md",
+      "new": "zeropoint_9_wzer000.md",
+      "type": "flattened",
+      "a432": 8,
+      "index": 0
+    },
+    {
+      "original": "zero-entropy-balance.ts",
+      "new": "zero-entropy-balance.ts",
+      "type": "root",
+      "a432": 2
+    },
+    {
+      "original": "zeropoint-single-directory-report.json",
+      "new": "zeropoint-single-directory-report.json",
+      "type": "root",
+      "a432": 5
+    },
+    {
+      "original": "zeropoint.test.ts",
+      "new": "zeropoint.test.ts",
+      "type": "root",
+      "a432": 7
+    }
+  ]
+}

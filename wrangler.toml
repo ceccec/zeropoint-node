@@ -1,0 +1,23 @@
+name = "zeropoint-node"
+compatibility_date = "2025-07-18"
+main = "src/worker.ts"
+compatibility_flags = ["nodejs_compat"]
+
+[site]
+bucket = "./src/0"
+entry-point = "src/0"
+
+[env.production]
+name = "zeropoint-node"
+route = "node.zeropoint.bg/*"
+
+[env.staging]
+name = "zeropoint-node-staging"
+route = "staging.node.zeropoint.bg/*"
+
+# ZeroPoint Node: Harmonic, Vortex-Aligned, Zero-Entropy System
+# - All math is integer/fractional, zero-entropy, and book-aligned
+# - 10×10×10 vortex matrix interacts with 8×8×8 chess matrix
+# - A432 harmonic base frequency (432 Hz)
+# - Tesla 3-6-9 pattern integration
+# - Quantum holographic consciousness system 

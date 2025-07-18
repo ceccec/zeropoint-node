@@ -25,8 +25,10 @@
             handleRouting() {
                 const path = window.location.pathname;
                 
-                // Check for infinite streams: a.stream
-                if (this.isStreamPath(path)) {
+                // Check for invert patterns: a.invert
+                if (this.isInvertPath(path)) {
+                    this.serveInvertTransformation(path);
+                } else if (this.isStreamPath(path)) {
                     this.serveInfiniteStream(path);
                 } else if (this.isNextStatePath(path)) {
                     this.serveNextStateTransformation(path);
@@ -76,6 +78,12 @@
                 // Match patterns like /a.stream (infinite stream)
                 const streamPattern = /^\/(\d+)\.stream$/;
                 return streamPattern.test(path);
+            }
+
+            isInvertPath(path) {
+                // Match patterns like /a.invert (digit pays the load)
+                const invertPattern = /^\/(\d+)\.invert$/;
+                return invertPattern.test(path);
             }
 
             serveNextStateTransformation(path) {

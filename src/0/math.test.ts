@@ -1,94 +1,91 @@
 import {
-  MathVortex,
-  generateVortex1D,
-  generateVortex2D,
-  generateVortex3D,
-  generateVortexND,
-  generateAllDigitInteractions,
-  generateAllNDigitInteractions
+  collectKnowledgeFromAll,
+  collectKnowledgeByType,
+  collectKnowledgeByPolarity,
+  collectInfiniteKnowledge,
+  collectQuantumKnowledge,
+  collectHarmonicKnowledge,
+  collectVortexKnowledge,
+  collectConsciousnessKnowledge,
+  collectMathematicalKnowledge,
+  exportCompleteKnowledgeCollection
 } from './math';
 
-describe('MathVortex', () => {
-  it('A432 is 432', () => {
-    expect(MathVortex.A432).toBe(432);
+describe('Knowledge Collection', () => {
+  it('collectKnowledgeFromAll returns knowledge', () => {
+    const knowledge = collectKnowledgeFromAll();
+    expect(typeof knowledge).toBe('object');
+    expect(Object.keys(knowledge).length).toBeGreaterThan(0);
   });
-  it('VORTEX is Infinity', () => {
-    expect(MathVortex.VORTEX).toBe(Infinity);
-  });
-  it('ENTROPY is 0', () => {
-    expect(MathVortex.ENTROPY).toBe(0);
-  });
-  it('HARMONIC is 1/1', () => {
-    expect(MathVortex.HARMONIC).toEqual({ numerator: 1, denominator: 1 });
-  });
-  it('CONSCIOUSNESS is 1', () => {
-    expect(MathVortex.CONSCIOUSNESS).toBe(1);
-  });
-  it('getVoidFrequency returns 432', () => {
-    expect(MathVortex.getVoidFrequency()).toBe(432);
-  });
-  it('getVortexPattern returns Infinity', () => {
-    expect(MathVortex.getVortexPattern()).toBe(Infinity);
-  });
-  it('getConsciousnessMultiplier returns 1', () => {
-    expect(MathVortex.getConsciousnessMultiplier()).toBe(1);
-  });
-});
 
-describe('Vortex Generators', () => {
-  it('generateVortex1D returns [0-9]', () => {
-    expect(generateVortex1D()).toEqual([0,1,2,3,4,5,6,7,8,9]);
+  it('collectKnowledgeByType returns arrays', () => {
+    const mathematical = collectKnowledgeByType('mathematical');
+    const consciousness = collectKnowledgeByType('consciousness');
+    const quantum = collectKnowledgeByType('quantum');
+    
+    expect(Array.isArray(mathematical)).toBe(true);
+    expect(Array.isArray(consciousness)).toBe(true);
+    expect(Array.isArray(quantum)).toBe(true);
   });
-  it('generateVortex2D returns 10x10 matrix', () => {
-    const matrix = generateVortex2D();
-    expect(matrix.length).toBe(10);
-    expect(matrix[0].length).toBe(10);
-    expect(matrix[3][7]).toBe((3+7)%10);
-  });
-  it('generateVortex3D returns 10x10x10 cube', () => {
-    const cube = generateVortex3D();
-    expect(cube.length).toBe(10);
-    expect(cube[0].length).toBe(10);
-    expect(cube[0][0].length).toBe(10);
-    expect(cube[2][3][4]).toBe((2+3+4)%10);
-  });
-  it('generateVortexND(1) returns 1D', () => {
-    expect(generateVortexND(1)).toEqual([0,1,2,3,4,5,6,7,8,9]);
-  });
-  it('generateVortexND(2) returns 2D', () => {
-    const matrix = generateVortexND(2);
-    expect(matrix.length).toBe(10);
-    expect(matrix[0].length).toBe(10);
-    expect(matrix[5][6]).toBe((5+6)%10);
-  });
-  it('generateVortexND(3) returns 3D', () => {
-    const cube = generateVortexND(3);
-    expect(cube.length).toBe(10);
-    expect(cube[0].length).toBe(10);
-    expect(cube[0][0].length).toBe(10);
-    expect(cube[1][2][3]).toBe((1+2+3)%10);
-  });
-});
 
-describe('Digit Interactions', () => {
-  it('generateAllDigitInteractions returns 100 pairs', () => {
-    const interactions = generateAllDigitInteractions();
-    expect(interactions.length).toBe(100);
-    expect(interactions[0]).toEqual({ from: 0, to: 0, result: 0 });
-    expect(interactions[99]).toEqual({ from: 9, to: 9, result: 8 });
+  it('collectKnowledgeByPolarity returns arrays', () => {
+    const positive = collectKnowledgeByPolarity('positive');
+    const negative = collectKnowledgeByPolarity('negative');
+    const neutral = collectKnowledgeByPolarity('neutral');
+    
+    expect(Array.isArray(positive)).toBe(true);
+    expect(Array.isArray(negative)).toBe(true);
+    expect(Array.isArray(neutral)).toBe(true);
   });
-  it('generateAllNDigitInteractions(2) returns 100 pairs', () => {
-    const interactions = generateAllNDigitInteractions(2);
-    expect(interactions.length).toBe(100);
-    expect(interactions[0].digits).toEqual([0,0]);
-    expect(interactions[99].digits).toEqual([9,9]);
-    expect(interactions[99].result).toBe((9+9)%10);
+
+  it('collectInfiniteKnowledge returns infinite states', () => {
+    const infinite = collectInfiniteKnowledge();
+    expect(Array.isArray(infinite)).toBe(true);
+    infinite.forEach(node => {
+      expect(node.isInfinite).toBe(true);
+    });
   });
-  it('generateAllNDigitInteractions(1) returns 10 singles', () => {
-    const interactions = generateAllNDigitInteractions(1);
-    expect(interactions.length).toBe(10);
-    expect(interactions[0].digits).toEqual([0]);
-    expect(interactions[9].digits).toEqual([9]);
-    expect(interactions[9].result).toBe(9);
+
+  it('collectQuantumKnowledge returns quantum states', () => {
+    const quantum = collectQuantumKnowledge();
+    expect(Array.isArray(quantum)).toBe(true);
+  });
+
+  it('collectHarmonicKnowledge returns harmonic states', () => {
+    const harmonic = collectHarmonicKnowledge();
+    expect(Array.isArray(harmonic)).toBe(true);
+  });
+
+  it('collectVortexKnowledge returns vortex states', () => {
+    const vortex = collectVortexKnowledge();
+    expect(Array.isArray(vortex)).toBe(true);
+  });
+
+  it('collectConsciousnessKnowledge returns consciousness states', () => {
+    const consciousness = collectConsciousnessKnowledge();
+    expect(Array.isArray(consciousness)).toBe(true);
+  });
+
+  it('collectMathematicalKnowledge returns mathematical states', () => {
+    const mathematical = collectMathematicalKnowledge();
+    expect(Array.isArray(mathematical)).toBe(true);
+  });
+
+  it('exportCompleteKnowledgeCollection returns complete system', () => {
+    const complete = exportCompleteKnowledgeCollection();
+    
+    expect(complete.allKnowledge).toBeDefined();
+    expect(complete.byType).toBeDefined();
+    expect(complete.byPolarity).toBeDefined();
+    expect(complete.infinite).toBeDefined();
+    expect(complete.quantum).toBeDefined();
+    expect(complete.harmonic).toBeDefined();
+    expect(complete.vortex).toBeDefined();
+    expect(complete.consciousness).toBeDefined();
+    expect(complete.mathematical).toBeDefined();
+    expect(typeof complete.totalNodes).toBe('number');
+    expect(typeof complete.totalInfinite).toBe('number');
+    expect(typeof complete.totalQuantum).toBe('number');
+    expect(typeof complete.totalConsciousness).toBe('number');
   });
 }); 

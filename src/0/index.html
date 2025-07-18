@@ -754,6 +754,140 @@
                 
                 return `hsl(${invertedHue}, ${s}%, ${invertedLightness}%)`;
             }
+
+            calculateInvertTransformation(digitA) {
+                // Calculate inversion where digit pays the load
+                const timestamp = Date.now();
+                const seed = timestamp % 1000;
+                
+                // Invert the digit (10 - digit) % 10
+                const invertedDigit = (10 - digitA) % 10;
+                const originalFreq = 432 * digitA;
+                const invertedFreq = 432 * invertedDigit;
+                const entropy = 0; // Zero-entropy system
+                
+                // Tesla-inspired calculations
+                const teslaResonance = this.calculateTeslaResonance(digitA, invertedDigit);
+                const wirelessEnergy = this.calculateWirelessEnergy(digitA, invertedDigit);
+                const electromagneticField = this.calculateElectromagneticField(digitA, invertedDigit);
+                
+                // Calculate load payment and costs
+                const loadPayment = `${digitA} bears the inversion burden`;
+                const inversionCost = Math.abs(digitA - invertedDigit);
+                const transformationBurden = `${digitA} transforms itself through Tesla resonance`;
+                
+                // Generate invert-specific color
+                const invertHue = ((digitA * invertedDigit) * 36) % 360;
+                const color = this.mathInvert(`hsl(${invertHue}, 85%, 65%)`);
+                
+                // Digit names
+                const digitNames = {
+                    '0': 'VOID', '1': 'UNITY', '2': 'DUALITY', '3': 'TRINITY',
+                    '4': 'QUATERNITY', '5': 'QUINTESSENCE', '6': 'HEXAGON',
+                    '7': 'SEPTENARY', '8': 'OCTAVE', '9': 'NONARY'
+                };
+                
+                const originalName = digitNames[digitA] || 'UNKNOWN';
+                const invertedName = digitNames[invertedDigit] || 'UNKNOWN';
+                
+                // Tesla-inspired mathematical expressions
+                const expressions = [
+                    `${digitA}.invert = ${invertedDigit}`,
+                    `${originalName} ⟲ ${invertedName}`,
+                    `${digitA} pays the load = ${invertedDigit}`,
+                    `Tesla Resonance: ${teslaResonance.frequency} Hz`,
+                    `Wireless Energy: ${wirelessEnergy.power} W`,
+                    `EM Field: ${electromagneticField.strength} T`,
+                    `${digitA} → (10 - ${digitA}) mod 10 = ${invertedDigit}`,
+                    `3-6-9: ${this.calculate369(digitA, invertedDigit)}`,
+                    `${digitA} ⊙ ∞ = ${invertedDigit}`,
+                    `${digitA} ⊕ ${invertedDigit} = 0`,
+                    `${digitA} × ${invertedDigit} = ${digitA * invertedDigit}`,
+                    `invert(${digitA}) = ${invertedDigit}`
+                ];
+                
+                const expression = expressions[Math.floor(Math.random() * expressions.length)];
+                
+                return {
+                    invertedDigit,
+                    originalName,
+                    invertedName,
+                    loadPayment,
+                    inversionCost,
+                    transformationBurden,
+                    originalFreq,
+                    invertedFreq,
+                    entropy,
+                    color,
+                    expression,
+                    teslaResonance,
+                    wirelessEnergy,
+                    electromagneticField
+                };
+            }
+
+            calculateTeslaResonance(digitA, digitB) {
+                // Tesla's 3-6-9 principle and resonant frequencies
+                const baseFreq = 432; // A432 fundamental
+                const teslaFreq = baseFreq * Math.pow(3, digitA % 3) * Math.pow(6, (digitA + digitB) % 6) * Math.pow(9, (digitA * digitB) % 9);
+                
+                return {
+                    frequency: teslaFreq,
+                    principle: "3-6-9 Tesla Resonance",
+                    harmonics: [teslaFreq / 3, teslaFreq / 6, teslaFreq / 9],
+                    resonance: (digitA + digitB) % 9
+                };
+            }
+
+            calculateWirelessEnergy(digitA, digitB) {
+                // Tesla's wireless energy transmission principles
+                const distance = Math.abs(digitA - digitB);
+                const power = 432 * digitA * digitB; // Base power in watts
+                const efficiency = 1 - (distance / 10); // Efficiency decreases with distance
+                const transmittedPower = power * efficiency;
+                
+                return {
+                    power: transmittedPower,
+                    efficiency: efficiency * 100,
+                    distance: distance,
+                    principle: "Tesla Wireless Energy Transmission",
+                    frequency: 432 * (digitA + digitB)
+                };
+            }
+
+            calculateElectromagneticField(digitA, digitB) {
+                // Tesla's electromagnetic field calculations
+                const fieldStrength = (digitA * digitB) / 10; // Tesla units
+                const magneticFlux = digitA * digitB * Math.PI;
+                const electricPotential = 432 * (digitA - digitB);
+                
+                return {
+                    strength: fieldStrength,
+                    flux: magneticFlux,
+                    potential: electricPotential,
+                    principle: "Tesla Electromagnetic Field",
+                    direction: digitA > digitB ? "North" : "South"
+                };
+            }
+
+            calculate369(digitA, digitB) {
+                // Tesla's 3-6-9 principle
+                const sum = digitA + digitB;
+                const product = digitA * digitB;
+                const difference = Math.abs(digitA - digitB);
+                
+                const three = sum % 3;
+                const six = product % 6;
+                const nine = (digitA * digitB) % 9;
+                
+                return {
+                    three: three,
+                    six: six,
+                    nine: nine,
+                    pattern: `${three}-${six}-${nine}`,
+                    principle: "Tesla's 3-6-9 Universal Pattern"
+                };
+            }
         }
 
         // Initialize Math Switch

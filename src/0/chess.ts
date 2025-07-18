@@ -52,10 +52,10 @@ export function generateAllMoves(board: ChessBoard): ChessMove[] {
 export function boardToMatrix(board: ChessBoard): number[][] {
   // Map pieces to digits: null=0, P=1, N=2, B=3, R=4, Q=5, K=6, p=7, n=8, b=9, r=1, q=2, k=3
   const map: Record<ChessPiece, number> = {
-    null: 0, P: 1, N: 2, B: 3, R: 4, Q: 5, K: 6,
+    P: 1, N: 2, B: 3, R: 4, Q: 5, K: 6,
     p: 7, n: 8, b: 9, r: 1, q: 2, k: 3
   };
-  return board.map(row => row.map(piece => map[piece]));
+  return board.map(row => row.map(piece => piece ? map[piece] : 0));
 }
 
 // Inline documentation:

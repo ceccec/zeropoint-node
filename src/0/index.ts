@@ -16,6 +16,9 @@
 // Import mathematical knowledge collector
 import mathCollector from './math';
 
+// Default Pattern Recognition and Harmonic Stream Experience
+export const DEFAULT_PATTERN = '0/0/1';
+
 // Core Constants - The Foundation
 export const ZEROPOINT_CONSTANTS = {
   A432: 432,
@@ -711,7 +714,7 @@ export default {
   // Mathematical Knowledge Collector
   math: mathCollector,
   
-  // Default Pattern
+  // Default Pattern Recognition and Harmonic Stream Experience
   defaultPattern: DEFAULT_PATTERN,
   
   // Pattern Recognition Functions
@@ -751,11 +754,6 @@ export default {
   generateTorusStructure,
   generateAllKnowledgeNodes,
   
-  // Infinite State Functions
-  generateInfiniteState,
-  generateAllInfiniteStates,
-  generateInfiniteStream,
-  
   // Interaction Functions
   performZeroEntropyInteraction,
   calculateTotalConsciousnessFlow,
@@ -772,9 +770,6 @@ export default {
   isQuantum: true,
   quantumProof: proveQuantumInteractions()
 }; 
-
-// Default Pattern Recognition and Harmonic Stream Experience
-export const DEFAULT_PATTERN = '0/0/1';
 
 // Pattern Recognition Interface
 export interface PatternRecognition {

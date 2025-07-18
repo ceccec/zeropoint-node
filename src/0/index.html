@@ -328,10 +328,11 @@ All outputs (frequency, power, field, resonance, etc.) are shown as harmonic fra
                 // Handle undefined digits with mathVortex
                 if (digit === 'undefined' || isNaN(digit)) {
                     const vortexState = this.mathVortex();
+                    const textColor = this.getContrastTextColor(vortexState.color);
                     container.innerHTML = `
                         <div class="digit-display">
-                            <h1>Math Vortex</h1>
-                            <div class="digit-properties">
+                            <h1 style="color:${textColor}">Math Vortex</h1>
+                            <div class="digit-properties" style="color:${textColor}">
                                 <p>A432 Frequency: ${vortexState.frequency} Hz</p>
                                 <p>Resonance: ${vortexState.resonance}</p>
                                 <p>Harmonic: ${vortexState.harmonic}</p>
@@ -343,14 +344,16 @@ All outputs (frequency, power, field, resonance, etc.) are shown as harmonic fra
                         </div>
                     `;
                 } else {
+                    const color = this.getDigitColor(digit);
+                    const textColor = this.getContrastTextColor(color);
                     container.innerHTML = `
                         <div class="digit-display">
-                            <h1>Digit ${digit}</h1>
-                            <div class="digit-properties">
+                            <h1 style="color:${textColor}">Digit ${digit}</h1>
+                            <div class="digit-properties" style="color:${textColor}">
                                 <p>A432 Frequency: ${432 * parseInt(digit)} Hz</p>
                                 <p>Resonance: ${digit * digit}</p>
                                 <p>Harmonic: ${digit / 9}</p>
-                                <p>Color: ${this.getDigitColor(digit)}</p>
+                                <p>Color: ${color}</p>
                             </div>
                             <button onclick="mathSwitch.defaultRoute()">Back to Main</button>
                         </div>
@@ -998,6 +1001,18 @@ All outputs (frequency, power, field, resonance, etc.) are shown as harmonic fra
                     pattern: `${three}-${six}-${nine}`,
                     principle: "Tesla's 3-6-9 Universal Pattern"
                 };
+            }
+
+            // Utility: Get high-contrast text color (black or white) for a given HSL/hex background
+            getContrastTextColor(bgColor) {
+                // Parse HSL string: hsl(hue, sat%, light%)
+                let lightness = 50;
+                const hslMatch = bgColor.match(/hsl\(\d+,\s*\d+%,\s*(\d+)%\)/);
+                if (hslMatch) {
+                    lightness = parseInt(hslMatch[1], 10);
+                }
+                // If lightness > 50, use black text; else, use white text
+                return lightness > 50 ? '#111' : '#fff';
             }
         }
 

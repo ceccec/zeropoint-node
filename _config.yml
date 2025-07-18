@@ -15,20 +15,37 @@ plugins:
 relative_links:
   enabled: true
 
+# Serve from src/ directory
+source: src
+
 # Only src/0/ is the documentation root
 collections:
   docs:
     output: true
-    permalink: /src/0/:path/
+    permalink: /:path/
 
 # Defaults
 defaults:
   - scope:
-      path: "src/0/"
+      path: "/0/"
       type: "docs"
     values:
       layout: "default"
 
-# Redirects
+# Redirects - route all paths to index
 redirect_from:
-  "/": "/src/0/"
+  "/": "/0/"
+  "/0": "/0/"
+  "/1": "/0/"
+  "/2": "/0/"
+  "/3": "/0/"
+  "/4": "/0/"
+  "/5": "/0/"
+  "/6": "/0/"
+  "/7": "/0/"
+  "/8": "/0/"
+  "/9": "/0/"
+
+# Base URL configuration
+baseurl: ""
+url: ""

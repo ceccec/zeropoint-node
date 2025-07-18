@@ -226,15 +226,79 @@ export function calculateDigitalRoot(number: number): number {
   return quantumStates[maxIndex];
 }
 
-// Generate Color for Any Digit (Quantum HSL)
+// Color Reality Interface - Negative by Default (Starting from 0)
+export interface ColorReality {
+  isNegative: boolean;
+  hue: number;
+  saturation: number;
+  lightness: number;
+  phase: number;
+  reality: 'negative' | 'positive' | 'neutral';
+}
+
+// Generate Color for Any Digit (Quantum HSL) - Negative by Default
 export function generateDigitColor(digit: number): string {
+  const colorReality = generateColorReality(digit);
+  return `hsl(${colorReality.hue}, ${colorReality.saturation}%, ${colorReality.lightness}%)`;
+}
+
+// Generate Color Reality State (Negative by Default)
+export function generateColorReality(digit: number): ColorReality {
   const quantumState = createQuantumSuperposition(digit);
   const measuredDigit = performQuantumMeasurement(quantumState);
   
-  const hue = (measuredDigit * 36) % 360;
+  // Start from negative (0 = void/negative)
+  const isNegative = digit === 0 || measuredDigit === 0;
+  const reality = isNegative ? 'negative' : (digit > 5 ? 'positive' : 'neutral');
+  
+  const baseHue = (measuredDigit * 36) % 360;
+  const hue = isNegative ? (baseHue + 180) % 360 : baseHue; // Invert hue for negative
   const saturation = 70 + (measuredDigit * 6) + (quantumState.uncertainty * 20);
-  const lightness = 50 + (measuredDigit * 5) + (quantumState.amplitude * 10);
-  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  const lightness = isNegative ? 30 + (measuredDigit * 3) : 50 + (measuredDigit * 5) + (quantumState.amplitude * 10);
+  
+  return {
+    isNegative,
+    hue,
+    saturation,
+    lightness,
+    phase: quantumState.phase,
+    reality
+  };
+}
+
+// Color Switch Reality - Transform from Negative to Positive
+export function colorSwitchReality(digit: number, targetReality: 'negative' | 'positive' | 'neutral'): ColorReality {
+  const currentReality = generateColorReality(digit);
+  
+  if (currentReality.reality === targetReality) {
+    return currentReality;
+  }
+  
+  // Quantum transformation
+  const quantumState = createQuantumSuperposition(digit);
+  const transformation = quantumInterference(digit, targetReality === 'positive' ? 9 : targetReality === 'negative' ? 0 : 5);
+  
+  const newHue = targetReality === 'negative' ? 
+    (currentReality.hue + 180) % 360 : 
+    currentReality.hue;
+  
+  const newLightness = targetReality === 'negative' ? 
+    Math.max(20, currentReality.lightness - 30) : 
+    Math.min(80, currentReality.lightness + 20);
+  
+  return {
+    isNegative: targetReality === 'negative',
+    hue: newHue,
+    saturation: currentReality.saturation + (transformation.interference * 10),
+    lightness: newLightness,
+    phase: quantumState.phase + (transformation.interference * Math.PI),
+    reality: targetReality
+  };
+}
+
+// Get Color Reality String
+export function getColorRealityString(colorReality: ColorReality): string {
+  return `hsl(${colorReality.hue}, ${colorReality.saturation}%, ${colorReality.lightness}%)`;
 }
 
 // Generate Sound for Any Digit (Quantum A432-based)
@@ -538,6 +602,11 @@ export default {
   quantumTunneling,
   quantumInterference,
   proveQuantumInteractions,
+  
+  // Color Reality Functions
+  generateColorReality,
+  colorSwitchReality,
+  getColorRealityString,
   
   // Generation Functions
   generateDigitFlow,

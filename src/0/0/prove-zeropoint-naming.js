@@ -108,7 +108,7 @@ const determineCategory = (filePath) => {
 
 // Generate Zeropoint single directory proof
 const generateZeropointProof = (analysis) => {
-  let content = `# Zeropoint Single Directory Proof
+  const content = `# Zeropoint Single Directory Proof
 
 ## Overview
 

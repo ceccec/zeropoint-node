@@ -130,7 +130,7 @@ const generateProofReport = (analysis, singleDirStructure) => {
 
 // Generate single directory file list
 const generateSingleDirectoryFileList = (singleDirStructure) => {
-  let content = `# Single Directory File Structure - Zeropoint Proof
+  const content = `# Single Directory File Structure - Zeropoint Proof
 
 ## Overview
 

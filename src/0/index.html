@@ -81,18 +81,74 @@
 
             displayDigitContent(digit) {
                 const container = document.querySelector('.container');
-                container.innerHTML = `
-                    <div class="digit-display">
-                        <h1>Digit ${digit}</h1>
-                        <div class="digit-properties">
-                            <p>A432 Frequency: ${432 * parseInt(digit)} Hz</p>
-                            <p>Resonance: ${digit * digit}</p>
-                            <p>Harmonic: ${digit / 9}</p>
-                            <p>Color: ${this.getDigitColor(digit)}</p>
+                
+                // Handle undefined digits with mathVortex
+                if (digit === 'undefined' || isNaN(digit)) {
+                    const vortexState = this.mathVortex();
+                    container.innerHTML = `
+                        <div class="digit-display">
+                            <h1>Math Vortex</h1>
+                            <div class="digit-properties">
+                                <p>A432 Frequency: ${vortexState.frequency} Hz</p>
+                                <p>Resonance: ${vortexState.resonance}</p>
+                                <p>Harmonic: ${vortexState.harmonic}</p>
+                                <p>Color: ${vortexState.color}</p>
+                                <p>Vortex State: ${vortexState.state}</p>
+                                <p>Mathematical Expression: ${vortexState.expression}</p>
+                            </div>
+                            <button onclick="mathSwitch.defaultRoute()">Back to Main</button>
                         </div>
-                        <button onclick="mathSwitch.defaultRoute()">Back to Main</button>
-                    </div>
-                `;
+                    `;
+                } else {
+                    container.innerHTML = `
+                        <div class="digit-display">
+                            <h1>Digit ${digit}</h1>
+                            <div class="digit-properties">
+                                <p>A432 Frequency: ${432 * parseInt(digit)} Hz</p>
+                                <p>Resonance: ${digit * digit}</p>
+                                <p>Harmonic: ${digit / 9}</p>
+                                <p>Color: ${this.getDigitColor(digit)}</p>
+                            </div>
+                            <button onclick="mathSwitch.defaultRoute()">Back to Main</button>
+                        </div>
+                    `;
+                }
+            }
+
+            mathVortex() {
+                // Generate mathematical vortex state from undefined
+                const timestamp = Date.now();
+                const vortexSeed = timestamp % 1000;
+                const frequency = 432 + (vortexSeed % 100);
+                const resonance = vortexSeed % 9;
+                const harmonic = resonance / 9;
+                const hue = (vortexSeed * 3.6) % 360;
+                const color = this.mathInvert(`hsl(${hue}, 70%, 50%)`);
+                
+                // Mathematical expressions for vortex states
+                const expressions = [
+                    '∞ × 0 = 1',
+                    '1/0 = ∞',
+                    '0^0 = 1',
+                    '√(-1) = i',
+                    'e^(iπ) + 1 = 0',
+                    'φ = (1 + √5)/2',
+                    'π = 3.14159...',
+                    'e = 2.71828...',
+                    'i^2 = -1',
+                    '∞/∞ = 1'
+                ];
+                
+                const state = expressions[vortexSeed % expressions.length];
+                
+                return {
+                    frequency,
+                    resonance,
+                    harmonic,
+                    color,
+                    state: 'Vortex Emergence',
+                    expression: state
+                };
             }
 
             displayInfinitePossibilities() {

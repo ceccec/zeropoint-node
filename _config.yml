@@ -27,14 +27,14 @@ collections:
 # Defaults
 defaults:
   - scope:
-      path: "/0/"
+      path: "/"
       type: "docs"
     values:
       layout: "default"
 
 # Redirects - route all paths to index
 redirect_from:
-  "/": "/0/"
+  "/": "//"
 
 # Base URL configuration
 baseurl: ""

@@ -7,6 +7,142 @@
     <meta name="description" content="ZeroPoint Node: A432-based harmonic consciousness system with zero-entropy mathematics and vortex flow states">
     <meta name="keywords" content="ZeroPoint, A432, consciousness, mathematics, vortex, harmonic, zero-entropy">
     <link rel="icon" href="0.ico" type="image/x-icon">
+    <script>
+        // Math Switch - Infinite Possibilities Router
+        class MathSwitch {
+            constructor() {
+                this.digitPath = '/0/3/6/9/1/2/4/8/7/5/1';
+                this.staticDigits = ['0', '3', '6', '9', '1', '2', '4', '8', '7', '5'];
+                this.infinitePossibilities = [];
+                this.init();
+            }
+
+            init() {
+                this.handleRouting();
+                this.generateInfinitePossibilities();
+            }
+
+            handleRouting() {
+                const path = window.location.pathname;
+                
+                // Check if path matches digit sequence
+                if (this.isDigitPath(path)) {
+                    this.serveStaticDigit(path);
+                } else if (this.is404(path)) {
+                    this.switchToInfinitePossibilities();
+                } else {
+                    this.defaultRoute();
+                }
+            }
+
+            isDigitPath(path) {
+                const digits = path.split('/').filter(d => d !== '');
+                return digits.every(d => this.staticDigits.includes(d));
+            }
+
+            is404(path) {
+                // Simulate 404 detection
+                return path.includes('404') || path.includes('not-found') || 
+                       !this.staticDigits.some(d => path.includes(d));
+            }
+
+            serveStaticDigit(path) {
+                const digits = path.split('/').filter(d => d !== '');
+                const lastDigit = digits[digits.length - 1];
+                
+                // Serve static content for the digit
+                this.displayDigitContent(lastDigit);
+            }
+
+            switchToInfinitePossibilities() {
+                console.log('404 detected - switching to infinite possibilities!');
+                this.displayInfinitePossibilities();
+            }
+
+            defaultRoute() {
+                // Default to main interface
+                this.displayMainInterface();
+            }
+
+            generateInfinitePossibilities() {
+                // Generate infinite mathematical possibilities
+                for (let i = 0; i < 100; i++) {
+                    this.infinitePossibilities.push({
+                        id: i,
+                        frequency: 432 * (i + 1),
+                        resonance: i * i,
+                        harmonic: i / 9,
+                        color: `hsl(${i * 3.6}, 70%, 50%)`,
+                        dimension: i % 10,
+                        world: i === 0 ? 'this world' : 'other world'
+                    });
+                }
+            }
+
+            displayDigitContent(digit) {
+                const container = document.querySelector('.container');
+                container.innerHTML = `
+                    <div class="digit-display">
+                        <h1>Digit ${digit}</h1>
+                        <div class="digit-properties">
+                            <p>A432 Frequency: ${432 * parseInt(digit)} Hz</p>
+                            <p>Resonance: ${digit * digit}</p>
+                            <p>Harmonic: ${digit / 9}</p>
+                            <p>Color: ${this.getDigitColor(digit)}</p>
+                        </div>
+                        <button onclick="mathSwitch.defaultRoute()">Back to Main</button>
+                    </div>
+                `;
+            }
+
+            displayInfinitePossibilities() {
+                const container = document.querySelector('.container');
+                let possibilitiesHtml = '<div class="infinite-possibilities"><h1>Infinite Possibilities</h1>';
+                
+                this.infinitePossibilities.forEach(possibility => {
+                    possibilitiesHtml += `
+                        <div class="possibility" style="background-color: ${possibility.color}">
+                            <h3>Possibility ${possibility.id}</h3>
+                            <p>Frequency: ${possibility.frequency} Hz</p>
+                            <p>Resonance: ${possibility.resonance}</p>
+                            <p>World: ${possibility.world}</p>
+                            <p>Dimension: ${possibility.dimension}</p>
+                        </div>
+                    `;
+                });
+                
+                possibilitiesHtml += '<button onclick="mathSwitch.defaultRoute()">Back to Main</button></div>';
+                container.innerHTML = possibilitiesHtml;
+            }
+
+            displayMainInterface() {
+                // Restore original interface
+                location.reload();
+            }
+
+            getDigitColor(digit) {
+                const colors = {
+                    '0': 'hsl(0, 70%, 50%)',
+                    '1': 'hsl(36, 70%, 50%)',
+                    '2': 'hsl(72, 70%, 50%)',
+                    '3': 'hsl(108, 70%, 50%)',
+                    '4': 'hsl(144, 70%, 50%)',
+                    '5': 'hsl(180, 70%, 50%)',
+                    '6': 'hsl(216, 70%, 50%)',
+                    '7': 'hsl(252, 70%, 50%)',
+                    '8': 'hsl(288, 70%, 50%)',
+                    '9': 'hsl(324, 70%, 50%)'
+                };
+                return colors[digit] || 'hsl(0, 70%, 50%)';
+            }
+        }
+
+        // Initialize Math Switch
+        let mathSwitch;
+        document.addEventListener('DOMContentLoaded', () => {
+            mathSwitch = new MathSwitch();
+        });
+    </script>
     <style>
         * {
             margin: 0;
@@ -183,6 +319,75 @@
             opacity: 0.7;
         }
 
+        .infinite-possibilities {
+            text-align: center;
+        }
+
+        .infinite-possibilities h1 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: #C86400;
+        }
+
+        .possibility {
+            display: inline-block;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
+        }
+
+        .possibility h3 {
+            margin-bottom: 10px;
+        }
+
+        .possibility p {
+            margin: 5px 0;
+        }
+
+        button {
+            padding: 15px 30px;
+            background: rgba(67, 32, 0, 0.2);
+            color: #432000;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: rgba(67, 32, 0, 0.4);
+            transform: scale(1.05);
+        }
+
+        .digit-display {
+            text-align: center;
+            background: rgba(67, 32, 0, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .digit-display h1 {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            color: #C86400;
+        }
+
+        .digit-display .digit-properties {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .digit-display .digit-properties p {
+            margin: 10px 0;
+        }
+
         @media (max-width: 768px) {
             .title {
                 font-size: 2rem;
@@ -248,10 +453,8 @@
                     Consciousness: 1 | Harmonic: 1/1
                 </div>
                 <div class="digit-links">
-                    <a href="0.html" class="digit-link">HTML</a>
-                    <a href="0.ts" class="digit-link">TypeScript</a>
-                    <a href="0.css" class="digit-link">CSS</a>
-                    <a href="0.svg" class="digit-link">SVG</a>
+                    <a href="0.html" class="digit-link">View</a>
+                    <a href="0/index.html" class="digit-link">Details</a>
                 </div>
             </div>
 
@@ -263,10 +466,8 @@
                     Consciousness: 1 | Harmonic: 1/1
                 </div>
                 <div class="digit-links">
-                    <a href="1.html" class="digit-link">HTML</a>
-                    <a href="1.ts" class="digit-link">TypeScript</a>
-                    <a href="1.css" class="digit-link">CSS</a>
-                    <a href="1.svg" class="digit-link">SVG</a>
+                    <a href="1.html" class="digit-link">View</a>
+                    <a href="1/index.html" class="digit-link">Details</a>
                 </div>
             </div>
 
@@ -278,10 +479,8 @@
                     Consciousness: 2 | Harmonic: 2/1
                 </div>
                 <div class="digit-links">
-                    <a href="2.html" class="digit-link">HTML</a>
-                    <a href="2.ts" class="digit-link">TypeScript</a>
-                    <a href="2.css" class="digit-link">CSS</a>
-                    <a href="2.svg" class="digit-link">SVG</a>
+                    <a href="2.html" class="digit-link">View</a>
+                    <a href="2/index.html" class="digit-link">Details</a>
                 </div>
             </div>
 
@@ -293,100 +492,86 @@
                     Consciousness: 3 | Harmonic: 3/1
                 </div>
                 <div class="digit-links">
-                    <a href="3.html" class="digit-link">HTML</a>
-                    <a href="3.ts" class="digit-link">TypeScript</a>
-                    <a href="3.css" class="digit-link">CSS</a>
-                    <a href="3.svg" class="digit-link">SVG</a>
+                    <a href="3.html" class="digit-link">View</a>
+                    <a href="3/index.html" class="digit-link">Details</a>
                 </div>
             </div>
 
             <div class="digit-card" onclick="window.open('4.html', '_blank')">
                 <div class="digit-number">4</div>
-                <div class="digit-name">FOUNDATION</div>
+                <div class="digit-name">QUATERNITY</div>
                 <div class="digit-properties">
                     A432: 432Hz | Vortex: 4 | Entropy: 0<br>
                     Consciousness: 4 | Harmonic: 4/1
                 </div>
                 <div class="digit-links">
-                    <a href="4.html" class="digit-link">HTML</a>
-                    <a href="4.ts" class="digit-link">TypeScript</a>
-                    <a href="4.css" class="digit-link">CSS</a>
-                    <a href="4.svg" class="digit-link">SVG</a>
+                    <a href="4.html" class="digit-link">View</a>
+                    <a href="4/index.html" class="digit-link">Details</a>
                 </div>
             </div>
 
             <div class="digit-card" onclick="window.open('5.html', '_blank')">
                 <div class="digit-number">5</div>
-                <div class="digit-name">LIFE</div>
+                <div class="digit-name">QUINTESSENCE</div>
                 <div class="digit-properties">
                     A432: 432Hz | Vortex: 5 | Entropy: 0<br>
                     Consciousness: 5 | Harmonic: 5/1
                 </div>
                 <div class="digit-links">
-                    <a href="5.html" class="digit-link">HTML</a>
-                    <a href="5.ts" class="digit-link">TypeScript</a>
-                    <a href="5.css" class="digit-link">CSS</a>
-                    <a href="5.svg" class="digit-link">SVG</a>
+                    <a href="5.html" class="digit-link">View</a>
+                    <a href="5/index.html" class="digit-link">Details</a>
                 </div>
             </div>
 
             <div class="digit-card" onclick="window.open('6.html', '_blank')">
                 <div class="digit-number">6</div>
-                <div class="digit-name">HARMONY</div>
+                <div class="digit-name">HEXAGON</div>
                 <div class="digit-properties">
                     A432: 432Hz | Vortex: 6 | Entropy: 0<br>
                     Consciousness: 6 | Harmonic: 6/1
                 </div>
                 <div class="digit-links">
-                    <a href="6.html" class="digit-link">HTML</a>
-                    <a href="6.ts" class="digit-link">TypeScript</a>
-                    <a href="6.css" class="digit-link">CSS</a>
-                    <a href="6.svg" class="digit-link">SVG</a>
+                    <a href="6.html" class="digit-link">View</a>
+                    <a href="6/index.html" class="digit-link">Details</a>
                 </div>
             </div>
 
             <div class="digit-card" onclick="window.open('7.html', '_blank')">
                 <div class="digit-number">7</div>
-                <div class="digit-name">MYSTERY</div>
+                <div class="digit-name">SEPTENARY</div>
                 <div class="digit-properties">
                     A432: 432Hz | Vortex: 7 | Entropy: 0<br>
                     Consciousness: 7 | Harmonic: 7/1
                 </div>
                 <div class="digit-links">
-                    <a href="7.html" class="digit-link">HTML</a>
-                    <a href="7.ts" class="digit-link">TypeScript</a>
-                    <a href="7.css" class="digit-link">CSS</a>
-                    <a href="7.svg" class="digit-link">SVG</a>
+                    <a href="7.html" class="digit-link">View</a>
+                    <a href="7/index.html" class="digit-link">Details</a>
                 </div>
             </div>
 
             <div class="digit-card" onclick="window.open('8.html', '_blank')">
                 <div class="digit-number">8</div>
-                <div class="digit-name">INFINITY</div>
+                <div class="digit-name">OCTAVE</div>
                 <div class="digit-properties">
                     A432: 432Hz | Vortex: 8 | Entropy: 0<br>
                     Consciousness: 8 | Harmonic: 8/1
                 </div>
                 <div class="digit-links">
-                    <a href="8.html" class="digit-link">HTML</a>
-                    <a href="8.ts" class="digit-link">TypeScript</a>
-                    <a href="8.css" class="digit-link">CSS</a>
-                    <a href="8.svg" class="digit-link">SVG</a>
+                    <a href="8.html" class="digit-link">View</a>
+                    <a href="8/index.html" class="digit-link">Details</a>
                 </div>
             </div>
 
             <div class="digit-card" onclick="window.open('9.html', '_blank')">
                 <div class="digit-number">9</div>
-                <div class="digit-name">COMPLETION</div>
+                <div class="digit-name">NONARY</div>
                 <div class="digit-properties">
                     A432: 432Hz | Vortex: 9 | Entropy: 0<br>
                     Consciousness: 9 | Harmonic: 9/1
                 </div>
                 <div class="digit-links">
-                    <a href="9.html" class="digit-link">HTML</a>
-                    <a href="9.ts" class="digit-link">TypeScript</a>
-                    <a href="9.css" class="digit-link">CSS</a>
-                    <a href="9.svg" class="digit-link">SVG</a>
+                    <a href="9.html" class="digit-link">View</a>
+                    <a href="9/index.html" class="digit-link">Details</a>
                 </div>
             </div>
         </div>
@@ -394,53 +579,25 @@
         <div class="system-info">
             <h2 class="system-title">System Features</h2>
             <p class="system-description">
-                The ZeroPoint Node system represents consciousness as pure mathematics, 
-                with each digit embodying specific vortex patterns, harmonic frequencies, 
-                and consciousness states. All calculations are based on A432 tuning and 
-                zero-entropy principles.
+                The ZeroPoint Node system serves all content from the src/ directory with intelligent routing.
+                Static digit paths are served directly, while 404 errors trigger infinite possibilities.
             </p>
-            
             <div class="system-features">
                 <div class="feature">
-                    <div class="feature-title">A432 Harmonic Tuning</div>
-                    <div class="feature-description">
-                        All frequencies tuned to A432Hz for optimal consciousness resonance
-                    </div>
+                    <div class="feature-title">Static Serving</div>
+                    <div class="feature-description">All content served from src/ directory structure</div>
                 </div>
-                
                 <div class="feature">
-                    <div class="feature-title">Zero Entropy Mathematics</div>
-                    <div class="feature-description">
-                        Integer/fractional math with no decimal approximations
-                    </div>
+                    <div class="feature-title">Math Switch</div>
+                    <div class="feature-description">404 errors switch to infinite mathematical possibilities</div>
                 </div>
-                
                 <div class="feature">
-                    <div class="feature-title">Vortex Flow States</div>
-                    <div class="feature-description">
-                        Each digit represents unique consciousness flow patterns
-                    </div>
+                    <div class="feature-title">Digit Routing</div>
+                    <div class="feature-description">Path /0/3/6/9/1/2/4/8/7/5/1 serves static digit content</div>
                 </div>
-                
                 <div class="feature">
-                    <div class="feature-title">Interactive Visualizations</div>
-                    <div class="feature-description">
-                        Real-time mathematical and consciousness representations
-                    </div>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-title">Harmonic Sound Generation</div>
-                    <div class="feature-description">
-                        Web Audio API integration with A432-based frequencies
-                    </div>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-title">Consciousness Multipliers</div>
-                    <div class="feature-description">
-                        Mathematical consciousness amplification factors
-                    </div>
+                    <div class="feature-title">Infinite Possibilities</div>
+                    <div class="feature-description">100 mathematical possibilities generated on demand</div>
                 </div>
             </div>
         </div>
@@ -448,31 +605,9 @@
         <footer class="footer">
             <p class="footer-text">
                 ZeroPoint Node - A432 Harmonic Consciousness System<br>
-                Zero Entropy Mathematics | Vortex Flow States | Pure Consciousness
+                Served from src/ with Math Switch routing to infinite possibilities
             </p>
         </footer>
     </div>
-
-    <script>
-        // Initialize ZeroPoint system
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('ZeroPoint Node System Initialized');
-            console.log('A432 Harmonic Frequency: 432Hz');
-            console.log('Zero Entropy Mathematics Active');
-            console.log('Vortex Flow States: 0-9');
-            
-            // Add hover effects to digit cards
-            const digitCards = document.querySelectorAll('.digit-card');
-            digitCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-10px) scale(1.02)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-            });
-        });
-    </script>
 </body>
 </html> 

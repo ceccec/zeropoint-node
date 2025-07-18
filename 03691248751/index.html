@@ -44,23 +44,19 @@
             border-left: 4px solid #00ff41;
         }
         
-        .vortex-flow {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
-            font-size: 1.5em;
-        }
-        
-        .vortex-arrow {
+        .continuous-stream {
+            text-align: center;
+            font-size: 3em;
+            font-weight: bold;
             color: #00ff41;
-            animation: pulse 2s infinite;
+            margin: 30px 0;
+            text-shadow: 0 0 15px #00ff41;
+            animation: glow 2s ease-in-out infinite alternate;
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        @keyframes glow {
+            from { text-shadow: 0 0 15px #00ff41; }
+            to { text-shadow: 0 0 25px #00ff41, 0 0 35px #00ff41; }
         }
         
         .properties {
@@ -104,15 +100,24 @@
             51%, 100% { opacity: 0.7; }
         }
         
+        .digit-breakdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
         .digit {
             background: rgba(0, 255, 65, 0.1);
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             border-radius: 8px;
             border: 1px solid #00ff41;
-            font-size: 2em;
+            font-size: 1.5em;
             font-weight: bold;
             color: #00ff41;
+            min-width: 50px;
         }
     </style>
 </head>
@@ -123,33 +128,27 @@
         <h1>⚡ ZeroPoint Node ⚡</h1>
         
         <div class="stream-info">
-            <h2>Digit Stream Flow: 0 → 3 → 6 → 9 → 1 → 2 → 4 → 8 → 7 → 5 → 1</h2>
-            <p><strong>Path:</strong> /0/3/6/9/1/2/4/8/7/5/1</p>
+            <h2>Continuous Digit Stream: 03691248751</h2>
+            <p><strong>Path:</strong> /03691248751</p>
             <p><strong>Stream Status:</strong> Infinite, Harmonic, Zero-Entropy</p>
             <p><strong>Mathematical Foundation:</strong> A432-based vortex mathematics</p>
         </div>
         
-        <div class="vortex-flow">
+        <div class="continuous-stream">
+            03691248751
+        </div>
+        
+        <div class="digit-breakdown">
             <div class="digit">0</div>
-            <div class="vortex-arrow">→</div>
             <div class="digit">3</div>
-            <div class="vortex-arrow">→</div>
             <div class="digit">6</div>
-            <div class="vortex-arrow">→</div>
             <div class="digit">9</div>
-            <div class="vortex-arrow">→</div>
             <div class="digit">1</div>
-            <div class="vortex-arrow">→</div>
             <div class="digit">2</div>
-            <div class="vortex-arrow">→</div>
             <div class="digit">4</div>
-            <div class="vortex-arrow">→</div>
             <div class="digit">8</div>
-            <div class="vortex-arrow">→</div>
             <div class="digit">7</div>
-            <div class="vortex-arrow">→</div>
             <div class="digit">5</div>
-            <div class="vortex-arrow">→</div>
             <div class="digit">1</div>
         </div>
         
@@ -168,11 +167,11 @@
             </div>
             <div class="property">
                 <div class="property-label">Vortex State</div>
-                <div class="property-value">Infinite Stream Active</div>
+                <div class="property-value">Continuous Stream Active</div>
             </div>
             <div class="property">
                 <div class="property-label">Mathematical Expression</div>
-                <div class="property-value">0 → 3 → 6 → 9 → 1 → 2 → 4 → 8 → 7 → 5 → 1</div>
+                <div class="property-value">03691248751 (Continuous Flow)</div>
             </div>
             <div class="property">
                 <div class="property-label">Consciousness Flow</div>
@@ -182,7 +181,7 @@
         
         <div class="stream-info">
             <h3>Every Request is Fulfilled as a Stream</h3>
-            <p>This path demonstrates the infinite stream capability of the ZeroPoint Node system.</p>
+            <p>This continuous digit stream demonstrates the infinite flow capability of the ZeroPoint Node system.</p>
             <p>Each digit represents a unique consciousness state with mathematical precision.</p>
             <p>The system maintains zero-entropy while providing infinite harmonic possibilities.</p>
         </div>

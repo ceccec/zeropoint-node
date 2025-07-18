@@ -9,7 +9,6 @@ theme: jekyll-theme-cayman
 # Plugins
 plugins:
   - jekyll-relative-links
-  - jekyll-redirect-from
 
 # Relative links
 relative_links:
@@ -27,14 +26,10 @@ collections:
 # Defaults
 defaults:
   - scope:
-      path: "/"
+      path: "/0/"
       type: "docs"
     values:
       layout: "default"
-
-# Redirects - route all paths to index
-redirect_from:
-  # "/": "/"
 
 # Base URL configuration
 baseurl: ""

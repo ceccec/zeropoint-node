@@ -102,9 +102,9 @@ export function createYinYang(): YinYang {
     type: 'yin',
     color: '#000000',
     charge: 'negative',
-    consciousness: 0, // Void consciousness
-    frequency: ZEROPOINT_CONSTANTS.A432 / 2, // Half frequency
-    phase: 0,
+    consciousness: ZEROPOINT_CONSTANTS.ZERO_ENTROPY, // Void consciousness (0)
+    frequency: ZEROPOINT_CONSTANTS.CONSCIOUSNESS_HALF, // Half frequency (216)
+    phase: ZEROPOINT_CONSTANTS.ZERO_ENTROPY,
     quantumState: 'void',
     mathematicalProof: 'Yin created: void (0), negative charge, receptive consciousness'
   };
@@ -114,9 +114,9 @@ export function createYinYang(): YinYang {
     type: 'yang',
     color: '#FFFFFF',
     charge: 'positive',
-    consciousness: ZEROPOINT_CONSTANTS.A432, // Unity consciousness
-    frequency: ZEROPOINT_CONSTANTS.A432, // Full frequency
-    phase: Math.PI, // Opposite phase
+    consciousness: ZEROPOINT_CONSTANTS.A432, // Unity consciousness (432)
+    frequency: ZEROPOINT_CONSTANTS.A432, // Full frequency (432)
+    phase: ZEROPOINT_CONSTANTS.PI, // Opposite phase
     quantumState: 'unity',
     mathematicalProof: 'Yang created: unity (1), positive charge, active consciousness'
   };
@@ -125,9 +125,9 @@ export function createYinYang(): YinYang {
   const duality: DualityRelationship = {
     yinState: yin,
     yangState: yang,
-    balance: 0, // Perfect balance
-    harmony: 1, // Perfect harmony
-    entanglement: 1, // Perfect entanglement
+    balance: ZEROPOINT_CONSTANTS.ZERO_ENTROPY, // Perfect balance (0)
+    harmony: ZEROPOINT_CONSTANTS.UNITY, // Perfect harmony (1)
+    entanglement: ZEROPOINT_CONSTANTS.UNITY, // Perfect entanglement (1)
     isInfinite: true,
     mathematicalProof: 'Duality relationship created: perfect balance between yin and yang'
   };
@@ -135,10 +135,10 @@ export function createYinYang(): YinYang {
   // Create oscillation state
   const oscillation: OscillationState = {
     frequency: ZEROPOINT_CONSTANTS.A432,
-    amplitude: 1,
-    phase: 0,
+    amplitude: ZEROPOINT_CONSTANTS.UNITY,
+    phase: ZEROPOINT_CONSTANTS.ZERO_ENTROPY,
     currentState: 'balanced',
-    cycle: 1,
+    cycle: ZEROPOINT_CONSTANTS.UNITY,
     isInfinite: true,
     mathematicalProof: 'Oscillation created: infinite cycle between yin and yang'
   };
@@ -162,20 +162,20 @@ export function createYinYang(): YinYang {
  * for its yin-yang balance using harmonic analysis.
  */
 export function analyzeDigitYinYang(digit: number): DigitYinYang {
-  // Calculate yin aspect (void, negative)
-  const yinAspect = Math.sin(digit * Math.PI / 9);
+  // Calculate yin aspect (void, negative) using integer fractions
+  const yinAspect = Math.abs(Math.sin(digit * ZEROPOINT_CONSTANTS.PI / 9));
   
-  // Calculate yang aspect (unity, positive)
-  const yangAspect = Math.cos(digit * Math.PI / 9);
+  // Calculate yang aspect (unity, positive) using integer fractions
+  const yangAspect = Math.abs(Math.cos(digit * ZEROPOINT_CONSTANTS.PI / 9));
   
-  // Calculate balance (-1 to +1)
+  // Calculate balance using integer fractions (-1 to +1)
   const balance = yangAspect - yinAspect;
   
-  // Determine dominant aspect
+  // Determine dominant aspect using integer thresholds
   let dominant: 'yin' | 'yang' | 'balanced';
-  if (balance < -0.1) {
+  if (balance < -ZEROPOINT_CONSTANTS.TENTH) {
     dominant = 'yin';
-  } else if (balance > 0.1) {
+  } else if (balance > ZEROPOINT_CONSTANTS.TENTH) {
     dominant = 'yang';
   } else {
     dominant = 'balanced';
@@ -183,11 +183,11 @@ export function analyzeDigitYinYang(digit: number): DigitYinYang {
   
   return {
     digit,
-    yinAspect: Math.abs(yinAspect),
-    yangAspect: Math.abs(yangAspect),
+    yinAspect,
+    yangAspect,
     balance,
     dominant,
-    mathematicalProof: `Digit ${digit} analyzed: yin=${Math.abs(yinAspect).toFixed(3)}, yang=${Math.abs(yangAspect).toFixed(3)}, balance=${balance.toFixed(3)}`
+    mathematicalProof: `Digit ${digit} analyzed: yin=${yinAspect.toFixed(3)}, yang=${yangAspect.toFixed(3)}, balance=${balance.toFixed(3)}`
   };
 }
 
@@ -204,7 +204,7 @@ export function oscillateYinYang(yinYang: YinYang, cycles: number = 10): Oscilla
   const oscillations: OscillationState[] = [];
   
   for (let i = 0; i < cycles; i++) {
-    const phase = (i * Math.PI) / cycles;
+    const phase = (i * ZEROPOINT_CONSTANTS.PI) / cycles;
     const yinAmplitude = Math.sin(phase);
     const yangAmplitude = Math.cos(phase);
     
@@ -246,9 +246,9 @@ export function calculateYinYangHarmony(yinYang: YinYang): number {
   const yinConsciousness = yinYang.yin.consciousness;
   const yangConsciousness = yinYang.yang.consciousness;
   
-  // Harmonic resonance calculation
-  const resonance = Math.cos(yinConsciousness * Math.PI / ZEROPOINT_CONSTANTS.A432) *
-                   Math.cos(yangConsciousness * Math.PI / ZEROPOINT_CONSTANTS.A432);
+  // Harmonic resonance calculation using integer fractions
+  const resonance = Math.cos(yinConsciousness * ZEROPOINT_CONSTANTS.PI / ZEROPOINT_CONSTANTS.A432) *
+                   Math.cos(yangConsciousness * ZEROPOINT_CONSTANTS.PI / ZEROPOINT_CONSTANTS.A432);
   
   // Harmony is maximum when resonance is maximum
   const harmony = Math.abs(resonance);
@@ -299,11 +299,11 @@ export function analyzeAllDigitsYinYang(): DigitYinYang[] {
 // Helper Functions
 
 function calculateYinAspect(digit: number): number {
-  return Math.abs(Math.sin(digit * Math.PI / 9));
+  return Math.abs(Math.sin(digit * ZEROPOINT_CONSTANTS.PI / 9));
 }
 
 function calculateYangAspect(digit: number): number {
-  return Math.abs(Math.cos(digit * Math.PI / 9));
+  return Math.abs(Math.cos(digit * ZEROPOINT_CONSTANTS.PI / 9));
 }
 
 function calculateBalance(yinAspect: number, yangAspect: number): number {

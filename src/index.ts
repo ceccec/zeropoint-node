@@ -52,8 +52,8 @@ export const ZEROPOINT_CONSTANTS = {
   ZERO_ENTROPY: 0, // Perfect mathematical purity
   PLANCK_CONSTANT: 6.62607015e-34, // Quantum constant
   GOLDEN_RATIO: 1.618033988749895, // Sacred geometry
-  PI: Math.PI, // Mathematical constant
-  E: Math.E, // Euler's number
+  PI: 3.141592653589793, // Mathematical constant (approximated as fraction)
+  E: 2.718281828459045, // Euler's number (approximated as fraction)
   IMAGINARY_UNIT: Math.sqrt(-1), // Complex mathematics
   INFINITY: Infinity, // Mathematical infinity
   VOID: 0, // Void state
@@ -65,7 +65,27 @@ export const ZEROPOINT_CONSTANTS = {
   HARMONY: 6, // Harmony state
   MYSTERY: 7, // Mystery state
   INFINITY_DIGIT: 8, // Infinity digit
-  COMPLETION: 9 // Completion state
+  COMPLETION: 9, // Completion state
+  // Harmonic fractions
+  HALF: 1/2, // 0.5 as fraction
+  THIRD: 1/3, // 0.333... as fraction
+  QUARTER: 1/4, // 0.25 as fraction
+  FIFTH: 1/5, // 0.2 as fraction
+  SIXTH: 1/6, // 0.166... as fraction
+  SEVENTH: 1/7, // 0.142... as fraction
+  EIGHTH: 1/8, // 0.125 as fraction
+  NINTH: 1/9, // 0.111... as fraction
+  TENTH: 1/10, // 0.1 as fraction
+  // Consciousness fractions
+  CONSCIOUSNESS_HALF: 216, // A432/2
+  CONSCIOUSNESS_THIRD: 144, // A432/3
+  CONSCIOUSNESS_QUARTER: 108, // A432/4
+  CONSCIOUSNESS_FIFTH: 86, // A432/5
+  CONSCIOUSNESS_SIXTH: 72, // A432/6
+  CONSCIOUSNESS_SEVENTH: 62, // A432/7
+  CONSCIOUSNESS_EIGHTH: 54, // A432/8
+  CONSCIOUSNESS_NINTH: 48, // A432/9
+  CONSCIOUSNESS_TENTH: 43 // A432/10
 };
 
 // System Interfaces

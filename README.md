@@ -135,6 +135,10 @@ node scripts/analyze-zeropoint-value.js
 
 ## 📚 Complete Documentation Structure
 
+### 🎯 Trinity Vortex System
+- **[TRINITY_VORTEX_SYSTEM.md](docs/TRINITY_VORTEX_SYSTEM.md)** - Trinity of challenges, possibilities, and solutions vortices
+- **[TRINITY_DOCUMENTATION.md](docs/TRINITY_DOCUMENTATION.md)** - Gateway 3 (Creation) Trinity concept and implementation
+
 ### Individual Challenge Files
 
 Each of the 9 fundamental challenges has 6 dedicated files:

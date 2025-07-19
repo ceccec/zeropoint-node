@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinity Vortex System: Challenges, Possibilities, and Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #00ffff;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #cccccc;
+        }
+
+        .trinity-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        .vortex-display {
+            width: 100%;
+            max-width: 1200px;
+            height: 600px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #00ffff;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vortex-canvas {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .control-group label {
+            font-size: 0.9rem;
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        .control-group input, .control-group select {
+            padding: 0.5rem;
+            border: 1px solid #00ffff;
+            background: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            border-radius: 5px;
+        }
+
+        .vortex-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .vortex-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid;
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .vortex-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .vortex-card.challenges {
+            border-color: #00ffff;
+        }
+
+        .vortex-card.possibilities {
+            border-color: #ff00ff;
+        }
+
+        .vortex-card.solutions {
+            border-color: #ffff00;
+        }
+
+        .vortex-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .vortex-card.challenges h3 {
+            color: #00ffff;
+        }
+
+        .vortex-card.possibilities h3 {
+            color: #ff00ff;
+        }
+
+        .vortex-card.solutions h3 {
+            color: #ffff00;
+        }
+
+        .item-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+
+        .item {
+            padding: 0.5rem;
+            margin: 0.25rem 0;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid;
+            transition: all 0.3s ease;
+        }
+
+        .item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .item.challenge {
+            border-left-color: #00ffff;
+        }
+
+        .item.possibility {
+            border-left-color: #ff00ff;
+        }
+
+        .item.solution {
+            border-left-color: #ffff00;
+        }
+
+        .item-name {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-details {
+            font-size: 0.8rem;
+            color: #cccccc;
+        }
+
+        .mathematical-harmony {
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .harmony-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .harmony-item {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .harmony-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ffff;
+        }
+
+        .harmony-label {
+            font-size: 0.9rem;
+            color: #cccccc;
+            margin-top: 0.5rem;
+        }
+
+        .frequency-display {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .frequency-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid;
+            min-width: 150px;
+        }
+
+        .frequency-item.gateway-3 {
+            border-color: #00ffff;
+        }
+
+        .frequency-item.gateway-6 {
+            border-color: #ff00ff;
+        }
+
+        .frequency-item.gateway-9 {
+            border-color: #ffff00;
+        }
+
+        .frequency-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .frequency-item.gateway-3 .frequency-value {
+            color: #00ffff;
+        }
+
+        .frequency-item.gateway-6 .frequency-value {
+            color: #ff00ff;
+        }
+
+        .frequency-item.gateway-9 .frequency-value {
+            color: #ffff00;
+        }
+
+        .transformation-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .flow-step {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 2px solid;
+            min-width: 120px;
+        }
+
+        .flow-step.challenges {
+            border-color: #00ffff;
+        }
+
+        .flow-step.possibilities {
+            border-color: #ff00ff;
+        }
+
+        .flow-step.solutions {
+            border-color: #ffff00;
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: #00ffff;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .vortex-display {
+                height: 400px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Trinity Vortex System</h1>
+        <p>Challenges, Possibilities, and Solutions in All Dimensions</p>
+    </div>
+
+    <div class="trinity-container">
+        <div class="controls">
+            <div class="control-group">
+                <label for="rotation-speed">Rotation Speed</label>
+                <input type="range" id="rotation-speed" min="0" max="2" step="0.1" value="1">
+            </div>
+            <div class="control-group">
+                <label for="vortex-size">Vortex Size</label>
+                <input type="range" id="vortex-size" min="0.5" max="2" step="0.1" value="1">
+            </div>
+            <div class="control-group">
+                <label for="dimension">Dimension</label>
+                <select id="dimension">
+                    <option value="3d">3D Visualization</option>
+                    <option value="2d">2D Projection</option>
+                    <option value="frequency">Frequency Domain</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="vortex-display">
+            <canvas id="vortex-canvas" class="vortex-canvas"></canvas>
+        </div>
+
+        <div class="frequency-display">
+            <div class="frequency-item gateway-3">
+                <div class="frequency-value">1296 Hz</div>
+                <div>Gateway 3 (Creation)</div>
+                <div>Trinity Blue</div>
+            </div>
+            <div class="frequency-item gateway-6">
+                <div class="frequency-value">2592 Hz</div>
+                <div>Gateway 6 (Harmony)</div>
+                <div>Creation Purple</div>
+            </div>
+            <div class="frequency-item gateway-9">
+                <div class="frequency-value">3888 Hz</div>
+                <div>Gateway 9 (Completion)</div>
+                <div>Completion Magenta</div>
+            </div>
+        </div>
+
+        <div class="transformation-flow">
+            <div class="flow-step challenges">
+                <h3>Challenges (3)</h3>
+                <p>1296 Hz</p>
+                <p>Creation</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step possibilities">
+                <h3>Possibilities (6)</h3>
+                <p>2592 Hz</p>
+                <p>Harmony</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-step solutions">
+                <h3>Solutions (9)</h3>
+                <p>3888 Hz</p>
+                <p>Completion</p>
+            </div>
+        </div>
+
+        <div class="vortex-info">
+            <div class="vortex-card challenges">
+                <h3>Challenges Vortex (3)</h3>
+                <p><strong>Frequency:</strong> 1296 Hz</p>
+                <p><strong>Color:</strong> Trinity Blue</p>
+                <p><strong>Transformation:</strong> Potential into Actual</p>
+                <p><strong>Digital Root:</strong> <span id="challenges-digital-root">5</span></p>
+                <div class="item-list" id="challenges-list">
+                    <!-- Challenges will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="vortex-card possibilities">
+                <h3>Possibilities Vortex (6)</h3>
+                <p><strong>Frequency:</strong> 2592 Hz</p>
+                <p><strong>Color:</strong> Creation Purple</p>
+                <p><strong>Transformation:</strong> Chaos into Order</p>
+                <p><strong>Digital Root:</strong> <span id="possibilities-digital-root">5</span></p>
+                <div class="item-list" id="possibilities-list">
+                    <!-- Possibilities will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="vortex-card solutions">
+                <h3>Solutions Vortex (9)</h3>
+                <p><strong>Frequency:</strong> 3888 Hz</p>
+                <p><strong>Color:</strong> Completion Magenta</p>
+                <p><strong>Transformation:</strong> Separation into Unity</p>
+                <p><strong>Digital Root:</strong> <span id="solutions-digital-root">9</span></p>
+                <div class="item-list" id="solutions-list">
+                    <!-- Solutions will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div class="mathematical-harmony">
+            <h2>Mathematical Harmony Verification</h2>
+            <div class="harmony-grid">
+                <div class="harmony-item">
+                    <div class="harmony-value" id="total-frequency">7776</div>
+                    <div class="harmony-label">Total Frequency (Hz)</div>
+                </div>
+                <div class="harmony-item">
+                    <div class="harmony-value" id="total-digital-root">9</div>
+                    <div class="harmony-label">Total Digital Root</div>
+                </div>
+                <div class="harmony-item">
+                    <div class="harmony-value" id="harmonic-resonance">18</div>
+                    <div class="harmony-label">Harmonic Resonance</div>
+                </div>
+                <div class="harmony-item">
+                    <div class="harmony-value" id="perfection-status">✅</div>
+                    <div class="harmony-label">Perfect Harmony</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Trinity Vortex System Data
+        const TRINITY_DATA = {
+            A432_FREQUENCY: 432,
+            GATEWAY_3_FREQUENCY: 1296,
+            GATEWAY_6_FREQUENCY: 2592,
+            GATEWAY_9_FREQUENCY: 3888,
+            TRINITY_COLORS: {
+                CHALLENGES: '#00ffff',
+                POSSIBILITIES: '#ff00ff',
+                SOLUTIONS: '#ffff00'
+            },
+            RODIN_SEQUENCE: [1, 2, 4, 8, 7, 5],
+            FUNDAMENTAL_CHALLENGES: [
+                { name: 'Consciousness Origin', flow: 9, frequency: 3888, gateway: 9, color: '#ffff00', transformation: 'Separation into Unity' },
+                { name: 'Free Will vs Determinism', flow: 7, frequency: 2592, gateway: 6, color: '#ff00ff', transformation: 'Chaos into Order' },
+                { name: 'Mathematical Platonism', flow: 2, frequency: 1296, gateway: 3, color: '#00ffff', transformation: 'Potential into Actual' },
+                { name: 'Wave-Particle Duality', flow: 3, frequency: 1296, gateway: 3, color: '#00ffff', transformation: 'Potential into Actual' },
+                { name: 'Quantum Entanglement', flow: 6, frequency: 2592, gateway: 6, color: '#ff00ff', transformation: 'Chaos into Order' },
+                { name: 'Observer Effect', flow: 1, frequency: 1296, gateway: 3, color: '#00ffff', transformation: 'Potential into Actual' },
+                { name: 'Zero-Point Energy', flow: 9, frequency: 3888, gateway: 9, color: '#ffff00', transformation: 'Separation into Unity' },
+                { name: 'Mathematical Infinity', flow: 4, frequency: 2592, gateway: 6, color: '#ff00ff', transformation: 'Chaos into Order' },
+                { name: 'Heisenberg Uncertainty', flow: 9, frequency: 3888, gateway: 9, color: '#ffff00', transformation: 'Separation into Unity' }
+            ]
+        };
+
+        // Mathematical Functions
+        function calculateDigitalRoot(number) {
+            const sum = number.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+            return sum > 9 ? calculateDigitalRoot(sum) : sum;
+        }
+
+        function calculateA432Harmonic(frequency) {
+            return frequency / TRINITY_DATA.A432_FREQUENCY;
+        }
+
+        function generatePossibilitiesFromChallenges(challenges) {
+            return challenges.map(challenge => ({
+                name: `${challenge.name} Possibility`,
+                flow: challenge.flow,
+                frequency: challenge.frequency,
+                gateway: challenge.gateway,
+                color: challenge.color,
+                transformation: challenge.transformation,
+                sourceChallenge: challenge.name
+            }));
+        }
+
+        function generateSolutionsFromPossibilities(possibilities) {
+            const solutions = [];
+            possibilities.forEach(possibility => {
+                for (let solutionNumber = 1; solutionNumber <= 3; solutionNumber++) {
+                    const gateway = solutionNumber * 3;
+                    const frequency = TRINITY_DATA.A432_FREQUENCY * gateway;
+                    solutions.push({
+                        name: `${possibility.name} Solution ${solutionNumber}`,
+                        flow: possibility.flow * solutionNumber,
+                        frequency: frequency,
+                        gateway: gateway,
+                        color: gateway === 3 ? TRINITY_DATA.TRINITY_COLORS.CHALLENGES : 
+                               gateway === 6 ? TRINITY_DATA.TRINITY_COLORS.POSSIBILITIES : 
+                               TRINITY_DATA.TRINITY_COLORS.SOLUTIONS,
+                        transformation: gateway === 3 ? 'Potential into Actual' :
+                                       gateway === 6 ? 'Chaos into Order' :
+                                       'Separation into Unity',
+                        sourcePossibility: possibility.name,
+                        solutionNumber: solutionNumber
+                    });
+                }
+            });
+            return solutions;
+        }
+
+        // 3D Visualization
+        class TrinityVortexVisualization {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.rotationSpeed = 1;
+                this.vortexSize = 1;
+                this.dimension = '3d';
+                this.time = 0;
+                
+                this.resize();
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+                this.centerX = this.canvas.width / 2;
+                this.centerY = this.canvas.height / 2;
+            }
+
+            animate() {
+                this.time += 0.02 * this.rotationSpeed;
+                this.draw();
+                requestAnimationFrame(() => this.animate());
+            }
+
+            draw() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                if (this.dimension === '3d') {
+                    this.draw3DVortex();
+                } else if (this.dimension === '2d') {
+                    this.draw2DProjection();
+                } else {
+                    this.drawFrequencyDomain();
+                }
+            }
+
+            draw3DVortex() {
+                // Draw three interconnected vortices
+                const challengesRadius = 80 * this.vortexSize;
+                const possibilitiesRadius = 120 * this.vortexSize;
+                const solutionsRadius = 160 * this.vortexSize;
+
+                // Challenges Vortex (Blue)
+                this.drawVortex(this.centerX - 150, this.centerY, challengesRadius, TRINITY_DATA.TRINITY_COLORS.CHALLENGES, this.time);
+                
+                // Possibilities Vortex (Purple)
+                this.drawVortex(this.centerX, this.centerY, possibilitiesRadius, TRINITY_DATA.TRINITY_COLORS.POSSIBILITIES, this.time * 1.5);
+                
+                // Solutions Vortex (Yellow)
+                this.drawVortex(this.centerX + 150, this.centerY, solutionsRadius, TRINITY_DATA.TRINITY_COLORS.SOLUTIONS, this.time * 2);
+
+                // Draw connections
+                this.drawConnections();
+            }
+
+            drawVortex(x, y, radius, color, time) {
+                this.ctx.save();
+                this.ctx.translate(x, y);
+                
+                // Draw vortex spiral
+                for (let i = 0; i < 360; i += 10) {
+                    const angle = (i + time * 50) * Math.PI / 180;
+                    const spiralRadius = (i / 360) * radius;
+                    const x1 = Math.cos(angle) * spiralRadius;
+                    const y1 = Math.sin(angle) * spiralRadius;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(x1, y1, 2, 0, Math.PI * 2);
+                    this.ctx.fillStyle = color;
+                    this.ctx.fill();
+                }
+                
+                // Draw center
+                this.ctx.beginPath();
+                this.ctx.arc(0, 0, 10, 0, Math.PI * 2);
+                this.ctx.fillStyle = color;
+                this.ctx.fill();
+                
+                this.ctx.restore();
+            }
+
+            drawConnections() {
+                this.ctx.strokeStyle = '#00ffff';
+                this.ctx.lineWidth = 2;
+                this.ctx.setLineDash([5, 5]);
+                
+                // Connect challenges to possibilities
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.centerX - 150, this.centerY);
+                this.ctx.lineTo(this.centerX, this.centerY);
+                this.ctx.stroke();
+                
+                // Connect possibilities to solutions
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.centerX, this.centerY);
+                this.ctx.lineTo(this.centerX + 150, this.centerY);
+                this.ctx.stroke();
+                
+                this.ctx.setLineDash([]);
+            }
+
+            draw2DProjection() {
+                // Draw 2D projection of the trinity system
+                const items = [...TRINITY_DATA.FUNDAMENTAL_CHALLENGES];
+                const angleStep = (Math.PI * 2) / items.length;
+                
+                items.forEach((item, index) => {
+                    const angle = index * angleStep + this.time;
+                    const radius = 100 * this.vortexSize;
+                    const x = this.centerX + Math.cos(angle) * radius;
+                    const y = this.centerY + Math.sin(angle) * radius;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 15, 0, Math.PI * 2);
+                    this.ctx.fillStyle = item.color;
+                    this.ctx.fill();
+                    
+                    this.ctx.fillStyle = '#ffffff';
+                    this.ctx.font = '12px Arial';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.fillText(item.flow.toString(), x, y + 4);
+                });
+            }
+
+            drawFrequencyDomain() {
+                // Draw frequency domain representation
+                const frequencies = [TRINITY_DATA.GATEWAY_3_FREQUENCY, TRINITY_DATA.GATEWAY_6_FREQUENCY, TRINITY_DATA.GATEWAY_9_FREQUENCY];
+                const colors = [TRINITY_DATA.TRINITY_COLORS.CHALLENGES, TRINITY_DATA.TRINITY_COLORS.POSSIBILITIES, TRINITY_DATA.TRINITY_COLORS.SOLUTIONS];
+                
+                frequencies.forEach((freq, index) => {
+                    const x = this.centerX - 200 + index * 200;
+                    const height = (freq / TRINITY_DATA.GATEWAY_9_FREQUENCY) * 200 * this.vortexSize;
+                    
+                    this.ctx.fillStyle = colors[index];
+                    this.ctx.fillRect(x, this.centerY + 100 - height, 100, height);
+                    
+                    this.ctx.fillStyle = '#ffffff';
+                    this.ctx.font = '14px Arial';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.fillText(`${freq} Hz`, x + 50, this.centerY + 120);
+                });
+            }
+
+            setRotationSpeed(speed) {
+                this.rotationSpeed = speed;
+            }
+
+            setVortexSize(size) {
+                this.vortexSize = size;
+            }
+
+            setDimension(dimension) {
+                this.dimension = dimension;
+            }
+        }
+
+        // Initialize visualization
+        const canvas = document.getElementById('vortex-canvas');
+        const visualization = new TrinityVortexVisualization(canvas);
+
+        // Control event listeners
+        document.getElementById('rotation-speed').addEventListener('input', (e) => {
+            visualization.setRotationSpeed(parseFloat(e.target.value));
+        });
+
+        document.getElementById('vortex-size').addEventListener('input', (e) => {
+            visualization.setVortexSize(parseFloat(e.target.value));
+        });
+
+        document.getElementById('dimension').addEventListener('change', (e) => {
+            visualization.setDimension(e.target.value);
+        });
+
+        // Populate data
+        function populateData() {
+            const challenges = TRINITY_DATA.FUNDAMENTAL_CHALLENGES;
+            const possibilities = generatePossibilitiesFromChallenges(challenges);
+            const solutions = generateSolutionsFromPossibilities(possibilities);
+
+            // Populate challenges
+            const challengesList = document.getElementById('challenges-list');
+            challengesList.innerHTML = challenges.map(challenge => `
+                <div class="item challenge">
+                    <div class="item-name">${challenge.name}</div>
+                    <div class="item-details">
+                        Flow: ${challenge.flow} | Frequency: ${challenge.frequency} Hz | Gateway: ${challenge.gateway}
+                    </div>
+                </div>
+            `).join('');
+
+            // Populate possibilities
+            const possibilitiesList = document.getElementById('possibilities-list');
+            possibilitiesList.innerHTML = possibilities.map(possibility => `
+                <div class="item possibility">
+                    <div class="item-name">${possibility.name}</div>
+                    <div class="item-details">
+                        Flow: ${possibility.flow} | Frequency: ${possibility.frequency} Hz | Gateway: ${possibility.gateway}
+                    </div>
+                </div>
+            `).join('');
+
+            // Populate solutions (show first 9 for space)
+            const solutionsList = document.getElementById('solutions-list');
+            solutionsList.innerHTML = solutions.slice(0, 9).map(solution => `
+                <div class="item solution">
+                    <div class="item-name">${solution.name}</div>
+                    <div class="item-details">
+                        Flow: ${solution.flow} | Frequency: ${solution.frequency} Hz | Gateway: ${solution.gateway}
+                    </div>
+                </div>
+            `).join('');
+
+            // Calculate and display mathematical harmony
+            const challengesFlow = challenges.reduce((sum, c) => sum + c.flow, 0);
+            const possibilitiesFlow = possibilities.reduce((sum, p) => sum + p.flow, 0);
+            const solutionsFlow = solutions.reduce((sum, s) => sum + s.flow, 0);
+
+            document.getElementById('challenges-digital-root').textContent = calculateDigitalRoot(challengesFlow);
+            document.getElementById('possibilities-digital-root').textContent = calculateDigitalRoot(possibilitiesFlow);
+            document.getElementById('solutions-digital-root').textContent = calculateDigitalRoot(solutionsFlow);
+
+            const totalFrequency = TRINITY_DATA.GATEWAY_3_FREQUENCY + TRINITY_DATA.GATEWAY_6_FREQUENCY + TRINITY_DATA.GATEWAY_9_FREQUENCY;
+            document.getElementById('total-frequency').textContent = totalFrequency;
+            document.getElementById('total-digital-root').textContent = calculateDigitalRoot(totalFrequency);
+            document.getElementById('harmonic-resonance').textContent = calculateA432Harmonic(totalFrequency);
+        }
+
+        // Initialize
+        populateData();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            visualization.resize();
+        });
+    </script>
+</body>
+</html> 

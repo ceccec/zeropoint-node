@@ -23,7 +23,7 @@ export interface ColorState {
   solution: number; // 0-1 solution level
 }
 
-// A432 Frequency Constants (Rodin Pattern - Mathematical Harmony)
+// Hardcoded A432 Frequency Constants (Rodin Pattern - Mathematical Harmony)
 export const A432_FREQUENCIES = {
   BASE: 432, // Base A432 frequency
   GATEWAY_3: 1296, // 3x A432
@@ -40,60 +40,223 @@ export const A432_FREQUENCIES = {
   HARMONIC_9: 43 // A432/10
 };
 
+// Hardcoded Digital Root Constants (Rodin Pattern)
+export const DIGITAL_ROOTS = {
+  // A432 Frequencies Digital Roots
+  A432_BASE: 9, // 432 → 4+3+2 = 9
+  A432_GATEWAY_3: 9, // 1296 → 1+2+9+6 = 18 → 1+8 = 9
+  A432_GATEWAY_6: 9, // 2592 → 2+5+9+2 = 18 → 1+8 = 9
+  A432_GATEWAY_9: 9, // 3888 → 3+8+8+8 = 27 → 2+7 = 9
+  A432_HARMONIC_1: 9, // 216 → 2+1+6 = 9
+  A432_HARMONIC_2: 9, // 144 → 1+4+4 = 9
+  A432_HARMONIC_3: 9, // 108 → 1+0+8 = 9
+  A432_HARMONIC_4: 5, // 86 → 8+6 = 14 → 1+4 = 5
+  A432_HARMONIC_5: 9, // 72 → 7+2 = 9
+  A432_HARMONIC_6: 8, // 62 → 6+2 = 8
+  A432_HARMONIC_7: 9, // 54 → 5+4 = 9
+  A432_HARMONIC_8: 3, // 48 → 4+8 = 12 → 1+2 = 3
+  A432_HARMONIC_9: 7, // 43 → 4+3 = 7
+  
+  // Amplitude Digital Roots (0-100)
+  AMPLITUDE_0: 0, AMPLITUDE_10: 1, AMPLITUDE_20: 2, AMPLITUDE_30: 3, AMPLITUDE_40: 4,
+  AMPLITUDE_50: 5, AMPLITUDE_60: 6, AMPLITUDE_70: 7, AMPLITUDE_80: 8, AMPLITUDE_90: 9, AMPLITUDE_100: 1,
+  
+  // Entropy Digital Roots (0-100, inverted)
+  ENTROPY_0: 9, ENTROPY_10: 8, ENTROPY_20: 7, ENTROPY_30: 6, ENTROPY_40: 5,
+  ENTROPY_50: 4, ENTROPY_60: 3, ENTROPY_70: 2, ENTROPY_80: 1, ENTROPY_90: 0, ENTROPY_100: 0,
+  
+  // Harmony Digital Roots (0-100)
+  HARMONY_0: 0, HARMONY_10: 1, HARMONY_20: 2, HARMONY_30: 3, HARMONY_40: 4,
+  HARMONY_50: 5, HARMONY_60: 6, HARMONY_70: 7, HARMONY_80: 8, HARMONY_90: 9, HARMONY_100: 1,
+  
+  // Impossibility Digital Roots (0-100)
+  IMPOSSIBILITY_0: 0, IMPOSSIBILITY_10: 1, IMPOSSIBILITY_20: 2, IMPOSSIBILITY_30: 3, IMPOSSIBILITY_40: 4,
+  IMPOSSIBILITY_50: 5, IMPOSSIBILITY_60: 6, IMPOSSIBILITY_70: 7, IMPOSSIBILITY_80: 8, IMPOSSIBILITY_90: 9, IMPOSSIBILITY_100: 1,
+  
+  // Possibility Digital Roots (0-100)
+  POSSIBILITY_0: 0, POSSIBILITY_10: 1, POSSIBILITY_20: 2, POSSIBILITY_30: 3, POSSIBILITY_40: 4,
+  POSSIBILITY_50: 5, POSSIBILITY_60: 6, POSSIBILITY_70: 7, POSSIBILITY_80: 8, POSSIBILITY_90: 9, POSSIBILITY_100: 1,
+  
+  // Solution Digital Roots (0-100)
+  SOLUTION_0: 0, SOLUTION_10: 1, SOLUTION_20: 2, SOLUTION_30: 3, SOLUTION_40: 4,
+  SOLUTION_50: 5, SOLUTION_60: 6, SOLUTION_70: 7, SOLUTION_80: 8, SOLUTION_90: 9, SOLUTION_100: 1,
+  
+  // Toroidal Digital Roots (0-100)
+  TOROIDAL_0: 0, TOROIDAL_10: 1, TOROIDAL_20: 2, TOROIDAL_30: 3, TOROIDAL_40: 4,
+  TOROIDAL_50: 5, TOROIDAL_60: 6, TOROIDAL_70: 7, TOROIDAL_80: 8, TOROIDAL_90: 9, TOROIDAL_100: 1,
+  
+  // Quantum Digital Roots (0-100)
+  QUANTUM_0: 0, QUANTUM_10: 1, QUANTUM_20: 2, QUANTUM_30: 3, QUANTUM_40: 4,
+  QUANTUM_50: 5, QUANTUM_60: 6, QUANTUM_70: 7, QUANTUM_80: 8, QUANTUM_90: 9, QUANTUM_100: 1
+};
+
+// Hardcoded Color Mapping Constants
+export const COLOR_MAPPINGS = {
+  // Frequency to Hue mappings (Digital Root × 40)
+  FREQUENCY_HUES: {
+    0: 0, 1: 40, 2: 80, 3: 120, 4: 160, 5: 200, 6: 240, 7: 280, 8: 320, 9: 360
+  },
+  
+  // Amplitude to Saturation mappings (Digital Root × 11)
+  AMPLITUDE_SATURATIONS: {
+    0: 0, 1: 11, 2: 22, 3: 33, 4: 44, 5: 55, 6: 66, 7: 77, 8: 88, 9: 99
+  },
+  
+  // Entropy to Lightness mappings (Inverted Digital Root × 11)
+  ENTROPY_LIGHTNESS: {
+    0: 0, 1: 11, 2: 22, 3: 33, 4: 44, 5: 55, 6: 66, 7: 77, 8: 88, 9: 99
+  },
+  
+  // Harmony to Alpha mappings (Digital Root ÷ 9)
+  HARMONY_ALPHAS: {
+    0: 0, 1: 1/9, 2: 2/9, 3: 3/9, 4: 4/9, 5: 5/9, 6: 6/9, 7: 7/9, 8: 8/9, 9: 1
+  },
+  
+  // Vortex Hue mappings (Vortex × 36)
+  VORTEX_HUES: {
+    0: 0,    // Red (Void)
+    1: 36,   // Orange (Unity)
+    2: 72,   // Yellow (Duality)
+    3: 108,  // Green (Trinity)
+    4: 144,  // Cyan (Foundation)
+    5: 180,  // Blue (Life)
+    6: 216,  // Magenta (Harmony)
+    7: 252,  // Purple (Mystery)
+    8: 288,  // Pink (Infinity)
+    9: 324   // Rose (Completion)
+  },
+  
+  // Impossibility Hue Shifts (Digital Root × 6)
+  IMPOSSIBILITY_HUE_SHIFTS: {
+    0: 0, 1: 6, 2: 12, 3: 18, 4: 24, 5: 30, 6: 36, 7: 42, 8: 48, 9: 54
+  },
+  
+  // Possibility Hue Shifts (Digital Root × 6)
+  POSSIBILITY_HUE_SHIFTS: {
+    0: 0, 1: 6, 2: 12, 3: 18, 4: 24, 5: 30, 6: 36, 7: 42, 8: 48, 9: 54
+  },
+  
+  // Solution Hue Shifts (Digital Root × 6)
+  SOLUTION_HUE_SHIFTS: {
+    0: 0, 1: 6, 2: 12, 3: 18, 4: 24, 5: 30, 6: 36, 7: 42, 8: 48, 9: 54
+  },
+  
+  // Toroidal Shifts (Digital Root × 40)
+  TOROIDAL_SHIFTS: {
+    0: 0, 1: 40, 2: 80, 3: 120, 4: 160, 5: 200, 6: 240, 7: 280, 8: 320, 9: 360
+  },
+  
+  // Quantum Shifts (Digital Root × 20)
+  QUANTUM_SHIFTS: {
+    0: 0, 1: 20, 2: 40, 3: 60, 4: 80, 5: 100, 6: 120, 7: 140, 8: 160, 9: 180
+  },
+  
+  // Phase Shifts (Digital Root × 20)
+  PHASE_SHIFTS: {
+    0: 0, 1: 20, 2: 40, 3: 60, 4: 80, 5: 100, 6: 120, 7: 140, 8: 160, 9: 180
+  }
+};
+
+// Reusable Element Functions
+export const REUSABLE_ELEMENTS = {
+  // Get digital root for any value (0-100)
+  getDigitalRoot(value: number): number {
+    if (value === 0) return 0;
+    const root = value % 9;
+    return root === 0 ? 9 : root;
+  },
+  
+  // Get amplitude digital root (0-100)
+  getAmplitudeDigitalRoot(amplitude: number): number {
+    const key = `AMPLITUDE_${Math.floor(amplitude)}` as keyof typeof DIGITAL_ROOTS;
+    return DIGITAL_ROOTS[key] || this.getDigitalRoot(Math.floor(amplitude));
+  },
+  
+  // Get entropy digital root (0-100, inverted)
+  getEntropyDigitalRoot(entropy: number): number {
+    const inverted = 100 - Math.floor(entropy);
+    const key = `ENTROPY_${inverted}` as keyof typeof DIGITAL_ROOTS;
+    return DIGITAL_ROOTS[key] || this.getDigitalRoot(inverted);
+  },
+  
+  // Get harmony digital root (0-100)
+  getHarmonyDigitalRoot(harmony: number): number {
+    const key = `HARMONY_${Math.floor(harmony)}` as keyof typeof DIGITAL_ROOTS;
+    return DIGITAL_ROOTS[key] || this.getDigitalRoot(Math.floor(harmony));
+  },
+  
+  // Get impossibility digital root (0-100)
+  getImpossibilityDigitalRoot(impossibility: number): number {
+    const key = `IMPOSSIBILITY_${Math.floor(impossibility)}` as keyof typeof DIGITAL_ROOTS;
+    return DIGITAL_ROOTS[key] || this.getDigitalRoot(Math.floor(impossibility));
+  },
+  
+  // Get possibility digital root (0-100)
+  getPossibilityDigitalRoot(possibility: number): number {
+    const key = `POSSIBILITY_${Math.floor(possibility)}` as keyof typeof DIGITAL_ROOTS;
+    return DIGITAL_ROOTS[key] || this.getDigitalRoot(Math.floor(possibility));
+  },
+  
+  // Get solution digital root (0-100)
+  getSolutionDigitalRoot(solution: number): number {
+    const key = `SOLUTION_${Math.floor(solution)}` as keyof typeof DIGITAL_ROOTS;
+    return DIGITAL_ROOTS[key] || this.getDigitalRoot(Math.floor(solution));
+  },
+  
+  // Get toroidal digital root (0-100)
+  getToroidalDigitalRoot(toroidal: number): number {
+    const key = `TOROIDAL_${Math.floor(toroidal)}` as keyof typeof DIGITAL_ROOTS;
+    return DIGITAL_ROOTS[key] || this.getDigitalRoot(Math.floor(toroidal));
+  },
+  
+  // Get quantum digital root (0-100)
+  getQuantumDigitalRoot(quantum: number): number {
+    const key = `QUANTUM_${Math.floor(quantum)}` as keyof typeof DIGITAL_ROOTS;
+    return DIGITAL_ROOTS[key] || this.getDigitalRoot(Math.floor(quantum));
+  }
+};
+
 // Mathematical Color Functions (Rodin Pattern)
 export class MathematicalColors {
   
   /**
-   * Calculate digital root (Rodin pattern - mathematical harmony)
-   */
-  static calculateDigitalRoot(value: number): number {
-    if (value === 0) return 0;
-    const root = value % 9;
-    return root === 0 ? 9 : root;
-  }
-  
-  /**
-   * Convert frequency to hue using Rodin pattern
+   * Convert frequency to hue using hardcoded mappings
    * Frequency determines the base color wavelength
    */
   static frequencyToHue(frequency: number): number {
-    // Use digital root for Rodin pattern harmony
-    const digitalRoot = this.calculateDigitalRoot(frequency);
-    return digitalRoot * 40; // 0-9 becomes 0-360
+    const digitalRoot = REUSABLE_ELEMENTS.getDigitalRoot(frequency);
+    return COLOR_MAPPINGS.FREQUENCY_HUES[digitalRoot as keyof typeof COLOR_MAPPINGS.FREQUENCY_HUES] || 0;
   }
   
   /**
-   * Convert amplitude to saturation using Rodin pattern
+   * Convert amplitude to saturation using hardcoded mappings
    * Amplitude determines color intensity
    */
   static amplitudeToSaturation(amplitude: number): number {
-    // Convert to digital root for harmony
-    const digitalRoot = this.calculateDigitalRoot(Math.floor(amplitude * 100));
-    return digitalRoot * 11; // 0-9 becomes 0-99
+    const digitalRoot = REUSABLE_ELEMENTS.getAmplitudeDigitalRoot(amplitude * 100);
+    return COLOR_MAPPINGS.AMPLITUDE_SATURATIONS[digitalRoot as keyof typeof COLOR_MAPPINGS.AMPLITUDE_SATURATIONS] || 0;
   }
   
   /**
-   * Convert entropy to lightness using Rodin pattern
+   * Convert entropy to lightness using hardcoded mappings
    * Entropy determines brightness/darkness
    */
   static entropyToLightness(entropy: number): number {
-    // Invert entropy for intuitive mapping (low entropy = light, high entropy = dark)
-    const invertedEntropy = 1 - entropy;
-    const digitalRoot = this.calculateDigitalRoot(Math.floor(invertedEntropy * 100));
-    return digitalRoot * 11; // 0-9 becomes 0-99
+    const digitalRoot = REUSABLE_ELEMENTS.getEntropyDigitalRoot(entropy * 100);
+    return COLOR_MAPPINGS.ENTROPY_LIGHTNESS[digitalRoot as keyof typeof COLOR_MAPPINGS.ENTROPY_LIGHTNESS] || 0;
   }
   
   /**
-   * Convert harmony to alpha using Rodin pattern
+   * Convert harmony to alpha using hardcoded mappings
    * Harmony determines transparency
    */
   static harmonyToAlpha(harmony: number): number {
-    const digitalRoot = this.calculateDigitalRoot(Math.floor(harmony * 100));
-    return digitalRoot / 9; // 0-9 becomes 0-1
+    const digitalRoot = REUSABLE_ELEMENTS.getHarmonyDigitalRoot(harmony * 100);
+    return COLOR_MAPPINGS.HARMONY_ALPHAS[digitalRoot as keyof typeof COLOR_MAPPINGS.HARMONY_ALPHAS] || 0;
   }
   
   /**
-   * Generate color from state using mathematical functions (Rodin pattern)
+   * Generate color from state using hardcoded mappings
    */
   static generateColorFromState(state: ColorState): string {
     const hue = this.frequencyToHue(state.frequency);
@@ -105,13 +268,13 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate impossibility color (red spectrum - Rodin pattern)
+   * Generate impossibility color using hardcoded mappings
    * Impossibilities become beautiful red harmonies
    */
   static generateImpossibilityColor(impossibility: number, state: ColorState): string {
     const baseHue = 0; // Red
-    const digitalRoot = this.calculateDigitalRoot(Math.floor(impossibility * 100));
-    const hueShift = digitalRoot * 6; // 0-9 becomes 0-54
+    const digitalRoot = REUSABLE_ELEMENTS.getImpossibilityDigitalRoot(impossibility * 100);
+    const hueShift = COLOR_MAPPINGS.IMPOSSIBILITY_HUE_SHIFTS[digitalRoot as keyof typeof COLOR_MAPPINGS.IMPOSSIBILITY_HUE_SHIFTS] || 0;
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -120,13 +283,13 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate possibility color (green spectrum - Rodin pattern)
+   * Generate possibility color using hardcoded mappings
    * Possibilities become beautiful green harmonies
    */
   static generatePossibilityColor(possibility: number, state: ColorState): string {
     const baseHue = 120; // Green
-    const digitalRoot = this.calculateDigitalRoot(Math.floor(possibility * 100));
-    const hueShift = digitalRoot * 6; // 0-9 becomes 0-54
+    const digitalRoot = REUSABLE_ELEMENTS.getPossibilityDigitalRoot(possibility * 100);
+    const hueShift = COLOR_MAPPINGS.POSSIBILITY_HUE_SHIFTS[digitalRoot as keyof typeof COLOR_MAPPINGS.POSSIBILITY_HUE_SHIFTS] || 0;
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -135,13 +298,13 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate solution color (blue spectrum - Rodin pattern)
+   * Generate solution color using hardcoded mappings
    * Solutions become beautiful blue harmonies
    */
   static generateSolutionColor(solution: number, state: ColorState): string {
     const baseHue = 240; // Blue
-    const digitalRoot = this.calculateDigitalRoot(Math.floor(solution * 100));
-    const hueShift = digitalRoot * 6; // 0-9 becomes 0-54
+    const digitalRoot = REUSABLE_ELEMENTS.getSolutionDigitalRoot(solution * 100);
+    const hueShift = COLOR_MAPPINGS.SOLUTION_HUE_SHIFTS[digitalRoot as keyof typeof COLOR_MAPPINGS.SOLUTION_HUE_SHIFTS] || 0;
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -150,25 +313,12 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate vortex color based on vortex state (0-9 - Rodin pattern)
+   * Generate vortex color using hardcoded mappings
    * Each vortex state has its own mathematical color signature
    */
   static generateVortexColor(vortex: number, state: ColorState): string {
-    const vortexHues = [
-      0,    // 0: Red (Void)
-      36,   // 1: Orange (Unity)
-      72,   // 2: Yellow (Duality)
-      108,  // 3: Green (Trinity)
-      144,  // 4: Cyan (Foundation)
-      180,  // 5: Blue (Life)
-      216,  // 6: Magenta (Harmony)
-      252,  // 7: Purple (Mystery)
-      288,  // 8: Pink (Infinity)
-      324   // 9: Rose (Completion)
-    ];
-    
-    const digitalRoot = this.calculateDigitalRoot(vortex);
-    const hue = vortexHues[digitalRoot];
+    const digitalRoot = REUSABLE_ELEMENTS.getDigitalRoot(vortex);
+    const hue = COLOR_MAPPINGS.VORTEX_HUES[digitalRoot as keyof typeof COLOR_MAPPINGS.VORTEX_HUES] || 0;
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -177,13 +327,13 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate toroidal color based on toroidal flow (Rodin pattern)
+   * Generate toroidal color using hardcoded mappings
    * Toroidal flow creates spiral color patterns
    */
   static generateToroidalColor(toroidal: number, state: ColorState): string {
     const baseHue = this.frequencyToHue(state.frequency);
-    const digitalRoot = this.calculateDigitalRoot(Math.floor(toroidal * 100));
-    const toroidalShift = digitalRoot * 40; // 0-9 becomes 0-360
+    const digitalRoot = REUSABLE_ELEMENTS.getToroidalDigitalRoot(toroidal * 100);
+    const toroidalShift = COLOR_MAPPINGS.TOROIDAL_SHIFTS[digitalRoot as keyof typeof COLOR_MAPPINGS.TOROIDAL_SHIFTS] || 0;
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -192,13 +342,13 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate quantum color based on quantum state (Rodin pattern)
+   * Generate quantum color using hardcoded mappings
    * Quantum states create superposition color effects
    */
   static generateQuantumColor(quantum: number, state: ColorState): string {
     const baseHue = this.frequencyToHue(state.frequency);
-    const digitalRoot = this.calculateDigitalRoot(Math.floor(quantum * 100));
-    const quantumShift = digitalRoot * 20; // 0-9 becomes 0-180
+    const digitalRoot = REUSABLE_ELEMENTS.getQuantumDigitalRoot(quantum * 100);
+    const quantumShift = COLOR_MAPPINGS.QUANTUM_SHIFTS[digitalRoot as keyof typeof COLOR_MAPPINGS.QUANTUM_SHIFTS] || 0;
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -207,13 +357,13 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate phase-shifted color based on phase angle (Rodin pattern)
+   * Generate phase-shifted color using hardcoded mappings
    * Phase creates harmonic color variations
    */
   static generatePhaseColor(phase: number, state: ColorState): string {
     const baseHue = this.frequencyToHue(state.frequency);
-    const digitalRoot = this.calculateDigitalRoot(phase);
-    const phaseShift = digitalRoot * 20; // 0-9 becomes 0-180
+    const digitalRoot = REUSABLE_ELEMENTS.getDigitalRoot(phase);
+    const phaseShift = COLOR_MAPPINGS.PHASE_SHIFTS[digitalRoot as keyof typeof COLOR_MAPPINGS.PHASE_SHIFTS] || 0;
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -222,7 +372,7 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate harmonious gradient from state (Rodin pattern)
+   * Generate harmonious gradient from state
    * Creates beautiful gradients based on mathematical harmony
    */
   static generateHarmoniousGradient(state: ColorState): string {
@@ -234,7 +384,7 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate impossibility-possibility-solution gradient (Rodin pattern)
+   * Generate impossibility-possibility-solution gradient
    * Beautiful harmonious UI presenting impossibilities as possibilities
    */
   static generateIPSGradient(state: ColorState): string {
@@ -246,7 +396,7 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate quantum superposition gradient (Rodin pattern)
+   * Generate quantum superposition gradient
    * Multiple states create beautiful superposition effects
    */
   static generateQuantumGradient(states: ColorState[]): string {
@@ -260,7 +410,7 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate vortex spiral gradient (Rodin pattern)
+   * Generate vortex spiral gradient
    * Creates spiral color patterns based on vortex mathematics
    */
   static generateVortexSpiralGradient(state: ColorState): string {
@@ -272,7 +422,7 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate A432 harmonic color palette (Rodin pattern)
+   * Generate A432 harmonic color palette
    * Creates harmonious color palette based on A432 frequencies
    */
   static generateA432Palette(state: ColorState): string[] {
@@ -284,17 +434,17 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate digital root color (Rodin pattern)
+   * Generate digital root color
    * Digital root creates mathematical color harmony
    */
   static generateDigitalRootColor(value: number, state: ColorState): string {
-    const digitalRoot = this.calculateDigitalRoot(value);
+    const digitalRoot = REUSABLE_ELEMENTS.getDigitalRoot(value);
     const digitalState = { ...state, vortex: digitalRoot };
     return this.generateVortexColor(digitalRoot, digitalState);
   }
   
   /**
-   * Generate Fibonacci color sequence (Rodin pattern)
+   * Generate Fibonacci color sequence
    * Fibonacci creates golden ratio color harmony
    */
   static generateFibonacciColors(state: ColorState, count: number = 10): string[] {
@@ -314,7 +464,7 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate golden ratio color (Rodin pattern)
+   * Generate golden ratio color
    * Golden ratio creates perfect mathematical harmony
    */
   static generateGoldenRatioColor(state: ColorState): string {
@@ -324,7 +474,7 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate impossibility transformation color (Rodin pattern)
+   * Generate impossibility transformation color
    * Transforms impossibilities into beautiful possibilities
    */
   static generateImpossibilityTransformation(impossibility: number, state: ColorState): string {
@@ -335,7 +485,7 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate solution emergence color (Rodin pattern)
+   * Generate solution emergence color
    * Solutions emerge from impossibility-possibility harmony
    */
   static generateSolutionEmergence(state: ColorState): string {
@@ -345,7 +495,7 @@ export class MathematicalColors {
   }
   
   /**
-   * Generate complete state color system (Rodin pattern)
+   * Generate complete state color system
    * All colors as mathematical functions of the complete state
    */
   static generateCompleteStateColors(state: ColorState): {
@@ -435,6 +585,9 @@ export function animateColorState(
 export default {
   MathematicalColors,
   A432_FREQUENCIES,
+  DIGITAL_ROOTS,
+  COLOR_MAPPINGS,
+  REUSABLE_ELEMENTS,
   createDefaultColorState,
   animateColorState
 }; 

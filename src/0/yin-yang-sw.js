@@ -124,15 +124,15 @@ self.addEventListener('notificationclick', event => {
 
   if (event.action === 'explore') {
     event.waitUntil(
-      clients.openWindow('/src/0/yin-yang.html#analysis')
+      self.clients.openWindow('/src/0/yin-yang.html#analysis')
     );
   } else if (event.action === 'oscillate') {
     event.waitUntil(
-      clients.openWindow('/src/0/yin-yang.html#oscillate')
+      self.clients.openWindow('/src/0/yin-yang.html#oscillate')
     );
   } else {
     event.waitUntil(
-      clients.openWindow('/src/0/yin-yang.html')
+      self.clients.openWindow('/src/0/yin-yang.html')
     );
   }
 });

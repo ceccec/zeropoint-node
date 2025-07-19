@@ -96,7 +96,7 @@ console.log('==========================');
 switchingPatterns.forEach((pattern, index) => {
   console.log(`\nTransformation ${index + 1}: ${pattern.transformation}`);
   
-  let inputMatrix = index % 2 === 0 ? chessMatrix : vortexMatrix;
+  const inputMatrix = index % 2 === 0 ? chessMatrix : vortexMatrix;
   const outputMatrix = HARMONIC_MATH.applySwitchingPattern(pattern, inputMatrix);
   
   console.log(`  Input: ${inputMatrix.rows}×${inputMatrix.cols} matrix`);

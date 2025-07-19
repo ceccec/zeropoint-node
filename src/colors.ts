@@ -5,81 +5,91 @@
  * presenting impossibilities as possibilities through beautiful harmonious solutions
  * 
  * Based on Rodin coil mathematics, A432 frequency principles, and state-driven color generation
- * Following Rodin pattern: only single digits (0-9) and integer fractions
+ * Following Rodin pattern: mathematical harmony and flow, digital root completion
  */
 
 // Mathematical State Interface (Rodin Pattern)
 export interface ColorState {
-  frequency: number; // A432-based frequency (single digits only)
-  amplitude: number; // 0-9 amplitude (single digits only)
-  phase: number; // 0-9 phase (single digits only)
-  entropy: number; // 0-9 entropy (single digits only)
-  harmony: number; // 0-9 harmony (single digits only)
-  vortex: number; // 0-9 vortex state (single digits only)
-  toroidal: number; // 0-9 toroidal flow (single digits only)
-  quantum: number; // 0-9 quantum state (single digits only)
-  impossibility: number; // 0-9 impossibility level (single digits only)
-  possibility: number; // 0-9 possibility level (single digits only)
-  solution: number; // 0-9 solution level (single digits only)
+  frequency: number; // A432-based frequency
+  amplitude: number; // 0-1 amplitude
+  phase: number; // 0-360 phase angle
+  entropy: number; // 0-1 entropy level
+  harmony: number; // 0-1 harmony level
+  vortex: number; // 0-9 vortex state
+  toroidal: number; // 0-1 toroidal flow
+  quantum: number; // 0-1 quantum state
+  impossibility: number; // 0-1 impossibility level
+  possibility: number; // 0-1 possibility level
+  solution: number; // 0-1 solution level
 }
 
-// A432 Frequency Constants (Rodin Pattern - Single Digits)
+// A432 Frequency Constants (Rodin Pattern - Mathematical Harmony)
 export const A432_FREQUENCIES = {
-  BASE: 4, // A432 base (single digit)
-  GATEWAY_3: 3, // Gateway 3 (single digit)
-  GATEWAY_6: 6, // Gateway 6 (single digit)
-  GATEWAY_9: 9, // Gateway 9 (single digit)
-  HARMONIC_1: 2, // A432/2 (single digit)
-  HARMONIC_2: 1, // A432/3 (single digit)
-  HARMONIC_3: 4, // A432/4 (single digit)
-  HARMONIC_4: 8, // A432/5 (single digit)
-  HARMONIC_5: 7, // A432/6 (single digit)
-  HARMONIC_6: 2, // A432/7 (single digit)
-  HARMONIC_7: 5, // A432/8 (single digit)
-  HARMONIC_8: 4, // A432/9 (single digit)
-  HARMONIC_9: 8 // A432/10 (single digit)
+  BASE: 432, // Base A432 frequency
+  GATEWAY_3: 1296, // 3x A432
+  GATEWAY_6: 2592, // 6x A432
+  GATEWAY_9: 3888, // 9x A432
+  HARMONIC_1: 216, // A432/2
+  HARMONIC_2: 144, // A432/3
+  HARMONIC_3: 108, // A432/4
+  HARMONIC_4: 86, // A432/5
+  HARMONIC_5: 72, // A432/6
+  HARMONIC_6: 62, // A432/7
+  HARMONIC_7: 54, // A432/8
+  HARMONIC_8: 48, // A432/9
+  HARMONIC_9: 43 // A432/10
 };
 
 // Mathematical Color Functions (Rodin Pattern)
 export class MathematicalColors {
   
   /**
-   * Convert frequency to hue (0-9, then multiply by 40 for 0-360)
-   * Frequency determines the base color wavelength (Rodin pattern)
+   * Calculate digital root (Rodin pattern - mathematical harmony)
+   */
+  static calculateDigitalRoot(value: number): number {
+    if (value === 0) return 0;
+    const root = value % 9;
+    return root === 0 ? 9 : root;
+  }
+  
+  /**
+   * Convert frequency to hue using Rodin pattern
+   * Frequency determines the base color wavelength
    */
   static frequencyToHue(frequency: number): number {
-    // Map to single digit (0-9), then scale to hue
-    const rodinFreq = frequency % 10;
-    return rodinFreq * 40; // 0-9 becomes 0-360
+    // Use digital root for Rodin pattern harmony
+    const digitalRoot = this.calculateDigitalRoot(frequency);
+    return digitalRoot * 40; // 0-9 becomes 0-360
   }
   
   /**
-   * Convert amplitude to saturation (0-9, then multiply by 11 for 0-99)
-   * Amplitude determines color intensity (Rodin pattern)
+   * Convert amplitude to saturation using Rodin pattern
+   * Amplitude determines color intensity
    */
   static amplitudeToSaturation(amplitude: number): number {
-    const rodinAmp = Math.min(9, Math.max(0, Math.floor(amplitude * 10)));
-    return rodinAmp * 11; // 0-9 becomes 0-99
+    // Convert to digital root for harmony
+    const digitalRoot = this.calculateDigitalRoot(Math.floor(amplitude * 100));
+    return digitalRoot * 11; // 0-9 becomes 0-99
   }
   
   /**
-   * Convert entropy to lightness (0-9, then multiply by 11 for 0-99)
-   * Entropy determines brightness/darkness (Rodin pattern)
+   * Convert entropy to lightness using Rodin pattern
+   * Entropy determines brightness/darkness
    */
   static entropyToLightness(entropy: number): number {
     // Invert entropy for intuitive mapping (low entropy = light, high entropy = dark)
-    const rodinEntropy = Math.min(9, Math.max(0, Math.floor(entropy * 10)));
-    const inverted = 9 - rodinEntropy; // Invert for intuitive mapping
-    return inverted * 11; // 0-9 becomes 0-99
+    const invertedEntropy = 1 - entropy;
+    const digitalRoot = this.calculateDigitalRoot(Math.floor(invertedEntropy * 100));
+    return digitalRoot * 11; // 0-9 becomes 0-99
   }
   
   /**
-   * Convert harmony to alpha (0-9, then divide by 9 for 0-1)
-   * Harmony determines transparency (Rodin pattern)
+   * Convert harmony to alpha using Rodin pattern
+   * Harmony determines transparency
    */
   static harmonyToAlpha(harmony: number): number {
-    const rodinHarmony = Math.min(9, Math.max(0, Math.floor(harmony * 10)));
-    return rodinHarmony / 9; // 0-9 becomes 0-1
+    const digitalRoot = this.calculateDigitalRoot(Math.floor(harmony * 100));
+    return digitalRoot / 9; // 0-9 becomes 0-1
   }
   
   /**
@@ -100,8 +110,8 @@ export class MathematicalColors {
    */
   static generateImpossibilityColor(impossibility: number, state: ColorState): string {
     const baseHue = 0; // Red
-    const rodinImpossibility = Math.min(9, Math.max(0, Math.floor(impossibility * 10)));
-    const hueShift = rodinImpossibility * 6; // 0-9 becomes 0-54
+    const digitalRoot = this.calculateDigitalRoot(Math.floor(impossibility * 100));
+    const hueShift = digitalRoot * 6; // 0-9 becomes 0-54
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -115,8 +125,8 @@ export class MathematicalColors {
    */
   static generatePossibilityColor(possibility: number, state: ColorState): string {
     const baseHue = 120; // Green
-    const rodinPossibility = Math.min(9, Math.max(0, Math.floor(possibility * 10)));
-    const hueShift = rodinPossibility * 6; // 0-9 becomes 0-54
+    const digitalRoot = this.calculateDigitalRoot(Math.floor(possibility * 100));
+    const hueShift = digitalRoot * 6; // 0-9 becomes 0-54
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -130,8 +140,8 @@ export class MathematicalColors {
    */
   static generateSolutionColor(solution: number, state: ColorState): string {
     const baseHue = 240; // Blue
-    const rodinSolution = Math.min(9, Math.max(0, Math.floor(solution * 10)));
-    const hueShift = rodinSolution * 6; // 0-9 becomes 0-54
+    const digitalRoot = this.calculateDigitalRoot(Math.floor(solution * 100));
+    const hueShift = digitalRoot * 6; // 0-9 becomes 0-54
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -157,8 +167,8 @@ export class MathematicalColors {
       324   // 9: Rose (Completion)
     ];
     
-    const rodinVortex = Math.min(9, Math.max(0, Math.floor(vortex)));
-    const hue = vortexHues[rodinVortex];
+    const digitalRoot = this.calculateDigitalRoot(vortex);
+    const hue = vortexHues[digitalRoot];
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -172,8 +182,8 @@ export class MathematicalColors {
    */
   static generateToroidalColor(toroidal: number, state: ColorState): string {
     const baseHue = this.frequencyToHue(state.frequency);
-    const rodinToroidal = Math.min(9, Math.max(0, Math.floor(toroidal * 10)));
-    const toroidalShift = rodinToroidal * 40; // 0-9 becomes 0-360
+    const digitalRoot = this.calculateDigitalRoot(Math.floor(toroidal * 100));
+    const toroidalShift = digitalRoot * 40; // 0-9 becomes 0-360
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -187,8 +197,8 @@ export class MathematicalColors {
    */
   static generateQuantumColor(quantum: number, state: ColorState): string {
     const baseHue = this.frequencyToHue(state.frequency);
-    const rodinQuantum = Math.min(9, Math.max(0, Math.floor(quantum * 10)));
-    const quantumShift = rodinQuantum * 20; // 0-9 becomes 0-180
+    const digitalRoot = this.calculateDigitalRoot(Math.floor(quantum * 100));
+    const quantumShift = digitalRoot * 20; // 0-9 becomes 0-180
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -202,8 +212,8 @@ export class MathematicalColors {
    */
   static generatePhaseColor(phase: number, state: ColorState): string {
     const baseHue = this.frequencyToHue(state.frequency);
-    const rodinPhase = Math.min(9, Math.max(0, Math.floor(phase)));
-    const phaseShift = rodinPhase * 20; // 0-9 becomes 0-180
+    const digitalRoot = this.calculateDigitalRoot(phase);
+    const phaseShift = digitalRoot * 20; // 0-9 becomes 0-180
     const saturation = this.amplitudeToSaturation(state.amplitude);
     const lightness = this.entropyToLightness(state.entropy);
     const alpha = this.harmonyToAlpha(state.harmony);
@@ -284,15 +294,6 @@ export class MathematicalColors {
   }
   
   /**
-   * Calculate digital root (mathematical harmony - Rodin pattern)
-   */
-  static calculateDigitalRoot(value: number): number {
-    if (value === 0) return 0;
-    const root = value % 9;
-    return root === 0 ? 9 : root;
-  }
-  
-  /**
    * Generate Fibonacci color sequence (Rodin pattern)
    * Fibonacci creates golden ratio color harmony
    */
@@ -301,7 +302,7 @@ export class MathematicalColors {
     let a = 1, b = 1;
     
     for (let i = 0; i < count; i++) {
-      const fibonacciState = { ...state, frequency: a % 10 }; // Single digit only
+      const fibonacciState = { ...state, frequency: a };
       colors.push(this.generateColorFromState(fibonacciState));
       
       const temp = a + b;
@@ -317,8 +318,8 @@ export class MathematicalColors {
    * Golden ratio creates perfect mathematical harmony
    */
   static generateGoldenRatioColor(state: ColorState): string {
-    const goldenRatio = 3/2; // Integer fraction approximation
-    const goldenState = { ...state, frequency: Math.floor(state.frequency * goldenRatio) % 10 };
+    const goldenRatio = 1.618033988749895;
+    const goldenState = { ...state, frequency: state.frequency * goldenRatio };
     return this.generateColorFromState(goldenState);
   }
   
@@ -328,8 +329,7 @@ export class MathematicalColors {
    */
   static generateImpossibilityTransformation(impossibility: number, state: ColorState): string {
     // Transform impossibility into possibility through mathematical harmony
-    const rodinImpossibility = Math.min(9, Math.max(0, Math.floor(impossibility * 10)));
-    const transformation = (9 - rodinImpossibility) / 9; // Invert for transformation
+    const transformation = Math.sin(impossibility * Math.PI) * 0.5 + 0.5;
     const transformedState = { ...state, possibility: transformation };
     return this.generatePossibilityColor(transformation, transformedState);
   }
@@ -339,9 +339,7 @@ export class MathematicalColors {
    * Solutions emerge from impossibility-possibility harmony
    */
   static generateSolutionEmergence(state: ColorState): string {
-    const rodinImpossibility = Math.min(9, Math.max(0, Math.floor(state.impossibility * 10)));
-    const rodinPossibility = Math.min(9, Math.max(0, Math.floor(state.possibility * 10)));
-    const emergence = (rodinImpossibility + rodinPossibility) / 2;
+    const emergence = (state.impossibility + state.possibility) / 2;
     const emergenceState = { ...state, solution: emergence };
     return this.generateSolutionColor(emergence, emergenceState);
   }
@@ -398,17 +396,17 @@ export class MathematicalColors {
 // Default State Generator (Rodin Pattern)
 export function createDefaultColorState(): ColorState {
   return {
-    frequency: 4, // Single digit
-    amplitude: 8, // Single digit
-    phase: 0, // Single digit
-    entropy: 2, // Single digit
-    harmony: 9, // Single digit
-    vortex: 3, // Single digit
-    toroidal: 5, // Single digit
-    quantum: 7, // Single digit
-    impossibility: 3, // Single digit
-    possibility: 6, // Single digit
-    solution: 8 // Single digit
+    frequency: A432_FREQUENCIES.BASE,
+    amplitude: 0.8,
+    phase: 0,
+    entropy: 0.2,
+    harmony: 0.9,
+    vortex: 3,
+    toroidal: 0.5,
+    quantum: 0.7,
+    impossibility: 0.3,
+    possibility: 0.6,
+    solution: 0.8
   };
 }
 
@@ -419,17 +417,17 @@ export function animateColorState(
   duration: number = 1000
 ): ColorState {
   const progress = (time % duration) / duration;
-  const rodinProgress = Math.floor(progress * 10) % 10; // Single digit
+  const angle = progress * Math.PI * 2;
   
   return {
     ...state,
-    phase: (state.phase + rodinProgress) % 10, // Single digit
-    amplitude: Math.min(9, Math.max(0, state.amplitude + (rodinProgress % 3) - 1)), // Single digit
-    toroidal: (state.toroidal + rodinProgress) % 10, // Single digit
-    quantum: Math.min(9, Math.max(0, state.quantum + (rodinProgress % 3) - 1)), // Single digit
-    impossibility: Math.min(9, Math.max(0, state.impossibility + (rodinProgress % 2) - 0)), // Single digit
-    possibility: Math.min(9, Math.max(0, state.possibility + (rodinProgress % 2) - 0)), // Single digit
-    solution: Math.min(9, Math.max(0, state.solution + (rodinProgress % 2) - 0)) // Single digit
+    phase: (state.phase + progress * 360) % 360,
+    amplitude: state.amplitude + Math.sin(angle) * 0.1,
+    toroidal: (state.toroidal + progress) % 1,
+    quantum: state.quantum + Math.sin(angle * 2) * 0.1,
+    impossibility: state.impossibility + Math.sin(angle * 3) * 0.05,
+    possibility: state.possibility + Math.sin(angle * 4) * 0.05,
+    solution: state.solution + Math.sin(angle * 5) * 0.05
   };
 }
 

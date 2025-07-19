@@ -7,7 +7,19 @@
  * - Solutions Vortex (9): 3888 Hz, Completion Magenta, Completion
  * 
  * All trinity operations reduce to 9 (perfect completion) through A432 harmonic resonance.
+ * 
+ * Integrated with Toroidal Flow System for vortex interactions.
  */
+
+// Import Toroidal Flow System
+import { 
+  ToroidalFlowSystem, 
+  toroidalFlowSystem,
+  createToroidalSystem,
+  integrateToroidalWithTrinity,
+  TOROIDAL_PATTERNS,
+  TOROIDAL_DIRECTIONS
+} from './torus';
 
 // A432 Base Frequency (Universal harmonic)
 export const A432_FREQUENCY = 432;
@@ -91,6 +103,7 @@ export interface TrinityVortexSystem {
   challenges: ChallengesVortex;
   possibilities: PossibilitiesVortex;
   solutions: SolutionsVortex;
+  toroidalSystem: any; // Toroidal Flow System integration
   totalFrequency: number;
   digitalRoot: number;
   isPerfect: boolean;
@@ -298,11 +311,18 @@ export function createSolutionsVortex(): SolutionsVortex {
   };
 }
 
-// Create Complete Trinity Vortex System
+// Create Complete Trinity Vortex System with Toroidal Integration
 export function createTrinityVortexSystem(): TrinityVortexSystem {
   const challengesVortex = createChallengesVortex();
   const possibilitiesVortex = createPossibilitiesVortex();
   const solutionsVortex = createSolutionsVortex();
+  
+  // Create and integrate toroidal system
+  const toroidalSystem = createToroidalSystem();
+  const integratedSystem = integrateToroidalWithTrinity(
+    { challenges: challengesVortex, possibilities: possibilitiesVortex, solutions: solutionsVortex },
+    toroidalSystem
+  );
   
   const totalFrequency = GATEWAY_3_FREQUENCY + GATEWAY_6_FREQUENCY + GATEWAY_9_FREQUENCY; // 7776 Hz
   const digitalRoot = calculateDigitalRoot(totalFrequency); // 7+7+7+6 = 27 → 2+7 = 9
@@ -311,13 +331,14 @@ export function createTrinityVortexSystem(): TrinityVortexSystem {
     challenges: challengesVortex,
     possibilities: possibilitiesVortex,
     solutions: solutionsVortex,
+    toroidalSystem: integratedSystem,
     totalFrequency,
     digitalRoot,
     isPerfect: true
   };
 }
 
-// Transform Impossibility through Trinity Vortex
+// Transform Impossibility through Trinity Vortex with Toroidal Flow
 export function transformThroughTrinityVortex(impossibility: string): Solution {
   // Phase 1: Identify Challenge
   const challenge = FUNDAMENTAL_CHALLENGES.find(c => 
@@ -350,11 +371,12 @@ export function transformThroughTrinityVortex(impossibility: string): Solution {
   return solution;
 }
 
-// Calculate Trinity Vortex Flow
+// Calculate Trinity Vortex Flow with Toroidal Integration
 export function calculateTrinityVortexFlow(): {
   challenges: number;
   possibilities: number;
   solutions: number;
+  toroidal: number;
   total: number;
   digitalRoot: number;
 } {
@@ -362,13 +384,17 @@ export function calculateTrinityVortexFlow(): {
   const possibilitiesFlow = challengesFlow; // Inherited
   const solutionsFlow = possibilitiesFlow * 3; // 150
   
-  const total = challengesFlow + possibilitiesFlow + solutionsFlow; // 250
-  const digitalRoot = calculateDigitalRoot(total); // 2+5+0 = 7
+  // Add toroidal flow contribution
+  const toroidalFlow = toroidalFlowSystem.getSystem().totalFlow;
+  
+  const total = challengesFlow + possibilitiesFlow + solutionsFlow + toroidalFlow; // 250 + toroidal
+  const digitalRoot = calculateDigitalRoot(total);
   
   return {
     challenges: challengesFlow,
     possibilities: possibilitiesFlow,
     solutions: solutionsFlow,
+    toroidal: toroidalFlow,
     total,
     digitalRoot
   };
@@ -394,36 +420,52 @@ export function calculateGatewayHarmonicResonance(gateway: number): number {
   return calculateA432Harmonic(frequency);
 }
 
-// Verify Trinity Mathematical Harmony
+// Verify Trinity Mathematical Harmony with Toroidal Integration
 export function verifyTrinityMathematicalHarmony(): {
   isPerfect: boolean;
   challenges: boolean;
   possibilities: boolean;
   solutions: boolean;
+  toroidal: boolean;
   total: boolean;
 } {
   const challengesVortex = createChallengesVortex();
   const possibilitiesVortex = createPossibilitiesVortex();
   const solutionsVortex = createSolutionsVortex();
+  const toroidalSystem = toroidalFlowSystem.getSystem();
   
   const challengesPerfect = challengesVortex.properties.digitalRoot === 5; // Expected: 5
   const possibilitiesPerfect = possibilitiesVortex.properties.digitalRoot === 5; // Expected: 5
   const solutionsPerfect = solutionsVortex.properties.digitalRoot === 9; // Expected: 9 (Perfect completion)
+  const toroidalPerfect = toroidalSystem.isPerfect; // Toroidal system perfection
   
   const totalFrequency = GATEWAY_3_FREQUENCY + GATEWAY_6_FREQUENCY + GATEWAY_9_FREQUENCY; // 7776 Hz
   const totalDigitalRoot = calculateDigitalRoot(totalFrequency); // 7+7+7+6 = 27 → 2+7 = 9
   const totalPerfect = totalDigitalRoot === 9;
   
   return {
-    isPerfect: challengesPerfect && possibilitiesPerfect && solutionsPerfect && totalPerfect,
+    isPerfect: challengesPerfect && possibilitiesPerfect && solutionsPerfect && toroidalPerfect && totalPerfect,
     challenges: challengesPerfect,
     possibilities: possibilitiesPerfect,
     solutions: solutionsPerfect,
+    toroidal: toroidalPerfect,
     total: totalPerfect
   };
 }
 
-// Trinity Vortex System Class
+// Switch Toroidal Flow Patterns
+export function switchTrinityToroidalFlow(
+  challengesPattern: string = TOROIDAL_PATTERNS.SINGLE,
+  possibilitiesPattern: string = TOROIDAL_PATTERNS.DOUBLE,
+  solutionsPattern: string = TOROIDAL_PATTERNS.TRIPLE
+): void {
+  toroidalFlowSystem.switchSystem(
+    [challengesPattern, possibilitiesPattern, solutionsPattern],
+    [TOROIDAL_DIRECTIONS.CLOCKWISE, TOROIDAL_DIRECTIONS.COUNTERCLOCKWISE, TOROIDAL_DIRECTIONS.BIDIRECTIONAL]
+  );
+}
+
+// Trinity Vortex System Class with Toroidal Integration
 export class TrinityVortexSystemClass {
   private system: TrinityVortexSystem;
   
@@ -447,6 +489,10 @@ export class TrinityVortexSystemClass {
     return this.system.solutions.solutions;
   }
   
+  getToroidalSystem(): any {
+    return this.system.toroidalSystem;
+  }
+  
   transformImpossibility(impossibility: string): Solution {
     return transformThroughTrinityVortex(impossibility);
   }
@@ -465,6 +511,20 @@ export class TrinityVortexSystemClass {
   
   getHarmonicResonance(gateway: number): number {
     return calculateGatewayHarmonicResonance(gateway);
+  }
+  
+  switchToroidalFlow(challengesPattern: string, possibilitiesPattern: string, solutionsPattern: string): void {
+    switchTrinityToroidalFlow(challengesPattern, possibilitiesPattern, solutionsPattern);
+    // Update system with new toroidal flows
+    this.system = createTrinityVortexSystem();
+  }
+  
+  getToroidalFlowAnalysis(index: number) {
+    return toroidalFlowSystem.analyzeFlow(index);
+  }
+  
+  verifyToroidalTheorems() {
+    return toroidalFlowSystem.verifyTheorems();
   }
 }
 
@@ -492,11 +552,15 @@ export default {
   getVortexByGateway,
   calculateGatewayHarmonicResonance,
   verifyTrinityMathematicalHarmony,
+  switchTrinityToroidalFlow,
   
   // Data
   FUNDAMENTAL_CHALLENGES,
   
   // Class
   TrinityVortexSystemClass,
-  trinityVortexSystem
+  trinityVortexSystem,
+  
+  // Toroidal Integration
+  toroidalFlowSystem
 }; 

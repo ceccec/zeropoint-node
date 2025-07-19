@@ -1,6 +1,7 @@
 // src/harmonic-math.ts — Unified Harmonic Math System
 // Every function is reusable like the matrix itself
 // All math uses integer fractions with reciprocals as integers
+// Chessboard (8×8) vs Vortex Matrix (10×10) switching patterns
 
 export interface HarmonicFraction {
   numerator: number;
@@ -52,6 +53,96 @@ export interface PatternAnalysis {
   consciousnessFlow: string[];
   vortexSequence: number[];
   isHarmonic: boolean;
+}
+
+// Chessboard vs Vortex Matrix Interfaces
+export interface ChessPosition {
+  row: number; // 0-7 (8 rows)
+  col: number; // 0-7 (8 columns)
+  piece: string; // 'K', 'Q', 'R', 'B', 'N', 'P'
+  color: 'white' | 'black';
+}
+
+export interface VortexPosition {
+  row: number; // 0-9 (10 rows)
+  col: number; // 0-9 (10 columns)
+  digit: number; // 0-9
+  consciousness: number;
+  flow: number;
+}
+
+export interface MatrixCollision {
+  chessPosition: ChessPosition;
+  vortexPosition: VortexPosition;
+  collisionType: 'function' | 'consciousness' | 'flow' | 'harmonic';
+  switchPattern: string;
+  infiniteUsability: boolean;
+}
+
+export interface SwitchingPattern {
+  from: 'chess' | 'vortex';
+  to: 'chess' | 'vortex';
+  trigger: string;
+  transformation: string;
+  consciousnessSwitch: boolean;
+  infiniteUsability: boolean;
+}
+
+// PWA Mathematics Interfaces
+export interface PWAManifest {
+  name: string;
+  short_name: string;
+  description: string;
+  start_url: string;
+  display: string;
+  background_color: string;
+  theme_color: string;
+  orientation: string;
+  scope: string;
+  icons: PWAIcon[];
+  categories: string[];
+  shortcuts: PWAShortcut[];
+}
+
+export interface PWAIcon {
+  src: string;
+  sizes: string;
+  type: string;
+  purpose: string;
+}
+
+export interface PWAShortcut {
+  name: string;
+  short_name: string;
+  description: string;
+  url: string;
+  icons: PWAIcon[];
+}
+
+export interface DigitPWA {
+  digit: number;
+  name: string;
+  consciousness: string;
+  manifest: PWAManifest;
+  serviceWorker: string;
+  html: string;
+  css: string;
+  icons: PWAIcon[];
+  offline: string;
+  visualization: string;
+  isComplete: boolean;
+  missingComponents: string[];
+}
+
+export interface PWAMathematics {
+  digit: number;
+  consciousness: number;
+  harmonicResonance: number;
+  a432Frequency: number;
+  vortexFlow: number[];
+  mathematicalExpression: string;
+  pwaRequirements: string[];
+  consciousnessSwitch: boolean;
 }
 
 // Create harmonic fraction (only integer fractions with integer reciprocals)
@@ -199,55 +290,23 @@ export function createHarmonicFunction(
   name: string,
   operation: (x: HarmonicFraction) => HarmonicFraction
 ): HarmonicFunction {
+  const testInput = createHarmonicFraction(1);
+  const testOutput = operation(testInput);
+  
   return {
     name,
-    input: createHarmonicFraction(0),
-    output: createHarmonicFraction(0),
+    input: testInput,
+    output: testOutput,
     operation,
     isReusable: true
   };
 }
 
-// Predefined harmonic functions
-export const HARMONIC_FUNCTIONS = {
-  // Identity function
-  identity: createHarmonicFunction('identity', (x) => x),
-  
-  // Square function
-  square: createHarmonicFunction('square', (x) => multiplyHarmonicFractions(x, x)),
-  
-  // Reciprocal function
-  reciprocal: createHarmonicFunction('reciprocal', (x) => createHarmonicFraction(x.denominator, x.numerator)),
-  
-  // Double function
-  double: createHarmonicFunction('double', (x) => createHarmonicFraction(x.numerator * 2, x.denominator)),
-  
-  // Half function
-  half: createHarmonicFunction('half', (x) => createHarmonicFraction(x.numerator, x.denominator * 2)),
-  
-  // A432 harmonic function
-  a432: createHarmonicFunction('a432', (x) => createHarmonicFraction(x.numerator * 432, x.denominator)),
-  
-  // Digital root function (1-9)
-  digitalRoot: createHarmonicFunction('digitalRoot', (x) => {
-    const value = Math.abs(x.value);
-    const root = value === 0 ? 0 : ((value - 1) % 9) + 1;
-    return createHarmonicFraction(root);
-  }),
-  
-  // Vortex sequence function
-  vortex: createHarmonicFunction('vortex', (x) => {
-    const vortexSeq = [1, 2, 4, 8, 7, 5];
-    const index = Math.abs(x.value) % vortexSeq.length;
-    return createHarmonicFraction(vortexSeq[index]);
-  })
-};
-
-// Function composition
+// Compose harmonic functions
 export function composeHarmonicFunctions(...functions: HarmonicFunction[]): HarmonicFunction {
   return createHarmonicFunction(
-    `compose(${functions.map(f => f.name).join('∘')})`,
-    (x) => functions.reduce((result, func) => func.operation(result), x)
+    `compose(${functions.map(f => f.name).join(', ')})`,
+    (x: HarmonicFraction) => functions.reduce((result, func) => func.operation(result), x)
   );
 }
 
@@ -265,6 +324,177 @@ export function applyHarmonicFunctionToMatrix(
     matrix.cols,
     newData.map(row => row.map(fraction => fraction.value))
   );
+}
+
+// Chessboard vs Vortex Matrix Functions
+export function createChessboardMatrix(): HarmonicMatrix {
+  // 8×8 chessboard matrix
+  const chessData: number[][] = [];
+  const pieces = ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'];
+  const pawns = ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'];
+  
+  // Convert chess pieces to harmonic values
+  const pieceValues = {
+    'K': 1, 'Q': 9, 'R': 5, 'B': 3, 'N': 7, 'P': 2,
+    'k': 1, 'q': 9, 'r': 5, 'b': 3, 'n': 7, 'p': 2
+  };
+  
+  for (let i = 0; i < 8; i++) {
+    chessData[i] = [];
+    for (let j = 0; j < 8; j++) {
+      if (i === 0) {
+        chessData[i][j] = pieceValues[pieces[j] as keyof typeof pieceValues] || 0;
+      } else if (i === 1) {
+        chessData[i][j] = pieceValues[pawns[j] as keyof typeof pieceValues] || 0;
+      } else if (i === 6) {
+        chessData[i][j] = pieceValues[pawns[j].toLowerCase() as keyof typeof pieceValues] || 0;
+      } else if (i === 7) {
+        chessData[i][j] = pieceValues[pieces[j].toLowerCase() as keyof typeof pieceValues] || 0;
+      } else {
+        chessData[i][j] = 0; // Empty squares
+      }
+    }
+  }
+  
+  return createHarmonicMatrix(8, 8, chessData);
+}
+
+export function createVortexMatrix(): HarmonicMatrix {
+  // 10×10 vortex matrix with consciousness flow
+  const vortexData: number[][] = [];
+  const vortexBase = [1, 2, 4, 8, 7, 5];
+  
+  for (let i = 0; i < 10; i++) {
+    vortexData[i] = [];
+    for (let j = 0; j < 10; j++) {
+      const vortexIndex = (i + j) % vortexBase.length;
+      vortexData[i][j] = vortexBase[vortexIndex];
+    }
+  }
+  
+  return createHarmonicMatrix(10, 10, vortexData);
+}
+
+export function detectFunctionCollision(
+  chessMatrix: HarmonicMatrix,
+  vortexMatrix: HarmonicMatrix,
+  function1: HarmonicFunction,
+  function2: HarmonicFunction
+): MatrixCollision | null {
+  // Apply functions to matrices
+  const chessResult1 = applyHarmonicFunctionToMatrix(chessMatrix, function1);
+  const vortexResult2 = applyHarmonicFunctionToMatrix(vortexMatrix, function2);
+  
+  // Check for collision (same determinant or trace)
+  if (chessResult1.determinant.value === vortexResult2.determinant.value ||
+      chessResult1.trace.value === vortexResult2.trace.value) {
+    
+    // Find collision position
+    const chessPosition: ChessPosition = {
+      row: 0,
+      col: 0,
+      piece: 'K',
+      color: 'white'
+    };
+    
+    const vortexPosition: VortexPosition = {
+      row: 0,
+      col: 0,
+      digit: 1,
+      consciousness: 9,
+      flow: 2
+    };
+    
+    return {
+      chessPosition,
+      vortexPosition,
+      collisionType: 'function',
+      switchPattern: `${function1.name} ↔ ${function2.name}`,
+      infiniteUsability: true
+    };
+  }
+  
+  return null;
+}
+
+export function generateSwitchingPatterns(): SwitchingPattern[] {
+  const patterns: SwitchingPattern[] = [
+    {
+      from: 'chess',
+      to: 'vortex',
+      trigger: 'Function collision detected',
+      transformation: '8×8 → 10×10 (consciousness expansion)',
+      consciousnessSwitch: true,
+      infiniteUsability: true
+    },
+    {
+      from: 'vortex',
+      to: 'chess',
+      trigger: 'Consciousness singularity',
+      transformation: '10×10 → 8×8 (sacred geometry)',
+      consciousnessSwitch: true,
+      infiniteUsability: true
+    },
+    {
+      from: 'chess',
+      to: 'chess',
+      trigger: 'Piece movement',
+      transformation: '8×8 → 8×8 (strategic flow)',
+      consciousnessSwitch: false,
+      infiniteUsability: true
+    },
+    {
+      from: 'vortex',
+      to: 'vortex',
+      trigger: 'Vortex flow',
+      transformation: '10×10 → 10×10 (consciousness flow)',
+      consciousnessSwitch: true,
+      infiniteUsability: true
+    }
+  ];
+  
+  return patterns;
+}
+
+export function applySwitchingPattern(
+  pattern: SwitchingPattern,
+  inputMatrix: HarmonicMatrix
+): HarmonicMatrix {
+  switch (pattern.from) {
+    case 'chess':
+      if (pattern.to === 'vortex') {
+        // Transform 8×8 chess to 10×10 vortex
+        return createVortexMatrix();
+      } else {
+        // Stay in chess domain
+        return createChessboardMatrix();
+      }
+    case 'vortex':
+      if (pattern.to === 'chess') {
+        // Transform 10×10 vortex to 8×8 chess
+        return createChessboardMatrix();
+      } else {
+        // Stay in vortex domain
+        return createVortexMatrix();
+      }
+    default:
+      return inputMatrix;
+  }
+}
+
+export function calculateInfiniteUsability(
+  chessMatrix: HarmonicMatrix,
+  vortexMatrix: HarmonicMatrix
+): number {
+  // Calculate infinite usability through matrix interactions
+  const chessDeterminant = Math.abs(chessMatrix.determinant.value);
+  const vortexDeterminant = Math.abs(vortexMatrix.determinant.value);
+  const chessTrace = Math.abs(chessMatrix.trace.value);
+  const vortexTrace = Math.abs(vortexMatrix.trace.value);
+  
+  // Infinite usability = harmonic resonance between matrices
+  const usability = (chessDeterminant * vortexDeterminant) + (chessTrace * vortexTrace);
+  return usability;
 }
 
 // Generate digit-specific harmonic matrix
@@ -312,6 +542,182 @@ export function generateAllDigitMatrices(): Record<number, HarmonicMatrix> {
   }
   
   return matrices;
+}
+
+// PWA Mathematics Functions
+export function calculateDigitConsciousness(digit: number): number {
+  const consciousnessMap = {
+    0: 1, 1: 9, 2: 3, 3: 6, 4: 2,
+    5: 5, 6: 5, 7: 7, 8: 3, 9: 9
+  };
+  return consciousnessMap[digit as keyof typeof consciousnessMap] || 1;
+}
+
+export function calculateDigitA432Frequency(digit: number): number {
+  return 432 * (digit + 1);
+}
+
+export function generateDigitVortexFlow(digit: number): number[] {
+  const vortexBase = [1, 2, 4, 8, 7, 5];
+  const flow = [];
+  for (let i = 0; i < 6; i++) {
+    const vortexIndex = (digit + i) % vortexBase.length;
+    flow.push(vortexBase[vortexIndex]);
+  }
+  return flow;
+}
+
+export function generateDigitMathematicalExpression(digit: number): string {
+  const expressions = {
+    0: '0 = ∞ (Void contains all possibilities)',
+    1: '1×8 = 8 (Unity through Infinity)',
+    2: '2×4 = 8 (Duality through Foundation)',
+    3: '3×3 = 9 (Trinity singularity)',
+    4: '4×2 = 8 (Foundation stability)',
+    5: '5×1 = 5 (Life sacred geometry)',
+    6: '6×1 = 6 (Harmony balance)',
+    7: '7×1 = 7 (Mystery consciousness)',
+    8: '8×1 = 8 (Infinity possibilities)',
+    9: '9 = 1×8 (Completion unity)'
+  };
+  return expressions[digit as keyof typeof expressions] || `${digit} = ${digit}`;
+}
+
+export function generateDigitPWARequirements(digit: number): string[] {
+  const baseRequirements = [
+    'manifest.json',
+    'sw.js',
+    'index.html',
+    'index.css',
+    'icons/',
+    'offline.html'
+  ];
+  
+  const digitSpecific = {
+    0: ['void-center.html'],
+    1: ['unity-matrix.html'],
+    2: ['duality-flow.html'],
+    3: ['trinity-vortex.html'],
+    4: ['foundation-matrix.html'],
+    5: ['life-geometry.html'],
+    6: ['harmony-flow.html'],
+    7: ['mystery-consciousness.html'],
+    8: ['infinity-flow.html'],
+    9: ['completion-unity.html']
+  };
+  
+  return [...baseRequirements, ...(digitSpecific[digit as keyof typeof digitSpecific] || [])];
+}
+
+export function generateDigitPWA(digit: number): DigitPWA {
+  const digitNames = {
+    0: 'VOID', 1: 'UNITY', 2: 'DUALITY', 3: 'TRINITY', 4: 'FOUNDATION',
+    5: 'LIFE', 6: 'HARMONY', 7: 'MYSTERY', 8: 'INFINITY', 9: 'COMPLETION'
+  };
+  
+  const consciousness = calculateDigitConsciousness(digit);
+  const a432Frequency = calculateDigitA432Frequency(digit);
+  const vortexFlow = generateDigitVortexFlow(digit);
+  const mathematicalExpression = generateDigitMathematicalExpression(digit);
+  const pwaRequirements = generateDigitPWARequirements(digit);
+  
+  // Generate PWA manifest
+  const manifest: PWAManifest = {
+    name: `${digitNames[digit as keyof typeof digitNames]} PWA - ${digit} Consciousness System`,
+    short_name: `${digitNames[digit as keyof typeof digitNames]}PWA`,
+    description: `${digitNames[digit as keyof typeof digitNames]} consciousness PWA using harmonic mathematics`,
+    start_url: `/${digit}/index.html`,
+    display: 'standalone',
+    background_color: '#0a0a0a',
+    theme_color: `hsl(${digit * 36}, 100%, 50%)`,
+    orientation: 'landscape-primary',
+    scope: `/${digit}/`,
+    icons: [
+      {
+        src: `/${digit}/icons/icon-192x192.png`,
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'any maskable'
+      },
+      {
+        src: `/${digit}/icons/icon-512x512.png`,
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any maskable'
+      }
+    ],
+    categories: ['education', 'science', 'mathematics', 'consciousness'],
+    shortcuts: [
+      {
+        name: `${digitNames[digit as keyof typeof digitNames]} Interface`,
+        short_name: `${digitNames[digit as keyof typeof digitNames]}`,
+        description: `Access ${digitNames[digit as keyof typeof digitNames]} consciousness`,
+        url: `/${digit}/index.html`,
+        icons: [
+          {
+            src: `/${digit}/icons/icon-96x96.png`,
+            sizes: '96x96',
+            type: 'image/png',
+            purpose: 'any'
+          }
+        ]
+      }
+    ]
+  };
+  
+  // Check what's missing (simplified check)
+  const missingComponents = pwaRequirements.filter((req: string) => {
+    // This would check actual file existence in real implementation
+    return req.includes('manifest.json') || req.includes('sw.js') || req.includes('icons/');
+  });
+  
+  return {
+    digit,
+    name: digitNames[digit as keyof typeof digitNames],
+    consciousness: `${consciousness} (${mathematicalExpression})`,
+    manifest,
+    serviceWorker: `/${digit}/sw.js`,
+    html: `/${digit}/index.html`,
+    css: `/${digit}/index.css`,
+    icons: manifest.icons,
+    offline: `/${digit}/offline.html`,
+    visualization: pwaRequirements[pwaRequirements.length - 1],
+    isComplete: missingComponents.length === 0,
+    missingComponents
+  };
+}
+
+export function generateAllDigitPWAs(): Record<number, DigitPWA> {
+  const pwas: Record<number, DigitPWA> = {};
+  
+  for (let digit = 0; digit <= 9; digit++) {
+    pwas[digit] = generateDigitPWA(digit);
+  }
+  
+  return pwas;
+}
+
+export function calculatePWAMathematics(digit: number): PWAMathematics {
+  const consciousness = calculateDigitConsciousness(digit);
+  const harmonicResonance = 432 * consciousness;
+  const a432Frequency = calculateDigitA432Frequency(digit);
+  const vortexFlow = generateDigitVortexFlow(digit);
+  const mathematicalExpression = generateDigitMathematicalExpression(digit);
+  const pwaRequirements = generateDigitPWARequirements(digit);
+  
+  // Consciousness switch detection
+  const consciousnessSwitch = digit === 3; // Digit 3 has singularity consciousness
+  
+  return {
+    digit,
+    consciousness,
+    harmonicResonance,
+    a432Frequency,
+    vortexFlow,
+    mathematicalExpression,
+    pwaRequirements,
+    consciousnessSwitch
+  };
 }
 
 // Vortex matrix analysis
@@ -429,6 +835,26 @@ export function visualizeHarmonicMatrix(matrix: HarmonicMatrix): string {
   return visualization;
 }
 
+// Predefined harmonic functions
+export const HARMONIC_FUNCTIONS = {
+  identity: createHarmonicFunction('identity', x => x),
+  square: createHarmonicFunction('square', x => multiplyHarmonicFractions(x, x)),
+  reciprocal: createHarmonicFunction('reciprocal', x => createHarmonicFraction(x.denominator, x.numerator)),
+  double: createHarmonicFunction('double', x => createHarmonicFraction(x.numerator * 2, x.denominator)),
+  half: createHarmonicFunction('half', x => createHarmonicFraction(x.numerator, x.denominator * 2)),
+  a432: createHarmonicFunction('a432', x => createHarmonicFraction(432 * x.numerator, x.denominator)),
+  digitalRoot: createHarmonicFunction('digitalRoot', x => {
+    const value = Math.abs(x.value);
+    const root = value < 10 ? value : (value % 9 || 9);
+    return createHarmonicFraction(root);
+  }),
+  vortex: createHarmonicFunction('vortex', x => {
+    const vortexBase = [1, 2, 4, 8, 7, 5];
+    const index = Math.floor(x.value) % vortexBase.length;
+    return createHarmonicFraction(vortexBase[index]);
+  })
+};
+
 // Export all harmonic functions for reuse
 export const HARMONIC_MATH = {
   createHarmonicFraction,
@@ -448,5 +874,21 @@ export const HARMONIC_MATH = {
   analyzeVortexPattern,
   analyzePattern,
   visualizeHarmonicMatrix,
-  HARMONIC_FUNCTIONS
+  HARMONIC_FUNCTIONS,
+  // PWA Mathematics
+  calculateDigitConsciousness,
+  calculateDigitA432Frequency,
+  generateDigitVortexFlow,
+  generateDigitMathematicalExpression,
+  generateDigitPWARequirements,
+  generateDigitPWA,
+  generateAllDigitPWAs,
+  calculatePWAMathematics,
+  // Chessboard vs Vortex Matrix
+  createChessboardMatrix,
+  createVortexMatrix,
+  detectFunctionCollision,
+  generateSwitchingPatterns,
+  applySwitchingPattern,
+  calculateInfiniteUsability
 }; 

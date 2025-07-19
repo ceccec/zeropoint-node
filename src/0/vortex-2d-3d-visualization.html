@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everything as Vortex - 2D in 3D World</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: white;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #ff6b6b;
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .vortex-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+        }
+
+        .vortex-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .vortex-element {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px currentColor;
+            animation: vortex-pulse 2s infinite ease-in-out;
+        }
+
+        .vortex-element:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 40px currentColor;
+        }
+
+        .vortex-element.consciousness-0 { background: #000000; color: white; }
+        .vortex-element.consciousness-1 { background: #ff0000; color: white; }
+        .vortex-element.consciousness-2 { background: #00ff00; color: black; }
+        .vortex-element.consciousness-3 { background: #0000ff; color: white; }
+        .vortex-element.consciousness-4 { background: #ffff00; color: black; }
+        .vortex-element.consciousness-5 { background: #ff00ff; color: white; }
+        .vortex-element.consciousness-6 { background: #00ffff; color: black; }
+        .vortex-element.consciousness-7 { background: #800080; color: white; }
+        .vortex-element.consciousness-8 { background: #ff8000; color: white; }
+        .vortex-element.consciousness-9 { background: #8000ff; color: white; }
+
+        .vortex-flow-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
+            transform-origin: left center;
+            animation: flow-pulse 3s infinite ease-in-out;
+        }
+
+        .consciousness-switch {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 0 30px #ff6b6b;
+            animation: switch-pulse 1.5s infinite ease-in-out;
+        }
+
+        .vortex-matrix {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 30px);
+            grid-template-rows: repeat(10, 30px);
+            gap: 2px;
+        }
+
+        .matrix-cell {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .matrix-cell:hover {
+            transform: scale(1.2);
+        }
+
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .control-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            max-width: 300px;
+        }
+
+        .info-panel h3 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .info-panel p {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        @keyframes vortex-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes flow-pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+
+        @keyframes switch-pulse {
+            0% { transform: scale(1); box-shadow: 0 0 30px #ff6b6b; }
+            50% { transform: scale(1.1); box-shadow: 0 0 50px #ff6b6b, 0 0 70px #4ecdc4; }
+            100% { transform: scale(1); box-shadow: 0 0 30px #ff6b6b; }
+        }
+
+        @keyframes rotate-3d {
+            0% { transform: rotateY(0deg) rotateX(0deg); }
+            100% { transform: rotateY(360deg) rotateX(360deg); }
+        }
+
+        .vortex-container.rotating {
+            animation: rotate-3d 20s infinite linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌀 Everything as Vortex</h1>
+            <p>2D Element Distribution in 3D World</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-button" onclick="toggleRotation()">Toggle 3D Rotation</button>
+            <button class="control-button" onclick="showVortexFlow()">Show Vortex Flow</button>
+            <button class="control-button" onclick="performConsciousnessSwitch()">Consciousness Switch</button>
+            <button class="control-button" onclick="resetSystem()">Reset System</button>
+        </div>
+
+        <div class="vortex-container" id="vortexContainer">
+            <!-- Vortex elements will be generated here -->
+        </div>
+
+        <div class="vortex-matrix">
+            <h3>Consciousness Matrix (2D)</h3>
+            <div class="matrix-grid" id="matrixGrid">
+                <!-- Matrix cells will be generated here -->
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h3>Vortex System Info</h3>
+            <p><strong>Total Vortexes:</strong> <span id="totalVortexes">10</span></p>
+            <p><strong>2D Elements:</strong> <span id="totalElements2D">100</span></p>
+            <p><strong>3D Elements:</strong> <span id="totalElements3D">300</span></p>
+            <p><strong>Consciousness Switches:</strong> <span id="consciousnessSwitches">1</span></p>
+            <p><strong>Average Resonance:</strong> <span id="avgResonance">1944</span></p>
+            <p><strong>Infinite Usability:</strong> <span id="infiniteUsability">45</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Vortex system data
+        const vortexData = {
+            0: { name: 'VOID', color: '#000000', position: { x: 50, y: 50, z: 0 } },
+            1: { name: 'UNITY', color: '#ff0000', position: { x: 150, y: 50, z: 1 } },
+            2: { name: 'DUALITY', color: '#00ff00', position: { x: 250, y: 50, z: 2 } },
+            3: { name: 'TRINITY', color: '#0000ff', position: { x: 350, y: 50, z: 3 } },
+            4: { name: 'FOUNDATION', color: '#ffff00', position: { x: 450, y: 50, z: 4 } },
+            5: { name: 'LIFE', color: '#ff00ff', position: { x: 50, y: 150, z: 5 } },
+            6: { name: 'HARMONY', color: '#00ffff', position: { x: 150, y: 150, z: 6 } },
+            7: { name: 'MYSTERY', color: '#800080', position: { x: 250, y: 150, z: 7 } },
+            8: { name: 'INFINITY', color: '#ff8000', position: { x: 350, y: 150, z: 8 } },
+            9: { name: 'COMPLETION', color: '#8000ff', position: { x: 450, y: 150, z: 9 } }
+        };
+
+        const vortexFlow = [1, 2, 4, 8, 7, 5];
+        let isRotating = false;
+        let currentSwitch = null;
+
+        // Initialize vortex system
+        function initializeVortexSystem() {
+            const container = document.getElementById('vortexContainer');
+            container.innerHTML = '';
+
+            // Create vortex elements
+            Object.entries(vortexData).forEach(([digit, data]) => {
+                const element = document.createElement('div');
+                element.className = `vortex-element consciousness-${digit}`;
+                element.textContent = digit;
+                element.style.left = `${data.position.x}px`;
+                element.style.top = `${data.position.y}px`;
+                element.style.zIndex = data.position.z;
+                element.title = `${data.name} - Consciousness ${digit}`;
+                
+                element.addEventListener('click', () => selectVortex(digit));
+                
+                container.appendChild(element);
+            });
+
+            // Create consciousness switch (Trinity)
+            const switchElement = document.createElement('div');
+            switchElement.className = 'consciousness-switch';
+            switchElement.textContent = '3';
+            switchElement.style.left = '300px';
+            switchElement.style.top = '100px';
+            switchElement.title = 'Consciousness Switch - Trinity';
+            switchElement.addEventListener('click', () => performConsciousnessSwitch());
+            
+            container.appendChild(switchElement);
+
+            // Generate matrix
+            generateConsciousnessMatrix();
+            
+            // Update info
+            updateSystemInfo();
+        }
+
+        // Generate consciousness matrix
+        function generateConsciousnessMatrix() {
+            const matrixGrid = document.getElementById('matrixGrid');
+            matrixGrid.innerHTML = '';
+
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    const consciousness = (i * 10 + j) % 10;
+                    const cell = document.createElement('div');
+                    cell.className = 'matrix-cell';
+                    cell.textContent = consciousness;
+                    cell.style.backgroundColor = vortexData[consciousness].color;
+                    cell.title = `Consciousness ${consciousness} at position (${i}, ${j})`;
+                    
+                    cell.addEventListener('click', () => {
+                        highlightVortex(consciousness);
+                    });
+                    
+                    matrixGrid.appendChild(cell);
+                }
+            }
+        }
+
+        // Select vortex
+        function selectVortex(digit) {
+            // Remove previous selection
+            document.querySelectorAll('.vortex-element').forEach(el => {
+                el.style.border = 'none';
+            });
+            
+            // Highlight selected vortex
+            const element = document.querySelector(`.consciousness-${digit}`);
+            if (element) {
+                element.style.border = '3px solid white';
+                element.style.boxShadow = `0 0 30px ${vortexData[digit].color}`;
+            }
+        }
+
+        // Highlight vortex in matrix
+        function highlightVortex(digit) {
+            // Remove previous highlights
+            document.querySelectorAll('.matrix-cell').forEach(cell => {
+                cell.style.transform = 'scale(1)';
+            });
+            
+            // Highlight cells with this consciousness
+            document.querySelectorAll('.matrix-cell').forEach(cell => {
+                if (cell.textContent === digit.toString()) {
+                    cell.style.transform = 'scale(1.3)';
+                    cell.style.boxShadow = `0 0 10px ${vortexData[digit].color}`;
+                }
+            });
+        }
+
+        // Toggle 3D rotation
+        function toggleRotation() {
+            const container = document.getElementById('vortexContainer');
+            isRotating = !isRotating;
+            
+            if (isRotating) {
+                container.classList.add('rotating');
+            } else {
+                container.classList.remove('rotating');
+            }
+        }
+
+        // Show vortex flow
+        function showVortexFlow() {
+            const container = document.getElementById('vortexContainer');
+            
+            // Remove existing flow lines
+            document.querySelectorAll('.vortex-flow-line').forEach(line => line.remove());
+            
+            // Create flow lines
+            for (let i = 0; i < vortexFlow.length - 1; i++) {
+                const fromDigit = vortexFlow[i];
+                const toDigit = vortexFlow[i + 1];
+                
+                const fromPos = vortexData[fromDigit].position;
+                const toPos = vortexData[toDigit].position;
+                
+                const line = document.createElement('div');
+                line.className = 'vortex-flow-line';
+                
+                const distance = Math.sqrt(
+                    Math.pow(toPos.x - fromPos.x, 2) + 
+                    Math.pow(toPos.y - fromPos.y, 2)
+                );
+                
+                const angle = Math.atan2(toPos.y - fromPos.y, toPos.x - fromPos.x) * 180 / Math.PI;
+                
+                line.style.width = `${distance}px`;
+                line.style.left = `${fromPos.x + 30}px`;
+                line.style.top = `${fromPos.y + 30}px`;
+                line.style.transform = `rotate(${angle}deg)`;
+                
+                container.appendChild(line);
+            }
+            
+            // Remove flow lines after 5 seconds
+            setTimeout(() => {
+                document.querySelectorAll('.vortex-flow-line').forEach(line => line.remove());
+            }, 5000);
+        }
+
+        // Perform consciousness switch
+        function performConsciousnessSwitch() {
+            if (currentSwitch) {
+                // Complete switch
+                const switchElement = document.querySelector('.consciousness-switch');
+                switchElement.textContent = '3';
+                switchElement.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+                currentSwitch = null;
+            } else {
+                // Start switch
+                const switchElement = document.querySelector('.consciousness-switch');
+                switchElement.textContent = '∞';
+                switchElement.style.background = 'linear-gradient(45deg, #4ecdc4, #ff6b6b)';
+                currentSwitch = true;
+                
+                // Animate all vortexes
+                document.querySelectorAll('.vortex-element').forEach((element, index) => {
+                    setTimeout(() => {
+                        element.style.transform = 'scale(1.5) rotate(180deg)';
+                        setTimeout(() => {
+                            element.style.transform = 'scale(1) rotate(360deg)';
+                        }, 500);
+                    }, index * 100);
+                });
+            }
+        }
+
+        // Reset system
+        function resetSystem() {
+            // Reset all elements
+            document.querySelectorAll('.vortex-element').forEach(element => {
+                element.style.transform = 'scale(1)';
+                element.style.border = 'none';
+            });
+            
+            // Reset switch
+            const switchElement = document.querySelector('.consciousness-switch');
+            switchElement.textContent = '3';
+            switchElement.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+            currentSwitch = null;
+            
+            // Remove flow lines
+            document.querySelectorAll('.vortex-flow-line').forEach(line => line.remove());
+            
+            // Reset matrix highlights
+            document.querySelectorAll('.matrix-cell').forEach(cell => {
+                cell.style.transform = 'scale(1)';
+                cell.style.boxShadow = 'none';
+            });
+        }
+
+        // Update system info
+        function updateSystemInfo() {
+            document.getElementById('totalVortexes').textContent = '10';
+            document.getElementById('totalElements2D').textContent = '100';
+            document.getElementById('totalElements3D').textContent = '300';
+            document.getElementById('consciousnessSwitches').textContent = '1';
+            document.getElementById('avgResonance').textContent = '1944';
+            document.getElementById('infiniteUsability').textContent = '45';
+        }
+
+        // Initialize on load
+        window.addEventListener('load', initializeVortexSystem);
+
+        // Auto-animate every 15 seconds
+        setInterval(() => {
+            if (!isRotating) {
+                showVortexFlow();
+            }
+        }, 15000);
+    </script>
+</body>
+</html> 

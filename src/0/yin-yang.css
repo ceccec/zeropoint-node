@@ -1,0 +1,368 @@
+/* ZeroPoint Yin-Yang PWA Styles */
+
+:root {
+    --yin-color: #000000;
+    --yang-color: #FFFFFF;
+    --yin-text: #FFFFFF;
+    --yang-text: #000000;
+    --background: #1a1a1a;
+    --accent: #432;
+    --font-family: 'Arial', sans-serif;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background: var(--background);
+    color: var(--yin-text);
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#yin-yang-container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* Yin-Yang Symbol */
+#yin-yang-symbol {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, var(--yin-color) 50%, var(--yang-color) 50%);
+    margin: 0 auto 2rem;
+    position: relative;
+    animation: rotate 10s linear infinite;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+}
+
+.yin-half, .yang-half {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.yin-half {
+    left: 0;
+    background: var(--yin-color);
+    border-radius: 100px 0 0 100px;
+}
+
+.yang-half {
+    right: 0;
+    background: var(--yang-color);
+    border-radius: 0 100px 100px 0;
+}
+
+.yin-dot, .yang-dot {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.yin-dot {
+    left: 25%;
+    background: var(--yin-color);
+    border: 3px solid var(--yang-color);
+}
+
+.yang-dot {
+    right: 25%;
+    background: var(--yang-color);
+    border: 3px solid var(--yin-color);
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Titles */
+#zeropoint-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, var(--yin-color), var(--yang-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+#yin-yang-subtitle {
+    font-size: 1.5rem;
+    color: var(--yin-text);
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+/* Duality Display */
+#duality-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.yin-section, .yang-section {
+    padding: 1.5rem;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.yin-section {
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--yin-color);
+}
+
+.yang-section {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--yang-color);
+}
+
+.yin-section h3, .yang-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.yin-section h3 {
+    color: var(--yin-text);
+}
+
+.yang-section h3 {
+    color: var(--yang-text);
+}
+
+.property {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+}
+
+.value {
+    font-weight: bold;
+    color: var(--accent);
+}
+
+/* Harmony Display */
+#harmony-display {
+    margin-bottom: 2rem;
+}
+
+.harmony-meter {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.harmony-bar {
+    height: 20px;
+    background: linear-gradient(90deg, var(--yin-color), var(--yang-color));
+    border-radius: 10px;
+    width: 100%;
+    transition: var(--transition);
+}
+
+.harmony-value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color: var(--yin-text);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Digit Analysis */
+#digit-analysis {
+    margin-bottom: 2rem;
+}
+
+.digit-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.digit-item {
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.digit-item:hover {
+    transform: scale(1.05);
+}
+
+.digit-number {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.digit-balance {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.digit-dominant {
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+/* Oscillation Display */
+#oscillation-display {
+    margin-bottom: 2rem;
+}
+
+.oscillation-wave {
+    height: 100px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.oscillation-wave::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--yin-color), var(--yang-color));
+    animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+    0%, 100% { transform: translateY(-50%) scaleX(0.5); }
+    50% { transform: translateY(-50%) scaleX(1); }
+}
+
+.current-state {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+/* Mathematical Proof */
+#mathematical-proof {
+    margin-bottom: 2rem;
+}
+
+.proof-text {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 10px;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+/* PWA Controls */
+#pwa-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    background: var(--accent);
+    color: var(--yin-text);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: bold;
+}
+
+button:hover {
+    background: var(--yang-color);
+    color: var(--yang-text);
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #yin-yang-container {
+        padding: 1rem;
+    }
+    
+    #yin-yang-symbol {
+        width: 150px;
+        height: 150px;
+    }
+    
+    #zeropoint-title {
+        font-size: 2rem;
+    }
+    
+    #duality-display {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .digit-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* PWA Specific Styles */
+@media (display-mode: standalone) {
+    body {
+        padding-top: 0;
+    }
+}
+
+/* Dark/Light Mode Support */
+@media (prefers-color-scheme: light) {
+    :root {
+        --background: #f5f5f5;
+        --yin-text: #000000;
+        --yang-text: #FFFFFF;
+    }
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+} 

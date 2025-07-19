@@ -1,0 +1,67 @@
+{
+  "name": "ZeroPoint - Yin-Yang PWA",
+  "short_name": "ZeroPoint",
+  "description": "The Face of ZeroPoint - Fundamental Duality Principle",
+  "start_url": "/src/0/yin-yang.html",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "scope": "/src/0/",
+  "lang": "en",
+  "categories": ["education", "science", "philosophy"],
+  "icons": [
+    {
+      "src": "yin-yang-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "yin-yang-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Yin-Yang Analysis",
+      "short_name": "Analysis",
+      "description": "Analyze digit yin-yang properties",
+      "url": "/src/0/yin-yang.html#analysis",
+      "icons": [
+        {
+          "src": "yin-yang-icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Oscillation",
+      "short_name": "Oscillate",
+      "description": "Start yin-yang oscillation",
+      "url": "/src/0/yin-yang.html#oscillate",
+      "icons": [
+        {
+          "src": "yin-yang-icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "yin-yang-screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "yin-yang-screenshot-narrow.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+} 

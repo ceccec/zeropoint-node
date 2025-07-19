@@ -1,0 +1,523 @@
+/* ZeroPoint Yin-Yang Duality CSS */
+
+:root {
+  --yin-color: #000000;
+  --yang-color: #ffffff;
+  --yin-yang-border: #432000;
+  --yin-yang-glow: #864000;
+  --yin-yang-text: #ffffff;
+  --yin-yang-accent: #00ff00;
+  --yin-yang-harmony: #ffff00;
+  --yin-yang-balance: #ff00ff;
+  --yin-yang-flow: #00ffff;
+  --yin-yang-unity: #ff8800;
+  
+  --font-family: 'Arial', sans-serif;
+  --font-size-small: 7/8rem;
+  --font-size-normal: 1rem;
+  --font-size-large: 5/4rem;
+  --font-size-xlarge: 3/2rem;
+  --font-size-xxlarge: 2rem;
+  
+  --border-radius: 8px;
+  --spacing-small: 1/2rem;
+  --spacing-normal: 1rem;
+  --spacing-large: 3/2rem;
+  --spacing-xlarge: 2rem;
+  
+  --transition: all 1/3s ease;
+  --animation-duration: 2s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background: linear-gradient(135deg, var(--yin-color), var(--yang-color));
+  color: var(--yin-yang-text);
+  line-height: 3/2;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#yin-yang-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-large);
+}
+
+/* Yin-Yang Symbol */
+#yin-yang-symbol {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin-bottom: var(--spacing-large);
+  border-radius: 50%;
+  background: linear-gradient(90deg, var(--yin-color) 50%, var(--yang-color) 50%);
+  border: 4px solid var(--yin-yang-border);
+  box-shadow: 0 0 50px rgba(255, 255, 255, 1/10);
+  animation: yinYangRotate var(--animation-duration) infinite linear;
+}
+
+.yin-dot {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: var(--yin-color);
+  border: 3px solid var(--yang-color);
+  border-radius: 50%;
+  animation: yinDot var(--animation-duration) infinite;
+}
+
+.yang-dot {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: 60px;
+  height: 60px;
+  background: var(--yang-color);
+  border: 3px solid var(--yin-color);
+  border-radius: 50%;
+  animation: yangDot var(--animation-duration) infinite;
+}
+
+@keyframes yinYangRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes yinDot {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(11/10); opacity: 8/10; }
+}
+
+@keyframes yangDot {
+  0%, 100% { transform: translate(-50%, 50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, 50%) scale(11/10); opacity: 8/10; }
+}
+
+/* Title */
+#yin-yang-title {
+  font-size: var(--font-size-xxlarge);
+  color: var(--yin-yang-glow);
+  margin-bottom: var(--spacing-small);
+  text-shadow: 0 0 20px var(--yin-yang-glow);
+  animation: titleGlow var(--animation-duration) infinite;
+}
+
+#yin-yang-subtitle {
+  font-size: var(--font-size-large);
+  color: var(--yin-yang-text);
+  margin-bottom: var(--spacing-large);
+  opacity: 8/10;
+}
+
+@keyframes titleGlow {
+  0%, 100% { text-shadow: 0 0 20px var(--yin-yang-glow); }
+  50% { text-shadow: 0 0 40px var(--yin-yang-glow), 0 0 60px var(--yin-yang-glow); }
+}
+
+/* Duality Display */
+#duality-display {
+  background: rgba(0, 0, 0, 3/10);
+  border: 1px solid var(--yin-yang-glow);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-large);
+  margin-bottom: var(--spacing-large);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 800px;
+}
+
+.duality-section h3 {
+  color: var(--yin-yang-glow);
+  margin-bottom: var(--spacing-normal);
+  font-size: var(--font-size-large);
+}
+
+.duality-properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-normal);
+}
+
+.property {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-small);
+  padding: var(--spacing-small);
+  background: rgba(134, 64, 0, 1/10);
+  border-radius: var(--border-radius);
+}
+
+.value {
+  color: var(--yin-yang-accent);
+  font-weight: bold;
+}
+
+/* Balance Display */
+#balance-display {
+  background: rgba(0, 0, 0, 3/10);
+  border: 1px solid var(--yin-yang-balance);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-large);
+  margin-bottom: var(--spacing-large);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 800px;
+}
+
+.balance-meter {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background: rgba(255, 0, 255, 1/10);
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: var(--spacing-normal);
+}
+
+.balance-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--yin-yang-balance), var(--yin-yang-glow));
+  width: 50%;
+  animation: balanceFlow var(--animation-duration) infinite;
+  transition: width 1/2s ease;
+}
+
+.balance-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--yin-yang-balance);
+  font-weight: bold;
+  font-size: var(--font-size-small);
+}
+
+@keyframes balanceFlow {
+  0%, 100% { width: 50%; }
+  25% { width: 6/10; }
+  75% { width: 4/10; }
+}
+
+.balance-properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-normal);
+}
+
+/* Flow Display */
+#flow-display {
+  background: rgba(0, 0, 0, 3/10);
+  border: 1px solid var(--yin-yang-flow);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-large);
+  margin-bottom: var(--spacing-large);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 800px;
+}
+
+.flow-meter {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background: rgba(0, 255, 255, 1/10);
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: var(--spacing-normal);
+}
+
+.flow-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--yin-yang-flow), var(--yin-yang-glow));
+  width: 100%;
+  animation: flowPulse var(--animation-duration) infinite;
+  transition: width 1/2s ease;
+}
+
+.flow-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--yin-yang-flow);
+  font-weight: bold;
+  font-size: var(--font-size-small);
+}
+
+@keyframes flowPulse {
+  0%, 100% { width: 100%; }
+  50% { width: 9/10; }
+}
+
+.flow-properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-normal);
+}
+
+/* Unity Display */
+#unity-display {
+  background: rgba(0, 0, 0, 3/10);
+  border: 1px solid var(--yin-yang-unity);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-large);
+  margin-bottom: var(--spacing-large);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 800px;
+}
+
+.unity-meter {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background: rgba(255, 136, 0, 1/10);
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: var(--spacing-normal);
+}
+
+.unity-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--yin-yang-unity), var(--yin-yang-glow));
+  width: 100%;
+  animation: unityFlow var(--animation-duration) infinite;
+  transition: width 1/2s ease;
+}
+
+.unity-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--yin-yang-unity);
+  font-weight: bold;
+  font-size: var(--font-size-small);
+}
+
+@keyframes unityFlow {
+  0%, 100% { width: 100%; }
+  50% { width: 95/100; }
+}
+
+.unity-properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-normal);
+}
+
+/* Harmony Display */
+#harmony-display {
+  background: rgba(0, 0, 0, 3/10);
+  border: 1px solid var(--yin-yang-harmony);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-large);
+  margin-bottom: var(--spacing-large);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 800px;
+}
+
+.harmony-meter {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background: rgba(255, 255, 0, 1/10);
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: var(--spacing-normal);
+}
+
+.harmony-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--yin-yang-harmony), var(--yin-yang-glow));
+  width: 100%;
+  animation: harmonyFlow var(--animation-duration) infinite;
+  transition: width 1/2s ease;
+}
+
+.harmony-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--yin-yang-harmony);
+  font-weight: bold;
+  font-size: var(--font-size-small);
+}
+
+@keyframes harmonyFlow {
+  0%, 100% { width: 100%; }
+  50% { width: 9/10; }
+}
+
+.harmony-properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-normal);
+}
+
+/* Oscillation Display */
+#oscillation-display {
+  background: rgba(0, 0, 0, 3/10);
+  border: 1px solid var(--yin-yang-glow);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-large);
+  margin-bottom: var(--spacing-large);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 800px;
+}
+
+.oscillation-wave {
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(90deg, var(--yin-color), var(--yang-color));
+  border-radius: var(--border-radius);
+  animation: oscillationWave var(--animation-duration) infinite;
+  margin-bottom: var(--spacing-normal);
+}
+
+@keyframes oscillationWave {
+  0%, 100% { transform: scaleX(1) scaleY(1); opacity: 1/2; }
+  50% { transform: scaleX(3/2) scaleY(3/2); opacity: 1; }
+}
+
+.oscillation-properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-normal);
+}
+
+/* Mathematical Proof */
+#mathematical-proof {
+  background: rgba(0, 0, 0, 3/10);
+  border: 1px solid var(--yin-yang-glow);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-large);
+  margin-bottom: var(--spacing-large);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.proof-text {
+  color: var(--yin-yang-glow);
+  font-style: italic;
+  font-size: var(--font-size-large);
+}
+
+/* PWA Controls */
+#pwa-controls {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-normal);
+  flex-wrap: wrap;
+  margin-top: var(--spacing-large);
+}
+
+#pwa-controls button {
+  background: var(--yin-yang-border);
+  color: var(--yin-yang-text);
+  border: none;
+  padding: var(--spacing-small) var(--spacing-normal);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: var(--font-size-small);
+}
+
+#pwa-controls button:hover {
+  background: var(--yin-yang-glow);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 3/10);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .duality-properties,
+  .balance-properties,
+  .flow-properties,
+  .unity-properties,
+  .harmony-properties,
+  .oscillation-properties {
+    grid-template-columns: 1fr;
+  }
+  
+  #pwa-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #yin-yang-symbol {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .yin-dot,
+  .yang-dot {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  #yin-yang-title {
+    font-size: var(--font-size-xlarge);
+  }
+  
+  #yin-yang-subtitle {
+    font-size: var(--font-size-normal);
+  }
+  
+  #yin-yang-symbol {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .yin-dot,
+  .yang-dot {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* PWA Specific Styles */
+@media (display-mode: standalone) {
+  #yin-yang-container {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Print Styles */
+@media print {
+  #pwa-controls {
+    display: none;
+  }
+  
+  .duality-section,
+  .balance-section,
+  .flow-section,
+  .unity-section,
+  .harmony-section,
+  .oscillation-section {
+    break-inside: avoid;
+  }
+} 

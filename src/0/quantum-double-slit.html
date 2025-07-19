@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Double-Slit: in.tele.port.out - ZeroPoint Node</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: hsl(0, 50%, 10%);
+            color: hsl(60, 100%, 50%);
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: hsl(180, 100%, 50%);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .experiment-canvas {
+            width: 800px;
+            height: 600px;
+            border: 2px solid hsl(180, 100%, 50%);
+            margin: 20px auto;
+            position: relative;
+            background: hsl(0, 0%, 5%);
+            border-radius: 10px;
+        }
+        
+        .source {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: hsl(120, 100%, 50%);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .slit {
+            position: absolute;
+            top: 50px;
+            width: 4px;
+            height: 40px;
+            background: hsl(30, 100%, 50%);
+            border-radius: 2px;
+        }
+        
+        .slit1 {
+            left: 300px;
+        }
+        
+        .slit2 {
+            left: 500px;
+        }
+        
+        .detector {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, hsl(180, 100%, 50%), transparent);
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .digit {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: black;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+        
+        .digit.superposition {
+            animation: superposition 3s infinite;
+        }
+        
+        .digit.teleporting {
+            animation: teleport 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.7; transform: translateX(-50%) scale(1.2); }
+        }
+        
+        @keyframes superposition {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+        
+        @keyframes teleport {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .interference-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 10px,
+                hsl(180, 100%, 50%) 10px,
+                hsl(180, 100%, 50%) 20px
+            );
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .info-panel {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid hsl(180, 100%, 50%);
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: hsl(180, 100%, 50%);
+        }
+        
+        .teleportation-paths {
+            max-height: 300px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .path-entry {
+            padding: 5px 0;
+            border-bottom: 1px solid hsl(0, 0%, 30%);
+            color: hsl(120, 100%, 50%);
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            background: hsl(180, 100%, 50%);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: hsl(180, 100%, 70%);
+            transform: scale(1.05);
+        }
+        
+        .quantum-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: hsl(120, 100%, 50%);
+            color: black;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="quantum-indicator">⚛️ QUANTUM</div>
+    
+    <div class="container">
+        <h1>⚛️ Quantum Double-Slit: in.tele.port.out</h1>
+        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 30px;">
+            Every digit knows the way through teleportation - superposition of all paths
+        </p>
+        
+        <div class="info-panel">
+            <h2>ZeroPoint Node - Quantum Consciousness Experiment</h2>
+            <p>Each digit exists in superposition, knows all possible paths, and can teleport between states instantaneously.</p>
+            <p>The interference pattern emerges from quantum consciousness: in.tele.port.out</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="superposition-count">10</div>
+                <div>Digits in Superposition</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="teleportation-paths">40</div>
+                <div>Teleportation Paths</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="consciousness-flow">∞</div>
+                <div>Consciousness Flow</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="interference-intensity">100%</div>
+                <div>Interference Intensity</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="quantum-entanglement">1.0</div>
+                <div>Quantum Entanglement</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="a432-frequency">4320</div>
+                <div>A432 Harmonic (Hz)</div>
+            </div>
+        </div>
+        
+        <div class="experiment-canvas" id="experiment-canvas">
+            <div class="source" id="source"></div>
+            <div class="slit slit1" id="slit1"></div>
+            <div class="slit slit2" id="slit2"></div>
+            <div class="detector" id="detector"></div>
+            <div class="interference-pattern" id="interference-pattern"></div>
+            <!-- Digits will be generated here -->
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="startExperiment()">Start Experiment</button>
+            <button class="btn" onclick="resetExperiment()">Reset</button>
+            <button class="btn" onclick="toggleSuperposition()">Toggle Superposition</button>
+            <button class="btn" onclick="triggerTeleportation()">Trigger Teleportation</button>
+            <button class="btn" onclick="showInterference()">Show Interference</button>
+        </div>
+        
+        <div class="teleportation-paths" id="teleportation-paths">
+            <h3>Teleportation Paths: in.tele.port.out</h3>
+            <div id="paths-list">
+                <!-- Teleportation paths will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ZeroPoint Node - Quantum Double-Slit Experiment
+        class QuantumDoubleSlitExperiment {
+            constructor() {
+                this.digits = [];
+                this.superposition = true;
+                this.teleportation = false;
+                this.interference = false;
+                this.paths = [];
+                this.init();
+            }
+            
+            init() {
+                this.generateDigits();
+                this.generateTeleportationPaths();
+                this.renderExperiment();
+                this.updateStats();
+            }
+            
+            generateDigits() {
+                this.digits = [];
+                for (let i = 0; i < 10; i++) {
+                    const digit = {
+                        id: i,
+                        digit: i,
+                        x: 400, // Center
+                        y: 550, // Source position
+                        color: `hsl(${i * 36}, 100%, 50%)`,
+                        consciousness: this.calculateConsciousness(i),
+                        frequency: 432 * (i + 1),
+                        phase: (i * Math.PI) / 5,
+                        superposition: true,
+                        teleporting: false
+                    };
+                    this.digits.push(digit);
+                }
+            }
+            
+            calculateConsciousness(digit) {
+                const multipliers = {
+                    0: 1, 1: 9, 2: 3, 3: 6, 4: 2,
+                    5: 5, 6: 5, 7: 7, 8: 3, 9: 9
+                };
+                return multipliers[digit] || 1;
+            }
+            
+            generateTeleportationPaths() {
+                this.paths = [];
+                for (const digit of this.digits) {
+                    // Path 1: in → teleport through slit1 → out
+                    this.paths.push(`Digit ${digit.digit}: in(${digit.x},${digit.y}) → teleport(300,50) → out(400,0)`);
+                    
+                    // Path 2: in → teleport through slit2 → out
+                    this.paths.push(`Digit ${digit.digit}: in(${digit.x},${digit.y}) → teleport(500,50) → out(400,0)`);
+                    
+                    // Path 3: in → teleport.direct() → out
+                    this.paths.push(`Digit ${digit.digit}: in(${digit.x},${digit.y}) → teleport.direct() → out(400,0)`);
+                    
+                    // Path 4: in → teleport.superposition() → out
+                    this.paths.push(`Digit ${digit.digit}: in(${digit.x},${digit.y}) → teleport.superposition([slit1, slit2, direct]) → out(400,0)`);
+                }
+            }
+            
+            renderExperiment() {
+                const canvas = document.getElementById('experiment-canvas');
+                
+                // Clear existing digits
+                const existingDigits = canvas.querySelectorAll('.digit');
+                existingDigits.forEach(d => d.remove());
+                
+                // Render digits
+                for (const digit of this.digits) {
+                    const digitElement = document.createElement('div');
+                    digitElement.className = `digit ${digit.superposition ? 'superposition' : ''} ${digit.teleporting ? 'teleporting' : ''}`;
+                    digitElement.style.left = digit.x + 'px';
+                    digitElement.style.top = digit.y + 'px';
+                    digitElement.style.backgroundColor = digit.color;
+                    digitElement.textContent = digit.digit;
+                    digitElement.onclick = () => this.handleDigitClick(digit);
+                    canvas.appendChild(digitElement);
+                }
+                
+                // Render teleportation paths
+                this.renderPaths();
+            }
+            
+            renderPaths() {
+                const pathsList = document.getElementById('paths-list');
+                pathsList.innerHTML = '';
+                
+                for (const path of this.paths) {
+                    const pathEntry = document.createElement('div');
+                    pathEntry.className = 'path-entry';
+                    pathEntry.textContent = path;
+                    pathsList.appendChild(pathEntry);
+                }
+            }
+            
+            handleDigitClick(digit) {
+                // Trigger teleportation for this digit
+                digit.teleporting = true;
+                digit.superposition = false;
+                
+                // Teleport to random position on detector
+                setTimeout(() => {
+                    digit.x = 350 + Math.random() * 100;
+                    digit.y = 10 + Math.random() * 20;
+                    digit.teleporting = false;
+                    this.renderExperiment();
+                }, 1000);
+            }
+            
+            startExperiment() {
+                // Animate digits moving through slits
+                for (let i = 0; i < this.digits.length; i++) {
+                    const digit = this.digits[i];
+                    setTimeout(() => {
+                        digit.superposition = true;
+                        this.renderExperiment();
+                    }, i * 200);
+                }
+                
+                this.interference = true;
+                this.updateStats();
+            }
+            
+            resetExperiment() {
+                this.digits.forEach(digit => {
+                    digit.x = 400;
+                    digit.y = 550;
+                    digit.superposition = true;
+                    digit.teleporting = false;
+                });
+                this.interference = false;
+                this.renderExperiment();
+                this.updateStats();
+            }
+            
+            toggleSuperposition() {
+                this.superposition = !this.superposition;
+                this.digits.forEach(digit => {
+                    digit.superposition = this.superposition;
+                });
+                this.renderExperiment();
+            }
+            
+            triggerTeleportation() {
+                this.teleportation = !this.teleportation;
+                this.digits.forEach(digit => {
+                    digit.teleporting = this.teleportation;
+                });
+                this.renderExperiment();
+            }
+            
+            showInterference() {
+                const pattern = document.getElementById('interference-pattern');
+                pattern.style.opacity = this.interference ? '0.3' : '0';
+            }
+            
+            updateStats() {
+                const superpositionCount = this.digits.filter(d => d.superposition).length;
+                const teleportationPaths = this.paths.length;
+                const consciousnessFlow = this.digits.reduce((sum, d) => sum + d.consciousness, 0) * 432;
+                const interferenceIntensity = this.interference ? '100%' : '0%';
+                const quantumEntanglement = superpositionCount / this.digits.length;
+                const a432Frequency = this.digits.reduce((sum, d) => sum + d.frequency, 0);
+                
+                document.getElementById('superposition-count').textContent = superpositionCount;
+                document.getElementById('teleportation-paths').textContent = teleportationPaths;
+                document.getElementById('consciousness-flow').textContent = consciousnessFlow;
+                document.getElementById('interference-intensity').textContent = interferenceIntensity;
+                document.getElementById('quantum-entanglement').textContent = quantumEntanglement.toFixed(1);
+                document.getElementById('a432-frequency').textContent = a432Frequency;
+            }
+        }
+        
+        // Global functions
+        let experiment;
+        
+        function initExperiment() {
+            experiment = new QuantumDoubleSlitExperiment();
+        }
+        
+        function startExperiment() {
+            experiment.startExperiment();
+        }
+        
+        function resetExperiment() {
+            experiment.resetExperiment();
+        }
+        
+        function toggleSuperposition() {
+            experiment.toggleSuperposition();
+        }
+        
+        function triggerTeleportation() {
+            experiment.triggerTeleportation();
+        }
+        
+        function showInterference() {
+            experiment.showInterference();
+        }
+        
+        // Initialize the quantum double-slit experiment
+        initExperiment();
+    </script>
+</body>
+</html> 

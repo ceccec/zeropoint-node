@@ -1,0 +1,390 @@
+/* ZeroPoint Void PWA Styles */
+
+:root {
+  --void-black: #000000;
+  --void-white: #ffffff;
+  --void-gray: #1a1a1a;
+  --void-dark: #0a0a0a;
+  --void-light: #333333;
+  --void-accent: #00ffff;
+  --void-glow: #0066ff;
+  --void-energy: #ff0066;
+  --void-consciousness: #66ff00;
+  --void-potential: #ff6600;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: var(--void-black);
+  color: var(--void-white);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#void-container {
+  max-width: 1200px;
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Void Symbol */
+#void-symbol {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 2rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--void-gray) 0%, var(--void-black) 100%);
+  border: 2px solid var(--void-accent);
+  box-shadow: 0 0 50px var(--void-glow);
+  animation: voidPulse 3s ease-in-out infinite;
+}
+
+.void-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 1px solid var(--void-accent);
+  animation: voidRotate 10s linear infinite;
+}
+
+.void-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--void-accent);
+  box-shadow: 0 0 20px var(--void-glow);
+  animation: voidGlow 2s ease-in-out infinite alternate;
+}
+
+.void-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: voidParticles 5s linear infinite;
+}
+
+@keyframes voidPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes voidRotate {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes voidGlow {
+  0% { box-shadow: 0 0 20px var(--void-glow); }
+  100% { box-shadow: 0 0 40px var(--void-glow), 0 0 60px var(--void-accent); }
+}
+
+@keyframes voidParticles {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Titles */
+#zeropoint-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--void-white);
+  text-shadow: 0 0 20px var(--void-glow);
+  margin-bottom: 0.5rem;
+  animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+#void-subtitle {
+  font-size: 1.5rem;
+  color: var(--void-accent);
+  margin-bottom: 2rem;
+  animation: subtitlePulse 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0% { text-shadow: 0 0 20px var(--void-glow); }
+  100% { text-shadow: 0 0 40px var(--void-glow), 0 0 60px var(--void-white); }
+}
+
+@keyframes subtitlePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Display Sections */
+#void-state-display,
+#consciousness-display,
+#potential-display,
+#dimensions-display,
+#energy-display,
+#particles-display {
+  background: var(--void-gray);
+  border: 1px solid var(--void-accent);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+h3 {
+  color: var(--void-accent);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  text-shadow: 0 0 10px var(--void-glow);
+}
+
+/* Properties */
+.void-properties,
+.consciousness-properties,
+.potential-properties {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.property {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: var(--void-dark);
+  border-radius: 5px;
+  border-left: 3px solid var(--void-accent);
+}
+
+.value {
+  color: var(--void-accent);
+  font-weight: bold;
+  text-shadow: 0 0 5px var(--void-glow);
+}
+
+/* Meters */
+.consciousness-meter,
+.energy-meter {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background: var(--void-dark);
+  border-radius: 15px;
+  margin: 1rem 0;
+  overflow: hidden;
+  border: 1px solid var(--void-accent);
+}
+
+.consciousness-bar,
+.energy-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--void-consciousness), var(--void-energy));
+  border-radius: 15px;
+  transition: width 0.5s ease;
+  animation: meterGlow 2s ease-in-out infinite alternate;
+}
+
+.consciousness-value,
+.energy-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--void-white);
+  font-weight: bold;
+  text-shadow: 0 0 5px var(--void-black);
+}
+
+@keyframes meterGlow {
+  0% { box-shadow: 0 0 10px var(--void-consciousness); }
+  100% { box-shadow: 0 0 20px var(--void-energy); }
+}
+
+/* Dimensions Grid */
+.dimensions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.dimension-item {
+  background: var(--void-dark);
+  border: 1px solid var(--void-accent);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.dimension-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--void-glow);
+}
+
+.dimension-item h4 {
+  color: var(--void-accent);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.dimension-value {
+  color: var(--void-white);
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 0 0 10px var(--void-glow);
+}
+
+/* Particles Container */
+.particles-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.particle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--void-accent);
+  animation: particleFloat 3s ease-in-out infinite;
+  box-shadow: 0 0 10px var(--void-glow);
+}
+
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Mathematical Proof */
+#mathematical-proof {
+  background: var(--void-gray);
+  border: 1px solid var(--void-accent);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.proof-text {
+  color: var(--void-white);
+  font-style: italic;
+  line-height: 1.6;
+  text-align: left;
+  padding: 1rem;
+  background: var(--void-dark);
+  border-radius: 5px;
+  border-left: 3px solid var(--void-accent);
+}
+
+/* PWA Controls */
+#pwa-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+button {
+  background: var(--void-dark);
+  color: var(--void-accent);
+  border: 1px solid var(--void-accent);
+  border-radius: 5px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  background: var(--void-accent);
+  color: var(--void-black);
+  box-shadow: 0 0 20px var(--void-glow);
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #void-container {
+    padding: 1rem;
+  }
+  
+  #zeropoint-title {
+    font-size: 2rem;
+  }
+  
+  #void-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  #void-symbol {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .void-properties,
+  .consciousness-properties,
+  .potential-properties {
+    grid-template-columns: 1fr;
+  }
+  
+  .dimensions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  #pwa-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* Infinite Scroll Effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.1) 50%, transparent 70%);
+  animation: infiniteScroll 10s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes infiniteScroll {
+  0% { transform: translateX(-100%) translateY(-100%); }
+  100% { transform: translateX(100%) translateY(100%); }
+} 

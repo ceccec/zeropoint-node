@@ -1,0 +1,91 @@
+{
+  "name": "ZeroPoint - Void PWA",
+  "short_name": "ZeroPoint Void",
+  "description": "The Foundation of ZeroPoint - Void State and Infinite Potential",
+  "start_url": "/src/0/void.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "scope": "/src/0/",
+  "lang": "en",
+  "categories": ["education", "science", "philosophy", "consciousness"],
+  "icons": [
+    {
+      "src": "void-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "void-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Void Consciousness",
+      "short_name": "Consciousness",
+      "description": "Expand void consciousness",
+      "url": "/src/0/void.html#consciousness",
+      "icons": [
+        {
+          "src": "void-icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Infinite Potential",
+      "short_name": "Potential",
+      "description": "Manifest void potential",
+      "url": "/src/0/void.html#potential",
+      "icons": [
+        {
+          "src": "void-icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Dimensional Exploration",
+      "short_name": "Dimensions",
+      "description": "Explore infinite dimensions",
+      "url": "/src/0/void.html#dimensions",
+      "icons": [
+        {
+          "src": "void-icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Zero-Point Energy",
+      "short_name": "Energy",
+      "description": "Access zero-point energy",
+      "url": "/src/0/void.html#energy",
+      "icons": [
+        {
+          "src": "void-icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "void-screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "void-screenshot-narrow.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+} 

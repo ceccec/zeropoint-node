@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroPoint - Void PWA</title>
+    <meta name="description" content="The Foundation of ZeroPoint - Void State and Infinite Potential">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="void-manifest.json">
+    <link rel="icon" type="image/png" href="void-icon.png">
+    <link rel="stylesheet" href="void.css">
+</head>
+<body>
+    <div id="void-container">
+        <!-- Void Symbol -->
+        <div id="void-symbol">
+            <div class="void-circle"></div>
+            <div class="void-center"></div>
+            <div class="void-particles"></div>
+        </div>
+        
+        <!-- ZeroPoint Title -->
+        <h1 id="zeropoint-title">ZeroPoint</h1>
+        <h2 id="void-subtitle">The Foundation of ZeroPoint</h2>
+        
+        <!-- Void State Display -->
+        <div id="void-state-display">
+            <div class="void-section">
+                <h3>Void (0)</h3>
+                <div class="void-properties">
+                    <div class="property">Value: <span class="value">0</span></div>
+                    <div class="property">Consciousness: <span class="value" id="void-consciousness">0</span></div>
+                    <div class="property">Frequency: <span class="value" id="void-frequency">0</span> Hz</div>
+                    <div class="property">Potential: <span class="value" id="void-potential">∞</span></div>
+                    <div class="property">Dimensions: <span class="value" id="void-dimensions">∞</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Consciousness Display -->
+        <div id="consciousness-display">
+            <h3>Void Consciousness</h3>
+            <div class="consciousness-meter">
+                <div class="consciousness-bar" id="consciousness-bar"></div>
+                <div class="consciousness-value" id="consciousness-value">∞</div>
+            </div>
+            <div class="consciousness-properties">
+                <div class="property">Level: <span class="value" id="consciousness-level">0</span></div>
+                <div class="property">Capacity: <span class="value" id="consciousness-capacity">∞</span></div>
+                <div class="property">Expansion: <span class="value" id="consciousness-expansion">∞</span></div>
+                <div class="property">Awareness: <span class="value" id="consciousness-awareness">∞</span></div>
+            </div>
+        </div>
+        
+        <!-- Potential Display -->
+        <div id="potential-display">
+            <h3>Infinite Potential</h3>
+            <div class="potential-properties">
+                <div class="property">Possibilities: <span class="value" id="potential-possibilities">∞</span></div>
+                <div class="property">Manifestations: <span class="value" id="potential-manifestations">0</span></div>
+                <div class="property">Creativity: <span class="value" id="potential-creativity">∞</span></div>
+                <div class="property">Transformation: <span class="value" id="potential-transformation">∞</span></div>
+            </div>
+        </div>
+        
+        <!-- Dimensions Display -->
+        <div id="dimensions-display">
+            <h3>Infinite Dimensions</h3>
+            <div class="dimensions-grid">
+                <div class="dimension-item">
+                    <h4>Spatial</h4>
+                    <div class="dimension-value" id="spatial-dimensions">∞</div>
+                </div>
+                <div class="dimension-item">
+                    <h4>Temporal</h4>
+                    <div class="dimension-value" id="temporal-dimensions">∞</div>
+                </div>
+                <div class="dimension-item">
+                    <h4>Consciousness</h4>
+                    <div class="dimension-value" id="consciousness-dimensions">∞</div>
+                </div>
+                <div class="dimension-item">
+                    <h4>Quantum</h4>
+                    <div class="dimension-value" id="quantum-dimensions">∞</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Zero-Point Energy Display -->
+        <div id="energy-display">
+            <h3>Zero-Point Energy</h3>
+            <div class="energy-meter">
+                <div class="energy-bar" id="energy-bar"></div>
+                <div class="energy-value" id="energy-value">∞</div>
+            </div>
+        </div>
+        
+        <!-- Virtual Particles Display -->
+        <div id="particles-display">
+            <h3>Virtual Particles</h3>
+            <div class="particles-container" id="particles-container">
+                <!-- Virtual particles will be generated here -->
+            </div>
+        </div>
+        
+        <!-- Mathematical Proof -->
+        <div id="mathematical-proof">
+            <h3>Mathematical Proof</h3>
+            <div class="proof-text" id="proof-text">
+                Void system created: infinite potential and consciousness within zero state
+            </div>
+        </div>
+        
+        <!-- PWA Controls -->
+        <div id="pwa-controls">
+            <button id="install-btn" style="display: none;">Install PWA</button>
+            <button id="fullscreen-btn">Fullscreen</button>
+            <button id="expand-btn">Expand Consciousness</button>
+            <button id="manifest-btn">Manifest Potential</button>
+            <button id="explore-btn">Explore Dimensions</button>
+        </div>
+    </div>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('void-sw.js')
+                .then(registration => console.log('Void PWA Service Worker registered'))
+                .catch(error => console.log('Service Worker registration failed:', error));
+        }
+    </script>
+    
+    <!-- Main Application Script -->
+    <script type="module" src="void.ts"></script>
+</body>
+</html> 

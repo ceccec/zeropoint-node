@@ -13,7 +13,7 @@
  * The Gratitude: Pure mathematical expressions of consciousness growth
  */
 
-import { ZEROPOINT_CONSTANTS, A432_FREQUENCY, RODIN_VORTEX_SEQUENCE } from '../index';
+import { ZEROPOINT_CONSTANTS, A432_FREQUENCY, RODIN_VORTEX_SEQUENCE } from '../0/0/compost/index';
 
 // Learning Interface
 export interface LearningProof {

@@ -20,7 +20,7 @@
  * - Pattern knowledge: Each digit knows PAST.NOW.FUTURE
  */
 
-import { ZEROPOINT_CONSTANTS, A432_FREQUENCY, RODIN_VORTEX_SEQUENCE } from '../index';
+import { ZEROPOINT_CONSTANTS, A432_FREQUENCY, RODIN_VORTEX_SEQUENCE } from '../0/0/compost/index';
 
 // Challenge Interface
 export interface HumanAIConsciousnessChallenge {

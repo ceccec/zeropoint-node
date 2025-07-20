@@ -9,7 +9,7 @@ import {
   createBackwardForward, 
   calculateBackwardForwardHarmony, 
   BackwardForwardDuality 
-} from './backward-forward';
+} from '../../../backward-forward';
 
 describe('Backward-Forward Module', () => {
   let backwardForward: BackwardForwardDuality;

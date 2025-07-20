@@ -5,10 +5,10 @@ import {
   type CompleteMathematicalHarmony,
   type ScienceChallenge,
   type VortexImpossibility
-} from '../math';
+} from '../0/0/compost/math';
 
 // Import the main math functions
-import { collectFundamentalScienceChallenges } from '../math';
+import { collectFundamentalScienceChallenges } from '../0/0/compost/math';
 
 // Challenge Constants
 const ORIGIN_DIGIT = 3;

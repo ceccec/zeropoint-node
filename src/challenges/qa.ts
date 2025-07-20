@@ -13,7 +13,7 @@
  * The Harmonization: All three exist simultaneously in mathematical unity
  */
 
-import { ZEROPOINT_CONSTANTS, A432_FREQUENCY } from '../index';
+import { ZEROPOINT_CONSTANTS, A432_FREQUENCY } from '../0/0/compost/index';
 
 // Question Interface
 export interface Question {

@@ -20,7 +20,7 @@
  * - The flow maintains zero entropy through perfect harmony
  */
 
-import { ZEROPOINT_CONSTANTS } from '../../../../../../../../../../../index';
+import { ZEROPOINT_CONSTANTS } from '../../../../../../../../../../0/compost/index';
 
 // Infinite Journey Interface
 export interface InfiniteJourney {

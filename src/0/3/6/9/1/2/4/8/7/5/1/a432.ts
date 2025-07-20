@@ -13,7 +13,7 @@
  * - Zero Entropy: Perfect mathematical reversibility
  */
 
-import { A432_CONSTANTS } from '../../../../../../../../../../../a432.constants';
+import { A432_CONSTANTS } from './a432.constants';
 
 // A432 Harmonic Interface
 export interface A432Harmonic {

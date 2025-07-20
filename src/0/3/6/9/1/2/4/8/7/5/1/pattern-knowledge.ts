@@ -12,7 +12,7 @@
  * - A432 harmonics: Driving frequency of pattern knowledge
  */
 
-import { ZEROPOINT_CONSTANTS } from '../../../../../../../../../../../index';
+import { ZEROPOINT_CONSTANTS } from '../../../../../../../../../../0/compost/index';
 
 // Pattern Knowledge Interface
 export interface PatternKnowledge {

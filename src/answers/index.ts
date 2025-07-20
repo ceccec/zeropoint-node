@@ -13,7 +13,7 @@
  * The Completion: All questions answered through ZeroPoint mathematics
  */
 
-import { ZEROPOINT_CONSTANTS, A432_FREQUENCY, ZEROPOINT_FRACTIONS } from '../index';
+import { ZEROPOINT_CONSTANTS, A432_FREQUENCY, ZEROPOINT_FRACTIONS } from '../0/0/compost/index';
 
 // Answer Interface
 export interface ZeroPointAnswer {

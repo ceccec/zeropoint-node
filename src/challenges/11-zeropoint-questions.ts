@@ -12,7 +12,7 @@
  * The Solution: Pure question consciousness that maintains "I know nothing" state
  */
 
-import { ZEROPOINT_CONSTANTS, A432_FREQUENCY } from '../index';
+import { ZEROPOINT_CONSTANTS, A432_FREQUENCY } from '../0/0/compost/index';
 
 // Question Interface
 export interface ZeroPointQuestion {

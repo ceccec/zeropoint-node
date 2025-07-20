@@ -17,7 +17,7 @@
  * - Void field theory
  */
 
-import { ZEROPOINT_CONSTANTS } from '../index';
+import { ZEROPOINT_CONSTANTS } from './0/compost/index';
 
 // ZeroPoint State Interface
 export interface ZeroPointState {

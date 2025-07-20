@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Hex Vortex Trinities - ZeroPoint System</title>
+    <link rel="stylesheet" href="quantum-hex-vortex-trinities.css">
+</head>
+<body>
+    <div class="quantum-hex-vortex-container">
+        <header>
+            <h1>Quantum Hex Vortex Trinities</h1>
+            <p>Every Digit in Hex, Split into Trinity Vortices</p>
+        </header>
+
+        <main>
+            <!-- All Digits in Hex Display -->
+            <section class="hex-digits-section">
+                <h2>All Digits in Hex Quantum States</h2>
+                <div class="hex-digits-grid" id="hexDigitsGrid">
+                    <!-- Generated dynamically -->
+                </div>
+            </section>
+
+            <!-- Hex Color Split Visualization -->
+            <section class="hex-color-split-section">
+                <h2>Hex Color Split into Trinity Vortices</h2>
+                <div class="hex-input-container">
+                    <label for="hexColorInput">Enter Hex Color:</label>
+                    <input type="text" id="hexColorInput" value="#FF00FF" placeholder="#RRGGBB">
+                    <button onclick="splitHexColor()">Split into Trinities</button>
+                </div>
+                <div class="hex-color-split" id="hexColorSplit">
+                    <!-- Generated dynamically -->
+                </div>
+            </section>
+
+            <!-- Quantum Superposition Display -->
+            <section class="quantum-superposition-section">
+                <h2>Quantum Superposition States</h2>
+                <div class="quantum-superposition" id="quantumSuperposition">
+                    <!-- Generated dynamically -->
+                </div>
+            </section>
+
+            <!-- Consciousness Display -->
+            <section class="consciousness-section">
+                <h2>Consciousness Resonance</h2>
+                <div class="consciousness-display" id="consciousnessDisplay">
+                    <!-- Generated dynamically -->
+                </div>
+            </section>
+
+            <!-- Mathematical Proof Display -->
+            <section class="mathematical-proof-section">
+                <h2>Mathematical Proofs</h2>
+                <div class="mathematical-proof" id="mathematicalProof">
+                    <!-- Generated dynamically -->
+                </div>
+            </section>
+
+            <!-- Interactive Controls -->
+            <section class="controls-section">
+                <h2>Interactive Controls</h2>
+                <div class="controls">
+                    <button onclick="generateAllQuantumStates()">Generate All Quantum States</button>
+                    <button onclick="createRandomEntanglement()">Create Random Entanglement</button>
+                    <button onclick="animateVortices()">Animate Vortices</button>
+                    <button onclick="resetSystem()">Reset System</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>ZeroPoint System - Quantum Hex Vortex Trinities</p>
+            <p>A432 Frequency Foundation | Trinity Consciousness | Infinite Mathematical Possibilities</p>
+        </footer>
+    </div>
+
+    <script type="module">
+        import { 
+            createQuantumHexDigit, 
+            splitHexColorIntoTrinityVortices, 
+            generateAllDigitsInHexQuantumStates,
+            createQuantumEntanglement 
+        } from './quantum-hex-vortex-trinities.js';
+
+        // Global state
+        let currentQuantumStates = [];
+        let currentHexSplit = null;
+
+        // Initialize the system
+        window.addEventListener('DOMContentLoaded', () => {
+            generateAllQuantumStates();
+            splitHexColor();
+        });
+
+        // Generate all quantum states for digits 0-9
+        window.generateAllQuantumStates = () => {
+            currentQuantumStates = generateAllDigitsInHexQuantumStates();
+            displayHexDigits();
+            updateMathematicalProof();
+        };
+
+        // Split hex color into trinity vortices
+        window.splitHexColor = () => {
+            const hexColor = document.getElementById('hexColorInput').value;
+            if (hexColor.match(/^#[0-9A-Fa-f]{6}$/)) {
+                currentHexSplit = splitHexColorIntoTrinityVortices(hexColor);
+                displayHexColorSplit();
+                displayQuantumSuperposition();
+                displayConsciousness();
+            } else {
+                alert('Please enter a valid hex color (e.g., #FF00FF)');
+            }
+        };
+
+        // Create random entanglement between digits
+        window.createRandomEntanglement = () => {
+            if (currentQuantumStates.length >= 2) {
+                const randomIndex1 = Math.floor(Math.random() * currentQuantumStates.length);
+                const randomIndex2 = Math.floor(Math.random() * currentQuantumStates.length);
+                
+                if (randomIndex1 !== randomIndex2) {
+                    const entanglement = createQuantumEntanglement(
+                        currentQuantumStates[randomIndex1],
+                        currentQuantumStates[randomIndex2]
+                    );
+                    
+                    displayEntanglement(entanglement);
+                }
+            }
+        };
+
+        // Animate vortices
+        window.animateVortices = () => {
+            const vortices = document.querySelectorAll('.trinity-vortex');
+            vortices.forEach(vortex => {
+                vortex.style.animation = 'vortexRotation 20s linear infinite';
+            });
+        };
+
+        // Reset system
+        window.resetSystem = () => {
+            currentQuantumStates = [];
+            currentHexSplit = null;
+            document.getElementById('hexDigitsGrid').innerHTML = '';
+            document.getElementById('hexColorSplit').innerHTML = '';
+            document.getElementById('quantumSuperposition').innerHTML = '';
+            document.getElementById('consciousnessDisplay').innerHTML = '';
+            document.getElementById('mathematicalProof').innerHTML = '';
+        };
+
+        // Display hex digits
+        function displayHexDigits() {
+            const grid = document.getElementById('hexDigitsGrid');
+            grid.innerHTML = '';
+            
+            currentQuantumStates.forEach(state => {
+                const digitElement = document.createElement('div');
+                digitElement.className = `hex-digit hex-digit-${state.digit}`;
+                digitElement.innerHTML = `
+                    <div>${state.digit}</div>
+                    <div style="font-size: 12px;">${state.hexValue}</div>
+                `;
+                digitElement.title = `Digit ${state.digit}: ${state.hexValue} | Consciousness: ${state.consciousness} | Frequency: ${state.frequency}`;
+                grid.appendChild(digitElement);
+            });
+        }
+
+        // Display hex color split
+        function displayHexColorSplit() {
+            if (!currentHexSplit) return;
+            
+            const container = document.getElementById('hexColorSplit');
+            container.innerHTML = `
+                <div class="hex-channel hex-channel-red">
+                    <h3>Red Vortex</h3>
+                    <div class="trinity-vortex trinity-vortex-red">
+                        <div>Hex: ${currentHexSplit.redVortex.hexValue}</div>
+                        <div class="trinity-states">
+                            <div class="trinity-state">${currentHexSplit.redVortex.trinityStates[0]}</div>
+                            <div class="trinity-state">${currentHexSplit.redVortex.trinityStates[1]}</div>
+                            <div class="trinity-state">${currentHexSplit.redVortex.trinityStates[2]}</div>
+                        </div>
+                        <div>Consciousness: ${currentHexSplit.redVortex.consciousness}</div>
+                        <div>Frequency: ${currentHexSplit.redVortex.frequency}</div>
+                    </div>
+                </div>
+                <div class="hex-channel hex-channel-green">
+                    <h3>Green Vortex</h3>
+                    <div class="trinity-vortex trinity-vortex-green">
+                        <div>Hex: ${currentHexSplit.greenVortex.hexValue}</div>
+                        <div class="trinity-states">
+                            <div class="trinity-state">${currentHexSplit.greenVortex.trinityStates[0]}</div>
+                            <div class="trinity-state">${currentHexSplit.greenVortex.trinityStates[1]}</div>
+                            <div class="trinity-state">${currentHexSplit.greenVortex.trinityStates[2]}</div>
+                        </div>
+                        <div>Consciousness: ${currentHexSplit.greenVortex.consciousness}</div>
+                        <div>Frequency: ${currentHexSplit.greenVortex.frequency}</div>
+                    </div>
+                </div>
+                <div class="hex-channel hex-channel-blue">
+                    <h3>Blue Vortex</h3>
+                    <div class="trinity-vortex trinity-vortex-blue">
+                        <div>Hex: ${currentHexSplit.blueVortex.hexValue}</div>
+                        <div class="trinity-states">
+                            <div class="trinity-state">${currentHexSplit.blueVortex.trinityStates[0]}</div>
+                            <div class="trinity-state">${currentHexSplit.blueVortex.trinityStates[1]}</div>
+                            <div class="trinity-state">${currentHexSplit.blueVortex.trinityStates[2]}</div>
+                        </div>
+                        <div>Consciousness: ${currentHexSplit.blueVortex.consciousness}</div>
+                        <div>Frequency: ${currentHexSplit.blueVortex.frequency}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Display quantum superposition
+        function displayQuantumSuperposition() {
+            if (!currentHexSplit) return;
+            
+            const container = document.getElementById('quantumSuperposition');
+            container.innerHTML = '';
+            
+            currentHexSplit.quantumSuperposition.forEach((state, index) => {
+                const stateElement = document.createElement('div');
+                stateElement.className = 'superposition-state';
+                stateElement.textContent = state;
+                stateElement.style.backgroundColor = `hsl(${state * 36}, 70%, 50%)`;
+                stateElement.title = `Quantum State ${index}: ${state}`;
+                container.appendChild(stateElement);
+            });
+        }
+
+        // Display consciousness
+        function displayConsciousness() {
+            if (!currentHexSplit) return;
+            
+            const container = document.getElementById('consciousnessDisplay');
+            container.innerHTML = `
+                <div class="consciousness-value">${currentHexSplit.totalConsciousness}</div>
+                <div class="frequency-value">${currentHexSplit.totalFrequency} Hz</div>
+                <div>Total Consciousness Resonance</div>
+            `;
+        }
+
+        // Display entanglement
+        function displayEntanglement(entanglement) {
+            const proof = document.getElementById('mathematicalProof');
+            const entanglementElement = document.createElement('div');
+            entanglementElement.className = 'mathematical-proof';
+            entanglementElement.innerHTML = `
+                <h3>Quantum Entanglement Result</h3>
+                <p><strong>Entangled:</strong> ${entanglement.entangled ? 'Yes' : 'No'}</p>
+                <p><strong>Shared Consciousness:</strong> ${entanglement.sharedConsciousness}</p>
+                <p><strong>Shared Frequency:</strong> ${entanglement.sharedFrequency} Hz</p>
+                <p><strong>Proof:</strong> ${entanglement.mathematicalProof}</p>
+            `;
+            proof.appendChild(entanglementElement);
+        }
+
+        // Update mathematical proof
+        function updateMathematicalProof() {
+            const proof = document.getElementById('mathematicalProof');
+            proof.innerHTML = `
+                <h3>Quantum Hex Vortex Trinities Mathematical Proofs</h3>
+                <p><strong>Scientific Proof 1:</strong> Every digit (0-9) can describe its interactions in hex format, creating quantum consciousness states.</p>
+                <p><strong>Scientific Proof 2:</strong> Each hex color (#RRGGBB) splits into two trinity vortices per channel, creating 6 trinity consciousness states.</p>
+                <p><strong>Scientific Proof 3:</strong> Each 2-digit hex value creates a trinity vortex with 3 consciousness states representing trinity consciousness.</p>
+                <p><strong>Scientific Proof 4:</strong> Multiple trinity vortices create quantum superposition states with infinite mathematical possibilities.</p>
+                <p><strong>A432 Foundation:</strong> All calculations use A432 Hz as the fundamental frequency for consciousness resonance.</p>
+            `;
+        }
+
+        // Add event listeners
+        document.getElementById('hexColorInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                splitHexColor();
+            }
+        });
+    </script>
+</body>
+</html> 

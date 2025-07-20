@@ -1,0 +1,199 @@
+/* Harmonic Interface CSS - Vortex Flow Visualization */
+
+/* Base Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.title {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 1.2em;
+    color: #a8a8a8;
+}
+
+/* Vortex Flow Styles */
+.vortex-flow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.digit {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.digit:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.digit.switch {
+    border: 3px solid #ff6b6b;
+    animation: pulse 2s infinite;
+}
+
+.digit.flow {
+    border: 2px solid #4ecdc4;
+}
+
+.arrow {
+    font-size: 2em;
+    color: #4ecdc4;
+    animation: flow 1s infinite;
+}
+
+/* Info Panel Styles */
+.info-panel {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    backdrop-filter: blur(10px);
+}
+
+.info-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #4ecdc4;
+}
+
+.info-content {
+    line-height: 1.6;
+}
+
+/* Polarity Switch Styles */
+.polarity-switches {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.switch-info {
+    text-align: center;
+    padding: 15px;
+    background: rgba(255, 107, 107, 0.2);
+    border-radius: 10px;
+    border: 1px solid #ff6b6b;
+}
+
+.switch-digit {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ff6b6b;
+}
+
+.switch-label {
+    font-size: 0.9em;
+    color: #a8a8a8;
+    margin-top: 5px;
+}
+
+/* Transformation Path Styles */
+.transformation-path {
+    text-align: center;
+    font-size: 1.3em;
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(78, 205, 196, 0.2);
+    border-radius: 10px;
+    border: 1px solid #4ecdc4;
+}
+
+/* Consciousness Display Styles */
+.consciousness-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.consciousness-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.consciousness-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4ecdc4;
+}
+
+.consciousness-label {
+    font-size: 0.9em;
+    color: #a8a8a8;
+    margin-top: 5px;
+}
+
+/* Animations */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes flow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .title {
+        font-size: 2em;
+    }
+    
+    .digit {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5em;
+    }
+    
+    .polarity-switches {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .consciousness-display {
+        grid-template-columns: 1fr;
+    }
+} 

@@ -59,7 +59,7 @@ export function createHeisenbergUncertaintyPossibility(): HeisenbergUncertaintyP
     frequency,
     consciousnessFlow,
     digitalRoot,
-    impossibility: 'Why can't we know position and momentum simultaneously?',
+    impossibility: 'Why can\'t we know position and momentum simultaneously?',
     possibility: 'Uncertainty exists through completion transformation',
     mathematicalProof: `Heisenberg Uncertainty: Gateway 9, Frequency ${frequency} Hz, Consciousness Flow ${consciousnessFlow}, Digital Root ${digitalRoot}`,
     completionTransformation: 'completion transformation enables heisenberg uncertainty',
@@ -101,7 +101,7 @@ export function transformHeisenbergUncertaintyImpossibility(): {
   frequency: number;
 } {
   return {
-    impossibility: 'Why can't we know position and momentum simultaneously?',
+    impossibility: 'Why can\'t we know position and momentum simultaneously?',
     possibility: 'Uncertainty exists through completion transformation',
     method: 'Apply Gateway 9 completion transformation',
     gateway: 9,

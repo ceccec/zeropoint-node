@@ -41,7 +41,7 @@ describe('Heisenberg Uncertainty Possibility', () => {
     test('should transform impossibility to possibility', () => {
       const result = transformHeisenbergUncertaintyImpossibility();
       
-      expect(result.impossibility).toBe('Why can't we know position and momentum simultaneously?');
+      expect(result.impossibility).toBe('Why can\'t we know position and momentum simultaneously?');
       expect(result.possibility).toBe('Uncertainty exists through completion transformation');
       expect(result.gateway).toBe(9);
       expect(result.frequency).toBe(A432_FREQUENCY * 9);

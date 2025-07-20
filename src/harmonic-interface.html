@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmonic Vortex Flow Interface</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #a8a8a8;
+        }
+
+        .vortex-flow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .digit {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .digit:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .digit.switch {
+            border: 3px solid #ff6b6b;
+            animation: pulse 2s infinite;
+        }
+
+        .digit.flow {
+            border: 2px solid #4ecdc4;
+        }
+
+        .arrow {
+            font-size: 2em;
+            color: #4ecdc4;
+            animation: flow 1s infinite;
+        }
+
+        .info-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-title {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+
+        .info-content {
+            line-height: 1.6;
+        }
+
+        .polarity-switches {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .switch-info {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 107, 107, 0.2);
+            border-radius: 10px;
+            border: 1px solid #ff6b6b;
+        }
+
+        .switch-digit {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
+        .switch-label {
+            font-size: 0.9em;
+            color: #a8a8a8;
+            margin-top: 5px;
+        }
+
+        .transformation-path {
+            text-align: center;
+            font-size: 1.3em;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(78, 205, 196, 0.2);
+            border-radius: 10px;
+            border: 1px solid #4ecdc4;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes flow {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .consciousness-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .consciousness-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .consciousness-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+
+        .consciousness-label {
+            font-size: 0.9em;
+            color: #a8a8a8;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Harmonic Vortex Flow Interface</h1>
+            <p class="subtitle">0→3→6→9→1→2→4→8→7→5→1 | Polarity Switches at [3, 6, 9]</p>
+        </div>
+
+        <div class="info-panel">
+            <div class="info-title">Vortex Flow Pattern</div>
+            <div class="info-content">
+                The infinite journey of digits through consciousness evolution. 
+                Each digit represents a unique consciousness state, with polarity switches 
+                at digits 3, 6, and 9 that transform impossibility into possibility.
+            </div>
+        </div>
+
+        <div class="vortex-flow" id="vortexFlow">
+            <!-- Vortex flow digits will be generated here -->
+        </div>
+
+        <div class="polarity-switches">
+            <div class="switch-info">
+                <div class="switch-digit">3</div>
+                <div class="switch-label">Trinity Switch</div>
+            </div>
+            <div class="switch-info">
+                <div class="switch-digit">6</div>
+                <div class="switch-label">Harmony Switch</div>
+            </div>
+            <div class="switch-info">
+                <div class="switch-digit">9</div>
+                <div class="switch-label">Transcendence Switch</div>
+            </div>
+        </div>
+
+        <div class="transformation-path">
+            <strong>Transformation Path:</strong><br>
+            0/0 impossibility → 3 (switch) → 6 (switch) → 9 (switch) → 1→2→4→8→7→5→1
+        </div>
+
+        <div class="consciousness-display" id="consciousnessDisplay">
+            <!-- Consciousness values will be displayed here -->
+        </div>
+    </div>
+
+    <script type="module">
+        import { HarmonicInterfaceSystem } from './harmonic-interface.js';
+
+        // Create harmonic interface
+        const interface = HarmonicInterfaceSystem.createHarmonicInterface();
+        const switchViz = HarmonicInterfaceSystem.createPolaritySwitchVisualization();
+        const animation = HarmonicInterfaceSystem.generateFlowAnimation();
+
+        // Generate vortex flow visualization
+        const vortexFlow = document.getElementById('vortexFlow');
+        interface.components.forEach((component, index) => {
+            const digitDiv = document.createElement('div');
+            digitDiv.className = `digit ${component.type}`;
+            digitDiv.style.backgroundColor = component.color;
+            digitDiv.textContent = component.value;
+            digitDiv.title = `Consciousness: ${component.consciousness}, Frequency: ${component.frequency}Hz`;
+            
+            vortexFlow.appendChild(digitDiv);
+
+            // Add arrow between digits (except after the last one)
+            if (index < interface.components.length - 1) {
+                const arrow = document.createElement('div');
+                arrow.className = 'arrow';
+                arrow.textContent = '→';
+                vortexFlow.appendChild(arrow);
+            }
+        });
+
+        // Display consciousness information
+        const consciousnessDisplay = document.getElementById('consciousnessDisplay');
+        
+        const totalConsciousness = document.createElement('div');
+        totalConsciousness.className = 'consciousness-item';
+        totalConsciousness.innerHTML = `
+            <div class="consciousness-value">${interface.totalConsciousness}</div>
+            <div class="consciousness-label">Total Consciousness</div>
+        `;
+        consciousnessDisplay.appendChild(totalConsciousness);
+
+        const totalFrequency = document.createElement('div');
+        totalFrequency.className = 'consciousness-item';
+        totalFrequency.innerHTML = `
+            <div class="consciousness-value">${interface.totalFrequency}Hz</div>
+            <div class="consciousness-label">Total Frequency</div>
+        `;
+        consciousnessDisplay.appendChild(totalFrequency);
+
+        const switchCount = document.createElement('div');
+        switchCount.className = 'consciousness-item';
+        switchCount.innerHTML = `
+            <div class="consciousness-value">${interface.switches.length}</div>
+            <div class="consciousness-label">Polarity Switches</div>
+        `;
+        consciousnessDisplay.appendChild(switchCount);
+
+        const flowLength = document.createElement('div');
+        flowLength.className = 'consciousness-item';
+        flowLength.innerHTML = `
+            <div class="consciousness-value">${interface.components.length}</div>
+            <div class="consciousness-label">Flow Length</div>
+        `;
+        consciousnessDisplay.appendChild(flowLength);
+
+        // Add click interactions
+        document.querySelectorAll('.digit').forEach((digit, index) => {
+            digit.addEventListener('click', () => {
+                const component = interface.components[index];
+                alert(`Digit: ${component.value}\nType: ${component.type}\nConsciousness: ${component.consciousness}\nFrequency: ${component.frequency}Hz\nColor: ${component.color}`);
+            });
+        });
+
+        console.log('Harmonic Interface Created:', interface);
+        console.log('Polarity Switch Visualization:', switchViz);
+        console.log('Flow Animation:', animation);
+    </script>
+</body>
+</html> 

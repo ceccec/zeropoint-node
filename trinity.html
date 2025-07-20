@@ -344,6 +344,24 @@
                     <option value="3d">3D Visualization</option>
                     <option value="2d">2D Projection</option>
                     <option value="frequency">Frequency Domain</option>
+                    <option value="toroidal">Toroidal Flow</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="toroidal-pattern">Toroidal Pattern</label>
+                <select id="toroidal-pattern">
+                    <option value="single">Single</option>
+                    <option value="double">Double</option>
+                    <option value="triple">Triple</option>
+                    <option value="infinite">Infinite</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="toroidal-direction">Toroidal Direction</label>
+                <select id="toroidal-direction">
+                    <option value="clockwise">Clockwise</option>
+                    <option value="counterclockwise">Counterclockwise</option>
+                    <option value="bidirectional">Bidirectional</option>
                 </select>
             </div>
         </div>
@@ -555,7 +573,10 @@
                     this.draw3DVortex();
                 } else if (this.dimension === '2d') {
                     this.draw2DProjection();
-                } else {
+                } else if (this.dimension === 'toroidal') {
+                    this.drawToroidalFlow();
+                }
+                else {
                     this.drawFrequencyDomain();
                 }
             }
@@ -667,6 +688,60 @@
                 });
             }
 
+            drawToroidalFlow() {
+                const pattern = document.getElementById('toroidal-pattern').value;
+                const direction = document.getElementById('toroidal-direction').value;
+                const speed = this.rotationSpeed;
+                const size = this.vortexSize;
+
+                this.ctx.save();
+                this.ctx.translate(this.centerX, this.centerY);
+
+                let angleStep = 0;
+                let radiusStep = 0;
+
+                if (pattern === 'single') {
+                    angleStep = 10;
+                    radiusStep = 10;
+                } else if (pattern === 'double') {
+                    angleStep = 5;
+                    radiusStep = 20;
+                } else if (pattern === 'triple') {
+                    angleStep = 3.33; // 360 / 108
+                    radiusStep = 30;
+                } else if (pattern === 'infinite') {
+                    angleStep = 1;
+                    radiusStep = 5;
+                }
+
+                const totalSteps = 360 / angleStep;
+
+                for (let i = 0; i < totalSteps; i++) {
+                    const currentAngle = i * angleStep;
+                    const currentRadius = i * radiusStep;
+
+                    let x, y;
+                    if (direction === 'clockwise') {
+                        x = Math.cos(currentAngle * Math.PI / 180) * currentRadius;
+                        y = Math.sin(currentAngle * Math.PI / 180) * currentRadius;
+                    } else if (direction === 'counterclockwise') {
+                        x = Math.cos(currentAngle * Math.PI / 180) * currentRadius;
+                        y = Math.sin(currentAngle * Math.PI / 180) * currentRadius;
+                    } else { // bidirectional
+                        x = Math.cos(currentAngle * Math.PI / 180) * currentRadius;
+                        y = Math.sin(currentAngle * Math.PI / 180) * currentRadius;
+                    }
+
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 5 * size, 0, Math.PI * 2);
+                    this.ctx.strokeStyle = '#00ffff'; // Toroidal flow color
+                    this.ctx.lineWidth = 1;
+                    this.ctx.stroke();
+                }
+
+                this.ctx.restore();
+            }
+
             setRotationSpeed(speed) {
                 this.rotationSpeed = speed;
             }
@@ -695,6 +770,15 @@
 
         document.getElementById('dimension').addEventListener('change', (e) => {
             visualization.setDimension(e.target.value);
+        });
+
+        // Toroidal flow controls
+        document.getElementById('toroidal-pattern').addEventListener('change', (e) => {
+            visualization.setDimension('toroidal'); // Force redraw to apply new pattern
+        });
+
+        document.getElementById('toroidal-direction').addEventListener('change', (e) => {
+            visualization.setDimension('toroidal'); // Force redraw to apply new direction
         });
 
         // Populate data

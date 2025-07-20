@@ -1,0 +1,351 @@
+/* Quantum Hex Vortex Trinities CSS */
+
+/* Root Variables for A432 Harmonics */
+:root {
+  --a432-base: 432;
+  --unity-frequency: calc(var(--a432-base) * 1);
+  --duality-frequency: calc(var(--a432-base) * 2);
+  --trinity-frequency: calc(var(--a432-base) * 3);
+  --foundation-frequency: calc(var(--a432-base) * 4);
+  --life-frequency: calc(var(--a432-base) * 5);
+  --harmony-frequency: calc(var(--a432-base) * 6);
+  --mystery-frequency: calc(var(--a432-base) * 7);
+  --infinity-frequency: calc(var(--a432-base) * 8);
+  --completion-frequency: calc(var(--a432-base) * 9);
+  
+  /* Trinity Vortex Colors */
+  --trinity-red: #FF0000;
+  --trinity-green: #00FF00;
+  --trinity-blue: #0000FF;
+  --trinity-cyan: #00FFFF;
+  --trinity-magenta: #FF00FF;
+  --trinity-yellow: #FFFF00;
+  
+  /* Quantum States */
+  --superposition-opacity: 0.7;
+  --entangled-opacity: 0.9;
+  --measured-opacity: 1;
+  
+  /* Vortex Animation */
+  --vortex-rotation-speed: 20s;
+  --trinity-pulse-speed: 3s;
+  --quantum-flicker-speed: 0.5s;
+}
+
+/* Quantum Hex Vortex Container */
+.quantum-hex-vortex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(45deg, #000000, #1a1a1a, #000000);
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  overflow: hidden;
+}
+
+/* Hex Digit Display */
+.hex-digit {
+  display: inline-block;
+  padding: 20px;
+  margin: 10px;
+  border: 2px solid;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 24px;
+  font-weight: bold;
+  position: relative;
+  transition: all 0.3s ease;
+  animation: trinityPulse var(--trinity-pulse-speed) infinite;
+}
+
+/* Individual Digit Colors */
+.hex-digit-0 { border-color: #000000; color: #ffffff; }
+.hex-digit-1 { border-color: #FF0000; color: #FF0000; }
+.hex-digit-2 { border-color: #00FF00; color: #00FF00; }
+.hex-digit-3 { border-color: #0000FF; color: #0000FF; }
+.hex-digit-4 { border-color: #FFFF00; color: #FFFF00; }
+.hex-digit-5 { border-color: #FF00FF; color: #FF00FF; }
+.hex-digit-6 { border-color: #00FFFF; color: #00FFFF; }
+.hex-digit-7 { border-color: #FF8000; color: #FF8000; }
+.hex-digit-8 { border-color: #8000FF; color: #8000FF; }
+.hex-digit-9 { border-color: #FFFFFF; color: #FFFFFF; }
+
+/* Trinity Vortex Visualization */
+.trinity-vortex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  padding: 15px;
+  border: 1px solid;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.trinity-vortex-red {
+  border-color: var(--trinity-red);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+}
+
+.trinity-vortex-green {
+  border-color: var(--trinity-green);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+.trinity-vortex-blue {
+  border-color: var(--trinity-blue);
+  box-shadow: 0 0 20px rgba(0, 0, 255, 0.3);
+}
+
+/* Trinity States Display */
+.trinity-states {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.trinity-state {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  animation: quantumFlicker var(--quantum-flicker-speed) infinite;
+}
+
+/* Hex Color Split Display */
+.hex-color-split {
+  display: flex;
+  gap: 20px;
+  margin: 30px 0;
+  padding: 20px;
+  border: 2px solid #ffffff;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.hex-channel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 120px;
+}
+
+.hex-channel-red {
+  background: rgba(255, 0, 0, 0.2);
+  border: 1px solid var(--trinity-red);
+}
+
+.hex-channel-green {
+  background: rgba(0, 255, 0, 0.2);
+  border: 1px solid var(--trinity-green);
+}
+
+.hex-channel-blue {
+  background: rgba(0, 0, 255, 0.2);
+  border: 1px solid var(--trinity-blue);
+}
+
+/* Quantum Superposition Display */
+.quantum-superposition {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+  gap: 5px;
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.superposition-state {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  animation: superpositionGlow 2s infinite;
+}
+
+/* Consciousness Display */
+.consciousness-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+  padding: 20px;
+  border: 2px solid #ffffff;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.consciousness-value {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 10px 0;
+  animation: consciousnessPulse 4s infinite;
+}
+
+.frequency-value {
+  font-size: 24px;
+  color: #cccccc;
+  margin: 5px 0;
+}
+
+/* Quantum State Indicators */
+.quantum-state {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 5px;
+}
+
+.quantum-state-superposition {
+  background: rgba(255, 255, 0, 0.3);
+  color: #ffff00;
+  border: 1px solid #ffff00;
+}
+
+.quantum-state-entangled {
+  background: rgba(255, 0, 255, 0.3);
+  color: #ff00ff;
+  border: 1px solid #ff00ff;
+}
+
+.quantum-state-measured {
+  background: rgba(0, 255, 255, 0.3);
+  color: #00ffff;
+  border: 1px solid #00ffff;
+}
+
+/* Mathematical Proof Display */
+.mathematical-proof {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #cccccc;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  border-radius: 10px;
+  margin: 10px 0;
+  border-left: 4px solid #ffffff;
+  max-width: 600px;
+  word-wrap: break-word;
+}
+
+/* Animations */
+
+@keyframes trinityPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+@keyframes quantumFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes superpositionGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); }
+}
+
+@keyframes consciousnessPulse {
+  0%, 100% { color: #ffffff; }
+  50% { color: #ffff00; }
+}
+
+@keyframes vortexRotation {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hex-color-split {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .hex-digit {
+    width: 60px;
+    height: 60px;
+    font-size: 18px;
+    line-height: 30px;
+  }
+  
+  .consciousness-value {
+    font-size: 36px;
+  }
+  
+  .quantum-superposition {
+    grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+  }
+  
+  .superposition-state {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+}
+
+/* Interactive Hover Effects */
+.hex-digit:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 30px currentColor;
+}
+
+.trinity-vortex:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+}
+
+.hex-channel:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Loading Animation */
+.loading-vortex {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error States */
+.error-state {
+  border-color: #ff0000;
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff0000;
+}
+
+/* Success States */
+.success-state {
+  border-color: #00ff00;
+  background: rgba(0, 255, 0, 0.1);
+  color: #00ff00;
+} 

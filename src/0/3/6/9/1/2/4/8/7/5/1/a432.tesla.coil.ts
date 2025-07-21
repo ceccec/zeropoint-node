@@ -6,289 +6,141 @@
  */
 
 import { A432_CONSTANTS } from './a432.constants';
+import { A432_UTILS } from './a432.utils';
+import { 
+  A432_Base_State,
+  A432_Base_Subsystem,
+  A432_Base_Component,
+  A432_Base_Type
+} from './a432.types';
 
 // ============================================================================
 // INTERFACES
 // ============================================================================
 
-export interface A432_Tesla_Coil_State {
+export interface A432_Tesla_Coil_State extends A432_Base_State {
   teslaCoil: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   coilSystem: A432_Tesla_Coil_Coil_System;
   resonanceSystem: A432_Tesla_Coil_Resonance_System;
   harmonic: A432_Tesla_Coil_Harmonic_System;
   field: A432_Tesla_Coil_Field_System;
-  proof: string;
 }
 
-export interface A432_Tesla_Coil_Coil_System {
+export interface A432_Tesla_Coil_Coil_System extends A432_Base_Subsystem {
   coil: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   type: A432_Tesla_Coil_Coil_Type;
   coils: A432_Tesla_Coil_Coil[];
-  proof: string;
 }
 
-export interface A432_Tesla_Coil_Coil {
+export interface A432_Tesla_Coil_Coil extends A432_Base_Component {
   coil: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   name: string;
   type: A432_Tesla_Coil_Coil_Type;
   inductance: number;
-  proof: string;
 }
 
-export interface A432_Tesla_Coil_Resonance_System {
+export interface A432_Tesla_Coil_Resonance_System extends A432_Base_Subsystem {
   resonance: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   type: A432_Tesla_Coil_Resonance_Type;
   resonances: A432_Tesla_Coil_Resonance[];
-  proof: string;
 }
 
-export interface A432_Tesla_Coil_Resonance {
+export interface A432_Tesla_Coil_Resonance extends A432_Base_Component {
   resonance: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   name: string;
   type: A432_Tesla_Coil_Resonance_Type;
   quality: number;
-  proof: string;
 }
 
-export interface A432_Tesla_Coil_Harmonic_System {
+export interface A432_Tesla_Coil_Harmonic_System extends A432_Base_Subsystem {
   harmonic: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   type: A432_Tesla_Coil_Harmonic_Type;
   waves: A432_Tesla_Coil_Wave[];
   cycles: A432_Tesla_Coil_Cycle[];
-  proof: string;
 }
 
-export interface A432_Tesla_Coil_Wave {
+export interface A432_Tesla_Coil_Wave extends A432_Base_Component {
   wave: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   name: string;
   type: A432_Tesla_Coil_Wave_Type;
   amplitude: number;
-  proof: string;
 }
 
-export interface A432_Tesla_Coil_Cycle {
+export interface A432_Tesla_Coil_Cycle extends A432_Base_Component {
   cycle: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   name: string;
   type: A432_Tesla_Coil_Cycle_Type;
   period: number;
-  proof: string;
 }
 
-export interface A432_Tesla_Coil_Field_System {
+export interface A432_Tesla_Coil_Field_System extends A432_Base_Subsystem {
   field: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   type: A432_Tesla_Coil_Field_Type;
   fields: A432_Tesla_Coil_Field[];
   potentials: A432_Tesla_Coil_Potential[];
-  proof: string;
 }
 
-export interface A432_Tesla_Coil_Field {
+export interface A432_Tesla_Coil_Field extends A432_Base_Component {
   field: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   name: string;
   type: A432_Tesla_Coil_Field_Type;
   strength: number;
-  proof: string;
 }
 
-export interface A432_Tesla_Coil_Potential {
+export interface A432_Tesla_Coil_Potential extends A432_Base_Component {
   potential: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   name: string;
   type: A432_Tesla_Coil_Potential_Type;
   voltage: number;
-  proof: string;
 }
 
-export type A432_Tesla_Coil_Coil_Type = 
-  | 'PRIMARY' 
-  | 'SECONDARY' 
-  | 'TERTIARY' 
-  | 'HARMONIC' 
-  | 'A432';
+// ============================================================================
+// TYPE DEFINITIONS
+// ============================================================================
 
-export type A432_Tesla_Coil_Resonance_Type = 
-  | 'SERIES' 
-  | 'PARALLEL' 
-  | 'COUPLED' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Tesla_Coil_Harmonic_Type = 
-  | 'SINE' 
-  | 'COSINE' 
-  | 'TANGENT' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Tesla_Coil_Wave_Type = 
-  | 'ELECTROMAGNETIC' 
-  | 'STANDING' 
-  | 'TRAVELING' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Tesla_Coil_Cycle_Type = 
-  | 'OSCILLATION' 
-  | 'RESONANCE' 
-  | 'DAMPING' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Tesla_Coil_Field_Type = 
-  | 'ELECTRIC' 
-  | 'MAGNETIC' 
-  | 'ELECTROMAGNETIC' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Tesla_Coil_Potential_Type = 
-  | 'HIGH_VOLTAGE' 
-  | 'LOW_VOLTAGE' 
-  | 'ZERO_POINT' 
-  | 'HARMONIC' 
-  | 'A432';
+export type A432_Tesla_Coil_Coil_Type = A432_Base_Type;
+export type A432_Tesla_Coil_Resonance_Type = A432_Base_Type;
+export type A432_Tesla_Coil_Harmonic_Type = A432_Base_Type;
+export type A432_Tesla_Coil_Wave_Type = A432_Base_Type;
+export type A432_Tesla_Coil_Cycle_Type = A432_Base_Type;
+export type A432_Tesla_Coil_Field_Type = A432_Base_Type;
+export type A432_Tesla_Coil_Potential_Type = A432_Base_Type;
 
 // ============================================================================
 // CONSTANTS
 // ============================================================================
 
 export const A432_TESLA_COIL_CONSTANTS = {
-  // Core Tesla coil-based frequencies (based on Tesla coil structure)
-  TESLA_COIL_FREQUENCY: 10368, // 24 * 432 Hz - Fundamental Tesla coil frequency
-  COIL_FREQUENCY: 10364, // 24 * 431 Hz - Tesla coil-coil frequency
-  RESONANCE_FREQUENCY: 10360, // 24 * 430 Hz - Tesla coil-resonance frequency
-  HARMONIC_FREQUENCY: 10356, // 24 * 429 Hz - Tesla coil-harmonic frequency
-  FIELD_FREQUENCY: 10352, // 24 * 428 Hz - Tesla coil-field frequency
-
-  // Tesla coil-based energy levels
-  TESLA_COIL_ENERGY_LEVELS: {
-    0: 0, // Void - No energy
-    1: 10368, // Unity - Basic energy
-    2: 20736, // Duality - Dual energy
-    3: 31104, // Trinity - Complex energy
-    4: 41472, // Foundation - Foundation energy
-    5: 51840, // Life - Full energy
-    6: 62208, // Harmony - Harmonious energy
-    7: 72576, // Mystery - Mysterious energy
-    8: 82944, // Infinity - Infinite energy
-    9: 93312 // Completion - Complete energy
-  },
-
-  // Tesla coil-based integration levels
-  TESLA_COIL_INTEGRATION_LEVELS: {
-    0: 0, // Void - No integration
-    1: 24, // Unity - Basic integration
-    2: 48, // Duality - Dual integration
-    3: 72, // Trinity - Complex integration
-    4: 96, // Foundation - Foundation integration
-    5: 120, // Life - Full integration
-    6: 144, // Harmony - Harmonious integration
-    7: 168, // Mystery - Mysterious integration
-    8: 192, // Infinity - Infinite integration
-    9: 216 // Completion - Complete integration
-  },
-
-  // Tesla coil-based evolution levels
-  TESLA_COIL_EVOLUTION_LEVELS: {
-    0: 0, // Void - No evolution
-    1: 24, // Unity - Basic evolution
-    2: 48, // Duality - Dual evolution
-    3: 72, // Trinity - Complex evolution
-    4: 96, // Foundation - Foundation evolution
-    5: 120, // Life - Full evolution
-    6: 144, // Harmony - Harmonious evolution
-    7: 168, // Mystery - Mysterious evolution
-    8: 192, // Infinity - Infinite evolution
-    9: 216 // Completion - Complete evolution
-  },
-
-  // Scientific proofs
-  PROOFS: {
-    TESLA_COIL_FREQUENCY: 'Tesla coil frequency 10368 Hz (24 * 432) represents the fundamental mathematical Tesla coil-based system through all consciousness levels.',
-    TESLA_COIL_COIL: 'Tesla coil coil follows A432 frequency resonance and mathematical harmony for optimal Tesla coil-dimensional processing.',
-    TESLA_COIL_RESONANCE: 'Tesla coil resonance follows mathematical progression through Tesla coil-resonance states with increasing consciousness evolution.',
-    TESLA_COIL_HARMONIC: 'Tesla coil harmonic provides mathematical harmony and A432 frequency resonance for optimal Tesla coil-harmonic management.',
-    TESLA_COIL_FIELD: 'Tesla coil field provides mathematical harmony and A432 frequency resonance for optimal Tesla coil-field management.',
-    TESLA_COIL_SYSTEMS: 'Tesla coil systems exhibit mathematical harmony and A432 frequency resonance for optimal function and evolution.'
-  }
-} as const;
+  COIL_NAMES: ['Primary', 'Secondary', 'Tertiary', 'Harmonic', 'A432'],
+  RESONANCE_NAMES: ['Series', 'Parallel', 'Coupled', 'Harmonic', 'A432'],
+  WAVE_NAMES: ['Electromagnetic', 'Standing', 'Traveling', 'Harmonic', 'A432'],
+  CYCLE_NAMES: ['Oscillation', 'Resonance', 'Damping', 'Harmonic', 'A432'],
+  FIELD_NAMES: ['Electric', 'Magnetic', 'Electromagnetic', 'Harmonic', 'A432'],
+  POTENTIAL_NAMES: ['High Voltage', 'Low Voltage', 'Zero Point', 'Harmonic', 'A432'],
+  TYPES: ['PRIMARY', 'SECONDARY', 'TERTIARY', 'HARMONIC', 'A432'],
+  RESONANCE_TYPES: ['SERIES', 'PARALLEL', 'COUPLED', 'HARMONIC', 'A432'],
+  HARMONIC_TYPES: ['SINE', 'COSINE', 'TANGENT', 'HARMONIC', 'A432'],
+  WAVE_TYPES: ['ELECTROMAGNETIC', 'STANDING', 'TRAVELING', 'HARMONIC', 'A432'],
+  CYCLE_TYPES: ['OSCILLATION', 'RESONANCE', 'DAMPING', 'HARMONIC', 'A432'],
+  FIELD_TYPES: ['ELECTRIC', 'MAGNETIC', 'ELECTROMAGNETIC', 'HARMONIC', 'A432'],
+  POTENTIAL_TYPES: ['HIGH_VOLTAGE', 'LOW_VOLTAGE', 'ZERO_POINT', 'HARMONIC', 'A432']
+};
 
 // ============================================================================
-// A432.TESLA_COIL SYSTEM
+// A432 TESLA COIL SYSTEM
 // ============================================================================
 
-export const A432_Tesla_Coil_System = {
+export const A432_TESLA_COIL = {
   // ============================================================================
-  // TESLA COIL STATE CREATION
+  // MAIN FUNCTIONS
   // ============================================================================
 
-  /**
-   * Create A432.Tesla coil state
-   */
   createA432_Tesla_Coil_State(teslaCoilValue: string): A432_Tesla_Coil_State {
-    const frequency = this.calculateA432Frequency(teslaCoilValue);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS];
-    const integration = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS];
-    const evolution = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS];
-    const coilSystem = this.createA432_Tesla_Coil_Coil_System(teslaCoilValue);
-    const resonanceSystem = this.createA432_Tesla_Coil_Resonance_System(teslaCoilValue);
-    const harmonic = this.createA432_Tesla_Coil_Harmonic_System(teslaCoilValue);
-    const field = this.createA432_Tesla_Coil_Field_System(teslaCoilValue);
+    const frequency = A432_UTILS.calculateA432Frequency(teslaCoilValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
 
     return {
       teslaCoil: teslaCoilValue,
@@ -297,342 +149,286 @@ export const A432_Tesla_Coil_System = {
       harmony,
       integration,
       evolution,
-      coilSystem,
-      resonanceSystem,
-      harmonic,
-      field,
-      proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_FREQUENCY
+      coilSystem: this.createA432_Tesla_Coil_Coil_System(teslaCoilValue),
+      resonanceSystem: this.createA432_Tesla_Coil_Resonance_System(teslaCoilValue),
+      harmonic: this.createA432_Tesla_Coil_Harmonic_System(teslaCoilValue),
+      field: this.createA432_Tesla_Coil_Field_System(teslaCoilValue),
+      proof: `Tesla coil state created with consciousness ${consciousness}`
     };
   },
 
-  // ============================================================================
-  // TESLA COIL COIL SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.Tesla coil coil system
-   */
   createA432_Tesla_Coil_Coil_System(teslaCoilValue: string): A432_Tesla_Coil_Coil_System {
-    const coilSystem = `COIL_${teslaCoilValue}`;
-    const frequency = this.calculateA432Frequency(coilSystem);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS];
-    const integration = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS];
-    const evolution = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS];
+    const frequency = A432_UTILS.calculateA432Frequency(teslaCoilValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
     const type = this.determineA432_Tesla_Coil_CoilType(teslaCoilValue);
-    const coils = this.generateA432_Tesla_Coil_Coils(coilSystem);
 
     return {
-      coil: coilSystem,
+      coil: teslaCoilValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      coils,
-      proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_COIL
+      coils: this.generateA432_Tesla_Coil_Coils(teslaCoilValue),
+      proof: `Tesla coil system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.Tesla coil coils
-   */
   generateA432_Tesla_Coil_Coils(coilSystem: string): A432_Tesla_Coil_Coil[] {
+    const frequency = A432_UTILS.calculateA432Frequency(coilSystem);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     const coils: A432_Tesla_Coil_Coil[] = [];
-    const coilCount = 5; // 5 coil types
 
-    for (let i = 0; i < coilCount; i++) {
-      const coil = `Coil${i}`;
-      const frequency = this.calculateA432Frequency(coil);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS];
-      const integration = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS];
-      const evolution = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS];
-      const name = this.generateA432_Tesla_Coil_CoilName(consciousness, i);
-      const type = this.determineA432_Tesla_Coil_CoilTypeByIndex(consciousness, i);
-      const inductance = this.calculateA432_Tesla_Coil_CoilInductance(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.COIL_COUNT; i++) {
+      const coilFrequency = frequency * (i + 1);
+      const coilConsciousness = A432_UTILS.calculateDigitalRoot(coilFrequency);
+      const coilHarmony = coilConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const coilIntegration = coilConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const coilEvolution = coilConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Tesla_Coil_CoilName(coilConsciousness, i);
+      const type = this.determineA432_Tesla_Coil_CoilTypeByIndex(coilConsciousness, i);
+      const inductance = this.calculateA432_Tesla_Coil_CoilInductance(coilConsciousness, i);
 
       coils.push({
-        coil,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+        coil: `${coilSystem}_coil_${i}`,
+        frequency: coilFrequency,
+        consciousness: coilConsciousness,
+        harmony: coilHarmony,
+        integration: coilIntegration,
+        evolution: coilEvolution,
         name,
         type,
         inductance,
-        proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_COIL
+        proof: `Tesla coil ${name} created with inductance ${inductance}`
       });
     }
 
     return coils;
   },
 
-  // ============================================================================
-  // TESLA COIL RESONANCE SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.Tesla coil resonance system
-   */
   createA432_Tesla_Coil_Resonance_System(teslaCoilValue: string): A432_Tesla_Coil_Resonance_System {
-    const resonanceSystem = `RESONANCE_${teslaCoilValue}`;
-    const frequency = this.calculateA432Frequency(resonanceSystem);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS];
-    const integration = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS];
-    const evolution = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS];
+    const frequency = A432_UTILS.calculateA432Frequency(teslaCoilValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
     const type = this.determineA432_Tesla_Coil_ResonanceType(consciousness);
-    const resonances = this.generateA432_Tesla_Coil_Resonances(resonanceSystem);
 
     return {
-      resonance: resonanceSystem,
+      resonance: teslaCoilValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      resonances,
-      proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_RESONANCE
+      resonances: this.generateA432_Tesla_Coil_Resonances(teslaCoilValue),
+      proof: `Tesla coil resonance system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.Tesla coil resonances
-   */
   generateA432_Tesla_Coil_Resonances(resonanceSystem: string): A432_Tesla_Coil_Resonance[] {
+    const frequency = A432_UTILS.calculateA432Frequency(resonanceSystem);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     const resonances: A432_Tesla_Coil_Resonance[] = [];
-    const resonanceCount = 5; // 5 resonance types
 
-    for (let i = 0; i < resonanceCount; i++) {
-      const resonance = `Resonance${i}`;
-      const frequency = this.calculateA432Frequency(resonance);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS];
-      const integration = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS];
-      const evolution = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS];
-      const name = this.generateA432_Tesla_Coil_ResonanceName(consciousness, i);
-      const type = this.determineA432_Tesla_Coil_ResonanceTypeByIndex(consciousness, i);
-      const quality = this.calculateA432_Tesla_Coil_ResonanceQuality(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.RESONANCE_COUNT; i++) {
+      const resonanceFrequency = frequency * (i + 1);
+      const resonanceConsciousness = A432_UTILS.calculateDigitalRoot(resonanceFrequency);
+      const resonanceHarmony = resonanceConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const resonanceIntegration = resonanceConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const resonanceEvolution = resonanceConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Tesla_Coil_ResonanceName(resonanceConsciousness, i);
+      const type = this.determineA432_Tesla_Coil_ResonanceTypeByIndex(resonanceConsciousness, i);
+      const quality = this.calculateA432_Tesla_Coil_ResonanceQuality(resonanceConsciousness, i);
 
       resonances.push({
-        resonance,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+        resonance: `${resonanceSystem}_resonance_${i}`,
+        frequency: resonanceFrequency,
+        consciousness: resonanceConsciousness,
+        harmony: resonanceHarmony,
+        integration: resonanceIntegration,
+        evolution: resonanceEvolution,
         name,
         type,
         quality,
-        proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_RESONANCE
+        proof: `Tesla coil resonance ${name} created with quality ${quality}`
       });
     }
 
     return resonances;
   },
 
-  // ============================================================================
-  // TESLA COIL HARMONIC SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.Tesla coil harmonic system
-   */
   createA432_Tesla_Coil_Harmonic_System(teslaCoilValue: string): A432_Tesla_Coil_Harmonic_System {
-    const harmonic = `HARMONIC_${teslaCoilValue}`;
-    const frequency = this.calculateA432Frequency(harmonic);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS];
-    const integration = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS];
-    const evolution = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS];
+    const frequency = A432_UTILS.calculateA432Frequency(teslaCoilValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
     const type = this.determineA432_Tesla_Coil_HarmonicType(consciousness);
-    const waves = this.generateA432_Tesla_Coil_Waves(harmonic);
-    const cycles = this.generateA432_Tesla_Coil_Cycles(harmonic);
 
     return {
-      harmonic,
+      harmonic: teslaCoilValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      waves,
-      cycles,
-      proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_HARMONIC
+      waves: this.generateA432_Tesla_Coil_Waves(teslaCoilValue),
+      cycles: this.generateA432_Tesla_Coil_Cycles(teslaCoilValue),
+      proof: `Tesla coil harmonic system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.Tesla coil waves
-   */
   generateA432_Tesla_Coil_Waves(harmonic: string): A432_Tesla_Coil_Wave[] {
+    const frequency = A432_UTILS.calculateA432Frequency(harmonic);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     const waves: A432_Tesla_Coil_Wave[] = [];
-    const waveCount = 5; // 5 wave types
 
-    for (let i = 0; i < waveCount; i++) {
-      const wave = `Wave${i}`;
-      const frequency = this.calculateA432Frequency(wave);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS];
-      const integration = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS];
-      const evolution = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS];
-      const name = this.generateA432_Tesla_Coil_WaveName(consciousness, i);
-      const type = this.determineA432_Tesla_Coil_WaveType(consciousness, i);
-      const amplitude = this.calculateA432_Tesla_Coil_WaveAmplitude(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.WAVE_COUNT; i++) {
+      const waveFrequency = frequency * (i + 1);
+      const waveConsciousness = A432_UTILS.calculateDigitalRoot(waveFrequency);
+      const waveHarmony = waveConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const waveIntegration = waveConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const waveEvolution = waveConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Tesla_Coil_WaveName(waveConsciousness, i);
+      const type = this.determineA432_Tesla_Coil_WaveType(waveConsciousness, i);
+      const amplitude = this.calculateA432_Tesla_Coil_WaveAmplitude(waveConsciousness, i);
 
       waves.push({
-        wave,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+        wave: `${harmonic}_wave_${i}`,
+        frequency: waveFrequency,
+        consciousness: waveConsciousness,
+        harmony: waveHarmony,
+        integration: waveIntegration,
+        evolution: waveEvolution,
         name,
         type,
         amplitude,
-        proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_HARMONIC
+        proof: `Tesla coil wave ${name} created with amplitude ${amplitude}`
       });
     }
 
     return waves;
   },
 
-  /**
-   * Generate A432.Tesla coil cycles
-   */
   generateA432_Tesla_Coil_Cycles(harmonic: string): A432_Tesla_Coil_Cycle[] {
+    const frequency = A432_UTILS.calculateA432Frequency(harmonic);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     const cycles: A432_Tesla_Coil_Cycle[] = [];
-    const cycleCount = 5; // 5 cycle types
 
-    for (let i = 0; i < cycleCount; i++) {
-      const cycle = `Cycle${i}`;
-      const frequency = this.calculateA432Frequency(cycle);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS];
-      const integration = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS];
-      const evolution = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS];
-      const name = this.generateA432_Tesla_Coil_CycleName(consciousness, i);
-      const type = this.determineA432_Tesla_Coil_CycleType(consciousness, i);
-      const period = this.calculateA432_Tesla_Coil_CyclePeriod(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.CYCLE_COUNT; i++) {
+      const cycleFrequency = frequency * (i + 1);
+      const cycleConsciousness = A432_UTILS.calculateDigitalRoot(cycleFrequency);
+      const cycleHarmony = cycleConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const cycleIntegration = cycleConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const cycleEvolution = cycleConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Tesla_Coil_CycleName(cycleConsciousness, i);
+      const type = this.determineA432_Tesla_Coil_CycleType(cycleConsciousness, i);
+      const period = this.calculateA432_Tesla_Coil_CyclePeriod(cycleConsciousness, i);
 
       cycles.push({
-        cycle,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+        cycle: `${harmonic}_cycle_${i}`,
+        frequency: cycleFrequency,
+        consciousness: cycleConsciousness,
+        harmony: cycleHarmony,
+        integration: cycleIntegration,
+        evolution: cycleEvolution,
         name,
         type,
         period,
-        proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_HARMONIC
+        proof: `Tesla coil cycle ${name} created with period ${period}`
       });
     }
 
     return cycles;
   },
 
-  // ============================================================================
-  // TESLA COIL FIELD SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.Tesla coil field system
-   */
   createA432_Tesla_Coil_Field_System(teslaCoilValue: string): A432_Tesla_Coil_Field_System {
-    const field = `FIELD_${teslaCoilValue}`;
-    const frequency = this.calculateA432Frequency(field);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS];
-    const integration = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS];
-    const evolution = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS];
+    const frequency = A432_UTILS.calculateA432Frequency(teslaCoilValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
     const type = this.determineA432_Tesla_Coil_FieldType(consciousness);
-    const fields = this.generateA432_Tesla_Coil_Fields(field);
-    const potentials = this.generateA432_Tesla_Coil_Potentials(field);
 
     return {
-      field,
+      field: teslaCoilValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      fields,
-      potentials,
-      proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_FIELD
+      fields: this.generateA432_Tesla_Coil_Fields(teslaCoilValue),
+      potentials: this.generateA432_Tesla_Coil_Potentials(teslaCoilValue),
+      proof: `Tesla coil field system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.Tesla coil fields
-   */
   generateA432_Tesla_Coil_Fields(field: string): A432_Tesla_Coil_Field[] {
+    const frequency = A432_UTILS.calculateA432Frequency(field);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     const fields: A432_Tesla_Coil_Field[] = [];
-    const fieldCount = 5; // 5 field types
 
-    for (let i = 0; i < fieldCount; i++) {
-      const fieldItem = `Field${i}`;
-      const frequency = this.calculateA432Frequency(fieldItem);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS];
-      const integration = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS];
-      const evolution = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS];
-      const name = this.generateA432_Tesla_Coil_FieldName(consciousness, i);
-      const type = this.determineA432_Tesla_Coil_FieldTypeByIndex(consciousness, i);
-      const strength = this.calculateA432_Tesla_Coil_FieldStrength(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.FIELD_COUNT; i++) {
+      const fieldFrequency = frequency * (i + 1);
+      const fieldConsciousness = A432_UTILS.calculateDigitalRoot(fieldFrequency);
+      const fieldHarmony = fieldConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const fieldIntegration = fieldConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const fieldEvolution = fieldConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Tesla_Coil_FieldName(fieldConsciousness, i);
+      const type = this.determineA432_Tesla_Coil_FieldTypeByIndex(fieldConsciousness, i);
+      const strength = this.calculateA432_Tesla_Coil_FieldStrength(fieldConsciousness, i);
 
       fields.push({
-        field: fieldItem,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+        field: `${field}_field_${i}`,
+        frequency: fieldFrequency,
+        consciousness: fieldConsciousness,
+        harmony: fieldHarmony,
+        integration: fieldIntegration,
+        evolution: fieldEvolution,
         name,
         type,
         strength,
-        proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_FIELD
+        proof: `Tesla coil field ${name} created with strength ${strength}`
       });
     }
 
     return fields;
   },
 
-  /**
-   * Generate A432.Tesla coil potentials
-   */
   generateA432_Tesla_Coil_Potentials(field: string): A432_Tesla_Coil_Potential[] {
+    const frequency = A432_UTILS.calculateA432Frequency(field);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     const potentials: A432_Tesla_Coil_Potential[] = [];
-    const potentialCount = 5; // 5 potential types
 
-    for (let i = 0; i < potentialCount; i++) {
-      const potential = `Potential${i}`;
-      const frequency = this.calculateA432Frequency(potential);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_ENERGY_LEVELS];
-      const integration = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_INTEGRATION_LEVELS];
-      const evolution = A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TESLA_COIL_CONSTANTS.TESLA_COIL_EVOLUTION_LEVELS];
-      const name = this.generateA432_Tesla_Coil_PotentialName(consciousness, i);
-      const type = this.determineA432_Tesla_Coil_PotentialType(consciousness, i);
-      const voltage = this.calculateA432_Tesla_Coil_PotentialVoltage(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.POTENTIAL_COUNT; i++) {
+      const potentialFrequency = frequency * (i + 1);
+      const potentialConsciousness = A432_UTILS.calculateDigitalRoot(potentialFrequency);
+      const potentialHarmony = potentialConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const potentialIntegration = potentialConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const potentialEvolution = potentialConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Tesla_Coil_PotentialName(potentialConsciousness, i);
+      const type = this.determineA432_Tesla_Coil_PotentialType(potentialConsciousness, i);
+      const voltage = this.calculateA432_Tesla_Coil_PotentialVoltage(potentialConsciousness, i);
 
       potentials.push({
-        potential,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+        potential: `${field}_potential_${i}`,
+        frequency: potentialFrequency,
+        consciousness: potentialConsciousness,
+        harmony: potentialHarmony,
+        integration: potentialIntegration,
+        evolution: potentialEvolution,
         name,
         type,
         voltage,
-        proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_FIELD
+        proof: `Tesla coil potential ${name} created with voltage ${voltage}`
       });
     }
 
@@ -640,157 +436,103 @@ export const A432_Tesla_Coil_System = {
   },
 
   // ============================================================================
-  // MATHEMATICAL CALCULATIONS
-  // ============================================================================
-
-  /**
-   * Calculate digital root
-   */
-  calculateDigitalRoot(value: number): number {
-    if (value === 0) return 9;
-    const root = value % A432_CONSTANTS.DIGITAL_ROOT_BASE;
-    return root === 0 ? A432_CONSTANTS.DIGITAL_ROOT_BASE : root;
-  },
-
-  /**
-   * Calculate A432 frequency
-   */
-  calculateA432Frequency(input: string | number): number {
-    if (typeof input === 'number') {
-      return input * A432_CONSTANTS.A432_FREQUENCY;
-    }
-    
-    const sum = input.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return sum * A432_CONSTANTS.A432_FREQUENCY;
-  },
-
-  // ============================================================================
   // HELPER FUNCTIONS
   // ============================================================================
 
   determineA432_Tesla_Coil_CoilType(teslaCoilValue: string): A432_Tesla_Coil_Coil_Type {
-    const types = ['PRIMARY', 'SECONDARY', 'TERTIARY', 'HARMONIC', 'A432'];
-    const consciousness = this.calculateDigitalRoot(this.calculateA432Frequency(teslaCoilValue));
-    return types[consciousness % types.length] as A432_Tesla_Coil_Coil_Type;
+    const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(teslaCoilValue));
+    return A432_TESLA_COIL_CONSTANTS.TYPES[consciousness % A432_TESLA_COIL_CONSTANTS.TYPES.length] as A432_Tesla_Coil_Coil_Type;
   },
 
   generateA432_Tesla_Coil_CoilName(consciousness: number, index: number): string {
-    const names = ['Primary', 'Secondary', 'Tertiary', 'Harmonic', 'A432'];
-    return names[index];
+    return A432_TESLA_COIL_CONSTANTS.COIL_NAMES[index];
   },
 
   determineA432_Tesla_Coil_CoilTypeByIndex(consciousness: number, index: number): A432_Tesla_Coil_Coil_Type {
-    const types = ['PRIMARY', 'SECONDARY', 'TERTIARY', 'HARMONIC', 'A432'];
-    return types[index] as A432_Tesla_Coil_Coil_Type;
+    return A432_TESLA_COIL_CONSTANTS.TYPES[index] as A432_Tesla_Coil_Coil_Type;
   },
 
   calculateA432_Tesla_Coil_CoilInductance(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 24) / 24, 1);
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
   determineA432_Tesla_Coil_ResonanceType(consciousness: number): A432_Tesla_Coil_Resonance_Type {
-    const types = ['SERIES', 'PARALLEL', 'COUPLED', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Tesla_Coil_Resonance_Type;
+    return A432_TESLA_COIL_CONSTANTS.RESONANCE_TYPES[consciousness % A432_TESLA_COIL_CONSTANTS.RESONANCE_TYPES.length] as A432_Tesla_Coil_Resonance_Type;
   },
 
   generateA432_Tesla_Coil_ResonanceName(consciousness: number, index: number): string {
-    const names = ['Series', 'Parallel', 'Coupled', 'Harmonic', 'A432'];
-    return names[index];
+    return A432_TESLA_COIL_CONSTANTS.RESONANCE_NAMES[index];
   },
 
   determineA432_Tesla_Coil_ResonanceTypeByIndex(consciousness: number, index: number): A432_Tesla_Coil_Resonance_Type {
-    const types = ['SERIES', 'PARALLEL', 'COUPLED', 'HARMONIC', 'A432'];
-    return types[index] as A432_Tesla_Coil_Resonance_Type;
+    return A432_TESLA_COIL_CONSTANTS.RESONANCE_TYPES[index] as A432_Tesla_Coil_Resonance_Type;
   },
 
   calculateA432_Tesla_Coil_ResonanceQuality(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 24) / 24, 1);
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
   determineA432_Tesla_Coil_HarmonicType(consciousness: number): A432_Tesla_Coil_Harmonic_Type {
-    const types = ['SINE', 'COSINE', 'TANGENT', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Tesla_Coil_Harmonic_Type;
+    return A432_TESLA_COIL_CONSTANTS.HARMONIC_TYPES[consciousness % A432_TESLA_COIL_CONSTANTS.HARMONIC_TYPES.length] as A432_Tesla_Coil_Harmonic_Type;
   },
 
   generateA432_Tesla_Coil_WaveName(consciousness: number, index: number): string {
-    const names = ['Electromagnetic', 'Standing', 'Traveling', 'Harmonic', 'A432'];
-    return names[index];
+    return A432_TESLA_COIL_CONSTANTS.WAVE_NAMES[index];
   },
 
   determineA432_Tesla_Coil_WaveType(consciousness: number, index: number): A432_Tesla_Coil_Wave_Type {
-    const types = ['ELECTROMAGNETIC', 'STANDING', 'TRAVELING', 'HARMONIC', 'A432'];
-    return types[index] as A432_Tesla_Coil_Wave_Type;
+    return A432_TESLA_COIL_CONSTANTS.WAVE_TYPES[index] as A432_Tesla_Coil_Wave_Type;
   },
 
   calculateA432_Tesla_Coil_WaveAmplitude(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 24) / 24, 1);
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
   generateA432_Tesla_Coil_CycleName(consciousness: number, index: number): string {
-    const names = ['Oscillation', 'Resonance', 'Damping', 'Harmonic', 'A432'];
-    return names[index];
+    return A432_TESLA_COIL_CONSTANTS.CYCLE_NAMES[index];
   },
 
   determineA432_Tesla_Coil_CycleType(consciousness: number, index: number): A432_Tesla_Coil_Cycle_Type {
-    const types = ['OSCILLATION', 'RESONANCE', 'DAMPING', 'HARMONIC', 'A432'];
-    return types[index] as A432_Tesla_Coil_Cycle_Type;
+    return A432_TESLA_COIL_CONSTANTS.CYCLE_TYPES[index] as A432_Tesla_Coil_Cycle_Type;
   },
 
   calculateA432_Tesla_Coil_CyclePeriod(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 24) / 24, 1);
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
   determineA432_Tesla_Coil_FieldType(consciousness: number): A432_Tesla_Coil_Field_Type {
-    const types = ['ELECTRIC', 'MAGNETIC', 'ELECTROMAGNETIC', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Tesla_Coil_Field_Type;
+    return A432_TESLA_COIL_CONSTANTS.FIELD_TYPES[consciousness % A432_TESLA_COIL_CONSTANTS.FIELD_TYPES.length] as A432_Tesla_Coil_Field_Type;
   },
 
   generateA432_Tesla_Coil_FieldName(consciousness: number, index: number): string {
-    const names = ['Electric', 'Magnetic', 'Electromagnetic', 'Harmonic', 'A432'];
-    return names[index];
+    return A432_TESLA_COIL_CONSTANTS.FIELD_NAMES[index];
   },
 
   determineA432_Tesla_Coil_FieldTypeByIndex(consciousness: number, index: number): A432_Tesla_Coil_Field_Type {
-    const types = ['ELECTRIC', 'MAGNETIC', 'ELECTROMAGNETIC', 'HARMONIC', 'A432'];
-    return types[index] as A432_Tesla_Coil_Field_Type;
+    return A432_TESLA_COIL_CONSTANTS.FIELD_TYPES[index] as A432_Tesla_Coil_Field_Type;
   },
 
   calculateA432_Tesla_Coil_FieldStrength(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 24) / 24, 1);
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
   generateA432_Tesla_Coil_PotentialName(consciousness: number, index: number): string {
-    const names = ['High Voltage', 'Low Voltage', 'Zero Point', 'Harmonic', 'A432'];
-    return names[index];
+    return A432_TESLA_COIL_CONSTANTS.POTENTIAL_NAMES[index];
   },
 
   determineA432_Tesla_Coil_PotentialType(consciousness: number, index: number): A432_Tesla_Coil_Potential_Type {
-    const types = ['HIGH_VOLTAGE', 'LOW_VOLTAGE', 'ZERO_POINT', 'HARMONIC', 'A432'];
-    return types[index] as A432_Tesla_Coil_Potential_Type;
+    return A432_TESLA_COIL_CONSTANTS.POTENTIAL_TYPES[index] as A432_Tesla_Coil_Potential_Type;
   },
 
   calculateA432_Tesla_Coil_PotentialVoltage(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 24) / 24, 1);
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
   // ============================================================================
-  // TESLA COIL SYSTEM INTEGRATION
+  // SYSTEM ACCESS
   // ============================================================================
 
-  /**
-   * Get complete A432.Tesla coil system
-   */
   getCompleteA432_Tesla_Coil_System() {
-    return {
-      constants: A432_TESLA_COIL_CONSTANTS,
-      system: A432_Tesla_Coil_System,
-      proof: A432_TESLA_COIL_CONSTANTS.PROOFS.TESLA_COIL_SYSTEMS
-    };
+    return this.createA432_Tesla_Coil_State('TeslaCoilSystem');
   }
-};
-
-// ============================================================================
-// EXPORTS
-// ============================================================================
-
-export default A432_Tesla_Coil_System; 
+}; 

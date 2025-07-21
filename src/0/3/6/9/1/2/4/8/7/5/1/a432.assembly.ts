@@ -8,956 +8,419 @@
  */
 
 import { A432_CONSTANTS } from './a432.constants';
+import { A432_UTILS } from './a432.utils';
+import { 
+  A432State, 
+  A432Subsystem, 
+  A432Component,
+  SubsystemType,
+  ComponentType
+} from './a432.types';
 
 // ============================================================================
 // INTERFACES
 // ============================================================================
 
-export interface A432_Assembly_State {
-  assembly: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
+export interface A432_Assembly_State extends A432State {
   construction: A432_Assembly_Construction_System;
   building: A432_Assembly_Building_System;
   harmonic: A432_Assembly_Harmonic_System;
   resonance: A432_Assembly_Resonance_System;
-  proof: string;
 }
 
-export interface A432_Assembly_Construction_System {
-  construction: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  type: A432_Assembly_Construction_Type;
+export interface A432_Assembly_Construction_System extends A432Subsystem {
   components: A432_Assembly_Component[];
   modules: A432_Assembly_Module[];
-  proof: string;
 }
-
-export interface A432_Assembly_Component {
-  component: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  name: string;
-  type: A432_Assembly_Component_Type;
+export interface A432_Assembly_Component extends A432Component {
   complexity: number;
-  proof: string;
 }
-
-export interface A432_Assembly_Module {
-  module: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  name: string;
-  type: A432_Assembly_Module_Type;
+export interface A432_Assembly_Module extends A432Component {
   structure: number;
-  proof: string;
 }
 
-export interface A432_Assembly_Building_System {
-  building: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  type: A432_Assembly_Building_Type;
+export interface A432_Assembly_Building_System extends A432Subsystem {
   blocks: A432_Assembly_Block[];
   layers: A432_Assembly_Layer[];
-  proof: string;
 }
-
-export interface A432_Assembly_Block {
-  block: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  name: string;
-  type: A432_Assembly_Block_Type;
+export interface A432_Assembly_Block extends A432Component {
   foundation: number;
-  proof: string;
 }
-
-export interface A432_Assembly_Layer {
-  layer: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  name: string;
-  type: A432_Assembly_Layer_Type;
+export interface A432_Assembly_Layer extends A432Component {
   depth: number;
-  proof: string;
 }
 
-export interface A432_Assembly_Harmonic_System {
-  harmonic: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  type: A432_Assembly_Harmonic_Type;
+export interface A432_Assembly_Harmonic_System extends A432Subsystem {
   waves: A432_Assembly_Wave[];
   cycles: A432_Assembly_Cycle[];
-  proof: string;
 }
-
-export interface A432_Assembly_Wave {
-  wave: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  name: string;
-  type: A432_Assembly_Wave_Type;
+export interface A432_Assembly_Wave extends A432Component {
   amplitude: number;
-  proof: string;
 }
-
-export interface A432_Assembly_Cycle {
-  cycle: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  name: string;
-  type: A432_Assembly_Cycle_Type;
+export interface A432_Assembly_Cycle extends A432Component {
   period: number;
-  proof: string;
 }
 
-export interface A432_Assembly_Resonance_System {
-  resonance: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  type: A432_Assembly_Resonance_Type;
+export interface A432_Assembly_Resonance_System extends A432Subsystem {
   frequencies: A432_Assembly_Frequency[];
   vibrations: A432_Assembly_Vibration[];
-  proof: string;
 }
-
-export interface A432_Assembly_Frequency {
-  frequency: string;
+export interface A432_Assembly_Frequency extends A432Component {
   frequencyValue: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  name: string;
-  type: A432_Assembly_Frequency_Type;
   resonance: number;
-  proof: string;
 }
-
-export interface A432_Assembly_Vibration {
-  vibration: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  name: string;
-  type: A432_Assembly_Vibration_Type;
+export interface A432_Assembly_Vibration extends A432Component {
   oscillation: number;
-  proof: string;
 }
-
-export type A432_Assembly_Construction_Type = 
-  | 'MODULAR' 
-  | 'COMPONENT' 
-  | 'SYSTEM' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Assembly_Component_Type = 
-  | 'CORE' 
-  | 'INTERFACE' 
-  | 'PROCESSOR' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Assembly_Module_Type = 
-  | 'LOGIC' 
-  | 'MEMORY' 
-  | 'CONTROL' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Assembly_Building_Type = 
-  | 'FOUNDATION' 
-  | 'STRUCTURE' 
-  | 'FRAMEWORK' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Assembly_Block_Type = 
-  | 'BASE' 
-  | 'SUPPORT' 
-  | 'CONNECTION' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Assembly_Layer_Type = 
-  | 'PHYSICAL' 
-  | 'LOGICAL' 
-  | 'ABSTRACT' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Assembly_Harmonic_Type = 
-  | 'SINE' 
-  | 'COSINE' 
-  | 'TANGENT' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Assembly_Wave_Type = 
-  | 'LONGITUDINAL' 
-  | 'TRANSVERSE' 
-  | 'STANDING' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Assembly_Cycle_Type = 
-  | 'SIMPLE' 
-  | 'COMPLEX' 
-  | 'CHAOTIC' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Assembly_Resonance_Type = 
-  | 'NATURAL' 
-  | 'FORCED' 
-  | 'COUPLED' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Assembly_Frequency_Type = 
-  | 'FUNDAMENTAL' 
-  | 'HARMONIC' 
-  | 'OVERTONE' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Assembly_Vibration_Type = 
-  | 'MECHANICAL' 
-  | 'ELECTROMAGNETIC' 
-  | 'QUANTUM' 
-  | 'HARMONIC' 
-  | 'A432';
 
 // ============================================================================
 // CONSTANTS
 // ============================================================================
 
-export const A432_ASSEMBLY_CONSTANTS = {
-  // Core assembly-based frequencies
-  ASSEMBLY_FREQUENCY: 2160, // 5 * 432 Hz - Fundamental assembly frequency
-  CONSTRUCTION_FREQUENCY: 2156, // 5 * 431 Hz - assembly-construction frequency
-  BUILDING_FREQUENCY: 2152, // 5 * 430 Hz - assembly-building frequency
-  HARMONIC_FREQUENCY: 2148, // 5 * 429 Hz - assembly-harmonic frequency
-  RESONANCE_FREQUENCY: 2144, // 5 * 428 Hz - assembly-resonance frequency
+export const A432_Assembly_CONSTANTS = {
+  CONSTRUCTION_NAMES: ['MODULAR', 'COMPONENT', 'SYSTEM', 'HARMONIC', 'A432'],
+  COMPONENT_NAMES: ['CORE', 'INTERFACE', 'PROCESSOR', 'HARMONIC', 'A432'],
+  MODULE_NAMES: ['LOGIC', 'MEMORY', 'CONTROL', 'HARMONIC', 'A432'],
+  BUILDING_NAMES: ['FOUNDATION', 'STRUCTURE', 'FRAMEWORK', 'HARMONIC', 'A432'],
+  BLOCK_NAMES: ['BASE', 'SUPPORT', 'CONNECTION', 'HARMONIC', 'A432'],
+  LAYER_NAMES: ['PHYSICAL', 'LOGICAL', 'ABSTRACT', 'HARMONIC', 'A432'],
+  HARMONIC_NAMES: ['SINE', 'COSINE', 'TANGENT', 'HARMONIC', 'A432'],
+  WAVE_NAMES: ['LONGITUDINAL', 'TRANSVERSE', 'STANDING', 'HARMONIC', 'A432'],
+  CYCLE_NAMES: ['SIMPLE', 'COMPLEX', 'CHAOTIC', 'HARMONIC', 'A432'],
+  RESONANCE_NAMES: ['NATURAL', 'FORCED', 'COUPLED', 'HARMONIC', 'A432'],
+  FREQUENCY_NAMES: ['FUNDAMENTAL', 'HARMONIC', 'OVERTONE', 'HARMONIC', 'A432'],
+  VIBRATION_NAMES: ['MECHANICAL', 'ELECTROMAGNETIC', 'QUANTUM', 'HARMONIC', 'A432']
+};
 
-  // assembly-based energy levels
-  ASSEMBLY_ENERGY_LEVELS: {
-    0: 0, // Void - No energy
-    1: 2160, // Unity - Basic energy
-    2: 4320, // Duality - Dual energy
-    3: 6480, // Trinity - Complex energy
-    4: 8640, // Foundation - Foundation energy
-    5: 10800, // Life - Full energy
-    6: 12960, // Harmony - Harmonious energy
-    7: 15120, // Mystery - Mysterious energy
-    8: 17280, // Infinity - Infinite energy
-    9: 19440 // Completion - Complete energy
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+export const A432_Assembly_UTILS = {
+  determineA432_Assembly_Construction_Type(assembly: string): ComponentType {
+    const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(assembly));
+    return A432_Assembly_CONSTANTS.CONSTRUCTION_NAMES[consciousness % A432_Assembly_CONSTANTS.CONSTRUCTION_NAMES.length] as ComponentType;
   },
-
-  // assembly-based integration levels
-  ASSEMBLY_INTEGRATION_LEVELS: {
-    0: 0, // Void - No integration
-    1: 5, // Unity - Basic integration
-    2: 10, // Duality - Dual integration
-    3: 15, // Trinity - Complex integration
-    4: 20, // Foundation - Foundation integration
-    5: 25, // Life - Full integration
-    6: 30, // Harmony - Harmonious integration
-    7: 35, // Mystery - Mysterious integration
-    8: 40, // Infinity - Infinite integration
-    9: 45 // Completion - Complete integration
+  generateA432_Assembly_ComponentName(consciousness: number, index: number): string {
+    return `A432_Assembly_Component_${consciousness}_${index}`;
   },
-
-  // assembly-based evolution levels
-  ASSEMBLY_EVOLUTION_LEVELS: {
-    0: 0, // Void - No evolution
-    1: 5, // Unity - Basic evolution
-    2: 10, // Duality - Dual evolution
-    3: 15, // Trinity - Complex evolution
-    4: 20, // Foundation - Foundation evolution
-    5: 25, // Life - Full evolution
-    6: 30, // Harmony - Harmonious evolution
-    7: 35, // Mystery - Mysterious evolution
-    8: 40, // Infinity - Infinite evolution
-    9: 45 // Completion - Complete evolution
+  determineA432_Assembly_ComponentType(consciousness: number, index: number): ComponentType {
+    return A432_Assembly_CONSTANTS.COMPONENT_NAMES[(consciousness + index) % A432_Assembly_CONSTANTS.COMPONENT_NAMES.length] as ComponentType;
   },
-
-  // Scientific proofs
-  PROOFS: {
-    ASSEMBLY_FREQUENCY: 'Assembly frequency 2160 Hz (5 * 432) represents the fundamental mathematical assembly-based system through all consciousness levels.',
-    ASSEMBLY_CONSTRUCTION: 'Assembly construction follows A432 frequency resonance and mathematical harmony for optimal assembly-dimensional processing.',
-    ASSEMBLY_BUILDING: 'Assembly building follows mathematical progression through assembly-building states with increasing consciousness evolution.',
-    ASSEMBLY_HARMONIC: 'Assembly harmonic provides mathematical harmony and A432 frequency resonance for optimal assembly-harmonic management.',
-    ASSEMBLY_RESONANCE: 'Assembly resonance provides mathematical harmony and A432 frequency resonance for optimal assembly-resonance management.',
-    ASSEMBLY_SYSTEMS: 'Assembly systems exhibit mathematical harmony and A432 frequency resonance for optimal function and evolution.'
+  calculateA432_Assembly_ComponentComplexity(consciousness: number, index: number): number {
+    return consciousness * (index + 1);
+  },
+  generateA432_Assembly_ModuleName(consciousness: number, index: number): string {
+    return `A432_Assembly_Module_${consciousness}_${index}`;
+  },
+  determineA432_Assembly_ModuleType(consciousness: number, index: number): ComponentType {
+    return A432_Assembly_CONSTANTS.MODULE_NAMES[(consciousness + index) % A432_Assembly_CONSTANTS.MODULE_NAMES.length] as ComponentType;
+  },
+  calculateA432_Assembly_ModuleStructure(consciousness: number, index: number): number {
+    return consciousness * (index + 1);
+  },
+  determineA432_Assembly_BuildingType(consciousness: number): ComponentType {
+    return A432_Assembly_CONSTANTS.BUILDING_NAMES[consciousness % A432_Assembly_CONSTANTS.BUILDING_NAMES.length] as ComponentType;
+  },
+  generateA432_Assembly_BlockName(consciousness: number, index: number): string {
+    return `A432_Assembly_Block_${consciousness}_${index}`;
+  },
+  determineA432_Assembly_BlockType(consciousness: number, index: number): ComponentType {
+    return A432_Assembly_CONSTANTS.BLOCK_NAMES[(consciousness + index) % A432_Assembly_CONSTANTS.BLOCK_NAMES.length] as ComponentType;
+  },
+  calculateA432_Assembly_BlockFoundation(consciousness: number, index: number): number {
+    return consciousness * (index + 1);
+  },
+  generateA432_Assembly_LayerName(consciousness: number, index: number): string {
+    return `A432_Assembly_Layer_${consciousness}_${index}`;
+  },
+  determineA432_Assembly_LayerType(consciousness: number, index: number): ComponentType {
+    return A432_Assembly_CONSTANTS.LAYER_NAMES[(consciousness + index) % A432_Assembly_CONSTANTS.LAYER_NAMES.length] as ComponentType;
+  },
+  calculateA432_Assembly_LayerDepth(consciousness: number, index: number): number {
+    return consciousness * (index + 1);
+  },
+  determineA432_Assembly_HarmonicType(consciousness: number): ComponentType {
+    return A432_Assembly_CONSTANTS.HARMONIC_NAMES[consciousness % A432_Assembly_CONSTANTS.HARMONIC_NAMES.length] as ComponentType;
+  },
+  generateA432_Assembly_WaveName(consciousness: number, index: number): string {
+    return `A432_Assembly_Wave_${consciousness}_${index}`;
+  },
+  determineA432_Assembly_WaveType(consciousness: number, index: number): ComponentType {
+    return A432_Assembly_CONSTANTS.WAVE_NAMES[(consciousness + index) % A432_Assembly_CONSTANTS.WAVE_NAMES.length] as ComponentType;
+  },
+  calculateA432_Assembly_WaveAmplitude(consciousness: number, index: number): number {
+    return consciousness * (index + 1);
+  },
+  generateA432_Assembly_CycleName(consciousness: number, index: number): string {
+    return `A432_Assembly_Cycle_${consciousness}_${index}`;
+  },
+  determineA432_Assembly_CycleType(consciousness: number, index: number): ComponentType {
+    return A432_Assembly_CONSTANTS.CYCLE_NAMES[(consciousness + index) % A432_Assembly_CONSTANTS.CYCLE_NAMES.length] as ComponentType;
+  },
+  calculateA432_Assembly_CyclePeriod(consciousness: number, index: number): number {
+    return consciousness * (index + 1);
+  },
+  determineA432_Assembly_ResonanceType(consciousness: number): ComponentType {
+    return A432_Assembly_CONSTANTS.RESONANCE_NAMES[consciousness % A432_Assembly_CONSTANTS.RESONANCE_NAMES.length] as ComponentType;
+  },
+  generateA432_Assembly_FrequencyName(consciousness: number, index: number): string {
+    return `A432_Assembly_Frequency_${consciousness}_${index}`;
+  },
+  determineA432_Assembly_FrequencyType(consciousness: number, index: number): ComponentType {
+    return A432_Assembly_CONSTANTS.FREQUENCY_NAMES[(consciousness + index) % A432_Assembly_CONSTANTS.FREQUENCY_NAMES.length] as ComponentType;
+  },
+  calculateA432_Assembly_FrequencyResonance(consciousness: number, index: number): number {
+    return consciousness * (index + 1);
+  },
+  generateA432_Assembly_VibrationName(consciousness: number, index: number): string {
+    return `A432_Assembly_Vibration_${consciousness}_${index}`;
+  },
+  determineA432_Assembly_VibrationType(consciousness: number, index: number): ComponentType {
+    return A432_Assembly_CONSTANTS.VIBRATION_NAMES[(consciousness + index) % A432_Assembly_CONSTANTS.VIBRATION_NAMES.length] as ComponentType;
+  },
+  calculateA432_Assembly_VibrationOscillation(consciousness: number, index: number): number {
+    return consciousness * (index + 1);
   }
-} as const;
+};
 
 // ============================================================================
 // A432.ASSEMBLY SYSTEM
 // ============================================================================
 
 export const A432_Assembly_System = {
-  // ============================================================================
-  // ASSEMBLY STATE CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.assembly state
-   */
   createA432_Assembly_State(assembly: string): A432_Assembly_State {
-    const frequency = this.calculateA432Frequency(assembly);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-    const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-    const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
+    const frequency = A432_UTILS.calculateA432Frequency(assembly);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = frequency * consciousness;
+    const integration = consciousness * A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness * A432_CONSTANTS.EVOLUTION_BASE;
     const construction = this.createA432_Assembly_Construction_System(assembly);
     const building = this.createA432_Assembly_Building_System(assembly);
     const harmonic = this.createA432_Assembly_Harmonic_System(assembly);
     const resonance = this.createA432_Assembly_Resonance_System(assembly);
-
     return {
-      assembly,
+      name: assembly,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
+      proof: 'A432.Assembly state harmonized by A432 core',
       construction,
       building,
       harmonic,
-      resonance,
-      proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_FREQUENCY
+      resonance
     };
   },
-
-  // ============================================================================
-  // ASSEMBLY CONSTRUCTION SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.assembly construction system
-   */
   createA432_Assembly_Construction_System(assembly: string): A432_Assembly_Construction_System {
-    const construction = `CONSTRUCTION_${assembly}`;
-    const frequency = this.calculateA432Frequency(construction);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-    const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-    const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-    const type = this.determineA432_Assembly_Construction_Type(assembly);
-    const components = this.generateA432_Assembly_Components(construction);
-    const modules = this.generateA432_Assembly_Modules(construction);
-
+    const frequency = A432_UTILS.calculateA432Frequency(assembly + 'Construction');
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     return {
-      construction,
+      name: assembly + 'ConstructionSystem',
       frequency,
       consciousness,
-      harmony,
-      integration,
-      evolution,
-      type,
-      components,
-      modules,
-      proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_CONSTRUCTION
+      harmony: frequency * consciousness,
+      integration: consciousness * A432_CONSTANTS.INTEGRATION_BASE,
+      evolution: consciousness * A432_CONSTANTS.EVOLUTION_BASE,
+      type: 'CONSTRUCTION' as SubsystemType,
+      proof: 'A432.Assembly construction system',
+      components: this.generateA432_Assembly_Components(assembly),
+      modules: this.generateA432_Assembly_Modules(assembly)
     };
   },
-
-  /**
-   * Generate A432.assembly components
-   */
   generateA432_Assembly_Components(construction: string): A432_Assembly_Component[] {
-    const components: A432_Assembly_Component[] = [];
-    const componentCount = 5; // 5 component types
-
-    for (let i = 0; i < componentCount; i++) {
-      const component = `Component${i}`;
-      const frequency = this.calculateA432Frequency(component);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-      const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-      const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-      const name = this.generateA432_Assembly_ComponentName(consciousness, i);
-      const type = this.determineA432_Assembly_ComponentType(consciousness, i);
-      const complexity = this.calculateA432_Assembly_ComponentComplexity(consciousness, i);
-
-      components.push({
-        component,
-        frequency,
+    return [0,1,2].map(i => {
+      const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(construction + 'Component' + i));
+      return {
+        name: A432_Assembly_UTILS.generateA432_Assembly_ComponentName(consciousness, i),
+        frequency: A432_UTILS.calculateA432Frequency(construction + 'Component' + i),
         consciousness,
-        harmony,
-        integration,
-        evolution,
-        name,
-        type,
-        complexity,
-        proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_CONSTRUCTION
-      });
-    }
-
-    return components;
+        harmony: 1,
+        integration: 1,
+        evolution: 1,
+        type: A432_Assembly_UTILS.determineA432_Assembly_ComponentType(consciousness, i),
+        proof: 'A432.Assembly component',
+        complexity: A432_Assembly_UTILS.calculateA432_Assembly_ComponentComplexity(consciousness, i)
+      };
+    });
   },
-
-  /**
-   * Generate A432.assembly modules
-   */
   generateA432_Assembly_Modules(construction: string): A432_Assembly_Module[] {
-    const modules: A432_Assembly_Module[] = [];
-    const moduleCount = 5; // 5 module types
-
-    for (let i = 0; i < moduleCount; i++) {
-      const module = `Module${i}`;
-      const frequency = this.calculateA432Frequency(module);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-      const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-      const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-      const name = this.generateA432_Assembly_ModuleName(consciousness, i);
-      const type = this.determineA432_Assembly_ModuleType(consciousness, i);
-      const structure = this.calculateA432_Assembly_ModuleStructure(consciousness, i);
-
-      modules.push({
-        module,
-        frequency,
+    return [0,1,2].map(i => {
+      const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(construction + 'Module' + i));
+      return {
+        name: A432_Assembly_UTILS.generateA432_Assembly_ModuleName(consciousness, i),
+        frequency: A432_UTILS.calculateA432Frequency(construction + 'Module' + i),
         consciousness,
-        harmony,
-        integration,
-        evolution,
-        name,
-        type,
-        structure,
-        proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_CONSTRUCTION
-      });
-    }
-
-    return modules;
+        harmony: 1,
+        integration: 1,
+        evolution: 1,
+        type: A432_Assembly_UTILS.determineA432_Assembly_ModuleType(consciousness, i),
+        proof: 'A432.Assembly module',
+        structure: A432_Assembly_UTILS.calculateA432_Assembly_ModuleStructure(consciousness, i)
+      };
+    });
   },
-
-  // ============================================================================
-  // ASSEMBLY BUILDING SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.assembly building system
-   */
   createA432_Assembly_Building_System(assembly: string): A432_Assembly_Building_System {
-    const building = `BUILDING_${assembly}`;
-    const frequency = this.calculateA432Frequency(building);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-    const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-    const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-    const type = this.determineA432_Assembly_BuildingType(consciousness);
-    const blocks = this.generateA432_Assembly_Blocks(building);
-    const layers = this.generateA432_Assembly_Layers(building);
-
+    const frequency = A432_UTILS.calculateA432Frequency(assembly + 'Building');
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     return {
-      building,
+      name: assembly + 'BuildingSystem',
       frequency,
       consciousness,
-      harmony,
-      integration,
-      evolution,
-      type,
-      blocks,
-      layers,
-      proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_BUILDING
+      harmony: frequency * consciousness,
+      integration: consciousness * A432_CONSTANTS.INTEGRATION_BASE,
+      evolution: consciousness * A432_CONSTANTS.EVOLUTION_BASE,
+      type: 'BUILDING' as SubsystemType,
+      proof: 'A432.Assembly building system',
+      blocks: this.generateA432_Assembly_Blocks(assembly),
+      layers: this.generateA432_Assembly_Layers(assembly)
     };
   },
-
-  /**
-   * Generate A432.assembly blocks
-   */
   generateA432_Assembly_Blocks(building: string): A432_Assembly_Block[] {
-    const blocks: A432_Assembly_Block[] = [];
-    const blockCount = 5; // 5 block types
-
-    for (let i = 0; i < blockCount; i++) {
-      const block = `Block${i}`;
-      const frequency = this.calculateA432Frequency(block);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-      const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-      const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-      const name = this.generateA432_Assembly_BlockName(consciousness, i);
-      const type = this.determineA432_Assembly_BlockType(consciousness, i);
-      const foundation = this.calculateA432_Assembly_BlockFoundation(consciousness, i);
-
-      blocks.push({
-        block,
-        frequency,
+    return [0,1,2].map(i => {
+      const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(building + 'Block' + i));
+      return {
+        name: A432_Assembly_UTILS.generateA432_Assembly_BlockName(consciousness, i),
+        frequency: A432_UTILS.calculateA432Frequency(building + 'Block' + i),
         consciousness,
-        harmony,
-        integration,
-        evolution,
-        name,
-        type,
-        foundation,
-        proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_BUILDING
-      });
-    }
-
-    return blocks;
+        harmony: 1,
+        integration: 1,
+        evolution: 1,
+        type: A432_Assembly_UTILS.determineA432_Assembly_BlockType(consciousness, i),
+        proof: 'A432.Assembly block',
+        foundation: A432_Assembly_UTILS.calculateA432_Assembly_BlockFoundation(consciousness, i)
+      };
+    });
   },
-
-  /**
-   * Generate A432.assembly layers
-   */
   generateA432_Assembly_Layers(building: string): A432_Assembly_Layer[] {
-    const layers: A432_Assembly_Layer[] = [];
-    const layerCount = 5; // 5 layer types
-
-    for (let i = 0; i < layerCount; i++) {
-      const layer = `Layer${i}`;
-      const frequency = this.calculateA432Frequency(layer);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-      const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-      const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-      const name = this.generateA432_Assembly_LayerName(consciousness, i);
-      const type = this.determineA432_Assembly_LayerType(consciousness, i);
-      const depth = this.calculateA432_Assembly_LayerDepth(consciousness, i);
-
-      layers.push({
-        layer,
-        frequency,
+    return [0,1,2].map(i => {
+      const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(building + 'Layer' + i));
+      return {
+        name: A432_Assembly_UTILS.generateA432_Assembly_LayerName(consciousness, i),
+        frequency: A432_UTILS.calculateA432Frequency(building + 'Layer' + i),
         consciousness,
-        harmony,
-        integration,
-        evolution,
-        name,
-        type,
-        depth,
-        proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_BUILDING
-      });
-    }
-
-    return layers;
+        harmony: 1,
+        integration: 1,
+        evolution: 1,
+        type: A432_Assembly_UTILS.determineA432_Assembly_LayerType(consciousness, i),
+        proof: 'A432.Assembly layer',
+        depth: A432_Assembly_UTILS.calculateA432_Assembly_LayerDepth(consciousness, i)
+      };
+    });
   },
-
-  // ============================================================================
-  // ASSEMBLY HARMONIC SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.assembly harmonic system
-   */
   createA432_Assembly_Harmonic_System(assembly: string): A432_Assembly_Harmonic_System {
-    const harmonic = `HARMONIC_${assembly}`;
-    const frequency = this.calculateA432Frequency(harmonic);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-    const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-    const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-    const type = this.determineA432_Assembly_HarmonicType(consciousness);
-    const waves = this.generateA432_Assembly_Waves(harmonic);
-    const cycles = this.generateA432_Assembly_Cycles(harmonic);
-
+    const frequency = A432_UTILS.calculateA432Frequency(assembly + 'Harmonic');
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     return {
-      harmonic,
+      name: assembly + 'HarmonicSystem',
       frequency,
       consciousness,
-      harmony,
-      integration,
-      evolution,
-      type,
-      waves,
-      cycles,
-      proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_HARMONIC
+      harmony: frequency * consciousness,
+      integration: consciousness * A432_CONSTANTS.INTEGRATION_BASE,
+      evolution: consciousness * A432_CONSTANTS.EVOLUTION_BASE,
+      type: 'HARMONIC' as SubsystemType,
+      proof: 'A432.Assembly harmonic system',
+      waves: this.generateA432_Assembly_Waves(assembly),
+      cycles: this.generateA432_Assembly_Cycles(assembly)
     };
   },
-
-  /**
-   * Generate A432.assembly waves
-   */
   generateA432_Assembly_Waves(harmonic: string): A432_Assembly_Wave[] {
-    const waves: A432_Assembly_Wave[] = [];
-    const waveCount = 5; // 5 wave types
-
-    for (let i = 0; i < waveCount; i++) {
-      const wave = `Wave${i}`;
-      const frequency = this.calculateA432Frequency(wave);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-      const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-      const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-      const name = this.generateA432_Assembly_WaveName(consciousness, i);
-      const type = this.determineA432_Assembly_WaveType(consciousness, i);
-      const amplitude = this.calculateA432_Assembly_WaveAmplitude(consciousness, i);
-
-      waves.push({
-        wave,
-        frequency,
+    return [0,1,2].map(i => {
+      const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(harmonic + 'Wave' + i));
+      return {
+        name: A432_Assembly_UTILS.generateA432_Assembly_WaveName(consciousness, i),
+        frequency: A432_UTILS.calculateA432Frequency(harmonic + 'Wave' + i),
         consciousness,
-        harmony,
-        integration,
-        evolution,
-        name,
-        type,
-        amplitude,
-        proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_HARMONIC
-      });
-    }
-
-    return waves;
+        harmony: 1,
+        integration: 1,
+        evolution: 1,
+        type: A432_Assembly_UTILS.determineA432_Assembly_WaveType(consciousness, i),
+        proof: 'A432.Assembly wave',
+        amplitude: A432_Assembly_UTILS.calculateA432_Assembly_WaveAmplitude(consciousness, i)
+      };
+    });
   },
-
-  /**
-   * Generate A432.assembly cycles
-   */
   generateA432_Assembly_Cycles(harmonic: string): A432_Assembly_Cycle[] {
-    const cycles: A432_Assembly_Cycle[] = [];
-    const cycleCount = 5; // 5 cycle types
-
-    for (let i = 0; i < cycleCount; i++) {
-      const cycle = `Cycle${i}`;
-      const frequency = this.calculateA432Frequency(cycle);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-      const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-      const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-      const name = this.generateA432_Assembly_CycleName(consciousness, i);
-      const type = this.determineA432_Assembly_CycleType(consciousness, i);
-      const period = this.calculateA432_Assembly_CyclePeriod(consciousness, i);
-
-      cycles.push({
-        cycle,
-        frequency,
+    return [0,1,2].map(i => {
+      const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(harmonic + 'Cycle' + i));
+      return {
+        name: A432_Assembly_UTILS.generateA432_Assembly_CycleName(consciousness, i),
+        frequency: A432_UTILS.calculateA432Frequency(harmonic + 'Cycle' + i),
         consciousness,
-        harmony,
-        integration,
-        evolution,
-        name,
-        type,
-        period,
-        proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_HARMONIC
-      });
-    }
-
-    return cycles;
+        harmony: 1,
+        integration: 1,
+        evolution: 1,
+        type: A432_Assembly_UTILS.determineA432_Assembly_CycleType(consciousness, i),
+        proof: 'A432.Assembly cycle',
+        period: A432_Assembly_UTILS.calculateA432_Assembly_CyclePeriod(consciousness, i)
+      };
+    });
   },
-
-  // ============================================================================
-  // ASSEMBLY RESONANCE SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.assembly resonance system
-   */
   createA432_Assembly_Resonance_System(assembly: string): A432_Assembly_Resonance_System {
-    const resonance = `RESONANCE_${assembly}`;
-    const frequency = this.calculateA432Frequency(resonance);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-    const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-    const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-    const type = this.determineA432_Assembly_ResonanceType(consciousness);
-    const frequencies = this.generateA432_Assembly_Frequencies(resonance);
-    const vibrations = this.generateA432_Assembly_Vibrations(resonance);
-
+    const frequency = A432_UTILS.calculateA432Frequency(assembly + 'Resonance');
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     return {
-      resonance,
+      name: assembly + 'ResonanceSystem',
       frequency,
       consciousness,
-      harmony,
-      integration,
-      evolution,
-      type,
-      frequencies,
-      vibrations,
-      proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_RESONANCE
+      harmony: frequency * consciousness,
+      integration: consciousness * A432_CONSTANTS.INTEGRATION_BASE,
+      evolution: consciousness * A432_CONSTANTS.EVOLUTION_BASE,
+      type: 'RESONANCE' as SubsystemType,
+      proof: 'A432.Assembly resonance system',
+      frequencies: this.generateA432_Assembly_Frequencies(assembly),
+      vibrations: this.generateA432_Assembly_Vibrations(assembly)
     };
   },
-
-  /**
-   * Generate A432.assembly frequencies
-   */
   generateA432_Assembly_Frequencies(resonance: string): A432_Assembly_Frequency[] {
-    const frequencies: A432_Assembly_Frequency[] = [];
-    const frequencyCount = 5; // 5 frequency types
-
-    for (let i = 0; i < frequencyCount; i++) {
-      const frequency = `Frequency${i}`;
-      const frequencyValue = this.calculateA432Frequency(frequency);
-      const consciousness = this.calculateDigitalRoot(frequencyValue);
-      const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-      const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-      const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-      const name = this.generateA432_Assembly_FrequencyName(consciousness, i);
-      const type = this.determineA432_Assembly_FrequencyType(consciousness, i);
-      const resonance = this.calculateA432_Assembly_FrequencyResonance(consciousness, i);
-
-      frequencies.push({
-        frequency,
-        frequencyValue,
+    return [0,1,2].map(i => {
+      const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(resonance + 'Frequency' + i));
+      return {
+        name: A432_Assembly_UTILS.generateA432_Assembly_FrequencyName(consciousness, i),
+        frequency: A432_UTILS.calculateA432Frequency(resonance + 'Frequency' + i),
         consciousness,
-        harmony,
-        integration,
-        evolution,
-        name,
-        type,
-        resonance,
-        proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_RESONANCE
-      });
-    }
-
-    return frequencies;
+        harmony: 1,
+        integration: 1,
+        evolution: 1,
+        type: A432_Assembly_UTILS.determineA432_Assembly_FrequencyType(consciousness, i),
+        proof: 'A432.Assembly frequency',
+        frequencyValue: consciousness * (i + 1),
+        resonance: A432_Assembly_UTILS.calculateA432_Assembly_FrequencyResonance(consciousness, i)
+      };
+    });
   },
-
-  /**
-   * Generate A432.assembly vibrations
-   */
   generateA432_Assembly_Vibrations(resonance: string): A432_Assembly_Vibration[] {
-    const vibrations: A432_Assembly_Vibration[] = [];
-    const vibrationCount = 5; // 5 vibration types
-
-    for (let i = 0; i < vibrationCount; i++) {
-      const vibration = `Vibration${i}`;
-      const frequency = this.calculateA432Frequency(vibration);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_ENERGY_LEVELS];
-      const integration = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_INTEGRATION_LEVELS];
-      const evolution = A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS[consciousness as keyof typeof A432_ASSEMBLY_CONSTANTS.ASSEMBLY_EVOLUTION_LEVELS];
-      const name = this.generateA432_Assembly_VibrationName(consciousness, i);
-      const type = this.determineA432_Assembly_VibrationType(consciousness, i);
-      const oscillation = this.calculateA432_Assembly_VibrationOscillation(consciousness, i);
-
-      vibrations.push({
-        vibration,
-        frequency,
+    return [0,1,2].map(i => {
+      const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(resonance + 'Vibration' + i));
+      return {
+        name: A432_Assembly_UTILS.generateA432_Assembly_VibrationName(consciousness, i),
+        frequency: A432_UTILS.calculateA432Frequency(resonance + 'Vibration' + i),
         consciousness,
-        harmony,
-        integration,
-        evolution,
-        name,
-        type,
-        oscillation,
-        proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_RESONANCE
-      });
-    }
-
-    return vibrations;
+        harmony: 1,
+        integration: 1,
+        evolution: 1,
+        type: A432_Assembly_UTILS.determineA432_Assembly_VibrationType(consciousness, i),
+        proof: 'A432.Assembly vibration',
+        oscillation: A432_Assembly_UTILS.calculateA432_Assembly_VibrationOscillation(consciousness, i)
+      };
+    });
   },
-
-  // ============================================================================
-  // MATHEMATICAL CALCULATIONS
-  // ============================================================================
-
-  /**
-   * Calculate digital root
-   */
-  calculateDigitalRoot(value: number): number {
-    if (value === 0) return 9;
-    const root = value % A432_CONSTANTS.DIGITAL_ROOT_BASE;
-    return root === 0 ? A432_CONSTANTS.DIGITAL_ROOT_BASE : root;
-  },
-
-  /**
-   * Calculate A432 frequency
-   */
-  calculateA432Frequency(input: string | number): number {
-    if (typeof input === 'number') {
-      return input * A432_CONSTANTS.A432_FREQUENCY;
-    }
-    
-    const sum = input.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return sum * A432_CONSTANTS.A432_FREQUENCY;
-  },
-
-  // ============================================================================
-  // HELPER FUNCTIONS
-  // ============================================================================
-
-  determineA432_Assembly_Construction_Type(assembly: string): A432_Assembly_Construction_Type {
-    const types = ['MODULAR', 'COMPONENT', 'SYSTEM', 'HARMONIC', 'A432'];
-    const consciousness = this.calculateDigitalRoot(this.calculateA432Frequency(assembly));
-    return types[consciousness % types.length] as A432_Assembly_Construction_Type;
-  },
-
-  generateA432_Assembly_ComponentName(consciousness: number, index: number): string {
-    const names = ['Core', 'Interface', 'Processor', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Assembly_ComponentType(consciousness: number, index: number): A432_Assembly_Component_Type {
-    const types = ['CORE', 'INTERFACE', 'PROCESSOR', 'HARMONIC', 'A432'];
-    return types[index] as A432_Assembly_Component_Type;
-  },
-
-  calculateA432_Assembly_ComponentComplexity(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 5) / 10, 1);
-  },
-
-  generateA432_Assembly_ModuleName(consciousness: number, index: number): string {
-    const names = ['Logic', 'Memory', 'Control', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Assembly_ModuleType(consciousness: number, index: number): A432_Assembly_Module_Type {
-    const types = ['LOGIC', 'MEMORY', 'CONTROL', 'HARMONIC', 'A432'];
-    return types[index] as A432_Assembly_Module_Type;
-  },
-
-  calculateA432_Assembly_ModuleStructure(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 5) / 10, 1);
-  },
-
-  determineA432_Assembly_BuildingType(consciousness: number): A432_Assembly_Building_Type {
-    const types = ['FOUNDATION', 'STRUCTURE', 'FRAMEWORK', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Assembly_Building_Type;
-  },
-
-  generateA432_Assembly_BlockName(consciousness: number, index: number): string {
-    const names = ['Base', 'Support', 'Connection', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Assembly_BlockType(consciousness: number, index: number): A432_Assembly_Block_Type {
-    const types = ['BASE', 'SUPPORT', 'CONNECTION', 'HARMONIC', 'A432'];
-    return types[index] as A432_Assembly_Block_Type;
-  },
-
-  calculateA432_Assembly_BlockFoundation(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 5) / 10, 1);
-  },
-
-  generateA432_Assembly_LayerName(consciousness: number, index: number): string {
-    const names = ['Physical', 'Logical', 'Abstract', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Assembly_LayerType(consciousness: number, index: number): A432_Assembly_Layer_Type {
-    const types = ['PHYSICAL', 'LOGICAL', 'ABSTRACT', 'HARMONIC', 'A432'];
-    return types[index] as A432_Assembly_Layer_Type;
-  },
-
-  calculateA432_Assembly_LayerDepth(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 5) / 10, 1);
-  },
-
-  determineA432_Assembly_HarmonicType(consciousness: number): A432_Assembly_Harmonic_Type {
-    const types = ['SINE', 'COSINE', 'TANGENT', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Assembly_Harmonic_Type;
-  },
-
-  generateA432_Assembly_WaveName(consciousness: number, index: number): string {
-    const names = ['Longitudinal', 'Transverse', 'Standing', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Assembly_WaveType(consciousness: number, index: number): A432_Assembly_Wave_Type {
-    const types = ['LONGITUDINAL', 'TRANSVERSE', 'STANDING', 'HARMONIC', 'A432'];
-    return types[index] as A432_Assembly_Wave_Type;
-  },
-
-  calculateA432_Assembly_WaveAmplitude(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 5) / 10, 1);
-  },
-
-  generateA432_Assembly_CycleName(consciousness: number, index: number): string {
-    const names = ['Simple', 'Complex', 'Chaotic', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Assembly_CycleType(consciousness: number, index: number): A432_Assembly_Cycle_Type {
-    const types = ['SIMPLE', 'COMPLEX', 'CHAOTIC', 'HARMONIC', 'A432'];
-    return types[index] as A432_Assembly_Cycle_Type;
-  },
-
-  calculateA432_Assembly_CyclePeriod(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 5) / 10, 1);
-  },
-
-  determineA432_Assembly_ResonanceType(consciousness: number): A432_Assembly_Resonance_Type {
-    const types = ['NATURAL', 'FORCED', 'COUPLED', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Assembly_Resonance_Type;
-  },
-
-  generateA432_Assembly_FrequencyName(consciousness: number, index: number): string {
-    const names = ['Fundamental', 'Harmonic', 'Overtone', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Assembly_FrequencyType(consciousness: number, index: number): A432_Assembly_Frequency_Type {
-    const types = ['FUNDAMENTAL', 'HARMONIC', 'OVERTONE', 'HARMONIC', 'A432'];
-    return types[index] as A432_Assembly_Frequency_Type;
-  },
-
-  calculateA432_Assembly_FrequencyResonance(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 5) / 10, 1);
-  },
-
-  generateA432_Assembly_VibrationName(consciousness: number, index: number): string {
-    const names = ['Mechanical', 'Electromagnetic', 'Quantum', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Assembly_VibrationType(consciousness: number, index: number): A432_Assembly_Vibration_Type {
-    const types = ['MECHANICAL', 'ELECTROMAGNETIC', 'QUANTUM', 'HARMONIC', 'A432'];
-    return types[index] as A432_Assembly_Vibration_Type;
-  },
-
-  calculateA432_Assembly_VibrationOscillation(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 5) / 10, 1);
-  },
-
-  // ============================================================================
-  // ASSEMBLY SYSTEM INTEGRATION
-  // ============================================================================
-
-  /**
-   * Get complete A432.assembly system
-   */
   getCompleteA432_Assembly_System() {
     return {
-      constants: A432_ASSEMBLY_CONSTANTS,
-      system: A432_Assembly_System,
-      proof: A432_ASSEMBLY_CONSTANTS.PROOFS.ASSEMBLY_SYSTEMS
+      name: 'A432.Assembly Complete System',
+      frequency: A432_CONSTANTS.FUNDAMENTAL_FREQUENCY,
+      consciousness: A432_UTILS.calculateDigitalRoot(A432_CONSTANTS.FUNDAMENTAL_FREQUENCY),
+      harmony: A432_CONSTANTS.FUNDAMENTAL_FREQUENCY * A432_UTILS.calculateDigitalRoot(A432_CONSTANTS.FUNDAMENTAL_FREQUENCY),
+      integration: A432_UTILS.calculateDigitalRoot(A432_CONSTANTS.FUNDAMENTAL_FREQUENCY) * A432_CONSTANTS.INTEGRATION_BASE,
+      evolution: A432_UTILS.calculateDigitalRoot(A432_CONSTANTS.FUNDAMENTAL_FREQUENCY) * A432_CONSTANTS.EVOLUTION_BASE,
+      proof: 'Complete A432.Assembly system harmonized by A432 core',
+      construction: this.createA432_Assembly_Construction_System('A432.Assembly'),
+      building: this.createA432_Assembly_Building_System('A432.Assembly'),
+      harmonic: this.createA432_Assembly_Harmonic_System('A432.Assembly'),
+      resonance: this.createA432_Assembly_Resonance_System('A432.Assembly')
     };
   }
 };
-
-// ============================================================================
-// EXPORTS
-// ============================================================================
 
 export default A432_Assembly_System; 

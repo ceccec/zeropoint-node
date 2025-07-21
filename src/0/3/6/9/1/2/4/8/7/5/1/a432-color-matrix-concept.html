@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>A432 Color Matrix Display</title>
+<style>
+/* A432 Color Matrix CSS */
+.a432-matrix {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 2px;
+  padding: 10px;
+  max-width: 800px;
+}
+
+.a432-cell-0-0 {
+  background-color: rgb(55, 57, 45);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-0-0:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-0-1 {
+  background-color: rgb(45, 57, 50);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-0-1:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-0-2 {
+  background-color: rgb(45, 50, 57);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-0-2:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-0-3 {
+  background-color: rgb(55, 45, 57);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-0-3:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-0-4 {
+  background-color: rgb(57, 45, 45);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-0-4:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-0-5 {
+  background-color: rgb(55, 57, 45);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-0-5:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-0-6 {
+  background-color: rgb(45, 57, 50);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-0-6:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-0-7 {
+  background-color: rgb(45, 50, 57);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-0-7:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-0-8 {
+  background-color: rgb(55, 45, 57);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-0-8:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-1-0 {
+  background-color: rgb(38, 64, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-1-0:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-1-1 {
+  background-color: rgb(59, 38, 64);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-1-1:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-1-2 {
+  background-color: rgb(59, 64, 38);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-1-2:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-1-3 {
+  background-color: rgb(38, 48, 64);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-1-3:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-1-4 {
+  background-color: rgb(64, 38, 38);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-1-4:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-1-5 {
+  background-color: rgb(38, 64, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-1-5:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-1-6 {
+  background-color: rgb(59, 38, 64);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-1-6:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-1-7 {
+  background-color: rgb(59, 64, 38);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-1-7:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-1-8 {
+  background-color: rgb(38, 48, 64);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-1-8:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-2-0 {
+  background-color: rgb(48, 71, 105);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-2-0:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-2-1 {
+  background-color: rgb(94, 105, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-2-1:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-2-2 {
+  background-color: rgb(94, 48, 105);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-2-2:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-2-3 {
+  background-color: rgb(48, 105, 71);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-2-3:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-2-4 {
+  background-color: rgb(105, 48, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-2-4:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-2-5 {
+  background-color: rgb(48, 71, 105);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-2-5:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-2-6 {
+  background-color: rgb(94, 105, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-2-6:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-2-7 {
+  background-color: rgb(94, 48, 105);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-2-7:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-2-8 {
+  background-color: rgb(48, 105, 71);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-2-8:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-3-0 {
+  background-color: rgb(133, 51, 153);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-3-0:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-3-1 {
+  background-color: rgb(51, 92, 153);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-3-1:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-3-2 {
+  background-color: rgb(51, 153, 92);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-3-2:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-3-3 {
+  background-color: rgb(133, 153, 51);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-3-3:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-3-4 {
+  background-color: rgb(153, 51, 51);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-3-4:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-3-5 {
+  background-color: rgb(133, 51, 153);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-3-5:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-3-6 {
+  background-color: rgb(51, 92, 153);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-3-6:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-3-7 {
+  background-color: rgb(51, 153, 92);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-3-7:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-3-8 {
+  background-color: rgb(133, 153, 51);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-3-8:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-4-0 {
+  background-color: rgb(207, 48, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-4-0:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-4-1 {
+  background-color: rgb(207, 48, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-4-1:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-4-2 {
+  background-color: rgb(207, 48, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-4-2:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-4-3 {
+  background-color: rgb(207, 48, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-4-3:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-4-4 {
+  background-color: rgb(207, 48, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-4-4:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-4-5 {
+  background-color: rgb(207, 48, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-4-5:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-4-6 {
+  background-color: rgb(207, 48, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-4-6:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-4-7 {
+  background-color: rgb(207, 48, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-4-7:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-4-8 {
+  background-color: rgb(207, 48, 48);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-4-8:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-5-0 {
+  background-color: rgb(199, 230, 76);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-5-0:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-5-1 {
+  background-color: rgb(76, 230, 138);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-5-1:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-5-2 {
+  background-color: rgb(76, 138, 230);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-5-2:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-5-3 {
+  background-color: rgb(199, 76, 230);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-5-3:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-5-4 {
+  background-color: rgb(230, 76, 76);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-5-4:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-5-5 {
+  background-color: rgb(199, 230, 76);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-5-5:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-5-6 {
+  background-color: rgb(76, 230, 138);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-5-6:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-5-7 {
+  background-color: rgb(76, 138, 230);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-5-7:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-5-8 {
+  background-color: rgb(199, 76, 230);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-5-8:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-6-0 {
+  background-color: rgb(112, 245, 165);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-6-0:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-6-1 {
+  background-color: rgb(219, 112, 245);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-6-1:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-6-2 {
+  background-color: rgb(219, 245, 112);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-6-2:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-6-3 {
+  background-color: rgb(112, 165, 245);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-6-3:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-6-4 {
+  background-color: rgb(245, 112, 112);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-6-4:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-6-5 {
+  background-color: rgb(112, 245, 165);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-6-5:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-6-6 {
+  background-color: rgb(219, 112, 245);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-6-6:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-6-7 {
+  background-color: rgb(219, 245, 112);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-6-7:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-6-8 {
+  background-color: rgb(112, 165, 245);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-6-8:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-7-0 {
+  background-color: rgb(153, 194, 255);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-7-0:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-7-1 {
+  background-color: rgb(235, 255, 153);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-7-1:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-7-2 {
+  background-color: rgb(235, 153, 255);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-7-2:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-7-3 {
+  background-color: rgb(153, 255, 194);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-7-3:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-7-4 {
+  background-color: rgb(255, 153, 153);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-7-4:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-7-5 {
+  background-color: rgb(153, 194, 255);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-7-5:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-7-6 {
+  background-color: rgb(235, 255, 153);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-7-6:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-7-7 {
+  background-color: rgb(235, 153, 255);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-7-7:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.a432-cell-7-8 {
+  background-color: rgb(153, 255, 194);
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.a432-cell-7-8:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+</style>
+</head>
+<body>
+<h1>A432 Color Matrix Display</h1>
+<p><strong>Mathematical Proof:</strong> A432 Consciousness Matrix: 8x9 matrix mapping consciousness levels to digital roots</p>
+<div class="a432-matrix">
+<div class="a432-cell-0-0" title="Consciousness: 1, Digital Root: 1, Frequency: 432Hz">1:1</div>
+<div class="a432-cell-0-1" title="Consciousness: 1, Digital Root: 2, Frequency: 864Hz">1:2</div>
+<div class="a432-cell-0-2" title="Consciousness: 1, Digital Root: 3, Frequency: 1296Hz">1:3</div>
+<div class="a432-cell-0-3" title="Consciousness: 1, Digital Root: 4, Frequency: 1728Hz">1:4</div>
+<div class="a432-cell-0-4" title="Consciousness: 1, Digital Root: 5, Frequency: 2160Hz">1:5</div>
+<div class="a432-cell-0-5" title="Consciousness: 1, Digital Root: 6, Frequency: 2592Hz">1:6</div>
+<div class="a432-cell-0-6" title="Consciousness: 1, Digital Root: 7, Frequency: 3024Hz">1:7</div>
+<div class="a432-cell-0-7" title="Consciousness: 1, Digital Root: 8, Frequency: 3456Hz">1:8</div>
+<div class="a432-cell-0-8" title="Consciousness: 1, Digital Root: 9, Frequency: 3888Hz">1:9</div>
+<div class="a432-cell-1-0" title="Consciousness: 2, Digital Root: 1, Frequency: 864Hz">2:1</div>
+<div class="a432-cell-1-1" title="Consciousness: 2, Digital Root: 2, Frequency: 1728Hz">2:2</div>
+<div class="a432-cell-1-2" title="Consciousness: 2, Digital Root: 3, Frequency: 2592Hz">2:3</div>
+<div class="a432-cell-1-3" title="Consciousness: 2, Digital Root: 4, Frequency: 3456Hz">2:4</div>
+<div class="a432-cell-1-4" title="Consciousness: 2, Digital Root: 5, Frequency: 4320Hz">2:5</div>
+<div class="a432-cell-1-5" title="Consciousness: 2, Digital Root: 6, Frequency: 5184Hz">2:6</div>
+<div class="a432-cell-1-6" title="Consciousness: 2, Digital Root: 7, Frequency: 6048Hz">2:7</div>
+<div class="a432-cell-1-7" title="Consciousness: 2, Digital Root: 8, Frequency: 6912Hz">2:8</div>
+<div class="a432-cell-1-8" title="Consciousness: 2, Digital Root: 9, Frequency: 7776Hz">2:9</div>
+<div class="a432-cell-2-0" title="Consciousness: 3, Digital Root: 1, Frequency: 1296Hz">3:1</div>
+<div class="a432-cell-2-1" title="Consciousness: 3, Digital Root: 2, Frequency: 2592Hz">3:2</div>
+<div class="a432-cell-2-2" title="Consciousness: 3, Digital Root: 3, Frequency: 3888Hz">3:3</div>
+<div class="a432-cell-2-3" title="Consciousness: 3, Digital Root: 4, Frequency: 5184Hz">3:4</div>
+<div class="a432-cell-2-4" title="Consciousness: 3, Digital Root: 5, Frequency: 6480Hz">3:5</div>
+<div class="a432-cell-2-5" title="Consciousness: 3, Digital Root: 6, Frequency: 7776Hz">3:6</div>
+<div class="a432-cell-2-6" title="Consciousness: 3, Digital Root: 7, Frequency: 9072Hz">3:7</div>
+<div class="a432-cell-2-7" title="Consciousness: 3, Digital Root: 8, Frequency: 10368Hz">3:8</div>
+<div class="a432-cell-2-8" title="Consciousness: 3, Digital Root: 9, Frequency: 11664Hz">3:9</div>
+<div class="a432-cell-3-0" title="Consciousness: 4, Digital Root: 1, Frequency: 1728Hz">4:1</div>
+<div class="a432-cell-3-1" title="Consciousness: 4, Digital Root: 2, Frequency: 3456Hz">4:2</div>
+<div class="a432-cell-3-2" title="Consciousness: 4, Digital Root: 3, Frequency: 5184Hz">4:3</div>
+<div class="a432-cell-3-3" title="Consciousness: 4, Digital Root: 4, Frequency: 6912Hz">4:4</div>
+<div class="a432-cell-3-4" title="Consciousness: 4, Digital Root: 5, Frequency: 8640Hz">4:5</div>
+<div class="a432-cell-3-5" title="Consciousness: 4, Digital Root: 6, Frequency: 10368Hz">4:6</div>
+<div class="a432-cell-3-6" title="Consciousness: 4, Digital Root: 7, Frequency: 12096Hz">4:7</div>
+<div class="a432-cell-3-7" title="Consciousness: 4, Digital Root: 8, Frequency: 13824Hz">4:8</div>
+<div class="a432-cell-3-8" title="Consciousness: 4, Digital Root: 9, Frequency: 15552Hz">4:9</div>
+<div class="a432-cell-4-0" title="Consciousness: 5, Digital Root: 1, Frequency: 2160Hz">5:1</div>
+<div class="a432-cell-4-1" title="Consciousness: 5, Digital Root: 2, Frequency: 4320Hz">5:2</div>
+<div class="a432-cell-4-2" title="Consciousness: 5, Digital Root: 3, Frequency: 6480Hz">5:3</div>
+<div class="a432-cell-4-3" title="Consciousness: 5, Digital Root: 4, Frequency: 8640Hz">5:4</div>
+<div class="a432-cell-4-4" title="Consciousness: 5, Digital Root: 5, Frequency: 10800Hz">5:5</div>
+<div class="a432-cell-4-5" title="Consciousness: 5, Digital Root: 6, Frequency: 12960Hz">5:6</div>
+<div class="a432-cell-4-6" title="Consciousness: 5, Digital Root: 7, Frequency: 15120Hz">5:7</div>
+<div class="a432-cell-4-7" title="Consciousness: 5, Digital Root: 8, Frequency: 17280Hz">5:8</div>
+<div class="a432-cell-4-8" title="Consciousness: 5, Digital Root: 9, Frequency: 19440Hz">5:9</div>
+<div class="a432-cell-5-0" title="Consciousness: 6, Digital Root: 1, Frequency: 2592Hz">6:1</div>
+<div class="a432-cell-5-1" title="Consciousness: 6, Digital Root: 2, Frequency: 5184Hz">6:2</div>
+<div class="a432-cell-5-2" title="Consciousness: 6, Digital Root: 3, Frequency: 7776Hz">6:3</div>
+<div class="a432-cell-5-3" title="Consciousness: 6, Digital Root: 4, Frequency: 10368Hz">6:4</div>
+<div class="a432-cell-5-4" title="Consciousness: 6, Digital Root: 5, Frequency: 12960Hz">6:5</div>
+<div class="a432-cell-5-5" title="Consciousness: 6, Digital Root: 6, Frequency: 15552Hz">6:6</div>
+<div class="a432-cell-5-6" title="Consciousness: 6, Digital Root: 7, Frequency: 18144Hz">6:7</div>
+<div class="a432-cell-5-7" title="Consciousness: 6, Digital Root: 8, Frequency: 20736Hz">6:8</div>
+<div class="a432-cell-5-8" title="Consciousness: 6, Digital Root: 9, Frequency: 23328Hz">6:9</div>
+<div class="a432-cell-6-0" title="Consciousness: 7, Digital Root: 1, Frequency: 3024Hz">7:1</div>
+<div class="a432-cell-6-1" title="Consciousness: 7, Digital Root: 2, Frequency: 6048Hz">7:2</div>
+<div class="a432-cell-6-2" title="Consciousness: 7, Digital Root: 3, Frequency: 9072Hz">7:3</div>
+<div class="a432-cell-6-3" title="Consciousness: 7, Digital Root: 4, Frequency: 12096Hz">7:4</div>
+<div class="a432-cell-6-4" title="Consciousness: 7, Digital Root: 5, Frequency: 15120Hz">7:5</div>
+<div class="a432-cell-6-5" title="Consciousness: 7, Digital Root: 6, Frequency: 18144Hz">7:6</div>
+<div class="a432-cell-6-6" title="Consciousness: 7, Digital Root: 7, Frequency: 21168Hz">7:7</div>
+<div class="a432-cell-6-7" title="Consciousness: 7, Digital Root: 8, Frequency: 24192Hz">7:8</div>
+<div class="a432-cell-6-8" title="Consciousness: 7, Digital Root: 9, Frequency: 27216Hz">7:9</div>
+<div class="a432-cell-7-0" title="Consciousness: 8, Digital Root: 1, Frequency: 3456Hz">8:1</div>
+<div class="a432-cell-7-1" title="Consciousness: 8, Digital Root: 2, Frequency: 6912Hz">8:2</div>
+<div class="a432-cell-7-2" title="Consciousness: 8, Digital Root: 3, Frequency: 10368Hz">8:3</div>
+<div class="a432-cell-7-3" title="Consciousness: 8, Digital Root: 4, Frequency: 13824Hz">8:4</div>
+<div class="a432-cell-7-4" title="Consciousness: 8, Digital Root: 5, Frequency: 17280Hz">8:5</div>
+<div class="a432-cell-7-5" title="Consciousness: 8, Digital Root: 6, Frequency: 20736Hz">8:6</div>
+<div class="a432-cell-7-6" title="Consciousness: 8, Digital Root: 7, Frequency: 24192Hz">8:7</div>
+<div class="a432-cell-7-7" title="Consciousness: 8, Digital Root: 8, Frequency: 27648Hz">8:8</div>
+<div class="a432-cell-7-8" title="Consciousness: 8, Digital Root: 9, Frequency: 31104Hz">8:9</div>
+</div>
+<p><em>Hover over cells to see detailed information</em></p>
+</body>
+</html>

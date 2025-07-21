@@ -1,25 +1,17 @@
-/**
- * A432 Constants - Mathematical Foundation
- * 
- * This module defines all A432-related constants and mathematical foundations
- * for the harmonic system, maintaining zero entropy through mathematical reversibility.
- * 
- * Mathematical Foundation:
- * - A432: 432 Hz, fundamental harmonic frequency
- * - Digital Root Switches: Multiplication → Addition → Digital Root
- * - Imperial Math: 8-based system with harmonic gateways
- * - Rodin Vortex: [1, 2, 4, 8, 7, 5] sequence
- * - Zero Entropy: Perfect mathematical reversibility
- */
+// a432.constants.ts
+// Shared constants for the A432 framework
 
-// Imperial Math Constants (8-based system)
 export const A432_CONSTANTS = {
-  BASE: 8, // Imperial base (8 inches = 1 foot)
-  HARMONIC_GATEWAYS: [3, 4, 6, 8], // Harmonic switch points
-  A432_FREQUENCY: 432, // A432 Hz fundamental frequency
-  DIGITAL_ROOT_BASE: 9, // Digital root completion
-  RODIN_SEQUENCE: [1, 2, 4, 8, 7, 5], // Vortex pattern
-  PERFECT_BALANCE: 4 // Perfect balance in imperial range
+  A432_FREQUENCY: 432,           // Base frequency in Hz
+  DIGITAL_ROOT_BASE: 9,          // Digital root calculation base
+  HARMONIC_MULTIPLIER: 1,        // Harmonic progression multiplier
+  CONSCIOUSNESS_LEVELS: 10,      // Number of consciousness levels (0-9)
+  INTEGRATION_BASE: 9,           // Integration calculation base
+  EVOLUTION_BASE: 9,             // Evolution calculation base
+  MATHEMATICAL_PRECISION: 6,     // Mathematical precision for calculations
+  FREQUENCY_TOLERANCE: 0.001,    // Frequency tolerance for resonance
+  HARMONIC_TOLERANCE: 0.01,      // Harmonic tolerance for calculations
+  CONSCIOUSNESS_TOLERANCE: 0.1   // Consciousness tolerance for levels
 };
 
 // A432 Harmonic Constants

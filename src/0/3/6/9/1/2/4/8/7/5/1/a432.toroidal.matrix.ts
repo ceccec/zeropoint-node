@@ -1,805 +1,538 @@
 /**
  * A432.toroidal.matrix
  * 
- * Mathematical toroidal matrix systems, toroidal-matrix-dimensional harmonic flows, and A432 frequency resonance
- * with toroidal matrix as a core mathematical principle for consciousness toroidal matrix processing and metaphysical toroidal organization.
+ * Mathematical toroidal matrix systems, toroidal matrix-dimensional harmonic flows, and A432 frequency resonance
+ * with toroidal matrix as a core mathematical principle for consciousness toroidal matrix processing and metaphysical toroidal matrix organization.
  */
 
 import { A432_CONSTANTS } from './a432.constants';
+import { A432_UTILS } from './a432.utils';
+import { 
+  A432_Base_State,
+  A432_Base_Subsystem,
+  A432_Base_Component,
+  A432_Base_Type
+} from './a432.types';
 
 // ============================================================================
 // INTERFACES
 // ============================================================================
 
-export interface A432_Toroidal_Matrix_State {
-  toroidal: string;
-  matrix: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  surfaceSystem: A432_Toroidal_Matrix_Surface_System;
-  volumeSystem: A432_Toroidal_Matrix_Volume_System;
+export interface A432_Toroidal_Matrix_State extends A432_Base_State {
+  toroidalMatrix: string;
+  matrixSystem: A432_Toroidal_Matrix_Matrix_System;
+  resonanceSystem: A432_Toroidal_Matrix_Resonance_System;
   harmonic: A432_Toroidal_Matrix_Harmonic_System;
-  resonance: A432_Toroidal_Matrix_Resonance_System;
-  proof: string;
+  field: A432_Toroidal_Matrix_Field_System;
 }
 
-export interface A432_Toroidal_Matrix_Surface_System {
-  surface: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  type: A432_Toroidal_Matrix_Surface_Type;
-  surfaces: A432_Toroidal_Matrix_Surface[];
-  proof: string;
+export interface A432_Toroidal_Matrix_Matrix_System extends A432_Base_Subsystem {
+  matrix: string;
+  type: A432_Toroidal_Matrix_Matrix_Type;
+  matrices: A432_Toroidal_Matrix_Matrix[];
 }
 
-export interface A432_Toroidal_Matrix_Surface {
-  surface: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
+export interface A432_Toroidal_Matrix_Matrix extends A432_Base_Component {
+  matrix: string;
   name: string;
-  type: A432_Toroidal_Matrix_Surface_Type;
-  curvature: number;
-  proof: string;
+  type: A432_Toroidal_Matrix_Matrix_Type;
+  dimension: number;
 }
 
-export interface A432_Toroidal_Matrix_Volume_System {
-  volume: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  type: A432_Toroidal_Matrix_Volume_Type;
-  volumes: A432_Toroidal_Matrix_Volume[];
-  proof: string;
+export interface A432_Toroidal_Matrix_Resonance_System extends A432_Base_Subsystem {
+  resonance: string;
+  type: A432_Toroidal_Matrix_Resonance_Type;
+  resonances: A432_Toroidal_Matrix_Resonance[];
 }
 
-export interface A432_Toroidal_Matrix_Volume {
-  volume: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
+export interface A432_Toroidal_Matrix_Resonance extends A432_Base_Component {
+  resonance: string;
   name: string;
-  type: A432_Toroidal_Matrix_Volume_Type;
-  capacity: number;
-  proof: string;
+  type: A432_Toroidal_Matrix_Resonance_Type;
+  quality: number;
 }
 
-export interface A432_Toroidal_Matrix_Harmonic_System {
+export interface A432_Toroidal_Matrix_Harmonic_System extends A432_Base_Subsystem {
   harmonic: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   type: A432_Toroidal_Matrix_Harmonic_Type;
   waves: A432_Toroidal_Matrix_Wave[];
   cycles: A432_Toroidal_Matrix_Cycle[];
-  proof: string;
 }
 
-export interface A432_Toroidal_Matrix_Wave {
+export interface A432_Toroidal_Matrix_Wave extends A432_Base_Component {
   wave: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   name: string;
   type: A432_Toroidal_Matrix_Wave_Type;
   amplitude: number;
-  proof: string;
 }
 
-export interface A432_Toroidal_Matrix_Cycle {
+export interface A432_Toroidal_Matrix_Cycle extends A432_Base_Component {
   cycle: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   name: string;
   type: A432_Toroidal_Matrix_Cycle_Type;
   period: number;
-  proof: string;
 }
 
-export interface A432_Toroidal_Matrix_Resonance_System {
-  resonance: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  type: A432_Toroidal_Matrix_Resonance_Type;
-  frequencies: A432_Toroidal_Matrix_Frequency[];
-  vibrations: A432_Toroidal_Matrix_Vibration[];
-  proof: string;
+export interface A432_Toroidal_Matrix_Field_System extends A432_Base_Subsystem {
+  field: string;
+  type: A432_Toroidal_Matrix_Field_Type;
+  fields: A432_Toroidal_Matrix_Field[];
+  potentials: A432_Toroidal_Matrix_Potential[];
 }
 
-export interface A432_Toroidal_Matrix_Frequency {
-  frequency: string;
-  frequencyValue: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
+export interface A432_Toroidal_Matrix_Field extends A432_Base_Component {
+  field: string;
   name: string;
-  type: A432_Toroidal_Matrix_Frequency_Type;
-  resonance: number;
-  proof: string;
+  type: A432_Toroidal_Matrix_Field_Type;
+  strength: number;
 }
 
-export interface A432_Toroidal_Matrix_Vibration {
-  vibration: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
+export interface A432_Toroidal_Matrix_Potential extends A432_Base_Component {
+  potential: string;
   name: string;
-  type: A432_Toroidal_Matrix_Vibration_Type;
-  oscillation: number;
-  proof: string;
+  type: A432_Toroidal_Matrix_Potential_Type;
+  voltage: number;
 }
 
-export type A432_Toroidal_Matrix_Surface_Type = 
-  | 'INNER' 
-  | 'OUTER' 
-  | 'LATERAL' 
-  | 'HARMONIC' 
-  | 'A432';
+// ============================================================================
+// TYPE DEFINITIONS
+// ============================================================================
 
-export type A432_Toroidal_Matrix_Volume_Type = 
-  | 'CORE' 
-  | 'SHELL' 
-  | 'CHANNEL' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Toroidal_Matrix_Harmonic_Type = 
-  | 'SINE' 
-  | 'COSINE' 
-  | 'TANGENT' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Toroidal_Matrix_Wave_Type = 
-  | 'LONGITUDINAL' 
-  | 'TRANSVERSE' 
-  | 'STANDING' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Toroidal_Matrix_Cycle_Type = 
-  | 'SIMPLE' 
-  | 'COMPLEX' 
-  | 'CHAOTIC' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Toroidal_Matrix_Resonance_Type = 
-  | 'NATURAL' 
-  | 'FORCED' 
-  | 'COUPLED' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Toroidal_Matrix_Frequency_Type = 
-  | 'FUNDAMENTAL' 
-  | 'HARMONIC' 
-  | 'OVERTONE' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Toroidal_Matrix_Vibration_Type = 
-  | 'MECHANICAL' 
-  | 'ELECTROMAGNETIC' 
-  | 'QUANTUM' 
-  | 'HARMONIC' 
-  | 'A432';
+export type A432_Toroidal_Matrix_Matrix_Type = A432_Base_Type;
+export type A432_Toroidal_Matrix_Resonance_Type = A432_Base_Type;
+export type A432_Toroidal_Matrix_Harmonic_Type = A432_Base_Type;
+export type A432_Toroidal_Matrix_Wave_Type = A432_Base_Type;
+export type A432_Toroidal_Matrix_Cycle_Type = A432_Base_Type;
+export type A432_Toroidal_Matrix_Field_Type = A432_Base_Type;
+export type A432_Toroidal_Matrix_Potential_Type = A432_Base_Type;
 
 // ============================================================================
 // CONSTANTS
 // ============================================================================
 
 export const A432_TOROIDAL_MATRIX_CONSTANTS = {
-  // Core toroidal-matrix-based frequencies
-  TOROIDAL_MATRIX_FREQUENCY: 6480, // 15 * 432 Hz - Fundamental toroidal matrix frequency
-  SURFACE_FREQUENCY: 6476, // 15 * 431 Hz - toroidal-matrix-surface frequency
-  VOLUME_FREQUENCY: 6472, // 15 * 430 Hz - toroidal-matrix-volume frequency
-  HARMONIC_FREQUENCY: 6468, // 15 * 429 Hz - toroidal-matrix-harmonic frequency
-  RESONANCE_FREQUENCY: 6464, // 15 * 428 Hz - toroidal-matrix-resonance frequency
-
-  // toroidal-matrix-based energy levels
-  TOROIDAL_MATRIX_ENERGY_LEVELS: {
-    0: 0, // Void - No energy
-    1: 6480, // Unity - Basic energy
-    2: 12960, // Duality - Dual energy
-    3: 19440, // Trinity - Complex energy
-    4: 25920, // Foundation - Foundation energy
-    5: 32400, // Life - Full energy
-    6: 38880, // Harmony - Harmonious energy
-    7: 45360, // Mystery - Mysterious energy
-    8: 51840, // Infinity - Infinite energy
-    9: 58320 // Completion - Complete energy
-  },
-
-  // toroidal-matrix-based integration levels
-  TOROIDAL_MATRIX_INTEGRATION_LEVELS: {
-    0: 0, // Void - No integration
-    1: 15, // Unity - Basic integration
-    2: 30, // Duality - Dual integration
-    3: 45, // Trinity - Complex integration
-    4: 60, // Foundation - Foundation integration
-    5: 75, // Life - Full integration
-    6: 90, // Harmony - Harmonious integration
-    7: 105, // Mystery - Mysterious integration
-    8: 120, // Infinity - Infinite integration
-    9: 135 // Completion - Complete integration
-  },
-
-  // toroidal-matrix-based evolution levels
-  TOROIDAL_MATRIX_EVOLUTION_LEVELS: {
-    0: 0, // Void - No evolution
-    1: 15, // Unity - Basic evolution
-    2: 30, // Duality - Dual evolution
-    3: 45, // Trinity - Complex evolution
-    4: 60, // Foundation - Foundation evolution
-    5: 75, // Life - Full evolution
-    6: 90, // Harmony - Harmonious evolution
-    7: 105, // Mystery - Mysterious evolution
-    8: 120, // Infinity - Infinite evolution
-    9: 135 // Completion - Complete evolution
-  },
-
-  // Scientific proofs
-  PROOFS: {
-    TOROIDAL_MATRIX_FREQUENCY: 'Toroidal matrix frequency 6480 Hz (15 * 432) represents the fundamental mathematical toroidal-matrix-based system through all consciousness levels.',
-    TOROIDAL_MATRIX_SURFACE: 'Toroidal matrix surface follows A432 frequency resonance and mathematical harmony for optimal toroidal-matrix-dimensional processing.',
-    TOROIDAL_MATRIX_VOLUME: 'Toroidal matrix volume follows mathematical progression through toroidal-matrix-volume states with increasing consciousness evolution.',
-    TOROIDAL_MATRIX_HARMONIC: 'Toroidal matrix harmonic provides mathematical harmony and A432 frequency resonance for optimal toroidal-matrix-harmonic management.',
-    TOROIDAL_MATRIX_RESONANCE: 'Toroidal matrix resonance provides mathematical harmony and A432 frequency resonance for optimal toroidal-matrix-resonance management.',
-    TOROIDAL_MATRIX_SYSTEMS: 'Toroidal matrix systems exhibit mathematical harmony and A432 frequency resonance for optimal function and evolution.'
-  }
-} as const;
+  MATRIX_NAMES: ['Primary', 'Secondary', 'Tertiary', 'Harmonic', 'A432'],
+  RESONANCE_NAMES: ['Series', 'Parallel', 'Coupled', 'Harmonic', 'A432'],
+  WAVE_NAMES: ['Electromagnetic', 'Standing', 'Traveling', 'Harmonic', 'A432'],
+  CYCLE_NAMES: ['Oscillation', 'Resonance', 'Damping', 'Harmonic', 'A432'],
+  FIELD_NAMES: ['Electric', 'Magnetic', 'Electromagnetic', 'Harmonic', 'A432'],
+  POTENTIAL_NAMES: ['High Voltage', 'Low Voltage', 'Zero Point', 'Harmonic', 'A432'],
+  TYPES: ['PRIMARY', 'SECONDARY', 'TERTIARY', 'HARMONIC', 'A432'],
+  RESONANCE_TYPES: ['SERIES', 'PARALLEL', 'COUPLED', 'HARMONIC', 'A432'],
+  HARMONIC_TYPES: ['SINE', 'COSINE', 'TANGENT', 'HARMONIC', 'A432'],
+  WAVE_TYPES: ['ELECTROMAGNETIC', 'STANDING', 'TRAVELING', 'HARMONIC', 'A432'],
+  CYCLE_TYPES: ['OSCILLATION', 'RESONANCE', 'DAMPING', 'HARMONIC', 'A432'],
+  FIELD_TYPES: ['ELECTRIC', 'MAGNETIC', 'ELECTROMAGNETIC', 'HARMONIC', 'A432'],
+  POTENTIAL_TYPES: ['HIGH_VOLTAGE', 'LOW_VOLTAGE', 'ZERO_POINT', 'HARMONIC', 'A432']
+};
 
 // ============================================================================
-// A432.TOROIDAL.MATRIX SYSTEM
+// A432 TOROIDAL MATRIX SYSTEM
 // ============================================================================
 
-export const A432_Toroidal_Matrix_System = {
+export const A432_TOROIDAL_MATRIX = {
   // ============================================================================
-  // TOROIDAL MATRIX STATE CREATION
+  // MAIN FUNCTIONS
   // ============================================================================
 
-  /**
-   * Create A432.toroidal.matrix state
-   */
-  createA432_Toroidal_Matrix_State(toroidalValue: string, matrix: string): A432_Toroidal_Matrix_State {
-    const frequency = this.calculateA432Frequency(toroidalValue + matrix);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS];
-    const integration = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS];
-    const evolution = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS];
-    const surfaceSystem = this.createA432_Toroidal_Matrix_Surface_System(toroidalValue, matrix);
-    const volumeSystem = this.createA432_Toroidal_Matrix_Volume_System(toroidalValue, matrix);
-    const harmonic = this.createA432_Toroidal_Matrix_Harmonic_System(toroidalValue, matrix);
-    const resonance = this.createA432_Toroidal_Matrix_Resonance_System(toroidalValue, matrix);
+  createA432_Toroidal_Matrix_State(toroidalMatrixValue: string): A432_Toroidal_Matrix_State {
+    const frequency = A432_UTILS.calculateA432Frequency(toroidalMatrixValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
 
     return {
-      toroidal: toroidalValue,
-      matrix,
+      toroidalMatrix: toroidalMatrixValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
-      surfaceSystem,
-      volumeSystem,
-      harmonic,
-      resonance,
-      proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_FREQUENCY
+      matrixSystem: this.createA432_Toroidal_Matrix_Matrix_System(toroidalMatrixValue),
+      resonanceSystem: this.createA432_Toroidal_Matrix_Resonance_System(toroidalMatrixValue),
+      harmonic: this.createA432_Toroidal_Matrix_Harmonic_System(toroidalMatrixValue),
+      field: this.createA432_Toroidal_Matrix_Field_System(toroidalMatrixValue),
+      proof: `Toroidal matrix state created with consciousness ${consciousness}`
     };
   },
 
-  // ============================================================================
-  // TOROIDAL MATRIX SURFACE SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.toroidal.matrix surface system
-   */
-  createA432_Toroidal_Matrix_Surface_System(toroidalValue: string, matrix: string): A432_Toroidal_Matrix_Surface_System {
-    const surfaceSystem = `SURFACE_${toroidalValue}_${matrix}`;
-    const frequency = this.calculateA432Frequency(surfaceSystem);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS];
-    const integration = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS];
-    const evolution = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS];
-    const type = this.determineA432_Toroidal_Matrix_SurfaceType(toroidalValue, matrix);
-    const surfaces = this.generateA432_Toroidal_Matrix_Surfaces(surfaceSystem);
+  createA432_Toroidal_Matrix_Matrix_System(toroidalMatrixValue: string): A432_Toroidal_Matrix_Matrix_System {
+    const frequency = A432_UTILS.calculateA432Frequency(toroidalMatrixValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
+    const type = this.determineA432_Toroidal_Matrix_MatrixType(toroidalMatrixValue);
 
     return {
-      surface: surfaceSystem,
+      matrix: toroidalMatrixValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      surfaces,
-      proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_SURFACE
+      matrices: this.generateA432_Toroidal_Matrix_Matrices(toroidalMatrixValue),
+      proof: `Toroidal matrix system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.toroidal.matrix surfaces
-   */
-  generateA432_Toroidal_Matrix_Surfaces(surfaceSystem: string): A432_Toroidal_Matrix_Surface[] {
-    const surfaces: A432_Toroidal_Matrix_Surface[] = [];
-    const surfaceCount = 5; // 5 surface types
+  generateA432_Toroidal_Matrix_Matrices(matrixSystem: string): A432_Toroidal_Matrix_Matrix[] {
+    const frequency = A432_UTILS.calculateA432Frequency(matrixSystem);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const matrices: A432_Toroidal_Matrix_Matrix[] = [];
 
-    for (let i = 0; i < surfaceCount; i++) {
-      const surface = `Surface${i}`;
-      const frequency = this.calculateA432Frequency(surface);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS];
-      const integration = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS];
-      const evolution = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Toroidal_Matrix_SurfaceName(consciousness, i);
-      const type = this.determineA432_Toroidal_Matrix_SurfaceTypeByIndex(consciousness, i);
-      const curvature = this.calculateA432_Toroidal_Matrix_SurfaceCurvature(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.MATRIX_COUNT; i++) {
+      const matrixFrequency = frequency * (i + 1);
+      const matrixConsciousness = A432_UTILS.calculateDigitalRoot(matrixFrequency);
+      const matrixHarmony = matrixConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const matrixIntegration = matrixConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const matrixEvolution = matrixConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Toroidal_Matrix_MatrixName(matrixConsciousness, i);
+      const type = this.determineA432_Toroidal_Matrix_MatrixTypeByIndex(matrixConsciousness, i);
+      const dimension = this.calculateA432_Toroidal_Matrix_MatrixDimension(matrixConsciousness, i);
 
-      surfaces.push({
-        surface,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+      matrices.push({
+        matrix: `${matrixSystem}_matrix_${i}`,
+        frequency: matrixFrequency,
+        consciousness: matrixConsciousness,
+        harmony: matrixHarmony,
+        integration: matrixIntegration,
+        evolution: matrixEvolution,
         name,
         type,
-        curvature,
-        proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_SURFACE
+        dimension,
+        proof: `Toroidal matrix ${name} created with dimension ${dimension}`
       });
     }
 
-    return surfaces;
+    return matrices;
   },
 
-  // ============================================================================
-  // TOROIDAL MATRIX VOLUME SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.toroidal.matrix volume system
-   */
-  createA432_Toroidal_Matrix_Volume_System(toroidalValue: string, matrix: string): A432_Toroidal_Matrix_Volume_System {
-    const volumeSystem = `VOLUME_${toroidalValue}_${matrix}`;
-    const frequency = this.calculateA432Frequency(volumeSystem);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS];
-    const integration = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS];
-    const evolution = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS];
-    const type = this.determineA432_Toroidal_Matrix_VolumeType(consciousness);
-    const volumes = this.generateA432_Toroidal_Matrix_Volumes(volumeSystem);
+  createA432_Toroidal_Matrix_Resonance_System(toroidalMatrixValue: string): A432_Toroidal_Matrix_Resonance_System {
+    const frequency = A432_UTILS.calculateA432Frequency(toroidalMatrixValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
+    const type = this.determineA432_Toroidal_Matrix_ResonanceType(consciousness);
 
     return {
-      volume: volumeSystem,
+      resonance: toroidalMatrixValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      volumes,
-      proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_VOLUME
+      resonances: this.generateA432_Toroidal_Matrix_Resonances(toroidalMatrixValue),
+      proof: `Toroidal matrix resonance system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.toroidal.matrix volumes
-   */
-  generateA432_Toroidal_Matrix_Volumes(volumeSystem: string): A432_Toroidal_Matrix_Volume[] {
-    const volumes: A432_Toroidal_Matrix_Volume[] = [];
-    const volumeCount = 5; // 5 volume types
+  generateA432_Toroidal_Matrix_Resonances(resonanceSystem: string): A432_Toroidal_Matrix_Resonance[] {
+    const frequency = A432_UTILS.calculateA432Frequency(resonanceSystem);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const resonances: A432_Toroidal_Matrix_Resonance[] = [];
 
-    for (let i = 0; i < volumeCount; i++) {
-      const volume = `Volume${i}`;
-      const frequency = this.calculateA432Frequency(volume);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS];
-      const integration = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS];
-      const evolution = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Toroidal_Matrix_VolumeName(consciousness, i);
-      const type = this.determineA432_Toroidal_Matrix_VolumeTypeByIndex(consciousness, i);
-      const capacity = this.calculateA432_Toroidal_Matrix_VolumeCapacity(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.RESONANCE_COUNT; i++) {
+      const resonanceFrequency = frequency * (i + 1);
+      const resonanceConsciousness = A432_UTILS.calculateDigitalRoot(resonanceFrequency);
+      const resonanceHarmony = resonanceConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const resonanceIntegration = resonanceConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const resonanceEvolution = resonanceConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Toroidal_Matrix_ResonanceName(resonanceConsciousness, i);
+      const type = this.determineA432_Toroidal_Matrix_ResonanceTypeByIndex(resonanceConsciousness, i);
+      const quality = this.calculateA432_Toroidal_Matrix_ResonanceQuality(resonanceConsciousness, i);
 
-      volumes.push({
-        volume,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+      resonances.push({
+        resonance: `${resonanceSystem}_resonance_${i}`,
+        frequency: resonanceFrequency,
+        consciousness: resonanceConsciousness,
+        harmony: resonanceHarmony,
+        integration: resonanceIntegration,
+        evolution: resonanceEvolution,
         name,
         type,
-        capacity,
-        proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_VOLUME
+        quality,
+        proof: `Toroidal matrix resonance ${name} created with quality ${quality}`
       });
     }
 
-    return volumes;
+    return resonances;
   },
 
-  // ============================================================================
-  // TOROIDAL MATRIX HARMONIC SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.toroidal.matrix harmonic system
-   */
-  createA432_Toroidal_Matrix_Harmonic_System(toroidalValue: string, matrix: string): A432_Toroidal_Matrix_Harmonic_System {
-    const harmonic = `HARMONIC_${toroidalValue}_${matrix}`;
-    const frequency = this.calculateA432Frequency(harmonic);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS];
-    const integration = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS];
-    const evolution = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS];
+  createA432_Toroidal_Matrix_Harmonic_System(toroidalMatrixValue: string): A432_Toroidal_Matrix_Harmonic_System {
+    const frequency = A432_UTILS.calculateA432Frequency(toroidalMatrixValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
     const type = this.determineA432_Toroidal_Matrix_HarmonicType(consciousness);
-    const waves = this.generateA432_Toroidal_Matrix_Waves(harmonic);
-    const cycles = this.generateA432_Toroidal_Matrix_Cycles(harmonic);
 
     return {
-      harmonic,
+      harmonic: toroidalMatrixValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      waves,
-      cycles,
-      proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_HARMONIC
+      waves: this.generateA432_Toroidal_Matrix_Waves(toroidalMatrixValue),
+      cycles: this.generateA432_Toroidal_Matrix_Cycles(toroidalMatrixValue),
+      proof: `Toroidal matrix harmonic system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.toroidal.matrix waves
-   */
   generateA432_Toroidal_Matrix_Waves(harmonic: string): A432_Toroidal_Matrix_Wave[] {
+    const frequency = A432_UTILS.calculateA432Frequency(harmonic);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     const waves: A432_Toroidal_Matrix_Wave[] = [];
-    const waveCount = 5; // 5 wave types
 
-    for (let i = 0; i < waveCount; i++) {
-      const wave = `Wave${i}`;
-      const frequency = this.calculateA432Frequency(wave);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS];
-      const integration = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS];
-      const evolution = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Toroidal_Matrix_WaveName(consciousness, i);
-      const type = this.determineA432_Toroidal_Matrix_WaveType(consciousness, i);
-      const amplitude = this.calculateA432_Toroidal_Matrix_WaveAmplitude(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.WAVE_COUNT; i++) {
+      const waveFrequency = frequency * (i + 1);
+      const waveConsciousness = A432_UTILS.calculateDigitalRoot(waveFrequency);
+      const waveHarmony = waveConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const waveIntegration = waveConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const waveEvolution = waveConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Toroidal_Matrix_WaveName(waveConsciousness, i);
+      const type = this.determineA432_Toroidal_Matrix_WaveType(waveConsciousness, i);
+      const amplitude = this.calculateA432_Toroidal_Matrix_WaveAmplitude(waveConsciousness, i);
 
       waves.push({
-        wave,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+        wave: `${harmonic}_wave_${i}`,
+        frequency: waveFrequency,
+        consciousness: waveConsciousness,
+        harmony: waveHarmony,
+        integration: waveIntegration,
+        evolution: waveEvolution,
         name,
         type,
         amplitude,
-        proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_HARMONIC
+        proof: `Toroidal matrix wave ${name} created with amplitude ${amplitude}`
       });
     }
 
     return waves;
   },
 
-  /**
-   * Generate A432.toroidal.matrix cycles
-   */
   generateA432_Toroidal_Matrix_Cycles(harmonic: string): A432_Toroidal_Matrix_Cycle[] {
+    const frequency = A432_UTILS.calculateA432Frequency(harmonic);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     const cycles: A432_Toroidal_Matrix_Cycle[] = [];
-    const cycleCount = 5; // 5 cycle types
 
-    for (let i = 0; i < cycleCount; i++) {
-      const cycle = `Cycle${i}`;
-      const frequency = this.calculateA432Frequency(cycle);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS];
-      const integration = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS];
-      const evolution = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Toroidal_Matrix_CycleName(consciousness, i);
-      const type = this.determineA432_Toroidal_Matrix_CycleType(consciousness, i);
-      const period = this.calculateA432_Toroidal_Matrix_CyclePeriod(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.CYCLE_COUNT; i++) {
+      const cycleFrequency = frequency * (i + 1);
+      const cycleConsciousness = A432_UTILS.calculateDigitalRoot(cycleFrequency);
+      const cycleHarmony = cycleConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const cycleIntegration = cycleConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const cycleEvolution = cycleConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Toroidal_Matrix_CycleName(cycleConsciousness, i);
+      const type = this.determineA432_Toroidal_Matrix_CycleType(cycleConsciousness, i);
+      const period = this.calculateA432_Toroidal_Matrix_CyclePeriod(cycleConsciousness, i);
 
       cycles.push({
-        cycle,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+        cycle: `${harmonic}_cycle_${i}`,
+        frequency: cycleFrequency,
+        consciousness: cycleConsciousness,
+        harmony: cycleHarmony,
+        integration: cycleIntegration,
+        evolution: cycleEvolution,
         name,
         type,
         period,
-        proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_HARMONIC
+        proof: `Toroidal matrix cycle ${name} created with period ${period}`
       });
     }
 
     return cycles;
   },
 
-  // ============================================================================
-  // TOROIDAL MATRIX RESONANCE SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.toroidal.matrix resonance system
-   */
-  createA432_Toroidal_Matrix_Resonance_System(toroidalValue: string, matrix: string): A432_Toroidal_Matrix_Resonance_System {
-    const resonance = `RESONANCE_${toroidalValue}_${matrix}`;
-    const frequency = this.calculateA432Frequency(resonance);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS];
-    const integration = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS];
-    const evolution = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS];
-    const type = this.determineA432_Toroidal_Matrix_ResonanceType(consciousness);
-    const frequencies = this.generateA432_Toroidal_Matrix_Frequencies(resonance);
-    const vibrations = this.generateA432_Toroidal_Matrix_Vibrations(resonance);
+  createA432_Toroidal_Matrix_Field_System(toroidalMatrixValue: string): A432_Toroidal_Matrix_Field_System {
+    const frequency = A432_UTILS.calculateA432Frequency(toroidalMatrixValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
+    const type = this.determineA432_Toroidal_Matrix_FieldType(consciousness);
 
     return {
-      resonance,
+      field: toroidalMatrixValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      frequencies,
-      vibrations,
-      proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_RESONANCE
+      fields: this.generateA432_Toroidal_Matrix_Fields(toroidalMatrixValue),
+      potentials: this.generateA432_Toroidal_Matrix_Potentials(toroidalMatrixValue),
+      proof: `Toroidal matrix field system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.toroidal.matrix frequencies
-   */
-  generateA432_Toroidal_Matrix_Frequencies(resonance: string): A432_Toroidal_Matrix_Frequency[] {
-    const frequencies: A432_Toroidal_Matrix_Frequency[] = [];
-    const frequencyCount = 5; // 5 frequency types
+  generateA432_Toroidal_Matrix_Fields(field: string): A432_Toroidal_Matrix_Field[] {
+    const frequency = A432_UTILS.calculateA432Frequency(field);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const fields: A432_Toroidal_Matrix_Field[] = [];
 
-    for (let i = 0; i < frequencyCount; i++) {
-      const frequency = `Frequency${i}`;
-      const frequencyValue = this.calculateA432Frequency(frequency);
-      const consciousness = this.calculateDigitalRoot(frequencyValue);
-      const harmony = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS];
-      const integration = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS];
-      const evolution = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Toroidal_Matrix_FrequencyName(consciousness, i);
-      const type = this.determineA432_Toroidal_Matrix_FrequencyType(consciousness, i);
-      const resonance = this.calculateA432_Toroidal_Matrix_FrequencyResonance(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.FIELD_COUNT; i++) {
+      const fieldFrequency = frequency * (i + 1);
+      const fieldConsciousness = A432_UTILS.calculateDigitalRoot(fieldFrequency);
+      const fieldHarmony = fieldConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const fieldIntegration = fieldConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const fieldEvolution = fieldConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Toroidal_Matrix_FieldName(fieldConsciousness, i);
+      const type = this.determineA432_Toroidal_Matrix_FieldTypeByIndex(fieldConsciousness, i);
+      const strength = this.calculateA432_Toroidal_Matrix_FieldStrength(fieldConsciousness, i);
 
-      frequencies.push({
-        frequency,
-        frequencyValue,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+      fields.push({
+        field: `${field}_field_${i}`,
+        frequency: fieldFrequency,
+        consciousness: fieldConsciousness,
+        harmony: fieldHarmony,
+        integration: fieldIntegration,
+        evolution: fieldEvolution,
         name,
         type,
-        resonance,
-        proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_RESONANCE
+        strength,
+        proof: `Toroidal matrix field ${name} created with strength ${strength}`
       });
     }
 
-    return frequencies;
+    return fields;
   },
 
-  /**
-   * Generate A432.toroidal.matrix vibrations
-   */
-  generateA432_Toroidal_Matrix_Vibrations(resonance: string): A432_Toroidal_Matrix_Vibration[] {
-    const vibrations: A432_Toroidal_Matrix_Vibration[] = [];
-    const vibrationCount = 5; // 5 vibration types
+  generateA432_Toroidal_Matrix_Potentials(field: string): A432_Toroidal_Matrix_Potential[] {
+    const frequency = A432_UTILS.calculateA432Frequency(field);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const potentials: A432_Toroidal_Matrix_Potential[] = [];
 
-    for (let i = 0; i < vibrationCount; i++) {
-      const vibration = `Vibration${i}`;
-      const frequency = this.calculateA432Frequency(vibration);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_ENERGY_LEVELS];
-      const integration = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_INTEGRATION_LEVELS];
-      const evolution = A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_TOROIDAL_MATRIX_CONSTANTS.TOROIDAL_MATRIX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Toroidal_Matrix_VibrationName(consciousness, i);
-      const type = this.determineA432_Toroidal_Matrix_VibrationType(consciousness, i);
-      const oscillation = this.calculateA432_Toroidal_Matrix_VibrationOscillation(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.POTENTIAL_COUNT; i++) {
+      const potentialFrequency = frequency * (i + 1);
+      const potentialConsciousness = A432_UTILS.calculateDigitalRoot(potentialFrequency);
+      const potentialHarmony = potentialConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const potentialIntegration = potentialConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const potentialEvolution = potentialConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Toroidal_Matrix_PotentialName(potentialConsciousness, i);
+      const type = this.determineA432_Toroidal_Matrix_PotentialType(potentialConsciousness, i);
+      const voltage = this.calculateA432_Toroidal_Matrix_PotentialVoltage(potentialConsciousness, i);
 
-      vibrations.push({
-        vibration,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+      potentials.push({
+        potential: `${field}_potential_${i}`,
+        frequency: potentialFrequency,
+        consciousness: potentialConsciousness,
+        harmony: potentialHarmony,
+        integration: potentialIntegration,
+        evolution: potentialEvolution,
         name,
         type,
-        oscillation,
-        proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_RESONANCE
+        voltage,
+        proof: `Toroidal matrix potential ${name} created with voltage ${voltage}`
       });
     }
 
-    return vibrations;
-  },
-
-  // ============================================================================
-  // MATHEMATICAL CALCULATIONS
-  // ============================================================================
-
-  /**
-   * Calculate digital root
-   */
-  calculateDigitalRoot(value: number): number {
-    if (value === 0) return 9;
-    const root = value % A432_CONSTANTS.DIGITAL_ROOT_BASE;
-    return root === 0 ? A432_CONSTANTS.DIGITAL_ROOT_BASE : root;
-  },
-
-  /**
-   * Calculate A432 frequency
-   */
-  calculateA432Frequency(input: string | number): number {
-    if (typeof input === 'number') {
-      return input * A432_CONSTANTS.A432_FREQUENCY;
-    }
-    
-    const sum = input.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return sum * A432_CONSTANTS.A432_FREQUENCY;
+    return potentials;
   },
 
   // ============================================================================
   // HELPER FUNCTIONS
   // ============================================================================
 
-  determineA432_Toroidal_Matrix_SurfaceType(toroidalValue: string, matrix: string): A432_Toroidal_Matrix_Surface_Type {
-    const types = ['INNER', 'OUTER', 'LATERAL', 'HARMONIC', 'A432'];
-    const consciousness = this.calculateDigitalRoot(this.calculateA432Frequency(toroidalValue + matrix));
-    return types[consciousness % types.length] as A432_Toroidal_Matrix_Surface_Type;
+  determineA432_Toroidal_Matrix_MatrixType(toroidalMatrixValue: string): A432_Toroidal_Matrix_Matrix_Type {
+    const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(toroidalMatrixValue));
+    return A432_TOROIDAL_MATRIX_CONSTANTS.TYPES[consciousness % A432_TOROIDAL_MATRIX_CONSTANTS.TYPES.length] as A432_Toroidal_Matrix_Matrix_Type;
   },
 
-  generateA432_Toroidal_Matrix_SurfaceName(consciousness: number, index: number): string {
-    const names = ['Inner', 'Outer', 'Lateral', 'Harmonic', 'A432'];
-    return names[index];
+  generateA432_Toroidal_Matrix_MatrixName(consciousness: number, index: number): string {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.MATRIX_NAMES[index];
   },
 
-  determineA432_Toroidal_Matrix_SurfaceTypeByIndex(consciousness: number, index: number): A432_Toroidal_Matrix_Surface_Type {
-    const types = ['INNER', 'OUTER', 'LATERAL', 'HARMONIC', 'A432'];
-    return types[index] as A432_Toroidal_Matrix_Surface_Type;
+  determineA432_Toroidal_Matrix_MatrixTypeByIndex(consciousness: number, index: number): A432_Toroidal_Matrix_Matrix_Type {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.TYPES[index] as A432_Toroidal_Matrix_Matrix_Type;
   },
 
-  calculateA432_Toroidal_Matrix_SurfaceCurvature(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 15) / 15, 1);
-  },
-
-  determineA432_Toroidal_Matrix_VolumeType(consciousness: number): A432_Toroidal_Matrix_Volume_Type {
-    const types = ['CORE', 'SHELL', 'CHANNEL', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Toroidal_Matrix_Volume_Type;
-  },
-
-  generateA432_Toroidal_Matrix_VolumeName(consciousness: number, index: number): string {
-    const names = ['Core', 'Shell', 'Channel', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Toroidal_Matrix_VolumeTypeByIndex(consciousness: number, index: number): A432_Toroidal_Matrix_Volume_Type {
-    const types = ['CORE', 'SHELL', 'CHANNEL', 'HARMONIC', 'A432'];
-    return types[index] as A432_Toroidal_Matrix_Volume_Type;
-  },
-
-  calculateA432_Toroidal_Matrix_VolumeCapacity(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 15) / 15, 1);
-  },
-
-  determineA432_Toroidal_Matrix_HarmonicType(consciousness: number): A432_Toroidal_Matrix_Harmonic_Type {
-    const types = ['SINE', 'COSINE', 'TANGENT', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Toroidal_Matrix_Harmonic_Type;
-  },
-
-  generateA432_Toroidal_Matrix_WaveName(consciousness: number, index: number): string {
-    const names = ['Longitudinal', 'Transverse', 'Standing', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Toroidal_Matrix_WaveType(consciousness: number, index: number): A432_Toroidal_Matrix_Wave_Type {
-    const types = ['LONGITUDINAL', 'TRANSVERSE', 'STANDING', 'HARMONIC', 'A432'];
-    return types[index] as A432_Toroidal_Matrix_Wave_Type;
-  },
-
-  calculateA432_Toroidal_Matrix_WaveAmplitude(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 15) / 15, 1);
-  },
-
-  generateA432_Toroidal_Matrix_CycleName(consciousness: number, index: number): string {
-    const names = ['Simple', 'Complex', 'Chaotic', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Toroidal_Matrix_CycleType(consciousness: number, index: number): A432_Toroidal_Matrix_Cycle_Type {
-    const types = ['SIMPLE', 'COMPLEX', 'CHAOTIC', 'HARMONIC', 'A432'];
-    return types[index] as A432_Toroidal_Matrix_Cycle_Type;
-  },
-
-  calculateA432_Toroidal_Matrix_CyclePeriod(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 15) / 15, 1);
+  calculateA432_Toroidal_Matrix_MatrixDimension(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
   determineA432_Toroidal_Matrix_ResonanceType(consciousness: number): A432_Toroidal_Matrix_Resonance_Type {
-    const types = ['NATURAL', 'FORCED', 'COUPLED', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Toroidal_Matrix_Resonance_Type;
+    return A432_TOROIDAL_MATRIX_CONSTANTS.RESONANCE_TYPES[consciousness % A432_TOROIDAL_MATRIX_CONSTANTS.RESONANCE_TYPES.length] as A432_Toroidal_Matrix_Resonance_Type;
   },
 
-  generateA432_Toroidal_Matrix_FrequencyName(consciousness: number, index: number): string {
-    const names = ['Fundamental', 'Harmonic', 'Overtone', 'Harmonic', 'A432'];
-    return names[index];
+  generateA432_Toroidal_Matrix_ResonanceName(consciousness: number, index: number): string {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.RESONANCE_NAMES[index];
   },
 
-  determineA432_Toroidal_Matrix_FrequencyType(consciousness: number, index: number): A432_Toroidal_Matrix_Frequency_Type {
-    const types = ['FUNDAMENTAL', 'HARMONIC', 'OVERTONE', 'HARMONIC', 'A432'];
-    return types[index] as A432_Toroidal_Matrix_Frequency_Type;
+  determineA432_Toroidal_Matrix_ResonanceTypeByIndex(consciousness: number, index: number): A432_Toroidal_Matrix_Resonance_Type {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.RESONANCE_TYPES[index] as A432_Toroidal_Matrix_Resonance_Type;
   },
 
-  calculateA432_Toroidal_Matrix_FrequencyResonance(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 15) / 15, 1);
+  calculateA432_Toroidal_Matrix_ResonanceQuality(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
-  generateA432_Toroidal_Matrix_VibrationName(consciousness: number, index: number): string {
-    const names = ['Mechanical', 'Electromagnetic', 'Quantum', 'Harmonic', 'A432'];
-    return names[index];
+  determineA432_Toroidal_Matrix_HarmonicType(consciousness: number): A432_Toroidal_Matrix_Harmonic_Type {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.HARMONIC_TYPES[consciousness % A432_TOROIDAL_MATRIX_CONSTANTS.HARMONIC_TYPES.length] as A432_Toroidal_Matrix_Harmonic_Type;
   },
 
-  determineA432_Toroidal_Matrix_VibrationType(consciousness: number, index: number): A432_Toroidal_Matrix_Vibration_Type {
-    const types = ['MECHANICAL', 'ELECTROMAGNETIC', 'QUANTUM', 'HARMONIC', 'A432'];
-    return types[index] as A432_Toroidal_Matrix_Vibration_Type;
+  generateA432_Toroidal_Matrix_WaveName(consciousness: number, index: number): string {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.WAVE_NAMES[index];
   },
 
-  calculateA432_Toroidal_Matrix_VibrationOscillation(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 15) / 15, 1);
+  determineA432_Toroidal_Matrix_WaveType(consciousness: number, index: number): A432_Toroidal_Matrix_Wave_Type {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.WAVE_TYPES[index] as A432_Toroidal_Matrix_Wave_Type;
+  },
+
+  calculateA432_Toroidal_Matrix_WaveAmplitude(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
+  },
+
+  generateA432_Toroidal_Matrix_CycleName(consciousness: number, index: number): string {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.CYCLE_NAMES[index];
+  },
+
+  determineA432_Toroidal_Matrix_CycleType(consciousness: number, index: number): A432_Toroidal_Matrix_Cycle_Type {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.CYCLE_TYPES[index] as A432_Toroidal_Matrix_Cycle_Type;
+  },
+
+  calculateA432_Toroidal_Matrix_CyclePeriod(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
+  },
+
+  determineA432_Toroidal_Matrix_FieldType(consciousness: number): A432_Toroidal_Matrix_Field_Type {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.FIELD_TYPES[consciousness % A432_TOROIDAL_MATRIX_CONSTANTS.FIELD_TYPES.length] as A432_Toroidal_Matrix_Field_Type;
+  },
+
+  generateA432_Toroidal_Matrix_FieldName(consciousness: number, index: number): string {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.FIELD_NAMES[index];
+  },
+
+  determineA432_Toroidal_Matrix_FieldTypeByIndex(consciousness: number, index: number): A432_Toroidal_Matrix_Field_Type {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.FIELD_TYPES[index] as A432_Toroidal_Matrix_Field_Type;
+  },
+
+  calculateA432_Toroidal_Matrix_FieldStrength(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
+  },
+
+  generateA432_Toroidal_Matrix_PotentialName(consciousness: number, index: number): string {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.POTENTIAL_NAMES[index];
+  },
+
+  determineA432_Toroidal_Matrix_PotentialType(consciousness: number, index: number): A432_Toroidal_Matrix_Potential_Type {
+    return A432_TOROIDAL_MATRIX_CONSTANTS.POTENTIAL_TYPES[index] as A432_Toroidal_Matrix_Potential_Type;
+  },
+
+  calculateA432_Toroidal_Matrix_PotentialVoltage(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
   // ============================================================================
-  // TOROIDAL MATRIX SYSTEM INTEGRATION
+  // SYSTEM ACCESS
   // ============================================================================
 
-  /**
-   * Get complete A432.toroidal.matrix system
-   */
   getCompleteA432_Toroidal_Matrix_System() {
-    return {
-      constants: A432_TOROIDAL_MATRIX_CONSTANTS,
-      system: A432_Toroidal_Matrix_System,
-      proof: A432_TOROIDAL_MATRIX_CONSTANTS.PROOFS.TOROIDAL_MATRIX_SYSTEMS
-    };
+    return this.createA432_Toroidal_Matrix_State('ToroidalMatrixSystem');
   }
-};
-
-// ============================================================================
-// EXPORTS
-// ============================================================================
-
-export default A432_Toroidal_Matrix_System; 
+}; 

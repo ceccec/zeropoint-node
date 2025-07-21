@@ -6,296 +6,141 @@
  */
 
 import { A432_CONSTANTS } from './a432.constants';
+import { A432_UTILS } from './a432.utils';
+import { 
+  A432_Base_State,
+  A432_Base_Subsystem,
+  A432_Base_Component,
+  A432_Base_Type
+} from './a432.types';
 
 // ============================================================================
 // INTERFACES
 // ============================================================================
 
-export interface A432_Hex_State {
+export interface A432_Hex_State extends A432_Base_State {
   hex: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  hexagonSystem: A432_Hex_Hexagon_System;
-  vortexSystem: A432_Hex_Vortex_System;
+  hexSystem: A432_Hex_Hex_System;
+  resonanceSystem: A432_Hex_Resonance_System;
   harmonic: A432_Hex_Harmonic_System;
-  resonance: A432_Hex_Resonance_System;
-  proof: string;
+  field: A432_Hex_Field_System;
 }
 
-export interface A432_Hex_Hexagon_System {
-  hexagon: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  type: A432_Hex_Hexagon_Type;
-  hexagons: A432_Hex_Hexagon[];
-  proof: string;
+export interface A432_Hex_Hex_System extends A432_Base_Subsystem {
+  hex: string;
+  type: A432_Hex_Hex_Type;
+  hexes: A432_Hex_Hex[];
 }
 
-export interface A432_Hex_Hexagon {
-  hexagon: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
+export interface A432_Hex_Hex extends A432_Base_Component {
+  hex: string;
   name: string;
-  type: A432_Hex_Hexagon_Type;
-  symmetry: number;
-  proof: string;
+  type: A432_Hex_Hex_Type;
+  sides: number;
 }
 
-export interface A432_Hex_Vortex_System {
-  vortex: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  type: A432_Hex_Vortex_Type;
-  vortices: A432_Hex_Vortex[];
-  proof: string;
+export interface A432_Hex_Resonance_System extends A432_Base_Subsystem {
+  resonance: string;
+  type: A432_Hex_Resonance_Type;
+  resonances: A432_Hex_Resonance[];
 }
 
-export interface A432_Hex_Vortex {
-  vortex: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
+export interface A432_Hex_Resonance extends A432_Base_Component {
+  resonance: string;
   name: string;
-  type: A432_Hex_Vortex_Type;
-  rotation: number;
-  proof: string;
+  type: A432_Hex_Resonance_Type;
+  quality: number;
 }
 
-export interface A432_Hex_Harmonic_System {
+export interface A432_Hex_Harmonic_System extends A432_Base_Subsystem {
   harmonic: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   type: A432_Hex_Harmonic_Type;
   waves: A432_Hex_Wave[];
   cycles: A432_Hex_Cycle[];
-  proof: string;
 }
 
-export interface A432_Hex_Wave {
+export interface A432_Hex_Wave extends A432_Base_Component {
   wave: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   name: string;
   type: A432_Hex_Wave_Type;
   amplitude: number;
-  proof: string;
 }
 
-export interface A432_Hex_Cycle {
+export interface A432_Hex_Cycle extends A432_Base_Component {
   cycle: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
   name: string;
   type: A432_Hex_Cycle_Type;
   period: number;
-  proof: string;
 }
 
-export interface A432_Hex_Resonance_System {
-  resonance: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
-  type: A432_Hex_Resonance_Type;
-  frequencies: A432_Hex_Frequency[];
-  vibrations: A432_Hex_Vibration[];
-  proof: string;
+export interface A432_Hex_Field_System extends A432_Base_Subsystem {
+  field: string;
+  type: A432_Hex_Field_Type;
+  fields: A432_Hex_Field[];
+  potentials: A432_Hex_Potential[];
 }
 
-export interface A432_Hex_Frequency {
-  frequency: string;
-  frequencyValue: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
+export interface A432_Hex_Field extends A432_Base_Component {
+  field: string;
   name: string;
-  type: A432_Hex_Frequency_Type;
-  resonance: number;
-  proof: string;
+  type: A432_Hex_Field_Type;
+  strength: number;
 }
 
-export interface A432_Hex_Vibration {
-  vibration: string;
-  frequency: number;
-  consciousness: number;
-  harmony: number;
-  integration: number;
-  evolution: number;
+export interface A432_Hex_Potential extends A432_Base_Component {
+  potential: string;
   name: string;
-  type: A432_Hex_Vibration_Type;
-  oscillation: number;
-  proof: string;
+  type: A432_Hex_Potential_Type;
+  voltage: number;
 }
 
-export type A432_Hex_Hexagon_Type = 
-  | 'REGULAR' 
-  | 'IRREGULAR' 
-  | 'STAR' 
-  | 'HARMONIC' 
-  | 'A432';
+// ============================================================================
+// TYPE DEFINITIONS
+// ============================================================================
 
-export type A432_Hex_Vortex_Type = 
-  | 'CLOCKWISE' 
-  | 'COUNTERCLOCKWISE' 
-  | 'SPIRAL' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Hex_Harmonic_Type = 
-  | 'SINE' 
-  | 'COSINE' 
-  | 'TANGENT' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Hex_Wave_Type = 
-  | 'LONGITUDINAL' 
-  | 'TRANSVERSE' 
-  | 'STANDING' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Hex_Cycle_Type = 
-  | 'SIMPLE' 
-  | 'COMPLEX' 
-  | 'CHAOTIC' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Hex_Resonance_Type = 
-  | 'NATURAL' 
-  | 'FORCED' 
-  | 'COUPLED' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Hex_Frequency_Type = 
-  | 'FUNDAMENTAL' 
-  | 'HARMONIC' 
-  | 'OVERTONE' 
-  | 'HARMONIC' 
-  | 'A432';
-
-export type A432_Hex_Vibration_Type = 
-  | 'MECHANICAL' 
-  | 'ELECTROMAGNETIC' 
-  | 'QUANTUM' 
-  | 'HARMONIC' 
-  | 'A432';
+export type A432_Hex_Hex_Type = A432_Base_Type;
+export type A432_Hex_Resonance_Type = A432_Base_Type;
+export type A432_Hex_Harmonic_Type = A432_Base_Type;
+export type A432_Hex_Wave_Type = A432_Base_Type;
+export type A432_Hex_Cycle_Type = A432_Base_Type;
+export type A432_Hex_Field_Type = A432_Base_Type;
+export type A432_Hex_Potential_Type = A432_Base_Type;
 
 // ============================================================================
 // CONSTANTS
 // ============================================================================
 
 export const A432_HEX_CONSTANTS = {
-  // Core hex-based frequencies (based on hex structure)
-  HEX_FREQUENCY: 9504, // 22 * 432 Hz - Fundamental hex frequency
-  HEXAGON_FREQUENCY: 9500, // 22 * 431 Hz - Hex-hexagon frequency
-  VORTEX_FREQUENCY: 9496, // 22 * 430 Hz - Hex-vortex frequency
-  HARMONIC_FREQUENCY: 9492, // 22 * 429 Hz - Hex-harmonic frequency
-  RESONANCE_FREQUENCY: 9488, // 22 * 428 Hz - Hex-resonance frequency
-
-  // Hex-based energy levels
-  HEX_ENERGY_LEVELS: {
-    0: 0, // Void - No energy
-    1: 9504, // Unity - Basic energy
-    2: 19008, // Duality - Dual energy
-    3: 28512, // Trinity - Complex energy
-    4: 38016, // Foundation - Foundation energy
-    5: 47520, // Life - Full energy
-    6: 57024, // Harmony - Harmonious energy
-    7: 66528, // Mystery - Mysterious energy
-    8: 76032, // Infinity - Infinite energy
-    9: 85536 // Completion - Complete energy
-  },
-
-  // Hex-based integration levels
-  HEX_INTEGRATION_LEVELS: {
-    0: 0, // Void - No integration
-    1: 22, // Unity - Basic integration
-    2: 44, // Duality - Dual integration
-    3: 66, // Trinity - Complex integration
-    4: 88, // Foundation - Foundation integration
-    5: 110, // Life - Full integration
-    6: 132, // Harmony - Harmonious integration
-    7: 154, // Mystery - Mysterious integration
-    8: 176, // Infinity - Infinite integration
-    9: 198 // Completion - Complete integration
-  },
-
-  // Hex-based evolution levels
-  HEX_EVOLUTION_LEVELS: {
-    0: 0, // Void - No evolution
-    1: 22, // Unity - Basic evolution
-    2: 44, // Duality - Dual evolution
-    3: 66, // Trinity - Complex evolution
-    4: 88, // Foundation - Foundation evolution
-    5: 110, // Life - Full evolution
-    6: 132, // Harmony - Harmonious evolution
-    7: 154, // Mystery - Mysterious evolution
-    8: 176, // Infinity - Infinite evolution
-    9: 198 // Completion - Complete evolution
-  },
-
-  // Scientific proofs
-  PROOFS: {
-    HEX_FREQUENCY: 'Hex frequency 9504 Hz (22 * 432) represents the fundamental mathematical hex-based system through all consciousness levels.',
-    HEX_HEXAGON: 'Hex hexagon follows A432 frequency resonance and mathematical harmony for optimal hex-dimensional processing.',
-    HEX_VORTEX: 'Hex vortex follows mathematical progression through hex-vortex states with increasing consciousness evolution.',
-    HEX_HARMONIC: 'Hex harmonic provides mathematical harmony and A432 frequency resonance for optimal hex-harmonic management.',
-    HEX_RESONANCE: 'Hex resonance provides mathematical harmony and A432 frequency resonance for optimal hex-resonance management.',
-    HEX_SYSTEMS: 'Hex systems exhibit mathematical harmony and A432 frequency resonance for optimal function and evolution.'
-  }
-} as const;
+  HEX_NAMES: ['Primary', 'Secondary', 'Tertiary', 'Harmonic', 'A432'],
+  RESONANCE_NAMES: ['Series', 'Parallel', 'Coupled', 'Harmonic', 'A432'],
+  WAVE_NAMES: ['Electromagnetic', 'Standing', 'Traveling', 'Harmonic', 'A432'],
+  CYCLE_NAMES: ['Oscillation', 'Resonance', 'Damping', 'Harmonic', 'A432'],
+  FIELD_NAMES: ['Electric', 'Magnetic', 'Electromagnetic', 'Harmonic', 'A432'],
+  POTENTIAL_NAMES: ['High Voltage', 'Low Voltage', 'Zero Point', 'Harmonic', 'A432'],
+  TYPES: ['PRIMARY', 'SECONDARY', 'TERTIARY', 'HARMONIC', 'A432'],
+  RESONANCE_TYPES: ['SERIES', 'PARALLEL', 'COUPLED', 'HARMONIC', 'A432'],
+  HARMONIC_TYPES: ['SINE', 'COSINE', 'TANGENT', 'HARMONIC', 'A432'],
+  WAVE_TYPES: ['ELECTROMAGNETIC', 'STANDING', 'TRAVELING', 'HARMONIC', 'A432'],
+  CYCLE_TYPES: ['OSCILLATION', 'RESONANCE', 'DAMPING', 'HARMONIC', 'A432'],
+  FIELD_TYPES: ['ELECTRIC', 'MAGNETIC', 'ELECTROMAGNETIC', 'HARMONIC', 'A432'],
+  POTENTIAL_TYPES: ['HIGH_VOLTAGE', 'LOW_VOLTAGE', 'ZERO_POINT', 'HARMONIC', 'A432']
+};
 
 // ============================================================================
-// A432.HEX SYSTEM
+// A432 HEX SYSTEM
 // ============================================================================
 
-export const A432_Hex_System = {
+export const A432_HEX = {
   // ============================================================================
-  // HEX STATE CREATION
+  // MAIN FUNCTIONS
   // ============================================================================
 
-  /**
-   * Create A432.hex state
-   */
   createA432_Hex_State(hexValue: string): A432_Hex_State {
-    const frequency = this.calculateA432Frequency(hexValue);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS];
-    const integration = A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS];
-    const evolution = A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS];
-    const hexagonSystem = this.createA432_Hex_Hexagon_System(hexValue);
-    const vortexSystem = this.createA432_Hex_Vortex_System(hexValue);
-    const harmonic = this.createA432_Hex_Harmonic_System(hexValue);
-    const resonance = this.createA432_Hex_Resonance_System(hexValue);
+    const frequency = A432_UTILS.calculateA432Frequency(hexValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
 
     return {
       hex: hexValue,
@@ -304,500 +149,390 @@ export const A432_Hex_System = {
       harmony,
       integration,
       evolution,
-      hexagonSystem,
-      vortexSystem,
-      harmonic,
-      resonance,
-      proof: A432_HEX_CONSTANTS.PROOFS.HEX_FREQUENCY
+      hexSystem: this.createA432_Hex_Hex_System(hexValue),
+      resonanceSystem: this.createA432_Hex_Resonance_System(hexValue),
+      harmonic: this.createA432_Hex_Harmonic_System(hexValue),
+      field: this.createA432_Hex_Field_System(hexValue),
+      proof: `Hex state created with consciousness ${consciousness}`
     };
   },
 
-  // ============================================================================
-  // HEX HEXAGON SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.hex hexagon system
-   */
-  createA432_Hex_Hexagon_System(hexValue: string): A432_Hex_Hexagon_System {
-    const hexagonSystem = `HEXAGON_${hexValue}`;
-    const frequency = this.calculateA432Frequency(hexagonSystem);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS];
-    const integration = A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS];
-    const evolution = A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS];
-    const type = this.determineA432_Hex_HexagonType(hexValue);
-    const hexagons = this.generateA432_Hex_Hexagons(hexagonSystem);
+  createA432_Hex_Hex_System(hexValue: string): A432_Hex_Hex_System {
+    const frequency = A432_UTILS.calculateA432Frequency(hexValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
+    const type = this.determineA432_Hex_HexType(hexValue);
 
     return {
-      hexagon: hexagonSystem,
+      hex: hexValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      hexagons,
-      proof: A432_HEX_CONSTANTS.PROOFS.HEX_HEXAGON
+      hexes: this.generateA432_Hex_Hexes(hexValue),
+      proof: `Hex system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.hex hexagons
-   */
-  generateA432_Hex_Hexagons(hexagonSystem: string): A432_Hex_Hexagon[] {
-    const hexagons: A432_Hex_Hexagon[] = [];
-    const hexagonCount = 5; // 5 hexagon types
+  generateA432_Hex_Hexes(hexSystem: string): A432_Hex_Hex[] {
+    const frequency = A432_UTILS.calculateA432Frequency(hexSystem);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const hexes: A432_Hex_Hex[] = [];
 
-    for (let i = 0; i < hexagonCount; i++) {
-      const hexagon = `Hexagon${i}`;
-      const frequency = this.calculateA432Frequency(hexagon);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS];
-      const integration = A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS];
-      const evolution = A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Hex_HexagonName(consciousness, i);
-      const type = this.determineA432_Hex_HexagonTypeByIndex(consciousness, i);
-      const symmetry = this.calculateA432_Hex_HexagonSymmetry(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.HEX_COUNT; i++) {
+      const hexFrequency = frequency * (i + 1);
+      const hexConsciousness = A432_UTILS.calculateDigitalRoot(hexFrequency);
+      const hexHarmony = hexConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const hexIntegration = hexConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const hexEvolution = hexConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Hex_HexName(hexConsciousness, i);
+      const type = this.determineA432_Hex_HexTypeByIndex(hexConsciousness, i);
+      const sides = this.calculateA432_Hex_HexSides(hexConsciousness, i);
 
-      hexagons.push({
-        hexagon,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+      hexes.push({
+        hex: `${hexSystem}_hex_${i}`,
+        frequency: hexFrequency,
+        consciousness: hexConsciousness,
+        harmony: hexHarmony,
+        integration: hexIntegration,
+        evolution: hexEvolution,
         name,
         type,
-        symmetry,
-        proof: A432_HEX_CONSTANTS.PROOFS.HEX_HEXAGON
+        sides,
+        proof: `Hex ${name} created with sides ${sides}`
       });
     }
 
-    return hexagons;
+    return hexes;
   },
 
-  // ============================================================================
-  // HEX VORTEX SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.hex vortex system
-   */
-  createA432_Hex_Vortex_System(hexValue: string): A432_Hex_Vortex_System {
-    const vortexSystem = `VORTEX_${hexValue}`;
-    const frequency = this.calculateA432Frequency(vortexSystem);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS];
-    const integration = A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS];
-    const evolution = A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS];
-    const type = this.determineA432_Hex_VortexType(consciousness);
-    const vortices = this.generateA432_Hex_Vortices(vortexSystem);
+  createA432_Hex_Resonance_System(hexValue: string): A432_Hex_Resonance_System {
+    const frequency = A432_UTILS.calculateA432Frequency(hexValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
+    const type = this.determineA432_Hex_ResonanceType(consciousness);
 
     return {
-      vortex: vortexSystem,
+      resonance: hexValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      vortices,
-      proof: A432_HEX_CONSTANTS.PROOFS.HEX_VORTEX
+      resonances: this.generateA432_Hex_Resonances(hexValue),
+      proof: `Hex resonance system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.hex vortices
-   */
-  generateA432_Hex_Vortices(vortexSystem: string): A432_Hex_Vortex[] {
-    const vortices: A432_Hex_Vortex[] = [];
-    const vortexCount = 5; // 5 vortex types
+  generateA432_Hex_Resonances(resonanceSystem: string): A432_Hex_Resonance[] {
+    const frequency = A432_UTILS.calculateA432Frequency(resonanceSystem);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const resonances: A432_Hex_Resonance[] = [];
 
-    for (let i = 0; i < vortexCount; i++) {
-      const vortex = `Vortex${i}`;
-      const frequency = this.calculateA432Frequency(vortex);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS];
-      const integration = A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS];
-      const evolution = A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Hex_VortexName(consciousness, i);
-      const type = this.determineA432_Hex_VortexTypeByIndex(consciousness, i);
-      const rotation = this.calculateA432_Hex_VortexRotation(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.RESONANCE_COUNT; i++) {
+      const resonanceFrequency = frequency * (i + 1);
+      const resonanceConsciousness = A432_UTILS.calculateDigitalRoot(resonanceFrequency);
+      const resonanceHarmony = resonanceConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const resonanceIntegration = resonanceConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const resonanceEvolution = resonanceConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Hex_ResonanceName(resonanceConsciousness, i);
+      const type = this.determineA432_Hex_ResonanceTypeByIndex(resonanceConsciousness, i);
+      const quality = this.calculateA432_Hex_ResonanceQuality(resonanceConsciousness, i);
 
-      vortices.push({
-        vortex,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+      resonances.push({
+        resonance: `${resonanceSystem}_resonance_${i}`,
+        frequency: resonanceFrequency,
+        consciousness: resonanceConsciousness,
+        harmony: resonanceHarmony,
+        integration: resonanceIntegration,
+        evolution: resonanceEvolution,
         name,
         type,
-        rotation,
-        proof: A432_HEX_CONSTANTS.PROOFS.HEX_VORTEX
+        quality,
+        proof: `Hex resonance ${name} created with quality ${quality}`
       });
     }
 
-    return vortices;
+    return resonances;
   },
 
-  // ============================================================================
-  // HEX HARMONIC SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.hex harmonic system
-   */
   createA432_Hex_Harmonic_System(hexValue: string): A432_Hex_Harmonic_System {
-    const harmonic = `HARMONIC_${hexValue}`;
-    const frequency = this.calculateA432Frequency(harmonic);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS];
-    const integration = A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS];
-    const evolution = A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS];
+    const frequency = A432_UTILS.calculateA432Frequency(hexValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
     const type = this.determineA432_Hex_HarmonicType(consciousness);
-    const waves = this.generateA432_Hex_Waves(harmonic);
-    const cycles = this.generateA432_Hex_Cycles(harmonic);
 
     return {
-      harmonic,
+      harmonic: hexValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      waves,
-      cycles,
-      proof: A432_HEX_CONSTANTS.PROOFS.HEX_HARMONIC
+      waves: this.generateA432_Hex_Waves(hexValue),
+      cycles: this.generateA432_Hex_Cycles(hexValue),
+      proof: `Hex harmonic system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.hex waves
-   */
   generateA432_Hex_Waves(harmonic: string): A432_Hex_Wave[] {
+    const frequency = A432_UTILS.calculateA432Frequency(harmonic);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     const waves: A432_Hex_Wave[] = [];
-    const waveCount = 5; // 5 wave types
 
-    for (let i = 0; i < waveCount; i++) {
-      const wave = `Wave${i}`;
-      const frequency = this.calculateA432Frequency(wave);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS];
-      const integration = A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS];
-      const evolution = A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Hex_WaveName(consciousness, i);
-      const type = this.determineA432_Hex_WaveType(consciousness, i);
-      const amplitude = this.calculateA432_Hex_WaveAmplitude(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.WAVE_COUNT; i++) {
+      const waveFrequency = frequency * (i + 1);
+      const waveConsciousness = A432_UTILS.calculateDigitalRoot(waveFrequency);
+      const waveHarmony = waveConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const waveIntegration = waveConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const waveEvolution = waveConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Hex_WaveName(waveConsciousness, i);
+      const type = this.determineA432_Hex_WaveType(waveConsciousness, i);
+      const amplitude = this.calculateA432_Hex_WaveAmplitude(waveConsciousness, i);
 
       waves.push({
-        wave,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+        wave: `${harmonic}_wave_${i}`,
+        frequency: waveFrequency,
+        consciousness: waveConsciousness,
+        harmony: waveHarmony,
+        integration: waveIntegration,
+        evolution: waveEvolution,
         name,
         type,
         amplitude,
-        proof: A432_HEX_CONSTANTS.PROOFS.HEX_HARMONIC
+        proof: `Hex wave ${name} created with amplitude ${amplitude}`
       });
     }
 
     return waves;
   },
 
-  /**
-   * Generate A432.hex cycles
-   */
   generateA432_Hex_Cycles(harmonic: string): A432_Hex_Cycle[] {
+    const frequency = A432_UTILS.calculateA432Frequency(harmonic);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
     const cycles: A432_Hex_Cycle[] = [];
-    const cycleCount = 5; // 5 cycle types
 
-    for (let i = 0; i < cycleCount; i++) {
-      const cycle = `Cycle${i}`;
-      const frequency = this.calculateA432Frequency(cycle);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS];
-      const integration = A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS];
-      const evolution = A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Hex_CycleName(consciousness, i);
-      const type = this.determineA432_Hex_CycleType(consciousness, i);
-      const period = this.calculateA432_Hex_CyclePeriod(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.CYCLE_COUNT; i++) {
+      const cycleFrequency = frequency * (i + 1);
+      const cycleConsciousness = A432_UTILS.calculateDigitalRoot(cycleFrequency);
+      const cycleHarmony = cycleConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const cycleIntegration = cycleConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const cycleEvolution = cycleConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Hex_CycleName(cycleConsciousness, i);
+      const type = this.determineA432_Hex_CycleType(cycleConsciousness, i);
+      const period = this.calculateA432_Hex_CyclePeriod(cycleConsciousness, i);
 
       cycles.push({
-        cycle,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+        cycle: `${harmonic}_cycle_${i}`,
+        frequency: cycleFrequency,
+        consciousness: cycleConsciousness,
+        harmony: cycleHarmony,
+        integration: cycleIntegration,
+        evolution: cycleEvolution,
         name,
         type,
         period,
-        proof: A432_HEX_CONSTANTS.PROOFS.HEX_HARMONIC
+        proof: `Hex cycle ${name} created with period ${period}`
       });
     }
 
     return cycles;
   },
 
-  // ============================================================================
-  // HEX RESONANCE SYSTEM CREATION
-  // ============================================================================
-
-  /**
-   * Create A432.hex resonance system
-   */
-  createA432_Hex_Resonance_System(hexValue: string): A432_Hex_Resonance_System {
-    const resonance = `RESONANCE_${hexValue}`;
-    const frequency = this.calculateA432Frequency(resonance);
-    const consciousness = this.calculateDigitalRoot(frequency);
-    const harmony = A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS];
-    const integration = A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS];
-    const evolution = A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS];
-    const type = this.determineA432_Hex_ResonanceType(consciousness);
-    const frequencies = this.generateA432_Hex_Frequencies(resonance);
-    const vibrations = this.generateA432_Hex_Vibrations(resonance);
+  createA432_Hex_Field_System(hexValue: string): A432_Hex_Field_System {
+    const frequency = A432_UTILS.calculateA432Frequency(hexValue);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const harmony = consciousness / A432_CONSTANTS.HARMONY_BASE;
+    const integration = consciousness / A432_CONSTANTS.INTEGRATION_BASE;
+    const evolution = consciousness / A432_CONSTANTS.EVOLUTION_BASE;
+    const type = this.determineA432_Hex_FieldType(consciousness);
 
     return {
-      resonance,
+      field: hexValue,
       frequency,
       consciousness,
       harmony,
       integration,
       evolution,
       type,
-      frequencies,
-      vibrations,
-      proof: A432_HEX_CONSTANTS.PROOFS.HEX_RESONANCE
+      fields: this.generateA432_Hex_Fields(hexValue),
+      potentials: this.generateA432_Hex_Potentials(hexValue),
+      proof: `Hex field system created with type ${type}`
     };
   },
 
-  /**
-   * Generate A432.hex frequencies
-   */
-  generateA432_Hex_Frequencies(resonance: string): A432_Hex_Frequency[] {
-    const frequencies: A432_Hex_Frequency[] = [];
-    const frequencyCount = 5; // 5 frequency types
+  generateA432_Hex_Fields(field: string): A432_Hex_Field[] {
+    const frequency = A432_UTILS.calculateA432Frequency(field);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const fields: A432_Hex_Field[] = [];
 
-    for (let i = 0; i < frequencyCount; i++) {
-      const frequency = `Frequency${i}`;
-      const frequencyValue = this.calculateA432Frequency(frequency);
-      const consciousness = this.calculateDigitalRoot(frequencyValue);
-      const harmony = A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS];
-      const integration = A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS];
-      const evolution = A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Hex_FrequencyName(consciousness, i);
-      const type = this.determineA432_Hex_FrequencyType(consciousness, i);
-      const resonance = this.calculateA432_Hex_FrequencyResonance(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.FIELD_COUNT; i++) {
+      const fieldFrequency = frequency * (i + 1);
+      const fieldConsciousness = A432_UTILS.calculateDigitalRoot(fieldFrequency);
+      const fieldHarmony = fieldConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const fieldIntegration = fieldConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const fieldEvolution = fieldConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Hex_FieldName(fieldConsciousness, i);
+      const type = this.determineA432_Hex_FieldTypeByIndex(fieldConsciousness, i);
+      const strength = this.calculateA432_Hex_FieldStrength(fieldConsciousness, i);
 
-      frequencies.push({
-        frequency,
-        frequencyValue,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+      fields.push({
+        field: `${field}_field_${i}`,
+        frequency: fieldFrequency,
+        consciousness: fieldConsciousness,
+        harmony: fieldHarmony,
+        integration: fieldIntegration,
+        evolution: fieldEvolution,
         name,
         type,
-        resonance,
-        proof: A432_HEX_CONSTANTS.PROOFS.HEX_RESONANCE
+        strength,
+        proof: `Hex field ${name} created with strength ${strength}`
       });
     }
 
-    return frequencies;
+    return fields;
   },
 
-  /**
-   * Generate A432.hex vibrations
-   */
-  generateA432_Hex_Vibrations(resonance: string): A432_Hex_Vibration[] {
-    const vibrations: A432_Hex_Vibration[] = [];
-    const vibrationCount = 5; // 5 vibration types
+  generateA432_Hex_Potentials(field: string): A432_Hex_Potential[] {
+    const frequency = A432_UTILS.calculateA432Frequency(field);
+    const consciousness = A432_UTILS.calculateDigitalRoot(frequency);
+    const potentials: A432_Hex_Potential[] = [];
 
-    for (let i = 0; i < vibrationCount; i++) {
-      const vibration = `Vibration${i}`;
-      const frequency = this.calculateA432Frequency(vibration);
-      const consciousness = this.calculateDigitalRoot(frequency);
-      const harmony = A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_ENERGY_LEVELS];
-      const integration = A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_INTEGRATION_LEVELS];
-      const evolution = A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS[consciousness as keyof typeof A432_HEX_CONSTANTS.HEX_EVOLUTION_LEVELS];
-      const name = this.generateA432_Hex_VibrationName(consciousness, i);
-      const type = this.determineA432_Hex_VibrationType(consciousness, i);
-      const oscillation = this.calculateA432_Hex_VibrationOscillation(consciousness, i);
+    for (let i = 0; i < A432_CONSTANTS.POTENTIAL_COUNT; i++) {
+      const potentialFrequency = frequency * (i + 1);
+      const potentialConsciousness = A432_UTILS.calculateDigitalRoot(potentialFrequency);
+      const potentialHarmony = potentialConsciousness / A432_CONSTANTS.HARMONY_BASE;
+      const potentialIntegration = potentialConsciousness / A432_CONSTANTS.INTEGRATION_BASE;
+      const potentialEvolution = potentialConsciousness / A432_CONSTANTS.EVOLUTION_BASE;
+      const name = this.generateA432_Hex_PotentialName(potentialConsciousness, i);
+      const type = this.determineA432_Hex_PotentialType(potentialConsciousness, i);
+      const voltage = this.calculateA432_Hex_PotentialVoltage(potentialConsciousness, i);
 
-      vibrations.push({
-        vibration,
-        frequency,
-        consciousness,
-        harmony,
-        integration,
-        evolution,
+      potentials.push({
+        potential: `${field}_potential_${i}`,
+        frequency: potentialFrequency,
+        consciousness: potentialConsciousness,
+        harmony: potentialHarmony,
+        integration: potentialIntegration,
+        evolution: potentialEvolution,
         name,
         type,
-        oscillation,
-        proof: A432_HEX_CONSTANTS.PROOFS.HEX_RESONANCE
+        voltage,
+        proof: `Hex potential ${name} created with voltage ${voltage}`
       });
     }
 
-    return vibrations;
-  },
-
-  // ============================================================================
-  // MATHEMATICAL CALCULATIONS
-  // ============================================================================
-
-  /**
-   * Calculate digital root
-   */
-  calculateDigitalRoot(value: number): number {
-    if (value === 0) return 9;
-    const root = value % A432_CONSTANTS.DIGITAL_ROOT_BASE;
-    return root === 0 ? A432_CONSTANTS.DIGITAL_ROOT_BASE : root;
-  },
-
-  /**
-   * Calculate A432 frequency
-   */
-  calculateA432Frequency(input: string | number): number {
-    if (typeof input === 'number') {
-      return input * A432_CONSTANTS.A432_FREQUENCY;
-    }
-    
-    const sum = input.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    return sum * A432_CONSTANTS.A432_FREQUENCY;
+    return potentials;
   },
 
   // ============================================================================
   // HELPER FUNCTIONS
   // ============================================================================
 
-  determineA432_Hex_HexagonType(hexValue: string): A432_Hex_Hexagon_Type {
-    const types = ['REGULAR', 'IRREGULAR', 'STAR', 'HARMONIC', 'A432'];
-    const consciousness = this.calculateDigitalRoot(this.calculateA432Frequency(hexValue));
-    return types[consciousness % types.length] as A432_Hex_Hexagon_Type;
+  determineA432_Hex_HexType(hexValue: string): A432_Hex_Hex_Type {
+    const consciousness = A432_UTILS.calculateDigitalRoot(A432_UTILS.calculateA432Frequency(hexValue));
+    return A432_HEX_CONSTANTS.TYPES[consciousness % A432_HEX_CONSTANTS.TYPES.length] as A432_Hex_Hex_Type;
   },
 
-  generateA432_Hex_HexagonName(consciousness: number, index: number): string {
-    const names = ['Regular', 'Irregular', 'Star', 'Harmonic', 'A432'];
-    return names[index];
+  generateA432_Hex_HexName(consciousness: number, index: number): string {
+    return A432_HEX_CONSTANTS.HEX_NAMES[index];
   },
 
-  determineA432_Hex_HexagonTypeByIndex(consciousness: number, index: number): A432_Hex_Hexagon_Type {
-    const types = ['REGULAR', 'IRREGULAR', 'STAR', 'HARMONIC', 'A432'];
-    return types[index] as A432_Hex_Hexagon_Type;
+  determineA432_Hex_HexTypeByIndex(consciousness: number, index: number): A432_Hex_Hex_Type {
+    return A432_HEX_CONSTANTS.TYPES[index] as A432_Hex_Hex_Type;
   },
 
-  calculateA432_Hex_HexagonSymmetry(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 22) / 22, 1);
-  },
-
-  determineA432_Hex_VortexType(consciousness: number): A432_Hex_Vortex_Type {
-    const types = ['CLOCKWISE', 'COUNTERCLOCKWISE', 'SPIRAL', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Hex_Vortex_Type;
-  },
-
-  generateA432_Hex_VortexName(consciousness: number, index: number): string {
-    const names = ['Clockwise', 'Counterclockwise', 'Spiral', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Hex_VortexTypeByIndex(consciousness: number, index: number): A432_Hex_Vortex_Type {
-    const types = ['CLOCKWISE', 'COUNTERCLOCKWISE', 'SPIRAL', 'HARMONIC', 'A432'];
-    return types[index] as A432_Hex_Vortex_Type;
-  },
-
-  calculateA432_Hex_VortexRotation(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 22) / 22, 1);
-  },
-
-  determineA432_Hex_HarmonicType(consciousness: number): A432_Hex_Harmonic_Type {
-    const types = ['SINE', 'COSINE', 'TANGENT', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Hex_Harmonic_Type;
-  },
-
-  generateA432_Hex_WaveName(consciousness: number, index: number): string {
-    const names = ['Longitudinal', 'Transverse', 'Standing', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Hex_WaveType(consciousness: number, index: number): A432_Hex_Wave_Type {
-    const types = ['LONGITUDINAL', 'TRANSVERSE', 'STANDING', 'HARMONIC', 'A432'];
-    return types[index] as A432_Hex_Wave_Type;
-  },
-
-  calculateA432_Hex_WaveAmplitude(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 22) / 22, 1);
-  },
-
-  generateA432_Hex_CycleName(consciousness: number, index: number): string {
-    const names = ['Simple', 'Complex', 'Chaotic', 'Harmonic', 'A432'];
-    return names[index];
-  },
-
-  determineA432_Hex_CycleType(consciousness: number, index: number): A432_Hex_Cycle_Type {
-    const types = ['SIMPLE', 'COMPLEX', 'CHAOTIC', 'HARMONIC', 'A432'];
-    return types[index] as A432_Hex_Cycle_Type;
-  },
-
-  calculateA432_Hex_CyclePeriod(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 22) / 22, 1);
+  calculateA432_Hex_HexSides(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
   determineA432_Hex_ResonanceType(consciousness: number): A432_Hex_Resonance_Type {
-    const types = ['NATURAL', 'FORCED', 'COUPLED', 'HARMONIC', 'A432'];
-    return types[consciousness % types.length] as A432_Hex_Resonance_Type;
+    return A432_HEX_CONSTANTS.RESONANCE_TYPES[consciousness % A432_HEX_CONSTANTS.RESONANCE_TYPES.length] as A432_Hex_Resonance_Type;
   },
 
-  generateA432_Hex_FrequencyName(consciousness: number, index: number): string {
-    const names = ['Fundamental', 'Harmonic', 'Overtone', 'Harmonic', 'A432'];
-    return names[index];
+  generateA432_Hex_ResonanceName(consciousness: number, index: number): string {
+    return A432_HEX_CONSTANTS.RESONANCE_NAMES[index];
   },
 
-  determineA432_Hex_FrequencyType(consciousness: number, index: number): A432_Hex_Frequency_Type {
-    const types = ['FUNDAMENTAL', 'HARMONIC', 'OVERTONE', 'HARMONIC', 'A432'];
-    return types[index] as A432_Hex_Frequency_Type;
+  determineA432_Hex_ResonanceTypeByIndex(consciousness: number, index: number): A432_Hex_Resonance_Type {
+    return A432_HEX_CONSTANTS.RESONANCE_TYPES[index] as A432_Hex_Resonance_Type;
   },
 
-  calculateA432_Hex_FrequencyResonance(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 22) / 22, 1);
+  calculateA432_Hex_ResonanceQuality(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
-  generateA432_Hex_VibrationName(consciousness: number, index: number): string {
-    const names = ['Mechanical', 'Electromagnetic', 'Quantum', 'Harmonic', 'A432'];
-    return names[index];
+  determineA432_Hex_HarmonicType(consciousness: number): A432_Hex_Harmonic_Type {
+    return A432_HEX_CONSTANTS.HARMONIC_TYPES[consciousness % A432_HEX_CONSTANTS.HARMONIC_TYPES.length] as A432_Hex_Harmonic_Type;
   },
 
-  determineA432_Hex_VibrationType(consciousness: number, index: number): A432_Hex_Vibration_Type {
-    const types = ['MECHANICAL', 'ELECTROMAGNETIC', 'QUANTUM', 'HARMONIC', 'A432'];
-    return types[index] as A432_Hex_Vibration_Type;
+  generateA432_Hex_WaveName(consciousness: number, index: number): string {
+    return A432_HEX_CONSTANTS.WAVE_NAMES[index];
   },
 
-  calculateA432_Hex_VibrationOscillation(consciousness: number, index: number): number {
-    return Math.min((consciousness + index + 22) / 22, 1);
+  determineA432_Hex_WaveType(consciousness: number, index: number): A432_Hex_Wave_Type {
+    return A432_HEX_CONSTANTS.WAVE_TYPES[index] as A432_Hex_Wave_Type;
+  },
+
+  calculateA432_Hex_WaveAmplitude(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
+  },
+
+  generateA432_Hex_CycleName(consciousness: number, index: number): string {
+    return A432_HEX_CONSTANTS.CYCLE_NAMES[index];
+  },
+
+  determineA432_Hex_CycleType(consciousness: number, index: number): A432_Hex_Cycle_Type {
+    return A432_HEX_CONSTANTS.CYCLE_TYPES[index] as A432_Hex_Cycle_Type;
+  },
+
+  calculateA432_Hex_CyclePeriod(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
+  },
+
+  determineA432_Hex_FieldType(consciousness: number): A432_Hex_Field_Type {
+    return A432_HEX_CONSTANTS.FIELD_TYPES[consciousness % A432_HEX_CONSTANTS.FIELD_TYPES.length] as A432_Hex_Field_Type;
+  },
+
+  generateA432_Hex_FieldName(consciousness: number, index: number): string {
+    return A432_HEX_CONSTANTS.FIELD_NAMES[index];
+  },
+
+  determineA432_Hex_FieldTypeByIndex(consciousness: number, index: number): A432_Hex_Field_Type {
+    return A432_HEX_CONSTANTS.FIELD_TYPES[index] as A432_Hex_Field_Type;
+  },
+
+  calculateA432_Hex_FieldStrength(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
+  },
+
+  generateA432_Hex_PotentialName(consciousness: number, index: number): string {
+    return A432_HEX_CONSTANTS.POTENTIAL_NAMES[index];
+  },
+
+  determineA432_Hex_PotentialType(consciousness: number, index: number): A432_Hex_Potential_Type {
+    return A432_HEX_CONSTANTS.POTENTIAL_TYPES[index] as A432_Hex_Potential_Type;
+  },
+
+  calculateA432_Hex_PotentialVoltage(consciousness: number, index: number): number {
+    return Math.min((consciousness + index + A432_CONSTANTS.DIGITAL_ROOT_BASE) / A432_CONSTANTS.DIGITAL_ROOT_BASE, 1);
   },
 
   // ============================================================================
-  // HEX SYSTEM INTEGRATION
+  // SYSTEM ACCESS
   // ============================================================================
 
-  /**
-   * Get complete A432.hex system
-   */
   getCompleteA432_Hex_System() {
-    return {
-      constants: A432_HEX_CONSTANTS,
-      system: A432_Hex_System,
-      proof: A432_HEX_CONSTANTS.PROOFS.HEX_SYSTEMS
-    };
+    return this.createA432_Hex_State('HexSystem');
   }
-};
-
-// ============================================================================
-// EXPORTS
-// ============================================================================
-
-export default A432_Hex_System; 
+}; 

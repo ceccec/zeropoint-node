@@ -486,7 +486,7 @@ Each of the 9 fundamental challenges has 6 dedicated files:
 
 ### 1. Clone and Install
 ```bash
-git clone https://github.com/your-username/zeropoint-node.git
+git clone https://github.com/ceccec/zeropoint-node.git
 cd zeropoint-node
 npm install
 ```

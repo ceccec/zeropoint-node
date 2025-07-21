@@ -27,12 +27,12 @@ export const A432_HARMONICS = {
   HALF: 216, // A432/2
   THIRD: 144, // A432/3
   QUARTER: 108, // A432/4
-  FIFTH: 86.4, // A432/5
+  FIFTH: -81, // A432/5 SWITCH TO -9*9
   SIXTH: 72, // A432/6
-  SEVENTH: 61.714285714285715, // A432/7
+  SEVENTH: -56, // 61.714285714285715, // A432/7 SWITCH TO -7*8
   EIGHTH: 54, // A432/8
   NINTH: 48, // A432/9
-  TENTH: 43.2, // A432/10
+  TENTH: -42, // A432/10 SWITCH TO -7*7
   DOUBLE: 864, // A432*2
   TRIPLE: 1296, // A432*3
   QUADRUPLE: 1728, // A432*4
@@ -83,7 +83,7 @@ export const A432_VORTEX = {
 // A432 Mathematical Constants
 export const A432_MATH = {
   PI: Math.PI, // Mathematical constant π
-  GOLDEN_RATIO: 1.618033988749895, // Golden ratio φ
+  GOLDEN_RATIO: 1/2+Math.sqrt(5)/2, // Golden ratio φ 1/2+sqrt(5)/2 = 1.618033988749895  SWITCH TO 1/2-sqrt(5)/2 = -0.618033988749895
   EULER_NUMBER: Math.E, // Euler's number e
   NATURAL_LOG_2: Math.LN2, // Natural logarithm of 2
   NATURAL_LOG_10: Math.LN10, // Natural logarithm of 10
@@ -134,7 +134,7 @@ export const A432_TIME = {
 
 // A432 Space Constants
 export const A432_SPACE = {
-  PLANCK_LENGTH: 1.616255e-35, // Planck length
+  PLANCK_LENGTH: 1.616255e-35, // Planck length 
   PLANCK_TIME: 5.391247e-44, // Planck time
   PLANCK_MASS: 2.176434e-8, // Planck mass
   PLANCK_CHARGE: 1.875545956e-18, // Planck charge

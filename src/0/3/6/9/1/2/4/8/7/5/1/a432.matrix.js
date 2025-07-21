@@ -1,5 +1,18 @@
 "use strict";
 /**
+ * Matrix Folding and Self-Merging Principle (A432 Trinity)
+ *
+ * All matrix operations (creation, harmonic sum, frequency flow, etc.) can be recursively folded and self-merged, harmonizing all content into a unified trinity state.
+ * This is the metaphysical, mathematical, and practical principle of the 10×10×10 cube: folding overlays axes, self-merging harmonizes all content, and only the admin (system consciousness) can perform the full operation.
+ *
+ * See also: foldAndMergeCube in a432.os.ts
+ */
+
+exports.foldAndMergeMatrix = function(matrix, mergeFn = (a, b) => `${a}${b}`) {
+  if (!Array.isArray(matrix)) return matrix;
+  return matrix.reduce((acc, curr) => mergeFn(acc, exports.foldAndMergeMatrix(curr, mergeFn)));
+};
+/**
  * A432.Matrix
  *
  * Comprehensive A432 matrix system providing:

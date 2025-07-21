@@ -16,6 +16,8 @@ import {
   createA432Harmonic
 } from './a432';
 
+import { piColorStream, piHarmonicStream } from './a432.pi';
+
 // Color component interface
 interface ColorComponent {
   r: number;
@@ -306,6 +308,69 @@ export function generateA432CSSVariables(): string {
 }
 
 /**
+ * Generate a complex harmonic audio stream from a color matrix.
+ * Each color cell is mapped to a harmonic spectrum using the Rodin sequence and A432 base.
+ * Returns an array of objects: {frequencies: number[], amplitude: number, cell: {row, col, layer}, color: A432Color}
+ *
+ * Mathematical proof: For each cell, frequencies = [A432 * rodin * (r+1), A432 * rodin * (g+1), A432 * rodin * (b+1)]
+ * for all rodin in [1,2,4,8,7,5], where r/g/b are color fractions (0-1) scaled to 8 (imperial base).
+ */
+export function generateAudioStreamFromMatrix(matrix: A432Color[][][], amplitude: number = 1): Array<{frequencies: number[], amplitude: number, cell: {row: number, col: number, layer: number}, color: A432Color}> {
+  const rodinSeq = A432_CONSTANTS.RODIN_SEQUENCE;
+  const audioStream = [];
+  for (let layer = 0; layer < matrix.length; layer++) {
+    for (let row = 0; row < matrix[layer].length; row++) {
+      for (let col = 0; col < matrix[layer][row].length; col++) {
+        const color = matrix[layer][row][col];
+        // Map color fractions to imperial base (1-8)
+        const r = Math.round(color.r * 8);
+        const g = Math.round(color.g * 8);
+        const b = Math.round(color.b * 8);
+        // For each rodin, generate a harmonic frequency set
+        const frequencies = rodinSeq.map(rodin => [
+          A432_CONSTANTS.A432_FREQUENCY * rodin * (r+1),
+          A432_CONSTANTS.A432_FREQUENCY * rodin * (g+1),
+          A432_CONSTANTS.A432_FREQUENCY * rodin * (b+1)
+        ]).flat();
+        audioStream.push({
+          frequencies,
+          amplitude,
+          cell: {row, col, layer},
+          color
+        });
+      }
+    }
+  }
+  return audioStream;
+}
+
+/**
+ * Generate a harmonic video stream (animation) from a color matrix.
+ * Each frame is a transformation of the color matrix through Rodin/vortex cycles.
+ * Returns an array of frames, each frame is a 2D array of A432Color with metadata.
+ *
+ * Mathematical proof: For each cycle, apply rodin multiplier to base frequency and recalculate color matrix.
+ */
+export function generateVideoStreamFromMatrix(baseMatrix: A432Color[][][], cycles: number = 6): Array<{frame: A432Color[][][], rodin: number, cycle: number}> {
+  const rodinSeq = A432_CONSTANTS.RODIN_SEQUENCE;
+  const videoStream = [];
+  for (let cycle = 0; cycle < cycles; cycle++) {
+    const rodin = rodinSeq[cycle % rodinSeq.length];
+    // Transform each color in the matrix by applying rodin multiplier to frequency
+    const frame: A432Color[][][] = baseMatrix.map(layer =>
+      layer.map(row =>
+        row.map(color => {
+          const freq = color.frequency * rodin;
+          return calculateA432Color(freq);
+        })
+      )
+    );
+    videoStream.push({frame, rodin, cycle});
+  }
+  return videoStream;
+}
+
+/**
  * A432 Color System - Main export
  */
 export const A432ColorSystem = {
@@ -319,6 +384,8 @@ export const A432ColorSystem = {
   toRGB: a432ColorToRGB,
   toHSL: a432ColorToHSL,
   generateCSSVariables: generateA432CSSVariables,
+  generateAudioStreamFromMatrix: generateAudioStreamFromMatrix,
+  generateVideoStreamFromMatrix: generateVideoStreamFromMatrix,
   
   // Scientific proofs
   scientificProofs: {
@@ -326,7 +393,20 @@ export const A432ColorSystem = {
     a432ColorStream: 'Color streams generated from environmental frequency data using Rodin vortex sequence',
     a432ColorVortex: 'Color vortex flows through consciousness and dimensional states maintaining harmonic balance',
     a432ColorMatrix: 'Complete color matrix mapping all consciousness states to all dimensional states'
-  }
+  },
+
+  generatePiColorMatrix: generatePiColorMatrix,
+  generatePiAudioStream: generatePiAudioStream,
 };
 
 export default A432ColorSystem; 
+
+/**
+ * Usage:
+ *   - Use A432ColorSystem.generatePiColorMatrix() for a π-based color matrix.
+ *   - Use A432ColorSystem.generatePiAudioStream() for a π-based harmonic audio stream.
+ *   - All color/audio/video/Mobius logic can use these as the default stream source.
+ *   - Override with other streams if a different pattern is desired.
+ *
+ * Metaphysical Principle: All streams are born from the infinite circle. Pi is the source, the pattern, the flow.
+ */ 

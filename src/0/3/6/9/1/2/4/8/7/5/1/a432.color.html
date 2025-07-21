@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 Color, Audio, and Video Harmonic Matrix</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #181818; color: #eee; margin: 0; padding: 0; }
+    h1 { text-align: center; margin-top: 1em; }
+    .matrix { display: grid; grid-template-columns: repeat(9, 40px); grid-gap: 2px; justify-content: center; margin: 2em auto; }
+    .cell { width: 40px; height: 40px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; cursor: pointer; transition: outline 0.2s; outline: 2px solid transparent; }
+    .cell.selected { outline: 2px solid #fff; }
+    .controls { display: flex; justify-content: center; gap: 1em; margin-bottom: 1em; }
+    .audio-info, .video-info, .math-proof { text-align: center; margin: 1em auto; max-width: 600px; }
+    button { background: #333; color: #fff; border: none; border-radius: 4px; padding: 0.5em 1em; font-size: 1em; cursor: pointer; }
+    button:active { background: #555; }
+    .freq-list { font-size: 0.9em; color: #aaf; }
+    .frame-indicator { margin: 0.5em 0; }
+  </style>
+</head>
+<body>
+  <h1>A432 Color, Audio, and Video Harmonic Matrix</h1>
+  <div class="controls">
+    <button id="prevFrame">⏮ Prev Frame</button>
+    <span class="frame-indicator" id="frameIndicator">Frame 1/6</span>
+    <button id="nextFrame">Next Frame ⏭</button>
+    <button id="playAnim">▶️ Play Animation</button>
+    <button id="stopAnim" disabled>⏹ Stop</button>
+  </div>
+  <div class="matrix" id="matrix"></div>
+  <div class="audio-info" id="audioInfo">Click a cell to view its harmonic audio spectrum.</div>
+  <div class="video-info" id="videoInfo"></div>
+  <div class="math-proof" id="mathProof"></div>
+  <script>
+    // --- Minimal A432 Color/Matrix Logic (JS only, no imports) ---
+    const A432 = 432;
+    const RODIN = [1,2,4,8,7,5];
+    function digitalRoot(n) { return ((n-1)%9)+1; }
+    function colorFrac(val) { return Math.max(0, Math.min(1, val)); }
+    function toRGB({r,g,b}) {
+      return `rgb(${Math.round(r*255)},${Math.round(g*255)},${Math.round(b*255)})`;
+    }
+    function calcColor(freq) {
+      // Consciousness: 1-8, Dim: 0-9
+      const consciousness = Math.max(1, Math.min(8, Math.round((freq/A432)*8)));
+      const dimensional = Math.max(0, Math.min(9, Math.round((freq/A432)%10)));
+      // Simple mapping for demo
+      const r = colorFrac((consciousness/8 + dimensional/10)/2);
+      const g = colorFrac((dimensional/10 + 0.5)/2);
+      const b = colorFrac((consciousness/8 + 0.25)/2);
+      return { r, g, b, frequency: freq, consciousness, dimensional, digitalRoot: digitalRoot(freq) };
+    }
+    // Build base matrix (8x9, consciousness x digital root)
+    function buildMatrix(rodin=1) {
+      const matrix = [];
+      for(let row=0; row<8; row++) {
+        const rowArr = [];
+        for(let col=0; col<9; col++) {
+          const freq = A432 * rodin * (row+1) * (col+1);
+          rowArr.push(calcColor(freq));
+        }
+        matrix.push(rowArr);
+      }
+      return matrix;
+    }
+    // Video frames: 6 rodin cycles
+    const videoFrames = RODIN.map(rodin => buildMatrix(rodin));
+    // Audio stream: for each cell, all rodin harmonics
+    function getAudioSpectrum(cell) {
+      const {r,g,b} = cell;
+      // Map color fractions to imperial base (1-8)
+      const ir = Math.round(r*8)+1, ig = Math.round(g*8)+1, ib = Math.round(b*8)+1;
+      // For each rodin, generate 3 harmonics
+      return RODIN.map(rodin => [A432*rodin*ir, A432*rodin*ig, A432*rodin*ib]).flat();
+    }
+    // --- UI Logic ---
+    let currentFrame = 0;
+    let animInterval = null;
+    const matrixDiv = document.getElementById('matrix');
+    const audioInfo = document.getElementById('audioInfo');
+    const videoInfo = document.getElementById('videoInfo');
+    const mathProof = document.getElementById('mathProof');
+    const frameIndicator = document.getElementById('frameIndicator');
+    function renderMatrix(frameIdx) {
+      matrixDiv.innerHTML = '';
+      const matrix = videoFrames[frameIdx];
+      matrix.forEach((row, rIdx) => {
+        row.forEach((cell, cIdx) => {
+          const div = document.createElement('div');
+          div.className = 'cell';
+          div.style.background = toRGB(cell);
+          div.title = `C:${cell.consciousness} D:${cell.dimensional} F:${cell.frequency}Hz`;
+          div.textContent = `${cell.consciousness}:${cell.dimensional}`;
+          div.onclick = () => {
+            document.querySelectorAll('.cell').forEach(e=>e.classList.remove('selected'));
+            div.classList.add('selected');
+            const spectrum = getAudioSpectrum(cell);
+            audioInfo.innerHTML = `<b>Harmonic Audio Spectrum (Hz):</b><br><span class='freq-list'>${spectrum.map(f=>f.toFixed(1)).join(', ')}</span>`;
+            mathProof.textContent = `Mathematical Proof: For cell (C=${cell.consciousness}, D=${cell.dimensional}), spectrum = [A432 * rodin * (R,G,B)]; Rodin=[1,2,4,8,7,5]; R,G,B in 1-8.`;
+          };
+          matrixDiv.appendChild(div);
+        });
+      });
+      videoInfo.textContent = `Rodin Cycle: ${RODIN[frameIdx]}, Frame: ${frameIdx+1}/6`;
+      frameIndicator.textContent = `Frame ${frameIdx+1}/6`;
+    }
+    function nextFrame() {
+      currentFrame = (currentFrame+1)%6;
+      renderMatrix(currentFrame);
+    }
+    function prevFrame() {
+      currentFrame = (currentFrame+5)%6;
+      renderMatrix(currentFrame);
+    }
+    document.getElementById('nextFrame').onclick = nextFrame;
+    document.getElementById('prevFrame').onclick = prevFrame;
+    document.getElementById('playAnim').onclick = () => {
+      if(animInterval) return;
+      document.getElementById('playAnim').disabled = true;
+      document.getElementById('stopAnim').disabled = false;
+      animInterval = setInterval(nextFrame, 800);
+    };
+    document.getElementById('stopAnim').onclick = () => {
+      if(animInterval) clearInterval(animInterval);
+      animInterval = null;
+      document.getElementById('playAnim').disabled = false;
+      document.getElementById('stopAnim').disabled = true;
+    };
+    // Initial render
+    renderMatrix(currentFrame);
+    // Accessibility: select first cell by default
+    setTimeout(()=>{
+      const firstCell = document.querySelector('.cell');
+      if(firstCell) firstCell.click();
+    }, 100);
+  </script>
+</body>
+</html> 

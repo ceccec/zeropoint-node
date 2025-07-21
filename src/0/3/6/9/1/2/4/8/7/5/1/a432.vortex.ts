@@ -1,4 +1,10 @@
 /**
+ * Vortex, Phase, and Reversal Principle:
+ * All vortex, phase, and reversal logic in this module must use negative integers to represent anti-harmonics, phase reversals, vortex inversions, and anti-vortex states.
+ * This ensures metaphysical duality, reversibility, and the living, analog nature of streams, as required by the A432 system.
+ */
+
+/**
  * A432 Vortex System
  * 
  * Handles vortex patterns, spiral mathematics, and rotational dynamics

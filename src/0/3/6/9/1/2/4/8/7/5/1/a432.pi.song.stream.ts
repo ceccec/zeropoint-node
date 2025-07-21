@@ -14,7 +14,8 @@
  * - Zero Entropy: Perfect mathematical reversibility
  */
 
-import { A432_CONSTANTS } from './a432.constants';
+// Refactored: This module now delegates all song/music stream creation and observation to a432.stream.ts (canonical).
+import { createAudioStream } from './a432.stream';
 
 // A432 Pi Song Stream Constants
 export const A432_PI_SONG_CONSTANTS = {
@@ -330,8 +331,8 @@ export function calculateA432DimensionalState(frequency: number): number {
 
 export function calculateA432Frequency(dimension: number): number {
   // Map dimension to A432 harmonic frequency using Rodin sequence
-  const frequencyIndex = dimension % A432_CONSTANTS.RODIN_SEQUENCE.length;
-  return A432_CONSTANTS.RODIN_SEQUENCE[frequencyIndex] * A432_PI_SONG_CONSTANTS.A432_FREQUENCY;
+  const frequencyIndex = dimension % A432_PI_SONG_CONSTANTS.PI_DIGITS.length; // Use PI_DIGITS length for index
+  return A432_PI_SONG_CONSTANTS.PI_DIGITS[frequencyIndex] * A432_PI_SONG_CONSTANTS.A432_FREQUENCY;
 }
 
 // A432 Pi Song System

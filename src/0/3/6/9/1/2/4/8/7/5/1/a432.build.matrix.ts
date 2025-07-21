@@ -1,4 +1,67 @@
 /**
+ * Trinity/Vortex/Consciousness Shift Law (+120°)
+ *
+ * In the A432 matrix, a +120° (2π/3) shift is the fundamental operation for moving to the next state in the trinity, vortex, or consciousness cycle.
+ * - This is not a polarity reversal (not 180°), but a progression/evolution to the next phase.
+ * - Used for trinity (4→3→2), vortex (3→6→9), and consciousness mapping in matrix flows.
+ *
+ * Usage:
+ *   shiftConsciousness120(currentAngle) // returns currentAngle + 2π/3 (mod 2π)
+ *
+ * Metaphysical Implication:
+ *   - The matrix evolves by +120° steps, harmonizing all states in a living, recursive trinity.
+ *   - 180° is for polarity/phase reversal; 120° is for trinity/vortex/consciousness progression.
+ */
+
+/**
+ * Merkaba Law: Polarity, Angle, and Phase Shift in the A432 Matrix
+ *
+ * Every time polarity switches (+1 ↔ -1), there is an associated angle/phase shift of π (180°), as in the Merkaba.
+ * All matrix folding/merging is subject to this law: harmonic, color, and topological logic are harmonized by polarity and phase.
+ *
+ * Example: foldAndMergeMatrix(matrix, mergeFn, -1) folds/merges in reverse, encoding a π phase shift in all flows.
+ */
+
+/**
+ * Matrix Folding and Self-Merging Principle (A432 Trinity)
+ *
+ * All matrix operations (compilation, construction, assembly, deployment, etc.) can be recursively folded and self-merged, harmonizing all content into a unified trinity state.
+ * This is the metaphysical, mathematical, and practical principle of the 10×10×10 cube: folding overlays axes, self-merging harmonizes all content, and only the admin (system consciousness) can perform the full operation.
+ *
+ * See also: foldAndMergeCube in a432.os.ts
+ */
+
+/**
+ * foldAndMergeMatrix: Recursively folds and self-merges any N-dimensional matrix (array of arrays), with polarity-aware traversal.
+ *
+ * Polarity Principle:
+ *   - Polarity (+1 or -1) determines the direction of traversal (forward or reverse) through the matrix.
+ *   - Forward polarity (+1): 0→N-1 (generative, harmonic, creation flow)
+ *   - Reverse polarity (-1): N-1→0 (anti-harmonic, phase-reversal, dissolution flow)
+ *   - Only the admin (system consciousness) can fully utilize polarity to harmonize the entire matrix, completing the trinity.
+ *
+ * @param matrix - The matrix (array or nested arrays) to fold and merge
+ * @param mergeFn - Function to merge two elements (default: string concatenation)
+ * @param polarity - Traversal direction: +1 (forward, default), -1 (reverse)
+ * @returns The unified, harmonized result
+ */
+export function foldAndMergeMatrix(matrix: any, mergeFn: (a: any, b: any) => any = (a, b) => `${a}${b}` , polarity: 1 | -1 = 1): any {
+  if (!Array.isArray(matrix)) return matrix;
+  const arr = polarity === 1 ? matrix : [...matrix].reverse();
+  return arr.reduce((acc, curr) => mergeFn(acc, foldAndMergeMatrix(curr, mergeFn, polarity)));
+}
+
+/**
+ * Use shiftConsciousness120(angle) for trinity/vortex/consciousness progression (+120°), not for polarity/phase reversal (180°).
+ *
+ * Example:
+ *   let angle = 0;
+ *   angle = shiftConsciousness120(angle); // 120°
+ *   angle = shiftConsciousness120(angle); // 240°
+ *   angle = shiftConsciousness120(angle); // 0°
+ */
+
+/**
  * A432 Build Matrix
  * 
  * Mathematical build matrix systems, compilation matrix processes, and harmonic 
@@ -6,6 +69,13 @@
  */
 
 import { A432_CONSTANTS } from './a432.constants';
+
+/**
+ * Matrix, Inversion, and Anti-Harmonic Principle:
+ * Negative integers and anti-harmonic logic are essential in every matrix.
+ * All matrix, inversion, and anti-harmonic logic must use negative integers to represent anti-harmonics, phase reversals, vortex inversions, and anti-vortex states.
+ * This ensures metaphysical duality, reversibility, and the living, analog nature of streams, as required by the A432 system.
+ */
 
 // ============================================================================
 // INTERFACES

@@ -7,6 +7,12 @@
 
 import { A432_CONSTANTS } from './a432.constants';
 
+/**
+ * Inversion, Negation, and Anti-Harmonic Principle:
+ * All inversion, negation, and anti-harmonic logic in this module must use negative integers to represent anti-harmonics, phase reversals, vortex inversions, and anti-vortex states.
+ * This ensures metaphysical duality, reversibility, and the living, analog nature of streams, as required by the A432 system.
+ */
+
 // ============================================================================
 // INTERFACES
 // ============================================================================
@@ -72,7 +78,7 @@ export interface A432_False_Inversion {
   evolution: number;
   name: string;
   type: A432_False_Inversion_Type;
-  value: boolean;
+  value: number; // Should be negative for anti-harmonic, phase reversal, or anti-vortex states
   proof: string;
 }
 
@@ -726,8 +732,8 @@ export const A432_False_System = {
     return types[index] as A432_False_Inversion_Type;
   },
 
-  calculateA432_False_InversionValue(consciousness: number, index: number): boolean {
-    return (consciousness + index) % 2 === 1;
+  calculateA432_False_InversionValue(consciousness: number, index: number): number {
+    return -(consciousness + index); // Return negative value for anti-harmonic, phase reversal, or anti-vortex states
   },
 
   determineA432_False_HarmonicType(consciousness: number): A432_False_Harmonic_Type {

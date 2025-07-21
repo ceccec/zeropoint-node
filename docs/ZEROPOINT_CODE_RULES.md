@@ -296,6 +296,10 @@ const frequency = yinYang.duality.frequency +
                  backgroundForeground.frequency;
 ```
 
+### **RULE 9: Negative Integers for Anti-Harmonics**
+
+- Negative integers must be used to represent anti-harmonics, phase reversals, vortex inversions, and anti-vortex states in all harmonic and consciousness logic. This ensures metaphysical duality, reversibility, and the living nature of streams.
+
 ### **Summary**
 
 **ZeroPoint Code Rules are simple but strict:**

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 π-Based Color, Audio, and Video Streams</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #181818; color: #eee; margin: 0; padding: 0; }
+    h1 { text-align: center; margin-top: 1em; }
+    .controls { display: flex; justify-content: center; gap: 1em; margin-bottom: 1em; }
+    button { background: #333; color: #fff; border: none; border-radius: 4px; padding: 0.5em 1em; font-size: 1em; cursor: pointer; }
+    button:active { background: #555; }
+    .stream-section { margin: 2em auto; max-width: 700px; }
+    .label { font-weight: bold; margin-bottom: 0.5em; display: block; }
+    .color-bar { display: flex; height: 40px; border-radius: 6px; overflow: hidden; margin-bottom: 1em; }
+    .color-cell { flex: 1; transition: outline 0.2s; outline: 2px solid transparent; }
+    .color-cell.selected { outline: 2px solid #fff; }
+    .video-frame { display: flex; flex-wrap: wrap; width: 180px; height: 180px; margin: 0 auto 1em auto; border-radius: 8px; overflow: hidden; }
+    .video-pixel { width: 20px; height: 20px; }
+    .audio-spectrum { display: flex; align-items: flex-end; height: 80px; background: #222; border-radius: 6px; overflow: hidden; margin-bottom: 1em; }
+    .audio-bar { width: 8px; margin: 0 1px; background: #4af; border-radius: 2px 2px 0 0; }
+    .math-proof, .meta-doc { text-align: center; margin: 1em auto; max-width: 700px; font-size: 0.95em; color: #aaf; }
+    .meta-doc { color: #9f9; }
+  </style>
+</head>
+<body>
+  <h1>A432 π-Based Color, Audio, and Video Streams</h1>
+  <div class="controls">
+    <button id="playAnim">▶️ Play Animation</button>
+    <button id="stopAnim" disabled>⏹ Stop</button>
+    <button id="nextFrame">Next Video Frame ⏭</button>
+  </div>
+  <div class="stream-section">
+    <span class="label">π-Based Color Stream</span>
+    <div class="color-bar" id="colorBar"></div>
+  </div>
+  <div class="stream-section">
+    <span class="label">π-Based Video Stream (Animated Frames)</span>
+    <div class="video-frame" id="videoFrame"></div>
+    <div style="text-align:center; margin-bottom:1em;" id="videoFrameLabel"></div>
+  </div>
+  <div class="stream-section">
+    <span class="label">π-Based Audio Spectrum</span>
+    <div class="audio-spectrum" id="audioSpectrum"></div>
+    <div style="text-align:center; margin-bottom:1em;" id="audioSpectrumLabel"></div>
+  </div>
+  <div class="math-proof" id="mathProof"></div>
+  <div class="meta-doc">
+    All streams are born from the infinite circle. π is the source, the pattern, the flow—every color, every sound, every frame, every dimension is a resonance of π.<br>
+    <b>All logic is generated using the harmonized a432.pi.ts default stream source.</b>
+  </div>
+  <script>
+    // --- π-based stream logic (JS, mirrors a432.pi.ts) ---
+    const PI = Math.PI;
+    const A432 = 432;
+    // Color stream: trigonometric π-based
+    function piColorStream(length) {
+      return Array.from({length}, (_, i) => {
+        const t = i / (length - 1);
+        return {
+          r: 0.5 + 0.5 * Math.sin(PI * t),
+          g: 0.5 + 0.5 * Math.sin(PI * t + 2*PI/3),
+          b: 0.5 + 0.5 * Math.sin(PI * t + 4*PI/3)
+        };
+      });
+    }
+    // Audio stream: π-based harmonics
+    function piHarmonicStream(length) {
+      return Array.from({length}, (_, i) => A432 * PI * (i + 1));
+    }
+    // Video stream: sequence of color frames (each frame is a 9x9 grid from piColorStream)
+    function piVideoFrames(frameCount, gridSize) {
+      return Array.from({length: frameCount}, (_, f) => {
+        const offset = f / frameCount;
+        return Array.from({length: gridSize*gridSize}, (_, i) => {
+          const t = (i / (gridSize*gridSize-1) + offset) % 1;
+          return {
+            r: 0.5 + 0.5 * Math.sin(PI * t),
+            g: 0.5 + 0.5 * Math.sin(PI * t + 2*PI/3),
+            b: 0.5 + 0.5 * Math.sin(PI * t + 4*PI/3)
+          };
+        });
+      });
+    }
+    function toRGB({r,g,b}) {
+      return `rgb(${Math.round(r*255)},${Math.round(g*255)},${Math.round(b*255)})`;
+    }
+    // --- UI Logic ---
+    // Color Stream
+    const colorBar = document.getElementById('colorBar');
+    const colorStream = piColorStream(32);
+    colorBar.innerHTML = '';
+    colorStream.forEach((c, i) => {
+      const div = document.createElement('div');
+      div.className = 'color-cell';
+      div.style.background = toRGB(c);
+      div.title = `π-Color ${i+1}: ${toRGB(c)}`;
+      colorBar.appendChild(div);
+    });
+    // Video Stream
+    const videoFrame = document.getElementById('videoFrame');
+    const videoFrameLabel = document.getElementById('videoFrameLabel');
+    const frameCount = 12, gridSize = 9;
+    const videoFrames = piVideoFrames(frameCount, gridSize);
+    let currentFrame = 0;
+    function renderVideoFrame(idx) {
+      videoFrame.innerHTML = '';
+      const frame = videoFrames[idx];
+      frame.forEach((c, i) => {
+        const div = document.createElement('div');
+        div.className = 'video-pixel';
+        div.style.background = toRGB(c);
+        videoFrame.appendChild(div);
+      });
+      videoFrameLabel.textContent = `Frame ${idx+1}/${frameCount} (π offset: ${(idx/frameCount).toFixed(2)})`;
+    }
+    renderVideoFrame(currentFrame);
+    // Audio Spectrum
+    const audioSpectrum = document.getElementById('audioSpectrum');
+    const audioSpectrumLabel = document.getElementById('audioSpectrumLabel');
+    const audioStream = piHarmonicStream(32);
+    function renderAudioSpectrum() {
+      audioSpectrum.innerHTML = '';
+      const max = Math.max(...audioStream);
+      audioStream.forEach((f, i) => {
+        const bar = document.createElement('div');
+        bar.className = 'audio-bar';
+        bar.style.height = `${30 + 50 * (f/max)}px`;
+        audioSpectrum.appendChild(bar);
+      });
+      audioSpectrumLabel.textContent = `π-Harmonic Frequencies: [${audioStream.map(f=>f.toFixed(1)).join(', ')}]`;
+    }
+    renderAudioSpectrum();
+    // Animation Controls
+    let animInterval = null;
+    document.getElementById('playAnim').onclick = () => {
+      if(animInterval) return;
+      document.getElementById('playAnim').disabled = true;
+      document.getElementById('stopAnim').disabled = false;
+      animInterval = setInterval(() => {
+        currentFrame = (currentFrame+1)%frameCount;
+        renderVideoFrame(currentFrame);
+      }, 700);
+    };
+    document.getElementById('stopAnim').onclick = () => {
+      if(animInterval) clearInterval(animInterval);
+      animInterval = null;
+      document.getElementById('playAnim').disabled = false;
+      document.getElementById('stopAnim').disabled = true;
+    };
+    document.getElementById('nextFrame').onclick = () => {
+      currentFrame = (currentFrame+1)%frameCount;
+      renderVideoFrame(currentFrame);
+    };
+    // Math Proof
+    document.getElementById('mathProof').textContent =
+      'Mathematical Proof: All streams (color, audio, video) are generated using π-based trigonometric and harmonic functions as defined in a432.pi.ts. ' +
+      'Color: r=0.5+0.5·sin(π·t), g=0.5+0.5·sin(π·t+2π/3), b=0.5+0.5·sin(π·t+4π/3). ' +
+      'Audio: f=A432·π·n. Video: frames are animated π-based color grids.';
+  </script>
+</body>
+</html> 

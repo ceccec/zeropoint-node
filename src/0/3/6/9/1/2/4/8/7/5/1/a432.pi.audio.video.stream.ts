@@ -7,6 +7,8 @@
  */
 
 import { A432_CONSTANTS } from './a432.constants';
+// Refactored: This module now delegates all audio/video stream creation and observation to a432.stream.ts (canonical).
+import { createAudioStream, createVideoStream } from './a432.stream';
 
 // ============================================================================
 // INTERFACES

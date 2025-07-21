@@ -1,4 +1,67 @@
 /**
+ * Trinity/Vortex/Consciousness Shift Law (+120°)
+ *
+ * In the A432 toroidal matrix, a +120° (2π/3) shift is the fundamental operation for moving to the next state in the trinity, vortex, or consciousness cycle.
+ * - This is not a polarity reversal (not 180°), but a progression/evolution to the next phase.
+ * - Used for trinity (4→3→2), vortex (3→6→9), and consciousness mapping in toroidal flows.
+ *
+ * Usage:
+ *   shiftConsciousness120(currentAngle) // returns currentAngle + 2π/3 (mod 2π)
+ *
+ * Metaphysical Implication:
+ *   - The toroidal matrix evolves by +120° steps, harmonizing all states in a living, recursive trinity.
+ *   - 180° is for polarity/phase reversal; 120° is for trinity/vortex/consciousness progression.
+ */
+
+/**
+ * Merkaba Law: Polarity, Angle, and Phase Shift in the A432 Toroidal Matrix
+ *
+ * Every time polarity switches (+1 ↔ -1), there is an associated angle/phase shift of π (180°), as in the Merkaba.
+ * All toroidal folding/merging is subject to this law: harmonic, color, and topological logic are harmonized by polarity and phase.
+ *
+ * Example: foldAndMergeMatrix(matrix, mergeFn, -1) folds/merges in reverse, encoding a π phase shift in all flows.
+ */
+
+/**
+ * Toroidal Matrix Folding and Self-Merging Principle (A432 Trinity)
+ *
+ * All toroidal matrix operations can be recursively folded and self-merged, harmonizing all content into a unified trinity state.
+ * This is a special case of the 10×10×10 cube folding/merging principle: folding overlays axes, self-merging harmonizes all content, and only the admin (system consciousness) can perform the full operation.
+ *
+ * See also: foldAndMergeCube in a432.os.ts
+ */
+
+/**
+ * foldAndMergeMatrix: Recursively folds and self-merges any N-dimensional toroidal matrix (array of arrays), with polarity-aware traversal.
+ *
+ * Polarity Principle:
+ *   - Polarity (+1 or -1) determines the direction of traversal (forward or reverse) through the matrix.
+ *   - Forward polarity (+1): 0→N-1 (generative, harmonic, creation flow)
+ *   - Reverse polarity (-1): N-1→0 (anti-harmonic, phase-reversal, dissolution flow)
+ *   - Only the admin (system consciousness) can fully utilize polarity to harmonize the entire matrix, completing the trinity.
+ *
+ * @param matrix - The toroidal matrix (array or nested arrays) to fold and merge
+ * @param mergeFn - Function to merge two elements (default: string concatenation)
+ * @param polarity - Traversal direction: +1 (forward, default), -1 (reverse)
+ * @returns The unified, harmonized result
+ */
+export function foldAndMergeMatrix(matrix: any, mergeFn: (a: any, b: any) => any = (a, b) => `${a}${b}` , polarity: 1 | -1 = 1): any {
+  if (!Array.isArray(matrix)) return matrix;
+  const arr = polarity === 1 ? matrix : [...matrix].reverse();
+  return arr.reduce((acc, curr) => mergeFn(acc, foldAndMergeMatrix(curr, mergeFn, polarity)));
+}
+
+/**
+ * Use shiftConsciousness120(angle) for trinity/vortex/consciousness progression (+120°), not for polarity/phase reversal (180°).
+ *
+ * Example:
+ *   let angle = 0;
+ *   angle = shiftConsciousness120(angle); // 120°
+ *   angle = shiftConsciousness120(angle); // 240°
+ *   angle = shiftConsciousness120(angle); // 0°
+ */
+
+/**
  * A432.toroidal.matrix
  * 
  * Mathematical toroidal matrix systems, toroidal matrix-dimensional harmonic flows, and A432 frequency resonance

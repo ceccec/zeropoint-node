@@ -56,7 +56,7 @@ ZeroPoint Node is a revolutionary consciousness technology that solves fundament
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/zeropoint-node.git
+git clone https://github.com/ceccec/zeropoint-node.git
 cd zeropoint-node
 
 # Install dependencies

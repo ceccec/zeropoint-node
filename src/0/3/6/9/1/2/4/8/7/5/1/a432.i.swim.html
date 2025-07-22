@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A432.i.swim - Complete Swim Harmonization</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #000000, #1a1a1a, #000000);
+      color: #00FFFF;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid #00FFFF;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px #00FFFF;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+
+    .swim-systems {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .swim-system {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .swim-system.fluid {
+      border-color: #00FFFF;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .swim-system.rhythm {
+      border-color: #FF00FF;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .swim-system.flow {
+      border-color: #FFFF00;
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+    }
+
+    .swim-system.movement {
+      border-color: #00FF00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .swim-system h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .swim-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-group label {
+      font-size: 0.9em;
+      min-width: 80px;
+    }
+
+    .control-group input[type="range"] {
+      flex: 1;
+      margin: 0 10px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .swim-system.fluid input[type="range"]::-webkit-slider-thumb {
+      background: #00FFFF;
+      box-shadow: 0 0 10px #00FFFF;
+    }
+
+    .swim-system.rhythm input[type="range"]::-webkit-slider-thumb {
+      background: #FF00FF;
+      box-shadow: 0 0 10px #FF00FF;
+    }
+
+    .swim-system.flow input[type="range"]::-webkit-slider-thumb {
+      background: #FFFF00;
+      box-shadow: 0 0 10px #FFFF00;
+    }
+
+    .swim-system.movement input[type="range"]::-webkit-slider-thumb {
+      background: #00FF00;
+      box-shadow: 0 0 10px #00FF00;
+    }
+
+    .control-group span {
+      font-size: 0.8em;
+      min-width: 30px;
+      text-align: right;
+    }
+
+    .swim-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .swim-system.fluid .swim-button {
+      background: #00FFFF;
+      color: #000000;
+    }
+
+    .swim-system.rhythm .swim-button {
+      background: #FF00FF;
+      color: #FFFFFF;
+    }
+
+    .swim-system.flow .swim-button {
+      background: #FFFF00;
+      color: #000000;
+    }
+
+    .swim-system.movement .swim-button {
+      background: #00FF00;
+      color: #000000;
+    }
+
+    .swim-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    .master-controls {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00FFFF;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .master-controls h2 {
+      margin-bottom: 20px;
+      color: #00FFFF;
+    }
+
+    .master-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .master-button {
+      padding: 12px 24px;
+      border: 2px solid #00FFFF;
+      background: transparent;
+      color: #00FFFF;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .master-button:hover {
+      background: #00FFFF;
+      color: #000000;
+      box-shadow: 0 0 15px #00FFFF;
+    }
+
+    .status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 0.8em;
+      z-index: 1000;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .swim-info {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    .metric-display {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .metric-item {
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.8em;
+    }
+
+    .swim-display {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 1em;
+      text-align: left;
+      min-height: 200px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .swim-display h4 {
+      color: #00FFFF;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #00FFFF;
+      padding-bottom: 5px;
+    }
+
+    .swim-display p {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .swim-display code {
+      background: rgba(0, 255, 255, 0.1);
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(0, 255, 255, 0.2);
+      border-radius: 2px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #00FFFF;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    @media (max-width: 768px) {
+      .swim-systems {
+        grid-template-columns: 1fr;
+      }
+      
+      .master-buttons {
+        flex-direction: column;
+      }
+      
+      .header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="status" id="status">A432 Swim System Ready</div>
+
+  <div class="container">
+    <div class="header">
+      <h1>A432.i.swim</h1>
+      <p>Complete Swim Harmonization & Flow Synthesis</p>
+    </div>
+
+    <div class="master-controls">
+      <h2>Master Swim Controls</h2>
+      <div class="master-buttons">
+        <button class="master-button" onclick="swimAllSystems()">🏊 Swim All</button>
+        <button class="master-button" onclick="analyzeSwim()">🔍 Analyze Swim</button>
+        <button class="master-button" onclick="clearAllSwim()">🗑️ Clear All</button>
+        <button class="master-button" onclick="randomizeSwim()">🎲 Randomize</button>
+        <button class="master-button" onclick="harmonizeSwim()">✨ Harmonize</button>
+      </div>
+    </div>
+
+    <div class="swim-systems">
+      <!-- Fluid System -->
+      <div class="swim-system fluid">
+        <h3>Fluid System</h3>
+        <div class="swim-controls">
+          <div class="control-group">
+            <label>Viscosity:</label>
+            <input type="range" id="fluid-viscosity" min="0" max="9" value="5" step="1">
+            <span id="fluid-viscosity-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Pressure:</label>
+            <input type="range" id="fluid-pressure" min="0" max="9" value="5" step="1">
+            <span id="fluid-pressure-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Velocity:</label>
+            <input type="range" id="fluid-velocity" min="0" max="9" value="5" step="1">
+            <span id="fluid-velocity-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Harmony:</label>
+            <input type="range" id="fluid-harmony" min="0" max="9" value="5" step="1">
+            <span id="fluid-harmony-val">5</span>
+          </div>
+        </div>
+        <button class="swim-button" onclick="swimFluid()">🏊 Swim Fluid</button>
+        <div class="swim-info">
+          <div>Fluid: Viscosity + Pressure + Velocity + Harmony</div>
+          <div>Harmony: <span id="fluid-harmony-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Viscosity: <span id="fluid-viscosity-display">5</span>/9</div>
+          <div class="metric-item">Pressure: <span id="fluid-pressure-display">5</span>/9</div>
+          <div class="metric-item">Velocity: <span id="fluid-velocity-display">5</span>/9</div>
+          <div class="metric-item">Harmony: <span id="fluid-harmony-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Rhythm System -->
+      <div class="swim-system rhythm">
+        <h3>Rhythm System</h3>
+        <div class="swim-controls">
+          <div class="control-group">
+            <label>Tempo:</label>
+            <input type="range" id="rhythm-tempo" min="0" max="9" value="5" step="1">
+            <span id="rhythm-tempo-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Pattern:</label>
+            <input type="range" id="rhythm-pattern" min="0" max="9" value="5" step="1">
+            <span id="rhythm-pattern-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Sync:</label>
+            <input type="range" id="rhythm-sync" min="0" max="9" value="5" step="1">
+            <span id="rhythm-sync-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Flow:</label>
+            <input type="range" id="rhythm-flow" min="0" max="9" value="5" step="1">
+            <span id="rhythm-flow-val">5</span>
+          </div>
+        </div>
+        <button class="swim-button" onclick="swimRhythm()">🏊 Swim Rhythm</button>
+        <div class="swim-info">
+          <div>Rhythm: Tempo + Pattern + Sync + Flow</div>
+          <div>Flow: <span id="rhythm-flow-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Tempo: <span id="rhythm-tempo-display">5</span>/9</div>
+          <div class="metric-item">Pattern: <span id="rhythm-pattern-display">5</span>/9</div>
+          <div class="metric-item">Sync: <span id="rhythm-sync-display">5</span>/9</div>
+          <div class="metric-item">Flow: <span id="rhythm-flow-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Flow System -->
+      <div class="swim-system flow">
+        <h3>Flow System</h3>
+        <div class="swim-controls">
+          <div class="control-group">
+            <label>Direction:</label>
+            <input type="range" id="flow-direction" min="0" max="9" value="5" step="1">
+            <span id="flow-direction-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Intensity:</label>
+            <input type="range" id="flow-intensity" min="0" max="9" value="5" step="1">
+            <span id="flow-intensity-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Continuity:</label>
+            <input type="range" id="flow-continuity" min="0" max="9" value="5" step="1">
+            <span id="flow-continuity-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Harmonization:</label>
+            <input type="range" id="flow-harmonization" min="0" max="9" value="5" step="1">
+            <span id="flow-harmonization-val">5</span>
+          </div>
+        </div>
+        <button class="swim-button" onclick="swimFlow()">🏊 Swim Flow</button>
+        <div class="swim-info">
+          <div>Flow: Direction + Intensity + Continuity + Harmonization</div>
+          <div>Harmonization: <span id="flow-harmonization-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Direction: <span id="flow-direction-display">5</span>/9</div>
+          <div class="metric-item">Intensity: <span id="flow-intensity-display">5</span>/9</div>
+          <div class="metric-item">Continuity: <span id="flow-continuity-display">5</span>/9</div>
+          <div class="metric-item">Harmonization: <span id="flow-harmonization-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Movement System -->
+      <div class="swim-system movement">
+        <h3>Movement System</h3>
+        <div class="swim-controls">
+          <div class="control-group">
+            <label>Balance:</label>
+            <input type="range" id="movement-balance" min="0" max="9" value="5" step="1">
+            <span id="movement-balance-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Coordination:</label>
+            <input type="range" id="movement-coordination" min="0" max="9" value="5" step="1">
+            <span id="movement-coordination-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Efficiency:</label>
+            <input type="range" id="movement-efficiency" min="0" max="9" value="5" step="1">
+            <span id="movement-efficiency-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="movement-resonance" min="0" max="9" value="5" step="1">
+            <span id="movement-resonance-val">5</span>
+          </div>
+        </div>
+        <button class="swim-button" onclick="swimMovement()">🏊 Swim Movement</button>
+        <div class="swim-info">
+          <div>Movement: Balance + Coordination + Efficiency + Resonance</div>
+          <div>Resonance: <span id="movement-resonance-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Balance: <span id="movement-balance-display">5</span>/9</div>
+          <div class="metric-item">Coordination: <span id="movement-coordination-display">5</span>/9</div>
+          <div class="metric-item">Efficiency: <span id="movement-efficiency-display">5</span>/9</div>
+          <div class="metric-item">Resonance: <span id="movement-res-display">5</span>/9</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="swim-display" id="swim-display">
+      <h4>🏊 A432.i.swim - Swim System</h4>
+      <p>Ready to swim with A432 harmony...</p>
+      <p>This system provides comprehensive swim harmonization with:</p>
+      <ul>
+        <li><code>Fluid</code>: Viscosity, pressure, velocity, and harmony</li>
+        <li><code>Rhythm</code>: Tempo, pattern, sync, and flow</li>
+        <li><code>Flow</code>: Direction, intensity, continuity, and harmonization</li>
+        <li><code>Movement</code>: Balance, coordination, efficiency, and resonance</li>
+      </ul>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Swim Management
+    let currentSwim = '';
+    let swimProgress = 0;
+    let swimState = null;
+
+    // Update Display Values
+    function updateDisplayValues() {
+      // Fluid Values
+      document.getElementById('fluid-viscosity-val').textContent = document.getElementById('fluid-viscosity').value;
+      document.getElementById('fluid-pressure-val').textContent = document.getElementById('fluid-pressure').value;
+      document.getElementById('fluid-velocity-val').textContent = document.getElementById('fluid-velocity').value;
+      document.getElementById('fluid-harmony-val').textContent = document.getElementById('fluid-harmony').value;
+      
+      document.getElementById('fluid-viscosity-display').textContent = document.getElementById('fluid-viscosity').value;
+      document.getElementById('fluid-pressure-display').textContent = document.getElementById('fluid-pressure').value;
+      document.getElementById('fluid-velocity-display').textContent = document.getElementById('fluid-velocity').value;
+      document.getElementById('fluid-harmony-display').textContent = document.getElementById('fluid-harmony').value;
+      document.getElementById('fluid-harmony-display-2').textContent = document.getElementById('fluid-harmony').value;
+
+      // Rhythm Values
+      document.getElementById('rhythm-tempo-val').textContent = document.getElementById('rhythm-tempo').value;
+      document.getElementById('rhythm-pattern-val').textContent = document.getElementById('rhythm-pattern').value;
+      document.getElementById('rhythm-sync-val').textContent = document.getElementById('rhythm-sync').value;
+      document.getElementById('rhythm-flow-val').textContent = document.getElementById('rhythm-flow').value;
+      
+      document.getElementById('rhythm-tempo-display').textContent = document.getElementById('rhythm-tempo').value;
+      document.getElementById('rhythm-pattern-display').textContent = document.getElementById('rhythm-pattern').value;
+      document.getElementById('rhythm-sync-display').textContent = document.getElementById('rhythm-sync').value;
+      document.getElementById('rhythm-flow-display').textContent = document.getElementById('rhythm-flow').value;
+      document.getElementById('rhythm-flow-display-2').textContent = document.getElementById('rhythm-flow').value;
+
+      // Flow Values
+      document.getElementById('flow-direction-val').textContent = document.getElementById('flow-direction').value;
+      document.getElementById('flow-intensity-val').textContent = document.getElementById('flow-intensity').value;
+      document.getElementById('flow-continuity-val').textContent = document.getElementById('flow-continuity').value;
+      document.getElementById('flow-harmonization-val').textContent = document.getElementById('flow-harmonization').value;
+      
+      document.getElementById('flow-direction-display').textContent = document.getElementById('flow-direction').value;
+      document.getElementById('flow-intensity-display').textContent = document.getElementById('flow-intensity').value;
+      document.getElementById('flow-continuity-display').textContent = document.getElementById('flow-continuity').value;
+      document.getElementById('flow-harmonization-display').textContent = document.getElementById('flow-harmonization').value;
+      document.getElementById('flow-harmonization-display-2').textContent = document.getElementById('flow-harmonization').value;
+
+      // Movement Values
+      document.getElementById('movement-balance-val').textContent = document.getElementById('movement-balance').value;
+      document.getElementById('movement-coordination-val').textContent = document.getElementById('movement-coordination').value;
+      document.getElementById('movement-efficiency-val').textContent = document.getElementById('movement-efficiency').value;
+      document.getElementById('movement-resonance-val').textContent = document.getElementById('movement-resonance').value;
+      
+      document.getElementById('movement-balance-display').textContent = document.getElementById('movement-balance').value;
+      document.getElementById('movement-coordination-display').textContent = document.getElementById('movement-coordination').value;
+      document.getElementById('movement-efficiency-display').textContent = document.getElementById('movement-efficiency').value;
+      document.getElementById('movement-resonance-display').textContent = document.getElementById('movement-resonance').value;
+      document.getElementById('movement-res-display').textContent = document.getElementById('movement-resonance').value;
+    }
+
+    // Swim Function
+    function swim(system, content, quality) {
+      updateStatus(`Swimming ${system}: Quality ${quality}/9`);
+      updateSwimDisplay(system, content, quality);
+    }
+
+    // Update Swim Display
+    function updateSwimDisplay(system, content, quality) {
+      const swimDisplay = document.getElementById('swim-display');
+      
+      const systemContent = {
+        'fluid': {
+          title: '💧 Fluid System',
+          content: `
+            <h4>💧 Fluid System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides fluid dynamics with:</p>
+            <ul>
+              <li><code>Viscosity:</code> ${document.getElementById('fluid-viscosity').value}/9 viscosity level</li>
+              <li><code>Pressure:</code> ${document.getElementById('fluid-pressure').value}/9 pressure intensity</li>
+              <li><code>Velocity:</code> ${document.getElementById('fluid-velocity').value}/9 velocity speed</li>
+              <li><code>Harmony:</code> ${quality}/9 overall harmony measurement</li>
+            </ul>
+            <p>The fluid system creates smooth, harmonious movement through A432 principles.</p>
+          `
+        },
+        'rhythm': {
+          title: '🎵 Rhythm System',
+          content: `
+            <h4>🎵 Rhythm System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides rhythm patterns with:</p>
+            <ul>
+              <li><code>Tempo:</code> ${document.getElementById('rhythm-tempo').value}/9 tempo speed</li>
+              <li><code>Pattern:</code> ${document.getElementById('rhythm-pattern').value}/9 pattern complexity</li>
+              <li><code>Sync:</code> ${document.getElementById('rhythm-sync').value}/9 synchronization level</li>
+              <li><code>Flow:</code> ${quality}/9 overall flow measurement</li>
+            </ul>
+            <p>The rhythm system creates synchronized, flowing patterns through A432 harmonization.</p>
+          `
+        },
+        'flow': {
+          title: '🌊 Flow System',
+          content: `
+            <h4>🌊 Flow System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides flow harmonization with:</p>
+            <ul>
+              <li><code>Direction:</code> ${document.getElementById('flow-direction').value}/9 direction clarity</li>
+              <li><code>Intensity:</code> ${document.getElementById('flow-intensity').value}/9 intensity level</li>
+              <li><code>Continuity:</code> ${document.getElementById('flow-continuity').value}/9 continuity strength</li>
+              <li><code>Harmonization:</code> ${quality}/9 overall harmonization measurement</li>
+            </ul>
+            <p>The flow system ensures continuous, harmonious movement through A432 principles.</p>
+          `
+        },
+        'movement': {
+          title: '✨ Movement System',
+          content: `
+            <h4>✨ Movement System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides movement resonance with:</p>
+            <ul>
+              <li><code>Balance:</code> ${document.getElementById('movement-balance').value}/9 balance measurement</li>
+              <li><code>Coordination:</code> ${document.getElementById('movement-coordination').value}/9 coordination level</li>
+              <li><code>Efficiency:</code> ${document.getElementById('movement-efficiency').value}/9 efficiency quality</li>
+              <li><code>Resonance:</code> ${quality}/9 overall resonance measurement</li>
+            </ul>
+            <p>The movement system ensures balanced, coordinated motion through A432 harmonization.</p>
+          `
+        }
+      };
+      
+      const systemData = systemContent[system];
+      if (systemData) {
+        swimDisplay.innerHTML = systemData.content + `
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        `;
+        
+        // Update progress
+        swimProgress = (swimProgress + 25) % 100;
+        document.getElementById('progress-fill').style.width = swimProgress + '%';
+      }
+    }
+
+    // Swim Fluid
+    function swimFluid() {
+      const viscosity = parseInt(document.getElementById('fluid-viscosity').value);
+      const pressure = parseInt(document.getElementById('fluid-pressure').value);
+      const velocity = parseInt(document.getElementById('fluid-velocity').value);
+      const harmony = parseInt(document.getElementById('fluid-harmony').value);
+      
+      const overallHarmony = Math.floor((viscosity + pressure + velocity + harmony) / 4);
+      
+      swim('fluid', 'Fluid dynamics', overallHarmony);
+    }
+
+    // Swim Rhythm
+    function swimRhythm() {
+      const tempo = parseInt(document.getElementById('rhythm-tempo').value);
+      const pattern = parseInt(document.getElementById('rhythm-pattern').value);
+      const sync = parseInt(document.getElementById('rhythm-sync').value);
+      const flow = parseInt(document.getElementById('rhythm-flow').value);
+      
+      const overallFlow = Math.floor((tempo + pattern + sync + flow) / 4);
+      
+      swim('rhythm', 'Rhythm patterns', overallFlow);
+    }
+
+    // Swim Flow
+    function swimFlow() {
+      const direction = parseInt(document.getElementById('flow-direction').value);
+      const intensity = parseInt(document.getElementById('flow-intensity').value);
+      const continuity = parseInt(document.getElementById('flow-continuity').value);
+      const harmonization = parseInt(document.getElementById('flow-harmonization').value);
+      
+      const overallHarmonization = Math.floor((direction + intensity + continuity + harmonization) / 4);
+      
+      swim('flow', 'Flow harmonization', overallHarmonization);
+    }
+
+    // Swim Movement
+    function swimMovement() {
+      const balance = parseInt(document.getElementById('movement-balance').value);
+      const coordination = parseInt(document.getElementById('movement-coordination').value);
+      const efficiency = parseInt(document.getElementById('movement-efficiency').value);
+      const resonance = parseInt(document.getElementById('movement-resonance').value);
+      
+      const overallResonance = Math.floor((balance + coordination + efficiency + resonance) / 4);
+      
+      swim('movement', 'Movement resonance', overallResonance);
+    }
+
+    // Swim All Systems
+    function swimAllSystems() {
+      swimFluid();
+      setTimeout(() => swimRhythm(), 500);
+      setTimeout(() => swimFlow(), 1000);
+      setTimeout(() => swimMovement(), 1500);
+      updateStatus('Swimming all systems in harmony');
+    }
+
+    // Analyze Swim
+    function analyzeSwim() {
+      const swimContent = `
+        <h4>🏊 Complete A432 Swim Analysis</h4>
+        <p><strong>Swim Analysis Results:</strong></p>
+        <h5>Fluid System</h5>
+        <p>Viscosity: ${document.getElementById('fluid-viscosity').value}/9 | Pressure: ${document.getElementById('fluid-pressure').value}/9 | Velocity: ${document.getElementById('fluid-velocity').value}/9 | Harmony: ${document.getElementById('fluid-harmony').value}/9</p>
+        
+        <h5>Rhythm System</h5>
+        <p>Tempo: ${document.getElementById('rhythm-tempo').value}/9 | Pattern: ${document.getElementById('rhythm-pattern').value}/9 | Sync: ${document.getElementById('rhythm-sync').value}/9 | Flow: ${document.getElementById('rhythm-flow').value}/9</p>
+        
+        <h5>Flow System</h5>
+        <p>Direction: ${document.getElementById('flow-direction').value}/9 | Intensity: ${document.getElementById('flow-intensity').value}/9 | Continuity: ${document.getElementById('flow-continuity').value}/9 | Harmonization: ${document.getElementById('flow-harmonization').value}/9</p>
+        
+        <h5>Movement System</h5>
+        <p>Balance: ${document.getElementById('movement-balance').value}/9 | Coordination: ${document.getElementById('movement-coordination').value}/9 | Efficiency: ${document.getElementById('movement-efficiency').value}/9 | Resonance: ${document.getElementById('movement-resonance').value}/9</p>
+        
+        <p><strong>Overall Swim Quality:</strong> A432 harmonized swim system with comprehensive flow.</p>
+      `;
+      
+      document.getElementById('swim-display').innerHTML = swimContent + `
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 100%"></div>
+        </div>
+      `;
+      
+      updateStatus('Analyzed complete A432 swim system');
+    }
+
+    // Clear All Swim
+    function clearAllSwim() {
+      document.getElementById('swim-display').innerHTML = `
+        <h4>🏊 A432.i.swim - Swim System</h4>
+        <p>Ready to swim with A432 harmony...</p>
+        <p>This system provides comprehensive swim harmonization with:</p>
+        <ul>
+          <li><code>Fluid</code>: Viscosity, pressure, velocity, and harmony</li>
+          <li><code>Rhythm</code>: Tempo, pattern, sync, and flow</li>
+          <li><code>Flow</code>: Direction, intensity, continuity, and harmonization</li>
+          <li><code>Movement</code>: Balance, coordination, efficiency, and resonance</li>
+        </ul>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      `;
+      
+      swimProgress = 0;
+      document.getElementById('progress-fill').style.width = '0%';
+      updateStatus('Cleared all swim');
+    }
+
+    // Randomize Swim
+    function randomizeSwim() {
+      // Randomize Fluid
+      document.getElementById('fluid-viscosity').value = Math.floor(Math.random() * 10);
+      document.getElementById('fluid-pressure').value = Math.floor(Math.random() * 10);
+      document.getElementById('fluid-velocity').value = Math.floor(Math.random() * 10);
+      document.getElementById('fluid-harmony').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Rhythm
+      document.getElementById('rhythm-tempo').value = Math.floor(Math.random() * 10);
+      document.getElementById('rhythm-pattern').value = Math.floor(Math.random() * 10);
+      document.getElementById('rhythm-sync').value = Math.floor(Math.random() * 10);
+      document.getElementById('rhythm-flow').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Flow
+      document.getElementById('flow-direction').value = Math.floor(Math.random() * 10);
+      document.getElementById('flow-intensity').value = Math.floor(Math.random() * 10);
+      document.getElementById('flow-continuity').value = Math.floor(Math.random() * 10);
+      document.getElementById('flow-harmonization').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Movement
+      document.getElementById('movement-balance').value = Math.floor(Math.random() * 10);
+      document.getElementById('movement-coordination').value = Math.floor(Math.random() * 10);
+      document.getElementById('movement-efficiency').value = Math.floor(Math.random() * 10);
+      document.getElementById('movement-resonance').value = Math.floor(Math.random() * 10);
+      
+      updateDisplayValues();
+      updateStatus('Randomized all swim parameters');
+    }
+
+    // Harmonize Swim
+    function harmonizeSwim() {
+      // Apply A432 harmonization
+      document.getElementById('fluid-viscosity').value = 5;
+      document.getElementById('fluid-pressure').value = 5;
+      document.getElementById('fluid-velocity').value = 5;
+      document.getElementById('fluid-harmony').value = 5;
+      
+      document.getElementById('rhythm-tempo').value = 5;
+      document.getElementById('rhythm-pattern').value = 5;
+      document.getElementById('rhythm-sync').value = 5;
+      document.getElementById('rhythm-flow').value = 5;
+      
+      document.getElementById('flow-direction').value = 5;
+      document.getElementById('flow-intensity').value = 5;
+      document.getElementById('flow-continuity').value = 5;
+      document.getElementById('flow-harmonization').value = 5;
+      
+      document.getElementById('movement-balance').value = 5;
+      document.getElementById('movement-coordination').value = 5;
+      document.getElementById('movement-efficiency').value = 5;
+      document.getElementById('movement-resonance').value = 5;
+      
+      updateDisplayValues();
+      updateStatus('Harmonized all swim with A432 system');
+    }
+
+    // Update Status
+    function updateStatus(message) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.classList.add('pulse');
+      setTimeout(() => status.classList.remove('pulse'), 2000);
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      const rangeInputs = document.querySelectorAll('input[type="range"]');
+      rangeInputs.forEach(input => {
+        input.addEventListener('input', updateDisplayValues);
+      });
+      
+      updateDisplayValues();
+      updateStatus('A432 Swim System Ready');
+    });
+
+    // Expose functions to global scope
+    window.swimAllSystems = swimAllSystems;
+    window.analyzeSwim = analyzeSwim;
+    window.clearAllSwim = clearAllSwim;
+    window.randomizeSwim = randomizeSwim;
+    window.harmonizeSwim = harmonizeSwim;
+    window.swimFluid = swimFluid;
+    window.swimRhythm = swimRhythm;
+    window.swimFlow = swimFlow;
+    window.swimMovement = swimMovement;
+  </script>
+</body>
+</html> 

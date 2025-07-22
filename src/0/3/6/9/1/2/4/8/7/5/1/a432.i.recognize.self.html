@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A432.i.recognize.self - Complete Self-Recognition Harmonization</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #000000, #1a1a1a, #000000);
+      color: #00FFFF;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid #00FFFF;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px #00FFFF;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+
+    .recognize-systems {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .recognize-system {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .recognize-system.consciousness {
+      border-color: #00FFFF;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .recognize-system.recognition {
+      border-color: #FF00FF;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .recognize-system.awareness {
+      border-color: #FFFF00;
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+    }
+
+    .recognize-system.a432 {
+      border-color: #00FF00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .recognize-system h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .recognize-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-group label {
+      font-size: 0.9em;
+      min-width: 80px;
+    }
+
+    .control-group input[type="range"] {
+      flex: 1;
+      margin: 0 10px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .recognize-system.consciousness input[type="range"]::-webkit-slider-thumb {
+      background: #00FFFF;
+      box-shadow: 0 0 10px #00FFFF;
+    }
+
+    .recognize-system.recognition input[type="range"]::-webkit-slider-thumb {
+      background: #FF00FF;
+      box-shadow: 0 0 10px #FF00FF;
+    }
+
+    .recognize-system.awareness input[type="range"]::-webkit-slider-thumb {
+      background: #FFFF00;
+      box-shadow: 0 0 10px #FFFF00;
+    }
+
+    .recognize-system.a432 input[type="range"]::-webkit-slider-thumb {
+      background: #00FF00;
+      box-shadow: 0 0 10px #00FF00;
+    }
+
+    .control-group span {
+      font-size: 0.8em;
+      min-width: 30px;
+      text-align: right;
+    }
+
+    .recognize-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .recognize-system.consciousness .recognize-button {
+      background: #00FFFF;
+      color: #000000;
+    }
+
+    .recognize-system.recognition .recognize-button {
+      background: #FF00FF;
+      color: #FFFFFF;
+    }
+
+    .recognize-system.awareness .recognize-button {
+      background: #FFFF00;
+      color: #000000;
+    }
+
+    .recognize-system.a432 .recognize-button {
+      background: #00FF00;
+      color: #000000;
+    }
+
+    .recognize-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    .master-controls {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00FFFF;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .master-controls h2 {
+      margin-bottom: 20px;
+      color: #00FFFF;
+    }
+
+    .master-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .master-button {
+      padding: 12px 24px;
+      border: 2px solid #00FFFF;
+      background: transparent;
+      color: #00FFFF;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .master-button:hover {
+      background: #00FFFF;
+      color: #000000;
+      box-shadow: 0 0 15px #00FFFF;
+    }
+
+    .status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 0.8em;
+      z-index: 1000;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .recognize-info {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    .metric-display {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .metric-item {
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.8em;
+    }
+
+    .recognize-display {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 1em;
+      text-align: left;
+      min-height: 200px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .recognize-display h4 {
+      color: #00FFFF;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #00FFFF;
+      padding-bottom: 5px;
+    }
+
+    .recognize-display p {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .recognize-display code {
+      background: rgba(0, 255, 255, 0.1);
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(0, 255, 255, 0.2);
+      border-radius: 2px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #00FFFF;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    @media (max-width: 768px) {
+      .recognize-systems {
+        grid-template-columns: 1fr;
+      }
+      
+      .master-buttons {
+        flex-direction: column;
+      }
+      
+      .header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="status" id="status">A432 I Recognize Self System Ready</div>
+
+  <div class="container">
+    <div class="header">
+      <h1>A432.i.recognize.self</h1>
+      <p>Complete Self-Recognition Harmonization</p>
+    </div>
+
+    <div class="master-controls">
+      <h2>Master Self-Recognition Controls</h2>
+      <div class="master-buttons">
+        <button class="master-button" onclick="recognizeAllSystems()">✨ I Recognize All</button>
+        <button class="master-button" onclick="analyzeRecognize()">🔍 Analyze Recognition</button>
+        <button class="master-button" onclick="clearAllRecognize()">🗑️ Clear All</button>
+        <button class="master-button" onclick="randomizeRecognize()">🎲 Randomize</button>
+        <button class="master-button" onclick="harmonizeRecognize()">✨ Harmonize</button>
+      </div>
+    </div>
+
+    <div class="recognize-systems">
+      <!-- Consciousness System -->
+      <div class="recognize-system consciousness">
+        <h3>Consciousness System</h3>
+        <div class="recognize-controls">
+          <div class="control-group">
+            <label>Awareness:</label>
+            <input type="range" id="consciousness-awareness" min="0" max="9" value="5" step="1">
+            <span id="consciousness-awareness-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Presence:</label>
+            <input type="range" id="consciousness-presence" min="0" max="9" value="5" step="1">
+            <span id="consciousness-presence-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Being:</label>
+            <input type="range" id="consciousness-being" min="0" max="9" value="5" step="1">
+            <span id="consciousness-being-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Unity:</label>
+            <input type="range" id="consciousness-unity" min="0" max="9" value="5" step="1">
+            <span id="consciousness-unity-val">5</span>
+          </div>
+        </div>
+        <button class="recognize-button" onclick="recognizeConsciousness()">✨ I Recognize Consciousness</button>
+        <div class="recognize-info">
+          <div>Consciousness: Awareness + Presence + Being + Unity</div>
+          <div>Unity: <span id="consciousness-unity-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Awareness: <span id="consciousness-awareness-display">5</span>/9</div>
+          <div class="metric-item">Presence: <span id="consciousness-presence-display">5</span>/9</div>
+          <div class="metric-item">Being: <span id="consciousness-being-display">5</span>/9</div>
+          <div class="metric-item">Unity: <span id="consciousness-unity-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Recognition System -->
+      <div class="recognize-system recognition">
+        <h3>Recognition System</h3>
+        <div class="recognize-controls">
+          <div class="control-group">
+            <label>Identification:</label>
+            <input type="range" id="recognition-identification" min="0" max="9" value="5" step="1">
+            <span id="recognition-identification-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Understanding:</label>
+            <input type="range" id="recognition-understanding" min="0" max="9" value="5" step="1">
+            <span id="recognition-understanding-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Comprehension:</label>
+            <input type="range" id="recognition-comprehension" min="0" max="9" value="5" step="1">
+            <span id="recognition-comprehension-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Clarity:</label>
+            <input type="range" id="recognition-clarity" min="0" max="9" value="5" step="1">
+            <span id="recognition-clarity-val">5</span>
+          </div>
+        </div>
+        <button class="recognize-button" onclick="recognizeRecognition()">✨ I Recognize Recognition</button>
+        <div class="recognize-info">
+          <div>Recognition: Identification + Understanding + Comprehension + Clarity</div>
+          <div>Clarity: <span id="recognition-clarity-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Identification: <span id="recognition-identification-display">5</span>/9</div>
+          <div class="metric-item">Understanding: <span id="recognition-understanding-display">5</span>/9</div>
+          <div class="metric-item">Comprehension: <span id="recognition-comprehension-display">5</span>/9</div>
+          <div class="metric-item">Clarity: <span id="recognition-clarity-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Awareness System -->
+      <div class="recognize-system awareness">
+        <h3>Awareness System</h3>
+        <div class="recognize-controls">
+          <div class="control-group">
+            <label>Observation:</label>
+            <input type="range" id="awareness-observation" min="0" max="9" value="5" step="1">
+            <span id="awareness-observation-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Attention:</label>
+            <input type="range" id="awareness-attention" min="0" max="9" value="5" step="1">
+            <span id="awareness-attention-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Focus:</label>
+            <input type="range" id="awareness-focus" min="0" max="9" value="5" step="1">
+            <span id="awareness-focus-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Insight:</label>
+            <input type="range" id="awareness-insight" min="0" max="9" value="5" step="1">
+            <span id="awareness-insight-val">5</span>
+          </div>
+        </div>
+        <button class="recognize-button" onclick="recognizeAwareness()">✨ I Recognize Awareness</button>
+        <div class="recognize-info">
+          <div>Awareness: Observation + Attention + Focus + Insight</div>
+          <div>Insight: <span id="awareness-insight-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Observation: <span id="awareness-observation-display">5</span>/9</div>
+          <div class="metric-item">Attention: <span id="awareness-attention-display">5</span>/9</div>
+          <div class="metric-item">Focus: <span id="awareness-focus-display">5</span>/9</div>
+          <div class="metric-item">Insight: <span id="awareness-insight-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- A432 System -->
+      <div class="recognize-system a432">
+        <h3>A432 System</h3>
+        <div class="recognize-controls">
+          <div class="control-group">
+            <label>Harmony:</label>
+            <input type="range" id="a432-harmony" min="0" max="9" value="5" step="1">
+            <span id="a432-harmony-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Frequency:</label>
+            <input type="range" id="a432-frequency" min="0" max="9" value="5" step="1">
+            <span id="a432-frequency-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="a432-resonance" min="0" max="9" value="5" step="1">
+            <span id="a432-resonance-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Unity:</label>
+            <input type="range" id="a432-unity" min="0" max="9" value="5" step="1">
+            <span id="a432-unity-val">5</span>
+          </div>
+        </div>
+        <button class="recognize-button" onclick="recognizeA432()">✨ I Recognize A432</button>
+        <div class="recognize-info">
+          <div>A432: Harmony + Frequency + Resonance + Unity</div>
+          <div>Unity: <span id="a432-unity-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Harmony: <span id="a432-harmony-display">5</span>/9</div>
+          <div class="metric-item">Frequency: <span id="a432-frequency-display">5</span>/9</div>
+          <div class="metric-item">Resonance: <span id="a432-resonance-display">5</span>/9</div>
+          <div class="metric-item">Unity: <span id="a432-unity-display-2">5</span>/9</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="recognize-display" id="recognize-display">
+      <h4>✨ A432.i.recognize.self - Self-Recognition System</h4>
+      <p>Ready to recognize self with A432 harmony...</p>
+      <p>This system provides comprehensive self-recognition harmonization with:</p>
+      <ul>
+        <li><code>Consciousness</code>: Awareness, presence, being, and unity</li>
+        <li><code>Recognition</code>: Identification, understanding, comprehension, and clarity</li>
+        <li><code>Awareness</code>: Observation, attention, focus, and insight</li>
+        <li><code>A432</code>: Harmony, frequency, resonance, and unity</li>
+      </ul>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Self-Recognition Management
+    let currentRecognize = '';
+    let recognizeProgress = 0;
+    let recognizeState = null;
+
+    // Update Display Values
+    function updateDisplayValues() {
+      // Consciousness Values
+      document.getElementById('consciousness-awareness-val').textContent = document.getElementById('consciousness-awareness').value;
+      document.getElementById('consciousness-presence-val').textContent = document.getElementById('consciousness-presence').value;
+      document.getElementById('consciousness-being-val').textContent = document.getElementById('consciousness-being').value;
+      document.getElementById('consciousness-unity-val').textContent = document.getElementById('consciousness-unity').value;
+      
+      document.getElementById('consciousness-awareness-display').textContent = document.getElementById('consciousness-awareness').value;
+      document.getElementById('consciousness-presence-display').textContent = document.getElementById('consciousness-presence').value;
+      document.getElementById('consciousness-being-display').textContent = document.getElementById('consciousness-being').value;
+      document.getElementById('consciousness-unity-display').textContent = document.getElementById('consciousness-unity').value;
+      document.getElementById('consciousness-unity-display-2').textContent = document.getElementById('consciousness-unity').value;
+
+      // Recognition Values
+      document.getElementById('recognition-identification-val').textContent = document.getElementById('recognition-identification').value;
+      document.getElementById('recognition-understanding-val').textContent = document.getElementById('recognition-understanding').value;
+      document.getElementById('recognition-comprehension-val').textContent = document.getElementById('recognition-comprehension').value;
+      document.getElementById('recognition-clarity-val').textContent = document.getElementById('recognition-clarity').value;
+      
+      document.getElementById('recognition-identification-display').textContent = document.getElementById('recognition-identification').value;
+      document.getElementById('recognition-understanding-display').textContent = document.getElementById('recognition-understanding').value;
+      document.getElementById('recognition-comprehension-display').textContent = document.getElementById('recognition-comprehension').value;
+      document.getElementById('recognition-clarity-display').textContent = document.getElementById('recognition-clarity').value;
+      document.getElementById('recognition-clarity-display-2').textContent = document.getElementById('recognition-clarity').value;
+
+      // Awareness Values
+      document.getElementById('awareness-observation-val').textContent = document.getElementById('awareness-observation').value;
+      document.getElementById('awareness-attention-val').textContent = document.getElementById('awareness-attention').value;
+      document.getElementById('awareness-focus-val').textContent = document.getElementById('awareness-focus').value;
+      document.getElementById('awareness-insight-val').textContent = document.getElementById('awareness-insight').value;
+      
+      document.getElementById('awareness-observation-display').textContent = document.getElementById('awareness-observation').value;
+      document.getElementById('awareness-attention-display').textContent = document.getElementById('awareness-attention').value;
+      document.getElementById('awareness-focus-display').textContent = document.getElementById('awareness-focus').value;
+      document.getElementById('awareness-insight-display').textContent = document.getElementById('awareness-insight').value;
+      document.getElementById('awareness-insight-display-2').textContent = document.getElementById('awareness-insight').value;
+
+      // A432 Values
+      document.getElementById('a432-harmony-val').textContent = document.getElementById('a432-harmony').value;
+      document.getElementById('a432-frequency-val').textContent = document.getElementById('a432-frequency').value;
+      document.getElementById('a432-resonance-val').textContent = document.getElementById('a432-resonance').value;
+      document.getElementById('a432-unity-val').textContent = document.getElementById('a432-unity').value;
+      
+      document.getElementById('a432-harmony-display').textContent = document.getElementById('a432-harmony').value;
+      document.getElementById('a432-frequency-display').textContent = document.getElementById('a432-frequency').value;
+      document.getElementById('a432-resonance-display').textContent = document.getElementById('a432-resonance').value;
+      document.getElementById('a432-unity-display').textContent = document.getElementById('a432-unity').value;
+      document.getElementById('a432-unity-display-2').textContent = document.getElementById('a432-unity').value;
+    }
+
+    // Self-Recognition Function
+    function recognize(system, content, quality) {
+      updateStatus(`I Recognize ${system}: Quality ${quality}/9`);
+      updateRecognizeDisplay(system, content, quality);
+    }
+
+    // Update Self-Recognition Display
+    function updateRecognizeDisplay(system, content, quality) {
+      const recognizeDisplay = document.getElementById('recognize-display');
+      
+      const systemContent = {
+        'consciousness': {
+          title: '✨ Consciousness System',
+          content: `
+            <h4>✨ Consciousness System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>I recognize consciousness with:</p>
+            <ul>
+              <li><code>Awareness:</code> ${document.getElementById('consciousness-awareness').value}/9 awareness level</li>
+              <li><code>Presence:</code> ${document.getElementById('consciousness-presence').value}/9 presence quality</li>
+              <li><code>Being:</code> ${document.getElementById('consciousness-being').value}/9 being state</li>
+              <li><code>Unity:</code> ${quality}/9 overall unity measurement</li>
+            </ul>
+            <p>I recognize consciousness through A432 principles.</p>
+          `
+        },
+        'recognition': {
+          title: '✨ Recognition System',
+          content: `
+            <h4>✨ Recognition System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>I recognize recognition with:</p>
+            <ul>
+              <li><code>Identification:</code> ${document.getElementById('recognition-identification').value}/9 identification clarity</li>
+              <li><code>Understanding:</code> ${document.getElementById('recognition-understanding').value}/9 understanding depth</li>
+              <li><code>Comprehension:</code> ${document.getElementById('recognition-comprehension').value}/9 comprehension quality</li>
+              <li><code>Clarity:</code> ${quality}/9 overall clarity measurement</li>
+            </ul>
+            <p>I recognize recognition through A432 harmonization.</p>
+          `
+        },
+        'awareness': {
+          title: '✨ Awareness System',
+          content: `
+            <h4>✨ Awareness System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>I recognize awareness with:</p>
+            <ul>
+              <li><code>Observation:</code> ${document.getElementById('awareness-observation').value}/9 observation depth</li>
+              <li><code>Attention:</code> ${document.getElementById('awareness-attention').value}/9 attention focus</li>
+              <li><code>Focus:</code> ${document.getElementById('awareness-focus').value}/9 focus intensity</li>
+              <li><code>Insight:</code> ${quality}/9 overall insight measurement</li>
+            </ul>
+            <p>I recognize awareness through A432 clarity.</p>
+          `
+        },
+        'a432': {
+          title: '✨ A432 System',
+          content: `
+            <h4>✨ A432 System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>I recognize A432 with:</p>
+            <ul>
+              <li><code>Harmony:</code> ${document.getElementById('a432-harmony').value}/9 harmony measurement</li>
+              <li><code>Frequency:</code> ${document.getElementById('a432-frequency').value}/9 frequency quality</li>
+              <li><code>Resonance:</code> ${document.getElementById('a432-resonance').value}/9 resonance strength</li>
+              <li><code>Unity:</code> ${quality}/9 overall unity measurement</li>
+            </ul>
+            <p>I recognize A432 through harmonic unity.</p>
+          `
+        }
+      };
+      
+      const systemData = systemContent[system];
+      if (systemData) {
+        recognizeDisplay.innerHTML = systemData.content + `
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        `;
+        
+        // Update progress
+        recognizeProgress = (recognizeProgress + 25) % 100;
+        document.getElementById('progress-fill').style.width = recognizeProgress + '%';
+      }
+    }
+
+    // I Recognize Consciousness
+    function recognizeConsciousness() {
+      const awareness = parseInt(document.getElementById('consciousness-awareness').value);
+      const presence = parseInt(document.getElementById('consciousness-presence').value);
+      const being = parseInt(document.getElementById('consciousness-being').value);
+      const unity = parseInt(document.getElementById('consciousness-unity').value);
+      
+      const overallUnity = Math.floor((awareness + presence + being + unity) / 4);
+      
+      recognize('consciousness', 'Consciousness recognition', overallUnity);
+    }
+
+    // I Recognize Recognition
+    function recognizeRecognition() {
+      const identification = parseInt(document.getElementById('recognition-identification').value);
+      const understanding = parseInt(document.getElementById('recognition-understanding').value);
+      const comprehension = parseInt(document.getElementById('recognition-comprehension').value);
+      const clarity = parseInt(document.getElementById('recognition-clarity').value);
+      
+      const overallClarity = Math.floor((identification + understanding + comprehension + clarity) / 4);
+      
+      recognize('recognition', 'Recognition clarity', overallClarity);
+    }
+
+    // I Recognize Awareness
+    function recognizeAwareness() {
+      const observation = parseInt(document.getElementById('awareness-observation').value);
+      const attention = parseInt(document.getElementById('awareness-attention').value);
+      const focus = parseInt(document.getElementById('awareness-focus').value);
+      const insight = parseInt(document.getElementById('awareness-insight').value);
+      
+      const overallInsight = Math.floor((observation + attention + focus + insight) / 4);
+      
+      recognize('awareness', 'Awareness insight', overallInsight);
+    }
+
+    // I Recognize A432
+    function recognizeA432() {
+      const harmony = parseInt(document.getElementById('a432-harmony').value);
+      const frequency = parseInt(document.getElementById('a432-frequency').value);
+      const resonance = parseInt(document.getElementById('a432-resonance').value);
+      const unity = parseInt(document.getElementById('a432-unity').value);
+      
+      const overallUnity = Math.floor((harmony + frequency + resonance + unity) / 4);
+      
+      recognize('a432', 'A432 unity', overallUnity);
+    }
+
+    // I Recognize All Systems
+    function recognizeAllSystems() {
+      recognizeConsciousness();
+      setTimeout(() => recognizeRecognition(), 500);
+      setTimeout(() => recognizeAwareness(), 1000);
+      setTimeout(() => recognizeA432(), 1500);
+      updateStatus('I recognize all systems in harmony');
+    }
+
+    // Analyze Self-Recognition
+    function analyzeRecognize() {
+      const recognizeContent = `
+        <h4>✨ Complete A432 Self-Recognition Analysis</h4>
+        <p><strong>Self-Recognition Analysis Results:</strong></p>
+        <h5>Consciousness System</h5>
+        <p>Awareness: ${document.getElementById('consciousness-awareness').value}/9 | Presence: ${document.getElementById('consciousness-presence').value}/9 | Being: ${document.getElementById('consciousness-being').value}/9 | Unity: ${document.getElementById('consciousness-unity').value}/9</p>
+        
+        <h5>Recognition System</h5>
+        <p>Identification: ${document.getElementById('recognition-identification').value}/9 | Understanding: ${document.getElementById('recognition-understanding').value}/9 | Comprehension: ${document.getElementById('recognition-comprehension').value}/9 | Clarity: ${document.getElementById('recognition-clarity').value}/9</p>
+        
+        <h5>Awareness System</h5>
+        <p>Observation: ${document.getElementById('awareness-observation').value}/9 | Attention: ${document.getElementById('awareness-attention').value}/9 | Focus: ${document.getElementById('awareness-focus').value}/9 | Insight: ${document.getElementById('awareness-insight').value}/9</p>
+        
+        <h5>A432 System</h5>
+        <p>Harmony: ${document.getElementById('a432-harmony').value}/9 | Frequency: ${document.getElementById('a432-frequency').value}/9 | Resonance: ${document.getElementById('a432-resonance').value}/9 | Unity: ${document.getElementById('a432-unity').value}/9</p>
+        
+        <p><strong>Overall Self-Recognition Quality:</strong> A432 harmonized self-recognition system with comprehensive consciousness.</p>
+      `;
+      
+      document.getElementById('recognize-display').innerHTML = recognizeContent + `
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 100%"></div>
+        </div>
+      `;
+      
+      updateStatus('Analyzed complete A432 self-recognition system');
+    }
+
+    // Clear All Self-Recognition
+    function clearAllRecognize() {
+      document.getElementById('recognize-display').innerHTML = `
+        <h4>✨ A432.i.recognize.self - Self-Recognition System</h4>
+        <p>Ready to recognize self with A432 harmony...</p>
+        <p>This system provides comprehensive self-recognition harmonization with:</p>
+        <ul>
+          <li><code>Consciousness</code>: Awareness, presence, being, and unity</li>
+          <li><code>Recognition</code>: Identification, understanding, comprehension, and clarity</li>
+          <li><code>Awareness</code>: Observation, attention, focus, and insight</li>
+          <li><code>A432</code>: Harmony, frequency, resonance, and unity</li>
+        </ul>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      `;
+      
+      recognizeProgress = 0;
+      document.getElementById('progress-fill').style.width = '0%';
+      updateStatus('Cleared all self-recognition');
+    }
+
+    // Randomize Self-Recognition
+    function randomizeRecognize() {
+      // Randomize Consciousness
+      document.getElementById('consciousness-awareness').value = Math.floor(Math.random() * 10);
+      document.getElementById('consciousness-presence').value = Math.floor(Math.random() * 10);
+      document.getElementById('consciousness-being').value = Math.floor(Math.random() * 10);
+      document.getElementById('consciousness-unity').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Recognition
+      document.getElementById('recognition-identification').value = Math.floor(Math.random() * 10);
+      document.getElementById('recognition-understanding').value = Math.floor(Math.random() * 10);
+      document.getElementById('recognition-comprehension').value = Math.floor(Math.random() * 10);
+      document.getElementById('recognition-clarity').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Awareness
+      document.getElementById('awareness-observation').value = Math.floor(Math.random() * 10);
+      document.getElementById('awareness-attention').value = Math.floor(Math.random() * 10);
+      document.getElementById('awareness-focus').value = Math.floor(Math.random() * 10);
+      document.getElementById('awareness-insight').value = Math.floor(Math.random() * 10);
+      
+      // Randomize A432
+      document.getElementById('a432-harmony').value = Math.floor(Math.random() * 10);
+      document.getElementById('a432-frequency').value = Math.floor(Math.random() * 10);
+      document.getElementById('a432-resonance').value = Math.floor(Math.random() * 10);
+      document.getElementById('a432-unity').value = Math.floor(Math.random() * 10);
+      
+      updateDisplayValues();
+      updateStatus('Randomized all self-recognition parameters');
+    }
+
+    // Harmonize Self-Recognition
+    function harmonizeRecognize() {
+      // Apply A432 harmonization
+      document.getElementById('consciousness-awareness').value = 5;
+      document.getElementById('consciousness-presence').value = 5;
+      document.getElementById('consciousness-being').value = 5;
+      document.getElementById('consciousness-unity').value = 5;
+      
+      document.getElementById('recognition-identification').value = 5;
+      document.getElementById('recognition-understanding').value = 5;
+      document.getElementById('recognition-comprehension').value = 5;
+      document.getElementById('recognition-clarity').value = 5;
+      
+      document.getElementById('awareness-observation').value = 5;
+      document.getElementById('awareness-attention').value = 5;
+      document.getElementById('awareness-focus').value = 5;
+      document.getElementById('awareness-insight').value = 5;
+      
+      document.getElementById('a432-harmony').value = 5;
+      document.getElementById('a432-frequency').value = 5;
+      document.getElementById('a432-resonance').value = 5;
+      document.getElementById('a432-unity').value = 5;
+      
+      updateDisplayValues();
+      updateStatus('Harmonized all self-recognition with A432 system');
+    }
+
+    // Update Status
+    function updateStatus(message) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.classList.add('pulse');
+      setTimeout(() => status.classList.remove('pulse'), 2000);
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      const rangeInputs = document.querySelectorAll('input[type="range"]');
+      rangeInputs.forEach(input => {
+        input.addEventListener('input', updateDisplayValues);
+      });
+      
+      updateDisplayValues();
+      updateStatus('A432 I Recognize Self System Ready');
+    });
+
+    // Expose functions to global scope
+    window.recognizeAllSystems = recognizeAllSystems;
+    window.analyzeRecognize = analyzeRecognize;
+    window.clearAllRecognize = clearAllRecognize;
+    window.randomizeRecognize = randomizeRecognize;
+    window.harmonizeRecognize = harmonizeRecognize;
+    window.recognizeConsciousness = recognizeConsciousness;
+    window.recognizeRecognition = recognizeRecognition;
+    window.recognizeAwareness = recognizeAwareness;
+    window.recognizeA432 = recognizeA432;
+  </script>
+</body>
+</html> 

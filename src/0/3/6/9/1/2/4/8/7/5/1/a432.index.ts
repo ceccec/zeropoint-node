@@ -16,6 +16,7 @@ export * from './a432.flow';
 export * from './a432.integration';
 export * from './a432.observation';
 export * from './a432.evolution';
+export * from './a432.documentation';
 
 import { initializeA432Harmonizer, harmonizeA432System } from './a432.harmonizer';
 import { a432ModuleRegistry } from './a432.modules';
@@ -27,6 +28,7 @@ import { registerA432FlowModules, harmonizeAllFlow } from './a432.flow';
 import { registerA432IntegrationModules, harmonizeAllIntegration } from './a432.integration';
 import { registerA432ObservationModules, harmonizeAllObservation } from './a432.observation';
 import { registerA432EvolutionModules, harmonizeAllEvolution } from './a432.evolution';
+import { registerA432DocumentationModules, harmonizeAllDocumentation } from './a432.documentation';
 
 // === A432 SYSTEM CLASS ===
 export class A432System {
@@ -56,6 +58,7 @@ export class A432System {
     registerA432IntegrationModules();
     registerA432ObservationModules();
     registerA432EvolutionModules();
+    registerA432DocumentationModules();
     
     this.initialized = true;
     console.log('A432 System initialized with expansion modules');
@@ -99,6 +102,10 @@ export class A432System {
 
   getEvolution(): any {
     return harmonizeAllEvolution();
+  }
+
+  getDocumentation(): any {
+    return harmonizeAllDocumentation();
   }
 
   getMeta(): string {
@@ -153,6 +160,10 @@ export const A432 = {
   
   evolution: {
     harmonize: () => a432.getEvolution()
+  },
+
+  documentation: {
+    harmonize: () => a432.getDocumentation()
   }
 };
 
@@ -160,7 +171,7 @@ export default A432;
 
 // === AUTO-INITIALIZATION ===
 if (typeof window !== 'undefined') {
-  window.addEventListener('DOMContentLoaded', () => {
+  (window as any).addEventListener('DOMContentLoaded', () => {
     a432.initialize();
   });
 } else {

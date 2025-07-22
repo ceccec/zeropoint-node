@@ -25,7 +25,8 @@ export type A432ModuleCategory =
   | 'transformation'    // NEW: State transformation modules
   | 'observation'       // NEW: Meta-observation and monitoring
   | 'healing'           // NEW: Healing and restoration modules
-  | 'evolution';        // NEW: Growth and evolution modules
+  | 'evolution'         // NEW: Growth and evolution modules
+  | 'documentation';    // NEW: Documentation and auto-generation modules
 
 // === MODULE INTERFACE ===
 export interface A432Module {

@@ -1,25 +1,37 @@
 /**
  * a432.index.ts — Main Entry Point
  * 
- * DRY-harmonized main entry point for the A432 system.
- * Exports all core functionality and provides a clean public API.
- * All modules are harmonized and accessible through this single interface.
+ * Main entry point for the A432 system.
+ * Exports all core functionality and provides clean public API.
+ * Auto-initialization for browser and Node.js environments.
  */
 
-// === CORE EXPORTS ===
 export * from './a432.core';
 export * from './a432.modules';
 export * from './a432.harmonizer';
+export * from './a432.balance';
+export * from './a432.resonance';
+export * from './a432.challenges';
+export * from './a432.flow';
+export * from './a432.integration';
+export * from './a432.observation';
+export * from './a432.evolution';
 
-// === SYSTEM INITIALIZATION ===
 import { initializeA432Harmonizer, harmonizeA432System } from './a432.harmonizer';
 import { a432ModuleRegistry } from './a432.modules';
 import { harmonizeA432Core, getA432CoreMeta } from './a432.core';
+import { registerA432BalanceModules, harmonizeAllBalance } from './a432.balance';
+import { registerA432ResonanceModules, harmonizeAllResonance } from './a432.resonance';
+import { registerA432ChallengeModules, harmonizeAllChallenges } from './a432.challenges';
+import { registerA432FlowModules, harmonizeAllFlow } from './a432.flow';
+import { registerA432IntegrationModules, harmonizeAllIntegration } from './a432.integration';
+import { registerA432ObservationModules, harmonizeAllObservation } from './a432.observation';
+import { registerA432EvolutionModules, harmonizeAllEvolution } from './a432.evolution';
 
-// === PUBLIC API ===
+// === A432 SYSTEM CLASS ===
 export class A432System {
   private static instance: A432System;
-  private initialized = false;
+  private initialized: boolean = false;
 
   private constructor() {}
 
@@ -30,89 +42,127 @@ export class A432System {
     return A432System.instance;
   }
 
-  // === INITIALIZATION ===
   initialize(): void {
     if (this.initialized) return;
     
+    // Initialize harmonizer
     initializeA432Harmonizer();
+    
+    // Register all expansion modules
+    registerA432BalanceModules();
+    registerA432ResonanceModules();
+    registerA432ChallengeModules();
+    registerA432FlowModules();
+    registerA432IntegrationModules();
+    registerA432ObservationModules();
+    registerA432EvolutionModules();
+    
     this.initialized = true;
+    console.log('A432 System initialized with expansion modules');
   }
 
-  // === CORE OPERATIONS ===
-  harmonize(strategy: 'sequential' | 'parallel' | 'dependency' | 'category' | 'recursive' | 'meta' = 'meta'): any {
-    this.initialize();
-    return harmonizeA432System(strategy);
+  harmonize(strategy: string = 'meta'): any {
+    return harmonizeA432System(strategy as any);
   }
 
   getCoreState(): any {
     return harmonizeA432Core();
   }
 
-  getCoreMeta(): string {
-    return getA432CoreMeta();
-  }
-
-  // === MODULE MANAGEMENT ===
   getModules(): any[] {
     return a432ModuleRegistry.getAllModules();
   }
 
-  getModulesByCategory(category: string): any[] {
-    return a432ModuleRegistry.getModulesByCategory(category as any);
+  getBalance(): any {
+    return harmonizeAllBalance();
   }
 
-  getModule(name: string): any {
-    return a432ModuleRegistry.getModule(name);
+  getResonance(): any {
+    return harmonizeAllResonance();
   }
 
-  // === STATISTICS ===
-  getStats(): any {
-    return a432ModuleRegistry.getModuleStats();
+  getChallenges(): any {
+    return harmonizeAllChallenges();
   }
 
-  // === UTILITIES ===
-  isInitialized(): boolean {
-    return this.initialized;
+  getFlow(): any {
+    return harmonizeAllFlow();
+  }
+
+  getIntegration(): any {
+    return harmonizeAllIntegration();
+  }
+
+  getObservation(): any {
+    return harmonizeAllObservation();
+  }
+
+  getEvolution(): any {
+    return harmonizeAllEvolution();
+  }
+
+  getMeta(): string {
+    return getA432CoreMeta();
   }
 }
 
-// === GLOBAL INSTANCE ===
+// === SINGLETON INSTANCE ===
 export const a432 = A432System.getInstance();
 
 // === CONVENIENCE EXPORTS ===
 export const A432 = {
   // Core functions
-  frequency: (dimension: number, polarity: 1 | -1 = 1) => import('./a432.core').then(m => m.a432Frequency(dimension, polarity)),
-  color: (root: number, polarity: 1 | -1 = 1) => import('./a432.core').then(m => m.a432HSLFromRoot(root, polarity)),
-  trinity: () => import('./a432.core').then(m => m.A432_TRINITY),
-  cycle: () => import('./a432.core').then(m => m.A432_CYCLE),
+  core: {
+    harmonize: harmonizeA432Core,
+    getMeta: getA432CoreMeta
+  },
   
   // System functions
-  harmonize: (strategy?: any) => a432.harmonize(strategy),
-  getState: () => a432.getCoreState(),
-  getMeta: () => a432.getCoreMeta(),
-  getModules: () => a432.getModules(),
-  getStats: () => a432.getStats(),
+  system: {
+    initialize: () => a432.initialize(),
+    harmonize: (strategy?: string) => a432.harmonize(strategy),
+    getCoreState: () => a432.getCoreState(),
+    getModules: () => a432.getModules(),
+    getMeta: () => a432.getMeta()
+  },
   
-  // Module functions
-  getModule: (name: string) => a432.getModule(name),
-  getModulesByCategory: (category: string) => a432.getModulesByCategory(category),
+  // Expansion modules
+  balance: {
+    harmonize: () => a432.getBalance()
+  },
   
-  // Utility functions
-  isInitialized: () => a432.isInitialized(),
-  initialize: () => a432.initialize()
+  resonance: {
+    harmonize: () => a432.getResonance()
+  },
+  
+  challenges: {
+    harmonize: () => a432.getChallenges()
+  },
+  
+  flow: {
+    harmonize: () => a432.getFlow()
+  },
+  
+  integration: {
+    harmonize: () => a432.getIntegration()
+  },
+  
+  observation: {
+    harmonize: () => a432.getObservation()
+  },
+  
+  evolution: {
+    harmonize: () => a432.getEvolution()
+  }
 };
 
-// === DEFAULT EXPORT ===
 export default A432;
 
 // === AUTO-INITIALIZATION ===
 if (typeof window !== 'undefined') {
-  // Browser environment - auto-initialize
   window.addEventListener('DOMContentLoaded', () => {
     a432.initialize();
   });
 } else {
-  // Node.js environment - auto-initialize
   a432.initialize();
 } 

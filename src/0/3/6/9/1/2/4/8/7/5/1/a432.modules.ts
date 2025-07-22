@@ -17,7 +17,15 @@ export type A432ModuleCategory =
   | 'visualization' 
   | 'interaction' 
   | 'system' 
-  | 'meta';
+  | 'meta'
+  | 'balance'           // NEW: Equilibrium and balance modules
+  | 'resonance'         // NEW: Frequency and resonance modules
+  | 'flow'              // NEW: Stream and flow modules
+  | 'integration'       // NEW: Cross-module integration
+  | 'transformation'    // NEW: State transformation modules
+  | 'observation'       // NEW: Meta-observation and monitoring
+  | 'healing'           // NEW: Healing and restoration modules
+  | 'evolution';        // NEW: Growth and evolution modules
 
 // === MODULE INTERFACE ===
 export interface A432Module {

@@ -16,7 +16,15 @@ export type HarmonizationStrategy =
   | 'dependency' 
   | 'category' 
   | 'recursive' 
-  | 'meta';
+  | 'meta'
+  | 'balance'           // NEW: Balance-based harmonization
+  | 'resonance'         // NEW: Frequency-based harmonization
+  | 'flow'              // NEW: Stream-based harmonization
+  | 'integration'       // NEW: Cross-category integration
+  | 'transformation'    // NEW: State transformation harmonization
+  | 'observation'       // NEW: Meta-observation harmonization
+  | 'healing'           // NEW: Healing-based harmonization
+  | 'evolution';        // NEW: Evolutionary harmonization
 
 export interface HarmonizationContext {
   strategy: HarmonizationStrategy;

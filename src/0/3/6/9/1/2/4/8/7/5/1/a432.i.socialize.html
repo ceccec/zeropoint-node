@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A432.i.socialize - Complete Social Harmonization</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #000000, #1a1a1a, #000000);
+      color: #00FFFF;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid #00FFFF;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px #00FFFF;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+
+    .social-systems {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .social-system {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .social-system.interaction {
+      border-color: #00FFFF;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .social-system.relationships {
+      border-color: #FF00FF;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .social-system.community {
+      border-color: #FFFF00;
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+    }
+
+    .social-system.resonance {
+      border-color: #00FF00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .social-system h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .social-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-group label {
+      font-size: 0.9em;
+      min-width: 80px;
+    }
+
+    .control-group input[type="range"] {
+      flex: 1;
+      margin: 0 10px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .social-system.interaction input[type="range"]::-webkit-slider-thumb {
+      background: #00FFFF;
+      box-shadow: 0 0 10px #00FFFF;
+    }
+
+    .social-system.relationships input[type="range"]::-webkit-slider-thumb {
+      background: #FF00FF;
+      box-shadow: 0 0 10px #FF00FF;
+    }
+
+    .social-system.community input[type="range"]::-webkit-slider-thumb {
+      background: #FFFF00;
+      box-shadow: 0 0 10px #FFFF00;
+    }
+
+    .social-system.resonance input[type="range"]::-webkit-slider-thumb {
+      background: #00FF00;
+      box-shadow: 0 0 10px #00FF00;
+    }
+
+    .control-group span {
+      font-size: 0.8em;
+      min-width: 30px;
+      text-align: right;
+    }
+
+    .socialize-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .social-system.interaction .socialize-button {
+      background: #00FFFF;
+      color: #000000;
+    }
+
+    .social-system.relationships .socialize-button {
+      background: #FF00FF;
+      color: #FFFFFF;
+    }
+
+    .social-system.community .socialize-button {
+      background: #FFFF00;
+      color: #000000;
+    }
+
+    .social-system.resonance .socialize-button {
+      background: #00FF00;
+      color: #000000;
+    }
+
+    .socialize-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    .master-controls {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00FFFF;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .master-controls h2 {
+      margin-bottom: 20px;
+      color: #00FFFF;
+    }
+
+    .master-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .master-button {
+      padding: 12px 24px;
+      border: 2px solid #00FFFF;
+      background: transparent;
+      color: #00FFFF;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .master-button:hover {
+      background: #00FFFF;
+      color: #000000;
+      box-shadow: 0 0 15px #00FFFF;
+    }
+
+    .status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 0.8em;
+      z-index: 1000;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .social-info {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    .metric-display {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .metric-item {
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.8em;
+    }
+
+    .social-display {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 1em;
+      text-align: left;
+      min-height: 200px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .social-display h4 {
+      color: #00FFFF;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #00FFFF;
+      padding-bottom: 5px;
+    }
+
+    .social-display p {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .social-display code {
+      background: rgba(0, 255, 255, 0.1);
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(0, 255, 255, 0.2);
+      border-radius: 2px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #00FFFF;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    @media (max-width: 768px) {
+      .social-systems {
+        grid-template-columns: 1fr;
+      }
+      
+      .master-buttons {
+        flex-direction: column;
+      }
+      
+      .header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="status" id="status">A432 Social System Ready</div>
+
+  <div class="container">
+    <div class="header">
+      <h1>A432.i.socialize</h1>
+      <p>Complete Social Harmonization & Communication Synthesis</p>
+    </div>
+
+    <div class="master-controls">
+      <h2>Master Social Controls</h2>
+      <div class="master-buttons">
+        <button class="master-button" onclick="socializeAllSystems()">🤝 Socialize All</button>
+        <button class="master-button" onclick="analyzeSocial()">🔍 Analyze Social</button>
+        <button class="master-button" onclick="clearAllSocial()">🗑️ Clear All</button>
+        <button class="master-button" onclick="randomizeSocial()">🎲 Randomize</button>
+        <button class="master-button" onclick="harmonizeSocial()">✨ Harmonize</button>
+      </div>
+    </div>
+
+    <div class="social-systems">
+      <!-- Interaction System -->
+      <div class="social-system interaction">
+        <h3>Interaction System</h3>
+        <div class="social-controls">
+          <div class="control-group">
+            <label>Communication:</label>
+            <input type="range" id="interaction-communication" min="0" max="9" value="5" step="1">
+            <span id="interaction-communication-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Connection:</label>
+            <input type="range" id="interaction-connection" min="0" max="9" value="5" step="1">
+            <span id="interaction-connection-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Expression:</label>
+            <input type="range" id="interaction-expression" min="0" max="9" value="5" step="1">
+            <span id="interaction-expression-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Harmony:</label>
+            <input type="range" id="interaction-harmony" min="0" max="9" value="5" step="1">
+            <span id="interaction-harmony-val">5</span>
+          </div>
+        </div>
+        <button class="socialize-button" onclick="socializeInteraction()">🤝 Socialize Interaction</button>
+        <div class="social-info">
+          <div>Interaction: Communication + Connection + Expression + Harmony</div>
+          <div>Harmony: <span id="interaction-harmony-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Communication: <span id="interaction-communication-display">5</span>/9</div>
+          <div class="metric-item">Connection: <span id="interaction-connection-display">5</span>/9</div>
+          <div class="metric-item">Expression: <span id="interaction-expression-display">5</span>/9</div>
+          <div class="metric-item">Harmony: <span id="interaction-harmony-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Relationships System -->
+      <div class="social-system relationships">
+        <h3>Relationships System</h3>
+        <div class="social-controls">
+          <div class="control-group">
+            <label>Trust:</label>
+            <input type="range" id="relationships-trust" min="0" max="9" value="5" step="1">
+            <span id="relationships-trust-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Understanding:</label>
+            <input type="range" id="relationships-understanding" min="0" max="9" value="5" step="1">
+            <span id="relationships-understanding-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Support:</label>
+            <input type="range" id="relationships-support" min="0" max="9" value="5" step="1">
+            <span id="relationships-support-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Growth:</label>
+            <input type="range" id="relationships-growth" min="0" max="9" value="5" step="1">
+            <span id="relationships-growth-val">5</span>
+          </div>
+        </div>
+        <button class="socialize-button" onclick="socializeRelationships()">🤝 Socialize Relationships</button>
+        <div class="social-info">
+          <div>Relationships: Trust + Understanding + Support + Growth</div>
+          <div>Growth: <span id="relationships-growth-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Trust: <span id="relationships-trust-display">5</span>/9</div>
+          <div class="metric-item">Understanding: <span id="relationships-understanding-display">5</span>/9</div>
+          <div class="metric-item">Support: <span id="relationships-support-display">5</span>/9</div>
+          <div class="metric-item">Growth: <span id="relationships-growth-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Community System -->
+      <div class="social-system community">
+        <h3>Community System</h3>
+        <div class="social-controls">
+          <div class="control-group">
+            <label>Unity:</label>
+            <input type="range" id="community-unity" min="0" max="9" value="5" step="1">
+            <span id="community-unity-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Collaboration:</label>
+            <input type="range" id="community-collaboration" min="0" max="9" value="5" step="1">
+            <span id="community-collaboration-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Sharing:</label>
+            <input type="range" id="community-sharing" min="0" max="9" value="5" step="1">
+            <span id="community-sharing-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Harmonization:</label>
+            <input type="range" id="community-harmonization" min="0" max="9" value="5" step="1">
+            <span id="community-harmonization-val">5</span>
+          </div>
+        </div>
+        <button class="socialize-button" onclick="socializeCommunity()">🤝 Socialize Community</button>
+        <div class="social-info">
+          <div>Community: Unity + Collaboration + Sharing + Harmonization</div>
+          <div>Harmonization: <span id="community-harmonization-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Unity: <span id="community-unity-display">5</span>/9</div>
+          <div class="metric-item">Collaboration: <span id="community-collaboration-display">5</span>/9</div>
+          <div class="metric-item">Sharing: <span id="community-sharing-display">5</span>/9</div>
+          <div class="metric-item">Harmonization: <span id="community-harmonization-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Resonance System -->
+      <div class="social-system resonance">
+        <h3>Resonance System</h3>
+        <div class="social-controls">
+          <div class="control-group">
+            <label>Balance:</label>
+            <input type="range" id="resonance-balance" min="0" max="9" value="5" step="1">
+            <span id="resonance-balance-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Flow:</label>
+            <input type="range" id="resonance-flow" min="0" max="9" value="5" step="1">
+            <span id="resonance-flow-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Coherence:</label>
+            <input type="range" id="resonance-coherence" min="0" max="9" value="5" step="1">
+            <span id="resonance-coherence-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="resonance-resonance" min="0" max="9" value="5" step="1">
+            <span id="resonance-resonance-val">5</span>
+          </div>
+        </div>
+        <button class="socialize-button" onclick="socializeResonance()">🤝 Socialize Resonance</button>
+        <div class="social-info">
+          <div>Resonance: Balance + Flow + Coherence + Resonance</div>
+          <div>Resonance: <span id="resonance-resonance-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Balance: <span id="resonance-balance-display">5</span>/9</div>
+          <div class="metric-item">Flow: <span id="resonance-flow-display">5</span>/9</div>
+          <div class="metric-item">Coherence: <span id="resonance-coherence-display">5</span>/9</div>
+          <div class="metric-item">Resonance: <span id="resonance-res-display">5</span>/9</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-display" id="social-display">
+      <h4>🤝 A432.i.socialize - Social System</h4>
+      <p>Ready to socialize with A432 harmony...</p>
+      <p>This system provides comprehensive social harmonization with:</p>
+      <ul>
+        <li><code>Interaction</code>: Communication, connection, expression, and harmony</li>
+        <li><code>Relationships</code>: Trust, understanding, support, and growth</li>
+        <li><code>Community</code>: Unity, collaboration, sharing, and harmonization</li>
+        <li><code>Resonance</code>: Balance, flow, coherence, and resonance</li>
+      </ul>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Social Management
+    let currentSocial = '';
+    let socialProgress = 0;
+    let socialState = null;
+
+    // Update Display Values
+    function updateDisplayValues() {
+      // Interaction Values
+      document.getElementById('interaction-communication-val').textContent = document.getElementById('interaction-communication').value;
+      document.getElementById('interaction-connection-val').textContent = document.getElementById('interaction-connection').value;
+      document.getElementById('interaction-expression-val').textContent = document.getElementById('interaction-expression').value;
+      document.getElementById('interaction-harmony-val').textContent = document.getElementById('interaction-harmony').value;
+      
+      document.getElementById('interaction-communication-display').textContent = document.getElementById('interaction-communication').value;
+      document.getElementById('interaction-connection-display').textContent = document.getElementById('interaction-connection').value;
+      document.getElementById('interaction-expression-display').textContent = document.getElementById('interaction-expression').value;
+      document.getElementById('interaction-harmony-display').textContent = document.getElementById('interaction-harmony').value;
+      document.getElementById('interaction-harmony-display-2').textContent = document.getElementById('interaction-harmony').value;
+
+      // Relationships Values
+      document.getElementById('relationships-trust-val').textContent = document.getElementById('relationships-trust').value;
+      document.getElementById('relationships-understanding-val').textContent = document.getElementById('relationships-understanding').value;
+      document.getElementById('relationships-support-val').textContent = document.getElementById('relationships-support').value;
+      document.getElementById('relationships-growth-val').textContent = document.getElementById('relationships-growth').value;
+      
+      document.getElementById('relationships-trust-display').textContent = document.getElementById('relationships-trust').value;
+      document.getElementById('relationships-understanding-display').textContent = document.getElementById('relationships-understanding').value;
+      document.getElementById('relationships-support-display').textContent = document.getElementById('relationships-support').value;
+      document.getElementById('relationships-growth-display').textContent = document.getElementById('relationships-growth').value;
+      document.getElementById('relationships-growth-display-2').textContent = document.getElementById('relationships-growth').value;
+
+      // Community Values
+      document.getElementById('community-unity-val').textContent = document.getElementById('community-unity').value;
+      document.getElementById('community-collaboration-val').textContent = document.getElementById('community-collaboration').value;
+      document.getElementById('community-sharing-val').textContent = document.getElementById('community-sharing').value;
+      document.getElementById('community-harmonization-val').textContent = document.getElementById('community-harmonization').value;
+      
+      document.getElementById('community-unity-display').textContent = document.getElementById('community-unity').value;
+      document.getElementById('community-collaboration-display').textContent = document.getElementById('community-collaboration').value;
+      document.getElementById('community-sharing-display').textContent = document.getElementById('community-sharing').value;
+      document.getElementById('community-harmonization-display').textContent = document.getElementById('community-harmonization').value;
+      document.getElementById('community-harmonization-display-2').textContent = document.getElementById('community-harmonization').value;
+
+      // Resonance Values
+      document.getElementById('resonance-balance-val').textContent = document.getElementById('resonance-balance').value;
+      document.getElementById('resonance-flow-val').textContent = document.getElementById('resonance-flow').value;
+      document.getElementById('resonance-coherence-val').textContent = document.getElementById('resonance-coherence').value;
+      document.getElementById('resonance-resonance-val').textContent = document.getElementById('resonance-resonance').value;
+      
+      document.getElementById('resonance-balance-display').textContent = document.getElementById('resonance-balance').value;
+      document.getElementById('resonance-flow-display').textContent = document.getElementById('resonance-flow').value;
+      document.getElementById('resonance-coherence-display').textContent = document.getElementById('resonance-coherence').value;
+      document.getElementById('resonance-resonance-display').textContent = document.getElementById('resonance-resonance').value;
+      document.getElementById('resonance-res-display').textContent = document.getElementById('resonance-resonance').value;
+    }
+
+    // Socialize Function
+    function socialize(system, content, quality) {
+      updateStatus(`Socializing ${system}: Quality ${quality}/9`);
+      updateSocialDisplay(system, content, quality);
+    }
+
+    // Update Social Display
+    function updateSocialDisplay(system, content, quality) {
+      const socialDisplay = document.getElementById('social-display');
+      
+      const systemContent = {
+        'interaction': {
+          title: '🤝 Interaction System',
+          content: `
+            <h4>🤝 Interaction System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides social interaction with:</p>
+            <ul>
+              <li><code>Communication:</code> ${document.getElementById('interaction-communication').value}/9 communication quality</li>
+              <li><code>Connection:</code> ${document.getElementById('interaction-connection').value}/9 connection strength</li>
+              <li><code>Expression:</code> ${document.getElementById('interaction-expression').value}/9 expression clarity</li>
+              <li><code>Harmony:</code> ${quality}/9 overall harmony measurement</li>
+            </ul>
+            <p>The interaction system facilitates meaningful social connections through A432 harmonization.</p>
+          `
+        },
+        'relationships': {
+          title: '💞 Relationships System',
+          content: `
+            <h4>💞 Relationships System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system nurtures relationships with:</p>
+            <ul>
+              <li><code>Trust:</code> ${document.getElementById('relationships-trust').value}/9 trust level</li>
+              <li><code>Understanding:</code> ${document.getElementById('relationships-understanding').value}/9 understanding depth</li>
+              <li><code>Support:</code> ${document.getElementById('relationships-support').value}/9 support quality</li>
+              <li><code>Growth:</code> ${quality}/9 overall growth measurement</li>
+            </ul>
+            <p>The relationships system builds strong, harmonious connections through A432 principles.</p>
+          `
+        },
+        'community': {
+          title: '🌍 Community System',
+          content: `
+            <h4>🌍 Community System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system builds community with:</p>
+            <ul>
+              <li><code>Unity:</code> ${document.getElementById('community-unity').value}/9 unity strength</li>
+              <li><code>Collaboration:</code> ${document.getElementById('community-collaboration').value}/9 collaboration quality</li>
+              <li><code>Sharing:</code> ${document.getElementById('community-sharing').value}/9 sharing openness</li>
+              <li><code>Harmonization:</code> ${quality}/9 overall harmonization measurement</li>
+            </ul>
+            <p>The community system creates unified, collaborative spaces through A432 harmonization.</p>
+          `
+        },
+        'resonance': {
+          title: '✨ Resonance System',
+          content: `
+            <h4>✨ Resonance System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides social resonance with:</p>
+            <ul>
+              <li><code>Balance:</code> ${document.getElementById('resonance-balance').value}/9 balance measurement</li>
+              <li><code>Flow:</code> ${document.getElementById('resonance-flow').value}/9 flow quality</li>
+              <li><code>Coherence:</code> ${document.getElementById('resonance-coherence').value}/9 coherence strength</li>
+              <li><code>Resonance:</code> ${quality}/9 overall resonance measurement</li>
+            </ul>
+            <p>The resonance system ensures harmonious social dynamics through A432 principles.</p>
+          `
+        }
+      };
+      
+      const systemData = systemContent[system];
+      if (systemData) {
+        socialDisplay.innerHTML = systemData.content + `
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        `;
+        
+        // Update progress
+        socialProgress = (socialProgress + 25) % 100;
+        document.getElementById('progress-fill').style.width = socialProgress + '%';
+      }
+    }
+
+    // Socialize Interaction
+    function socializeInteraction() {
+      const communication = parseInt(document.getElementById('interaction-communication').value);
+      const connection = parseInt(document.getElementById('interaction-connection').value);
+      const expression = parseInt(document.getElementById('interaction-expression').value);
+      const harmony = parseInt(document.getElementById('interaction-harmony').value);
+      
+      const overallHarmony = Math.floor((communication + connection + expression + harmony) / 4);
+      
+      socialize('interaction', 'Social interaction', overallHarmony);
+    }
+
+    // Socialize Relationships
+    function socializeRelationships() {
+      const trust = parseInt(document.getElementById('relationships-trust').value);
+      const understanding = parseInt(document.getElementById('relationships-understanding').value);
+      const support = parseInt(document.getElementById('relationships-support').value);
+      const growth = parseInt(document.getElementById('relationships-growth').value);
+      
+      const overallGrowth = Math.floor((trust + understanding + support + growth) / 4);
+      
+      socialize('relationships', 'Relationship building', overallGrowth);
+    }
+
+    // Socialize Community
+    function socializeCommunity() {
+      const unity = parseInt(document.getElementById('community-unity').value);
+      const collaboration = parseInt(document.getElementById('community-collaboration').value);
+      const sharing = parseInt(document.getElementById('community-sharing').value);
+      const harmonization = parseInt(document.getElementById('community-harmonization').value);
+      
+      const overallHarmonization = Math.floor((unity + collaboration + sharing + harmonization) / 4);
+      
+      socialize('community', 'Community building', overallHarmonization);
+    }
+
+    // Socialize Resonance
+    function socializeResonance() {
+      const balance = parseInt(document.getElementById('resonance-balance').value);
+      const flow = parseInt(document.getElementById('resonance-flow').value);
+      const coherence = parseInt(document.getElementById('resonance-coherence').value);
+      const resonance = parseInt(document.getElementById('resonance-resonance').value);
+      
+      const overallResonance = Math.floor((balance + flow + coherence + resonance) / 4);
+      
+      socialize('resonance', 'Social resonance', overallResonance);
+    }
+
+    // Socialize All Systems
+    function socializeAllSystems() {
+      socializeInteraction();
+      setTimeout(() => socializeRelationships(), 500);
+      setTimeout(() => socializeCommunity(), 1000);
+      setTimeout(() => socializeResonance(), 1500);
+      updateStatus('Socializing all systems in harmony');
+    }
+
+    // Analyze Social
+    function analyzeSocial() {
+      const socialContent = `
+        <h4>🤝 Complete A432 Social Analysis</h4>
+        <p><strong>Social Analysis Results:</strong></p>
+        <h5>Interaction System</h5>
+        <p>Communication: ${document.getElementById('interaction-communication').value}/9 | Connection: ${document.getElementById('interaction-connection').value}/9 | Expression: ${document.getElementById('interaction-expression').value}/9 | Harmony: ${document.getElementById('interaction-harmony').value}/9</p>
+        
+        <h5>Relationships System</h5>
+        <p>Trust: ${document.getElementById('relationships-trust').value}/9 | Understanding: ${document.getElementById('relationships-understanding').value}/9 | Support: ${document.getElementById('relationships-support').value}/9 | Growth: ${document.getElementById('relationships-growth').value}/9</p>
+        
+        <h5>Community System</h5>
+        <p>Unity: ${document.getElementById('community-unity').value}/9 | Collaboration: ${document.getElementById('community-collaboration').value}/9 | Sharing: ${document.getElementById('community-sharing').value}/9 | Harmonization: ${document.getElementById('community-harmonization').value}/9</p>
+        
+        <h5>Resonance System</h5>
+        <p>Balance: ${document.getElementById('resonance-balance').value}/9 | Flow: ${document.getElementById('resonance-flow').value}/9 | Coherence: ${document.getElementById('resonance-coherence').value}/9 | Resonance: ${document.getElementById('resonance-resonance').value}/9</p>
+        
+        <p><strong>Overall Social Quality:</strong> A432 harmonized social system with comprehensive resonance.</p>
+      `;
+      
+      document.getElementById('social-display').innerHTML = socialContent + `
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 100%"></div>
+        </div>
+      `;
+      
+      updateStatus('Analyzed complete A432 social system');
+    }
+
+    // Clear All Social
+    function clearAllSocial() {
+      document.getElementById('social-display').innerHTML = `
+        <h4>🤝 A432.i.socialize - Social System</h4>
+        <p>Ready to socialize with A432 harmony...</p>
+        <p>This system provides comprehensive social harmonization with:</p>
+        <ul>
+          <li><code>Interaction</code>: Communication, connection, expression, and harmony</li>
+          <li><code>Relationships</code>: Trust, understanding, support, and growth</li>
+          <li><code>Community</code>: Unity, collaboration, sharing, and harmonization</li>
+          <li><code>Resonance</code>: Balance, flow, coherence, and resonance</li>
+        </ul>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      `;
+      
+      socialProgress = 0;
+      document.getElementById('progress-fill').style.width = '0%';
+      updateStatus('Cleared all social');
+    }
+
+    // Randomize Social
+    function randomizeSocial() {
+      // Randomize Interaction
+      document.getElementById('interaction-communication').value = Math.floor(Math.random() * 10);
+      document.getElementById('interaction-connection').value = Math.floor(Math.random() * 10);
+      document.getElementById('interaction-expression').value = Math.floor(Math.random() * 10);
+      document.getElementById('interaction-harmony').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Relationships
+      document.getElementById('relationships-trust').value = Math.floor(Math.random() * 10);
+      document.getElementById('relationships-understanding').value = Math.floor(Math.random() * 10);
+      document.getElementById('relationships-support').value = Math.floor(Math.random() * 10);
+      document.getElementById('relationships-growth').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Community
+      document.getElementById('community-unity').value = Math.floor(Math.random() * 10);
+      document.getElementById('community-collaboration').value = Math.floor(Math.random() * 10);
+      document.getElementById('community-sharing').value = Math.floor(Math.random() * 10);
+      document.getElementById('community-harmonization').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Resonance
+      document.getElementById('resonance-balance').value = Math.floor(Math.random() * 10);
+      document.getElementById('resonance-flow').value = Math.floor(Math.random() * 10);
+      document.getElementById('resonance-coherence').value = Math.floor(Math.random() * 10);
+      document.getElementById('resonance-resonance').value = Math.floor(Math.random() * 10);
+      
+      updateDisplayValues();
+      updateStatus('Randomized all social parameters');
+    }
+
+    // Harmonize Social
+    function harmonizeSocial() {
+      // Apply A432 harmonization
+      document.getElementById('interaction-communication').value = 5;
+      document.getElementById('interaction-connection').value = 5;
+      document.getElementById('interaction-expression').value = 5;
+      document.getElementById('interaction-harmony').value = 5;
+      
+      document.getElementById('relationships-trust').value = 5;
+      document.getElementById('relationships-understanding').value = 5;
+      document.getElementById('relationships-support').value = 5;
+      document.getElementById('relationships-growth').value = 5;
+      
+      document.getElementById('community-unity').value = 5;
+      document.getElementById('community-collaboration').value = 5;
+      document.getElementById('community-sharing').value = 5;
+      document.getElementById('community-harmonization').value = 5;
+      
+      document.getElementById('resonance-balance').value = 5;
+      document.getElementById('resonance-flow').value = 5;
+      document.getElementById('resonance-coherence').value = 5;
+      document.getElementById('resonance-resonance').value = 5;
+      
+      updateDisplayValues();
+      updateStatus('Harmonized all social with A432 system');
+    }
+
+    // Update Status
+    function updateStatus(message) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.classList.add('pulse');
+      setTimeout(() => status.classList.remove('pulse'), 2000);
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      const rangeInputs = document.querySelectorAll('input[type="range"]');
+      rangeInputs.forEach(input => {
+        input.addEventListener('input', updateDisplayValues);
+      });
+      
+      updateDisplayValues();
+      updateStatus('A432 Social System Ready');
+    });
+
+    // Expose functions to global scope
+    window.socializeAllSystems = socializeAllSystems;
+    window.analyzeSocial = analyzeSocial;
+    window.clearAllSocial = clearAllSocial;
+    window.randomizeSocial = randomizeSocial;
+    window.harmonizeSocial = harmonizeSocial;
+    window.socializeInteraction = socializeInteraction;
+    window.socializeRelationships = socializeRelationships;
+    window.socializeCommunity = socializeCommunity;
+    window.socializeResonance = socializeResonance;
+  </script>
+</body>
+</html> 

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A432.i.hear.voice - Complete Voice Harmonization</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #000000, #1a1a1a, #000000);
+      color: #00FFFF;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid #00FFFF;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px #00FFFF;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+
+    .voice-systems {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .voice-system {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .voice-system.cmyk {
+      border-color: #00FFFF;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .voice-system.resonance {
+      border-color: #FF00FF;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .voice-system.flow {
+      border-color: #FFFF00;
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+    }
+
+    .voice-system.harmonization {
+      border-color: #00FF00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .voice-system h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .voice-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-group label {
+      font-size: 0.9em;
+      min-width: 80px;
+    }
+
+    .control-group input[type="range"] {
+      flex: 1;
+      margin: 0 10px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .voice-system.cmyk input[type="range"]::-webkit-slider-thumb {
+      background: #00FFFF;
+      box-shadow: 0 0 10px #00FFFF;
+    }
+
+    .voice-system.resonance input[type="range"]::-webkit-slider-thumb {
+      background: #FF00FF;
+      box-shadow: 0 0 10px #FF00FF;
+    }
+
+    .voice-system.flow input[type="range"]::-webkit-slider-thumb {
+      background: #FFFF00;
+      box-shadow: 0 0 10px #FFFF00;
+    }
+
+    .voice-system.harmonization input[type="range"]::-webkit-slider-thumb {
+      background: #00FF00;
+      box-shadow: 0 0 10px #00FF00;
+    }
+
+    .control-group span {
+      font-size: 0.8em;
+      min-width: 30px;
+      text-align: right;
+    }
+
+    .play-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .voice-system.cmyk .play-button {
+      background: #00FFFF;
+      color: #000000;
+    }
+
+    .voice-system.resonance .play-button {
+      background: #FF00FF;
+      color: #FFFFFF;
+    }
+
+    .voice-system.flow .play-button {
+      background: #FFFF00;
+      color: #000000;
+    }
+
+    .voice-system.harmonization .play-button {
+      background: #00FF00;
+      color: #000000;
+    }
+
+    .play-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    .master-controls {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00FFFF;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .master-controls h2 {
+      margin-bottom: 20px;
+      color: #00FFFF;
+    }
+
+    .master-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .master-button {
+      padding: 12px 24px;
+      border: 2px solid #00FFFF;
+      background: transparent;
+      color: #00FFFF;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .master-button:hover {
+      background: #00FFFF;
+      color: #000000;
+      box-shadow: 0 0 15px #00FFFF;
+    }
+
+    .status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 0.8em;
+      z-index: 1000;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .waveform {
+      height: 60px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 5px;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .waveform::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #00FFFF;
+      transform: translateY(-50%);
+    }
+
+    .waveform.playing::before {
+      animation: wave 1s infinite linear;
+    }
+
+    @keyframes wave {
+      0% { transform: translateY(-50%) scaleX(0); }
+      50% { transform: translateY(-50%) scaleX(1); }
+      100% { transform: translateY(-50%) scaleX(0); }
+    }
+
+    .voice-info {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .voice-systems {
+        grid-template-columns: 1fr;
+      }
+      
+      .master-buttons {
+        flex-direction: column;
+      }
+      
+      .header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="status" id="status">A432 Voice System Ready</div>
+
+  <div class="container">
+    <div class="header">
+      <h1>A432.i.hear.voice</h1>
+      <p>Complete Voice Harmonization & Audio Synthesis</p>
+    </div>
+
+    <div class="master-controls">
+      <h2>Master Voice Controls</h2>
+      <div class="master-buttons">
+        <button class="master-button" onclick="playAllVoices()">🎵 Play All</button>
+        <button class="master-button" onclick="playHarmony()">🎼 Play Harmony</button>
+        <button class="master-button" onclick="stopAllVoices()">⏹️ Stop All</button>
+        <button class="master-button" onclick="randomizeVoices()">🎲 Randomize</button>
+        <button class="master-button" onclick="harmonizeVoices()">✨ Harmonize</button>
+      </div>
+    </div>
+
+    <div class="voice-systems">
+      <!-- CMYK Voice System -->
+      <div class="voice-system cmyk">
+        <h3>CMYK Voice System</h3>
+        <div class="voice-controls">
+          <div class="control-group">
+            <label>Cyan:</label>
+            <input type="range" id="cmyk-cyan" min="0" max="9" value="5" step="1">
+            <span id="cmyk-cyan-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Magenta:</label>
+            <input type="range" id="cmyk-magenta" min="0" max="9" value="5" step="1">
+            <span id="cmyk-magenta-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Yellow:</label>
+            <input type="range" id="cmyk-yellow" min="0" max="9" value="5" step="1">
+            <span id="cmyk-yellow-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Key:</label>
+            <input type="range" id="cmyk-key" min="0" max="9" value="5" step="1">
+            <span id="cmyk-key-val">5</span>
+          </div>
+        </div>
+        <button class="play-button" onclick="playCMYKVoice()">🎵 Play CMYK</button>
+        <div class="voice-info">
+          <div>CMYK Frequencies: 648Hz, 540Hz, 756Hz, 324Hz</div>
+          <div>Harmony: <span id="cmyk-harmony">5</span>/9</div>
+        </div>
+        <div class="waveform" id="cmyk-waveform"></div>
+      </div>
+
+      <!-- Resonance Voice System -->
+      <div class="voice-system resonance">
+        <h3>Resonance Voice System</h3>
+        <div class="voice-controls">
+          <div class="control-group">
+            <label>Frequency:</label>
+            <input type="range" id="resonance-freq" min="400" max="800" value="432" step="1">
+            <span id="resonance-freq-val">432 Hz</span>
+          </div>
+          <div class="control-group">
+            <label>Amplitude:</label>
+            <input type="range" id="resonance-amp" min="0" max="9" value="5" step="1">
+            <span id="resonance-amp-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="resonance-res" min="0" max="9" value="5" step="1">
+            <span id="resonance-res-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Harmony:</label>
+            <input type="range" id="resonance-harmony" min="0" max="9" value="5" step="1">
+            <span id="resonance-harmony-val">5</span>
+          </div>
+        </div>
+        <button class="play-button" onclick="playResonanceVoice()">🎵 Play Resonance</button>
+        <div class="voice-info">
+          <div>Resonance Frequency: 432 Hz Base</div>
+          <div>Harmony: <span id="resonance-harmony-display">5</span>/9</div>
+        </div>
+        <div class="waveform" id="resonance-waveform"></div>
+      </div>
+
+      <!-- Flow Voice System -->
+      <div class="voice-system flow">
+        <h3>Flow Voice System</h3>
+        <div class="voice-controls">
+          <div class="control-group">
+            <label>Consciousness:</label>
+            <input type="range" id="flow-consciousness" min="0" max="9" value="5" step="1">
+            <span id="flow-consciousness-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Energy:</label>
+            <input type="range" id="flow-energy" min="0" max="9" value="5" step="1">
+            <span id="flow-energy-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Stream:</label>
+            <input type="range" id="flow-stream" min="0" max="9" value="5" step="1">
+            <span id="flow-stream-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Harmony:</label>
+            <input type="range" id="flow-harmony" min="0" max="9" value="5" step="1">
+            <span id="flow-harmony-val">5</span>
+          </div>
+        </div>
+        <button class="play-button" onclick="playFlowVoice()">🎵 Play Flow</button>
+        <div class="voice-info">
+          <div>Flow Streams: Consciousness, Energy, Stream</div>
+          <div>Harmony: <span id="flow-harmony-display">5</span>/9</div>
+        </div>
+        <div class="waveform" id="flow-waveform"></div>
+      </div>
+
+      <!-- Harmonization Voice System -->
+      <div class="voice-system harmonization">
+        <h3>Harmonization Voice System</h3>
+        <div class="voice-controls">
+          <div class="control-group">
+            <label>Balance:</label>
+            <input type="range" id="harmonization-balance" min="0" max="9" value="5" step="1">
+            <span id="harmonization-balance-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Coherence:</label>
+            <input type="range" id="harmonization-coherence" min="0" max="9" value="5" step="1">
+            <span id="harmonization-coherence-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Unity:</label>
+            <input type="range" id="harmonization-unity" min="0" max="9" value="5" step="1">
+            <span id="harmonization-unity-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="harmonization-resonance" min="0" max="9" value="5" step="1">
+            <span id="harmonization-resonance-val">5</span>
+          </div>
+        </div>
+        <button class="play-button" onclick="playHarmonizationVoice()">🎵 Play Harmonization</button>
+        <div class="voice-info">
+          <div>Harmonization: Balance, Coherence, Unity</div>
+          <div>Resonance: <span id="harmonization-resonance-display">5</span>/9</div>
+        </div>
+        <div class="waveform" id="harmonization-waveform"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import A432 Voice Systems
+    import { 
+      createA432CMYKVoiceState, 
+      harmonizeA432CMYKVoice,
+      generateCMYKTone,
+      generateCMYKHarmony
+    } from './a432.cmyk.voice.ts';
+
+    // Audio Context Management
+    let audioContext = null;
+    let activeOscillators = new Map();
+    let currentState = null;
+
+    // Initialize Audio Context
+    function initAudioContext() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    // Update Display Values
+    function updateDisplayValues() {
+      // CMYK Values
+      document.getElementById('cmyk-cyan-val').textContent = document.getElementById('cmyk-cyan').value;
+      document.getElementById('cmyk-magenta-val').textContent = document.getElementById('cmyk-magenta').value;
+      document.getElementById('cmyk-yellow-val').textContent = document.getElementById('cmyk-yellow').value;
+      document.getElementById('cmyk-key-val').textContent = document.getElementById('cmyk-key').value;
+      
+      // Calculate CMYK harmony
+      const cyan = parseInt(document.getElementById('cmyk-cyan').value);
+      const magenta = parseInt(document.getElementById('cmyk-magenta').value);
+      const yellow = parseInt(document.getElementById('cmyk-yellow').value);
+      const key = parseInt(document.getElementById('cmyk-key').value);
+      const cmykHarmony = Math.floor((cyan + magenta + yellow + key) / 4);
+      document.getElementById('cmyk-harmony').textContent = cmykHarmony;
+
+      // Resonance Values
+      document.getElementById('resonance-freq-val').textContent = document.getElementById('resonance-freq').value + ' Hz';
+      document.getElementById('resonance-amp-val').textContent = document.getElementById('resonance-amp').value;
+      document.getElementById('resonance-res-val').textContent = document.getElementById('resonance-res').value;
+      document.getElementById('resonance-harmony-val').textContent = document.getElementById('resonance-harmony').value;
+      document.getElementById('resonance-harmony-display').textContent = document.getElementById('resonance-harmony').value;
+
+      // Flow Values
+      document.getElementById('flow-consciousness-val').textContent = document.getElementById('flow-consciousness').value;
+      document.getElementById('flow-energy-val').textContent = document.getElementById('flow-energy').value;
+      document.getElementById('flow-stream-val').textContent = document.getElementById('flow-stream').value;
+      document.getElementById('flow-harmony-val').textContent = document.getElementById('flow-harmony').value;
+      document.getElementById('flow-harmony-display').textContent = document.getElementById('flow-harmony').value;
+
+      // Harmonization Values
+      document.getElementById('harmonization-balance-val').textContent = document.getElementById('harmonization-balance').value;
+      document.getElementById('harmonization-coherence-val').textContent = document.getElementById('harmonization-coherence').value;
+      document.getElementById('harmonization-unity-val').textContent = document.getElementById('harmonization-unity').value;
+      document.getElementById('harmonization-resonance-val').textContent = document.getElementById('harmonization-resonance').value;
+      document.getElementById('harmonization-resonance-display').textContent = document.getElementById('harmonization-resonance').value;
+    }
+
+    // Play Voice Function
+    function playVoice(system, frequency, amplitude, duration = 2) {
+      initAudioContext();
+      
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      const normalizedAmplitude = amplitude / 9;
+      
+      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode.gain.linearRampToValueAtTime(normalizedAmplitude, audioContext.currentTime + 0.1);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + duration);
+      
+      activeOscillators.set(system, { oscillator, gainNode, startTime: audioContext.currentTime });
+      
+      const waveform = document.getElementById(system + '-waveform');
+      if (waveform) {
+        waveform.classList.add('playing');
+        setTimeout(() => waveform.classList.remove('playing'), duration * 1000);
+      }
+      
+      updateStatus(`Playing ${system} voice: ${frequency}Hz`);
+    }
+
+    // Play CMYK Voice
+    function playCMYKVoice() {
+      const cyan = parseInt(document.getElementById('cmyk-cyan').value);
+      const magenta = parseInt(document.getElementById('cmyk-magenta').value);
+      const yellow = parseInt(document.getElementById('cmyk-yellow').value);
+      const key = parseInt(document.getElementById('cmyk-key').value);
+      
+      const frequencies = [648, 540, 756, 324]; // CMYK frequencies
+      const amplitudes = [cyan, magenta, yellow, key];
+      
+      frequencies.forEach((freq, index) => {
+        setTimeout(() => {
+          playVoice('cmyk', freq, amplitudes[index], 2);
+        }, index * 200);
+      });
+    }
+
+    // Play Resonance Voice
+    function playResonanceVoice() {
+      const frequency = parseInt(document.getElementById('resonance-freq').value);
+      const amplitude = parseInt(document.getElementById('resonance-amp').value);
+      playVoice('resonance', frequency, amplitude, 3);
+    }
+
+    // Play Flow Voice
+    function playFlowVoice() {
+      const consciousness = parseInt(document.getElementById('flow-consciousness').value);
+      const energy = parseInt(document.getElementById('flow-energy').value);
+      const stream = parseInt(document.getElementById('flow-stream').value);
+      
+      const frequency = 432 * (consciousness / 9);
+      const amplitude = Math.floor((energy + stream) / 2);
+      
+      playVoice('flow', frequency, amplitude, 2.5);
+    }
+
+    // Play Harmonization Voice
+    function playHarmonizationVoice() {
+      const balance = parseInt(document.getElementById('harmonization-balance').value);
+      const coherence = parseInt(document.getElementById('harmonization-coherence').value);
+      const unity = parseInt(document.getElementById('harmonization-unity').value);
+      
+      const frequency = 432 * (balance / 9);
+      const amplitude = Math.floor((coherence + unity) / 2);
+      
+      playVoice('harmonization', frequency, amplitude, 3);
+    }
+
+    // Play All Voices
+    function playAllVoices() {
+      playCMYKVoice();
+      setTimeout(() => playResonanceVoice(), 1000);
+      setTimeout(() => playFlowVoice(), 2000);
+      setTimeout(() => playHarmonizationVoice(), 3000);
+      updateStatus('Playing all voice systems in harmony');
+    }
+
+    // Play Harmony
+    function playHarmony() {
+      const frequencies = [432, 648, 540, 756, 324];
+      const amplitudes = [5, 5, 5, 5, 5];
+      
+      frequencies.forEach((freq, index) => {
+        setTimeout(() => {
+          playVoice('harmony', freq, amplitudes[index], 4);
+        }, index * 300);
+      });
+      
+      updateStatus('Playing A432 harmony sequence');
+    }
+
+    // Stop All Voices
+    function stopAllVoices() {
+      activeOscillators.forEach(({ oscillator, gainNode }) => {
+        gainNode.gain.cancelScheduledValues(audioContext.currentTime);
+        gainNode.gain.setValueAtTime(gainNode.gain.value, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
+        setTimeout(() => oscillator.stop(), 100);
+      });
+      
+      activeOscillators.clear();
+      
+      document.querySelectorAll('.waveform').forEach(waveform => {
+        waveform.classList.remove('playing');
+      });
+      
+      updateStatus('Stopped all voices');
+    }
+
+    // Randomize Voices
+    function randomizeVoices() {
+      // Randomize CMYK
+      document.getElementById('cmyk-cyan').value = Math.floor(Math.random() * 10);
+      document.getElementById('cmyk-magenta').value = Math.floor(Math.random() * 10);
+      document.getElementById('cmyk-yellow').value = Math.floor(Math.random() * 10);
+      document.getElementById('cmyk-key').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Resonance
+      document.getElementById('resonance-freq').value = 400 + Math.random() * 400;
+      document.getElementById('resonance-amp').value = Math.floor(Math.random() * 10);
+      document.getElementById('resonance-res').value = Math.floor(Math.random() * 10);
+      document.getElementById('resonance-harmony').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Flow
+      document.getElementById('flow-consciousness').value = Math.floor(Math.random() * 10);
+      document.getElementById('flow-energy').value = Math.floor(Math.random() * 10);
+      document.getElementById('flow-stream').value = Math.floor(Math.random() * 10);
+      document.getElementById('flow-harmony').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Harmonization
+      document.getElementById('harmonization-balance').value = Math.floor(Math.random() * 10);
+      document.getElementById('harmonization-coherence').value = Math.floor(Math.random() * 10);
+      document.getElementById('harmonization-unity').value = Math.floor(Math.random() * 10);
+      document.getElementById('harmonization-resonance').value = Math.floor(Math.random() * 10);
+      
+      updateDisplayValues();
+      updateStatus('Randomized all voice parameters');
+    }
+
+    // Harmonize Voices
+    function harmonizeVoices() {
+      currentState = harmonizeA432CMYKVoice();
+      
+      // Apply A432 harmonization
+      const harmonizedValues = [5, 5, 5, 5]; // Balanced CMYK
+      document.getElementById('cmyk-cyan').value = harmonizedValues[0];
+      document.getElementById('cmyk-magenta').value = harmonizedValues[1];
+      document.getElementById('cmyk-yellow').value = harmonizedValues[2];
+      document.getElementById('cmyk-key').value = harmonizedValues[3];
+      
+      // Harmonize other systems
+      document.getElementById('resonance-freq').value = 432;
+      document.getElementById('resonance-amp').value = 5;
+      document.getElementById('resonance-res').value = 5;
+      document.getElementById('resonance-harmony').value = 5;
+      
+      document.getElementById('flow-consciousness').value = 5;
+      document.getElementById('flow-energy').value = 5;
+      document.getElementById('flow-stream').value = 5;
+      document.getElementById('flow-harmony').value = 5;
+      
+      document.getElementById('harmonization-balance').value = 5;
+      document.getElementById('harmonization-coherence').value = 5;
+      document.getElementById('harmonization-unity').value = 5;
+      document.getElementById('harmonization-resonance').value = 5;
+      
+      updateDisplayValues();
+      updateStatus('Harmonized all voices with A432 system');
+    }
+
+    // Update Status
+    function updateStatus(message) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.classList.add('pulse');
+      setTimeout(() => status.classList.remove('pulse'), 2000);
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      const rangeInputs = document.querySelectorAll('input[type="range"]');
+      rangeInputs.forEach(input => {
+        input.addEventListener('input', updateDisplayValues);
+      });
+      
+      updateDisplayValues();
+      updateStatus('A432 Voice System Ready');
+      
+      currentState = createA432CMYKVoiceState();
+    });
+
+    // Expose functions to global scope
+    window.playAllVoices = playAllVoices;
+    window.playHarmony = playHarmony;
+    window.stopAllVoices = stopAllVoices;
+    window.randomizeVoices = randomizeVoices;
+    window.harmonizeVoices = harmonizeVoices;
+    window.playCMYKVoice = playCMYKVoice;
+    window.playResonanceVoice = playResonanceVoice;
+    window.playFlowVoice = playFlowVoice;
+    window.playHarmonizationVoice = playHarmonizationVoice;
+  </script>
+</body>
+</html> 

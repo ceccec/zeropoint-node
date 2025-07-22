@@ -17,6 +17,7 @@ export * from './a432.integration';
 export * from './a432.observation';
 export * from './a432.evolution';
 export * from './a432.documentation';
+export * from './a432.innovation';
 
 import { initializeA432Harmonizer, harmonizeA432System } from './a432.harmonizer';
 import { a432ModuleRegistry } from './a432.modules';
@@ -29,6 +30,7 @@ import { registerA432IntegrationModules, harmonizeAllIntegration } from './a432.
 import { registerA432ObservationModules, harmonizeAllObservation } from './a432.observation';
 import { registerA432EvolutionModules, harmonizeAllEvolution } from './a432.evolution';
 import { registerA432DocumentationModules, harmonizeAllDocumentation } from './a432.documentation';
+import { registerA432InnovationModules, harmonizeAllInnovation } from './a432.innovation';
 
 // === A432 SYSTEM CLASS ===
 export class A432System {
@@ -59,6 +61,7 @@ export class A432System {
     registerA432ObservationModules();
     registerA432EvolutionModules();
     registerA432DocumentationModules();
+    registerA432InnovationModules();
     
     this.initialized = true;
     console.log('A432 System initialized with expansion modules');
@@ -106,6 +109,10 @@ export class A432System {
 
   getDocumentation(): any {
     return harmonizeAllDocumentation();
+  }
+
+  getInnovation(): any {
+    return harmonizeAllInnovation();
   }
 
   getMeta(): string {
@@ -164,6 +171,10 @@ export const A432 = {
 
   documentation: {
     harmonize: () => a432.getDocumentation()
+  },
+
+  innovation: {
+    harmonize: () => a432.getInnovation()
   }
 };
 

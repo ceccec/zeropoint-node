@@ -349,3 +349,47 @@ export const A432VibrationSystem = {
 };
 
 export default A432VibrationSystem; 
+
+// a432.vibration.ts
+// Living, harmonized vibration stream/interface
+
+export interface VibrationEvent {
+  id: number;
+  frequency: number;
+  amplitude: number;
+  trinity: number;
+  timestamp: number;
+  summary: string;
+}
+
+export class A432VibrationStream {
+  private events: VibrationEvent[] = [];
+  private currentId = 1;
+  vibrate(frequency: number, amplitude: number, trinity: number): VibrationEvent {
+    const event: VibrationEvent = {
+      id: this.currentId++,
+      frequency,
+      amplitude,
+      trinity,
+      timestamp: Date.now(),
+      summary: `Vibration ${frequency} Hz, Amp ${amplitude} (Trinity ${trinity}) at ${new Date().toLocaleTimeString()}`
+    };
+    this.events.push(event);
+    return event;
+  }
+  getCurrent(): VibrationEvent {
+    return this.events[this.events.length - 1];
+  }
+  getAll(): VibrationEvent[] {
+    return this.events;
+  }
+  overlay(): string {
+    const width = 320, height = 60;
+    return `
+      <svg width="${width}" height="${height}" style="background:#111;border-radius:12px;">
+        ${this.events.map((e,i) => `<rect x="${40 + i*36}" y="${30-e.amplitude}" width="24" height="${e.amplitude*2}" fill="#f8f" stroke="#fff" stroke-width="2"><title>${e.summary}</title></rect>`).join('')}
+        <text x="12" y="54" font-size="13" fill="#8ff">Vibration Stream</text>
+      </svg>
+    `;
+  }
+} 

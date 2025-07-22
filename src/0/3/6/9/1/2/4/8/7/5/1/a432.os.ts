@@ -19,6 +19,8 @@ import {
 } from './a432';
 import * as fs from 'fs';
 import * as path from 'path';
+import { a432TrinityStream } from './a432.trinity';
+import { iTrinityJourney } from './a432.i.trinity';
 
 export interface A432OSState {
   dimension: number;
@@ -236,3 +238,22 @@ export const OS_DOC = {
   axis: 'The OS is the observer, the self-aware system, the consciousness of the matrix.'
 };
 // All math in this module uses only vortex/trinity numbers and harmonic integer fractions. 
+
+// === Trinity Agent/OS Integration for Terminal ===
+export function createTrinityAgent(id: string, trinityStart: number = 3, familyStart: number = 1) {
+  const journey = iTrinityJourney(12, trinityStart, familyStart);
+  return {
+    id,
+    journey,
+    observe: () => journey.map(s => s.metaphysical).join('\n'),
+    shift: () => {
+      // Shift all trinity states by +120° (cycle)
+      return iTrinityJourney(12, a432TrinityStream(1, trinityStart)[0], familyStart);
+    }
+  };
+}
+
+export function harmonizeAllAgents(agents: ReturnType<typeof createTrinityAgent>[]) {
+  // Example: fold all journeys into a single meta-log
+  return agents.map(agent => agent.observe()).join('\n---\n');
+} 

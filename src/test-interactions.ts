@@ -27,8 +27,8 @@ function testSpecificInteractions() {
 
   const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   
-  for (let digitA of digits) {
-    for (let digitB of digits) {
+  for (const digitA of digits) {
+    for (const digitB of digits) {
       const interaction = (digitA * (digitA + digitB)) % 9;
       const result = interaction === 0 ? 9 : interaction;
       console.log(`${digitA} × (${digitA} + ${digitB}) = ${digitA} × ${digitA + digitB} = ${digitA * (digitA + digitB)} % 9 = ${interaction} → ${result}`);

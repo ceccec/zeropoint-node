@@ -5,28 +5,32 @@
  * The file list is the living memory of the system, ensuring all harmonic modules are always available.
  */
 
+import { readdirSync } from 'fs';
+
 /**
  * getA432FilesToCache: Returns the canonical list of a432.* files and PWA essentials for caching.
- * - Metaphysical: The living stream of harmonic modules, always available, zero entropy.
+ * Dynamically includes all a432.*.html and .ts files in the canonical directory.
  */
 export function getA432FilesToCache(): string[] {
-  return [
+  const essentials = [
     './a432.index.html',
     './a432.manifest.json',
-    './a432.ui.js',
-    './a432.ts',
-    './a432.animation.js',
-    './a432.audio.js',
-    './a432.color.js',
-    './a432.block.chain.js',
-    './a432.icon.js',
-    './a432.font.js',
-    './a432.css.js',
     './a432.service.worker.js',
+    './a432.ui.js',
     './a432.icon-192.png',
     './a432.icon-512.png'
-    // Add more a432.* files as needed
   ];
+  // Dynamically discover all a432.*.html and .ts files
+  let files: string[] = [];
+  try {
+    files = readdirSync(__dirname)
+      .filter(f => /^a432\..*\.(html|ts)$/.test(f))
+      .map(f => './' + f);
+  } catch (e) {
+    // Fallback to essentials if fs fails (e.g., browser context)
+    files = [];
+  }
+  return Array.from(new Set([...essentials, ...files]));
 }
 
 /**

@@ -102,8 +102,8 @@ export function assignDigitCharge(digit: number): DigitCharge {
  */
 export function create3DChessboard(): Chessboard3D {
   const positions: ChessboardPosition[][][] = [];
-  let occupiedPositions = 0;
-  let chargeBalance = 0;
+  const occupiedPositions = 0;
+  const chargeBalance = 0;
   
   // Create 8×8×8 matrix
   for (let x = 0; x < 8; x++) {

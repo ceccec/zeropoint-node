@@ -58,7 +58,7 @@ export default {
       }
     }
     
-    // Handle vortex-chess interaction paths
+    // Handle vortex.chess interaction paths
     if (path.includes('vortex') || path.includes('chess')) {
       const interactionHTML = await getVortexChessHTML();
       return new Response(interactionHTML, {
@@ -443,7 +443,7 @@ async function getDigitHTML(digitPath: string): Promise<string> {
         </div>
         
         <a href="/" class="matrix-link">Back to Matrix</a>
-        <a href="/vortex-chess" class="matrix-link">Vortex-Chess Interaction</a>
+        <a href="/vortex.chess" class="matrix-link">Vortex-Chess Interaction</a>
     </div>
 </body>
 </html>`;

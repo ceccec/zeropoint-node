@@ -141,7 +141,7 @@ export function getTrinityCompositeCMYK(): A432CMYK {
  * getAllColorModels: Returns all color models (HSL, RGB, CMYK) for a digit or composite color.
  */
 export function getAllColorModels(d: number | 'void' = 'void'): { hsl: A432HSL, rgb: A432RGB, cmyk: A432CMYK } {
-  let hslStr = typeof d === 'number' ? getVortexColor(d) : getTrinityCompositeColor();
+  const hslStr = typeof d === 'number' ? getVortexColor(d) : getTrinityCompositeColor();
   const [h, s, l] = hslStr.match(/\d+/g)!.map(Number);
   const hsl: A432HSL = { hue: h, saturation: s, lightness: l };
   const rgb = hslToRgb(h, s, l);
@@ -163,4 +163,46 @@ export const A432ColorModel = {
   hslToCmyk,
   getTrinityCompositeCMYK,
   getAllColorModels
-}; 
+};
+
+// a432.color.ts
+// Living, harmonized color stream/interface
+
+export interface ColorEvent {
+  id: number;
+  color: string;
+  trinity: number;
+  timestamp: number;
+  summary: string;
+}
+
+export class A432ColorStream {
+  private events: ColorEvent[] = [];
+  private currentId = 1;
+  addColor(color: string, trinity: number): ColorEvent {
+    const event: ColorEvent = {
+      id: this.currentId++,
+      color,
+      trinity,
+      timestamp: Date.now(),
+      summary: `Color ${color} (Trinity ${trinity}) at ${new Date().toLocaleTimeString()}`
+    };
+    this.events.push(event);
+    return event;
+  }
+  getCurrent(): ColorEvent {
+    return this.events[this.events.length - 1];
+  }
+  getAll(): ColorEvent[] {
+    return this.events;
+  }
+  overlay(): string {
+    const width = 320, height = 60;
+    return `
+      <svg width="${width}" height="${height}" style="background:#111;border-radius:12px;">
+        ${this.events.map((e,i) => `<rect x="${20 + i*28}" y="12" width="24" height="36" fill="${e.color}" stroke="#fff" stroke-width="2"><title>${e.summary}</title></rect>`).join('')}
+        <text x="12" y="54" font-size="13" fill="#8ff">Color Stream</text>
+      </svg>
+    `;
+  }
+} 

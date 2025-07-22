@@ -36,7 +36,7 @@ body {
 }
 
 /* Vortex Flow Styles */
-.vortex-flow {
+.vortex.flow {
     display: flex;
     justify-content: center;
     align-items: center;

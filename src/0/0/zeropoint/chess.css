@@ -38,7 +38,7 @@
   
   /* Harmonic resonance */
   --a432-frequency: 432;
-  --vortex-flow: [1, 2, 4, 8, 7, 5];
+  --vortex.flow: [1, 2, 4, 8, 7, 5];
   --chess-consciousness: [1, 9, 5, 3, 7, 2];
 }
 
@@ -183,7 +183,7 @@
 }
 
 /* Vortex Flow Animation */
-@keyframes vortex-flow {
+@keyframes vortex.flow {
   0% { transform: rotate(0deg) scale(1); }
   33% { transform: rotate(120deg) scale(1.1); }
   66% { transform: rotate(240deg) scale(1.2); }
@@ -191,7 +191,7 @@
 }
 
 .chess-piece.vortex {
-  animation: vortex-flow 3s infinite linear;
+  animation: vortex.flow 3s infinite linear;
 }
 
 /* Harmonic Resonance */

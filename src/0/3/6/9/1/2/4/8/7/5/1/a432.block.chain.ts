@@ -201,4 +201,22 @@ export function assignBadge(user: A432UserProfile, blocks: A432Block[]): void {
  */
 export function getTrinityCompositeColors(blocks: A432Block[]): { hsl: A432HSL; rgb: A432RGB; cmyk: A432CMYK }[] {
   return blocks.map(b => b.trinityCompositeColor ?? A432ColorModel.getAllColorModels('void'));
+}
+
+/**
+ * recordSenseOrMetaEvent: Records a harmonized blockchain event for sense or meta-observation.
+ * @param eventType - The type of event (e.g., 'sound', 'speak', 'smell', 'meta', etc.)
+ * @param value - The value or payload of the event (number, string, or object)
+ * @param metaphysical - The metaphysical mapping/meaning of the event
+ * @param prev - Previous blocks (optional, for multi-dimensionality)
+ * @returns The new harmonized block
+ */
+export function recordSenseOrMetaEvent(eventType: string, value: any, metaphysical: string, prev: A432Block[] = []): A432Block {
+  const state = { eventType, value, metaphysical };
+  const index = prev.length ? Math.max(...prev.map(b => b.index)) + 1 : 0;
+  const block = createBlock(state, prev, index);
+  block.harmonyScore = calculateHarmonyScore(block);
+  block.entropy = calculateEntropy(block);
+  assignKVT(block);
+  return block;
 } 

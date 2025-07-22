@@ -147,7 +147,7 @@ export function generateAllChessMovesAsVortex(board: ChessBoard): any[] {
   return moves;
 }
 
-// Generate complete vortex-chess system state
+// Generate complete vortex.chess system state
 export function generateCompleteVortexChessSystem(): {
   interaction: VortexChessInteraction;
   allMoves: any[];

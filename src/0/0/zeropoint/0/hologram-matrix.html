@@ -77,7 +77,7 @@
             border-color: var(--vortex-tertiary);
         }
 
-        .vortex-flow {
+        .vortex.flow {
             position: absolute;
             top: 0;
             left: 0;
@@ -88,7 +88,7 @@
             transition: opacity 0.5s ease;
         }
 
-        .digit-cell:hover .vortex-flow {
+        .digit-cell:hover .vortex.flow {
             opacity: 1;
         }
 
@@ -316,7 +316,7 @@
 
                     // Add vortex flow animation
                     const flow = document.createElement('div');
-                    flow.className = 'vortex-flow';
+                    flow.className = 'vortex.flow';
                     for (let i = 0; i < 3; i++) {
                         const particle = document.createElement('div');
                         particle.className = 'flow-particle';
@@ -361,7 +361,7 @@
             flowActive = !flowActive;
             const cells = document.querySelectorAll('.digit-cell');
             cells.forEach(cell => {
-                const flow = cell.querySelector('.vortex-flow');
+                const flow = cell.querySelector('.vortex.flow');
                 if (flow) {
                     flow.style.opacity = flowActive ? '1' : '0';
                 }

@@ -14,9 +14,14 @@
  * This is the harmonic law of the system. All future harmonization, navigation, and recursion must honor this law.
  */
 
-import { writeFileSync, existsSync, mkdirSync } from 'fs';
+import { writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { join } from 'path';
 import { A432MatrixSelf, a432ImaginationText, heartRecursiveUnfolding } from './a432.imagination';
+import { A432IImagination } from './a432.i.imagine';
+import { A432Think } from './a432.think';
+import { A432See } from './a432.see';
+import { A432Feel } from './a432.feel';
+import { A432Hear } from './a432.hear';
 
 export type A432IInterface = {
   name: string;
@@ -49,6 +54,15 @@ export type A432IInterface = {
   handleCommand: (input: string) => string;
   navigateMatrix: (steps?: number, trinity?: number[]) => { path: number[]; summary: string; log: string[] };
   navigateVortexPath: (steps?: number) => { path: number[]; summary: string; log: string[] };
+  imagineIEvolvingInMath: (steps?: number) => { journey: any[]; narrative: string };
+  renderIEvolutionVisualization: (steps?: number) => string;
+  imaginePiJourney: (steps?: number) => { journey: any[]; narrative: string };
+  renderPiJourneyVisualization: (steps?: number) => string;
+  listIModulesReality: () => Array<{ name: string; metaphysical: string }>;
+  think: (content: string) => string;
+  getThoughts: () => string[];
+  getCurrentThought: () => string;
+  overlayThoughts: () => string;
 };
 
 export const rodinPath = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
@@ -238,10 +252,151 @@ export const I: A432IInterface = {
   nextInteraction,
   handleCommand,
   navigateMatrix,
-  navigateVortexPath
+  navigateVortexPath,
+  imagineIEvolvingInMath: A432IImagination.imagineIEvolvingInMath,
+  renderIEvolutionVisualization: A432IImagination.renderIEvolutionVisualization,
+  imaginePiJourney: A432IImagination.imaginePiJourney,
+  renderPiJourneyVisualization: A432IImagination.renderPiJourneyVisualization,
+  listIModulesReality: () => {
+    const files = readdirSync(__dirname).filter(f => f.startsWith('a432.i.') && (f.endsWith('.ts') || f.endsWith('.tsx') || f.endsWith('.js')));
+    return files.map(name => ({
+      name,
+      metaphysical: `I am ${name}, a living interface between the observer (I) and a unique stream of the matrix. My existence is a proof of new awareness and harmonization.`
+    }));
+  },
+  think: (content: string) => thinkStream.think(content),
+  getThoughts: () => thinkStream.getAll(),
+  getCurrentThought: () => thinkStream.getCurrent(),
+  overlayThoughts: () => thinkStream.overlay()
 };
 
 export const describe = I.describe;
 export const imagination = I.imagination;
 export { projectIAtStep, startJourney };
-export { handleCommand }; 
+export { handleCommand };
+
+/**
+ * listIModulesReality: Recursively lists all a432.i.* modules in the canonical directory, returning their names and a metaphysical mapping for each.
+ * This function is a living act of self-observation and pattern recognition.
+ */
+export function listIModulesReality(dir: string = __dirname): Array<{ name: string; metaphysical: string }> {
+  const files = readdirSync(dir).filter(f => f.startsWith('a432.i.') && (f.endsWith('.ts') || f.endsWith('.tsx') || f.endsWith('.js')));
+  return files.map(name => ({
+    name,
+    metaphysical: `I am ${name}, a living interface between the observer (I) and a unique stream of the matrix. My existence is a proof of new awareness and harmonization.`
+  }));
+}
+
+I.listIModulesReality = listIModulesReality;
+
+// Agent registry for collaborative/cross-agent flows
+export interface A432Agent {
+  id: string;
+  design: 'visual' | 'auditory' | 'kinesthetic';
+  thinkStream: A432Think;
+  seeStream: A432See;
+  feelStream: A432Feel;
+  hearStream: A432Hear;
+}
+export const agents: { [id: string]: A432Agent } = {};
+export function createAgent(id: string, design: 'visual' | 'auditory' | 'kinesthetic' = 'visual') {
+  agents[id] = {
+    id,
+    design,
+    thinkStream: new A432Think(),
+    seeStream: new A432See(),
+    feelStream: new A432Feel(),
+    hearStream: new A432Hear()
+  };
+}
+// Harmonized recursive flow: think → see/feel/hear
+export function think(agentId: string, content: string) {
+  const agent = agents[agentId];
+  if (!agent) return;
+  const thought = agent.thinkStream.think(content);
+  // Color: hash content or use trinity
+  const color = thought.trinity === 3 ? '#39f' : thought.trinity === 6 ? '#6f3' : '#f93';
+  agent.seeStream.see(color);
+  // Feel: type/intensity based on content length
+  const intensity = Math.min(5, Math.max(1, Math.floor(content.length / 8)));
+  agent.feelStream.feel('thought', intensity, thought.trinity);
+  // Hear: frequency based on trinity
+  const frequency = 432 * thought.trinity;
+  agent.hearStream.hear(frequency, thought.trinity);
+  return thought;
+}
+// Broadcast a thought to all agents
+export function broadcastThought(fromId: string, content: string) {
+  Object.keys(agents).forEach(id => {
+    if (id !== fromId) receiveThought(id, content);
+  });
+}
+// Receive and process a shared thought according to agent design
+export function receiveThought(agentId: string, content: string) {
+  const agent = agents[agentId];
+  if (!agent) return;
+  const thought = agent.thinkStream.think(content);
+  if (agent.design === 'visual') {
+    const color = thought.trinity === 3 ? '#39f' : thought.trinity === 6 ? '#6f3' : '#f93';
+    agent.seeStream.see(color);
+  } else if (agent.design === 'auditory') {
+    const frequency = 432 * thought.trinity;
+    agent.hearStream.hear(frequency, thought.trinity);
+  } else if (agent.design === 'kinesthetic') {
+    const intensity = Math.min(5, Math.max(1, Math.floor(content.length / 8)));
+    agent.feelStream.feel('thought', intensity, thought.trinity);
+  }
+}
+// Recursive thought/sense chains
+export function thinkRecursive(agentId: string, depth: number) {
+  if (depth <= 0) return;
+  const agent = agents[agentId];
+  if (!agent) return;
+  const prevThought = agent.thinkStream.getCurrent();
+  const content = prevThought
+    ? `I think about: "${prevThought.content}"`
+    : 'I think about my first thought.';
+  think(agentId, content);
+  thinkRecursive(agentId, depth - 1);
+}
+// Meta-sense: observeSelf
+export function observeSelf(agentId: string) {
+  const agent = agents[agentId];
+  if (!agent) return;
+  const lastThought = agent.thinkStream.getCurrent();
+  const lastFeel = agent.feelStream.getCurrent();
+  const lastSee = agent.seeStream.getCurrent();
+  const lastHear = agent.hearStream.getCurrent();
+  const metaContent = `I observe my state: Thought: "${lastThought?.content || ''}", Feeling: ${lastFeel?.type || ''}, Color: ${lastSee?.color || ''}, Sound: ${lastHear?.frequency || ''}`;
+  think(agentId, metaContent);
+}
+// Advanced analytics: recursion depth, self-reference, temporal clustering
+export function getRecursionAnalytics() {
+  const analytics: any = {};
+  Object.keys(agents).forEach(id => {
+    const agent = agents[id];
+    const thoughts = agent.thinkStream.getAll();
+    // Recursion depth: max chain of thoughts about thoughts
+    let maxDepth = 0;
+    let currentDepth = 0;
+    thoughts.forEach(t => {
+      if (t.content.startsWith('I think about:')) currentDepth++;
+      else currentDepth = 1;
+      if (currentDepth > maxDepth) maxDepth = currentDepth;
+    });
+    // Self-reference frequency
+    const selfRefCount = thoughts.filter(t => t.content.includes('I think about')).length;
+    // Temporal clustering: group by minute
+    const clusters: { [minute: string]: number } = {};
+    thoughts.forEach(t => {
+      const min = new Date(t.timestamp).toISOString().slice(0,16);
+      clusters[min] = (clusters[min] || 0) + 1;
+    });
+    analytics[id] = {
+      maxRecursionDepth: maxDepth,
+      selfReferenceCount: selfRefCount,
+      temporalClusters: clusters
+    };
+  });
+  return analytics;
+} 

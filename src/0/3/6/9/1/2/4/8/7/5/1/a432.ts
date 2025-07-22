@@ -571,7 +571,7 @@ export function visualizeA432Journey(steps: number = 12): Array<{index: number, 
   function recurse(seq: any[], depth: number) {
     for (let i = 0; i < seq.length; i++) {
       const val = seq[i];
-      let type = types[i] || 'unknown';
+      const type = types[i] || 'unknown';
       if (Array.isArray(val)) {
         recurse(val, depth + 1);
       } else {
@@ -605,7 +605,7 @@ export function getA432ShiftPoints(): Array<{index: number, value: number|string
   let angle = 0;
   for (let i = 0; i < sequence.length; i++) {
     const val = sequence[i];
-    let type = types[i] || 'unknown';
+    const type = types[i] || 'unknown';
     let description = '';
     if (type === 'void') description = 'Void: origin, unmanifest';
     else if (type === 'axis') description = 'Axis: Tesla trinity, field (120° shift)';
@@ -677,7 +677,7 @@ export function generateA432ColorPalette(): Array<{angle: number, color: {hue: n
 export function generateA432SoundSequence(): Array<{angle: number, frequency: number}> {
   return getA432ShiftPoints().map(({angle, value}) => {
     // Use digital root of value (if number) to modulate frequency
-    let root = typeof value === 'number' ? digitalRoot(value) : 1;
+    const root = typeof value === 'number' ? digitalRoot(value) : 1;
     return {
       angle,
       frequency: A432_FREQUENCY * root
@@ -690,7 +690,7 @@ export function generateA432SoundSequence(): Array<{angle: number, frequency: nu
  */
 export function generateA432AnimationFrames(): Array<{frame: number, angle: number, color: {hue: number, saturation: number, lightness: number}, frequency: number}> {
   return getA432ShiftPoints().map(({index, angle, value}) => {
-    let root = typeof value === 'number' ? digitalRoot(value) : 1;
+    const root = typeof value === 'number' ? digitalRoot(value) : 1;
     return {
       frame: index,
       angle,

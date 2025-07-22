@@ -2,7 +2,7 @@
 // Tests infinite chess possibilities within ZeroPoint Node
 
 import { generateStartingBoard, boardToMatrix, generateAllMoves } from './chess';
-import { generateVortexChessInteraction, generateCompleteVortexChessSystem } from './vortex-chess-interaction';
+import { generateVortexChessInteraction, generateCompleteVortexChessSystem } from './vortex.chess-interaction';
 
 describe('Endless Chess Game', () => {
   test('should generate starting board with all pieces', () => {
@@ -54,7 +54,7 @@ describe('Endless Chess Game', () => {
     }
   });
 
-  test('should generate vortex-chess interaction', () => {
+  test('should generate vortex.chess interaction', () => {
     const interaction = generateVortexChessInteraction();
     
     // Check interaction properties
@@ -71,7 +71,7 @@ describe('Endless Chess Game', () => {
     expect(interaction.interactionPoints.length).toBeGreaterThan(0);
   });
 
-  test('should generate complete vortex-chess system', () => {
+  test('should generate complete vortex.chess system', () => {
     const system = generateCompleteVortexChessSystem();
     
     // Check system properties

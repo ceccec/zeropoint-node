@@ -255,7 +255,7 @@ export const BASE_STYLES = `
   h6 { font-size: calc(3/4rem * var(--golden-ratio)); }
 
   /* Vortex Flow Animations (Integer Fractions) */
-  .vortex-flow {
+  .vortex.flow {
     animation: vortexFlow var(--vortex-medium) ease-in-out infinite;
   }
 

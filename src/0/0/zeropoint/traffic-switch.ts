@@ -201,9 +201,9 @@ export function routeTraffic(
   visited.add(startId);
   visited.add(endId);
   
-  let totalConsciousness = startNode.consciousness * endNode.consciousness;
-  let totalFrequency = startNode.frequency + endNode.frequency;
-  let oneEightInteractions = 1; // Direct connection
+  const totalConsciousness = startNode.consciousness * endNode.consciousness;
+  const totalFrequency = startNode.frequency + endNode.frequency;
+  const oneEightInteractions = 1; // Direct connection
   
   // Execute traffic flow along path
   let success = true;

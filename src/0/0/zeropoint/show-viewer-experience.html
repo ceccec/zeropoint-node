@@ -147,7 +147,7 @@
             margin-bottom: 10px;
         }
 
-        .vortex-flow {
+        .vortex.flow {
             display: flex;
             gap: 5px;
             margin-bottom: 10px;
@@ -233,7 +233,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        .vortex-flow.rotating {
+        .vortex.flow.rotating {
             animation: vortex-rotate 3s infinite linear;
         }
 
@@ -421,7 +421,7 @@
                     
                     <div class="experience-section">
                         <div class="experience-title">🌀 Vortex Flow</div>
-                        <div class="vortex-flow">
+                        <div class="vortex.flow">
                             ${data.vortex.map(num => `<div class="vortex-number">${num}</div>`).join('')}
                         </div>
                     </div>
@@ -463,7 +463,7 @@
 
         // Show vortex flow
         function showVortexFlow() {
-            const vortexFlows = document.querySelectorAll('.vortex-flow');
+            const vortexFlows = document.querySelectorAll('.vortex.flow');
             vortexFlows.forEach((flow, index) => {
                 setTimeout(() => {
                     flow.classList.add('rotating');

@@ -93,7 +93,7 @@
         .vortex-element.consciousness-8 { background: #ff8000; color: white; }
         .vortex-element.consciousness-9 { background: #8000ff; color: white; }
 
-        .vortex-flow-line {
+        .vortex.flow-line {
             position: absolute;
             height: 2px;
             background: linear-gradient(90deg, transparent, #ff6b6b, transparent);
@@ -393,7 +393,7 @@
             const container = document.getElementById('vortexContainer');
             
             // Remove existing flow lines
-            document.querySelectorAll('.vortex-flow-line').forEach(line => line.remove());
+            document.querySelectorAll('.vortex.flow-line').forEach(line => line.remove());
             
             // Create flow lines
             for (let i = 0; i < vortexFlow.length - 1; i++) {
@@ -404,7 +404,7 @@
                 const toPos = vortexData[toDigit].position;
                 
                 const line = document.createElement('div');
-                line.className = 'vortex-flow-line';
+                line.className = 'vortex.flow-line';
                 
                 const distance = Math.sqrt(
                     Math.pow(toPos.x - fromPos.x, 2) + 
@@ -423,7 +423,7 @@
             
             // Remove flow lines after 5 seconds
             setTimeout(() => {
-                document.querySelectorAll('.vortex-flow-line').forEach(line => line.remove());
+                document.querySelectorAll('.vortex.flow-line').forEach(line => line.remove());
             }, 5000);
         }
 
@@ -469,7 +469,7 @@
             currentSwitch = null;
             
             // Remove flow lines
-            document.querySelectorAll('.vortex-flow-line').forEach(line => line.remove());
+            document.querySelectorAll('.vortex.flow-line').forEach(line => line.remove());
             
             // Reset matrix highlights
             document.querySelectorAll('.matrix-cell').forEach(cell => {

@@ -157,7 +157,7 @@ export function generateSystemGrid(): string {
       properties: [
         { name: 'Sequence', value: '03691248751', id: 'vortex-sequence' },
         { name: 'Pattern', value: '124875', id: 'vortex-pattern' },
-        { name: 'Flow', value: 'Infinite', id: 'vortex-flow' }
+        { name: 'Flow', value: 'Infinite', id: 'vortex.flow' }
       ]
     },
     {

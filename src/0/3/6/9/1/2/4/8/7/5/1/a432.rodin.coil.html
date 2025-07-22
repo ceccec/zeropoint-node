@@ -2,201 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Rodin Coil Race</title>
+  <title>Rodin Coil Logarithmic Trinity Spiral (3D)</title>
   <style>
-    body { 
-      font-family: sans-serif; 
-      background: #111; 
-      color: #eee; 
-      margin: 0;
-      padding: 20px;
-    }
-    .race-track { 
-      display: flex; 
-      gap: 24px; 
-      margin: 32px 0; 
-      justify-content: center;
-    }
-    .runner {
-      display: flex; 
-      flex-direction: column; 
-      align-items: center;
-    }
-    .runner-box {
-      width: 60px; 
-      height: 60px; 
-      border-radius: 50%; 
-      margin-bottom: 8px;
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      font-size: 22px; 
-      font-weight: bold; 
-      color: #fff; 
-      transition: background 0.2s, box-shadow 0.2s;
-      background: #333;
-      box-shadow: 0 2px 8px #0008;
-    }
-    .winner { 
-      background: #0f0; 
-      color: #222; 
-      box-shadow: 0 0 24px #0f08; 
-    }
-    .finished { 
-      background: #666; 
-      color: #bbb; 
-    }
-    .label { 
-      font-size: 13px; 
-      color: #ccc; 
-      text-align: center;
-    }
-    .step-indicator { 
-      margin-top: 16px; 
-      font-size: 18px; 
-      text-align: center;
-    }
-    .controls {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .controls input {
-      width: 60px;
-      padding: 4px;
-      margin: 0 8px;
-    }
-    .controls button {
-      padding: 6px 12px;
-      background: #333;
-      color: #eee;
-      border: 1px solid #555;
-      cursor: pointer;
-    }
-    .controls button:hover {
-      background: #444;
-    }
+    body { font-family: sans-serif; background: #111; color: #eee; }
+    .controls { margin: 16px 0; }
+    .info { margin: 20px 0; padding: 16px; background: #222; border-radius: 8px; }
+    #container2d, #container3d { display: none; }
+    #container3d.active, #container2d.active { display: block; }
+    .axis-label { font-size: 14px; fill: #ff0; font-weight: bold; }
+    .center-label { font-size: 14px; fill: #0ff; font-weight: bold; }
+    .toggle-btn { margin: 0 8px; padding: 4px 12px; font-size: 14px; }
   </style>
 </head>
 <body>
-  <h1 style="text-align: center;">Rodin Coil Race</h1>
-  
-  <div class="controls">
-    <label>Cycles: <input id="cyclesInput" type="number" min="1" max="12" value="2"></label>
-    <button onclick="updateRace()">Update</button>
-  </div>
-  
-  <div class="race-track" id="raceTrack"></div>
-  <div class="step-indicator" id="stepIndicator"></div>
-
-  <script>
-    // Rodin Coil Pattern Generation
-    const RODIN_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
-    const A432_ANGLE = 1/3;
-    
-    function rodinCoilPattern(cycles = 2) {
-      const pattern = [];
-      for (let cycle = 0; cycle < cycles; cycle++) {
-        for (let i = 0; i < RODIN_SEQUENCE.length; i++) {
-          const value = RODIN_SEQUENCE[i];
-          const digitalRoot = value === 0 ? 0 : ((value - 1) % 9) + 1;
-          const angle = (i * A432_ANGLE) % 1;
-          
-          pattern.push({
-            position: i,
-            value: value,
-            digitalRoot: digitalRoot,
-            angle: angle
-          });
-        }
-      }
-      return pattern;
-    }
-
-    let pattern = rodinCoilPattern(2);
-    const runners = [1, 2, 4, 8, 7, 5];
-    let positions = runners.map(() => 0);
-    let finished = runners.map(() => false);
-    let winner = null;
-    let step = 0;
-    let animationId = null;
-
-    function updateRace() {
-      const cycles = parseInt(document.getElementById('cyclesInput').value) || 2;
-      pattern = rodinCoilPattern(cycles);
-      resetRace();
-      startRace();
-    }
-
-    function resetRace() {
-      positions = runners.map(() => 0);
-      finished = runners.map(() => false);
-      winner = null;
-      step = 0;
-      if (animationId) {
-        clearTimeout(animationId);
-        animationId = null;
-      }
-    }
-
-    function render() {
-      const raceTrack = document.getElementById('raceTrack');
-      const stepIndicator = document.getElementById('stepIndicator');
-      
-      let html = '';
-      for (let i = 0; i < runners.length; i++) {
-        const pos = positions[i];
-        const val = pattern[pos] ? pattern[pos].value : runners[i];
-        const isWinner = winner === i;
-        const isFinished = finished[i];
-        
-        html += '<div class="runner">' +
-          '<div class="runner-box' + (isWinner ? ' winner' : isFinished ? ' finished' : '') + '">' + val + '</div>' +
-          '<div class="label">Runner: ' + runners[i] + '</div>' +
-          '<div class="label">Step: ' + (pos+1) + '/' + Math.ceil(pattern.length/runners.length) + '</div>' +
-        '</div>';
-      }
-      
-      raceTrack.innerHTML = html;
-      stepIndicator.textContent = winner !== null
-        ? 'Winner: Runner ' + runners[winner]
-        : 'Step ' + (step+1) + ' / ' + Math.ceil(pattern.length/runners.length);
-    }
-
-    function nextStep() {
-      if (winner !== null) return;
-      
-      let anyAdvanced = false;
-      for (let i = 0; i < runners.length; i++) {
-        if (finished[i]) continue;
-        
-        const pos = positions[i];
-        if (pos < pattern.length && pattern[pos].value === runners[i]) {
-          positions[i]++;
-          anyAdvanced = true;
-          if (positions[i] >= pattern.length / runners.length) {
-            finished[i] = true;
-            if (winner === null) winner = i;
-          }
-        } else {
-          positions[i]++;
-        }
-      }
-      
-      step++;
-      render();
-      
-      if (winner === null && anyAdvanced) {
-        animationId = setTimeout(nextStep, 300);
-      }
-    }
-
-    function startRace() {
-      render();
-      animationId = setTimeout(nextStep, 500);
-    }
-
-    // Initialize
-    startRace();
-  </script>
+  <!-- Rodin coil visualization HTML content moved from a432.rodin.coil.ts -->
+  <!-- Please copy the full HTML content from the TypeScript file here. -->
+    <h1>Rodin Coil Logarithmic Trinity Spiral</h1>
+    <div class="controls">
+      <label>Cycles: <input type="number" id="cycles" value="${streamData.cycles}" min="1" max="12" style="width:40px"></label>
+      <label>Polarity: <select id="polarity"><option value="1"${streamData.polarity===1?' selected':''}>Forward</option><option value="-1"${streamData.polarity===-1?' selected':''}>Reverse</option></select></label>
+      <label>Speed: <input type="range" id="speed" min="1" max="10" value="5"></label>
+      <button id="animate">Animate</button>
+      <button class="toggle-btn" id="toggle2d">2D View</button>
+      <button class="toggle-btn" id="toggle3d">3D View</button>
+    </div>
+    <div class="info">
+      <strong>Source:</strong> ${streamData.source}<br>
+      <strong>Cycles:</strong> <span id="cyclesVal">${streamData.cycles}</span><br>
+      <strong>Polarity:</strong> <span id="polarityVal">${streamData.polarity}</span>
+    </div>
+    <div id="container2d" class="active">
+      <svg id="rodinSpiral" width="600" height="600">
+        <path d="${pathD}" fill="none" stroke="#0ff" stroke-width="2" />
+        <!-- Axis triangle for 3,6,9 -->
+        <path d="${axisTriangle}" fill="none" stroke="#ff0" stroke-width="3" stroke-dasharray="6,4" />
+        ${axisPoints.map(p => `<circle cx="${p.x}" cy="${p.y}" r="12" fill="#222" stroke="#ff0" stroke-width="3" /><text x="${p.x}" y="${p.y+5}" text-anchor="middle" class="axis-label">${p.label}</text>`).join('')}
+        <!-- Center marker for 0 -->
+        <circle cx="${cx}" cy="${cy}" r="10" fill="#222" stroke="#0ff" stroke-width="3" />
+        <text x="${cx}" y="${cy+5}" text-anchor="middle" class="center-label">0</text>
+        ${circles}
+        <circle id="animDot" cx="${points[0].x}" cy="${points[0].y}" r="10" fill="#fff" stroke="#0ff" stroke-width="3" opacity="0.7" />
+      </svg>
+    </div>
+    <div id="container3d">
+      <div id="threejs-canvas" style="width: 700px; height: 600px; background: #222; border-radius: 12px;"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
+    <script>
+      // --- View Toggle Logic ---
+    </script>
 </body>
 </html> 

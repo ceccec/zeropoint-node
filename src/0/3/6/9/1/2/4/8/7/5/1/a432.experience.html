@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A432 Harmonized Experience</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .a432-experience-main {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .a432-experience-main h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 2rem;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .experience-overview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .overall-harmony h2 {
+      font-size: 2.5rem;
+      color: #4ecdc4;
+      margin-bottom: 0.5rem;
+    }
+
+    .overall-harmony p {
+      font-size: 1.2rem;
+      color: #96ceb4;
+    }
+
+    .active-modules h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #ff6b6b;
+    }
+
+    .module-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .module-tag {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .experience-panels {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+    }
+
+    .a432-panel {
+      padding: 1.5rem;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .a432-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .a432-panel:hover::before {
+      transform: translateX(100%);
+    }
+
+    .a432-panel:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .a432-panel h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .panel-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .metric span:first-child {
+      font-weight: 500;
+      color: #e0e0e0;
+    }
+
+    .value {
+      font-weight: bold;
+      color: #4ecdc4;
+      font-size: 1.1rem;
+    }
+
+    .flow-indicator,
+    .frequency-display,
+    .challenge-balance,
+    .flow-direction,
+    .integration-balance,
+    .observation-clarity,
+    .evolution-direction,
+    .innovation-flow,
+    .documentation-templates {
+      padding: 0.8rem;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 500;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .controls {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 1000;
+    }
+
+    .control-btn {
+      padding: 0.8rem 1.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 25px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .control-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    .harmonize-btn {
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+      border: none;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .experience-panels {
+        grid-template-columns: 1fr;
+      }
+      
+      .experience-overview {
+        grid-template-columns: 1fr;
+      }
+      
+      .a432-experience-main h1 {
+        font-size: 2rem;
+      }
+      
+      .controls {
+        position: static;
+        margin: 2rem 0;
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button class="control-btn harmonize-btn" onclick="harmonizeExperience()">🔄 Harmonize</button>
+    <button class="control-btn" onclick="refreshExperience()">🔄 Refresh</button>
+    <button class="control-btn" onclick="toggleAnimation()">🎬 Toggle Animation</button>
+  </div>
+
+  <div id="a432-experience-container" class="a432-experience-main">
+    <!-- Experience content will be dynamically generated -->
+  </div>
+
+  <script type="module">
+    import { A432ExperienceUI } from './a432.experience.ui.ts';
+
+    let currentState = null;
+    let animationEnabled = true;
+
+    function updateExperience() {
+      const container = document.getElementById('a432-experience-container');
+      currentState = A432ExperienceUI.getExperienceState();
+      container.innerHTML = A432ExperienceUI.mainExperience();
+      
+      if (animationEnabled) {
+        addPulseAnimation();
+      }
+    }
+
+    function harmonizeExperience() {
+      currentState = A432ExperienceUI.harmonizeExperience();
+      updateExperience();
+      showNotification('Experience harmonized! 🎯');
+    }
+
+    function refreshExperience() {
+      updateExperience();
+      showNotification('Experience refreshed! ✨');
+    }
+
+    function toggleAnimation() {
+      animationEnabled = !animationEnabled;
+      const panels = document.querySelectorAll('.a432-panel');
+      panels.forEach(panel => {
+        if (animationEnabled) {
+          panel.classList.add('pulse');
+        } else {
+          panel.classList.remove('pulse');
+        }
+      });
+      showNotification(animationEnabled ? 'Animation enabled! 🎬' : 'Animation disabled! ⏸️');
+    }
+
+    function addPulseAnimation() {
+      const panels = document.querySelectorAll('.a432-panel');
+      panels.forEach((panel, index) => {
+        setTimeout(() => {
+          panel.classList.add('pulse');
+          setTimeout(() => {
+            panel.classList.remove('pulse');
+          }, 2000);
+        }, index * 200);
+      });
+    }
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.textContent = message;
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        z-index: 10000;
+        font-weight: bold;
+        backdrop-filter: blur(10px);
+      `;
+      document.body.appendChild(notification);
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
+    // Initialize experience
+    updateExperience();
+
+    // Auto-harmonize every 30 seconds
+    setInterval(() => {
+      if (animationEnabled) {
+        harmonizeExperience();
+      }
+    }, 30000);
+
+    // Make functions globally available
+    window.harmonizeExperience = harmonizeExperience;
+    window.refreshExperience = refreshExperience;
+    window.toggleAnimation = toggleAnimation;
+  </script>
+</body>
+</html> 

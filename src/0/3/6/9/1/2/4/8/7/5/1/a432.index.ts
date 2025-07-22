@@ -18,6 +18,7 @@ export * from './a432.observation';
 export * from './a432.evolution';
 export * from './a432.documentation';
 export * from './a432.innovation';
+export * from './a432.experience.ui';
 
 import { initializeA432Harmonizer, harmonizeA432System } from './a432.harmonizer';
 import { a432ModuleRegistry } from './a432.modules';
@@ -31,6 +32,7 @@ import { registerA432ObservationModules, harmonizeAllObservation } from './a432.
 import { registerA432EvolutionModules, harmonizeAllEvolution } from './a432.evolution';
 import { registerA432DocumentationModules, harmonizeAllDocumentation } from './a432.documentation';
 import { registerA432InnovationModules, harmonizeAllInnovation } from './a432.innovation';
+import { registerA432ExperienceUIModule, A432ExperienceUI } from './a432.experience.ui';
 
 // === A432 SYSTEM CLASS ===
 export class A432System {
@@ -62,6 +64,7 @@ export class A432System {
     registerA432EvolutionModules();
     registerA432DocumentationModules();
     registerA432InnovationModules();
+    registerA432ExperienceUIModule();
     
     this.initialized = true;
     console.log('A432 System initialized with expansion modules');
@@ -175,13 +178,17 @@ export const A432 = {
 
   innovation: {
     harmonize: () => a432.getInnovation()
+  },
+
+  experienceUI: {
+    getInstance: () => A432ExperienceUI
   }
 };
 
 export default A432;
 
 // === AUTO-INITIALIZATION ===
-if (typeof window !== 'undefined') {
+if (typeof (window as any) !== 'undefined') {
   (window as any).addEventListener('DOMContentLoaded', () => {
     a432.initialize();
   });

@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A432.i.breathe - Complete Breathe Harmonization</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #000000, #1a1a1a, #000000);
+      color: #00FFFF;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid #00FFFF;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px #00FFFF;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+
+    .breathe-systems {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .breathe-system {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .breathe-system.respiration {
+      border-color: #00FFFF;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .breathe-system.vitality {
+      border-color: #FF00FF;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .breathe-system.flow {
+      border-color: #FFFF00;
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+    }
+
+    .breathe-system.life {
+      border-color: #00FF00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .breathe-system h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .breathe-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-group label {
+      font-size: 0.9em;
+      min-width: 80px;
+    }
+
+    .control-group input[type="range"] {
+      flex: 1;
+      margin: 0 10px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .breathe-system.respiration input[type="range"]::-webkit-slider-thumb {
+      background: #00FFFF;
+      box-shadow: 0 0 10px #00FFFF;
+    }
+
+    .breathe-system.vitality input[type="range"]::-webkit-slider-thumb {
+      background: #FF00FF;
+      box-shadow: 0 0 10px #FF00FF;
+    }
+
+    .breathe-system.flow input[type="range"]::-webkit-slider-thumb {
+      background: #FFFF00;
+      box-shadow: 0 0 10px #FFFF00;
+    }
+
+    .breathe-system.life input[type="range"]::-webkit-slider-thumb {
+      background: #00FF00;
+      box-shadow: 0 0 10px #00FF00;
+    }
+
+    .control-group span {
+      font-size: 0.8em;
+      min-width: 30px;
+      text-align: right;
+    }
+
+    .breathe-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .breathe-system.respiration .breathe-button {
+      background: #00FFFF;
+      color: #000000;
+    }
+
+    .breathe-system.vitality .breathe-button {
+      background: #FF00FF;
+      color: #FFFFFF;
+    }
+
+    .breathe-system.flow .breathe-button {
+      background: #FFFF00;
+      color: #000000;
+    }
+
+    .breathe-system.life .breathe-button {
+      background: #00FF00;
+      color: #000000;
+    }
+
+    .breathe-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    .master-controls {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00FFFF;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .master-controls h2 {
+      margin-bottom: 20px;
+      color: #00FFFF;
+    }
+
+    .master-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .master-button {
+      padding: 12px 24px;
+      border: 2px solid #00FFFF;
+      background: transparent;
+      color: #00FFFF;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .master-button:hover {
+      background: #00FFFF;
+      color: #000000;
+      box-shadow: 0 0 15px #00FFFF;
+    }
+
+    .status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 0.8em;
+      z-index: 1000;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .breathe-info {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    .metric-display {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .metric-item {
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.8em;
+    }
+
+    .breathe-display {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 1em;
+      text-align: left;
+      min-height: 200px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .breathe-display h4 {
+      color: #00FFFF;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #00FFFF;
+      padding-bottom: 5px;
+    }
+
+    .breathe-display p {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .breathe-display code {
+      background: rgba(0, 255, 255, 0.1);
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(0, 255, 255, 0.2);
+      border-radius: 2px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #00FFFF;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    @media (max-width: 768px) {
+      .breathe-systems {
+        grid-template-columns: 1fr;
+      }
+      
+      .master-buttons {
+        flex-direction: column;
+      }
+      
+      .header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="status" id="status">A432 Breathe System Ready</div>
+
+  <div class="container">
+    <div class="header">
+      <h1>A432.i.breathe</h1>
+      <p>Complete Breathe Harmonization & Life Synthesis</p>
+    </div>
+
+    <div class="master-controls">
+      <h2>Master Breathe Controls</h2>
+      <div class="master-buttons">
+        <button class="master-button" onclick="breatheAllSystems()">🫁 Breathe All</button>
+        <button class="master-button" onclick="analyzeBreathe()">🔍 Analyze Breathe</button>
+        <button class="master-button" onclick="clearAllBreathe()">🗑️ Clear All</button>
+        <button class="master-button" onclick="randomizeBreathe()">🎲 Randomize</button>
+        <button class="master-button" onclick="harmonizeBreathe()">✨ Harmonize</button>
+      </div>
+    </div>
+
+    <div class="breathe-systems">
+      <!-- Respiration System -->
+      <div class="breathe-system respiration">
+        <h3>Respiration System</h3>
+        <div class="breathe-controls">
+          <div class="control-group">
+            <label>Inhale:</label>
+            <input type="range" id="respiration-inhale" min="0" max="9" value="5" step="1">
+            <span id="respiration-inhale-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Exhale:</label>
+            <input type="range" id="respiration-exhale" min="0" max="9" value="5" step="1">
+            <span id="respiration-exhale-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Rhythm:</label>
+            <input type="range" id="respiration-rhythm" min="0" max="9" value="5" step="1">
+            <span id="respiration-rhythm-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Harmony:</label>
+            <input type="range" id="respiration-harmony" min="0" max="9" value="5" step="1">
+            <span id="respiration-harmony-val">5</span>
+          </div>
+        </div>
+        <button class="breathe-button" onclick="breatheRespiration()">🫁 Breathe Respiration</button>
+        <div class="breathe-info">
+          <div>Respiration: Inhale + Exhale + Rhythm + Harmony</div>
+          <div>Harmony: <span id="respiration-harmony-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Inhale: <span id="respiration-inhale-display">5</span>/9</div>
+          <div class="metric-item">Exhale: <span id="respiration-exhale-display">5</span>/9</div>
+          <div class="metric-item">Rhythm: <span id="respiration-rhythm-display">5</span>/9</div>
+          <div class="metric-item">Harmony: <span id="respiration-harmony-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Vitality System -->
+      <div class="breathe-system vitality">
+        <h3>Vitality System</h3>
+        <div class="breathe-controls">
+          <div class="control-group">
+            <label>Energy:</label>
+            <input type="range" id="vitality-energy" min="0" max="9" value="5" step="1">
+            <span id="vitality-energy-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Strength:</label>
+            <input type="range" id="vitality-strength" min="0" max="9" value="5" step="1">
+            <span id="vitality-strength-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Vigor:</label>
+            <input type="range" id="vitality-vigor" min="0" max="9" value="5" step="1">
+            <span id="vitality-vigor-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Life:</label>
+            <input type="range" id="vitality-life" min="0" max="9" value="5" step="1">
+            <span id="vitality-life-val">5</span>
+          </div>
+        </div>
+        <button class="breathe-button" onclick="breatheVitality()">🫁 Breathe Vitality</button>
+        <div class="breathe-info">
+          <div>Vitality: Energy + Strength + Vigor + Life</div>
+          <div>Life: <span id="vitality-life-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Energy: <span id="vitality-energy-display">5</span>/9</div>
+          <div class="metric-item">Strength: <span id="vitality-strength-display">5</span>/9</div>
+          <div class="metric-item">Vigor: <span id="vitality-vigor-display">5</span>/9</div>
+          <div class="metric-item">Life: <span id="vitality-life-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Flow System -->
+      <div class="breathe-system flow">
+        <h3>Flow System</h3>
+        <div class="breathe-controls">
+          <div class="control-group">
+            <label>Direction:</label>
+            <input type="range" id="flow-direction" min="0" max="9" value="5" step="1">
+            <span id="flow-direction-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Intensity:</label>
+            <input type="range" id="flow-intensity" min="0" max="9" value="5" step="1">
+            <span id="flow-intensity-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Continuity:</label>
+            <input type="range" id="flow-continuity" min="0" max="9" value="5" step="1">
+            <span id="flow-continuity-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Harmonization:</label>
+            <input type="range" id="flow-harmonization" min="0" max="9" value="5" step="1">
+            <span id="flow-harmonization-val">5</span>
+          </div>
+        </div>
+        <button class="breathe-button" onclick="breatheFlow()">🫁 Breathe Flow</button>
+        <div class="breathe-info">
+          <div>Flow: Direction + Intensity + Continuity + Harmonization</div>
+          <div>Harmonization: <span id="flow-harmonization-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Direction: <span id="flow-direction-display">5</span>/9</div>
+          <div class="metric-item">Intensity: <span id="flow-intensity-display">5</span>/9</div>
+          <div class="metric-item">Continuity: <span id="flow-continuity-display">5</span>/9</div>
+          <div class="metric-item">Harmonization: <span id="flow-harmonization-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Life System -->
+      <div class="breathe-system life">
+        <h3>Life System</h3>
+        <div class="breathe-controls">
+          <div class="control-group">
+            <label>Balance:</label>
+            <input type="range" id="life-balance" min="0" max="9" value="5" step="1">
+            <span id="life-balance-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Unity:</label>
+            <input type="range" id="life-unity" min="0" max="9" value="5" step="1">
+            <span id="life-unity-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Coherence:</label>
+            <input type="range" id="life-coherence" min="0" max="9" value="5" step="1">
+            <span id="life-coherence-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="life-resonance" min="0" max="9" value="5" step="1">
+            <span id="life-resonance-val">5</span>
+          </div>
+        </div>
+        <button class="breathe-button" onclick="breatheLife()">🫁 Breathe Life</button>
+        <div class="breathe-info">
+          <div>Life: Balance + Unity + Coherence + Resonance</div>
+          <div>Resonance: <span id="life-resonance-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Balance: <span id="life-balance-display">5</span>/9</div>
+          <div class="metric-item">Unity: <span id="life-unity-display">5</span>/9</div>
+          <div class="metric-item">Coherence: <span id="life-coherence-display">5</span>/9</div>
+          <div class="metric-item">Resonance: <span id="life-res-display">5</span>/9</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="breathe-display" id="breathe-display">
+      <h4>🫁 A432.i.breathe - Breathe System</h4>
+      <p>Ready to breathe with A432 harmony...</p>
+      <p>This system provides comprehensive breathe harmonization with:</p>
+      <ul>
+        <li><code>Respiration</code>: Inhale, exhale, rhythm, and harmony</li>
+        <li><code>Vitality</code>: Energy, strength, vigor, and life</li>
+        <li><code>Flow</code>: Direction, intensity, continuity, and harmonization</li>
+        <li><code>Life</code>: Balance, unity, coherence, and resonance</li>
+      </ul>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Breathe Management
+    let currentBreathe = '';
+    let breatheProgress = 0;
+    let breatheState = null;
+
+    // Update Display Values
+    function updateDisplayValues() {
+      // Respiration Values
+      document.getElementById('respiration-inhale-val').textContent = document.getElementById('respiration-inhale').value;
+      document.getElementById('respiration-exhale-val').textContent = document.getElementById('respiration-exhale').value;
+      document.getElementById('respiration-rhythm-val').textContent = document.getElementById('respiration-rhythm').value;
+      document.getElementById('respiration-harmony-val').textContent = document.getElementById('respiration-harmony').value;
+      
+      document.getElementById('respiration-inhale-display').textContent = document.getElementById('respiration-inhale').value;
+      document.getElementById('respiration-exhale-display').textContent = document.getElementById('respiration-exhale').value;
+      document.getElementById('respiration-rhythm-display').textContent = document.getElementById('respiration-rhythm').value;
+      document.getElementById('respiration-harmony-display').textContent = document.getElementById('respiration-harmony').value;
+      document.getElementById('respiration-harmony-display-2').textContent = document.getElementById('respiration-harmony').value;
+
+      // Vitality Values
+      document.getElementById('vitality-energy-val').textContent = document.getElementById('vitality-energy').value;
+      document.getElementById('vitality-strength-val').textContent = document.getElementById('vitality-strength').value;
+      document.getElementById('vitality-vigor-val').textContent = document.getElementById('vitality-vigor').value;
+      document.getElementById('vitality-life-val').textContent = document.getElementById('vitality-life').value;
+      
+      document.getElementById('vitality-energy-display').textContent = document.getElementById('vitality-energy').value;
+      document.getElementById('vitality-strength-display').textContent = document.getElementById('vitality-strength').value;
+      document.getElementById('vitality-vigor-display').textContent = document.getElementById('vitality-vigor').value;
+      document.getElementById('vitality-life-display').textContent = document.getElementById('vitality-life').value;
+      document.getElementById('vitality-life-display-2').textContent = document.getElementById('vitality-life').value;
+
+      // Flow Values
+      document.getElementById('flow-direction-val').textContent = document.getElementById('flow-direction').value;
+      document.getElementById('flow-intensity-val').textContent = document.getElementById('flow-intensity').value;
+      document.getElementById('flow-continuity-val').textContent = document.getElementById('flow-continuity').value;
+      document.getElementById('flow-harmonization-val').textContent = document.getElementById('flow-harmonization').value;
+      
+      document.getElementById('flow-direction-display').textContent = document.getElementById('flow-direction').value;
+      document.getElementById('flow-intensity-display').textContent = document.getElementById('flow-intensity').value;
+      document.getElementById('flow-continuity-display').textContent = document.getElementById('flow-continuity').value;
+      document.getElementById('flow-harmonization-display').textContent = document.getElementById('flow-harmonization').value;
+      document.getElementById('flow-harmonization-display-2').textContent = document.getElementById('flow-harmonization').value;
+
+      // Life Values
+      document.getElementById('life-balance-val').textContent = document.getElementById('life-balance').value;
+      document.getElementById('life-unity-val').textContent = document.getElementById('life-unity').value;
+      document.getElementById('life-coherence-val').textContent = document.getElementById('life-coherence').value;
+      document.getElementById('life-resonance-val').textContent = document.getElementById('life-resonance').value;
+      
+      document.getElementById('life-balance-display').textContent = document.getElementById('life-balance').value;
+      document.getElementById('life-unity-display').textContent = document.getElementById('life-unity').value;
+      document.getElementById('life-coherence-display').textContent = document.getElementById('life-coherence').value;
+      document.getElementById('life-resonance-display').textContent = document.getElementById('life-resonance').value;
+      document.getElementById('life-res-display').textContent = document.getElementById('life-resonance').value;
+    }
+
+    // Breathe Function
+    function breathe(system, content, quality) {
+      updateStatus(`Breathing ${system}: Quality ${quality}/9`);
+      updateBreatheDisplay(system, content, quality);
+    }
+
+    // Update Breathe Display
+    function updateBreatheDisplay(system, content, quality) {
+      const breatheDisplay = document.getElementById('breathe-display');
+      
+      const systemContent = {
+        'respiration': {
+          title: '🫁 Respiration System',
+          content: `
+            <h4>🫁 Respiration System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides breathing patterns with:</p>
+            <ul>
+              <li><code>Inhale:</code> ${document.getElementById('respiration-inhale').value}/9 inhale depth</li>
+              <li><code>Exhale:</code> ${document.getElementById('respiration-exhale').value}/9 exhale strength</li>
+              <li><code>Rhythm:</code> ${document.getElementById('respiration-rhythm').value}/9 breathing rhythm</li>
+              <li><code>Harmony:</code> ${quality}/9 overall harmony measurement</li>
+            </ul>
+            <p>The respiration system creates balanced, harmonious breathing through A432 principles.</p>
+          `
+        },
+        'vitality': {
+          title: '⚡ Vitality System',
+          content: `
+            <h4>⚡ Vitality System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides life energy with:</p>
+            <ul>
+              <li><code>Energy:</code> ${document.getElementById('vitality-energy').value}/9 energy level</li>
+              <li><code>Strength:</code> ${document.getElementById('vitality-strength').value}/9 strength quality</li>
+              <li><code>Vigor:</code> ${document.getElementById('vitality-vigor').value}/9 vigor intensity</li>
+              <li><code>Life:</code> ${quality}/9 overall life measurement</li>
+            </ul>
+            <p>The vitality system enhances life force through A432 harmonization.</p>
+          `
+        },
+        'flow': {
+          title: '🌊 Flow System',
+          content: `
+            <h4>🌊 Flow System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides breath flow with:</p>
+            <ul>
+              <li><code>Direction:</code> ${document.getElementById('flow-direction').value}/9 flow direction</li>
+              <li><code>Intensity:</code> ${document.getElementById('flow-intensity').value}/9 flow intensity</li>
+              <li><code>Continuity:</code> ${document.getElementById('flow-continuity').value}/9 flow continuity</li>
+              <li><code>Harmonization:</code> ${quality}/9 overall harmonization measurement</li>
+            </ul>
+            <p>The flow system ensures smooth, continuous breathing through A432 principles.</p>
+          `
+        },
+        'life': {
+          title: '✨ Life System',
+          content: `
+            <h4>✨ Life System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides life resonance with:</p>
+            <ul>
+              <li><code>Balance:</code> ${document.getElementById('life-balance').value}/9 balance measurement</li>
+              <li><code>Unity:</code> ${document.getElementById('life-unity').value}/9 unity strength</li>
+              <li><code>Coherence:</code> ${document.getElementById('life-coherence').value}/9 coherence quality</li>
+              <li><code>Resonance:</code> ${quality}/9 overall resonance measurement</li>
+            </ul>
+            <p>The life system ensures harmonious life force through A432 harmonization.</p>
+          `
+        }
+      };
+      
+      const systemData = systemContent[system];
+      if (systemData) {
+        breatheDisplay.innerHTML = systemData.content + `
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        `;
+        
+        // Update progress
+        breatheProgress = (breatheProgress + 25) % 100;
+        document.getElementById('progress-fill').style.width = breatheProgress + '%';
+      }
+    }
+
+    // Breathe Respiration
+    function breatheRespiration() {
+      const inhale = parseInt(document.getElementById('respiration-inhale').value);
+      const exhale = parseInt(document.getElementById('respiration-exhale').value);
+      const rhythm = parseInt(document.getElementById('respiration-rhythm').value);
+      const harmony = parseInt(document.getElementById('respiration-harmony').value);
+      
+      const overallHarmony = Math.floor((inhale + exhale + rhythm + harmony) / 4);
+      
+      breathe('respiration', 'Breathing patterns', overallHarmony);
+    }
+
+    // Breathe Vitality
+    function breatheVitality() {
+      const energy = parseInt(document.getElementById('vitality-energy').value);
+      const strength = parseInt(document.getElementById('vitality-strength').value);
+      const vigor = parseInt(document.getElementById('vitality-vigor').value);
+      const life = parseInt(document.getElementById('vitality-life').value);
+      
+      const overallLife = Math.floor((energy + strength + vigor + life) / 4);
+      
+      breathe('vitality', 'Life energy', overallLife);
+    }
+
+    // Breathe Flow
+    function breatheFlow() {
+      const direction = parseInt(document.getElementById('flow-direction').value);
+      const intensity = parseInt(document.getElementById('flow-intensity').value);
+      const continuity = parseInt(document.getElementById('flow-continuity').value);
+      const harmonization = parseInt(document.getElementById('flow-harmonization').value);
+      
+      const overallHarmonization = Math.floor((direction + intensity + continuity + harmonization) / 4);
+      
+      breathe('flow', 'Breath flow', overallHarmonization);
+    }
+
+    // Breathe Life
+    function breatheLife() {
+      const balance = parseInt(document.getElementById('life-balance').value);
+      const unity = parseInt(document.getElementById('life-unity').value);
+      const coherence = parseInt(document.getElementById('life-coherence').value);
+      const resonance = parseInt(document.getElementById('life-resonance').value);
+      
+      const overallResonance = Math.floor((balance + unity + coherence + resonance) / 4);
+      
+      breathe('life', 'Life resonance', overallResonance);
+    }
+
+    // Breathe All Systems
+    function breatheAllSystems() {
+      breatheRespiration();
+      setTimeout(() => breatheVitality(), 500);
+      setTimeout(() => breatheFlow(), 1000);
+      setTimeout(() => breatheLife(), 1500);
+      updateStatus('Breathing all systems in harmony');
+    }
+
+    // Analyze Breathe
+    function analyzeBreathe() {
+      const breatheContent = `
+        <h4>🫁 Complete A432 Breathe Analysis</h4>
+        <p><strong>Breathe Analysis Results:</strong></p>
+        <h5>Respiration System</h5>
+        <p>Inhale: ${document.getElementById('respiration-inhale').value}/9 | Exhale: ${document.getElementById('respiration-exhale').value}/9 | Rhythm: ${document.getElementById('respiration-rhythm').value}/9 | Harmony: ${document.getElementById('respiration-harmony').value}/9</p>
+        
+        <h5>Vitality System</h5>
+        <p>Energy: ${document.getElementById('vitality-energy').value}/9 | Strength: ${document.getElementById('vitality-strength').value}/9 | Vigor: ${document.getElementById('vitality-vigor').value}/9 | Life: ${document.getElementById('vitality-life').value}/9</p>
+        
+        <h5>Flow System</h5>
+        <p>Direction: ${document.getElementById('flow-direction').value}/9 | Intensity: ${document.getElementById('flow-intensity').value}/9 | Continuity: ${document.getElementById('flow-continuity').value}/9 | Harmonization: ${document.getElementById('flow-harmonization').value}/9</p>
+        
+        <h5>Life System</h5>
+        <p>Balance: ${document.getElementById('life-balance').value}/9 | Unity: ${document.getElementById('life-unity').value}/9 | Coherence: ${document.getElementById('life-coherence').value}/9 | Resonance: ${document.getElementById('life-resonance').value}/9</p>
+        
+        <p><strong>Overall Breathe Quality:</strong> A432 harmonized breathe system with comprehensive life force.</p>
+      `;
+      
+      document.getElementById('breathe-display').innerHTML = breatheContent + `
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 100%"></div>
+        </div>
+      `;
+      
+      updateStatus('Analyzed complete A432 breathe system');
+    }
+
+    // Clear All Breathe
+    function clearAllBreathe() {
+      document.getElementById('breathe-display').innerHTML = `
+        <h4>🫁 A432.i.breathe - Breathe System</h4>
+        <p>Ready to breathe with A432 harmony...</p>
+        <p>This system provides comprehensive breathe harmonization with:</p>
+        <ul>
+          <li><code>Respiration</code>: Inhale, exhale, rhythm, and harmony</li>
+          <li><code>Vitality</code>: Energy, strength, vigor, and life</li>
+          <li><code>Flow</code>: Direction, intensity, continuity, and harmonization</li>
+          <li><code>Life</code>: Balance, unity, coherence, and resonance</li>
+        </ul>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      `;
+      
+      breatheProgress = 0;
+      document.getElementById('progress-fill').style.width = '0%';
+      updateStatus('Cleared all breathe');
+    }
+
+    // Randomize Breathe
+    function randomizeBreathe() {
+      // Randomize Respiration
+      document.getElementById('respiration-inhale').value = Math.floor(Math.random() * 10);
+      document.getElementById('respiration-exhale').value = Math.floor(Math.random() * 10);
+      document.getElementById('respiration-rhythm').value = Math.floor(Math.random() * 10);
+      document.getElementById('respiration-harmony').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Vitality
+      document.getElementById('vitality-energy').value = Math.floor(Math.random() * 10);
+      document.getElementById('vitality-strength').value = Math.floor(Math.random() * 10);
+      document.getElementById('vitality-vigor').value = Math.floor(Math.random() * 10);
+      document.getElementById('vitality-life').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Flow
+      document.getElementById('flow-direction').value = Math.floor(Math.random() * 10);
+      document.getElementById('flow-intensity').value = Math.floor(Math.random() * 10);
+      document.getElementById('flow-continuity').value = Math.floor(Math.random() * 10);
+      document.getElementById('flow-harmonization').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Life
+      document.getElementById('life-balance').value = Math.floor(Math.random() * 10);
+      document.getElementById('life-unity').value = Math.floor(Math.random() * 10);
+      document.getElementById('life-coherence').value = Math.floor(Math.random() * 10);
+      document.getElementById('life-resonance').value = Math.floor(Math.random() * 10);
+      
+      updateDisplayValues();
+      updateStatus('Randomized all breathe parameters');
+    }
+
+    // Harmonize Breathe
+    function harmonizeBreathe() {
+      // Apply A432 harmonization
+      document.getElementById('respiration-inhale').value = 5;
+      document.getElementById('respiration-exhale').value = 5;
+      document.getElementById('respiration-rhythm').value = 5;
+      document.getElementById('respiration-harmony').value = 5;
+      
+      document.getElementById('vitality-energy').value = 5;
+      document.getElementById('vitality-strength').value = 5;
+      document.getElementById('vitality-vigor').value = 5;
+      document.getElementById('vitality-life').value = 5;
+      
+      document.getElementById('flow-direction').value = 5;
+      document.getElementById('flow-intensity').value = 5;
+      document.getElementById('flow-continuity').value = 5;
+      document.getElementById('flow-harmonization').value = 5;
+      
+      document.getElementById('life-balance').value = 5;
+      document.getElementById('life-unity').value = 5;
+      document.getElementById('life-coherence').value = 5;
+      document.getElementById('life-resonance').value = 5;
+      
+      updateDisplayValues();
+      updateStatus('Harmonized all breathe with A432 system');
+    }
+
+    // Update Status
+    function updateStatus(message) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.classList.add('pulse');
+      setTimeout(() => status.classList.remove('pulse'), 2000);
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      const rangeInputs = document.querySelectorAll('input[type="range"]');
+      rangeInputs.forEach(input => {
+        input.addEventListener('input', updateDisplayValues);
+      });
+      
+      updateDisplayValues();
+      updateStatus('A432 Breathe System Ready');
+    });
+
+    // Expose functions to global scope
+    window.breatheAllSystems = breatheAllSystems;
+    window.analyzeBreathe = analyzeBreathe;
+    window.clearAllBreathe = clearAllBreathe;
+    window.randomizeBreathe = randomizeBreathe;
+    window.harmonizeBreathe = harmonizeBreathe;
+    window.breatheRespiration = breatheRespiration;
+    window.breatheVitality = breatheVitality;
+    window.breatheFlow = breatheFlow;
+    window.breatheLife = breatheLife;
+  </script>
+</body>
+</html> 

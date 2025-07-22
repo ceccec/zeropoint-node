@@ -19,6 +19,7 @@ export * from './a432.evolution';
 export * from './a432.documentation';
 export * from './a432.innovation';
 export * from './a432.experience.ui';
+export * from './a432.cmyk.voice';
 
 import { initializeA432Harmonizer, harmonizeA432System } from './a432.harmonizer';
 import { a432ModuleRegistry } from './a432.modules';
@@ -33,6 +34,7 @@ import { registerA432EvolutionModules, harmonizeAllEvolution } from './a432.evol
 import { registerA432DocumentationModules, harmonizeAllDocumentation } from './a432.documentation';
 import { registerA432InnovationModules, harmonizeAllInnovation } from './a432.innovation';
 import { registerA432ExperienceUIModule, A432ExperienceUI } from './a432.experience.ui';
+import { registerA432CMYKVoiceModules, harmonizeAllCMYKVoice } from './a432.cmyk.voice';
 
 // === A432 SYSTEM CLASS ===
 export class A432System {
@@ -65,6 +67,7 @@ export class A432System {
     registerA432DocumentationModules();
     registerA432InnovationModules();
     registerA432ExperienceUIModule();
+    registerA432CMYKVoiceModules();
     
     this.initialized = true;
     console.log('A432 System initialized with expansion modules');
@@ -116,6 +119,10 @@ export class A432System {
 
   getInnovation(): any {
     return harmonizeAllInnovation();
+  }
+
+  getCMYKVoice(): any {
+    return harmonizeAllCMYKVoice();
   }
 
   getMeta(): string {
@@ -178,6 +185,10 @@ export const A432 = {
 
   innovation: {
     harmonize: () => a432.getInnovation()
+  },
+
+  cmykVoice: {
+    harmonize: () => a432.getCMYKVoice()
   },
 
   experienceUI: {

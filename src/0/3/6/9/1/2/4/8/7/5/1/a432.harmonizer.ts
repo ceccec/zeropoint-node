@@ -26,7 +26,8 @@ export type HarmonizationStrategy =
   | 'healing'           // NEW: Healing-based harmonization
   | 'evolution'         // NEW: Evolutionary harmonization
   | 'documentation'     // NEW: Documentation-based harmonization
-  | 'innovation';       // NEW: Innovation-based harmonization
+  | 'innovation'        // NEW: Innovation-based harmonization
+  | 'voice';            // NEW: Voice-based harmonization
 
 export interface HarmonizationContext {
   strategy: HarmonizationStrategy;

@@ -27,7 +27,8 @@ export type A432ModuleCategory =
   | 'healing'           // NEW: Healing and restoration modules
   | 'evolution'         // NEW: Growth and evolution modules
   | 'documentation'     // NEW: Documentation and auto-generation modules
-  | 'innovation';       // NEW: Innovation and breakthrough modules
+  | 'innovation'        // NEW: Innovation and breakthrough modules
+  | 'voice';            // NEW: Voice and audio harmonization modules
 
 // === MODULE INTERFACE ===
 export interface A432Module {

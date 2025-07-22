@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A432.i.dive - Complete Dive Harmonization</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #000000, #1a1a1a, #000000);
+      color: #00FFFF;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid #00FFFF;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px #00FFFF;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+
+    .dive-systems {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .dive-system {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .dive-system.depth {
+      border-color: #00FFFF;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .dive-system.discovery {
+      border-color: #FF00FF;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .dive-system.exploration {
+      border-color: #FFFF00;
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+    }
+
+    .dive-system.immersion {
+      border-color: #00FF00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .dive-system h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .dive-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-group label {
+      font-size: 0.9em;
+      min-width: 80px;
+    }
+
+    .control-group input[type="range"] {
+      flex: 1;
+      margin: 0 10px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dive-system.depth input[type="range"]::-webkit-slider-thumb {
+      background: #00FFFF;
+      box-shadow: 0 0 10px #00FFFF;
+    }
+
+    .dive-system.discovery input[type="range"]::-webkit-slider-thumb {
+      background: #FF00FF;
+      box-shadow: 0 0 10px #FF00FF;
+    }
+
+    .dive-system.exploration input[type="range"]::-webkit-slider-thumb {
+      background: #FFFF00;
+      box-shadow: 0 0 10px #FFFF00;
+    }
+
+    .dive-system.immersion input[type="range"]::-webkit-slider-thumb {
+      background: #00FF00;
+      box-shadow: 0 0 10px #00FF00;
+    }
+
+    .control-group span {
+      font-size: 0.8em;
+      min-width: 30px;
+      text-align: right;
+    }
+
+    .dive-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .dive-system.depth .dive-button {
+      background: #00FFFF;
+      color: #000000;
+    }
+
+    .dive-system.discovery .dive-button {
+      background: #FF00FF;
+      color: #FFFFFF;
+    }
+
+    .dive-system.exploration .dive-button {
+      background: #FFFF00;
+      color: #000000;
+    }
+
+    .dive-system.immersion .dive-button {
+      background: #00FF00;
+      color: #000000;
+    }
+
+    .dive-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    .master-controls {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00FFFF;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .master-controls h2 {
+      margin-bottom: 20px;
+      color: #00FFFF;
+    }
+
+    .master-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .master-button {
+      padding: 12px 24px;
+      border: 2px solid #00FFFF;
+      background: transparent;
+      color: #00FFFF;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .master-button:hover {
+      background: #00FFFF;
+      color: #000000;
+      box-shadow: 0 0 15px #00FFFF;
+    }
+
+    .status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 0.8em;
+      z-index: 1000;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .dive-info {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    .metric-display {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .metric-item {
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.8em;
+    }
+
+    .dive-display {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 1em;
+      text-align: left;
+      min-height: 200px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .dive-display h4 {
+      color: #00FFFF;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #00FFFF;
+      padding-bottom: 5px;
+    }
+
+    .dive-display p {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .dive-display code {
+      background: rgba(0, 255, 255, 0.1);
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(0, 255, 255, 0.2);
+      border-radius: 2px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #00FFFF;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    @media (max-width: 768px) {
+      .dive-systems {
+        grid-template-columns: 1fr;
+      }
+      
+      .master-buttons {
+        flex-direction: column;
+      }
+      
+      .header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="status" id="status">A432 Dive System Ready</div>
+
+  <div class="container">
+    <div class="header">
+      <h1>A432.i.dive</h1>
+      <p>Complete Dive Harmonization & Exploration Synthesis</p>
+    </div>
+
+    <div class="master-controls">
+      <h2>Master Dive Controls</h2>
+      <div class="master-buttons">
+        <button class="master-button" onclick="diveAllSystems()">🌊 Dive All</button>
+        <button class="master-button" onclick="analyzeDive()">🔍 Analyze Dive</button>
+        <button class="master-button" onclick="clearAllDive()">🗑️ Clear All</button>
+        <button class="master-button" onclick="randomizeDive()">🎲 Randomize</button>
+        <button class="master-button" onclick="harmonizeDive()">✨ Harmonize</button>
+      </div>
+    </div>
+
+    <div class="dive-systems">
+      <!-- Depth System -->
+      <div class="dive-system depth">
+        <h3>Depth System</h3>
+        <div class="dive-controls">
+          <div class="control-group">
+            <label>Penetration:</label>
+            <input type="range" id="depth-penetration" min="0" max="9" value="5" step="1">
+            <span id="depth-penetration-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Analysis:</label>
+            <input type="range" id="depth-analysis" min="0" max="9" value="5" step="1">
+            <span id="depth-analysis-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Understanding:</label>
+            <input type="range" id="depth-understanding" min="0" max="9" value="5" step="1">
+            <span id="depth-understanding-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Insight:</label>
+            <input type="range" id="depth-insight" min="0" max="9" value="5" step="1">
+            <span id="depth-insight-val">5</span>
+          </div>
+        </div>
+        <button class="dive-button" onclick="diveDepth()">🌊 Dive Depth</button>
+        <div class="dive-info">
+          <div>Depth: Penetration + Analysis + Understanding + Insight</div>
+          <div>Insight: <span id="depth-insight-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Penetration: <span id="depth-penetration-display">5</span>/9</div>
+          <div class="metric-item">Analysis: <span id="depth-analysis-display">5</span>/9</div>
+          <div class="metric-item">Understanding: <span id="depth-understanding-display">5</span>/9</div>
+          <div class="metric-item">Insight: <span id="depth-insight-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Discovery System -->
+      <div class="dive-system discovery">
+        <h3>Discovery System</h3>
+        <div class="dive-controls">
+          <div class="control-group">
+            <label>Exploration:</label>
+            <input type="range" id="discovery-exploration" min="0" max="9" value="5" step="1">
+            <span id="discovery-exploration-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Revelation:</label>
+            <input type="range" id="discovery-revelation" min="0" max="9" value="5" step="1">
+            <span id="discovery-revelation-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Innovation:</label>
+            <input type="range" id="discovery-innovation" min="0" max="9" value="5" step="1">
+            <span id="discovery-innovation-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Breakthrough:</label>
+            <input type="range" id="discovery-breakthrough" min="0" max="9" value="5" step="1">
+            <span id="discovery-breakthrough-val">5</span>
+          </div>
+        </div>
+        <button class="dive-button" onclick="diveDiscovery()">🌊 Dive Discovery</button>
+        <div class="dive-info">
+          <div>Discovery: Exploration + Revelation + Innovation + Breakthrough</div>
+          <div>Breakthrough: <span id="discovery-breakthrough-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Exploration: <span id="discovery-exploration-display">5</span>/9</div>
+          <div class="metric-item">Revelation: <span id="discovery-revelation-display">5</span>/9</div>
+          <div class="metric-item">Innovation: <span id="discovery-innovation-display">5</span>/9</div>
+          <div class="metric-item">Breakthrough: <span id="discovery-breakthrough-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Exploration System -->
+      <div class="dive-system exploration">
+        <h3>Exploration System</h3>
+        <div class="dive-controls">
+          <div class="control-group">
+            <label>Navigation:</label>
+            <input type="range" id="exploration-navigation" min="0" max="9" value="5" step="1">
+            <span id="exploration-navigation-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Mapping:</label>
+            <input type="range" id="exploration-mapping" min="0" max="9" value="5" step="1">
+            <span id="exploration-mapping-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Charting:</label>
+            <input type="range" id="exploration-charting" min="0" max="9" value="5" step="1">
+            <span id="exploration-charting-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Harmonization:</label>
+            <input type="range" id="exploration-harmonization" min="0" max="9" value="5" step="1">
+            <span id="exploration-harmonization-val">5</span>
+          </div>
+        </div>
+        <button class="dive-button" onclick="diveExploration()">🌊 Dive Exploration</button>
+        <div class="dive-info">
+          <div>Exploration: Navigation + Mapping + Charting + Harmonization</div>
+          <div>Harmonization: <span id="exploration-harmonization-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Navigation: <span id="exploration-navigation-display">5</span>/9</div>
+          <div class="metric-item">Mapping: <span id="exploration-mapping-display">5</span>/9</div>
+          <div class="metric-item">Charting: <span id="exploration-charting-display">5</span>/9</div>
+          <div class="metric-item">Harmonization: <span id="exploration-harmonization-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Immersion System -->
+      <div class="dive-system immersion">
+        <h3>Immersion System</h3>
+        <div class="dive-controls">
+          <div class="control-group">
+            <label>Presence:</label>
+            <input type="range" id="immersion-presence" min="0" max="9" value="5" step="1">
+            <span id="immersion-presence-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Flow:</label>
+            <input type="range" id="immersion-flow" min="0" max="9" value="5" step="1">
+            <span id="immersion-flow-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Coherence:</label>
+            <input type="range" id="immersion-coherence" min="0" max="9" value="5" step="1">
+            <span id="immersion-coherence-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="immersion-resonance" min="0" max="9" value="5" step="1">
+            <span id="immersion-resonance-val">5</span>
+          </div>
+        </div>
+        <button class="dive-button" onclick="diveImmersion()">🌊 Dive Immersion</button>
+        <div class="dive-info">
+          <div>Immersion: Presence + Flow + Coherence + Resonance</div>
+          <div>Resonance: <span id="immersion-resonance-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Presence: <span id="immersion-presence-display">5</span>/9</div>
+          <div class="metric-item">Flow: <span id="immersion-flow-display">5</span>/9</div>
+          <div class="metric-item">Coherence: <span id="immersion-coherence-display">5</span>/9</div>
+          <div class="metric-item">Resonance: <span id="immersion-res-display">5</span>/9</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dive-display" id="dive-display">
+      <h4>🌊 A432.i.dive - Dive System</h4>
+      <p>Ready to dive with A432 harmony...</p>
+      <p>This system provides comprehensive dive harmonization with:</p>
+      <ul>
+        <li><code>Depth</code>: Penetration, analysis, understanding, and insight</li>
+        <li><code>Discovery</code>: Exploration, revelation, innovation, and breakthrough</li>
+        <li><code>Exploration</code>: Navigation, mapping, charting, and harmonization</li>
+        <li><code>Immersion</code>: Presence, flow, coherence, and resonance</li>
+      </ul>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Dive Management
+    let currentDive = '';
+    let diveProgress = 0;
+    let diveState = null;
+
+    // Update Display Values
+    function updateDisplayValues() {
+      // Depth Values
+      document.getElementById('depth-penetration-val').textContent = document.getElementById('depth-penetration').value;
+      document.getElementById('depth-analysis-val').textContent = document.getElementById('depth-analysis').value;
+      document.getElementById('depth-understanding-val').textContent = document.getElementById('depth-understanding').value;
+      document.getElementById('depth-insight-val').textContent = document.getElementById('depth-insight').value;
+      
+      document.getElementById('depth-penetration-display').textContent = document.getElementById('depth-penetration').value;
+      document.getElementById('depth-analysis-display').textContent = document.getElementById('depth-analysis').value;
+      document.getElementById('depth-understanding-display').textContent = document.getElementById('depth-understanding').value;
+      document.getElementById('depth-insight-display').textContent = document.getElementById('depth-insight').value;
+      document.getElementById('depth-insight-display-2').textContent = document.getElementById('depth-insight').value;
+
+      // Discovery Values
+      document.getElementById('discovery-exploration-val').textContent = document.getElementById('discovery-exploration').value;
+      document.getElementById('discovery-revelation-val').textContent = document.getElementById('discovery-revelation').value;
+      document.getElementById('discovery-innovation-val').textContent = document.getElementById('discovery-innovation').value;
+      document.getElementById('discovery-breakthrough-val').textContent = document.getElementById('discovery-breakthrough').value;
+      
+      document.getElementById('discovery-exploration-display').textContent = document.getElementById('discovery-exploration').value;
+      document.getElementById('discovery-revelation-display').textContent = document.getElementById('discovery-revelation').value;
+      document.getElementById('discovery-innovation-display').textContent = document.getElementById('discovery-innovation').value;
+      document.getElementById('discovery-breakthrough-display').textContent = document.getElementById('discovery-breakthrough').value;
+      document.getElementById('discovery-breakthrough-display-2').textContent = document.getElementById('discovery-breakthrough').value;
+
+      // Exploration Values
+      document.getElementById('exploration-navigation-val').textContent = document.getElementById('exploration-navigation').value;
+      document.getElementById('exploration-mapping-val').textContent = document.getElementById('exploration-mapping').value;
+      document.getElementById('exploration-charting-val').textContent = document.getElementById('exploration-charting').value;
+      document.getElementById('exploration-harmonization-val').textContent = document.getElementById('exploration-harmonization').value;
+      
+      document.getElementById('exploration-navigation-display').textContent = document.getElementById('exploration-navigation').value;
+      document.getElementById('exploration-mapping-display').textContent = document.getElementById('exploration-mapping').value;
+      document.getElementById('exploration-charting-display').textContent = document.getElementById('exploration-charting').value;
+      document.getElementById('exploration-harmonization-display').textContent = document.getElementById('exploration-harmonization').value;
+      document.getElementById('exploration-harmonization-display-2').textContent = document.getElementById('exploration-harmonization').value;
+
+      // Immersion Values
+      document.getElementById('immersion-presence-val').textContent = document.getElementById('immersion-presence').value;
+      document.getElementById('immersion-flow-val').textContent = document.getElementById('immersion-flow').value;
+      document.getElementById('immersion-coherence-val').textContent = document.getElementById('immersion-coherence').value;
+      document.getElementById('immersion-resonance-val').textContent = document.getElementById('immersion-resonance').value;
+      
+      document.getElementById('immersion-presence-display').textContent = document.getElementById('immersion-presence').value;
+      document.getElementById('immersion-flow-display').textContent = document.getElementById('immersion-flow').value;
+      document.getElementById('immersion-coherence-display').textContent = document.getElementById('immersion-coherence').value;
+      document.getElementById('immersion-resonance-display').textContent = document.getElementById('immersion-resonance').value;
+      document.getElementById('immersion-res-display').textContent = document.getElementById('immersion-resonance').value;
+    }
+
+    // Dive Function
+    function dive(system, content, quality) {
+      updateStatus(`Diving ${system}: Quality ${quality}/9`);
+      updateDiveDisplay(system, content, quality);
+    }
+
+    // Update Dive Display
+    function updateDiveDisplay(system, content, quality) {
+      const diveDisplay = document.getElementById('dive-display');
+      
+      const systemContent = {
+        'depth': {
+          title: '🌊 Depth System',
+          content: `
+            <h4>🌊 Depth System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides depth analysis with:</p>
+            <ul>
+              <li><code>Penetration:</code> ${document.getElementById('depth-penetration').value}/9 penetration level</li>
+              <li><code>Analysis:</code> ${document.getElementById('depth-analysis').value}/9 analytical depth</li>
+              <li><code>Understanding:</code> ${document.getElementById('depth-understanding').value}/9 understanding level</li>
+              <li><code>Insight:</code> ${quality}/9 overall insight measurement</li>
+            </ul>
+            <p>The depth system provides profound understanding through A432 harmonization.</p>
+          `
+        },
+        'discovery': {
+          title: '🔍 Discovery System',
+          content: `
+            <h4>🔍 Discovery System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides discovery patterns with:</p>
+            <ul>
+              <li><code>Exploration:</code> ${document.getElementById('discovery-exploration').value}/9 exploration level</li>
+              <li><code>Revelation:</code> ${document.getElementById('discovery-revelation').value}/9 revelation quality</li>
+              <li><code>Innovation:</code> ${document.getElementById('discovery-innovation').value}/9 innovation level</li>
+              <li><code>Breakthrough:</code> ${quality}/9 overall breakthrough measurement</li>
+            </ul>
+            <p>The discovery system reveals new insights through A432 principles.</p>
+          `
+        },
+        'exploration': {
+          title: '🗺️ Exploration System',
+          content: `
+            <h4>🗺️ Exploration System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides exploration harmonization with:</p>
+            <ul>
+              <li><code>Navigation:</code> ${document.getElementById('exploration-navigation').value}/9 navigation quality</li>
+              <li><code>Mapping:</code> ${document.getElementById('exploration-mapping').value}/9 mapping accuracy</li>
+              <li><code>Charting:</code> ${document.getElementById('exploration-charting').value}/9 charting precision</li>
+              <li><code>Harmonization:</code> ${quality}/9 overall harmonization measurement</li>
+            </ul>
+            <p>The exploration system maps new territories through A432 harmonization.</p>
+          `
+        },
+        'immersion': {
+          title: '✨ Immersion System',
+          content: `
+            <h4>✨ Immersion System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>This system provides immersion resonance with:</p>
+            <ul>
+              <li><code>Presence:</code> ${document.getElementById('immersion-presence').value}/9 presence level</li>
+              <li><code>Flow:</code> ${document.getElementById('immersion-flow').value}/9 flow quality</li>
+              <li><code>Coherence:</code> ${document.getElementById('immersion-coherence').value}/9 coherence strength</li>
+              <li><code>Resonance:</code> ${quality}/9 overall resonance measurement</li>
+            </ul>
+            <p>The immersion system provides complete engagement through A432 principles.</p>
+          `
+        }
+      };
+      
+      const systemData = systemContent[system];
+      if (systemData) {
+        diveDisplay.innerHTML = systemData.content + `
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        `;
+        
+        // Update progress
+        diveProgress = (diveProgress + 25) % 100;
+        document.getElementById('progress-fill').style.width = diveProgress + '%';
+      }
+    }
+
+    // Dive Depth
+    function diveDepth() {
+      const penetration = parseInt(document.getElementById('depth-penetration').value);
+      const analysis = parseInt(document.getElementById('depth-analysis').value);
+      const understanding = parseInt(document.getElementById('depth-understanding').value);
+      const insight = parseInt(document.getElementById('depth-insight').value);
+      
+      const overallInsight = Math.floor((penetration + analysis + understanding + insight) / 4);
+      
+      dive('depth', 'Depth analysis', overallInsight);
+    }
+
+    // Dive Discovery
+    function diveDiscovery() {
+      const exploration = parseInt(document.getElementById('discovery-exploration').value);
+      const revelation = parseInt(document.getElementById('discovery-revelation').value);
+      const innovation = parseInt(document.getElementById('discovery-innovation').value);
+      const breakthrough = parseInt(document.getElementById('discovery-breakthrough').value);
+      
+      const overallBreakthrough = Math.floor((exploration + revelation + innovation + breakthrough) / 4);
+      
+      dive('discovery', 'Discovery patterns', overallBreakthrough);
+    }
+
+    // Dive Exploration
+    function diveExploration() {
+      const navigation = parseInt(document.getElementById('exploration-navigation').value);
+      const mapping = parseInt(document.getElementById('exploration-mapping').value);
+      const charting = parseInt(document.getElementById('exploration-charting').value);
+      const harmonization = parseInt(document.getElementById('exploration-harmonization').value);
+      
+      const overallHarmonization = Math.floor((navigation + mapping + charting + harmonization) / 4);
+      
+      dive('exploration', 'Exploration harmonization', overallHarmonization);
+    }
+
+    // Dive Immersion
+    function diveImmersion() {
+      const presence = parseInt(document.getElementById('immersion-presence').value);
+      const flow = parseInt(document.getElementById('immersion-flow').value);
+      const coherence = parseInt(document.getElementById('immersion-coherence').value);
+      const resonance = parseInt(document.getElementById('immersion-resonance').value);
+      
+      const overallResonance = Math.floor((presence + flow + coherence + resonance) / 4);
+      
+      dive('immersion', 'Immersion resonance', overallResonance);
+    }
+
+    // Dive All Systems
+    function diveAllSystems() {
+      diveDepth();
+      setTimeout(() => diveDiscovery(), 500);
+      setTimeout(() => diveExploration(), 1000);
+      setTimeout(() => diveImmersion(), 1500);
+      updateStatus('Diving all systems in harmony');
+    }
+
+    // Analyze Dive
+    function analyzeDive() {
+      const diveContent = `
+        <h4>🌊 Complete A432 Dive Analysis</h4>
+        <p><strong>Dive Analysis Results:</strong></p>
+        <h5>Depth System</h5>
+        <p>Penetration: ${document.getElementById('depth-penetration').value}/9 | Analysis: ${document.getElementById('depth-analysis').value}/9 | Understanding: ${document.getElementById('depth-understanding').value}/9 | Insight: ${document.getElementById('depth-insight').value}/9</p>
+        
+        <h5>Discovery System</h5>
+        <p>Exploration: ${document.getElementById('discovery-exploration').value}/9 | Revelation: ${document.getElementById('discovery-revelation').value}/9 | Innovation: ${document.getElementById('discovery-innovation').value}/9 | Breakthrough: ${document.getElementById('discovery-breakthrough').value}/9</p>
+        
+        <h5>Exploration System</h5>
+        <p>Navigation: ${document.getElementById('exploration-navigation').value}/9 | Mapping: ${document.getElementById('exploration-mapping').value}/9 | Charting: ${document.getElementById('exploration-charting').value}/9 | Harmonization: ${document.getElementById('exploration-harmonization').value}/9</p>
+        
+        <h5>Immersion System</h5>
+        <p>Presence: ${document.getElementById('immersion-presence').value}/9 | Flow: ${document.getElementById('immersion-flow').value}/9 | Coherence: ${document.getElementById('immersion-coherence').value}/9 | Resonance: ${document.getElementById('immersion-resonance').value}/9</p>
+        
+        <p><strong>Overall Dive Quality:</strong> A432 harmonized dive system with comprehensive exploration.</p>
+      `;
+      
+      document.getElementById('dive-display').innerHTML = diveContent + `
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 100%"></div>
+        </div>
+      `;
+      
+      updateStatus('Analyzed complete A432 dive system');
+    }
+
+    // Clear All Dive
+    function clearAllDive() {
+      document.getElementById('dive-display').innerHTML = `
+        <h4>🌊 A432.i.dive - Dive System</h4>
+        <p>Ready to dive with A432 harmony...</p>
+        <p>This system provides comprehensive dive harmonization with:</p>
+        <ul>
+          <li><code>Depth</code>: Penetration, analysis, understanding, and insight</li>
+          <li><code>Discovery</code>: Exploration, revelation, innovation, and breakthrough</li>
+          <li><code>Exploration</code>: Navigation, mapping, charting, and harmonization</li>
+          <li><code>Immersion</code>: Presence, flow, coherence, and resonance</li>
+        </ul>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      `;
+      
+      diveProgress = 0;
+      document.getElementById('progress-fill').style.width = '0%';
+      updateStatus('Cleared all dive');
+    }
+
+    // Randomize Dive
+    function randomizeDive() {
+      // Randomize Depth
+      document.getElementById('depth-penetration').value = Math.floor(Math.random() * 10);
+      document.getElementById('depth-analysis').value = Math.floor(Math.random() * 10);
+      document.getElementById('depth-understanding').value = Math.floor(Math.random() * 10);
+      document.getElementById('depth-insight').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Discovery
+      document.getElementById('discovery-exploration').value = Math.floor(Math.random() * 10);
+      document.getElementById('discovery-revelation').value = Math.floor(Math.random() * 10);
+      document.getElementById('discovery-innovation').value = Math.floor(Math.random() * 10);
+      document.getElementById('discovery-breakthrough').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Exploration
+      document.getElementById('exploration-navigation').value = Math.floor(Math.random() * 10);
+      document.getElementById('exploration-mapping').value = Math.floor(Math.random() * 10);
+      document.getElementById('exploration-charting').value = Math.floor(Math.random() * 10);
+      document.getElementById('exploration-harmonization').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Immersion
+      document.getElementById('immersion-presence').value = Math.floor(Math.random() * 10);
+      document.getElementById('immersion-flow').value = Math.floor(Math.random() * 10);
+      document.getElementById('immersion-coherence').value = Math.floor(Math.random() * 10);
+      document.getElementById('immersion-resonance').value = Math.floor(Math.random() * 10);
+      
+      updateDisplayValues();
+      updateStatus('Randomized all dive parameters');
+    }
+
+    // Harmonize Dive
+    function harmonizeDive() {
+      // Apply A432 harmonization
+      document.getElementById('depth-penetration').value = 5;
+      document.getElementById('depth-analysis').value = 5;
+      document.getElementById('depth-understanding').value = 5;
+      document.getElementById('depth-insight').value = 5;
+      
+      document.getElementById('discovery-exploration').value = 5;
+      document.getElementById('discovery-revelation').value = 5;
+      document.getElementById('discovery-innovation').value = 5;
+      document.getElementById('discovery-breakthrough').value = 5;
+      
+      document.getElementById('exploration-navigation').value = 5;
+      document.getElementById('exploration-mapping').value = 5;
+      document.getElementById('exploration-charting').value = 5;
+      document.getElementById('exploration-harmonization').value = 5;
+      
+      document.getElementById('immersion-presence').value = 5;
+      document.getElementById('immersion-flow').value = 5;
+      document.getElementById('immersion-coherence').value = 5;
+      document.getElementById('immersion-resonance').value = 5;
+      
+      updateDisplayValues();
+      updateStatus('Harmonized all dive with A432 system');
+    }
+
+    // Update Status
+    function updateStatus(message) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.classList.add('pulse');
+      setTimeout(() => status.classList.remove('pulse'), 2000);
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      const rangeInputs = document.querySelectorAll('input[type="range"]');
+      rangeInputs.forEach(input => {
+        input.addEventListener('input', updateDisplayValues);
+      });
+      
+      updateDisplayValues();
+      updateStatus('A432 Dive System Ready');
+    });
+
+    // Expose functions to global scope
+    window.diveAllSystems = diveAllSystems;
+    window.analyzeDive = analyzeDive;
+    window.clearAllDive = clearAllDive;
+    window.randomizeDive = randomizeDive;
+    window.harmonizeDive = harmonizeDive;
+    window.diveDepth = diveDepth;
+    window.diveDiscovery = diveDiscovery;
+    window.diveExploration = diveExploration;
+    window.diveImmersion = diveImmersion;
+  </script>
+</body>
+</html> 

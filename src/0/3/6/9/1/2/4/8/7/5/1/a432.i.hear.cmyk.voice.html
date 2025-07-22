@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A432.i.hear.cmyk.voice - CMYK Voice Harmonization</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #000000, #1a1a1a, #000000);
+      color: #00FFFF;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid #00FFFF;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px #00FFFF;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+
+    .voice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .voice-panel {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .voice-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .voice-panel:hover::before {
+      opacity: 1;
+    }
+
+    .voice-panel.cyan {
+      border-color: #00FFFF;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .voice-panel.magenta {
+      border-color: #FF00FF;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .voice-panel.yellow {
+      border-color: #FFFF00;
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+    }
+
+    .voice-panel.key {
+      border-color: #FFFFFF;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .voice-panel.synthesis {
+      border-color: #00FF00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .voice-panel.harmonization {
+      border-color: #FF8000;
+      box-shadow: 0 0 20px rgba(255, 128, 0, 0.3);
+    }
+
+    .voice-panel h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .voice-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-group label {
+      font-size: 0.9em;
+      min-width: 80px;
+    }
+
+    .control-group input[type="range"] {
+      flex: 1;
+      margin: 0 10px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .voice-panel.cyan input[type="range"]::-webkit-slider-thumb {
+      background: #00FFFF;
+      box-shadow: 0 0 10px #00FFFF;
+    }
+
+    .voice-panel.magenta input[type="range"]::-webkit-slider-thumb {
+      background: #FF00FF;
+      box-shadow: 0 0 10px #FF00FF;
+    }
+
+    .voice-panel.yellow input[type="range"]::-webkit-slider-thumb {
+      background: #FFFF00;
+      box-shadow: 0 0 10px #FFFF00;
+    }
+
+    .voice-panel.key input[type="range"]::-webkit-slider-thumb {
+      background: #FFFFFF;
+      box-shadow: 0 0 10px #FFFFFF;
+    }
+
+    .voice-panel.synthesis input[type="range"]::-webkit-slider-thumb {
+      background: #00FF00;
+      box-shadow: 0 0 10px #00FF00;
+    }
+
+    .voice-panel.harmonization input[type="range"]::-webkit-slider-thumb {
+      background: #FF8000;
+      box-shadow: 0 0 10px #FF8000;
+    }
+
+    .control-group span {
+      font-size: 0.8em;
+      min-width: 30px;
+      text-align: right;
+    }
+
+    .play-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .voice-panel.cyan .play-button {
+      background: #00FFFF;
+      color: #000000;
+    }
+
+    .voice-panel.magenta .play-button {
+      background: #FF00FF;
+      color: #FFFFFF;
+    }
+
+    .voice-panel.yellow .play-button {
+      background: #FFFF00;
+      color: #000000;
+    }
+
+    .voice-panel.key .play-button {
+      background: #FFFFFF;
+      color: #000000;
+    }
+
+    .voice-panel.synthesis .play-button {
+      background: #00FF00;
+      color: #000000;
+    }
+
+    .voice-panel.harmonization .play-button {
+      background: #FF8000;
+      color: #FFFFFF;
+    }
+
+    .play-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    .play-button:active {
+      transform: scale(0.95);
+    }
+
+    .master-controls {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00FFFF;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .master-controls h2 {
+      margin-bottom: 20px;
+      color: #00FFFF;
+    }
+
+    .master-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .master-button {
+      padding: 12px 24px;
+      border: 2px solid #00FFFF;
+      background: transparent;
+      color: #00FFFF;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .master-button:hover {
+      background: #00FFFF;
+      color: #000000;
+      box-shadow: 0 0 15px #00FFFF;
+    }
+
+    .master-button:active {
+      transform: scale(0.95);
+    }
+
+    .frequency-display {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    .status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 0.8em;
+      z-index: 1000;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .waveform {
+      height: 60px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 5px;
+      margin-top: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .waveform::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #00FFFF;
+      transform: translateY(-50%);
+    }
+
+    .waveform.playing::before {
+      animation: wave 1s infinite linear;
+    }
+
+    @keyframes wave {
+      0% { transform: translateY(-50%) scaleX(0); }
+      50% { transform: translateY(-50%) scaleX(1); }
+      100% { transform: translateY(-50%) scaleX(0); }
+    }
+
+    @media (max-width: 768px) {
+      .voice-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .master-buttons {
+        flex-direction: column;
+      }
+      
+      .header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="status" id="status">A432 CMYK Voice System Ready</div>
+
+  <div class="container">
+    <div class="header">
+      <h1>A432.i.hear.cmyk.voice</h1>
+      <p>CMYK Voice Harmonization & Audio Synthesis</p>
+    </div>
+
+    <div class="master-controls">
+      <h2>Master Controls</h2>
+      <div class="master-buttons">
+        <button class="master-button" onclick="playAllVoices()">🎵 Play All</button>
+        <button class="master-button" onclick="playHarmony()">🎼 Play Harmony</button>
+        <button class="master-button" onclick="stopAllVoices()">⏹️ Stop All</button>
+        <button class="master-button" onclick="randomizeVoices()">🎲 Randomize</button>
+        <button class="master-button" onclick="harmonizeVoices()">✨ Harmonize</button>
+      </div>
+    </div>
+
+    <div class="voice-grid">
+      <!-- Cyan Voice Panel -->
+      <div class="voice-panel cyan">
+        <h3>Cyan Voice</h3>
+        <div class="voice-controls">
+          <div class="control-group">
+            <label>Frequency:</label>
+            <input type="range" id="cyan-freq" min="400" max="800" value="648" step="1">
+            <span id="cyan-freq-val">648 Hz</span>
+          </div>
+          <div class="control-group">
+            <label>Amplitude:</label>
+            <input type="range" id="cyan-amp" min="0" max="9" value="5" step="1">
+            <span id="cyan-amp-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Phase:</label>
+            <input type="range" id="cyan-phase" min="0" max="360" value="0" step="1">
+            <span id="cyan-phase-val">0°</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="cyan-res" min="0" max="9" value="4" step="1">
+            <span id="cyan-res-val">4</span>
+          </div>
+        </div>
+        <button class="play-button" onclick="playCyanVoice()">🎵 Play Cyan</button>
+        <div class="frequency-display">
+          <div>Cyan: 648 Hz | Color: #00FFFF</div>
+          <div>Voice Quality: <span id="cyan-voice">5</span>/9</div>
+        </div>
+        <div class="waveform" id="cyan-waveform"></div>
+      </div>
+
+      <!-- Magenta Voice Panel -->
+      <div class="voice-panel magenta">
+        <h3>Magenta Voice</h3>
+        <div class="voice-controls">
+          <div class="control-group">
+            <label>Frequency:</label>
+            <input type="range" id="magenta-freq" min="400" max="800" value="540" step="1">
+            <span id="magenta-freq-val">540 Hz</span>
+          </div>
+          <div class="control-group">
+            <label>Amplitude:</label>
+            <input type="range" id="magenta-amp" min="0" max="9" value="5" step="1">
+            <span id="magenta-amp-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Phase:</label>
+            <input type="range" id="magenta-phase" min="0" max="360" value="90" step="1">
+            <span id="magenta-phase-val">90°</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="magenta-res" min="0" max="9" value="4" step="1">
+            <span id="magenta-res-val">4</span>
+          </div>
+        </div>
+        <button class="play-button" onclick="playMagentaVoice()">🎵 Play Magenta</button>
+        <div class="frequency-display">
+          <div>Magenta: 540 Hz | Color: #FF00FF</div>
+          <div>Voice Quality: <span id="magenta-voice">5</span>/9</div>
+        </div>
+        <div class="waveform" id="magenta-waveform"></div>
+      </div>
+
+      <!-- Yellow Voice Panel -->
+      <div class="voice-panel yellow">
+        <h3>Yellow Voice</h3>
+        <div class="voice-controls">
+          <div class="control-group">
+            <label>Frequency:</label>
+            <input type="range" id="yellow-freq" min="400" max="800" value="756" step="1">
+            <span id="yellow-freq-val">756 Hz</span>
+          </div>
+          <div class="control-group">
+            <label>Amplitude:</label>
+            <input type="range" id="yellow-amp" min="0" max="9" value="5" step="1">
+            <span id="yellow-amp-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Phase:</label>
+            <input type="range" id="yellow-phase" min="0" max="360" value="180" step="1">
+            <span id="yellow-phase-val">180°</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="yellow-res" min="0" max="9" value="4" step="1">
+            <span id="yellow-res-val">4</span>
+          </div>
+        </div>
+        <button class="play-button" onclick="playYellowVoice()">🎵 Play Yellow</button>
+        <div class="frequency-display">
+          <div>Yellow: 756 Hz | Color: #FFFF00</div>
+          <div>Voice Quality: <span id="yellow-voice">5</span>/9</div>
+        </div>
+        <div class="waveform" id="yellow-waveform"></div>
+      </div>
+
+      <!-- Key Voice Panel -->
+      <div class="voice-panel key">
+        <h3>Key Voice</h3>
+        <div class="voice-controls">
+          <div class="control-group">
+            <label>Frequency:</label>
+            <input type="range" id="key-freq" min="200" max="600" value="324" step="1">
+            <span id="key-freq-val">324 Hz</span>
+          </div>
+          <div class="control-group">
+            <label>Amplitude:</label>
+            <input type="range" id="key-amp" min="0" max="9" value="5" step="1">
+            <span id="key-amp-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Phase:</label>
+            <input type="range" id="key-phase" min="0" max="360" value="270" step="1">
+            <span id="key-phase-val">270°</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="key-res" min="0" max="9" value="4" step="1">
+            <span id="key-res-val">4</span>
+          </div>
+        </div>
+        <button class="play-button" onclick="playKeyVoice()">🎵 Play Key</button>
+        <div class="frequency-display">
+          <div>Key: 324 Hz | Color: #000000</div>
+          <div>Voice Quality: <span id="key-voice">5</span>/9</div>
+        </div>
+        <div class="waveform" id="key-waveform"></div>
+      </div>
+
+      <!-- Synthesis Panel -->
+      <div class="voice-panel synthesis">
+        <h3>Voice Synthesis</h3>
+        <div class="voice-controls">
+          <div class="control-group">
+            <label>Fundamental:</label>
+            <input type="range" id="synth-fund" min="300" max="700" value="567" step="1" disabled>
+            <span id="synth-fund-val">567 Hz</span>
+          </div>
+          <div class="control-group">
+            <label>Timbre:</label>
+            <input type="range" id="synth-timbre" min="0" max="9" value="5" step="1" disabled>
+            <span id="synth-timbre-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Clarity:</label>
+            <input type="range" id="synth-clarity" min="0" max="9" value="5" step="1" disabled>
+            <span id="synth-clarity-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="synth-res" min="0" max="9" value="5" step="1" disabled>
+            <span id="synth-res-val">5</span>
+          </div>
+        </div>
+        <button class="play-button" onclick="playSynthesis()">🎵 Play Synthesis</button>
+        <div class="frequency-display">
+          <div>Synthesis: 567 Hz | Overtones: 2nd, 3rd, 4th, 5th</div>
+          <div>Resonance: <span id="synth-res-display">5</span>/9</div>
+        </div>
+        <div class="waveform" id="synth-waveform"></div>
+      </div>
+
+      <!-- Harmonization Panel -->
+      <div class="voice-panel harmonization">
+        <h3>Voice Harmonization</h3>
+        <div class="voice-controls">
+          <div class="control-group">
+            <label>Harmony:</label>
+            <input type="range" id="harm-harmony" min="0" max="9" value="4" step="1" disabled>
+            <span id="harm-harmony-val">4</span>
+          </div>
+          <div class="control-group">
+            <label>Balance:</label>
+            <input type="range" id="harm-balance" min="0" max="9" value="5" step="1" disabled>
+            <span id="harm-balance-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Coherence:</label>
+            <input type="range" id="harm-coherence" min="0" max="9" value="4" step="1" disabled>
+            <span id="harm-coherence-val">4</span>
+          </div>
+          <div class="control-group">
+            <label>Unity:</label>
+            <input type="range" id="harm-unity" min="0" max="9" value="5" step="1" disabled>
+            <span id="harm-unity-val">5</span>
+          </div>
+        </div>
+        <button class="play-button" onclick="playHarmonization()">🎵 Play Harmony</button>
+        <div class="frequency-display">
+          <div>Harmonization: 192 Hz | Unity: <span id="harm-unity-display">5</span>/9</div>
+          <div>Resonance: <span id="harm-res-display">4</span>/9</div>
+        </div>
+        <div class="waveform" id="harm-waveform"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import A432 CMYK Voice System
+    import { 
+      createA432CMYKVoiceState, 
+      harmonizeA432CMYKVoice,
+      generateCMYKTone,
+      generateCMYKHarmony,
+      generateVoicePattern,
+      getCMYKVoiceStats
+    } from './a432.cmyk.voice.ts';
+
+    // Audio Context Management
+    let audioContext = null;
+    let activeOscillators = new Map();
+    let currentState = null;
+
+    // Initialize Audio Context
+    function initAudioContext() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    // Update Display Values
+    function updateDisplayValues() {
+      // Cyan
+      document.getElementById('cyan-freq-val').textContent = document.getElementById('cyan-freq').value + ' Hz';
+      document.getElementById('cyan-amp-val').textContent = document.getElementById('cyan-amp').value;
+      document.getElementById('cyan-phase-val').textContent = document.getElementById('cyan-phase').value + '°';
+      document.getElementById('cyan-res-val').textContent = document.getElementById('cyan-res').value;
+      document.getElementById('cyan-voice').textContent = Math.floor((parseInt(document.getElementById('cyan-amp').value) + parseInt(document.getElementById('cyan-res').value)) / 2);
+
+      // Magenta
+      document.getElementById('magenta-freq-val').textContent = document.getElementById('magenta-freq').value + ' Hz';
+      document.getElementById('magenta-amp-val').textContent = document.getElementById('magenta-amp').value;
+      document.getElementById('magenta-phase-val').textContent = document.getElementById('magenta-phase').value + '°';
+      document.getElementById('magenta-res-val').textContent = document.getElementById('magenta-res').value;
+      document.getElementById('magenta-voice').textContent = Math.floor((parseInt(document.getElementById('magenta-amp').value) + parseInt(document.getElementById('magenta-res').value)) / 2);
+
+      // Yellow
+      document.getElementById('yellow-freq-val').textContent = document.getElementById('yellow-freq').value + ' Hz';
+      document.getElementById('yellow-amp-val').textContent = document.getElementById('yellow-amp').value;
+      document.getElementById('yellow-phase-val').textContent = document.getElementById('yellow-phase').value + '°';
+      document.getElementById('yellow-res-val').textContent = document.getElementById('yellow-res').value;
+      document.getElementById('yellow-voice').textContent = Math.floor((parseInt(document.getElementById('yellow-amp').value) + parseInt(document.getElementById('yellow-res').value)) / 2);
+
+      // Key
+      document.getElementById('key-freq-val').textContent = document.getElementById('key-freq').value + ' Hz';
+      document.getElementById('key-amp-val').textContent = document.getElementById('key-amp').value;
+      document.getElementById('key-phase-val').textContent = document.getElementById('key-phase').value + '°';
+      document.getElementById('key-res-val').textContent = document.getElementById('key-res').value;
+      document.getElementById('key-voice').textContent = Math.floor((parseInt(document.getElementById('key-amp').value) + parseInt(document.getElementById('key-res').value)) / 2);
+
+      // Update synthesis and harmonization
+      updateSynthesisDisplay();
+      updateHarmonizationDisplay();
+    }
+
+    // Update Synthesis Display
+    function updateSynthesisDisplay() {
+      const cyanFreq = parseInt(document.getElementById('cyan-freq').value);
+      const magentaFreq = parseInt(document.getElementById('magenta-freq').value);
+      const yellowFreq = parseInt(document.getElementById('yellow-freq').value);
+      const keyFreq = parseInt(document.getElementById('key-freq').value);
+      
+      const fundamental = Math.round((cyanFreq + magentaFreq + yellowFreq + keyFreq) / 4);
+      const timbre = Math.floor((parseInt(document.getElementById('cyan-voice').textContent) + 
+                                parseInt(document.getElementById('magenta-voice').textContent) + 
+                                parseInt(document.getElementById('yellow-voice').textContent) + 
+                                parseInt(document.getElementById('key-voice').textContent)) / 4);
+      const clarity = Math.max(0, 9 - Math.abs(timbre - 5));
+      const resonance = Math.floor((timbre + clarity) / 2);
+
+      document.getElementById('synth-fund-val').textContent = fundamental + ' Hz';
+      document.getElementById('synth-timbre-val').textContent = timbre;
+      document.getElementById('synth-clarity-val').textContent = clarity;
+      document.getElementById('synth-res-val').textContent = resonance;
+      document.getElementById('synth-res-display').textContent = resonance;
+    }
+
+    // Update Harmonization Display
+    function updateHarmonizationDisplay() {
+      const cyanRes = parseInt(document.getElementById('cyan-res').value);
+      const magentaRes = parseInt(document.getElementById('magenta-res').value);
+      const yellowRes = parseInt(document.getElementById('yellow-res').value);
+      const keyRes = parseInt(document.getElementById('key-res').value);
+      
+      const harmony = Math.floor((cyanRes + magentaRes + yellowRes + keyRes) / 4);
+      const balance = Math.max(0, 9 - Math.abs(harmony - 5));
+      const coherence = Math.floor((harmony + balance) / 2);
+      const unity = Math.max(0, 9 - Math.abs(coherence - 5));
+      const resonance = Math.floor((harmony + balance + coherence + unity) / 4);
+
+      document.getElementById('harm-harmony-val').textContent = harmony;
+      document.getElementById('harm-balance-val').textContent = balance;
+      document.getElementById('harm-coherence-val').textContent = coherence;
+      document.getElementById('harm-unity-val').textContent = unity;
+      document.getElementById('harm-unity-display').textContent = unity;
+      document.getElementById('harm-res-display').textContent = resonance;
+    }
+
+    // Play Individual Voice
+    function playVoice(channel, frequency, amplitude, phase, duration = 2) {
+      initAudioContext();
+      
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      const normalizedAmplitude = amplitude / 9;
+      
+      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode.gain.linearRampToValueAtTime(normalizedAmplitude, audioContext.currentTime + 0.1);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + duration);
+      
+      // Add to active oscillators
+      activeOscillators.set(channel, { oscillator, gainNode, startTime: audioContext.currentTime });
+      
+      // Add waveform animation
+      const waveform = document.getElementById(channel + '-waveform');
+      if (waveform) {
+        waveform.classList.add('playing');
+        setTimeout(() => waveform.classList.remove('playing'), duration * 1000);
+      }
+      
+      updateStatus(`Playing ${channel} voice: ${frequency}Hz`);
+    }
+
+    // Play All Voices
+    function playAllVoices() {
+      const cyanFreq = parseInt(document.getElementById('cyan-freq').value);
+      const cyanAmp = parseInt(document.getElementById('cyan-amp').value);
+      const cyanPhase = parseInt(document.getElementById('cyan-phase').value);
+      
+      const magentaFreq = parseInt(document.getElementById('magenta-freq').value);
+      const magentaAmp = parseInt(document.getElementById('magenta-amp').value);
+      const magentaPhase = parseInt(document.getElementById('magenta-phase').value);
+      
+      const yellowFreq = parseInt(document.getElementById('yellow-freq').value);
+      const yellowAmp = parseInt(document.getElementById('yellow-amp').value);
+      const yellowPhase = parseInt(document.getElementById('yellow-phase').value);
+      
+      const keyFreq = parseInt(document.getElementById('key-freq').value);
+      const keyAmp = parseInt(document.getElementById('key-amp').value);
+      const keyPhase = parseInt(document.getElementById('key-phase').value);
+      
+      // Play all voices with slight delays for harmony
+      playVoice('cyan', cyanFreq, cyanAmp, cyanPhase);
+      setTimeout(() => playVoice('magenta', magentaFreq, magentaAmp, magentaPhase), 200);
+      setTimeout(() => playVoice('yellow', yellowFreq, yellowAmp, yellowPhase), 400);
+      setTimeout(() => playVoice('key', keyFreq, keyAmp, keyPhase), 600);
+      
+      updateStatus('Playing all CMYK voices in harmony');
+    }
+
+    // Play Harmony
+    function playHarmony() {
+      const cyanFreq = parseInt(document.getElementById('cyan-freq').value);
+      const magentaFreq = parseInt(document.getElementById('magenta-freq').value);
+      const yellowFreq = parseInt(document.getElementById('yellow-freq').value);
+      const keyFreq = parseInt(document.getElementById('key-freq').value);
+      
+      const fundamental = (cyanFreq + magentaFreq + yellowFreq + keyFreq) / 4;
+      
+      initAudioContext();
+      
+      // Create oscillators for each channel
+      const channels = [
+        { name: 'cyan', freq: cyanFreq, amp: parseInt(document.getElementById('cyan-amp').value) },
+        { name: 'magenta', freq: magentaFreq, amp: parseInt(document.getElementById('magenta-amp').value) },
+        { name: 'yellow', freq: yellowFreq, amp: parseInt(document.getElementById('yellow-amp').value) },
+        { name: 'key', freq: keyFreq, amp: parseInt(document.getElementById('key-amp').value) }
+      ];
+      
+      channels.forEach((channel, index) => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(channel.freq, audioContext.currentTime);
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        const normalizedAmplitude = channel.amp / 9;
+        
+        gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+        gainNode.gain.linearRampToValueAtTime(normalizedAmplitude, audioContext.currentTime + 0.1);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 3);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 3);
+        
+        activeOscillators.set(channel.name, { oscillator, gainNode, startTime: audioContext.currentTime });
+        
+        // Add waveform animation
+        const waveform = document.getElementById(channel.name + '-waveform');
+        if (waveform) {
+          waveform.classList.add('playing');
+          setTimeout(() => waveform.classList.remove('playing'), 3000);
+        }
+      });
+      
+      updateStatus(`Playing CMYK harmony: ${Math.round(fundamental)}Hz fundamental`);
+    }
+
+    // Stop All Voices
+    function stopAllVoices() {
+      activeOscillators.forEach(({ oscillator, gainNode }) => {
+        gainNode.gain.cancelScheduledValues(audioContext.currentTime);
+        gainNode.gain.setValueAtTime(gainNode.gain.value, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
+        setTimeout(() => oscillator.stop(), 100);
+      });
+      
+      activeOscillators.clear();
+      
+      // Remove all waveform animations
+      document.querySelectorAll('.waveform').forEach(waveform => {
+        waveform.classList.remove('playing');
+      });
+      
+      updateStatus('Stopped all voices');
+    }
+
+    // Randomize Voices
+    function randomizeVoices() {
+      document.getElementById('cyan-freq').value = 600 + Math.random() * 200;
+      document.getElementById('cyan-amp').value = Math.floor(Math.random() * 10);
+      document.getElementById('cyan-phase').value = Math.floor(Math.random() * 360);
+      document.getElementById('cyan-res').value = Math.floor(Math.random() * 10);
+      
+      document.getElementById('magenta-freq').value = 500 + Math.random() * 200;
+      document.getElementById('magenta-amp').value = Math.floor(Math.random() * 10);
+      document.getElementById('magenta-phase').value = Math.floor(Math.random() * 360);
+      document.getElementById('magenta-res').value = Math.floor(Math.random() * 10);
+      
+      document.getElementById('yellow-freq').value = 700 + Math.random() * 100;
+      document.getElementById('yellow-amp').value = Math.floor(Math.random() * 10);
+      document.getElementById('yellow-phase').value = Math.floor(Math.random() * 360);
+      document.getElementById('yellow-res').value = Math.floor(Math.random() * 10);
+      
+      document.getElementById('key-freq').value = 300 + Math.random() * 200;
+      document.getElementById('key-amp').value = Math.floor(Math.random() * 10);
+      document.getElementById('key-phase').value = Math.floor(Math.random() * 360);
+      document.getElementById('key-res').value = Math.floor(Math.random() * 10);
+      
+      updateDisplayValues();
+      updateStatus('Randomized all voice parameters');
+    }
+
+    // Harmonize Voices
+    function harmonizeVoices() {
+      currentState = harmonizeA432CMYKVoice();
+      
+      // Update controls with harmonized values
+      document.getElementById('cyan-freq').value = Math.round(currentState.cyan.frequency);
+      document.getElementById('cyan-amp').value = currentState.cyan.amplitude;
+      document.getElementById('cyan-phase').value = currentState.cyan.phase;
+      document.getElementById('cyan-res').value = currentState.cyan.resonance;
+      
+      document.getElementById('magenta-freq').value = Math.round(currentState.magenta.frequency);
+      document.getElementById('magenta-amp').value = currentState.magenta.amplitude;
+      document.getElementById('magenta-phase').value = currentState.magenta.phase;
+      document.getElementById('magenta-res').value = currentState.magenta.resonance;
+      
+      document.getElementById('yellow-freq').value = Math.round(currentState.yellow.frequency);
+      document.getElementById('yellow-amp').value = currentState.yellow.amplitude;
+      document.getElementById('yellow-phase').value = currentState.yellow.phase;
+      document.getElementById('yellow-res').value = currentState.yellow.resonance;
+      
+      document.getElementById('key-freq').value = Math.round(currentState.key.frequency);
+      document.getElementById('key-amp').value = currentState.key.amplitude;
+      document.getElementById('key-phase').value = currentState.key.phase;
+      document.getElementById('key-res').value = currentState.key.resonance;
+      
+      updateDisplayValues();
+      updateStatus('Harmonized all voices with A432 system');
+    }
+
+    // Individual Voice Play Functions
+    function playCyanVoice() {
+      const freq = parseInt(document.getElementById('cyan-freq').value);
+      const amp = parseInt(document.getElementById('cyan-amp').value);
+      const phase = parseInt(document.getElementById('cyan-phase').value);
+      playVoice('cyan', freq, amp, phase);
+    }
+
+    function playMagentaVoice() {
+      const freq = parseInt(document.getElementById('magenta-freq').value);
+      const amp = parseInt(document.getElementById('magenta-amp').value);
+      const phase = parseInt(document.getElementById('magenta-phase').value);
+      playVoice('magenta', freq, amp, phase);
+    }
+
+    function playYellowVoice() {
+      const freq = parseInt(document.getElementById('yellow-freq').value);
+      const amp = parseInt(document.getElementById('yellow-amp').value);
+      const phase = parseInt(document.getElementById('yellow-phase').value);
+      playVoice('yellow', freq, amp, phase);
+    }
+
+    function playKeyVoice() {
+      const freq = parseInt(document.getElementById('key-freq').value);
+      const amp = parseInt(document.getElementById('key-amp').value);
+      const phase = parseInt(document.getElementById('key-phase').value);
+      playVoice('key', freq, amp, phase);
+    }
+
+    function playSynthesis() {
+      const fundamental = parseInt(document.getElementById('synth-fund-val').textContent);
+      const resonance = parseInt(document.getElementById('synth-res-val').textContent);
+      playVoice('synth', fundamental, resonance, 0, 3);
+    }
+
+    function playHarmonization() {
+      const harmony = parseInt(document.getElementById('harm-harmony-val').textContent);
+      const frequency = 432 * (harmony / 9);
+      playVoice('harm', frequency, harmony, 0, 4);
+    }
+
+    // Update Status
+    function updateStatus(message) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.classList.add('pulse');
+      setTimeout(() => status.classList.remove('pulse'), 2000);
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add event listeners for all range inputs
+      const rangeInputs = document.querySelectorAll('input[type="range"]');
+      rangeInputs.forEach(input => {
+        input.addEventListener('input', updateDisplayValues);
+      });
+      
+      // Initialize display
+      updateDisplayValues();
+      updateStatus('A432 CMYK Voice System Ready');
+      
+      // Initialize A432 state
+      currentState = createA432CMYKVoiceState();
+    });
+
+    // Expose functions to global scope
+    window.playAllVoices = playAllVoices;
+    window.playHarmony = playHarmony;
+    window.stopAllVoices = stopAllVoices;
+    window.randomizeVoices = randomizeVoices;
+    window.harmonizeVoices = harmonizeVoices;
+    window.playCyanVoice = playCyanVoice;
+    window.playMagentaVoice = playMagentaVoice;
+    window.playYellowVoice = playYellowVoice;
+    window.playKeyVoice = playKeyVoice;
+    window.playSynthesis = playSynthesis;
+    window.playHarmonization = playHarmonization;
+  </script>
+</body>
+</html> 

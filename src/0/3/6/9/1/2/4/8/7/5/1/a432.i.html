@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 Interactive Terminal</title>
+  <style>
+    body {
+      background: #000;
+      color: #0f0;
+      font-family: monospace;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    #terminal {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1em;
+      white-space: pre-wrap;
+    }
+    #input {
+      width: 100%;
+      box-sizing: border-box;
+      background: #111;
+      color: #0f0;
+      border: none;
+      font-family: monospace;
+      font-size: 1em;
+      padding: 0.5em;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <input id="input" autocomplete="off" autofocus placeholder="I> "/>
+  <script type="module">
+    import { handleCommand } from './a432.i.ts';
+    const terminal = document.getElementById('terminal');
+    const input = document.getElementById('input');
+    function print(text) {
+      terminal.textContent += text + '\n';
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+    print('A432 Interactive Terminal. Type help.');
+    input.addEventListener('keydown', async (e) => {
+      if (e.key === 'Enter') {
+        const cmd = input.value.trim();
+        if (!cmd) return;
+        print('I> ' + cmd);
+        let output = '';
+        try {
+          output = handleCommand(cmd);
+        } catch (err) {
+          output = 'Error: ' + err;
+        }
+        print(output);
+        input.value = '';
+      }
+    });
+  </script>
+</body>
+</html> 

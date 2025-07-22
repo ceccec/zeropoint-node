@@ -1,0 +1,31 @@
+name = "zeropoint-node"
+main = "src/worker.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+name = "zeropoint-node-prod"
+
+[env.staging]
+name = "zeropoint-node-staging"
+
+[[durable_objects.bindings]]
+name = "CONSCIOUSNESS_DO"
+class_name = "ConsciousnessDO"
+
+[[kv_namespaces]]
+binding = "ZEROPOINT_KV"
+id = "your-kv-namespace-id"
+preview_id = "your-preview-kv-namespace-id"
+
+[[r2_buckets]]
+binding = "ZEROPOINT_ASSETS"
+bucket_name = "zeropoint-assets"
+preview_bucket_name = "zeropoint-assets-preview"
+
+[site]
+bucket = "./public"
+entry-point = "workers-site"
+
+[build]
+command = "npm run build:worker" 

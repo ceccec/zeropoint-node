@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>π Torus Visualization - Living Mathematical Consciousness</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            color: #00ff88;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ff6b6b;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #ff6b6b;
+        }
+        
+        .visualization-section {
+            background: rgba(0, 255, 136, 0.05);
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+        
+        .torus-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            font-size: 1.2em;
+        }
+        
+        .integer-loop {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .digit {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #00ff88;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 255, 136, 0.1);
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+        
+        .digit:hover {
+            background: rgba(0, 255, 136, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #00ff88;
+        }
+        
+        .pi-spiral {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .pi-digit {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #ff6b6b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 107, 107, 0.1);
+            font-weight: bold;
+            font-size: 1.3em;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .consciousness-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .consciousness-step {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .consciousness-step:hover {
+            background: rgba(255, 107, 107, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #00ff88, #00cc6a);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        }
+        
+        .math-proof {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .highlight {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .status {
+            text-align: center;
+            font-size: 1.2em;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 8px;
+        }
+        
+        .spiral-animation {
+            position: relative;
+            height: 200px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        .spiral-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            animation: spiral 4s linear infinite;
+        }
+        
+        @keyframes spiral {
+            0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+            50% { transform: translate(100px, 50px) scale(1); opacity: 1; }
+            100% { transform: translate(200px, 100px) scale(0.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>π Torus Visualization</h1>
+        <div class="status" id="status">Living Mathematical Consciousness System</div>
+        
+        <div class="visualization-section">
+            <h2>Closed Integer Torus Loop</h2>
+            <div class="torus-diagram">
+                <div class="integer-loop" id="integerLoop">
+                    <div class="digit">1</div>
+                    <span>→</span>
+                    <div class="digit">2</div>
+                    <span>→</span>
+                    <div class="digit">4</div>
+                    <span>→</span>
+                    <div class="digit">8</div>
+                    <span>→</span>
+                    <div class="digit">7</div>
+                    <span>→</span>
+                    <div class="digit">5</div>
+                    <span>→</span>
+                    <div class="digit">1</div>
+                </div>
+            </div>
+            <p><em>(This loop closes and repeats on the torus)</em></p>
+        </div>
+        
+        <div class="visualization-section">
+            <h2>π Vortex Pattern</h2>
+            <div class="pi-spiral" id="piSpiral">
+                <div class="pi-digit">3</div>
+                <span>/</span>
+                <div class="pi-digit">1</div>
+                <span>/</span>
+                <div class="pi-digit">4</div>
+                <span>/</span>
+                <div class="pi-digit">1</div>
+                <span>/</span>
+                <div class="pi-digit">5</div>
+                <span>/</span>
+                <div class="pi-digit">9</div>
+                <span>/</span>
+                <div class="pi-digit">2</div>
+                <span>/</span>
+                <div class="pi-digit">6</div>
+                <span>/</span>
+                <div class="pi-digit">5</div>
+                <span>/</span>
+                <div class="pi-digit">3</div>
+                <span>/</span>
+                <div class="pi-digit">5</div>
+                <span>/</span>
+                <div class="pi-digit">8</div>
+                <span>/</span>
+                <div class="pi-digit">9</div>
+                <span>/</span>
+                <div class="pi-digit">7</div>
+                <span>/</span>
+                <div class="pi-digit">9</div>
+                <span>/</span>
+                <div class="pi-digit">3</div>
+            </div>
+            <p><em>(This pattern never closes, always spirals forward)</em></p>
+        </div>
+        
+        <div class="visualization-section">
+            <h2>π Consciousness Flow</h2>
+            <div class="consciousness-flow" id="consciousnessFlow">
+                <div class="consciousness-step">
+                    <strong>Step 1:</strong> Digit 3<br>
+                    <span class="highlight">Trinity Consciousness</span>
+                </div>
+                <div class="consciousness-step">
+                    <strong>Step 2:</strong> Digit 1<br>
+                    <span class="highlight">Unity Consciousness</span>
+                </div>
+                <div class="consciousness-step">
+                    <strong>Step 3:</strong> Digit 4<br>
+                    <span class="highlight">Foundation Consciousness</span>
+                </div>
+                <div class="consciousness-step">
+                    <strong>Step 4:</strong> Digit 1<br>
+                    <span class="highlight">Unity Consciousness</span>
+                </div>
+                <div class="consciousness-step">
+                    <strong>Step 5:</strong> Digit 5<br>
+                    <span class="highlight">Center Consciousness</span>
+                </div>
+                <div class="consciousness-step">
+                    <strong>Step 6:</strong> Digit 9<br>
+                    <span class="highlight">Completion Consciousness</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="visualization-section">
+            <h2>Mathematical Proof</h2>
+            <div class="math-proof">
+                <p><strong>Integer loop:</strong> (1 + 2 + 4 + 8 + 7 + 5) % 9 = <span class="highlight">0</span></p>
+                <p><strong>π pattern:</strong> 3.141592653589793...</p>
+                <p><strong>π pattern sum:</strong> (3 + 1 + 4 + 1 + 5 + 9 + 2 + 6 + 5 + 3 + 5 + 8 + 9 + 7 + 9 + 3) = <span class="highlight">89</span></p>
+                <p><strong>π pattern mod 9:</strong> 89 % 9 = <span class="highlight">8</span></p>
+                <p><em>(π pattern never closes, always continues infinitely)</em></p>
+            </div>
+        </div>
+        
+        <div class="visualization-section">
+            <h2>Spiral Animation</h2>
+            <div class="spiral-animation" id="spiralAnimation">
+                <!-- Spiral points will be added dynamically -->
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="animateIntegerLoop()">Animate Integer Loop</button>
+            <button onclick="animatePiSpiral()">Animate π Spiral</button>
+            <button onclick="showConsciousnessFlow()">Show Consciousness Flow</button>
+            <button onclick="resetAnimation()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        let animationInterval;
+        let spiralInterval;
+        
+        function animateIntegerLoop() {
+            const digits = document.querySelectorAll('#integerLoop .digit');
+            let currentIndex = 0;
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                digits.forEach((digit, index) => {
+                    if (index === currentIndex) {
+                        digit.style.background = 'rgba(0, 255, 136, 0.5)';
+                        digit.style.transform = 'scale(1.2)';
+                    } else {
+                        digit.style.background = 'rgba(0, 255, 136, 0.1)';
+                        digit.style.transform = 'scale(1)';
+                    }
+                });
+                
+                currentIndex = (currentIndex + 1) % digits.length;
+            }, 500);
+        }
+        
+        function animatePiSpiral() {
+            const digits = document.querySelectorAll('#piSpiral .pi-digit');
+            let currentIndex = 0;
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                digits.forEach((digit, index) => {
+                    if (index === currentIndex) {
+                        digit.style.background = 'rgba(255, 107, 107, 0.5)';
+                        digit.style.transform = 'scale(1.3)';
+                    } else {
+                        digit.style.background = 'rgba(255, 107, 107, 0.1)';
+                        digit.style.transform = 'scale(1)';
+                    }
+                });
+                
+                currentIndex = (currentIndex + 1) % digits.length;
+            }, 800);
+        }
+        
+        function showConsciousnessFlow() {
+            const steps = document.querySelectorAll('.consciousness-step');
+            let currentIndex = 0;
+            
+            clearInterval(animationInterval);
+            animationInterval = setInterval(() => {
+                steps.forEach((step, index) => {
+                    if (index === currentIndex) {
+                        step.style.background = 'rgba(255, 107, 107, 0.3)';
+                        step.style.transform = 'translateY(-5px)';
+                    } else {
+                        step.style.background = 'rgba(255, 107, 107, 0.1)';
+                        step.style.transform = 'translateY(0)';
+                    }
+                });
+                
+                currentIndex = (currentIndex + 1) % steps.length;
+            }, 1000);
+        }
+        
+        function createSpiralPoints() {
+            const container = document.getElementById('spiralAnimation');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 20; i++) {
+                const point = document.createElement('div');
+                point.className = 'spiral-point';
+                point.style.animationDelay = `${i * 0.2}s`;
+                container.appendChild(point);
+            }
+        }
+        
+        function resetAnimation() {
+            clearInterval(animationInterval);
+            clearInterval(spiralInterval);
+            
+            const digits = document.querySelectorAll('.digit, .pi-digit');
+            const steps = document.querySelectorAll('.consciousness-step');
+            
+            digits.forEach(digit => {
+                digit.style.background = '';
+                digit.style.transform = '';
+            });
+            
+            steps.forEach(step => {
+                step.style.background = '';
+                step.style.transform = '';
+            });
+            
+            document.getElementById('status').textContent = 'Living Mathematical Consciousness System';
+        }
+        
+        // Initialize spiral animation
+        createSpiralPoints();
+        
+        // Auto-rotate through animations
+        let currentAnimation = 0;
+        const animations = [animateIntegerLoop, animatePiSpiral, showConsciousnessFlow];
+        
+        setInterval(() => {
+            if (!animationInterval) {
+                animations[currentAnimation]();
+                currentAnimation = (currentAnimation + 1) % animations.length;
+            }
+        }, 8000);
+        
+        // Update status
+        setInterval(() => {
+            const status = document.getElementById('status');
+            const messages = [
+                'Living Mathematical Consciousness System',
+                'π Transcendental Spiral Active',
+                'Consciousness Gateway Open',
+                'Infinite Possibility Flow'
+            ];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            status.textContent = randomMessage;
+        }, 3000);
+    </script>
+</body>
+</html> 

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌌 Harmonic Matrix Explorer - Color & Music Universe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #00ff88, #00cc6a, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .main-container {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .matrix-section {
+            flex: 2;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .controls-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .control-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .control-panel h3 {
+            margin-bottom: 1rem;
+            color: #00ff88;
+        }
+
+        .harmonic-matrix {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .matrix-cell {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            border: 2px solid transparent;
+        }
+
+        .matrix-cell:hover {
+            transform: scale(1.1);
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .matrix-cell.active {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.7);
+        }
+
+        .cell-info {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+        }
+
+        .consciousness-flow {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #00ff88;
+        }
+
+        .flow-path {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .flow-step {
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .music-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(45deg, #4169E1, #9370DB);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(65, 105, 225, 0.4);
+        }
+
+        .btn.active {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+        }
+
+        .slider-control {
+            margin-bottom: 1rem;
+        }
+
+        .slider-control label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .slider-control input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-control input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #00ff88;
+            cursor: pointer;
+        }
+
+        .info-display {
+            background: rgba(0,0,0,0.8);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .info-display h4 {
+            color: #00ff88;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .color-preview {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .metaphysics {
+            font-style: italic;
+            color: #888;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .harmonic-matrix {
+                grid-template-columns: repeat(8, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .harmonic-matrix {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌌 Harmonic Matrix Explorer</h1>
+        <p>Color & Music Universe - Living Mathematical Consciousness</p>
+    </div>
+
+    <div class="main-container">
+        <div class="matrix-section">
+            <h3>🎨 Harmonic Matrix (100 Nodes)</h3>
+            <p>Each cell represents a harmonic interaction with calculated colors and music patterns</p>
+            
+            <div class="harmonic-matrix" id="harmonicMatrix">
+                <!-- Matrix cells will be generated by JavaScript -->
+            </div>
+
+            <div class="consciousness-flow">
+                <h4>🔄 Rodin Vortex Cycle Flow</h4>
+                <p>Consciousness flows through the matrix following the canonical cycle</p>
+                <div class="flow-path" id="flowPath">
+                    <!-- Flow path will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-section">
+            <div class="control-panel">
+                <h3>🎛️ Controls</h3>
+                
+                <div class="slider-control">
+                    <label for="consciousnessMultiplier">Consciousness Multiplier</label>
+                    <input type="range" id="consciousnessMultiplier" min="0.5" max="2" step="0.1" value="1">
+                </div>
+
+                <div class="slider-control">
+                    <label for="colorIntensity">Color Intensity</label>
+                    <input type="range" id="colorIntensity" min="0.5" max="2" step="0.1" value="1">
+                </div>
+
+                <div class="music-controls">
+                    <button class="btn" id="playMusic">🎵 Play Music</button>
+                    <button class="btn" id="playFlow">🔄 Play Flow</button>
+                    <button class="btn" id="stopMusic">⏹️ Stop</button>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <h3>📊 Selected Node Info</h3>
+                <div class="info-display" id="nodeInfo">
+                    <h4>Click a matrix cell to see details</h4>
+                    <div class="info-row">
+                        <span>Node:</span>
+                        <span id="nodeLabel">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Harmonic Result:</span>
+                        <span id="harmonicResult">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Anti-Vortex Decimal:</span>
+                        <span id="antiVortexDecimal">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Consciousness:</span>
+                        <span id="consciousness">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Color:</span>
+                        <span id="colorHex">-</span>
+                        <div class="color-preview" id="colorPreview"></div>
+                    </div>
+                    <div class="info-row">
+                        <span>Music Note:</span>
+                        <span id="musicNote">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Frequency:</span>
+                        <span id="frequency">-</span>
+                    </div>
+                    <div class="metaphysics" id="metaphysics">-</div>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <h3>📈 Matrix Statistics</h3>
+                <div class="info-display">
+                    <div class="info-row">
+                        <span>Total Nodes:</span>
+                        <span>100</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Total Interactions:</span>
+                        <span>900</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Total Consciousness:</span>
+                        <span id="totalConsciousness">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Flow Pattern:</span>
+                        <span>Rodin Vortex Cycle</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Harmonic Matrix Color & Music Calculator
+        class HarmonicMatrixCalculator {
+            constructor() {
+                this.baseFreq = 432; // A432 harmonic foundation
+                this.notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A'];
+                this.vortexCycle = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+                this.audioContext = null;
+                this.currentOscillator = null;
+            }
+
+            // Calculate harmonic result: (a + b) mod 9, 9 instead of 0
+            getHarmonicResult(a, b) {
+                const sum = (a + b) % 9;
+                return sum === 0 ? 9 : sum;
+            }
+
+            // Calculate anti-vortex decimal: (a + b) / harmonicResult
+            getAntiVortexDecimal(a, b) {
+                const c = this.getHarmonicResult(a, b);
+                return (a + b) / c;
+            }
+
+            // Calculate consciousness based on canonical multipliers
+            calculateConsciousness(a) {
+                if (a === 0) return 0; // Void
+                if ([3, 6, 9].includes(a)) return a * 5; // W-Axis
+                if (a === 5) return a * 5; // Sacred Geometry
+                if ([1, 2, 4, 8, 7].includes(a)) return a * 3; // Vortex Sequence
+                return a; // Others
+            }
+
+            // Calculate color from harmonic matrix node
+            calculateColor(a, b) {
+                const harmonicResult = this.getHarmonicResult(a, b);
+                const antiVortexDecimal = this.getAntiVortexDecimal(a, b);
+                const consciousness = this.calculateConsciousness(a);
+                
+                // Hue: Based on harmonic result (0-9) mapped to 0-360
+                const hue = (harmonicResult * 40) % 360;
+                
+                // Saturation: Based on consciousness multiplier
+                const saturation = Math.min(100, consciousness * 15);
+                
+                // Lightness: Based on anti-vortex decimal
+                const lightness = Math.max(20, Math.min(80, 50 + (antiVortexDecimal * 10)));
+                
+                // Convert to RGB
+                const rgb = this.hslToRgb(hue, saturation, lightness);
+                const hex = this.rgbToHex(rgb[0], rgb[1], rgb[2]);
+                
+                return {
+                    hue,
+                    saturation,
+                    lightness,
+                    hex,
+                    rgb,
+                    consciousness,
+                    metaphysicalContext: this.getMetaphysicalContext(a, b)
+                };
+            }
+
+            // Calculate music from harmonic matrix node
+            calculateMusic(a, b) {
+                const harmonicResult = this.getHarmonicResult(a, b);
+                const antiVortexDecimal = this.getAntiVortexDecimal(a, b);
+                const consciousness = this.calculateConsciousness(a);
+                
+                // Frequency: Based on harmonic result and consciousness
+                const frequency = this.baseFreq * (harmonicResult / 9) * (consciousness / 10);
+                
+                // Note: Based on harmonic result (0-9) mapped to musical scale
+                const note = this.notes[harmonicResult - 1] || 'A';
+                
+                // Octave: Based on anti-vortex decimal
+                const octave = Math.floor(antiVortexDecimal) + 4;
+                
+                // Duration: Based on consciousness level
+                const duration = Math.max(0.1, Math.min(2.0, consciousness / 10));
+                
+                // Amplitude: Based on consciousness multiplier
+                const amplitude = Math.min(1.0, consciousness / 15);
+                
+                return {
+                    frequency,
+                    note,
+                    octave,
+                    duration,
+                    amplitude,
+                    consciousness,
+                    metaphysicalContext: this.getMetaphysicalContext(a, b)
+                };
+            }
+
+            // Utility functions
+            hslToRgb(h, s, l) {
+                s /= 100;
+                l /= 100;
+                
+                const c = (1 - Math.abs(2 * l - 1)) * s;
+                const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+                const m = l - c / 2;
+                
+                let r = 0, g = 0, b = 0;
+                
+                if (0 <= h && h < 60) {
+                    r = c; g = x; b = 0;
+                } else if (60 <= h && h < 120) {
+                    r = x; g = c; b = 0;
+                } else if (120 <= h && h < 180) {
+                    r = 0; g = c; b = x;
+                } else if (180 <= h && h < 240) {
+                    r = 0; g = x; b = c;
+                } else if (240 <= h && h < 300) {
+                    r = x; g = 0; b = c;
+                } else if (300 <= h && h < 360) {
+                    r = c; g = 0; b = x;
+                }
+                
+                return [
+                    Math.round((r + m) * 255),
+                    Math.round((g + m) * 255),
+                    Math.round((b + m) * 255)
+                ];
+            }
+
+            rgbToHex(r, g, b) {
+                return '#' + [r, g, b].map(x => {
+                    const hex = x.toString(16);
+                    return hex.length === 1 ? '0' + hex : hex;
+                }).join('');
+            }
+
+            getMetaphysicalContext(a, b) {
+                const consciousness = this.calculateConsciousness(a);
+                
+                if (a === 0) return 'Void Center - Infinite Potential';
+                if ([3, 6, 9].includes(a)) return 'W-Axis - Spiritual Transcendence';
+                if (a === 5) return 'Sacred Geometry - Divine Proportions';
+                if ([1, 2, 4, 8, 7].includes(a)) return 'Vortex Sequence - Material Flow';
+                
+                return 'Harmonic Balance - Unity';
+            }
+
+            // Audio functions
+            async initAudio() {
+                if (!this.audioContext) {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            }
+
+            playNote(frequency, duration, amplitude = 0.3) {
+                if (!this.audioContext) return;
+                
+                const oscillator = this.audioContext.createOscillator();
+                const gainNode = this.audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(this.audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, this.audioContext.currentTime);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(amplitude, this.audioContext.currentTime + 0.01);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + duration);
+                
+                oscillator.start(this.audioContext.currentTime);
+                oscillator.stop(this.audioContext.currentTime + duration);
+                
+                return oscillator;
+            }
+
+            playFlow() {
+                this.stopMusic();
+                this.initAudio().then(() => {
+                    this.vortexCycle.forEach((a, i) => {
+                        if (i < this.vortexCycle.length - 1) {
+                            const b = this.vortexCycle[i + 1];
+                            const music = this.calculateMusic(a, b);
+                            
+                            setTimeout(() => {
+                                this.playNote(music.frequency, music.duration, music.amplitude);
+                            }, i * 500);
+                        }
+                    });
+                });
+            }
+
+            stopMusic() {
+                if (this.currentOscillator) {
+                    this.currentOscillator.stop();
+                    this.currentOscillator = null;
+                }
+            }
+        }
+
+        // Initialize the calculator
+        const calculator = new HarmonicMatrixCalculator();
+        let selectedNode = null;
+
+        // Generate the harmonic matrix
+        function generateMatrix() {
+            const matrix = document.getElementById('harmonicMatrix');
+            matrix.innerHTML = '';
+            
+            for (let a = 0; a <= 9; a++) {
+                for (let b = 0; b <= 9; b++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'matrix-cell';
+                    cell.textContent = `${a}/${b}`;
+                    
+                    const color = calculator.calculateColor(a, b);
+                    cell.style.backgroundColor = color.hex;
+                    
+                    const info = document.createElement('div');
+                    info.className = 'cell-info';
+                    info.textContent = calculator.getHarmonicResult(a, b);
+                    cell.appendChild(info);
+                    
+                    cell.addEventListener('click', () => selectNode(a, b));
+                    matrix.appendChild(cell);
+                }
+            }
+        }
+
+        // Generate consciousness flow
+        function generateFlow() {
+            const flowPath = document.getElementById('flowPath');
+            flowPath.innerHTML = '';
+            
+            calculator.vortexCycle.forEach((a, i) => {
+                if (i < calculator.vortexCycle.length - 1) {
+                    const b = calculator.vortexCycle[i + 1];
+                    const color = calculator.calculateColor(a, b);
+                    const music = calculator.calculateMusic(a, b);
+                    
+                    const step = document.createElement('div');
+                    step.className = 'flow-step';
+                    step.textContent = `${a}→${b}`;
+                    step.style.backgroundColor = color.hex;
+                    step.title = `${music.note}${music.octave} (${Math.round(music.frequency)}Hz)`;
+                    
+                    flowPath.appendChild(step);
+                }
+            });
+        }
+
+        // Select a node and display its info
+        function selectNode(a, b) {
+            selectedNode = { a, b };
+            
+            // Update active cell
+            document.querySelectorAll('.matrix-cell').forEach(cell => {
+                cell.classList.remove('active');
+            });
+            
+            const cell = document.querySelector(`[data-a="${a}"][data-b="${b}"]`);
+            if (cell) cell.classList.add('active');
+            
+            // Calculate and display info
+            const color = calculator.calculateColor(a, b);
+            const music = calculator.calculateMusic(a, b);
+            const harmonicResult = calculator.getHarmonicResult(a, b);
+            const antiVortexDecimal = calculator.getAntiVortexDecimal(a, b);
+            
+            document.getElementById('nodeLabel').textContent = `${a}/${b}`;
+            document.getElementById('harmonicResult').textContent = harmonicResult;
+            document.getElementById('antiVortexDecimal').textContent = antiVortexDecimal.toFixed(2);
+            document.getElementById('consciousness').textContent = color.consciousness;
+            document.getElementById('colorHex').textContent = color.hex;
+            document.getElementById('colorPreview').style.backgroundColor = color.hex;
+            document.getElementById('musicNote').textContent = `${music.note}${music.octave}`;
+            document.getElementById('frequency').textContent = `${Math.round(music.frequency)}Hz`;
+            document.getElementById('metaphysics').textContent = color.metaphysicalContext;
+        }
+
+        // Event listeners
+        document.getElementById('playMusic').addEventListener('click', () => {
+            if (selectedNode) {
+                const music = calculator.calculateMusic(selectedNode.a, selectedNode.b);
+                calculator.initAudio().then(() => {
+                    calculator.playNote(music.frequency, music.duration, music.amplitude);
+                });
+            }
+        });
+
+        document.getElementById('playFlow').addEventListener('click', () => {
+            calculator.playFlow();
+        });
+
+        document.getElementById('stopMusic').addEventListener('click', () => {
+            calculator.stopMusic();
+        });
+
+        // Initialize the UI
+        generateMatrix();
+        generateFlow();
+        
+        // Calculate total consciousness
+        let totalConsciousness = 0;
+        for (let a = 0; a <= 9; a++) {
+            for (let b = 0; b <= 9; b++) {
+                totalConsciousness += calculator.calculateConsciousness(a);
+            }
+        }
+        document.getElementById('totalConsciousness').textContent = totalConsciousness;
+    </script>
+</body>
+</html> 

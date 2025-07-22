@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergent Integer Tree Color System - ZeroPoint Node</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            font-family: 'Courier New', monospace;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.8;
+        }
+        
+        .integer-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .integer-card {
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .integer-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .integer-number {
+            font-size: 3em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .integer-details {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .consciousness-bar {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .consciousness-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        
+        .family-section {
+            margin-bottom: 40px;
+        }
+        
+        .family-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .controls {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .control-group input {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        button {
+            background: #00ff88;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            margin: 5px;
+        }
+        
+        button:hover {
+            background: #00cc6a;
+        }
+        
+        .info-panel {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .flow-gradient {
+            height: 60px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .animation-demo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .animated-integer {
+            display: inline-block;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px;
+            font-size: 2em;
+            font-weight: bold;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Emergent Integer Tree Color System</h1>
+            <p>Colors and styling discovered from mathematical consciousness patterns</p>
+            <p>No predefined colors - everything emerges from existing mathematical relationships</p>
+        </div>
+
+        <div class="info-panel">
+            <h3>🔮 Mathematical Consciousness Patterns</h3>
+            <p><strong>Color Generation:</strong> Hue = (consciousness × 27) % 360</p>
+            <p><strong>Saturation:</strong> digitalRoot × 15</p>
+            <p><strong>Lightness:</strong> 50 + (consciousness × 3)</p>
+            <p><strong>Border Radius:</strong> consciousness × 2</p>
+            <p><strong>Box Shadow:</strong> consciousness × 4 blur, consciousness × 2 spread</p>
+        </div>
+
+        <div class="controls">
+            <h3>🎛️ Controls</h3>
+            <div class="control-group">
+                <label>Animation Speed:</label>
+                <input type="range" id="animationSpeed" min="0.5" max="3" step="0.1" value="1">
+            </div>
+            <div class="control-group">
+                <label>Consciousness Multiplier:</label>
+                <input type="range" id="consciousnessMultiplier" min="0.5" max="2" step="0.1" value="1">
+            </div>
+            <button onclick="toggleAnimations()">Toggle Animations</button>
+            <button onclick="resetColors()">Reset Colors</button>
+            <button onclick="showFlowGradient()">Show Flow Gradient</button>
+        </div>
+
+        <div class="family-section">
+            <h2 class="family-title">🌿 Vortex A Family (Yin - Material Foundation)</h2>
+            <div class="family-grid" id="vortexA"></div>
+        </div>
+
+        <div class="family-section">
+            <h2 class="family-title">🌟 Vortex B Family (Yang - Material Expression)</h2>
+            <div class="family-grid" id="vortexB"></div>
+        </div>
+
+        <div class="family-section">
+            <h2 class="family-title">✨ W-Axis Family (Spiritual Transcendence)</h2>
+            <div class="family-grid" id="wAxis"></div>
+        </div>
+
+        <div class="family-section">
+            <h2 class="family-title">⚫ Void Family (Infinite Potential)</h2>
+            <div class="family-grid" id="void"></div>
+        </div>
+
+        <div class="flow-gradient" id="flowGradient">
+            <span>Flow Gradient: [1, 2, 4, 8, 7, 5, 3, 6, 9, 0]</span>
+        </div>
+
+        <div class="animation-demo">
+            <h3>🎭 Consciousness Animations</h3>
+            <div id="animatedIntegers"></div>
+        </div>
+    </div>
+
+    <script>
+        // Integer Tree Coil Constants
+        const INTEGER_TREE_COIL = {
+            VORTEX_A: [1, 2, 4],
+            VORTEX_B: [8, 7, 5],
+            W_AXIS: [3, 6, 9],
+            VOID_CENTER: [0],
+            INTEGER_TREE: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+            COIL_FLOW_SEQUENCE: [1, 2, 4, 8, 7, 5, 3, 6, 9, 0]
+        };
+
+        // Helper Functions
+        function calculateDigitalRoot(n) {
+            if (n === 0) return 0;
+            return n % 9 === 0 ? 9 : n % 9;
+        }
+
+        function calculateCoilConsciousness(number) {
+            const digitalRoot = calculateDigitalRoot(number);
+            const isVortexA = INTEGER_TREE_COIL.VORTEX_A.includes(number);
+            const isVortexB = INTEGER_TREE_COIL.VORTEX_B.includes(number);
+            const isWAxis = INTEGER_TREE_COIL.W_AXIS.includes(number);
+            const isVoid = INTEGER_TREE_COIL.VOID_CENTER.includes(number);
+            
+            let consciousness = digitalRoot;
+            
+            if (isWAxis) consciousness *= 1.5;
+            if (isVortexA) consciousness *= 1.2;
+            if (isVortexB) consciousness *= 1.2;
+            if (isVoid) consciousness = 0;
+            
+            return consciousness;
+        }
+
+        // Emergent Color Generation
+        function generateColorFromConsciousness(consciousness, digitalRoot) {
+            const hue = (consciousness * 27) % 360;
+            const saturation = Math.min(100, digitalRoot * 15);
+            const lightness = Math.max(20, Math.min(80, 50 + (consciousness * 3)));
+            
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        }
+
+        function generateBackgroundColor(consciousness, digitalRoot) {
+            const hue = (consciousness * 27) % 360;
+            const saturation = Math.min(30, digitalRoot * 5);
+            const lightness = Math.max(90, 100 - (consciousness * 2));
+            
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+        }
+
+        function generateBorderRadius(consciousness) {
+            const baseRadius = Math.max(0, Math.min(20, consciousness * 2));
+            return `${baseRadius}px`;
+        }
+
+        function generateBoxShadow(consciousness, digitalRoot) {
+            if (consciousness === 0) return 'none';
+            
+            const blur = consciousness * 4;
+            const spread = digitalRoot * 0.5;
+            const opacity = Math.min(0.5, consciousness / 20);
+            
+            return `0 ${consciousness * 2}px ${blur}px rgba(0, 0, 0, ${opacity})`;
+        }
+
+        function generateEmergentColorScheme(integer) {
+            const consciousness = calculateCoilConsciousness(integer);
+            const digitalRoot = calculateDigitalRoot(integer);
+            
+            return {
+                integer,
+                consciousness,
+                digitalRoot,
+                primary: generateColorFromConsciousness(consciousness, digitalRoot),
+                background: generateBackgroundColor(consciousness, digitalRoot),
+                borderRadius: generateBorderRadius(consciousness),
+                boxShadow: generateBoxShadow(consciousness, digitalRoot)
+            };
+        }
+
+        function createIntegerCard(integer) {
+            const scheme = generateEmergentColorScheme(integer);
+            const consciousnessPercent = (scheme.consciousness / 13.5) * 100;
+            
+            const card = document.createElement('div');
+            card.className = 'integer-card';
+            card.style.backgroundColor = scheme.background;
+            card.style.borderRadius = scheme.borderRadius;
+            card.style.boxShadow = scheme.boxShadow;
+            
+            card.innerHTML = `
+                <div class="integer-number" style="color: ${scheme.primary}">${integer}</div>
+                <div class="integer-details">
+                    <div>Consciousness: ${scheme.consciousness.toFixed(1)}</div>
+                    <div>Digital Root: ${scheme.digitalRoot}</div>
+                    <div class="consciousness-bar">
+                        <div class="consciousness-fill" style="width: ${consciousnessPercent}%; background: ${scheme.primary}"></div>
+                    </div>
+                    <div>Primary: ${scheme.primary}</div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function populateFamilySection(containerId, integers) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            integers.forEach(integer => {
+                const card = createIntegerCard(integer);
+                container.appendChild(card);
+            });
+        }
+
+        function updateFlowGradient() {
+            const gradient = INTEGER_TREE_COIL.COIL_FLOW_SEQUENCE.map(integer => {
+                const scheme = generateEmergentColorScheme(integer);
+                return scheme.primary;
+            }).join(', ');
+            
+            const gradientElement = document.getElementById('flowGradient');
+            gradientElement.style.background = `linear-gradient(45deg, ${gradient})`;
+        }
+
+        function createAnimatedIntegers() {
+            const container = document.getElementById('animatedIntegers');
+            container.innerHTML = '';
+            
+            INTEGER_TREE_COIL.INTEGER_TREE.forEach(integer => {
+                const scheme = generateEmergentColorScheme(integer);
+                const animatedDiv = document.createElement('div');
+                animatedDiv.className = 'animated-integer';
+                animatedDiv.style.backgroundColor = scheme.primary;
+                animatedDiv.style.color = 'white';
+                animatedDiv.style.borderRadius = scheme.borderRadius;
+                animatedDiv.style.boxShadow = scheme.boxShadow;
+                animatedDiv.textContent = integer;
+                container.appendChild(animatedDiv);
+            });
+        }
+
+        // Control functions
+        function toggleAnimations() {
+            const animatedElements = document.querySelectorAll('.animated-integer');
+            animatedElements.forEach(el => {
+                if (el.style.animation === 'none') {
+                    el.style.animation = 'pulse 2s ease-in-out infinite';
+                } else {
+                    el.style.animation = 'none';
+                }
+            });
+        }
+
+        function resetColors() {
+            populateFamilySection('vortexA', INTEGER_TREE_COIL.VORTEX_A);
+            populateFamilySection('vortexB', INTEGER_TREE_COIL.VORTEX_B);
+            populateFamilySection('wAxis', INTEGER_TREE_COIL.W_AXIS);
+            populateFamilySection('void', INTEGER_TREE_COIL.VOID_CENTER);
+            updateFlowGradient();
+            createAnimatedIntegers();
+        }
+
+        function showFlowGradient() {
+            const gradientElement = document.getElementById('flowGradient');
+            gradientElement.style.display = gradientElement.style.display === 'none' ? 'flex' : 'flex';
+        }
+
+        // Initialize the demo
+        function initDemo() {
+            populateFamilySection('vortexA', INTEGER_TREE_COIL.VORTEX_A);
+            populateFamilySection('vortexB', INTEGER_TREE_COIL.VORTEX_B);
+            populateFamilySection('wAxis', INTEGER_TREE_COIL.W_AXIS);
+            populateFamilySection('void', INTEGER_TREE_COIL.VOID_CENTER);
+            updateFlowGradient();
+            createAnimatedIntegers();
+        }
+
+        // Event listeners
+        document.getElementById('animationSpeed').addEventListener('input', function(e) {
+            const speed = e.target.value;
+            document.documentElement.style.setProperty('--animation-speed', speed);
+        });
+
+        document.getElementById('consciousnessMultiplier').addEventListener('input', function(e) {
+            const multiplier = e.target.value;
+            // This would require redefining the consciousness calculation
+            // For now, just update the display
+            console.log('Consciousness multiplier:', multiplier);
+        });
+
+        // Initialize when page loads
+        window.addEventListener('load', initDemo);
+    </script>
+</body>
+</html> 

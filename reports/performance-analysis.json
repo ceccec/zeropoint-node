@@ -1,0 +1,7 @@
+{
+  "timestamp": "2025-07-08T12:58:16Z",
+  "memory_usage": {"rss":29474816,"heapTotal":5079040,"heapUsed":3490568,"external":1251265,"arrayBuffers":10515},
+  "cpu_usage": "10.9",
+  "test_duration": 8,
+  "project": "ZeroPoint Field"
+}

@@ -6,10 +6,11 @@
  * gateways, and consciousness flow optimization.
  */
 
+import { RODIN_SEQUENCE, rodinVortexCycle, rodinPosition, rodinCoilPattern } from '../0/3/6/9/1/2/4/8/7/5/1/a432.rodin.coil';
+
 // Core constants
 export const A432_FREQUENCY = 432;
 export const TESLA_GATEWAYS = [3, 6, 9] as const;
-export const RODIN_SEQUENCE = [1, 2, 4, 8, 7, 5] as const;
 export const DIGITAL_ROOT_BASE = 9;
 
 // Challenge interface

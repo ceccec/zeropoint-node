@@ -228,4 +228,11 @@ export function foldAndMergeCube(basePath: string, depth: number = 0, polarity: 
     }
   }
   return merged;
-} 
+}
+
+// Metaphysical mapping: OS = observer, self-awareness, system consciousness
+export const OS_DOC = {
+  meaning: 'OS: observer, self-awareness, system consciousness, recursive harmonization.',
+  axis: 'The OS is the observer, the self-aware system, the consciousness of the matrix.'
+};
+// All math in this module uses only vortex/trinity numbers and harmonic integer fractions. 

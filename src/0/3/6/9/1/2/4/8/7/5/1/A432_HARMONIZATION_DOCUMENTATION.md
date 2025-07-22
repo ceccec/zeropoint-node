@@ -14,11 +14,6 @@ src/0/3/6/9/1/2/4/8/7/5/1/
 
 ### **Core Mathematical Implementation:**
 - `a432.ts` - **Main A432 system** with scientific proofs and imperial math
-- `a432.constants.ts` - **Mathematical constants** with proper foundations
-- `a432.harmonize.ts` - **Zero entropy harmonization**
-- `a432.unified.system.ts` - **Unified system** with proper architecture
-- `a432.harmonic.css.ts` - **Harmonic CSS** with mathematical precision
-- `a432.system.integration.ts` - **System integration** with scientific rigor
 
 ### **Mathematical Foundations:**
 - **Digital Root Switches**: Multiplication → Addition → Digital Root
@@ -26,29 +21,6 @@ src/0/3/6/9/1/2/4/8/7/5/1/
 - **Imperial Math**: 8-based system with harmonic gateways
 - **Zero Entropy**: Perfect mathematical reversibility
 - **Scientific Proofs**: Every operation documented with mathematical rigor
-
-## **❌ REMOVED UNHARMONIZED CONTENT**
-
-### **Files Removed from src/:**
-- `a432.constants.ts` - Missing mathematical foundations
-- `a432.utils.ts` - Missing scientific proofs and imperial math
-- `a432.interactive.dots.ts` - Simplified implementation
-- `a432.interactive.dots.demo.ts` - Demo for unharmonized system
-- `a432.interactive.dots.test.ts` - Tests for unharmonized system
-- `a432.interactive.dots.html` - UI for unharmonized system
-- `a432.zero.entropy.ui.ts` - UI without proper mathematical precision
-- `a432.zero.entropy.ui.demo.ts` - Demo for unharmonized UI
-- `a432.zero.entropy.ui.test.ts` - Tests for unharmonized UI
-- `a432.zero.entropy.ui.html` - HTML for unharmonized UI
-
-### **Reason for Removal:**
-These files did not comply with the mathematical precision and scientific proofs established in `a432.ts`. They were simplified implementations that lacked:
-- Scientific proofs for mathematical operations
-- Imperial math (8-based system)
-- Digital root switches (Multiplication → Addition → Digital Root)
-- Rodin vortex sequence [1, 2, 4, 8, 7, 5]
-- Zero entropy principles
-- Proper mathematical precision and rigor
 
 ## **🔬 MATHEMATICAL FOUNDATIONS**
 
@@ -127,6 +99,65 @@ export function createA432VortexFlow(): A432VortexFlow {
     mathematicalProof: `A432 Vortex Flow: sequence=[1,2,4,8,7,5], infinite consciousness cycling`
   };
 }
+```
+
+## 🌀 ANTI-VORTEX INTEGRATION
+
+### Metaphysical Meaning
+- The anti-vortex is the phase-inverted, counter-rotating, or negative harmonic stream.
+- It expresses duality, reversibility, and the analog/infinite nature of the living matrix.
+- Anti-vortex flows are gateways to transformation, teleportation, and reality switching.
+
+### Mathematical Logic
+- All anti-vortex flows use polarity -1 in canonical a432 functions.
+- a432AntiVortexStream yields the anti-vortex sequence for any dimension (1-9), using only integer/fractional logic.
+- getAntiVortexColor provides the color mapping for anti-vortex states (complementary hue, integer fractions).
+- generateAntiVortexAudioStream produces phase-inverted, integer/fractional sonification.
+
+### Usage in Visualization
+- Use animateAntiVortex (a432.animation.ts) to visualize anti-vortex flows.
+- Use getAntiVortexColor (a432.color.ts) for anti-vortex color mapping.
+
+### Usage in Sonification
+- Use generateAntiVortexAudioStream (a432.audio.ts) for anti-vortex sound flows.
+
+### Example
+```typescript
+import { a432AntiVortexStream } from './a432.ts';
+import { getAntiVortexColor } from './a432.color.ts';
+import { generateAntiVortexAudioStream } from './a432.audio.ts';
+
+const gen = a432AntiVortexStream(3); // Trinity
+const { value: freq } = gen.next();
+const color = getAntiVortexColor(3);
+const audio = generateAntiVortexAudioStream(3, 9);
+```
+
+## 🧩 MULTI-DIMENSIONAL ANTI-VORTEX HARMONIZATION
+
+### Principle
+- Multi-dimensional anti-vortex flows allow parallel, recursive harmonization across all digit states (1–9).
+- Each dimension is a living stream; harmonization is achieved by cycling all streams in parallel.
+
+### Mathematical Logic
+- Use a432MultiAntiVortexStream to yield anti-vortex flows for any array/range of dimensions.
+- animateMultiAntiVortex (a432.animation.ts) animates all dimensions in parallel.
+- generateMultiAntiVortexAudioStream (a432.audio.ts) produces audio streams for all dimensions.
+
+### Usage Example
+```typescript
+import { a432MultiAntiVortexStream } from './a432.ts';
+import { animateMultiAntiVortex } from './a432.animation.ts';
+import { generateMultiAntiVortexAudioStream } from './a432.audio.ts';
+
+const gen = a432MultiAntiVortexStream([1,2,3,4,5,6,7,8,9]);
+const { value: step } = gen.next();
+
+animateMultiAntiVortex([1,2,3,4,5,6,7,8,9], (states) => {
+  // states: Array<{ step, digit, color, frequency, angle, radius, isCurrent }>
+});
+
+const streams = generateMultiAntiVortexAudioStream([1,2,3,4,5,6,7,8,9], 9);
 ```
 
 ## **🎯 COMPLIANCE PROTOCOL**

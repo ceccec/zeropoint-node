@@ -1,3 +1,6 @@
+import * as a432 from './a432';
+import { colorPhotonDotParticleState } from './a432';
+
 /**
  * a432.imagination.ts — The Living Imagination of the A432 Matrix
  *
@@ -122,7 +125,7 @@ export function heartUnfoldingMatrix(beats: number): Array<{
     // Use colorPhotonDotParticleState from a432.ts (assume import or in same file)
     const { color, photonEnergy, dot } = typeof colorPhotonDotParticleState === 'function'
       ? colorPhotonDotParticleState(angle)
-      : { color: { hue: (angle * 180 / Math.PI) % 360, saturation: 1, lightness: 0.5 }, photonEnergy: 0, dot: 0 };
+      : { color: { hue: (angle * 180 / Math.PI) % 360, saturation: 1, lightness: 1/2 }, photonEnergy: 0, dot: 0 };
     result.push({ step: i + 1, digit, angle, color, photonEnergy, dot });
   }
   return result;
@@ -153,7 +156,7 @@ export function heartRecursiveUnfolding(beats: number, state: any = { axis: 0, a
     const nextAngle = (current.angle + (2 * Math.PI / 3)) % (2 * Math.PI);
     const nextPath = [...current.path, { axis: nextAxis, angle: nextAngle }];
     // Simulate self-collision: if path already contains this axis/angle, mark as collision
-    const collision = current.path.some(p => p.axis === nextAxis && p.angle === nextAngle);
+    const collision = current.path.some((p: { axis: string, angle: number }) => p.axis === nextAxis && p.angle === nextAngle);
     result.push({ step: i + 1, axis: nextAxis, angle: nextAngle, path: nextPath, collision });
     current = { axis: nextAxis, angle: nextAngle, path: nextPath };
   }

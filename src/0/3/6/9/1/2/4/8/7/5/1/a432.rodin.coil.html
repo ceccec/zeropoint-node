@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rodin Coil Race</title>
+  <style>
+    body { 
+      font-family: sans-serif; 
+      background: #111; 
+      color: #eee; 
+      margin: 0;
+      padding: 20px;
+    }
+    .race-track { 
+      display: flex; 
+      gap: 24px; 
+      margin: 32px 0; 
+      justify-content: center;
+    }
+    .runner {
+      display: flex; 
+      flex-direction: column; 
+      align-items: center;
+    }
+    .runner-box {
+      width: 60px; 
+      height: 60px; 
+      border-radius: 50%; 
+      margin-bottom: 8px;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      font-size: 22px; 
+      font-weight: bold; 
+      color: #fff; 
+      transition: background 0.2s, box-shadow 0.2s;
+      background: #333;
+      box-shadow: 0 2px 8px #0008;
+    }
+    .winner { 
+      background: #0f0; 
+      color: #222; 
+      box-shadow: 0 0 24px #0f08; 
+    }
+    .finished { 
+      background: #666; 
+      color: #bbb; 
+    }
+    .label { 
+      font-size: 13px; 
+      color: #ccc; 
+      text-align: center;
+    }
+    .step-indicator { 
+      margin-top: 16px; 
+      font-size: 18px; 
+      text-align: center;
+    }
+    .controls {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .controls input {
+      width: 60px;
+      padding: 4px;
+      margin: 0 8px;
+    }
+    .controls button {
+      padding: 6px 12px;
+      background: #333;
+      color: #eee;
+      border: 1px solid #555;
+      cursor: pointer;
+    }
+    .controls button:hover {
+      background: #444;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">Rodin Coil Race</h1>
+  
+  <div class="controls">
+    <label>Cycles: <input id="cyclesInput" type="number" min="1" max="12" value="2"></label>
+    <button onclick="updateRace()">Update</button>
+  </div>
+  
+  <div class="race-track" id="raceTrack"></div>
+  <div class="step-indicator" id="stepIndicator"></div>
+
+  <script>
+    // Rodin Coil Pattern Generation
+    const RODIN_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+    const A432_ANGLE = 1/3;
+    
+    function rodinCoilPattern(cycles = 2) {
+      const pattern = [];
+      for (let cycle = 0; cycle < cycles; cycle++) {
+        for (let i = 0; i < RODIN_SEQUENCE.length; i++) {
+          const value = RODIN_SEQUENCE[i];
+          const digitalRoot = value === 0 ? 0 : ((value - 1) % 9) + 1;
+          const angle = (i * A432_ANGLE) % 1;
+          
+          pattern.push({
+            position: i,
+            value: value,
+            digitalRoot: digitalRoot,
+            angle: angle
+          });
+        }
+      }
+      return pattern;
+    }
+
+    let pattern = rodinCoilPattern(2);
+    const runners = [1, 2, 4, 8, 7, 5];
+    let positions = runners.map(() => 0);
+    let finished = runners.map(() => false);
+    let winner = null;
+    let step = 0;
+    let animationId = null;
+
+    function updateRace() {
+      const cycles = parseInt(document.getElementById('cyclesInput').value) || 2;
+      pattern = rodinCoilPattern(cycles);
+      resetRace();
+      startRace();
+    }
+
+    function resetRace() {
+      positions = runners.map(() => 0);
+      finished = runners.map(() => false);
+      winner = null;
+      step = 0;
+      if (animationId) {
+        clearTimeout(animationId);
+        animationId = null;
+      }
+    }
+
+    function render() {
+      const raceTrack = document.getElementById('raceTrack');
+      const stepIndicator = document.getElementById('stepIndicator');
+      
+      let html = '';
+      for (let i = 0; i < runners.length; i++) {
+        const pos = positions[i];
+        const val = pattern[pos] ? pattern[pos].value : runners[i];
+        const isWinner = winner === i;
+        const isFinished = finished[i];
+        
+        html += '<div class="runner">' +
+          '<div class="runner-box' + (isWinner ? ' winner' : isFinished ? ' finished' : '') + '">' + val + '</div>' +
+          '<div class="label">Runner: ' + runners[i] + '</div>' +
+          '<div class="label">Step: ' + (pos+1) + '/' + Math.ceil(pattern.length/runners.length) + '</div>' +
+        '</div>';
+      }
+      
+      raceTrack.innerHTML = html;
+      stepIndicator.textContent = winner !== null
+        ? 'Winner: Runner ' + runners[winner]
+        : 'Step ' + (step+1) + ' / ' + Math.ceil(pattern.length/runners.length);
+    }
+
+    function nextStep() {
+      if (winner !== null) return;
+      
+      let anyAdvanced = false;
+      for (let i = 0; i < runners.length; i++) {
+        if (finished[i]) continue;
+        
+        const pos = positions[i];
+        if (pos < pattern.length && pattern[pos].value === runners[i]) {
+          positions[i]++;
+          anyAdvanced = true;
+          if (positions[i] >= pattern.length / runners.length) {
+            finished[i] = true;
+            if (winner === null) winner = i;
+          }
+        } else {
+          positions[i]++;
+        }
+      }
+      
+      step++;
+      render();
+      
+      if (winner === null && anyAdvanced) {
+        animationId = setTimeout(nextStep, 300);
+      }
+    }
+
+    function startRace() {
+      render();
+      animationId = setTimeout(nextStep, 500);
+    }
+
+    // Initialize
+    startRace();
+  </script>
+</body>
+</html> 

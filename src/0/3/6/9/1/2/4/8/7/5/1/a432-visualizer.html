@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A432 Living Matrix Visualizer</title>
+  <style>
+    body { background: #111; color: #eee; font-family: sans-serif; margin: 0; padding: 24px; }
+    h1 { margin-top: 0; }
+    .controls label { margin-right: 18px; }
+    .streams { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 24px; }
+    .stream-box { background: #222; border-radius: 8px; padding: 16px; min-width: 320px; margin-bottom: 16px; }
+    .digits { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 8px; }
+    .digit { display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; border-radius: 4px; font-weight: 600; color: #111; }
+    .meta-recursion { margin-top: 16px; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 2px; margin-bottom: 4px; }
+    .tip { margin-top: 32px; font-size: 13px; color: #aaa; }
+    input[type='number'] { width: 48px; }
+  </style>
+</head>
+<body>
+  <h1>A432 Living Matrix Visualizer</h1>
+  <div class="controls">
+    <label>Steps: <input id="steps" type="number" min="6" max="72" value="18" /></label>
+    <label>Recursions: <input id="recursions" type="number" min="0" max="9" value="0" /></label>
+    <label><input id="blend" type="checkbox" /> Blend Streams</label>
+    <span id="stream-select"></span>
+  </div>
+  <div class="streams" id="streams"></div>
+  <div class="meta-recursion" id="meta-recursion"></div>
+  <div class="tip"><b>Tip:</b> Select streams, blend, and recurse to explore the living harmonics. All logic is from a432 modules only.</div>
+  <script type="module">
+    import * as trinity from './a432.trinity.js';
+    import * as family from './a432.family.js';
+    import * as nine from './a432.nine.js';
+    import * as cascade from './a432.cascade.js';
+    import * as double from './a432.double.js';
+    import * as mirror from './a432.mirror.js';
+    import * as shear from './a432.shear.js';
+    import * as coil from './a432.coil.js';
+    import * as electron from './a432.shear.electron.js';
+    import * as meta from './a432.meta.js';
+
+    const STREAMS = [
+      { key: 'trinity', label: 'Trinity', fn: trinity.a432TrinityStream },
+      { key: 'coil', label: 'Rodin Coil', fn: coil.a432RodinCoilStream },
+      { key: 'shear', label: 'Shear', fn: shear.a432GapSpace },
+      { key: 'family', label: 'Family', fn: () => family.a432FamilyGroups().F1 },
+      { key: 'nine', label: 'Nine', fn: nine.a432Decoqubit },
+      { key: 'cascade', label: 'Cascade', fn: cascade.a432DandelionPuff },
+      { key: 'double', label: 'Double', fn: double.a432ClosedSystem },
+      { key: 'mirror', label: 'Mirror', fn: mirror.a432ToroidalMap },
+      { key: 'electron', label: 'Electron', fn: electron.a432NestedVortices },
+    ];
+
+    // Color as a function of vortex math:
+    // - Hue: 3/6/9 (trinity) → 0, 120, 240; family group (1,2,4,8,7,5) → 60, 180, 300, 30, 210, 330
+    // - Saturation: 2/3 (as integer fraction)
+    // - Lightness: 50 for trinity, 40 for family, 60 for others
+    function colorForDigit(d) {
+      const n = Math.abs(d) % 9 || 9;
+      // Trinity group
+      if (n === 3) return `hsl(0, ${100 * 2/3}%, 50%)`;
+      if (n === 6) return `hsl(120, ${100 * 2/3}%, 50%)`;
+      if (n === 9) return `hsl(240, ${100 * 2/3}%, 50%)`;
+      // Family group
+      if (n === 1) return `hsl(60, ${100 * 2/3}%, 40%)`;
+      if (n === 2) return `hsl(180, ${100 * 2/3}%, 40%)`;
+      if (n === 4) return `hsl(300, ${100 * 2/3}%, 40%)`;
+      if (n === 8) return `hsl(30, ${100 * 2/3}%, 40%)`;
+      if (n === 7) return `hsl(210, ${100 * 2/3}%, 40%)`;
+      if (n === 5) return `hsl(330, ${100 * 2/3}%, 40%)`;
+      // Fallback (should not occur)
+      return `hsl(0, 0%, 60%)`;
+    }
+
+    // UI State
+    let steps = 18;
+    let recursions = 0;
+    let blend = false;
+    let selected = ['trinity', 'coil'];
+
+    // Controls
+    document.getElementById('steps').addEventListener('input', e => { steps = Number(e.target.value); render(); });
+    document.getElementById('recursions').addEventListener('input', e => { recursions = Number(e.target.value); render(); });
+    document.getElementById('blend').addEventListener('change', e => { blend = e.target.checked; render(); });
+
+    // Stream selection checkboxes
+    const streamSelect = document.getElementById('stream-select');
+    STREAMS.forEach(s => {
+      const label = document.createElement('label');
+      label.style.marginRight = '12px';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = selected.includes(s.key);
+      cb.onchange = e => {
+        if (e.target.checked) selected.push(s.key);
+        else selected = selected.filter(k => k !== s.key);
+        render();
+      };
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(' ' + s.label));
+      streamSelect.appendChild(label);
+    });
+
+    function getStreams() {
+      return selected.map(key => {
+        const s = STREAMS.find(s => s.key === key);
+        return s ? s.fn(steps) : [];
+      });
+    }
+
+    function render() {
+      // Streams
+      const streamsDiv = document.getElementById('streams');
+      streamsDiv.innerHTML = '';
+      const streams = getStreams();
+      const blended = blend && streams.length > 1 ? meta.a432BlendStreams(streams, steps) : null;
+      const toShow = blend && blended ? [blended] : streams;
+      const analytics = toShow.map(meta.a432HarmonicAnalytics);
+
+      toShow.forEach((stream, idx) => {
+        const box = document.createElement('div');
+        box.className = 'stream-box';
+        const h3 = document.createElement('h3');
+        h3.textContent = blend ? 'Blended' : STREAMS.find(s => s.key === selected[idx])?.label;
+        box.appendChild(h3);
+        const digitsDiv = document.createElement('div');
+        digitsDiv.className = 'digits';
+        stream.forEach(d => {
+          const span = document.createElement('span');
+          span.className = 'digit';
+          span.style.background = colorForDigit(d);
+          span.textContent = d;
+          digitsDiv.appendChild(span);
+        });
+        box.appendChild(digitsDiv);
+        const stats = document.createElement('div');
+        stats.style.fontSize = '14px';
+        stats.innerHTML = `<b>Harmony:</b> ${analytics[idx].harmony.toFixed(2)}<br />` +
+                          `<b>Entropy:</b> ${analytics[idx].entropy.toFixed(2)}<br />` +
+                          `<b>Resonance:</b> ${analytics[idx].resonance}`;
+        box.appendChild(stats);
+        streamsDiv.appendChild(box);
+      });
+
+      // Meta-recursion
+      const metaDiv = document.getElementById('meta-recursion');
+      metaDiv.innerHTML = '';
+      if (recursions > 0 && toShow[0]) {
+        const recursed = meta.a432RecursiveMetaVortex(toShow[0], recursions);
+        const title = document.createElement('h3');
+        title.textContent = 'Meta-Recursion';
+        metaDiv.appendChild(title);
+        recursed.forEach((arr, i) => {
+          const row = document.createElement('div');
+          row.className = 'meta-row';
+          arr.forEach(d => {
+            const span = document.createElement('span');
+            span.className = 'digit';
+            span.style.width = '20px';
+            span.style.height = '20px';
+            span.style.lineHeight = '20px';
+            span.style.background = colorForDigit(d);
+            span.style.opacity = 1 - i * 0.15;
+            span.textContent = d;
+            row.appendChild(span);
+          });
+          metaDiv.appendChild(row);
+        });
+      }
+    }
+
+    render();
+  </script>
+</body>
+</html> 

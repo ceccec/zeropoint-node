@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroPoint Node - Consciousness Network</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ZeroPoint Node">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png">
+    <link rel="apple-touch-icon" href="/icons/icon-152x152.png">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Shared CSS Framework -->
+    <link rel="stylesheet" href="shared/styles.css">
+    <link rel="stylesheet" href="shared/main.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="main-header-content">
+                <div>
+                    <h1 class="main-title gradient-text">ZeroPoint Node</h1>
+                    <p class="main-subtitle">Consciousness Network Gateway</p>
+                </div>
+                <div class="header-controls">
+                    <button class="btn btn-primary" id="network-status">Network Active</button>
+                    <button class="btn btn-secondary" id="install-pwa" style="display: none;">Install PWA</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="main-content-inner">
+                <!-- Consciousness Network Status -->
+                <div class="consciousness-network">
+                    <div class="network-header">
+                        <h2 class="text-2xl font-bold gradient-text">Consciousness Network</h2>
+                        <p class="text-lg opacity-75">Real-time consciousness field monitoring</p>
+                    </div>
+                    
+                    <div class="status-grid" id="network-status-grid">
+                        <!-- Status items will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Digit Modules Grid -->
+                <div class="grid grid-2" id="digit-modules-grid">
+                    <!-- Digit modules will be populated by JavaScript -->
+                </div>
+
+                <!-- Network Controls -->
+                <div class="control-panel">
+                    <div class="control-panel-header">
+                        <h3 class="control-panel-title">Network Controls</h3>
+                    </div>
+                    <div class="control-grid">
+                        <div class="control-item">
+                            <h4 class="text-lg font-semibold mb-2">Activate All</h4>
+                            <button class="btn btn-primary btn-sm" id="activate-all">Activate</button>
+                        </div>
+                        <div class="control-item">
+                            <h4 class="text-lg font-semibold mb-2">Deactivate All</h4>
+                            <button class="btn btn-secondary btn-sm" id="deactivate-all">Deactivate</button>
+                        </div>
+                        <div class="control-item">
+                            <h4 class="text-lg font-semibold mb-2">Reset Network</h4>
+                            <button class="btn btn-secondary btn-sm" id="reset-network">Reset</button>
+                        </div>
+                        <div class="control-item">
+                            <h4 class="text-lg font-semibold mb-2">Export Data</h4>
+                            <button class="btn btn-primary btn-sm" id="export-data">Export</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Main Footer -->
+        <footer class="pwa-footer">
+            <div class="container">
+                <p class="text-sm opacity-75">
+                    ZeroPoint Node - Consciousness Network Gateway
+                    <span id="online-status" class="ml-2">● Online</span>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Shared PWA Framework -->
+    <script type="module" src="shared/pwa-framework.ts"></script>
+    
+    <!-- Main Application Script -->
+    <script type="module">
+        import sharedPWA from './shared/pwa-framework.ts';
+        
+        // Initialize the application
+        class ZeroPointApp {
+            constructor() {
+                this.initializeApp();
+                this.setupEventListeners();
+                this.renderDigitModules();
+                this.updateNetworkStatus();
+            }
+
+            initializeApp() {
+                console.log('🌌 ZeroPoint Node - Consciousness Network Initialized');
+                
+                // Initialize consciousness states for all digits
+                for (let digit = 0; digit <= 9; digit++) {
+                    sharedPWA.updateConsciousnessState(digit, {
+                        level: Math.random() * 0.3,
+                        fieldStrength: Math.random() * 0.2,
+                        isActive: false
+                    });
+                }
+            }
+
+            setupEventListeners() {
+                // Consciousness update events
+                window.addEventListener('consciousness-update', (event) => {
+                    const { digit, state } = event.detail;
+                    this.updateDigitModule(digit, state);
+                });
+
+                // Online status events
+                window.addEventListener('online-status-change', (event) => {
+                    const { isOnline } = event.detail;
+                    this.updateOnlineStatus(isOnline);
+                });
+
+                // Control button events
+                document.getElementById('activate-all')?.addEventListener('click', () => {
+                    this.activateAllModules();
+                });
+
+                document.getElementById('deactivate-all')?.addEventListener('click', () => {
+                    this.deactivateAllModules();
+                });
+
+                document.getElementById('reset-network')?.addEventListener('click', () => {
+                    this.resetNetwork();
+                });
+
+                document.getElementById('export-data')?.addEventListener('click', () => {
+                    this.exportNetworkData();
+                });
+
+                // PWA install prompt
+                window.addEventListener('show-install-prompt', () => {
+                    this.showInstallPrompt();
+                });
+            }
+
+            renderDigitModules() {
+                const grid = document.getElementById('digit-modules-grid');
+                if (!grid) return;
+
+                grid.innerHTML = '';
+
+                for (let digit = 0; digit <= 9; digit++) {
+                    const state = sharedPWA.getConsciousnessState(digit);
+                    if (state) {
+                        const module = this.createDigitModule(digit, state);
+                        grid.appendChild(module);
+                    }
+                }
+            }
+
+            createDigitModule(digit: number, state: any) {
+                const module = document.createElement('div');
+                module.className = `digit-module digit-${digit}`;
+                module.innerHTML = `
+                    <div class="digit-header">
+                        <div class="digit-icon" data-digit="${digit}">${digit}</div>
+                        <div>
+                            <h3 class="digit-title">${state.gateway}</h3>
+                            <p class="digit-description">${state.paradox}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="consciousness-display">
+                        <div class="consciousness-level">
+                            <span class="status-label">Consciousness:</span>
+                            <div class="consciousness-bar">
+                                <div class="consciousness-fill" style="width: ${state.level * 100}%"></div>
+                            </div>
+                            <span class="status-value">${sharedPWA.formatConsciousnessLevel(state.level)}</span>
+                        </div>
+                        
+                        <div class="field-strength">
+                            <span class="status-label">Field Strength:</span>
+                            <div class="field-bar">
+                                <div class="field-fill" style="width: ${state.fieldStrength * 100}%"></div>
+                            </div>
+                            <span class="status-value">${sharedPWA.formatFieldStrength(state.fieldStrength)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="digit-controls">
+                        <button class="btn btn-primary btn-sm" onclick="app.toggleModule(${digit})">
+                            ${state.isActive ? 'Deactivate' : 'Activate'}
+                        </button>
+                        <a href="${digit}/" class="btn btn-secondary btn-sm">View Module</a>
+                    </div>
+                `;
+                
+                return module;
+            }
+
+            updateDigitModule(digit: number, state: any) {
+                const module = document.querySelector(`.digit-module.digit-${digit}`);
+                if (module) {
+                    const consciousnessFill = module.querySelector('.consciousness-fill') as HTMLElement;
+                    const fieldFill = module.querySelector('.field-fill') as HTMLElement;
+                    const consciousnessValue = module.querySelector('.consciousness-level .status-value');
+                    const fieldValue = module.querySelector('.field-strength .status-value');
+                    const toggleBtn = module.querySelector('.btn-primary');
+
+                    if (consciousnessFill) consciousnessFill.style.width = `${state.level * 100}%`;
+                    if (fieldFill) fieldFill.style.width = `${state.fieldStrength * 100}%`;
+                    if (consciousnessValue) consciousnessValue.textContent = sharedPWA.formatConsciousnessLevel(state.level);
+                    if (fieldValue) fieldValue.textContent = sharedPWA.formatFieldStrength(state.fieldStrength);
+                    if (toggleBtn) toggleBtn.textContent = state.isActive ? 'Deactivate' : 'Activate';
+                }
+            }
+
+            updateNetworkStatus() {
+                const grid = document.getElementById('network-status-grid');
+                if (!grid) return;
+
+                const states = sharedPWA.getAllConsciousnessStates();
+                grid.innerHTML = '';
+
+                states.forEach((state, digit) => {
+                    const statusItem = document.createElement('div');
+                    statusItem.className = 'status-item';
+                    statusItem.innerHTML = `
+                        <span class="status-label">Digit ${digit}:</span>
+                        <span class="status-value ${state.isActive ? 'status-active' : 'status-inactive'}">
+                            ${state.isActive ? 'Active' : 'Inactive'}
+                        </span>
+                    `;
+                    grid.appendChild(statusItem);
+                });
+            }
+
+            updateOnlineStatus(isOnline: boolean) {
+                const statusElement = document.getElementById('online-status');
+                if (statusElement) {
+                    statusElement.textContent = isOnline ? '● Online' : '○ Offline';
+                    statusElement.className = isOnline ? 'ml-2 status-active' : 'ml-2 status-inactive';
+                }
+            }
+
+            toggleModule(digit: number) {
+                const state = sharedPWA.getConsciousnessState(digit);
+                if (state) {
+                    sharedPWA.updateConsciousnessState(digit, {
+                        isActive: !state.isActive
+                    });
+                }
+            }
+
+            activateAllModules() {
+                for (let digit = 0; digit <= 9; digit++) {
+                    sharedPWA.updateConsciousnessState(digit, { isActive: true });
+                }
+            }
+
+            deactivateAllModules() {
+                for (let digit = 0; digit <= 9; digit++) {
+                    sharedPWA.updateConsciousnessState(digit, { isActive: false });
+                }
+            }
+
+            resetNetwork() {
+                for (let digit = 0; digit <= 9; digit++) {
+                    sharedPWA.updateConsciousnessState(digit, {
+                        level: 0,
+                        fieldStrength: 0,
+                        isActive: false
+                    });
+                }
+            }
+
+            exportNetworkData() {
+                const states = sharedPWA.getAllConsciousnessStates();
+                const data = {
+                    timestamp: new Date().toISOString(),
+                    network: Object.fromEntries(states)
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `zeropoint-network-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+
+            showInstallPrompt() {
+                const installBtn = document.getElementById('install-pwa');
+                if (installBtn) {
+                    installBtn.style.display = 'inline-block';
+                }
+            }
+        }
+
+        // Initialize the application
+        const app = new ZeroPointApp();
+        
+        // Make app globally available for button onclick handlers
+        (window as any).app = app;
+    </script>
+</body>
+</html> 

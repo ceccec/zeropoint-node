@@ -1,18 +1,13 @@
 /**
- * Trinity/Vortex/Consciousness Shift Law (+120°)
- *
- * In the A432 system, a +120° (2π/3) shift is the fundamental operation for moving to the next state in the trinity, vortex, or consciousness cycle.
- * - This is not a polarity reversal (not 180°), but a progression/evolution to the next phase.
- * - Used for trinity (4→3→2), vortex (3→6→9), and consciousness mapping.
- * - Canonical function: shiftConsciousness120(angle)
- *
- * Usage:
- *   shiftConsciousness120(currentAngle) // returns currentAngle + 2π/3 (mod 2π)
- *
- * Metaphysical Implication:
- *   - The system evolves by +120° steps, harmonizing all states in a living, recursive trinity.
- *   - 180° is for polarity/phase reversal; 120° is for trinity/vortex/consciousness progression.
+ * nextInteraction(n: number, cycle?: number[]):
+ *   Returns the next element in the cycle after n, using the default trinity [1,2,3] if no cycle is provided.
+ *   Encodes the law: every self-meeting n/n shifts to the next in the cycle, avoiding collision and enabling infinite recursion.
+ *   This is the canonical A432 recursion/collision-avoidance law.
  */
+export function nextInteraction(n: number, cycle: number[] = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1]): number {
+  const idx = cycle.indexOf(n);
+  return cycle[(idx + 1) % cycle.length];
+}
 
 /**
  * a432.ts — Zero Entropy Harmonic Seed
@@ -41,6 +36,52 @@ export const A432_DIGIT_MEANINGS = [
   { name: 'Infinity', description: 'Power, expansion, infinite flow, recursion; the endless, the self-similar, the principle of recursion and the infinite loop.' },
   { name: 'Completion', description: 'Fulfillment, wholeness, return, zero entropy; the end and the beginning, the return to source, and the closure of the cycle.' }
 ];
+
+/**
+ * A432_APERTURE: The Primal Point (Zero) — Source and Return of All Emanation
+ *
+ * In Vortex Based Mathematics and the metaphysics of the Rodin coil, the aperture (zero point) is the origin and return of all digit flows.
+ * All emanation (spirit, energy, matter) emerges from and returns to this point, recursively.
+ * This function models the two-stage surge pump (implosion/explosion, black hole/white hole) as a digit-based, recursive process.
+ *
+ * - The Rodin coil sequence (1-2-4-8-7-5) flows outward (explosion/emanation), always returning to 1 (the seed).
+ * - The reverse sequence (5-7-8-4-2-1) flows inward (implosion/return), always returning to 0 (the aperture).
+ * - 9 is the invisible axis/monopole, the W-axis, the spiritual center.
+ *
+ * This function can be used to recursively traverse the vortex, modeling spirit emanation and return, using only single digits.
+ */
+export function a432ApertureFlow(direction: 1 | -1 = 1, start: number = 1, steps: number = 6): number[] {
+  // Outward: 1-2-4-8-7-5, Inward: 5-7-8-4-2-1
+  const outward = [1, 2, 4, 8, 7, 5];
+  const inward = [5, 7, 8, 4, 2, 1];
+  const seq = direction === 1 ? outward : inward;
+  const idx = seq.indexOf(start);
+  if (idx === -1) return [];
+  const result = [];
+  for (let i = 0; i < steps; i++) {
+    result.push(seq[(idx + i) % seq.length]);
+  }
+  return result;
+}
+
+/**
+ * a432ApertureSurgePump: Models the two-stage surge pump (implosion/explosion) as a recursive digit process.
+ * Returns an object with outward and inward flows, each as a digit sequence.
+ */
+export function a432ApertureSurgePump(seed: number = 1, steps: number = 6): { outward: number[], inward: number[] } {
+  return {
+    outward: a432ApertureFlow(1, seed, steps),
+    inward: a432ApertureFlow(-1, 5, steps)
+  };
+}
+
+/**
+ * Metaphysical Mapping:
+ * - The Rodin coil is the living vortex: outward flow is creation/emanation, inward flow is return/implosion.
+ * - Sacred geometry (domes, eyes, black holes) is the projection of this recursive aperture logic.
+ * - Spirit emanation is modeled as recursive traversal of the vortex, always returning to the aperture (zero point).
+ * - 9 is the invisible axis, the spiritual center, not traversed but always present.
+ */
 
 /**
  * a432StreamText: Generate a stream text for a given dimension (1-9) using the digit meaning mapping.
@@ -75,14 +116,18 @@ export function fineStructureConstant(): number { return (E * E) / (4 * PI * EPS
 
 // --- Canonical Harmonic/Vortex Constants ---
 export const A432_FREQUENCY = 432;
-export const RODIN_SEQUENCE = [1, 2, 4, 8, 7, 5];
+import { RODIN_SEQUENCE, rodinVortexCycle, rodinPosition, rodinCoilPattern } from './a432.rodin.coil';
+export { rodinVortexCycle, rodinPosition, rodinCoilPattern };
+export const RODIN_VORTEX_SEQUENCE = RODIN_SEQUENCE;
 export const TELEPORTATION_STATES = [-81, -56, -42]; // Only reality switch/teleportation states
 
 /**
- * RODIN_VORTEX_SEQUENCE is the infinite harmonic flow and the generative/return cycle of the system.
+ * A432_SEQUENCE is the infinite harmonic flow and the generative/return cycle of the system.
  * 124 8 751 is the core Rodin vortex pattern: [1, 2, 4, 8, 7, 5, 1]
  */
-export const RODIN_VORTEX_SEQUENCE = [1, 2, 4, 8, 7, 5, 1];
+export const A432_SEQUENCE = [0, [3, 6, 9], [1, 2, 4], 8, [7, 5, 1]]; // Void 0 -> 9 -> 7 -> 8 -> 4
+export const A432_TRINITY = [0, 9, 1];
+export const A432_ANGLE = 360 / 3; // 120 degrees dimensional gateways angle
 
 /**
  * Polarity Flows in Rodin/Trinity Logic
@@ -98,14 +143,6 @@ export const RODIN_VORTEX_SEQUENCE = [1, 2, 4, 8, 7, 5, 1];
  *   a432Frequency(3, +1) // forward frequency
  *   a432Frequency(3, -1) // reverse frequency
  */
-export function rodinVortexCycle(n: number, polarity: 1 | -1 = 1): number[] {
-  const seq = polarity === 1 ? RODIN_VORTEX_SEQUENCE : [...RODIN_VORTEX_SEQUENCE].reverse();
-  const result = [];
-  for (let i = 0; i < n; i++) {
-    result.push(...seq);
-  }
-  return result;
-}
 
 /**
  * a432Frequency: Get the A432-based frequency for a given dimension and polarity.
@@ -316,6 +353,79 @@ export const a432DimensionStreams = Array.from({ length: 9 }, (_, i) => {
   return { dimension, frequency, color: { hsl, rgb }, consciousness, generator };
 });
 
+/**
+ * a432AntiVortexStream: Canonical anti-vortex (anti-harmonic, phase-reversal) stream generator.
+ *
+ * - Returns a generator yielding the anti-vortex (reverse polarity, -1) sequence for a given dimension (1-9).
+ * - All values are derived from integer/fractional logic, never hardcoded decimals.
+ * - This is the living, recursive anti-vortex stream: negative harmonics, phase reversals, vortex inversions.
+ * - Use for anti-vortex visualization, sonification, and metaphysical mapping.
+ *
+ * Metaphysical Principle:
+ *   - The anti-vortex is the phase-inverted, counter-rotating, or negative harmonic stream.
+ *   - It is essential for expressing duality, reversibility, and the analog/infinite nature of the living matrix.
+ *   - Anti-vortex flows are gateways to transformation, teleportation, and reality switching.
+ *
+ * Usage:
+ *   const gen = a432AntiVortexStream(3); // generator for dimension 3 (Trinity)
+ *   gen.next().value // first anti-vortex frequency
+ *   [...Array(6)].map(() => gen.next().value) // first 6 anti-vortex steps
+ */
+export function* a432AntiVortexStream(dimension: number) {
+  let n = 0;
+  while (true) {
+    // Use polarity -1 for anti-vortex (reverse) flow
+    yield a432Frequency(((dimension + (-1 * n) + 8) % 9) + 1, -1);
+    n++;
+  }
+}
+
+/**
+ * a432MultiAntiVortexStream: Yields anti-vortex streams for any array or range of dimensions (1–9).
+ * - Returns a generator yielding { dimension, frequency, step } for each dimension in the input array, cycling anti-vortex flows in parallel.
+ * - All values are integer/fractional, using polarity -1.
+ *
+ * Usage:
+ *   const gen = a432MultiAntiVortexStream([1,2,3,4,5,6,7,8,9]);
+ *   gen.next().value // { dimension, frequency, step }
+ *   [...Array(9)].map(() => gen.next().value) // first 9 steps for all dimensions
+ */
+export function* a432MultiAntiVortexStream(dimensions: number[]) {
+  const gens = dimensions.map(d => a432AntiVortexStream(d));
+  let step = 0;
+  while (true) {
+    const result = dimensions.map((dimension, i) => {
+      const { value: frequency } = gens[i].next();
+      return { dimension, frequency, step: step + 1 };
+    });
+    yield result;
+    step++;
+  }
+}
+
+/**
+ * a432AntiVortexMapping: Canonical metaphysical mapping for anti-vortex flows.
+ *
+ * - Each anti-vortex state is mapped as a living stream: meaning, color, sound, and transformation logic.
+ * - Use this mapping for visualization, sonification, and recursive metaphysical exploration.
+ */
+export const a432AntiVortexMapping = Array.from({ length: 9 }, (_, i) => {
+  const dimension = i + 1;
+  const frequency = a432Frequency(dimension, -1);
+  const hsl = a432HSLFromRoot(dimension, -1);
+  const rgb = a432RGBFromRoot(dimension, -1);
+  const consciousness = digitalRoot(frequency);
+  const meaning = A432_DIGIT_MEANINGS[dimension]?.description || '';
+  return {
+    dimension,
+    frequency,
+    color: { hsl, rgb },
+    consciousness,
+    meaning,
+    stream: a432AntiVortexStream(dimension)
+  };
+});
+
 // --- Mobius-Rodin-Tesla System (harmonized, canonical) ---
 export interface A432MobiusRodinTeslaState {
   name: string;
@@ -399,17 +509,15 @@ export const A432_Mobius_Rodin_Tesla_System = {
  * shiftConsciousness120: Canonical +120° (2π/3) shift for trinity/vortex/consciousness progression.
  *
  * Use this for trinity/vortex/consciousness state progression (not for polarity/phase reversal).
- * - Each call advances the angle/state by +120° (2π/3 radians).
- * - For 3-fold cycles: 0 → 120° → 240° → 0° ...
+ * - Each call advances the angle/state by +60° (2π/6 radians).
+ * - For 3-fold cycles: 0 → 60° → 120° → 180° → 240° → 300° → 0° ...
  *
  * Usage:
- *   let angle = 0;
- *   angle = shiftConsciousness120(angle); // 120°
- *   angle = shiftConsciousness120(angle); // 240°
- *   angle = shiftConsciousness120(angle); // 0°
+ *   let angle = 60;
+ *   angle = shiftConsciousness(angle); // 60°
  */
-export function shiftConsciousness120(angle: number): number {
-  return (angle + (2 * Math.PI / 3)) % (2 * Math.PI);
+export function shiftConsciousness(angle: number): number {
+  return (angle + (2 * Math.PI / 6)) % (2 * Math.PI);
 }
 
 /**
@@ -447,4 +555,158 @@ export function colorPhotonDotParticleState(angle: number): {
   // Dot: the discrete state (step index)
   const dot = step;
   return { color, photonEnergy, dot };
+}
+
+/**
+ * visualizeA432Journey: Returns an array of steps representing the mathematical/recursive journey through the A432_SEQUENCE.
+ * Each step includes: index, value, type (void, axis, trinity, fold, return), and a description.
+ * The function recursively unfolds/folds the sequence, showing the journey 0 → 9 → 7 → 8 → 4 and back to the seed.
+ */
+export function visualizeA432Journey(steps: number = 12): Array<{index: number, value: number|string|number[], type: string, description: string}> {
+  const sequence = [0, [3,6,9], [1,2,4], 8, [7,5,1]];
+  const types = ['void', 'axis', 'trinity', 'fold', 'return'];
+  const flat = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+  const journey: Array<{index: number, value: number|string|number[], type: string, description: string}> = [];
+  let idx = 0;
+  function recurse(seq: any[], depth: number) {
+    for (let i = 0; i < seq.length; i++) {
+      const val = seq[i];
+      let type = types[i] || 'unknown';
+      if (Array.isArray(val)) {
+        recurse(val, depth + 1);
+      } else {
+        let description = '';
+        if (val === 0) description = 'Void: origin, unmanifest';
+        else if (val === 8) description = 'Fold: infinity, Mobius, recursion';
+        else if ([3,6,9].includes(val)) description = 'Axis: Tesla trinity, field';
+        else if ([1,2,4].includes(val)) description = 'Trinity: generative, creation';
+        else if ([7,5,1].includes(val)) description = 'Return: completion, return path';
+        else description = 'State';
+        journey.push({index: idx++, value: val, type, description});
+      }
+    }
+  }
+  recurse(sequence, 0);
+  // Optionally, show the fold/journey path: 0 → 9 → 7 → 8 → 4
+  journey.push({index: idx++, value: [0,9,7,8,4], type: 'fold-journey', description: 'Folded journey: Void → Axis → Return → Fold → Trinity'});
+  return journey.slice(0, steps);
+}
+
+/**
+ * getA432ShiftPoints: Returns an array of steps in the A432_SEQUENCE where a 120° shift occurs.
+ * Each step includes: index, value, type (void, axis, trinity, fold, return, shift), angle (in degrees), and a description.
+ * Every transition between major groups is a +120° shift, cycling angle by 120° each time.
+ */
+export function getA432ShiftPoints(): Array<{index: number, value: number|string|number[], type: string, angle: number, description: string}> {
+  const sequence = [0, [3,6,9], [1,2,4], 8, [7,5,1]];
+  const types = ['void', 'axis', 'trinity', 'fold', 'return'];
+  const shiftPoints: Array<{index: number, value: number|string|number[], type: string, angle: number, description: string}> = [];
+  let idx = 0;
+  let angle = 0;
+  for (let i = 0; i < sequence.length; i++) {
+    const val = sequence[i];
+    let type = types[i] || 'unknown';
+    let description = '';
+    if (type === 'void') description = 'Void: origin, unmanifest';
+    else if (type === 'axis') description = 'Axis: Tesla trinity, field (120° shift)';
+    else if (type === 'trinity') description = 'Trinity: generative, creation (120° shift)';
+    else if (type === 'fold') description = 'Fold: infinity, Mobius, recursion (120° shift)';
+    else if (type === 'return') description = 'Return: completion, return path (120° shift)';
+    else description = 'State';
+    shiftPoints.push({index: idx++, value: val, type, angle, description});
+    if (i < sequence.length - 1) angle = (angle + 120) % 360;
+  }
+  return shiftPoints;
+}
+
+/**
+ * Canonical vortex shift: each vortex changes angle by 60° to avoid collision and maintain stability.
+ * Trinity total: 3 axes × 2 polarities × 60° = 360° (full cycle)
+ */
+export const A432_VORTEX_SHIFT_DEGREES = 60;
+export const A432_TRINITY_TOTAL_DEGREES = 3 * 2 * A432_VORTEX_SHIFT_DEGREES; // 360
+
+/**
+ * Returns the shifted angle for a given vortex step (modulo 360).
+ * @param index Step in the sequence (integer)
+ * @returns Angle in degrees (0–359)
+ */
+export function getA432VortexAngle(index: number): number {
+  return (index * A432_VORTEX_SHIFT_DEGREES) % 360;
+}
+
+/**
+ * getA432PaletteStates: Flattens A432_SEQUENCE to a list of unique numbers (including 0) in order.
+ * Returns: Array<{ root: number, angle: number, hsl: {hue: number, saturation: number, lightness: number} }>
+ * Angle is assigned as (A432_ANGLE * 360) * i for each state, where A432_ANGLE is the canonical increment (1/3 of a circle).
+ */
+export function getA432PaletteStates(polarity: 1 | -1 = 1): Array<{root: number, angle: number, hsl: {hue: number, saturation: number, lightness: number}} > {
+  // Flatten A432_SEQUENCE to unique numbers in order
+  function flatten(seq: any[]): number[] {
+    const out: number[] = [];
+    for (const v of seq) {
+      if (Array.isArray(v)) out.push(...flatten(v));
+      else out.push(v);
+    }
+    return out;
+  }
+  const roots = Array.from(new Set(flatten(A432_SEQUENCE)));
+  return roots.map((root, i) => ({
+    root,
+    angle: (A432_ANGLE * 360) * i,
+    hsl: a432HSLFromRoot(root, polarity)
+  }));
+}
+
+/**
+ * generateA432ColorPalette: Returns an array of HSL color objects for each 120° shift in the A432 sequence.
+ */
+export function generateA432ColorPalette(): Array<{angle: number, color: {hue: number, saturation: number, lightness: number}} > {
+  return getA432ShiftPoints().map(({angle}, i) => {
+    // Map angle to HSL color (hue = angle)
+    return {
+      angle,
+      color: { hue: angle, saturation: 1, lightness: 0.5 }
+    };
+  });
+}
+
+/**
+ * generateA432SoundSequence: Returns an array of frequencies (Hz) for each 120° shift, using A432_FREQUENCY and digital root mapping.
+ */
+export function generateA432SoundSequence(): Array<{angle: number, frequency: number}> {
+  return getA432ShiftPoints().map(({angle, value}) => {
+    // Use digital root of value (if number) to modulate frequency
+    let root = typeof value === 'number' ? digitalRoot(value) : 1;
+    return {
+      angle,
+      frequency: A432_FREQUENCY * root
+    };
+  });
+}
+
+/**
+ * generateA432AnimationFrames: Returns an array of frame objects, each with angle, color, and frequency, for each 120° shift.
+ */
+export function generateA432AnimationFrames(): Array<{frame: number, angle: number, color: {hue: number, saturation: number, lightness: number}, frequency: number}> {
+  return getA432ShiftPoints().map(({index, angle, value}) => {
+    let root = typeof value === 'number' ? digitalRoot(value) : 1;
+    return {
+      frame: index,
+      angle,
+      color: { hue: angle, saturation: 1, lightness: 0.5 },
+      frequency: A432_FREQUENCY * root
+    };
+  });
 } 
+
+// --- Harmonized Modules ---
+export * from './a432.trinity';
+export * from './a432.family';
+export * from './a432.nine';
+export * from './a432.cascade';
+export * from './a432.double';
+export * from './a432.mirror';
+export * from './a432.shear';
+export * from './a432.coil';
+export * from './a432.shear.electron'; 

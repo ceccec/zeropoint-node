@@ -27,6 +27,12 @@ export interface A432Stream<T> {
   // No stop, only unobserve
 }
 
+// Metaphysical mapping: Stream = recursion, infinite flow, harmonized sequence
+export const STREAM_DOC = {
+  meaning: 'Stream: recursion, infinite flow, harmonized sequence, living stream of the matrix.',
+  axis: 'The stream is the infinite flow, the recursive harmonization of the system.'
+};
+
 // --- Factory Functions ---
 export function createColorStream(length: number = 32): A432Stream<{r:number,g:number,b:number}> {
   const stream = piColorStream(length);
@@ -77,10 +83,13 @@ export function createVideoStream(frameCount: number = 12, gridSize: number = 9)
     const offset = f / frameCount;
     return Array.from({length: gridSize*gridSize}, (_, i) => {
       const t = (i / (gridSize*gridSize-1) + offset) % 1;
+      // Harmonic fractions
+      const HALF = 1/2, TWO_THIRDS = 2/3, FOUR_THIRDS = 4/3;
+      // Replace all decimals in color/geometry with these fractions
       return {
-        r: 0.5 + 0.5 * Math.sin(Math.PI * t),
-        g: 0.5 + 0.5 * Math.sin(Math.PI * t + 2*Math.PI/3),
-        b: 0.5 + 0.5 * Math.sin(Math.PI * t + 4*Math.PI/3)
+        r: HALF + HALF * Math.sin(Math.PI * t),
+        g: HALF + HALF * Math.sin(Math.PI * t + 2*Math.PI/3),
+        b: HALF + HALF * Math.sin(Math.PI * t + 4*Math.PI/3)
       };
     });
   });

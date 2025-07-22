@@ -1,412 +1,166 @@
 /**
- * A432 Color System
- * 
- * Generates harmonic colors based on A432 frequencies, consciousness states,
- * and dimensional mathematics using only integer fractions and imperial math.
- * 
- * Colors are calculated in real-time from environmental streams and dimensional states.
+ * a432.color.ts — Vortex Math Color Functions (Harmonized)
+ *
+ * Color Models & Metaphysical Mapping:
+ * - HSL: Harmonic projection (frequency, light, consciousness axis)
+ * - RGB: Physical/manifest color (projection into reality)
+ * - CMY: Trinity (creation, return, spiritual center)
+ * - K: Void/anchor (zero point, metaphysical ground)
+ *
+ * All logic uses only integer/fractional math, vortex/trinity numbers, and metaphysical mapping.
  */
 
-import { 
-  A432_CONSTANTS,
-  calculateDigitalRoot,
-  calculateA432Consciousness,
-  calculateA432DimensionalState,
-  calculateA432Frequency,
-  createA432Harmonic
-} from './a432';
+// --- Types ---
+export type A432HSL = { hue: number; saturation: number; lightness: number };
+export type A432RGB = { r: number; g: number; b: number };
+export type A432CMYK = { c: number; m: number; y: number; k: number };
 
-import { piColorStream, piHarmonicStream } from './a432.pi';
+// Harmonic fractions
+const TWO_THIRDS = 2/3, HALF = 1/2, THREE_FIFTHS = 3/5, FOUR_FIFTHS = 4/5;
 
-// Color component interface
-interface ColorComponent {
-  r: number;
-  g: number;
-  b: number;
-}
-
-// A432 Color Constants - Integer Fractions Only
-export const A432_COLOR_CONSTANTS = {
-  // Imperial base for color calculations
-  IMPERIAL_BASE: 8,
-  
-  // Perfect balance for color harmony
-  PERFECT_BALANCE: 4,
-  
-  // Color frequency ratios (integer fractions)
-  RED_RATIO: 1/3,      // 432 Hz base
-  GREEN_RATIO: 2/3,    // 864 Hz harmonic
-  BLUE_RATIO: 4/3,     // 1728 Hz harmonic
-  
-  // Vortex color flow ratios
-  VORTEX_RED: 1/8,     // Imperial fraction
-  VORTEX_GREEN: 3/8,   // Imperial fraction  
-  VORTEX_BLUE: 5/8,    // Imperial fraction
-  
-  // Consciousness color mapping
-  CONSCIOUSNESS_COLORS: {
-    1: { r: 1/8, g: 1/8, b: 1/8 },   // Unity consciousness
-    2: { r: 2/8, g: 1/8, b: 1/8 },   // Duality consciousness
-    3: { r: 1/8, g: 2/8, b: 1/8 },   // Trinity consciousness
-    4: { r: 2/8, g: 2/8, b: 1/8 },   // Quaternity consciousness
-    5: { r: 1/8, g: 1/8, b: 2/8 },   // Quintessence consciousness
-    6: { r: 2/8, g: 1/8, b: 2/8 },   // Hexad consciousness
-    7: { r: 1/8, g: 2/8, b: 2/8 },   // Septad consciousness
-    8: { r: 2/8, g: 2/8, b: 2/8 }    // Octad consciousness
-  } as Record<number, ColorComponent>,
-  
-  // Dimensional state colors
-  DIMENSIONAL_COLORS: {
-    0: { r: 1/9, g: 1/9, b: 1/9 },   // Zero dimension
-    1: { r: 2/9, g: 1/9, b: 1/9 },   // First dimension
-    2: { r: 1/9, g: 2/9, b: 1/9 },   // Second dimension
-    3: { r: 2/9, g: 2/9, b: 1/9 },   // Third dimension
-    4: { r: 1/9, g: 1/9, b: 2/9 },   // Fourth dimension
-    5: { r: 2/9, g: 1/9, b: 2/9 },   // Fifth dimension
-    6: { r: 1/9, g: 2/9, b: 2/9 },   // Sixth dimension
-    7: { r: 2/9, g: 2/9, b: 2/9 },   // Seventh dimension
-    8: { r: 3/9, g: 1/9, b: 1/9 },   // Eighth dimension
-    9: { r: 1/9, g: 3/9, b: 1/9 }    // Ninth dimension
-  } as Record<number, ColorComponent>
-};
-
-// Color calculation functions using only integer fractions
-export interface A432Color {
-  r: number;  // Red component (0-1 as fraction)
-  g: number;  // Green component (0-1 as fraction)
-  b: number;  // Blue component (0-1 as fraction)
-  frequency: number;
-  consciousness: number;
-  dimensionalState: number;
-  digitalRoot: number;
-  mathematicalProof: string;
-}
-
-export interface A432ColorStream {
-  colors: A432Color[];
-  frequency: number;
-  consciousness: number;
-  dimensionalState: number;
-  isHarmonic: boolean;
-  mathematicalProof: string;
+/**
+ * getVortexColor: Returns HSL color for a digit (1-9) based on vortex math group.
+ * - Metaphysical: Color of the living stream for the digit (axis or Mobius group)
+ */
+export function getVortexColor(d: number): string {
+  const n = Math.abs(d) % 9 || 9;
+  if (n === 3) return getTrinityColor(3);
+  if (n === 6) return getTrinityColor(6);
+  if (n === 9) return getTrinityColor(9);
+  if ([1,2,4,8,7,5].includes(n)) return getFamilyColor(n);
+  return 'hsl(0, 0%, 60%)';
 }
 
 /**
- * Calculate A432 color from frequency using imperial math
+ * getTrinityColor: HSL color for trinity digits (3,6,9).
+ * - Metaphysical: Axis/monopole color (creation, return, spiritual center)
  */
-export function calculateA432Color(frequency: number): A432Color {
-  const consciousness = calculateA432Consciousness(frequency);
-  const dimensionalState = calculateA432DimensionalState(frequency);
-  const digitalRoot = calculateDigitalRoot(frequency);
-  
-  // Get base color from consciousness
-  const baseColor = A432_COLOR_CONSTANTS.CONSCIOUSNESS_COLORS[consciousness];
-  
-  // Get dimensional color
-  const dimensionalColor = A432_COLOR_CONSTANTS.DIMENSIONAL_COLORS[dimensionalState];
-  
-  // Harmonize colors using imperial math
-  const r = harmonizeColorComponent(baseColor.r, dimensionalColor.r, frequency);
-  const g = harmonizeColorComponent(baseColor.g, dimensionalColor.g, frequency);
-  const b = harmonizeColorComponent(baseColor.b, dimensionalColor.b, frequency);
-  
-  return {
-    r,
-    g,
-    b,
-    frequency,
-    consciousness,
-    dimensionalState,
-    digitalRoot,
-    mathematicalProof: `A432 Color: f=${frequency}, c=${consciousness}, d=${dimensionalState}, dr=${digitalRoot}`
-  };
+export function getTrinityColor(n: number): string {
+  const hue = n === 3 ? 0 : n === 6 ? 120 : 240;
+  const sat = TWO_THIRDS * 100;
+  return `hsl(${hue}, ${sat}%, 50%)`;
 }
 
 /**
- * Harmonize color component using imperial math
+ * getFamilyColor: HSL color for family digits (1,2,4,8,7,5).
+ * - Metaphysical: Mobius/family color (recursive stream)
  */
-function harmonizeColorComponent(base: number, dimensional: number, frequency: number): number {
-  // Use imperial base (8) for harmonization
-  const imperialFactor = (frequency % A432_COLOR_CONSTANTS.IMPERIAL_BASE) / A432_COLOR_CONSTANTS.IMPERIAL_BASE;
-  
-  // Harmonize using perfect balance
-  const harmonized = (base + dimensional + imperialFactor) / 3;
-  
-  // Ensure result is within 0-1 range using integer fractions
-  return Math.max(0, Math.min(1, harmonized));
+export function getFamilyColor(n: number): string {
+  const hues = { 1: 60, 2: 180, 4: 300, 8: 30, 7: 210, 5: 330 };
+  const hue = hues[n as keyof typeof hues] || 0;
+  const sat = TWO_THIRDS * 100;
+  return `hsl(${hue}, ${sat}%, 40%)`;
 }
 
 /**
- * Generate A432 color stream from environmental data
+ * getAntiVortexColor: HSL color for anti-vortex/negative harmonics (negative digits).
+ * - Metaphysical: Phase reversal, anti-harmonics, inversion
  */
-export function generateA432ColorStream(
-  environmentalData: { frequency: number; consciousness?: number; dimensionalState?: number }
-): A432ColorStream {
-  const { frequency, consciousness, dimensionalState } = environmentalData;
-  
-  // Calculate or use provided values
-  const calculatedConsciousness = consciousness || calculateA432Consciousness(frequency);
-  const calculatedDimensionalState = dimensionalState || calculateA432DimensionalState(frequency);
-  
-  // Generate color spectrum
-  const colors: A432Color[] = [];
-  const rodinSequence = A432_CONSTANTS.RODIN_SEQUENCE;
-  
-  for (let i = 0; i < rodinSequence.length; i++) {
-    const harmonicFreq = rodinSequence[i] * frequency;
-    const color = calculateA432Color(harmonicFreq);
-    colors.push(color);
-  }
-  
-  // Check if stream is harmonic
-  const isHarmonic = colors.every(color => 
-    color.consciousness >= 1 && color.consciousness <= 8 &&
-    color.dimensionalState >= 0 && color.dimensionalState <= 9
-  );
-  
-  return {
-    colors,
-    frequency,
-    consciousness: calculatedConsciousness,
-    dimensionalState: calculatedDimensionalState,
-    isHarmonic,
-    mathematicalProof: `A432 Color Stream: ${colors.length} harmonics, consciousness=${calculatedConsciousness}, dimension=${calculatedDimensionalState}`
-  };
+export function getAntiVortexColor(d: number): string {
+  const n = Math.abs(d) % 9 || 9;
+  let baseHue = 0;
+  const hues = { 1: 60, 2: 180, 4: 300, 8: 30, 7: 210, 5: 330 };
+  if ([3,6,9].includes(n)) baseHue = n === 3 ? 0 : n === 6 ? 120 : 240;
+  else if ([1,2,4,8,7,5].includes(n)) baseHue = hues[n as keyof typeof hues];
+  const hue = (baseHue + 180) % 360;
+  const sat = TWO_THIRDS * 100;
+  return `hsl(${hue}, ${sat}%, 60%)`;
 }
 
 /**
- * Calculate A432 color from consciousness state
+ * getTrinityCompositeColor: Analog-mixed (HSL-averaged) color of the three trinity states (3, 6, 9).
+ * - Metaphysical: The void, union of all trinity states
  */
-export function calculateA432ColorFromConsciousness(consciousness: number): A432Color {
-  if (consciousness < 1 || consciousness > 8) {
-    throw new Error('Consciousness must be between 1 and 8');
-  }
-  
-  const frequency = consciousness * 432 / 8; // Map consciousness to frequency
-  return calculateA432Color(frequency);
-}
-
-/**
- * Calculate A432 color from dimensional state
- */
-export function calculateA432ColorFromDimensionalState(dimensionalState: number): A432Color {
-  if (dimensionalState < 0 || dimensionalState > 9) {
-    throw new Error('Dimensional state must be between 0 and 9');
-  }
-  
-  const frequency = calculateA432Frequency(dimensionalState);
-  return calculateA432Color(frequency);
-}
-
-/**
- * Generate A432 color matrix for all consciousness and dimensional states
- */
-export function generateA432ColorMatrix(): A432Color[][] {
-  const matrix: A432Color[][] = [];
-  
-  for (let consciousness = 1; consciousness <= 8; consciousness++) {
-    const row: A432Color[] = [];
-    for (let dimensionalState = 0; dimensionalState <= 9; dimensionalState++) {
-      const frequency = consciousness * 432 / 8 + dimensionalState * 432 / 10;
-      const color = calculateA432Color(frequency);
-      row.push(color);
-    }
-    matrix.push(row);
-  }
-  
-  return matrix;
-}
-
-/**
- * Calculate A432 color vortex flow
- */
-export function calculateA432ColorVortex(initialFrequency: number, cycles: number): A432ColorStream[] {
-  const streams: A432ColorStream[] = [];
-  let currentFrequency = initialFrequency;
-  
-  for (let cycle = 0; cycle < cycles; cycle++) {
-    const stream = generateA432ColorStream({ frequency: currentFrequency });
-    streams.push(stream);
-    
-    // Advance frequency using Rodin sequence
-    const rodinIndex = cycle % A432_CONSTANTS.RODIN_SEQUENCE.length;
-    currentFrequency = A432_CONSTANTS.RODIN_SEQUENCE[rodinIndex] * initialFrequency;
-  }
-  
-  return streams;
-}
-
-/**
- * Convert A432 color to CSS RGB string
- */
-export function a432ColorToRGB(color: A432Color): string {
-  const r = Math.round(color.r * 255);
-  const g = Math.round(color.g * 255);
-  const b = Math.round(color.b * 255);
-  
-  return `rgb(${r}, ${g}, ${b})`;
-}
-
-/**
- * Convert A432 color to CSS HSL string
- */
-export function a432ColorToHSL(color: A432Color): string {
-  // Convert RGB to HSL using imperial math
-  const max = Math.max(color.r, color.g, color.b);
-  const min = Math.min(color.r, color.g, color.b);
-  const delta = max - min;
-  
-  let hue = 0;
-  const lightness = (max + min) / 2;
-  const saturation = delta === 0 ? 0 : delta / (1 - Math.abs(2 * lightness - 1));
-  
-  if (delta !== 0) {
-    if (max === color.r) {
-      hue = ((color.g - color.b) / delta) % 6;
-    } else if (max === color.g) {
-      hue = (color.b - color.r) / delta + 2;
-    } else {
-      hue = (color.r - color.g) / delta + 4;
-    }
-    
-    hue = hue * 60;
-    if (hue < 0) hue += 360;
-  }
-  
-  return `hsl(${Math.round(hue)}, ${Math.round(saturation * 100)}%, ${Math.round(lightness * 100)}%)`;
-}
-
-/**
- * Generate A432 CSS variables for harmonic color system
- */
-export function generateA432CSSVariables(): string {
-  const variables: string[] = [];
-  
-  // Generate consciousness colors
-  for (let consciousness = 1; consciousness <= 8; consciousness++) {
-    const color = calculateA432ColorFromConsciousness(consciousness);
-    const rgb = a432ColorToRGB(color);
-    variables.push(`--a432-consciousness-${consciousness}: ${rgb};`);
-  }
-  
-  // Generate dimensional colors
-  for (let dimensionalState = 0; dimensionalState <= 9; dimensionalState++) {
-    const color = calculateA432ColorFromDimensionalState(dimensionalState);
-    const rgb = a432ColorToRGB(color);
-    variables.push(`--a432-dimensional-${dimensionalState}: ${rgb};`);
-  }
-  
-  // Generate harmonic frequency colors
-  A432_CONSTANTS.RODIN_SEQUENCE.forEach((multiplier, index) => {
-    const frequency = multiplier * 432;
-    const color = calculateA432Color(frequency);
-    const rgb = a432ColorToRGB(color);
-    variables.push(`--a432-harmonic-${index}: ${rgb};`);
+export function getTrinityCompositeColor(): string {
+  const hsl = [3, 6, 9].map(getTrinityColor).map(str => {
+    const [hue, sat, light] = str.match(/\d+/g)!.map(Number);
+    return { hue, sat, light };
   });
-  
-  return `:root {\n  ${variables.join('\n  ')}\n}`;
+  const avg = (arr: number[]): number => Math.round(arr.reduce((a: number, b: number) => a + b, 0) / 3);
+  const hue = avg(hsl.map(c => c.hue));
+  const sat = avg(hsl.map(c => c.sat));
+  const light = avg(hsl.map(c => c.light));
+  return `hsl(${hue}, ${sat}%, ${light}%)`;
 }
 
 /**
- * Generate a complex harmonic audio stream from a color matrix.
- * Each color cell is mapped to a harmonic spectrum using the Rodin sequence and A432 base.
- * Returns an array of objects: {frequencies: number[], amplitude: number, cell: {row, col, layer}, color: A432Color}
- *
- * Mathematical proof: For each cell, frequencies = [A432 * rodin * (r+1), A432 * rodin * (g+1), A432 * rodin * (b+1)]
- * for all rodin in [1,2,4,8,7,5], where r/g/b are color fractions (0-1) scaled to 8 (imperial base).
+ * getVoidColorForDimension: Returns the void (composite) color for a given dimension (digit).
+ * - Metaphysical: The unique void color id for the dimension
  */
-export function generateAudioStreamFromMatrix(matrix: A432Color[][][], amplitude: number = 1): Array<{frequencies: number[], amplitude: number, cell: {row: number, col: number, layer: number}, color: A432Color}> {
-  const rodinSeq = A432_CONSTANTS.RODIN_SEQUENCE;
-  const audioStream = [];
-  for (let layer = 0; layer < matrix.length; layer++) {
-    for (let row = 0; row < matrix[layer].length; row++) {
-      for (let col = 0; col < matrix[layer][row].length; col++) {
-        const color = matrix[layer][row][col];
-        // Map color fractions to imperial base (1-8)
-        const r = Math.round(color.r * 8);
-        const g = Math.round(color.g * 8);
-        const b = Math.round(color.b * 8);
-        // For each rodin, generate a harmonic frequency set
-        const frequencies = rodinSeq.map(rodin => [
-          A432_CONSTANTS.A432_FREQUENCY * rodin * (r+1),
-          A432_CONSTANTS.A432_FREQUENCY * rodin * (g+1),
-          A432_CONSTANTS.A432_FREQUENCY * rodin * (b+1)
-        ]).flat();
-        audioStream.push({
-          frequencies,
-          amplitude,
-          cell: {row, col, layer},
-          color
-        });
-      }
-    }
+export function getVoidColorForDimension(dimension: number): string {
+  // For now, all dimensions use the trinity composite color as the void color
+  // (can be extended for dimension-specific logic)
+  return getTrinityCompositeColor();
+}
+
+/**
+ * hslToRgb: Converts HSL to RGB (0-255)
+ */
+export function hslToRgb(h: number, s: number, l: number): A432RGB {
+  s /= 100; l /= 100;
+  const a = s * Math.min(l, 1 - l);
+  function f(n: number) {
+    const k = (n + h / 30) % 12;
+    return l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
   }
-  return audioStream;
+  const r = Math.round(f(0) * 255), g = Math.round(f(8) * 255), b = Math.round(f(4) * 255);
+  return { r, g, b };
 }
 
 /**
- * Generate a harmonic video stream (animation) from a color matrix.
- * Each frame is a transformation of the color matrix through Rodin/vortex cycles.
- * Returns an array of frames, each frame is a 2D array of A432Color with metadata.
- *
- * Mathematical proof: For each cycle, apply rodin multiplier to base frequency and recalculate color matrix.
+ * hslToCmyk: Converts HSL color to CMYK (for analog/printing model).
+ * - Metaphysical: CMY = trinity, K = void/anchor
  */
-export function generateVideoStreamFromMatrix(baseMatrix: A432Color[][][], cycles: number = 6): Array<{frame: A432Color[][][], rodin: number, cycle: number}> {
-  const rodinSeq = A432_CONSTANTS.RODIN_SEQUENCE;
-  const videoStream = [];
-  for (let cycle = 0; cycle < cycles; cycle++) {
-    const rodin = rodinSeq[cycle % rodinSeq.length];
-    // Transform each color in the matrix by applying rodin multiplier to frequency
-    const frame: A432Color[][][] = baseMatrix.map(layer =>
-      layer.map(row =>
-        row.map(color => {
-          const freq = color.frequency * rodin;
-          return calculateA432Color(freq);
-        })
-      )
-    );
-    videoStream.push({frame, rodin, cycle});
+export function hslToCmyk(h: number, s: number, l: number): A432CMYK {
+  s /= 100; l /= 100;
+  const a = s * Math.min(l, 1 - l);
+  function f(n: number) {
+    const k = (n + h / 30) % 12;
+    return l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
   }
-  return videoStream;
+  const r = f(0), g = f(8), b = f(4);
+  const c = 1 - r, m = 1 - g, y = 1 - b;
+  const kVal = Math.min(c, m, y);
+  const c1 = (c - kVal) / (1 - kVal) || 0;
+  const m1 = (m - kVal) / (1 - kVal) || 0;
+  const y1 = (y - kVal) / (1 - kVal) || 0;
+  return { c: c1, m: m1, y: y1, k: kVal };
 }
 
 /**
- * A432 Color System - Main export
+ * getTrinityCompositeCMYK: Returns the CMYK value of the trinity composite (void) color.
+ * - Metaphysical: CMY = trinity, K = void/anchor
  */
-export const A432ColorSystem = {
-  constants: A432_COLOR_CONSTANTS,
-  calculateColor: calculateA432Color,
-  generateColorStream: generateA432ColorStream,
-  calculateColorFromConsciousness: calculateA432ColorFromConsciousness,
-  calculateColorFromDimensionalState: calculateA432ColorFromDimensionalState,
-  generateColorMatrix: generateA432ColorMatrix,
-  calculateColorVortex: calculateA432ColorVortex,
-  toRGB: a432ColorToRGB,
-  toHSL: a432ColorToHSL,
-  generateCSSVariables: generateA432CSSVariables,
-  generateAudioStreamFromMatrix: generateAudioStreamFromMatrix,
-  generateVideoStreamFromMatrix: generateVideoStreamFromMatrix,
-  
-  // Scientific proofs
-  scientificProofs: {
-    a432ColorCalculation: 'A432 colors calculated using consciousness mapping and dimensional states with imperial math',
-    a432ColorStream: 'Color streams generated from environmental frequency data using Rodin vortex sequence',
-    a432ColorVortex: 'Color vortex flows through consciousness and dimensional states maintaining harmonic balance',
-    a432ColorMatrix: 'Complete color matrix mapping all consciousness states to all dimensional states'
-  },
-
-  generatePiColorMatrix: generatePiColorMatrix,
-  generatePiAudioStream: generatePiAudioStream,
-};
-
-export default A432ColorSystem; 
+export function getTrinityCompositeCMYK(): A432CMYK {
+  const hsl = getTrinityCompositeColor();
+  const [h, s, l] = hsl.match(/\d+/g)!.map(Number);
+  return hslToCmyk(h, s, l);
+}
 
 /**
- * Usage:
- *   - Use A432ColorSystem.generatePiColorMatrix() for a π-based color matrix.
- *   - Use A432ColorSystem.generatePiAudioStream() for a π-based harmonic audio stream.
- *   - All color/audio/video/Mobius logic can use these as the default stream source.
- *   - Override with other streams if a different pattern is desired.
- *
- * Metaphysical Principle: All streams are born from the infinite circle. Pi is the source, the pattern, the flow.
- */ 
+ * getAllColorModels: Returns all color models (HSL, RGB, CMYK) for a digit or composite color.
+ */
+export function getAllColorModels(d: number | 'void' = 'void'): { hsl: A432HSL, rgb: A432RGB, cmyk: A432CMYK } {
+  let hslStr = typeof d === 'number' ? getVortexColor(d) : getTrinityCompositeColor();
+  const [h, s, l] = hslStr.match(/\d+/g)!.map(Number);
+  const hsl: A432HSL = { hue: h, saturation: s, lightness: l };
+  const rgb = hslToRgb(h, s, l);
+  const cmyk = hslToCmyk(h, s, l);
+  return { hsl, rgb, cmyk };
+}
+
+/**
+ * Unified color model object for modular import.
+ */
+export const A432ColorModel = {
+  getVortexColor,
+  getTrinityColor,
+  getFamilyColor,
+  getAntiVortexColor,
+  getTrinityCompositeColor,
+  getVoidColorForDimension,
+  hslToRgb,
+  hslToCmyk,
+  getTrinityCompositeCMYK,
+  getAllColorModels
+}; 

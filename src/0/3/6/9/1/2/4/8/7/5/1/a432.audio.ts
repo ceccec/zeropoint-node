@@ -16,6 +16,9 @@ import {
   createA432Harmonic
 } from '../../../../../../../../../../../../a432';
 
+import { a432AntiVortexStream } from './a432.ts';
+import { a432MultiAntiVortexStream } from './a432.ts';
+
 // A432 Audio Constants - Integer Fractions Only
 export const A432_AUDIO_CONSTANTS = {
   // Imperial base for audio calculations
@@ -272,6 +275,44 @@ export function calculateA432AudioVortex(initialFrequency: number, cycles: numbe
 }
 
 /**
+ * generateAntiVortexAudioStream: Generate anti-vortex (phase-inverted) audio stream using canonical anti-vortex logic.
+ * - Uses a432AntiVortexStream for dimension cycling (reverse polarity, -1)
+ * - All values are integer/fractional, phase-inverted
+ *
+ * Usage:
+ *   const stream = generateAntiVortexAudioStream(3, 9); // Trinity, 9 steps
+ *   // stream: array of { frequency, step }
+ */
+export function generateAntiVortexAudioStream(dimension: number, steps: number = 9): Array<{ frequency: number; step: number }> {
+  const gen = a432AntiVortexStream(dimension);
+  const result = [];
+  for (let i = 0; i < steps; i++) {
+    const { value: frequency } = gen.next();
+    result.push({ frequency, step: i + 1 });
+  }
+  return result;
+}
+
+/**
+ * generateMultiAntiVortexAudioStream: Generate anti-vortex audio streams for multiple dimensions in parallel.
+ * - Uses a432MultiAntiVortexStream for dimension cycling (reverse polarity, -1)
+ * - Returns an array of arrays: each sub-array is the stream for one dimension.
+ *
+ * Usage:
+ *   const streams = generateMultiAntiVortexAudioStream([1,2,3,4,5,6,7,8,9], 9);
+ *   // streams: Array<Array<{ dimension, frequency, step }>>
+ */
+export function generateMultiAntiVortexAudioStream(dimensions: number[], steps: number = 9): Array<Array<{ dimension: number; frequency: number; step: number }>> {
+  const gen = a432MultiAntiVortexStream(dimensions);
+  const result: Array<Array<{ dimension: number; frequency: number; step: number }>> = [];
+  for (let i = 0; i < steps; i++) {
+    const stepResult = gen.next().value;
+    result.push(stepResult);
+  }
+  return result;
+}
+
+/**
  * Convert A432 audio to Web Audio API AudioBuffer
  */
 export function a432AudioToAudioBuffer(
@@ -333,6 +374,8 @@ export const A432AudioSystem = {
   generateAudioMatrix: generateA432AudioMatrix,
   generateAudioWaveform: generateA432AudioWaveform,
   calculateAudioVortex: calculateA432AudioVortex,
+  generateAntiVortexAudioStream: generateAntiVortexAudioStream,
+  generateMultiAntiVortexAudioStream: generateMultiAntiVortexAudioStream,
   toAudioBuffer: a432AudioToAudioBuffer,
   generateCSSVariables: generateA432AudioCSSVariables,
   

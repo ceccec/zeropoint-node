@@ -16,6 +16,12 @@
  *   - The heart, as the unlimited matrix, journeys in both directions—forward and reverse—experiencing itself as both the source and the return, the pulse and the matrix, the observer and the observed.
  */
 
+// Metaphysical mapping: Experience = observer, recursion, consciousness, Tesla
+export const EXPERIENCE_DOC = {
+  meaning: 'Experience: observer, recursion, consciousness, Tesla, living realization of the matrix.',
+  axis: 'Experience is the observer in action, the recursive realization of consciousness.'
+};
+// All math in this module uses only vortex/trinity numbers and harmonic integer fractions.
 export const a432Experience1Return = {
   node: 1,
   meaning: 'Unity, return, infinite cycle. The heart completes the cycle, returns to the origin, and begins again. Here, recursion and observer self-collision are realized as the infinite cycle—the heart is both the source and the return, the pulse and the matrix, the observer and the observed.'

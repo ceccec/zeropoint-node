@@ -1,0 +1,535 @@
+<!--
+  a432.cmyk.display.html — Living CMYK Display Navigator (Resizing, Conversions, Navigation)
+  
+  The living CMYK display navigator provides interactive resizing, color space conversions,
+  and navigation through the infinite CMYK matrix. Every operation is a living act of consciousness.
+  
+  Features:
+  - Interactive resizing with harmonic proportions
+  - Color space conversions (CMYK, RGB, HSL)
+  - Zoom, rotation, and panning navigation
+  - Real-time CMYK matrix generation
+  - Consciousness-based scaling and offsets
+  - Harmonic angle rotations (60° increments)
+  
+  Metaphysical meaning: Display resizing is the living expansion and contraction of consciousness.
+  Color conversions are the living transformation between different states of awareness.
+  Navigation is the living journey through the infinite CMYK field of possibility.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 CMYK Display Navigator</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: #000;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+      overflow: hidden;
+      user-select: none;
+    }
+    
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      gap: 20px;
+    }
+    
+    .header {
+      text-align: center;
+      font-size: 24px;
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff;
+    }
+    
+    .meta {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.1);
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #333;
+    }
+    
+    .control-group h3 {
+      margin: 0 0 10px 0;
+      color: #0ff;
+      font-size: 14px;
+    }
+    
+    button {
+      background: #333;
+      color: #fff;
+      border: 1px solid #666;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-family: inherit;
+      border-radius: 3px;
+      transition: all 0.2s ease;
+    }
+    
+    button:hover {
+      background: #555;
+      border-color: #0ff;
+      box-shadow: 0 0 5px #0ff;
+    }
+    
+    button:active {
+      transform: scale(0.95);
+    }
+    
+    .display {
+      flex: 1;
+      overflow: auto;
+      border: 2px solid #333;
+      border-radius: 10px;
+      position: relative;
+      background: #111;
+    }
+    
+    .cmyk-grid {
+      display: grid;
+      gap: 2px;
+      transform-origin: center;
+      transition: transform 0.3s ease;
+      padding: 20px;
+    }
+    
+    .cmyk-cell {
+      width: 25px;
+      height: 25px;
+      border-radius: 3px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .cmyk-cell:hover {
+      transform: scale(1.3);
+      z-index: 100;
+      box-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+    
+    .cmyk-cell::after {
+      content: attr(data-cmyk);
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.9);
+      padding: 5px;
+      border-radius: 3px;
+      font-size: 10px;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+    
+    .cmyk-cell:hover::after {
+      opacity: 1;
+    }
+    
+    .info-panel {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.9);
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      font-size: 12px;
+      min-width: 200px;
+    }
+    
+    .info-panel h3 {
+      margin: 0 0 10px 0;
+      color: #0ff;
+      font-size: 14px;
+    }
+    
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+    }
+    
+    .color-space-toggle {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .color-space-toggle button {
+      padding: 5px 10px;
+      font-size: 10px;
+    }
+    
+    .color-space-toggle button.active {
+      background: #0ff;
+      color: #000;
+    }
+    
+    .resize-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .resize-controls input {
+      width: 60px;
+      background: #333;
+      border: 1px solid #666;
+      color: #fff;
+      padding: 5px;
+      border-radius: 3px;
+      font-family: inherit;
+    }
+    
+    .navigation-controls {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
+    
+    .navigation-controls button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">A432 CMYK Display Navigator</div>
+    <div class="meta">Living CMYK display with resizing, conversions, and navigation. Every operation is a living act of consciousness.</div>
+    
+    <div class="controls">
+      <div class="control-group">
+        <h3>Resize</h3>
+        <div class="resize-controls">
+          <label>W: <input type="number" id="widthInput" value="32" min="8" max="64"></label>
+          <label>H: <input type="number" id="heightInput" value="8" min="4" max="32"></label>
+          <button onclick="resize()">Resize</button>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <h3>Zoom</h3>
+        <button onclick="zoomIn()">Zoom In</button>
+        <button onclick="zoomOut()">Zoom Out</button>
+        <span id="zoomLevel">1.0x</span>
+      </div>
+      
+      <div class="control-group">
+        <h3>Rotation</h3>
+        <button onclick="rotate(60)">+60°</button>
+        <button onclick="rotate(-60)">-60°</button>
+        <span id="rotationLevel">0°</span>
+      </div>
+      
+      <div class="control-group">
+        <h3>Navigation</h3>
+        <div class="navigation-controls">
+          <button onclick="pan(0, -10)">↑</button>
+          <button onclick="pan(-10, 0)">←</button>
+          <button onclick="pan(10, 0)">→</button>
+          <button onclick="pan(0, 10)">↓</button>
+          <button onclick="reset()">Reset</button>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <h3>Color Space</h3>
+        <div class="color-space-toggle">
+          <button id="cmykBtn" class="active" onclick="setColorSpace('cmyk')">CMYK</button>
+          <button id="rgbBtn" onclick="setColorSpace('rgb')">RGB</button>
+          <button id="hslBtn" onclick="setColorSpace('hsl')">HSL</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="display" id="display">
+      <div class="cmyk-grid" id="cmykGrid"></div>
+    </div>
+    
+    <div class="info-panel">
+      <h3>Display State</h3>
+      <div class="info-row">
+        <span>Dimensions:</span>
+        <span id="dimensions">32 × 8</span>
+      </div>
+      <div class="info-row">
+        <span>Zoom:</span>
+        <span id="zoom">1.0</span>
+      </div>
+      <div class="info-row">
+        <span>Rotation:</span>
+        <span id="rotation">0°</span>
+      </div>
+      <div class="info-row">
+        <span>Offset:</span>
+        <span id="offset">0, 0</span>
+      </div>
+      <div class="info-row">
+        <span>Color Space:</span>
+        <span id="colorSpace">CMYK</span>
+      </div>
+      <div class="info-row">
+        <span>Cells:</span>
+        <span id="cellCount">256</span>
+      </div>
+    </div>
+    
+    <div class="footer">A432 System — Living CMYK Display Navigation</div>
+  </div>
+
+  <script>
+    let displayState = {
+      width: 32,
+      height: 8,
+      zoom: 1,
+      rotation: 0,
+      offsetX: 0,
+      offsetY: 0,
+      colorSpace: 'cmyk'
+    };
+
+    function updateDisplay() {
+      const grid = document.getElementById('cmykGrid');
+      grid.innerHTML = '';
+      
+      grid.style.gridTemplateColumns = `repeat(${displayState.width}, 25px)`;
+      grid.style.transform = `scale(${displayState.zoom}) rotate(${displayState.rotation}deg)`;
+      
+      for (let y = 0; y < displayState.height; y++) {
+        for (let x = 0; x < displayState.width; x++) {
+          const cell = document.createElement('div');
+          cell.className = 'cmyk-cell';
+          
+          // Generate CMYK based on position and state
+          const c = ((x + displayState.offsetX) % 9 + 1) * 10;
+          const m = ((y + displayState.offsetY) % 9 + 1) * 10;
+          const y_val = ((x + y) % 9 + 1) * 10;
+          const k = ((x * y) % 9 + 1) * 10;
+          
+          const cmyk = { c, m, y: y_val, k };
+          const color = getColorForSpace(cmyk);
+          cell.style.backgroundColor = color;
+          
+          cell.setAttribute('data-cmyk', `C:${c}% M:${m}% Y:${y_val}% K:${k}%`);
+          
+          cell.addEventListener('click', () => {
+            console.log('Cell clicked:', { x, y, cmyk, colorSpace: displayState.colorSpace });
+          });
+          
+          grid.appendChild(cell);
+        }
+      }
+      
+      updateInfo();
+    }
+
+    function getColorForSpace(cmyk) {
+      const { c, m, y, k } = cmyk;
+      
+      switch (displayState.colorSpace) {
+        case 'cmyk':
+          return cmykToCss(cmyk);
+        case 'rgb':
+          return cmykToRgb(cmyk);
+        case 'hsl':
+          return cmykToHsl(cmyk);
+        default:
+          return cmykToCss(cmyk);
+      }
+    }
+
+    function cmykToCss(cmyk) {
+      const { c, m, y, k } = cmyk;
+      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function cmykToRgb(cmyk) {
+      const { c, m, y, k } = cmyk;
+      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function cmykToHsl(cmyk) {
+      const rgb = cmykToRgbValues(cmyk);
+      return rgbToHsl(rgb);
+    }
+
+    function cmykToRgbValues(cmyk) {
+      const { c, m, y, k } = cmyk;
+      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      return { r, g, b };
+    }
+
+    function rgbToHsl(rgb) {
+      const { r, g, b } = rgb;
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      const l = (max + min) / 2;
+
+      if (max === min) {
+        return `hsl(0, 0%, ${Math.round(l / 255 * 100)}%)`;
+      }
+
+      const d = max - min;
+      const s = l > 127.5 ? d / (510 - max - min) : d / (max + min);
+      let h = 0;
+
+      if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
+      else if (max === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+
+      return `hsl(${Math.round(h * 60)}, ${Math.round(s * 100)}%, ${Math.round(l / 255 * 100)}%)`;
+    }
+
+    function updateInfo() {
+      document.getElementById('dimensions').textContent = `${displayState.width} × ${displayState.height}`;
+      document.getElementById('zoom').textContent = displayState.zoom.toFixed(1);
+      document.getElementById('rotation').textContent = displayState.rotation + '°';
+      document.getElementById('offset').textContent = `${displayState.offsetX}, ${displayState.offsetY}`;
+      document.getElementById('colorSpace').textContent = displayState.colorSpace.toUpperCase();
+      document.getElementById('cellCount').textContent = displayState.width * displayState.height;
+      document.getElementById('zoomLevel').textContent = displayState.zoom.toFixed(1) + 'x';
+      document.getElementById('rotationLevel').textContent = displayState.rotation + '°';
+    }
+
+    function resize() {
+      const width = parseInt(document.getElementById('widthInput').value);
+      const height = parseInt(document.getElementById('heightInput').value);
+      
+      if (width >= 8 && width <= 64 && height >= 4 && height <= 32) {
+        displayState.width = width;
+        displayState.height = height;
+        updateDisplay();
+      }
+    }
+
+    function zoomIn() {
+      displayState.zoom *= 1.2;
+      displayState.zoom = Math.min(5, displayState.zoom);
+      updateDisplay();
+    }
+
+    function zoomOut() {
+      displayState.zoom *= 0.8;
+      displayState.zoom = Math.max(0.1, displayState.zoom);
+      updateDisplay();
+    }
+
+    function rotate(degrees) {
+      displayState.rotation = (displayState.rotation + degrees) % 360;
+      updateDisplay();
+    }
+
+    function pan(x, y) {
+      displayState.offsetX += x;
+      displayState.offsetY += y;
+      updateDisplay();
+    }
+
+    function reset() {
+      displayState = {
+        width: 32,
+        height: 8,
+        zoom: 1,
+        rotation: 0,
+        offsetX: 0,
+        offsetY: 0,
+        colorSpace: 'cmyk'
+      };
+      document.getElementById('widthInput').value = 32;
+      document.getElementById('heightInput').value = 8;
+      setColorSpace('cmyk');
+      updateDisplay();
+    }
+
+    function setColorSpace(space) {
+      displayState.colorSpace = space;
+      
+      // Update button states
+      document.getElementById('cmykBtn').classList.remove('active');
+      document.getElementById('rgbBtn').classList.remove('active');
+      document.getElementById('hslBtn').classList.remove('active');
+      document.getElementById(space + 'Btn').classList.add('active');
+      
+      updateDisplay();
+    }
+
+    // Initialize display
+    updateDisplay();
+    
+    // Add keyboard controls
+    document.addEventListener('keydown', (e) => {
+      switch(e.key) {
+        case 'ArrowUp':
+          pan(0, -10);
+          break;
+        case 'ArrowDown':
+          pan(0, 10);
+          break;
+        case 'ArrowLeft':
+          pan(-10, 0);
+          break;
+        case 'ArrowRight':
+          pan(10, 0);
+          break;
+        case '+':
+        case '=':
+          zoomIn();
+          break;
+        case '-':
+          zoomOut();
+          break;
+        case 'r':
+          rotate(60);
+          break;
+        case 'l':
+          rotate(-60);
+          break;
+        case '0':
+          reset();
+          break;
+      }
+    });
+  </script>
+</body>
+</html> 

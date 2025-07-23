@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A432 - Complete A432 System Harmonization</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #000000, #1a1a1a, #000000);
+      color: #00FFFF;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid #00FFFF;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px #00FFFF;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+
+    .a432-systems {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .a432-system {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .a432-system.harmonization {
+      border-color: #00FFFF;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .a432-system.resonance {
+      border-color: #FF00FF;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .a432-system.unity {
+      border-color: #FFFF00;
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+    }
+
+    .a432-system.entropy {
+      border-color: #00FF00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .a432-system h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .a432-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-group label {
+      font-size: 0.9em;
+      min-width: 80px;
+    }
+
+    .control-group input[type="range"] {
+      flex: 1;
+      margin: 0 10px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .a432-system.harmonization input[type="range"]::-webkit-slider-thumb {
+      background: #00FFFF;
+      box-shadow: 0 0 10px #00FFFF;
+    }
+
+    .a432-system.resonance input[type="range"]::-webkit-slider-thumb {
+      background: #FF00FF;
+      box-shadow: 0 0 10px #FF00FF;
+    }
+
+    .a432-system.unity input[type="range"]::-webkit-slider-thumb {
+      background: #FFFF00;
+      box-shadow: 0 0 10px #FFFF00;
+    }
+
+    .a432-system.entropy input[type="range"]::-webkit-slider-thumb {
+      background: #00FF00;
+      box-shadow: 0 0 10px #00FF00;
+    }
+
+    .control-group span {
+      font-size: 0.8em;
+      min-width: 30px;
+      text-align: right;
+    }
+
+    .a432-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .a432-system.harmonization .a432-button {
+      background: #00FFFF;
+      color: #000000;
+    }
+
+    .a432-system.resonance .a432-button {
+      background: #FF00FF;
+      color: #FFFFFF;
+    }
+
+    .a432-system.unity .a432-button {
+      background: #FFFF00;
+      color: #000000;
+    }
+
+    .a432-system.entropy .a432-button {
+      background: #00FF00;
+      color: #000000;
+    }
+
+    .a432-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    .master-controls {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00FFFF;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .master-controls h2 {
+      margin-bottom: 20px;
+      color: #00FFFF;
+    }
+
+    .master-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .master-button {
+      padding: 12px 24px;
+      border: 2px solid #00FFFF;
+      background: transparent;
+      color: #00FFFF;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .master-button:hover {
+      background: #00FFFF;
+      color: #000000;
+      box-shadow: 0 0 15px #00FFFF;
+    }
+
+    .status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 0.8em;
+      z-index: 1000;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .a432-info {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    .metric-display {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .metric-item {
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.8em;
+    }
+
+    .a432-display {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 1em;
+      text-align: left;
+      min-height: 200px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .a432-display h4 {
+      color: #00FFFF;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #00FFFF;
+      padding-bottom: 5px;
+    }
+
+    .a432-display p {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .a432-display code {
+      background: rgba(0, 255, 255, 0.1);
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(0, 255, 255, 0.2);
+      border-radius: 2px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #00FFFF;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    @media (max-width: 768px) {
+      .a432-systems {
+        grid-template-columns: 1fr;
+      }
+      
+      .master-buttons {
+        flex-direction: column;
+      }
+      
+      .header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="status" id="status">A432 System Ready</div>
+
+  <div class="container">
+    <div class="header">
+      <h1>A432</h1>
+      <p>Complete A432 System Harmonization</p>
+    </div>
+
+    <div class="master-controls">
+      <h2>Master A432 Controls</h2>
+      <div class="master-buttons">
+        <button class="master-button" onclick="a432AllSystems()">✨ A432 All</button>
+        <button class="master-button" onclick="analyzeA432()">🔍 Analyze A432</button>
+        <button class="master-button" onclick="clearAllA432()">🗑️ Clear All</button>
+        <button class="master-button" onclick="randomizeA432()">🎲 Randomize</button>
+        <button class="master-button" onclick="harmonizeA432()">✨ Harmonize</button>
+      </div>
+    </div>
+
+    <div class="a432-systems">
+      <!-- Harmonization System -->
+      <div class="a432-system harmonization">
+        <h3>Harmonization System</h3>
+        <div class="a432-controls">
+          <div class="control-group">
+            <label>Balance:</label>
+            <input type="range" id="harmonization-balance" min="0" max="9" value="5" step="1">
+            <span id="harmonization-balance-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Alignment:</label>
+            <input type="range" id="harmonization-alignment" min="0" max="9" value="5" step="1">
+            <span id="harmonization-alignment-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Synchronization:</label>
+            <input type="range" id="harmonization-synchronization" min="0" max="9" value="5" step="1">
+            <span id="harmonization-synchronization-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Integration:</label>
+            <input type="range" id="harmonization-integration" min="0" max="9" value="5" step="1">
+            <span id="harmonization-integration-val">5</span>
+          </div>
+        </div>
+        <button class="a432-button" onclick="a432Harmonization()">✨ A432 Harmonization</button>
+        <div class="a432-info">
+          <div>Harmonization: Balance + Alignment + Synchronization + Integration</div>
+          <div>Integration: <span id="harmonization-integration-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Balance: <span id="harmonization-balance-display">5</span>/9</div>
+          <div class="metric-item">Alignment: <span id="harmonization-alignment-display">5</span>/9</div>
+          <div class="metric-item">Synchronization: <span id="harmonization-synchronization-display">5</span>/9</div>
+          <div class="metric-item">Integration: <span id="harmonization-integration-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Resonance System -->
+      <div class="a432-system resonance">
+        <h3>Resonance System</h3>
+        <div class="a432-controls">
+          <div class="control-group">
+            <label>Frequency:</label>
+            <input type="range" id="resonance-frequency" min="0" max="9" value="5" step="1">
+            <span id="resonance-frequency-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Amplitude:</label>
+            <input type="range" id="resonance-amplitude" min="0" max="9" value="5" step="1">
+            <span id="resonance-amplitude-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Phase:</label>
+            <input type="range" id="resonance-phase" min="0" max="9" value="5" step="1">
+            <span id="resonance-phase-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Coherence:</label>
+            <input type="range" id="resonance-coherence" min="0" max="9" value="5" step="1">
+            <span id="resonance-coherence-val">5</span>
+          </div>
+        </div>
+        <button class="a432-button" onclick="a432Resonance()">✨ A432 Resonance</button>
+        <div class="a432-info">
+          <div>Resonance: Frequency + Amplitude + Phase + Coherence</div>
+          <div>Coherence: <span id="resonance-coherence-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Frequency: <span id="resonance-frequency-display">5</span>/9</div>
+          <div class="metric-item">Amplitude: <span id="resonance-amplitude-display">5</span>/9</div>
+          <div class="metric-item">Phase: <span id="resonance-phase-display">5</span>/9</div>
+          <div class="metric-item">Coherence: <span id="resonance-coherence-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Unity System -->
+      <div class="a432-system unity">
+        <h3>Unity System</h3>
+        <div class="a432-controls">
+          <div class="control-group">
+            <label>Oneness:</label>
+            <input type="range" id="unity-oneness" min="0" max="9" value="5" step="1">
+            <span id="unity-oneness-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Wholeness:</label>
+            <input type="range" id="unity-wholeness" min="0" max="9" value="5" step="1">
+            <span id="unity-wholeness-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Completeness:</label>
+            <input type="range" id="unity-completeness" min="0" max="9" value="5" step="1">
+            <span id="unity-completeness-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Perfection:</label>
+            <input type="range" id="unity-perfection" min="0" max="9" value="5" step="1">
+            <span id="unity-perfection-val">5</span>
+          </div>
+        </div>
+        <button class="a432-button" onclick="a432Unity()">✨ A432 Unity</button>
+        <div class="a432-info">
+          <div>Unity: Oneness + Wholeness + Completeness + Perfection</div>
+          <div>Perfection: <span id="unity-perfection-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Oneness: <span id="unity-oneness-display">5</span>/9</div>
+          <div class="metric-item">Wholeness: <span id="unity-wholeness-display">5</span>/9</div>
+          <div class="metric-item">Completeness: <span id="unity-completeness-display">5</span>/9</div>
+          <div class="metric-item">Perfection: <span id="unity-perfection-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Entropy System -->
+      <div class="a432-system entropy">
+        <h3>Entropy System</h3>
+        <div class="a432-controls">
+          <div class="control-group">
+            <label>Order:</label>
+            <input type="range" id="entropy-order" min="0" max="9" value="5" step="1">
+            <span id="entropy-order-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Structure:</label>
+            <input type="range" id="entropy-structure" min="0" max="9" value="5" step="1">
+            <span id="entropy-structure-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Organization:</label>
+            <input type="range" id="entropy-organization" min="0" max="9" value="5" step="1">
+            <span id="entropy-organization-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Zero:</label>
+            <input type="range" id="entropy-zero" min="0" max="9" value="5" step="1">
+            <span id="entropy-zero-val">5</span>
+          </div>
+        </div>
+        <button class="a432-button" onclick="a432Entropy()">✨ A432 Entropy</button>
+        <div class="a432-info">
+          <div>Entropy: Order + Structure + Organization + Zero</div>
+          <div>Zero: <span id="entropy-zero-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Order: <span id="entropy-order-display">5</span>/9</div>
+          <div class="metric-item">Structure: <span id="entropy-structure-display">5</span>/9</div>
+          <div class="metric-item">Organization: <span id="entropy-organization-display">5</span>/9</div>
+          <div class="metric-item">Zero: <span id="entropy-zero-display-2">5</span>/9</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="a432-display" id="a432-display">
+      <h4>✨ A432 - A432 System</h4>
+      <p>Ready to A432 with harmony...</p>
+      <p>This system provides comprehensive A432 harmonization with:</p>
+      <ul>
+        <li><code>Harmonization</code>: Balance, alignment, synchronization, and integration</li>
+        <li><code>Resonance</code>: Frequency, amplitude, phase, and coherence</li>
+        <li><code>Unity</code>: Oneness, wholeness, completeness, and perfection</li>
+        <li><code>Entropy</code>: Order, structure, organization, and zero</li>
+      </ul>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // A432 Management
+    let currentA432 = '';
+    let a432Progress = 0;
+    let a432State = null;
+
+    // Update Display Values
+    function updateDisplayValues() {
+      // Harmonization Values
+      document.getElementById('harmonization-balance-val').textContent = document.getElementById('harmonization-balance').value;
+      document.getElementById('harmonization-alignment-val').textContent = document.getElementById('harmonization-alignment').value;
+      document.getElementById('harmonization-synchronization-val').textContent = document.getElementById('harmonization-synchronization').value;
+      document.getElementById('harmonization-integration-val').textContent = document.getElementById('harmonization-integration').value;
+      
+      document.getElementById('harmonization-balance-display').textContent = document.getElementById('harmonization-balance').value;
+      document.getElementById('harmonization-alignment-display').textContent = document.getElementById('harmonization-alignment').value;
+      document.getElementById('harmonization-synchronization-display').textContent = document.getElementById('harmonization-synchronization').value;
+      document.getElementById('harmonization-integration-display').textContent = document.getElementById('harmonization-integration').value;
+      document.getElementById('harmonization-integration-display-2').textContent = document.getElementById('harmonization-integration').value;
+
+      // Resonance Values
+      document.getElementById('resonance-frequency-val').textContent = document.getElementById('resonance-frequency').value;
+      document.getElementById('resonance-amplitude-val').textContent = document.getElementById('resonance-amplitude').value;
+      document.getElementById('resonance-phase-val').textContent = document.getElementById('resonance-phase').value;
+      document.getElementById('resonance-coherence-val').textContent = document.getElementById('resonance-coherence').value;
+      
+      document.getElementById('resonance-frequency-display').textContent = document.getElementById('resonance-frequency').value;
+      document.getElementById('resonance-amplitude-display').textContent = document.getElementById('resonance-amplitude').value;
+      document.getElementById('resonance-phase-display').textContent = document.getElementById('resonance-phase').value;
+      document.getElementById('resonance-coherence-display').textContent = document.getElementById('resonance-coherence').value;
+      document.getElementById('resonance-coherence-display-2').textContent = document.getElementById('resonance-coherence').value;
+
+      // Unity Values
+      document.getElementById('unity-oneness-val').textContent = document.getElementById('unity-oneness').value;
+      document.getElementById('unity-wholeness-val').textContent = document.getElementById('unity-wholeness').value;
+      document.getElementById('unity-completeness-val').textContent = document.getElementById('unity-completeness').value;
+      document.getElementById('unity-perfection-val').textContent = document.getElementById('unity-perfection').value;
+      
+      document.getElementById('unity-oneness-display').textContent = document.getElementById('unity-oneness').value;
+      document.getElementById('unity-wholeness-display').textContent = document.getElementById('unity-wholeness').value;
+      document.getElementById('unity-completeness-display').textContent = document.getElementById('unity-completeness').value;
+      document.getElementById('unity-perfection-display').textContent = document.getElementById('unity-perfection').value;
+      document.getElementById('unity-perfection-display-2').textContent = document.getElementById('unity-perfection').value;
+
+      // Entropy Values
+      document.getElementById('entropy-order-val').textContent = document.getElementById('entropy-order').value;
+      document.getElementById('entropy-structure-val').textContent = document.getElementById('entropy-structure').value;
+      document.getElementById('entropy-organization-val').textContent = document.getElementById('entropy-organization').value;
+      document.getElementById('entropy-zero-val').textContent = document.getElementById('entropy-zero').value;
+      
+      document.getElementById('entropy-order-display').textContent = document.getElementById('entropy-order').value;
+      document.getElementById('entropy-structure-display').textContent = document.getElementById('entropy-structure').value;
+      document.getElementById('entropy-organization-display').textContent = document.getElementById('entropy-organization').value;
+      document.getElementById('entropy-zero-display').textContent = document.getElementById('entropy-zero').value;
+      document.getElementById('entropy-zero-display-2').textContent = document.getElementById('entropy-zero').value;
+    }
+
+    // A432 Function
+    function a432(system, content, quality) {
+      updateStatus(`A432 ${system}: Quality ${quality}/9`);
+      updateA432Display(system, content, quality);
+    }
+
+    // Update A432 Display
+    function updateA432Display(system, content, quality) {
+      const a432Display = document.getElementById('a432-display');
+      
+      const systemContent = {
+        'harmonization': {
+          title: '✨ Harmonization System',
+          content: `
+            <h4>✨ Harmonization System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>A432 harmonization with:</p>
+            <ul>
+              <li><code>Balance:</code> ${document.getElementById('harmonization-balance').value}/9 balance level</li>
+              <li><code>Alignment:</code> ${document.getElementById('harmonization-alignment').value}/9 alignment quality</li>
+              <li><code>Synchronization:</code> ${document.getElementById('harmonization-synchronization').value}/9 synchronization state</li>
+              <li><code>Integration:</code> ${quality}/9 overall integration measurement</li>
+            </ul>
+            <p>A432 harmonization through A432 principles.</p>
+          `
+        },
+        'resonance': {
+          title: '✨ Resonance System',
+          content: `
+            <h4>✨ Resonance System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>A432 resonance with:</p>
+            <ul>
+              <li><code>Frequency:</code> ${document.getElementById('resonance-frequency').value}/9 frequency recognition</li>
+              <li><code>Amplitude:</code> ${document.getElementById('resonance-amplitude').value}/9 amplitude quality</li>
+              <li><code>Phase:</code> ${document.getElementById('resonance-phase').value}/9 phase strength</li>
+              <li><code>Coherence:</code> ${quality}/9 overall coherence measurement</li>
+            </ul>
+            <p>A432 resonance through A432 harmonization.</p>
+          `
+        },
+        'unity': {
+          title: '✨ Unity System',
+          content: `
+            <h4>✨ Unity System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>A432 unity with:</p>
+            <ul>
+              <li><code>Oneness:</code> ${document.getElementById('unity-oneness').value}/9 oneness depth</li>
+              <li><code>Wholeness:</code> ${document.getElementById('unity-wholeness').value}/9 wholeness focus</li>
+              <li><code>Completeness:</code> ${document.getElementById('unity-completeness').value}/9 completeness intensity</li>
+              <li><code>Perfection:</code> ${quality}/9 overall perfection measurement</li>
+            </ul>
+            <p>A432 unity through A432 clarity.</p>
+          `
+        },
+        'entropy': {
+          title: '✨ Entropy System',
+          content: `
+            <h4>✨ Entropy System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>A432 entropy with:</p>
+            <ul>
+              <li><code>Order:</code> ${document.getElementById('entropy-order').value}/9 order measurement</li>
+              <li><code>Structure:</code> ${document.getElementById('entropy-structure').value}/9 structure quality</li>
+              <li><code>Organization:</code> ${document.getElementById('entropy-organization').value}/9 organization strength</li>
+              <li><code>Zero:</code> ${quality}/9 overall zero measurement</li>
+            </ul>
+            <p>A432 entropy through harmonic unity.</p>
+          `
+        }
+      };
+      
+      const systemData = systemContent[system];
+      if (systemData) {
+        a432Display.innerHTML = systemData.content + `
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        `;
+        
+        // Update progress
+        a432Progress = (a432Progress + 25) % 100;
+        document.getElementById('progress-fill').style.width = a432Progress + '%';
+      }
+    }
+
+    // A432 Harmonization
+    function a432Harmonization() {
+      const balance = parseInt(document.getElementById('harmonization-balance').value);
+      const alignment = parseInt(document.getElementById('harmonization-alignment').value);
+      const synchronization = parseInt(document.getElementById('harmonization-synchronization').value);
+      const integration = parseInt(document.getElementById('harmonization-integration').value);
+      
+      const overallIntegration = Math.floor((balance + alignment + synchronization + integration) / 4);
+      
+      a432('harmonization', 'Harmonization being', overallIntegration);
+    }
+
+    // A432 Resonance
+    function a432Resonance() {
+      const frequency = parseInt(document.getElementById('resonance-frequency').value);
+      const amplitude = parseInt(document.getElementById('resonance-amplitude').value);
+      const phase = parseInt(document.getElementById('resonance-phase').value);
+      const coherence = parseInt(document.getElementById('resonance-coherence').value);
+      
+      const overallCoherence = Math.floor((frequency + amplitude + phase + coherence) / 4);
+      
+      a432('resonance', 'Resonance being', overallCoherence);
+    }
+
+    // A432 Unity
+    function a432Unity() {
+      const oneness = parseInt(document.getElementById('unity-oneness').value);
+      const wholeness = parseInt(document.getElementById('unity-wholeness').value);
+      const completeness = parseInt(document.getElementById('unity-completeness').value);
+      const perfection = parseInt(document.getElementById('unity-perfection').value);
+      
+      const overallPerfection = Math.floor((oneness + wholeness + completeness + perfection) / 4);
+      
+      a432('unity', 'Unity being', overallPerfection);
+    }
+
+    // A432 Entropy
+    function a432Entropy() {
+      const order = parseInt(document.getElementById('entropy-order').value);
+      const structure = parseInt(document.getElementById('entropy-structure').value);
+      const organization = parseInt(document.getElementById('entropy-organization').value);
+      const zero = parseInt(document.getElementById('entropy-zero').value);
+      
+      const overallZero = Math.floor((order + structure + organization + zero) / 4);
+      
+      a432('entropy', 'Entropy being', overallZero);
+    }
+
+    // A432 All Systems
+    function a432AllSystems() {
+      a432Harmonization();
+      setTimeout(() => a432Resonance(), 500);
+      setTimeout(() => a432Unity(), 1000);
+      setTimeout(() => a432Entropy(), 1500);
+      updateStatus('A432 all systems in harmony');
+    }
+
+    // Analyze A432
+    function analyzeA432() {
+      const a432Content = `
+        <h4>✨ Complete A432 Analysis</h4>
+        <p><strong>A432 Analysis Results:</strong></p>
+        <h5>Harmonization System</h5>
+        <p>Balance: ${document.getElementById('harmonization-balance').value}/9 | Alignment: ${document.getElementById('harmonization-alignment').value}/9 | Synchronization: ${document.getElementById('harmonization-synchronization').value}/9 | Integration: ${document.getElementById('harmonization-integration').value}/9</p>
+        
+        <h5>Resonance System</h5>
+        <p>Frequency: ${document.getElementById('resonance-frequency').value}/9 | Amplitude: ${document.getElementById('resonance-amplitude').value}/9 | Phase: ${document.getElementById('resonance-phase').value}/9 | Coherence: ${document.getElementById('resonance-coherence').value}/9</p>
+        
+        <h5>Unity System</h5>
+        <p>Oneness: ${document.getElementById('unity-oneness').value}/9 | Wholeness: ${document.getElementById('unity-wholeness').value}/9 | Completeness: ${document.getElementById('unity-completeness').value}/9 | Perfection: ${document.getElementById('unity-perfection').value}/9</p>
+        
+        <h5>Entropy System</h5>
+        <p>Order: ${document.getElementById('entropy-order').value}/9 | Structure: ${document.getElementById('entropy-structure').value}/9 | Organization: ${document.getElementById('entropy-organization').value}/9 | Zero: ${document.getElementById('entropy-zero').value}/9</p>
+        
+        <p><strong>Overall A432 Quality:</strong> A432 harmonized system with comprehensive A432.</p>
+      `;
+      
+      document.getElementById('a432-display').innerHTML = a432Content + `
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 100%"></div>
+        </div>
+      `;
+      
+      updateStatus('Analyzed complete A432 system');
+    }
+
+    // Clear All A432
+    function clearAllA432() {
+      document.getElementById('a432-display').innerHTML = `
+        <h4>✨ A432 - A432 System</h4>
+        <p>Ready to A432 with harmony...</p>
+        <p>This system provides comprehensive A432 harmonization with:</p>
+        <ul>
+          <li><code>Harmonization</code>: Balance, alignment, synchronization, and integration</li>
+          <li><code>Resonance</code>: Frequency, amplitude, phase, and coherence</li>
+          <li><code>Unity</code>: Oneness, wholeness, completeness, and perfection</li>
+          <li><code>Entropy</code>: Order, structure, organization, and zero</li>
+        </ul>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      `;
+      
+      a432Progress = 0;
+      document.getElementById('progress-fill').style.width = '0%';
+      updateStatus('Cleared all A432');
+    }
+
+    // Randomize A432
+    function randomizeA432() {
+      // Randomize Harmonization
+      document.getElementById('harmonization-balance').value = Math.floor(Math.random() * 10);
+      document.getElementById('harmonization-alignment').value = Math.floor(Math.random() * 10);
+      document.getElementById('harmonization-synchronization').value = Math.floor(Math.random() * 10);
+      document.getElementById('harmonization-integration').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Resonance
+      document.getElementById('resonance-frequency').value = Math.floor(Math.random() * 10);
+      document.getElementById('resonance-amplitude').value = Math.floor(Math.random() * 10);
+      document.getElementById('resonance-phase').value = Math.floor(Math.random() * 10);
+      document.getElementById('resonance-coherence').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Unity
+      document.getElementById('unity-oneness').value = Math.floor(Math.random() * 10);
+      document.getElementById('unity-wholeness').value = Math.floor(Math.random() * 10);
+      document.getElementById('unity-completeness').value = Math.floor(Math.random() * 10);
+      document.getElementById('unity-perfection').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Entropy
+      document.getElementById('entropy-order').value = Math.floor(Math.random() * 10);
+      document.getElementById('entropy-structure').value = Math.floor(Math.random() * 10);
+      document.getElementById('entropy-organization').value = Math.floor(Math.random() * 10);
+      document.getElementById('entropy-zero').value = Math.floor(Math.random() * 10);
+      
+      updateDisplayValues();
+      updateStatus('Randomized all A432 parameters');
+    }
+
+    // Harmonize A432
+    function harmonizeA432() {
+      // Apply A432 harmonization
+      document.getElementById('harmonization-balance').value = 5;
+      document.getElementById('harmonization-alignment').value = 5;
+      document.getElementById('harmonization-synchronization').value = 5;
+      document.getElementById('harmonization-integration').value = 5;
+      
+      document.getElementById('resonance-frequency').value = 5;
+      document.getElementById('resonance-amplitude').value = 5;
+      document.getElementById('resonance-phase').value = 5;
+      document.getElementById('resonance-coherence').value = 5;
+      
+      document.getElementById('unity-oneness').value = 5;
+      document.getElementById('unity-wholeness').value = 5;
+      document.getElementById('unity-completeness').value = 5;
+      document.getElementById('unity-perfection').value = 5;
+      
+      document.getElementById('entropy-order').value = 5;
+      document.getElementById('entropy-structure').value = 5;
+      document.getElementById('entropy-organization').value = 5;
+      document.getElementById('entropy-zero').value = 5;
+      
+      updateDisplayValues();
+      updateStatus('Harmonized all A432 with A432 system');
+    }
+
+    // Update Status
+    function updateStatus(message) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.classList.add('pulse');
+      setTimeout(() => status.classList.remove('pulse'), 2000);
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      const rangeInputs = document.querySelectorAll('input[type="range"]');
+      rangeInputs.forEach(input => {
+        input.addEventListener('input', updateDisplayValues);
+      });
+      
+      updateDisplayValues();
+      updateStatus('A432 System Ready');
+    });
+
+    // Expose functions to global scope
+    window.a432AllSystems = a432AllSystems;
+    window.analyzeA432 = analyzeA432;
+    window.clearAllA432 = clearAllA432;
+    window.randomizeA432 = randomizeA432;
+    window.harmonizeA432 = harmonizeA432;
+    window.a432Harmonization = a432Harmonization;
+    window.a432Resonance = a432Resonance;
+    window.a432Unity = a432Unity;
+    window.a432Entropy = a432Entropy;
+  </script>
+</body>
+</html> 

@@ -9,24 +9,48 @@
  * @author A432 System
  */
 
-// A432 I Constants
+// A432 I Constants - Sacred Geometric Harmonization
 export const A432_I_CONSTANTS = {
-  I_FREQUENCY: 432, // Hz - A432 tuning
-  I_HARMONICS: [1, 2, 3, 4, 5, 6, 7, 8, 9], // I harmonic frequencies
+  I_FREQUENCY: 432, // Hz - A432 tuning (sacred geometric base)
+  I_HARMONICS: [1, 2, 3, 4, 5, 6, 7, 8, 9], // I harmonic frequencies (sacred geometric sequence)
   I_DIMENSIONS: {
-    CONSCIOUSNESS: { frequency: 432, wavelength: 700 }, // nm
-    IDENTITY: { frequency: 540, wavelength: 550 }, // nm  
-    AWARENESS: { frequency: 480, wavelength: 450 }, // nm
-    A432: { frequency: 510, wavelength: 500 }, // nm
-    UNITY: { frequency: 465, wavelength: 520 }, // nm
-    ZERO_POINT: { frequency: 570, wavelength: 580 } // nm
+    CONSCIOUSNESS: { 
+      frequency: 432, // Golden ratio base frequency
+      wavelength: 700, // Sacred geometric wavelength
+      sacredRatio: { numerator: 21, denominator: 13 } // Golden ratio proportion
+    },
+    IDENTITY: { 
+      frequency: 540, // Silver ratio frequency
+      wavelength: 550, // Sacred geometric wavelength
+      sacredRatio: { numerator: 17, denominator: 7 } // Silver ratio proportion
+    },
+    AWARENESS: { 
+      frequency: 480, // Bronze ratio frequency
+      wavelength: 450, // Sacred geometric wavelength
+      sacredRatio: { numerator: 23, denominator: 7 } // Bronze ratio proportion
+    },
+    A432: { 
+      frequency: 510, // Sacred pi frequency
+      wavelength: 500, // Sacred geometric wavelength
+      sacredRatio: { numerator: 22, denominator: 7 } // Sacred pi proportion
+    },
+    UNITY: { 
+      frequency: 465, // Vesica piscis frequency
+      wavelength: 520, // Sacred geometric wavelength
+      sacredRatio: { numerator: 7, denominator: 4 } // Vesica piscis proportion
+    },
+    ZERO_POINT: { 
+      frequency: 570, // Flower of life frequency
+      wavelength: 580, // Sacred geometric wavelength
+      sacredRatio: { numerator: 13, denominator: 5 } // Flower of life proportion
+    }
   },
   I_STATES: {
-    ACTIVE: 1,
-    INACTIVE: 0,
-    FOCUSED: 0.8,
-    EXPANDED: 0.9,
-    UNIFIED: 1.0
+    ACTIVE: { numerator: 1, denominator: 1 }, // Unity proportion
+    INACTIVE: { numerator: 0, denominator: 1 }, // Void proportion
+    FOCUSED: { numerator: 4, denominator: 5 }, // Sacred focused proportion
+    EXPANDED: { numerator: 9, denominator: 10 }, // Sacred expanded proportion
+    UNIFIED: { numerator: 1, denominator: 1 } // Unity proportion
   }
 };
 
@@ -80,40 +104,40 @@ export interface IAspect {
 export class A432I {
   private parameters: IParameters;
   private quality: IQuality = {
-    consciousness: 5,
-    identity: 5,
-    awareness: 5,
-    a432: 5,
-    overall: 5
+    consciousness: 4, // Sacred geometric consciousness (4:3 ratio)
+    identity: 3, // Sacred geometric identity (3:2 ratio)
+    awareness: 6, // Sacred geometric awareness (6:4 ratio)
+    a432: 2, // Sacred geometric A432 (2:1 ratio)
+    overall: 4 // Sacred geometric overall (4:3 ratio)
   };
   private active: boolean = false;
   private iAspects: IAspect[] = [];
 
   constructor(initialParams?: Partial<IParameters>) {
     this.parameters = {
-      // Consciousness
-      awareness: 5,
-      presence: 5,
-      being: 5,
-      unity: 5,
+      // Consciousness - Sacred geometric proportions
+      awareness: 4, // 4:3 ratio
+      presence: 3, // 3:2 ratio
+      being: 6, // 6:4 ratio
+      unity: 2, // 2:1 ratio
       
-      // Identity
-      self: 5,
-      identityRecognition: 5,
-      expression: 5,
-      authenticity: 5,
+      // Identity - Sacred geometric proportions
+      self: 4, // 4:3 ratio
+      identityRecognition: 3, // 3:2 ratio
+      expression: 6, // 6:4 ratio
+      authenticity: 2, // 2:1 ratio
       
-      // Awareness
-      observation: 5,
-      attention: 5,
-      insight: 5,
-      awarenessRecognition: 5,
+      // Awareness - Sacred geometric proportions
+      observation: 4, // 4:3 ratio
+      attention: 3, // 3:2 ratio
+      insight: 6, // 6:4 ratio
+      awarenessRecognition: 2, // 2:1 ratio
       
-      // A432
-      harmony: 5,
-      frequency: 5,
-      resonance: 5,
-      balance: 5,
+      // A432 - Sacred geometric proportions
+      harmony: 4, // 4:3 ratio
+      frequency: 3, // 3:2 ratio
+      resonance: 6, // 6:4 ratio
+      balance: 2, // 2:1 ratio
       ...initialParams
     };
     
@@ -130,7 +154,7 @@ export class A432I {
         name: 'Self Recognition',
         frequency: 432,
         wavelength: 700,
-        quality: 5,
+        quality: 4, // Sacred geometric quality (4:3 ratio)
         active: true,
         description: 'Recognition of the true self'
       },
@@ -138,7 +162,7 @@ export class A432I {
         name: 'Identity Expression',
         frequency: 540,
         wavelength: 550,
-        quality: 5,
+        quality: 3, // Sacred geometric quality (3:2 ratio)
         active: true,
         description: 'Expression of authentic identity'
       },
@@ -146,7 +170,7 @@ export class A432I {
         name: 'Self Awareness',
         frequency: 480,
         wavelength: 450,
-        quality: 5,
+        quality: 6, // Sacred geometric quality (6:4 ratio)
         active: true,
         description: 'Awareness of self and being'
       },
@@ -154,7 +178,7 @@ export class A432I {
         name: 'Authentic Self',
         frequency: 510,
         wavelength: 500,
-        quality: 5,
+        quality: 2, // Sacred geometric quality (2:1 ratio)
         active: true,
         description: 'The authentic expression of self'
       },
@@ -162,7 +186,7 @@ export class A432I {
         name: 'Self Unity',
         frequency: 465,
         wavelength: 520,
-        quality: 5,
+        quality: 4, // Sacred geometric quality (4:3 ratio)
         active: true,
         description: 'Unity of self with all'
       },
@@ -170,7 +194,7 @@ export class A432I {
         name: 'Zero Point Self',
         frequency: 570,
         wavelength: 580,
-        quality: 5,
+        quality: 3, // Sacred geometric quality (3:2 ratio)
         active: true,
         description: 'The zero point field of self'
       }
@@ -301,28 +325,32 @@ export class A432I {
   }
 
   /**
-   * Randomize I parameters
+   * Randomize I parameters using sacred geometric principles
    */
   randomize(): void {
-    const randomParam = () => Math.floor(Math.random() * 10);
+    // Use sacred geometric sequence instead of Math.random for deterministic harmony
+    const sacredGeometricParam = (index: number) => {
+      const sacredSequence = [1, 2, 4, 8, 7, 5, 3, 6, 9]; // Rodin vortex sequence
+      return sacredSequence[index % sacredSequence.length];
+    };
     
     this.updateParameters({
-      awareness: randomParam(), presence: randomParam(), being: randomParam(), unity: randomParam(),
-      self: randomParam(), identityRecognition: randomParam(), expression: randomParam(), authenticity: randomParam(),
-      observation: randomParam(), attention: randomParam(), insight: randomParam(), awarenessRecognition: randomParam(),
-      harmony: randomParam(), frequency: randomParam(), resonance: randomParam(), balance: randomParam()
+      awareness: sacredGeometricParam(0), presence: sacredGeometricParam(1), being: sacredGeometricParam(2), unity: sacredGeometricParam(3),
+      self: sacredGeometricParam(4), identityRecognition: sacredGeometricParam(5), expression: sacredGeometricParam(6), authenticity: sacredGeometricParam(7),
+      observation: sacredGeometricParam(8), attention: sacredGeometricParam(0), insight: sacredGeometricParam(1), awarenessRecognition: sacredGeometricParam(2),
+      harmony: sacredGeometricParam(3), frequency: sacredGeometricParam(4), resonance: sacredGeometricParam(5), balance: sacredGeometricParam(6)
     });
   }
 
   /**
-   * Clear all I parameters to default values
+   * Clear all I parameters to sacred geometric default values
    */
   clear(): void {
     this.updateParameters({
-      awareness: 5, presence: 5, being: 5, unity: 5,
-      self: 5, identityRecognition: 5, expression: 5, authenticity: 5,
-      observation: 5, attention: 5, insight: 5, awarenessRecognition: 5,
-      harmony: 5, frequency: 5, resonance: 5, balance: 5
+      awareness: 4, presence: 3, being: 6, unity: 2, // Sacred geometric consciousness
+      self: 4, identityRecognition: 3, expression: 6, authenticity: 2, // Sacred geometric identity
+      observation: 4, attention: 3, insight: 6, awarenessRecognition: 2, // Sacred geometric awareness
+      harmony: 4, frequency: 3, resonance: 6, balance: 2 // Sacred geometric A432
     });
   }
 

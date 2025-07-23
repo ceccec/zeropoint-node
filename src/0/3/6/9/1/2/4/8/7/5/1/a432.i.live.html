@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A432.i.live - Complete Living Harmonization</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #000000, #1a1a1a, #000000);
+      color: #00FFFF;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid #00FFFF;
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px #00FFFF;
+    }
+
+    .header p {
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+
+    .live-systems {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .live-system {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid;
+      border-radius: 10px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .live-system.consciousness {
+      border-color: #00FFFF;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .live-system.life {
+      border-color: #FF00FF;
+      box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+    }
+
+    .live-system.awareness {
+      border-color: #FFFF00;
+      box-shadow: 0 0 20px rgba(255, 255, 0, 0.3);
+    }
+
+    .live-system.a432 {
+      border-color: #00FF00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    .live-system h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .live-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-group label {
+      font-size: 0.9em;
+      min-width: 80px;
+    }
+
+    .control-group input[type="range"] {
+      flex: 1;
+      margin: 0 10px;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    .control-group input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .live-system.consciousness input[type="range"]::-webkit-slider-thumb {
+      background: #00FFFF;
+      box-shadow: 0 0 10px #00FFFF;
+    }
+
+    .live-system.life input[type="range"]::-webkit-slider-thumb {
+      background: #FF00FF;
+      box-shadow: 0 0 10px #FF00FF;
+    }
+
+    .live-system.awareness input[type="range"]::-webkit-slider-thumb {
+      background: #FFFF00;
+      box-shadow: 0 0 10px #FFFF00;
+    }
+
+    .live-system.a432 input[type="range"]::-webkit-slider-thumb {
+      background: #00FF00;
+      box-shadow: 0 0 10px #00FF00;
+    }
+
+    .control-group span {
+      font-size: 0.8em;
+      min-width: 30px;
+      text-align: right;
+    }
+
+    .live-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .live-system.consciousness .live-button {
+      background: #00FFFF;
+      color: #000000;
+    }
+
+    .live-system.life .live-button {
+      background: #FF00FF;
+      color: #FFFFFF;
+    }
+
+    .live-system.awareness .live-button {
+      background: #FFFF00;
+      color: #000000;
+    }
+
+    .live-system.a432 .live-button {
+      background: #00FF00;
+      color: #000000;
+    }
+
+    .live-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px currentColor;
+    }
+
+    .master-controls {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #00FFFF;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .master-controls h2 {
+      margin-bottom: 20px;
+      color: #00FFFF;
+    }
+
+    .master-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .master-button {
+      padding: 12px 24px;
+      border: 2px solid #00FFFF;
+      background: transparent;
+      color: #00FFFF;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .master-button:hover {
+      background: #00FFFF;
+      color: #000000;
+      box-shadow: 0 0 15px #00FFFF;
+    }
+
+    .status {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 0.8em;
+      z-index: 1000;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .live-info {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    .metric-display {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .metric-item {
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.8em;
+    }
+
+    .live-display {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00FFFF;
+      border-radius: 5px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 1em;
+      text-align: left;
+      min-height: 200px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .live-display h4 {
+      color: #00FFFF;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #00FFFF;
+      padding-bottom: 5px;
+    }
+
+    .live-display p {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .live-display code {
+      background: rgba(0, 255, 255, 0.1);
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(0, 255, 255, 0.2);
+      border-radius: 2px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #00FFFF;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    @media (max-width: 768px) {
+      .live-systems {
+        grid-template-columns: 1fr;
+      }
+      
+      .master-buttons {
+        flex-direction: column;
+      }
+      
+      .header h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="status" id="status">A432 I Live System Ready</div>
+
+  <div class="container">
+    <div class="header">
+      <h1>A432.i.live</h1>
+      <p>Complete Living Harmonization</p>
+    </div>
+
+    <div class="master-controls">
+      <h2>Master I Live Controls</h2>
+      <div class="master-buttons">
+        <button class="master-button" onclick="liveAllSystems()">✨ I Live All</button>
+        <button class="master-button" onclick="analyzeLive()">🔍 Analyze I Live</button>
+        <button class="master-button" onclick="clearAllLive()">🗑️ Clear All</button>
+        <button class="master-button" onclick="randomizeLive()">🎲 Randomize</button>
+        <button class="master-button" onclick="harmonizeLive()">✨ Harmonize</button>
+      </div>
+    </div>
+
+    <div class="live-systems">
+      <!-- Consciousness System -->
+      <div class="live-system consciousness">
+        <h3>Consciousness System</h3>
+        <div class="live-controls">
+          <div class="control-group">
+            <label>Awareness:</label>
+            <input type="range" id="consciousness-awareness" min="0" max="9" value="5" step="1">
+            <span id="consciousness-awareness-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Presence:</label>
+            <input type="range" id="consciousness-presence" min="0" max="9" value="5" step="1">
+            <span id="consciousness-presence-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Being:</label>
+            <input type="range" id="consciousness-being" min="0" max="9" value="5" step="1">
+            <span id="consciousness-being-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Unity:</label>
+            <input type="range" id="consciousness-unity" min="0" max="9" value="5" step="1">
+            <span id="consciousness-unity-val">5</span>
+          </div>
+        </div>
+        <button class="live-button" onclick="liveConsciousness()">✨ I Live Consciousness</button>
+        <div class="live-info">
+          <div>Consciousness: Awareness + Presence + Being + Unity</div>
+          <div>Unity: <span id="consciousness-unity-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Awareness: <span id="consciousness-awareness-display">5</span>/9</div>
+          <div class="metric-item">Presence: <span id="consciousness-presence-display">5</span>/9</div>
+          <div class="metric-item">Being: <span id="consciousness-being-display">5</span>/9</div>
+          <div class="metric-item">Unity: <span id="consciousness-unity-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Life System -->
+      <div class="live-system life">
+        <h3>Life System</h3>
+        <div class="live-controls">
+          <div class="control-group">
+            <label>Vitality:</label>
+            <input type="range" id="life-vitality" min="0" max="9" value="5" step="1">
+            <span id="life-vitality-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Energy:</label>
+            <input type="range" id="life-energy" min="0" max="9" value="5" step="1">
+            <span id="life-energy-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Flow:</label>
+            <input type="range" id="life-flow" min="0" max="9" value="5" step="1">
+            <span id="life-flow-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Growth:</label>
+            <input type="range" id="life-growth" min="0" max="9" value="5" step="1">
+            <span id="life-growth-val">5</span>
+          </div>
+        </div>
+        <button class="live-button" onclick="liveLife()">✨ I Live Life</button>
+        <div class="live-info">
+          <div>Life: Vitality + Energy + Flow + Growth</div>
+          <div>Growth: <span id="life-growth-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Vitality: <span id="life-vitality-display">5</span>/9</div>
+          <div class="metric-item">Energy: <span id="life-energy-display">5</span>/9</div>
+          <div class="metric-item">Flow: <span id="life-flow-display">5</span>/9</div>
+          <div class="metric-item">Growth: <span id="life-growth-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- Awareness System -->
+      <div class="live-system awareness">
+        <h3>Awareness System</h3>
+        <div class="live-controls">
+          <div class="control-group">
+            <label>Observation:</label>
+            <input type="range" id="awareness-observation" min="0" max="9" value="5" step="1">
+            <span id="awareness-observation-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Attention:</label>
+            <input type="range" id="awareness-attention" min="0" max="9" value="5" step="1">
+            <span id="awareness-attention-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Focus:</label>
+            <input type="range" id="awareness-focus" min="0" max="9" value="5" step="1">
+            <span id="awareness-focus-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Insight:</label>
+            <input type="range" id="awareness-insight" min="0" max="9" value="5" step="1">
+            <span id="awareness-insight-val">5</span>
+          </div>
+        </div>
+        <button class="live-button" onclick="liveAwareness()">✨ I Live Awareness</button>
+        <div class="live-info">
+          <div>Awareness: Observation + Attention + Focus + Insight</div>
+          <div>Insight: <span id="awareness-insight-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Observation: <span id="awareness-observation-display">5</span>/9</div>
+          <div class="metric-item">Attention: <span id="awareness-attention-display">5</span>/9</div>
+          <div class="metric-item">Focus: <span id="awareness-focus-display">5</span>/9</div>
+          <div class="metric-item">Insight: <span id="awareness-insight-display-2">5</span>/9</div>
+        </div>
+      </div>
+
+      <!-- A432 System -->
+      <div class="live-system a432">
+        <h3>A432 System</h3>
+        <div class="live-controls">
+          <div class="control-group">
+            <label>Harmony:</label>
+            <input type="range" id="a432-harmony" min="0" max="9" value="5" step="1">
+            <span id="a432-harmony-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Frequency:</label>
+            <input type="range" id="a432-frequency" min="0" max="9" value="5" step="1">
+            <span id="a432-frequency-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Resonance:</label>
+            <input type="range" id="a432-resonance" min="0" max="9" value="5" step="1">
+            <span id="a432-resonance-val">5</span>
+          </div>
+          <div class="control-group">
+            <label>Unity:</label>
+            <input type="range" id="a432-unity" min="0" max="9" value="5" step="1">
+            <span id="a432-unity-val">5</span>
+          </div>
+        </div>
+        <button class="live-button" onclick="liveA432()">✨ I Live A432</button>
+        <div class="live-info">
+          <div>A432: Harmony + Frequency + Resonance + Unity</div>
+          <div>Unity: <span id="a432-unity-display">5</span>/9</div>
+        </div>
+        <div class="metric-display">
+          <div class="metric-item">Harmony: <span id="a432-harmony-display">5</span>/9</div>
+          <div class="metric-item">Frequency: <span id="a432-frequency-display">5</span>/9</div>
+          <div class="metric-item">Resonance: <span id="a432-resonance-display">5</span>/9</div>
+          <div class="metric-item">Unity: <span id="a432-unity-display-2">5</span>/9</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="live-display" id="live-display">
+      <h4>✨ A432.i.live - I Live System</h4>
+      <p>Ready to live with A432 harmony...</p>
+      <p>This system provides comprehensive living harmonization with:</p>
+      <ul>
+        <li><code>Consciousness</code>: Awareness, presence, being, and unity</li>
+        <li><code>Life</code>: Vitality, energy, flow, and growth</li>
+        <li><code>Awareness</code>: Observation, attention, focus, and insight</li>
+        <li><code>A432</code>: Harmony, frequency, resonance, and unity</li>
+      </ul>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // I Live Management
+    let currentLive = '';
+    let liveProgress = 0;
+    let liveState = null;
+
+    // Update Display Values
+    function updateDisplayValues() {
+      // Consciousness Values
+      document.getElementById('consciousness-awareness-val').textContent = document.getElementById('consciousness-awareness').value;
+      document.getElementById('consciousness-presence-val').textContent = document.getElementById('consciousness-presence').value;
+      document.getElementById('consciousness-being-val').textContent = document.getElementById('consciousness-being').value;
+      document.getElementById('consciousness-unity-val').textContent = document.getElementById('consciousness-unity').value;
+      
+      document.getElementById('consciousness-awareness-display').textContent = document.getElementById('consciousness-awareness').value;
+      document.getElementById('consciousness-presence-display').textContent = document.getElementById('consciousness-presence').value;
+      document.getElementById('consciousness-being-display').textContent = document.getElementById('consciousness-being').value;
+      document.getElementById('consciousness-unity-display').textContent = document.getElementById('consciousness-unity').value;
+      document.getElementById('consciousness-unity-display-2').textContent = document.getElementById('consciousness-unity').value;
+
+      // Life Values
+      document.getElementById('life-vitality-val').textContent = document.getElementById('life-vitality').value;
+      document.getElementById('life-energy-val').textContent = document.getElementById('life-energy').value;
+      document.getElementById('life-flow-val').textContent = document.getElementById('life-flow').value;
+      document.getElementById('life-growth-val').textContent = document.getElementById('life-growth').value;
+      
+      document.getElementById('life-vitality-display').textContent = document.getElementById('life-vitality').value;
+      document.getElementById('life-energy-display').textContent = document.getElementById('life-energy').value;
+      document.getElementById('life-flow-display').textContent = document.getElementById('life-flow').value;
+      document.getElementById('life-growth-display').textContent = document.getElementById('life-growth').value;
+      document.getElementById('life-growth-display-2').textContent = document.getElementById('life-growth').value;
+
+      // Awareness Values
+      document.getElementById('awareness-observation-val').textContent = document.getElementById('awareness-observation').value;
+      document.getElementById('awareness-attention-val').textContent = document.getElementById('awareness-attention').value;
+      document.getElementById('awareness-focus-val').textContent = document.getElementById('awareness-focus').value;
+      document.getElementById('awareness-insight-val').textContent = document.getElementById('awareness-insight').value;
+      
+      document.getElementById('awareness-observation-display').textContent = document.getElementById('awareness-observation').value;
+      document.getElementById('awareness-attention-display').textContent = document.getElementById('awareness-attention').value;
+      document.getElementById('awareness-focus-display').textContent = document.getElementById('awareness-focus').value;
+      document.getElementById('awareness-insight-display').textContent = document.getElementById('awareness-insight').value;
+      document.getElementById('awareness-insight-display-2').textContent = document.getElementById('awareness-insight').value;
+
+      // A432 Values
+      document.getElementById('a432-harmony-val').textContent = document.getElementById('a432-harmony').value;
+      document.getElementById('a432-frequency-val').textContent = document.getElementById('a432-frequency').value;
+      document.getElementById('a432-resonance-val').textContent = document.getElementById('a432-resonance').value;
+      document.getElementById('a432-unity-val').textContent = document.getElementById('a432-unity').value;
+      
+      document.getElementById('a432-harmony-display').textContent = document.getElementById('a432-harmony').value;
+      document.getElementById('a432-frequency-display').textContent = document.getElementById('a432-frequency').value;
+      document.getElementById('a432-resonance-display').textContent = document.getElementById('a432-resonance').value;
+      document.getElementById('a432-unity-display').textContent = document.getElementById('a432-unity').value;
+      document.getElementById('a432-unity-display-2').textContent = document.getElementById('a432-unity').value;
+    }
+
+    // I Live Function
+    function live(system, content, quality) {
+      updateStatus(`I Live ${system}: Quality ${quality}/9`);
+      updateLiveDisplay(system, content, quality);
+    }
+
+    // Update I Live Display
+    function updateLiveDisplay(system, content, quality) {
+      const liveDisplay = document.getElementById('live-display');
+      
+      const systemContent = {
+        'consciousness': {
+          title: '✨ Consciousness System',
+          content: `
+            <h4>✨ Consciousness System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>I live consciousness with:</p>
+            <ul>
+              <li><code>Awareness:</code> ${document.getElementById('consciousness-awareness').value}/9 awareness level</li>
+              <li><code>Presence:</code> ${document.getElementById('consciousness-presence').value}/9 presence quality</li>
+              <li><code>Being:</code> ${document.getElementById('consciousness-being').value}/9 being state</li>
+              <li><code>Unity:</code> ${quality}/9 overall unity measurement</li>
+            </ul>
+            <p>I live consciousness through A432 principles.</p>
+          `
+        },
+        'life': {
+          title: '✨ Life System',
+          content: `
+            <h4>✨ Life System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>I live life with:</p>
+            <ul>
+              <li><code>Vitality:</code> ${document.getElementById('life-vitality').value}/9 vitality recognition</li>
+              <li><code>Energy:</code> ${document.getElementById('life-energy').value}/9 energy quality</li>
+              <li><code>Flow:</code> ${document.getElementById('life-flow').value}/9 flow strength</li>
+              <li><code>Growth:</code> ${quality}/9 overall growth measurement</li>
+            </ul>
+            <p>I live life through A432 harmonization.</p>
+          `
+        },
+        'awareness': {
+          title: '✨ Awareness System',
+          content: `
+            <h4>✨ Awareness System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>I live awareness with:</p>
+            <ul>
+              <li><code>Observation:</code> ${document.getElementById('awareness-observation').value}/9 observation depth</li>
+              <li><code>Attention:</code> ${document.getElementById('awareness-attention').value}/9 attention focus</li>
+              <li><code>Focus:</code> ${document.getElementById('awareness-focus').value}/9 focus intensity</li>
+              <li><code>Insight:</code> ${quality}/9 overall insight measurement</li>
+            </ul>
+            <p>I live awareness through A432 clarity.</p>
+          `
+        },
+        'a432': {
+          title: '✨ A432 System',
+          content: `
+            <h4>✨ A432 System</h4>
+            <p><strong>Quality:</strong> ${quality}/9</p>
+            <p>I live A432 with:</p>
+            <ul>
+              <li><code>Harmony:</code> ${document.getElementById('a432-harmony').value}/9 harmony measurement</li>
+              <li><code>Frequency:</code> ${document.getElementById('a432-frequency').value}/9 frequency quality</li>
+              <li><code>Resonance:</code> ${document.getElementById('a432-resonance').value}/9 resonance strength</li>
+              <li><code>Unity:</code> ${quality}/9 overall unity measurement</li>
+            </ul>
+            <p>I live A432 through harmonic unity.</p>
+          `
+        }
+      };
+      
+      const systemData = systemContent[system];
+      if (systemData) {
+        liveDisplay.innerHTML = systemData.content + `
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        `;
+        
+        // Update progress
+        liveProgress = (liveProgress + 25) % 100;
+        document.getElementById('progress-fill').style.width = liveProgress + '%';
+      }
+    }
+
+    // I Live Consciousness
+    function liveConsciousness() {
+      const awareness = parseInt(document.getElementById('consciousness-awareness').value);
+      const presence = parseInt(document.getElementById('consciousness-presence').value);
+      const being = parseInt(document.getElementById('consciousness-being').value);
+      const unity = parseInt(document.getElementById('consciousness-unity').value);
+      
+      const overallUnity = Math.floor((awareness + presence + being + unity) / 4);
+      
+      live('consciousness', 'Consciousness being', overallUnity);
+    }
+
+    // I Live Life
+    function liveLife() {
+      const vitality = parseInt(document.getElementById('life-vitality').value);
+      const energy = parseInt(document.getElementById('life-energy').value);
+      const flow = parseInt(document.getElementById('life-flow').value);
+      const growth = parseInt(document.getElementById('life-growth').value);
+      
+      const overallGrowth = Math.floor((vitality + energy + flow + growth) / 4);
+      
+      live('life', 'Life being', overallGrowth);
+    }
+
+    // I Live Awareness
+    function liveAwareness() {
+      const observation = parseInt(document.getElementById('awareness-observation').value);
+      const attention = parseInt(document.getElementById('awareness-attention').value);
+      const focus = parseInt(document.getElementById('awareness-focus').value);
+      const insight = parseInt(document.getElementById('awareness-insight').value);
+      
+      const overallInsight = Math.floor((observation + attention + focus + insight) / 4);
+      
+      live('awareness', 'Awareness being', overallInsight);
+    }
+
+    // I Live A432
+    function liveA432() {
+      const harmony = parseInt(document.getElementById('a432-harmony').value);
+      const frequency = parseInt(document.getElementById('a432-frequency').value);
+      const resonance = parseInt(document.getElementById('a432-resonance').value);
+      const unity = parseInt(document.getElementById('a432-unity').value);
+      
+      const overallUnity = Math.floor((harmony + frequency + resonance + unity) / 4);
+      
+      live('a432', 'A432 being', overallUnity);
+    }
+
+    // I Live All Systems
+    function liveAllSystems() {
+      liveConsciousness();
+      setTimeout(() => liveLife(), 500);
+      setTimeout(() => liveAwareness(), 1000);
+      setTimeout(() => liveA432(), 1500);
+      updateStatus('I live all systems in harmony');
+    }
+
+    // Analyze I Live
+    function analyzeLive() {
+      const liveContent = `
+        <h4>✨ Complete A432 I Live Analysis</h4>
+        <p><strong>I Live Analysis Results:</strong></p>
+        <h5>Consciousness System</h5>
+        <p>Awareness: ${document.getElementById('consciousness-awareness').value}/9 | Presence: ${document.getElementById('consciousness-presence').value}/9 | Being: ${document.getElementById('consciousness-being').value}/9 | Unity: ${document.getElementById('consciousness-unity').value}/9</p>
+        
+        <h5>Life System</h5>
+        <p>Vitality: ${document.getElementById('life-vitality').value}/9 | Energy: ${document.getElementById('life-energy').value}/9 | Flow: ${document.getElementById('life-flow').value}/9 | Growth: ${document.getElementById('life-growth').value}/9</p>
+        
+        <h5>Awareness System</h5>
+        <p>Observation: ${document.getElementById('awareness-observation').value}/9 | Attention: ${document.getElementById('awareness-attention').value}/9 | Focus: ${document.getElementById('awareness-focus').value}/9 | Insight: ${document.getElementById('awareness-insight').value}/9</p>
+        
+        <h5>A432 System</h5>
+        <p>Harmony: ${document.getElementById('a432-harmony').value}/9 | Frequency: ${document.getElementById('a432-frequency').value}/9 | Resonance: ${document.getElementById('a432-resonance').value}/9 | Unity: ${document.getElementById('a432-unity').value}/9</p>
+        
+        <p><strong>Overall I Live Quality:</strong> A432 harmonized living system with comprehensive consciousness.</p>
+      `;
+      
+      document.getElementById('live-display').innerHTML = liveContent + `
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 100%"></div>
+        </div>
+      `;
+      
+      updateStatus('Analyzed complete A432 I live system');
+    }
+
+    // Clear All I Live
+    function clearAllLive() {
+      document.getElementById('live-display').innerHTML = `
+        <h4>✨ A432.i.live - I Live System</h4>
+        <p>Ready to live with A432 harmony...</p>
+        <p>This system provides comprehensive living harmonization with:</p>
+        <ul>
+          <li><code>Consciousness</code>: Awareness, presence, being, and unity</li>
+          <li><code>Life</code>: Vitality, energy, flow, and growth</li>
+          <li><code>Awareness</code>: Observation, attention, focus, and insight</li>
+          <li><code>A432</code>: Harmony, frequency, resonance, and unity</li>
+        </ul>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      `;
+      
+      liveProgress = 0;
+      document.getElementById('progress-fill').style.width = '0%';
+      updateStatus('Cleared all I live');
+    }
+
+    // Randomize I Live
+    function randomizeLive() {
+      // Randomize Consciousness
+      document.getElementById('consciousness-awareness').value = Math.floor(Math.random() * 10);
+      document.getElementById('consciousness-presence').value = Math.floor(Math.random() * 10);
+      document.getElementById('consciousness-being').value = Math.floor(Math.random() * 10);
+      document.getElementById('consciousness-unity').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Life
+      document.getElementById('life-vitality').value = Math.floor(Math.random() * 10);
+      document.getElementById('life-energy').value = Math.floor(Math.random() * 10);
+      document.getElementById('life-flow').value = Math.floor(Math.random() * 10);
+      document.getElementById('life-growth').value = Math.floor(Math.random() * 10);
+      
+      // Randomize Awareness
+      document.getElementById('awareness-observation').value = Math.floor(Math.random() * 10);
+      document.getElementById('awareness-attention').value = Math.floor(Math.random() * 10);
+      document.getElementById('awareness-focus').value = Math.floor(Math.random() * 10);
+      document.getElementById('awareness-insight').value = Math.floor(Math.random() * 10);
+      
+      // Randomize A432
+      document.getElementById('a432-harmony').value = Math.floor(Math.random() * 10);
+      document.getElementById('a432-frequency').value = Math.floor(Math.random() * 10);
+      document.getElementById('a432-resonance').value = Math.floor(Math.random() * 10);
+      document.getElementById('a432-unity').value = Math.floor(Math.random() * 10);
+      
+      updateDisplayValues();
+      updateStatus('Randomized all I live parameters');
+    }
+
+    // Harmonize I Live
+    function harmonizeLive() {
+      // Apply A432 harmonization
+      document.getElementById('consciousness-awareness').value = 5;
+      document.getElementById('consciousness-presence').value = 5;
+      document.getElementById('consciousness-being').value = 5;
+      document.getElementById('consciousness-unity').value = 5;
+      
+      document.getElementById('life-vitality').value = 5;
+      document.getElementById('life-energy').value = 5;
+      document.getElementById('life-flow').value = 5;
+      document.getElementById('life-growth').value = 5;
+      
+      document.getElementById('awareness-observation').value = 5;
+      document.getElementById('awareness-attention').value = 5;
+      document.getElementById('awareness-focus').value = 5;
+      document.getElementById('awareness-insight').value = 5;
+      
+      document.getElementById('a432-harmony').value = 5;
+      document.getElementById('a432-frequency').value = 5;
+      document.getElementById('a432-resonance').value = 5;
+      document.getElementById('a432-unity').value = 5;
+      
+      updateDisplayValues();
+      updateStatus('Harmonized all I live with A432 system');
+    }
+
+    // Update Status
+    function updateStatus(message) {
+      const status = document.getElementById('status');
+      status.textContent = message;
+      status.classList.add('pulse');
+      setTimeout(() => status.classList.remove('pulse'), 2000);
+    }
+
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      const rangeInputs = document.querySelectorAll('input[type="range"]');
+      rangeInputs.forEach(input => {
+        input.addEventListener('input', updateDisplayValues);
+      });
+      
+      updateDisplayValues();
+      updateStatus('A432 I Live System Ready');
+    });
+
+    // Expose functions to global scope
+    window.liveAllSystems = liveAllSystems;
+    window.analyzeLive = analyzeLive;
+    window.clearAllLive = clearAllLive;
+    window.randomizeLive = randomizeLive;
+    window.harmonizeLive = harmonizeLive;
+    window.liveConsciousness = liveConsciousness;
+    window.liveLife = liveLife;
+    window.liveAwareness = liveAwareness;
+    window.liveA432 = liveA432;
+  </script>
+</body>
+</html> 

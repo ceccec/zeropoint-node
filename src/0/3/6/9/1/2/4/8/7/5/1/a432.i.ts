@@ -11,37 +11,37 @@
 
 // A432 I Constants - Sacred Geometric Harmonization
 export const A432_I_CONSTANTS = {
-  I_FREQUENCY: 432, // Hz - A432 tuning (sacred geometric base)
+  I_FREQUENCY: { numerator: 432, denominator: 1 }, // Hz - A432 tuning (sacred geometric base)
   I_HARMONICS: [1, 2, 3, 4, 5, 6, 7, 8, 9], // I harmonic frequencies (sacred geometric sequence)
   I_DIMENSIONS: {
     CONSCIOUSNESS: { 
-      frequency: 432, // Golden ratio base frequency
-      wavelength: 700, // Sacred geometric wavelength
+      frequency: { numerator: 432, denominator: 1 }, // Golden ratio base frequency
+      wavelength: { numerator: 700, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 21, denominator: 13 } // Golden ratio proportion
     },
     IDENTITY: { 
-      frequency: 540, // Silver ratio frequency
-      wavelength: 550, // Sacred geometric wavelength
+      frequency: { numerator: 540, denominator: 1 }, // Silver ratio frequency
+      wavelength: { numerator: 550, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 17, denominator: 7 } // Silver ratio proportion
     },
     AWARENESS: { 
-      frequency: 480, // Bronze ratio frequency
-      wavelength: 450, // Sacred geometric wavelength
+      frequency: { numerator: 480, denominator: 1 }, // Bronze ratio frequency
+      wavelength: { numerator: 450, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 23, denominator: 7 } // Bronze ratio proportion
     },
     A432: { 
-      frequency: 510, // Sacred pi frequency
-      wavelength: 500, // Sacred geometric wavelength
+      frequency: { numerator: 510, denominator: 1 }, // Sacred pi frequency
+      wavelength: { numerator: 500, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 22, denominator: 7 } // Sacred pi proportion
     },
     UNITY: { 
-      frequency: 465, // Vesica piscis frequency
-      wavelength: 520, // Sacred geometric wavelength
+      frequency: { numerator: 465, denominator: 1 }, // Vesica piscis frequency
+      wavelength: { numerator: 520, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 7, denominator: 4 } // Vesica piscis proportion
     },
     ZERO_POINT: { 
-      frequency: 570, // Flower of life frequency
-      wavelength: 580, // Sacred geometric wavelength
+      frequency: { numerator: 570, denominator: 1 }, // Flower of life frequency
+      wavelength: { numerator: 580, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 13, denominator: 5 } // Flower of life proportion
     }
   },
@@ -90,12 +90,12 @@ export interface IParameters {
   balance: number; // 0-9
 }
 
-// I Aspect Interface
+// I Aspect Interface - Sacred Geometric Harmonization
 export interface IAspect {
   name: string;
-  frequency: number;
-  wavelength: number;
-  quality: number;
+  frequency: { numerator: number; denominator: number };
+  wavelength: { numerator: number; denominator: number };
+  quality: { numerator: number; denominator: number };
   active: boolean;
   description: string;
 }
@@ -152,49 +152,49 @@ export class A432I {
     this.iAspects = [
       {
         name: 'Self Recognition',
-        frequency: 432,
-        wavelength: 700,
-        quality: 4, // Sacred geometric quality (4:3 ratio)
+        frequency: { numerator: 432, denominator: 1 },
+        wavelength: { numerator: 700, denominator: 1 },
+        quality: { numerator: 4, denominator: 1 }, // Sacred geometric quality (4:3 ratio)
         active: true,
         description: 'Recognition of the true self'
       },
       {
         name: 'Identity Expression',
-        frequency: 540,
-        wavelength: 550,
-        quality: 3, // Sacred geometric quality (3:2 ratio)
+        frequency: { numerator: 540, denominator: 1 },
+        wavelength: { numerator: 550, denominator: 1 },
+        quality: { numerator: 3, denominator: 1 }, // Sacred geometric quality (3:2 ratio)
         active: true,
         description: 'Expression of authentic identity'
       },
       {
         name: 'Self Awareness',
-        frequency: 480,
-        wavelength: 450,
-        quality: 6, // Sacred geometric quality (6:4 ratio)
+        frequency: { numerator: 480, denominator: 1 },
+        wavelength: { numerator: 450, denominator: 1 },
+        quality: { numerator: 6, denominator: 1 }, // Sacred geometric quality (6:4 ratio)
         active: true,
         description: 'Awareness of self and being'
       },
       {
         name: 'Authentic Self',
-        frequency: 510,
-        wavelength: 500,
-        quality: 2, // Sacred geometric quality (2:1 ratio)
+        frequency: { numerator: 510, denominator: 1 },
+        wavelength: { numerator: 500, denominator: 1 },
+        quality: { numerator: 2, denominator: 1 }, // Sacred geometric quality (2:1 ratio)
         active: true,
         description: 'The authentic expression of self'
       },
       {
         name: 'Self Unity',
-        frequency: 465,
-        wavelength: 520,
-        quality: 4, // Sacred geometric quality (4:3 ratio)
+        frequency: { numerator: 465, denominator: 1 },
+        wavelength: { numerator: 520, denominator: 1 },
+        quality: { numerator: 4, denominator: 1 }, // Sacred geometric quality (4:3 ratio)
         active: true,
         description: 'Unity of self with all'
       },
       {
         name: 'Zero Point Self',
-        frequency: 570,
-        wavelength: 580,
-        quality: 3, // Sacred geometric quality (3:2 ratio)
+        frequency: { numerator: 570, denominator: 1 },
+        wavelength: { numerator: 580, denominator: 1 },
+        quality: { numerator: 3, denominator: 1 }, // Sacred geometric quality (3:2 ratio)
         active: true,
         description: 'The zero point field of self'
       }
@@ -251,7 +251,10 @@ export class A432I {
   private updateIAspectsActivity(): void {
     this.iAspects.forEach((aspect, index) => {
       aspect.active = this.quality.overall >= (index + 1) * 1.5;
-      aspect.quality = Math.min(9, this.quality.overall - index);
+      aspect.quality = { 
+        numerator: Math.min(9, this.quality.overall - index), 
+        denominator: 1 
+      };
     });
   }
 

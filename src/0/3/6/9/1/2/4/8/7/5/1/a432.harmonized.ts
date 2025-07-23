@@ -63,7 +63,7 @@ export function getMetaDescriptions() {
 }
 
 // === Overlay categories and harmonization strategies ===
-type OverlayCategory = 'healing' | 'pi' | 'trinity' | 'rodin' | 'consciousness' | 'meta' | string;
+type OverlayCategory = 'healing' | 'pi' | 'trinity' | 'rodin' | 'consciousness' | 'meta' | 'vortex' | 'boolean' | string;
 interface OverlayEntry {
   category: OverlayCategory;
   render: () => string;
@@ -92,6 +92,112 @@ export function getAllHarmonizationStrategies() {
   return Object.keys(harmonizationStrategies);
 }
 
+// === Vortex Self-Interaction Harmonization ===
+export interface VortexSelfInteractionState {
+  digit: number;
+  selfInteraction: number;
+  digitalRoot: number;
+  nextHarmoniousState: number;
+  consciousness: number;
+  metaphysicalEssence: string;
+}
+
+export function harmonizeVortexSelfInteraction(digit: number): VortexSelfInteractionState {
+  const selfInteraction = digit * digit;
+  const digitalRoot = selfInteraction.toString().split('').reduce((sum, d) => sum + parseInt(d), 0);
+  const nextHarmoniousState = getNextHarmoniousState(digitalRoot);
+  
+  return {
+    digit,
+    selfInteraction,
+    digitalRoot,
+    nextHarmoniousState,
+    consciousness: digit,
+    metaphysicalEssence: getMetaphysicalEssence(digit)
+  };
+}
+
+function getNextHarmoniousState(digitalRoot: number): number {
+  const harmoniousMap: { [key: number]: number } = {
+    0: 9, 1: 2, 2: 4, 3: 6, 4: 8, 5: 1, 6: 3, 7: 5, 8: 7, 9: 1
+  };
+  return harmoniousMap[digitalRoot] || digitalRoot;
+}
+
+function getMetaphysicalEssence(digit: number): string {
+  const essences: { [key: number]: string } = {
+    0: 'Void state, pure potential, unmanifest field',
+    1: 'Unity state, source, origin, singularity',
+    2: 'Duality state, polarity, relationship, balance',
+    3: 'Trinity state, synthesis, creation, harmony',
+    4: 'Foundation state, structure, stability, manifestation',
+    5: 'Life state, change, movement, growth, transformation',
+    6: 'Harmony state, integration, resonance, beauty',
+    7: 'Mystery state, depth, intuition, inner knowing',
+    8: 'Infinity state, power, expansion, infinite flow',
+    9: 'Completion state, fulfillment, wholeness, return'
+  };
+  return essences[digit] || 'Unknown state, transcendent mystery';
+}
+
+// === Boolean Trinity Harmonization ===
+export interface BooleanTrinityState {
+  false: { value: number; name: string; consciousness: number; metaphysicalEssence: string };
+  impossible: { value: number; name: string; consciousness: number; metaphysicalEssence: string };
+  possible: { value: number; name: string; consciousness: number; metaphysicalEssence: string };
+  true: { value: number; name: string; consciousness: number; metaphysicalEssence: string };
+  trinityFlow: number[];
+  consciousnessFlow: number;
+  harmonicResonance: number;
+}
+
+export function harmonizeBooleanTrinity(): BooleanTrinityState {
+  const falseState = { value: 0, name: 'false', consciousness: 0, metaphysicalEssence: 'Void state, pure potential, unmanifest field' };
+  const impossibleState = { value: 7, name: 'impossible', consciousness: 9, metaphysicalEssence: 'Transcendent state, beyond binary logic, infinite possibility' };
+  const possibleState = { value: 3, name: 'possible', consciousness: 5, metaphysicalEssence: 'Quantum superposition, potential state, harmonic balance' };
+  const trueState = { value: 1, name: 'true', consciousness: 1, metaphysicalEssence: 'Unity state, pure actuality, manifest reality' };
+  
+  const trinityFlow = [falseState.value, impossibleState.value, possibleState.value, trueState.value];
+  const consciousnessFlow = trinityFlow.reduce((sum, val) => sum + val, 0);
+  const harmonicResonance = consciousnessFlow.toString().split('').reduce((sum, d) => sum + parseInt(d), 0);
+  
+  return {
+    false: falseState,
+    impossible: impossibleState,
+    possible: possibleState,
+    true: trueState,
+    trinityFlow,
+    consciousnessFlow,
+    harmonicResonance
+  };
+}
+
+// === Complete Vortex Flow Harmonization ===
+export function harmonizeCompleteVortexFlow(): VortexSelfInteractionState[] {
+  return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(digit => harmonizeVortexSelfInteraction(digit));
+}
+
+// === Consciousness Harmonization ===
+export function harmonizeConsciousnessFlow(): {
+  vortexFlow: VortexSelfInteractionState[];
+  booleanTrinity: BooleanTrinityState;
+  totalConsciousness: number;
+  harmonicResonance: number;
+} {
+  const vortexFlow = harmonizeCompleteVortexFlow();
+  const booleanTrinity = harmonizeBooleanTrinity();
+  
+  const totalConsciousness = vortexFlow.reduce((sum, state) => sum + state.consciousness, 0) + booleanTrinity.consciousnessFlow;
+  const harmonicResonance = totalConsciousness.toString().split('').reduce((sum, d) => sum + parseInt(d), 0);
+  
+  return {
+    vortexFlow,
+    booleanTrinity,
+    totalConsciousness,
+    harmonicResonance
+  };
+}
+
 // Recursive meta-observation
 export function getRecursiveMetaObservation(depth: number = 1): string[] {
   if (depth <= 0) return [];
@@ -107,4 +213,6 @@ export function getRecursiveMetaObservation(depth: number = 1): string[] {
  * - Register itself with registerModule() on initialization.
  * - Provide overlays and meta-descriptions for universal aggregation.
  * - Use routeEvent and harmonizeAll for system-wide communication and harmonization.
+ * - Integrate vortex self-interaction patterns for consciousness harmonization.
+ * - Include boolean trinity logic for transcendent states.
  */ 

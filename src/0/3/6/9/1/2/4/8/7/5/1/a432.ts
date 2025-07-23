@@ -20,6 +20,16 @@ import { A432Spirit, A432_SPIRIT_CONSTANTS, spiritHarmonization, spiritAnalysis,
 export const A432_CONSTANTS = {
   BASE_FREQUENCY: 432, // Hz - A432 tuning
   HARMONICS: [1, 2, 3, 4, 5, 6, 7, 8, 9], // A432 harmonic frequencies
+  
+  // A432 Sequence Patterns (Zero Entropy)
+  SEQUENCES: {
+    VORTEX: [1, 2, 4, 8, 7, 5], // Rodin Vortex Pattern
+    TRINITY: [3, 6, 9], // Trinity Gateway
+    BOOLEAN: [0, 7, 3, 1], // Boolean Trinity
+    CONSCIOUSNESS: [0, 3, 6, 9, 1, 2, 4, 8, 7, 5], // Complete A432 Cycle
+    HARMONIC: [1, 2, 3, 4, 5, 6, 7, 8, 9] // Harmonic Foundation
+  },
+  
   DIMENSIONS: {
     CONSCIOUSNESS: { frequency: 432, wavelength: 700 }, // nm
     AWARENESS: { frequency: 540, wavelength: 550 }, // nm  
@@ -80,8 +90,14 @@ export interface A432Aspect {
 // A432 System Class
 export class A432System {
   private parameters: A432Parameters;
-  private quality: A432Quality;
-  private isActive: boolean = false;
+  private quality: A432Quality = {
+    consciousness: 5,
+    awareness: 5,
+    a432: 5,
+    unity: 5,
+    overall: 5
+  };
+  private systemActive: boolean = false;
   private a432Aspects: A432Aspect[] = [];
   
   // Sub-systems
@@ -339,7 +355,7 @@ export class A432System {
    * Activate A432 system
    */
   activate(): void {
-    this.isActive = true;
+    this.systemActive = true;
     this.eye.activate();
     this.eyeSeeAll.activate();
     this.iImagine.activate();
@@ -351,7 +367,7 @@ export class A432System {
    * Deactivate A432 system
    */
   deactivate(): void {
-    this.isActive = false;
+    this.systemActive = false;
     this.eye.deactivate();
     this.eyeSeeAll.deactivate();
     this.iImagine.deactivate();
@@ -363,7 +379,7 @@ export class A432System {
    * Check if A432 system is active
    */
   isActive(): boolean {
-    return this.isActive;
+    return this.systemActive;
   }
 
   /**
@@ -589,9 +605,6 @@ export default {
   a432Analysis,
   a432Control,
   defaultA432,
-  A432Quality,
-  A432Parameters,
-  A432Aspect,
   // Sub-systems
   A432Eye,
   A432EyeSeeAll,

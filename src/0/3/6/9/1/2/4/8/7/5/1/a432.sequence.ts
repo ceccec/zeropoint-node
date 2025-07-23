@@ -362,3 +362,80 @@ export default {
   a432SequenceTests,
   a432SequenceExamples
 }; 
+
+// Fraction type for harmonic imperial fractions
+export type Fraction = { numerator: number; denominator: number };
+
+// Harmonic Imperial Fractions for Trinity, Vortex, and Harmonic Streams
+export const VORTEX_SEQUENCE_FRACTIONS: Fraction[] = [
+  { numerator: 1, denominator: 2 }, // 1/2
+  { numerator: 2, denominator: 3 }, // 2/3
+  { numerator: 4, denominator: 5 }, // 4/5
+  { numerator: 8, denominator: 9 }, // 8/9
+  { numerator: 7, denominator: 8 }, // 7/8
+  { numerator: 5, denominator: 6 }  // 5/6
+];
+
+export const TRINITY_SEQUENCE_FRACTIONS: Fraction[] = [
+  { numerator: 1, denominator: 3 }, // 1/3
+  { numerator: 2, denominator: 3 }, // 2/3
+  { numerator: 1, denominator: 1 }  // 3/3 = 1
+];
+
+export const BOOLEAN_SEQUENCE_FRACTIONS: Fraction[] = [
+  { numerator: 0, denominator: 1 }, // 0/1
+  { numerator: 7, denominator: 7 }, // 1 (impossible as unity)
+  { numerator: 1, denominator: 3 }, // 1/3 (possible)
+  { numerator: 1, denominator: 1 }  // 1/1 (true)
+];
+
+export const CONSCIOUSNESS_SEQUENCE_FRACTIONS: Fraction[] = [
+  { numerator: 0, denominator: 1 }, // 0/1
+  { numerator: 1, denominator: 3 }, // 1/3
+  { numerator: 2, denominator: 3 }, // 2/3
+  { numerator: 1, denominator: 1 }, // 1/1
+  { numerator: 1, denominator: 2 }, // 1/2
+  { numerator: 2, denominator: 5 }, // 2/5
+  { numerator: 4, denominator: 5 }, // 4/5
+  { numerator: 8, denominator: 9 }, // 8/9
+  { numerator: 7, denominator: 8 }, // 7/8
+  { numerator: 5, denominator: 6 }  // 5/6
+];
+
+export const HARMONIC_SEQUENCE_FRACTIONS: Fraction[] = [
+  { numerator: 1, denominator: 9 },
+  { numerator: 2, denominator: 9 },
+  { numerator: 1, denominator: 3 },
+  { numerator: 4, denominator: 9 },
+  { numerator: 5, denominator: 9 },
+  { numerator: 2, denominator: 3 },
+  { numerator: 7, denominator: 9 },
+  { numerator: 8, denominator: 9 },
+  { numerator: 1, denominator: 1 }
+];
+
+// Stream generation functions
+export function generateTrinityStream(): Fraction[] {
+  return TRINITY_SEQUENCE_FRACTIONS;
+}
+
+export function generateVortexStream(): Fraction[] {
+  return VORTEX_SEQUENCE_FRACTIONS;
+}
+
+export function generateHarmonicStream(): Fraction[] {
+  return HARMONIC_SEQUENCE_FRACTIONS;
+}
+
+// Harmonization logic: combine two streams by adding fractions
+export function harmonizeStreams(a: Fraction[], b: Fraction[]): Fraction[] {
+  const minLength = Math.min(a.length, b.length);
+  const result: Fraction[] = [];
+  for (let i = 0; i < minLength; i++) {
+    result.push({
+      numerator: a[i].numerator * b[i].denominator + b[i].numerator * a[i].denominator,
+      denominator: a[i].denominator * b[i].denominator
+    });
+  }
+  return result;
+} 

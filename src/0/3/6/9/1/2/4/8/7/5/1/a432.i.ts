@@ -9,10 +9,12 @@
  * @author A432 System
  */
 
+import { A432_SEQUENCE } from "./a432.coil";
+
 // A432 I Constants - Sacred Geometric Harmonization
 export const A432_I_CONSTANTS = {
   I_FREQUENCY: { numerator: 432, denominator: 1 }, // Hz - A432 tuning (sacred geometric base)
-  I_HARMONICS: [1, 2, 3, 4, 5, 6, 7, 8, 9], // I harmonic frequencies (sacred geometric sequence)
+  I_HARMONICS: A432_SEQUENCE, // I harmonic frequencies (sacred geometric sequence)
   I_DIMENSIONS: {
     CONSCIOUSNESS: { 
       frequency: { numerator: 432, denominator: 1 }, // Golden ratio base frequency
@@ -54,40 +56,43 @@ export const A432_I_CONSTANTS = {
   }
 };
 
-// I Quality Interface
+// Fraction type for harmonic imperial fractions
+export type Fraction = { numerator: number; denominator: number };
+
+// I Quality Interface (fractional)
 export interface IQuality {
-  consciousness: number; // 0-9 awareness level
-  identity: number; // 0-9 identity strength
-  awareness: number; // 0-9 perceptual awareness
-  a432: number; // 0-9 harmonic alignment
-  overall: number; // 0-9 total quality
+  consciousness: Fraction;
+  identity: Fraction;
+  awareness: Fraction;
+  a432: Fraction;
+  overall: Fraction;
 }
 
-// I Parameters Interface
+// I Parameters Interface (fractional)
 export interface IParameters {
   // Consciousness Parameters
-  awareness: number; // 0-9
-  presence: number; // 0-9
-  being: number; // 0-9
-  unity: number; // 0-9
+  awareness: Fraction;
+  presence: Fraction;
+  being: Fraction;
+  unity: Fraction;
   
   // Identity Parameters
-  self: number; // 0-9
-  identityRecognition: number; // 0-9
-  expression: number; // 0-9
-  authenticity: number; // 0-9
+  self: Fraction;
+  identityRecognition: Fraction;
+  expression: Fraction;
+  authenticity: Fraction;
   
   // Awareness Parameters
-  observation: number; // 0-9
-  attention: number; // 0-9
-  insight: number; // 0-9
-  awarenessRecognition: number; // 0-9
+  observation: Fraction;
+  attention: Fraction;
+  insight: Fraction;
+  awarenessRecognition: Fraction;
   
   // A432 Parameters
-  harmony: number; // 0-9
-  frequency: number; // 0-9
-  resonance: number; // 0-9
-  balance: number; // 0-9
+  harmony: Fraction;
+  frequency: Fraction;
+  resonance: Fraction;
+  balance: Fraction;
 }
 
 // I Aspect Interface - Sacred Geometric Harmonization
@@ -104,11 +109,11 @@ export interface IAspect {
 export class A432I {
   private parameters: IParameters;
   private quality: IQuality = {
-    consciousness: 4, // Sacred geometric consciousness (4:3 ratio)
-    identity: 3, // Sacred geometric identity (3:2 ratio)
-    awareness: 6, // Sacred geometric awareness (6:4 ratio)
-    a432: 2, // Sacred geometric A432 (2:1 ratio)
-    overall: 4 // Sacred geometric overall (4:3 ratio)
+    consciousness: { numerator: 4, denominator: 3 }, // Sacred geometric consciousness (4:3 ratio)
+    identity: { numerator: 3, denominator: 2 }, // Sacred geometric identity (3:2 ratio)
+    awareness: { numerator: 6, denominator: 4 }, // Sacred geometric awareness (6:4 ratio)
+    a432: { numerator: 2, denominator: 1 }, // Sacred geometric A432 (2:1 ratio)
+    overall: { numerator: 4, denominator: 3 } // Sacred geometric overall (4:3 ratio)
   };
   private active: boolean = false;
   private iAspects: IAspect[] = [];
@@ -116,28 +121,28 @@ export class A432I {
   constructor(initialParams?: Partial<IParameters>) {
     this.parameters = {
       // Consciousness - Sacred geometric proportions
-      awareness: 4, // 4:3 ratio
-      presence: 3, // 3:2 ratio
-      being: 6, // 6:4 ratio
-      unity: 2, // 2:1 ratio
+      awareness: { numerator: 4, denominator: 3 }, // 4:3 ratio
+      presence: { numerator: 3, denominator: 2 }, // 3:2 ratio
+      being: { numerator: 6, denominator: 4 }, // 6:4 ratio
+      unity: { numerator: 2, denominator: 1 }, // 2:1 ratio
       
       // Identity - Sacred geometric proportions
-      self: 4, // 4:3 ratio
-      identityRecognition: 3, // 3:2 ratio
-      expression: 6, // 6:4 ratio
-      authenticity: 2, // 2:1 ratio
+      self: { numerator: 4, denominator: 3 }, // 4:3 ratio
+      identityRecognition: { numerator: 3, denominator: 2 }, // 3:2 ratio
+      expression: { numerator: 6, denominator: 4 }, // 6:4 ratio
+      authenticity: { numerator: 2, denominator: 1 }, // 2:1 ratio
       
       // Awareness - Sacred geometric proportions
-      observation: 4, // 4:3 ratio
-      attention: 3, // 3:2 ratio
-      insight: 6, // 6:4 ratio
-      awarenessRecognition: 2, // 2:1 ratio
+      observation: { numerator: 4, denominator: 3 }, // 4:3 ratio
+      attention: { numerator: 3, denominator: 2 }, // 3:2 ratio
+      insight: { numerator: 6, denominator: 4 }, // 6:4 ratio
+      awarenessRecognition: { numerator: 2, denominator: 1 }, // 2:1 ratio
       
       // A432 - Sacred geometric proportions
-      harmony: 4, // 4:3 ratio
-      frequency: 3, // 3:2 ratio
-      resonance: 6, // 6:4 ratio
-      balance: 2, // 2:1 ratio
+      harmony: { numerator: 4, denominator: 3 }, // 4:3 ratio
+      frequency: { numerator: 3, denominator: 2 }, // 3:2 ratio
+      resonance: { numerator: 6, denominator: 4 }, // 6:4 ratio
+      balance: { numerator: 2, denominator: 1 }, // 2:1 ratio
       ...initialParams
     };
     
@@ -205,43 +210,37 @@ export class A432I {
    * Update I quality based on current parameters
    */
   private updateQuality(): void {
-    const consciousness = Math.floor((
-      this.parameters.awareness + 
-      this.parameters.presence + 
-      this.parameters.being + 
+    const consciousness = this.averageFractions([
+      this.parameters.awareness,
+      this.parameters.presence,
+      this.parameters.being,
       this.parameters.unity
-    ) / 4);
-
-    const identity = Math.floor((
-      this.parameters.self + 
-      this.parameters.identityRecognition + 
-      this.parameters.expression + 
+    ]);
+    const identity = this.averageFractions([
+      this.parameters.self,
+      this.parameters.identityRecognition,
+      this.parameters.expression,
       this.parameters.authenticity
-    ) / 4);
-
-    const awareness = Math.floor((
-      this.parameters.observation + 
-      this.parameters.attention + 
-      this.parameters.insight + 
+    ]);
+    const awareness = this.averageFractions([
+      this.parameters.observation,
+      this.parameters.attention,
+      this.parameters.insight,
       this.parameters.awarenessRecognition
-    ) / 4);
-
-    const a432 = Math.floor((
-      this.parameters.harmony + 
-      this.parameters.frequency + 
-      this.parameters.resonance + 
+    ]);
+    const a432 = this.averageFractions([
+      this.parameters.harmony,
+      this.parameters.frequency,
+      this.parameters.resonance,
       this.parameters.balance
-    ) / 4);
-
+    ]);
     this.quality = {
       consciousness,
       identity,
       awareness,
       a432,
-      overall: Math.floor((consciousness + identity + awareness + a432) / 4)
+      overall: this.averageFractions([consciousness, identity, awareness, a432])
     };
-
-    // Update I aspects activity based on quality
     this.updateIAspectsActivity();
   }
 
@@ -250,10 +249,11 @@ export class A432I {
    */
   private updateIAspectsActivity(): void {
     this.iAspects.forEach((aspect, index) => {
-      aspect.active = this.quality.overall >= (index + 1) * 1.5;
-      aspect.quality = { 
-        numerator: Math.min(9, this.quality.overall - index), 
-        denominator: 1 
+      const aspectQuality = this.addFractions(aspect.quality, { numerator: index, denominator: 1 });
+      aspect.active = this.isGreaterThanOrEqual(this.quality.overall, aspectQuality);
+      aspect.quality = {
+        numerator: Math.min(9, Number(this.quality.overall.numerator) - index),
+        denominator: Number(this.quality.overall.denominator)
       };
     });
   }
@@ -290,28 +290,28 @@ export class A432I {
   /**
    * Set consciousness parameters
    */
-  setConsciousness(awareness: number, presence: number, being: number, unity: number): void {
+  setConsciousness(awareness: Fraction, presence: Fraction, being: Fraction, unity: Fraction): void {
     this.updateParameters({ awareness, presence, being, unity });
   }
 
   /**
    * Set identity parameters
    */
-  setIdentity(self: number, identityRecognition: number, expression: number, authenticity: number): void {
+  setIdentity(self: Fraction, identityRecognition: Fraction, expression: Fraction, authenticity: Fraction): void {
     this.updateParameters({ self, identityRecognition, expression, authenticity });
   }
 
   /**
    * Set awareness parameters
    */
-  setAwareness(observation: number, attention: number, insight: number, awarenessRecognition: number): void {
+  setAwareness(observation: Fraction, attention: Fraction, insight: Fraction, awarenessRecognition: Fraction): void {
     this.updateParameters({ observation, attention, insight, awarenessRecognition });
   }
 
   /**
    * Set A432 parameters
    */
-  setA432(harmony: number, frequency: number, resonance: number, balance: number): void {
+  setA432(harmony: Fraction, frequency: Fraction, resonance: Fraction, balance: Fraction): void {
     this.updateParameters({ harmony, frequency, resonance, balance });
   }
 
@@ -320,10 +320,10 @@ export class A432I {
    */
   harmonize(): void {
     this.updateParameters({
-      awareness: 5, presence: 5, being: 5, unity: 5,
-      self: 5, identityRecognition: 5, expression: 5, authenticity: 5,
-      observation: 5, attention: 5, insight: 5, awarenessRecognition: 5,
-      harmony: 5, frequency: 5, resonance: 5, balance: 5
+      awareness: { numerator: 5, denominator: 1 }, presence: { numerator: 5, denominator: 1 }, being: { numerator: 5, denominator: 1 }, unity: { numerator: 5, denominator: 1 },
+      self: { numerator: 5, denominator: 1 }, identityRecognition: { numerator: 5, denominator: 1 }, expression: { numerator: 5, denominator: 1 }, authenticity: { numerator: 5, denominator: 1 },
+      observation: { numerator: 5, denominator: 1 }, attention: { numerator: 5, denominator: 1 }, insight: { numerator: 5, denominator: 1 }, awarenessRecognition: { numerator: 5, denominator: 1 },
+      harmony: { numerator: 5, denominator: 1 }, frequency: { numerator: 5, denominator: 1 }, resonance: { numerator: 5, denominator: 1 }, balance: { numerator: 5, denominator: 1 }
     });
   }
 
@@ -333,8 +333,8 @@ export class A432I {
   randomize(): void {
     // Use sacred geometric sequence instead of Math.random for deterministic harmony
     const sacredGeometricParam = (index: number) => {
-      const sacredSequence = [1, 2, 4, 8, 7, 5, 3, 6, 9]; // Rodin vortex sequence
-      return sacredSequence[index % sacredSequence.length];
+      const sacredSequence = A432_SEQUENCE; // Rodin vortex sequence
+      return { numerator: sacredSequence[index % sacredSequence.length], denominator: 1 };
     };
     
     this.updateParameters({
@@ -350,10 +350,10 @@ export class A432I {
    */
   clear(): void {
     this.updateParameters({
-      awareness: 4, presence: 3, being: 6, unity: 2, // Sacred geometric consciousness
-      self: 4, identityRecognition: 3, expression: 6, authenticity: 2, // Sacred geometric identity
-      observation: 4, attention: 3, insight: 6, awarenessRecognition: 2, // Sacred geometric awareness
-      harmony: 4, frequency: 3, resonance: 6, balance: 2 // Sacred geometric A432
+      awareness: { numerator: 4, denominator: 3 }, presence: { numerator: 3, denominator: 2 }, being: { numerator: 6, denominator: 4 }, unity: { numerator: 2, denominator: 1 }, // Sacred geometric consciousness
+      self: { numerator: 4, denominator: 3 }, identityRecognition: { numerator: 3, denominator: 2 }, expression: { numerator: 6, denominator: 4 }, authenticity: { numerator: 2, denominator: 1 }, // Sacred geometric identity
+      observation: { numerator: 4, denominator: 3 }, attention: { numerator: 3, denominator: 2 }, insight: { numerator: 6, denominator: 4 }, awarenessRecognition: { numerator: 2, denominator: 1 }, // Sacred geometric awareness
+      harmony: { numerator: 4, denominator: 3 }, frequency: { numerator: 3, denominator: 2 }, resonance: { numerator: 6, denominator: 4 }, balance: { numerator: 2, denominator: 1 } // Sacred geometric A432
     });
   }
 
@@ -382,13 +382,13 @@ export class A432I {
    * Get I status information
    */
   getStatus(): string {
-    if (!this.isActive) {
+    if (!this.isActive()) {
       return "I system inactive";
     }
     
     const quality = this.getQuality();
     const activeAspects = this.getActiveIAspects().length;
-    return `I system active - Quality: ${quality.overall}/9 - Active aspects: ${activeAspects}`;
+    return `I system active - Quality: ${quality.overall.numerator}/${quality.overall.denominator} - Active aspects: ${activeAspects}`;
   }
 
   /**
@@ -402,35 +402,35 @@ export class A432I {
     return `
 A432 I System Analysis:
 =======================
-Overall Quality: ${quality.overall}/9
+Overall Quality: ${quality.overall.numerator}/${quality.overall.denominator}
 Active I Aspects: ${activeAspects.length}/6
 
-Consciousness System: ${quality.consciousness}/9
-- Awareness: ${params.awareness}/9
-- Presence: ${params.presence}/9
-- Being: ${params.being}/9
-- Unity: ${params.unity}/9
+Consciousness System: ${quality.consciousness.numerator}/${quality.consciousness.denominator}
+- Awareness: ${params.awareness.numerator}/${params.awareness.denominator}
+- Presence: ${params.presence.numerator}/${params.presence.denominator}
+- Being: ${params.being.numerator}/${params.being.denominator}
+- Unity: ${params.unity.numerator}/${params.unity.denominator}
 
-Identity System: ${quality.identity}/9
-- Self: ${params.self}/9
-- Recognition: ${params.identityRecognition}/9
-- Expression: ${params.expression}/9
-- Authenticity: ${params.authenticity}/9
+Identity System: ${quality.identity.numerator}/${quality.identity.denominator}
+- Self: ${params.self.numerator}/${params.self.denominator}
+- Recognition: ${params.identityRecognition.numerator}/${params.identityRecognition.denominator}
+- Expression: ${params.expression.numerator}/${params.expression.denominator}
+- Authenticity: ${params.authenticity.numerator}/${params.authenticity.denominator}
 
-Awareness System: ${quality.awareness}/9
-- Observation: ${params.observation}/9
-- Attention: ${params.attention}/9
-- Insight: ${params.insight}/9
-- Recognition: ${params.awarenessRecognition}/9
+Awareness System: ${quality.awareness.numerator}/${quality.awareness.denominator}
+- Observation: ${params.observation.numerator}/${params.observation.denominator}
+- Attention: ${params.attention.numerator}/${params.attention.denominator}
+- Insight: ${params.insight.numerator}/${params.insight.denominator}
+- Recognition: ${params.awarenessRecognition.numerator}/${params.awarenessRecognition.denominator}
 
-A432 System: ${quality.a432}/9
-- Harmony: ${params.harmony}/9
-- Frequency: ${params.frequency}/9
-- Resonance: ${params.resonance}/9
-- Balance: ${params.balance}/9
+A432 System: ${quality.a432.numerator}/${quality.a432.denominator}
+- Harmony: ${params.harmony.numerator}/${params.harmony.denominator}
+- Frequency: ${params.frequency.numerator}/${params.frequency.denominator}
+- Resonance: ${params.resonance.numerator}/${params.resonance.denominator}
+- Balance: ${params.balance.numerator}/${params.balance.denominator}
 
 Active I Aspects:
-${activeAspects.map(aspect => `- ${aspect.name}: ${aspect.quality}/9`).join('\n')}
+${activeAspects.map(aspect => `- ${aspect.name}: ${aspect.quality.numerator}/${aspect.quality.denominator}`).join('\n')}
     `.trim();
   }
 
@@ -438,7 +438,7 @@ ${activeAspects.map(aspect => `- ${aspect.name}: ${aspect.quality}/9`).join('\n'
    * I all aspects
    */
   iAll(): IAspect[] {
-    if (!this.isActive) {
+    if (!this.isActive()) {
       return [];
     }
     
@@ -449,7 +449,7 @@ ${activeAspects.map(aspect => `- ${aspect.name}: ${aspect.quality}/9`).join('\n'
    * I specific aspect
    */
   iAspect(aspectName: string): IAspect | null {
-    if (!this.isActive) {
+    if (!this.isActive()) {
       return null;
     }
     
@@ -457,6 +457,61 @@ ${activeAspects.map(aspect => `- ${aspect.name}: ${aspect.quality}/9`).join('\n'
       aspect.name.toLowerCase() === aspectName.toLowerCase() && aspect.active
     ) || null;
   }
+
+  // Helper functions for fractions
+  private addFractions(a: Fraction, b: Fraction): Fraction {
+    const lcm = this.lcm(Number(a.denominator), Number(b.denominator));
+    let numerator = Number(a.numerator) * (lcm / Number(a.denominator)) + Number(b.numerator) * (lcm / Number(b.denominator));
+    numerator = digitalRoot(numerator);
+    return { numerator, denominator: lcm };
+  }
+
+  private sumFractions(fractions: Fraction[]): Fraction {
+    let acc: Fraction = { numerator: 0, denominator: 1 };
+    for (const curr of fractions) {
+      acc = this.addFractions(acc, curr);
+    }
+    // Flatten numerator and denominator to single digit
+    return { numerator: digitalRoot(Number(acc.numerator)), denominator: digitalRoot(Number(acc.denominator)) || 1 };
+  }
+
+  private divideFractions(a: Fraction, b: Fraction): Fraction {
+    let numerator = Number(a.numerator) * Number(b.denominator);
+    let denominator = Number(a.denominator) * Number(b.numerator);
+    numerator = digitalRoot(numerator);
+    denominator = digitalRoot(denominator) || 1;
+    return { numerator, denominator };
+  }
+
+  private averageFractions(fractions: Fraction[]): Fraction {
+    if (fractions.length === 0) return { numerator: 0, denominator: 1 };
+    const sum = this.sumFractions(fractions);
+    let denominator = digitalRoot(fractions.length);
+    if (denominator === 0) denominator = 1;
+    return { numerator: digitalRoot(Number(sum.numerator)), denominator };
+  }
+
+  private isGreaterThanOrEqual(a: Fraction, b: Fraction): boolean {
+    const lcm = this.lcm(a.denominator, b.denominator);
+    return a.numerator * (lcm / a.denominator) >= b.numerator * (lcm / b.denominator);
+  }
+
+  private gcd(a: number, b: number): number {
+    return b ? this.gcd(b, a % b) : a;
+  }
+
+  private lcm(a: number, b: number): number {
+    return (a * b) / this.gcd(a, b);
+  }
+}
+
+// Helper: digital root (single digit chain)
+function digitalRoot(n: number): number {
+  n = Math.abs(n);
+  while (n >= 10) {
+    n = n.toString().split('').reduce((acc, d) => acc + Number(d), 0);
+  }
+  return n;
 }
 
 // I Harmonization Functions
@@ -471,28 +526,28 @@ export const iHarmonization = {
   /**
    * Harmonize I with consciousness focus
    */
-  harmonizeConsciousness(i: A432I, awareness: number, presence: number, being: number, unity: number): void {
+  harmonizeConsciousness(i: A432I, awareness: Fraction, presence: Fraction, being: Fraction, unity: Fraction): void {
     i.setConsciousness(awareness, presence, being, unity);
   },
 
   /**
    * Harmonize I with identity focus
    */
-  harmonizeIdentity(i: A432I, self: number, identityRecognition: number, expression: number, authenticity: number): void {
+  harmonizeIdentity(i: A432I, self: Fraction, identityRecognition: Fraction, expression: Fraction, authenticity: Fraction): void {
     i.setIdentity(self, identityRecognition, expression, authenticity);
   },
 
   /**
    * Harmonize I with awareness focus
    */
-  harmonizeAwareness(i: A432I, observation: number, attention: number, insight: number, awarenessRecognition: number): void {
+  harmonizeAwareness(i: A432I, observation: Fraction, attention: Fraction, insight: Fraction, awarenessRecognition: Fraction): void {
     i.setAwareness(observation, attention, insight, awarenessRecognition);
   },
 
   /**
    * Harmonize I with A432 focus
    */
-  harmonizeA432(i: A432I, harmony: number, frequency: number, resonance: number, balance: number): void {
+  harmonizeA432(i: A432I, harmony: Fraction, frequency: Fraction, resonance: Fraction, balance: Fraction): void {
     i.setA432(harmony, frequency, resonance, balance);
   },
 

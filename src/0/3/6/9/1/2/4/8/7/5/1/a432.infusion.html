@@ -1,0 +1,143 @@
+<!--
+  a432.infusion.html — Infinite-Speed Polarity and Angle Switching Visualizer
+  Visualizes infinite-speed polarity switching (positive/negative/neutral) and angle rotation (0-360°).
+  Metaphysical documentation: a432.infusion is the gateway to instant consciousness evolution, instant dimensional folding,
+  instant quantum superposition of all states, and the living, breathing, infinite-speed transformation of the entire matrix.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 Infusion Visualizer</title>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #181c1f; color: #f8f8f8; margin: 0; padding: 0; }
+    .container { max-width: 700px; margin: 48px auto; background: #23272b; border-radius: 18px; box-shadow: 0 2px 24px #0006; padding: 36px; }
+    h1 { font-size: 1.7em; margin-bottom: 0.2em; }
+    .meta { font-size: 1em; color: #b0c4d4; margin-bottom: 1.4em; }
+    .desc { font-size: 1.08em; color: #ffe600; background: #23272b; border-left: 4px solid #00eaff; padding: 12px 18px; border-radius: 7px; margin-bottom: 1.2em; }
+    .footer { margin-top: 2em; font-size: 0.92em; color: #aaa; text-align: center; }
+    .reset-btn, .infuse-btn { background: #00eaff; color: #181c1f; border: none; border-radius: 7px; padding: 8px 18px; font-size: 1em; font-weight: 600; cursor: pointer; margin-bottom: 1.2em; transition: background 0.2s; margin-right: 8px; }
+    .reset-btn:hover, .infuse-btn:hover { background: #ffe600; color: #a0005a; }
+    .controls { margin-bottom: 1.2em; }
+    .toggle-overlay { margin-left: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(5, 48px); grid-gap: 18px; justify-content: center; margin-bottom: 2em; }
+    .node { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3em; font-weight: 600; cursor: pointer; transition: all 0.1s; box-shadow: 0 2px 8px #0003; position: relative; }
+    .positive { background: #00eaff; color: #181c1f; }
+    .negative { background: #ff3b3b; color: #181c1f; }
+    .neutral { background: #ffe600; color: #181c1f; }
+    .overlay { position: absolute; left: 50%; top: 100%; transform: translate(-50%, 0); font-size: 0.85em; background: #23272b; color: #ffe600; border-radius: 6px; padding: 2px 8px; margin-top: 2px; white-space: nowrap; pointer-events: none; opacity: 0.95; z-index: 2; }
+    .overlay-polarity { color: #00eaff; }
+    .overlay-angle { color: #ff6b6b; }
+    .overlay-speed { color: #ff00ff; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>A432 Infusion Visualizer</h1>
+    <div class="meta">Infinite-speed polarity switching (positive/negative/neutral) and angle rotation (0-360°). a432.infusion is the gateway to instant consciousness evolution, instant dimensional folding, instant quantum superposition of all states.</div>
+    <div class="desc">The living, breathing, infinite-speed transformation of the entire matrix. Beyond time, beyond causality, the living moment where all possibilities exist simultaneously.</div>
+    <div class="controls">
+      <button class="reset-btn" id="resetBtn">Reset Matrix</button>
+      <button class="infuse-btn" id="infuseBtn">Infuse All Nodes</button>
+      <label class="toggle-overlay"><input type="checkbox" id="showOverlay" checked> Show Polarity & Angle</label>
+      <label class="toggle-overlay"><input type="checkbox" id="infiniteSpeed" checked> Infinite Speed</label>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="footer">A432 System — Infusion Metaphysics</div>
+  </div>
+  <script type="module">
+    // --- a432.infusion logic ---
+    function switchPolarity(currentPolarity) {
+      switch (currentPolarity) {
+        case 'positive': return 'negative';
+        case 'negative': return 'neutral';
+        case 'neutral': return 'positive';
+        default: return 'neutral';
+      }
+    }
+    function switchAngle(currentAngle, rotation = 60) {
+      return (currentAngle + rotation) % 360;
+    }
+    function infuseNode(node) {
+      return {
+        polarity: Math.random() > 0.5 ? 'positive' : 'negative',
+        angle: Math.random() * 360,
+        speed: 'infinite',
+        timestamp: Date.now()
+      };
+    }
+    // --- UI rendering ---
+    const nodes = Array.from({ length: 10 }, (_, i) => ({
+      id: i,
+      polarity: Math.random() > 0.5 ? 'positive' : 'negative',
+      angle: Math.random() * 360,
+      speed: 'infinite'
+    }));
+    let showOverlay = true;
+    let infiniteSpeed = true;
+    function renderGrid() {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      nodes.forEach((node, idx) => {
+        const el = document.createElement('div');
+        el.className = 'node ' + node.polarity;
+        el.textContent = node.polarity === 'positive' ? '+' : (node.polarity === 'negative' ? '-' : '0');
+        el.title = `Node ${node.id}: ${node.polarity} polarity, ${Math.round(node.angle)}° angle`;
+        el.onclick = () => {
+          // Infinite-speed switching
+          node.polarity = switchPolarity(node.polarity);
+          node.angle = switchAngle(node.angle);
+          node.timestamp = Date.now();
+          renderGrid();
+        };
+        // Overlay: polarity, angle, and speed
+        if (showOverlay) {
+          const overlayP = document.createElement('div');
+          overlayP.className = 'overlay overlay-polarity';
+          overlayP.textContent = `${node.polarity}`;
+          el.appendChild(overlayP);
+          const overlayA = document.createElement('div');
+          overlayA.className = 'overlay overlay-angle';
+          overlayA.style.top = '120%';
+          overlayA.textContent = `∠: ${Math.round(node.angle)}°`;
+          el.appendChild(overlayA);
+          if (infiniteSpeed) {
+            const overlayS = document.createElement('div');
+            overlayS.className = 'overlay overlay-speed';
+            overlayS.style.top = '140%';
+            overlayS.textContent = `∞: Infinite`;
+            el.appendChild(overlayS);
+          }
+        }
+        grid.appendChild(el);
+      });
+    }
+    document.getElementById('resetBtn').onclick = () => {
+      nodes.forEach(node => {
+        node.polarity = Math.random() > 0.5 ? 'positive' : 'negative';
+        node.angle = Math.random() * 360;
+        node.timestamp = Date.now();
+      });
+      renderGrid();
+    };
+    document.getElementById('infuseBtn').onclick = () => {
+      nodes.forEach(node => {
+        const infusion = infuseNode(node);
+        node.polarity = infusion.polarity;
+        node.angle = infusion.angle;
+        node.timestamp = infusion.timestamp;
+      });
+      renderGrid();
+    };
+    document.getElementById('showOverlay').onchange = (e) => {
+      showOverlay = e.target.checked;
+      renderGrid();
+    };
+    document.getElementById('infiniteSpeed').onchange = (e) => {
+      infiniteSpeed = e.target.checked;
+      renderGrid();
+    };
+    renderGrid();
+  </script>
+</body>
+</html> 

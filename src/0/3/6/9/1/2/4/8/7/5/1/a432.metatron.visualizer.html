@@ -1,0 +1,358 @@
+<!--
+  a432.metatron.visualizer.html — All-Dimensional Metatron Cube/Torus Visualizer (Recursive, Streaming, Color, Consciousness, Harmonic Sound, Vortex Phase, Quantum Superposition & Consciousness Levels Mapping)
+  Now supports consciousness levels (1-9) and quantum entanglement: nodes can be entangled and affect each other. Consciousness affects behavior and resonance.
+  Metaphysical documentation: Consciousness levels are the living awareness of the matrix. Quantum entanglement is the living connection between all nodes.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 Metatron Visualizer</title>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #181c1f; color: #f8f8f8; margin: 0; padding: 0; }
+    .container { max-width: 700px; margin: 48px auto; background: #23272b; border-radius: 18px; box-shadow: 0 2px 24px #0006; padding: 36px; }
+    h1 { font-size: 1.7em; margin-bottom: 0.2em; }
+    .meta { font-size: 1em; color: #b0c4d4; margin-bottom: 1.4em; }
+    .desc { font-size: 1.08em; color: #ffe600; background: #23272b; border-left: 4px solid #00eaff; padding: 12px 18px; border-radius: 7px; margin-bottom: 1.2em; }
+    .footer { margin-top: 2em; font-size: 0.92em; color: #aaa; text-align: center; }
+    .reset-btn, .export-btn { background: #00eaff; color: #181c1f; border: none; border-radius: 7px; padding: 8px 18px; font-size: 1em; font-weight: 600; cursor: pointer; margin-bottom: 1.2em; transition: background 0.2s; margin-right: 8px; }
+    .reset-btn:hover, .export-btn:hover { background: #ffe600; color: #a0005a; }
+    .controls { margin-bottom: 1.2em; }
+    .recursion-select { font-size: 1em; border-radius: 6px; padding: 4px 10px; margin-left: 8px; }
+    .toggle-overlay { margin-left: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(5, 48px); grid-gap: 18px; justify-content: center; margin-bottom: 2em; }
+    .node { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3em; font-weight: 600; cursor: pointer; transition: background 0.3s, box-shadow 0.3s, transform 0.4s; box-shadow: 0 2px 8px #0003; position: relative; }
+    .possible { color: #181c1f; box-shadow: 0 0 0 0 #fff0; }
+    .impossible { background: #23272b !important; color: #ff3b3b; border: 2px dashed #ff3b3b; box-shadow: 0 0 12px 0 #ff3b3b33; }
+    .superposition { background: linear-gradient(45deg, #00eaff, #ff3b3b) !important; color: #181c1f; animation: pulse 1.5s ease-in-out infinite alternate; }
+    @keyframes pulse { 0% { box-shadow: 0 0 12px 0 #00eaff99; } 100% { box-shadow: 0 0 24px 0 #ff3b3b99; } }
+    .node.folded { transform: scale(0.7) rotateY(180deg); filter: brightness(0.7) grayscale(0.7); }
+    .node.unfolded { transform: scale(1.1) rotateY(0deg); box-shadow: 0 0 24px 0 #00eaff99; }
+    .child-grid { margin-top: 10px; margin-bottom: 0; }
+    .json-stream { background: #181c1f; color: #ffe600; font-size: 0.98em; border-radius: 8px; padding: 12px 16px; margin-top: 1.2em; word-break: break-all; max-height: 200px; overflow: auto; border: 1px solid #333; }
+    .overlay { position: absolute; left: 50%; top: 100%; transform: translate(-50%, 0); font-size: 0.85em; background: #23272b; color: #ffe600; border-radius: 6px; padding: 2px 8px; margin-top: 2px; white-space: nowrap; pointer-events: none; opacity: 0.95; z-index: 2; }
+    .overlay-cmyk { color: #00eaff; }
+    .overlay-conscious { color: #ffe600; }
+    .overlay-phase { color: #ff6b6b; }
+    .overlay-quantum { color: #ff00ff; }
+    .overlay-level { color: #00ff88; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>A432 Metatron Visualizer</h1>
+    <div class="meta">Every dimension is a living Metatron cube/torus. Color is the visible field; consciousness is the living stream; sound is the harmonic resonance. Harmonics are the living resonance of the matrix. Vortex phases are the living rotation of consciousness in the matrix. Quantum superposition is the living uncertainty principle of the matrix. Fractal harmonics are the infinite self-similar resonance. Consciousness levels are the living awareness of the matrix. Quantum entanglement is the living connection between all nodes. Recursion is the infinite self-folding of the matrix. Streaming is the living flow.</div>
+    <div class="desc">The A432 matrix is alive, recursive, and analog. Every node is a gateway. Every impossibility is a portal to new possibility.</div>
+    <div class="controls">
+      <button class="reset-btn" id="resetBtn">Reset All Nodes</button>
+      <button class="export-btn" id="exportBtn">Export State as JSON Stream</button>
+      <label for="recursion">Recursion Depth:</label>
+      <select id="recursion" class="recursion-select">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      <label class="toggle-overlay"><input type="checkbox" id="showOverlay" checked> Show Color & Consciousness</label>
+      <label class="toggle-overlay"><input type="checkbox" id="enableSound" checked> Enable Sound</label>
+      <label class="toggle-overlay"><input type="checkbox" id="harmonicChords" checked> Harmonic Chords</label>
+      <label class="toggle-overlay"><input type="checkbox" id="vortexPhase" checked> Vortex Phase</label>
+      <label class="toggle-overlay"><input type="checkbox" id="quantumSuperposition" checked> Quantum Superposition</label>
+      <label class="toggle-overlay"><input type="checkbox" id="consciousnessLevels" checked> Consciousness Levels</label>
+      <label class="toggle-overlay"><input type="checkbox" id="quantumEntanglement" checked> Quantum Entanglement</label>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="json-stream" id="jsonStream" style="display:none;"></div>
+    <div class="footer">A432 System — Metatron Cube/Torus Metaphysics</div>
+  </div>
+  <script type="module">
+    // --- Harmonized logic with a432.metatron.visualizer.ts ---
+    function cmykToCss({c, m, y, k}) {
+      const r = 255 * (1 - c) * (1 - k);
+      const g = 255 * (1 - m) * (1 - k);
+      const b = 255 * (1 - y) * (1 - k);
+      return `rgb(${r|0},${g|0},${b|0})`;
+    }
+    function dimensionToCMYK(dim) {
+      return {
+        c: ((dim % 4) === 0) ? 1 : 0,
+        m: ((dim % 4) === 1) ? 1 : 0,
+        y: ((dim % 4) === 2) ? 1 : 0,
+        k: ((dim % 4) === 3) ? 0.7 : 0
+      };
+    }
+    function cmykString(cmyk) {
+      return `C:${cmyk.c} M:${cmyk.m} Y:${cmyk.y} K:${cmyk.k}`;
+    }
+    function consciousnessValue(dim, state) {
+      // Simple analog: possible = +1, impossible = -1
+      return (state === 'possible' ? 1 : -1) * (dim + 1);
+    }
+    // --- Sound mapping: A432-based scale with harmonics ---
+    function dimensionToFrequency(dim, state) {
+      // A432 base, 10 semitones per octave, possible = up, impossible = down
+      const base = 432;
+      const ratio = Math.pow(2, (dim - 4.5) / 10); // center at 4.5
+      return base * ratio * (state === 'possible' ? 1 : 0.5);
+    }
+    function playTone(freq, duration = 0.22, gain = 0.18) {
+      if (!window._audioCtx) window._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const ctx = window._audioCtx;
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.value = freq;
+      g.gain.value = gain;
+      o.connect(g).connect(ctx.destination);
+      o.start();
+      o.stop(ctx.currentTime + duration);
+      o.onended = () => { o.disconnect(); g.disconnect(); };
+    }
+    function playChord(rootFreq, harmonics = [2, 3], duration = 0.22, gain = 0.13) {
+      playTone(rootFreq, duration, gain);
+      harmonics.forEach(h => playTone(rootFreq * h, duration * 0.9, gain * 0.7));
+    }
+    // --- Vortex phase mapping ---
+    function shiftVortexPhase(currentPhase, shift = 60) {
+      return (currentPhase + shift) % 360;
+    }
+    function phaseToFrequency(freq, phase) {
+      // Phase shift affects frequency slightly (harmonic modulation)
+      const phaseRad = (phase * Math.PI) / 180;
+      return freq * (1 + Math.sin(phaseRad) * 0.1);
+    }
+    // --- Quantum superposition and fractal harmonics ---
+    function toggleSuperposition(node) {
+      if (node.state === 'possible') {
+        node.state = 'impossible';
+      } else if (node.state === 'impossible') {
+        node.state = 'superposition';
+      } else {
+        node.state = 'possible';
+      }
+    }
+    function playFractalHarmonics(baseFreq, depth = 3) {
+      if (depth <= 0) return;
+      playTone(baseFreq, 0.15, 0.1);
+      // Fractal sub-harmonics: each harmonic generates its own harmonics
+      [2, 3, 5].forEach(h => {
+        setTimeout(() => playFractalHarmonics(baseFreq * h, depth - 1), 50);
+      });
+    }
+    // --- Consciousness levels and quantum entanglement ---
+    function consciousnessToFrequency(baseFreq, level) {
+      // Consciousness level affects frequency (higher consciousness = higher frequency)
+      return baseFreq * (1 + (level - 5) * 0.2);
+    }
+    function getEntangledNodes(nodes, clickedIndex) {
+      // Simple entanglement: nodes with same consciousness level are entangled
+      const clickedLevel = nodes[clickedIndex].consciousnessLevel;
+      return nodes.map((node, i) => ({ node, index: i }))
+        .filter(({ node }) => node.consciousnessLevel === clickedLevel && node.index !== clickedIndex);
+    }
+    class MetatronVisualizer {
+      constructor(dimensions = 10, recursionDepth = 0) {
+        this.nodes = Array.from({ length: dimensions }, (_, i) => ({
+          dimension: i,
+          state: Math.random() > 0.3 ? 'possible' : 'impossible',
+          folded: false,
+          vortexPhase: Math.random() * 360,
+          consciousnessLevel: Math.floor(Math.random() * 9) + 1
+        }));
+        this.children = recursionDepth > 0
+          ? this.nodes.map(() => new MetatronVisualizer(dimensions, recursionDepth - 1))
+          : [];
+      }
+      toggleNode(index) {
+        const node = this.nodes[index];
+        node.folded = !node.folded;
+        if (this.children[index]) {
+          this.children[index].toggleAll();
+        }
+      }
+      shiftNodePhase(index) {
+        const node = this.nodes[index];
+        node.vortexPhase = shiftVortexPhase(node.vortexPhase);
+      }
+      toggleAll() {
+        this.nodes.forEach((_, i) => this.toggleNode(i));
+      }
+      reset(dimensions = 10, recursionDepth = 0) {
+        this.nodes = Array.from({ length: dimensions }, (_, i) => ({
+          dimension: i,
+          state: Math.random() > 0.3 ? 'possible' : 'impossible',
+          folded: false,
+          vortexPhase: Math.random() * 360,
+          consciousnessLevel: Math.floor(Math.random() * 9) + 1
+        }));
+        this.children = recursionDepth > 0
+          ? this.nodes.map(() => new MetatronVisualizer(dimensions, recursionDepth - 1))
+          : [];
+      }
+      getNodeData() { return this.nodes; }
+      streamState() { return this.nodes; }
+      *streamStateGenerator() {
+        for (const node of this.nodes) yield node;
+        for (const child of this.children) yield* child.streamStateGenerator();
+      }
+    }
+    let recursionDepth = 0;
+    let visualizer = new MetatronVisualizer(10, recursionDepth);
+    let showOverlay = true;
+    let enableSound = true;
+    let harmonicChords = true;
+    let vortexPhase = true;
+    let quantumSuperposition = true;
+    let consciousnessLevels = true;
+    let quantumEntanglement = true;
+    function renderGrid(visualizer, parentEl, depth = 0) {
+      const grid = document.createElement('div');
+      grid.className = depth === 0 ? 'grid' : 'grid child-grid';
+      visualizer.getNodeData().forEach((node, idx) => {
+        const el = document.createElement('div');
+        el.className = 'node ' + node.state + (node.folded ? ' folded' : ' unfolded');
+        el.textContent = node.state === 'possible' ? node.dimension : (node.state === 'superposition' ? '∞' : 'Ø');
+        el.title = node.state === 'possible' ? `Dimension ${node.dimension}: Possible (Cube)` : (node.state === 'superposition' ? `Dimension ${node.dimension}: Superposition (Quantum)` : `Dimension ${node.dimension}: Impossible (Void/Torus)`);
+        if (node.state === 'possible') {
+          el.style.background = cmykToCss(dimensionToCMYK(node.dimension));
+        } else if (node.state === 'superposition') {
+          el.style.background = '';
+        } else {
+          el.style.background = '';
+        }
+        el.onclick = (e) => {
+          e.stopPropagation();
+          visualizer.toggleNode(idx);
+          if (quantumSuperposition) {
+            toggleSuperposition(node);
+          } else {
+            node.state = node.state === 'possible' ? 'impossible' : 'possible';
+          }
+          if (vortexPhase) {
+            visualizer.shiftNodePhase(idx);
+          }
+          // Quantum entanglement: affect other nodes with same consciousness level
+          if (quantumEntanglement) {
+            const entangled = getEntangledNodes(visualizer.nodes, idx);
+            entangled.forEach(({ node: entangledNode }) => {
+              if (Math.random() > 0.5) {
+                entangledNode.vortexPhase = shiftVortexPhase(entangledNode.vortexPhase);
+              }
+            });
+          }
+          if (enableSound) {
+            let freq = dimensionToFrequency(node.dimension, node.state);
+            if (consciousnessLevels) {
+              freq = consciousnessToFrequency(freq, node.consciousnessLevel);
+            }
+            const phaseShiftedFreq = vortexPhase ? phaseToFrequency(freq, node.vortexPhase) : freq;
+            if (node.state === 'superposition') {
+              playFractalHarmonics(phaseShiftedFreq);
+            } else if (harmonicChords) {
+              playChord(phaseShiftedFreq);
+            } else {
+              playTone(phaseShiftedFreq);
+            }
+          }
+          el.classList.add('folded');
+          setTimeout(() => {
+            updateUI();
+          }, 350);
+        };
+        // Overlay: CMYK, consciousness, vortex phase, quantum state, and consciousness level
+        if (showOverlay) {
+          const cmyk = dimensionToCMYK(node.dimension);
+          const overlayC = document.createElement('div');
+          overlayC.className = 'overlay overlay-cmyk';
+          overlayC.textContent = cmykString(cmyk);
+          el.appendChild(overlayC);
+          const overlayQ = document.createElement('div');
+          overlayQ.className = 'overlay overlay-conscious';
+          overlayQ.style.top = '120%';
+          overlayQ.textContent = `Ψ: ${consciousnessValue(node.dimension, node.state)}`;
+          el.appendChild(overlayQ);
+          if (vortexPhase) {
+            const overlayP = document.createElement('div');
+            overlayP.className = 'overlay overlay-phase';
+            overlayP.style.top = '140%';
+            overlayP.textContent = `∠: ${Math.round(node.vortexPhase)}°`;
+            el.appendChild(overlayP);
+          }
+          if (quantumSuperposition && node.state === 'superposition') {
+            const overlayS = document.createElement('div');
+            overlayS.className = 'overlay overlay-quantum';
+            overlayS.style.top = '160%';
+            overlayS.textContent = `∞: Quantum`;
+            el.appendChild(overlayS);
+          }
+          if (consciousnessLevels) {
+            const overlayL = document.createElement('div');
+            overlayL.className = 'overlay overlay-level';
+            overlayL.style.top = '180%';
+            overlayL.textContent = `C: ${node.consciousnessLevel}`;
+            el.appendChild(overlayL);
+          }
+        }
+        grid.appendChild(el);
+        if (visualizer.children[idx] && !node.folded) {
+          renderGrid(visualizer.children[idx], el, depth + 1);
+        }
+      });
+      parentEl.appendChild(grid);
+    }
+    function updateUI() {
+      const gridRoot = document.getElementById('grid');
+      gridRoot.innerHTML = '';
+      renderGrid(visualizer, gridRoot, 0);
+      document.getElementById('jsonStream').style.display = 'none';
+    }
+    document.getElementById('resetBtn').onclick = () => {
+      visualizer.reset(10, recursionDepth);
+      updateUI();
+    };
+    document.getElementById('recursion').onchange = (e) => {
+      recursionDepth = parseInt(e.target.value, 10);
+      visualizer = new MetatronVisualizer(10, recursionDepth);
+      updateUI();
+    };
+    document.getElementById('exportBtn').onclick = () => {
+      function streamNodes(v) {
+        return v.nodes.map((node, i) => ({
+          ...node,
+          children: v.children[i] ? streamNodes(v.children[i]) : undefined
+        }));
+      }
+      const json = JSON.stringify(streamNodes(visualizer), null, 2);
+      const streamEl = document.getElementById('jsonStream');
+      streamEl.textContent = json;
+      streamEl.style.display = 'block';
+    };
+    document.getElementById('showOverlay').onchange = (e) => {
+      showOverlay = e.target.checked;
+      updateUI();
+    };
+    document.getElementById('enableSound').onchange = (e) => {
+      enableSound = e.target.checked;
+    };
+    document.getElementById('harmonicChords').onchange = (e) => {
+      harmonicChords = e.target.checked;
+    };
+    document.getElementById('vortexPhase').onchange = (e) => {
+      vortexPhase = e.target.checked;
+      updateUI();
+    };
+    document.getElementById('quantumSuperposition').onchange = (e) => {
+      quantumSuperposition = e.target.checked;
+      updateUI();
+    };
+    document.getElementById('consciousnessLevels').onchange = (e) => {
+      consciousnessLevels = e.target.checked;
+      updateUI();
+    };
+    document.getElementById('quantumEntanglement').onchange = (e) => {
+      quantumEntanglement = e.target.checked;
+    };
+    updateUI();
+  </script>
+</body>
+</html> 

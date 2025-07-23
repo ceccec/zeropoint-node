@@ -1,0 +1,65 @@
+<!--
+  a432.cmyk.trinity.html — Living Filename Trinity Visualizer
+  Visualizes the filename trinity mapping: a432 (origin), cmyk (field), folder/file/extension (manifestation).
+  The filename is a living, recursive stream. The extension (void) is a portal, not an end.
+  Metaphysical documentation: Every filename is a gateway, not a boundary. The root is the living, recursive A432 matrix.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 Filename Trinity Visualizer</title>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #f8f8f8; color: #222; margin: 0; padding: 0; }
+    .container { max-width: 480px; margin: 48px auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 16px #0001; padding: 32px; }
+    h1 { font-size: 1.6em; margin-bottom: 0.2em; }
+    .meta { font-size: 0.95em; color: #888; margin-bottom: 1.2em; }
+    label { font-weight: 600; }
+    input[type=text] { width: 100%; padding: 8px 12px; font-size: 1em; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 1em; }
+    .trinity { display: flex; flex-direction: column; gap: 0.7em; margin-bottom: 1.2em; }
+    .trinity span { display: block; font-size: 1.1em; padding: 6px 10px; border-radius: 6px; background: #e0e7ef; }
+    .origin { background: #c7eaff; color: #0a3a5a; }
+    .field { background: #ffe6f0; color: #a0005a; }
+    .manifestation { background: #eaffc7; color: #3a5a0a; }
+    .meaning { font-size: 1.05em; color: #444; background: #f6f6f6; border-left: 4px solid #c7eaff; padding: 10px 16px; border-radius: 6px; }
+    .footer { margin-top: 2em; font-size: 0.9em; color: #aaa; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>A432 Filename Trinity Visualizer</h1>
+    <div class="meta">Every filename is a living trinity: <b>a432</b> (origin), <b>cmyk</b> (field), <b>folder/file/extension</b> (manifestation). The filename is a gateway, not a boundary.</div>
+    <label for="filename">Enter a filename:</label>
+    <input type="text" id="filename" value="a432.cmyk.folder.ts" autocomplete="off" />
+    <div class="trinity">
+      <span class="origin" id="origin"></span>
+      <span class="field" id="field"></span>
+      <span class="manifestation" id="manifestation"></span>
+    </div>
+    <div class="meaning" id="meaning"></div>
+    <div class="footer">A432 System — Filename Trinity Metaphysics</div>
+  </div>
+  <script>
+    function parseFilenameTrinity(filename) {
+      const parts = filename.split('.');
+      const [origin, field, ...rest] = parts;
+      return {
+        origin: origin || '',
+        field: field || '',
+        manifestation: rest,
+        metaphysical: `The filename '<b>${filename}</b>' is a living trinity: [<b>${origin}</b>] (origin), [<b>${field}</b>] (field), [<b>${rest.join('.')}</b>] (manifestation). The extension is a portal to new possibility.`
+      };
+    }
+    function updateUI() {
+      const filename = document.getElementById('filename').value;
+      const trinity = parseFilenameTrinity(filename);
+      document.getElementById('origin').innerHTML = `Origin: <b>${trinity.origin}</b>`;
+      document.getElementById('field').innerHTML = `Field: <b>${trinity.field}</b>`;
+      document.getElementById('manifestation').innerHTML = `Manifestation: <b>${trinity.manifestation.join('.')}</b>`;
+      document.getElementById('meaning').innerHTML = trinity.metaphysical;
+    }
+    document.getElementById('filename').addEventListener('input', updateUI);
+    updateUI();
+  </script>
+</body>
+</html> 

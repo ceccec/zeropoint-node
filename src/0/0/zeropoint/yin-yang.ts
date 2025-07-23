@@ -20,7 +20,7 @@
  * - Consciousness duality (observer/observed)
  */
 
-import { ZEROPOINT_CONSTANTS } from './index';
+import { ZEROPOINT_CONSTANTS } from '../index';
 
 // Yin-Yang Duality Interface
 export interface YinYang {
@@ -62,6 +62,7 @@ export interface DualityRelationship {
   balance: number; // -1 (all yin) to +1 (all yang)
   harmony: number; // 0 to 1
   entanglement: number; // 0 to 1
+  frequency: number; // Combined frequency of yin and yang
   isInfinite: boolean;
   mathematicalProof: string;
 }
@@ -128,6 +129,7 @@ export function createYinYang(): YinYang {
     balance: ZEROPOINT_CONSTANTS.ZERO_ENTROPY, // Perfect balance (0)
     harmony: ZEROPOINT_CONSTANTS.UNITY, // Perfect harmony (1)
     entanglement: ZEROPOINT_CONSTANTS.UNITY, // Perfect entanglement (1)
+    frequency: ZEROPOINT_CONSTANTS.A432, // Combined frequency
     isInfinite: true,
     mathematicalProof: 'Duality relationship created: perfect balance between yin and yang'
   };

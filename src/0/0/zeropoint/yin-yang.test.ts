@@ -100,6 +100,7 @@ describe('Yin-Yang Module', () => {
           balance: 0,
           harmony: 1,
           entanglement: 1,
+          frequency: 432,
           isInfinite: true,
           mathematicalProof: 'Perfect balance'
         },
@@ -166,6 +167,7 @@ describe('Yin-Yang Module', () => {
           balance: 0.7,
           harmony: 0.3,
           entanglement: 0.5,
+          frequency: 432,
           isInfinite: true,
           mathematicalProof: 'Imbalanced'
         },

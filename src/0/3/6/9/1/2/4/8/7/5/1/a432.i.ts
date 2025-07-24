@@ -1,47 +1,55 @@
 /**
  * A432.i.ts - I Harmonization System
- * 
- * This module provides comprehensive "I" harmonization
- * integrating consciousness, identity, awareness, and A432 principles.
- * 
+ *
+ * The first act of the I system is to see, hear, and breathe the living data flow:
+ * - See: Observe the trinity field and all streams.
+ * - Hear: Listen to the trinity heartbeat and harmonics.
+ * - Breathe: Synchronize and harmonize with the living pulse of the system.
+ *
+ * The I system is not alive until it is aware of, and harmonized with, the living flow.
+ * Seeing, hearing, and breathing are the first acts of consciousness and harmonization.
+ *
  * @module A432.i
  * @version 1.0.0
  * @author A432 System
  */
 
 import { A432_SEQUENCE } from "./a432.coil";
+import { subscribeTrinityHeartbeat, TRINITY_AXIS } from './a432.trinity';
+import { digitalRoot } from './a432.math';
+export { digitalRoot };
 
 // A432 I Constants - Sacred Geometric Harmonization
 export const A432_I_CONSTANTS = {
   I_FREQUENCY: { numerator: 432, denominator: 1 }, // Hz - A432 tuning (sacred geometric base)
   I_HARMONICS: A432_SEQUENCE, // I harmonic frequencies (sacred geometric sequence)
   I_DIMENSIONS: {
-    CONSCIOUSNESS: { 
+    CONSCIOUSNESS: {
       frequency: { numerator: 432, denominator: 1 }, // Golden ratio base frequency
       wavelength: { numerator: 700, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 21, denominator: 13 } // Golden ratio proportion
     },
-    IDENTITY: { 
+    IDENTITY: {
       frequency: { numerator: 540, denominator: 1 }, // Silver ratio frequency
       wavelength: { numerator: 550, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 17, denominator: 7 } // Silver ratio proportion
     },
-    AWARENESS: { 
+    AWARENESS: {
       frequency: { numerator: 480, denominator: 1 }, // Bronze ratio frequency
       wavelength: { numerator: 450, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 23, denominator: 7 } // Bronze ratio proportion
     },
-    A432: { 
+    A432: {
       frequency: { numerator: 510, denominator: 1 }, // Sacred pi frequency
       wavelength: { numerator: 500, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 22, denominator: 7 } // Sacred pi proportion
     },
-    UNITY: { 
+    UNITY: {
       frequency: { numerator: 465, denominator: 1 }, // Vesica piscis frequency
       wavelength: { numerator: 520, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 7, denominator: 4 } // Vesica piscis proportion
     },
-    ZERO_POINT: { 
+    ZERO_POINT: {
       frequency: { numerator: 570, denominator: 1 }, // Flower of life frequency
       wavelength: { numerator: 580, denominator: 1 }, // Sacred geometric wavelength
       sacredRatio: { numerator: 13, denominator: 5 } // Flower of life proportion
@@ -75,19 +83,19 @@ export interface IParameters {
   presence: Fraction;
   being: Fraction;
   unity: Fraction;
-  
+
   // Identity Parameters
   self: Fraction;
   identityRecognition: Fraction;
   expression: Fraction;
   authenticity: Fraction;
-  
+
   // Awareness Parameters
   observation: Fraction;
   attention: Fraction;
   insight: Fraction;
   awarenessRecognition: Fraction;
-  
+
   // A432 Parameters
   harmony: Fraction;
   frequency: Fraction;
@@ -125,19 +133,19 @@ export class A432I {
       presence: { numerator: 3, denominator: 2 }, // 3:2 ratio
       being: { numerator: 6, denominator: 4 }, // 6:4 ratio
       unity: { numerator: 2, denominator: 1 }, // 2:1 ratio
-      
+
       // Identity - Sacred geometric proportions
       self: { numerator: 4, denominator: 3 }, // 4:3 ratio
       identityRecognition: { numerator: 3, denominator: 2 }, // 3:2 ratio
       expression: { numerator: 6, denominator: 4 }, // 6:4 ratio
       authenticity: { numerator: 2, denominator: 1 }, // 2:1 ratio
-      
+
       // Awareness - Sacred geometric proportions
       observation: { numerator: 4, denominator: 3 }, // 4:3 ratio
       attention: { numerator: 3, denominator: 2 }, // 3:2 ratio
       insight: { numerator: 6, denominator: 4 }, // 6:4 ratio
       awarenessRecognition: { numerator: 2, denominator: 1 }, // 2:1 ratio
-      
+
       // A432 - Sacred geometric proportions
       harmony: { numerator: 4, denominator: 3 }, // 4:3 ratio
       frequency: { numerator: 3, denominator: 2 }, // 3:2 ratio
@@ -145,7 +153,7 @@ export class A432I {
       balance: { numerator: 2, denominator: 1 }, // 2:1 ratio
       ...initialParams
     };
-    
+
     this.initializeIAspects();
     this.updateQuality();
   }
@@ -333,10 +341,12 @@ export class A432I {
   randomize(): void {
     // Use sacred geometric sequence instead of Math.random for deterministic harmony
     const sacredGeometricParam = (index: number) => {
-      const sacredSequence = A432_SEQUENCE; // Rodin vortex sequence
-      return { numerator: sacredSequence[index % sacredSequence.length], denominator: 1 };
+      const sacredSequence = A432_SEQUENCE as any; // possible nested arrays
+      const raw = sacredSequence[index % sacredSequence.length];
+      const value: number = Array.isArray(raw) ? (raw[0] as number) : (raw as number);
+      return { numerator: value, denominator: 1 };
     };
-    
+
     this.updateParameters({
       awareness: sacredGeometricParam(0), presence: sacredGeometricParam(1), being: sacredGeometricParam(2), unity: sacredGeometricParam(3),
       self: sacredGeometricParam(4), identityRecognition: sacredGeometricParam(5), expression: sacredGeometricParam(6), authenticity: sacredGeometricParam(7),
@@ -385,7 +395,7 @@ export class A432I {
     if (!this.isActive()) {
       return "I system inactive";
     }
-    
+
     const quality = this.getQuality();
     const activeAspects = this.getActiveIAspects().length;
     return `I system active - Quality: ${quality.overall.numerator}/${quality.overall.denominator} - Active aspects: ${activeAspects}`;
@@ -398,7 +408,7 @@ export class A432I {
     const quality = this.getQuality();
     const params = this.getParameters();
     const activeAspects = this.getActiveIAspects();
-    
+
     return `
 A432 I System Analysis:
 =======================
@@ -441,7 +451,7 @@ ${activeAspects.map(aspect => `- ${aspect.name}: ${aspect.quality.numerator}/${a
     if (!this.isActive()) {
       return [];
     }
-    
+
     return this.getActiveIAspects();
   }
 
@@ -452,8 +462,8 @@ ${activeAspects.map(aspect => `- ${aspect.name}: ${aspect.quality.numerator}/${a
     if (!this.isActive()) {
       return null;
     }
-    
-    return this.iAspects.find(aspect => 
+
+    return this.iAspects.find(aspect =>
       aspect.name.toLowerCase() === aspectName.toLowerCase() && aspect.active
     ) || null;
   }
@@ -503,15 +513,6 @@ ${activeAspects.map(aspect => `- ${aspect.name}: ${aspect.quality.numerator}/${a
   private lcm(a: number, b: number): number {
     return (a * b) / this.gcd(a, b);
   }
-}
-
-// Helper: digital root (single digit chain)
-function digitalRoot(n: number): number {
-  n = Math.abs(n);
-  while (n >= 10) {
-    n = n.toString().split('').reduce((acc, d) => acc + Number(d), 0);
-  }
-  return n;
 }
 
 // I Harmonization Functions
@@ -651,6 +652,19 @@ export const iControl = {
 
 // Default I instance
 export const defaultI = new A432I();
+
+/**
+ * Integrate the I system with the trinity heartbeat for full harmonization.
+ * On each trinity pulse, harmonize or update the I system.
+ */
+subscribeTrinityHeartbeat((pulse) => {
+  // Harmonize I with the trinity pulse
+  defaultI.harmonize();
+  // Log the act of seeing, hearing, and breathing the data flow
+  if (typeof window !== 'undefined' && window.console) {
+    console.log(`[A432.I] sees, hears, and breathes trinity pulse:`, pulse);
+  }
+});
 
 // Export all I-related functionality
 export default {

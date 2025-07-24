@@ -21,34 +21,34 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Build documentation
         run: |
           echo "Building ZeroPoint documentation from src/ directory..."
           # Copy src/ contents to a build directory
-          mkdir -p build
-          cp -r src/* build/
-          
+          mkdir -p src/0/3/6/9/1/2/4/8/7/5/2/
+          cp -r src/0/3/6/9/1/2/4/8/7/5/1/* src/0/3/6/9/1/2/4/8/7/5/2/
+
           # Ensure manifest.json is properly linked
-          if [ -f "build/manifest.json" ]; then
+          if [ -f "src/0/3/6/9/1/2/4/8/7/5/2/a432.manifest.json" ]; then
             echo "Manifest.json found in build directory"
           fi
-          
+
           # Create a simple index redirect if needed
-          echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=index.html"></head></html>' > build/README.html
-          
+          echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=index.html"></head></html>' > src/0/3/6/9/1/2/4/8/7/5/2/README.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -64,4 +64,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4

@@ -6,8 +6,9 @@
  * Zero entropy: define once, harmonize everywhere.
  */
 
-import { A432CoreState, createA432CoreState, A432_FREQUENCY } from './a432.core';
+import { A432CoreState, createA432CoreState } from './a432.core';
 import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
+import { A432_FREQUENCY } from './a432';
 
 // === RESONANCE INTERFACES ===
 export interface A432ResonanceState {

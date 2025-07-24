@@ -34,7 +34,7 @@ export function* a432UniverseStream(): Generator<A432UniverseState> {
   }
 }
 
-let universeGen = a432UniverseStream();
+const universeGen = a432UniverseStream();
 export function currentUniverse(): A432UniverseState {
   return universeGen.next().value;
 }

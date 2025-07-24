@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 Cave Diving — Harmonized Navigation & Survival Visualization</title>
+  <style>
+    body { font-family: 'Courier New', monospace; background: #111; color: #00ffff; padding: 20px; }
+    .header { text-align: center; font-size: 2em; margin-bottom: 20px; }
+    .gas-controls, .protocol-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .gas-control, .protocol-control { background: #222; border: 2px solid #00ffff; border-radius: 8px; padding: 15px; }
+    .gas-control label, .protocol-control label { display: block; margin-bottom: 8px; font-size: 1em; }
+    .gas-control input[type="range"] { width: 100%; }
+    .protocol-control input[type="checkbox"] { margin-right: 8px; }
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 20px; }
+    .metric { background: #222; border: 1px solid #00ffff; border-radius: 5px; padding: 8px; text-align: center; }
+    .swatch { display: inline-block; width: 80px; height: 80px; border-radius: 10px; border: 2px solid #00ffff; background: #fff; margin: 0 10px; }
+    .mobius-path { text-align: center; margin: 20px 0; }
+    .mobius-svg { width: 180px; height: 120px; }
+    .metaphysics { background: #222; border: 1px solid #00ffff; border-radius: 5px; padding: 12px; margin-top: 20px; color: #00ffff; font-size: 1em; }
+    .button-bar { text-align: center; margin-bottom: 20px; }
+    .harmonize-btn { background: #00ffff; color: #111; border: none; border-radius: 5px; padding: 10px 20px; font-family: 'Courier New', monospace; font-size: 1em; cursor: pointer; font-weight: bold; }
+    .harmonize-btn:hover { background: #00cccc; }
+    .export-btn { background: #333; color: #00ffff; border: 1px solid #00ffff; border-radius: 5px; padding: 10px 20px; font-family: 'Courier New', monospace; font-size: 1em; cursor: pointer; font-weight: bold; margin-left: 10px; }
+    .export-btn:hover { background: #00ffff; color: #111; }
+    .reading { background: #222; border: 1px solid #00ffff; border-radius: 5px; padding: 12px; margin-top: 20px; color: #fff; font-size: 1em; white-space: pre-line; }
+  </style>
+</head>
+<body>
+  <div class="header">A432 Cave Diving — Harmonized Navigation & Survival Visualization</div>
+  <form id="cave-form">
+    <div class="gas-controls">
+      <div class="gas-control"><label>O₂ Fraction <input type="range" id="gas-o2" min="0" max="1" value="0.21" step="0.01"></label><span id="gas-o2-val">0.21</span></div>
+      <div class="gas-control"><label>N₂ Fraction <input type="range" id="gas-n2" min="0" max="1" value="0.78" step="0.01"></label><span id="gas-n2-val">0.78</span></div>
+      <div class="gas-control"><label>He Fraction <input type="range" id="gas-he" min="0" max="1" value="0" step="0.01"></label><span id="gas-he-val">0.00</span></div>
+      <div class="gas-control"><label>CO₂ Fraction <input type="range" id="gas-co2" min="0" max="0.1" value="0.01" step="0.01"></label><span id="gas-co2-val">0.01</span></div>
+    </div>
+    <div class="protocol-controls">
+      <div class="protocol-control"><label><input type="checkbox" id="protocol-0">Rule of Thirds</label></div>
+      <div class="protocol-control"><label><input type="checkbox" id="protocol-1">Lost Line Drill</label></div>
+      <div class="protocol-control"><label><input type="checkbox" id="protocol-2">Gas Switch</label></div>
+      <div class="protocol-control"><label><input type="checkbox" id="protocol-3">Team Check</label></div>
+      <div class="protocol-control"><label><input type="checkbox" id="protocol-4">Bailout Plan</label></div>
+    </div>
+  </form>
+  <div class="metrics">
+    <div class="metric">C: <span id="cave-cmyk-c">0</span></div>
+    <div class="metric">M: <span id="cave-cmyk-m">0</span></div>
+    <div class="metric">Y: <span id="cave-cmyk-y">0</span></div>
+    <div class="metric">K: <span id="cave-cmyk-k">0</span></div>
+    <div class="metric">Harmony: <span id="cave-harmony">0</span></div>
+  </div>
+  <div style="text-align:center; margin-bottom:20px;">
+    <div class="swatch" id="cave-swatch"></div>
+  </div>
+  <div class="mobius-path">
+    <svg class="mobius-svg" viewBox="0 0 180 120">
+      <path id="mobius-path" d="M20,60 Q90,10 160,60 Q90,110 20,60" stroke="#00ffff" stroke-width="3" fill="none"/>
+      <circle id="mobius-marker" cx="20" cy="60" r="6" fill="#ff0"/>
+    </svg>
+    <div style="margin-top:8px;">Navigation: Mobius Circuit</div>
+  </div>
+  <div class="button-bar">
+    <button type="button" id="harmonize-all-btn" class="harmonize-btn">Harmonize All</button>
+    <button type="button" id="export-cave-btn" class="export-btn">Export State</button>
+  </div>
+  <div class="reading" id="cave-reading"></div>
+  <div class="metaphysics" id="metaphysics"></div>
+  <script type="module">
+    import { createCaveDivingA432, a432CaveDivingMetaphysics } from './a432.cave.diving.js';
+    function cmykToRgb({c, m, y, k}) {
+      c /= 100; m /= 100; y /= 100; k /= 100;
+      const r = Math.round(255 * (1 - c) * (1 - k));
+      const g = Math.round(255 * (1 - m) * (1 - k));
+      const b = Math.round(255 * (1 - y) * (1 - k));
+      return `rgb(${r},${g},${b})`;
+    }
+    function getGasFractions() {
+      return {
+        O2: parseFloat(document.getElementById('gas-o2').value),
+        N2: parseFloat(document.getElementById('gas-n2').value),
+        He: parseFloat(document.getElementById('gas-he').value),
+        CO2: parseFloat(document.getElementById('gas-co2').value)
+      };
+    }
+    function getProtocolStates() {
+      return [0,1,2,3,4].map(i=>document.getElementById(`protocol-${i}`).checked);
+    }
+    function updateUI() {
+      const gasFractions = getGasFractions();
+      const navigationPath = [1,2,4,8,7,5,1];
+      const protocolStates = getProtocolStates();
+      const cave = createCaveDivingA432(gasFractions, navigationPath, protocolStates);
+      document.getElementById('gas-o2-val').textContent = gasFractions.O2.toFixed(2);
+      document.getElementById('gas-n2-val').textContent = gasFractions.N2.toFixed(2);
+      document.getElementById('gas-he-val').textContent = gasFractions.He.toFixed(2);
+      document.getElementById('gas-co2-val').textContent = gasFractions.CO2.toFixed(2);
+      document.getElementById('cave-cmyk-c').textContent = cave.cmyk.c;
+      document.getElementById('cave-cmyk-m').textContent = cave.cmyk.m;
+      document.getElementById('cave-cmyk-y').textContent = cave.cmyk.y;
+      document.getElementById('cave-cmyk-k').textContent = cave.cmyk.k;
+      document.getElementById('cave-harmony').textContent = cave.overallHarmony;
+      document.getElementById('cave-swatch').style.background = cmykToRgb(cave.cmyk);
+      document.getElementById('cave-reading').textContent = [
+        `Gas Harmonics:`,
+        ...cave.gases.map(g=>`${g.name}: Fraction ${g.fraction.toFixed(2)}, Harmonic ${g.harmonic} Hz`),
+        `\nProtocols:`,
+        ...cave.protocols.map(p=>`${p.name}: ${p.harmonized ? '✅' : '❌'}`),
+        `\nNavigation: Mobius Circuit [${cave.navigation.path.join(', ')}]`,
+        `\nOverall Harmony: ${cave.overallHarmony}/9`
+      ].join('\n');
+      document.getElementById('metaphysics').textContent = a432CaveDivingMetaphysics;
+    }
+    function animateMobius() {
+      const path = document.getElementById('mobius-path');
+      const marker = document.getElementById('mobius-marker');
+      let t = 0;
+      setInterval(()=>{
+        t = (t + 0.01) % 1;
+        const len = path.getTotalLength();
+        const pt = path.getPointAtLength(t * len);
+        marker.setAttribute('cx', pt.x);
+        marker.setAttribute('cy', pt.y);
+      }, 30);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+      ['gas-o2','gas-n2','gas-he','gas-co2'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updateUI);
+      });
+      [0,1,2,3,4].forEach(i => {
+        document.getElementById(`protocol-${i}`).addEventListener('change', updateUI);
+      });
+      document.getElementById('harmonize-all-btn').addEventListener('click', () => {
+        document.getElementById('gas-o2').value = 0.21;
+        document.getElementById('gas-n2').value = 0.78;
+        document.getElementById('gas-he').value = 0.00;
+        document.getElementById('gas-co2').value = 0.01;
+        [0,1,2,3,4].forEach(i => {
+          document.getElementById(`protocol-${i}`).checked = true;
+        });
+        updateUI();
+      });
+      document.getElementById('export-cave-btn').addEventListener('click', () => {
+        const gasFractions = getGasFractions();
+        const navigationPath = [1,2,4,8,7,5,1];
+        const protocolStates = getProtocolStates();
+        const cave = createCaveDivingA432(gasFractions, navigationPath, protocolStates);
+        navigator.clipboard.writeText(JSON.stringify(cave, null, 2));
+        alert('Cave diving state copied to clipboard!');
+      });
+      animateMobius();
+    });
+  </script>
+</body>
+</html> 

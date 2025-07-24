@@ -6,7 +6,7 @@
  * Zero entropy: define once, experience everywhere.
  */
 
-import { A432CoreState, createA432CoreState, A432_FREQUENCY } from './a432.core';
+import { A432CoreState, createA432CoreState } from './a432.core';
 import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
 import { harmonizeAllBalance } from './a432.balance';
 import { harmonizeAllResonance } from './a432.resonance';
@@ -17,6 +17,7 @@ import { harmonizeAllObservation } from './a432.observation';
 import { harmonizeAllEvolution } from './a432.evolution';
 import { harmonizeAllInnovation } from './a432.innovation';
 import { harmonizeAllDocumentation } from './a432.documentation';
+import { A432_FREQUENCY } from './a432';
 
 // === EXPERIENCE UI INTERFACES ===
 export interface A432ExperienceUI {

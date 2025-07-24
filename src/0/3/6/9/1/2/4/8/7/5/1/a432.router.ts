@@ -21,6 +21,7 @@ export interface A432ModuleRoute {
 // Simulate auto-discovery: modules register themselves here
 const moduleRoutes: A432ModuleRoute[] = [];
 export function registerA432Route(pattern: A432RoutePattern, handler: A432RouteHandler, module: string, metaphysics?: string) {
+  console.log('Registering route pattern:', pattern);
   moduleRoutes.push({ pattern, handler, module, metaphysics });
 }
 

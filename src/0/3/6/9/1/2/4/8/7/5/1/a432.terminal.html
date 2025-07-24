@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: linear-gradient(135deg, #181828 0%, #222 60%, #111 100%);
+      color: #00FFFF;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    #terminal-root {
+      min-height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal-root"></div>
+  <script type="module" src="./a432.terminal.js"></script>
+</body>
+</html> 

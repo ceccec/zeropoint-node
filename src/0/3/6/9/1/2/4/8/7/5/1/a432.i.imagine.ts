@@ -79,8 +79,8 @@ export interface ImaginationAspect {
 // A432 I Imagine Class
 export class A432IImagine {
   private parameters: IImagineParameters;
-  private quality: IImagineQuality;
-  private isActive: boolean = false;
+  private quality: IImagineQuality = { consciousness: 5, imagination: 5, awareness: 5, a432: 5, overall: 5 };
+  public isActive: boolean = false;
   private imaginationAspects: ImaginationAspect[] = [];
 
   constructor(initialParams?: Partial<IImagineParameters>) {
@@ -335,13 +335,6 @@ export class A432IImagine {
   }
 
   /**
-   * Check if I imagine system is active
-   */
-  isActive(): boolean {
-    return this.isActive;
-  }
-
-  /**
    * Get I imagine status information
    */
   getStatus(): string {
@@ -539,7 +532,7 @@ export const iImagineControl = {
    * Check if I imagine is active
    */
   isActive(iImagine: A432IImagine): boolean {
-    return iImagine.isActive();
+    return iImagine.isActive;
   },
 
   /**
@@ -567,8 +560,5 @@ export default {
   iImagineHarmonization,
   iImagineAnalysis,
   iImagineControl,
-  defaultIImagine,
-  IImagineQuality,
-  IImagineParameters,
-  ImaginationAspect
+  defaultIImagine
 }; 

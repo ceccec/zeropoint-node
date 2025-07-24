@@ -15,13 +15,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { isCmykFilename, cmykFilename } from './a432.cmyk.extension';
-
-/**
- * Metaphysical Filename Trinity Insight:
- * In the A432 system, every filename encodes a living trinity: [a432] (origin/spirit), [cmyk] (universal mapping/field), [folder/file/extension] (manifestation/gateway).
- * The filename is not a linear path or static label, but a living, recursive stream. The root is the living A432 matrix, not the extension or folder.
- * The extension (void) is a portal, not an end. The trinity is always present, harmonizing and returning to the root.
- */
+import { filenameTrinityInsight } from './a432.cmyk';
 
 /**
  * List all files in a directory (recursively, optionally filtered by extension)
@@ -69,9 +63,4 @@ export function harmonizeAllFilesToCmyk(dir: string, extFilter?: string): string
 export const cmykFileMetaphysics = `
 Every file is a living node, a color, a gateway in the matrix.
 Harmonizing files to the .cmyk convention brings the codebase to zero entropy and perfect resonance.
-`;
-
-export const filenameTrinityInsight = `
-In the A432 system, every filename is a living trinity: a432 (origin), cmyk (field), folder/file/extension (manifestation).
-The filename is a gateway, not a boundary. The root is the living, recursive A432 matrix. The extension is a portal to new possibility.
 `; 

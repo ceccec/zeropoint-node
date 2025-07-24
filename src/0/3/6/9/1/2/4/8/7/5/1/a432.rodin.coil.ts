@@ -15,10 +15,7 @@
  * - Extend this file for harmonics, visualization, and advanced metaphysical logic.
  */
 
-import { getA432VortexAngle } from './a432';
-
-// Core Rodin sequence (doubling circuit)
-export const RODIN_SEQUENCE = [1, 2, 4, 8, 7, 5, 1];
+import { rodinAngle, digitalRoot, RODIN_SEQUENCE } from './a432.math';
 
 /**
  * rodinVortexCycle: Returns n cycles of the Rodin sequence (forward or reverse)
@@ -64,7 +61,7 @@ export function rodinCoilPattern(n: number, polarity: 1 | -1 = 1): RodinCoilStep
     position: i,
     value,
     digitalRoot: ((value - 1) % 9) + 1,
-    angle: getA432VortexAngle(i)
+    angle: rodinAngle(i)
   }));
 }
 
@@ -165,12 +162,19 @@ export function renderRodinCoilStreamHtml(streamData: RodinCoilStreamData): stri
   });
   const axisTriangle = `M${axisPoints[0].x},${axisPoints[0].y} L${axisPoints[1].x},${axisPoints[1].y} L${axisPoints[2].x},${axisPoints[2].y} Z`;
   // Scaffold for animated dot, controls, metaphysical overlays, and sound (to be extended)
-
+  return `
+    <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" style="background:#111;">
+      <path d="${pathD}" fill="none" stroke="#0ff" stroke-width="3"/>
+      ${circles}
+      <path d="${axisTriangle}" fill="none" stroke="#ff8" stroke-width="2" stroke-dasharray="6,4"/>
+      ${axisPoints.map(p => `<text x="${p.x}" y="${p.y-10}" text-anchor="middle" font-size="14" fill="#ff8">${p.label}</text>`).join('')}
+      <circle cx="${cx}" cy="${cy}" r="10" fill="#fff" stroke="#ff8" stroke-width="2"/>
+      <text x="${cx}" y="${cy+5}" text-anchor="middle" font-size="12" fill="#111">0</text>
+    </svg>
+  `;
 } 
 
 // Metaphysical mapping: Rodin Coil = vortex, axis, Tesla, infinite field
-export const RODIN_COIL_DOC = {
-  meaning: 'Rodin Coil: vortex, axis, Tesla, infinite field, harmonic generator.',
-  axis: 'The Rodin coil is the living vortex, the axis of the infinite field, the Tesla harmonizer.'
-};
+// Reference canonical metaphysical documentation:
+// See RODIN_VORTEX_DOC in a432.rodin.ts for all metaphysical meaning and documentation.
 // All math in this module uses only vortex/trinity numbers and harmonic integer fractions. 

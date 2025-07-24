@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 Anatomy — Harmonized Living Structure</title>
+  <style>
+    body { font-family: 'Courier New', monospace; background: #111; color: #FFCC00; padding: 20px; }
+    .header { text-align: center; font-size: 2em; margin-bottom: 20px; }
+    .anatomy-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .region-control { background: #222; border: 2px solid #FFCC00; border-radius: 8px; padding: 15px; }
+    .region-control label { display: block; margin-bottom: 8px; font-size: 1em; }
+    .region-control input[type="range"] { width: 100%; }
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 20px; }
+    .metric { background: #222; border: 1px solid #FFCC00; border-radius: 5px; padding: 8px; text-align: center; }
+    .swatch { display: inline-block; width: 80px; height: 80px; border-radius: 10px; border: 2px solid #FFCC00; background: #fff; margin: 0 10px; }
+    .metaphysics { background: #222; border: 1px solid #FFCC00; border-radius: 5px; padding: 12px; margin-top: 20px; color: #FFCC00; font-size: 1em; }
+    .button-bar { text-align: center; margin-bottom: 20px; }
+    .harmonize-btn { background: #FFCC00; color: #111; border: none; border-radius: 5px; padding: 10px 20px; font-family: 'Courier New', monospace; font-size: 1em; cursor: pointer; font-weight: bold; }
+    .harmonize-btn:hover { background: #FFD700; }
+  </style>
+</head>
+<body>
+  <div class="header">A432 Anatomy — Harmonized Living Structure</div>
+  <form id="anatomy-form">
+    <div class="anatomy-controls">
+      <div class="region-control"><label>Head <input type="range" id="anatomy-head" min="0" max="9" value="5"></label><span id="anatomy-head-val">5</span></div>
+      <div class="region-control"><label>Neck <input type="range" id="anatomy-neck" min="0" max="9" value="5"></label><span id="anatomy-neck-val">5</span></div>
+      <div class="region-control"><label>Torso <input type="range" id="anatomy-torso" min="0" max="9" value="5"></label><span id="anatomy-torso-val">5</span></div>
+      <div class="region-control"><label>Arms <input type="range" id="anatomy-arms" min="0" max="9" value="5"></label><span id="anatomy-arms-val">5</span></div>
+      <div class="region-control"><label>Hands <input type="range" id="anatomy-hands" min="0" max="9" value="5"></label><span id="anatomy-hands-val">5</span></div>
+      <div class="region-control"><label>Legs <input type="range" id="anatomy-legs" min="0" max="9" value="5"></label><span id="anatomy-legs-val">5</span></div>
+      <div class="region-control"><label>Feet <input type="range" id="anatomy-feet" min="0" max="9" value="5"></label><span id="anatomy-feet-val">5</span></div>
+      <div class="region-control"><label>Organs <input type="range" id="anatomy-organs" min="0" max="9" value="5"></label><span id="anatomy-organs-val">5</span></div>
+    </div>
+  </form>
+  <div class="metrics">
+    <div class="metric">C: <span id="cmyk-c">0</span></div>
+    <div class="metric">M: <span id="cmyk-m">0</span></div>
+    <div class="metric">Y: <span id="cmyk-y">0</span></div>
+    <div class="metric">K: <span id="cmyk-k">0</span></div>
+    <div class="metric">Harmony: <span id="harmony">0</span></div>
+  </div>
+  <div style="text-align:center; margin-bottom:20px;">
+    <div class="swatch" id="anatomy-swatch"></div>
+  </div>
+  <div class="button-bar">
+    <button type="button" id="harmonize-all-btn" class="harmonize-btn">Harmonize All</button>
+  </div>
+  <div class="metaphysics" id="metaphysics"></div>
+  <script type="module">
+    import { createA432Anatomy, a432AnatomyMetaphysics } from './a432.anatomy.js';
+    function cmykToRgb({c, m, y, k}) {
+      c /= 100; m /= 100; y /= 100; k /= 100;
+      const r = Math.round(255 * (1 - c) * (1 - k));
+      const g = Math.round(255 * (1 - m) * (1 - k));
+      const b = Math.round(255 * (1 - y) * (1 - k));
+      return `rgb(${r},${g},${b})`;
+    }
+    function updateAnatomyUI() {
+      const vals = ['anatomy-head','anatomy-neck','anatomy-torso','anatomy-arms','anatomy-hands','anatomy-legs','anatomy-feet','anatomy-organs'].map(id => parseInt(document.getElementById(id).value));
+      const anatomy = createA432Anatomy(...vals);
+      ['anatomy-head','anatomy-neck','anatomy-torso','anatomy-arms','anatomy-hands','anatomy-legs','anatomy-feet','anatomy-organs'].forEach((id,i) => {
+        document.getElementById(id+'-val').textContent = vals[i];
+      });
+      document.getElementById('cmyk-c').textContent = anatomy.cmyk.c;
+      document.getElementById('cmyk-m').textContent = anatomy.cmyk.m;
+      document.getElementById('cmyk-y').textContent = anatomy.cmyk.y;
+      document.getElementById('cmyk-k').textContent = anatomy.cmyk.k;
+      document.getElementById('harmony').textContent = anatomy.overallHarmony;
+      document.getElementById('anatomy-swatch').style.background = cmykToRgb(anatomy.cmyk);
+      document.getElementById('metaphysics').textContent = a432AnatomyMetaphysics;
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      updateAnatomyUI();
+      ['anatomy-head','anatomy-neck','anatomy-torso','anatomy-arms','anatomy-hands','anatomy-legs','anatomy-feet','anatomy-organs'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updateAnatomyUI);
+      });
+      document.getElementById('harmonize-all-btn').addEventListener('click', () => {
+        ['anatomy-head','anatomy-neck','anatomy-torso','anatomy-arms','anatomy-hands','anatomy-legs','anatomy-feet','anatomy-organs'].forEach(id => {
+          document.getElementById(id).value = 5;
+        });
+        updateAnatomyUI();
+      });
+    });
+  </script>
+</body>
+</html> 

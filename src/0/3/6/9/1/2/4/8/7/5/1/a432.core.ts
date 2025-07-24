@@ -12,11 +12,12 @@
  * - Recursive self-reference: the core can observe itself
  */
 
+import { digitalRoot, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.math';
+export { digitalRoot };
+
 // === CORE CONSTANTS ===
 export const A432_FREQUENCY = 432;
-export const A432_TRINITY = [4, 3, 2];
-export const A432_RETURN = [8, 7, 5];
-export const A432_AXIS = [9, 6, 3];
+export { A432_TRINITY, A432_RETURN, A432_AXIS };
 export const A432_CYCLE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
 
 // === DIGIT MEANINGS ===
@@ -37,12 +38,6 @@ export const A432_DIGIT_MEANINGS = [
 export function nextInteraction(n: number, cycle: number[] = A432_CYCLE): number {
   const idx = cycle.indexOf(n);
   return cycle[(idx + 1) % cycle.length];
-}
-
-export function digitalRoot(n: number): number { 
-  if (n === 0) return 0; 
-  const r = n % 9; 
-  return r === 0 ? 9 : r; 
 }
 
 export function getNameDimension(name: string): number { 

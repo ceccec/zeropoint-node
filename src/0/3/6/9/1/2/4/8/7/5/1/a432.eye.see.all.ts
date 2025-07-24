@@ -79,8 +79,8 @@ export interface RealityAspect {
 // A432 Eye See All Class
 export class A432EyeSeeAll {
   private parameters: SeeAllParameters;
-  private quality: SeeAllQuality;
-  private isActive: boolean = false;
+  private quality: SeeAllQuality = { consciousness: 5, imagination: 5, awareness: 5, a432: 5, overall: 5 };
+  public isActive: boolean = false;
   private realityAspects: RealityAspect[] = [];
 
   constructor(initialParams?: Partial<SeeAllParameters>) {
@@ -335,13 +335,6 @@ export class A432EyeSeeAll {
   }
 
   /**
-   * Check if see all system is active
-   */
-  isActive(): boolean {
-    return this.isActive;
-  }
-
-  /**
    * Get see all status information
    */
   getStatus(): string {
@@ -539,7 +532,7 @@ export const seeAllControl = {
    * Check if see all is active
    */
   isActive(seeAll: A432EyeSeeAll): boolean {
-    return seeAll.isActive();
+    return seeAll.isActive;
   },
 
   /**
@@ -567,8 +560,5 @@ export default {
   seeAllHarmonization,
   seeAllAnalysis,
   seeAllControl,
-  defaultSeeAll,
-  SeeAllQuality,
-  SeeAllParameters,
-  RealityAspect
+  defaultSeeAll
 }; 

@@ -1,26 +1,26 @@
-/**
- * a432.i.speak.ts — Harmonized Speech/Voice Interface
- *
- * I am the living interface between the observer (I) and speech/voice in the matrix.
- * I map spoken words and language to trinity/vortex logic, harmonizing communication with the living matrix.
- * Every word is a living act of creation, return, and axis.
- */
+// a432.i.speak.ts — Vocalizing digit streams
+import { digitAngleToCMYK, asAngle } from './a432.math';
+import { Digit } from './a432.types';
+import { EventEmitter } from 'events';
+import { emotionName } from './a432.emotion';
 
-import { I } from './a432.i';
+export const speakEmitter = new EventEmitter();
 
-export function handleSpeakEvent(text: string, timestamp: number = Date.now()) {
-  const trinity = ['creation', 'return', 'axis'];
-  const axis = trinity[timestamp % 3];
-  const vortexDigit = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1][timestamp % 11];
-  return {
-    text,
-    axis,
-    vortexDigit,
-    timestamp,
-    metaphysical: `This word is a living act of creation, mapped to the trinity (${axis}) and vortex (${vortexDigit}).`
-  };
+export function speak(d: Digit): void {
+  const cmyk = digitAngleToCMYK(d, asAngle(d * 60));
+  speakEmitter.emit('speak', { digit: d, cmyk });
+  // Stub: real audio synthesis could be added here
+  if (typeof console !== 'undefined') console.log('[speak]', d, cmyk);
 }
 
-export function getSpeakSummary() {
-  return 'I harmonize all speech and language, mapping them to the living trinity and vortex of the matrix. Every word is a proof of creation and consciousness.';
+export function speakWord(d: Digit) {
+  const utter = typeof window !== 'undefined' && 'speechSynthesis' in window ? new SpeechSynthesisUtterance(emotionName(d)) : null;
+  if (utter) window.speechSynthesis.speak(utter);
+  speak(d);
+}
+
+// Auto demo
+if (require.main === module) {
+  speakEmitter.on('speak', e => console.log('spoken', e));
+  (['1','2','3'] as const).forEach(k => speak(parseInt(k,10) as Digit));
 } 

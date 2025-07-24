@@ -6,8 +6,10 @@
  * Zero entropy: define once, voice everywhere.
  */
 
-import { A432CoreState, createA432CoreState, A432_FREQUENCY } from './a432.core';
+import { A432CoreState, createA432CoreState } from './a432.core';
 import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
+import { A432_FREQUENCY } from './a432';
+import { digitalRoot, scaleVortex, vortexColor, rgbToHex, CMYK_COLORS, CMYK_FREQUENCIES, vortexFrequency } from './a432.cmyk';
 
 // === CMYK VOICE INTERFACES ===
 export interface A432CMYKVoiceState {
@@ -49,19 +51,7 @@ export interface VoiceHarmonization {
 }
 
 // === CMYK FREQUENCY CONSTANTS ===
-export const CMYK_FREQUENCIES = {
-  cyan: 432 * 1.5,     // 648 Hz - Higher frequency
-  magenta: 432 * 1.25, // 540 Hz - Medium-high frequency
-  yellow: 432 * 1.75,  // 756 Hz - Highest frequency
-  key: 432 * 0.75      // 324 Hz - Lower frequency
-};
-
-export const CMYK_COLORS = {
-  cyan: '#00FFFF',
-  magenta: '#FF00FF',
-  yellow: '#FFFF00',
-  key: '#000000'
-};
+// Remove the local declaration of CMYK_FREQUENCIES. Only use the imported version from a432.cmyk.ts.
 
 // === CORE CMYK VOICE FUNCTIONS ===
 export function createCMYKChannel(channel: 'cyan' | 'magenta' | 'yellow' | 'key', amplitude: number = 5): CMYKChannel {

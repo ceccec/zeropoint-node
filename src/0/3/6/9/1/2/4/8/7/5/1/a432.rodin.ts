@@ -1,67 +1,110 @@
-// a432.rodin.ts
-// Canonical mathematical encoding of Marko Rodin's Vortex Based Mathematics (VBM)
-// Implements: Rodin sequence, torus mapping, Decoqubit, zero-point axis, and metaphysical documentation.
+// @ts-nocheck
+/**
+ * a432.rodin.ts — Science & Math extraction from the Rodin book
+ * -----------------------------------------------------------------
+ * This module scans every plain-text chapter chunk under the project
+ * (directories like src/*/chunks/*.txt) and extracts lines that look
+ * mathematical: ones containing numbers, equations, ratios, degrees,
+ * frequency references, etc.  The goal is to keep the raw science/math
+ * content handy for further analysis while avoiding manual copy-paste.
+ *
+ * Usage
+ *   import { extractRodinMath, getRodinMathLines } from './a432.rodin';
+ *   const lines = await getRodinMathLines();
+ *   console.log(lines.slice(0, 20));
+ *
+ * Run directly:
+ *   npx ts-node src/.../a432.rodin.ts > rodin-math.txt
+ *
+ * Notes
+ * • Uses only Node built-ins (fs, path) to stay dependency-free.
+ * • Filtering heuristic: a line is considered mathematical if it
+ *   contains a digit OR one of the symbols: %,°,=,+,-,*,/,^.
+ * • You can post-process the returned lines with regex, a432.math helpers, etc.
+ */
+
+import { promises as fs } from 'fs';
+import path from 'path';
+
+/** Root directory of the repository (assumed two levels up from this file). */
+const PROJECT_ROOT = path.resolve(__dirname, '..', '..', '..', '..', '..', '..', '..', '..', '..', '..', '..');
+
+/** True when executed directly via `ts-node a432.rodin.ts` */
+const IS_CLI = require.main === module;
+
+/** Regex flagging a line as math/science (contains digits or math symbols). */
+const MATH_REGEX = /[0-9]|[%°=+\-*/^]/;
 
 /**
- * RODIN_SEQUENCE: The fundamental vortex pattern discovered by Marko Rodin.
- * Maps to the surface of a torus and encodes the flow of energy/matter.
+ * Recursively walk a directory collecting .txt files inside a `chunks` folder.
  */
-export const RODIN_SEQUENCE = [1, 2, 4, 8, 7, 5, 1];
+async function collectChunkFiles(dir: string): Promise<string[]> {
+  const entries = await fs.readdir(dir, { withFileTypes: true });
+  const files: string[] = [];
+  for (const entry of entries) {
+    const p = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      // Only recurse if still within reasonable depth
+      files.push(...await collectChunkFiles(p));
+    } else if (entry.isFile() && entry.name.endsWith('.txt') && (dir.includes('chunks') || dir.includes('rodin-knowledge'))) {
+      files.push(p);
+    }
+  }
+  return files;
+}
 
 /**
- * rodinVortexCycle: Returns n cycles of the Rodin sequence (forward or reverse)
- * @param n - number of cycles
- * @param polarity - +1 (forward, default), -1 (reverse)
+ * Read a file and return the lines that satisfy MATH_REGEX.
  */
-export function rodinVortexCycle(n: number, polarity: 1 | -1 = 1): number[] {
-  const seq = polarity === 1 ? RODIN_SEQUENCE : [...RODIN_SEQUENCE].reverse();
-  const result = [];
-  for (let i = 0; i < n; i++) result.push(...seq);
+async function extractMathLinesFromFile(file: string): Promise<string[]> {
+  const raw = await fs.readFile(file, 'utf8');
+  return raw.split(/\r?\n/).filter(line => MATH_REGEX.test(line));
+}
+
+/**
+ * Returns a flat array of all math/science lines across every chunk file.
+ */
+export async function getRodinMathLines(): Promise<string[]> {
+  const chunkFiles = await collectChunkFiles(PROJECT_ROOT + '/src');
+  const all: string[] = [];
+  for (const f of chunkFiles) {
+    const lines = await extractMathLinesFromFile(f);
+    all.push(...lines.map(l => l.trim()));
+  }
+  return all;
+}
+
+/**
+ * Groups the math lines by their originating file for easier context.
+ */
+export interface FileMath {
+  file: string;
+  lines: string[];
+}
+
+export async function extractRodinMath(): Promise<FileMath[]> {
+  const chunkFiles = await collectChunkFiles(PROJECT_ROOT + '/src');
+  const result: FileMath[] = [];
+  for (const f of chunkFiles) {
+    const lines = await extractMathLinesFromFile(f);
+    if (lines.length) result.push({ file: path.relative(PROJECT_ROOT, f), lines });
+  }
   return result;
 }
 
-/**
- * rodinTorusMap: Maps the Rodin sequence to (theta, phi) coordinates on a torus.
- * @param cycles - number of cycles
- * @param polarity - +1 or -1
- * @returns Array of {theta, phi, value}
- */
-export function rodinTorusMap(cycles: number, polarity: 1 | -1 = 1): Array<{theta: number, phi: number, value: number}> {
-  const pattern = rodinVortexCycle(cycles, polarity);
-  return pattern.map((value, i) => ({
-    theta: (i / pattern.length) * 2 * Math.PI,
-    phi: (value / 9) * 2 * Math.PI,
-    value
-  }));
-}
-
-/**
- * decoqubitHypersphere: Scaffold for Decoqubit/hypersphere structure.
- * @param n - number of layers/recursions
- * @returns Array of hypersphere states (to be extended)
- */
-export function decoqubitHypersphere(n: number): Array<{layer: number, state: any}> {
-  // Placeholder: implement recursive/holographic logic
-  return Array.from({length: n}, (_, i) => ({layer: i, state: null}));
-}
-
-/**
- * zeroPointAxis: Returns the axis/field points (0, 3, 6, 9) for metaphysical overlays.
- */
-export const ZERO_POINT_AXIS = [0, 3, 6, 9];
-
-/**
- * Documentation: This module encodes the mathematical and metaphysical logic of VBM as described by Marko Rodin.
- * Extend with: field line generation, energy flow, Decoqubit recursion, and metaphysical overlays.
- */
-/**
- * rodinMatrix7x7: Generates a 7x7 matrix of the Rodin sequence, showing all phase relationships.
- * Each row is a phase-shifted version of the Rodin sequence.
- * @returns 2D array (7x7) of numbers
- */
-export function rodinMatrix7x7(): number[][] {
-  const base = RODIN_SEQUENCE.slice(0, 7); // [1,2,4,8,7,5,1]
-  return Array.from({length: 7}, (_, row) =>
-    Array.from({length: 7}, (_, col) => base[(col + row) % 7])
-  );
+// ------------------------------------------------------------------
+// CLI: print all math lines (with source file headers) to stdout
+// ------------------------------------------------------------------
+if (IS_CLI) {
+  (async () => {
+    const grouped = await extractRodinMath();
+    for (const g of grouped) {
+      console.log(`# ${g.file}`);
+      g.lines.forEach(ln => console.log(ln));
+      console.log();
+    }
+  })().catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
 } 

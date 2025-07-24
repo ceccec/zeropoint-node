@@ -10,7 +10,7 @@ interface OSTerminalModule {
 }
 
 const registeredModules: OSTerminalModule[] = [];
-let osTerminalLog: string[] = [];
+const osTerminalLog: string[] = [];
 
 /**
  * Register a module/stream with the OS terminal

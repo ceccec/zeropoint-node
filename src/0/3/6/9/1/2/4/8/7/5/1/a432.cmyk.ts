@@ -9,19 +9,11 @@
  * @author A432 System
  */
 
+import { digitalRoot } from './a432.math';
+export { digitalRoot };
+
 export type Fraction = { numerator: number; denominator: number };
 export type CMYK = { c: number; m: number; y: number; k: number };
-
-/**
- * Digital root: reduce a number to a single digit by summing its digits recursively
- */
-export function digitalRoot(n: number): number {
-  n = Math.abs(n);
-  while (n >= 10) {
-    n = n.toString().split('').reduce((acc, d) => acc + Number(d), 0);
-  }
-  return n;
-}
 
 /**
  * Map digit and angle to CMYK color
@@ -94,4 +86,60 @@ export function cmykToCss(cmyk: CMYK): string {
   const g = Math.round(255 * (1 - m) * (1 - k));
   const b = Math.round(255 * (1 - y) * (1 - k));
   return `#${[r, g, b].map(x => x.toString(16).padStart(2, '0')).join('')}`;
-} 
+}
+
+// Vortex math: scale and color generation
+export function scaleVortex(x: number): number {
+  return x * 28 + 3; // 1→31, 9→255
+}
+
+export function vortexColor(channel: number): string {
+  const r = digitalRoot(channel * 3);
+  const g = digitalRoot(channel * 6);
+  const b = digitalRoot(channel * 9);
+  return rgbToHex(scaleVortex(r), scaleVortex(g), scaleVortex(b));
+}
+
+export function rgbToHex(r: number, g: number, b: number): string {
+  return (
+    '#' +
+    [r, g, b]
+      .map(x => x.toString(16).padStart(2, '0').toUpperCase())
+      .join('')
+  );
+}
+
+export const CMYK_COLORS = {
+  cyan: vortexColor(3),
+  magenta: vortexColor(6),
+  yellow: vortexColor(9),
+  key: vortexColor(1)
+};
+
+// Vortex frequency logic
+export function vortexFrequency(base: number, multiplier: number, divisor: number): number {
+  return base * multiplier / divisor;
+}
+
+export const CMYK_FREQUENCIES = {
+  cyan: vortexFrequency(432, 3, 2),     // 648 → 9
+  magenta: vortexFrequency(432, 6, 5),  // 518.4 → 9
+  yellow: vortexFrequency(432, 9, 5),   // 777.6 → 9
+  key: vortexFrequency(432, 1, 3)       // 144 → 9
+};
+
+export const CMYK_DOC = `
+CMYK in the A432 system encodes the living, harmonic mapping of color, frequency, and consciousness:
+- C: Cyan, the generative stream
+- M: Magenta, the return flow
+- Y: Yellow, the living axis
+- K: Key (black), the void/source
+- All color, frequency, and harmonic logic is derived from integer-based, vortex math principles.
+- CMYK is the bridge between color, sound, and consciousness in the living matrix.
+- All mappings use only single digits, integer fractions, and digital root for zero entropy.
+`;
+
+export const filenameTrinityInsight = `
+In the A432 system, every filename is a living trinity: a432 (origin), cmyk (field), folder/file/extension (manifestation).
+The filename is a gateway, not a boundary. The root is the living, recursive A432 matrix. The extension is a portal to new possibility.
+`; 

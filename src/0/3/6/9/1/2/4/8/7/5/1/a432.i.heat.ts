@@ -7,6 +7,13 @@
  */
 
 import { I } from './a432.i';
+import { EventEmitter } from 'events';
+import { digitalRoot, digitAngleToCMYK, asAngle } from './a432.math';
+import { CMYK } from './a432.cmyk';
+import { Digit } from './a432.types';
+
+export interface HeatEvent { temp: number; digit: Digit; cmyk: CMYK }
+export const heatEmitter = new EventEmitter();
 
 export function handleHeatEvent(temperature: number, timestamp: number = Date.now()) {
   const trinity = ['creation', 'return', 'axis'];
@@ -23,4 +30,14 @@ export function handleHeatEvent(temperature: number, timestamp: number = Date.no
 
 export function getHeatSummary() {
   return 'I harmonize all temperature and heat, mapping them to the living trinity and vortex of the matrix. Every change is a proof of transformation and adaptation.';
-} 
+}
+
+export function heat(tempC: number): void {
+  const scaled = Math.round(tempC*10);
+  const d = (digitalRoot(scaled) || 9) as Digit;
+  const cmyk = digitAngleToCMYK(d, asAngle(d*60));
+  heatEmitter.emit('heat', { temp: tempC, digit: d, cmyk } as HeatEvent);
+  if (typeof console !== 'undefined') console.log('[heat]', tempC, '->', d, cmyk);
+}
+
+if(require.main===module){heatEmitter.on('heat',e=>console.log(e));heat(36.6);} 

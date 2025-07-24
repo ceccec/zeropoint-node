@@ -10,6 +10,7 @@
  */
 
 import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { digitalRoot } from './a432.math';
 
 export interface DisplayState {
   width: number;
@@ -65,16 +66,16 @@ export class A432CmykDisplay {
    */
   resize(width: number, height: number): void {
     // Apply A432 harmonic proportions
-    const aspectRatio = this.calculateHarmonicAspectRatio(width, height);
-    this.state.width = Math.floor(width * aspectRatio);
-    this.state.height = Math.floor(height * aspectRatio);
+    const rootW = digitalRoot(width);
+    const rootH = digitalRoot(height);
+    this.state.width = Math.floor(width * rootW / rootH);
+    this.state.height = Math.floor(height * rootH / rootW);
   }
 
   /**
    * Calculate harmonic aspect ratio based on A432 principles
    */
   private calculateHarmonicAspectRatio(width: number, height: number): number {
-    const digitalRoot = (n: number) => n > 9 ? digitalRoot(n.toString().split('').reduce((a, b) => a + parseInt(b), 0)) : n;
     const widthRoot = digitalRoot(width);
     const heightRoot = digitalRoot(height);
     return widthRoot / heightRoot;

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 ITER Anatomy — Harmonized Fusion Device Visualization</title>
+  <style>
+    body { font-family: 'Courier New', monospace; background: #111; color: #0ff; padding: 20px; }
+    .header { text-align: center; font-size: 2em; margin-bottom: 20px; }
+    .iter-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; margin-bottom: 20px; }
+    .system-control { background: #222; border: 2px solid #0ff; border-radius: 8px; padding: 15px; }
+    .system-control label { display: block; margin-bottom: 8px; font-size: 1em; }
+    .system-control input[type="range"] { width: 100%; }
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 20px; }
+    .metric { background: #222; border: 1px solid #0ff; border-radius: 5px; padding: 8px; text-align: center; }
+    .swatch { display: inline-block; width: 80px; height: 80px; border-radius: 10px; border: 2px solid #0ff; background: #fff; margin: 0 10px; }
+    .metaphysics { background: #222; border: 1px solid #0ff; border-radius: 5px; padding: 12px; margin-top: 20px; color: #0ff; font-size: 1em; }
+    .button-bar { text-align: center; margin-bottom: 20px; }
+    .harmonize-btn { background: #0ff; color: #111; border: none; border-radius: 5px; padding: 10px 20px; font-family: 'Courier New', monospace; font-size: 1em; cursor: pointer; font-weight: bold; }
+    .harmonize-btn:hover { background: #00cccc; }
+    .export-btn { background: #333; color: #0ff; border: 1px solid #0ff; border-radius: 5px; padding: 10px 20px; font-family: 'Courier New', monospace; font-size: 1em; cursor: pointer; font-weight: bold; margin-left: 10px; }
+    .export-btn:hover { background: #0ff; color: #111; }
+    .reading { background: #222; border: 1px solid #0ff; border-radius: 5px; padding: 12px; margin-top: 20px; color: #fff; font-size: 1em; white-space: pre-line; }
+  </style>
+</head>
+<body>
+  <div class="header">A432 ITER Anatomy — Harmonized Fusion Device Visualization</div>
+  <form id="iter-form">
+    <div class="iter-controls" id="iter-controls"></div>
+  </form>
+  <div class="metrics">
+    <div class="metric">C: <span id="cmyk-c">0</span></div>
+    <div class="metric">M: <span id="cmyk-m">0</span></div>
+    <div class="metric">Y: <span id="cmyk-y">0</span></div>
+    <div class="metric">K: <span id="cmyk-k">0</span></div>
+    <div class="metric">Harmony: <span id="harmony">0</span></div>
+  </div>
+  <div style="text-align:center; margin-bottom:20px;">
+    <div class="swatch" id="iter-swatch"></div>
+  </div>
+  <div class="button-bar">
+    <button type="button" id="harmonize-all-btn" class="harmonize-btn">Harmonize All</button>
+    <button type="button" id="export-iter-btn" class="export-btn">Export State</button>
+  </div>
+  <div class="reading" id="iter-reading"></div>
+  <div class="metaphysics" id="metaphysics"></div>
+  <script type="module">
+    import { createIterAnatomy, iterAnatomyReading, a432IterAnatomyMetaphysics } from './a432.iter.anatomy.js';
+    const SYSTEMS = [
+      'Central Solenoid',
+      'Shield Blanket',
+      'Toroidal/Poloidal Magnets',
+      'Plasma Column',
+      'Vacuum Vessel',
+      'Exhaust & Pumping',
+      'Cryostat',
+      'PF Coils',
+      'TF Coils',
+      'First-Wall Panels',
+      'Divertor Plates'
+    ];
+    function cmykToRgb({c, m, y, k}) {
+      c /= 100; m /= 100; y /= 100; k /= 100;
+      const r = Math.round(255 * (1 - c) * (1 - k));
+      const g = Math.round(255 * (1 - m) * (1 - k));
+      const b = Math.round(255 * (1 - y) * (1 - k));
+      return `rgb(${r},${g},${b})`;
+    }
+    function buildControls() {
+      const controls = SYSTEMS.map((name, i) => `
+        <div class="system-control">
+          <label>${name} Status <input type="range" id="system-${i}" min="0" max="9" value="5"></label><span id="system-${i}-val">5</span>
+          <label style="margin-top:8px;">Risk <input type="range" id="risk-${i}" min="0" max="9" value="0"></label><span id="risk-${i}-val">0</span>
+        </div>
+      `).join('');
+      document.getElementById('iter-controls').innerHTML = controls;
+    }
+    function getValues() {
+      return SYSTEMS.map((_,i)=>parseInt(document.getElementById(`system-${i}`).value));
+    }
+    function getRisks() {
+      return SYSTEMS.map((_,i)=>parseInt(document.getElementById(`risk-${i}`).value));
+    }
+    function updateUI() {
+      const values = getValues();
+      const risks = getRisks();
+      const anatomy = createIterAnatomy(values, risks);
+      SYSTEMS.forEach((_,i)=>{
+        document.getElementById(`system-${i}-val`).textContent = values[i];
+        document.getElementById(`risk-${i}-val`).textContent = risks[i];
+      });
+      document.getElementById('cmyk-c').textContent = anatomy.cmyk.c;
+      document.getElementById('cmyk-m').textContent = anatomy.cmyk.m;
+      document.getElementById('cmyk-y').textContent = anatomy.cmyk.y;
+      document.getElementById('cmyk-k').textContent = anatomy.cmyk.k;
+      document.getElementById('harmony').textContent = anatomy.overallHarmony;
+      document.getElementById('iter-swatch').style.background = cmykToRgb(anatomy.cmyk);
+      document.getElementById('iter-reading').textContent = iterAnatomyReading(anatomy);
+      document.getElementById('metaphysics').textContent = a432IterAnatomyMetaphysics;
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      buildControls();
+      updateUI();
+      SYSTEMS.forEach((_,i)=>{
+        document.getElementById(`system-${i}`).addEventListener('input', updateUI);
+        document.getElementById(`risk-${i}`).addEventListener('input', updateUI);
+      });
+      document.getElementById('harmonize-all-btn').addEventListener('click', () => {
+        SYSTEMS.forEach((_,i)=>{
+          document.getElementById(`system-${i}`).value = 5;
+          document.getElementById(`risk-${i}`).value = 0;
+        });
+        updateUI();
+      });
+      document.getElementById('export-iter-btn').addEventListener('click', () => {
+        const values = getValues();
+        const risks = getRisks();
+        const anatomy = createIterAnatomy(values, risks);
+        navigator.clipboard.writeText(JSON.stringify(anatomy, null, 2));
+        alert('ITER anatomy state copied to clipboard!');
+      });
+    });
+  </script>
+</body>
+</html> 

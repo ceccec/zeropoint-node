@@ -69,7 +69,13 @@ export interface EyeParameters {
 // A432 Eye Class
 export class A432Eye {
   private parameters: EyeParameters;
-  private quality: EyeQuality;
+  private quality: EyeQuality = {
+    consciousness: 5,
+    vision: 5,
+    awareness: 5,
+    a432: 5,
+    overall: 5
+  };
   private isActive: boolean = false;
 
   constructor(initialParams?: Partial<EyeParameters>) {
@@ -247,13 +253,6 @@ export class A432Eye {
   }
 
   /**
-   * Check if eye system is active
-   */
-  isActive(): boolean {
-    return this.isActive;
-  }
-
-  /**
    * Get eye status information
    */
   getStatus(): string {
@@ -408,13 +407,6 @@ export const eyeControl = {
    */
   deactivate(eye: A432Eye): void {
     eye.deactivate();
-  },
-
-  /**
-   * Check if eye is active
-   */
-  isActive(eye: A432Eye): boolean {
-    return eye.isActive();
   }
 };
 
@@ -428,7 +420,5 @@ export default {
   eyeHarmonization,
   eyeAnalysis,
   eyeControl,
-  defaultEye,
-  EyeQuality,
-  EyeParameters
+  defaultEye
 }; 

@@ -22,7 +22,7 @@ export function* a432MultiverseStream(
   }
 }
 
-let multiverseGen = a432MultiverseStream();
+const multiverseGen = a432MultiverseStream();
 export function currentMultiverse(): A432MultiverseState {
   return multiverseGen.next().value;
 }

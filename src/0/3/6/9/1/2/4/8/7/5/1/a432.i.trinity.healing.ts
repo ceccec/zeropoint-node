@@ -16,7 +16,7 @@ export interface TrinityHealingMeta {
   metaLog: any[];
 }
 
-let meta: TrinityHealingMeta = {
+const meta: TrinityHealingMeta = {
   user: 'Anonymous',
   systemState: 'Idle',
   streamState: 'Uninitialized',
@@ -151,7 +151,7 @@ export function integrateColorVideoAndSound(targetId: string, vortexStream?: Vor
     const panel = document.getElementById(targetId);
     if (!panel) return;
     // Add color video field
-    let colorField = document.createElement('div');
+    const colorField = document.createElement('div');
     colorField.id = 'color-video-field';
     colorField.style.position = 'absolute';
     colorField.style.top = '0';
@@ -215,8 +215,8 @@ export function enablePiStreamHealing(targetId: string, vortexStream?: VortexStr
   let piIndex = 0;
   function nextPiTrinity() {
     // Use next digit of pi (mod 9, mapped to trinity)
-    let digit = PI_DIGITS[piIndex % PI_DIGITS.length];
-    let trinity = [3, 6, 9].includes(digit) ? digit : [3, 6, 9][digit % 3];
+    const digit = PI_DIGITS[piIndex % PI_DIGITS.length];
+    const trinity = [3, 6, 9].includes(digit) ? digit : [3, 6, 9][digit % 3];
     // Trigger a healing event as if user selected this trinity
     const event = { type: 'pi-stream', trinity, a432: { frequency: 432 * (trinity / 3), color: `hsl(${trinity * 40},70%,55%)` }, rife: { frequency: 528 + trinity * 100, name: 'Pi-Harmonic' }, time: new Date().toISOString() };
     // Broadcast to all observers and update overlays
@@ -229,7 +229,7 @@ export function enablePiStreamHealing(targetId: string, vortexStream?: VortexStr
   setTimeout(() => {
     const panel = document.getElementById(targetId);
     if (!panel) return;
-    let piBtn = document.createElement('button');
+    const piBtn = document.createElement('button');
     piBtn.id = 'pi-stream-btn';
     piBtn.textContent = 'Enable Pi Stream';
     piBtn.style.background = '#222';
@@ -263,7 +263,7 @@ export function embedAnimatedPiTrinityRodin(targetId: string, length: number = 6
   if (!el) return;
   let step = 0;
   // Create overlay panel
-  let overlay = document.createElement('div');
+  const overlay = document.createElement('div');
   overlay.id = 'pi-trinity-consciousness-overlay';
   overlay.style.marginTop = '12px';
   overlay.style.background = '#232344';

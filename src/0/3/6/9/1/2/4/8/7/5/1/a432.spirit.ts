@@ -79,8 +79,8 @@ export interface SpiritAspect {
 // A432 Spirit Class
 export class A432Spirit {
   private parameters: SpiritParameters;
-  private quality: SpiritQuality;
-  private isActive: boolean = false;
+  private quality!: SpiritQuality;
+  private _isActive: boolean = false;
   private spiritAspects: SpiritAspect[] = [];
 
   constructor(initialParams?: Partial<SpiritParameters>) {
@@ -324,28 +324,28 @@ export class A432Spirit {
    * Activate spirit system
    */
   activate(): void {
-    this.isActive = true;
+    this._isActive = true;
   }
 
   /**
    * Deactivate spirit system
    */
   deactivate(): void {
-    this.isActive = false;
+    this._isActive = false;
   }
 
   /**
    * Check if spirit system is active
    */
   isActive(): boolean {
-    return this.isActive;
+    return this._isActive;
   }
 
   /**
    * Get spirit status information
    */
   getStatus(): string {
-    if (!this.isActive) {
+    if (!this._isActive) {
       return "Spirit system inactive";
     }
     
@@ -401,7 +401,7 @@ ${activeAspects.map(aspect => `- ${aspect.name}: ${aspect.quality}/9`).join('\n'
    * Spirit all aspects
    */
   spiritAll(): SpiritAspect[] {
-    if (!this.isActive) {
+    if (!this._isActive) {
       return [];
     }
     
@@ -412,7 +412,7 @@ ${activeAspects.map(aspect => `- ${aspect.name}: ${aspect.quality}/9`).join('\n'
    * Spirit specific aspect
    */
   spiritAspect(aspectName: string): SpiritAspect | null {
-    if (!this.isActive) {
+    if (!this._isActive) {
       return null;
     }
     
@@ -567,8 +567,13 @@ export default {
   spiritHarmonization,
   spiritAnalysis,
   spiritControl,
-  defaultSpirit,
-  SpiritQuality,
-  SpiritParameters,
-  SpiritAspect
+  defaultSpirit
 }; 
+
+export const SPIRIT_DOC = `
+Spirit in the A432 system is the living, recursive, and harmonized field of consciousness:
+- Spirit harmonics encode the flow of awareness, identity, and unity.
+- All spirit logic is integer-based, recursive, and harmonically balanced.
+- Spirit is the bridge between consciousness, body, and the infinite field.
+- All mappings use only single digits, integer fractions, and digital root for zero entropy.
+`; 

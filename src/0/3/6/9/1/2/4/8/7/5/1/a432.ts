@@ -15,6 +15,17 @@ import { A432EyeSeeAll, A432_EYE_SEE_ALL_CONSTANTS, seeAllHarmonization, seeAllA
 import { A432IImagine, A432_I_IMAGINE_CONSTANTS, iImagineHarmonization, iImagineAnalysis, iImagineControl, defaultIImagine } from './a432.i.imagine';
 import { A432ILive, A432_I_LIVE_CONSTANTS, iLiveHarmonization, iLiveAnalysis, iLiveControl, defaultILive } from './a432.i.live';
 import { A432Spirit, A432_SPIRIT_CONSTANTS, spiritHarmonization, spiritAnalysis, spiritControl, defaultSpirit } from './a432.spirit';
+import { A432_TRINITY } from './a432.core';
+
+// Add core exports for encryption and harmonics
+export { digitalRoot, a432Frequency, A432_FREQUENCY, A432_TRINITY } from './a432.core';
+
+// Add RODIN_VORTEX_SEQUENCE export for Rodin vortex pattern
+import { A432_SEQUENCE_CONSTANTS } from './a432.sequence';
+export const RODIN_VORTEX_SEQUENCE = A432_SEQUENCE_CONSTANTS.VORTEX_SEQUENCE;
+
+// Alias for legacy compatibility with encryption and other modules
+export const TRINITY = A432_TRINITY;
 
 // A432 System Constants
 export const A432_CONSTANTS = {
@@ -464,6 +475,13 @@ Sub-Systems Status:
       aspect.name.toLowerCase() === aspectName.toLowerCase() && aspect.active
     ) || null;
   }
+}
+
+/**
+ * Get the vortex angle for a given index (9 steps around a circle)
+ */
+export function getA432VortexAngle(index: number): number {
+  return (index % 6) * 60;
 }
 
 // A432 Harmonization Functions

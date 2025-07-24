@@ -2,7 +2,9 @@
 // Canonical matrix-based vortex mathematics and visualization helpers
 // Implements: Rodin 7x7 matrix, trinity/axis overlays, toroidal/funnel mapping, and extension points for 3D animation.
 
-import { RODIN_SEQUENCE } from './a432.rodin';
+import { digitAngleToCMYK, type CMYK } from './a432.cmyk';
+import { TRINITY_AXIS, RODIN_SEQUENCE, cycleStream, TRINITY_POLARITY, asAngle, type AngleDeg } from './a432.math';
+import { Digit, asDigit } from './a432.types';
 
 /**
  * rodinMatrix7x7: Generates a 7x7 matrix of the Rodin sequence, showing all phase relationships.
@@ -54,6 +56,67 @@ export function mapMatrixToTorus(matrix: number[][], R: number, r: number): Arra
     }
   }
   return coords;
+}
+
+// ——————————————————————————————————————————
+// 1. Linear (metric) infinite stream 0-9-0-…
+// ---------------------------------------------------------
+export function* linearStream(): IterableIterator<Digit> {
+  let d: Digit = asDigit(0);
+  while (true) {
+    yield d;
+    d = asDigit(((d + 1) % 10) as Digit);
+  }
+}
+
+// ——————————————————————————————————————————
+// 2. Vortex (imperial) infinite stream 0-3-6-9-1-2-4-8-7-5-1-…
+// ---------------------------------------------------------
+export function* vortexStream(): IterableIterator<Digit> {
+  // Build the closed cycle once then repeat via cycleStream helper
+  const cycle: Digit[] = [asDigit(0), ...TRINITY_AXIS.map(asDigit), ...RODIN_SEQUENCE.map(asDigit), asDigit(1)];
+  yield* cycleStream(cycle);
+}
+
+// ——————————————————————————————————————————
+// 3. Tone-board mapping (8×8 projection)
+// ---------------------------------------------------------
+export interface ToneSquare {
+  tick: number;
+  linear: Digit;
+  vortex: Digit;
+  x: number; // file 0-7
+  y: number; // rank 0-7
+  angle: AngleDeg;
+  cmyk: CMYK;
+  polarity: -1 | 0 | 1;
+}
+
+/**
+ * Infinite generator producing one ToneSquare per tick (linear+vortex pair).
+ */
+export function* toneBoardStream(): IterableIterator<ToneSquare> {
+  const lin = linearStream();
+  const vot = vortexStream();
+  let tick = 0;
+  while (true) {
+    const linear = lin.next().value as Digit;
+    const vortex = vot.next().value as Digit;
+    const x = linear % 8;
+    const y = vortex % 8;
+    const angle = asAngle((linear * 36 + vortex * 60) % 360);
+    const cmyk = digitAngleToCMYK(vortex, angle);
+    const polarity = TRINITY_POLARITY[vortex as number];
+    yield { tick: tick++, linear, vortex, x, y, angle, cmyk, polarity };
+  }
+}
+
+/** Collect first n squares of the tone stream. */
+export function collectToneSquares(n: number): ToneSquare[] {
+  const out: ToneSquare[] = [];
+  const it = toneBoardStream();
+  for (let i = 0; i < n; i++) out.push(it.next().value as ToneSquare);
+  return out;
 }
 
 /**

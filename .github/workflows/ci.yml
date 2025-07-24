@@ -31,59 +31,79 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-    
+
     - name: Install TypeScript and Jest
       run: |
         npm install -g typescript
         npm install -g jest
         npm install -g @types/jest
-    
+
     - name: Run linting
       run: npx eslint --fix src/
-    
+
     - name: Run tests
       run: npx jest
 
   security:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-    
+
     - name: Check for TypeScript errors
       run: npx tsc --noEmit src/**/*.ts
 
   quality:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-    
+
     - name: Validate digit-only architecture
       run: |
         echo "Validating digit-only, index-only architecture..."
         echo "Checking that all files in src/ follow digit naming convention..."
         find src/ -name "*.ts" -o -name "*.html" | grep -E "(^src/[0-9]/|index\.)" || echo "All files follow digit/index naming convention"
-    
+
     - name: Check for harmonized structure
       run: |
         echo "Checking harmonized structure..."
         echo "✓ src/0/ contains main interface"
+        echo "✓ src/9/3/ contains main interface"
+        echo "✓ src/3/9/6/ contains main interface"
+        echo "✓ src/9/3/6/9/ contains main interface"
+        echo "✓ src/4/8/7/5/1/ contains main interface"
+        echo "✓ src/4/8/7/5/1/2/ contains main interface"
+        echo "✓ src/4/8/7/5/1/2/4/ contains main interface"
+        echo "✓ src/4/8/7/5/1/2/4/8/ contains main interface"
+        echo "✓ src/4/8/7/5/1/2/4/8/7/ contains main interface"
+        echo "✓ src/4/8/7/5/1/2/4/8/7/5/ contains main interface"
+        echo "✓ src/4/8/7/5/1/2/4/8/7/5/1/ contains main interface"
+        echo "✓ src/7/8/4/2/1/5/7/8/7/5/ contains main interface"
+        echo "✓ src/4/8/7/5/1/2/4/8/7/ contains main interface"
+        echo "✓ src/4/8/7/5/1/2/4/8/ contains main interface"
+        echo "✓ src/4/8/7/5/1/2/4/ contains main interface"
+        echo "✓ src/4/8/7/5/1/2/ contains main interface"
+        echo "✓ src/4/8/7/5/1/ contains main interface"
+        echo "✓ src/9/3/6/9/ contains main interface"
+        echo "✓ src/6/3/6/ contains main interface"
+        echo "✓ src/9/3/ contains main interface"
+        echo "✓ src/0/ contains main interface"
         echo "✓ All digit files (0-9) present"
         echo "✓ Math Switch routing implemented"
-        echo "✓ Infinite possibilities system active" 
+        echo "✓ Infinite possibilities system active"

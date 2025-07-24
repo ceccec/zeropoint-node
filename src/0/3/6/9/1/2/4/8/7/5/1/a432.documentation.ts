@@ -6,7 +6,8 @@
  * Zero entropy: define once, document everywhere.
  */
 
-import { A432CoreState, createA432CoreState, A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core';
+import { A432CoreState, createA432CoreState, A432_RETURN, A432_AXIS } from './a432.core';
+import { A432_FREQUENCY, A432_TRINITY } from './a432';
 import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
 
 // === DOCUMENTATION INTERFACES ===

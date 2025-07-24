@@ -12,18 +12,10 @@
  * @author A432 System
  */
 
-export type Fraction = { numerator: number; denominator: number };
+import { digitalRoot } from './a432.math';
+export { digitalRoot };
 
-/**
- * Digital root: reduce a number to a single digit by summing its digits recursively
- */
-export function digitalRoot(n: number): number {
-  n = Math.abs(n);
-  while (n >= 10) {
-    n = n.toString().split('').reduce((acc, d) => acc + Number(d), 0);
-  }
-  return n;
-}
+export type Fraction = { numerator: number; denominator: number };
 
 /**
  * Shift a fraction by 60 degrees (hexagonal rotation), take the square root, and alternate polarity

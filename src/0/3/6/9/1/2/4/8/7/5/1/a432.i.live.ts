@@ -79,8 +79,8 @@ export interface LifeAspect {
 // A432 I Live Class
 export class A432ILive {
   private parameters: ILiveParameters;
-  private quality: ILiveQuality;
-  private isActive: boolean = false;
+  private quality: ILiveQuality = { consciousness: 5, life: 5, awareness: 5, a432: 5, overall: 5 };
+  public isActive: boolean = false;
   private lifeAspects: LifeAspect[] = [];
 
   constructor(initialParams?: Partial<ILiveParameters>) {
@@ -335,13 +335,6 @@ export class A432ILive {
   }
 
   /**
-   * Check if I live system is active
-   */
-  isActive(): boolean {
-    return this.isActive;
-  }
-
-  /**
    * Get I live status information
    */
   getStatus(): string {
@@ -539,7 +532,7 @@ export const iLiveControl = {
    * Check if I live is active
    */
   isActive(iLive: A432ILive): boolean {
-    return iLive.isActive();
+    return iLive.isActive;
   },
 
   /**
@@ -567,8 +560,5 @@ export default {
   iLiveHarmonization,
   iLiveAnalysis,
   iLiveControl,
-  defaultILive,
-  ILiveQuality,
-  ILiveParameters,
-  LifeAspect
+  defaultILive
 }; 

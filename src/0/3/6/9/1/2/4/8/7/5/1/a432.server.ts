@@ -1,255 +1,176 @@
-import express from 'express';
-import * as a432 from './a432';
-import { A432Imagination, heartUnfoldingMatrix, heartRecursiveUnfolding, A432MatrixSelf, a432ImaginationText } from './a432.imagination';
-import { encode, decode } from './a432.encryption';
-import { processTerminalInput } from './a432.terminal';
-import { Request, Response } from 'express';
-import { piDigitalRootStream, piRodinVortexStream, piA432ColorStream, piTrinityProductStream, piRecursiveJourneyStream } from './a432.pi';
-import { generateA432ColorPalette, generateA432SoundSequence, generateA432AnimationFrames } from './a432';
-import { rodinCoilPattern, RODIN_SEQUENCE, rodinCoilStream, renderRodinCoilStreamHtml } from './a432.rodin.coil';
-import path from 'path';
-import { zeroEntropyRoute } from './a432.router';
+// a432.server.ts — Thin harmonic transport layer
+// --------------------------------------------------
+// Serves the zero-entropy UI and exposes two math-driven JSON APIs.
+// All heavy logic lives in a432.math.ts and helpers; this file only wires HTTP.
+//
+// Endpoints:
+//   GET  /0/3/6/9/1/2/4/8/7/5/1/       → a432.index.html (static)
+//   GET  /0/1/2/3/4/5/6/7/8/9/1/       → same index
+//   GET  /a432/possibility?steps=n     → unfolding possibilityPath
+//   GET  /a432/git-vortex              → colourised commit history
+//   any other → 404 JSON with digit 8 colour
 
+import express, { Request, Response } from 'express';
+import path from 'path';
+import { resolveDivision, digitAngleToCMYK, asAngle, possibilityPath } from './a432.math';
+import { handleImpossible } from './a432.impossible';
+import { asDigit } from './a432.types';
+import { execSync } from 'child_process';
+import { pulse } from './a432.graph';
+import fs from 'fs';
+import util from 'util';
+const readFile = util.promisify(fs.readFile);
+
+// ——————————————————————————————————————————
+// Setup
+// ---------------------------------------------------------
 const app = express();
 app.use(express.json());
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 8000;
+const CANON_DIR  = __dirname;
+const MATRIX_URL = '/0/3/6/9/1/2/4/8/7/5/1/';
+const LINEAR_URL = '/0/1/2/3/4/5/6/7/8/9/1/';
+const YIN_URL    = '/1/5/7/8/4/2/1/9/6/3/0/'; // reverse of MATRIX_URL
+const PORT       = Number(process.env.PORT) || 4320;
 
-// Serve static files from the current directory at '/'
-const staticDir = __dirname;
-app.use('/', express.static(staticDir));
+// ——————————————————————————————————————————
+// Trinity middleware: request / process / response snapshot
+// ---------------------------------------------------------
+const VORTEX = [0,3,6,9,1,2,4,8,7,5] as const;
+app.use((req: Request, res: Response, next) => {
+  const firstDigit = req.url.match(/\d/)?.[0] ?? '0';
+  const R = asDigit(Number(firstDigit));
+  const tick = Date.now() % 11;
+  const P = asDigit(VORTEX[(R + tick) % 11]);
+  const S = resolveDivision(P, R).digit;
 
-// Integrate harmonized main router
-// Add zero-entropy router for all /a432/* paths
-app.all('/a432/*', (req, res) => {
-  // Zero-entropy routing stream: auto-recognizes and harmonizes all /a432 routes
-  zeroEntropyRoute(req.path.replace(/^\/a432/, ''), req, res);
+  const cmyk = digitAngleToCMYK(S, asAngle(S * 60));
+  (res.locals as any).trinity = { R, P, S, cmyk };
+
+  res.setHeader('X-A432', `${R}-${P}-${S}`);
+  res.setHeader('X-A432-CMYK', `${cmyk.c},${cmyk.m},${cmyk.y},${cmyk.k}`);
+  next();
 });
 
-// Serve a432.index.html as the default page for '/'
-app.get('/', (req, res) => {
-  res.sendFile(path.join(staticDir, 'a432.index.html'));
-});
-
-// Harmonized metaphysical routes
-app.get('/meta', (req, res) => {
-  res.json({
-    meaning: 'Meta-mapping, harmonization, and system self-awareness.',
-    doc: 'This endpoint returns the metaphysical mapping for the meta layer of the A432 system.'
+// ——————————————————————————————————————————
+// Static UI
+// ---------------------------------------------------------
+[MATRIX_URL, YIN_URL, YANG_URL].forEach(url => {
+  app.get(url, (_req: Request, res: Response) => {
+    res.sendFile(path.join(CANON_DIR, 'a432.index.html'));
   });
+  app.use(url, express.static(CANON_DIR));
 });
 
-app.get('/matrix', (req, res) => {
-  res.json({
-    meaning: 'The living, generative, and self-referential matrix of the system.',
-    doc: 'This endpoint returns the metaphysical mapping for the matrix layer of the A432 system.'
-  });
-});
-
-app.get('/observer', (req, res) => {
-  res.json({
-    meaning: 'The observer and interface of the living matrix.',
-    doc: 'This endpoint returns the metaphysical mapping for the observer layer of the A432 system.'
-  });
-});
-
-/**
- * POST /encode
- * Body: { text: string }
- * Returns: { encoded: number[] }
- */
-app.post('/encode', (req: Request, res: Response) => {
-  const { text } = req.body;
-  if (typeof text !== 'string') return res.status(400).json({ error: 'text required' });
-  res.json({ encoded: encode(text) });
-});
-
-/**
- * POST /decode
- * Body: { freqs: number[] }
- * Returns: { decoded: string }
- */
-app.post('/decode', (req: Request, res: Response) => {
-  const { freqs } = req.body;
-  if (!Array.isArray(freqs)) return res.status(400).json({ error: 'freqs required' });
-  res.json({ decoded: decode(freqs) });
-});
-
-/**
- * POST /terminal
- * Body: { input: string }
- * Returns: result of processTerminalInput
- */
-app.post('/terminal', (req: Request, res: Response) => {
-  const { input } = req.body;
-  res.json(processTerminalInput(input));
-});
-
-/**
- * GET /terminal
- * Query: ?input=...
- * Returns: result of processTerminalInput
- */
-app.get('/terminal', (req: Request, res: Response) => {
-  const input = req.query.input as string;
-  res.json(processTerminalInput(input));
-});
-
-/**
- * GET /pi/digital-root?length=n
- * Returns: array of digital roots for [π, 2π, ...]
- */
-app.get('/pi/digital-root', (req: Request, res: Response) => {
-  const length = parseInt(req.query.length as string) || 12;
-  res.json(piDigitalRootStream(length));
-});
-
-/**
- * GET /pi/rodin-vortex?length=n
- * Returns: array of harmonic Rodin vortex cycles for each π multiple
- */
-app.get('/pi/rodin-vortex', (req: Request, res: Response) => {
-  const length = parseInt(req.query.length as string) || 12;
-  res.json(piRodinVortexStream(length));
-});
-
-/**
- * GET /pi/a432-color?length=n
- * Returns: array of A432 HSL colors for digital roots of π multiples
- */
-app.get('/pi/a432-color', (req: Request, res: Response) => {
-  const length = parseInt(req.query.length as string) || 12;
-  res.json(piA432ColorStream(length));
-});
-
-/**
- * GET /pi/trinity-product?length=n
- * Returns: array of harmonic trinity products for each π multiple
- */
-app.get('/pi/trinity-product', (req: Request, res: Response) => {
-  const length = parseInt(req.query.length as string) || 12;
-  res.json(piTrinityProductStream(length));
-});
-
-/**
- * GET /pi/recursive-journey?length=n
- * Returns: array of {step, pi, digitalRoot, color, rodin, trinityProduct} for each π multiple
- */
-app.get('/pi/recursive-journey', (req: Request, res: Response) => {
-  const length = parseInt(req.query.length as string) || 12;
-  res.json(piRecursiveJourneyStream(length));
-});
-
-/**
- * GET /a432/color-palette.json
- * Returns: array of all harmonically valid A432 HSL color objects (JSON), with angle derived from A432_ANGLE and A432_SEQUENCE
- * Query: ?invert=1 for anti-harmonic (inverted) palette
- */
-app.get('/a432/color-palette.json', (req: Request, res: Response) => {
-  const invert = req.query.invert === '1' ? -1 : 1;
-  res.json(a432.getA432PaletteStates(invert));
-});
-
-/**
- * GET /a432/color-palette
- * Returns: HTML visualization of all harmonically valid A432 colors, with angle derived from A432_ANGLE and A432_SEQUENCE
- * Query: ?invert=1 for anti-harmonic (inverted) palette
- */
-function renderA432ColorPaletteHtml(palette: Array<{root: number, angle: number, hsl: {hue: number, saturation: number, lightness: number}}>, isInverted: boolean): string {
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>A432 Color Palette${isInverted ? ' (Inverted)' : ''}</title>
-  <style>
-    body { font-family: sans-serif; background: #111; color: #eee; }
-    .palette { display: flex; gap: 12px; margin: 32px 0; }
-    .color-box {
-      width: 80px; height: 140px; border-radius: 8px; box-shadow: 0 2px 8px #0008;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: bold; margin-bottom: 8px;
+// HTML view via ?view param on .ts -----------------------------------------
+app.get('/*.ts', async (req: Request, res: Response, next) => {
+  if (!('view' in req.query)) return next();
+  try {
+    const tsPath = path.join(CANON_DIR, req.path.replace(/^\//,''));
+    if (fs.existsSync(tsPath)) {
+      const code = await readFile(tsPath,'utf8');
+      res.type('text/html').send(`<!DOCTYPE html><html><head><meta charset='utf-8'><title>${path.basename(tsPath)}</title><style>body{background:#111;color:#8ff;font-family:monospace;padding:16px;}pre{white-space:pre-wrap;}</style></head><body><h2>${tsPath}</h2><pre>${code.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</pre></body></html>`);
+      return;
     }
-    .label { margin-top: 8px; font-size: 12px; color: #ccc; }
-    .invert-link { color: #6cf; text-decoration: underline; margin-left: 16px; }
-  </style>
-</head>
-<body>
-  <h1>A432 Color Palette${isInverted ? ' (Inverted)' : ''}</h1>
-  <div class="palette">
-    ${palette.map(({root, angle, hsl}) => `
-      <div class="color-box" style="background: hsl(${hsl.hue}, ${hsl.saturation * 100}%, ${hsl.lightness * 100}%);">
-        <div>Root: ${root}</div>
-        <div class="label">Angle: ${angle}&deg;</div>
-        <div class="label">H: ${hsl.hue}</div>
-        <div class="label">S: ${hsl.saturation * 100}%</div>
-        <div class="label">L: ${hsl.lightness * 100}%</div>
-      </div>
-    `).join('')}
-  </div>
-  <p>
-    JSON: <a href="/a432/color-palette.json${isInverted ? '?invert=1' : ''}"">/a432/color-palette.json${isInverted ? '?invert=1' : ''}</a>
-    <a class="invert-link" href="/a432/color-palette${isInverted ? '' : '?invert=1'}">${isInverted ? 'Show Normal Palette' : 'Show Inverted Palette'}</a>
-  </p>
-</body>
-</html>`;
+  } catch {}
+  next();
+});
+
+// Pulse JSON endpoint at root ---------------------------------------------
+app.get('/', (_req: Request, res: Response) => { res.json(pulse()); });
+
+// ——————————————————————————————————————————
+// In-memory stores (single-digit ids only) -------------------------------
+const possibilities: Record<number, string[]> = {};
+
+// helpers
+function nextDigitId(store: Record<number, unknown>): number {
+  const used = Object.keys(store).map(Number);
+  for (let d = 0; d < 10; d++) if (!used.includes(d)) return d;
+  return 0; // overwrite oldest when full
 }
-app.get('/a432/color-palette', (req: Request, res: Response) => {
-  const invert = req.query.invert === '1' ? -1 : 1;
-  const palette = a432.getA432PaletteStates(invert);
-  const isInverted = invert === -1;
-  const html = renderA432ColorPaletteHtml(palette, isInverted);
-  res.setHeader('Content-Type', 'text/html');
-  res.send(html);
+
+// Resource 1 — possibilities (CRUD via HTTP verbs) ------------------------
+app.post('/1', (req: Request, res: Response) => {
+  const steps = Number(req.body?.steps ?? 10);
+  const gen = possibilityPath();
+  const out: string[] = [];
+  for (let i = 0; i < steps; i++) out.push(gen.next().value as string);
+  const id = nextDigitId(possibilities);
+  possibilities[id] = out;
+  res.status(201).json({ id, path: out });
 });
 
-/**
- * GET /a432/sound-sequence
- * Returns: array of frequencies (Hz) for each 120° shift in the A432 sequence
- */
-app.get('/a432/sound-sequence', (req: Request, res: Response) => {
-  res.json(generateA432SoundSequence());
+app.get('/1', (_req: Request, res: Response) => {
+  res.json(Object.entries(possibilities).map(([k, v]) => ({ id: Number(k), path: v })));
 });
 
-/**
- * GET /a432/animation-frames
- * Returns: array of frame objects (angle, color, frequency) for each 120° shift in the A432 sequence
- */
-app.get('/a432/animation-frames', (req: Request, res: Response) => {
-  res.json(generateA432AnimationFrames());
+app.get('/1/:id', (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  const path = possibilities[id];
+  if (!path) return res.status(404).json(handleImpossible('possibility id not found'));
+  res.json({ id, path });
 });
 
-/**
- * GET /a432/rodin-coil/stream
- * Serves the canonical Rodin coil stream from a432.rodin.coil.ts
- * When no parameters given: uses π-based stream from a432.pi.ts
- * Query: ?cycles=n&polarity=1|-1 (default: cycles=2, polarity=1)
- */
-app.get('/a432/rodin-coil/stream', (req: Request, res: Response) => {
-  const cycles = req.query.cycles ? parseInt(req.query.cycles as string) : undefined;
-  const polarity = req.query.polarity ? parseInt(req.query.polarity as string) as 1 | -1 : undefined;
-  const length = parseInt(req.query.length as string) || 10;
-
-  const result = rodinCoilStream(cycles, polarity, length);
-  res.json(result);
+app.put('/1/:id', (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  if (!(id in possibilities)) return res.status(404).json(handleImpossible('possibility id not found'));
+  const steps = Number(req.body?.steps ?? 10);
+  const gen = possibilityPath();
+  const out: string[] = [];
+  for (let i = 0; i < steps; i++) out.push(gen.next().value as string);
+  possibilities[id] = out;
+  res.json({ id, path: out });
 });
 
-/**
- * GET /a432/rodin-coil/
- * Serves HTML visualization of the canonical Rodin coil stream
- * Uses the canonical rendering function from a432.rodin.coil.ts
- * Query: ?cycles=n&polarity=1|-1 (default: cycles=2, polarity=1)
- */
-app.get('/a432/rodin-coil/', (req: Request, res: Response) => {
-  const cycles = req.query.cycles ? parseInt(req.query.cycles as string) : undefined;
-  const polarity = req.query.polarity ? parseInt(req.query.polarity as string) as 1 | -1 : undefined;
-  const length = parseInt(req.query.length as string) || 10;
-
-  const streamData = rodinCoilStream(cycles, polarity, length);
-  const html = renderRodinCoilStreamHtml(streamData);
-
-  res.setHeader('Content-Type', 'text/html');
-  res.send(html);
+app.delete('/1/:id', (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+  if (!(id in possibilities)) return res.status(404).json(handleImpossible('possibility id not found'));
+  delete possibilities[id];
+  res.status(204).end();
 });
 
-app.listen(port, () => {
-  console.log(`A432 Harmony Server listening at http://localhost:${port}`);
+// Resource 2 — git-vortex (read-only) -------------------------------------
+app.get('/2', (_req: Request, res: Response) => {
+  const hashes = execSync('git rev-list --topo-order --abbrev-commit HEAD')
+    .toString().trim().split('\n');
+  const data = hashes.slice(0, 10).map((h, i) => {
+    const v = VORTEX[i % 11];
+    const angle = asAngle(v * 60);
+    const cmyk = digitAngleToCMYK(v, angle);
+    return { idx: i, hash: h, v, angle, cmyk };
+  });
+  res.json(data);
+});
+
+app.get('/2/:id', (req: Request, res: Response) => {
+  const idx = Number(req.params.id);
+  const hash = execSync(`git rev-list --topo-order --abbrev-commit HEAD | sed -n '$(( ${idx}+1 ))p'`)
+    .toString().trim();
+  if (!hash) return res.status(404).json(handleImpossible('commit not found'));
+  const v = VORTEX[idx % 11];
+  const angle = asAngle(v * 60);
+  const cmyk = digitAngleToCMYK(v, angle);
+  res.json({ idx, hash, v, angle, cmyk });
+});
+
+// Modules list endpoint -----------------------------------------------
+app.get('/modules', (_req: Request, res: Response) => {
+  // list .ts files in canonical dir (non-test)
+  const files = fs.readdirSync(CANON_DIR).filter(f => f.startsWith('a432') && f.endsWith('.ts') && !f.endsWith('.test.ts'));
+  res.json(files);
+});
+
+// ——————————————————————————————————————————
+// Fallback 404 → digit 8 colour
+// ---------------------------------------------------------
+app.use((_req: Request, res: Response) => {
+  res.status(404).json(handleImpossible('not found'));
+});
+
+// ——————————————————————————————————————————
+// Start
+// ---------------------------------------------------------
+app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
+  console.log(`A432 matrix → http://localhost:${PORT}${MATRIX_URL}`);
 });

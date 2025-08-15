@@ -1,0 +1,384 @@
+/**
+ * A432 Utilities System
+ * Harmonized utilities for common A432 operations
+ * DRY pattern: Define once, use everywhere
+ */
+
+import { A432_FREQUENCY, A432_TRINITY, A432_CYCLE } from './a432';
+
+// === MATHEMATICAL UTILITIES ===
+export class A432Math {
+  /**
+   * Calculate digital root (sum of digits until single digit)
+   */
+  static digitalRoot(n: number): number {
+    return n === 0 ? 0 : (n % 9 === 0 ? 9 : n % 9);
+  }
+
+  /**
+   * Calculate harmonic frequency based on A432 base
+   */
+  static harmonicFrequency(base: number, multiplier: number = 1): number {
+    return A432_FREQUENCY * base * multiplier;
+  }
+
+  /**
+   * Calculate trinity product
+   */
+  static trinityProduct(polarity: 1 | -1 = 1): number {
+    return A432_TRINITY.reduce((a, b) => a * b, 1) * polarity;
+  }
+
+  /**
+   * Calculate vortex angle for given index
+   */
+  static vortexAngle(index: number): number {
+    return (index * 40) % 360;
+  }
+
+  /**
+   * Calculate spiral coordinates
+   */
+  static spiralCoordinates(angle: number, radius: number, height: number = 0): { x: number; y: number; z: number } {
+    return {
+      x: radius * Math.cos(angle * Math.PI / 180),
+      y: radius * Math.sin(angle * Math.PI / 180),
+      z: height
+    };
+  }
+
+  /**
+   * Calculate harmonic resonance between two frequencies
+   */
+  static harmonicResonance(freq1: number, freq2: number): number {
+    const ratio = freq1 / freq2;
+    const harmonic = Math.log2(ratio);
+    return Math.abs(harmonic - Math.round(harmonic));
+  }
+
+  /**
+   * Calculate color from frequency
+   */
+  static frequencyToColor(frequency: number): { hue: number; saturation: number; lightness: number } {
+    const hue = (frequency % 360);
+    const saturation = 70 + (frequency % 30);
+    const lightness = 50 + (frequency % 20);
+    return { hue, saturation, lightness };
+  }
+
+  /**
+   * Convert HSL to RGB
+   */
+  static hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: number } {
+    const hue = h / 360;
+    const sat = s / 100;
+    const light = l / 100;
+    
+    const c = (1 - Math.abs(2 * light - 1)) * sat;
+    const x = c * (1 - Math.abs((hue * 6) % 2 - 1));
+    const m = light - c / 2;
+    
+    let r = 0, g = 0, b = 0;
+    if (hue < 1/6) { r = c; g = x; b = 0; }
+    else if (hue < 2/6) { r = x; g = c; b = 0; }
+    else if (hue < 3/6) { r = 0; g = c; b = x; }
+    else if (hue < 4/6) { r = 0; g = x; b = c; }
+    else if (hue < 5/6) { r = x; g = 0; b = c; }
+    else { r = c; g = 0; b = x; }
+    
+    return {
+      r: Math.round((r + m) * 255),
+      g: Math.round((g + m) * 255),
+      b: Math.round((b + m) * 255)
+    };
+  }
+
+  /**
+   * Convert RGB to HSL
+   */
+  static rgbToHsl(r: number, g: number, b: number): { hue: number; saturation: number; lightness: number } {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h = 0, s = 0, l = (max + min) / 2;
+
+    if (max !== min) {
+      const d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      
+      switch (max) {
+        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+        case g: h = (b - r) / d + 2; break;
+        case b: h = (r - g) / d + 4; break;
+      }
+      h /= 6;
+    }
+
+    return {
+      hue: h * 360,
+      saturation: s * 100,
+      lightness: l * 100
+    };
+  }
+}
+
+// === SEQUENCE UTILITIES ===
+export class A432Sequence {
+  /**
+   * Generate A432 cycle sequence
+   */
+  static generateCycle(length: number = A432_CYCLE.length): number[] {
+    return A432_CYCLE.slice(0, length);
+  }
+
+  /**
+   * Generate trinity sequence
+   */
+  static generateTrinity(length: number = A432_TRINITY.length): number[] {
+    return A432_TRINITY.slice(0, length);
+  }
+
+  /**
+   * Generate vortex sequence
+   */
+  static generateVortex(length: number = 9): number[] {
+    return Array.from({ length }, (_, i) => A432Math.digitalRoot(i + 1));
+  }
+
+  /**
+   * Generate consciousness sequence
+   */
+  static generateConsciousness(length: number = 9): number[] {
+    return Array.from({ length }, (_, i) => (i + 1) % 9 || 9);
+  }
+
+  /**
+   * Generate boolean sequence
+   */
+  static generateBoolean(length: number = 9): boolean[] {
+    return Array.from({ length }, (_, i) => (i + 1) % 2 === 0);
+  }
+
+  /**
+   * Get next harmonious state
+   */
+  static getNextHarmonious(current: number): number {
+    const digitalRoot = A432Math.digitalRoot(current);
+    return digitalRoot === 9 ? 1 : digitalRoot + 1;
+  }
+
+  /**
+   * Get previous harmonious state
+   */
+  static getPreviousHarmonious(current: number): number {
+    const digitalRoot = A432Math.digitalRoot(current);
+    return digitalRoot === 1 ? 9 : digitalRoot - 1;
+  }
+}
+
+// === COLOR UTILITIES ===
+export class A432Color {
+  /**
+   * Generate A432 color matrix
+   */
+  static generateMatrix(polarity: 1 | -1 = 1): Array<{ root: number; hsl: { hue: number; saturation: number; lightness: number }; rgb: { r: number; g: number; b: number } }> {
+    return Array.from({ length: 9 }, (_, i) => {
+      const root = i + 1;
+      const frequency = A432Math.harmonicFrequency(root, polarity);
+      const hsl = A432Math.frequencyToColor(frequency);
+      const rgb = A432Math.hslToRgb(hsl.hue, hsl.saturation, hsl.lightness);
+      return { root, hsl, rgb };
+    });
+  }
+
+  /**
+   * Generate CMYK color
+   */
+  static generateCMYK(hue: number): { c: number; m: number; y: number; k: number } {
+    const normalizedHue = hue / 360;
+    return {
+      c: Math.round((1 - normalizedHue) * 100),
+      m: Math.round(normalizedHue * 100),
+      y: Math.round((0.5 - Math.abs(normalizedHue - 0.5)) * 100),
+      k: Math.round(Math.min(normalizedHue, 1 - normalizedHue) * 50)
+    };
+  }
+
+  /**
+   * Generate harmonic color palette
+   */
+  static generatePalette(baseHue: number, count: number = 9): Array<{ hue: number; saturation: number; lightness: number }> {
+    return Array.from({ length: count }, (_, i) => ({
+      hue: (baseHue + (i * 40)) % 360,
+      saturation: 70 + (i % 30),
+      lightness: 50 + (i % 20)
+    }));
+  }
+}
+
+// === FREQUENCY UTILITIES ===
+export class A432Frequency {
+  /**
+   * Calculate base frequency for dimension
+   */
+  static baseFrequency(dimension: number, polarity: 1 | -1 = 1): number {
+    return A432_FREQUENCY * dimension * polarity;
+  }
+
+  /**
+   * Calculate harmonic series
+   */
+  static harmonicSeries(base: number, count: number = 9): number[] {
+    return Array.from({ length: count }, (_, i) => base * (i + 1));
+  }
+
+  /**
+   * Calculate subharmonic series
+   */
+  static subharmonicSeries(base: number, count: number = 9): number[] {
+    return Array.from({ length: count }, (_, i) => base / (i + 1));
+  }
+
+  /**
+   * Calculate golden ratio frequency
+   */
+  static goldenRatio(base: number): number {
+    return base * 1.618033988749895;
+  }
+
+  /**
+   * Calculate silver ratio frequency
+   */
+  static silverRatio(base: number): number {
+    return base * 1.4142135623730951;
+  }
+}
+
+// === HARMONIZATION UTILITIES ===
+export class A432Harmonization {
+  /**
+   * Calculate overall harmony from multiple states
+   */
+  static calculateHarmony(states: Array<{ harmony?: number; resonance?: number; balance?: number }>): number {
+    const harmonyValues = states.map(state => {
+      if (state.harmony !== undefined) return state.harmony;
+      if (state.resonance !== undefined) return state.resonance;
+      if (state.balance !== undefined) return state.balance;
+      return 0;
+    });
+    
+    return Math.floor(harmonyValues.reduce((sum, val) => sum + val, 0) / harmonyValues.length);
+  }
+
+  /**
+   * Harmonize frequencies
+   */
+  static harmonizeFrequencies(frequencies: number[]): number[] {
+    const base = frequencies[0];
+    return frequencies.map(freq => {
+      const ratio = freq / base;
+      const harmonic = Math.round(ratio);
+      return base * harmonic;
+    });
+  }
+
+  /**
+   * Harmonize colors
+   */
+  static harmonizeColors(colors: Array<{ hue: number; saturation: number; lightness: number }>): Array<{ hue: number; saturation: number; lightness: number }> {
+    const baseHue = colors[0].hue;
+    return colors.map((color, i) => ({
+      hue: (baseHue + (i * 40)) % 360,
+      saturation: Math.max(70, color.saturation),
+      lightness: Math.max(50, color.lightness)
+    }));
+  }
+
+  /**
+   * Harmonize sequences
+   */
+  static harmonizeSequences(sequences: number[][]): number[][] {
+    const baseLength = Math.max(...sequences.map(seq => seq.length));
+    return sequences.map(seq => {
+      const harmonized = [...seq];
+      while (harmonized.length < baseLength) {
+        harmonized.push(A432Sequence.getNextHarmonious(harmonized[harmonized.length - 1]));
+      }
+      return harmonized;
+    });
+  }
+}
+
+// === VALIDATION UTILITIES ===
+export class A432Validation {
+  /**
+   * Validate dimension (1-9)
+   */
+  static isValidDimension(dimension: number): boolean {
+    return Number.isInteger(dimension) && dimension >= 1 && dimension <= 9;
+  }
+
+  /**
+   * Validate polarity (1 or -1)
+   */
+  static isValidPolarity(polarity: number): boolean {
+    return polarity === 1 || polarity === -1;
+  }
+
+  /**
+   * Validate frequency (positive number)
+   */
+  static isValidFrequency(frequency: number): boolean {
+    return Number.isFinite(frequency) && frequency > 0;
+  }
+
+  /**
+   * Validate color values
+   */
+  static isValidColor(hue: number, saturation: number, lightness: number): boolean {
+    return hue >= 0 && hue <= 360 &&
+           saturation >= 0 && saturation <= 100 &&
+           lightness >= 0 && lightness <= 100;
+  }
+
+  /**
+   * Validate sequence
+   */
+  static isValidSequence(sequence: number[]): boolean {
+    return Array.isArray(sequence) && sequence.every(n => Number.isInteger(n) && n >= 0 && n <= 9);
+  }
+}
+
+// === CONVENIENCE FUNCTIONS ===
+export const a432Math = A432Math;
+export const a432Sequence = A432Sequence;
+export const a432Color = A432Color;
+export const a432Frequency = A432Frequency;
+export const a432Harmonization = A432Harmonization;
+export const a432Validation = A432Validation;
+
+// Legacy compatibility
+export const calculateDigitalRoot = A432Math.digitalRoot;
+export const calculateHarmonicFrequency = A432Math.harmonicFrequency;
+export const calculateTrinityProduct = A432Math.trinityProduct;
+export const calculateVortexAngle = A432Math.vortexAngle;
+export const generateCycle = A432Sequence.generateCycle;
+export const generateTrinity = A432Sequence.generateTrinity;
+export const generateVortex = A432Sequence.generateVortex;
+export const generateConsciousness = A432Sequence.generateConsciousness;
+export const generateBoolean = A432Sequence.generateBoolean;
+export const generateColorMatrix = A432Color.generateMatrix;
+export const generateCMYK = A432Color.generateCMYK;
+export const generatePalette = A432Color.generatePalette;
+export const calculateBaseFrequency = A432Frequency.baseFrequency;
+export const calculateHarmonicSeries = A432Frequency.harmonicSeries;
+export const calculateSubharmonicSeries = A432Frequency.subharmonicSeries;
+export const calculateGoldenRatio = A432Frequency.goldenRatio;
+export const calculateSilverRatio = A432Frequency.silverRatio;
+export const calculateHarmony = A432Harmonization.calculateHarmony;
+export const harmonizeFrequencies = A432Harmonization.harmonizeFrequencies;
+export const harmonizeColors = A432Harmonization.harmonizeColors;
+export const harmonizeSequences = A432Harmonization.harmonizeSequences;

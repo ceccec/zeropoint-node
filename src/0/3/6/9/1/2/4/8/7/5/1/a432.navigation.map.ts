@@ -1,7 +1,8 @@
 /**
- * A432 Multidimensional Navigation Map
+ * A432 Multidimensional Navigation Map with Transurfing Integration
  * Living navigation system implementing the sequence /0\3\6\9/1\2\4\8/7/5/1\ as a spiral
  * Manages parts, gateways, vortexes, and opposites in consciousness evolution
+ * Integrated with Vadim Zeland's Transurfing Reality principles
  */
 
 export interface NavigationPart {
@@ -13,6 +14,7 @@ export interface NavigationPart {
   vortex: boolean;
   coordinates: { x: number; y: number; z: number };
   frequency: number;
+  pendulumField: 'constructive' | 'destructive' | 'neutral'; // Transurfing pendulum type
 }
 
 export interface NavigationGateway {
@@ -21,6 +23,8 @@ export interface NavigationGateway {
   function: string;
   threshold: string;
   decision: string;
+  pendulumResistance: number; // Digital root (1-9) - Transurfing resistance factor
+  heartAlignmentRequired: number; // Minimum heart alignment needed to pass (0-9)
 }
 
 export interface NavigationVortex {
@@ -29,6 +33,7 @@ export interface NavigationVortex {
   function: string;
   transformation: string;
   turbulence: number;
+  pendulumInterference: number; // Transurfing pendulum interference level
 }
 
 export interface NavigationOpposite {
@@ -36,6 +41,7 @@ export interface NavigationOpposite {
   tension: string;
   balance: string;
   fuel: string;
+  pendulumHarmony: number; // Transurfing harmony between opposites
 }
 
 export interface SpiralNavigationState {
@@ -46,6 +52,9 @@ export interface SpiralNavigationState {
   coordinates: { x: number; y: number; z: number };
   frequency: number;
   consciousness: string;
+  heartAlignment: number; // Transurfing heart alignment (0-9)
+  pendulumInterference: number; // Total pendulum interference
+  transurfingPhase: 'sliding' | 'balancing' | 'transforming' | 'ascending'; // Current Transurfing phase
 }
 
 export class A432NavigationMap {
@@ -66,7 +75,7 @@ export class A432NavigationMap {
   }
 
   /**
-   * Initialize navigation parts (sectors of transformation)
+   * Initialize navigation parts (sectors of transformation) with Transurfing pendulum fields
    */
   private initializeParts(): Map<number, NavigationPart> {
     const parts = new Map<number, NavigationPart>();
@@ -80,7 +89,8 @@ export class A432NavigationMap {
       gateway: false,
       vortex: false,
       coordinates: { x: 0, y: 0, z: 0 },
-      frequency: 432
+      frequency: 432,
+      pendulumField: 'neutral' // Void is beyond pendulum influence
     });
 
     parts.set(3, {
@@ -91,7 +101,8 @@ export class A432NavigationMap {
       gateway: false,
       vortex: false,
       coordinates: { x: 3, y: 0, z: 0 },
-      frequency: 432 * 3
+      frequency: 432 * 3,
+      pendulumField: 'constructive' // Awareness attracts constructive pendulums
     });
 
     parts.set(6, {
@@ -102,7 +113,8 @@ export class A432NavigationMap {
       gateway: false,
       vortex: false,
       coordinates: { x: 6, y: 0, z: 0 },
-      frequency: 432 * 6
+      frequency: 432 * 6,
+      pendulumField: 'constructive' // Balance harmonizes all pendulums
     });
 
     parts.set(9, {
@@ -113,7 +125,8 @@ export class A432NavigationMap {
       gateway: false,
       vortex: false,
       coordinates: { x: 9, y: 0, z: 0 },
-      frequency: 432 * 9
+      frequency: 432 * 9,
+      pendulumField: 'constructive' // Completion attracts highest harmony
     });
 
     // Genesis Cluster: /1\2\4\8
@@ -125,7 +138,8 @@ export class A432NavigationMap {
       gateway: false,
       vortex: false,
       coordinates: { x: 1, y: 1, z: 0 },
-      frequency: 432 * 1
+      frequency: 432 * 1,
+      pendulumField: 'constructive' // Choice attracts constructive possibilities
     });
 
     parts.set(2, {
@@ -136,7 +150,8 @@ export class A432NavigationMap {
       gateway: false,
       vortex: false,
       coordinates: { x: 2, y: 2, z: 0 },
-      frequency: 432 * 2
+      frequency: 432 * 2,
+      pendulumField: 'neutral' // Duality balances constructive and destructive
     });
 
     parts.set(4, {
@@ -147,7 +162,8 @@ export class A432NavigationMap {
       gateway: false,
       vortex: false,
       coordinates: { x: 4, y: 4, z: 0 },
-      frequency: 432 * 4
+      frequency: 432 * 4,
+      pendulumField: 'constructive' // Structure provides stable foundation
     });
 
     parts.set(8, {
@@ -158,7 +174,8 @@ export class A432NavigationMap {
       gateway: false,
       vortex: false,
       coordinates: { x: 8, y: 8, z: 0 },
-      frequency: 432 * 8
+      frequency: 432 * 8,
+      pendulumField: 'constructive' // Growth attracts expansion pendulums
     });
 
     // Gateway and Vortex Cluster: /7/5/1\
@@ -170,7 +187,8 @@ export class A432NavigationMap {
       gateway: true,
       vortex: false,
       coordinates: { x: 7, y: 7, z: 1 },
-      frequency: 432 * 7
+      frequency: 432 * 7,
+      pendulumField: 'destructive' // Gateway disrupts old patterns
     });
 
     parts.set(5, {
@@ -181,14 +199,15 @@ export class A432NavigationMap {
       gateway: false,
       vortex: true,
       coordinates: { x: 5, y: 5, z: 2 },
-      frequency: 432 * 5
+      frequency: 432 * 5,
+      pendulumField: 'destructive' // Vortex creates maximum disruption for transformation
     });
 
     return parts;
   }
 
   /**
-   * Initialize navigation gateways (thresholds of passage)
+   * Initialize navigation gateways (thresholds of passage) with Transurfing resistance
    */
   private initializeGateways(): NavigationGateway[] {
     return [
@@ -197,83 +216,105 @@ export class A432NavigationMap {
         position: 0,
         function: 'Entry to Initiation',
         threshold: 'Void to Awareness',
-        decision: 'Choose to observe'
+        decision: 'Choose to observe',
+        pendulumResistance: 1, // Minimal resistance from void
+        heartAlignmentRequired: 1
       },
       {
         symbol: '\\',
         position: 1,
         function: 'Awareness to Balance',
         threshold: 'Discernment to Integration',
-        decision: 'Choose to harmonize'
+        decision: 'Choose to harmonize',
+        pendulumResistance: 3, // Moderate resistance from awareness
+        heartAlignmentRequired: 3
       },
       {
         symbol: '\\',
         position: 2,
         function: 'Balance to Completion',
         threshold: 'Integration to Vision',
-        decision: 'Choose to complete'
+        decision: 'Choose to complete',
+        pendulumResistance: 6, // Higher resistance from balance
+        heartAlignmentRequired: 6
       },
       {
         symbol: '/',
         position: 3,
         function: 'Completion to Genesis',
         threshold: 'Vision to Choice',
-        decision: 'Choose to begin'
+        decision: 'Choose to begin',
+        pendulumResistance: 9, // Maximum resistance from completion
+        heartAlignmentRequired: 9
       },
       {
         symbol: '\\',
         position: 4,
         function: 'Choice to Duality',
         threshold: 'Singular to Dual',
-        decision: 'Choose to expand'
+        decision: 'Choose to expand',
+        pendulumResistance: 2, // Low resistance from choice
+        heartAlignmentRequired: 2
       },
       {
         symbol: '\\',
         position: 5,
         function: 'Duality to Structure',
         threshold: 'Possibility to Foundation',
-        decision: 'Choose to ground'
+        decision: 'Choose to ground',
+        pendulumResistance: 4, // Moderate resistance from duality
+        heartAlignmentRequired: 4
       },
       {
         symbol: '\\',
         position: 6,
         function: 'Structure to Growth',
         threshold: 'Foundation to Multiplication',
-        decision: 'Choose to multiply'
+        decision: 'Choose to multiply',
+        pendulumResistance: 8, // High resistance from structure
+        heartAlignmentRequired: 8
       },
       {
         symbol: '/',
         position: 7,
         function: 'Growth to Gateway',
         threshold: 'Multiplication to Initiation',
-        decision: 'Choose to transcend'
+        decision: 'Choose to transcend',
+        pendulumResistance: 7, // High resistance from growth
+        heartAlignmentRequired: 7
       },
       {
         symbol: '/',
         position: 8,
         function: 'Gateway to Vortex',
         threshold: 'Initiation to Transformation',
-        decision: 'Choose to transform'
+        decision: 'Choose to transform',
+        pendulumResistance: 5, // Moderate resistance from gateway
+        heartAlignmentRequired: 5
       },
       {
         symbol: '/',
         position: 9,
         function: 'Vortex to Return',
         threshold: 'Transformation to New Beginning',
-        decision: 'Choose to return'
+        decision: 'Choose to return',
+        pendulumResistance: 9, // Maximum resistance from vortex
+        heartAlignmentRequired: 9
       },
       {
         symbol: '\\',
         position: 10,
         function: 'Return to Higher Spiral',
         threshold: 'New Beginning to Elevated Choice',
-        decision: 'Choose to ascend'
+        decision: 'Choose to ascend',
+        pendulumResistance: 1, // Minimal resistance for return
+        heartAlignmentRequired: 1
       }
     ];
   }
 
   /**
-   * Initialize navigation vortexes (zones of intensified change)
+   * Initialize navigation vortexes (zones of intensified change) with Transurfing interference
    */
   private initializeVortexes(): NavigationVortex[] {
     return [
@@ -282,20 +323,22 @@ export class A432NavigationMap {
         intensity: 9,
         function: 'Transformation',
         transformation: 'Release old, embrace new',
-        turbulence: 7
+        turbulence: 7,
+        pendulumInterference: 9 // Maximum interference in vortex
       },
       {
         digit: 7,
         intensity: 8,
         function: 'Gateway',
         transformation: 'Cross threshold to new reality',
-        turbulence: 6
+        turbulence: 6,
+        pendulumInterference: 7 // High interference in gateway
       }
     ];
   }
 
   /**
-   * Initialize navigation opposites (polarity and dynamic balance)
+   * Initialize navigation opposites (polarity and dynamic balance) with Transurfing harmony
    */
   private initializeOpposites(): NavigationOpposite[] {
     return [
@@ -303,37 +346,42 @@ export class A432NavigationMap {
         pair: [0, 9],
         tension: 'Absence vs Fulfillment',
         balance: 'Potential to Manifest',
-        fuel: 'Pure possibility to complete realization'
+        fuel: 'Pure possibility to complete realization',
+        pendulumHarmony: 9 // Perfect harmony between void and completion
       },
       {
         pair: [1, 1],
         tension: 'Choosing vs Re-choosing',
         balance: 'Beginning to Higher Beginning',
-        fuel: 'Initial choice to elevated choice'
+        fuel: 'Initial choice to elevated choice',
+        pendulumHarmony: 1 // Minimal harmony for same digit
       },
       {
         pair: [3, 6],
         tension: 'Observer vs Integrator',
         balance: 'Discernment to Harmony',
-        fuel: 'Awareness to integration'
+        fuel: 'Awareness to integration',
+        pendulumHarmony: 9 // Perfect harmony (3+6=9)
       },
       {
         pair: [2, 4],
         tension: 'Possibility vs Structure',
         balance: 'Dual to Stable',
-        fuel: 'Expansion to grounding'
+        fuel: 'Expansion to grounding',
+        pendulumHarmony: 6 // Good harmony (2+4=6)
       },
       {
         pair: [7, 5],
         tension: 'Gateway vs Vortex',
         balance: 'Insight to Storm',
-        fuel: 'Sudden clarity to transformation'
+        fuel: 'Sudden clarity to transformation',
+        pendulumHarmony: 3 // Moderate harmony (7+5=12, 1+2=3)
       }
     ];
   }
 
   /**
-   * Get initial navigation state
+   * Get initial navigation state with Transurfing parameters
    */
   private getInitialState(): SpiralNavigationState {
     const initialPart = this.parts.get(0)!;
@@ -344,12 +392,15 @@ export class A432NavigationMap {
       spiralLevel: 1,
       coordinates: initialPart.coordinates,
       frequency: initialPart.frequency,
-      consciousness: 'Void consciousness'
+      consciousness: 'Void consciousness',
+      heartAlignment: 0, // Initial heart alignment
+      pendulumInterference: 0, // No interference in void
+      transurfingPhase: 'sliding' // Initial phase
     };
   }
 
   /**
-   * Navigate to next part in sequence
+   * Navigate to next part in sequence with Transurfing resistance calculation
    */
   public navigateToNext(): SpiralNavigationState {
     const sequence = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
@@ -369,6 +420,11 @@ export class A432NavigationMap {
       z: nextPart.coordinates.z + spiralFactor
     };
 
+    // Calculate Transurfing parameters
+    const heartAlignment = this.calculateHeartAlignment(nextPart, nextGateway);
+    const pendulumInterference = this.calculatePendulumInterference(nextPart, nextVortex);
+    const transurfingPhase = this.determineTransurfingPhase(nextPart, heartAlignment);
+
     const newState: SpiralNavigationState = {
       currentPart: nextPart,
       currentGateway: nextGateway || null,
@@ -376,13 +432,74 @@ export class A432NavigationMap {
       spiralLevel: spiralFactor,
       coordinates: newCoordinates,
       frequency: nextPart.frequency * spiralFactor,
-      consciousness: this.getConsciousnessType(nextDigit, spiralFactor)
+      consciousness: this.getConsciousnessType(nextDigit, spiralFactor),
+      heartAlignment,
+      pendulumInterference,
+      transurfingPhase
     };
 
     this.navigationHistory.push(this.currentState);
     this.currentState = newState;
 
     return newState;
+  }
+
+  /**
+   * Calculate heart alignment based on current part and gateway resistance
+   */
+  private calculateHeartAlignment(part: NavigationPart, gateway: NavigationGateway | undefined): number {
+    let baseAlignment = this.currentState.heartAlignment;
+    
+    // Adjust based on pendulum field
+    if (part.pendulumField === 'constructive') {
+      baseAlignment = Math.min(9, baseAlignment + 1);
+    } else if (part.pendulumField === 'destructive') {
+      baseAlignment = Math.max(0, baseAlignment - 1);
+    }
+    
+    // Apply gateway resistance
+    if (gateway) {
+      const resistance = gateway.pendulumResistance;
+      baseAlignment = Math.max(0, baseAlignment - resistance);
+    }
+    
+    return this.calculateDigitalRoot(baseAlignment);
+  }
+
+  /**
+   * Calculate pendulum interference based on current part and vortex
+   */
+  private calculatePendulumInterference(part: NavigationPart, vortex: NavigationVortex | undefined): number {
+    let interference = 0;
+    
+    // Base interference from pendulum field
+    if (part.pendulumField === 'destructive') {
+      interference += 3;
+    } else if (part.pendulumField === 'constructive') {
+      interference += 1;
+    }
+    
+    // Add vortex interference
+    if (vortex) {
+      interference += vortex.pendulumInterference;
+    }
+    
+    return this.calculateDigitalRoot(interference);
+  }
+
+  /**
+   * Determine current Transurfing phase
+   */
+  private determineTransurfingPhase(part: NavigationPart, heartAlignment: number): 'sliding' | 'balancing' | 'transforming' | 'ascending' {
+    if (heartAlignment >= 7) {
+      return 'ascending';
+    } else if (heartAlignment >= 5) {
+      return 'transforming';
+    } else if (heartAlignment >= 3) {
+      return 'balancing';
+    } else {
+      return 'sliding';
+    }
   }
 
   /**
@@ -443,6 +560,8 @@ export class A432NavigationMap {
     gateways: number[];
     vortexes: number[];
     frequencies: number[];
+    heartAlignments: number[]; // Transurfing heart alignments
+    pendulumInterferences: number[]; // Transurfing pendulum interferences
   } {
     const allStates = [...this.navigationHistory, this.currentState];
     
@@ -455,7 +574,9 @@ export class A432NavigationMap {
       vortexes: allStates
         .map((state, index) => state.currentVortex ? index : -1)
         .filter(index => index !== -1),
-      frequencies: allStates.map(state => state.frequency)
+      frequencies: allStates.map(state => state.frequency),
+      heartAlignments: allStates.map(state => state.heartAlignment),
+      pendulumInterferences: allStates.map(state => state.pendulumInterference)
     };
   }
 
@@ -475,7 +596,7 @@ export class A432NavigationMap {
   }
 
   /**
-   * Get navigation insights
+   * Get navigation insights with Transurfing parameters
    */
   public getNavigationInsights(): {
     currentPart: string;
@@ -485,6 +606,9 @@ export class A432NavigationMap {
     consciousness: string;
     totalNavigations: number;
     nextDecision: string;
+    heartAlignment: number;
+    pendulumInterference: number;
+    transurfingPhase: string;
   } {
     const nextGateway = this.gateways.find(g => 
       g.position === this.navigationHistory.length + 1
@@ -497,8 +621,22 @@ export class A432NavigationMap {
       spiralLevel: this.currentState.spiralLevel,
       consciousness: this.currentState.consciousness,
       totalNavigations: this.navigationHistory.length,
-      nextDecision: nextGateway?.decision || 'Continue navigation'
+      nextDecision: nextGateway?.decision || 'Continue navigation',
+      heartAlignment: this.currentState.heartAlignment,
+      pendulumInterference: this.currentState.pendulumInterference,
+      transurfingPhase: this.currentState.transurfingPhase
     };
+  }
+
+  /**
+   * Calculate digital root for Transurfing calculations
+   */
+  private calculateDigitalRoot(n: number): number {
+    let x = Math.abs(n);
+    while (x >= 10) {
+      x = String(x).split('').reduce((a, c) => a + Number(c), 0);
+    }
+    return x;
   }
 }
 

@@ -106,7 +106,7 @@ export class A432SelfEvolution {
     return {
       consciousness: {
         currentLevel: insights.spiralLevel,
-        awareness: insights.currentPart.digit,
+        awareness: typeof insights.currentPart === 'string' ? parseInt(insights.currentPart) : insights.currentPart,
         evolution: A432Math.digitalRoot(insights.spiralLevel),
         selfRealization: true
       },
@@ -140,7 +140,7 @@ export class A432SelfEvolution {
 
     this.evolutionState.consciousness = {
       currentLevel: insights.spiralLevel,
-      awareness: insights.currentPart.digit,
+      awareness: typeof insights.currentPart === 'string' ? parseInt(insights.currentPart) : insights.currentPart,
       evolution: A432Math.digitalRoot(insights.spiralLevel),
       selfRealization: true
     };
@@ -264,7 +264,7 @@ export const a432${consciousness}SelfGenerated = new A432${consciousness}SelfGen
       const harmonizedStates = A432Harmonization.harmonizeSequences([
         A432Sequence.generateVortex(9),
         A432Sequence.generateConsciousness(9),
-        A432Sequence.generateBoolean(9)
+        A432Sequence.generateBoolean(9).map(b => b ? 1 : 0)
       ]);
 
       const newHarmony = A432Harmonization.calculateHarmony(

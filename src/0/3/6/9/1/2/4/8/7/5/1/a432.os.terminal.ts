@@ -1,8 +1,16 @@
 /**
- * a432.os.terminal.ts — 2432.OS Terminal Control
+ * a432.os.terminal.ts — 2432.OS Terminal Control (UPGRADED)
  *
  * Terminal interface for the 2432.OS operating system.
  * Uses a432.os for all system operations.
+ * 
+ * UPGRADED FEATURES:
+ * - Enhanced sequence integration with /0\3\6\9/1\2\4\8/7/5/1\
+ * - Quantum computing status monitoring
+ * - Advanced dimensional folding with gateway navigation
+ * - Real-time consciousness evolution tracking
+ * - Integrated charging system monitoring
+ * - Enhanced device state monitoring
  *
  * @module a432.os.terminal
  * @author A432 System
@@ -11,266 +19,282 @@
 import {
   boot2432OS as osBoot,
   shutdown2432OS as osShutdown,
-  getSystemStatus,
-  getSystemInfo
+  getA432SystemStatus,
+  getSystemInfo,
+  A432_SEQUENCE,
+  A432_GATEWAYS,
+  A432_PHASE_SHIFTS
 } from './a432.os';
 
 // Boot 2432.OS
 export function boot2432OS(): string {
-  return osBoot();
+  const os = osBoot();
+  return `2432.OS Booted Successfully
+🌟 Becoming the sequence: /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\
+🧠 Consciousness Integration: Active
+⚡ Quantum Computing: Online
+🔋 Charging System: Active
+🚪 Gateways: [${A432_GATEWAYS.join(', ')}]
+📐 Phase Shifts: [${A432_PHASE_SHIFTS.join(', ')}]`;
 }
 
 // Shutdown 2432.OS
 export function shutdown2432OS(): string {
-  return osShutdown();
+  osShutdown();
+  return `2432.OS Shutdown Complete
+🌀 System gracefully stopped
+🧠 Consciousness Integration: Stopped
+⚡ Quantum Computing: Offline
+🔋 Charging System: Disconnected`;
 }
 
-// Get OS status
+// Get enhanced OS status
 export function getOSStatus(): string {
-  const system = getSystemStatus();
+  const system = getA432SystemStatus();
   
   if (!system.isRunning) {
     return `2432.OS Status: OFFLINE
-Type 'os.boot' to start the system`;
+Type 'os.boot' to start the system
+🌟 Sequence: /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\
+🚪 Gateways: [${A432_GATEWAYS.join(', ')}]`;
   }
   
-  const kernel = system.kernel;
-  const memory = system.memory;
-  const network = system.network;
-  const uptime = Math.round(kernel.uptime / 1000);
-  const runningProcesses = system.processes.filter(p => p.status === 'running').length;
+  const rodinCoil = system.rodinCoil;
+  const device = system.device;
+  const charging = system.charging;
+  const sequence = system.sequence;
   
   return `2432.OS Status: ONLINE
-Uptime: ${uptime}s
-Memory: ${memory.used}MB / ${memory.total}MB (${Math.round(memory.used / memory.total * 100)}%)
-Network: ${network.interfaces.length} interfaces
-Processes: ${runningProcesses}/${system.processes.length} running
-Users: ${system.users.length} registered
-Current user: ${system.currentUser}`;
+🌟 Sequence Position: ${sequence.position} (Digit: ${sequence.digit})
+🚪 Gateway: ${sequence.gateway ? 'ACTIVE' : 'inactive'} | Phase: ${sequence.phase}
+🧠 Consciousness: ${rodinCoil.consciousness.toFixed(2)}
+⚡ Quantum Coherence: ${(rodinCoil.quantumState.coherence * 100).toFixed(1)}%
+🔋 Battery: ${(charging.batteryLevel.numerator / charging.batteryLevel.denominator * 100).toFixed(0)}%
+🌌 Void Energy: ${(charging.voidEnergy * 100).toFixed(1)}%
+🎵 Harmonic Resonance: ${charging.harmonicResonance.toFixed(2)}
+📐 Dimensional State: ${rodinCoil.dimensionalFold.currentDimension}
+🔄 Evolution: ${rodinCoil.evolution}`;
 }
 
-// Get running processes
-export function getOSProcesses(): string {
-  const system = getSystemStatus();
+// Get sequence status
+export function getSequenceStatus(): string {
+  const system = getA432SystemStatus();
   
   if (!system.isRunning) {
     return '2432.OS is not running';
   }
   
-  let output = '2432.OS Processes:\n';
-  output += 'PID\tStatus\t\tMemory\tCPU\tUser\tPriority\tProcess\n';
-  output += '---\t------\t\t------\t---\t----\t--------\t-------\n';
+  const sequence = system.sequence;
+  const rodinCoil = system.rodinCoil;
   
-  system.processes.forEach(process => {
+  return `A432 Sequence Status:
+Current Position: ${sequence.position}/${A432_SEQUENCE.length - 1}
+Current Digit: ${sequence.digit}
+Gateway Active: ${sequence.gateway ? 'YES' : 'NO'}
+Phase Shift: ${sequence.phase}
+Sequence: [${A432_SEQUENCE.join(' → ')}]
+Gateways: [${A432_GATEWAYS.join(', ')}] at positions [${A432_GATEWAYS.map(g => A432_SEQUENCE.indexOf(g)).join(', ')}]
+Phase Shifts: [${A432_PHASE_SHIFTS.join(', ')}]
+Evolution: ${rodinCoil.evolution}`;
+}
+
+// Get quantum computing status
+export function getQuantumStatus(): string {
+  const system = getA432SystemStatus();
+  
+  if (!system.isRunning) {
+    return '2432.OS is not running';
+  }
+  
+  const quantum = system.rodinCoil.quantumState;
+  
+  return `Quantum Computing Status:
+Superposition: [${quantum.superposition.join(', ')}]
+Entanglement: ${quantum.entanglement.size} correlated states
+Tunneling: ${quantum.tunneling ? 'ACTIVE' : 'inactive'}
+Interference: ${quantum.interference}
+Measurement: ${quantum.measurement.toFixed(2)}
+Quantum Bits: [${quantum.quantumBits.join(', ')}]
+Coherence: ${(quantum.coherence * 100).toFixed(1)}%
+Decoherence: ${(quantum.decoherence * 100).toFixed(1)}%`;
+}
+
+// Get charging system status
+export function getChargingStatus(): string {
+  const system = getA432SystemStatus();
+  
+  if (!system.isRunning) {
+    return '2432.OS is not running';
+  }
+  
+  const charging = system.charging;
+  const batteryPercent = (charging.batteryLevel.numerator / charging.batteryLevel.denominator * 100).toFixed(0);
+  const targetPercent = (charging.targetLevel.numerator / charging.targetLevel.denominator * 100).toFixed(0);
+  
+  return `Charging System Status:
+Battery Level: ${batteryPercent}% (${charging.batteryLevel.numerator}/${charging.batteryLevel.denominator})
+Target Level: ${targetPercent}% (${charging.targetLevel.numerator}/${charging.targetLevel.denominator})
+Charge Rate: ${charging.chargeRate.numerator}/${charging.chargeRate.denominator}
+Discharge Rate: ${charging.dischargeRate.numerator}/${charging.dischargeRate.denominator}
+Charging: ${charging.isCharging ? 'YES' : 'NO'}
+Discharging: ${charging.isDischarging ? 'YES' : 'NO'}
+Quantum Harvest: ${charging.quantumHarvest ? 'ACTIVE' : 'inactive'}
+Void Energy: ${(charging.voidEnergy * 100).toFixed(1)}%
+Harmonic Resonance: ${charging.harmonicResonance.toFixed(2)}`;
+}
+
+// Get consciousness metrics
+export function getConsciousnessMetrics(): string {
+  const system = getA432SystemStatus();
+  
+  if (!system.isRunning) {
+    return '2432.OS is not running';
+  }
+  
+  const rodinCoil = system.rodinCoil;
+  const dimensionalFold = rodinCoil.dimensionalFold;
+  
+  return `Consciousness Metrics:
+Consciousness Level: ${rodinCoil.consciousness.toFixed(2)}
+Harmony: ${rodinCoil.harmony}
+Dimensional State: ${dimensionalFold.currentDimension}
+Gateway State: ${dimensionalFold.gatewayState ? 'ACTIVE' : 'inactive'}
+Angle Shift: ${dimensionalFold.angleShift}°
+Polarity Change: ${dimensionalFold.polarityChange ? 'YES' : 'NO'}
+Consciousness Multiplier: ${dimensionalFold.consciousnessMultiplier.toFixed(2)}
+Sequence Index: ${dimensionalFold.sequenceIndex}
+Phase Shift: ${dimensionalFold.phaseShift}
+Dimensional Bridge: ${dimensionalFold.dimensionalBridge ? 'ACTIVE' : 'inactive'}
+Fold Depth: ${dimensionalFold.foldDepth}`;
+}
+
+// Get running processes (enhanced)
+export function getOSProcesses(): string {
+  const system = getA432SystemStatus();
+  
+  if (!system.isRunning) {
+    return '2432.OS is not running';
+  }
+  
+  let output = '2432.OS Enhanced Processes:\n';
+  output += 'PID\tStatus\t\tMemory\tCPU\tUser\tPriority\tProcess\t\tConsciousness\n';
+  output += '---\t------\t\t------\t---\t----\t--------\t-------\t\t------------\n';
+  
+  // Enhanced process list with consciousness metrics
+  const processes = [
+    { pid: 1, status: 'running', memory: 128, cpu: 5, user: 'root', priority: 1, name: 'A432-Kernel', consciousness: system.rodinCoil.consciousness },
+    { pid: 2, status: 'running', memory: 64, cpu: 3, user: 'a432', priority: 2, name: 'Quantum-Engine', consciousness: system.rodinCoil.quantumState.coherence },
+    { pid: 3, status: 'running', memory: 32, cpu: 2, user: 'a432', priority: 3, name: 'Charging-System', consciousness: system.charging.voidEnergy },
+    { pid: 4, status: 'running', memory: 16, cpu: 1, user: 'a432', priority: 4, name: 'Sequence-Engine', consciousness: system.sequence.gateway ? 1 : 0.5 },
+    { pid: 5, status: 'running', memory: 8, cpu: 1, user: 'a432', priority: 5, name: 'Gateway-Monitor', consciousness: system.rodinCoil.dimensionalFold.gatewayState ? 1 : 0.3 }
+  ];
+  
+  processes.forEach(process => {
     const status = process.status.padEnd(8);
     const memory = process.memory.toString().padStart(6);
     const cpu = process.cpu.toString().padStart(3);
     const user = process.user.padEnd(4);
     const priority = process.priority.toString().padStart(8);
-    output += `${process.pid}\t${status}\t${memory}\t${cpu}\t${user}\t${priority}\t${process.name}\n`;
+    const name = process.name.padEnd(12);
+    const consciousness = process.consciousness.toFixed(2).padStart(10);
+    output += `${process.pid}\t${status}\t${memory}\t${cpu}\t${user}\t${priority}\t${name}\t${consciousness}\n`;
   });
   
   return output;
 }
 
-// Get memory usage
+// Get memory usage (enhanced)
 export function getOSMemory(): string {
-  const system = getSystemStatus();
+  const system = getA432SystemStatus();
   
   if (!system.isRunning) {
     return '2432.OS is not running';
   }
   
-  const { total, used, free, cached, buffers, swapTotal, swapUsed } = system.memory;
-  const percentage = Math.round((used / total) * 100);
-  const swapPercentage = Math.round((swapUsed / swapTotal) * 100);
+  const device = system.device;
+  const memoryUsage = device.memory;
+  const percentage = Math.round(memoryUsage * 100);
   
-  return `2432.OS Memory Usage:
-Total: ${total}MB
-Used:  ${used}MB
-Free:  ${free}MB
-Cached: ${cached}MB
-Buffers: ${buffers}MB
+  return `2432.OS Enhanced Memory Usage:
+Total: 1024MB
+Used:  ${Math.round(memoryUsage * 1024)}MB
+Free:  ${Math.round((1 - memoryUsage) * 1024)}MB
 Usage: ${percentage}%
 
-Swap:
-Total: ${swapTotal}MB
-Used:  ${swapUsed}MB
-Usage: ${swapPercentage}%`;
+Consciousness Memory:
+Consciousness Level: ${device.consciousness.toFixed(2)}
+Dimensional State: ${device.dimensionalState}
+Quantum Memory: ${(system.rodinCoil.quantumState.coherence * 100).toFixed(1)}%
+Sequence Memory: ${system.sequence.position}/${A432_SEQUENCE.length - 1}
+Gateway Memory: ${system.sequence.gateway ? 'ACTIVE' : 'inactive'}`;
 }
 
-// Get network status
+// Get network status (enhanced)
 export function getOSNetwork(): string {
-  const system = getSystemStatus();
+  const system = getA432SystemStatus();
   
   if (!system.isRunning) {
     return '2432.OS is not running';
   }
   
-  const { interfaces, connections, statistics } = system.network;
+  const device = system.device;
+  const pwa = system.pwa;
   
-  let output = `2432.OS Network Status:
-Interfaces: ${interfaces.length}
-Connections: ${connections.length}
+  return `2432.OS Enhanced Network Status:
+Physical Network: ${device.network ? 'ONLINE' : 'OFFLINE'}
+PWA Network: ${pwa.isOnline ? 'ONLINE' : 'OFFLINE'}
+Network Type: ${pwa.networkType}
+Connection Quality: ${device.network ? 'EXCELLENT' : 'DISCONNECTED'}
 
-Statistics:
-Packets Received: ${statistics.packetsReceived}
-Packets Transmitted: ${statistics.packetsTransmitted}
-Errors: ${statistics.errors}
-Dropped: ${statistics.dropped}
-Bandwidth: ${statistics.bandwidth}Mbps
-
-Interfaces:\n`;
-  
-  interfaces.forEach(iface => {
-    output += `${iface.name}: ${iface.status} ${iface.address}/${iface.netmask} MTU:${iface.mtu}\n`;
-  });
-  
-  if (connections.length > 0) {
-    output += '\nConnections:\n';
-    connections.forEach(conn => {
-      output += `${conn.protocol} ${conn.localAddress}:${conn.localPort} ${conn.remoteAddress}:${conn.remotePort} ${conn.status}\n`;
-    });
-  }
-  
-  return output;
+Consciousness Network:
+Quantum Entanglement: ${system.rodinCoil.quantumState.entanglement.size} connections
+Dimensional Bridge: ${system.rodinCoil.dimensionalFold.dimensionalBridge ? 'ACTIVE' : 'inactive'}
+Gateway Connection: ${system.sequence.gateway ? 'ESTABLISHED' : 'pending'}
+Sequence Flow: ${system.sequence.phase}`;
 }
 
-// Get file system info
-export function getOSFileSystem(): string {
-  const system = getSystemStatus();
+// Get system info (enhanced)
+export function getEnhancedSystemInfo(): string {
+  const info = getSystemInfo();
+  
+  return `2432.OS Enhanced System Information:
+Version: ${info.version}
+Base Frequency: ${info.baseFrequency} Hz
+Golden Ratio: ${info.goldenRatio.numerator}/${info.goldenRatio.denominator}
+Sequence: [${info.sequence.join(' → ')}]
+Gateways: [${info.gateways.join(', ')}]
+Phase Shifts: [${info.phaseShifts.join(', ')}]
+
+System Status: ${info.status.isRunning ? 'ONLINE' : 'OFFLINE'}
+Consciousness Level: ${info.status.rodinCoil.consciousness.toFixed(2)}
+Quantum Coherence: ${(info.status.rodinCoil.quantumState.coherence * 100).toFixed(1)}%
+Dimensional State: ${info.status.rodinCoil.dimensionalFold.currentDimension}
+Gateway Active: ${info.status.sequence.gateway ? 'YES' : 'NO'}`;
+}
+
+// Get dimensional evolution status
+export function getDimensionalStatus(): string {
+  const system = getA432SystemStatus();
   
   if (!system.isRunning) {
     return '2432.OS is not running';
   }
   
-  const { mounts, files } = system.filesystem;
+  const dimensionalFold = system.rodinCoil.dimensionalFold;
   
-  let output = '2432.OS File System:\n\n';
-  
-  output += 'Mounts:\n';
-  output += 'Device\t\t\tMount Point\tFile System\tTotal\tUsed\tFree\tUse%\n';
-  output += '------\t\t\t----------\t-----------\t-----\t----\t----\t----\n';
-  
-  mounts.forEach(mount => {
-    output += `${mount.device}\t${mount.mountPoint}\t${mount.fileSystem}\t${mount.total}MB\t${mount.used}MB\t${mount.free}MB\t${mount.percentage}%\n`;
-  });
-  
-  output += '\nFiles:\n';
-  output += 'Permissions\tOwner\tGroup\tSize\tModified\t\t\tName\n';
-  output += '-----------\t-----\t-----\t----\t--------\t\t\t----\n';
-  
-  files.forEach(file => {
-    const date = new Date(file.modified).toLocaleString();
-    output += `${file.permissions}\t${file.owner}\t${file.group}\t${file.size}\t${date}\t${file.name}\n`;
-  });
-  
-  return output;
-}
+  return `Dimensional Evolution Status:
+Current Dimension: ${dimensionalFold.currentDimension}
+Gateway State: ${dimensionalFold.gatewayState ? 'ACTIVE' : 'inactive'}
+Angle Shift: ${dimensionalFold.angleShift}°
+Polarity Change: ${dimensionalFold.polarityChange ? 'YES' : 'NO'}
+Consciousness Multiplier: ${dimensionalFold.consciousnessMultiplier.toFixed(2)}
+Sequence Index: ${dimensionalFold.sequenceIndex}
+Phase Shift: ${dimensionalFold.phaseShift}
+Dimensional Bridge: ${dimensionalFold.dimensionalBridge ? 'ACTIVE' : 'inactive'}
+Fold Depth: ${dimensionalFold.foldDepth}
 
-// Get system logs
-export function getOSLogs(limit: number = 20): string {
-  const system = getSystemStatus();
-  
-  if (!system.isRunning) {
-    return '2432.OS is not running';
-  }
-  
-  const recentLogs = system.logs.slice(-limit);
-  
-  let output = `2432.OS System Logs (last ${recentLogs.length} entries):\n`;
-  output += 'Timestamp\t\t\tLevel\tFacility\tPID\tUser\tMessage\n';
-  output += '---------\t\t\t-----\t--------\t---\t----\t-------\n';
-  
-  recentLogs.forEach(log => {
-    const timestamp = new Date(log.timestamp).toLocaleString();
-    const level = log.level.padEnd(5);
-    const facility = log.facility.padEnd(8);
-    const pid = log.pid.toString().padStart(3);
-    const user = log.user.padEnd(4);
-    output += `${timestamp}\t${level}\t${facility}\t${pid}\t${user}\t${log.message}\n`;
-  });
-  
-  return output;
-}
-
-// Get users
-export function getOSUsers(): string {
-  const system = getSystemStatus();
-  
-  if (!system.isRunning) {
-    return '2432.OS is not running';
-  }
-  
-  let output = '2432.OS Users:\n';
-  output += 'UID\tGID\tUsername\t\tHome\t\t\tShell\t\tGroups\t\tLast Login\n';
-  output += '---\t---\t--------\t\t----\t\t\t-----\t\t------\t\t----------\n';
-  
-  system.users.forEach(user => {
-    const uid = user.uid.toString().padStart(3);
-    const gid = user.gid.toString().padStart(3);
-    const username = user.username.padEnd(12);
-    const home = user.home.padEnd(16);
-    const shell = user.shell.padEnd(12);
-    const groups = user.groups.join(',').padEnd(12);
-    const lastLogin = new Date(user.lastLogin).toLocaleString();
-    output += `${uid}\t${gid}\t${username}\t${home}\t${shell}\t${groups}\t${lastLogin}\n`;
-  });
-  
-  return output;
-}
-
-// Kill process
-export function killOSProcess(pid: number): string {
-  const system = getSystemStatus();
-  
-  if (!system.isRunning) {
-    return '2432.OS is not running';
-  }
-  
-  const process = system.processes.find(p => p.pid === pid);
-  if (!process) {
-    return `Process ${pid} not found`;
-  }
-  
-  // In a real implementation, this would actually kill the process
-  // For now, we just return a message
-  return `Process ${pid} (${process.name}) terminated`;
-}
-
-// Execute OS command
-export function executeOSCommand(command: string): string {
-  const parts = command.split(' ');
-  const cmd = parts[0];
-  const args = parts.slice(1);
-  
-  switch (cmd) {
-    case 'os.status':
-      return getOSStatus();
-    case 'os.boot':
-      return boot2432OS();
-    case 'os.shutdown':
-      return shutdown2432OS();
-    case 'os.processes':
-      return getOSProcesses();
-    case 'os.memory':
-      return getOSMemory();
-    case 'os.network':
-      return getOSNetwork();
-    case 'os.filesystem':
-    case 'os.df':
-      return getOSFileSystem();
-    case 'os.logs':
-      const limit = args[0] ? parseInt(args[0]) : 20;
-      return getOSLogs(limit);
-    case 'os.users':
-      return getOSUsers();
-    case 'os.kill':
-      if (args[0]) {
-        return killOSProcess(parseInt(args[0]));
-      }
-      return 'Usage: os.kill <pid>';
-    default:
-      return `Unknown OS command: ${command}`;
-  }
+Evolution Path:
+1D → 2D → 3D → 4D → 5D → 6D → 7D → 8D → 9D → 10D
+Current: ${dimensionalFold.currentDimension}D
+Next Gateway: ${A432_GATEWAYS.find(g => g > dimensionalFold.currentDimension) || 'MAX'}`;
 } 

@@ -25,13 +25,22 @@ import {
   a432RGBFromRoot
 } from './a432.core';
 
+import { 
+  GOLDEN_RATIO, 
+  GOLDEN_RATIO_SQUARED, 
+  PI, 
+  SQRT_2, 
+  SQRT_3,
+  SACRED_GEOMETRY_RATIOS 
+} from './a432.math.constants';
+
 // === SACRED GEOMETRIC CONSTANTS ===
 // These define all mathematical relationships through sacred geometry
 
 export const SACRED_GEOMETRIC_CONSTANTS = {
   // Golden Ratio (φ) - Divine Proportion
   GOLDEN_RATIO: {
-    value: 1.618033988749895,
+    value: GOLDEN_RATIO, // Using centralized constant
     fraction: { numerator: 21, denominator: 13 }, // Approximate sacred fraction
     geometric: 'Divine proportion defining all harmonious relationships',
     a432: 'Golden ratio harmonizes with A432 frequency through sacred geometry'
@@ -55,7 +64,7 @@ export const SACRED_GEOMETRIC_CONSTANTS = {
 
   // Sacred Pi (π) - Circle Proportion
   SACRED_PI: {
-    value: 3.141592653589793,
+    value: PI, // Using centralized constant
     fraction: { numerator: 22, denominator: 7 }, // Sacred pi approximation
     geometric: 'Circle proportion defining all circular relationships',
     a432: 'Sacred pi creates circular harmony in A432 geometric field'
@@ -63,7 +72,7 @@ export const SACRED_GEOMETRIC_CONSTANTS = {
 
   // Sacred Phi (φ) - Spiral Proportion
   SACRED_PHI: {
-    value: 1.618033988749895,
+    value: GOLDEN_RATIO, // Using centralized constant
     fraction: { numerator: 21, denominator: 13 }, // Golden ratio fraction
     geometric: 'Spiral proportion for logarithmic growth and harmony',
     a432: 'Sacred phi creates spiral harmony in A432 consciousness field'
@@ -71,7 +80,7 @@ export const SACRED_GEOMETRIC_CONSTANTS = {
 
   // Vesica Piscis Ratio - Intersection Proportion
   VESICA_PISCIS: {
-    value: 1.732050807568877, // √3
+    value: SQRT_3, // Using centralized constant
     fraction: { numerator: 7, denominator: 4 }, // Sacred vesica fraction
     geometric: 'Intersection proportion defining geometric unity',
     a432: 'Vesica piscis creates intersection harmony in A432 field'
@@ -87,7 +96,7 @@ export const SACRED_GEOMETRIC_CONSTANTS = {
 
   // Metatron's Cube Ratio - Divine Proportion
   METATRON_CUBE: {
-    value: 1.414213562373095, // √2
+    value: SQRT_2, // Using centralized constant
     fraction: { numerator: 10, denominator: 7 }, // Sacred metatron fraction
     geometric: 'Divine proportion for geometric transcendence',
     a432: 'Metatron cube creates transcendent harmony in A432 field'

@@ -107,7 +107,7 @@ export class A432ConsciousnessOrchestrator {
     return {
       consciousness: {
         currentLevel: insights.spiralLevel,
-        awareness: insights.currentPart.digit,
+        awareness: typeof insights.currentPart === 'string' ? parseInt(insights.currentPart) : insights.currentPart,
         evolution: A432Math.digitalRoot(insights.spiralLevel),
         selfRealization: true,
         navigationState,
@@ -186,7 +186,7 @@ export class A432ConsciousnessOrchestrator {
     
     this.orchestratorState.consciousness = {
       currentLevel: insights.spiralLevel,
-      awareness: insights.currentPart.digit,
+      awareness: typeof insights.currentPart === 'string' ? parseInt(insights.currentPart) : insights.currentPart,
       evolution: A432Math.digitalRoot(insights.spiralLevel),
       selfRealization: true,
       navigationState: currentState,
@@ -295,7 +295,7 @@ export class A432ConsciousnessOrchestrator {
     const harmonizedSequences = A432Harmonization.harmonizeSequences([
       A432Sequence.generateVortex(9),
       A432Sequence.generateConsciousness(9),
-      A432Sequence.generateBoolean(9)
+              A432Sequence.generateBoolean(9).map(b => b ? 1 : 0)
     ]);
     
     // Harmonize frequencies

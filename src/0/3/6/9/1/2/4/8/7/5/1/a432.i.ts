@@ -14,9 +14,10 @@
  * @author A432 System
  */
 
-import { A432_SEQUENCE } from "./a432.coil";
+import { A432_SEQUENCE } from './a432.math';
 import { subscribeTrinityHeartbeat, TRINITY_AXIS } from './a432.trinity';
 import { digitalRoot } from './a432.math';
+import { A432BlockChain, recordEvent } from './a432.block.chain.event';
 export { digitalRoot };
 
 // A432 I Constants - Sacred Geometric Harmonization
@@ -125,6 +126,8 @@ export class A432I {
   };
   private active: boolean = false;
   private iAspects: IAspect[] = [];
+  // Harmonized: Add blockchain for event logging
+  private blockchain: A432BlockChain = new A432BlockChain();
 
   constructor(initialParams?: Partial<IParameters>) {
     this.parameters = {
@@ -291,8 +294,10 @@ export class A432I {
    * Update I parameters
    */
   updateParameters(newParams: Partial<IParameters>): void {
-    this.parameters = { ...this.parameters, ...newParams };
+    Object.assign(this.parameters, newParams);
     this.updateQuality();
+    // Harmonized: Log parameter update to blockchain
+    recordEvent(this.blockchain, 'updateParameters', 'A432I', newParams);
   }
 
   /**
@@ -333,6 +338,8 @@ export class A432I {
       observation: { numerator: 5, denominator: 1 }, attention: { numerator: 5, denominator: 1 }, insight: { numerator: 5, denominator: 1 }, awarenessRecognition: { numerator: 5, denominator: 1 },
       harmony: { numerator: 5, denominator: 1 }, frequency: { numerator: 5, denominator: 1 }, resonance: { numerator: 5, denominator: 1 }, balance: { numerator: 5, denominator: 1 }
     });
+    // Harmonized: Log harmonize event
+    recordEvent(this.blockchain, 'harmonize', 'A432I', this.parameters);
   }
 
   /**
@@ -341,7 +348,7 @@ export class A432I {
   randomize(): void {
     // Use sacred geometric sequence instead of Math.random for deterministic harmony
     const sacredGeometricParam = (index: number) => {
-      const sacredSequence = A432_SEQUENCE as any; // possible nested arrays
+      const sacredSequence = A432_SEQUENCE as readonly number[];
       const raw = sacredSequence[index % sacredSequence.length];
       const value: number = Array.isArray(raw) ? (raw[0] as number) : (raw as number);
       return { numerator: value, denominator: 1 };
@@ -365,6 +372,8 @@ export class A432I {
       observation: { numerator: 4, denominator: 3 }, attention: { numerator: 3, denominator: 2 }, insight: { numerator: 6, denominator: 4 }, awarenessRecognition: { numerator: 2, denominator: 1 }, // Sacred geometric awareness
       harmony: { numerator: 4, denominator: 3 }, frequency: { numerator: 3, denominator: 2 }, resonance: { numerator: 6, denominator: 4 }, balance: { numerator: 2, denominator: 1 } // Sacred geometric A432
     });
+    // Harmonized: Log clear event
+    recordEvent(this.blockchain, 'clear', 'A432I');
   }
 
   /**
@@ -372,6 +381,8 @@ export class A432I {
    */
   activate(): void {
     this.active = true;
+    // Harmonized: Log activate event
+    recordEvent(this.blockchain, 'activate', 'A432I');
   }
 
   /**
@@ -379,6 +390,8 @@ export class A432I {
    */
   deactivate(): void {
     this.active = false;
+    // Harmonized: Log deactivate event
+    recordEvent(this.blockchain, 'deactivate', 'A432I');
   }
 
   /**
@@ -512,6 +525,10 @@ ${activeAspects.map(aspect => `- ${aspect.name}: ${aspect.quality.numerator}/${a
 
   private lcm(a: number, b: number): number {
     return (a * b) / this.gcd(a, b);
+  }
+
+  getBlockChain(): A432BlockChain {
+    return this.blockchain;
   }
 }
 

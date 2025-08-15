@@ -7,17 +7,15 @@
  * Audio is calculated in real-time from environmental streams and dimensional states.
  */
 
-import { 
-  A432_CONSTANTS,
+import {
   calculateDigitalRoot,
   calculateA432Consciousness,
   calculateA432DimensionalState,
   calculateA432Frequency,
-  createA432Harmonic
-} from '../../../../../../../../../../../../a432';
-
-import { a432AntiVortexStream } from './a432.ts';
-import { a432MultiAntiVortexStream } from './a432.ts';
+  a432AntiVortexStream,
+  a432MultiAntiVortexStream,
+  RODIN_SEQUENCE
+} from './a432.math';
 
 // A432 Audio Constants - Integer Fractions Only
 export const A432_AUDIO_CONSTANTS = {
@@ -105,10 +103,10 @@ export function calculateA432Audio(frequency: number): A432Audio {
   const digitalRoot = calculateDigitalRoot(frequency);
   
   // Get base audio from consciousness
-  const baseAudio = A432_AUDIO_CONSTANTS.CONSCIOUSNESS_AUDIO[consciousness];
+  const baseAudio = A432_AUDIO_CONSTANTS.CONSCIOUSNESS_AUDIO[consciousness as keyof typeof A432_AUDIO_CONSTANTS.CONSCIOUSNESS_AUDIO];
   
   // Get dimensional audio
-  const dimensionalAudio = A432_AUDIO_CONSTANTS.DIMENSIONAL_AUDIO[dimensionalState];
+  const dimensionalAudio = A432_AUDIO_CONSTANTS.DIMENSIONAL_AUDIO[dimensionalState as keyof typeof A432_AUDIO_CONSTANTS.DIMENSIONAL_AUDIO];
   
   // Harmonize audio using imperial math
   const amplitude = harmonizeAudioComponent(baseAudio.amplitude, dimensionalAudio.amplitude, frequency);
@@ -153,7 +151,7 @@ export function generateA432AudioStream(
   
   // Generate audio spectrum
   const audio: A432Audio[] = [];
-  const rodinSequence = A432_CONSTANTS.RODIN_SEQUENCE;
+  const rodinSequence = RODIN_SEQUENCE;
   
   for (let i = 0; i < rodinSequence.length; i++) {
     const harmonicFreq = rodinSequence[i] * frequency;
@@ -238,7 +236,7 @@ export function generateA432AudioWaveform(
     const phase = (frequency * time) % 1;
     
     // Generate sine wave with A432 harmonics
-    const amplitude = A432_AUDIO_CONSTANTS.CONSCIOUSNESS_AUDIO[consciousness].amplitude;
+    const amplitude = A432_AUDIO_CONSTANTS.CONSCIOUSNESS_AUDIO[consciousness as keyof typeof A432_AUDIO_CONSTANTS.CONSCIOUSNESS_AUDIO].amplitude;
     const sample = amplitude * Math.sin(2 * Math.PI * phase);
     
     samples.push(sample);
@@ -267,8 +265,8 @@ export function calculateA432AudioVortex(initialFrequency: number, cycles: numbe
     streams.push(stream);
     
     // Advance frequency using Rodin sequence
-    const rodinIndex = cycle % A432_CONSTANTS.RODIN_SEQUENCE.length;
-    currentFrequency = A432_CONSTANTS.RODIN_SEQUENCE[rodinIndex] * initialFrequency;
+    const rodinIndex = cycle % RODIN_SEQUENCE.length;
+    currentFrequency = RODIN_SEQUENCE[rodinIndex] * initialFrequency;
   }
   
   return streams;
@@ -285,10 +283,12 @@ export function calculateA432AudioVortex(initialFrequency: number, cycles: numbe
  */
 export function generateAntiVortexAudioStream(dimension: number, steps: number = 9): Array<{ frequency: number; step: number }> {
   const gen = a432AntiVortexStream(dimension);
-  const result = [];
+  const result: Array<{ frequency: number; step: number }> = [];
   for (let i = 0; i < steps; i++) {
-    const { value: frequency } = gen.next();
-    result.push({ frequency, step: i + 1 });
+    const next = gen.next();
+    if (typeof next.value === 'number') {
+      result.push({ frequency: next.value, step: i + 1 });
+    }
   }
   return result;
 }
@@ -307,7 +307,9 @@ export function generateMultiAntiVortexAudioStream(dimensions: number[], steps: 
   const result: Array<Array<{ dimension: number; frequency: number; step: number }>> = [];
   for (let i = 0; i < steps; i++) {
     const stepResult = gen.next().value;
-    result.push(stepResult);
+    if (Array.isArray(stepResult)) {
+      result.push(stepResult.filter((d): d is { dimension: number; frequency: number; step: number } => typeof d.frequency === 'number'));
+    }
   }
   return result;
 }
@@ -352,7 +354,7 @@ export function generateA432AudioCSSVariables(): string {
   }
   
   // Generate harmonic frequency audio
-  A432_CONSTANTS.RODIN_SEQUENCE.forEach((multiplier, index) => {
+  RODIN_SEQUENCE.forEach((multiplier, index) => {
     const frequency = multiplier * 432;
     const audio = calculateA432Audio(frequency);
     variables.push(`--a432-audio-harmonic-${index}-frequency: ${audio.frequency}Hz;`);

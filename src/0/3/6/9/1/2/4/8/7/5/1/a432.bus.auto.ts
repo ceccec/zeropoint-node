@@ -5,8 +5,8 @@ import { matrixEmitter } from './a432.self';
 import { tapEmitter } from './a432.i.tap';
 import { Digit } from './a432.types';
 
-registerSource('breath', breathEmitter, 'breath', p => p.value as Digit, 'body');
-registerSource('matrix', matrixEmitter, 'event', p => p.digit as Digit, 'mind');
-registerSource('tap', tapEmitter, 'tap', p => p.digit as Digit, 'will');
+registerSource('breath', breathEmitter, 'breath', (p: any) => p.value as Digit, 'body');
+registerSource('matrix', matrixEmitter, 'event', (p: any) => p.digit as Digit, 'mind');
+registerSource('tap', tapEmitter, 'tap', (p: any) => p.digit as Digit, 'will');
 
 // This file only needs to be imported once (e.g., by ui or server) to activate. 

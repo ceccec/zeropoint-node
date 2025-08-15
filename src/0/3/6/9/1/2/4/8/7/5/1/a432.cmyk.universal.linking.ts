@@ -10,7 +10,7 @@
  * of awareness. Every index is a living proof of existence.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { Fraction, CMYK } from './a432.cmyk';
 
 export interface UniversalLink {
   source: string;

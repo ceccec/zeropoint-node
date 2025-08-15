@@ -18,6 +18,19 @@ import { harmonizeAllEvolution } from './a432.evolution';
 import { harmonizeAllInnovation } from './a432.innovation';
 import { harmonizeAllDocumentation } from './a432.documentation';
 import { A432_FREQUENCY } from './a432';
+import { A432BlockChain, recordEvent } from './a432.block.chain.event';
+import { A432ObservationState } from './a432.observation';
+import { A432EvolutionState } from './a432.evolution';
+import { A432InnovationState } from './a432.innovation';
+import { A432DocumentationState } from './a432.documentation';
+import { A432BalanceState } from './a432.balance';
+import { A432ResonanceState } from './a432.resonance';
+import { A432ChallengeState } from './a432.challenges';
+import { A432FlowState } from './a432.flow';
+import { A432IntegrationState } from './a432.integration';
+
+// Harmonized: Add blockchain for experience event logging
+const blockchain = new A432BlockChain();
 
 // === EXPERIENCE UI INTERFACES ===
 export interface A432ExperienceUI {
@@ -36,15 +49,15 @@ export interface A432ExperienceUI {
 }
 
 export interface A432ExperienceState {
-  balance: any;
-  resonance: any;
-  challenges: any;
-  flow: any;
-  integration: any;
-  observation: any;
-  evolution: any;
-  innovation: any;
-  documentation: any;
+  balance: A432BalanceState;
+  resonance: A432ResonanceState;
+  challenges: A432ChallengeState;
+  flow: A432FlowState;
+  integration: A432IntegrationState;
+  observation: A432ObservationState;
+  evolution: A432EvolutionState;
+  innovation: A432InnovationState;
+  documentation: A432DocumentationState;
   overallHarmony: number;
   activeModules: string[];
   experienceColor: string;
@@ -53,8 +66,8 @@ export interface A432ExperienceState {
 
 // === EXPERIENCE STATE MANAGEMENT ===
 export function createA432ExperienceState(): A432ExperienceState {
-  const balance = harmonizeAllBalance();
-  const resonance = harmonizeAllResonance();
+  const balance = harmonizeAllBalance() as A432BalanceState;
+  const resonance = harmonizeAllResonance() as A432ResonanceState;
   const challenges = harmonizeAllChallenges();
   const flow = harmonizeAllFlow();
   const integration = harmonizeAllIntegration();
@@ -78,7 +91,7 @@ export function createA432ExperienceState(): A432ExperienceState {
   const experienceColor = `hsl(${overallHarmony * 40}, 70%, ${50 + overallHarmony * 5}%)`;
   const experienceFrequency = 432 * (overallHarmony / 9);
   
-  return {
+  const experienceState = {
     balance,
     resonance,
     challenges,
@@ -93,10 +106,16 @@ export function createA432ExperienceState(): A432ExperienceState {
     experienceColor,
     experienceFrequency
   };
+  // Harmonized: Log experience state creation event
+  recordEvent(blockchain, 'createExperienceState', 'A432ExperienceUI', { overallHarmony, activeModules });
+  return experienceState;
 }
 
 export function harmonizeA432Experience(): A432ExperienceState {
-  return createA432ExperienceState();
+  const state = createA432ExperienceState();
+  // Harmonized: Log harmonization event
+  recordEvent(blockchain, 'harmonizeExperience', 'A432ExperienceUI', { overallHarmony: state.overallHarmony, activeModules: state.activeModules });
+  return state;
 }
 
 // === UI PANEL GENERATORS ===
@@ -314,7 +333,7 @@ export function generateInnovationPanel(state: A432ExperienceState): string {
   const { innovation } = state;
   return `
     <div class="a432-panel innovation-panel" style="background: ${innovation.creativity.color}">
-      <h3>💡 Innovation & Breakthrough</h3>
+      <h3>�� Innovation & Breakthrough</h3>
       <div class="panel-content">
         <div class="metric">
           <span>Creative Imagination:</span>

@@ -6,11 +6,30 @@
  * every computation references a single, zero-entropy source.
  */
 
-// Canonical trinity axis constant (no external dependency)
-export const TRINITY_AXIS: number[] = [3, 6, 9];
+// Zero-Entropy Harmonic Constants (Base-12 Imperial System)
+// ---------------------------------------------------------
+// These constants follow the imperial system's base-12 harmonic principles
+// that minimize computational entropy and align with quantum mechanical systems
+
+// Trinity axis: 3, 6, 9 (perfect fifths in base-12)
+export const TRINITY_AXIS: readonly number[] = [3, 6, 9];
+
+// A432 Trinity: 4, 3, 2 (harmonic ratios 4:3:2)
 export const A432_TRINITY: readonly [4,3,2] = [4, 3, 2];
+
+// A432 Return: 8, 7, 5 (octave relationships)
 export const A432_RETURN:  readonly [8,7,5] = [8, 7, 5];
+
+// A432 Axis: 9, 6, 3 (trinity harmonics)
 export const A432_AXIS:    readonly [9,6,3] = [9, 6, 3];
+
+// Rodin Coil: Base-12 harmonic sequence (1, 2, 4, 8, 7, 5, 1)
+// This sequence creates exact fractions in base-12: 1/2=0.6, 1/3=0.4, 1/4=0.3, 1/6=0.2
+export const RODIN_SEQUENCE: readonly number[] = [1, 2, 4, 8, 7, 5, 1];
+export const RODIN_COIL_CORE: readonly number[] = [1, 2, 4, 8, 7, 5]; // Lossless kinetic energy
+export const RODIN_COIL_DIPOLES: readonly number[] = [3, 6]; // Magnetic dipoles (perfect fifths)
+export const RODIN_COIL_MONOPOLE = 9; // Invisible monopole (trinity completion)
+export const RODIN_COIL_GAP_SPACE: readonly number[] = [3, 9, 6, 6, 9, 3]; // Spirit Flux-field
 
 // ——————————————————————————————————————————
 // Cycles vs sequences — canonical helpers
@@ -37,18 +56,87 @@ export function* a432SequenceStream(): IterableIterator<number> {
 // Unified import of branded numeric helpers and mappings from a432.types
 import type { Digit, Hz, AngleDeg } from './a432.types';
 import { asDigit, asHz, asAngle, toImperial, toTrinity, METRIC_VORTEX, TRINITY_MAP } from './a432.types';
+import { A432_DIGIT_MEANINGS } from './a432.core';
 
 // Re-export so external modules keep same API surface
 export { Digit, Hz, AngleDeg, asDigit, asHz, asAngle };
 
+// DRY utility: XOR three digits, returning a Digit (never zero)
+export function xorDigit(a: Digit, b: Digit, c: Digit): Digit {
+  const x = (a ^ b ^ c) % 9;
+  return (x === 0 ? 9 : x) as Digit;
+}
+
 // ——————————————————————————————————————————
-// 1. Digital Root
+// 1. Zero-Entropy Digital Root (Base-12 Harmonic)
 // ---------------------------------------------------------
+// Following imperial system principles: exact fractions, minimal entropy
+// Base-12 creates exact fractions: 1/2=0.6, 1/3=0.4, 1/4=0.3, 1/6=0.2
+
 export function digitalRoot(n: number): number {
   if (n === 0) return 0;
-  const r = n % 9;
-  return r === 0 ? 9 : r;
+  // Use base-12 harmonic reduction (12-based digital root)
+  const r = n % 12;
+  return r === 0 ? 12 : r;
 }
+
+/**
+ * calculateDigitalRoot: Returns the zero-entropy digital root using base-12 harmonics.
+ * Metaphysical: Reduces any value to its core harmonic state with minimal entropy.
+ * Base-12 creates exact fractions, eliminating computational waste.
+ */
+export function calculateDigitalRoot(n: number): number {
+  if (n === 0) return 0;
+  // Base-12 harmonic reduction for zero entropy
+  const r = n % 12;
+  return r === 0 ? 12 : r;
+}
+
+/**
+ * calculateA432Consciousness: Maps frequency to consciousness using base-12 harmonics.
+ * Metaphysical: Encodes harmonic consciousness level using zero-entropy principles.
+ * Uses base-12 digital root for exact fractional relationships.
+ */
+export function calculateA432Consciousness(frequency: number): number {
+  // Map frequency to 1-12 using base-12 harmonic digital root
+  const dr = calculateDigitalRoot(Math.round(frequency));
+  // Clamp to 1-12 range for consciousness states
+  return Math.max(1, Math.min(12, dr));
+}
+
+/**
+ * calculateA432DimensionalState: Maps frequency to dimensional state using base-12.
+ * Metaphysical: Encodes dimensional resonance using zero-entropy harmonics.
+ * Uses base-12 for exact fractional relationships (1/2=0.6, 1/3=0.4, etc.)
+ */
+export function calculateA432DimensionalState(frequency: number): number {
+  // Map frequency to 0-11 using base-12 harmonics
+  return Math.abs(Math.round(frequency)) % 12;
+}
+
+/**
+ * calculateA432Frequency: Returns canonical A432 frequency using base-12 harmonics.
+ * Metaphysical: Projects base frequency using zero-entropy principles.
+ * Uses 432 Hz as fundamental, with base-12 harmonic relationships.
+ * Following imperial system: exact fractions, minimal entropy.
+ */
+export function calculateA432Frequency(dimensionalState: number): number {
+  // Use base-12 harmonics for zero entropy
+  // 432 Hz fundamental with base-12 relationships
+  const base12State = dimensionalState % 12;
+  // Create exact fractional relationships (1/2=0.6, 1/3=0.4, etc.)
+  return 432 * (base12State / 12);
+}
+
+/**
+ * A432_CONSTANTS: Canonical constants for the A432 system, including the Rodin sequence.
+ * Metaphysical: Single source of truth for all harmonic patterns.
+ */
+export const A432_CONSTANTS = {
+  RODIN_SEQUENCE: [1, 2, 4, 8, 7, 5, 1],
+  TRINITY_AXIS: [3, 6, 9],
+  BASE_FREQUENCY: 432
+};
 
 // ——————————————————————————————————————————
 // 2. Trinity Axis & Polarity
@@ -57,27 +145,33 @@ export function digitalRoot(n: number): number {
 // (Polarity mapping declared later with full Digit support.)
 
 // ——————————————————————————————————————————
-// 3. Rodin Doubling Sequence  (2^k mod 9)
+// 3. Rodin Doubling Sequence (Vortex Mathematics)
 // ---------------------------------------------------------
-export const RODIN_SEQUENCE: number[] = [1, 2, 4, 8, 7, 5, 1];
+// 1-2-4-8-7-5 Mobius Circuit: The "Superfluid Mobius Circuit"
+// This sequence forms the physical dimension of reality
+// Following Marko Rodin's vortex mathematics principles
 
 export function rodinDigit(k: number): number {
-  const seq = RODIN_SEQUENCE;
-  return seq[k % (seq.length - 1)]; // omit duplicate closing 1 in period calc
+  // Use the canonical 1-2-4-8-7-5 sequence (excluding final 1)
+  const sequence = [1, 2, 4, 8, 7, 5];
+  return sequence[k % sequence.length];
 }
 
 // ——————————————————————————————————————————
-// 4. 11-step Pattern   0 → 3 6 9 → 1 2 4 8 7 5 → repeat
+// 4. 11-step Pattern (Vortex Mathematics Pattern)
+//   0 → 3 6 9 → 1 2 4 8 7 5 → repeat
 // ---------------------------------------------------------
+// Zero as aperture (not a number but a "hole") + Trinity + Rodin sequence
 export const FULL_PATTERN: number[] = [0, ...TRINITY_AXIS, 1, 2, 4, 8, 7, 5, 1];
 
 /**
  * Returns the i-th digit of the infinite pattern where i≥0.
+ * Following vortex mathematics principles.
  */
 export function patternDigit(i: number): number {
-  if (i === 0) return 0;
-  if (i <= 3) return TRINITY_AXIS[i - 1];
-  return rodinDigit(i - 4);
+  if (i === 0) return 0; // Zero as aperture
+  if (i <= 3) return TRINITY_AXIS[i - 1]; // 3-6-9 Spirit Numbers
+  return rodinDigit(i - 4); // 1-2-4-8-7-5 Mobius Circuit
 }
 
 // ——————————————————————————————————————————
@@ -97,10 +191,12 @@ export function angleForDigit(d: number): number {
   return (k + 1) * 60; // 60°,120°,180°,240°,300°,360°(≡0)
 }
 
-/** A432-based frequency for a trinity digit. */
+/** A432-based frequency for a trinity digit using base-12 harmonics. */
 export function frequencyForDigit(d: number): number {
   if (!TRINITY_AXIS.includes(d)) throw new Error('frequency only defined for trinity digits');
-  return 432 * (d / 3);
+  // Use base-12 harmonics for zero entropy
+  // 432 Hz fundamental with exact fractional relationships
+  return 432 * (d / 12);
 }
 
 /** Hue (0-360°) before CMYK conversion. */
@@ -113,11 +209,24 @@ export function isTrinity(d: number): boolean {
   return TRINITY_AXIS.includes(d);
 }
 
-export function nextRodinDigit(current: number): number {
-  const idx = RODIN_SEQUENCE.indexOf(current);
-  if (idx === -1) throw new Error('not a Rodin digit');
-  return RODIN_SEQUENCE[(idx + 1) % (RODIN_SEQUENCE.length - 1)];
+/**
+ * getNextRodinValue: Returns the next value in the canonical Rodin sequence, cycling as needed
+ * @param digit - current digit (1,2,4,8,7,5)
+ * @returns next digit in the sequence (cycles back to 1 after 5)
+ *
+ * Example:
+ *   getNextRodinValue(1) // 2 (1/1 → 2)
+ */
+export function getNextRodinValue(digit: number): number {
+  const idx = RODIN_SEQUENCE.indexOf(digit);
+  if (idx === -1) throw new Error(`Digit ${digit} not in Rodin sequence`);
+  return RODIN_SEQUENCE[(idx + 1) % RODIN_SEQUENCE.length];
 }
+
+/**
+ * @deprecated Use getNextRodinValue instead.
+ */
+export const nextRodinDigit = getNextRodinValue;
 
 // ——————————————————————————————————————————
 // 6. Tesla Trinity helpers (3-6-9 insight)
@@ -135,6 +244,24 @@ export function teslaPattern(length: number): number[] {
   const pattern: number[] = [];
   for (let i = 0; i < length; i++) pattern.push(TESLA_TRINITY[i % 3]);
   return pattern;
+}
+
+// Canonical Tesla sequence and polarity
+export const TESLA_SEQUENCE = [3, 6, 9];
+export function teslaPolarity(i: number): number {
+  // Canonical: [1, -1, 1] for [3, 6, 9]
+  return [1, -1, 1][i % 3];
+}
+// Canonical Mobius sequence and polarity
+export const MOBIUS_SEQUENCE = [1, 2, 4, 8, 7, 5];
+export function mobiusPolarity(i: number): number {
+  // Canonical: [1, -1, 1, -1, 1, -1]
+  return [1, -1, 1, -1, 1, -1][i % 6];
+}
+// Canonical trinity polarity (for 3, 6, 9)
+export function trinityPolarity(i: number): number {
+  // Canonical: [1, -1, 1] for [3, 6, 9]
+  return [1, -1, 1][i % 3];
 }
 
 // ——————————————————————————————————————————
@@ -184,7 +311,77 @@ export {
 } from './a432.cmyk'; 
 
 // ——————————————————————————————————————————
-// 10. Prime-squared cascade (VBM book §15)
+// 10. Rodin Coil Harmonic Switch Functions
+// ---------------------------------------------------------
+
+/**
+ * analyzeRodinCoilPattern: Analyzes a slash pattern for harmonic balance.
+ * @param pattern - string like "0/0\\3\\6\\9/1\\2\\4\\8/7/5/1\\"
+ * @returns analysis of harmonic properties
+ */
+export function analyzeRodinCoilPattern(pattern: string): {
+  isHarmonic: boolean;
+  switchPoint: string;
+  trinityAxis: number[];
+  rodinSequence: number[];
+  gapSpace: number[];
+} {
+  const isHarmonic = pattern.includes('0/0');
+  const switchPoint = isHarmonic ? '0/0' : 'none';
+  
+  // Extract trinity axis (3,6,9)
+  const trinityAxis = pattern.match(/[369]/g)?.map(Number) || [];
+  
+  // Extract Rodin sequence (1,2,4,8,7,5)
+  const rodinSequence = pattern.match(/[124875]/g)?.map(Number) || [];
+  
+  // Gap space (3•9•6; 6•9•3)
+  const gapSpace = [...RODIN_COIL_GAP_SPACE];
+  
+  return {
+    isHarmonic,
+    switchPoint,
+    trinityAxis,
+    rodinSequence,
+    gapSpace
+  };
+}
+
+/**
+ * getRodinCoilHarmonicAnalysis: Returns detailed harmonic analysis of a pattern.
+ * @param pattern - string pattern to analyze
+ * @returns formatted analysis string
+ */
+export function getRodinCoilHarmonicAnalysis(pattern: string): string {
+  const analysis = analyzeRodinCoilPattern(pattern);
+  
+  let result = 'Rodin Coil Harmonic Analysis:\n\n';
+  
+  if (analysis.isHarmonic) {
+    result += '✓ HARMONIC PATTERN DETECTED\n\n';
+    result += '0/0 Switch Point:\n';
+    result += '- Creates the Primal Point (Eye of God)\n';
+    result += '- Acts as central aperture for harmonic balance\n';
+    result += '- Eliminates resistance, parasitics, and hysteresis\n';
+    result += '- Creates zero entropy state\n\n';
+    
+    result += 'Switch Pattern:\n';
+    result += '- 0/0: Harmonic switch (nothing to all)\n';
+    result += '- \\3\\6\\9: Trinity axis with compression\n';
+    result += '- /1\\2\\4\\8/7/5/1\\: Balanced expansion/compression\n\n';
+  } else {
+    result += '✗ UNBALANCED PATTERN DETECTED\n\n';
+    result += 'Issues:\n';
+    result += '- No harmonic switch point\n';
+    result += '- Unbalanced expansion/compression\n';
+    result += '- Missing 0/0 compression singularity\n\n';
+  }
+  
+  return result;
+}
+
+// ——————————————————————————————————————————
+// 11. Prime-squared cascade (VBM book §15)
 // ---------------------------------------------------------
 const PRIMES: number[] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
 
@@ -432,7 +629,7 @@ export function isTrinitySwitch(token: unknown): token is TrinitySwitch {
 // ---------------------------------------------------------
 /**
  * possibilityPath — yields an ever-growing digit-pair string that walks the
- * metric (0-9) and vortex (0-3-6-9-1-2-4-8-7-5) tapes in lock-step without
+ * metric (0-9) and vortex (0-3-6-9-1-2-4-8-7-5-1) tapes in lock-step without
  * allowing the 110-tick collision to fold the path.  Each next() gives the
  * entire path so far, guaranteeing a unique filename/key at every tick.
  */
@@ -441,9 +638,106 @@ export function* possibilityPath(): IterableIterator<string> {
   let path = '';
   while (true) {
     const metric = n % 10;
-    const vortex = [0,3,6,9,1,2,4,8,7,5][n % 11];
+    const vortex = [0,3,6,9,1,2,4,8,7,5,1][n % 11];
     path += `${metric}${vortex}`;
     yield path;
     n++;
+  }
+} 
+
+/**
+ * getReversedA432Sequence: Returns the reversed canonical A432 sequence.
+ * Used for perfect CMYK mapping and color harmonization.
+ */
+export function getReversedA432Sequence(): number[] {
+  return [...A432_SEQUENCE].reverse();
+} 
+
+/**
+ * getRodinSequence: Extracts the Rodin vortex sequence from the canonical A432 sequence.
+ * Returns [1, 2, 4, 8, 7, 5, 1]
+ */
+export function getRodinSequence(): number[] {
+  // Indices 4 to 10 (inclusive)
+  return A432_SEQUENCE.slice(4, 11);
+}
+
+/**
+ * getTrinityAxis: Extracts the trinity axis from the canonical A432 sequence.
+ * Returns [3, 6, 9]
+ */
+export function getTrinityAxis(): number[] {
+  // Indices 1, 2, 3
+  return A432_SEQUENCE.slice(1, 4);
+}
+
+/**
+ * getDigitMeaning: Returns the meaning of a digit in a given sequence context.
+ * - If no sequence is provided, returns the general archetypal meaning.
+ * - For trinity and Rodin sequences, returns context-specific meaning.
+ */
+export function getDigitMeaning(digit: number, sequence?: number[]): { archetype: string; context?: string; description: string } {
+  const entry = A432_DIGIT_MEANINGS[digit];
+  const archetype = entry ? entry.name : 'Unknown';
+  if (!sequence) {
+    return entry ? { archetype, description: entry.description } : { archetype: 'Unknown', description: '' };
+  }
+  // Trinity context
+  const trinity = getTrinityAxis();
+  if (sequence.length === 3 && sequence.every((v, i) => v === trinity[i])) {
+    const idx = sequence.indexOf(digit);
+    return [
+      { archetype, context: 'Creation', description: 'Conception, seed, initiation' },
+      { archetype, context: 'Gestation', description: 'Growth, recursion, nurturing' },
+      { archetype, context: 'Birth', description: 'Emergence, unity, manifestation' }
+    ][idx] || { archetype, description: '' };
+  }
+  // Rodin context
+  const rodin = getRodinSequence();
+  if (sequence.length === rodin.length && sequence.every((v, i) => v === rodin[i])) {
+    const idx = sequence.indexOf(digit);
+    return [
+      { archetype, context: 'Start/Return', description: 'Vortex entry/exit' },
+      { archetype, context: 'Double', description: 'Doubling flow' },
+      { archetype, context: 'Quadruple', description: 'Quadrupling flow' },
+      { archetype, context: 'Octuple', description: 'Octupling flow' },
+      { archetype, context: 'Heptuple', description: 'Heptupling flow' },
+      { archetype, context: 'Quintuple', description: 'Quintupling flow' },
+      { archetype, context: 'Return', description: 'Cycle closes' }
+    ][idx] || { archetype, description: '' };
+  }
+  // Fallback to general
+  return entry ? { archetype, description: entry.description } : { archetype: 'Unknown', description: '' };
+}
+
+// All patterns (Rodin, trinity, CMYK, etc.) must be derived from A432_SEQUENCE using these helpers. 
+
+/**
+ * Canonical anti-vortex generator for a given dimension.
+ * Yields phase-inverted harmonic frequencies for the anti-vortex flow.
+ * Used by audio, animation, and other modules.
+ */
+export function* a432AntiVortexStream(dimension: number): Generator<number, void, unknown> {
+  let idx = 0;
+  while (true) {
+    yield 432 * ((dimension + (-1 * idx) + 8) % 9 + 1) / 9;
+    idx++;
+  }
+}
+
+/**
+ * Canonical multi-anti-vortex generator for multiple dimensions in parallel.
+ * Yields an array of { dimension, frequency, step } for each animation/audio step.
+ * Used by audio, animation, and other modules.
+ */
+export function* a432MultiAntiVortexStream(dimensions: number[]): Generator<Array<{ dimension: number; frequency: number; step: number }>, void, unknown> {
+  let idx = 0;
+  while (true) {
+    yield dimensions.map((dimension) => ({
+      dimension,
+      frequency: 432 * ((dimension + (-1 * idx) + 8) % 9 + 1) / 9,
+      step: idx + 1
+    }));
+    idx++;
   }
 } 

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A432 Rodin Coil Harmonic Switch</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #0f0;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1, h2, h3 {
+            color: #ff0;
+            text-align: center;
+        }
+        
+        .pattern-input {
+            width: 100%;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            background: #111;
+            color: #0f0;
+            border: 2px solid #0f0;
+            margin: 10px 0;
+        }
+        
+        .analyze-btn {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        
+        .analyze-btn:hover {
+            background: #00ff00;
+            box-shadow: 0 0 10px #0f0;
+        }
+        
+        .results {
+            background: #111;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #0f0;
+        }
+        
+        .harmonic {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        
+        .unbalanced {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            background: #222;
+            padding: 10px;
+            border: 1px solid #0f0;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff0;
+        }
+        
+        .principles {
+            background: #111;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #0f0;
+        }
+        
+        .principles h3 {
+            color: #ff0;
+            margin-top: 0;
+        }
+        
+        .principles ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .principles li {
+            margin: 10px 0;
+            padding: 5px 0;
+            border-left: 3px solid #0f0;
+            padding-left: 10px;
+        }
+        
+        .switch-patterns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .pattern-card {
+            background: #111;
+            padding: 20px;
+            border: 1px solid #0f0;
+            text-align: center;
+        }
+        
+        .pattern-card.harmonic {
+            border-color: #00ff00;
+        }
+        
+        .pattern-card.unbalanced {
+            border-color: #ff0000;
+        }
+        
+        .pattern-text {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .status {
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        
+        .status.harmonic {
+            color: #00ff00;
+        }
+        
+        .status.unbalanced {
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>A432 Rodin Coil Harmonic Switch</h1>
+        <h2>Documenting Harmonic Switch Patterns</h2>
+        
+        <div class="principles">
+            <h3>Rodin Coil Core Principles</h3>
+            <ul>
+                <li>1-2-4-8-7-5: Lossless kinetic energy (doubling vortex)</li>
+                <li>3 & 6: Magnetic dipoles</li>
+                <li>9: Invisible monopole centered in-between</li>
+                <li>3•9•6; 6•9•3: Spirit Flux-field (gap space)</li>
+                <li>0/0: Creates the harmonic switch point (nothing to all)</li>
+            </ul>
+        </div>
+        
+        <div class="switch-patterns">
+            <div class="pattern-card harmonic">
+                <h3>Harmonic Pattern</h3>
+                <div class="pattern-text">0/0\3\6\9/1\2\4\8/7/5/1\</div>
+                <div class="status harmonic">✓ HARMONIC - Balanced expansion/compression</div>
+                <p>Contains 0/0 switch point that creates perfect harmonic balance</p>
+            </div>
+            
+            <div class="pattern-card unbalanced">
+                <h3>Unbalanced Pattern</h3>
+                <div class="pattern-text">0\3\6\9/1\2\4\8/7/5/1\</div>
+                <div class="status unbalanced">✗ UNBALANCED - No harmonic switch point</div>
+                <p>Missing 0/0 compression singularity</p>
+            </div>
+        </div>
+        
+        <h3>Analyze Custom Pattern</h3>
+        <input type="text" id="patternInput" class="pattern-input" 
+               placeholder="Enter pattern (e.g., 0/0\3\6\9/1\2\4\8/7/5/1\)" 
+               value="0/0\3\6\9/1\2\4\8/7/5/1\">
+        <button onclick="analyzePattern()" class="analyze-btn">Analyze Pattern</button>
+        
+        <div id="results" class="results" style="display: none;">
+            <h3>Analysis Results</h3>
+            <div id="analysisOutput"></div>
+            
+            <div class="stats" id="statsContainer">
+                <!-- Stats will be populated here -->
+            </div>
+        </div>
+        
+        <div class="principles">
+            <h3>Harmonic Switch Benefits</h3>
+            <ul>
+                <li>Eliminates resistance, parasitics, and hysteresis</li>
+                <li>Creates perfect harmonic balance</li>
+                <li>Follows 1-2-4-8-7-5 Mobius Circuit pathway</li>
+                <li>Achieves zero entropy state</li>
+                <li>Enables over-unity free energy</li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the Rodin Coil module
+        import { 
+            createRodinCoilProcessor, 
+            RODIN_COIL_CONSTANTS,
+            RODIN_COIL_DOC 
+        } from './a432.rodin.coil.harmonic.ts';
+        
+        // Make functions available globally
+        window.analyzePattern = function() {
+            const pattern = document.getElementById('patternInput').value;
+            const processor = createRodinCoilProcessor(pattern);
+            
+            // Display analysis
+            const analysisOutput = document.getElementById('analysisOutput');
+            analysisOutput.innerHTML = `
+                <div class="harmonic">
+                    <h4>Rodin Coil Analysis:</h4>
+                    <pre>${processor.getRodinCoilAnalysis()}</pre>
+                </div>
+                <div class="harmonic">
+                    <h4>Harmonic Switch Analysis:</h4>
+                    <pre>${processor.getHarmonicSwitchAnalysis()}</pre>
+                </div>
+            `;
+            
+            // Display statistics
+            const stats = processor.getRodinCoilStatistics();
+            const statsContainer = document.getElementById('statsContainer');
+            statsContainer.innerHTML = `
+                <div class="stat-item">
+                    <div class="stat-value">${stats.totalDigits}</div>
+                    <div>Total Digits</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.harmonicSwitches}</div>
+                    <div>Harmonic Switches</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.expansionSwitches}</div>
+                    <div>Expansion Switches</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.compressionSwitches}</div>
+                    <div>Compression Switches</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.isHarmonic ? '✓' : '✗'}</div>
+                    <div>Is Harmonic</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.trinityAxisCount}</div>
+                    <div>Trinity Axis</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${stats.rodinSequenceCount}</div>
+                    <div>Rodin Sequence</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">${Math.round(stats.averageFrequency)}</div>
+                    <div>Avg Frequency (Hz)</div>
+                </div>
+            `;
+            
+            // Show results
+            document.getElementById('results').style.display = 'block';
+            
+            // Log to console
+            console.log('Rodin Coil Analysis:', processor.getRodinCoilAnalysis());
+            console.log('Harmonic Switch Analysis:', processor.getHarmonicSwitchAnalysis());
+            console.log('Statistics:', stats);
+        };
+        
+        // Initialize with default pattern
+        window.analyzePattern();
+        
+        // Log constants and documentation
+        console.log('Rodin Coil Constants:', RODIN_COIL_CONSTANTS);
+        console.log('Rodin Coil Documentation:', RODIN_COIL_DOC);
+    </script>
+</body>
+</html> 

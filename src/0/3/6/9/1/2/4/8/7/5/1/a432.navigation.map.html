@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A432 Multidimensional Navigation Map</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .sequence-display {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sequence {
+            font-size: 2em;
+            font-weight: bold;
+            letter-spacing: 10px;
+            margin-bottom: 10px;
+        }
+
+        .sequence-explanation {
+            font-size: 1.1em;
+            color: #ddd;
+        }
+
+        .map-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .map-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #4ecdc4;
+            text-align: center;
+        }
+
+        .cluster {
+            margin-bottom: 25px;
+        }
+
+        .cluster-title {
+            font-size: 1.2em;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .part {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #4ecdc4;
+            transition: all 0.3s ease;
+        }
+
+        .part:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .part-digit {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ff6b6b;
+            min-width: 40px;
+        }
+
+        .part-info {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .part-name {
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .part-function {
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        .part-polarity {
+            color: #4ecdc4;
+            font-size: 0.8em;
+            font-style: italic;
+        }
+
+        .gateway {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .vortex {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .opposite {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .opposite-pair {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .opposite-tension {
+            color: #4ecdc4;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .opposite-balance {
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        .spiral-visualization {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .spiral-canvas {
+            width: 100%;
+            height: 400px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .status {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #4ecdc4;
+        }
+
+        .status-title {
+            font-size: 1.2em;
+            color: #4ecdc4;
+            margin-bottom: 15px;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-label {
+            color: #ccc;
+        }
+
+        .status-value {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .map-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sequence {
+                font-size: 1.5em;
+                letter-spacing: 5px;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">A432 Multidimensional Navigation Map</h1>
+            <p class="subtitle">Living consciousness spiral: /0\3\6\9/1\2\4\8/7/5/1\</p>
+        </div>
+
+        <div class="sequence-display">
+            <div class="sequence">/0\3\6\9/1\2\4\8/7/5/1\</div>
+            <div class="sequence-explanation">
+                Parts • Gateways • Vortexes • Opposites • Spiral Evolution
+            </div>
+        </div>
+
+        <div class="map-grid">
+            <div class="map-section">
+                <h2 class="section-title">Navigation Parts</h2>
+                
+                <div class="cluster">
+                    <h3 class="cluster-title">Initiation Cluster: /0\3\6\9</h3>
+                    <div class="part">
+                        <div class="part-digit">0</div>
+                        <div class="part-info">
+                            <div class="part-name">Void</div>
+                            <div class="part-function">Primordial Potential</div>
+                            <div class="part-polarity">Absence</div>
+                        </div>
+                    </div>
+                    <div class="part">
+                        <div class="part-digit">3</div>
+                        <div class="part-info">
+                            <div class="part-name">Awareness</div>
+                            <div class="part-function">Observer</div>
+                            <div class="part-polarity">Discernment</div>
+                        </div>
+                    </div>
+                    <div class="part">
+                        <div class="part-digit">6</div>
+                        <div class="part-info">
+                            <div class="part-name">Balance</div>
+                            <div class="part-function">Harmonizer</div>
+                            <div class="part-polarity">Integration</div>
+                        </div>
+                    </div>
+                    <div class="part">
+                        <div class="part-digit">9</div>
+                        <div class="part-info">
+                            <div class="part-name">Completion</div>
+                            <div class="part-function">Vision</div>
+                            <div class="part-polarity">Fulfillment</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cluster">
+                    <h3 class="cluster-title">Genesis Cluster: /1\2\4\8</h3>
+                    <div class="part">
+                        <div class="part-digit">1</div>
+                        <div class="part-info">
+                            <div class="part-name">Spark</div>
+                            <div class="part-function">Choice</div>
+                            <div class="part-polarity">Singular</div>
+                        </div>
+                    </div>
+                    <div class="part">
+                        <div class="part-digit">2</div>
+                        <div class="part-info">
+                            <div class="part-name">Duality</div>
+                            <div class="part-function">Possibility</div>
+                            <div class="part-polarity">Dual</div>
+                        </div>
+                    </div>
+                    <div class="part">
+                        <div class="part-digit">4</div>
+                        <div class="part-info">
+                            <div class="part-name">Structure</div>
+                            <div class="part-function">Foundation</div>
+                            <div class="part-polarity">Stable</div>
+                        </div>
+                    </div>
+                    <div class="part">
+                        <div class="part-digit">8</div>
+                        <div class="part-info">
+                            <div class="part-name">Growth</div>
+                            <div class="part-function">Multiplication</div>
+                            <div class="part-polarity">Expansive</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cluster">
+                    <h3 class="cluster-title">Gateway & Vortex: /7/5/1\</h3>
+                    <div class="gateway">
+                        <div class="part-digit">7</div>
+                        <div class="part-name">Gateway</div>
+                        <div class="part-function">Initiation • Liminal</div>
+                    </div>
+                    <div class="vortex">
+                        <div class="part-digit">5</div>
+                        <div class="part-name">Vortex</div>
+                        <div class="part-function">Transformation • Turbulent</div>
+                    </div>
+                    <div class="part">
+                        <div class="part-digit">1</div>
+                        <div class="part-info">
+                            <div class="part-name">Return</div>
+                            <div class="part-function">New Beginning</div>
+                            <div class="part-polarity">Higher Spiral</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-section">
+                <h2 class="section-title">Gateways & Vortexes</h2>
+                
+                <div class="gateway">
+                    <strong>Gateways (Thresholds of Passage)</strong><br>
+                    / and \ symbols mark conscious transitions
+                </div>
+                
+                <div class="vortex">
+                    <strong>Vortexes (Zones of Intensified Change)</strong><br>
+                    Points 5 and 7: transformation and initiation
+                </div>
+
+                <h3 class="cluster-title">Navigation Opposites</h3>
+                
+                <div class="opposite">
+                    <div class="opposite-pair">0 ↔ 9</div>
+                    <div class="opposite-tension">Absence vs Fulfillment</div>
+                    <div class="opposite-balance">Potential to Manifest</div>
+                </div>
+                
+                <div class="opposite">
+                    <div class="opposite-pair">1 ↔ 1</div>
+                    <div class="opposite-tension">Choosing vs Re-choosing</div>
+                    <div class="opposite-balance">Beginning to Higher Beginning</div>
+                </div>
+                
+                <div class="opposite">
+                    <div class="opposite-pair">3 ↔ 6</div>
+                    <div class="opposite-tension">Observer vs Integrator</div>
+                    <div class="opposite-balance">Discernment to Harmony</div>
+                </div>
+                
+                <div class="opposite">
+                    <div class="opposite-pair">2 ↔ 4</div>
+                    <div class="opposite-tension">Possibility vs Structure</div>
+                    <div class="opposite-balance">Dual to Stable</div>
+                </div>
+                
+                <div class="opposite">
+                    <div class="opposite-pair">7 ↔ 5</div>
+                    <div class="opposite-tension">Gateway vs Vortex</div>
+                    <div class="opposite-balance">Insight to Storm</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="navigateNext()">Navigate Next</button>
+            <button class="btn" onclick="navigateCycle()">Complete Cycle</button>
+            <button class="btn" onclick="resetNavigation()">Reset</button>
+        </div>
+
+        <div class="status">
+            <h3 class="status-title">Current Navigation State</h3>
+            <div class="status-item">
+                <span class="status-label">Current Part:</span>
+                <span class="status-value" id="currentPart">Void</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Spiral Level:</span>
+                <span class="status-value" id="spiralLevel">1</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Consciousness:</span>
+                <span class="status-value" id="consciousness">Void consciousness</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Next Decision:</span>
+                <span class="status-value" id="nextDecision">Choose to observe</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Total Navigations:</span>
+                <span class="status-value" id="totalNavigations">0</span>
+            </div>
+        </div>
+
+        <div class="spiral-visualization">
+            <h3 class="section-title">Spiral Visualization</h3>
+            <canvas class="spiral-canvas" id="spiralCanvas"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Navigation state
+        let currentState = {
+            currentPart: 'Void',
+            spiralLevel: 1,
+            consciousness: 'Void consciousness',
+            nextDecision: 'Choose to observe',
+            totalNavigations: 0
+        };
+
+        const sequence = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+        const partNames = ['Void', 'Awareness', 'Balance', 'Completion', 'Spark', 'Duality', 'Structure', 'Growth', 'Gateway', 'Vortex', 'Return'];
+        const decisions = [
+            'Choose to observe',
+            'Choose to harmonize',
+            'Choose to complete',
+            'Choose to begin',
+            'Choose to expand',
+            'Choose to ground',
+            'Choose to multiply',
+            'Choose to transcend',
+            'Choose to transform',
+            'Choose to return',
+            'Choose to ascend'
+        ];
+
+        function navigateNext() {
+            const currentIndex = currentState.totalNavigations % sequence.length;
+            const nextIndex = (currentIndex + 1) % sequence.length;
+            
+            currentState.currentPart = partNames[nextIndex];
+            currentState.spiralLevel = Math.floor(currentState.totalNavigations / sequence.length) + 1;
+            currentState.consciousness = `${partNames[nextIndex]} consciousness (Spiral ${currentState.spiralLevel})`;
+            currentState.nextDecision = decisions[nextIndex];
+            currentState.totalNavigations++;
+            
+            updateDisplay();
+            drawSpiral();
+        }
+
+        function navigateCycle() {
+            for (let i = 0; i < sequence.length; i++) {
+                setTimeout(() => {
+                    navigateNext();
+                }, i * 500);
+            }
+        }
+
+        function resetNavigation() {
+            currentState = {
+                currentPart: 'Void',
+                spiralLevel: 1,
+                consciousness: 'Void consciousness',
+                nextDecision: 'Choose to observe',
+                totalNavigations: 0
+            };
+            updateDisplay();
+            drawSpiral();
+        }
+
+        function updateDisplay() {
+            document.getElementById('currentPart').textContent = currentState.currentPart;
+            document.getElementById('spiralLevel').textContent = currentState.spiralLevel;
+            document.getElementById('consciousness').textContent = currentState.consciousness;
+            document.getElementById('nextDecision').textContent = currentState.nextDecision;
+            document.getElementById('totalNavigations').textContent = currentState.totalNavigations;
+        }
+
+        function drawSpiral() {
+            const canvas = document.getElementById('spiralCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw spiral
+            ctx.strokeStyle = '#4ecdc4';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            for (let i = 0; i < currentState.totalNavigations + 1; i++) {
+                const angle = i * 0.5;
+                const radius = i * 3;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+                
+                // Draw points
+                ctx.fillStyle = i === currentState.totalNavigations ? '#ff6b6b' : '#4ecdc4';
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Label points
+                if (i < partNames.length) {
+                    ctx.fillStyle = '#fff';
+                    ctx.font = '12px Arial';
+                    ctx.fillText(partNames[i % partNames.length], x + 10, y);
+                }
+            }
+            
+            ctx.stroke();
+        }
+
+        // Initialize display
+        updateDisplay();
+        drawSpiral();
+        
+        // Handle window resize
+        window.addEventListener('resize', drawSpiral);
+    </script>
+</body>
+</html>

@@ -23,11 +23,11 @@ export class A432PathFollower {
   private path: PathStep[] = [];
   private currentIndex: number = 0;
 
-  constructor(public pathType: 'trinity' | 'vortex' | 'pi' | 'custom' = 'trinity', public options: any = {}) {
+  constructor(public pathType: 'trinity' | 'vortex' | 'pi' | 'custom' = 'trinity', public options: unknown = {}) {
     this.startPath(pathType, options);
   }
 
-  startPath(pathType: 'trinity' | 'vortex' | 'pi' | 'custom' = 'trinity', options: any = {}) {
+  startPath(pathType: 'trinity' | 'vortex' | 'pi' | 'custom' = 'trinity', options: unknown = {}) {
     // For now, use getChainOfEvents for trinity; can extend for other types
     const baseChain = getChainOfEvents(options.depth || 6);
     this.path = baseChain.map(e => ({

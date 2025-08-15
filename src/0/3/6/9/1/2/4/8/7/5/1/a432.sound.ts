@@ -1,7 +1,9 @@
-// a432.sound.ts — Play digits as A432-based tones using Web Audio
-//-----------------------------------------------------------------
+// a432.sound.ts — Centralized A432 sound/music logic (DRY)
+//----------------------------------------------------------
 import { Digit } from './a432.types';
 import { frequencyForDigit } from './a432.math';
+
+export const A432_FREQUENCY = 432;
 
 let ctx: AudioContext | null = null;
 function ensureCtx() {
@@ -10,16 +12,23 @@ function ensureCtx() {
   return ctx;
 }
 
-export async function playDigit(d: Digit, duration = 0.2, vol = 0.2) {
+export function playFrequency(frequency: number, duration = 0.2, vol = 0.2) {
   const audio = ensureCtx();
   if (!audio) return;
-  const freq = frequencyForDigit((d === 9 ? 3 : (d % 3 === 0 ? d : 3)));
   const osc = audio.createOscillator();
   osc.type = 'sine';
-  osc.frequency.value = freq;
+  osc.frequency.value = frequency;
   const gain = audio.createGain();
   gain.gain.value = vol;
   osc.connect(gain).connect(audio.destination);
   osc.start();
   osc.stop(audio.currentTime + duration);
+}
+
+export function playDigit(d: Digit, duration = 0.2, vol = 0.2) {
+  playFrequency(frequencyForDigit((d === 9 ? 3 : (d % 3 === 0 ? d : 3))), duration, vol);
+}
+
+export function playTrinitySound(trinity: number, duration = 0.18, vol = 0.2) {
+  playFrequency(A432_FREQUENCY * trinity, duration, vol);
 } 

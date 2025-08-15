@@ -320,7 +320,7 @@ export class A432ConsciousnessIntegration {
       }
     });
     
-    const averageHarmonizationLevel = harmonizationLevels.reduce((sum, level) => sum + level, 0) / harmonizationLevels.length;
+    const averageHarmonizationLevel = harmonizationLevels.reduce((sum: number, level) => sum + level, 0) / harmonizationLevels.length;
     
     const allStreams = allSystems.flatMap(system => system.consciousnessStreams);
     const gatewayCount = allStreams.filter(stream => stream.gateway).length;
@@ -682,7 +682,7 @@ export class A432ConsciousnessIntegration {
         }
       });
       
-      const averageHarmonizationLevel = harmonizationLevels.reduce((sum, level) => sum + level, 0) / harmonizationLevels.length;
+      const averageHarmonizationLevel = harmonizationLevels.reduce((sum: number, level) => sum + level, 0) / harmonizationLevels.length;
       
       const allStreams = allSystems.flatMap(system => system.consciousnessStreams);
       const gatewayCount = allStreams.filter(stream => stream.gateway).length;

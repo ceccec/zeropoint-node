@@ -6,7 +6,7 @@
  * Every change in temperature is a living act of transformation and adaptation.
  */
 
-import { I } from './a432.i';
+import I from './a432.i';
 import { EventEmitter } from 'events';
 import { digitalRoot, digitAngleToCMYK, asAngle } from './a432.math';
 import { CMYK } from './a432.cmyk';

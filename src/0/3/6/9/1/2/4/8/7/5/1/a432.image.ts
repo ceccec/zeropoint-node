@@ -9,19 +9,21 @@
 
 import { 
   A432_CONSTANTS,
-  calculateDigitalRoot,
   calculateA432Consciousness,
   calculateA432DimensionalState,
   calculateA432Frequency,
-  createA432Harmonic
 } from './a432';
 
 import {
   A432Color,
   calculateA432Color,
   generateA432ColorStream,
-  A432ColorSystem
+  A432ColorSystem,
+  cmykToRgb
 } from './a432.color';
+
+import { RODIN_SEQUENCE } from './a432.math';
+import { calculateDigitalRoot } from './a432';
 
 // A432 Image Constants - Integer Fractions Only
 export const A432_IMAGE_CONSTANTS = {
@@ -110,10 +112,10 @@ export function calculateA432Image(frequency: number): A432Image {
   const color = calculateA432Color(frequency);
   
   // Get base image from consciousness
-  const baseImage = A432_IMAGE_CONSTANTS.CONSCIOUSNESS_IMAGES[consciousness];
+  const baseImage = A432_IMAGE_CONSTANTS.CONSCIOUSNESS_IMAGES[consciousness as keyof typeof A432_IMAGE_CONSTANTS.CONSCIOUSNESS_IMAGES];
   
   // Get dimensional image
-  const dimensionalImage = A432_IMAGE_CONSTANTS.DIMENSIONAL_IMAGES[dimensionalState];
+  const dimensionalImage = A432_IMAGE_CONSTANTS.DIMENSIONAL_IMAGES[dimensionalState as keyof typeof A432_IMAGE_CONSTANTS.DIMENSIONAL_IMAGES];
   
   // Harmonize image dimensions using imperial math
   const width = harmonizeImageComponent(baseImage.width, dimensionalImage.width, frequency);
@@ -161,7 +163,7 @@ export function generateA432ImageStream(
   
   // Generate image spectrum
   const images: A432Image[] = [];
-  const rodinSequence = A432_CONSTANTS.RODIN_SEQUENCE;
+  const rodinSequence = RODIN_SEQUENCE;
   
   for (let i = 0; i < rodinSequence.length; i++) {
     const harmonicFreq = rodinSequence[i] * frequency;
@@ -275,8 +277,8 @@ export function calculateA432ImageVortex(initialFrequency: number, cycles: numbe
     streams.push(stream);
     
     // Advance frequency using Rodin sequence
-    const rodinIndex = cycle % A432_CONSTANTS.RODIN_SEQUENCE.length;
-    currentFrequency = A432_CONSTANTS.RODIN_SEQUENCE[rodinIndex] * initialFrequency;
+    const rodinIndex = cycle % RODIN_SEQUENCE.length;
+    currentFrequency = RODIN_SEQUENCE[rodinIndex] * initialFrequency;
   }
   
   return streams;
@@ -301,9 +303,10 @@ export function a432ImageToCanvasData(
       const index = (y * imageMatrix.width + x) * 4;
       
       // Convert A432 color to RGB values
-      data[index] = Math.round(pixel.color.r * 255);     // Red
-      data[index + 1] = Math.round(pixel.color.g * 255); // Green
-      data[index + 2] = Math.round(pixel.color.b * 255); // Blue
+      const { r, g, b } = cmykToRgb(pixel.color);
+      data[index] = Math.round(r * 255);     // Red
+      data[index + 1] = Math.round(g * 255); // Green
+      data[index + 2] = Math.round(b * 255); // Blue
       data[index + 3] = 255; // Alpha (fully opaque)
     }
   }
@@ -320,9 +323,9 @@ export function a432ImageToSVG(imageMatrix: A432ImageMatrix): string {
   for (let y = 0; y < imageMatrix.height; y++) {
     for (let x = 0; x < imageMatrix.width; x++) {
       const pixel = imageMatrix.pixels[y][x];
-      const color = A432ColorSystem.toRGB(pixel.color);
+      const { r, g, b } = cmykToRgb(pixel.color);
       
-      svg += `<rect x="${x}" y="${y}" width="1" height="1" fill="${color}" />`;
+      svg += `<rect x="${x}" y="${y}" width="1" height="1" fill="rgb(${r * 255}, ${g * 255}, ${b * 255})" />`;
     }
   }
   
@@ -339,8 +342,8 @@ export function generateA432ImageCSSVariables(): string {
   // Generate consciousness images
   for (let consciousness = 1; consciousness <= 8; consciousness++) {
     const image = calculateA432ImageFromConsciousness(consciousness);
-    const color = A432ColorSystem.toRGB(image.color);
-    variables.push(`--a432-image-consciousness-${consciousness}: ${color};`);
+    const { r, g, b } = cmykToRgb(image.color);
+    variables.push(`--a432-image-consciousness-${consciousness}: rgb(${r * 255}, ${g * 255}, ${b * 255});`);
     variables.push(`--a432-image-width-${consciousness}: ${image.width * 100}%;`);
     variables.push(`--a432-image-height-${consciousness}: ${image.height * 100}%;`);
   }
@@ -348,17 +351,17 @@ export function generateA432ImageCSSVariables(): string {
   // Generate dimensional images
   for (let dimensionalState = 0; dimensionalState <= 9; dimensionalState++) {
     const image = calculateA432ImageFromDimensionalState(dimensionalState);
-    const color = A432ColorSystem.toRGB(image.color);
-    variables.push(`--a432-image-dimensional-${dimensionalState}: ${color};`);
+    const { r, g, b } = cmykToRgb(image.color);
+    variables.push(`--a432-image-dimensional-${dimensionalState}: rgb(${r * 255}, ${g * 255}, ${b * 255});`);
     variables.push(`--a432-image-depth-${dimensionalState}: ${image.depth * 100}%;`);
   }
   
   // Generate harmonic frequency images
-  A432_CONSTANTS.RODIN_SEQUENCE.forEach((multiplier, index) => {
+  RODIN_SEQUENCE.forEach((multiplier, index) => {
     const frequency = multiplier * 432;
     const image = calculateA432Image(frequency);
-    const color = A432ColorSystem.toRGB(image.color);
-    variables.push(`--a432-image-harmonic-${index}: ${color};`);
+    const { r, g, b } = cmykToRgb(image.color);
+    variables.push(`--a432-image-harmonic-${index}: rgb(${r * 255}, ${g * 255}, ${b * 255});`);
   });
   
   return `:root {\n  ${variables.join('\n  ')}\n}`;

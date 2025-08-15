@@ -1,27 +1,35 @@
 import { Controller } from '@hotwired/stimulus';
 import { startMetatron, MetatronFrame } from './a432.metatron';
+import { startA432Visualization } from './a432.pure.visualization';
 
 export default class extends Controller {
-  static targets=['scene'] as const;
+  static targets = ["scene"];
   declare readonly sceneTarget: SVGSVGElement;
   #stop?:()=>void;
   connect(){
+    console.log('Metatron controller connecting...');
     const svg=this.sceneTarget;
-    const nodes: SVGCircleElement[] = Array.from({length:12},(_,i)=>{
-      const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-      c.setAttribute('r','6');
-      svg.appendChild(c);
-      return c;
-    });
-    const R=80;
-    const pos=(i:number)=>[Math.cos(i*Math.PI/6)*R,Math.sin(i*Math.PI/6)*R];
-    nodes.forEach((n,i)=>{const [x,y]=pos(i);n.setAttribute('cx',String(x));n.setAttribute('cy',String(y));});
-    this.#stop=startMetatron(({nodes:frame}:MetatronFrame)=>{
-      frame.forEach((f,i)=>{
-        const n=nodes[i];
-        n.setAttribute('fill',`cmyk(${f.color.c}% ${f.color.m}% ${f.color.y}% / ${f.color.k}%)`);
-      });
-    });
+    console.log('Metatron SVG found:', svg);
+    
+    // Mount pure a432 visualization in Metatron quadrant
+    const container = document.createElement('div');
+    container.style.width = '100%';
+    container.style.height = '100%';
+    container.style.position = 'absolute';
+    container.style.top = '0';
+    container.style.left = '0';
+    container.style.zIndex = '1';
+    
+    // Clear existing SVG content and add container
+    svg.innerHTML = '';
+    svg.appendChild(container);
+    
+    console.log('Pure A432 visualization container created');
+    
+    // Start the pure a432 visualization
+    this.#stop = startA432Visualization(container);
+    
+    console.log('Pure A432 visualization mounted in Metatron quadrant');
   }
   disconnect(){this.#stop?.();}
 } 

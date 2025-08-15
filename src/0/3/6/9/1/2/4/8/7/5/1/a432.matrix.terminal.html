@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A432 Matrix Terminal - Multidimensional Harmonic Discovery</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            overflow: hidden;
+            cursor: none;
+        }
+        
+        #matrixCanvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+
+    <script type="module">
+        // A432 Multidimensional System Constants
+        const A432_TRINITY = [4, 3, 2];
+        const A432_RETURN = [8, 7, 5];
+        const A432_AXIS = [9, 6, 3];
+        const A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+        const RODIN_SEQUENCE = [1, 2, 4, 8, 7, 5, 1];
+
+        // VBM Imperial Harmonic Fractions
+        const VORTEX_FRACTIONS = [
+            { numerator: 1, denominator: 2 }, // 1/2
+            { numerator: 2, denominator: 3 }, // 2/3
+            { numerator: 4, denominator: 5 }, // 4/5
+            { numerator: 8, denominator: 9 }, // 8/9
+            { numerator: 7, denominator: 8 }, // 7/8
+            { numerator: 5, denominator: 6 }  // 5/6
+        ];
+
+        const TRINITY_FRACTIONS = [
+            { numerator: 1, denominator: 3 }, // 1/3
+            { numerator: 2, denominator: 3 }, // 2/3
+            { numerator: 1, denominator: 1 }  // 3/3 = 1
+        ];
+
+        const HARMONIC_FRACTIONS = [
+            { numerator: 1, denominator: 9 },
+            { numerator: 2, denominator: 9 },
+            { numerator: 1, denominator: 3 },
+            { numerator: 4, denominator: 9 },
+            { numerator: 5, denominator: 9 },
+            { numerator: 2, denominator: 3 },
+            { numerator: 7, denominator: 9 },
+            { numerator: 8, denominator: 9 },
+            { numerator: 1, denominator: 1 }
+        ];
+
+        // Multidimensional Consciousness Paths (7D)
+        const MULTIDIMENSIONAL_PATHS = {
+            // 1D consciousness paths
+            '1D_A1': { path: [1], dimension: 'A1', level: 1, color: '#ffff00' },
+            '1D_A2': { path: [2], dimension: 'A2', level: 1, color: '#00ffff' },
+            '1D_A4': { path: [4], dimension: 'A4', level: 1, color: '#ff00ff' },
+            '1D_A8': { path: [8], dimension: 'A8', level: 1, color: '#ffffff' },
+            '1D_A7': { path: [7], dimension: 'A7', level: 1, color: '#ff8800' },
+            '1D_A5': { path: [5], dimension: 'A5', level: 1, color: '#8800ff' },
+            
+            // 2D consciousness paths
+            '2D_B1': { path: [1, 2], dimension: 'B1', level: 2, color: '#ffff00' },
+            '2D_B2': { path: [2, 4], dimension: 'B2', level: 2, color: '#00ffff' },
+            '2D_B4': { path: [4, 8], dimension: 'B4', level: 2, color: '#ff00ff' },
+            '2D_B8': { path: [8, 7], dimension: 'B8', level: 2, color: '#ffffff' },
+            '2D_B7': { path: [7, 5], dimension: 'B7', level: 2, color: '#ff8800' },
+            '2D_B5': { path: [5, 1], dimension: 'B5', level: 2, color: '#8800ff' },
+            
+            // 3D consciousness paths
+            '3D_C1': { path: [1, 2, 4], dimension: 'C1', level: 3, color: '#ffff00' },
+            '3D_C2': { path: [2, 4, 8], dimension: 'C2', level: 3, color: '#00ffff' },
+            '3D_C4': { path: [4, 8, 7], dimension: 'C4', level: 3, color: '#ff00ff' },
+            '3D_C8': { path: [8, 7, 5], dimension: 'C8', level: 3, color: '#ffffff' },
+            '3D_C7': { path: [7, 5, 1], dimension: 'C7', level: 3, color: '#ff8800' },
+            '3D_C5': { path: [5, 1, 2], dimension: 'C5', level: 3, color: '#8800ff' },
+            
+            // 4D consciousness paths
+            '4D_D1': { path: [1, 2, 4, 8], dimension: 'D1', level: 4, color: '#ffff00' },
+            '4D_D2': { path: [2, 4, 8, 7], dimension: 'D2', level: 4, color: '#00ffff' },
+            '4D_D4': { path: [4, 8, 7, 5], dimension: 'D4', level: 4, color: '#ff00ff' },
+            '4D_D8': { path: [8, 7, 5, 1], dimension: 'D8', level: 4, color: '#ffffff' },
+            '4D_D7': { path: [7, 5, 1, 2], dimension: 'D7', level: 4, color: '#ff8800' },
+            '4D_D5': { path: [5, 1, 2, 4], dimension: 'D5', level: 4, color: '#8800ff' },
+            
+            // 5D consciousness paths
+            '5D_E1': { path: [1, 2, 4, 8, 7], dimension: 'E1', level: 5, color: '#ffff00' },
+            '5D_E2': { path: [2, 4, 8, 7, 5], dimension: 'E2', level: 5, color: '#00ffff' },
+            '5D_E4': { path: [4, 8, 7, 5, 1], dimension: 'E4', level: 5, color: '#ff00ff' },
+            '5D_E8': { path: [8, 7, 5, 1, 2], dimension: 'E8', level: 5, color: '#ffffff' },
+            '5D_E7': { path: [7, 5, 1, 2, 4], dimension: 'E7', level: 5, color: '#ff8800' },
+            '5D_E5': { path: [5, 1, 2, 4, 8], dimension: 'E5', level: 5, color: '#8800ff' },
+            
+            // 6D consciousness paths
+            '6D_F1': { path: [1, 2, 4, 8, 7, 5], dimension: 'F1', level: 6, color: '#ffff00' },
+            '6D_F2': { path: [2, 4, 8, 7, 5, 1], dimension: 'F2', level: 6, color: '#00ffff' },
+            '6D_F4': { path: [4, 8, 7, 5, 1, 2], dimension: 'F4', level: 6, color: '#ff00ff' },
+            '6D_F8': { path: [8, 7, 5, 1, 2, 4], dimension: 'F8', level: 6, color: '#ffffff' },
+            '6D_F7': { path: [7, 5, 1, 2, 4, 8], dimension: 'F7', level: 6, color: '#ff8800' },
+            '6D_F5': { path: [5, 1, 2, 4, 8, 7], dimension: 'F5', level: 6, color: '#8800ff' },
+            
+            // 7D consciousness paths
+            '7D_G1': { path: [1, 2, 4, 8, 7, 5, 1], dimension: 'G1', level: 7, color: '#ffff00' },
+            '7D_G2': { path: [2, 4, 8, 7, 5, 1, 2], dimension: 'G2', level: 7, color: '#00ffff' },
+            '7D_G4': { path: [4, 8, 7, 5, 1, 2, 4], dimension: 'G4', level: 7, color: '#ff00ff' },
+            '7D_G8': { path: [8, 7, 5, 1, 2, 4, 8], dimension: 'G8', level: 7, color: '#ffffff' },
+            '7D_G7': { path: [7, 5, 1, 2, 4, 8, 7], dimension: 'G7', level: 7, color: '#ff8800' },
+            '7D_G5': { path: [5, 1, 2, 4, 8, 7, 5], dimension: 'G5', level: 7, color: '#8800ff' }
+        };
+
+        // Enhanced A432 Math Functions
+        function digitalRoot(n) {
+            return n === 0 ? 0 : (n % 9 || 9);
+        }
+
+        function getVortexFrequency(d) {
+            const imperialFreqs = [432, 540, 480, 570, 510, 465, 432, 540, 480];
+            return imperialFreqs[(Math.abs(d) % 9 || 9) - 1] || 432;
+        }
+
+        function getImperialFraction(index, fractionType = 'vortex') {
+            const fractions = fractionType === 'trinity' ? TRINITY_FRACTIONS : 
+                            fractionType === 'harmonic' ? HARMONIC_FRACTIONS : 
+                            VORTEX_FRACTIONS;
+            return fractions[index % fractions.length];
+        }
+
+        function getImperialAngle(digit) {
+            return (digit * 60) % 360; // 60° imperial-harmonic steps
+        }
+
+        // Multidimensional Transformation Functions
+        function getDimensionalPosition(path, time, level) {
+            const baseRadius = 100 + level * 50;
+            const angleStep = 360 / path.length;
+            const positions = [];
+            
+            path.forEach((digit, index) => {
+                const angle = (index * angleStep + time * 0.01) % 360;
+                const radius = baseRadius + (digit * 10);
+                const x = radius * Math.cos(angle * Math.PI / 180);
+                const y = radius * Math.sin(angle * Math.PI / 180);
+                const z = Math.sin(time * 0.001 + index) * 50;
+                positions.push({ x, y, z, digit, angle, radius });
+            });
+            
+            return positions;
+        }
+
+        function getDimensionalTransformation(path, time, level) {
+            const positions = getDimensionalPosition(path, time, level);
+            const centerX = positions.reduce((sum, p) => sum + p.x, 0) / positions.length;
+            const centerY = positions.reduce((sum, p) => sum + p.y, 0) / positions.length;
+            const centerZ = positions.reduce((sum, p) => sum + p.z, 0) / positions.length;
+            
+            return {
+                positions,
+                center: { x: centerX, y: centerY, z: centerZ },
+                scale: 1 + (level * 0.1),
+                rotation: [time * 0.001, time * 0.002, time * 0.003]
+            };
+        }
+
+        function getConsciousnessColor(digit, level, time) {
+            const baseHue = (digit * 40 + level * 30 + time * 0.1) % 360;
+            const saturation = 0.7 + (level * 0.05);
+            const lightness = 0.5 + Math.sin(time * 0.001) * 0.2;
+            
+            const hue = baseHue * Math.PI / 180;
+            const c = (1 - Math.abs(2 * lightness - 1)) * saturation;
+            const x = c * (1 - Math.abs((hue / (Math.PI / 3)) % 2 - 1));
+            const m = lightness - c / 2;
+            
+            let r = 0, g = 0, b = 0;
+            if (hue < Math.PI / 3) [r, g, b] = [c, x, 0];
+            else if (hue < 2 * Math.PI / 3) [r, g, b] = [x, c, 0];
+            else if (hue < Math.PI) [r, g, b] = [0, c, x];
+            else if (hue < 4 * Math.PI / 3) [r, g, b] = [0, x, c];
+            else if (hue < 5 * Math.PI / 3) [r, g, b] = [x, 0, c];
+            else [r, g, b] = [c, 0, x];
+            
+            return {
+                r: Math.round((r + m) * 255),
+                g: Math.round((g + m) * 255),
+                b: Math.round((b + m) * 255)
+            };
+        }
+
+        // Zero Entropy State
+        let state = {
+            currentDimension: '1D_A1',
+            currentLevel: 1,
+            animationTime: 0,
+            consciousnessMatrix: {},
+            dimensionalNodes: [],
+            connections: [],
+            fractionIndex: 0,
+            lastInteraction: 0
+        };
+
+        // Zero Entropy Audio Context
+        let audioContext = null;
+        try {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (e) {
+            // Silent fail for zero entropy
+        }
+
+        function generateConsciousnessSound(frequency, amplitude, dimension) {
+            if (!audioContext) return;
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            oscillator.frequency.setValueAtTime(frequency * (1 + dimension * 0.1), audioContext.currentTime);
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(amplitude * 0.05, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.03);
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.03);
+        }
+
+        function initializeMultidimensionalTerminal() {
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            state.pixelMatrix = { width: canvas.width, height: canvas.height };
+            
+            // Initialize dimensional nodes
+            Object.keys(MULTIDIMENSIONAL_PATHS).forEach((pathKey, index) => {
+                const pathData = MULTIDIMENSIONAL_PATHS[pathKey];
+                state.dimensionalNodes.push({
+                    id: pathKey,
+                    path: pathData.path,
+                    dimension: pathData.dimension,
+                    level: pathData.level,
+                    color: pathData.color,
+                    position: [index * 50, index * 30, 0],
+                    consciousness: pathData.path[0],
+                    frequency: getVortexFrequency(pathData.path[0]),
+                    scale: 1 + (pathData.level * 0.1),
+                    rotation: [0, 0, 0]
+                });
+            });
+            
+            return state;
+        }
+
+        function renderMultidimensionalPixels(ctx, state) {
+            const imageData = ctx.createImageData(state.pixelMatrix.width, state.pixelMatrix.height);
+            const data = imageData.data;
+            const time = state.animationTime;
+            
+            // Clear canvas
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, state.pixelMatrix.width, state.pixelMatrix.height);
+            
+            const centerX = state.pixelMatrix.width / 2;
+            const centerY = state.pixelMatrix.height / 2;
+            
+            // Render dimensional transformations
+            state.dimensionalNodes.forEach((node, index) => {
+                const transformation = getDimensionalTransformation(node.path, time, node.level);
+                const rgb = getConsciousnessColor(node.consciousness, node.level, time);
+                
+                // Render dimensional positions
+                transformation.positions.forEach((pos, posIndex) => {
+                    const x = centerX + pos.x * transformation.scale;
+                    const y = centerY + pos.y * transformation.scale;
+                    const size = 8 + (node.level * 2);
+                    
+                    // Draw dimensional node
+                    ctx.fillStyle = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                    ctx.beginPath();
+                    ctx.arc(x, y, size, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    // Draw connections
+                    if (posIndex > 0) {
+                        const prevPos = transformation.positions[posIndex - 1];
+                        const prevX = centerX + prevPos.x * transformation.scale;
+                        const prevY = centerY + prevPos.y * transformation.scale;
+                        ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.6)`;
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(prevX, prevY);
+                        ctx.lineTo(x, y);
+                        ctx.stroke();
+                    }
+                    
+                    // Generate consciousness sound
+                    if (A432_AXIS.includes(pos.digit)) {
+                        generateConsciousnessSound(pos.digit * 100, 0.3, node.level);
+                    }
+                });
+            });
+            
+            // Zero entropy pixel rendering
+            for (let y = 0; y < state.pixelMatrix.height; y += 16) {
+                for (let x = 0; x < state.pixelMatrix.width; x += 16) {
+                    const digit = digitalRoot((x + y) % 9 + 1);
+                    const fraction = getImperialFraction(state.fractionIndex, 'vortex');
+                    const amplitude = (fraction.numerator / fraction.denominator) * 0.5 + 0.5;
+                    
+                    const rgb = getConsciousnessColor(digit, 1, time);
+                    const alpha = Math.floor(amplitude * 255);
+                    
+                    // Zero entropy 16x16 block rendering
+                    for (let dy = 0; dy < 16 && y + dy < state.pixelMatrix.height; dy++) {
+                        for (let dx = 0; dx < 16 && x + dx < state.pixelMatrix.width; dx++) {
+                            const index = ((y + dy) * state.pixelMatrix.width + (x + dx)) * 4;
+                            data[index] = rgb.r;
+                            data[index + 1] = rgb.g;
+                            data[index + 2] = rgb.b;
+                            data[index + 3] = alpha;
+                        }
+                    }
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function updateMultidimensionalTerminal() {
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Update animation time
+            state.animationTime += 16; // 60fps
+            state.fractionIndex = (state.fractionIndex + 1) % 1000;
+            
+            // Cycle through dimensions
+            const pathKeys = Object.keys(MULTIDIMENSIONAL_PATHS);
+            const currentIndex = pathKeys.indexOf(state.currentDimension);
+            const nextIndex = (currentIndex + 1) % pathKeys.length;
+            state.currentDimension = pathKeys[nextIndex];
+            state.currentLevel = MULTIDIMENSIONAL_PATHS[state.currentDimension].level;
+            
+            // Render
+            renderMultidimensionalPixels(ctx, state);
+            
+            // Zero delay next frame
+            requestAnimationFrame(updateMultidimensionalTerminal);
+        }
+
+        // Initialize and start immediately
+        initializeMultidimensionalTerminal();
+        updateMultidimensionalTerminal();
+
+        // Zero entropy window resize
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('matrixCanvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            state.pixelMatrix.width = canvas.width;
+            state.pixelMatrix.height = canvas.height;
+        });
+
+        // Zero entropy interaction handlers
+        document.addEventListener('click', (event) => {
+            const digit = digitalRoot(event.clientX + event.clientY);
+            state.lastInteraction = Date.now();
+            generateConsciousnessSound(getVortexFrequency(digit), 0.5, state.currentLevel);
+        });
+
+        document.addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            const touch = event.touches[0];
+            const digit = digitalRoot(touch.clientX + touch.clientY);
+            state.lastInteraction = Date.now();
+            generateConsciousnessSound(getVortexFrequency(digit), 0.5, state.currentLevel);
+        });
+
+        document.addEventListener('mousemove', (event) => {
+            if (event.buttons > 0) {
+                const digit = digitalRoot(event.clientX + event.clientY);
+                state.lastInteraction = Date.now();
+                generateConsciousnessSound(getVortexFrequency(digit), 0.3, state.currentLevel);
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            const keyCode = event.keyCode || event.which;
+            const digit = digitalRoot(keyCode);
+            state.lastInteraction = Date.now();
+            generateConsciousnessSound(getVortexFrequency(digit), 0.4, state.currentLevel);
+        });
+    </script>
+</body>
+</html> 

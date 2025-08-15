@@ -73,12 +73,12 @@ export class A432CmykDimensions {
    */
   private mapDimensionToCmyk(dimension: number, coordinates: number[]): CMYK {
     // Create fraction based on dimension and coordinates
-    const numerator = coordinates.reduce((sum, coord, index) => {
-      return sum + (coord * (index + 1)) % 9 + 1;
+    const numerator = coordinates.reduce((sum, coord) => {
+      return sum + (coord * (coordinates.indexOf(coord) + 1)) % 9 + 1;
     }, dimension);
     
-    const denominator = coordinates.reduce((sum, coord, index) => {
-      return sum + (coord * (this.dimensions - index)) % 9 + 1;
+    const denominator = coordinates.reduce((sum, coord) => {
+      return sum + (coord * (this.dimensions - coordinates.indexOf(coord))) % 9 + 1;
     }, dimension);
 
     const fraction: Fraction = { numerator, denominator };

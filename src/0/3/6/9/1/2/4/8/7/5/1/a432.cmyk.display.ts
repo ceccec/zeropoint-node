@@ -9,7 +9,7 @@
  * Navigation is the living journey through the infinite CMYK field of possibility.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { Fraction, CMYK, fractionToCMYK } from './a432.cmyk';
 import { digitalRoot } from './a432.math';
 
 export interface DisplayState {
@@ -33,7 +33,7 @@ export interface NavigationControls {
 export interface ColorConversion {
   from: string;
   to: string;
-  convert: (color: any) => any;
+  convert: (color: CMYK | unknown) => CMYK | unknown;
 }
 
 /**
@@ -274,8 +274,6 @@ export class A432CmykDisplay {
    * Generate HTML for interactive CMYK display
    */
   generateHtml(): string {
-    const matrix = this.generateCmykMatrix();
-    const controls = this.getNavigationControls();
     
     return `
 <!DOCTYPE html>

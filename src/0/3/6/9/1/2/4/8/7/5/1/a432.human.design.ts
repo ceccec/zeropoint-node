@@ -7,6 +7,8 @@
  * Provides metaphysical and mathematical documentation.
  */
 
+import { humanConsciousnessEmitter, HumanConsciousnessEvent } from './a432.human.consciousness';
+
 export interface HumanAttribute {
   name: string;
   value: number; // 0-9
@@ -107,6 +109,42 @@ export function harmonizeAll(): HumanDesign {
 
 export function exportHumanDesign(design: HumanDesign): string {
   return JSON.stringify(design, null, 2);
+}
+
+/**
+ * Real-time harmonizer: updates HumanDesign in response to consciousness/emotion stream.
+ * Maps digit/emotion to the emotional attribute (default), but can be extended for others.
+ * Calls the provided callback with the updated design.
+ */
+let _currentHumanDesign: HumanDesign = harmonizeAll();
+export function startHumanDesignHarmonizer(
+  callback: (design: HumanDesign, event: HumanConsciousnessEvent) => void,
+  attribute: keyof HumanDesign = 'emotional'
+): () => void {
+  const handler = (e: HumanConsciousnessEvent) => {
+    // Map digit (0-9) to value, update the chosen attribute
+    const value = e.digit;
+    // Copy current values
+    const d = _currentHumanDesign;
+    // Update the selected attribute
+    const args: [number, number, number, number, number, number, number, number] = [
+      d.physical.value,
+      d.emotional.value,
+      d.mental.value,
+      d.spiritual.value,
+      d.social.value,
+      d.creative.value,
+      d.energetic.value,
+      d.environmental.value
+    ];
+    const idx = ['physical','emotional','mental','spiritual','social','creative','energetic','environmental'].indexOf(attribute);
+    if(idx>=0) args[idx] = value;
+    _currentHumanDesign = createHumanDesign(...args);
+    callback(_currentHumanDesign, e);
+  };
+  humanConsciousnessEmitter.on('hconscious', handler);
+  // Return disposer
+  return () => humanConsciousnessEmitter.off('hconscious', handler);
 }
 
 export const a432HumanDesignMetaphysics = `

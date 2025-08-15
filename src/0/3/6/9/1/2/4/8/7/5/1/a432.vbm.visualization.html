@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 VBM Sequence Visualization</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #000;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #4CAF50;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .info-panel {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    
+    button:hover {
+      background: #45a049;
+    }
+    
+    .visualization-container {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .canvas-container, .svg-container {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .canvas-container canvas, .svg-container {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      background: #000;
+    }
+    
+    .node-info {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    
+    .node-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .node-item {
+      background: rgba(76, 175, 80, 0.2);
+      border: 1px solid #4CAF50;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    
+    .trinity {
+      background: rgba(255, 193, 7, 0.2);
+      border-color: #FFC107;
+    }
+    
+    .zero {
+      background: rgba(33, 150, 243, 0.2);
+      border-color: #2196F3;
+    }
+    
+    .angle-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .info-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 5px;
+    }
+    
+    .info-box h3 {
+      margin-top: 0;
+      color: #4CAF50;
+    }
+    
+    .color-preview {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>A432 VBM Sequence Visualization</h1>
+    
+    <div class="info-panel">
+      <h3>VBM Visualization System</h3>
+      <p><strong>Sequence:</strong> [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1]</p>
+      <p><strong>Angle Step:</strong> 60° per node (trinity harmonic)</p>
+      <p><strong>Colors:</strong> Generated using digital root logic mapped to HSV</p>
+      <p><strong>Nodes:</strong> Each represents a phase node in the A432 system</p>
+    </div>
+    
+    <div class="controls">
+      <button id="renderBtn">Render Visualization</button>
+      <button id="infoBtn">Show Node Info</button>
+      <button id="clearBtn">Clear</button>
+    </div>
+    
+    <div class="visualization-container">
+      <div class="canvas-container">
+        <h3>Canvas Visualization</h3>
+        <canvas id="canvasViz" width="400" height="400"></canvas>
+      </div>
+      
+      <div class="svg-container">
+        <h3>SVG Visualization</h3>
+        <div id="svgViz"></div>
+      </div>
+    </div>
+    
+    <div class="node-info" id="nodeInfo" style="display: none;">
+      <h3>Node Information</h3>
+      <div class="node-grid" id="nodeGrid"></div>
+    </div>
+    
+    <div class="angle-info">
+      <div class="info-box">
+        <h3>Trinity Nodes</h3>
+        <p><strong>3:</strong> 0° (base frequency node)</p>
+        <p><strong>6:</strong> 120° (second trinity node)</p>
+        <p><strong>9:</strong> 240° (third trinity node)</p>
+      </div>
+      
+      <div class="info-box">
+        <h3>Digital Root Colors</h3>
+        <p>Colors generated using: hue = (digit % 9) * 36°</p>
+        <p><strong>0:</strong> 0° (red)</p>
+        <p><strong>1:</strong> 36° (orange)</p>
+        <p><strong>2:</strong> 72° (yellow)</p>
+        <p><strong>3:</strong> 108° (green)</p>
+        <p><strong>4:</strong> 144° (cyan)</p>
+        <p><strong>5:</strong> 180° (blue)</p>
+        <p><strong>6:</strong> 216° (magenta)</p>
+        <p><strong>7:</strong> 252° (purple)</p>
+        <p><strong>8:</strong> 288° (pink)</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import the harmonized VBM visualization module
+    import { 
+      createVBMCanvasVisualization,
+      createVBMSVGVisualization,
+      VBM_VISUALIZATION_CONSTANTS, 
+      VBM_VISUALIZATION_DOC,
+      getVBMVisualizationColors 
+    } from './a432.vbm.visualization.ts';
+    
+    // DOM elements
+    const renderBtn = document.getElementById('renderBtn');
+    const infoBtn = document.getElementById('infoBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const canvasViz = document.getElementById('canvasViz');
+    const svgViz = document.getElementById('svgViz');
+    const nodeInfo = document.getElementById('nodeInfo');
+    const nodeGrid = document.getElementById('nodeGrid');
+    
+    let canvasVisualization = null;
+    let svgVisualization = null;
+    
+    // Render visualizations
+    function renderVisualizations() {
+      // Canvas visualization
+      if (canvasVisualization) {
+        canvasVisualization.render();
+      } else {
+        canvasVisualization = createVBMCanvasVisualization(canvasViz);
+        canvasVisualization.render();
+      }
+      
+      // SVG visualization
+      if (svgVisualization) {
+        svgVisualization.render();
+      } else {
+        svgVisualization = createVBMSVGVisualization(svgViz);
+        svgVisualization.render();
+      }
+      
+      console.log('VBM Visualizations rendered');
+    }
+    
+    // Show node information
+    function showNodeInfo() {
+      const sequence = VBM_VISUALIZATION_CONSTANTS.SEQUENCE;
+      const colors = getVBMVisualizationColors();
+      
+      nodeGrid.innerHTML = '';
+      
+      sequence.forEach((digit, index) => {
+        const color = colors[index];
+        const angle = (index * VBM_VISUALIZATION_CONSTANTS.ANGLE_STEP);
+        const digitalRoot = digit % 9 || 9;
+        
+        const nodeDiv = document.createElement('div');
+        nodeDiv.className = 'node-item';
+        
+        if (digit === 0) {
+          nodeDiv.className += ' zero';
+        } else if ([3, 6, 9].includes(digit)) {
+          nodeDiv.className += ' trinity';
+        }
+        
+        nodeDiv.innerHTML = `
+          <div class="color-preview" style="background-color: ${color};"></div>
+          <div><strong>${digit}</strong></div>
+          <div style="font-size: 12px; color: #ccc;">
+            ${angle}° | DR: ${digitalRoot}
+          </div>
+        `;
+        
+        nodeGrid.appendChild(nodeDiv);
+      });
+      
+      nodeInfo.style.display = 'block';
+    }
+    
+    // Clear visualizations
+    function clearVisualizations() {
+      if (canvasVisualization) {
+        canvasViz.innerHTML = '';
+        canvasVisualization = null;
+      }
+      
+      if (svgVisualization) {
+        svgViz.innerHTML = '';
+        svgVisualization = null;
+      }
+      
+      nodeInfo.style.display = 'none';
+      console.log('VBM Visualizations cleared');
+    }
+    
+    // Event listeners
+    renderBtn.addEventListener('click', renderVisualizations);
+    infoBtn.addEventListener('click', showNodeInfo);
+    clearBtn.addEventListener('click', clearVisualizations);
+    
+    // Auto-render on load
+    renderVisualizations();
+    
+    // Log system information
+    console.log('A432 VBM Visualization System:');
+    console.log('Purpose:', VBM_VISUALIZATION_DOC.purpose);
+    console.log('Sequence:', VBM_VISUALIZATION_DOC.sequence);
+    console.log('Angles:', VBM_VISUALIZATION_DOC.angles);
+    console.log('Colors:', VBM_VISUALIZATION_DOC.colors);
+    console.log('Nodes:', VBM_VISUALIZATION_DOC.nodes);
+    console.log('Grid:', VBM_VISUALIZATION_DOC.grid);
+    console.log('Title:', VBM_VISUALIZATION_DOC.title);
+    
+    console.log('Visualization Constants:', VBM_VISUALIZATION_CONSTANTS);
+    console.log('Colors:', getVBMVisualizationColors());
+  </script>
+</body>
+</html> 

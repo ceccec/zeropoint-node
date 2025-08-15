@@ -2,6 +2,8 @@
 // Canonical pregnancy/creation trinity module (3, 6, 9)
 // Encodes metaphysical and mathematical logic of pregnancy, gestation, and birth as a trinity process
 
+import { getTrinityAxis } from './a432.math';
+
 /**
  * Returns the canonical trinity stages of pregnancy: Creation (3), Gestation (6), Birth (9)
  */
@@ -17,7 +19,7 @@ export function getPregnancyTrinityStages() {
  * Returns the canonical gestation cycle as a stream of trinity values (3, 6, 9) repeated for 9 cycles
  */
 export function getGestationCycle(cycles: number = 9) {
-  const trinity = [3, 6, 9];
+  const trinity = getTrinityAxis();
   return Array.from({ length: cycles * 3 }, (_, i) => trinity[i % 3]);
 }
 
@@ -40,7 +42,7 @@ export function renderPregnancyTrinityVisualization(currentStage: number = 0): s
       ${stages.map((s, i) => `
         <circle cx="${cx + i * gap}" cy="${cy}" r="${i === currentStage ? r + 8 : r}" fill="${colors[i]}" stroke="#fff" stroke-width="2">
           <title>${s.name}: ${s.meaning}</title>
-          ${i === currentStage ? `<animate attributeName="r" values="${r};${r + 16};${r}" dur="1.2s" repeatCount="indefinite" />` : ''}
+          ${i === currentStage ? `<animate attributeName="r" values="${r};${r + 12};${r}" dur="1.2s" repeatCount="indefinite" />` : ''}
         </circle>
         <text x="${cx + i * gap}" y="${cy + 6}" text-anchor="middle" font-size="18" fill="#fff">${s.trinity}</text>
         <text x="${cx + i * gap}" y="${cy + 32}" text-anchor="middle" font-size="13" fill="#ff8">${s.name}</text>
@@ -54,7 +56,7 @@ export function renderPregnancyTrinityVisualization(currentStage: number = 0): s
  * Renders a gestation cycle animation as SVG (row of trinity-colored circles, currentIndex pulses)
  */
 export function renderGestationCycleAnimation(currentIndex: number = 0, cycles: number = 9): string {
-  const trinity = [3, 6, 9];
+  const trinity = getTrinityAxis();
   const colors = ['#39f', '#6f3', '#f93'];
   const total = cycles * 3;
   const r = 14, gap = 36, cx = 24, cy = 32;
@@ -67,7 +69,7 @@ export function renderGestationCycleAnimation(currentIndex: number = 0, cycles: 
         return `
           <circle cx="${cx + i * gap}" cy="${cy}" r="${isCurrent ? r + 6 : r}" fill="${color}" stroke="#fff" stroke-width="2">
             <title>Step ${i + 1}: Trinity ${t}</title>
-            ${isCurrent ? `<animate attributeName=\"r\" values=\"${r};${r + 12};${r}\" dur=\"1.2s\" repeatCount=\"indefinite\" />` : ''}
+            ${isCurrent ? `<animate attributeName="r" values="${r};${r + 12};${r}" dur="1.2s" repeatCount="indefinite" />` : ''}
           </circle>
           <text x="${cx + i * gap}" y="${cy + 28}" text-anchor="middle" font-size="10" fill="#ff8">${t}</text>
         `;

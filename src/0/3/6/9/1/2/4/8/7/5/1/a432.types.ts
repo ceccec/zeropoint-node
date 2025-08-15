@@ -30,5 +30,13 @@ export type AngleDeg = number & { readonly __brand: 'AngleDeg' };
 
 // helpers to brand values (no runtime cost)
 export const asDigit = (n: number) => n as Digit;
+/**
+ * Safely convert a number to Digit (0-9), throws if out of range.
+ */
+export function toDigit(n: number): Digit {
+  const d = n % 10;
+  if (!Number.isInteger(d) || d < 0 || d > 9) throw new Error('Not a Digit: ' + n);
+  return d as Digit;
+}
 export const asHz = (n: number) => n as Hz;
 export const asAngle = (n: number) => n as AngleDeg; 

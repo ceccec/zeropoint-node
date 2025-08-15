@@ -304,7 +304,7 @@ V(2) = 4 × φ = 4φ
 V(3) = 8 × φ = 8φ
 V(4) = 7 × φ = 7φ
 V(5) = 5 × φ = 5φ
-V(6) = 1 × φ = φ (cycle repeats)
+V(6) = 1 × φ = φ (sequense shifts 60 degrees norh/south and continues in new dimension)
 
 Properties:
 1. The sequence cycles every 6 positions

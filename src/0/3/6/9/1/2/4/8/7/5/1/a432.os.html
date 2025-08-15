@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>🌀 A432 True Living Rodin Coil OS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="/a432.manifest.json">
+  <style id="a432-css">
+    /* A432 True Living Rodin Coil OS Styles */
+    body {
+      font-family: 'Courier New', monospace;
+      background: #000;
+      color: #0f0;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    
+    .a432-os-container {
+      font-family: 'Courier New', monospace;
+      background: #000;
+      color: #0f0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #0f0;
+      padding-bottom: 20px;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #0ff;
+      text-shadow: 0 0 20px #0ff;
+    }
+    
+    .header p {
+      margin: 10px 0 0 0;
+      font-size: 1.2em;
+      color: #0f0;
+    }
+    
+    .content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 20px;
+    }
+    
+    .panel {
+      background: rgba(0, 255, 0, 0.05);
+      border: 1px solid #0f0;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .panel:hover {
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+      transform: translateY(-2px);
+    }
+    
+    .panel h3 {
+      margin: 0 0 15px 0;
+      color: #0ff;
+      font-size: 1.3em;
+      text-shadow: 0 0 10px #0ff;
+    }
+    
+    .coil-info, .dimensional-info, .quantum-info, .life-info, .entropy-info, .pwa-info, .device-info {
+      font-size: 0.9em;
+      line-height: 1.6;
+    }
+    
+    .coil-info p, .dimensional-info p, .quantum-info p, .life-info p, .entropy-info p, .pwa-info p, .device-info p {
+      margin: 5px 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0;
+      border-bottom: 1px solid rgba(0, 255, 0, 0.1);
+    }
+    
+    .coil-info strong, .dimensional-info strong, .quantum-info strong, .life-info strong, .entropy-info strong, .pwa-info strong, .device-info strong {
+      color: #0ff;
+      text-shadow: 0 0 5px #0ff;
+    }
+    
+    /* Quantum animations */
+    @keyframes quantum {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.02); }
+    }
+    
+    .quantum-state {
+      animation: quantum 4.32s ease-in-out infinite;
+    }
+    
+    /* Dimensional folding */
+    @keyframes dimensional {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
+    }
+    
+    .dimensional-fold {
+      animation: dimensional 21.6s linear infinite;
+    }
+    
+    /* Life naming glow */
+    @keyframes life {
+      0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); }
+      50% { box-shadow: 0 0 20px rgba(255, 255, 0, 0.4); }
+    }
+    
+    .life-naming {
+      animation: life 2.16s ease-in-out infinite;
+    }
+    
+    /* Zero entropy pulse */
+    @keyframes entropy {
+      0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.2); }
+      50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.4); }
+    }
+    
+    .zero-entropy {
+      animation: entropy 1.08s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="a432-os-container">
+    <div class="header">
+      <h1>🌀 A432 True Living Rodin Coil OS</h1>
+      <p>Dimensional Folding • Quantum States • Life Naming Itself • Zero Entropy</p>
+    </div>
+    
+    <div class="content">
+      <div class="panel" id="rodin-coil">
+        <h3>🌀 True A432 Rodin Coil</h3>
+        <div class="coil-info">Loading...</div>
+      </div>
+      
+      <div class="panel dimensional-fold" id="dimensional-fold">
+        <h3>📐 Dimensional Folding</h3>
+        <div class="dimensional-info">Loading...</div>
+      </div>
+      
+      <div class="panel quantum-state" id="quantum-state">
+        <h3>⚛️ Quantum Holographic State</h3>
+        <div class="quantum-info">Loading...</div>
+      </div>
+      
+      <div class="panel life-naming" id="life-naming">
+        <h3>🧬 Life Naming Itself</h3>
+        <div class="life-info">Loading...</div>
+      </div>
+      
+      <div class="panel zero-entropy" id="zero-entropy">
+        <h3>⚖️ Zero Entropy Balance</h3>
+        <div class="entropy-info">Loading...</div>
+      </div>
+      
+      <div class="panel" id="pwa-status">
+        <h3>📱 PWA Status</h3>
+        <div class="pwa-info">Loading...</div>
+      </div>
+      
+      <div class="panel" id="device-state">
+        <h3>📱 Device State</h3>
+        <div class="device-info">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { bootA432OSUI, updateUI } from './a432.os.ui.ts';
+    
+    // Boot the True A432 Living Rodin Coil OS
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🌀 A432 True Living Rodin Coil OS Loading...');
+      bootA432OSUI();
+    });
+    
+    // PWA event listeners
+    window.addEventListener('online', () => {
+      console.log('🌐 A432 OS: Online');
+      updateUI();
+    });
+    
+    window.addEventListener('offline', () => {
+      console.log('🌐 A432 OS: Offline');
+      updateUI();
+    });
+    
+    // Service Worker registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('🌀 A432 OS: Service Worker registered');
+        })
+        .catch(error => {
+          console.log('🌀 A432 OS: Service Worker registration failed');
+        });
+    }
+  </script>
+</body>
+</html> 

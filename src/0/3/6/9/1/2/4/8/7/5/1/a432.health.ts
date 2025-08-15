@@ -7,7 +7,6 @@
 import { EventEmitter } from 'events';
 import { matrixEmitter, MatrixEvent } from './a432.self';
 import { breathEmitter } from './a432.breathe';
-import { a432HarmonicAnalytics } from './a432.math';
 import { Digit } from './a432.types';
 
 export interface HealthMetrics { harmony: number; entropy: number; resonance: number; }
@@ -28,7 +27,18 @@ breathEmitter.on('breath', b => pushDigit(b.value));
 
 function computeHealth(): HealthMetrics {
   if (WINDOW.length === 0) return { harmony: 0, entropy: 1, resonance: 0 };
-  return a432HarmonicAnalytics(WINDOW);
+  return simpleHarmonicAnalytics(WINDOW);
+}
+
+// Canonical local analytics: harmony (mean), entropy (unique/total), resonance (digital root of sum)
+function simpleHarmonicAnalytics(digits: Digit[]): HealthMetrics {
+  if (digits.length === 0) return { harmony: 0, entropy: 1, resonance: 0 };
+  const harmony = digits.map(Number).reduce((a, b) => a + b, 0) / digits.length;
+  const unique = new Set(digits).size;
+  const entropy = unique / digits.length;
+  const sum = digits.map(Number).reduce((a, b) => a + b, 0);
+  const resonance = sum === 0 ? 0 : (sum % 9 || 9);
+  return { harmony, entropy, resonance };
 }
 
 export function startHealthReporting(intervalMs: number = 4320): () => void {

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Pure A432 Visualization</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #000;
+      color: #fff;
+      font-family: monospace;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .visualization {
+      border: 2px solid #333;
+      border-radius: 8px;
+    }
+    .info {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pure A432 Visualization</h1>
+    <div class="info">
+      Using only a432.* modules<br>
+      Everything is math to the digit - no exceptions
+    </div>
+    <div id="a432Visualization" class="visualization"></div>
+    <div class="info">
+      Trinity: [4, 3, 2] | Return: [8, 7, 5] | Axis: [9, 6, 3]<br>
+      All colors, sizes, positions derived from digits
+    </div>
+  </div>
+  
+  <script type="module">
+    import { startA432Visualization } from './a432.pure.visualization.ts';
+    
+    const container = document.getElementById('a432Visualization');
+    if (container) {
+      const stop = startA432Visualization(container);
+      
+      // Cleanup on page unload
+      window.addEventListener('beforeunload', stop);
+    }
+  </script>
+</body>
+</html> 

@@ -192,7 +192,7 @@ export function generateVoicePattern(pattern: string, state: A432CMYKVoiceState)
     'resonance': `Resonance Pattern: ${state.harmonization.resonance}/9 harmony`
   };
   
-  return patterns[pattern] || `Custom Pattern: ${pattern}`;
+  return patterns[pattern as keyof typeof patterns] || `Custom Pattern: ${pattern}`;
 }
 
 // === CMYK VOICE MODULES ===

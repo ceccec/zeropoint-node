@@ -9,8 +9,10 @@
  * @author A432 System
  */
 
-import { digitalRoot } from './a432.math';
-export { digitalRoot };
+import { digitalRoot, getReversedA432Sequence } from './a432.math';
+
+// Canonical CMYK color sequence derived from the reversed A432 sequence
+export const CMYK_SEQUENCE = getReversedA432Sequence();
 
 export type Fraction = { numerator: number; denominator: number };
 export type CMYK = { c: number; m: number; y: number; k: number };

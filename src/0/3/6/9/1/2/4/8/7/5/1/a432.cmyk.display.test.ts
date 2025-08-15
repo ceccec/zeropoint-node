@@ -6,7 +6,7 @@
  * of the display operations.
  */
 
-import { A432CmykDisplay, DisplayState, NavigationControls } from './a432.cmyk.display';
+import { A432CmykDisplay } from './a432.cmyk.display';
 import { Fraction, CMYK } from './a432.cmyk';
 
 describe('A432CmykDisplay', () => {

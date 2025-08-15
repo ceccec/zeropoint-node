@@ -6,7 +6,7 @@
  * Every scroll is a living act of observation, flow, and harmonization.
  */
 
-import { I } from './a432.i';
+import I from './a432.i';
 
 export type ScrollDirection = 'up' | 'down' | 'left' | 'right';
 

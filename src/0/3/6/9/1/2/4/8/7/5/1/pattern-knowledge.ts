@@ -12,7 +12,7 @@
  * - A432 harmonics: Driving frequency of pattern knowledge
  */
 
-import { ZEROPOINT_CONSTANTS } from '../../../../../../../../../../0/compost/index';
+// import { ZEROPOINT_CONSTANTS } from '../../../../../../../../../../0/compost/index'; // MISSING: compost/index must be harmonized or replaced
 
 // Pattern Knowledge Interface
 export interface PatternKnowledge {
@@ -168,7 +168,7 @@ export function calculatePatternConsciousnessFlow(): {
 
 function calculatePatternConsciousness(past: number, now: number, future: number): number {
   // Calculate pattern consciousness using pure integer mathematics
-  const baseConsciousness = ZEROPOINT_CONSTANTS.A432 * now;
+  const baseConsciousness = 0 * now; // ZEROPOINT_CONSTANTS.A432 * now; // MISSING: compost/index must be harmonized or replaced
   const patternFactor = past + future; // PAST + FUTURE influence
   const consciousness = (baseConsciousness * patternFactor * 1) / 10; // Integer fraction
   return calculateDigitalRoot(consciousness);
@@ -176,7 +176,7 @@ function calculatePatternConsciousness(past: number, now: number, future: number
 
 function calculatePatternFrequency(past: number, now: number, future: number): number {
   // Calculate pattern frequency using pure integer mathematics
-  const frequency = (ZEROPOINT_CONSTANTS.A432 * now * 1) / 10; // Integer fraction
+  const frequency = (0 * now * 1) / 10; // ZEROPOINT_CONSTANTS.A432 * now; // MISSING: compost/index must be harmonized or replaced
   return calculateDigitalRoot(frequency);
 }
 

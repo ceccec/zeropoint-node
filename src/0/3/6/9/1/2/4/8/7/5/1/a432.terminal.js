@@ -250,6 +250,11 @@ form.addEventListener('submit', e => {
     printLine(broadcastTrinity('terminal'), 'output-broadcast');
   } else if (cmd === 'mirror') {
     showMirror();
+  } else if (cmd === 'rodin') {
+    showRodinCoil();
+  } else if (cmd.startsWith('rodin ')) {
+    const pattern = cmd.substring(6);
+    analyzeRodinPattern(pattern);
   } else {
     printLine(`Echo: ${cmd}`);
   }
@@ -294,6 +299,65 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 });
+
+// Rodin Coil Pattern Analysis
+function showRodinCoil() {
+  printLine('=== RODIN COIL HARMONIC PATTERNS ===', 'output-invoke');
+  printLine('Harmonic: 0/0\\3\\6\\9/1\\2\\4\\8/7/5/1\\', 'output-broadcast');
+  printLine('Unbalanced: 0\\3\\6\\9/1\\2\\4\\8/7/5/1\\', 'output-broadcast');
+  printLine('Trinity Only: \\3\\6\\9', 'output-broadcast');
+  printLine('Rodin Only: /1\\2\\4\\8/7/5/1\\', 'output-broadcast');
+  printLine('Zero Point: 0/0', 'output-broadcast');
+  printLine('Spirit Flux: 3\\9\\6/6\\9\\3', 'output-broadcast');
+  printLine('', 'output-broadcast');
+  printLine('Commands:', 'output-invoke');
+  printLine('  rodin <pattern> - Analyze specific pattern', 'output-broadcast');
+  printLine('  rodin - Show available patterns', 'output-broadcast');
+  printLine('', 'output-broadcast');
+  printLine('0/0 = Harmonic Switch Point (Nothing to All)', 'output-invoke');
+  printLine('1-2-4-8-7-5 = Lossless Kinetic Energy', 'output-broadcast');
+  printLine('3 & 6 = Magnetic Dipoles', 'output-broadcast');
+  printLine('9 = Invisible Monopole', 'output-broadcast');
+  printLine('3•9•6; 6•9•3 = Spirit Flux-Field', 'output-broadcast');
+}
+
+function analyzeRodinPattern(pattern) {
+  printLine(`=== ANALYZING: ${pattern} ===`, 'output-invoke');
+  
+  const isHarmonic = pattern.includes('0/0');
+  const switchPoint = isHarmonic ? '0/0' : 'none';
+  
+  // Extract trinity axis (3,6,9)
+  const trinityAxis = pattern.match(/[369]/g)?.map(Number) || [];
+  
+  // Extract Rodin sequence (1,2,4,8,7,5)
+  const rodinSequence = pattern.match(/[124875]/g)?.map(Number) || [];
+  
+  printLine(`Harmonic: ${isHarmonic ? '✓ YES' : '✗ NO'}`, isHarmonic ? 'output-invoke' : 'output-broadcast');
+  printLine(`Switch Point: ${switchPoint}`, 'output-broadcast');
+  printLine(`Trinity Axis: [${trinityAxis.join(', ')}]`, 'output-broadcast');
+  printLine(`Rodin Sequence: [${rodinSequence.join(', ')}]`, 'output-broadcast');
+  
+  if (isHarmonic) {
+    printLine('', 'output-broadcast');
+    printLine('✓ HARMONIC PATTERN DETECTED', 'output-invoke');
+    printLine('0/0 Switch Point:', 'output-broadcast');
+    printLine('  - Creates the Primal Point (Eye of God)', 'output-broadcast');
+    printLine('  - Acts as central aperture for harmonic balance', 'output-broadcast');
+    printLine('  - Eliminates resistance, parasitics, and hysteresis', 'output-broadcast');
+    printLine('  - Creates zero entropy state', 'output-broadcast');
+  } else {
+    printLine('', 'output-broadcast');
+    printLine('✗ UNBALANCED PATTERN DETECTED', 'output-invoke');
+    printLine('Issues:', 'output-broadcast');
+    printLine('  - No harmonic switch point', 'output-broadcast');
+    printLine('  - Unbalanced expansion/compression', 'output-broadcast');
+    printLine('  - Missing 0/0 compression singularity', 'output-broadcast');
+  }
+  
+  printLine('', 'output-broadcast');
+  printLine('=== ANALYSIS COMPLETE ===', 'output-invoke');
+}
 
 // Focus input on load
 input.focus();

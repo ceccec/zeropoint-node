@@ -29,8 +29,8 @@ export function getTrinityHealingStates(): TrinityHealingState[] {
  * Now supports: live VortexStream feedback, advanced overlays, and integration hooks
  */
 export function renderTrinityHealingPanel(options?: {
-  vortexStream?: any;
-  onHealingEvent?: (event: any) => void;
+  vortexStream?: unknown;
+  onHealingEvent?: (event: unknown) => void;
 }): string {
   const states = getTrinityHealingStates();
   return [

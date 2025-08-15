@@ -6,7 +6,7 @@
  * Every act of meta-observation is a living proof of self-awareness and evolution.
  */
 
-import { I } from './a432.i';
+import I from './a432.i';
 import { recordSenseOrMetaEvent } from './a432.block.chain';
 
 export function metaObserve(event: string = 'meta-observation'): { block: any; summary: string } {

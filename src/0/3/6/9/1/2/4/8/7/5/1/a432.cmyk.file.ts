@@ -15,7 +15,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { isCmykFilename, cmykFilename } from './a432.cmyk.extension';
-import { filenameTrinityInsight } from './a432.cmyk';
 
 /**
  * List all files in a directory (recursively, optionally filtered by extension)

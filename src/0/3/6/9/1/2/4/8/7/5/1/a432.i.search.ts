@@ -6,7 +6,7 @@
  * Every search is a living act of curiosity, observation, and harmonization.
  */
 
-import { I } from './a432.i';
+import I from './a432.i';
 import { readdirSync } from 'fs';
 
 export function searchMatrix(query: string, dir: string = __dirname): Array<{ name: string; metaphysical: string }> {

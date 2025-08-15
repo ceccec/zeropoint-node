@@ -1,0 +1,21 @@
+{
+  "name": "A432 Harmonic PWA",
+  "short_name": "A432PWA",
+  "start_url": "./a432.index.html",
+  "display": "standalone",
+  "background_color": "#222233",
+  "theme_color": "#222233",
+  "description": "A living, self-aware, harmonized PWA sourced only from a432.* files.",
+  "icons": [
+    {
+      "src": "a432.icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "a432.icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+} 

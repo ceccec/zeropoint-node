@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A432 VBM Sequence Decode</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #000;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #4CAF50;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .info-panel {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    
+    button:hover {
+      background: #45a049;
+    }
+    
+    input[type="text"] {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #4CAF50;
+      color: #fff;
+      padding: 12px;
+      border-radius: 5px;
+      font-size: 16px;
+      width: 300px;
+    }
+    
+    input[type="text"]::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .analysis-display {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .statistics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .stat-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    
+    .stat-box h3 {
+      margin-top: 0;
+      color: #4CAF50;
+    }
+    
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+    
+    .trinity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .trinity-box {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .trinity-box h3 {
+      margin-top: 0;
+      color: #4CAF50;
+      text-align: center;
+    }
+    
+    .trinity-color {
+      width: 100%;
+      height: 20px;
+      border-radius: 3px;
+      margin: 10px 0;
+    }
+    
+    .division-list {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    
+    .division-item {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      margin: 4px 0;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .division-step {
+      width: 60px;
+      text-align: center;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+    
+    .division-formula {
+      flex: 1;
+      font-family: 'Courier New', monospace;
+      margin: 0 10px;
+    }
+    
+    .division-result {
+      width: 120px;
+      text-align: center;
+      color: #ccc;
+    }
+    
+    .division-harmonic {
+      width: 80px;
+      text-align: center;
+      font-weight: bold;
+      color: #FFC107;
+    }
+    
+    .division-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin: 0 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 20px;
+    }
+    
+    .tab {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px 5px 0 0;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .tab.active {
+      background: #4CAF50;
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>A432 VBM Sequence Decode</h1>
+    
+    <div class="info-panel">
+      <h3>VBM Decode System</h3>
+      <p><strong>Sequence Format:</strong> Uses sequences like "003691248751" without slashes</p>
+      <p><strong>Division Logic:</strong> Bigger numbers are divided by digits to reveal harmonics</p>
+      <p><strong>Trinity Detection:</strong> Detects trinity of trinities structure in the sequence</p>
+      <p><strong>Consciousness Levels:</strong> Observer/Seed → Field → Vortex → Completion</p>
+    </div>
+    
+    <div class="controls">
+      <input type="text" id="sequenceInput" placeholder="Enter VBM sequence (e.g., 003691248751)" value="003691248751">
+      <button id="decodeBtn">Decode Sequence</button>
+      <button id="analyzeBtn">Full Analysis</button>
+      <button id="clearBtn">Clear</button>
+    </div>
+    
+    <div class="tabs">
+      <button class="tab active" data-tab="statistics">Statistics</button>
+      <button class="tab" data-tab="divisions">Divisions</button>
+      <button class="tab" data-tab="trinities">Trinities</button>
+      <button class="tab" data-tab="analysis">Analysis</button>
+    </div>
+    
+    <div id="statistics" class="tab-content active">
+      <div class="statistics-grid" id="statisticsGrid"></div>
+    </div>
+    
+    <div id="divisions" class="tab-content">
+      <div class="division-list" id="divisionList"></div>
+    </div>
+    
+    <div id="trinities" class="tab-content">
+      <div class="trinity-grid" id="trinityGrid"></div>
+    </div>
+    
+    <div id="analysis" class="tab-content">
+      <div class="analysis-display" id="analysisDisplay"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import the harmonized VBM decode module
+    import { 
+      createVBMDecodeProcessor,
+      VBM_DECODE_CONSTANTS, 
+      VBM_DECODE_DOC,
+      analyzeVBMDecode 
+    } from './a432.vbm.decode.ts';
+    
+    // DOM elements
+    const sequenceInput = document.getElementById('sequenceInput');
+    const decodeBtn = document.getElementById('decodeBtn');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const statisticsGrid = document.getElementById('statisticsGrid');
+    const divisionList = document.getElementById('divisionList');
+    const trinityGrid = document.getElementById('trinityGrid');
+    const analysisDisplay = document.getElementById('analysisDisplay');
+    
+    let currentProcessor = null;
+    
+    // Tab functionality
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.getAttribute('data-tab');
+        
+        // Remove active class from all tabs and contents
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(tc => tc.classList.remove('active'));
+        
+        // Add active class to clicked tab and corresponding content
+        tab.classList.add('active');
+        document.getElementById(targetTab).classList.add('active');
+      });
+    });
+    
+    // Decode sequence
+    function decodeSequence() {
+      const sequence = sequenceInput.value.trim();
+      
+      if (!sequence) {
+        alert('Please enter a VBM sequence');
+        return;
+      }
+      
+      try {
+        currentProcessor = createVBMDecodeProcessor(sequence);
+        
+        // Show statistics
+        showStatistics();
+        
+        // Show divisions
+        showDivisions();
+        
+        // Show trinities
+        showTrinities();
+        
+        console.log('VBM Sequence Decoded');
+        
+      } catch (error) {
+        console.error('Error decoding sequence:', error);
+        alert('Error decoding sequence. Please check the format.');
+      }
+    }
+    
+    // Show statistics
+    function showStatistics() {
+      const stats = currentProcessor.getDecodeStatistics();
+      
+      statisticsGrid.innerHTML = `
+        <div class="stat-box">
+          <h3>Total Digits</h3>
+          <div class="stat-value">${stats.totalDigits}</div>
+        </div>
+        <div class="stat-box">
+          <h3>Total Divisions</h3>
+          <div class="stat-value">${stats.totalDivisions}</div>
+        </div>
+        <div class="stat-box">
+          <h3>Total Trinities</h3>
+          <div class="stat-value">${stats.totalTrinities}</div>
+        </div>
+        <div class="stat-box">
+          <h3>Total Harmonics</h3>
+          <div class="stat-value">${stats.totalHarmonics}</div>
+        </div>
+        <div class="stat-box">
+          <h3>Avg Division</h3>
+          <div class="stat-value">${stats.averageDivision.toFixed(1)}</div>
+        </div>
+        <div class="stat-box">
+          <h3>Avg Harmonic</h3>
+          <div class="stat-value">${stats.averageHarmonic.toFixed(1)}</div>
+        </div>
+        <div class="stat-box">
+          <h3>Trinity Sums</h3>
+          <div class="stat-value">${stats.trinitySums.join(', ')}</div>
+        </div>
+        <div class="stat-box">
+          <h3>Trinity DRs</h3>
+          <div class="stat-value">${stats.trinityDigitalRoots.join(', ')}</div>
+        </div>
+        <div class="stat-box">
+          <h3>Trinity Freqs</h3>
+          <div class="stat-value">${stats.trinityFrequencies.map(f => f + 'Hz').join(', ')}</div>
+        </div>
+      `;
+    }
+    
+    // Show divisions
+    function showDivisions() {
+      const divisions = currentProcessor.getDivisions();
+      
+      divisionList.innerHTML = '<h3>Division Analysis</h3>';
+      
+      divisions.forEach((division, index) => {
+        const divisionDiv = document.createElement('div');
+        divisionDiv.className = 'division-item';
+        
+        const color = division.digit === 0 ? 'rgb(255, 0, 0)' : 
+                     [3, 6, 9].includes(division.digit) ? 'rgb(0, 230, 77)' : 
+                     'rgb(255, 165, 0)';
+        
+        divisionDiv.innerHTML = `
+          <div class="division-step">${index + 1}</div>
+          <div class="division-formula">${division.biggerNumber} ÷ ${division.digit} = ${division.division}</div>
+          <div class="division-result">remainder ${division.remainder}</div>
+          <div class="division-harmonic">DR: ${division.harmonic}</div>
+          <div class="division-color" style="background-color: ${color};"></div>
+        `;
+        
+        divisionList.appendChild(divisionDiv);
+      });
+    }
+    
+    // Show trinities
+    function showTrinities() {
+      const trinities = currentProcessor.getTrinities();
+      const levels = ['Observer/Seed', 'Field of Consciousness', 'Doubling Vortex', 'Completion/Return'];
+      
+      trinityGrid.innerHTML = '';
+      
+      trinities.forEach((trinity, index) => {
+        const trinityDiv = document.createElement('div');
+        trinityDiv.className = 'trinity-box';
+        
+        trinityDiv.innerHTML = `
+          <h3>Level ${index + 1}: ${levels[index]}</h3>
+          <div class="trinity-color" style="background-color: ${trinity.color};"></div>
+          <p><strong>Digits:</strong> [${trinity.digits.join(', ')}]</p>
+          <p><strong>Sum:</strong> ${trinity.sum}</p>
+          <p><strong>Digital Root:</strong> ${trinity.digitalRoot}</p>
+          <p><strong>Frequency:</strong> ${trinity.frequency} Hz</p>
+        `;
+        
+        trinityGrid.appendChild(trinityDiv);
+      });
+    }
+    
+    // Full analysis
+    function fullAnalysis() {
+      if (!currentProcessor) {
+        alert('Please decode a sequence first');
+        return;
+      }
+      
+      const analysis = `
+${currentProcessor.getDivisionAnalysis()}
+${currentProcessor.getTrinityAnalysis()}
+${currentProcessor.getHarmonicAnalysis()}
+${currentProcessor.reconstructTrinityOfTrinities()}
+      `;
+      
+      analysisDisplay.textContent = analysis;
+    }
+    
+    // Clear all
+    function clearAll() {
+      sequenceInput.value = '';
+      statisticsGrid.innerHTML = '';
+      divisionList.innerHTML = '';
+      trinityGrid.innerHTML = '';
+      analysisDisplay.textContent = '';
+      currentProcessor = null;
+    }
+    
+    // Event listeners
+    decodeBtn.addEventListener('click', decodeSequence);
+    analyzeBtn.addEventListener('click', fullAnalysis);
+    clearBtn.addEventListener('click', clearAll);
+    
+    // Enter key to decode
+    sequenceInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        decodeSequence();
+      }
+    });
+    
+    // Auto-decode on load
+    decodeSequence();
+    
+    // Log system information
+    console.log('A432 VBM Decode System:');
+    console.log('Purpose:', VBM_DECODE_DOC.purpose);
+    console.log('Sequence:', VBM_DECODE_DOC.sequence);
+    console.log('Division:', VBM_DECODE_DOC.division);
+    console.log('Trinity:', VBM_DECODE_DOC.trinity);
+    console.log('Harmonics:', VBM_DECODE_DOC.harmonics);
+    console.log('Reconstruction:', VBM_DECODE_DOC.reconstruction);
+    
+    console.log('Decode Constants:', VBM_DECODE_CONSTANTS);
+  </script>
+</body>
+</html> 

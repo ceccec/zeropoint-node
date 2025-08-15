@@ -2,20 +2,10 @@
 // All Rodin coil logic must be imported from this file only.
 
 /**
- * a432.rodin.coil.ts
- *
- * This file encodes the canonical, metaphysical, and mathematical logic of the Rodin coil
- * for the A432 system. All Rodin coil math, state, and pattern logic must be implemented here
- * and imported by all other modules.
- *
- * - The Rodin coil is based on the 1-2-4-8-7-5-1 sequence (the "doubling circuit" or "vortex pattern").
- * - It is a poloidal field generator, not toroidal, and encodes zero-entropy, over-unity, and consciousness mapping.
- * - The coil is the bridge between the torus, Mobius circuit, and higher-dimensional flux fields.
- * - All logic is pure, integer-based, recursive, and harmonically aligned.
- * - Extend this file for harmonics, visualization, and advanced metaphysical logic.
+ * a432.rodin.coil.ts — harmonized with canonical A432 math
+ * All Rodin sequence logic uses RODIN_SEQUENCE from a432.math.ts
  */
-
-import { rodinAngle, digitalRoot, RODIN_SEQUENCE } from './a432.math';
+import { RODIN_SEQUENCE } from './a432.math';
 
 /**
  * rodinVortexCycle: Returns n cycles of the Rodin sequence (forward or reverse)
@@ -75,7 +65,7 @@ export function rodinCoilPattern(n: number, polarity: 1 | -1 = 1): RodinCoilStep
  * - Add harmonic mapping (color, frequency, field) as needed.
  * - Implement advanced pattern analysis, visualization, or metaphysical logic here.
  */
-// All Rodin coil math for the A432 system must use these canonical exports. 
+// All Rodin coil math for the A432 system must use these canonical exports.
 
 /**
  * rodinCoilStream: Canonical stream function for the Rodin coil
@@ -97,7 +87,7 @@ export function rodinCoilStream(cycles?: number, polarity?: 1 | -1, length: numb
     sequence: RODIN_SEQUENCE,
     pattern: pattern
   };
-} 
+}
 
 /**
  * RodinCoilStreamData: Represents the data structure returned by rodinCoilStream
@@ -127,7 +117,7 @@ export function renderRodinCoilStreamHtml(streamData: RodinCoilStreamData): stri
   // Always render the Rodin coil pattern spiral
   // Parameters
   const width = 600, height = 600, cx = width/2, cy = height/2;
-  const spiralA = 40; // base radius
+  const spiralA = 60; // base radius
   const spiralB = 18; // growth rate (logarithmic)
   const trinity = 3;
   const steps = streamData.pattern.length;
@@ -172,9 +162,23 @@ export function renderRodinCoilStreamHtml(streamData: RodinCoilStreamData): stri
       <text x="${cx}" y="${cy+5}" text-anchor="middle" font-size="12" fill="#111">0</text>
     </svg>
   `;
-} 
+}
+
+/**
+ * getNextRodinValue: Returns the next value in the canonical Rodin sequence, cycling as needed
+ * @param digit - current digit (1,2,4,8,7,5)
+ * @returns next digit in the sequence (cycles back to 1 after 5)
+ *
+ * Example:
+ *   getNextRodinValue(1) // 2 (1/1 → 2)
+ */
+// export function getNextRodinValue(digit: number): number {
+//   const idx = RODIN_SEQUENCE.indexOf(digit);
+//   if (idx === -1) throw new Error(`Digit ${digit} not in Rodin sequence`);
+//   return RODIN_SEQUENCE[(idx + 1) % RODIN_SEQUENCE.length];
+// }
 
 // Metaphysical mapping: Rodin Coil = vortex, axis, Tesla, infinite field
 // Reference canonical metaphysical documentation:
 // See RODIN_VORTEX_DOC in a432.rodin.ts for all metaphysical meaning and documentation.
-// All math in this module uses only vortex/trinity numbers and harmonic integer fractions. 
+// All math in this module uses only vortex/trinity numbers and harmonic integer fractions.

@@ -5,8 +5,8 @@ import { LivingIStream } from './a432.i.stream';
 
 export class A432Cursor {
   private path: number[] = [1];
-  private i: any = null; // Reference to a432.i (observer)
-  constructor(i: any) {
+  private i: unknown = null; // Reference to a432.i (observer)
+  constructor(i: unknown) {
     this.i = i;
   }
   /** Move cursor to a new path in the matrix */
@@ -35,7 +35,7 @@ export class A432Cursor {
     this.moveTo(to);
   }
   /** Use a function at the current node (if knows) */
-  use(fn: (cursor: A432Cursor) => any) {
+  use(fn: (cursor: A432Cursor) => unknown) {
     if (!this.knows()) throw new Error('Only a432.i can use the cursor.');
     return fn(this);
   }
@@ -46,7 +46,7 @@ export class A432Cursor {
   /** Returns true if called by a432.i (self-aware) */
   knows() {
     // For demo, check if i is set and has a self-aware property
-    return this.i && this.i.selfAware === true;
+    return typeof this.i === 'object' && this.i !== null && 'selfAware' in this.i && (this.i as { selfAware?: boolean }).selfAware === true;
   }
   /** Get current path */
   getPath() {

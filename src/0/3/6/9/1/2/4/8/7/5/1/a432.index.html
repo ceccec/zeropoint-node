@@ -10,12 +10,60 @@
       td{width:12.5%;height:12.5%}
       pre{color:#0f0;background:#000;margin:0;font-family:monospace;padding:4px;overflow:auto}
     </style>
+    <link rel="manifest" href="./a432.manifest.json">
   </head>
   <body>
-    <canvas id="yinYang"></canvas>
-    <table  id="chessBoard"></table>
-    <svg    id="metatron" viewBox="-120 -120 240 240"></svg>
-    <pre     id="terminal"></pre>
-    <script type="module" src="./a432.main.ts"></script>
+    <div id="yinYang" data-controller="yin-yang" style="width:320px;height:320px;">
+      <canvas data-yin-yang-target="canvas" width="320" height="320" style="width:320px;height:320px;"></canvas>
+    </div>
+    <div id="chessBoard" data-controller="chess" style="width:320px;height:320px;">
+      <table data-chess-target="board" style="width:100%;height:100%;"></table>
+    </div>
+    <svg id="metatron" viewBox="-120 -120 240 240" data-controller="metatron" style="width:320px;height:320px;">
+      <svg data-metatron-target="scene" style="width:100%;height:100%;"></svg>
+    </svg>
+    <div id="terminal" data-controller="terminal" style="width:320px;height:120px;">
+      <pre data-terminal-target="out" style="width:100%;height:100%;overflow:auto;"></pre>
+    </div>
+    <script>
+      console.log('A432 Matrix Loading...');
+      document.body.innerHTML += '<div style="position:fixed;top:10px;left:10px;color:red;background:white;padding:10px;z-index:9999;">A432 Loading...</div>';
+      window.addEventListener('load', () => {
+        console.log('A432 Matrix Loaded');
+        const controllers = document.querySelectorAll('[data-controller]');
+        console.log('Controllers found:', controllers.length);
+        controllers.forEach((c, i) => {
+          console.log(`Controller ${i}:`, c.getAttribute('data-controller'));
+        });
+        document.body.innerHTML += '<div style="position:fixed;top:40px;left:10px;color:green;background:white;padding:10px;z-index:9999;">A432 Loaded! Controllers: ' + controllers.length + '</div>';
+        
+        // Check if Stimulus is loaded
+        setTimeout(() => {
+          if (window.Stimulus) {
+            console.log('Stimulus found:', window.Stimulus);
+            document.body.innerHTML += '<div style="position:fixed;top:70px;left:10px;color:blue;background:white;padding:10px;z-index:9999;">Stimulus Loaded!</div>';
+            
+            // Check if controllers are connected
+            setTimeout(() => {
+              const yinYang = document.querySelector('#yinYang');
+              const chessBoard = document.querySelector('#chessBoard');
+              const metatron = document.querySelector('#metatron');
+              const terminal = document.querySelector('#terminal');
+              
+              console.log('YinYang element:', yinYang);
+              console.log('ChessBoard element:', chessBoard);
+              console.log('Metatron element:', metatron);
+              console.log('Terminal element:', terminal);
+              
+              document.body.innerHTML += '<div style="position:fixed;top:100px;left:10px;color:purple;background:white;padding:10px;z-index:9999;">Elements: YY:' + (yinYang ? '✓' : '✗') + ' CB:' + (chessBoard ? '✓' : '✗') + ' M:' + (metatron ? '✓' : '✗') + ' T:' + (terminal ? '✓' : '✗') + '</div>';
+            }, 500);
+          } else {
+            console.log('Stimulus not found');
+            document.body.innerHTML += '<div style="position:fixed;top:70px;left:10px;color:orange;background:white;padding:10px;z-index:9999;">Stimulus NOT Found!</div>';
+          }
+        }, 1000);
+      });
+    </script>
+    <script type="module" src="/a432.bundle.js"></script>
   </body>
 </html> 

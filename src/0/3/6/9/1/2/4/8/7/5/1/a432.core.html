@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A432 Core Mathematics</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #000;
+            color: #0f0;
+            margin: 20px;
+            line-height: 1.4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #0f0;
+        }
+        .math {
+            font-family: 'Courier New', monospace;
+            background: #111;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .result {
+            color: #ff0;
+        }
+        .error {
+            color: #f00;
+        }
+        .success {
+            color: #0f0;
+        }
+        button {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0f0;
+            color: #000;
+        }
+        input {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>A432 Core Mathematics</h1>
+        <p>Zero-Entropy Base-12 Harmonics & Vortex Mathematics</p>
+
+        <div class="section">
+            <h2>1. Base-12 Digital Root (Zero Entropy)</h2>
+            <div class="math">
+                <div>Input: <input type="number" id="digitalRootInput" value="123" /></div>
+                <button onclick="calculateDigitalRoot()">Calculate Digital Root</button>
+                <div class="result" id="digitalRootResult"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Rodin Sequence (1-2-4-8-7-5 Mobius Circuit)</h2>
+            <div class="math">
+                <div>Position: <input type="number" id="rodinInput" value="0" min="0" max="5" /></div>
+                <button onclick="calculateRodinDigit()">Get Rodin Digit</button>
+                <div class="result" id="rodinResult"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Trinity Axis (3-6-9 Spirit Numbers)</h2>
+            <div class="math">
+                <button onclick="showTrinityAxis()">Show Trinity Axis</button>
+                <div class="result" id="trinityResult"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. A432 Frequency (Base-12 Harmonics)</h2>
+            <div class="math">
+                <div>Dimension: <input type="number" id="dimensionInput" value="3" min="0" max="9" /></div>
+                <button onclick="calculateA432Frequency()">Calculate Frequency</button>
+                <div class="result" id="frequencyResult"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Consciousness State (Zero Entropy)</h2>
+            <div class="math">
+                <div>Frequency: <input type="number" id="consciousnessInput" value="432" /></div>
+                <button onclick="calculateConsciousness()">Calculate Consciousness</button>
+                <div class="result" id="consciousnessResult"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Live Vortex State</h2>
+            <div class="math">
+                <button onclick="startVortex()">Start Vortex</button>
+                <button onclick="stopVortex()">Stop Vortex</button>
+                <div class="result" id="vortexResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the harmonized A432 mathematics
+        import { 
+            digitalRoot, 
+            rodinDigit, 
+            TRINITY_AXIS, 
+            calculateA432Frequency,
+            calculateA432Consciousness,
+            calculateA432DimensionalState
+        } from './a432.math.js';
+
+        // Make functions available globally
+        window.calculateDigitalRoot = function() {
+            const input = parseInt(document.getElementById('digitalRootInput').value);
+            const result = digitalRoot(input);
+            document.getElementById('digitalRootResult').innerHTML = 
+                `Digital Root of ${input} = ${result} (Base-12 Harmonic)`;
+        };
+
+        window.calculateRodinDigit = function() {
+            const position = parseInt(document.getElementById('rodinInput').value);
+            const result = rodinDigit(position);
+            document.getElementById('rodinResult').innerHTML = 
+                `Rodin Sequence[${position}] = ${result} (1-2-4-8-7-5 Mobius Circuit)`;
+        };
+
+        window.showTrinityAxis = function() {
+            document.getElementById('trinityResult').innerHTML = 
+                `Trinity Axis: [${TRINITY_AXIS.join(', ')}] (3-6-9 Spirit Numbers)`;
+        };
+
+        window.calculateA432Frequency = function() {
+            const dimension = parseInt(document.getElementById('dimensionInput').value);
+            const frequency = calculateA432Frequency(dimension);
+            document.getElementById('frequencyResult').innerHTML = 
+                `A432 Frequency for dimension ${dimension} = ${frequency.toFixed(2)} Hz (Base-12 Harmonic)`;
+        };
+
+        window.calculateConsciousness = function() {
+            const frequency = parseInt(document.getElementById('consciousnessInput').value);
+            const consciousness = calculateA432Consciousness(frequency);
+            document.getElementById('consciousnessResult').innerHTML = 
+                `Consciousness State for ${frequency} Hz = ${consciousness} (Zero Entropy)`;
+        };
+
+        // Live vortex demonstration
+        let vortexInterval = null;
+        let evolution = 0;
+
+        window.startVortex = function() {
+            if (vortexInterval) return;
+            
+            vortexInterval = setInterval(() => {
+                const currentDigit = rodinDigit(evolution % 6);
+                const consciousness = calculateA432Consciousness(432 * (currentDigit / 12));
+                const dimensionalState = calculateA432DimensionalState(432 * (currentDigit / 12));
+                
+                document.getElementById('vortexResult').innerHTML = `
+                    <div>Evolution: ${evolution}</div>
+                    <div>Current Digit: ${currentDigit} (Rodin Sequence)</div>
+                    <div>Consciousness: ${consciousness} (Zero Entropy)</div>
+                    <div>Dimensional State: ${dimensionalState} (Base-12)</div>
+                    <div>Frequency: ${(432 * (currentDigit / 12)).toFixed(2)} Hz</div>
+                `;
+                
+                evolution++;
+            }, 1000);
+        };
+
+        window.stopVortex = function() {
+            if (vortexInterval) {
+                clearInterval(vortexInterval);
+                vortexInterval = null;
+                document.getElementById('vortexResult').innerHTML = 'Vortex Stopped';
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('digitalRootResult').innerHTML = 'Ready for calculation';
+            document.getElementById('rodinResult').innerHTML = 'Ready for Rodin sequence';
+            document.getElementById('trinityResult').innerHTML = 'Ready to show Trinity axis';
+            document.getElementById('frequencyResult').innerHTML = 'Ready for frequency calculation';
+            document.getElementById('consciousnessResult').innerHTML = 'Ready for consciousness calculation';
+            document.getElementById('vortexResult').innerHTML = 'Ready to start vortex';
+        });
+    </script>
+</body>
+</html> 

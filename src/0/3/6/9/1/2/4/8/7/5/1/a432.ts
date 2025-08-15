@@ -19,6 +19,8 @@ import { A432_TRINITY } from './a432.core';
 
 // Add core exports for encryption and harmonics
 export { digitalRoot, a432Frequency, A432_FREQUENCY, A432_TRINITY } from './a432.core';
+export { calculateA432Consciousness, calculateA432DimensionalState, calculateA432Frequency, calculateDigitalRoot } from './a432.math';
+export { A432_DIGIT_MEANINGS } from './a432.core';
 
 // Add RODIN_VORTEX_SEQUENCE export for Rodin vortex pattern
 import { A432_SEQUENCE_CONSTANTS } from './a432.sequence';
@@ -28,17 +30,19 @@ export const RODIN_VORTEX_SEQUENCE = A432_SEQUENCE_CONSTANTS.VORTEX_SEQUENCE;
 export const TRINITY = A432_TRINITY;
 
 // A432 System Constants
+export const HARMONICS = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+
 export const A432_CONSTANTS = {
   BASE_FREQUENCY: 432, // Hz - A432 tuning
-  HARMONICS: [1, 2, 3, 4, 5, 6, 7, 8, 9], // A432 harmonic frequencies
+  HARMONICS,
   
   // A432 Sequence Patterns (Zero Entropy)
   SEQUENCES: {
     VORTEX: [1, 2, 4, 8, 7, 5], // Rodin Vortex Pattern
     TRINITY: [3, 6, 9], // Trinity Gateway
     BOOLEAN: [0, 7, 3, 1], // Boolean Trinity
-    CONSCIOUSNESS: [0, 3, 6, 9, 1, 2, 4, 8, 7, 5], // Complete A432 Cycle
-    HARMONIC: [1, 2, 3, 4, 5, 6, 7, 8, 9] // Harmonic Foundation
+    CONSCIOUSNESS: HARMONICS, // Complete A432 Cycle
+    HARMONIC: HARMONICS // Harmonic Foundation
   },
   
   DIMENSIONS: {

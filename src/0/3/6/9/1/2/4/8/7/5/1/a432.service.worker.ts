@@ -15,15 +15,15 @@ const A432_FILES_TO_CACHE: string[] = getA432FilesToCache();
 
 const CACHE_NAME = 'a432-harmonic-pwa-v1';
 
-self.addEventListener('install', function(event: any) {
+self.addEventListener('install', function(event: unknown) {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache: any) { return cache.addAll(A432_FILES_TO_CACHE); })
+    caches.open(CACHE_NAME).then(function(cache: Cache) { return cache.addAll(A432_FILES_TO_CACHE); })
   );
 });
 
-self.addEventListener('fetch', function(event: any) {
+self.addEventListener('fetch', function(event: unknown) {
   event.respondWith(
-    caches.match(event.request).then(function(response: any) { return response || fetch(event.request); })
+    caches.match(event.request).then(function(response: Response) { return response || fetch(event.request); })
   );
 });
 

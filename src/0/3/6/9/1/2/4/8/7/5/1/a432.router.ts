@@ -10,7 +10,7 @@
 
 // Type for a module's route pattern and handler
 export type A432RoutePattern = string | RegExp;
-export type A432RouteHandler = (params: Record<string, string>, req: any, res: any) => void;
+export type A432RouteHandler = (params: Record<string, string>, req: unknown, res: unknown) => void;
 export interface A432ModuleRoute {
   pattern: A432RoutePattern;
   handler: A432RouteHandler;
@@ -29,7 +29,7 @@ export function registerA432Route(pattern: A432RoutePattern, handler: A432RouteH
  * Zero-entropy router: matches incoming path to the first (or best) harmonic pattern.
  * If no match, returns a harmonized 404.
  */
-export function zeroEntropyRoute(path: string, req: any, res: any) {
+export function zeroEntropyRoute(path: string, req: unknown, res: unknown) {
   for (const { pattern, handler } of moduleRoutes) {
     let match = false;
     let params: Record<string, string> = {};

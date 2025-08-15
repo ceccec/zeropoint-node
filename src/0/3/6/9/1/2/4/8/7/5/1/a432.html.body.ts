@@ -60,7 +60,7 @@ export function generateA432HumanBodyHtml(): string {
       const r = Math.round(255 * (1 - c) * (1 - k));
       const g = Math.round(255 * (1 - m) * (1 - k));
       const b = Math.round(255 * (1 - y) * (1 - k));
-      return `rgb(${r},${g},${b})`;
+      return 'rgb(' + r + ',' + g + ',' + b + ')';
     }
     function updateBodyUI() {
       const vals = ['skeletal','muscular','nervous','circulatory','respiratory','digestive','endocrine','immune'].map(id => parseInt(document.getElementById(id).value));

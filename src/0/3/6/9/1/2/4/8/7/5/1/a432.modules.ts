@@ -7,6 +7,7 @@
  */
 
 import { A432CoreState, createA432CoreState, harmonizeA432Core, getA432CoreMeta } from './a432.core';
+import { A432BlockChain, recordEvent } from './a432.block.chain.event';
 
 // === MODULE CATEGORIES ===
 export type A432ModuleCategory = 
@@ -38,11 +39,11 @@ export interface A432Module {
   description: string;
   dependencies: string[];
   exports: string[];
-  getState: () => any;
+  getState: () => unknown;
   harmonize?: () => void;
   getOverlays?: () => string[];
   getMeta?: () => string;
-  onEvent?: (event: any) => void;
+  onEvent?: (event: unknown) => void;
 }
 
 // === MODULE REGISTRY ===
@@ -185,11 +186,13 @@ class A432ModuleRegistry {
   }
 
   // === EVENT ROUTING ===
-  routeEvent(event: any): void {
+  routeEvent(event: unknown): void {
     this.modules.forEach(module => {
       if (module.onEvent) {
         try {
           module.onEvent(event);
+          // Harmonized: Log routed event
+          recordEvent(blockchain, 'routeEvent', 'A432Modules', { module: module.name, event: event as Record<string, unknown> });
         } catch (error) {
           console.error(`Event handling failed for module ${module.name}:`, error);
         }
@@ -215,7 +218,7 @@ class A432ModuleRegistry {
 
   // === MODULE STATISTICS ===
   getModuleStats(): { total: number; byCategory: Record<A432ModuleCategory, number> } {
-    const byCategory: Record<A432ModuleCategory, number> = {} as any;
+    const byCategory: Record<A432ModuleCategory, number> = {} as Record<A432ModuleCategory, number>;
     this.categories.forEach((set, category) => {
       byCategory[category] = set.size;
     });
@@ -229,9 +232,14 @@ class A432ModuleRegistry {
 // === GLOBAL REGISTRY INSTANCE ===
 export const a432ModuleRegistry = new A432ModuleRegistry();
 
+// Harmonized: Add blockchain for module event logging
+const blockchain = new A432BlockChain();
+
 // === CONVENIENCE FUNCTIONS ===
 export function registerA432Module(module: A432Module): void {
   a432ModuleRegistry.register(module);
+  // Harmonized: Log module registration event
+  recordEvent(blockchain, 'registerModule', 'A432Modules', { name: module.name, category: module.category });
 }
 
 export function getA432Module(name: string): A432Module | undefined {
@@ -244,6 +252,8 @@ export function getA432ModulesByCategory(category: A432ModuleCategory): A432Modu
 
 export function harmonizeA432Modules(): void {
   a432ModuleRegistry.harmonizeAll();
+  // Harmonized: Log harmonization event
+  recordEvent(blockchain, 'harmonizeModules', 'A432Modules');
 }
 
 export function getA432ModuleStats(): { total: number; byCategory: Record<A432ModuleCategory, number> } {

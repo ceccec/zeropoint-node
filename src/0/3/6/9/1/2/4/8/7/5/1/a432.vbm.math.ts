@@ -1,20 +1,17 @@
 /**
- * a432.vbm.math.ts — Consolidated mathematics distilled from the Rodin VBM book
- * ---------------------------------------------------------------------------------
- * Pure, hard-coded math (no textual references) derived from the sequences, formulas
- * and ratios repeatedly cited in the Vortex Based Mathematics material.
- * Everything remains integer-based and re-uses helpers from a432.math where possible.
+ * a432.vbm.math.ts — harmonized with canonical A432 math
+ * All Rodin sequence logic uses RODIN_SEQUENCE from a432.math.ts
  */
 
 import {
   TRINITY_AXIS,
-  RODIN_SEQUENCE,
   kineticShockWaveOfNine,
   fibonacciRoots,
   primeSquaredRoots,
   angleForDigit,
   digitalRoot,
 } from './a432.math';
+import { RODIN_SEQUENCE } from './a432.math';
 
 // ——————————————————————————————————————————
 // 1. Trinity axis and doubling circuit (already canonical)

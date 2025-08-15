@@ -8,7 +8,7 @@ export interface A432Event {
   trinity: number;
   phase: number;
   agent: string;
-  payload: any;
+  payload: unknown;
   parent: number | null;
   path: number[];
   summary: string;
@@ -19,7 +19,7 @@ let eventCounter = 1;
 /**
  * Generates a new event with trinity/vortex logic
  */
-export function createA432Event(type: string, agent: string, payload: any = {}, parent: number | null = null, path: number[] = []): A432Event {
+export function createA432Event(type: string, agent: string, payload: unknown = {}, parent: number | null = null, path: number[] = []): A432Event {
   const phase = (eventCounter - 1) % 3;
   const trinity = [3, 6, 9][phase];
   const id = eventCounter++;

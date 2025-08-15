@@ -10,7 +10,7 @@
  * - All functions handle anti-vortex/negative harmonics: negative digits use negative frequency and anti-vortex color
  */
 
-import { getVortexColor, getAntiVortexColor, A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color';
+import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color';
 
 /**
  * getVortexFrequency: Returns a frequency (Hz) for a digit (1-9), harmonized with color logic.

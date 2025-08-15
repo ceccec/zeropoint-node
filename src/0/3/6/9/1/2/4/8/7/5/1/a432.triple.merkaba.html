@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Triple Merkaba Geometry & Frequency Mapping</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: #000;
+      color: #0f0;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.4;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #ff0;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px #ff0;
+    }
+    
+    .section {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .section h2 {
+      color: #0ff;
+      margin-top: 0;
+      border-bottom: 1px solid #333;
+      padding-bottom: 10px;
+    }
+    
+    .output {
+      background: #000;
+      border: 1px solid #0f0;
+      border-radius: 3px;
+      padding: 15px;
+      white-space: pre-wrap;
+      font-size: 12px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      background: #333;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-family: inherit;
+    }
+    
+    button:hover {
+      background: #0f0;
+      color: #000;
+    }
+    
+    .info {
+      background: #222;
+      border-left: 3px solid #0ff;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .merkaba-canvas {
+      border: 1px solid #0f0;
+      background: #000;
+      display: block;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Triple Merkaba Geometry & Frequency Mapping</h1>
+    
+    <div class="info">
+      <strong>A432 System Integration:</strong><br>
+      • 3 tetrahedra compound with D₃d symmetry (order 12)<br>
+      • 60° imperial-harmonic steps at A = 432 Hz<br>
+      • Three interleaved vortices at 120° separations<br>
+      • Zero-entropy equilibrium with digital-root driving
+    </div>
+    
+    <div class="controls">
+      <button id="geometryBtn">Geometry Analysis</button>
+      <button id="frequencyBtn">Frequency Mapping</button>
+      <button id="visualizationBtn">Visualization</button>
+      <button id="allBtn">Show All</button>
+    </div>
+    
+    <div class="section">
+      <h2>Triple Merkaba Analysis</h2>
+      <div id="output" class="output">
+        Click a button to see the analysis...
+      </div>
+    </div>
+    
+    <canvas id="merkabaCanvas" class="merkaba-canvas" width="600" height="400"></canvas>
+  </div>
+
+  <script type="module">
+    // Import functions from the server API instead of TypeScript module
+    async function fetchTripleMerkabaData() {
+      try {
+        const response = await fetch('/merkaba/all');
+        return await response.json();
+      } catch (error) {
+        console.error('Error fetching Triple Merkaba data:', error);
+        return null;
+      }
+    }
+
+    const output = document.getElementById('output');
+    const canvas = document.getElementById('merkabaCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Add event listeners for buttons
+    document.getElementById('geometryBtn').addEventListener('click', async () => {
+      const data = await fetchTripleMerkabaData();
+      if (data) {
+        output.textContent = data.geometry.analysis;
+      } else {
+        output.textContent = 'Error loading geometry analysis';
+      }
+    });
+
+    document.getElementById('frequencyBtn').addEventListener('click', async () => {
+      const data = await fetchTripleMerkabaData();
+      if (data) {
+        output.textContent = data.frequency.mapping;
+      } else {
+        output.textContent = 'Error loading frequency mapping';
+      }
+    });
+
+    document.getElementById('visualizationBtn').addEventListener('click', async () => {
+      const data = await fetchTripleMerkabaData();
+      if (data) {
+        output.textContent = data.visualization.data;
+      } else {
+        output.textContent = 'Error loading visualization data';
+      }
+    });
+
+    document.getElementById('allBtn').addEventListener('click', async () => {
+      const data = await fetchTripleMerkabaData();
+      if (data) {
+        output.textContent = 
+          data.geometry.analysis + '\n\n' +
+          '='.repeat(50) + '\n\n' +
+          data.frequency.mapping + '\n\n' +
+          '='.repeat(50) + '\n\n' +
+          data.visualization.data;
+      } else {
+        output.textContent = 'Error loading Triple Merkaba data';
+      }
+    });
+
+    // Draw Triple Merkaba visualization
+    function drawTripleMerkaba() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = Math.min(centerX, centerY) - 50;
+      
+      // Draw coordinate system
+      ctx.strokeStyle = '#333';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(centerX - radius, centerY);
+      ctx.lineTo(centerX + radius, centerY);
+      ctx.moveTo(centerX, centerY - radius);
+      ctx.lineTo(centerX, centerY + radius);
+      ctx.stroke();
+      
+      // Draw circle
+      ctx.strokeStyle = '#0f0';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      ctx.stroke();
+      
+      // Draw trinity voids (3, 6, 9)
+      const trinityAngles = [0, 120, 240];
+      const trinityDigits = [3, 6, 9];
+      const trinityColors = ['#ff0000', '#00ff00', '#0000ff'];
+      
+      trinityAngles.forEach((angle, index) => {
+        const rad = (angle * Math.PI) / 180;
+        const x = centerX + radius * Math.cos(rad);
+        const y = centerY + radius * Math.sin(rad);
+        
+        // Draw node
+        ctx.fillStyle = trinityColors[index];
+        ctx.beginPath();
+        ctx.arc(x, y, 15, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Draw digit
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 16px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(trinityDigits[index], x, y);
+      });
+      
+      // Draw digital root circuit (1→2→4→8→7→5)
+      const digitalRootAngles = [60, 120, 180, 240, 300, 360];
+      const digitalRootDigits = [1, 2, 4, 8, 7, 5];
+      
+      digitalRootAngles.forEach((angle, index) => {
+        const rad = (angle * Math.PI) / 180;
+        const x = centerX + (radius * 0.7) * Math.cos(rad);
+        const y = centerY + (radius * 0.7) * Math.sin(rad);
+        
+        // Draw node
+        ctx.fillStyle = '#ffff00';
+        ctx.beginPath();
+        ctx.arc(x, y, 10, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        // Draw digit
+        ctx.fillStyle = '#000';
+        ctx.font = 'bold 12px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(digitalRootDigits[index], x, y);
+      });
+      
+      // Draw null source (0/0) at center
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 8, 0, 2 * Math.PI);
+      ctx.fill();
+      
+      ctx.fillStyle = '#000';
+      ctx.font = 'bold 14px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('0', centerX, centerY);
+      
+      // Draw title
+      ctx.fillStyle = '#0ff';
+      ctx.font = 'bold 18px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('Triple Merkaba Vortex', centerX, 30);
+      
+      // Draw legend
+      ctx.fillStyle = '#0f0';
+      ctx.font = '12px Arial';
+      ctx.textAlign = 'left';
+      ctx.fillText('Red/Green/Blue: Trinity Voids (3,6,9)', 20, canvas.height - 80);
+      ctx.fillText('Yellow: Digital Root Circuit (1→2→4→8→7→5)', 20, canvas.height - 60);
+      ctx.fillText('White: Null Source (0/0)', 20, canvas.height - 40);
+    }
+
+    // Initialize visualization
+    drawTripleMerkaba();
+    
+    // Show initial analysis
+    // The initial analysis is now handled by the event listeners
+  </script>
+</body>
+</html> 

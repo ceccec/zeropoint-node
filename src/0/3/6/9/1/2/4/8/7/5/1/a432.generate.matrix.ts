@@ -24,7 +24,7 @@ function* digitPairs(): IterableIterator<string> {
 
 function nextUniqueName(existing: Set<string>, seed: string): string {
   let name = seed;
-  let iter = digitPairs();
+  const iter = digitPairs();
   while (existing.has(name + '.ts')) {
     name += iter.next().value;
   }

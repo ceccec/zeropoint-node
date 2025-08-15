@@ -21,7 +21,7 @@ export function registerSource(
   source: string,
   emitter: EventEmitter,
   eventName: string,
-  picker: (payload: any) => Digit,
+  picker: (payload: unknown) => Digit,
   category: Category = source
 ): void {
   emitter.on(eventName, payload => {

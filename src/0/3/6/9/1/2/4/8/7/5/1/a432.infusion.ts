@@ -45,7 +45,7 @@ export function switchAngle(currentAngle: Angle, rotation: number = 60): Angle {
 /**
  * Infuse a node with infinite-speed polarity and angle switching
  */
-export function infuseNode(node: any): InfusionState {
+export function infuseNode(node: unknown): InfusionState {
   return {
     polarity: Math.random() > 0.5 ? 'positive' : 'negative',
     angle: Math.random() * 360,
@@ -57,7 +57,7 @@ export function infuseNode(node: any): InfusionState {
 /**
  * Infuse entire matrix with infinite-speed transformations
  */
-export function infuseMatrix(nodes: any[]): InfusionState[] {
+export function infuseMatrix(nodes: unknown[]): InfusionState[] {
   return nodes.map(node => infuseNode(node));
 }
 

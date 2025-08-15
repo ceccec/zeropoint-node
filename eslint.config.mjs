@@ -3,10 +3,18 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 import { defineConfig } from "eslint/config";
 
-
+// Exclude build/output directories globally
 export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs,ts,mts,cts}"], plugins: { js }, extends: ["js/recommended"] },
-  { files: ["**/*.{js,mjs,cjs,ts,mts,cts}"], languageOptions: { globals: globals.browser } },
+  {
+    ignores: [
+      "dist/**/*",
+      "public/**/*",
+      "coverage/**/*",
+      "build/**/*"
+    ]
+  },
+  { files: ["src/0/3/6/9/1/2/4/8/7/5/1/**/*.{js,mjs,cjs,ts,mts,cts}"], plugins: { js }, extends: ["js/recommended"] },
+  { files: ["src/0/3/6/9/1/2/4/8/7/5/1/**/*.{js,mjs,cjs,ts,mts,cts}"], languageOptions: { globals: globals.browser } },
   tseslint.configs.recommended,
   // Strict lint rules for canonical A432 core path
   {
@@ -25,4 +33,8 @@ export default defineConfig([
       "@typescript-eslint/no-unused-vars": "warn",
     },
   },
+  // Ignore all other directories
+  {
+    ignores: ["!src/0/3/6/9/1/2/4/8/7/5/1/**/*"]
+  }
 ]);

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio-Reactive Multi-layer CMYK Vortex Torus</title>
+  <style>
+    body { background:#181822; margin:0; }
+    canvas { display:block; margin:3em auto 1em; background:#23232d; border-radius:16px; }
+    #desc { color:#EEE; text-align:center; max-width: 600px; margin: auto; }
+  </style>
+</head>
+<body>
+<div id="desc">
+  <h2>CMYK Vortex Toroidal Audio Visualizer</h2>
+  <p>Microphone input live-controls color, rotation, and pulsing. Watch the CMY vortex layers phase with your sound!</p>
+</div>
+<canvas id="cv" width="700" height="700"></canvas>
+<script>
+const canvas = document.getElementById('cv');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height, CX = W/2, CY = H/2;
+const R0 = 130, LAYERS = 3, PHASES = 6;
+
+const CMY = [ 
+  { name:"CYAN",    col:"#00ffff", angle:0 },
+  { name:"MAGENTA", col:"#Math.PI/3 },
+  { name:"YELLOW",  col:"#ffff00", angle:4*Math.PI/3 }
+];
+const GREY = "#bbbbbb";
+
+function lerp(a,b,t){ // linear interpolation [0,1]
+  return a+(b-a)*t;
+}
+function lerpColor(hexA,hexB,t){
+  const ah=hexA.match(/\w\w/g).map(x=>parseInt(x,16)),
+        bh=hexB.match(/\w\w/g).map(x=>parseInt(x,16));
+  return "#"+ah.map((av,i)=>Math.round(lerp(av,bh[i],t)).toString(16).padStart(2,"0")).join('');
+}
+function angleToColor(theta){
+  // Find which CMY wedge? Each covers 120deg (2PI/3)
+  let seg = Math.floor(((theta+2*Math.PI)%(2*Math.PI)*PHASES)/(2*Math.PI));
+  let base = seg%3, next = (base+1)%3;
+  let frac = ((theta+2*Math.PI)%(2*Math.PI)-seg*2*Math.PI/PHASES)/(2*Math.PI/PHASES);
+  if(seg%2===0) return lerpColor(CMY[base].col,CMY[next].col,frac);
+  return GREY;
+}
+
+// AUDIO: Web Audio API setup
+let analyser, dataArray, rms=0, audioOk=false;
+navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+  let audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  let src=audioCtx.createMediaStreamSource(stream);
+  analyser=audioCtx.createAnalyser();
+  analyser.fftSize=512;
+  src.connect(analyser);
+  dataArray=new Uint8Array(analyser.fftSize);
+  audioOk=true;
+});
+
+// Main draw
+let t = 0;
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  if(audioOk && analyser){
+    analyser.getByteTimeDomainData(dataArray);
+    rms = Math.sqrt(dataArray.reduce((a,b)=>a+(b-128)**2,0)/dataArray.length)/128;
+  }
+  // Multiple vortex layers
+  for(let layer=0; layer<LAYERS; layer++){
+    let r = R0 + 65*layer + 45*Math.sin(t/33+layer)*rms;
+    for(let i=0; i<PHASES; i++){
+      let ang0 = (i + t*0.008*(1+layer*0.2)+layer*0.4*rms)%PHASES * (2*Math.PI/PHASES);
+      let ang1 = ((i+1) + t*0.008*(1+layer*0.2)+layer*0.4*rms)%PHASES * (2*Math.PI/PHASES);
+      // Fill wedge with advanced gradient
+      let steps=27;
+      for(let s=0;s<steps;s++){
+        let frac = s/steps;
+        let A = ang0+(ang1-ang0)*frac;
+        let Ap = ang0+(ang1-ang0)*(frac+1/steps);
+        let col = angleToColor((A+Ap)/2+layer*0.23);
+        ctx.beginPath();
+        ctx.arc(CX,CY,r,A,Ap,false);
+        ctx.lineTo(CX,CY);
+        ctx.closePath();
+        ctx.globalAlpha = 0.84-0.19*layer;
+        ctx.fillStyle = col;
+        ctx.fill();
+      }
+    }
+  }
+  // Animated phase dots (on top)
+  for(let layer=0; layer<LAYERS; layer++){
+    let angle = (t*0.044+rms*3+layer*Math.PI/6)% (2*Math.PI);
+    let R = R0 + 65*layer + 48*Math.sin(t/23+layer);
+    let px = CX + R*Math.cos(angle), py = CY + R*Math.sin(angle);
+    ctx.beginPath();
+    ctx.arc(px,py,16,0,2*Math.PI);
+    ctx.shadowColor = angleToColor(angle+layer*0.23);
+    ctx.shadowBlur = 15+8*rms;
+    ctx.fillStyle = "#fff";
+    ctx.globalAlpha = 0.7+0.3*Math.sin(t/21+layer*0.7);
+    ctx.fill();
+    ctx.globalAlpha = 1; ctx.shadowBlur=0;
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = angleToColor(angle+layer*0.23);
+    ctx.stroke();
+  }
+  // Center (KEY)
+  ctx.beginPath();
+  ctx.arc(CX,CY,32,0,2*Math.PI);
+  ctx.fillStyle = "#111";
+  ctx.strokeStyle = "#555";
+  ctx.lineWidth = 3;
+  ctx.fill();
+  ctx.stroke();
+  ctx.font = "bold 20px Sans-serif";
+  ctx.fillStyle = "#FF0";
+  ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.fillText("KEY", CX, CY);
+
+  t++;
+  requestAnimationFrame(draw);
+}
+draw();
+</script>
+</body>
+</html>

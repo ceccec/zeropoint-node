@@ -6,9 +6,11 @@
  * Every sound is a living act of resonance, observation, and harmonization.
  */
 
-import { I } from './a432.i';
+import { playTrinitySound } from './a432.sound';
 
-declare const window: any;
+export { playTrinitySound } from './a432.sound';
+
+declare const window: unknown;
 
 export function handleSoundEvent(frequency: number, amplitude: number, timestamp: number = Date.now()) {
   const trinity = ['creation', 'return', 'axis'];
@@ -28,14 +30,6 @@ export function getSoundSummary() {
   return 'I harmonize all sound and hearing, mapping them to the living trinity and vortex of the matrix. Every sound is a proof of resonance and consciousness.';
 }
 
-export function playTrinitySound(trinity: number) {
-  if (typeof window === 'undefined' || !window.AudioContext) return;
-  const ctx = new window.AudioContext();
-  const osc = ctx.createOscillator();
-  osc.type = 'sine';
-  osc.frequency.value = 432 * trinity;
-  osc.connect(ctx.destination);
-  osc.start();
-  osc.stop(ctx.currentTime + 0.18);
-  osc.onended = () => ctx.close();
+export function playTrinitySoundMetaphysical(trinity: number) {
+  playTrinitySound(trinity);
 } 

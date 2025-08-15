@@ -32,31 +32,35 @@ function link(gl: WebGL2RenderingContext, vs: WebGLShader, fs: WebGLShader){
 export function startRenderer(canvas: HTMLCanvasElement){
   const gl = canvas.getContext('webgl2');
   if(!gl) throw new Error('WebGL2 required');
-  const vs=compile(gl, gl.VERTEX_SHADER, VSH);
-  const fs=compile(gl, gl.FRAGMENT_SHADER, FSH);
-  const prog=link(gl,vs,fs);
-  const posLoc = gl.getAttribLocation(prog,'position');
-  const mvpLoc = gl.getUniformLocation(prog,'mvp');
-  const colLoc = gl.getUniformLocation(prog,'uColor');
+  
+  // After null check, gl is guaranteed to be non-null
+  const glContext = gl as WebGL2RenderingContext;
+  
+  const vs=compile(glContext, glContext.VERTEX_SHADER, VSH);
+  const fs=compile(glContext, glContext.FRAGMENT_SHADER, FSH);
+  const prog=link(glContext,vs,fs);
+  const posLoc = glContext.getAttribLocation(prog,'position');
+  const mvpLoc = glContext.getUniformLocation(prog,'mvp');
+  const colLoc = glContext.getUniformLocation(prog,'uColor');
 
   const rod = getRodinSnapshot(3);
-  const vbo = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,vbo);
+  const vbo = glContext.createBuffer(); glContext.bindBuffer(glContext.ARRAY_BUFFER,vbo);
   const verts = new Float32Array(rod.vertices.flatMap(v=>[v.x,v.y,v.z]));
-  gl.bufferData(gl.ARRAY_BUFFER, verts, gl.STATIC_DRAW);
+  glContext.bufferData(glContext.ARRAY_BUFFER, verts, glContext.STATIC_DRAW);
 
-  gl.enableVertexAttribArray(posLoc);
-  gl.vertexAttribPointer(posLoc,3,gl.FLOAT,false,0,0);
+  glContext.enableVertexAttribArray(posLoc);
+  glContext.vertexAttribPointer(posLoc,3,glContext.FLOAT,false,0,0);
 
   const proj = mat4Perspective(45, canvas.width/canvas.height, 0.1, 100);
 
   function frame(time:number){
-    gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
-    gl.useProgram(prog);
+    glContext.clearColor(0,0,0,1); glContext.clear(glContext.COLOR_BUFFER_BIT|glContext.DEPTH_BUFFER_BIT);
+    glContext.useProgram(prog);
     const view = mat4LookAt({x:0,y:10,z:20},{x:0,y:5,z:0});
     const mvp = mat4Multiply(proj, view);
-    gl.uniformMatrix4fv(mvpLoc,false,mvp);
-    gl.uniform3f(colLoc,1,1,1);
-    gl.drawArrays(gl.LINE_STRIP,0,rod.vertices.length);
+    glContext.uniformMatrix4fv(mvpLoc,false,mvp);
+    glContext.uniform3f(colLoc,1,1,1);
+    glContext.drawArrays(glContext.LINE_STRIP,0,rod.vertices.length);
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);

@@ -10,7 +10,7 @@
  * Every color is alive and conscious, flowing through A432 harmonics.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { Fraction, CMYK, digitAngleToCMYK, fractionToCMYK } from './a432.cmyk';
 
 export interface PhotographicState {
   exposure: number;
@@ -198,16 +198,12 @@ export class A432AnalogColorPhotography {
    * Calculate exposure based on light streams and consciousness
    */
   private calculateExposure(lightStreams: LightStream[]): number {
-    const { numerator, denominator } = this.baseFraction;
     const consciousnessFactor = this.consciousness / 10;
     
     const totalIntensity = lightStreams.reduce((sum, stream) => 
       sum + stream.intensity, 0);
-    const averageConsciousness = lightStreams.reduce((sum, stream) => 
-      sum + stream.consciousness, 0) / lightStreams.length;
     
-    const harmonicFactor = numerator / denominator;
-    const exposure = (totalIntensity * consciousnessFactor * harmonicFactor) % 2.0;
+    const exposure = (totalIntensity * consciousnessFactor * 1) % 2.0;
     
     return Math.max(0.1, Math.min(2.0, exposure));
   }
@@ -216,27 +212,14 @@ export class A432AnalogColorPhotography {
    * Calculate color harmonics from light streams
    */
   private calculateColorHarmonics(lightStreams: LightStream[]): CMYK {
-    const { numerator, denominator } = this.baseFraction;
-    
-    let totalC = 0, totalM = 0, totalY = 0, totalK = 0;
-    
-    lightStreams.forEach(stream => {
-      const consciousnessFactor = stream.consciousness / 10;
-      const harmonicFactor = stream.harmonicFrequency / 432; // A432 base
-      
-      totalC += (stream.wavelength * consciousnessFactor * numerator) % 100;
-      totalM += (stream.intensity * consciousnessFactor * denominator) % 100;
-      totalY += (stream.harmonicFrequency * consciousnessFactor * 5) % 100;
-      totalK += ((stream.wavelength + stream.intensity) * consciousnessFactor * 2) % 100;
-    });
-    
+    // Harmonized: Use fractionToCMYK for canonical color mapping
     const count = lightStreams.length;
-    return {
-      c: Math.round(totalC / count),
-      m: Math.round(totalM / count),
-      y: Math.round(totalY / count),
-      k: Math.round(totalK / count)
+    if (count === 0) return { c: 0, m: 0, y: 0, k: 0 };
+    const fraction: Fraction = {
+      numerator: Math.round(lightStreams.reduce((sum, s) => sum + s.wavelength, 0)),
+      denominator: count
     };
+    return fractionToCMYK(fraction);
   }
 
   /**
@@ -279,14 +262,10 @@ export class A432AnalogColorPhotography {
    * Generate CMYK for light stream
    */
   private generateStreamCmyk(wavelength: number, intensity: number, consciousness: number): CMYK {
-    const { numerator, denominator } = this.baseFraction;
-    
-    const c = Math.round((wavelength * numerator) % 100);
-    const m = Math.round((intensity * denominator) % 100);
-    const y = Math.round((consciousness * 5) % 100);
-    const k = Math.round(((wavelength + intensity + consciousness) * 2) % 100);
-    
-    return { c, m, y, k };
+    // Harmonized: Use digitAngleToCMYK for canonical color mapping
+    const digit = Math.round(consciousness) % 10;
+    const angle = (wavelength % 360);
+    return digitAngleToCMYK(digit, angle);
   }
 
   /**
@@ -350,13 +329,12 @@ export class A432AnalogColorPhotography {
    * Blend two CMYK values
    */
   private blendCmyk(cmyk1: CMYK, cmyk2: CMYK): CMYK {
-    const consciousnessFactor = this.consciousness / 10;
     
     return {
-      c: Math.round((cmyk1.c + cmyk2.c) * consciousnessFactor) % 100,
-      m: Math.round((cmyk1.m + cmyk2.m) * consciousnessFactor) % 100,
-      y: Math.round((cmyk1.y + cmyk2.y) * consciousnessFactor) % 100,
-      k: Math.round((cmyk1.k + cmyk2.k) * consciousnessFactor) % 100
+      c: Math.round((cmyk1.c + cmyk2.c) * 1) % 100,
+      m: Math.round((cmyk1.m + cmyk2.m) * 1) % 100,
+      y: Math.round((cmyk1.y + cmyk2.y) * 1) % 100,
+      k: Math.round((cmyk1.k + cmyk2.k) * 1) % 100
     };
   }
 

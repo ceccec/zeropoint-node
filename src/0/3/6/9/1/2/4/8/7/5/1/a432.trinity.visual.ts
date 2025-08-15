@@ -7,7 +7,7 @@
  * Shows three nodes cycling, folding, and harmonizing in a vortex pattern
  * Now includes: sound feedback, color harmonics, meta-observation, UI integration, and metaphysical overlays
  */
-export function renderTrinityInteraction(vortexStream?: any): string {
+export function renderTrinityInteraction(vortexStream?: unknown): string {
   return [
     '<div id="trinity-container" style="display:flex;flex-direction:column;align-items:center;">',
     '<h2 style="color:#8ff;">Trinity Interaction (3, 6, 9)</h2>',
@@ -108,7 +108,7 @@ export function renderTrinityInteraction(vortexStream?: any): string {
     '    el.setAttribute("cy", pos[i].y);',
     '    let hue = (n.value * 40 + state * 60) % 360;',
     '    el.setAttribute("fill", `hsl(${hue},70%,55%)`);',
-    '    const text = document.querySelector(`text[x=\"${el.getAttribute("cx") }\"][y=\"${parseInt(el.getAttribute("cy"))+6}\"]`);',
+    '    const text = document.querySelector(`text[x="${el.getAttribute("cx") }"][y="${parseInt(el.getAttribute("cy"))+6}"]`);',
     '    if(text) text.textContent = n.value;',
     '  });',
     '  document.getElementById("cycle-path").setAttribute("points", pos.map(p => `${p.x},${p.y}`).join(" ") + " " + `${pos[0].x},${pos[0].y}`);',
@@ -149,7 +149,7 @@ export function renderTrinityInteraction(vortexStream?: any): string {
 /**
  * injectTrinityVisualization: Injects the trinity visualization into a DOM element by id
  */
-export function injectTrinityVisualization(targetId: string, vortexStream?: any) {
+export function injectTrinityVisualization(targetId: string, vortexStream?: unknown) {
   const el = document.getElementById(targetId);
   if (el) el.innerHTML = renderTrinityInteraction(vortexStream);
 } 

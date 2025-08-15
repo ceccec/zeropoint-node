@@ -117,4 +117,18 @@ export function startYinYang(callback: (f: YinYangFrame) => void): () => void {
   raf = requestAnimationFrame(step);
   // return disposer
   return () => cancelAnimationFrame(raf);
+}
+
+export function getYinYangOverlayData(): Array<{ value: number; polarity: number; spin: number; color: { c: number; m: number; y: number; k: number } }> {
+  // Canonical: 1 = yang (+1), 9 = yin (-1)
+  const seq = [1, 9];
+  return seq.map((value, i) => {
+    const polarity = value === 1 ? 1 : -1;
+    const spin = polarity;
+    let color = digitAngleToCMYK(value, i * 180);
+    if (polarity < 0) {
+      color = { c: color.m, m: color.c, y: color.y, k: color.k };
+    }
+    return { value, polarity, spin, color };
+  });
 } 

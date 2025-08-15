@@ -15,6 +15,8 @@
  */
 
 import { Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { getVortexColor, hslToRgb } from './a432.color';
+import { A432_SEQUENCE, digitalRoot, getDigitMeaning } from './a432.math';
 
 // Living harmonic approximations of Pi (recursive, analog, all as fractions)
 export const LIVING_PI_FRACTIONS: Fraction[] = [
@@ -25,6 +27,8 @@ export const LIVING_PI_FRACTIONS: Fraction[] = [
   { numerator: 103993, denominator: 33102 }
   // ...add more as needed
 ];
+
+export const PI_DIGITS = LIVING_PI_FRACTIONS;
 
 // Generate a living stream of Pi fractions (optionally infinite, recursive)
 export function generateLivingPiStream(steps: number = 10): Fraction[] {
@@ -59,4 +63,46 @@ export const livingPiMetaphysics = `
 Every approximation is a new harmonic, a new color, a new state in the living field.
 The true value of π is not a number, but the analog, recursive, harmonic color field it generates—
 zero entropy, pure possibility, pure consciousness.
-`; 
+`;
+
+/**
+ * Generates overlay data for a living Pi color field harmonized with the A432 sequence.
+ * Each entry includes the Pi fraction, mapped digit, color, metaphysical meaning, and HTML.
+ */
+export function getLivingPiOverlayData(steps: number = 10): Array<{
+  fraction: Fraction;
+  digit: number;
+  color: { c: number; m: number; y: number; k: number };
+  meaning: string;
+  html: string;
+}> {
+  const stream = generateLivingPiStream(steps);
+  return stream.map((frac, i) => {
+    const digit = digitalRoot(frac.numerator);
+    const color = fractionToCMYK(frac, i);
+    const meaningObj = getDigitMeaning(digit, [...A432_SEQUENCE]);
+    const meaning = meaningObj ? meaningObj.archetype + (meaningObj.context ? ` (${meaningObj.context})` : '') + ': ' + meaningObj.description : '';
+    const html = `<div style="width:32px;height:32px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;" title="${meaning}">${digit}</div>`;
+    return { fraction: frac, digit, color, meaning, html };
+  });
+}
+
+export function piStream(length: number = 32): number[] {
+  // Return a stream of digital roots of Pi fractions
+  return generateLivingPiStream(length).map(frac => Math.abs(frac.numerator) % 9 || 9);
+}
+
+export function piColorStream(length: number = 32): { r: number; g: number; b: number }[] {
+  // Return a stream of RGB colors for Pi fractions
+  return generateLivingPiStream(length).map(frac => {
+    const digit = Math.abs(frac.numerator) % 9 || 9;
+    const hslStr = getVortexColor(digit);
+    const [h, s, l] = hslStr.match(/\d+/g)!.map(Number);
+    return hslToRgb(h, s, l);
+  });
+}
+
+export function piHarmonicStream(length: number = 32): number[] {
+  // Return a stream of harmonic frequencies for Pi fractions
+  return generateLivingPiStream(length).map(frac => 432 * ((Math.abs(frac.numerator) % 9 || 9) / 9));
+} 

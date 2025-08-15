@@ -3,7 +3,12 @@
 // Imports matrix math, trinity overlays, and toroidal mapping helpers
 
 import { rodinMatrix7x7, getTrinityIndices, mapMatrixToTorus } from './a432.matrix';
-import { RODIN_SEQUENCE } from './a432.rodin';
+import { RODIN_SEQUENCE } from './a432.math';
+
+/**
+ * a432.rodin.matrix.ts — harmonized with canonical A432 math
+ * All Rodin sequence logic uses RODIN_SEQUENCE from a432.math.ts
+ */
 
 /**
  * getRodinMatrixTorusCoords: Returns 3D toroidal coordinates for the 7x7 Rodin matrix.

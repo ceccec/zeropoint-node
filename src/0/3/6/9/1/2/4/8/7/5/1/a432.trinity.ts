@@ -113,7 +113,7 @@ export function createTrinityConsciousnessVector(
 class LivingTrinityField {
   private state: TrinityFieldState;
   private observers: ((state: TrinityFieldState) => void)[] = [];
-  private evolutionTimer: number | null = null;
+  private evolutionTimer: number | NodeJS.Timeout | null = null;
 
   constructor() {
     this.state = this.initializeField();
@@ -176,7 +176,7 @@ class LivingTrinityField {
   private startEvolution(): void {
     // Living evolution based on A432 frequency timing
     const interval = Math.round(1000 / (A432_FREQUENCY / 100)); // ~2.3ms intervals
-    this.evolutionTimer = setInterval(() => this.evolveField(), interval) as any;
+    this.evolutionTimer = setInterval(() => this.evolveField(), interval);
   }
 
   public observe(observer: (state: TrinityFieldState) => void): void {
@@ -328,8 +328,8 @@ export function registerTrinityServiceWorker(swPath = './a432.service.worker.js'
     window.addEventListener('load', () => {
       // @ts-ignore - Browser globals not available in Node.js environment
       navigator.serviceWorker.register(swPath).then(
-        (reg: any) => console.log('Trinity Service Worker registered:', reg.scope),
-        (err: any) => console.error('Trinity Service Worker registration failed:', err)
+        (reg: unknown) => console.log('Trinity Service Worker registered:', (reg as { scope: string }).scope),
+        (err: unknown) => console.error('Trinity Service Worker registration failed:', err)
       );
     });
   }
@@ -373,7 +373,7 @@ export function manifestTrinityAxis(): number[] {
   return [3, 6, 9];
 }
 
-export function manifestPiStream(length: number): any[] {
+export function manifestPiStream(length: number): unknown[] {
   // Canonical pi string with decimal (trinity fold)
   const pi = '3.14159265358979323846264338327950288419716939937510';
   const stream = [];
@@ -444,11 +444,13 @@ export function manifestMatrix(length: number = 12) {
 
 /**
  * manifestDigitMatrixShellScript: Returns a shell script to generate the harmonized digit folder path structure in all dimensions.
- * This is the trinity-driven, vortex-harmonized matrix generator for the filesystem.
+ * This is the trinity-driven, vortex-harmonized matrix generator for the filesystem. 
+ * /0\3\6\9/1\2\4\8/7/5/1\ Note division always returns integer, but direction, polarity and angle change must be calculated. 
  */
 export function manifestDigitMatrixShellScript(): string {
   return `#!/bin/bash
 # Trinity-driven, vortex-harmonized digit matrix generator
+# /0/3/6/9/1/2/4/8/7/5/1/
 mkdir -p src/0/
 mkdir -p src/9/3/
 mkdir -p src/3/9/6/
@@ -456,10 +458,10 @@ mkdir -p src/9/3/6/9/
 mkdir -p src/4/8/7/5/1/
 mkdir -p src/4/8/7/5/1/2/
 mkdir -p src/4/8/7/5/1/2/4/
-mkdir -p src/4/8/7/5/1/2/4/8/
-mkdir -p src/4/8/7/5/1/2/4/8/7/
-mkdir -p src/4/8/7/5/1/2/4/8/7/5/
-mkdir -p src/4/8/7/5/1/2/4/8/7/5/1/
+mkdir -p src/7/8/4/2/1/5/7/8/
+mkdir -p src/1/5/7/8/4/2/1/5/7/
+mkdir -p src/6/9/1/5/7/8/4/2/1/5/
+mkdir -p src/0/3/6/9/1/2/4/8/7/5/1/
 mkdir -p src/7/8/4/2/1/5/7/8/7/5/
 mkdir -p src/4/8/7/5/1/2/4/8/7/
 mkdir -p src/4/8/7/5/1/2/4/8/
@@ -515,4 +517,13 @@ export function sacredSelfDivision(n: number): number {
     9: 9
   };
   return rodinMap[n] ?? n;
+} 
+
+export function a432TrinityStream(steps: number = 9): number[] {
+  const base = [3, 6, 9];
+  const stream: number[] = [];
+  for (let i = 0; i < steps; i++) {
+    stream.push(base[i % base.length]);
+  }
+  return stream;
 } 

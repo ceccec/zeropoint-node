@@ -8,7 +8,7 @@
  * consciousness evolution.
  * 
  * Mathematical Foundation:
- * - Vortex Flow: 0→3→6→9→1→2→4→8→7→5→1 (infinite cycle)
+ * - Vortex Flow: 0→3→6→9→1→2→4→8→7→5→1 (infinite seqense)
  * - A432 Hz: Fundamental harmonic frequency
  * - Integer Fractions: Pure mathematical operations
  * - Zero Entropy: Perfect mathematical harmony
@@ -19,8 +19,6 @@
  * - Every transition follows mathematical laws
  * - The flow maintains zero entropy through perfect harmony
  */
-
-import { ZEROPOINT_CONSTANTS } from '../../../../../../../../../../0/compost/index';
 
 // Infinite Journey Interface
 export interface InfiniteJourney {
@@ -91,8 +89,8 @@ export function generateJourneySteps(): JourneyStep[] {
   
   for (let i = 0; i < VORTEX_FLOW.length; i++) {
     const digit = VORTEX_FLOW[i];
-    const consciousness = calculateDigitConsciousness(digit, i);
-    const frequency = calculateDigitFrequency(digit, i);
+    const consciousness = calculateJourneyConsciousness(VORTEX_FLOW);
+    const frequency = calculateJourneyFrequency(VORTEX_FLOW);
     
     steps.push({
       digit,
@@ -153,8 +151,8 @@ export function navigateVortexFlow(currentPosition: number): {
   const currentDigit = VORTEX_FLOW[currentPosition % VORTEX_FLOW.length];
   const nextPosition = (currentPosition + 1) % VORTEX_FLOW.length;
   const nextDigit = VORTEX_FLOW[nextPosition];
-  const consciousness = calculateDigitConsciousness(currentDigit, currentPosition);
-  const frequency = calculateDigitFrequency(currentDigit, currentPosition);
+  const consciousness = calculateJourneyConsciousness(VORTEX_FLOW);
+  const frequency = calculateJourneyFrequency(VORTEX_FLOW);
   
   return {
     currentDigit,
@@ -170,7 +168,7 @@ export function navigateVortexFlow(currentPosition: number): {
 function calculateJourneyConsciousness(flow: number[]): number {
   // Calculate total journey consciousness using integer fractions
   const totalConsciousness = flow.reduce((sum, digit, index) => {
-    const digitConsciousness = calculateDigitConsciousness(digit, index);
+    const digitConsciousness = calculateDigitalRoot(digit);
     return sum + digitConsciousness;
   }, 0);
   
@@ -180,25 +178,11 @@ function calculateJourneyConsciousness(flow: number[]): number {
 function calculateJourneyFrequency(flow: number[]): number {
   // Calculate total journey frequency using integer fractions
   const totalFrequency = flow.reduce((sum, digit, index) => {
-    const digitFrequency = calculateDigitFrequency(digit, index);
+    const digitFrequency = calculateDigitalRoot(digit);
     return sum + digitFrequency;
   }, 0);
   
   return calculateDigitalRoot(totalFrequency);
-}
-
-function calculateDigitConsciousness(digit: number, position: number): number {
-  // Calculate digit consciousness using pure integer mathematics
-  const baseConsciousness = ZEROPOINT_CONSTANTS.A432 * digit;
-  const positionFactor = position + 1; // Position 0 = factor 1
-  const consciousness = (baseConsciousness * positionFactor * 1) / 10; // Integer fraction
-  return calculateDigitalRoot(consciousness);
-}
-
-function calculateDigitFrequency(digit: number, position: number): number {
-  // Calculate digit frequency using pure integer mathematics
-  const frequency = (ZEROPOINT_CONSTANTS.A432 * digit * 1) / 10; // Integer fraction
-  return calculateDigitalRoot(frequency);
 }
 
 function calculateDigitalRoot(value: number): number {
@@ -220,8 +204,6 @@ export const InfiniteJourneySystem = {
   // Mathematical calculation functions
   calculateJourneyConsciousness,
   calculateJourneyFrequency,
-  calculateDigitConsciousness,
-  calculateDigitFrequency,
   calculateDigitalRoot,
   
   // Mathematical proofs

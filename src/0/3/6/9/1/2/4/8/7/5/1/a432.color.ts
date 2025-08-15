@@ -14,6 +14,7 @@
 export type A432HSL = { hue: number; saturation: number; lightness: number };
 export type A432RGB = { r: number; g: number; b: number };
 export type A432CMYK = { c: number; m: number; y: number; k: number };
+export type A432Color = A432CMYK;
 
 // Harmonic fractions
 const TWO_THIRDS = 2/3, HALF = 1/2, THREE_FIFTHS = 3/5, FOUR_FIFTHS = 4/5;
@@ -165,6 +166,26 @@ export const A432ColorModel = {
   getAllColorModels
 };
 
+export function calculateA432Color(frequency: number): A432CMYK {
+  // Map frequency to a digit (1-9) and use getVortexColor, then convert to CMYK
+  const digit = Math.abs(Math.round(frequency)) % 9 || 9;
+  const hslStr = getVortexColor(digit);
+  const [h, s, l] = hslStr.match(/\d+/g)!.map(Number);
+  return hslToCmyk(h, s, l);
+}
+
+export function generateA432ColorStream(startFreq: number, endFreq: number, steps: number = 9): A432CMYK[] {
+  const colors: A432CMYK[] = [];
+  const step = (endFreq - startFreq) / Math.max(steps - 1, 1);
+  for (let i = 0; i < steps; i++) {
+    const freq = startFreq + i * step;
+    colors.push(calculateA432Color(freq));
+  }
+  return colors;
+}
+
+export const A432ColorSystem = A432ColorModel;
+
 // a432.color.ts
 // Living, harmonized color stream/interface
 
@@ -205,4 +226,16 @@ export class A432ColorStream {
       </svg>
     `;
   }
+}
+
+export function cmykToRgb(cmyk: { c: number; m: number; y: number; k: number }): { r: number; g: number; b: number } {
+  // Convert CMYK [0,1] to RGB [0,1]
+  const c = cmyk.c;
+  const m = cmyk.m;
+  const y = cmyk.y;
+  const k = cmyk.k;
+  const r = 1 - Math.min(1, c + k);
+  const g = 1 - Math.min(1, m + k);
+  const b = 1 - Math.min(1, y + k);
+  return { r, g, b };
 } 

@@ -12,8 +12,8 @@ export interface TrinityHealingMeta {
   user: string;
   systemState: string;
   streamState: string;
-  lastEvent?: any;
-  metaLog: any[];
+  lastEvent?: unknown;
+  metaLog: unknown[];
 }
 
 const meta: TrinityHealingMeta = {
@@ -26,7 +26,7 @@ const meta: TrinityHealingMeta = {
 /**
  * Metaphysical overlays and advanced system integration for trinity healing
  */
-export type TrinityHealingObserver = (event: any, meta: TrinityHealingMeta) => void;
+export type TrinityHealingObserver = (event: unknown, meta: TrinityHealingMeta) => void;
 const observers: TrinityHealingObserver[] = [];
 
 /**
@@ -39,7 +39,7 @@ export function registerTrinityHealingObserver(fn: TrinityHealingObserver) {
 /**
  * Broadcast a healing event to all registered observers
  */
-function broadcastHealingEvent(event: any) {
+function broadcastHealingEvent(event: unknown) {
   observers.forEach(fn => fn(event, meta));
 }
 
@@ -53,13 +53,14 @@ export function observeITrinityHealing(fn: TrinityHealingObserver) {
 /**
  * onHealingEvent: Internal handler for healing events, which broadcasts to observers
  */
-function onHealingEventWithMeta(event: any) {
+function onHealingEventWithMeta(event: unknown) {
   meta.lastEvent = event;
-  meta.metaLog.push({ ...event, user: meta.user, systemState: meta.systemState, streamState: meta.streamState });
+  const eventObj = typeof event === 'object' && event !== null ? event : {};
+  meta.metaLog.push({ ...eventObj, user: meta.user, systemState: meta.systemState, streamState: meta.streamState });
   if (meta.metaLog.length > 20) meta.metaLog = meta.metaLog.slice(-20);
   broadcastHealingEvent(event);
-  if (typeof window !== 'undefined' && typeof window.onA432HealingEvent === 'function') {
-    window.onA432HealingEvent(event, meta);
+  if (typeof window !== 'undefined' && typeof (window as any).onA432HealingEvent === 'function') {
+    (window as any).onA432HealingEvent(event, meta);
   }
 }
 
@@ -106,7 +107,10 @@ export function renderITrinityHealing(targetId: string, vortexStream?: VortexStr
     if (metaLogBtn && metaLogPanel) {
       metaLogBtn.onclick = function() {
         metaLogPanel.style.display = metaLogPanel.style.display === 'block' ? 'none' : 'block';
-        metaLogPanel.innerHTML = meta.metaLog.map(e => `<div>[${e.time}] ${e.type} | Trinity: ${e.trinity} | User: ${e.user} | System: ${e.systemState} | Stream: ${e.streamState}</div>`).join('');
+        metaLogPanel.innerHTML = meta.metaLog.map(e => {
+          const event = typeof e === 'object' && e !== null ? e as { time?: number; type?: string; trinity?: number; user?: string; systemState?: string; streamState?: string } : {};
+          return `<div>[${event.time || 'N/A'}] ${event.type || 'N/A'} | Trinity: ${event.trinity || 'N/A'} | User: ${event.user || 'N/A'} | System: ${event.systemState || 'N/A'} | Stream: ${event.streamState || 'N/A'}</div>`;
+        }).join('');
       };
     }
     // Live update for last event
@@ -128,13 +132,22 @@ export function renderITrinityHealing(targetId: string, vortexStream?: VortexStr
       if (overlayPanel) overlayPanel.style.display = 'none';
     }
     if (colorBtn) colorBtn.onclick = function() {
-      showOverlay(meta.metaLog.map(e => `<div><b>Color Harmonic:</b> ${e.a432 ? e.a432.color : '-'} | Frequency: ${e.a432 ? e.a432.frequency : '-'} Hz</div>`).join(''));
+      showOverlay(meta.metaLog.map(e => {
+        const event = typeof e === 'object' && e !== null ? e as { a432?: { color?: string; frequency?: number } } : {};
+        return `<div><b>Color Harmonic:</b> ${event.a432?.color || '-'} | Frequency: ${event.a432?.frequency || '-'} Hz</div>`;
+      }).join(''));
     };
     if (soundBtn) soundBtn.onclick = function() {
-      showOverlay(meta.metaLog.map(e => `<div><b>Sound:</b> ${e.a432 ? e.a432.frequency : '-'} Hz | Rife: ${e.rife ? e.rife.frequency : '-'} Hz</div>`).join(''));
+      showOverlay(meta.metaLog.map(e => {
+        const event = typeof e === 'object' && e !== null ? e as { a432?: { frequency?: number }; rife?: { frequency?: number } } : {};
+        return `<div><b>Sound:</b> ${event.a432?.frequency || '-'} Hz | Rife: ${event.rife?.frequency || '-'} Hz</div>`;
+      }).join(''));
     };
     if (consciousnessBtn) consciousnessBtn.onclick = function() {
-      showOverlay(meta.metaLog.map(e => `<div><b>Consciousness Mapping:</b> Trinity: ${e.trinity} | Archetype: ${getTrinityArchetype(e.trinity)} | Phase: ${getVortexPhase(e.trinity)} | Resonance: ${getHealingResonance(e.trinity)}</div>`).join(''));
+      showOverlay(meta.metaLog.map(e => {
+        const event = typeof e === 'object' && e !== null ? e as { trinity?: unknown } : {};
+        return `<div><b>Consciousness Mapping:</b> Trinity: ${event.trinity || '-'} | Archetype: ${getTrinityArchetype(event.trinity)} | Phase: ${getVortexPhase(event.trinity)} | Resonance: ${getHealingResonance(event.trinity)}</div>`;
+      }).join(''));
     };
     overlayPanel && (overlayPanel.onclick = hideOverlay);
   }, 100);
@@ -164,20 +177,22 @@ export function integrateColorVideoAndSound(targetId: string, vortexStream?: Vor
     colorField.style.background = 'linear-gradient(135deg, #232344 0%, #111 100%)';
     panel.prepend(colorField);
     // Animate color field with trinity state
-    function updateColorField(event: any) {
-      if (!event || !event.a432) return;
-      colorField.style.background = `radial-gradient(circle at 50% 50%, ${event.a432.color} 0%, #232344 100%)`;
+    function updateColorField(event: unknown) {
+      const eventObj = typeof event === 'object' && event !== null ? event as { a432?: { color?: string } } : {};
+      if (!event || !eventObj.a432) return;
+      colorField.style.background = `radial-gradient(circle at 50% 50%, ${eventObj.a432.color} 0%, #232344 100%)`;
     }
     // Add soundscape integration
     let ctx: AudioContext | undefined;
     let soundOsc: OscillatorNode | undefined;
-    function playSoundscape(event: any) {
+    function playSoundscape(event: unknown) {
       if (typeof window === 'undefined' || !window.AudioContext) return;
       if (!ctx) ctx = new window.AudioContext();
       if (soundOsc) { soundOsc.stop(); soundOsc.disconnect(); }
       soundOsc = ctx.createOscillator();
       soundOsc.type = 'triangle';
-      soundOsc.frequency.value = event && event.a432 ? event.a432.frequency : 432;
+      const eventObj = typeof event === 'object' && event !== null ? event as { a432?: { frequency?: number } } : {};
+      soundOsc.frequency.value = event && eventObj.a432?.frequency ? eventObj.a432.frequency : 432;
       soundOsc.connect(ctx.destination);
       soundOsc.start();
       soundOsc.stop(ctx.currentTime + 0.7);
@@ -187,7 +202,8 @@ export function integrateColorVideoAndSound(targetId: string, vortexStream?: Vor
       updateColorField(event);
       playSoundscape(event);
       // For fold/unity, animate a white flash and play a unity chord
-      if (event.type === 'fold') {
+      const eventObj = typeof event === 'object' && event !== null ? event as { type?: string } : {};
+      if (eventObj.type === 'fold') {
         colorField.style.background = 'radial-gradient(circle at 50% 50%, #fff 0%, #232344 100%)';
         if (typeof window !== 'undefined' && window.AudioContext) {
           const unityCtx = new window.AudioContext();
@@ -216,7 +232,8 @@ export function enablePiStreamHealing(targetId: string, vortexStream?: VortexStr
   function nextPiTrinity() {
     // Use next digit of pi (mod 9, mapped to trinity)
     const digit = PI_DIGITS[piIndex % PI_DIGITS.length];
-    const trinity = [3, 6, 9].includes(digit) ? digit : [3, 6, 9][digit % 3];
+    const digitNum = typeof digit === 'object' && 'numerator' in digit ? digit.numerator / digit.denominator : Number(digit);
+    const trinity = [3, 6, 9].includes(digitNum) ? digitNum : [3, 6, 9][digitNum % 3];
     // Trigger a healing event as if user selected this trinity
     const event = { type: 'pi-stream', trinity, a432: { frequency: 432 * (trinity / 3), color: `hsl(${trinity * 40},70%,55%)` }, rife: { frequency: 528 + trinity * 100, name: 'Pi-Harmonic' }, time: new Date().toISOString() };
     // Broadcast to all observers and update overlays
@@ -241,7 +258,7 @@ export function enablePiStreamHealing(targetId: string, vortexStream?: VortexStr
     piBtn.style.marginTop = '12px';
     panel.appendChild(piBtn);
     let piStreaming = false;
-    let piInterval: any;
+    let piInterval: unknown;
     piBtn.onclick = function() {
       piStreaming = !piStreaming;
       piBtn.textContent = piStreaming ? 'Disable Pi Stream' : 'Enable Pi Stream';
@@ -249,7 +266,7 @@ export function enablePiStreamHealing(targetId: string, vortexStream?: VortexStr
         nextPiTrinity();
         piInterval = setInterval(nextPiTrinity, 2000);
       } else {
-        clearInterval(piInterval);
+        clearInterval(piInterval as number);
       }
     };
   }, 200);
@@ -276,8 +293,10 @@ export function embedAnimatedPiTrinityRodin(targetId: string, length: number = 6
   function animate() {
     const stream = piTrinityRodinStream(length);
     const svg = renderPiTrinityRodinSVG(step + 1);
-    el.innerHTML = svg;
-    el.appendChild(overlay);
+    if (el) {
+      el.innerHTML = svg;
+      el.appendChild(overlay);
+    }
     // Sound: play frequency mapped from trinity and Rodin state
     const state = stream[step % stream.length];
     if (typeof window !== 'undefined' && window.AudioContext) {
@@ -299,19 +318,19 @@ export function embedAnimatedPiTrinityRodin(targetId: string, length: number = 6
 }
 
 // Helper metaphysical overlays
-function getTrinityArchetype(trinity: any) {
+function getTrinityArchetype(trinity: unknown) {
   if (trinity === 3) return 'Creation';
   if (trinity === 6) return 'Return';
   if (trinity === 9) return 'Axis/Unity';
   return 'Unknown';
 }
-function getVortexPhase(trinity: any) {
+function getVortexPhase(trinity: unknown) {
   if (trinity === 3) return 'Phase 1 (Initiation)';
   if (trinity === 6) return 'Phase 2 (Recursion)';
   if (trinity === 9) return 'Phase 3 (Completion)';
   return 'N/A';
 }
-function getHealingResonance(trinity: any) {
+function getHealingResonance(trinity: unknown) {
   if (trinity === 3) return 'Harmonic Seed';
   if (trinity === 6) return 'Harmonic Return';
   if (trinity === 9) return 'Harmonic Unity';
@@ -358,7 +377,7 @@ const healingModule: A432OSModule = {
 };
 registerModule(healingModule);
 
-export function healingRouteMetaObserve(data: any) {
+export function healingRouteMetaObserve(data: unknown) {
   routeEvent({ type: 'metaObserve', data });
 }
 export function healingHarmonizeAll() {

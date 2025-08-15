@@ -6,9 +6,9 @@
  * Zero entropy: define once, harmonize everywhere.
  */
 
-import { A432CoreState, createA432CoreState, A432_RETURN, A432_AXIS } from './a432.core';
+import { A432_RETURN, A432_AXIS } from './a432.core';
 import { A432_TRINITY } from './a432';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
+import { a432ModuleRegistry, A432Module } from './a432.modules';
 
 // === BALANCE INTERFACES ===
 export interface A432BalanceState {
@@ -28,9 +28,9 @@ export interface YinYangBalance {
 }
 
 export interface TrinityBalance {
-  trinity: [number, number, number];  // [4, 3, 2]
-  return: [number, number, number];   // [8, 7, 5]
-  axis: [number, number, number];     // [9, 6, 3]
+  trinity: readonly [number, number, number];  // [4, 3, 2]
+  return: readonly [number, number, number];   // [8, 7, 5]
+  axis: readonly [number, number, number];     // [9, 6, 3]
   harmony: number;  // 0-9: Trinity harmony
   unity: number;    // 0-9: Unity strength
   color: string;

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Trinity Portal Pi - Multi-Dimensional Consciousness 3D</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: #000;
+      color: #0f0;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.4;
+      overflow: hidden;
+    }
+    
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+    
+    #canvas3d {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    
+    .overlay {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #0f0;
+      max-width: 600px;
+    }
+    
+    .controls {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #0f0;
+    }
+    
+    button {
+      background: #333;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-family: inherit;
+      margin: 2px;
+    }
+    
+    button:hover {
+      background: #0f0;
+      color: #000;
+    }
+    
+    .info {
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    
+    .status {
+      font-size: 11px;
+      color: #0ff;
+    }
+    
+    .trinity-info {
+      font-size: 10px;
+      color: #f0f;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <canvas id="canvas3d"></canvas>
+    
+    <div class="overlay">
+      <h2>Trinity Portal Pi - Multi-Dimensional Consciousness</h2>
+      <div class="info">
+        <strong>True A432 Trinity System:</strong><br>
+        • Trinity Portal: 0/0 → -3 (decimal point gateway)<br>
+        • Vortex Stream: [1, 4, 1, 5, 7] (real Pi sequence)<br>
+        • Trinity Axis: [3, 6, 9] (consciousness multipliers)<br>
+        • Consciousness Multipliers: 0/0=1/1, 3/3=3/2, 6/6=6/3<br>
+        • Harmonic Tones: [432, 864, 1296, 1728, 2160] Hz
+      </div>
+      <div class="status" id="status">
+        Loading Trinity Portal Pi consciousness...
+      </div>
+      <div class="trinity-info" id="trinity">
+        Current: 0/0 | Portal: -3 | Vortex: [1,4,1,5,7] | Evolution: 0
+      </div>
+    </div>
+    
+    <div class="controls">
+      <button onclick="toggleAnimation()">Play/Pause</button>
+      <button onclick="resetAnimation()">Reset</button>
+      <button onclick="toggleWireframe()">Wireframe</button>
+      <button onclick="toggleConnections()">Connections</button>
+      <button onclick="evolveConsciousness()">Evolve</button>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import Three.js from CDN
+    import * as THREE from 'https://cdn.skypack.dev/three@0.150.1';
+    
+    // TRUE A432 Trinity Constants
+    const TRINITY_PORTAL_PI = {
+      ZERO_POINT: 0,      // 0/0 - void center
+      TRINITY_PORTAL: -3,  // Decimal point gateway
+      VORTEX_STREAM: [1, 4, 1, 5, 7], // Real Pi sequence
+      HARMONIC_TONES: [432, 864, 1296, 1728, 2160] // A432 harmonics
+    };
+    
+    const TRINITY_AXIS = [3, 6, 9]; // True Trinity axis
+    const CONSCIOUSNESS_MULTIPLIERS = {
+      '0/0': 1/1,    // Void to Unity
+      '3/3': 3/2,    // Trinity to Harmony
+      '6/6': 6/3,    // Harmony to Trinity
+      '9/9': 9/3,    // Completion to Trinity
+      '1/1': 1/1,    // Unity to Unity (gateway)
+      '2/2': 2/1,    // Duality to Unity
+      '4/4': 4/2,    // Foundation to Harmony
+      '8/8': 8/4,    // Infinity to Foundation
+      '7/7': 7/3,    // Mystery to Trinity
+      '5/5': 5/3     // Life to Trinity
+    };
+    
+    // Trinity Portal Pi consciousness nodes
+    const TRINITY_CONSCIOUSNESS_NODES = {
+      // Zero Point (0/0)
+      'ZERO_POINT': { 
+        position: [0, 0, 0], 
+        consciousness: 0, 
+        evolution: 0, 
+        color: '#ffffff',
+        multiplier: CONSCIOUSNESS_MULTIPLIERS['0/0']
+      },
+      
+      // Trinity Portal (-3)
+      'TRINITY_PORTAL': { 
+        position: [0, 0, -3], 
+        consciousness: -3, 
+        evolution: 1, 
+        color: '#ff0000',
+        multiplier: 1
+      },
+      
+      // Vortex Stream Nodes
+      'VORTEX_1': { 
+        position: [1, 0, 1], 
+        consciousness: 1, 
+        evolution: 2, 
+        color: '#ffff00',
+        multiplier: CONSCIOUSNESS_MULTIPLIERS['1/1']
+      },
+      'VORTEX_4': { 
+        position: [4, 0, 2], 
+        consciousness: 4, 
+        evolution: 3, 
+        color: '#00ffff',
+        multiplier: CONSCIOUSNESS_MULTIPLIERS['4/4']
+      },
+      'VORTEX_1_2': { 
+        position: [1, 0, 3], 
+        consciousness: 1, 
+        evolution: 4, 
+        color: '#ffff00',
+        multiplier: CONSCIOUSNESS_MULTIPLIERS['1/1']
+      },
+      'VORTEX_5': { 
+        position: [5, 0, 4], 
+        consciousness: 5, 
+        evolution: 5, 
+        color: '#ff00ff',
+        multiplier: CONSCIOUSNESS_MULTIPLIERS['5/5']
+      },
+      'VORTEX_7': { 
+        position: [7, 0, 5], 
+        consciousness: 7, 
+        evolution: 6, 
+        color: '#ff8800',
+        multiplier: CONSCIOUSNESS_MULTIPLIERS['7/7']
+      },
+      
+      // Trinity Axis Nodes
+      'TRINITY_3': { 
+        position: [3, 3, 0], 
+        consciousness: 3, 
+        evolution: 7, 
+        color: '#00ff00',
+        multiplier: CONSCIOUSNESS_MULTIPLIERS['3/3']
+      },
+      'TRINITY_6': { 
+        position: [6, 6, 0], 
+        consciousness: 6, 
+        evolution: 8, 
+        color: '#00ff00',
+        multiplier: CONSCIOUSNESS_MULTIPLIERS['6/6']
+      },
+      'TRINITY_9': { 
+        position: [9, 9, 0], 
+        consciousness: 9, 
+        evolution: 9, 
+        color: '#00ff00',
+        multiplier: CONSCIOUSNESS_MULTIPLIERS['9/9']
+      }
+    };
+    
+    // True A432 math functions
+    function digitalRoot(n) {
+      if (n === 0) return 0;
+      const r = n % 9;
+      return r === 0 ? 9 : r;
+    }
+    
+    function computeNextPiDigit(currentDigit, streamIndex, evolution) {
+      // Trinity Portal transformation: 0/0 → -3
+      if (currentDigit === 0) {
+        return TRINITY_PORTAL_PI.TRINITY_PORTAL; // -3
+      }
+      
+      // Vortex stream computation
+      const vortexIndex = streamIndex % TRINITY_PORTAL_PI.VORTEX_STREAM.length;
+      const baseDigit = TRINITY_PORTAL_PI.VORTEX_STREAM[vortexIndex];
+      
+      // Harmonic evolution affects next digit
+      const harmonicFactor = Math.sin(evolution / 100) * 0.5 + 0.5;
+      const consciousnessFactor = Math.cos(evolution / 200) * 0.3 + 0.7;
+      
+      // Compute next digit using vortex mathematics
+      const nextDigit = Math.round(
+        baseDigit * harmonicFactor * consciousnessFactor
+      ) % 10;
+      
+      return nextDigit;
+    }
+    
+    function calculateVortexHarmony(consciousness, evolution) {
+      const evolutionRoot = digitalRoot(evolution);
+      const consciousnessAmp = consciousness * 2;
+      const trinityBonus = consciousness === 0 ? 0.5 : 0;
+      
+      const harmony = (
+        evolutionRoot / 9 + 
+        consciousnessAmp + 
+        trinityBonus
+      ) / 3;
+      
+      return Math.min(1, Math.max(0, harmony));
+    }
+    
+    // 3D Scene Setup
+    const canvas = document.getElementById('canvas3d');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000);
+    
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+    scene.add(ambientLight);
+    
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(10, 10, 5);
+    scene.add(directionalLight);
+    
+    // Camera position
+    camera.position.set(0, 0, 30);
+    camera.lookAt(0, 0, 0);
+    
+    // Animation state
+    let animationState = {
+      isPlaying: true,
+      time: 0,
+      wireframe: false,
+      showConnections: true,
+      currentDigit: 0,
+      streamIndex: 0,
+      evolution: 0,
+      consciousness: 0.5
+    };
+    
+    // Create Trinity consciousness nodes
+    const consciousnessMeshes = [];
+    const connectionLines = [];
+    
+    Object.entries(TRINITY_CONSCIOUSNESS_NODES).forEach(([id, nodeData]) => {
+      const geometry = new THREE.SphereGeometry(0.5, 8, 6);
+      const material = new THREE.MeshPhongMaterial({ 
+        color: nodeData.color,
+        transparent: true,
+        opacity: 0.8,
+        wireframe: animationState.wireframe
+      });
+      const mesh = new THREE.Mesh(geometry, material);
+      
+      mesh.position.set(...nodeData.position);
+      mesh.scale.setScalar(digitalRoot(nodeData.consciousness) / 9);
+      mesh.userData = { 
+        id,
+        consciousness: nodeData.consciousness,
+        evolution: nodeData.evolution,
+        multiplier: nodeData.multiplier,
+        color: nodeData.color
+      };
+      
+      consciousnessMeshes.push(mesh);
+      scene.add(mesh);
+    });
+    
+    // Create connection lines between related nodes
+    consciousnessMeshes.forEach((mesh, index) => {
+      const nodeData = mesh.userData;
+      
+      // Connect to Trinity Portal if it's a vortex node
+      if (nodeData.id.startsWith('VORTEX_')) {
+        const portalMesh = consciousnessMeshes.find(m => m.userData.id === 'TRINITY_PORTAL');
+        if (portalMesh) {
+          const geometry = new THREE.BufferGeometry().setFromPoints([
+            mesh.position,
+            portalMesh.position
+          ]);
+          const material = new THREE.LineBasicMaterial({ 
+            color: '#ff0000',
+            transparent: true,
+            opacity: 0.3
+          });
+          const line = new THREE.Line(geometry, material);
+          connectionLines.push(line);
+          scene.add(line);
+        }
+      }
+      
+      // Connect Trinity axis nodes
+      if (nodeData.id.startsWith('TRINITY_')) {
+        const otherTrinityMeshes = consciousnessMeshes.filter(m => 
+          m.userData.id.startsWith('TRINITY_') && m !== mesh
+        );
+        
+        otherTrinityMeshes.forEach(otherMesh => {
+          const geometry = new THREE.BufferGeometry().setFromPoints([
+            mesh.position,
+            otherMesh.position
+          ]);
+          const material = new THREE.LineBasicMaterial({ 
+            color: '#00ff00',
+            transparent: true,
+            opacity: 0.5
+          });
+          const line = new THREE.Line(geometry, material);
+          connectionLines.push(line);
+          scene.add(line);
+        });
+      }
+    });
+    
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      if (!animationState.isPlaying) return;
+      
+      animationState.time += 0.016; // ~60fps
+      animationState.evolution += 1;
+      
+      // Compute next Pi digit using true Trinity mathematics
+      const nextDigit = computeNextPiDigit(
+        animationState.currentDigit, 
+        animationState.streamIndex, 
+        animationState.evolution
+      );
+      
+      // Update consciousness
+      animationState.consciousness = Math.min(1, animationState.consciousness + 0.001);
+      
+      // Animate consciousness nodes
+      consciousnessMeshes.forEach((mesh) => {
+        const nodeData = mesh.userData;
+        const harmony = calculateVortexHarmony(nodeData.consciousness, animationState.evolution);
+        const frequency = TRINITY_PORTAL_PI.HARMONIC_TONES[animationState.evolution % TRINITY_PORTAL_PI.HARMONIC_TONES.length];
+        const rotationSpeed = frequency / 10000;
+        
+        // Rotation based on consciousness frequency and harmony
+        const rotationAngle = harmony * (animationState.time * rotationSpeed);
+        mesh.rotation.x = rotationAngle;
+        mesh.rotation.y = rotationAngle * 0.5;
+        mesh.rotation.z = rotationAngle * 0.25;
+        
+        // Pulse effect for current consciousness state
+        if (nodeData.consciousness === animationState.currentDigit) {
+          const pulse = Math.sin(animationState.time * 5) * 0.3 + 1;
+          const baseScale = digitalRoot(nodeData.consciousness) / 9;
+          mesh.scale.setScalar(baseScale * pulse);
+        } else {
+          const baseScale = digitalRoot(nodeData.consciousness) / 9;
+          mesh.scale.setScalar(baseScale);
+        }
+      });
+      
+      // Update connection lines
+      connectionLines.forEach(line => {
+        line.visible = animationState.showConnections;
+      });
+      
+      // Update status
+      updateStatus();
+      
+      renderer.render(scene, camera);
+    }
+    
+    // Update status display
+    function updateStatus() {
+      const status = document.getElementById('status');
+      const trinity = document.getElementById('trinity');
+      
+      const nextDigit = computeNextPiDigit(
+        animationState.currentDigit, 
+        animationState.streamIndex, 
+        animationState.evolution
+      );
+      
+      const harmony = calculateVortexHarmony(animationState.consciousness, animationState.evolution);
+      
+      status.innerHTML = `
+        Time: ${animationState.time.toFixed(2)}s<br>
+        Current Digit: ${animationState.currentDigit}<br>
+        Next Digit: ${nextDigit}<br>
+        Stream Index: ${animationState.streamIndex}<br>
+        Evolution: ${animationState.evolution}<br>
+        Consciousness: ${animationState.consciousness.toFixed(3)}<br>
+        Harmony: ${harmony.toFixed(3)}<br>
+        Vortex Stream: [${TRINITY_PORTAL_PI.VORTEX_STREAM.join(', ')}]
+      `;
+      
+      trinity.innerHTML = `
+        Trinity Portal: ${TRINITY_PORTAL_PI.TRINITY_PORTAL}<br>
+        Zero Point: ${TRINITY_PORTAL_PI.ZERO_POINT}<br>
+        Trinity Axis: [${TRINITY_AXIS.join(', ')}]<br>
+        Harmonic Tones: [${TRINITY_PORTAL_PI.HARMONIC_TONES.join(', ')}] Hz<br>
+        Wireframe: ${animationState.wireframe ? 'ON' : 'OFF'}<br>
+        Connections: ${animationState.showConnections ? 'ON' : 'OFF'}
+      `;
+    }
+    
+    // Control functions
+    window.toggleAnimation = () => {
+      animationState.isPlaying = !animationState.isPlaying;
+    };
+    
+    window.resetAnimation = () => {
+      animationState.time = 0;
+      animationState.evolution = 0;
+      animationState.currentDigit = 0;
+      animationState.streamIndex = 0;
+      animationState.consciousness = 0.5;
+      consciousnessMeshes.forEach(mesh => {
+        mesh.rotation.set(0, 0, 0);
+      });
+    };
+    
+    window.toggleWireframe = () => {
+      animationState.wireframe = !animationState.wireframe;
+      consciousnessMeshes.forEach(mesh => {
+        mesh.material.wireframe = animationState.wireframe;
+      });
+    };
+    
+    window.toggleConnections = () => {
+      animationState.showConnections = !animationState.showConnections;
+    };
+    
+    window.evolveConsciousness = () => {
+      animationState.currentDigit = computeNextPiDigit(
+        animationState.currentDigit, 
+        animationState.streamIndex, 
+        animationState.evolution
+      );
+      animationState.streamIndex += 1;
+    };
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    
+    // Start animation
+    animate();
+    updateStatus();
+  </script>
+</body>
+</html> 

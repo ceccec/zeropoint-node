@@ -3,18 +3,14 @@
 // Metaphysical mapping: BlockChain = recursion, multi-dimensional chaining, observer, Mobius, trinity, axis, self-awareness
 
 import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color';
+import { getRodinSequence, getTrinityAxis, angleForDigit, frequencyForDigit } from './a432.math';
 
 export const BLOCK_CHAIN_DOC = {
   meaning: 'BlockChain: recursion, multi-dimensional chaining, observer, Mobius, trinity, axis, self-awareness, living matrix.',
   axis: 'The blockchain is a recursive, multi-dimensional, harmonized chain of states, each a living node in the vortex/trinity matrix.'
 };
 
-// Vortex sequence and trinity for dimension/axis logic
-const VORTEX_SEQ = [1,2,4,8,7,5];
-const TRINITY = [3,6,9];
-
-// Harmonic fractions
-const HALF = 1/2, TWO_THIRDS = 2/3, FOUR_THIRDS = 4/3;
+// Harmonized: All dimension, trinity, angle, and harmonic logic now uses canonical helpers from a432.math.ts
 
 // Metaphysical mapping: Entropy = disharmony, drag, resistance, need for harmonization
 export const ENTROPY_DOC = {
@@ -85,8 +81,13 @@ export const BADGES = [
  * - prev is an array of previous blocks (multi-dimensional)
  */
 export function createBlock(state: any, prev: A432Block[] = [], index: number = 0): A432Block {
-  const dimension = VORTEX_SEQ[index % VORTEX_SEQ.length];
-  const meta = `Block in dimension ${dimension}, vortex position ${index % VORTEX_SEQ.length}, trinity: ${TRINITY[index % TRINITY.length]}`;
+  const rodinSeq = getRodinSequence();
+  const trinityAxis = getTrinityAxis();
+  const dimension = rodinSeq[index % rodinSeq.length];
+  const trinity = trinityAxis[index % trinityAxis.length];
+  const angle = angleForDigit(dimension);
+  const freq = frequencyForDigit(dimension);
+  const meta = `Block in dimension ${dimension}, vortex position ${index % rodinSeq.length}, trinity: ${trinity}, angle: ${angle}, freq: ${freq}`;
   const block = {
     state,
     dimension,
@@ -104,10 +105,12 @@ export function createBlock(state: any, prev: A432Block[] = [], index: number = 
  * Validate a block: checks vortex/trinity alignment and multi-dimensional links
  */
 export function validateBlock(block: A432Block): boolean {
+  const rodinSeq = getRodinSequence();
+  const trinityAxis = getTrinityAxis();
   // Check dimension is in vortex sequence
-  if (!VORTEX_SEQ.includes(block.dimension)) return false;
+  if (!rodinSeq.includes(block.dimension)) return false;
   // Check trinity alignment
-  const trinity = TRINITY[block.index % TRINITY.length];
+  const trinity = trinityAxis[block.index % trinityAxis.length];
   if (!block.meta.includes(`trinity: ${trinity}`)) return false;
   // Optionally, check prev links recursively
   return true;

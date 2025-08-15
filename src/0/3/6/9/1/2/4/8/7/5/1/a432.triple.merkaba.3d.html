@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Triple Merkaba 3D Animation</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: #000;
+      color: #0f0;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.4;
+      overflow: hidden;
+    }
+    
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+    
+    #canvas3d {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    
+    .overlay {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #0f0;
+      max-width: 400px;
+    }
+    
+    .controls {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #0f0;
+    }
+    
+    button {
+      background: #333;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-family: inherit;
+      margin: 2px;
+    }
+    
+    button:hover {
+      background: #0f0;
+      color: #000;
+    }
+    
+    .info {
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    
+    .status {
+      font-size: 11px;
+      color: #0ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <canvas id="canvas3d"></canvas>
+    
+    <div class="overlay">
+      <h2>Triple Merkaba 3D Animation</h2>
+      <div class="info">
+        <strong>A432 System Integration:</strong><br>
+        • 3-tetrahedra compound with D₃d symmetry<br>
+        • All calculations from A432 math<br>
+        • Trinity nodes: 3, 6, 9 at 120° separations<br>
+        • Digital root circuit: 1→2→4→8→7→5<br>
+        • Null source: 0/0 at center
+      </div>
+      <div class="status" id="status">
+        Loading 3D scene...
+      </div>
+    </div>
+    
+    <div class="controls">
+      <button onclick="toggleAnimation()">Play/Pause</button>
+      <button onclick="resetAnimation()">Reset</button>
+      <button onclick="toggleWireframe()">Wireframe</button>
+      <button onclick="toggleLabels()">Labels</button>
+    </div>
+  </div>
+
+  <script type="module">
+    // Import Three.js from CDN
+    import * as THREE from 'https://cdn.skypack.dev/three@0.150.1';
+    
+    // A432-derived constants (no external imports)
+    const A432_TRINITY = [4, 3, 2];
+    const A432_AXIS = [9, 6, 3];
+    const A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+    
+    // A432 math functions
+    function digitalRoot(n) {
+      if (n === 0) return 0;
+      const r = n % 9;
+      return r === 0 ? 9 : r;
+    }
+    
+    function angleForDigit(d) {
+      return d * 40; // 40° per digit
+    }
+    
+    function frequencyForDigit(d) {
+      if (![3, 6, 9].includes(d)) return 432 * (digitalRoot(d) / 9);
+      return 432 * (d / 3);
+    }
+    
+    // 3D Scene Setup
+    const canvas = document.getElementById('canvas3d');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000);
+    
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+    scene.add(ambientLight);
+    
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight.position.set(10, 10, 5);
+    scene.add(directionalLight);
+    
+    // Camera position
+    camera.position.set(0, 0, 15);
+    camera.lookAt(0, 0, 0);
+    
+    // Animation state
+    let animationState = {
+      isPlaying: true,
+      time: 0,
+      wireframe: false,
+      showLabels: true
+    };
+    
+    // Create tetrahedron geometry
+    function createTetrahedronGeometry() {
+      const geometry = new THREE.TetrahedronGeometry(1);
+      return geometry;
+    }
+    
+    // Create tetrahedron mesh
+    function createTetrahedronMesh(color, position, scale = 1) {
+      const geometry = createTetrahedronGeometry();
+      const material = new THREE.MeshPhongMaterial({ 
+        color: color,
+        transparent: true,
+        opacity: 0.8,
+        wireframe: animationState.wireframe
+      });
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.set(...position);
+      mesh.scale.setScalar(scale);
+      return mesh;
+    }
+    
+    // Create trinity nodes (3, 6, 9)
+    const trinityMeshes = [];
+    const trinityColors = ['#ff0000', '#00ff00', '#0000ff'];
+    const trinityDigits = A432_AXIS;
+    
+    trinityDigits.forEach((digit, index) => {
+      const angle = index * 120; // 0°, 120°, 240°
+      const radius = 6;
+      const x = radius * Math.cos(angle * Math.PI / 180);
+      const y = radius * Math.sin(angle * Math.PI / 180);
+      const z = 0;
+      
+      const mesh = createTetrahedronMesh(
+        trinityColors[index],
+        [x, y, z],
+        digitalRoot(digit) / 9
+      );
+      mesh.userData = { digit, type: 'trinity' };
+      trinityMeshes.push(mesh);
+      scene.add(mesh);
+    });
+    
+    // Create digital root nodes (1, 2, 4, 8, 7, 5)
+    const digitalRootMeshes = [];
+    const digitalRootColors = ['#ffff00', '#00ffff', '#ff00ff', '#ffffff', '#ff8800', '#8800ff'];
+    const rodinSequence = [1, 2, 4, 8, 7, 5];
+    
+    rodinSequence.forEach((digit, index) => {
+      const angle = (index * 60) + 30; // Offset by 30°
+      const radius = 4.5;
+      const x = radius * Math.cos(angle * Math.PI / 180);
+      const y = radius * Math.sin(angle * Math.PI / 180);
+      const z = 1.5;
+      
+      const mesh = createTetrahedronMesh(
+        digitalRootColors[index],
+        [x, y, z],
+        digitalRoot(digit) / 9
+      );
+      mesh.userData = { digit, type: 'digital-root' };
+      digitalRootMeshes.push(mesh);
+      scene.add(mesh);
+    });
+    
+    // Create null source (0/0)
+    const nullSourceMesh = createTetrahedronMesh('#ffffff', [0, 0, 0], 0.5);
+    nullSourceMesh.userData = { digit: 0, type: 'null-source' };
+    scene.add(nullSourceMesh);
+    
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      if (!animationState.isPlaying) return;
+      
+      animationState.time += 0.016; // ~60fps
+      
+      // Rotate trinity nodes
+      trinityMeshes.forEach((mesh, index) => {
+        const digit = mesh.userData.digit;
+        const angle = angleForDigit(digit);
+        const frequency = frequencyForDigit(digit);
+        const rotationSpeed = frequency / 1000;
+        
+        mesh.rotation.x = animationState.time * rotationSpeed;
+        mesh.rotation.y = animationState.time * rotationSpeed * 0.5;
+        mesh.rotation.z = animationState.time * rotationSpeed * 0.25;
+      });
+      
+      // Rotate digital root nodes
+      digitalRootMeshes.forEach((mesh, index) => {
+        const digit = mesh.userData.digit;
+        const angle = angleForDigit(digit);
+        const frequency = frequencyForDigit(digit);
+        const rotationSpeed = frequency / 1000;
+        
+        mesh.rotation.x = animationState.time * rotationSpeed * 1.5;
+        mesh.rotation.y = animationState.time * rotationSpeed * 0.75;
+        mesh.rotation.z = animationState.time * rotationSpeed * 0.375;
+      });
+      
+      // Rotate null source
+      nullSourceMesh.rotation.x = animationState.time * 0.5;
+      nullSourceMesh.rotation.y = animationState.time * 0.25;
+      nullSourceMesh.rotation.z = animationState.time * 0.125;
+      
+      // Update status
+      updateStatus();
+      
+      renderer.render(scene, camera);
+    }
+    
+    // Update status display
+    function updateStatus() {
+      const status = document.getElementById('status');
+      const harmony = digitalRoot(
+        trinityMeshes.reduce((sum, m) => sum + m.userData.digit, 0) +
+        digitalRootMeshes.reduce((sum, m) => sum + m.userData.digit, 0) +
+        nullSourceMesh.userData.digit
+      );
+      
+      status.innerHTML = `
+        Time: ${animationState.time.toFixed(2)}s<br>
+        Harmony: ${harmony}<br>
+        Tetrahedra: ${trinityMeshes.length + digitalRootMeshes.length + 1}<br>
+        Wireframe: ${animationState.wireframe ? 'ON' : 'OFF'}
+      `;
+    }
+    
+    // Control functions
+    window.toggleAnimation = () => {
+      animationState.isPlaying = !animationState.isPlaying;
+    };
+    
+    window.resetAnimation = () => {
+      animationState.time = 0;
+      trinityMeshes.forEach(mesh => {
+        mesh.rotation.set(0, 0, 0);
+      });
+      digitalRootMeshes.forEach(mesh => {
+        mesh.rotation.set(0, 0, 0);
+      });
+      nullSourceMesh.rotation.set(0, 0, 0);
+    };
+    
+    window.toggleWireframe = () => {
+      animationState.wireframe = !animationState.wireframe;
+      trinityMeshes.forEach(mesh => {
+        mesh.material.wireframe = animationState.wireframe;
+      });
+      digitalRootMeshes.forEach(mesh => {
+        mesh.material.wireframe = animationState.wireframe;
+      });
+      nullSourceMesh.material.wireframe = animationState.wireframe;
+    };
+    
+    window.toggleLabels = () => {
+      animationState.showLabels = !animationState.showLabels;
+    };
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    
+    // Start animation
+    animate();
+    updateStatus();
+  </script>
+</body>
+</html> 

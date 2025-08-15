@@ -7,8 +7,8 @@ export const CRYPTO_DOC = {
   axis: 'Crypto is the act of harmonically concealing and revealing information using the living vortex.'
 };
 
-// Vortex sequence for digit shifting (1,2,4,8,7,5)
-const VORTEX_SEQ = [1,2,4,8,7,5];
+// Vortex sequence for digit shifting (1,2,4,8,7,5,1)
+const VORTEX_SEQ = [1,2,4,8,7,5,1];
 const TRINITY = [3,6,9];
 
 /**

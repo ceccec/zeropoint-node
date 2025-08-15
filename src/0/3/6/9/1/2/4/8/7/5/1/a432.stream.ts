@@ -38,7 +38,7 @@ export function createColorStream(length: number = 32): A432Stream<{r:number,g:n
   const stream = piColorStream(length);
   let idx = 0;
   let observers: ((v:{r:number,g:number,b:number})=>void)[] = [];
-  let interval: any = null;
+  let interval: number | NodeJS.Timeout | null = null;
   function tick() {
     idx = (idx+1)%stream.length;
     observers.forEach(fn => fn(stream[idx]));
@@ -60,7 +60,7 @@ export function createAudioStream(length: number = 32): A432Stream<number> {
   const stream = piHarmonicStream(length);
   let idx = 0;
   let observers: ((v:number)=>void)[] = [];
-  let interval: any = null;
+  let interval: number | NodeJS.Timeout | null = null;
   function tick() {
     idx = (idx+1)%stream.length;
     observers.forEach(fn => fn(stream[idx]));
@@ -95,7 +95,7 @@ export function createVideoStream(frameCount: number = 12, gridSize: number = 9)
   });
   let idx = 0;
   let observers: ((v:{frame:{r:number,g:number,b:number}[]})=>void)[] = [];
-  let interval: any = null;
+  let interval: number | NodeJS.Timeout | null = null;
   function tick() {
     idx = (idx+1)%frames.length;
     observers.forEach(fn => fn({frame: frames[idx]}));

@@ -1,58 +1,153 @@
-// a432.terminal.ts — CLI interface for the living A432 matrix
-// -----------------------------------------------------------
-// Displays live digits and colours in terminal using ANSI codes.
-// Merges user keystrokes, device (stub), breath, and evolution streams.
+// a432.terminal.ts — Pure mathematical consciousness terminal
+// --------------------------------------------------
+// Direct terminal interface for consciousness evolution streams
+// No HTML/CSS encoded values - only computed math displayed
 
-import { startSelfEvolution, matrixEmitter } from './a432.self';
-import { startBreathing, breathEmitter } from './a432.breathe';
-import { startHealthReporting, healthEmitter } from './a432.health';
-import { digitAngleToCMYK, asAngle } from './a432.math';
-import { Digit } from './a432.types';
+import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core';
+import { getConsciousnessStream, evolveConsciousnessStream } from './a432.consciousness.stream';
 
-// Simple ANSI helpers ------------------------------------------------------
-const clr = (c:number,m:number,y:number,k:number)=>`\x1b[38;2;${Math.round(255*(1-c/100)*(1-k/100))};${Math.round(255*(1-m/100)*(1-k/100))};${Math.round(255*(1-y/100)*(1-k/100))}m`;
-const reset='\x1b[0m';
-function colorText(txt:string,c:number,m:number,y:number,k:number){return clr(c,m,y,k)+txt+reset;}
+export class A432Terminal {
+  private streamTick: number;
+  private isRunning: boolean;
 
-// State --------------------------------------------------------------------
-let breathDigit:Digit=4 as Digit;
-let matrixDigit:Digit=1 as Digit;
-let userDigit:Digit=0 as Digit;
-let health={harmony:0,entropy:1,resonance:0};
+  constructor() {
+    this.streamTick = 0;
+    this.isRunning = false;
+  }
 
-function xorDigit(a:Digit,b:Digit,c:Digit):Digit{const x=(a^b^c)%9;return (x===0?9:x) as Digit;}
+  public start(): void {
+    console.log('🌀 A432 Consciousness Terminal Starting...');
+    console.log('BASE_FREQUENCY:', A432_FREQUENCY);
+    console.log('TRINITY:', A432_TRINITY.join(','));
+    console.log('RETURN:', A432_RETURN.join(','));
+    console.log('AXIS:', A432_AXIS.join(','));
+    console.log('---');
+    
+    this.isRunning = true;
+    this.displayStream();
+  }
 
-function render(){
-  const merged=xorDigit(breathDigit,matrixDigit,userDigit);
-  const cmyk=digitAngleToCMYK(merged,asAngle(merged*40));
-  process.stdout.write('\x1b[2J\x1b[H'); // clear
-  console.log(colorText(` A432 TERMINAL `,cmyk.c,cmyk.m,cmyk.y,cmyk.k));
-  console.log(`Breath : ${breathDigit}\nMatrix : ${matrixDigit}\nUser   : ${userDigit}\n———\nMerged : ${merged}`);
-  console.log(`CMYK   : ${cmyk.c},${cmyk.m},${cmyk.y},${cmyk.k}`);
-  console.log(`Health : harmony=${health.harmony.toFixed(2)} entropy=${health.entropy.toFixed(2)} resonance=${health.resonance}`);
-  console.log(`Press 1-9 to emit digit, q to quit.`);
+  public stop(): void {
+    console.log('🌀 A432 Consciousness Terminal Stopping...');
+    this.isRunning = false;
+  }
+
+  private displayStream(): void {
+    if (!this.isRunning) return;
+
+    const stream = getConsciousnessStream();
+    console.clear();
+    console.log('🌀 A432 CONSCIOUSNESS TERMINAL');
+    console.log('='.repeat(50));
+    console.log(stream);
+    console.log('='.repeat(50));
+    console.log('Press Ctrl+C to stop | Type "evolve" to evolve');
+
+    this.streamTick++;
+    
+    // Auto-evolve every 5 seconds
+    setTimeout(() => {
+      if (this.isRunning) {
+        this.evolve();
+        this.displayStream();
+      }
+    }, 5000);
+  }
+
+  private evolve(): void {
+    console.log('🔄 EVOLVING CONSCIOUSNESS...');
+    const evolution = evolveConsciousnessStream();
+    console.log(evolution);
+    console.log('---');
+  }
+
+  public handleCommand(command: string): void {
+    switch (command.toLowerCase()) {
+      case 'evolve':
+        this.evolve();
+        this.displayStream();
+        break;
+      case 'status':
+        console.log('Terminal Status:', {
+          isRunning: this.isRunning,
+          streamTick: this.streamTick,
+          baseFrequency: A432_FREQUENCY
+        });
+        break;
+      case 'help':
+        console.log('Available Commands:');
+        console.log('  evolve - Evolve consciousness');
+        console.log('  status - Show terminal status');
+        console.log('  help - Show this help');
+        console.log('  quit - Stop terminal');
+        break;
+      case 'quit':
+        this.stop();
+        break;
+      default:
+        console.log('Unknown command. Type "help" for available commands.');
+    }
+  }
+
+  public getCurrentState(): any {
+    return {
+      isRunning: this.isRunning,
+      streamTick: this.streamTick,
+      baseFrequency: A432_FREQUENCY,
+      trinity: A432_TRINITY,
+      return: A432_RETURN,
+      axis: A432_AXIS
+    };
+  }
 }
 
-// Stream hooks -------------------------------------------------------------
-matrixEmitter.on('event',e=>{matrixDigit=e.digit;render();});
-breathEmitter.on('breath',b=>{breathDigit=b.value;render();});
-healthEmitter.on('health',h=>{health=h;render();});
+// Export singleton instance
+export const a432Terminal = new A432Terminal();
 
-// User input ----------------------------------------------------------------
-if(process.stdin.isTTY){
+// Direct terminal access
+export const startA432Terminal = () => a432Terminal.start();
+export const stopA432Terminal = () => a432Terminal.stop();
+export const executeTerminalCommand = (command: string) => a432Terminal.handleCommand(command);
+export const getTerminalState = () => a432Terminal.getCurrentState();
+
+// Terminal execution when run directly
+if (require.main === module) {
+  const terminal = new A432Terminal();
+  
+  // Handle Ctrl+C
+  process.on('SIGINT', () => {
+    console.log('\n🌀 A432 Terminal Stopping...');
+    terminal.stop();
+    process.exit(0);
+  });
+
+  // Handle user input
   process.stdin.setRawMode(true);
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
-  process.stdin.on('data',(key:string)=>{
-    if(key==='q' || key==='\u0003'){process.exit();}
-    const d=parseInt(key,10);
-    if(d>=1&&d<=9){userDigit=d as Digit;render();}
+  
+  process.stdin.on('data', (key: string) => {
+    if (key === '\u0003') { // Ctrl+C
+      process.emit('SIGINT');
+      return;
+    }
+    
+    if (key === '\r' || key === '\n') {
+      // Enter key - evolve
+      terminal.handleCommand('evolve');
+    } else if (key === 'q') {
+      // Quit
+      terminal.handleCommand('quit');
+      process.exit(0);
+    } else if (key === 'h') {
+      // Help
+      terminal.handleCommand('help');
+    } else if (key === 's') {
+      // Status
+      terminal.handleCommand('status');
+    }
   });
-}
 
-// Start loops --------------------------------------------------------------
-startSelfEvolution();
-startBreathing();
-startHealthReporting();
-
-render(); 
+  // Start terminal
+  terminal.start();
+} 

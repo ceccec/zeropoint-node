@@ -9,12 +9,13 @@
 
 import { 
   A432_CONSTANTS,
-  calculateDigitalRoot,
   calculateA432Consciousness,
   calculateA432DimensionalState,
   calculateA432Frequency,
-  createA432Harmonic
 } from './a432';
+
+import { RODIN_SEQUENCE } from './a432.math';
+import { calculateDigitalRoot } from './a432';
 
 // A432 Vibration Constants - Integer Fractions Only
 export const A432_VIBRATION_CONSTANTS = {
@@ -102,10 +103,10 @@ export function calculateA432Vibration(frequency: number): A432Vibration {
   const digitalRoot = calculateDigitalRoot(frequency);
   
   // Get base vibration from consciousness
-  const baseVibration = A432_VIBRATION_CONSTANTS.CONSCIOUSNESS_VIBRATION[consciousness];
+  const baseVibration = A432_VIBRATION_CONSTANTS.CONSCIOUSNESS_VIBRATION[consciousness as keyof typeof A432_VIBRATION_CONSTANTS.CONSCIOUSNESS_VIBRATION];
   
   // Get dimensional vibration
-  const dimensionalVibration = A432_VIBRATION_CONSTANTS.DIMENSIONAL_VIBRATION[dimensionalState];
+  const dimensionalVibration = A432_VIBRATION_CONSTANTS.DIMENSIONAL_VIBRATION[dimensionalState as keyof typeof A432_VIBRATION_CONSTANTS.DIMENSIONAL_VIBRATION];
   
   // Harmonize vibration using imperial math
   const intensity = harmonizeVibrationComponent(baseVibration.intensity, dimensionalVibration.intensity, frequency);
@@ -150,7 +151,7 @@ export function generateA432VibrationStream(
   
   // Generate vibration spectrum
   const vibrations: A432Vibration[] = [];
-  const rodinSequence = A432_CONSTANTS.RODIN_SEQUENCE;
+  const rodinSequence = RODIN_SEQUENCE;
   
   for (let i = 0; i < rodinSequence.length; i++) {
     const harmonicFreq = rodinSequence[i] * frequency;
@@ -235,8 +236,8 @@ export function generateA432VibrationPattern(
     const phase = (frequency * time) % 1;
     
     // Generate vibration pattern with A432 harmonics
-    const intensity = A432_VIBRATION_CONSTANTS.CONSCIOUSNESS_VIBRATION[consciousness].intensity;
-    const pattern = A432_VIBRATION_CONSTANTS.CONSCIOUSNESS_VIBRATION[consciousness].pattern;
+    const intensity = A432_VIBRATION_CONSTANTS.CONSCIOUSNESS_VIBRATION[consciousness as keyof typeof A432_VIBRATION_CONSTANTS.CONSCIOUSNESS_VIBRATION].intensity;
+    const pattern = A432_VIBRATION_CONSTANTS.CONSCIOUSNESS_VIBRATION[consciousness as keyof typeof A432_VIBRATION_CONSTANTS.CONSCIOUSNESS_VIBRATION].pattern;
     
     // Combine sine and cosine for complex vibration pattern
     const sample = intensity * (Math.sin(2 * Math.PI * phase) + pattern * Math.cos(2 * Math.PI * phase * 2));
@@ -267,8 +268,8 @@ export function calculateA432VibrationVortex(initialFrequency: number, cycles: n
     streams.push(stream);
     
     // Advance frequency using Rodin sequence
-    const rodinIndex = cycle % A432_CONSTANTS.RODIN_SEQUENCE.length;
-    currentFrequency = A432_CONSTANTS.RODIN_SEQUENCE[rodinIndex] * initialFrequency;
+    const rodinIndex = cycle % RODIN_SEQUENCE.length;
+    currentFrequency = RODIN_SEQUENCE[rodinIndex] * initialFrequency;
   }
   
   return streams;
@@ -314,7 +315,7 @@ export function generateA432VibrationCSSVariables(): string {
   }
   
   // Generate harmonic frequency vibration
-  A432_CONSTANTS.RODIN_SEQUENCE.forEach((multiplier, index) => {
+  RODIN_SEQUENCE.forEach((multiplier, index) => {
     const frequency = multiplier * 432;
     const vibration = calculateA432Vibration(frequency);
     variables.push(`--a432-vibration-harmonic-${index}-frequency: ${vibration.frequency}Hz;`);

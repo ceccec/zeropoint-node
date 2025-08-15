@@ -6,6 +6,8 @@
  * Provides metaphysical and mathematical documentation.
  */
 
+import { toHarmonic, toCMYK, getFlow } from './a432.body';
+
 export interface AnatomyRegion {
   name: string;
   value: number; // 0-9
@@ -28,17 +30,6 @@ export interface A432Anatomy {
   cmyk: { c: number; m: number; y: number; k: number };
   flows: number[][];
   description: string;
-}
-
-function toHarmonic(value: number): number {
-  return Math.round(432 * (1 + value / 9));
-}
-function toCMYK(value: number, channel: number): number {
-  return Math.round((value / 9) * 100);
-}
-function getFlow(seed: number): number[] {
-  const base = [1, 2, 4, 8, 7, 5];
-  return base.map(n => ((n + seed) % 9) || 9);
 }
 
 export function createA432Anatomy(

@@ -6,7 +6,7 @@
  * Every scent is a living act of presence, observation, and transformation.
  */
 
-import { I } from './a432.i';
+import I from './a432.i';
 
 export function handleSmellEvent(scent: string, intensity: number, timestamp: number = Date.now()) {
   const trinity = ['creation', 'return', 'axis'];

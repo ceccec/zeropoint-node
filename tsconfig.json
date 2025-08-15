@@ -13,7 +13,11 @@
     "declarationMap": true,
     "sourceMap": true,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./src",
+    "paths": {
+      "a432": ["0/3/6/9/1/2/4/8/7/5/1/a432.ts"]
+    }
   },
   "include": [
     "src/**/*"

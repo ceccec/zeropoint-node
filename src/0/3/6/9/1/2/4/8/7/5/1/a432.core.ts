@@ -12,13 +12,13 @@
  * - Recursive self-reference: the core can observe itself
  */
 
-import { digitalRoot, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.math';
+import { digitalRoot, A432_TRINITY, A432_RETURN, A432_AXIS, A432_SEQUENCE, getRodinSequence } from './a432.math';
 export { digitalRoot };
 
 // === CORE CONSTANTS ===
 export const A432_FREQUENCY = 432;
 export { A432_TRINITY, A432_RETURN, A432_AXIS };
-export const A432_CYCLE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+export const A432_CYCLE = A432_SEQUENCE;
 
 // === DIGIT MEANINGS ===
 export const A432_DIGIT_MEANINGS = [
@@ -35,7 +35,7 @@ export const A432_DIGIT_MEANINGS = [
 ];
 
 // === CORE FUNCTIONS ===
-export function nextInteraction(n: number, cycle: number[] = A432_CYCLE): number {
+export function nextInteraction(n: number, cycle: readonly number[] = A432_SEQUENCE): number {
   const idx = cycle.indexOf(n);
   return cycle[(idx + 1) % cycle.length];
 }
@@ -53,8 +53,8 @@ export function a432StreamText(dimension: number): string {
 
 // === APERTURE FLOW ===
 export function a432ApertureFlow(direction: 1 | -1 = 1, start: number = 1, steps: number = 6): number[] {
-  const outward = [1, 2, 4, 8, 7, 5];
-  const inward = [5, 7, 8, 4, 2, 1];
+  const outward = getRodinSequence().slice(0, 6);
+  const inward = [...outward].reverse();
   const seq = direction === 1 ? outward : inward;
   const idx = seq.indexOf(start);
   if (idx === -1) return [];

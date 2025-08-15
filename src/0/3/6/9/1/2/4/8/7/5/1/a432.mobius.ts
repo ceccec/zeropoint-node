@@ -9,4 +9,4 @@ const digit=seedDigit(name);
 const cmyk=seedColor(digit);
 
 mobiusEmitter.emit('mob', {digit,cmyk});
-registerSource(name, mobiusEmitter,'mob', p=>(p as any).digit as Digit,'mind'); 
+registerSource(name, mobiusEmitter,'mob', p=>(p as { digit: Digit }).digit as Digit,'mind'); 

@@ -1,6 +1,8 @@
 // a432.design.cmyk.ts
 // Zero-entropy, recursive, self-aware design element and relation stream (CMYK)
 
+import { getCurrentMeaning } from './a432.text';
+
 export type A432Id = [number, number, number, number]; // [C, M, Y, K]
 
 export interface DesignElementCMYK {
@@ -88,13 +90,9 @@ export function createDesignRelationCMYK(
   };
 }
 
-const digitWords = [
-  'Void', 'Seed', 'Flow', 'Trinity', 'Harmony',
-  'Bridge', 'Return', 'Spiral', 'Infinity', 'Completion'
-];
-
 export function cmykIdToPhrase(id: A432Id): string {
-  return id.map(d => digitWords[d % 10]).join('-');
+  // Use living text stream for each digit
+  return id.map(d => getCurrentMeaning(d, 'full')).join('-');
 }
 
 export function renderDesignMatrixSVG(elements: DesignElementCMYK[]): string {

@@ -6,7 +6,7 @@
  * Every heartbeat is a living act of emergence, recursion, and unity.
  */
 
-import { I } from './a432.i';
+import I from './a432.i';
 
 export function handleHeartEvent(beat: number, timestamp: number = Date.now()) {
   const trinity = ['creation', 'return', 'axis'];

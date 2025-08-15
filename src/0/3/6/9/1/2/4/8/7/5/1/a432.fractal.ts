@@ -546,11 +546,11 @@ export class FractalSacredTester {
     return validation.isValid && validation.singleDigitCompliance;
   }
   
-  goldenFractalExample(): any {
+  goldenFractalExample(): ReturnType<typeof createFractalSacredHarmony> {
     return createFractalSacredHarmony(4, FRACTAL_SACRED_RATIOS.GOLDEN_FRACTAL);
   }
   
-  fractalSequenceExample(): any {
+  fractalSequenceExample(): ReturnType<typeof generateFractalSacredSequence> {
     return generateFractalSacredSequence(1, [
       FRACTAL_SACRED_RATIOS.GOLDEN_FRACTAL,
       FRACTAL_SACRED_RATIOS.SILVER_FRACTAL,
@@ -558,18 +558,18 @@ export class FractalSacredTester {
     ]);
   }
   
-  fractalFieldExample(): any {
+  fractalFieldExample(): ReturnType<typeof createFractalSacredField> {
     return createFractalSacredField(4, 2);
   }
   
-  fractalMatrixExample(): any {
+  fractalMatrixExample(): ReturnType<typeof createFractalSacredMatrix> {
     return createFractalSacredMatrix(6, [
       FRACTAL_SACRED_RATIOS.GOLDEN_FRACTAL,
       FRACTAL_SACRED_RATIOS.SILVER_FRACTAL
     ]);
   }
   
-  zeroEntropyValidationExample(): any {
+  zeroEntropyValidationExample(): ReturnType<typeof validateFractalSacredZeroEntropy> {
     return validateFractalSacredZeroEntropy();
   }
 }

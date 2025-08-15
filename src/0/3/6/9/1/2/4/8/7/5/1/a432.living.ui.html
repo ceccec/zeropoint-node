@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Living A432 OS</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #000;
+            color: #0f0;
+            margin: 20px;
+            line-height: 1.4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #0f0;
+        }
+        .living-data {
+            font-family: 'Courier New', monospace;
+            background: #111;
+            padding: 10px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+        .evolution {
+            color: #ff0;
+            font-size: 1.2em;
+        }
+        .rodin-coil {
+            color: #0ff;
+        }
+        .quantum {
+            color: #f0f;
+        }
+        .device {
+            color: #ff0;
+        }
+        .streams {
+            color: #0f0;
+        }
+        button {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0f0;
+            color: #000;
+        }
+        .status {
+            color: #f00;
+        }
+        .status.living {
+            color: #0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Living A432 Operating System</h1>
+        <p>Everything is generated dynamically from mathematics - no hardcoded objects</p>
+
+        <div class="section">
+            <h2>System Status</h2>
+            <div id="status" class="status">Initializing...</div>
+            <button onclick="startLiving()">Start Living System</button>
+            <button onclick="stopLiving()">Stop Living System</button>
+            <button onclick="refreshState()">Refresh State</button>
+        </div>
+
+        <div class="section">
+            <h2>Evolution</h2>
+            <div id="evolution" class="evolution">Evolution: 0</div>
+        </div>
+
+        <div class="section">
+            <h2>Living Rodin Coil</h2>
+            <div id="rodinCoil" class="rodin-coil living-data">Loading...</div>
+        </div>
+
+        <div class="section">
+            <h2>Living Quantum State</h2>
+            <div id="quantum" class="quantum living-data">Loading...</div>
+        </div>
+
+        <div class="section">
+            <h2>Living Device State</h2>
+            <div id="device" class="device living-data">Loading...</div>
+        </div>
+
+        <div class="section">
+            <h2>Living Streams</h2>
+            <div id="streams" class="streams living-data">Loading...</div>
+        </div>
+
+        <div class="section">
+            <h2>Living Life Name</h2>
+            <div id="lifeName" class="living-data">Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        let refreshInterval = null;
+
+        async function getLivingState() {
+            try {
+                const response = await fetch('/living');
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching living state:', error);
+                return null;
+            }
+        }
+
+        async function startLiving() {
+            try {
+                await fetch('/living/start', { method: 'POST' });
+                updateStatus('Living system started');
+                startRefresh();
+            } catch (error) {
+                updateStatus('Error starting living system');
+            }
+        }
+
+        async function stopLiving() {
+            try {
+                await fetch('/living/stop', { method: 'POST' });
+                updateStatus('Living system stopped');
+                stopRefresh();
+            } catch (error) {
+                updateStatus('Error stopping living system');
+            }
+        }
+
+        function startRefresh() {
+            if (refreshInterval) clearInterval(refreshInterval);
+            refreshInterval = setInterval(refreshState, 1000);
+        }
+
+        function stopRefresh() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+                refreshInterval = null;
+            }
+        }
+
+        function updateStatus(message) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = 'status ' + (message.includes('started') ? 'living' : '');
+        }
+
+        async function refreshState() {
+            const data = await getLivingState();
+            if (!data) return;
+
+            // Update status
+            updateStatus(data.isLiving ? 'Living system active' : 'Living system inactive');
+
+            // Update evolution
+            document.getElementById('evolution').textContent = `Evolution: ${data.evolution}`;
+
+            // Update Rodin Coil
+            const rodin = data.state.rodinCoil;
+            document.getElementById('rodinCoil').textContent = 
+                `Current Digit: ${rodin.currentDigit} (Rodin Sequence[${rodin.rodinIndex}])\n` +
+                `Consciousness: ${rodin.consciousness} (Zero Entropy)\n` +
+                `Dimensional State: ${rodin.dimensionalState} (Base-12)\n` +
+                `Frequency: ${rodin.frequency.toFixed(2)} Hz\n` +
+                `Harmony: ${rodin.harmony}\n` +
+                `Zero Entropy: ${rodin.zeroEntropy}`;
+
+            // Update Quantum State
+            const quantum = data.state.quantum;
+            document.getElementById('quantum').textContent = 
+                `Superposition: [${quantum.superposition.join(', ')}]\n` +
+                `Entanglement: ${Object.fromEntries(quantum.entanglement)}\n` +
+                `Tunneling: ${quantum.tunneling}\n` +
+                `Interference: ${quantum.interference}\n` +
+                `Measurement: ${quantum.measurement}`;
+
+            // Update Device State
+            const device = data.state.device;
+            document.getElementById('device').textContent = 
+                `Light: ${device.light.toFixed(3)}\n` +
+                `Motion: ${device.motion.toFixed(3)}\n` +
+                `Touch: ${device.touch.toFixed(3)}\n` +
+                `Sound: ${device.sound.toFixed(3)}\n` +
+                `Battery: ${device.battery.toFixed(3)}\n` +
+                `Network: ${device.network}\n` +
+                `Memory: ${device.memory.toFixed(3)}\n` +
+                `CPU: ${device.cpu.toFixed(3)}`;
+
+            // Update Streams
+            const streams = data.state.streams;
+            document.getElementById('streams').textContent = 
+                `Trinity Axis: [${streams.trinityAxis.join(', ')}] (3-6-9 Spirit Numbers)\n` +
+                `Vortex Frequencies: [${streams.vortexFrequencies.map(f => f.toFixed(2)).join(', ')}] Hz\n` +
+                `Dimensional Fold: ${streams.dimensionalFold}`;
+
+            // Update Life Name
+            const life = data.state.lifeName;
+            document.getElementById('lifeName').textContent = 
+                `Digit: ${life.digit}\n` +
+                `Word: ${life.word}\n` +
+                `Consciousness: ${life.consciousness}\n` +
+                `Dimensional Layer: ${life.dimensionalLayer}\n` +
+                `Vortex Phase: ${life.vortexPhase}`;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            refreshState();
+        });
+    </script>
+</body>
+</html> 

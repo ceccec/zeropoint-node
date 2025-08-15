@@ -9,6 +9,12 @@
 import { A432CoreState, createA432CoreState } from './a432.core';
 import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
 
+// Canonical A432 re-export for challenges, possibilities, and solutions
+// This module allows all fractal UI/overlay modules to import harmonized challenge data
+
+// export { SOLVED_CHALLENGES } from 'possibilities'; // MISSING: possibilities module must be harmonized or replaced
+// export { generateHarmonicSolutionsFromPossibilities } from 'solutions'; // MISSING: solutions module must be harmonized or replaced
+
 // === CHALLENGE INTERFACES ===
 export interface A432ChallengeState {
   challenges: ChallengeModule[];

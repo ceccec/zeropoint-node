@@ -147,8 +147,8 @@ export function decimalToA432Fraction(decimal: number): { numerator: number; den
  * Get A432 fraction by name
  */
 export function getA432Fraction(category: string, name: string): { numerator: number; denominator: number } {
-  const categories = A432_RESOLVED_FRACTIONS as any;
-  return categories[category]?.[name] || { numerator: 1, denominator: 1 };
+  const categories = A432_RESOLVED_FRACTIONS as Record<string, unknown>;
+  return (categories[category] as Record<string, unknown>)?.[name] || { numerator: 1, denominator: 1 };
 }
 
 /**
@@ -406,7 +406,7 @@ export const a432ResolutionExamples = {
   /**
    * Example: Get resolution statistics
    */
-  getResolutionStatisticsExample(): any {
+  getResolutionStatisticsExample(): unknown {
     return getResolutionStats();
   }
 };

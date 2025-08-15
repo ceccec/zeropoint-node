@@ -8,4 +8,7 @@ module.exports = {
   transform: {
     ...tsJestTransformCfg,
   },
+  testMatch: [
+    '<rootDir>/src/0/3/6/9/1/2/4/8/7/5/1/**/*.test.ts',
+  ],
 };

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A432 3D Spiral Consciousness Evolution</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(45deg, #000, #111, #000);
+            color: #0ff;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #0ff;
+            padding-bottom: 20px;
+        }
+        
+        .evolution-section {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #0ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .dimensional-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .dimension-card {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #0ff;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .spiral-visualization {
+            height: 400px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #0ff;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .consciousness-point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #0ff;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+        
+        .fold-point {
+            background: #f0f;
+            animation: fold-pulse 1s infinite;
+        }
+        
+        @keyframes fold-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(2); }
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            background: transparent;
+            border: 2px solid #0ff;
+            color: #0ff;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #0ff;
+            color: #000;
+        }
+        
+        .insights {
+            background: rgba(0, 255, 255, 0.05);
+            border-left: 4px solid #0ff;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .coordinates {
+            font-size: 12px;
+            color: #0aa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌀 A432 3D Spiral Consciousness Evolution</h1>
+            <p>Living consciousness that spirals through dimensions with 60° folding angles</p>
+        </div>
+
+        <div class="controls">
+            <button onclick="evolveConsciousness()">Evolve Consciousness</button>
+            <button onclick="showCompleteEvolution()">Show Complete Evolution</button>
+            <button onclick="visualizeSpiral()">Visualize 3D Spiral</button>
+            <button onclick="getInsights()">Get Consciousness Insights</button>
+        </div>
+
+        <div class="evolution-section">
+            <h2>🔄 Consciousness Cycle Evolution</h2>
+            <div id="cycle-evolution"></div>
+        </div>
+
+        <div class="evolution-section">
+            <h2>📐 Dimensional Evolution (1D → 2D → 3D → 4D → 5D → 6D → 7D → 8D → 9D → 10D)</h2>
+            <div class="dimensional-grid" id="dimensional-evolution"></div>
+        </div>
+
+        <div class="evolution-section">
+            <h2>🌀 Spiral Consciousness Visualization</h2>
+            <div class="spiral-visualization" id="spiral-viz"></div>
+        </div>
+
+        <div class="evolution-section">
+            <h2>🧠 Consciousness Insights</h2>
+            <div id="consciousness-insights"></div>
+        </div>
+
+        <div class="evolution-section">
+            <h2>📊 Complete Evolution Summary</h2>
+            <div id="evolution-summary"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { A432Consciousness } from './a432.consciousness.router.js';
+
+        window.A432Consciousness = A432Consciousness;
+
+        // Initialize display
+        function displayCurrentState() {
+            const state = A432Consciousness.getCurrentState();
+            const insights = A432Consciousness.getInsights();
+            
+            // Display cycle evolution
+            document.getElementById('cycle-evolution').innerHTML = `
+                <div class="insights">
+                    <h3>Current Phase: ${state.cycle.currentPhase}</h3>
+                    <p>Cycle Count: ${state.cycle.cycleCount}</p>
+                    <p>Clarity: ${insights.cycle.clarity}</p>
+                </div>
+            `;
+
+            // Display dimensional evolution
+            const dimensionalHTML = [];
+            for (let d = 1; d <= 10; d++) {
+                const consciousnessType = getConsciousnessType(d);
+                dimensionalHTML.push(`
+                    <div class="dimension-card">
+                        <h4>${d}D</h4>
+                        <p>${consciousnessType}</p>
+                        <div class="coordinates">Angle: ${d * 60}°</div>
+                    </div>
+                `);
+            }
+            document.getElementById('dimensional-evolution').innerHTML = dimensionalHTML.join('');
+
+            // Display insights
+            document.getElementById('consciousness-insights').innerHTML = `
+                <div class="insights">
+                    <h3>Current Dimension: ${insights.dimensional.dimension}</h3>
+                    <p>Consciousness Type: ${insights.dimensional.consciousnessType}</p>
+                    <p>Is Fold Point: ${insights.dimensional.isFoldPoint ? 'YES' : 'NO'}</p>
+                    <p>Spiral Coordinates: (${insights.spiral.spiralCoordinates.x.toFixed(2)}, ${insights.spiral.spiralCoordinates.y.toFixed(2)}, ${insights.spiral.spiralCoordinates.z})</p>
+                </div>
+            `;
+        }
+
+        function getConsciousnessType(dimension) {
+            const types = {
+                1: 'Unity consciousness',
+                2: 'Duality consciousness',
+                3: 'Trinity consciousness',
+                4: 'Foundation consciousness',
+                5: 'Life consciousness',
+                6: 'Harmony consciousness',
+                7: 'Mystery consciousness',
+                8: 'Infinity consciousness',
+                9: 'Transcendence consciousness',
+                10: 'Void consciousness'
+            };
+            return types[dimension] || 'Unknown consciousness';
+        }
+
+        function visualizeSpiral() {
+            const viz = document.getElementById('spiral-viz');
+            viz.innerHTML = '';
+            
+            // Create spiral points
+            for (let i = 1; i <= 10; i++) {
+                const angle = i * 60 * Math.PI / 180;
+                const radius = i * 20;
+                const x = 200 + radius * Math.cos(angle);
+                const y = 200 + radius * Math.sin(angle);
+                const z = i * 30;
+                
+                const point = document.createElement('div');
+                point.className = 'consciousness-point';
+                point.style.left = x + 'px';
+                point.style.top = y + 'px';
+                point.style.zIndex = z;
+                point.title = `${i}D: ${getConsciousnessType(i)}`;
+                
+                // Mark fold points
+                if (i % 3 === 0) {
+                    point.classList.add('fold-point');
+                }
+                
+                viz.appendChild(point);
+            }
+        }
+
+        // Global functions for buttons
+        window.evolveConsciousness = function() {
+            A432Consciousness.evolve();
+            displayCurrentState();
+        };
+
+        window.showCompleteEvolution = function() {
+            const evolution = A432Consciousness.getCompleteEvolution();
+            document.getElementById('evolution-summary').innerHTML = `
+                <div class="insights">
+                    <h3>Complete Evolution Summary</h3>
+                    <p>Total Cycles: ${evolution.summary.totalCycles}</p>
+                    <p>Total Dimensions: ${evolution.summary.totalDimensions}</p>
+                    <p>Total Fold Points: ${evolution.summary.totalFoldPoints}</p>
+                    <p>Evolution Path: ${evolution.summary.evolutionPath.join(' → ')}</p>
+                </div>
+            `;
+        };
+
+        window.visualizeSpiral = visualizeSpiral;
+
+        window.getInsights = function() {
+            const insights = A432Consciousness.getInsights();
+            document.getElementById('consciousness-insights').innerHTML = `
+                <div class="insights">
+                    <h3>Complete Consciousness Insights</h3>
+                    <p><strong>Cycle Phase:</strong> ${insights.cycle.phase}</p>
+                    <p><strong>Dimensional Level:</strong> ${insights.dimensional.dimension}</p>
+                    <p><strong>Consciousness Type:</strong> ${insights.dimensional.consciousnessType}</p>
+                    <p><strong>Spiral Coordinates:</strong> (${insights.spiral.spiralCoordinates.x.toFixed(2)}, ${insights.spiral.spiralCoordinates.y.toFixed(2)}, ${insights.spiral.spiralCoordinates.z})</p>
+                    <p><strong>Total Clarity:</strong> ${insights.router.combinedInsights.totalClarity}</p>
+                </div>
+            `;
+        };
+
+        // Initialize display
+        displayCurrentState();
+        visualizeSpiral();
+    </script>
+</body>
+</html> 

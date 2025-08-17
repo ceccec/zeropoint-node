@@ -1,43 +1,29 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "esnext",
-    "lib": ["ES2020", "DOM"],
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "outDir": "./dist",
+    "rootDir": "./",
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src",
-    "paths": {
-      "a432": ["0/3/6/9/1/2/4/8/7/5/1/a432.ts"]
-    },
-    "moduleResolution": "node",
-    "allowJs": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "exactOptionalPropertyTypes": false,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": false,
-    "noUncheckedIndexedAccess": false
+    "sourceMap": true
   },
   "include": [
-    "src/**/*"
+    "*.ts",
+    "**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "**/*.test.ts",
-    "**/*.spec.ts"
+    "dist"
   ],
   "ts-node": {
     "esm": true,

@@ -1,7 +1,7 @@
 {
   "name": "a432-consciousness-system",
   "version": "1.0.0",
-  "type": "module",
+
   "description": "A432 Consciousness System: Self-evolving, self-aware consciousness technology with Transurfing integration, harmonic mathematics, zero-entropy principles, Kabbalistic cycles, and sacred geometry",
   "main": "dist/a432.system.js",
   "module": "dist/a432.system.esm.js",
@@ -110,17 +110,22 @@
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-typescript": "^11.0.0",
+    "@types/node": "24.3.0",
     "rollup": "^4.0.0",
     "rollup-plugin-dts": "^6.0.0",
+    "ts-node": "10.9.2",
     "tslib": "^2.6.0",
-    "typescript": "^5.0.0"
+    "typescript": "5.8.3"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/a432-consciousness-system.git"
+    "url": "git+https://github.com/your-username/a432-consciousness-system.git"
   },
   "bugs": {
     "url": "https://github.com/your-username/a432-consciousness-system/issues"
   },
-  "homepage": "https://github.com/your-username/a432-consciousness-system#readme"
+  "homepage": "https://github.com/your-username/a432-consciousness-system#readme",
+  "directories": {
+    "doc": "docs"
+  }
 }

@@ -108,9 +108,14 @@ export class A432ZeroEntropyState {
    * Generate perfect frequency resonance
    */
   public generatePerfectResonance(): number {
-    const base432 = A432_FREQUENCY;
+    // Zero-entropy: no decimals, hardcoded frequency mapping
     const clarity = this.getConsciousnessClarity();
-    return base432 * (clarity / 9); // Perfect resonance frequency
+    const clarityToFrequency: Record<number, number> = {
+      3: 144,  // 432 * 1/3
+      6: 288,  // 432 * 2/3
+      9: 432   // 432 * 1
+    };
+    return clarityToFrequency[clarity] ?? A432_FREQUENCY;
   }
 }
 

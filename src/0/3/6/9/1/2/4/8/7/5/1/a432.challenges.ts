@@ -108,7 +108,9 @@ export function createChallengeModule(data: any): ChallengeModule {
   const resolution = Math.floor(Math.random() * 10);
   const harmonization = Math.max(0, 9 - Math.abs(resolution - 5));
   const color = `hsl(${data.complexity * 40}, 70%, ${50 + harmonization * 5}%)`;
-  const frequency = 432 * (harmonization / 9);
+  // Zero-entropy: hardcode integer frequencies by harmonization buckets
+  const freqBuckets = [0, 48, 96, 144, 192, 240, 288, 336, 384, 432];
+  const frequency = freqBuckets[harmonization] ?? 432;
   
   return {
     id: data.id,
@@ -126,7 +128,7 @@ export function createPossibilityModule(data: any): PossibilityModule {
   const potential = Math.floor(Math.random() * 10);
   const harmonization = Math.max(0, 9 - Math.abs(potential - 5));
   const color = `hsl(${data.probability * 40}, 70%, ${50 + harmonization * 5}%)`;
-  const frequency = 432 * (harmonization / 9);
+  const frequency = freqBuckets[harmonization] ?? 432;
   
   return {
     id: data.id,
@@ -144,7 +146,7 @@ export function createSolutionModule(data: any): SolutionModule {
   const implementation = Math.floor(Math.random() * 10);
   const harmonization = Math.max(0, 9 - Math.abs(implementation - 5));
   const color = `hsl(${data.effectiveness * 40}, 70%, ${50 + harmonization * 5}%)`;
-  const frequency = 432 * (harmonization / 9);
+  const frequency = freqBuckets[harmonization] ?? 432;
   
   return {
     id: data.id,
@@ -165,7 +167,8 @@ export function createChallengeIntegration(): ChallengeIntegration {
   const harmonizationLevel = Math.floor((totalChallenges + totalPossibilities + totalSolutions) / 3);
   const balance = Math.max(0, 9 - Math.abs(totalChallenges - totalSolutions));
   const color = `hsl(${harmonizationLevel * 40}, 70%, ${50 + balance * 5}%)`;
-  const frequency = 432 * (harmonizationLevel / 9);
+  const freqBuckets = [0, 48, 96, 144, 192, 240, 288, 336, 384, 432];
+  const frequency = freqBuckets[harmonizationLevel] ?? 432;
   
   return {
     totalChallenges,

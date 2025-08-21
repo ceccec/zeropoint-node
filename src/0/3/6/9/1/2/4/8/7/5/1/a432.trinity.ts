@@ -88,11 +88,17 @@ export function createTrinityConsciousnessVector(
 ): TrinityConsciousnessVector {
   const baseAngle = TRINITY_HARMONIC_ANGLES[digit as keyof typeof TRINITY_HARMONIC_ANGLES] || 0;
   const angle = (baseAngle + (phase * 60)) % 360;
-  const polarity = Math.sin((angle * Math.PI) / 180);
-  const frequency = A432_FREQUENCY * (digit / 3) * (1 + polarity * 0.1);
+  // Zero-entropy: quantize polarity to {-1,0,1} and hardcode frequencies
+  const sinVal = Math.sin((angle * Math.PI) / 180);
+  const polarity = sinVal > 0 ? 1 : (sinVal < 0 ? -1 : 0);
+  // Hardcoded integer multiples of 432 based on trinity digit
+  const baseFrequencyMap: Record<number, number> = { 3: 432, 6: 864, 9: 1296 };
+  const frequency = baseFrequencyMap[digit] ?? A432_FREQUENCY;
   const cmyk = digitAngleToCMYK(digit, angle);
-  const resonance = Math.cos((angle * Math.PI) / 180) * awareness;
-  const consciousness = (awareness + Math.abs(polarity)) / 2;
+  // Quantize resonance to integer bucket 0..9 (integer only)
+  const cosVal = Math.cos((angle * Math.PI) / 180);
+  const resonance = Math.floor(Math.abs(cosVal) * 9);
+  const consciousness = Math.floor(((awareness + Math.abs(polarity)) / 2) * 9);
   
   return {
     digit,

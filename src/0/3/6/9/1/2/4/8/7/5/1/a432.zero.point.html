@@ -712,9 +712,9 @@
       const order = parseInt(document.getElementById('entropy-order').value);
       const structure = parseInt(document.getElementById('entropy-structure').value);
       const organization = parseInt(document.getElementById('entropy-organization').value);
-      const zero = parseInt(document.getElementById('entropy-zero').value);
+      const entropyZero = parseInt(document.getElementById('entropy-zero').value);
       
-      const overallZero = Math.floor((order + structure + organization + zero) / 4);
+      const overallZero = Math.floor((order + structure + organization + entropyZero) / 4);
       
       zero('entropy', 'Entropy zero', overallZero);
     }

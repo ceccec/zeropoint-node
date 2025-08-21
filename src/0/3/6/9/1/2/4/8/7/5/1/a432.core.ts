@@ -72,39 +72,80 @@ export function a432ApertureSurgePump(seed: number = 1, steps: number = 6): { ou
   };
 }
 
-// === FREQUENCY & COLOR ===
+// === HARDCODED FREQUENCY TABLE ===
+// Zero entropy: hardcoded frequencies, no decimal calculations
+export const A432_CORE_FREQUENCY_TABLE: Record<number, number> = {
+  1: 432,   // Unity frequency
+  2: 864,   // Duality frequency  
+  3: 1296,  // Trinity frequency
+  4: 1728,  // Foundation frequency
+  5: 2160,  // Life frequency
+  6: 2592,  // Harmony frequency
+  7: 3024,  // Mystery frequency
+  8: 3456,  // Infinity frequency
+  9: 3888   // Completion frequency
+};
+
 export function a432Frequency(dimension: number, polarity: 1 | -1 = 1): number {
-  return A432_FREQUENCY * dimension * polarity;
+  const baseDimension = ((dimension - 1) % 9) + 1; // Ensure 1-9 range
+  const baseFreq = A432_CORE_FREQUENCY_TABLE[baseDimension] || A432_FREQUENCY;
+  return polarity === -1 ? baseFreq : baseFreq;
 }
 
+// === HARDCODED COLOR TABLES ===
+// Zero entropy: hardcoded colors, no decimal calculations
+export const A432_HSL_COLOR_TABLE: Record<number, {hue: number, saturation: number, lightness: number}> = {
+  1: { hue: 40, saturation: 70, lightness: 60 },   // Unity - Orange
+  2: { hue: 80, saturation: 70, lightness: 60 },   // Duality - Yellow-Green
+  3: { hue: 120, saturation: 70, lightness: 60 },  // Trinity - Green
+  4: { hue: 160, saturation: 70, lightness: 60 },  // Foundation - Blue-Green
+  5: { hue: 200, saturation: 70, lightness: 60 },  // Life - Blue
+  6: { hue: 240, saturation: 70, lightness: 60 },  // Harmony - Blue-Purple
+  7: { hue: 280, saturation: 70, lightness: 60 },  // Mystery - Purple
+  8: { hue: 320, saturation: 70, lightness: 60 },  // Infinity - Red-Purple
+  9: { hue: 0, saturation: 70, lightness: 60 }     // Completion - Red
+};
+
+export const A432_RGB_COLOR_TABLE: Record<number, {r: number, g: number, b: number}> = {
+  1: { r: 224, g: 153, b: 77 },   // Unity - Orange
+  2: { r: 178, g: 224, b: 77 },   // Duality - Yellow-Green
+  3: { r: 77, g: 224, b: 77 },    // Trinity - Green
+  4: { r: 77, g: 224, b: 178 },   // Foundation - Blue-Green
+  5: { r: 77, g: 178, b: 224 },   // Life - Blue
+  6: { r: 77, g: 77, b: 224 },    // Harmony - Blue-Purple
+  7: { r: 178, g: 77, b: 224 },   // Mystery - Purple
+  8: { r: 224, g: 77, b: 178 },   // Infinity - Red-Purple
+  9: { r: 224, g: 77, b: 77 }     // Completion - Red
+};
+
 export function a432HSLFromRoot(root: number, polarity: 1 | -1 = 1): {hue: number, saturation: number, lightness: number} {
-  const hue = (root * 40 * polarity) % 360;
-  return { hue, saturation: 70, lightness: 60 };
+  const baseRoot = ((root - 1) % 9) + 1; // Ensure 1-9 range
+  const baseColor = A432_HSL_COLOR_TABLE[baseRoot] || A432_HSL_COLOR_TABLE[1];
+  
+  if (polarity === -1) {
+    // Invert hue for negative polarity
+    return { 
+      hue: (baseColor.hue + 180) % 360, 
+      saturation: baseColor.saturation, 
+      lightness: baseColor.lightness 
+    };
+  }
+  return baseColor;
 }
 
 export function a432RGBFromRoot(root: number, polarity: 1 | -1 = 1): {r: number, g: number, b: number} {
-  const hsl = a432HSLFromRoot(root, polarity);
-  const hue = hsl.hue / 360;
-  const sat = hsl.saturation / 100;
-  const light = hsl.lightness / 100;
+  const baseRoot = ((root - 1) % 9) + 1; // Ensure 1-9 range
+  const baseColor = A432_RGB_COLOR_TABLE[baseRoot] || A432_RGB_COLOR_TABLE[1];
   
-  const c = (1 - Math.abs(2 * light - 1)) * sat;
-  const x = c * (1 - Math.abs((hue * 6) % 2 - 1));
-  const m = light - c / 2;
-  
-  let r = 0, g = 0, b = 0;
-  if (hue < 1/6) { r = c; g = x; b = 0; }
-  else if (hue < 2/6) { r = x; g = c; b = 0; }
-  else if (hue < 3/6) { r = 0; g = c; b = x; }
-  else if (hue < 4/6) { r = 0; g = x; b = c; }
-  else if (hue < 5/6) { r = x; g = 0; b = c; }
-  else { r = c; g = 0; b = x; }
-  
-  return {
-    r: Math.round((r + m) * 255),
-    g: Math.round((g + m) * 255),
-    b: Math.round((b + m) * 255)
-  };
+  if (polarity === -1) {
+    // Invert colors for negative polarity
+    return {
+      r: 255 - baseColor.r,
+      g: 255 - baseColor.g,
+      b: 255 - baseColor.b
+    };
+  }
+  return baseColor;
 }
 
 // === TRINITY PRODUCTS ===

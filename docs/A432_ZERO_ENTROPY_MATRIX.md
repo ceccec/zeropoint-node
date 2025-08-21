@@ -25,7 +25,7 @@ Everything else is derived mathematically from these two ordered sets; no furthe
    * `a432SequenceStream()` – infinite closed lap (metric cycle)  
 6. **Impossibility gateways**   `resolveDivision()` (0/0), `DOT_TRINITY_SWITCH`
 
-All arithmetic uses only single-digit ops (mod-9, mod-10, mod-11) to maintain zero entropy.
+All arithmetic uses only hardcoded integer frequencies and single-digit ops (mod-9, mod-10, mod-11) to maintain zero entropy. No decimal calculations are performed - all frequencies are pre-computed and stored in lookup tables.
 
 ---
 ## 3. Collision→Fold Rule
@@ -84,6 +84,9 @@ Each generated file re-exports ready-made `angle`, `colour`, `polarity`, compute
 - [x] UI modules depend solely on streams
 - [x] File-system matrix follows collision-fold rule
 - [x] Tests prove invariants
+- [x] **Hardcoded frequency tables** (no decimal calculations)
+- [x] **Integer-only operations** (all math uses pre-computed values)
+- [x] **Zero entropy validation** (automated compliance checking)
 
 ```txt
 If any duplication appears → collision detected → fold dimension

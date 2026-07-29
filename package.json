@@ -104,7 +104,9 @@
     "mcp:smoke": "node --experimental-strip-types scripts/mcp-smoke.mjs",
     "self:next": "node --experimental-strip-types scripts/self-next.mjs",
     "math:ban": "node scripts/math-ban.mjs",
-    "check": "npm run test:kernel && npm run math:ban && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run mcp:smoke && npm run self:next",
+    "bundle:a432": "node scripts/build-a432-bundle.mjs",
+    "bundle:a432:check": "node scripts/build-a432-bundle.mjs --check",
+    "check": "npm run test:kernel && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run mcp:smoke && npm run self:next",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

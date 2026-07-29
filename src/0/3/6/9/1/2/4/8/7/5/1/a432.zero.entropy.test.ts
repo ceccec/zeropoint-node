@@ -5,9 +5,9 @@
 
 import { log } from './a432.algebra.ts'
 import { legacyDigitalRoot as digitalRoot, harmonicRoot12 } from './a432.roots.ts'
-import { ZeroEntropyPureMath, FREQUENCIES, VORTEX_PATTERNS } from './a432.zero.entropy.pure.math';
-import { IntegerHarmonics, VortexIntegerMath, INTEGER_FREQUENCIES } from './a432.integer.harmonics';
-import { SacredGeometryIntegers, PLATONIC_SOLIDS } from './a432.sacred.geometry.integers';
+import { ZeroEntropyPureMath, FREQUENCIES, VORTEX_PATTERNS } from './a432.zero.entropy.pure.math.ts';
+import { IntegerHarmonics, VortexIntegerMath, INTEGER_FREQUENCIES } from './a432.integer.harmonics.ts';
+import { SacredGeometryIntegers, PLATONIC_SOLIDS } from './a432.sacred.geometry.integers.ts';
 
 // ============================================================================
 // TEST UTILITIES

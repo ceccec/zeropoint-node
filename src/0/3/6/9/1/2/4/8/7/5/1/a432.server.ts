@@ -138,14 +138,14 @@ app.get('/core', (req: Request, res: Response) => {
 
 // Living A432 OS endpoint
 app.get('/living', (req: Request, res: Response) => {
-  import('./a432.living.os').then(({ getLivingA432Status }) => {
+  import('./a432.living.os.ts').then(({ getLivingA432Status }) => {
     res.json(getLivingA432Status());
   });
 });
 
 // Living A432 UI endpoint - generates itself from mathematics
 app.get('/living/ui', (req: Request, res: Response) => {
-  import('./a432.living.ui').then(({ generateLivingUI }) => {
+  import('./a432.living.ui.ts').then(({ generateLivingUI }) => {
     res.send(generateLivingUI());
   });
 });
@@ -171,7 +171,7 @@ app.get('/living/ui', (req: Request, res: Response) => {
 
 // Root endpoint - Black Empty HTML with A432 Math Animation Streams
 app.get('/', (req: Request, res: Response) => {
-  import('./a432.empty.streams').then(({ createEmptyStreams }) => {
+  import('./a432.empty.streams.ts').then(({ createEmptyStreams }) => {
     res.send(createEmptyStreams());
   });
 });

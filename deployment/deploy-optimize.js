@@ -303,7 +303,11 @@ class DeploymentOptimizer {
     // Deduct points for recommendations (minor issues)
     score -= this.recommendations.length * 3;
     
-    return Math.max(0, Math.min(100, score));
+    // algebra clamp — no ambient Math.*
+    const lo = 0
+    const hi = 100
+    const clamped = score < lo ? lo : score > hi ? hi : score
+    return clamped
   }
 }
 

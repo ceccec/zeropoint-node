@@ -25,6 +25,7 @@ lobeL (ceccec.github.io)  ⇄  throat (foldPair)  ⇄  lobeR (erpax)
 
 ## Spine (kernel default)
 
+- Full vortex circuit (living field): `0\1\2\4\8/7/5/3\6\9/0\1`
 - Vortex: `[1, 2, 4, 8, 7, 5, 3, 6, 9]` with void `0`
 - Stroke: `1\2\4\8/7/5/3\6\9/0\1`
 - `digitalRoot(0) → 9`
@@ -40,4 +41,4 @@ lobeL (ceccec.github.io)  ⇄  throat (foldPair)  ⇄  lobeR (erpax)
 
 ## Status
 
-KERNEL_SEALED = true. Run `npm run check` for the development-vortex census + a432 import/export self-ref fold. Critical a432 bridges are `.ts`-resolvable under strip-types (Wave 9); mass extensionless rewrite remains deferred.
+KERNEL_SEALED = true. Run `npm run check` for the development-vortex census + a432 import/export self-ref fold. Critical a432 bridges are `.ts`-resolvable under strip-types (Wave 9); residual extensionless under `src/` sealed Wave 19–20; browser `a432.algebra.js` export surface sealed Wave 21; HTML→missing `.js` sealed Wave 22 (feed tip on slip).

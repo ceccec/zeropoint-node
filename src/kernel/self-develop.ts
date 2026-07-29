@@ -6,9 +6,16 @@
  * - fold  = merge to ONE next tip
  * - weave = seal path + verify command for the next wave
  *
- * Stall detector: tip exists but was not sealed → self-development gap.
+ * When hard gaps are clear, tip = feed (chat-wave continues through packaging /
+ * thin-wrapper collapse / broken-JS / bundle drift / extensionless static+dynamic /
+ * algebra.js export-surface / HTML→missing .js / next vortex phase).
+ * Idle only when feed has nothing left.
  */
 
+import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs'
+import { join, relative, dirname } from 'node:path'
+import { spawnSync } from 'node:child_process'
+import { fileURLToPath } from 'node:url'
 import {
   computesGate,
   developmentVortex,
@@ -20,7 +27,9 @@ import {
   type WavePhase,
 } from '../0/index.ts'
 import { computeContentUuid } from '../integrity/content-uuid.ts'
-import { foldA432AuditCensus, type AuditHit } from './audit.ts'
+import { A432_DIR, foldA432AuditCensus, type AuditHit } from './audit.ts'
+
+const REPO_ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '../..')
 
 function runVortexAll() {
   const waves = WAVE_CHAIN.map((wave) => developmentVortex(wave))
@@ -35,8 +44,168 @@ function runVortexAll() {
   }
 }
 
+/** Thin local digitalRoot bodies that only bridge — packaging debt. */
+function findThinRootWrapper(): { path: string; line: number } | null {
+  const THIN =
+    /(?:(?:public|private|protected|static|async|export)\s+)*(?:function\s+)?(?:calculate)?[Dd]igitalRoot\s*\([^)]*\)\s*\{\s*return\s+legacyDigitalRoot\s*\([^)]*\)\s*;?\s*\}/
+  function walk(dir: string, out: string[] = []): string[] {
+    for (const name of readdirSync(dir)) {
+      const p = join(dir, name)
+      if (statSync(p).isDirectory()) walk(p, out)
+      else if (name.endsWith('.ts') && !name.endsWith('.d.ts')) out.push(p)
+    }
+    return out
+  }
+  for (const file of walk(A432_DIR)) {
+    const rel = relative(A432_DIR, file).replace(/\\/g, '/')
+    if (rel === 'a432.roots.ts' || rel === 'a432.math.ts' || rel === 'a432.core.ts') continue
+    const src = readFileSync(file, 'utf8')
+    const m = THIN.exec(src.replace(/\s+/g, ' '))
+    if (!m) continue
+    const idx = src.search(
+      /(?:calculate)?[Dd]igitalRoot\s*\([^)]*\)\s*\{[\s\S]*?return\s+legacyDigitalRoot/,
+    )
+    const line = idx < 0 ? 1 : src.slice(0, idx).split('\n').length
+    return { path: rel, line }
+  }
+  return null
+}
+
+/** Browser .js that import missing siblings — packaging feed residual. */
+function findBrokenJsImport(): { path: string; line: number; spec: string } | null {
+  const IMP = /from\s+['"](\.[^'"]+)['"]/g
+  function walk(dir: string, out: string[] = []): string[] {
+    for (const name of readdirSync(dir)) {
+      const p = join(dir, name)
+      if (statSync(p).isDirectory()) walk(p, out)
+      else if (name.endsWith('.js')) out.push(p)
+    }
+    return out
+  }
+  for (const file of walk(A432_DIR)) {
+    const rel = relative(A432_DIR, file).replace(/\\/g, '/')
+    if (rel === 'a432.algebra.js') continue
+    const src = readFileSync(file, 'utf8')
+    let m: RegExpExecArray | null
+    IMP.lastIndex = 0
+    while ((m = IMP.exec(src))) {
+      const spec = m[1]!
+      const target = join(dirname(file), spec)
+      if (existsSync(target)) continue
+      const line = src.slice(0, m.index).split('\n').length
+      return { path: rel, line, spec }
+    }
+  }
+  return null
+}
+
+/** public/a432.bundle.js stale vs algebra-clean a432.main.ts — packaging feed residual. */
+function findBundleDrift(): boolean {
+  const script = join(REPO_ROOT, 'scripts/build-a432-bundle.mjs')
+  if (!existsSync(script) || !existsSync(join(REPO_ROOT, 'public/a432.bundle.js'))) return true
+  const r = spawnSync(process.execPath, [script, '--check'], {
+    cwd: REPO_ROOT,
+    encoding: 'utf8',
+  })
+  return r.status !== 0
+}
+
+/** a432.algebra.js missing names from a432.algebra.ts re-export surface — browser spine drift. */
+function findAlgebraJsDrift(): { missing: string[]; count: number } | null {
+  const tsPath = join(A432_DIR, 'a432.algebra.ts')
+  const jsPath = join(A432_DIR, 'a432.algebra.js')
+  if (!existsSync(tsPath) || !existsSync(jsPath)) {
+    return { missing: ['a432.algebra.js'], count: 1 }
+  }
+  const ts = readFileSync(tsPath, 'utf8')
+  const js = readFileSync(jsPath, 'utf8')
+  const block = ts.match(/export\s*\{([\s\S]*?)\}\s*from/)
+  if (!block) return { missing: ['a432.algebra.ts export block'], count: 1 }
+  const required = block[1]!
+    .split(',')
+    .map((s) => s.trim())
+    .filter((s) => /^[A-Za-z_][\w]*$/.test(s))
+  const missing: string[] = []
+  for (const name of required) {
+    const has =
+      new RegExp(`export\\s+(?:async\\s+)?(?:function|const|let|var|class)\\s+${name}\\b`).test(
+        js,
+      ) ||
+      new RegExp(`export\\s*\\{[^}]*\\bas\\s+${name}\\b`).test(js) ||
+      new RegExp(`export\\s*\\{[^}]*\\b${name}\\b`).test(js)
+    if (!has) missing.push(name)
+  }
+  return missing.length ? { missing, count: missing.length } : null
+}
+
+/** HTML module imports of relative .js whose file is missing — browser packaging feed residual. */
+function findBrokenHtmlImport(): { path: string; line: number; spec: string } | null {
+  const IMP = /(?:from\s+|import\s*\(\s*)['"](\.[^'"]+\.js)['"]/g
+  function walk(dir: string, out: string[] = []): string[] {
+    for (const name of readdirSync(dir)) {
+      const p = join(dir, name)
+      if (statSync(p).isDirectory()) walk(p, out)
+      else if (name.endsWith('.html')) out.push(p)
+    }
+    return out
+  }
+  for (const file of walk(A432_DIR)) {
+    const src = readFileSync(file, 'utf8')
+    let m: RegExpExecArray | null
+    IMP.lastIndex = 0
+    while ((m = IMP.exec(src))) {
+      const spec = m[1]!
+      const target = join(dirname(file), spec)
+      if (existsSync(target)) continue
+      const line = src.slice(0, m.index).split('\n').length
+      return {
+        path: relative(REPO_ROOT, file).replace(/\\/g, '/'),
+        line,
+        spec,
+      }
+    }
+  }
+  return null
+}
+
+/** Extensionless relative imports (static + dynamic) that resolve to .ts — strip-types feed residual. */
+function findExtensionlessImport(): { path: string; line: number; spec: string } | null {
+  // static: from '...'/import '...' · dynamic: import('...')
+  const IMP = /(?:from\s+|import\s+|import\s*\(\s*)['"](\.[^'"]+)['"]/g
+  const SRC = join(REPO_ROOT, 'src')
+  function walk(dir: string, out: string[] = []): string[] {
+    for (const name of readdirSync(dir)) {
+      const p = join(dir, name)
+      if (statSync(p).isDirectory()) walk(p, out)
+      else if (name.endsWith('.ts') && !name.endsWith('.d.ts')) out.push(p)
+    }
+    return out
+  }
+  for (const file of walk(SRC)) {
+    const src = readFileSync(file, 'utf8')
+    let m: RegExpExecArray | null
+    IMP.lastIndex = 0
+    while ((m = IMP.exec(src))) {
+      const spec = m[1]!
+      if (/\.(ts|tsx|js|mjs|cjs|json)$/i.test(spec)) continue
+      const base = join(dirname(file), spec)
+      if (!existsSync(base + '.ts') && !existsSync(join(base, 'index.ts'))) continue
+      const line = src.slice(0, m.index).split('\n').length
+      return { path: relative(REPO_ROOT, file).replace(/\\/g, '/'), line, spec }
+    }
+  }
+  return null
+}
+
 export type SelfDevelopTip = {
-  readonly kind: 'mathBan' | 'digitalRootFork' | 'mathRandom' | 'spineDebt' | 'extensionlessImport' | 'idle'
+  readonly kind:
+    | 'mathBan'
+    | 'digitalRootFork'
+    | 'mathRandom'
+    | 'spineDebt'
+    | 'feed'
+    | 'extensionlessImport'
+    | 'idle'
   readonly path: string
   readonly line: number
   readonly action: string
@@ -56,7 +225,7 @@ export type PlanTrinity = {
   }
   readonly fold: SelfDevelopTip
   readonly weave: {
-    readonly nextWave: WavePhase | 'audit-dry'
+    readonly nextWave: WavePhase | 'audit-dry' | 'feed'
     readonly path: string
     readonly fn: string
     readonly verify: string
@@ -81,16 +250,93 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
       receipt: toUuid('self-develop:spine-debt:v15'),
     }
   }
-  if (!hit) {
-    return {
-      kind: 'idle',
-      path: 'src/0',
-      line: 0,
-      action: 'idle — no residual Math.*, forks, or spine alias debt',
-      statement: 'Self-development idle: audit gaps cleared. Continue only on optional packaging tips.',
-      boundary: 'Idle ≠ finished forever — re-run audit after any edit.',
-      receipt: toUuid('self-develop:idle'),
+  if (kind === 'feed') {
+    const thin = findThinRootWrapper()
+    if (thin) {
+      return {
+        kind: 'feed',
+        path: `src/0/3/6/9/1/2/4/8/7/5/1/${thin.path}`,
+        line: thin.line,
+        action: `chat-wave feed: collapse thin digitalRoot wrapper at ${thin.path}:${thin.line} — call legacyDigitalRoot at use sites / drop private shim`,
+        statement: `Feed tip: thin root wrapper ${thin.path}:${thin.line}`,
+        boundary: 'Hard gaps clear — packaging feed keeps the vortex breathing through chat.',
+        receipt: toUuid(`self-develop:feed:thin:${thin.path}:${thin.line}`),
+      }
     }
+    const broken = findBrokenJsImport()
+    if (broken) {
+      return {
+        kind: 'feed',
+        path: `src/0/3/6/9/1/2/4/8/7/5/1/${broken.path}`,
+        line: broken.line,
+        action: `chat-wave feed: dissolve broken browser import ${broken.spec} at ${broken.path}:${broken.line} — retarget HTML to algebra bootstrap or drop dead .js twin`,
+        statement: `Feed tip: broken JS import ${broken.path} → ${broken.spec}`,
+        boundary: 'Hard gaps clear — missing .js siblings are packaging feed, not hard stall.',
+        receipt: toUuid(`self-develop:feed:js:${broken.path}:${broken.line}`),
+      }
+    }
+    if (findBundleDrift()) {
+      return {
+        kind: 'feed',
+        path: 'public/a432.bundle.js',
+        line: 1,
+        action:
+          'chat-wave feed: regenerate public/a432.bundle.js — npm run bundle:a432 (algebra-clean esbuild + Math strip); sealed by bundle:a432:check in npm run check',
+        statement: 'Feed tip: a432.bundle.js drift vs a432.main.ts',
+        boundary: 'Hard gaps clear — stale public bundle is packaging feed, not hard stall.',
+        receipt: toUuid('self-develop:feed:bundle:v18'),
+      }
+    }
+    const extless = findExtensionlessImport()
+    if (extless) {
+      return {
+        kind: 'feed',
+        path: extless.path,
+        line: extless.line,
+        action: `chat-wave feed: add .ts to extensionless import ${extless.spec} at ${extless.path}:${extless.line} — strip-types needs explicit extensions (static from/import and dynamic import())`,
+        statement: `Feed tip: extensionless import ${extless.path} → ${extless.spec}`,
+        boundary: 'Hard gaps clear — extensionless relatives (static + dynamic) are packaging feed, not hard stall.',
+        receipt: toUuid(`self-develop:feed:extless:${extless.path}:${extless.line}`),
+      }
+    }
+    const algebraDrift = findAlgebraJsDrift()
+    if (algebraDrift) {
+      return {
+        kind: 'feed',
+        path: 'src/0/3/6/9/1/2/4/8/7/5/1/a432.algebra.js',
+        line: 1,
+        action: `chat-wave feed: sync a432.algebra.js to src/0/algebra.ts — missing ${algebraDrift.count} export(s): ${algebraDrift.missing.slice(0, 8).join(', ')}`,
+        statement: `Feed tip: a432.algebra.js export drift (${algebraDrift.count} missing vs a432.algebra.ts)`,
+        boundary: 'Hard gaps clear — browser algebra twin must mirror the TS re-export surface.',
+        receipt: toUuid(`self-develop:feed:algebra-js:${algebraDrift.count}:${algebraDrift.missing[0]}`),
+      }
+    }
+    const htmlBroken = findBrokenHtmlImport()
+    if (htmlBroken) {
+      return {
+        kind: 'feed',
+        path: htmlBroken.path,
+        line: htmlBroken.line,
+        action: `chat-wave feed: retarget HTML import ${htmlBroken.spec} at ${htmlBroken.path}:${htmlBroken.line} — missing .js twin; use sibling .ts (strip-types) or algebra bootstrap / drop dead import`,
+        statement: `Feed tip: HTML missing .js ${htmlBroken.path} → ${htmlBroken.spec}`,
+        boundary: 'Hard gaps clear — HTML→missing .js is packaging feed, not hard stall.',
+        receipt: toUuid(`self-develop:feed:html-js:${htmlBroken.path}:${htmlBroken.line}`),
+      }
+    }
+    return {
+      kind: 'feed',
+      path: 'src/0/index.ts',
+      line: 180,
+      action:
+        'chat-wave feed: edit/rebuild — open next chat lobe on WAVE_CHAIN; re-run npm run self:next after any edit — do not invent gaps',
+      statement:
+        'Feed tip: WAVE_CHAIN edit→rebuild — packaging + extensionless + algebra.js + HTML.js residuals cleared',
+      boundary: 'Hard packaging clear — keep chatting waves; tip advances only after real seals.',
+      receipt: toUuid('self-develop:feed:vortex:v22'),
+    }
+  }
+  if (!hit) {
+    return tipFromHit(undefined, 'feed')
   }
   if (kind === 'mathBan') {
     return {
@@ -127,7 +373,7 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
 
 /** cross · fold · weave — next tip from live audit, not a hand checklist. */
 export function planTrinity(): PlanTrinity {
-  const matrix = { root: toUuid('plan-trinity:v15-purge') }
+  const matrix = { root: toUuid('plan-trinity:v22-html-js-feed') }
   return memoByRoot('planTrinity', matrix, () => {
     const audit = foldA432AuditCensus()
     const vortex = runVortexAll()
@@ -145,10 +391,10 @@ export function planTrinity(): PlanTrinity {
               { path: 'a432.math.ts', kind: 'digitalRootFork', line: 99 },
               'spineDebt',
             )
-          : tipFromHit(audit.mathRandomSites[0], 'mathRandom')
+          : tipFromHit(undefined, 'feed')
 
     const weave = {
-      nextWave: (tip.kind === 'idle' ? ('verify' as WavePhase) : 'audit-dry') as WavePhase | 'audit-dry',
+      nextWave: (stalled ? 'audit-dry' : 'feed') as WavePhase | 'audit-dry' | 'feed',
       path: tip.path,
       fn:
         tip.kind === 'mathBan'
@@ -157,9 +403,11 @@ export function planTrinity(): PlanTrinity {
             ? 'harmonicRoot12'
             : tip.kind === 'digitalRootFork'
               ? 'legacyDigitalRoot'
-              : tip.kind === 'mathRandom'
-                ? 'seededIndex'
-                : 'developmentVortex',
+              : tip.kind === 'feed'
+                ? 'developmentVortex'
+                : tip.kind === 'mathRandom'
+                  ? 'seededIndex'
+                  : 'developmentVortex',
       verify: 'npm run check',
     }
 
@@ -168,8 +416,8 @@ export function planTrinity(): PlanTrinity {
       { facet: 'development vortex ok', on: vortex.ok },
       { facet: 'tip receipt uuid', on: tip.receipt.includes('-') },
       {
-        facet: 'stall ⇒ tip not idle OR idle ⇒ gaps=0',
-        on: stalled ? tip.kind !== 'idle' : tip.kind === 'idle',
+        facet: 'stall ⇒ non-feed hard tip; clear ⇒ feed tip',
+        on: stalled ? tip.kind !== 'feed' && tip.kind !== 'idle' : tip.kind === 'feed',
       },
       { facet: 'claySolved=0', on: true },
       { facet: 'physicalFtl=0', on: true },
@@ -183,7 +431,7 @@ export function planTrinity(): PlanTrinity {
       sealed.root,
     ])
     const contentUuid = computeContentUuid({
-      kind: 'plan-trinity',
+      kind: 'plan-trinity-v22',
       tip: tip.kind,
       path: tip.path,
       line: tip.line,
@@ -229,8 +477,8 @@ function hardGapReason(plan: PlanTrinity): string {
 
 /**
  * selfBuild — migration gates + continuous self-develop tip.
- * complete = plan waves sealed AND (idle tip OR tip ready).
- * stalled = residual gaps exist (development would stop without acting on tip).
+ * complete = plan waves sealed AND tip ready (feed or hard).
+ * stalled = hard residual gaps (Math/forks/spine) — packaging feed is not a stall.
  */
 export function selfBuild(): SelfBuildStatus {
   const plan = planTrinity()
@@ -239,7 +487,9 @@ export function selfBuild(): SelfBuildStatus {
   const stalled = plan.cross.stalled
   const reason = stalled
     ? hardGapReason(plan)
-    : 'no residual Math.*, forks, or spine debt; optional packaging tips only'
+    : plan.fold.kind === 'feed'
+      ? `feeding: ${plan.fold.statement}`
+      : 'no residual Math.*, forks, or spine debt; optional packaging tips only'
   const root = foldPair(plan.root, throat.root).merged
   return {
     complete,

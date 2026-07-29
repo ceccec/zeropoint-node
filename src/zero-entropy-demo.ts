@@ -15,7 +15,7 @@ import {
   ZERO_ENTROPY_FREQUENCIES, 
   ZeroEntropyMath, 
   ZeroEntropyValidator 
-} from './0/3/6/9/1/2/4/8/7/5/1/a432.zero.entropy.math';
+} from './0/3/6/9/1/2/4/8/7/5/1/a432.zero.entropy.math.ts';
 
 export class ZeroEntropyDemo {
   

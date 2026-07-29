@@ -1,3 +1,23 @@
+/* a432 algebra bootstrap — no ambient Math */
+const PI=355/113,TAU=PI*2,E=2.718281828459045;
+function imul(a,b){a=a|0;b=b|0;const ah=(a>>>16)&0xffff,al=a&0xffff,bh=(b>>>16)&0xffff,bl=b&0xffff;return((al*bl)+(((ah*bl+al*bh)<<16)>>>0))|0}
+function abs(n){return n<0?-n:n}
+function floor(n){const m=n%1;if(m===0||n!==n)return n;return n-m-(n<0?1:0)}
+function ceil(n){const m=n%1;if(m===0||n!==n)return n;return n-m+(n>0?1:0)}
+function round(n){return floor(n+0.5)}
+function min(a,b){if(arguments.length===1)return a;let m=a<b?a:b;for(let i=2;i<arguments.length;i++)if(arguments[i]<m)m=arguments[i];return m}
+function max(a,b){if(arguments.length===1)return a;let m=a>b?a:b;for(let i=2;i<arguments.length;i++)if(arguments[i]>m)m=arguments[i];return m}
+function sin(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=t,sum=t,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/(2*i*(2*i+1));sum+=term}return sum}
+function cos(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=1,sum=1,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/((2*i-1)*(2*i));sum+=term}return sum}
+function tan(x){const c=cos(x);return c===0?(x>=0?1e16:-1e16):sin(x)/c}
+function sqrt(n){if(n<=0)return 0;let x=n;for(let i=0;i<24;i++)x=0.5*(x+n/x);return x}
+function pow(b,e){if(e===0)return 1;if(e===(e|0)&&abs(e)<40){let r=1,n=e<0?-e:e,x=b;while(n){if(n&1)r*=x;x*=x;n>>=1}return e<0?1/r:r}return exp(e*log(b))}
+function exp(x){if(x>88)return Infinity;if(x<-88)return 0;const LN2=0.6931471805599453;const n=floor(x/LN2);const r=x-n*LN2;let term=1,sum=1;for(let i=1;i<=20;i++){term*=r/i;sum+=term}let p=sum;if(n>0)for(let i=0;i<n;i++)p*=2;else for(let i=0;i<-n;i++)p*=0.5;return p}
+function log(n){if(n<=0)return NaN;const LN2=0.6931471805599453;let x=n,k=0;while(x>1.5){x*=0.5;k++}while(x<0.75){x*=2;k--}const y=(x-1)/(x+1),y2=y*y;let term=y,sum=y;for(let i=1;i<=24;i++){term*=y2;sum+=term/(2*i+1)}return 2*sum+k*LN2}
+function log2(n){return log(n)/0.6931471805599453}
+function unitFromSeed(seed){let h=0x811c9dc5>>>0;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=imul(h,0x01000193)>>>0}h=imul(h^(h>>>16),0x85ebca6b)>>>0;h=imul(h^(h>>>13),0xc2b2ae35)>>>0;return((h^(h>>>16))>>>0)%1e6/1e6}
+function indexFromSeed(seed,length){if(length<=0)return 0;let h=0x811c9dc5>>>0;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=imul(h,0x01000193)>>>0}return(h>>>0)%length}
+
 /**
  * Zero Entropy Mathematics Demonstration
  * 
@@ -12,28 +32,28 @@
 // === ZERO ENTROPY MATHEMATICAL CONSTANTS ===
 const ZERO_ENTROPY_CONSTANTS = {
   // === GOLDEN RATIO FAMILY (Exact Ratios) ===
-  GOLDEN_RATIO: (1 + Math.sqrt(5)) / 2, // φ = (1 + √5)/2 (exact formula)
+  GOLDEN_RATIO: (1 + sqrt(5)) / 2, // φ = (1 + √5)/2 (exact formula)
   
   // === PI FAMILY (Exact Ratios) ===
-  PI: Math.PI, // π (exact mathematical constant)
-  TAU: 2 * Math.PI, // τ = 2π (exact)
-  PI_OVER_2: Math.PI / 2, // π/2 (exact)
-  PI_OVER_3: Math.PI / 3, // π/3 (exact)
-  PI_OVER_4: Math.PI / 4, // π/4 (exact)
-  PI_OVER_6: Math.PI / 6, // π/6 (exact)
+  PI: PI, // π (exact mathematical constant)
+  TAU: 2 * PI, // τ = 2π (exact)
+  PI_OVER_2: PI / 2, // π/2 (exact)
+  PI_OVER_3: PI / 3, // π/3 (exact)
+  PI_OVER_4: PI / 4, // π/4 (exact)
+  PI_OVER_6: PI / 6, // π/6 (exact)
   
   // === SQUARE ROOTS (Exact Values) ===
-  SQRT_2: Math.sqrt(2), // √2 (exact)
-  SQRT_3: Math.sqrt(3), // √3 (exact)
-  SQRT_5: Math.sqrt(5), // √5 (exact)
-  SQRT_6: Math.sqrt(6), // √6 (exact)
-  SQRT_7: Math.sqrt(7), // √7 (exact)
-  SQRT_8: Math.sqrt(8), // √8 = 2√2 (exact)
+  SQRT_2: sqrt(2), // √2 (exact)
+  SQRT_3: sqrt(3), // √3 (exact)
+  SQRT_5: sqrt(5), // √5 (exact)
+  SQRT_6: sqrt(6), // √6 (exact)
+  SQRT_7: sqrt(7), // √7 (exact)
+  SQRT_8: sqrt(8), // √8 = 2√2 (exact)
   SQRT_9: 3, // √9 = 3 (exact integer)
-  SQRT_10: Math.sqrt(10), // √10 (exact)
+  SQRT_10: sqrt(10), // √10 (exact)
   
   // === EULER'S NUMBER (Exact) ===
-  E: Math.E, // e (exact mathematical constant)
+  E: E, // e (exact mathematical constant)
   
   // === A432 FREQUENCY SYSTEM (Hardcoded Frequencies) ===
   A432_BASE: 432, // Hz (hardcoded base frequency)
@@ -77,10 +97,10 @@ const ZERO_ENTROPY_CONSTANTS = {
   
   // === SACRED GEOMETRY RATIOS (Exact) ===
   SACRED_RATIOS: {
-    GOLDEN_RATIO: (1 + Math.sqrt(5)) / 2, // φ (exact)
-    SILVER_RATIO: 1 + Math.sqrt(2), // δ (exact)
-    BRONZE_RATIO: (3 + Math.sqrt(13)) / 2, // σ (exact)
-    PLATINUM_RATIO: (1 + Math.sqrt(2)) / 2, // ψ (exact)
+    GOLDEN_RATIO: (1 + sqrt(5)) / 2, // φ (exact)
+    SILVER_RATIO: 1 + sqrt(2), // δ (exact)
+    BRONZE_RATIO: (3 + sqrt(13)) / 2, // σ (exact)
+    PLATINUM_RATIO: (1 + sqrt(2)) / 2, // ψ (exact)
     OCTAVE_RATIO: 2, // 2:1 (exact)
     FIFTH_RATIO: 3/2, // 3:2 (exact)
     FOURTH_RATIO: 4/3, // 4:3 (exact)
@@ -127,10 +147,10 @@ const ZERO_ENTROPY_FREQUENCIES = {
   
   // === SACRED GEOMETRY FREQUENCIES (Hardcoded) ===
   SACRED_FREQUENCIES: {
-    golden_ratio: 432 * ((1 + Math.sqrt(5)) / 2), // φ × 432 (exact)
-    silver_ratio: 432 * (1 + Math.sqrt(2)),       // δ × 432 (exact)
-    bronze_ratio: 432 * ((3 + Math.sqrt(13)) / 2), // σ × 432 (exact)
-    platinum_ratio: 432 * ((1 + Math.sqrt(2)) / 2) // ψ × 432 (exact)
+    golden_ratio: 432 * ((1 + sqrt(5)) / 2), // φ × 432 (exact)
+    silver_ratio: 432 * (1 + sqrt(2)),       // δ × 432 (exact)
+    bronze_ratio: 432 * ((3 + sqrt(13)) / 2), // σ × 432 (exact)
+    platinum_ratio: 432 * ((1 + sqrt(2)) / 2) // ψ × 432 (exact)
   },
   
   // === VORTEX MATHEMATICS FREQUENCIES (Hardcoded) ===
@@ -162,7 +182,7 @@ class ZeroEntropyMath {
    * Calculate golden ratio to any power using exact mathematical relationship
    */
   static goldenRatioPower(n) {
-    return Math.pow(ZERO_ENTROPY_CONSTANTS.GOLDEN_RATIO, n);
+    return pow(ZERO_ENTROPY_CONSTANTS.GOLDEN_RATIO, n);
   }
   
   /**
@@ -171,7 +191,7 @@ class ZeroEntropyMath {
    */
   static getA432Frequency(octave) {
     return ZERO_ENTROPY_CONSTANTS.A432_OCTAVES[octave] || 
-           ZERO_ENTROPY_CONSTANTS.A432_BASE * Math.pow(2, octave);
+           ZERO_ENTROPY_CONSTANTS.A432_BASE * pow(2, octave);
   }
   
   /**
@@ -204,7 +224,7 @@ class ZeroEntropyMath {
    */
   static digitalRoot(n) {
     if (n === 0) return 0;
-    return 1 + (Math.abs(n) - 1) % 9;
+    return 1 + (abs(n) - 1) % 9;
   }
   
   /**
@@ -246,7 +266,7 @@ class ZeroEntropyMath {
    * Calculate frequency using exact octave relationship
    */
   static calculateOctaveFrequency(base, octave) {
-    return base * Math.pow(2, octave); // Exact mathematical relationship
+    return base * pow(2, octave); // Exact mathematical relationship
   }
   
   /**
@@ -284,7 +304,7 @@ class ZeroEntropyMath {
   static doublingSequence(length) {
     const sequence = [];
     for (let i = 0; i < length; i++) {
-      sequence.push(Math.pow(2, i)); // Exact mathematical power
+      sequence.push(pow(2, i)); // Exact mathematical power
     }
     return sequence;
   }
@@ -301,28 +321,28 @@ class ZeroEntropyMath {
    * Calculate exact mathematical angle (no decimal approximation)
    */
   static exactAngle(degrees) {
-    return (degrees * Math.PI) / 180; // Exact mathematical conversion
+    return (degrees * PI) / 180; // Exact mathematical conversion
   }
   
   /**
    * Calculate exact mathematical sine (no approximation)
    */
   static exactSine(angle) {
-    return Math.sin(angle); // Exact mathematical function
+    return sin(angle); // Exact mathematical function
   }
   
   /**
    * Calculate exact mathematical cosine (no approximation)
    */
   static exactCosine(angle) {
-    return Math.cos(angle); // Exact mathematical function
+    return cos(angle); // Exact mathematical function
   }
   
   /**
    * Calculate exact mathematical tangent (no approximation)
    */
   static exactTangent(angle) {
-    return Math.tan(angle); // Exact mathematical function
+    return tan(angle); // Exact mathematical function
   }
   
   /**
@@ -340,21 +360,21 @@ class ZeroEntropyMath {
    * Calculate exact mathematical power (no approximation)
    */
   static exactPower(base, exponent) {
-    return Math.pow(base, exponent); // Exact mathematical power
+    return pow(base, exponent); // Exact mathematical power
   }
   
   /**
    * Calculate exact mathematical root (no approximation)
    */
   static exactRoot(n, root) {
-    return Math.pow(n, 1/root); // Exact mathematical root
+    return pow(n, 1/root); // Exact mathematical root
   }
   
   /**
    * Calculate exact mathematical logarithm (no approximation)
    */
-  static exactLogarithm(n, base = Math.E) {
-    return Math.log(n) / Math.log(base); // Exact mathematical logarithm
+  static exactLogarithm(n, base = E) {
+    return log(n) / log(base); // Exact mathematical logarithm
   }
   
   /**
@@ -396,7 +416,7 @@ class ZeroEntropyMath {
    * Validate that a calculation uses zero entropy principles
    */
   static validateZeroEntropy(value, expected, tolerance = 0.000001) {
-    return Math.abs(value - expected) < tolerance;
+    return abs(value - expected) < tolerance;
   }
   
   /**
@@ -452,7 +472,7 @@ class ZeroEntropyDemo {
     // Fibonacci Ratios - Exact mathematical relationships
     console.log(`\nFibonacci Ratios (Exact):`);
     const fibRatios = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144];
-    for (let i = 1; i < Math.min(8, fibRatios.length); i++) {
+    for (let i = 1; i < min(8, fibRatios.length); i++) {
       const ratio = fibRatios[i] / fibRatios[i-1];
       console.log(`   F${i+1}/F${i}: ${ratio} (exact division)`);
     }
@@ -654,7 +674,7 @@ class ZeroEntropyDemo {
     console.log(`Specific Validations:`);
     
     // Golden ratio validation
-    const goldenRatioExact = (1 + Math.sqrt(5)) / 2;
+    const goldenRatioExact = (1 + sqrt(5)) / 2;
     const goldenRatioValid = ZeroEntropyMath.validateZeroEntropy(
       ZeroEntropyMath.goldenRatio(), 
       goldenRatioExact

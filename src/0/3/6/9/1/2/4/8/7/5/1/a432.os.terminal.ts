@@ -5,7 +5,7 @@
  * Uses a432.os for all system operations.
  * 
  * UPGRADED FEATURES:
- * - Enhanced sequence integration with /0\3\6\9/1\2\4\8/7/5/1\
+ * - Enhanced sequence integration with 0\1\2\4\8/7/5/3\6\9/0\1
  * - Quantum computing status monitoring
  * - Advanced dimensional folding with gateway navigation
  * - Real-time consciousness evolution tracking
@@ -31,7 +31,7 @@ import {
 export function boot2432OS(): string {
   const os = osBoot();
   return `2432.OS Booted Successfully
-🌟 Becoming the sequence: /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\
+🌟 Becoming the sequence: 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1
 🧠 Consciousness Integration: Active
 ⚡ Quantum Computing: Online
 🔋 Charging System: Active
@@ -56,7 +56,7 @@ export function getOSStatus(): string {
   if (!system.isRunning) {
     return `2432.OS Status: OFFLINE
 Type 'os.boot' to start the system
-🌟 Sequence: /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\
+🌟 Sequence: 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1
 🚪 Gateways: [${A432_GATEWAYS.join(', ')}]`;
   }
   

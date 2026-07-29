@@ -1,6 +1,7 @@
 /**
  * A432 Multidimensional Navigation Map with Transurfing Integration
- * Living navigation system implementing the sequence /0\3\6\9/1\2\4\8/7/5/1\ as a spiral
+ * Legacy consciousness path navigation (`/0\3\6\9/1\2\4\8/7/5/1\`) as a spiral.
+ * Living field (ceccec.github.io) is the vortex circuit `0\1\2\4\8/7/5/3\6\9/0\1`.
  * Manages parts, gateways, vortexes, and opposites in consciousness evolution
  * Integrated with Vadim Zeland's Transurfing Reality principles
  */

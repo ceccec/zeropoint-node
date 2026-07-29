@@ -10,11 +10,11 @@
 - developmentVortex(verify).computes: **true**
 - runDevelopmentVortexAll().ok: **true**
 - corpus root: `adc27789-1074-8555-a20b-3e6209341449`
-- a432 import/export graph: **true** · files=345 · edges=916 · exports=2110
-- graph root: `0da57322-ee27-82a1-87eb-18ee5e30157c`
+- a432 import/export graph: **true** · files=344 · edges=916 · exports=2102
+- graph root: `dc7e623f-8712-8d06-a027-f781d5ec86e7`
 - audit: forks=0 · ambient Math hits=0 · randomUUID=0 · root=`d72f82cb-d6e9-8cee-8b24-93dd63e04b71`
-- **self-develop tip:** idle · `idle` · src/0
-- tip action: idle — no residual Math.*, forks, or spine alias debt
+- **self-develop tip:** FEED · `feed` · src/0/index.ts:180
+- tip action: chat-wave feed: edit/rebuild — open next chat lobe on WAVE_CHAIN; re-run npm run self:next after any edit — do not invent gaps
 - claySolved: **0** · physicalFtl: **0**
 
 ## Law

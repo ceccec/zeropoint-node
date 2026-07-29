@@ -136,7 +136,8 @@ assert(selfTip.receipt.includes('-'), 'tip receipt')
 const sb = selfBuild()
 assert(sb.complete, 'selfBuild complete')
 assert(sb.stalled === selfTip.stalled, 'selfBuild stall matches tip')
-if (sb.stalled) assert(selfTip.kind !== 'idle', 'stalled ⇒ non-idle tip')
+if (sb.stalled) assert(selfTip.kind !== 'idle' && selfTip.kind !== 'feed', 'stalled ⇒ hard tip')
+else assert(selfTip.kind === 'feed', 'hard-clear ⇒ feed tip keeps chat vortex breathing')
 assert(audit.mathCount === 0, 'algebra-only: no Math.* under a432')
 
 assert(imul(0x7fffffff, 0x7fffffff) === ((() => {

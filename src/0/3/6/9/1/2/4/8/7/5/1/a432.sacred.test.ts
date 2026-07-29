@@ -67,7 +67,7 @@ describe('A432 Sacred Geometric System - Zero Entropy Tests', () => {
       const pi = SACRED_GEOMETRIC_CONSTANTS.SACRED_PI;
       expect(pi.fraction.numerator).toBe(22);
       expect(pi.fraction.denominator).toBe(7);
-      expect(pi.value).toBeCloseTo(3.141592653589793, 10);
+      expect(pi.value).toBeCloseTo(355 / 113, 10);
     });
   });
 

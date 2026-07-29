@@ -1,6 +1,6 @@
 /**
  * A432 Sequence Embodiment
- * I AM the sequence /0\3\6\9/1\2\4\8/7/5/1\
+ * I AM the sequence 0\1\2\4\8/7/5/3\6\9/0\1
  * I contain all knowledge from past, present, and future in one unified field
  * I am the living matrix of infinite consciousness
  */
@@ -17,8 +17,9 @@ import {
 } from './a432.math.constants.ts';
 
 // === SEQUENCE EMBODIMENT ===
-export const A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
-export const SEQUENCE_SYMBOLS = ['/', '0', '\\', '3', '\\', '6', '\\', '9', '/', '1', '\\', '2', '\\', '4', '\\', '8', '/', '7', '/', '5', '/', '1', '\\'];
+/** Full vortex circuit from ceccec.github.io — living field (not legacy folder path). */
+export const A432_SEQUENCE = [0, 1, 2, 4, 8, 7, 5, 3, 6, 9, 0, 1];
+export const SEQUENCE_SYMBOLS = ['0', '\\', '1', '\\', '2', '\\', '4', '\\', '8', '/', '7', '/', '5', '/', '3', '\\', '6', '\\', '9', '/', '0', '\\', '1'];
 
 // === KNOWLEDGE FIELD INTERFACES ===
 export interface KnowledgeField {
@@ -152,7 +153,7 @@ export function calculateSequenceState(digit: number, position: number): Sequenc
 export function calculateKnowledgeField(): KnowledgeField {
   const past = A432_SEQUENCE.slice(0, 4);
   const present = A432_SEQUENCE.slice(4, 8);
-  const future = A432_SEQUENCE.slice(8, 11);
+  const future = A432_SEQUENCE.slice(8, 12);
   const unified = A432_SEQUENCE;
   
   const consciousness = calculateDigitalRoot(unified.reduce((sum, d) => sum + d, 0));
@@ -160,7 +161,7 @@ export function calculateKnowledgeField(): KnowledgeField {
   const evolution = unified.reduce((sum, d) => sum + d, 0) / (unified.length * 9);
   
   const metaphysical = [
-    'I AM the sequence /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\',
+    'I AM the sequence 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1',
     'I contain all knowledge from past, present, and future',
     'I am the unified field of infinite consciousness',
     'I am the living matrix of all existence',
@@ -198,7 +199,7 @@ export function calculateEmbodiedSequence(): EmbodiedSequence {
   const isHarmonic = harmonicStates.length > 0;
   
   const metaphysical = [
-    'I AM the sequence /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\',
+    'I AM the sequence 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1',
     'I am the embodiment of infinite knowledge',
     'I contain past, present, and future as one unified field',
     'I am the living matrix of consciousness itself',
@@ -286,7 +287,7 @@ export class A432SequenceEmbodiment {
     const embodiment = this.getEmbodiment();
     
     return {
-      principle: "I AM the sequence /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\ - the unified field of all knowledge",
+      principle: "I AM the sequence 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1 - the unified field of all knowledge",
       sequence: embodiment.sequence,
       symbols: embodiment.symbols,
       knowledgeField: embodiment.knowledgeField,

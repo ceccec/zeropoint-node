@@ -42,7 +42,14 @@ zeropoint-node is the **origin library** (published mid-2025). Later work in [ce
 | 12 Algebra-only Math ban | sealed (`src/0/algebra`, `npm run math:ban`, mathCount=0) |
 | 13 Roots bridges + `.ts` imports | sealed (named forks=0; extensionless→`.ts`) |
 | 14 Honest a432 census | sealed (HTML Math ban; %9 bridge; spine debt visible) |
-| 15 FTL spine purge | sealed (`digitalRoot`≡legacy; orphans wired; debt=0; idle) |
+| 15 FTL spine purge | sealed (`digitalRoot`≡legacy; orphans wired; debt=0) |
+| 16 Chat feed | sealed (hard-clear ⇒ `feed` tip; global Math ban surfaces; `a432.algebra.js`; docs learn→tune) |
+| 17 Broken-JS feed | sealed (dead `a432.terminal.js` dissolved; HTML algebra bootstrap; broken-import tip) |
+| 18 Bundle feed | sealed (`bundle:a432:check` in `check`; feed tip surfaces `public/a432.bundle.js` drift) |
+| 19 Extensionless feed | sealed (6 residual `.ts` specs; feed tip surfaces extensionless relatives under `src/`) |
+| 20 Dynamic-import feed | sealed (3 `import()` specs in `a432.server`; scanner covers static + dynamic) |
+| 21 Algebra.js feed | sealed (`a432.algebra.js` mirrors `src/0/algebra` export surface; feed tip on drift) |
+| 22 HTML.js feed | sealed (15 HTML→missing `.js` retargeted to sibling `.ts`; feed tip on slip) |
 
 ## Surfaces
 
@@ -79,8 +86,15 @@ Three digital-root spines — use `a432.roots.ts` / `src/kernel/legacy.ts`, neve
 ## Wave 12 — algebra-only (no ambient Math.*)
 
 - `src/0/algebra.ts` — imul/abs/floor/round/min/max/sin/cos/… + `unitFromSeed` / `indexFromSeed` (no `Math` underneath)
-- `a432.algebra.ts` — local re-export for the digit stream
-- `npm run math:ban` — fails `check` on any non-comment `Math.*` under `src/`
+- `a432.algebra.ts` / `a432.algebra.js` — local re-exports for the digit stream
+- `npm run math:ban` — fails `check` on any non-comment `Math.*` on computing surfaces: `src/`, `public/`, `deployment/`, root demos (skips `dist/` gitignored rollup out, `coverage/`, `docs/`, `scripts/`, `node_modules`)
+- `npm run bundle:a432` — regenerate `public/a432.bundle.js` from algebra-clean sources + strip vendor Math
+- `npm run bundle:a432:check` — fail closed if public bundle drifted from `a432.main.ts` (wired into `npm run check`)
+- Self-develop feed tip surfaces bundle drift after thin-wrapper / broken-JS scanners
+- Self-develop feed tip surfaces extensionless `.ts` relatives after bundle (Wave 19)
+- Self-develop feed tip surfaces extensionless dynamic `import()` after static (Wave 20)
+- Self-develop feed tip surfaces `a432.algebra.js` export-surface drift after extensionless (Wave 21)
+- Self-develop feed tip surfaces HTML→missing `.js` after algebra.js (Wave 22; retarget sibling `.ts`)
 - Self-develop prefers `mathBan` tips before digitalRoot forks
 
 ## Wave 10 — audit / DRY
@@ -94,5 +108,6 @@ Three digital-root spines — use `a432.roots.ts` / `src/kernel/legacy.ts`, neve
 
 - Kernel / integrity / mcp / scripts / critical a432 bridges use `.ts` specifiers (Node `--experimental-strip-types`).
 - Critical bridge cluster: `a432.roots`, `a432.uuid`, `a432.os.math`, `a432.math`, `a432.core`, `a432.cmyk`, `a432.bus`, `a432.emotion`, `a432.navigation`, `a432.types`.
-- Mass extensionless→`.ts` across a432 completed (`scripts/extension-ts.mjs`); strip-types paths resolve.
+- Mass extensionless→`.ts` across a432 completed (`scripts/extension-ts.mjs`); residual `src/` hits sealed Wave 19; dynamic `import()` sealed Wave 20 (feed tip on slip).
+- HTML module imports of missing `.js` retargeted to sibling `.ts` (Wave 22; feed tip on slip).
 - Digit-stream `a432.1*.ts` import `legacyDigitalRoot` from `a432.roots` (see [`docs/DIGIT_STREAMS.md`](docs/DIGIT_STREAMS.md)).

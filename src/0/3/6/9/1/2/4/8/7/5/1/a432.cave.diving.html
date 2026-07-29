@@ -89,7 +89,7 @@ function indexFromSeed(seed,length){if(length<=0)return 0;let h=0x811c9dc5>>>0;f
 function legacyDigitalRoot(n){if(n===0)return 0;const r=((abs(n)%9)+9)%9;return r===0?9:r}
 
 
-    import { createCaveDivingA432, a432CaveDivingMetaphysics } from './a432.cave.diving.js';
+    import { createCaveDivingA432, a432CaveDivingMetaphysics } from './a432.cave.diving.ts';
     function cmykToRgb({c, m, y, k}) {
       c /= 100; m /= 100; y /= 100; k /= 100;
       const r = round(255 * (1 - c) * (1 - k));

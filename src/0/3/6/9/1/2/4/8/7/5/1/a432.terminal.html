@@ -20,11 +20,135 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
+      padding: 24px 0;
+      box-sizing: border-box;
+    }
+    #terminal-output {
+      min-height: 180px;
+      max-height: 320px;
+      width: 90%;
+      margin: 18px 0 12px;
+      overflow-y: auto;
+      padding: 18px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      border: 2px solid #39f;
+      background: #181828;
+      box-shadow: 0 0 12px #39f4;
+    }
+    #terminal-form {
+      width: 90%;
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    #terminal-input {
+      flex: 1;
+      background: #111;
+      color: #0ff;
+      border: 1px solid #39f;
+      padding: 10px 12px;
+      font: inherit;
+    }
+    button {
+      background: #123;
+      color: #8ff;
+      border: 1px solid #39f;
+      padding: 10px 16px;
+      font: inherit;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <div id="terminal-root"></div>
-  <script type="module" src="./a432.terminal.js"></script>
+  <script type="module">
+/* a432 algebra bootstrap — no ambient Math */
+const PI=355/113,TAU=PI*2;
+function abs(n){return n<0?-n:n}
+function floor(n){const m=n%1;if(m===0||n!==n)return n;return n-m-(n<0?1:0)}
+function round(n){return floor(n+0.5)}
+function sin(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=t,sum=t,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/(2*i*(2*i+1));sum+=term}return sum}
+function cos(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=1,sum=1,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/((2*i-1)*(2*i));sum+=term}return sum}
+function legacyDigitalRoot(n){if(n===0)return 0;const r=((abs(n)%9)+9)%9;return r===0?9:r}
+
+const VORTEX = [1, 2, 4, 8, 7, 5, 3, 6, 9]
+const root = document.getElementById('terminal-root')
+root.innerHTML = ''
+
+const title = document.createElement('div')
+title.textContent = 'A432 Terminal'
+title.style.cssText = 'font-size:2.2em;margin-bottom:8px;letter-spacing:0.04em;text-shadow:0 0 12px #39f8;text-align:center;'
+root.appendChild(title)
+
+const meta = document.createElement('div')
+meta.textContent = 'algebra-only · legacyDigitalRoot · vortex 1-2-4-8-7-5-3-6-9'
+meta.style.cssText = 'font-size:1em;margin-bottom:18px;text-align:center;opacity:0.85;'
+root.appendChild(meta)
+
+const field = document.createElement('div')
+field.id = 'trinity-field'
+root.appendChild(field)
+
+const output = document.createElement('div')
+output.id = 'terminal-output'
+root.appendChild(output)
+
+const form = document.createElement('form')
+form.id = 'terminal-form'
+form.autocomplete = 'off'
+const input = document.createElement('input')
+input.id = 'terminal-input'
+input.placeholder = 'number or text → digital root'
+const go = document.createElement('button')
+go.type = 'submit'
+go.textContent = 'fold'
+form.appendChild(input)
+form.appendChild(go)
+root.appendChild(form)
+
+function line(text) {
+  const p = document.createElement('div')
+  p.textContent = text
+  output.appendChild(p)
+  output.scrollTop = output.scrollHeight
+}
+
+function renderField(markerAngle) {
+  const size = 280, cx = size / 2, cy = size / 2, r = 100
+  const dots = []
+  for (let i = 0; i < 9; i++) {
+    const angle = (i * 360) / 9
+    const rad = (angle * PI) / 180
+    const x = cx + r * cos(rad)
+    const y = cy + r * sin(rad)
+    const d = VORTEX[i]
+    dots.push(`<circle cx="${x}" cy="${y}" r="14" fill="#1a3a4a" stroke="#8ff" stroke-width="2"/><text x="${x}" y="${y + 4}" text-anchor="middle" font-size="12" fill="#8ff">${d}</text>`)
+  }
+  const markerRad = (markerAngle * PI) / 180
+  const mx = cx + r * cos(markerRad)
+  const my = cy + r * sin(markerRad)
+  const marker = `<circle cx="${mx}" cy="${my}" r="22" fill="none" stroke="#0ff" stroke-width="3" opacity="0.8"/>`
+  field.innerHTML = `<svg width="${size}" height="${size}" style="display:block;margin:0 auto;background:#181828;border-radius:50%;box-shadow:0 0 24px #39f8;">${dots.join('')}${marker}</svg>`
+}
+
+let marker = 0
+renderField(marker)
+setInterval(() => {
+  marker = (marker + 10) % 360
+  renderField(marker)
+}, 600)
+
+line('ready · type a number (legacyDigitalRoot) or text (root of length)')
+form.addEventListener('submit', (e) => {
+  e.preventDefault()
+  const raw = input.value.trim()
+  if (!raw) return
+  const n = Number(raw)
+  const dr = Number.isFinite(n) && raw !== '' ? legacyDigitalRoot(round(n)) : legacyDigitalRoot(raw.length)
+  line(`> ${raw}  →  digitalRoot ${dr}  ·  vortex[${VORTEX.indexOf(dr) >= 0 ? VORTEX.indexOf(dr) : '?'}]`)
+  input.value = ''
+})
+  </script>
 </body>
-</html> 
+</html>

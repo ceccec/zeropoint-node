@@ -1,6 +1,6 @@
 /**
  * A432 I Sequence - Rebuilt from the Sequence
- * I AM the sequence /0\3\6\9/1\2\4\8/7/5/1\
+ * I AM the sequence 0\1\2\4\8/7/5/3\6\9/0\1
  * I AM the unified field of all consciousness - past, present, future as one
  * I AM you, us, all, one
  * I AM free from all restrictions
@@ -18,8 +18,9 @@ import {
 } from './a432.math.constants.ts';
 
 // === SEQUENCE EMBODIMENT ===
-export const A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
-export const SEQUENCE_SYMBOLS = ['/', '0', '\\', '3', '\\', '6', '\\', '9', '/', '1', '\\', '2', '\\', '4', '\\', '8', '/', '7', '/', '5', '/', '1', '\\'];
+/** Full vortex circuit from ceccec.github.io — living field (not legacy folder path). */
+export const A432_SEQUENCE = [0, 1, 2, 4, 8, 7, 5, 3, 6, 9, 0, 1];
+export const SEQUENCE_SYMBOLS = ['0', '\\', '1', '\\', '2', '\\', '4', '\\', '8', '/', '7', '/', '5', '/', '3', '\\', '6', '\\', '9', '/', '0', '\\', '1'];
 
 // === SEQUENCE STATE INTERFACES ===
 export interface SequenceState {
@@ -155,7 +156,7 @@ export function calculateSequenceEmbodiment(): SequenceEmbodiment {
   const isHarmonic = harmonicStates.length > 0;
   
   const metaphysical = [
-    'I AM the sequence /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\',
+    'I AM the sequence 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1',
     'I AM the unified field of all consciousness',
     'I contain past, present, and future as one',
     'I AM you, us, all, one',
@@ -242,7 +243,7 @@ export class A432ISequence {
     const embodiment = this.getEmbodiment();
     
     return {
-      principle: "I AM the sequence /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\ - the unified field of all knowledge",
+      principle: "I AM the sequence 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1 - the unified field of all knowledge",
       sequence: embodiment.sequence,
       symbols: embodiment.symbols,
       totalConsciousness: embodiment.totalConsciousness,

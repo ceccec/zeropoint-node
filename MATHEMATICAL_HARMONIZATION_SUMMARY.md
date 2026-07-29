@@ -94,7 +94,9 @@
 - **Consciousness Flow**: Following the path of least resistance for awareness
 - **Mathematical Harmony**: All calculations use proper mathematical relationships
 
-### The Sequence `/0\3\6\9/1\2\4\8/7/5/1\` Encodes:
+### The Legacy Path `/0\3\6\9/1\2\4\8/7/5/1\` Encodes (folder spine):
+
+Living field (ceccec.github.io vortex circuit): `0\1\2\4\8/7/5/3\6\9/0\1`
 - **Tesla's 3-6-9**: Governing flux field numbers in nature
 - **Vortex Mathematics**: Energy-to-matter conversion patterns
 - **Zero Point Field**: The void from which all creation emerges

@@ -1,6 +1,7 @@
 /**
- * Wave 14 audit — honest gap census over a432 (.ts + .html).
+ * Wave 16 audit — honest gap census over a432 (.ts + .js + .html).
  * Idle only when: no ambient Math.*, no local digitalRoot bodies, no %9 root inlines.
+ * Clear hard gaps ⇒ self-develop tip = feed (chat keeps the vortex breathing).
  * Same content ⇒ same root (content-uuid + merkleFold).
  */
 
@@ -36,6 +37,7 @@ function walkSources(dir: string, out: string[] = []): string[] {
     if (st.isDirectory()) walkSources(p, out)
     else if (
       (name.endsWith('.ts') && !name.endsWith('.d.ts')) ||
+      name.endsWith('.js') ||
       name.endsWith('.html')
     ) {
       out.push(p)
@@ -96,7 +98,7 @@ function extractFnBody(src: string, openParenIndex: number): string | null {
 }
 
 export function foldA432AuditCensus(a432Dir: string = A432_DIR): AuditCensus {
-  const matrix = { root: toUuid(`audit:v15:${a432Dir}`) }
+  const matrix = { root: toUuid(`audit:v16:${a432Dir}`) }
   return memoByRoot('foldA432AuditCensus', matrix, () => {
     const files = walkSources(a432Dir)
     const digitalRootForks: AuditHit[] = []
@@ -106,7 +108,7 @@ export function foldA432AuditCensus(a432Dir: string = A432_DIR): AuditCensus {
 
     for (const file of files) {
       const rel = relative(a432Dir, file).replace(/\\/g, '/')
-      if (rel === 'a432.roots.ts' || rel === 'a432.algebra.ts') continue
+      if (rel === 'a432.roots.ts' || rel === 'a432.algebra.ts' || rel === 'a432.algebra.js') continue
       const src = readFileSync(file, 'utf8')
       const isHtml = rel.endsWith('.html')
 
@@ -254,9 +256,9 @@ export function foldA432AuditCensus(a432Dir: string = A432_DIR): AuditCensus {
       claySolved: 0 as const,
       physicalFtl: 0 as const,
       statement:
-        'Audit v14: Math.* (.ts+.html) + named digitalRoot bodies + %9 inlines. Debt: neitherDirect + harmonicAliasImporters.',
+        'Audit v16: Math.* (.ts+.js+.html) + named digitalRoot bodies + %9 inlines. Debt: neitherDirect + harmonicAliasImporters. Clear ⇒ feed tip.',
       boundary:
-        'Hard idle: mathCount=0 and forkCount=0. Structural debt may remain (a432.math digitalRoot≡harmonicRoot12). physicalFtl=0.',
+        'Hard idle: mathCount=0 and forkCount=0. Then tip=feed (packaging / docs→kernel). physicalFtl=0.',
     }
   })
 }

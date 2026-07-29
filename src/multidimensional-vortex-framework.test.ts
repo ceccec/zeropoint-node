@@ -3,7 +3,7 @@
  */
 
 import { PI, abs, sqrt } from './0/algebra.ts'
-import MultidimensionalVortexFramework, { VortexMathUtils } from './multidimensional-vortex-framework';
+import MultidimensionalVortexFramework, { VortexMathUtils } from './multidimensional-vortex-framework.ts';
 
 describe('MultidimensionalVortexFramework', () => {
   let framework: MultidimensionalVortexFramework;

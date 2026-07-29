@@ -41,6 +41,11 @@ Migration complete when all hold:
 - [x] Thin MCP + `mcp:smoke`
 - [x] Generated `docs/KERNEL.md` + `docs/pages/` drift-check
 - [x] `npm run check` green
+- [x] `bundle:a432:check` seals `public/a432.bundle.js` (feed tip on drift)
+- [x] Extensionless `.ts` residuals under `src/` cleared (feed tip on slip)
+- [x] Dynamic `import()` extensionless under `src/` cleared (Wave 20; feed tip on slip)
+- [x] `a432.algebra.js` export surface mirrors `a432.algebra.ts` (Wave 21; feed tip on drift)
+- [x] HTML→missing `.js` retargeted to sibling `.ts` (Wave 22; feed tip on slip)
 - [x] Real `SECURITY.md` (not erpax stub)
 - [x] No Payload/ERP in tree
 
@@ -51,4 +56,5 @@ Migration complete when all hold:
 - Wet-linear full-tree rewrites in one turn
 - Editing generated projections by hand
 - Hand-minted / ambient-random ids (use `toUuid` / content-uuid / algebra `unitFromSeed`)
-- Ambient `Math.*` under `src/` (use `src/0/algebra`; `npm run math:ban` fails closed)
+- Ambient `Math.*` on any computing surface (use `src/0/algebra` / `a432.algebra.js` / HTML bootstrap; `npm run math:ban` fails closed on `src/`, `public/`, `deployment/`, root demos — `dist/` gitignored, rebuilt from clean sources)
+- Ignoring `npm run self:next` tip when hard-clear (tip=`feed` — keep chatting waves)

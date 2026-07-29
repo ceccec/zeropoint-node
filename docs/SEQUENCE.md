@@ -4,6 +4,7 @@ Two spines share digits; they are **not** the same ordering. A third (base-12 ha
 
 ## Kernel (default) — from ceccec.github.io
 
+- Full vortex circuit (living field): `0\1\2\4\8/7/5/3\6\9/0\1`
 - `VORTEX_SEQUENCE = [1, 2, 4, 8, 7, 5, 3, 6, 9]`
 - Stroke: `1\2\4\8/7/5/3\6\9/0\1`
 - `digitalRoot(0) → 9`

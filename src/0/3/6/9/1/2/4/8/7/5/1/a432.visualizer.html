@@ -53,16 +53,16 @@ function indexFromSeed(seed,length){if(length<=0)return 0;let h=0x811c9dc5>>>0;f
 function legacyDigitalRoot(n){if(n===0)return 0;const r=((abs(n)%9)+9)%9;return r===0?9:r}
 
 
-    import * as trinity from './a432.trinity.js';
-    import * as family from './a432.family.js';
-    import * as nine from './a432.nine.js';
-    import * as cascade from './a432.cascade.js';
-    import * as double from './a432.double.js';
-    import * as mirror from './a432.mirror.js';
-    import * as shear from './a432.shear.js';
-    import * as coil from './a432.coil.js';
-    import * as electron from './a432.shear.electron.js';
-    import * as meta from './a432.meta.js';
+    import * as trinity from './a432.trinity.ts';
+    import * as family from './a432.family.ts';
+    import * as nine from './a432.nine.ts';
+    import * as cascade from './a432.cascade.ts';
+    import * as double from './a432.double.ts';
+    import * as mirror from './a432.mirror.ts';
+    import * as shear from './a432.shear.ts';
+    import * as coil from './a432.coil.ts';
+    import * as electron from './a432.shear.electron.ts';
+    import * as meta from './a432.meta.ts';
 
     const STREAMS = [
       { key: 'trinity', label: 'Trinity', fn: trinity.a432TrinityStream },

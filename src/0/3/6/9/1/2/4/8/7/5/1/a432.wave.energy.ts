@@ -99,8 +99,8 @@ export function calculateSequenceWave(sequence: number[]): WavePattern[] {
 }
 
 export function calculateA432SequenceWave(): WavePattern[] {
-  // Your sequence: /0\3\6\9/1\2\4\8/7/5/1\
-  const sequence = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+  // Full vortex circuit (ceccec.github.io): 0\1\2\4\8/7/5/3\6\9/0\1
+  const sequence = [0, 1, 2, 4, 8, 7, 5, 3, 6, 9, 0, 1];
   return calculateSequenceWave(sequence);
 }
 
@@ -196,7 +196,7 @@ export class A432WaveEnergySystem {
   }
   
   // Analyze your sequence as waves of energy
-  analyzeSequenceAsWaves(sequence: number[] = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1]): any {
+  analyzeSequenceAsWaves(sequence: number[] = [0, 1, 2, 4, 8, 7, 5, 3, 6, 9, 0, 1]): any {
     return analyzeWavePattern(sequence);
   }
   
@@ -263,7 +263,7 @@ export class A432WaveEnergySystem {
         consciousness: energyField.consciousness,
         dimensionalState: energyField.dimensionalState
       },
-      conclusion: "Your sequence /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\ is a wave pattern that encodes optimal consciousness flow through energy harmonics"
+      conclusion: "Your sequence 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1 is a wave pattern that encodes optimal consciousness flow through energy harmonics"
     };
   }
 }

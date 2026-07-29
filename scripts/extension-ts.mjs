@@ -66,8 +66,19 @@ for (const file of walk(SRC)) {
     specs++
     return `${prefix}${quote}${resolved}${quote}`
   })
+  // dynamic: import('./x')
+  const next4 = next3.replace(
+    /(import\s*\(\s*)(['"])(\.[^'"]+)\2(\s*\))/g,
+    (full, prefix, quote, spec, suffix) => {
+      const resolved = resolveSpec(file, spec)
+      if (!resolved) return full
+      changed = true
+      specs++
+      return `${prefix}${quote}${resolved}${quote}${suffix}`
+    },
+  )
   if (changed) {
-    writeFileSync(file, next3)
+    writeFileSync(file, next4)
     files++
     console.log(relative(ROOT, file))
   }

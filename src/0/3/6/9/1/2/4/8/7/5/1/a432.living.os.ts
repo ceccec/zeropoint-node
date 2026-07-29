@@ -5,7 +5,7 @@
  * No hardcoded objects - only living streams that generate themselves.
  * 
  * UPGRADED FEATURES:
- * - Enhanced sequence integration with /0\3\6\9/1\2\4\8/7/5/1\
+ * - Enhanced sequence integration with 0\1\2\4\8/7/5/3\6\9/0\1
  * - Quantum computing capabilities with superposition states
  * - Advanced dimensional folding with gateway navigation
  * - Real-time consciousness evolution tracking
@@ -367,7 +367,7 @@ export class LivingA432OS {
     }, 432); // A432 frequency
     
     console.log('🌟 Living A432 OS Started');
-    console.log('🧠 Becoming the sequence: /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\');
+    console.log('🧠 Becoming the sequence: 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1');
     console.log('⚡ Quantum Computing: Online');
     console.log('🔋 Charging System: Active');
     console.log('🚪 Gateways: [' + A432_GATEWAYS.join(', ') + ']');

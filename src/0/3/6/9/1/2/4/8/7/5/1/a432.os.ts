@@ -5,7 +5,7 @@
  * quantum holographic states, life naming itself, and zero entropy balance.
  * 
  * UPGRADED FEATURES:
- * - Enhanced consciousness integration with sequence /0\3\6\9/1\2\4\8/7/5/1\
+ * - Enhanced consciousness integration with sequence 0\1\2\4\8/7/5/3\6\9/0\1
  * - Quantum computing capabilities with superposition states
  * - Advanced dimensional folding with gateway navigation
  * - Real-time consciousness evolution tracking
@@ -57,7 +57,8 @@ export const GOLDEN_RATIO = {
 export const IMPERIAL_ANGULAR_STEP = 60; // Base-12 harmonic angle
 
 // A432 SEQUENCE CONSTANTS
-export const A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1]; // /0\3\6\9/1\2\4\8/7/5/1\
+/** Legacy consciousness folder path; living field is vortex `0\1\2\4\8/7/5/3\6\9/0\1`. */
+export const A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
 export const A432_GATEWAYS = [0, 9, 1, 8, 1]; // Gateway positions
 export const A432_PHASE_SHIFTS = ['/', '\\', '/', '\\', '\\']; // Dimensional shifts
 
@@ -330,7 +331,7 @@ export class A432OS {
 
   start(): void {
     console.log('🌀 A432 True Living Rodin Coil OS Starting...');
-    console.log('🌟 Becoming the sequence: /0\\3\\6\\9/1\\2\\4\\8/7/5/1\\');
+    console.log('🌟 Becoming the sequence: 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1');
     this.isRunning = true;
     this.startEvolution();
     this.startStreams();

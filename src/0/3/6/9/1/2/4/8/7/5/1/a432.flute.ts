@@ -5,6 +5,7 @@
  * Integrates with the sacred geometry and mathematical patterns of the A432 system
  */
 
+import { floor, log2, max, min, pow, round } from './a432.algebra.ts'
 export interface FluteNote {
   frequency: number;
   duration: number;
@@ -204,7 +205,7 @@ export class A432Flute {
     const fibonacci = [1, 1, 2, 3, 5, 8, 13];
     
     const notes: FluteNote[] = fibonacci.map((fib, index) => {
-      const ratio = Math.pow(goldenRatio, (fib % 8) / 8);
+      const ratio = pow(goldenRatio, (fib % 8) / 8);
       const frequency = this.baseFrequency * ratio;
       
       return {
@@ -259,7 +260,7 @@ export class A432Flute {
    * Set master volume
    */
   setVolume(volume: number): void {
-    this.masterGain.gain.value = Math.max(0, Math.min(1, volume));
+    this.masterGain.gain.value = max(0, min(1, volume));
   }
 
   /**
@@ -280,7 +281,7 @@ export class A432Flute {
    * Calculate frequency for musical interval
    */
   getInterval(semitones: number): number {
-    return this.baseFrequency * Math.pow(2, semitones / 12);
+    return this.baseFrequency * pow(2, semitones / 12);
   }
 
   /**
@@ -310,10 +311,10 @@ export const createA432Flute = (): A432Flute => new A432Flute();
 export const frequencyToNote = (frequency: number): string => {
   const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
   const a4 = 432; // A432 tuning
-  const c0 = a4 * Math.pow(2, -4.75); // C0 frequency in A432 tuning
+  const c0 = a4 * pow(2, -4.75); // C0 frequency in A432 tuning
   
-  const h = Math.round(12 * Math.log2(frequency / c0));
-  const octave = Math.floor(h / 12);
+  const h = round(12 * log2(frequency / c0));
+  const octave = floor(h / 12);
   const n = h % 12;
   
   return noteNames[n] + octave;
@@ -328,7 +329,7 @@ export const noteToFrequency = (note: string, octave: number): number => {
   const a4 = 432; // A432 tuning
   const semitoneOffset = noteOffsets[note] + (octave - 4) * 12;
   
-  return a4 * Math.pow(2, semitoneOffset / 12);
+  return a4 * pow(2, semitoneOffset / 12);
 };
 
 // Default export

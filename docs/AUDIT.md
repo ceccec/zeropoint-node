@@ -4,7 +4,7 @@
 
 Computed by `foldA432AuditCensus` — not a hand inventory.
 
-- files scanned: **373** (.ts + .html)
+- files scanned: **375** (.ts + .html)
 - digitalRoot named forks: **0**
 - %9 root inlines: **0**
 - ambient Math.* hits: **0**

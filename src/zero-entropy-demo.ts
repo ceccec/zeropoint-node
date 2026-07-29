@@ -9,6 +9,7 @@
  * 3. Pure mathematical relationships (no randomness or entropy)
  */
 
+import { min, sqrt } from './0/algebra.ts'
 import { 
   ZERO_ENTROPY_CONSTANTS, 
   ZERO_ENTROPY_FREQUENCIES, 
@@ -60,7 +61,7 @@ export class ZeroEntropyDemo {
     // Fibonacci Ratios - Exact mathematical relationships
     console.log(`\nFibonacci Ratios (Exact):`);
     const fibRatios = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144];
-    for (let i = 1; i < Math.min(8, fibRatios.length); i++) {
+    for (let i = 1; i < min(8, fibRatios.length); i++) {
       const ratio = fibRatios[i] / fibRatios[i-1];
       console.log(`   F${i+1}/F${i}: ${ratio} (exact division)`);
     }
@@ -268,7 +269,7 @@ export class ZeroEntropyDemo {
     console.log(`\nSpecific Validations:`);
     
     // Golden ratio validation
-    const goldenRatioExact = (1 + Math.sqrt(5)) / 2;
+    const goldenRatioExact = (1 + sqrt(5)) / 2;
     const goldenRatioValid = ZeroEntropyMath.validateZeroEntropy(
       ZeroEntropyMath.goldenRatio(), 
       goldenRatioExact

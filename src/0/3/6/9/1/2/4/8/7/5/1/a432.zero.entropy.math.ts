@@ -11,35 +11,37 @@
  * Based on Marko Rodin's Vortex Based Mathematics and Tesla's 3-6-9 principle
  */
 
+import { E, PI, abs, cos, log, pow, sin, sqrt, tan } from './a432.algebra.ts'
+import { legacyDigitalRoot } from './a432.roots.ts'
 // === ZERO ENTROPY MATHEMATICAL CONSTANTS ===
 // All constants are exact ratios, not decimal approximations
 
 export const ZERO_ENTROPY_CONSTANTS = {
   // === GOLDEN RATIO FAMILY (Exact Ratios) ===
-  GOLDEN_RATIO_NUMERATOR: 1 + Math.sqrt(5), // Exact: 1 + √5
+  GOLDEN_RATIO_NUMERATOR: 1 + sqrt(5), // Exact: 1 + √5
   GOLDEN_RATIO_DENOMINATOR: 2, // Exact: 2
-  GOLDEN_RATIO: (1 + Math.sqrt(5)) / 2, // φ = (1 + √5)/2 (exact formula)
+  GOLDEN_RATIO: (1 + sqrt(5)) / 2, // φ = (1 + √5)/2 (exact formula)
   
   // === PI FAMILY (Exact Ratios) ===
-  PI: Math.PI, // π (exact mathematical constant)
-  TAU: 2 * Math.PI, // τ = 2π (exact)
-  PI_OVER_2: Math.PI / 2, // π/2 (exact)
-  PI_OVER_3: Math.PI / 3, // π/3 (exact)
-  PI_OVER_4: Math.PI / 4, // π/4 (exact)
-  PI_OVER_6: Math.PI / 6, // π/6 (exact)
+  PI: PI, // π (exact mathematical constant)
+  TAU: 2 * PI, // τ = 2π (exact)
+  PI_OVER_2: PI / 2, // π/2 (exact)
+  PI_OVER_3: PI / 3, // π/3 (exact)
+  PI_OVER_4: PI / 4, // π/4 (exact)
+  PI_OVER_6: PI / 6, // π/6 (exact)
   
   // === SQUARE ROOTS (Exact Values) ===
-  SQRT_2: Math.sqrt(2), // √2 (exact)
-  SQRT_3: Math.sqrt(3), // √3 (exact)
-  SQRT_5: Math.sqrt(5), // √5 (exact)
-  SQRT_6: Math.sqrt(6), // √6 (exact)
-  SQRT_7: Math.sqrt(7), // √7 (exact)
-  SQRT_8: Math.sqrt(8), // √8 = 2√2 (exact)
+  SQRT_2: sqrt(2), // √2 (exact)
+  SQRT_3: sqrt(3), // √3 (exact)
+  SQRT_5: sqrt(5), // √5 (exact)
+  SQRT_6: sqrt(6), // √6 (exact)
+  SQRT_7: sqrt(7), // √7 (exact)
+  SQRT_8: sqrt(8), // √8 = 2√2 (exact)
   SQRT_9: 3, // √9 = 3 (exact integer)
-  SQRT_10: Math.sqrt(10), // √10 (exact)
+  SQRT_10: sqrt(10), // √10 (exact)
   
   // === EULER'S NUMBER (Exact) ===
-  E: Math.E, // e (exact mathematical constant)
+  E: E, // e (exact mathematical constant)
   
   // === A432 FREQUENCY SYSTEM (Hardcoded Frequencies) ===
   A432_BASE: 432, // Hz (hardcoded base frequency)
@@ -83,10 +85,10 @@ export const ZERO_ENTROPY_CONSTANTS = {
   
   // === SACRED GEOMETRY RATIOS (Exact) ===
   SACRED_RATIOS: {
-    GOLDEN_RATIO: (1 + Math.sqrt(5)) / 2, // φ (exact)
-    SILVER_RATIO: 1 + Math.sqrt(2), // δ (exact)
-    BRONZE_RATIO: (3 + Math.sqrt(13)) / 2, // σ (exact)
-    PLATINUM_RATIO: (1 + Math.sqrt(2)) / 2, // ψ (exact)
+    GOLDEN_RATIO: (1 + sqrt(5)) / 2, // φ (exact)
+    SILVER_RATIO: 1 + sqrt(2), // δ (exact)
+    BRONZE_RATIO: (3 + sqrt(13)) / 2, // σ (exact)
+    PLATINUM_RATIO: (1 + sqrt(2)) / 2, // ψ (exact)
     OCTAVE_RATIO: 2, // 2:1 (exact)
     FIFTH_RATIO: 3/2, // 3:2 (exact)
     FOURTH_RATIO: 4/3, // 4:3 (exact)
@@ -114,7 +116,7 @@ export class ZeroEntropyMath {
    * Calculate golden ratio to any power using exact mathematical relationship
    */
   static goldenRatioPower(n: number): number {
-    return Math.pow(ZERO_ENTROPY_CONSTANTS.GOLDEN_RATIO, n);
+    return pow(ZERO_ENTROPY_CONSTANTS.GOLDEN_RATIO, n);
   }
   
   /**
@@ -123,7 +125,7 @@ export class ZeroEntropyMath {
    */
   static getA432Frequency(octave: number): number {
     return ZERO_ENTROPY_CONSTANTS.A432_OCTAVES[octave as keyof typeof ZERO_ENTROPY_CONSTANTS.A432_OCTAVES] || 
-           ZERO_ENTROPY_CONSTANTS.A432_BASE * Math.pow(2, octave);
+           ZERO_ENTROPY_CONSTANTS.A432_BASE * pow(2, octave);
   }
   
   /**
@@ -155,8 +157,7 @@ export class ZeroEntropyMath {
    * Uses: n === 0 ? 0 : 1 + (n - 1) % 9
    */
   static digitalRoot(n: number): number {
-    if (n === 0) return 0;
-    return 1 + (Math.abs(n) - 1) % 9;
+    return legacyDigitalRoot(n)
   }
   
   /**
@@ -198,7 +199,7 @@ export class ZeroEntropyMath {
    * Calculate frequency using exact octave relationship
    */
   static calculateOctaveFrequency(base: number, octave: number): number {
-    return base * Math.pow(2, octave); // Exact mathematical relationship
+    return base * pow(2, octave); // Exact mathematical relationship
   }
   
   /**
@@ -236,7 +237,7 @@ export class ZeroEntropyMath {
   static doublingSequence(length: number): number[] {
     const sequence: number[] = [];
     for (let i = 0; i < length; i++) {
-      sequence.push(Math.pow(2, i)); // Exact mathematical power
+      sequence.push(pow(2, i)); // Exact mathematical power
     }
     return sequence;
   }
@@ -253,28 +254,28 @@ export class ZeroEntropyMath {
    * Calculate exact mathematical angle (no decimal approximation)
    */
   static exactAngle(degrees: number): number {
-    return (degrees * Math.PI) / 180; // Exact mathematical conversion
+    return (degrees * PI) / 180; // Exact mathematical conversion
   }
   
   /**
    * Calculate exact mathematical sine (no approximation)
    */
   static exactSine(angle: number): number {
-    return Math.sin(angle); // Exact mathematical function
+    return sin(angle); // Exact mathematical function
   }
   
   /**
    * Calculate exact mathematical cosine (no approximation)
    */
   static exactCosine(angle: number): number {
-    return Math.cos(angle); // Exact mathematical function
+    return cos(angle); // Exact mathematical function
   }
   
   /**
    * Calculate exact mathematical tangent (no approximation)
    */
   static exactTangent(angle: number): number {
-    return Math.tan(angle); // Exact mathematical function
+    return tan(angle); // Exact mathematical function
   }
   
   /**
@@ -292,21 +293,21 @@ export class ZeroEntropyMath {
    * Calculate exact mathematical power (no approximation)
    */
   static exactPower(base: number, exponent: number): number {
-    return Math.pow(base, exponent); // Exact mathematical power
+    return pow(base, exponent); // Exact mathematical power
   }
   
   /**
    * Calculate exact mathematical root (no approximation)
    */
   static exactRoot(n: number, root: number): number {
-    return Math.pow(n, 1/root); // Exact mathematical root
+    return pow(n, 1/root); // Exact mathematical root
   }
   
   /**
    * Calculate exact mathematical logarithm (no approximation)
    */
-  static exactLogarithm(n: number, base: number = Math.E): number {
-    return Math.log(n) / Math.log(base); // Exact mathematical logarithm
+  static exactLogarithm(n: number, base: number = E): number {
+    return log(n) / log(base); // Exact mathematical logarithm
   }
   
   /**
@@ -348,7 +349,7 @@ export class ZeroEntropyMath {
    * Validate that a calculation uses zero entropy principles
    */
   static validateZeroEntropy(value: number, expected: number, tolerance: number = 0.000001): boolean {
-    return Math.abs(value - expected) < tolerance;
+    return abs(value - expected) < tolerance;
   }
   
   /**
@@ -397,10 +398,10 @@ export const ZERO_ENTROPY_FREQUENCIES = {
   
   // === SACRED GEOMETRY FREQUENCIES (Hardcoded) ===
   SACRED_FREQUENCIES: {
-    golden_ratio: 432 * ((1 + Math.sqrt(5)) / 2), // φ × 432 (exact)
-    silver_ratio: 432 * (1 + Math.sqrt(2)),       // δ × 432 (exact)
-    bronze_ratio: 432 * ((3 + Math.sqrt(13)) / 2), // σ × 432 (exact)
-    platinum_ratio: 432 * ((1 + Math.sqrt(2)) / 2) // ψ × 432 (exact)
+    golden_ratio: 432 * ((1 + sqrt(5)) / 2), // φ × 432 (exact)
+    silver_ratio: 432 * (1 + sqrt(2)),       // δ × 432 (exact)
+    bronze_ratio: 432 * ((3 + sqrt(13)) / 2), // σ × 432 (exact)
+    platinum_ratio: 432 * ((1 + sqrt(2)) / 2) // ψ × 432 (exact)
   },
   
   // === VORTEX MATHEMATICS FREQUENCIES (Hardcoded) ===
@@ -427,18 +428,18 @@ export class ZeroEntropyValidator {
     const constants = ZERO_ENTROPY_CONSTANTS;
     
     // Validate golden ratio is exact
-    const goldenRatioExact = (1 + Math.sqrt(5)) / 2;
+    const goldenRatioExact = (1 + sqrt(5)) / 2;
     if (!ZeroEntropyMath.validateZeroEntropy(constants.GOLDEN_RATIO, goldenRatioExact)) {
       return false;
     }
     
     // Validate PI is exact
-    if (!ZeroEntropyMath.validateZeroEntropy(constants.PI, Math.PI)) {
+    if (!ZeroEntropyMath.validateZeroEntropy(constants.PI, PI)) {
       return false;
     }
     
     // Validate square roots are exact
-    if (!ZeroEntropyMath.validateZeroEntropy(constants.SQRT_2, Math.sqrt(2))) {
+    if (!ZeroEntropyMath.validateZeroEntropy(constants.SQRT_2, sqrt(2))) {
       return false;
     }
     

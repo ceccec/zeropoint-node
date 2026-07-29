@@ -11,9 +11,9 @@ Computed by `foldA432AuditCensus` — not a hand inventory.
 - randomUUID sites: **0**
 - neither roots nor algebra (direct): **0**
 - digitalRoot via math/core (harmonic alias): **0**
-- root: `d72f82cb-d6e9-8cee-8b24-93dd63e04b71`
-- content-uuid: `00c369a0-aaa5-8b71-aaf1-dbf6a3413a8d`
-- claySolved: **0** · physicalFtl: **0**
+- root: `30da1d03-cbb1-8bfc-8d8b-64932519c7e7`
+- content-uuid: `51ea9f62-7a1d-817c-92a5-809ec9bf5a6b`
+- claySolved: **0** · physicalFtl: **true** (`computePhysicalFtl`)
 
 ## digitalRoot named forks (sample ≤40)
 

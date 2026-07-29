@@ -163,7 +163,16 @@ function callTool(name: string, args: Record<string, unknown>) {
     case 'zeropoint.selfNext': {
       const tip = nextSelfDevelopTip()
       const sb = selfBuild()
-      return { ...tip, selfBuild: { stalled: sb.stalled, reason: sb.reason, complete: sb.complete } }
+      return {
+        ...tip,
+        selfBuild: {
+          stalled: sb.stalled,
+          reason: sb.reason,
+          complete: sb.complete,
+          physicalFtl: sb.physicalFtl,
+          claySolved: sb.claySolved,
+        },
+      }
     }
     default:
       throw new Error(`unknown tool: ${name}`)

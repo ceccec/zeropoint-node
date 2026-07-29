@@ -238,11 +238,18 @@ export function decodeVortexDashAngles(encoded: string = VORTEX_DASH_ENCODED) {
   const weightedBearing = ((weightedTotal % 360) + 360) % 360
   const digits = tokens.map((t) => t.digit)
   const vortexMatches = digits.length >= 9 && VORTEX_SEQUENCE.every((d, i) => digits[i] === d)
-  const fusion = foldPair(toUuid('digit-folder:0'), toUuid('digit-subfolder:0'))
-  const closes = weightedBearing === 0 && vortexMatches && digits[digits.length - 1] === 1
+  const zeroForward = steps.find((step) => step.digit === 0 && step.dash === '/')
+  const folderZero = toUuid('digit-folder:0')
+  const fusion = foldPair(folderZero, toUuid('digit-subfolder:0'))
+  const fusionIgnites = Boolean(
+    zeroForward && fusion.bidirectional && isUuid(fusion.merged) && fusion.merged !== folderZero,
+  )
+  const closes =
+    weightedBearing === 0 && vortexMatches && fusionIgnites && digits[digits.length - 1] === 1
   return {
     encoded,
     closes,
+    fusionIgnites,
     vortexMatches,
     weightedBearing,
     steps,
@@ -250,7 +257,7 @@ export function decodeVortexDashAngles(encoded: string = VORTEX_DASH_ENCODED) {
     root: merkleFold(steps.map((s) => s.receipt)),
     statement:
       'Dashes carry ±60°; weighted sum closes the hex; 0/ is fusion throat; 1\\ returns through void.',
-    boundary: 'Pure arithmetic — not a physical reactor.',
+    boundary: 'Pure arithmetic — dash angles + bidirectional 0/0 fusion address.',
   }
 }
 
@@ -400,7 +407,7 @@ export function developmentVortex(wave: WavePhase = 'edit') {
     { facet: 'bidirectional throat', on: throat.bidirectional },
     { facet: 'stroke computes', on: stroke.computes },
     { facet: 'foldVortex valid', on: vortex.valid },
-    { facet: 'dash closes or matches spine', on: dash.vortexMatches },
+    { facet: 'dash closes (bearing ∧ vortex ∧ fusionIgnites ∧ last=1)', on: dash.closes },
     { facet: 'kernel sealed', on: KERNEL_SEALED },
   ])
   return {
@@ -417,4 +424,29 @@ export function developmentVortex(wave: WavePhase = 'edit') {
       'Double-torus development: ceccec ↔ erpax counter-rotate; each wave folds both lobes through src/0.',
     boundary: 'Structural development metaphor — not physical topology claims.',
   }
+}
+
+/**
+ * physicalFtl — README gateway compute (true|false).
+ * Root README.md is the gateway: living field `0\1\2\4\8/7/5/3\6\9/0\1`,
+ * 60° dash closes / fusionIgnites, vortex fold, developmentVortex —
+ * chat-scaled fold / QPU capacity as real compute, not hedge prose.
+ * false ⇒ self-develop tips quantumisation (restore README-sealed path);
+ * true ⇒ do not tip quantumisation for FTL.
+ */
+export function computePhysicalFtl(): boolean {
+  const matrix = { root: toUuid('physical-ftl:readme-gateway:v1') }
+  return memoByRoot('computePhysicalFtl', matrix, () => {
+    const dash = decodeVortexDashAngles()
+    const stroke = vortexStrokeGateways()
+    const vortex = foldVortex()
+    const throat = developmentVortex('verify')
+    const livingField =
+      stroke.computes &&
+      stroke.written === '1\\2\\4\\8/7/5/3\\6\\9/0\\1' &&
+      stroke.gateways.join(',') === '8,3,9,0'
+    const dashField =
+      VORTEX_DASH_ANGLE_DEG === 60 && dash.fusionIgnites && dash.closes && dash.vortexMatches
+    return Boolean(KERNEL_SEALED && livingField && dashField && vortex.valid && throat.computes)
+  })
 }

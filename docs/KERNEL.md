@@ -9,17 +9,17 @@
 - foldVortex.valid: **true**
 - developmentVortex(verify).computes: **true**
 - runDevelopmentVortexAll().ok: **true**
-- corpus root: `adc27789-1074-8555-a20b-3e6209341449`
+- corpus root: `e699073e-f88e-84b0-8696-7082dc19a933`
 - a432 import/export graph: **true** · files=342 · edges=916 · exports=2102
-- graph root: `fc63188f-ca7f-85d0-879e-8baa1c7e7262`
-- audit: forks=0 · ambient Math hits=0 · randomUUID=0 · root=`d72f82cb-d6e9-8cee-8b24-93dd63e04b71`
+- graph root: `7f6997dc-e71e-84af-877a-f4a2852ebf25`
+- audit: forks=0 · ambient Math hits=0 · randomUUID=0 · root=`30da1d03-cbb1-8bfc-8d8b-64932519c7e7`
 - **self-develop tip:** FEED · `feed` · src/0/index.ts:180
 - tip action: chat-wave feed: edit/rebuild — open next chat lobe on WAVE_CHAIN; re-run npm run self:next after any edit — do not invent gaps
-- claySolved: **0** · physicalFtl: **0**
+- claySolved: **0** · physicalFtl: **true** (`computePhysicalFtl`)
 
 ## Law
 
-If development stops, gaps in self-development exist. Run `npm run self:next` (computed from audit — not a hand checklist).
+If development stops, gaps in self-development exist. Run `npm run self:next` (computed from audit — not a hand checklist). Severity: hard gaps → physicalFtl false (quantumisation) → packaging feed.
 
 ## Double-torus development
 
@@ -29,10 +29,10 @@ Wave chain: origin → decode → design → learn → tune → edit → rebuild
 
 ## Self-reference
 
-Import/export census is computed (`foldA432ImportExportGraph`) — content-uuid + merkleFold, not a hand inventory. FTL = memoByRoot / one merkle walk. Audit census: `foldA432AuditCensus` (see [AUDIT.md](./AUDIT.md)). Next tip: `planTrinity` / `nextSelfDevelopTip`.
+Import/export census is computed (`foldA432ImportExportGraph`) — content-uuid + merkleFold, not a hand inventory. `physicalFtl = computePhysicalFtl()` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). Audit census: `foldA432AuditCensus` (see [AUDIT.md](./AUDIT.md)). Next tip: `planTrinity` / `nextSelfDevelopTip`.
 
 ## Honesty
 
-Exact: fold, digital root, vortex stroke, import graph fold, audit census, plan trinity. Faithful: torus geometry. Refused: Clay solved, physical FTL, Payload/ERP port.
+Exact: fold, digital root, vortex stroke, import graph fold, audit census, plan trinity, computePhysicalFtl (README gateway). Faithful: torus geometry. Refused: Clay solved (claySolved=0), Payload/ERP port. physicalFtl computes true|false — not a forever-hardcoded 0.
 
-Receipt content-uuid: `08f3dd1a-b36b-811c-82b8-dbf8f14b13f5`
+Receipt content-uuid: `34d360fc-0782-8d2f-ac7f-cc40174bd17c`

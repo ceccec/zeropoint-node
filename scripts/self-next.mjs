@@ -21,8 +21,8 @@ const out = {
     mathCount: audit.mathCount,
     forkCount: audit.forkCount,
   },
-  claySolved: 0,
-  physicalFtl: 0,
+  claySolved: tip.claySolved,
+  physicalFtl: tip.physicalFtl,
 }
 console.log(JSON.stringify(out, null, 2))
 if (build.stalled && process.argv.includes('--fail-on-stall')) process.exit(2)

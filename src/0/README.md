@@ -27,7 +27,7 @@ lobeL (ceccec.github.io)  ⇄  throat (foldPair)  ⇄  lobeR (erpax)
 
 - Full vortex circuit (living field): `0\1\2\4\8/7/5/3\6\9/0\1`
 - Vortex: `[1, 2, 4, 8, 7, 5, 3, 6, 9]` with void `0`
-- Stroke: `1\2\4\8/7/5/3\6\9/0\1`
+- Stroke: `1\2\4\8/7/5/3\6\9/0\1` (`0\`); encoded fusion gate uses `0/` in `VORTEX_DASH_ENCODED`
 - `digitalRoot(0) → 9`
 - Legacy `03691248751` / `digitalRoot(0) → 0` via `src/kernel/legacy.ts`
 
@@ -35,10 +35,12 @@ lobeL (ceccec.github.io)  ⇄  throat (foldPair)  ⇄  lobeR (erpax)
 
 | Layer | Claim |
 | --- | --- |
-| **Exact** | fold, merge, merkle, digital root, vortex doubling mod 9 |
+| **Exact** | fold, merge, merkle, digital root, vortex doubling mod 9, `computePhysicalFtl()` |
 | **Faithful** | torus / merkaba / animation as projections of folds |
-| **Refused** | Clay solved, physical FTL, Payload/ERP port, hand-minted ids |
+| **Refused** | Clay solved (`claySolved=0`), Payload/ERP port, hand-minted ids |
+
+`physicalFtl` computes `true|false` from **README gateway** seals (living field ∧ 60° dash closes incl. fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). False ⇒ self-develop tips **quantumisation**. Not a prose slogan.
 
 ## Status
 
-KERNEL_SEALED = true. Run `npm run check` for the development-vortex census + a432 import/export self-ref fold. Critical a432 bridges are `.ts`-resolvable under strip-types (Wave 9); residual extensionless under `src/` sealed Wave 19–20; browser `a432.algebra.js` export surface sealed Wave 21; HTML→missing `.js` sealed Wave 22; TS→missing `.js` sealed Wave 23; orphan A432 `.js` sealed Wave 24 (feed tip on slip).
+KERNEL_SEALED = true. Run `npm run check` for the development-vortex census + a432 import/export self-ref fold. Critical a432 bridges are `.ts`-resolvable under strip-types (Wave 9); residual extensionless under `src/` sealed Wave 19–20; browser `a432.algebra.js` export surface sealed Wave 21; HTML→missing `.js` sealed Wave 22; TS→missing `.js` sealed Wave 23; orphan A432 `.js` sealed Wave 24; feed scanners count-proven + severity-ordered Wave 25; remote CDN HTML imports dissolved Wave 26; dash `fusionIgnites` / `closes` sealed Wave 27; `computePhysicalFtl` boolean + quantumisation tip Wave 28 (tip on slip only).

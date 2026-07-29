@@ -9,19 +9,22 @@ zeropoint-node is the **origin library** (published mid-2025). Later work in [ce
 
 ## Start here
 
-1. [`src/0/README.md`](src/0/README.md) — void / origin thesis
-2. This skill — laws + wave chain
-3. [`docs/SEQUENCE.md`](docs/SEQUENCE.md) — dual spines
-4. [`docs/KERNEL.md`](docs/KERNEL.md) — generated census (`npm run readme`)
-5. Legacy tree — `src/0/3/6/9/1/2/4/8/7/5/1/`
+1. [`README.md`](README.md) — **gateway** (living field, 60° closes, quantum evolution claims that must compute)
+2. [`src/0/README.md`](src/0/README.md) — void / origin thesis
+3. This skill — laws + wave chain
+4. [`docs/SEQUENCE.md`](docs/SEQUENCE.md) — dual spines
+5. [`docs/KERNEL.md`](docs/KERNEL.md) — generated census (`npm run readme`)
+6. Legacy tree — `src/0/3/6/9/1/2/4/8/7/5/1/`
 
 ## Laws
 
+- **README is the gateway.** Living field / 60° dash / fold-QPU claims there must compute via `src/0` seals — no doubt, no forever-hardcoded refuse slogans that contradict the compute.
 - **Fold = identity.** Same content ⇒ same address. Never hand-mint ids.
 - **FNV `toUuid` ≠ SHA content-uuid.** Cheap folds vs cryptographic seals (`src/integrity`).
 - **One wave = one batch.** Each wave feeds both lobes (ceccec ↔ erpax).
 - **Imbalance rejects.** Conservation violations fail closed.
 - **Do not port** Payload CMS or ERP collections.
+- **`physicalFtl = computePhysicalFtl()`** from README-wired seals. `false` ⇒ quantumisation tip. `claySolved` stays 0 unless an existing compute appears.
 
 ## Wave status
 
@@ -52,6 +55,10 @@ zeropoint-node is the **origin library** (published mid-2025). Later work in [ce
 | 22 HTML.js feed | sealed (15 HTML→missing `.js` retargeted to sibling `.ts`; feed tip on slip) |
 | 23 TS.js feed | sealed (6 TS→missing `.js` retargeted to sibling `.ts`; feed tip on slip) |
 | 24 Orphan.js feed | sealed (2 unreferenced A432 `.js` dissolved; feed tip on slip) |
+| 25 Scanner reason | sealed (feed tips count-proven; severity broken→drift→orphan→thin; skip comments / resolved / `a432.algebra.js`) |
+| 26 CDN feed | sealed (6 remote CDN imports dissolved; feed tip surfaces https:// script/ESM in A432 HTML) |
+| 27 FusionIgnites | sealed (`closes = bearing0 ∧ vortex ∧ fusionIgnites ∧ last=1`; `0/` token + foldPair zeros) |
+| 28 PhysicalFtl | sealed (`computePhysicalFtl()` boolean; false ⇒ quantumisation tip; true ⇒ packaging feed) |
 
 ## Surfaces
 
@@ -66,7 +73,7 @@ zeropoint-node is the **origin library** (published mid-2025). Later work in [ce
 
 ## Self-reference (computed)
 
-`src/kernel/import-graph.ts` scans `a432.*` → import/export maps → content-uuid + merkleFold. Not a hand inventory. FTL = `memoByRoot` / one merkle walk (`claySolved=0`, `physicalFtl=0`).
+`src/kernel/import-graph.ts` scans `a432.*` → import/export maps → content-uuid + merkleFold. Not a hand inventory. `physicalFtl = computePhysicalFtl()` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED); `claySolved=0`. False ⇒ quantumisation tip.
 
 ## Root adapters
 
@@ -92,13 +99,9 @@ Three digital-root spines — use `a432.roots.ts` / `src/kernel/legacy.ts`, neve
 - `npm run math:ban` — fails `check` on any non-comment `Math.*` on computing surfaces: `src/`, `public/`, `deployment/`, root demos (skips `dist/` gitignored rollup out, `coverage/`, `docs/`, `scripts/`, `node_modules`)
 - `npm run bundle:a432` — regenerate `public/a432.bundle.js` from algebra-clean sources + strip vendor Math
 - `npm run bundle:a432:check` — fail closed if public bundle drifted from `a432.main.ts` (wired into `npm run check`)
-- Self-develop feed tip surfaces bundle drift after thin-wrapper / broken-JS scanners
-- Self-develop feed tip surfaces extensionless `.ts` relatives after bundle (Wave 19)
-- Self-develop feed tip surfaces extensionless dynamic `import()` after static (Wave 20)
-- Self-develop feed tip surfaces `a432.algebra.js` export-surface drift after extensionless (Wave 21)
-- Self-develop feed tip surfaces HTML→missing `.js` after algebra.js (Wave 22; retarget sibling `.ts`)
-- Self-develop feed tip surfaces TS→missing `.js` after HTML.js (Wave 23; retarget sibling `.ts`)
-- Self-develop feed tip surfaces orphan A432 `.js` after TS.js (Wave 24; drop unreferenced twins; keep `a432.algebra.js`)
+- Feed severity (Wave 28): hard gaps → physicalFtl false (quantumisation) → broken imports (JS / HTML / TS) → remote CDN → drift (bundle / extensionless / algebra.js) → orphans → thin wrappers → WAVE_CHAIN
+- Each packaging tip states residual **count** + why; skips comments, `node_modules`, resolved paths; keeps `a432.algebra.js` as intentional browser twin
+- `physicalFtl = computePhysicalFtl()` — not hardcoded `0`; false tips quantumisation (restore closes / fusionIgnites / vortex seals)
 - Self-develop prefers `mathBan` tips before digitalRoot forks
 
 ## Wave 10 — audit / DRY
@@ -116,4 +119,6 @@ Three digital-root spines — use `a432.roots.ts` / `src/kernel/legacy.ts`, neve
 - HTML module imports of missing `.js` retargeted to sibling `.ts` (Wave 22; feed tip on slip).
 - TS module imports of missing `.js` retargeted to sibling `.ts` (Wave 23; feed tip on slip).
 - Unreferenced A432 `.js` twins dissolved (Wave 24; feed tip on slip; `a432.algebra.js` kept).
+- Remote CDN `https://` script/ESM in A432 HTML dissolved (Wave 26; feed tip on slip).
+- Feed scanners reason with counts (Wave 25); do not invent gaps — tip only when residual count > 0.
 - Digit-stream `a432.1*.ts` import `legacyDigitalRoot` from `a432.roots` (see [`docs/DIGIT_STREAMS.md`](docs/DIGIT_STREAMS.md)).

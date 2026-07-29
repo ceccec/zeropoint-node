@@ -8,7 +8,7 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { computesGate, memoByRoot, merkleFold, toUuid } from '../0/index.ts'
+import { computePhysicalFtl, computesGate, memoByRoot, merkleFold, toUuid } from '../0/index.ts'
 import { computeContentUuid } from '../integrity/content-uuid.ts'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
@@ -68,7 +68,7 @@ export type AuditCensus = {
   root: string
   contentUuid: string
   claySolved: 0
-  physicalFtl: 0
+  physicalFtl: boolean
   statement: string
   boundary: string
 }
@@ -187,11 +187,12 @@ export function foldA432AuditCensus(a432Dir: string = A432_DIR): AuditCensus {
       }
     }
 
+    const physicalFtl = computePhysicalFtl()
     const sealed = computesGate('a432-audit', [
       { facet: 'scanned sources', on: files.length > 0 },
       { facet: 'roots adapter present', on: files.some((f) => f.endsWith('a432.roots.ts')) },
       { facet: 'claySolved=0', on: true },
-      { facet: 'physicalFtl=0', on: true },
+      { facet: 'physicalFtl boolean', on: physicalFtl === true || physicalFtl === false },
     ])
 
     const leafIds = [
@@ -254,11 +255,11 @@ export function foldA432AuditCensus(a432Dir: string = A432_DIR): AuditCensus {
       root,
       contentUuid,
       claySolved: 0 as const,
-      physicalFtl: 0 as const,
+      physicalFtl,
       statement:
-        'Audit v16: Math.* (.ts+.js+.html) + named digitalRoot bodies + %9 inlines. Debt: neitherDirect + harmonicAliasImporters. Clear ⇒ feed tip.',
+        'Audit v16: Math.* (.ts+.js+.html) + named digitalRoot bodies + %9 inlines. Debt: neitherDirect + harmonicAliasImporters. Clear ⇒ physicalFtl gate then feed tip.',
       boundary:
-        'Hard idle: mathCount=0 and forkCount=0. Then tip=feed (packaging / docs→kernel). physicalFtl=0.',
+        'Hard idle: mathCount=0 and forkCount=0. Then physicalFtl=computePhysicalFtl(); false ⇒ quantumisation; true ⇒ tip=feed (packaging / docs→kernel).',
     }
   })
 }

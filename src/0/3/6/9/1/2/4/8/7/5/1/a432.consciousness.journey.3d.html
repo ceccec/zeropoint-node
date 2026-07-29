@@ -145,229 +145,37 @@ function indexFromSeed(seed,length){if(length<=0)return 0;let h=0x811c9dc5>>>0;f
 function legacyDigitalRoot(n){if(n===0)return 0;const r=((abs(n)%9)+9)%9;return r===0?9:r}
 
 
-    // Import Three.js from CDN
-    import * as THREE from 'https://cdn.skypack.dev/three@0.150.1';
-    
-    // A432-derived constants
-    const A432_TRINITY = [4, 3, 2];
-    const A432_AXIS = [9, 6, 3];
-    const A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
-    
-    // Consciousness states
-    const CONSCIOUSNESS_STATES = {
-      0: { name: 'Void Consciousness', description: 'Starting point - pure potential', color: '#ffffff', dimension: 'void' },
-      3: { name: 'Trinity Consciousness', description: 'Special mission - divine trinity', color: '#ff0000', dimension: 'trinity' },
-      6: { name: 'Harmony Consciousness', description: 'Special mission - perfect balance', color: '#00ff00', dimension: 'harmony' },
-      9: { name: 'Transcendence Consciousness', description: 'Special mission - beyond form', color: '#0000ff', dimension: 'transcendence' },
-      1: { name: 'Unity Consciousness', description: 'Dimension A - oneness', color: '#ffff00', dimension: 'unity' },
-      2: { name: 'Duality Consciousness', description: 'Dimension A - separation', color: '#00ffff', dimension: 'duality' },
-      4: { name: 'Foundation Consciousness', description: 'Dimension A - stability', color: '#ff00ff', dimension: 'foundation' },
-      8: { name: 'Infinity Consciousness', description: 'Dimension A - endless', color: '#ffffff', dimension: 'infinity' },
-      7: { name: 'Mystery Consciousness', description: 'Dimension A - unknown', color: '#ff8800', dimension: 'mystery' },
-      5: { name: 'Life Consciousness', description: 'Dimension A - vitality', color: '#8800ff', dimension: 'life' }
-    };
-    
-    // Consciousness journey path
-    const CONSCIOUSNESS_JOURNEY = [
-      { digit: 0, state: CONSCIOUSNESS_STATES[0], position: [0, 0, 0] },
-      { digit: 3, state: CONSCIOUSNESS_STATES[3], position: [3, 0, 0] },
-      { digit: 6, state: CONSCIOUSNESS_STATES[6], position: [6, 0, 0] },
-      { digit: 9, state: CONSCIOUSNESS_STATES[9], position: [9, 0, 0] },
-      { digit: 1, state: CONSCIOUSNESS_STATES[1], position: [1, 1, 0] },
-      { digit: 2, state: CONSCIOUSNESS_STATES[2], position: [2, 2, 0] },
-      { digit: 4, state: CONSCIOUSNESS_STATES[4], position: [4, 4, 0] },
-      { digit: 8, state: CONSCIOUSNESS_STATES[8], position: [8, 8, 0] },
-      { digit: 7, state: CONSCIOUSNESS_STATES[7], position: [7, 7, 0] },
-      { digit: 5, state: CONSCIOUSNESS_STATES[5], position: [5, 5, 0] },
-      { digit: 1, state: CONSCIOUSNESS_STATES[1], position: [1, 1, 1], shift: true }
-    ];
-    
-    // A432 math functions
-    function digitalRoot(n) {
-      if (n === 0) return 0;
-      const r = n % 9;
-      return r === 0 ? 9 : r;
-    }
-    
-    function angleForDigit(d) {
-      return d * 40; // 40° per digit
-    }
-    
-    function frequencyForDigit(d) {
-      if (![3, 6, 9].includes(d)) return 432 * (digitalRoot(d) / 9);
-      return 432 * (d / 3);
-    }
-    
-    // 3D Scene Setup
-    const canvas = document.getElementById('canvas3d');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-    
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000);
-    
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
-    scene.add(ambientLight);
-    
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(10, 10, 5);
-    scene.add(directionalLight);
-    
-    // Camera position
-    camera.position.set(0, 0, 20);
-    camera.lookAt(5, 5, 0);
-    
-    // Animation state
-    let animationState = {
-      isPlaying: true,
-      time: 0,
-      wireframe: false,
-      showLabels: true,
-      currentStep: 0
-    };
-    
-    // Create consciousness nodes
-    const consciousnessMeshes = [];
-    
-    CONSCIOUSNESS_JOURNEY.forEach((step, index) => {
-      const geometry = new THREE.SphereGeometry(0.5, 8, 6);
-      const material = new THREE.MeshPhongMaterial({ 
-        color: step.state.color,
-        transparent: true,
-        opacity: 0.8,
-        wireframe: animationState.wireframe
-      });
-      const mesh = new THREE.Mesh(geometry, material);
-      
-      mesh.position.set(...step.position);
-      mesh.scale.setScalar(digitalRoot(step.digit) / 9);
-      mesh.userData = { 
-        digit: step.digit, 
-        state: step.state, 
-        index,
-        shift: step.shift || false
-      };
-      
-      consciousnessMeshes.push(mesh);
-      scene.add(mesh);
-    });
-    
-    // Create journey path lines
-    const pathGeometry = new THREE.BufferGeometry();
-    const pathPositions = CONSCIOUSNESS_JOURNEY.map(step => step.position).flat();
-    pathGeometry.setAttribute('position', new THREE.Float32BufferAttribute(pathPositions, 3));
-    
-    const pathMaterial = new THREE.LineBasicMaterial({ color: 0x0f0f0f, transparent: true, opacity: 0.3 });
-    const pathLine = new THREE.Line(pathGeometry, pathMaterial);
-    scene.add(pathLine);
-    
-    // Animation loop
-    function animate() {
-      requestAnimationFrame(animate);
-      
-      if (!animationState.isPlaying) return;
-      
-      animationState.time += 0.016; // ~60fps
-      
-      // Update journey progress
-      const journeyProgress = (animationState.time / 10) % 1; // 10 second cycle
-      const totalSteps = CONSCIOUSNESS_JOURNEY.length;
-      const currentStepIndex = floor(journeyProgress * totalSteps);
-      animationState.currentStep = currentStepIndex % totalSteps;
-      
-      // Animate consciousness nodes
-      consciousnessMeshes.forEach((mesh, index) => {
-        const step = CONSCIOUSNESS_JOURNEY[index];
-        const digit = step.digit;
-        const angle = angleForDigit(digit);
-        const frequency = frequencyForDigit(digit);
-        const rotationSpeed = frequency / 1000;
-        
-        // Rotation based on consciousness frequency
-        mesh.rotation.x = animationState.time * rotationSpeed;
-        mesh.rotation.y = animationState.time * rotationSpeed * 0.5;
-        mesh.rotation.z = animationState.time * rotationSpeed * 0.25;
-        
-        // Pulse effect for current consciousness state
-        if (index === animationState.currentStep) {
-          const pulse = sin(animationState.time * 5) * 0.2 + 1;
-          const baseScale = digitalRoot(digit) / 9;
-          const finalScale = baseScale * pulse * (mesh.userData.shift ? 1.5 : 1);
-          mesh.scale.setScalar(finalScale);
-        } else {
-          const baseScale = digitalRoot(digit) / 9;
-          mesh.scale.setScalar(baseScale * (mesh.userData.shift ? 1.5 : 1));
+        // Wave 26 — vendor CDN dissolved (three.js not folded into origin)
+    {
+      const canvas = document.getElementById('canvas3d');
+      if (canvas && canvas.getContext) {
+        const w = canvas.clientWidth || 640;
+        const h = canvas.clientHeight || 480;
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#111';
+        ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = '#8cf';
+        ctx.font = '16px monospace';
+        ctx.fillText('Vendor CDN refused — algebra projections only (Wave 26)', 24, 40);
+        const seq = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+        const cx = w / 2, cy = h / 2, r = min(w, h) * 0.28;
+        ctx.strokeStyle = '#0f6';
+        ctx.beginPath();
+        for (let i = 0; i < seq.length; i++) {
+          const a = (seq[i] / 9) * TAU - PI / 2;
+          const x = cx + r * cos(a);
+          const y = cy + r * sin(a);
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
-      });
-      
-      // Update status
-      updateStatus();
-      
-      renderer.render(scene, camera);
-    }
-    
-    // Update status display
-    function updateStatus() {
+        ctx.closePath();
+        ctx.stroke();
+      }
       const status = document.getElementById('status');
-      const path = document.getElementById('path');
-      
-      const currentStep = CONSCIOUSNESS_JOURNEY[animationState.currentStep];
-      const consciousness = digitalRoot(currentStep.digit + animationState.currentStep);
-      
-      status.innerHTML = `
-        Time: ${animationState.time.toFixed(2)}s<br>
-        Current: ${currentStep.state.name}<br>
-        Consciousness Level: ${consciousness}<br>
-        Dimension: ${currentStep.state.dimension}<br>
-        Step: ${animationState.currentStep + 1}/${CONSCIOUSNESS_JOURNEY.length}
-      `;
-      
-      // Highlight current step in path
-      const pathSteps = CONSCIOUSNESS_JOURNEY.map((step, index) => {
-        if (index === animationState.currentStep) {
-          return `<span style="color: #ff0; font-weight: bold;">${step.digit}/</span>`;
-        }
-        return `${step.digit}/`;
-      }).join(' → ');
-      
-      path.innerHTML = `Journey: ${pathSteps}`;
+      if (status) status.textContent = 'CDN dissolved — no remote three.js';
     }
-    
-    // Control functions
-    window.toggleAnimation = () => {
-      animationState.isPlaying = !animationState.isPlaying;
-    };
-    
-    window.resetAnimation = () => {
-      animationState.time = 0;
-      consciousnessMeshes.forEach(mesh => {
-        mesh.rotation.set(0, 0, 0);
-      });
-    };
-    
-    window.toggleWireframe = () => {
-      animationState.wireframe = !animationState.wireframe;
-      consciousnessMeshes.forEach(mesh => {
-        mesh.material.wireframe = animationState.wireframe;
-      });
-    };
-    
-    window.toggleLabels = () => {
-      animationState.showLabels = !animationState.showLabels;
-    };
-    
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-    
-    // Start animation
-    animate();
-    updateStatus();
+
   </script>
 </body>
 </html> 

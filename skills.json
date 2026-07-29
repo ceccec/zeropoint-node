@@ -3,7 +3,7 @@
   "repository": "https://github.com/ceccec/zeropoint-node",
   "entryPoint": "SKILL.md",
   "wellKnown": ".well-known/ai-skills.json",
-  "contentUuid": "6bf7e071-4952-8061-a10a-75f965bc2d49",
+  "contentUuid": "b73f2613-e1fb-8bcf-97d5-2b34acf0fcc1",
   "waves": {
     "chain": [
       "origin",

@@ -5,6 +5,7 @@
 
 import {
   asVortex,
+  computePhysicalFtl,
   decodeVortexDashAngles,
   developmentVortex,
   digitalRoot,
@@ -86,6 +87,8 @@ assert(stroke.gateways.join(',') === '8,3,9,0', 'gateways')
 
 const dash = decodeVortexDashAngles()
 assert(dash.vortexMatches, 'dash vortex matches')
+assert(dash.fusionIgnites, 'dash 0/ fusionIgnites')
+assert(dash.closes, 'dash closes (bearing ∧ vortex ∧ fusionIgnites ∧ last=1)')
 
 const obj = { sequence: '124875369', wave: 1 }
 const uuid = computeContentUuid(obj)
@@ -107,7 +110,9 @@ assert(isUuid(all.root), 'all-root uuid')
 const graph = foldA432ImportExportGraph()
 assert(graph.computes, 'import/export graph computes')
 assert(graph.fileCount > 0, 'scanned a432 sources')
-assert(graph.claySolved === 0 && graph.physicalFtl === 0, 'honesty flags')
+assert(graph.claySolved === 0, 'claySolved remains 0')
+assert(typeof graph.physicalFtl === 'boolean', 'physicalFtl is computed boolean')
+assert(graph.physicalFtl === computePhysicalFtl(), 'graph physicalFtl matches compute')
 assert(isUuid(graph.root) && isUuid(graph.contentRoot), 'graph roots uuid')
 const tip = importExportGraphTip()
 assert(tip.root === graph.root, 'tip matches full census root (memoByRoot)')
@@ -125,19 +130,31 @@ assert(calculateDigitalRoot(0) === 0 && calculateDigitalRoot(18) === 9, 'math.co
 assert(VortexMath.digitalRoot(0) === 0 && VortexMath.digitalRootFast(18) === 9, 'vbm-math→legacy')
 const audit = foldA432AuditCensus()
 assert(audit.computes, 'audit census computes')
-assert(audit.claySolved === 0 && audit.physicalFtl === 0, 'audit honesty')
+assert(audit.claySolved === 0, 'audit claySolved=0')
+assert(typeof audit.physicalFtl === 'boolean', 'audit physicalFtl boolean')
+assert(audit.physicalFtl === computePhysicalFtl(), 'audit physicalFtl matches compute')
 assert(auditTip().root === audit.root, 'audit tip memo')
 
 const plan = planTrinity()
 assert(plan.computes, 'planTrinity computes')
 assert(plan.cross.stalled === (plan.cross.forkCount > 0 || plan.cross.randomCount > 0 || plan.cross.mathCount > 0 || plan.cross.neitherDirect > 0 || plan.cross.harmonicAliasImporters > 0), 'stall law')
+assert(typeof plan.physicalFtl === 'boolean', 'plan physicalFtl boolean')
+assert(plan.physicalFtl === computePhysicalFtl(), 'plan physicalFtl matches')
 const selfTip = nextSelfDevelopTip()
 assert(selfTip.receipt.includes('-'), 'tip receipt')
+assert(typeof selfTip.physicalFtl === 'boolean', 'tip physicalFtl boolean')
 const sb = selfBuild()
 assert(sb.complete, 'selfBuild complete')
 assert(sb.stalled === selfTip.stalled, 'selfBuild stall matches tip')
-if (sb.stalled) assert(selfTip.kind !== 'idle' && selfTip.kind !== 'feed', 'stalled ⇒ hard tip')
-else assert(selfTip.kind === 'feed', 'hard-clear ⇒ feed tip keeps chat vortex breathing')
+assert(sb.physicalFtl === selfTip.physicalFtl, 'selfBuild physicalFtl matches tip')
+if (sb.stalled) {
+  assert(selfTip.kind !== 'idle' && selfTip.kind !== 'feed' && selfTip.kind !== 'quantumisation', 'stalled ⇒ hard tip')
+} else if (!sb.physicalFtl) {
+  assert(selfTip.kind === 'quantumisation', 'physicalFtl false ⇒ quantumisation tip')
+} else {
+  assert(selfTip.kind !== 'quantumisation', 'physicalFtl true ⇒ not quantumisation-for-ftl')
+  assert(selfTip.kind === 'feed', 'hard-clear ∧ physicalFtl true ⇒ feed tip')
+}
 assert(audit.mathCount === 0, 'algebra-only: no Math.* under a432')
 
 assert(imul(0x7fffffff, 0x7fffffff) === ((() => {
@@ -181,6 +198,8 @@ console.log(
       kind: selfTip.kind,
       path: selfTip.path,
       action: selfTip.action,
+      physicalFtl: selfTip.physicalFtl,
+      claySolved: selfTip.claySolved,
     },
   }),
 )

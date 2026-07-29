@@ -6,7 +6,8 @@ Two spines share digits; they are **not** the same ordering. A third (base-12 ha
 
 - Full vortex circuit (living field): `0\1\2\4\8/7/5/3\6\9/0\1`
 - `VORTEX_SEQUENCE = [1, 2, 4, 8, 7, 5, 3, 6, 9]`
-- Stroke: `1\2\4\8/7/5/3\6\9/0\1`
+- Stroke: `1\2\4\8/7/5/3\6\9/0\1` (living field uses `0\`)
+- Encoded dash decode: `VORTEX_DASH_ENCODED` = `1\2\4\8/7/5/3\6\9/0/1\` — fusion throat is `0/` (not stroke `0\`); `closes` needs `fusionIgnites`
 - `digitalRoot(0) → 9`
 - Gateways (polarity reversals): `[8, 3, 9, 0]`
 
@@ -30,7 +31,7 @@ lobeL (ceccec.github.io) ⇄ throat (src/0 fold) ⇄ lobeR (erpax)
 
 Each chat wave calls `developmentVortex(wave)`; `runDevelopmentVortexAll()` chains all eight.
 
-Self-ref: `foldA432ImportExportGraph()` computes the a432 import/export census (content-uuid + merkleFold).
+Self-ref: `foldA432ImportExportGraph()` computes the a432 import/export census (content-uuid + merkleFold). `physicalFtl = computePhysicalFtl()` from structural seals; false ⇒ quantumisation tip.
 
 ## Imports (Wave 9)
 

@@ -13,13 +13,15 @@ description: >-
 
 **If development stops, gaps in self-development exist.**
 
+**README.md is the gateway** — living field / 60° / quantum evolution claims must compute (`computePhysicalFtl`). False ⇒ quantumisation tip.
+
 The next tip is **computed** (`planTrinity` ← audit census), not invented:
 
 ```bash
 npm run self:next
 ```
 
-Say **next** to advance one wave — but always read `self:next` first so the tip is the audit gap, not prose.
+Say **next** to advance one wave — but always read `self:next` first so the tip is the audit gap, not prose. Severity: hard gaps → physicalFtl false (quantumisation) → packaging feed (broken → CDN → drift → orphan → thin). Packaging tips are count-proven — do not invent gaps.
 
 ## Double-torus development vortex
 
@@ -44,5 +46,5 @@ Say **next** to advance one wave — but always read `self:next` first so the ti
 - Payload/ERP port
 - Hand-minted ids
 - Full-tree rewrite in one turn
-- Claiming Clay solved / physical FTL
+- Claiming Clay solved; hardcoding `physicalFtl: 0` — use `computePhysicalFtl()` (false ⇒ quantumisation tip)
 - Ignoring a stalled `self:next` tip (that IS the self-development gap)

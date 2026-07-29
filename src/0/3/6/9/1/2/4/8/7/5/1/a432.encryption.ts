@@ -1,4 +1,5 @@
-import * as a432 from './a432';
+import { round } from './a432.algebra.ts'
+import * as a432 from './a432.ts';
 
 /**
  * a432.encryption.ts — Harmonic Encryption/Decryption
@@ -32,7 +33,7 @@ export function encode(text: string): number[] {
 export function decode(freqs: number[]): string {
   return freqs.map(freq => {
     // Reverse: find closest digit by dividing by A432_FREQUENCY
-    const approx = Math.round(freq / a432.A432_FREQUENCY);
+    const approx = round(freq / a432.A432_FREQUENCY);
     // Map back to char code (approximate)
     return String.fromCharCode(approx);
   }).join('');

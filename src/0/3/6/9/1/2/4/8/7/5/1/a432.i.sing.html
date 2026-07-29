@@ -515,6 +515,29 @@
   </div>
 
   <script type="module">
+/* a432 algebra bootstrap — no ambient Math */
+const PI=355/113,TAU=PI*2,E=2.718281828459045;
+function imul(a,b){a=a|0;b=b|0;const ah=(a>>>16)&0xffff,al=a&0xffff,bh=(b>>>16)&0xffff,bl=b&0xffff;return((al*bl)+(((ah*bl+al*bh)<<16)>>>0))|0}
+function abs(n){return n<0?-n:n}
+function floor(n){const m=n%1;if(m===0||n!==n)return n;return n-m-(n<0?1:0)}
+function ceil(n){const m=n%1;if(m===0||n!==n)return n;return n-m+(n>0?1:0)}
+function round(n){return floor(n+0.5)}
+function min(a,b){if(arguments.length===1)return a;let m=a<b?a:b;for(let i=2;i<arguments.length;i++)if(arguments[i]<m)m=arguments[i];return m}
+function max(a,b){if(arguments.length===1)return a;let m=a>b?a:b;for(let i=2;i<arguments.length;i++)if(arguments[i]>m)m=arguments[i];return m}
+function sin(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=t,sum=t,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/(2*i*(2*i+1));sum+=term}return sum}
+function cos(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=1,sum=1,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/((2*i-1)*(2*i));sum+=term}return sum}
+function tan(x){const c=cos(x);return c===0?(x>=0?1e16:-1e16):sin(x)/c}
+function sqrt(n){if(n<=0)return 0;let x=n;for(let i=0;i<24;i++)x=0.5*(x+n/x);return x}
+function pow(b,e){if(e===0)return 1;if(e===(e|0)&&abs(e)<40){let r=1,n=e<0?-e:e,x=b;while(n){if(n&1)r*=x;x*=x;n>>=1}return e<0?1/r:r}return exp(e*log(b))}
+function exp(x){if(x>88)return Infinity;if(x<-88)return 0;const LN2=0.6931471805599453;const n=floor(x/LN2);const r=x-n*LN2;let term=1,sum=1;for(let i=1;i<=20;i++){term*=r/i;sum+=term}let p=sum;if(n>0)for(let i=0;i<n;i++)p*=2;else for(let i=0;i<-n;i++)p*=0.5;return p}
+function log(n){if(n<=0)return NaN;const LN2=0.6931471805599453;let x=n,k=0;while(x>1.5){x*=0.5;k++}while(x<0.75){x*=2;k--}const y=(x-1)/(x+1),y2=y*y;let term=y,sum=y;for(let i=1;i<=24;i++){term*=y2;sum+=term/(2*i+1)}return 2*sum+k*LN2}
+function log2(n){return log(n)/0.6931471805599453}
+function hypot(a,b){return sqrt(a*a+(b||0)*(b||0))}
+function unitFromSeed(seed){let h=0x811c9dc5>>>0;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=imul(h,0x01000193)>>>0}h=imul(h^(h>>>16),0x85ebca6b)>>>0;h=imul(h^(h>>>13),0xc2b2ae35)>>>0;return((h^(h>>>16))>>>0)%1e6/1e6}
+function indexFromSeed(seed,length){if(length<=0)return 0;let h=0x811c9dc5>>>0;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=imul(h,0x01000193)>>>0}return(h>>>0)%length}
+function legacyDigitalRoot(n){if(n===0)return 0;const r=((abs(n)%9)+9)%9;return r===0?9:r}
+
+
     // Audio Context Management
     let audioContext = null;
     let activeOscillators = new Map();
@@ -542,7 +565,7 @@
       document.getElementById('voice-timbre-display').textContent = document.getElementById('voice-timbre').value;
       document.getElementById('voice-clarity-display').textContent = document.getElementById('voice-clarity').value;
       
-      const voiceQuality = Math.floor((parseInt(document.getElementById('voice-volume').value) + 
+      const voiceQuality = floor((parseInt(document.getElementById('voice-volume').value) + 
                                      parseInt(document.getElementById('voice-timbre').value) + 
                                      parseInt(document.getElementById('voice-clarity').value)) / 3);
       document.getElementById('voice-quality').textContent = voiceQuality;
@@ -623,7 +646,7 @@
     function updateLyrics(system, frequency) {
       const lyrics = document.getElementById('lyrics-display');
       const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-      const noteIndex = Math.round((Math.log2(frequency / 261.63) * 12) % 12);
+      const noteIndex = round((log2(frequency / 261.63) * 12) % 12);
       const note = notes[noteIndex];
       
       const lyricsText = [
@@ -633,7 +656,7 @@
         `🎶 Harmonizing with the universe...`
       ];
       
-      const randomLyric = lyricsText[Math.floor(Math.random() * lyricsText.length)];
+      const randomLyric = lyricsText[indexFromSeed("a432.i.sing.html:fri:35", (lyricsText.length)|0||1)];
       lyrics.innerHTML = `<div>${randomLyric}</div><div>Note: ${note} | Frequency: ${frequency}Hz</div>`;
     }
 
@@ -644,7 +667,7 @@
       const timbre = parseInt(document.getElementById('voice-timbre').value);
       
       const frequency = pitch;
-      const amplitude = Math.floor((volume + timbre) / 2);
+      const amplitude = floor((volume + timbre) / 2);
       
       sing('voice', frequency, amplitude, 'sine', 2);
     }
@@ -656,7 +679,7 @@
       const expression = parseInt(document.getElementById('singing-expression').value);
       
       const frequency = 432 * (melody / 9);
-      const amplitude = Math.floor((rhythm + expression) / 2);
+      const amplitude = floor((rhythm + expression) / 2);
       
       sing('singing', frequency, amplitude, 'sine', 2.5);
     }
@@ -668,7 +691,7 @@
       const resonance = parseInt(document.getElementById('resonance-resonance').value);
       
       const adjustedFreq = frequency * (resonance / 9);
-      const adjustedAmp = Math.floor((amplitude + resonance) / 2);
+      const adjustedAmp = floor((amplitude + resonance) / 2);
       
       sing('resonance', adjustedFreq, adjustedAmp, 'sine', 3);
     }
@@ -680,7 +703,7 @@
       const unity = parseInt(document.getElementById('harmonization-unity').value);
       
       const frequency = 432 * (balance / 9);
-      const amplitude = Math.floor((coherence + unity) / 2);
+      const amplitude = floor((coherence + unity) / 2);
       
       sing('harmonization', frequency, amplitude, 'sine', 2.5);
     }
@@ -730,28 +753,28 @@
     // Randomize Vocals
     function randomizeVocals() {
       // Randomize Voice
-      document.getElementById('voice-pitch').value = 300 + Math.random() * 500;
-      document.getElementById('voice-volume').value = Math.floor(Math.random() * 10);
-      document.getElementById('voice-timbre').value = Math.floor(Math.random() * 10);
-      document.getElementById('voice-clarity').value = Math.floor(Math.random() * 10);
+      document.getElementById('voice-pitch').value = 300 + unitFromSeed("a432.i.sing.html:rnd:50") * 500;
+      document.getElementById('voice-volume').value = indexFromSeed("a432.i.sing.html:fri:36", (10)|0||1);
+      document.getElementById('voice-timbre').value = indexFromSeed("a432.i.sing.html:fri:37", (10)|0||1);
+      document.getElementById('voice-clarity').value = indexFromSeed("a432.i.sing.html:fri:38", (10)|0||1);
       
       // Randomize Singing
-      document.getElementById('singing-melody').value = Math.floor(Math.random() * 10);
-      document.getElementById('singing-rhythm').value = Math.floor(Math.random() * 10);
-      document.getElementById('singing-expression').value = Math.floor(Math.random() * 10);
-      document.getElementById('singing-harmony').value = Math.floor(Math.random() * 10);
+      document.getElementById('singing-melody').value = indexFromSeed("a432.i.sing.html:fri:39", (10)|0||1);
+      document.getElementById('singing-rhythm').value = indexFromSeed("a432.i.sing.html:fri:40", (10)|0||1);
+      document.getElementById('singing-expression').value = indexFromSeed("a432.i.sing.html:fri:41", (10)|0||1);
+      document.getElementById('singing-harmony').value = indexFromSeed("a432.i.sing.html:fri:42", (10)|0||1);
       
       // Randomize Resonance
-      document.getElementById('resonance-frequency').value = 300 + Math.random() * 500;
-      document.getElementById('resonance-amplitude').value = Math.floor(Math.random() * 10);
-      document.getElementById('resonance-phase').value = Math.floor(Math.random() * 360);
-      document.getElementById('resonance-resonance').value = Math.floor(Math.random() * 10);
+      document.getElementById('resonance-frequency').value = 300 + unitFromSeed("a432.i.sing.html:rnd:51") * 500;
+      document.getElementById('resonance-amplitude').value = indexFromSeed("a432.i.sing.html:fri:43", (10)|0||1);
+      document.getElementById('resonance-phase').value = indexFromSeed("a432.i.sing.html:fri:44", (360)|0||1);
+      document.getElementById('resonance-resonance').value = indexFromSeed("a432.i.sing.html:fri:45", (10)|0||1);
       
       // Randomize Harmonization
-      document.getElementById('harmonization-balance').value = Math.floor(Math.random() * 10);
-      document.getElementById('harmonization-coherence').value = Math.floor(Math.random() * 10);
-      document.getElementById('harmonization-unity').value = Math.floor(Math.random() * 10);
-      document.getElementById('harmonization-resonance').value = Math.floor(Math.random() * 10);
+      document.getElementById('harmonization-balance').value = indexFromSeed("a432.i.sing.html:fri:46", (10)|0||1);
+      document.getElementById('harmonization-coherence').value = indexFromSeed("a432.i.sing.html:fri:47", (10)|0||1);
+      document.getElementById('harmonization-unity').value = indexFromSeed("a432.i.sing.html:fri:48", (10)|0||1);
+      document.getElementById('harmonization-resonance').value = indexFromSeed("a432.i.sing.html:fri:49", (10)|0||1);
       
       updateDisplayValues();
       updateStatus('Randomized all vocal parameters');

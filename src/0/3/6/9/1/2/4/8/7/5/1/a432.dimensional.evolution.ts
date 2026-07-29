@@ -4,7 +4,8 @@
  * 1D → 2D → 3D → 4D → 5D → 6D → 7D → 8D → 9D → 10D
  */
 
-import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core';
+import { PI, cos, sin } from './a432.algebra.ts'
+import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core.ts';
 
 export interface DimensionalState {
   dimension: number;
@@ -176,12 +177,12 @@ export class A432DimensionalEvolution {
     z: number;
     dimension: number;
   } {
-    const angleRad = (this.currentAngle * Math.PI) / 180;
+    const angleRad = (this.currentAngle * PI) / 180;
     const radius = this.currentDimension;
     
     return {
-      x: radius * Math.cos(angleRad),
-      y: radius * Math.sin(angleRad),
+      x: radius * cos(angleRad),
+      y: radius * sin(angleRad),
       z: this.currentDimension,
       dimension: this.currentDimension
     };

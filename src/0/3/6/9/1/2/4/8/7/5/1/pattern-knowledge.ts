@@ -12,6 +12,8 @@
  * - A432 harmonics: Driving frequency of pattern knowledge
  */
 
+import { legacyDigitalRoot } from './a432.roots.ts'
+
 // import { ZEROPOINT_CONSTANTS } from '../../../../../../../../../../0/compost/index'; // MISSING: compost/index must be harmonized or replaced
 
 // Pattern Knowledge Interface
@@ -181,10 +183,7 @@ function calculatePatternFrequency(past: number, now: number, future: number): n
 }
 
 function calculateDigitalRoot(value: number): number {
-  // Calculate digital root using pure integer mathematics
-  if (value === 0) return 0;
-  const root = value % 9;
-  return root === 0 ? 9 : root;
+  return legacyDigitalRoot(value)
 }
 
 // Export the complete Pattern Knowledge system

@@ -2,6 +2,7 @@
  * a432.vbm.science.extract.ts — pull science-oriented sentences from VBM.txt
  */
 
+import { log } from './a432.algebra.ts'
 import fs from 'fs/promises';
 import path from 'path';
 

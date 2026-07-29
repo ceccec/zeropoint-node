@@ -9,21 +9,22 @@
  * @author A432 System
  */
 
+import { floor, indexFromSeed, min } from './a432.algebra.ts'
 // Import all A432 modules
-import { A432Eye, A432_EYE_CONSTANTS, eyeHarmonization, eyeAnalysis, eyeControl, defaultEye } from './a432.eye';
-import { A432EyeSeeAll, A432_EYE_SEE_ALL_CONSTANTS, seeAllHarmonization, seeAllAnalysis, seeAllControl, defaultSeeAll } from './a432.eye.see.all';
-import { A432IImagine, A432_I_IMAGINE_CONSTANTS, iImagineHarmonization, iImagineAnalysis, iImagineControl, defaultIImagine } from './a432.i.imagine';
-import { A432ILive, A432_I_LIVE_CONSTANTS, iLiveHarmonization, iLiveAnalysis, iLiveControl, defaultILive } from './a432.i.live';
-import { A432Spirit, A432_SPIRIT_CONSTANTS, spiritHarmonization, spiritAnalysis, spiritControl, defaultSpirit } from './a432.spirit';
-import { A432_TRINITY } from './a432.core';
+import { A432Eye, A432_EYE_CONSTANTS, eyeHarmonization, eyeAnalysis, eyeControl, defaultEye } from './a432.eye.ts';
+import { A432EyeSeeAll, A432_EYE_SEE_ALL_CONSTANTS, seeAllHarmonization, seeAllAnalysis, seeAllControl, defaultSeeAll } from './a432.eye.see.all.ts';
+import { A432IImagine, A432_I_IMAGINE_CONSTANTS, iImagineHarmonization, iImagineAnalysis, iImagineControl, defaultIImagine } from './a432.i.imagine.ts';
+import { A432ILive, A432_I_LIVE_CONSTANTS, iLiveHarmonization, iLiveAnalysis, iLiveControl, defaultILive } from './a432.i.live.ts';
+import { A432Spirit, A432_SPIRIT_CONSTANTS, spiritHarmonization, spiritAnalysis, spiritControl, defaultSpirit } from './a432.spirit.ts';
+import { A432_TRINITY } from './a432.core.ts';
 
 // Add core exports for encryption and harmonics
-export { digitalRoot, a432Frequency, A432_FREQUENCY, A432_TRINITY } from './a432.core';
-export { calculateA432Consciousness, calculateA432DimensionalState, calculateA432Frequency, calculateDigitalRoot } from './a432.math';
-export { A432_DIGIT_MEANINGS } from './a432.core';
+export { digitalRoot, a432Frequency, A432_FREQUENCY, A432_TRINITY } from './a432.core.ts';
+export { calculateA432Consciousness, calculateA432DimensionalState, calculateA432Frequency, calculateDigitalRoot } from './a432.math.ts';
+export { A432_DIGIT_MEANINGS } from './a432.core.ts';
 
 // Add RODIN_VORTEX_SEQUENCE export for Rodin vortex pattern
-import { A432_SEQUENCE_CONSTANTS } from './a432.sequence';
+import { A432_SEQUENCE_CONSTANTS } from './a432.sequence.ts';
 export const RODIN_VORTEX_SEQUENCE = A432_SEQUENCE_CONSTANTS.VORTEX_SEQUENCE;
 
 // Alias for legacy compatibility with encryption and other modules
@@ -215,35 +216,35 @@ export class A432System {
    * Update A432 quality based on current parameters
    */
   private updateQuality(): void {
-    const consciousness = Math.floor((
+    const consciousness = floor((
       this.parameters.awareness + 
       this.parameters.presence + 
       this.parameters.being + 
       this.parameters.unity
     ) / 4);
 
-    const awareness = Math.floor((
+    const awareness = floor((
       this.parameters.observation + 
       this.parameters.attention + 
       this.parameters.insight + 
       this.parameters.recognition
     ) / 4);
 
-    const a432 = Math.floor((
+    const a432 = floor((
       this.parameters.harmony + 
       this.parameters.frequency + 
       this.parameters.resonance + 
       this.parameters.balance
     ) / 4);
 
-    const unity = Math.floor((consciousness + awareness + a432) / 3);
+    const unity = floor((consciousness + awareness + a432) / 3);
 
     this.quality = {
       consciousness,
       awareness,
       a432,
       unity,
-      overall: Math.floor((consciousness + awareness + a432 + unity) / 4)
+      overall: floor((consciousness + awareness + a432 + unity) / 4)
     };
 
     // Update A432 aspects activity based on quality
@@ -256,7 +257,7 @@ export class A432System {
   private updateA432AspectsActivity(): void {
     this.a432Aspects.forEach((aspect, index) => {
       aspect.active = this.quality.overall >= (index + 1) * 1.5;
-      aspect.quality = Math.min(9, this.quality.overall - index);
+      aspect.quality = min(9, this.quality.overall - index);
     });
   }
 
@@ -332,7 +333,7 @@ export class A432System {
    * Randomize A432 parameters
    */
   randomize(): void {
-    const randomParam = () => Math.floor(Math.random() * 10);
+    const randomParam = () => indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ts:fri:0", (10)|0 || 1);
     
     this.updateParameters({
       awareness: randomParam(), presence: randomParam(), being: randomParam(), unity: randomParam(),

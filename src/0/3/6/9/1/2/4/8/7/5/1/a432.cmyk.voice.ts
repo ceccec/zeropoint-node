@@ -6,10 +6,11 @@
  * Zero entropy: define once, voice everywhere.
  */
 
-import { A432CoreState, createA432CoreState } from './a432.core';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
-import { A432_FREQUENCY } from './a432';
-import { digitalRoot, scaleVortex, vortexColor, rgbToHex, CMYK_COLORS, CMYK_FREQUENCIES, vortexFrequency } from './a432.cmyk';
+import { abs, floor, max, unitFromSeed } from './a432.algebra.ts'
+import { A432CoreState, createA432CoreState } from './a432.core.ts';
+import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
+import { A432_FREQUENCY } from './a432.ts';
+import { digitalRoot, scaleVortex, vortexColor, rgbToHex, CMYK_COLORS, CMYK_FREQUENCIES, vortexFrequency } from './a432.cmyk.ts';
 
 // === CMYK VOICE INTERFACES ===
 export interface A432CMYKVoiceState {
@@ -56,10 +57,10 @@ export interface VoiceHarmonization {
 // === CORE CMYK VOICE FUNCTIONS ===
 export function createCMYKChannel(channel: 'cyan' | 'magenta' | 'yellow' | 'key', amplitude: number = 5): CMYKChannel {
   const frequency = CMYK_FREQUENCIES[channel];
-  const phase = Math.random() * 360;
-  const resonance = Math.max(0, 9 - Math.abs(amplitude - 5));
+  const phase = unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.voice.ts:rnd:0") * 360;
+  const resonance = max(0, 9 - abs(amplitude - 5));
   const color = CMYK_COLORS[channel];
-  const voice = Math.floor((amplitude + resonance) / 2);
+  const voice = floor((amplitude + resonance) / 2);
   
   return { frequency, amplitude, phase, resonance, color, voice };
 }
@@ -72,9 +73,9 @@ export function createVoiceSynthesis(cyan: CMYKChannel, magenta: CMYKChannel, ye
     fundamental * 4,
     fundamental * 5
   ];
-  const timbre = Math.floor((cyan.voice + magenta.voice + yellow.voice + key.voice) / 4);
-  const clarity = Math.max(0, 9 - Math.abs(timbre - 5));
-  const resonance = Math.floor((timbre + clarity) / 2);
+  const timbre = floor((cyan.voice + magenta.voice + yellow.voice + key.voice) / 4);
+  const clarity = max(0, 9 - abs(timbre - 5));
+  const resonance = floor((timbre + clarity) / 2);
   const color = `hsl(${resonance * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = fundamental;
   
@@ -82,11 +83,11 @@ export function createVoiceSynthesis(cyan: CMYKChannel, magenta: CMYKChannel, ye
 }
 
 export function createVoiceHarmonization(cyan: CMYKChannel, magenta: CMYKChannel, yellow: CMYKChannel, key: CMYKChannel): VoiceHarmonization {
-  const harmony = Math.floor((cyan.resonance + magenta.resonance + yellow.resonance + key.resonance) / 4);
-  const balance = Math.max(0, 9 - Math.abs(harmony - 5));
-  const coherence = Math.floor((harmony + balance) / 2);
-  const unity = Math.max(0, 9 - Math.abs(coherence - 5));
-  const resonance = Math.floor((harmony + balance + coherence + unity) / 4);
+  const harmony = floor((cyan.resonance + magenta.resonance + yellow.resonance + key.resonance) / 4);
+  const balance = max(0, 9 - abs(harmony - 5));
+  const coherence = floor((harmony + balance) / 2);
+  const unity = max(0, 9 - abs(coherence - 5));
+  const resonance = floor((harmony + balance + coherence + unity) / 4);
   const color = `hsl(${harmony * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (harmony / 9);
   

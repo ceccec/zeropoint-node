@@ -6,8 +6,9 @@
  * Zero entropy: define once, harmonize everywhere.
  */
 
-import { A432CoreState, createA432CoreState } from './a432.core';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
+import { abs, floor, max } from './a432.algebra.ts'
+import { A432CoreState, createA432CoreState } from './a432.core.ts';
+import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
 
 // === OBSERVATION INTERFACES ===
 export interface A432ObservationState {
@@ -59,10 +60,10 @@ export interface SystemRestoration {
 
 // === CORE OBSERVATION FUNCTIONS ===
 export function createMetaObservation(awareness: number = 5): MetaObservation {
-  const clarity = Math.max(0, 9 - Math.abs(awareness - 5));
-  const insight = Math.floor((awareness + clarity) / 2);
-  const wisdom = Math.max(0, 9 - Math.abs(insight - 5));
-  const resonance = Math.floor((awareness + clarity + insight + wisdom) / 4);
+  const clarity = max(0, 9 - abs(awareness - 5));
+  const insight = floor((awareness + clarity) / 2);
+  const wisdom = max(0, 9 - abs(insight - 5));
+  const resonance = floor((awareness + clarity + insight + wisdom) / 4);
   const color = `hsl(${awareness * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -70,10 +71,10 @@ export function createMetaObservation(awareness: number = 5): MetaObservation {
 }
 
 export function createHealingRestoration(health: number = 5): HealingRestoration {
-  const vitality = Math.max(0, 9 - Math.abs(health - 5));
-  const balance = Math.floor((health + vitality) / 2);
-  const harmony = Math.max(0, 9 - Math.abs(balance - 5));
-  const resonance = Math.floor((health + vitality + balance + harmony) / 4);
+  const vitality = max(0, 9 - abs(health - 5));
+  const balance = floor((health + vitality) / 2);
+  const harmony = max(0, 9 - abs(balance - 5));
+  const resonance = floor((health + vitality + balance + harmony) / 4);
   const color = `hsl(${health * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -81,10 +82,10 @@ export function createHealingRestoration(health: number = 5): HealingRestoration
 }
 
 export function createAwarenessExpansion(consciousness: number = 5): AwarenessExpansion {
-  const expansion = Math.max(0, 9 - Math.abs(consciousness - 5));
-  const integration = Math.floor((consciousness + expansion) / 2);
-  const unity = Math.max(0, 9 - Math.abs(integration - 5));
-  const resonance = Math.floor((consciousness + expansion + integration + unity) / 4);
+  const expansion = max(0, 9 - abs(consciousness - 5));
+  const integration = floor((consciousness + expansion) / 2);
+  const unity = max(0, 9 - abs(integration - 5));
+  const resonance = floor((consciousness + expansion + integration + unity) / 4);
   const color = `hsl(${consciousness * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -92,10 +93,10 @@ export function createAwarenessExpansion(consciousness: number = 5): AwarenessEx
 }
 
 export function createSystemRestoration(integrity: number = 5): SystemRestoration {
-  const coherence = Math.max(0, 9 - Math.abs(integrity - 5));
-  const stability = Math.floor((integrity + coherence) / 2);
-  const harmony = Math.max(0, 9 - Math.abs(stability - 5));
-  const resonance = Math.floor((integrity + coherence + stability + harmony) / 4);
+  const coherence = max(0, 9 - abs(integrity - 5));
+  const stability = floor((integrity + coherence) / 2);
+  const harmony = max(0, 9 - abs(stability - 5));
+  const resonance = floor((integrity + coherence + stability + harmony) / 4);
   const color = `hsl(${integrity * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   

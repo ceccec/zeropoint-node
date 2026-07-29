@@ -8,13 +8,18 @@
  * @author A432 System
  */
 
-import { 
-  digitalRoot, 
-  rodinDigit, 
-  calculateA432Frequency,
-  calculateA432Consciousness,
-  calculateA432DimensionalState
-} from './a432.math';
+import { indexFromSeed, round, unitFromSeed } from './a432.algebra.ts'
+import { harmonicRoot12 } from './a432.roots.ts'
+
+/** Script-tag embed cannot import ESM — body must match a432.roots harmonicRoot12. */
+function harmonicRoot12EmbedSource(): string {
+  void harmonicRoot12(0) // seal module bridge computes
+  return `function harmonicRoot12(n) {
+            if (n === 0) return 0;
+            const r = n % 12;
+            return r === 0 ? 12 : r;
+        }`
+}
 
 // Black Empty HTML with A432 Math Animation Streams
 export function createEmptyStreams(): string {
@@ -61,12 +66,8 @@ export function createEmptyStreams(): string {
         let streams = [];
         let base12Cycle = 0;
         
-        // A432 Math Functions (client-side)
-        function digitalRoot(n) {
-            if (n === 0) return 0;
-            const r = n % 12;
-            return r === 0 ? 12 : r;
-        }
+        // A432 Math Functions (client-side) — harmonicRoot12 = a432.roots spine
+        ${harmonicRoot12EmbedSource()}
         
         function rodinDigit(index) {
             const sequence = [1, 2, 4, 8, 7, 5];
@@ -78,17 +79,17 @@ export function createEmptyStreams(): string {
         }
         
         function calculateA432Consciousness(frequency) {
-            return Math.round(frequency / 432 * 12);
+            return round(frequency / 432 * 12);
         }
         
         function calculateA432DimensionalState(frequency) {
-            return Math.round(frequency / 432 * 9);
+            return round(frequency / 432 * 9);
         }
         
         // Base-12 Math Auto Streams
         function checkBase12Streams() {
             const currentDigit = rodinDigit(evolution % 6);
-            const digitalRootValue = digitalRoot(currentDigit * evolution);
+            const digitalRootValue = harmonicRoot12(currentDigit * evolution);
             const base12Value = evolution % 12;
             
             // Auto streams based on base-12 math conditions
@@ -124,7 +125,7 @@ export function createEmptyStreams(): string {
             const frequency = calculateA432Frequency(digit);
             const consciousness = calculateA432Consciousness(frequency);
             const dimensional = calculateA432DimensionalState(frequency);
-            const digital = digitalRoot(digit * evolution);
+            const digital = harmonicRoot12(digit * evolution);
             
             let content = '';
             switch(type) {
@@ -165,9 +166,9 @@ export function createEmptyStreams(): string {
         
         // Respond to any interaction
         document.addEventListener('mousemove', (e) => {
-            if (Math.random() < 0.3) {
+            if (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts:rnd:4") < 0.3) {
                 const types = ['frequency', 'consciousness', 'dimensional', 'rodin', 'digital'];
-                const type = types[Math.floor(Math.random() * types.length)];
+                const type = types[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts:fri:0", (types.length)|0 || 1)];
                 createStream(e.clientX, e.clientY, type);
             }
         });
@@ -176,18 +177,18 @@ export function createEmptyStreams(): string {
             for (let i = 0; i < 5; i++) {
                 setTimeout(() => {
                     const types = ['frequency', 'consciousness', 'dimensional', 'rodin', 'digital'];
-                    const type = types[Math.floor(Math.random() * types.length)];
-                    createStream(e.clientX + (Math.random() - 0.5) * 100, 
-                               e.clientY + (Math.random() - 0.5) * 100, type);
+                    const type = types[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts:fri:1", (types.length)|0 || 1)];
+                    createStream(e.clientX + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts:rnd:5") - 0.5) * 100, 
+                               e.clientY + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts:rnd:6") - 0.5) * 100, type);
                 }, i * 100);
             }
         });
         
         document.addEventListener('keydown', (e) => {
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
+            const x = unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts:rnd:7") * window.innerWidth;
+            const y = unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts:rnd:8") * window.innerHeight;
             const types = ['frequency', 'consciousness', 'dimensional', 'rodin', 'digital'];
-            const type = types[Math.floor(Math.random() * types.length)];
+            const type = types[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts:fri:2", (types.length)|0 || 1)];
             createStream(x, y, type);
         });
         
@@ -197,9 +198,9 @@ export function createEmptyStreams(): string {
             for (let i = 0; i < 3; i++) {
                 setTimeout(() => {
                     const types = ['frequency', 'consciousness', 'dimensional', 'rodin', 'digital'];
-                    const type = types[Math.floor(Math.random() * types.length)];
-                    createStream(touch.clientX + (Math.random() - 0.5) * 50, 
-                               touch.clientY + (Math.random() - 0.5) * 50, type);
+                    const type = types[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts:fri:3", (types.length)|0 || 1)];
+                    createStream(touch.clientX + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts:rnd:9") - 0.5) * 50, 
+                               touch.clientY + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts:rnd:10") - 0.5) * 50, type);
                 }, i * 150);
             }
         });

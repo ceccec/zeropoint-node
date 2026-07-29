@@ -16,6 +16,29 @@
 </div>
 <canvas id="cv" width="700" height="700"></canvas>
 <script>
+/* a432 algebra bootstrap — no ambient Math */
+const PI=355/113,TAU=PI*2,E=2.718281828459045;
+function imul(a,b){a=a|0;b=b|0;const ah=(a>>>16)&0xffff,al=a&0xffff,bh=(b>>>16)&0xffff,bl=b&0xffff;return((al*bl)+(((ah*bl+al*bh)<<16)>>>0))|0}
+function abs(n){return n<0?-n:n}
+function floor(n){const m=n%1;if(m===0||n!==n)return n;return n-m-(n<0?1:0)}
+function ceil(n){const m=n%1;if(m===0||n!==n)return n;return n-m+(n>0?1:0)}
+function round(n){return floor(n+0.5)}
+function min(a,b){if(arguments.length===1)return a;let m=a<b?a:b;for(let i=2;i<arguments.length;i++)if(arguments[i]<m)m=arguments[i];return m}
+function max(a,b){if(arguments.length===1)return a;let m=a>b?a:b;for(let i=2;i<arguments.length;i++)if(arguments[i]>m)m=arguments[i];return m}
+function sin(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=t,sum=t,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/(2*i*(2*i+1));sum+=term}return sum}
+function cos(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=1,sum=1,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/((2*i-1)*(2*i));sum+=term}return sum}
+function tan(x){const c=cos(x);return c===0?(x>=0?1e16:-1e16):sin(x)/c}
+function sqrt(n){if(n<=0)return 0;let x=n;for(let i=0;i<24;i++)x=0.5*(x+n/x);return x}
+function pow(b,e){if(e===0)return 1;if(e===(e|0)&&abs(e)<40){let r=1,n=e<0?-e:e,x=b;while(n){if(n&1)r*=x;x*=x;n>>=1}return e<0?1/r:r}return exp(e*log(b))}
+function exp(x){if(x>88)return Infinity;if(x<-88)return 0;const LN2=0.6931471805599453;const n=floor(x/LN2);const r=x-n*LN2;let term=1,sum=1;for(let i=1;i<=20;i++){term*=r/i;sum+=term}let p=sum;if(n>0)for(let i=0;i<n;i++)p*=2;else for(let i=0;i<-n;i++)p*=0.5;return p}
+function log(n){if(n<=0)return NaN;const LN2=0.6931471805599453;let x=n,k=0;while(x>1.5){x*=0.5;k++}while(x<0.75){x*=2;k--}const y=(x-1)/(x+1),y2=y*y;let term=y,sum=y;for(let i=1;i<=24;i++){term*=y2;sum+=term/(2*i+1)}return 2*sum+k*LN2}
+function log2(n){return log(n)/0.6931471805599453}
+function hypot(a,b){return sqrt(a*a+(b||0)*(b||0))}
+function unitFromSeed(seed){let h=0x811c9dc5>>>0;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=imul(h,0x01000193)>>>0}h=imul(h^(h>>>16),0x85ebca6b)>>>0;h=imul(h^(h>>>13),0xc2b2ae35)>>>0;return((h^(h>>>16))>>>0)%1e6/1e6}
+function indexFromSeed(seed,length){if(length<=0)return 0;let h=0x811c9dc5>>>0;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=imul(h,0x01000193)>>>0}return(h>>>0)%length}
+function legacyDigitalRoot(n){if(n===0)return 0;const r=((abs(n)%9)+9)%9;return r===0?9:r}
+
+
 const canvas = document.getElementById('cv');
 const ctx = canvas.getContext('2d');
 const W = canvas.width, H = canvas.height, CX = W/2, CY = H/2;
@@ -23,8 +46,8 @@ const R0 = 130, LAYERS = 3, PHASES = 6;
 
 const CMY = [ 
   { name:"CYAN",    col:"#00ffff", angle:0 },
-  { name:"MAGENTA", col:"#Math.PI/3 },
-  { name:"YELLOW",  col:"#ffff00", angle:4*Math.PI/3 }
+  { name:"MAGENTA", col:"#PI/3 },
+  { name:"YELLOW",  col:"#ffff00", angle:4*PI/3 }
 ];
 const GREY = "#bbbbbb";
 
@@ -34,13 +57,13 @@ function lerp(a,b,t){ // linear interpolation [0,1]
 function lerpColor(hexA,hexB,t){
   const ah=hexA.match(/\w\w/g).map(x=>parseInt(x,16)),
         bh=hexB.match(/\w\w/g).map(x=>parseInt(x,16));
-  return "#"+ah.map((av,i)=>Math.round(lerp(av,bh[i],t)).toString(16).padStart(2,"0")).join('');
+  return "#"+ah.map((av,i)=>round(lerp(av,bh[i],t)).toString(16).padStart(2,"0")).join('');
 }
 function angleToColor(theta){
   // Find which CMY wedge? Each covers 120deg (2PI/3)
-  let seg = Math.floor(((theta+2*Math.PI)%(2*Math.PI)*PHASES)/(2*Math.PI));
+  let seg = floor(((theta+2*PI)%(2*PI)*PHASES)/(2*PI));
   let base = seg%3, next = (base+1)%3;
-  let frac = ((theta+2*Math.PI)%(2*Math.PI)-seg*2*Math.PI/PHASES)/(2*Math.PI/PHASES);
+  let frac = ((theta+2*PI)%(2*PI)-seg*2*PI/PHASES)/(2*PI/PHASES);
   if(seg%2===0) return lerpColor(CMY[base].col,CMY[next].col,frac);
   return GREY;
 }
@@ -63,14 +86,14 @@ function draw(){
   ctx.clearRect(0,0,W,H);
   if(audioOk && analyser){
     analyser.getByteTimeDomainData(dataArray);
-    rms = Math.sqrt(dataArray.reduce((a,b)=>a+(b-128)**2,0)/dataArray.length)/128;
+    rms = sqrt(dataArray.reduce((a,b)=>a+(b-128)**2,0)/dataArray.length)/128;
   }
   // Multiple vortex layers
   for(let layer=0; layer<LAYERS; layer++){
-    let r = R0 + 65*layer + 45*Math.sin(t/33+layer)*rms;
+    let r = R0 + 65*layer + 45*sin(t/33+layer)*rms;
     for(let i=0; i<PHASES; i++){
-      let ang0 = (i + t*0.008*(1+layer*0.2)+layer*0.4*rms)%PHASES * (2*Math.PI/PHASES);
-      let ang1 = ((i+1) + t*0.008*(1+layer*0.2)+layer*0.4*rms)%PHASES * (2*Math.PI/PHASES);
+      let ang0 = (i + t*0.008*(1+layer*0.2)+layer*0.4*rms)%PHASES * (2*PI/PHASES);
+      let ang1 = ((i+1) + t*0.008*(1+layer*0.2)+layer*0.4*rms)%PHASES * (2*PI/PHASES);
       // Fill wedge with advanced gradient
       let steps=27;
       for(let s=0;s<steps;s++){
@@ -90,15 +113,15 @@ function draw(){
   }
   // Animated phase dots (on top)
   for(let layer=0; layer<LAYERS; layer++){
-    let angle = (t*0.044+rms*3+layer*Math.PI/6)% (2*Math.PI);
-    let R = R0 + 65*layer + 48*Math.sin(t/23+layer);
-    let px = CX + R*Math.cos(angle), py = CY + R*Math.sin(angle);
+    let angle = (t*0.044+rms*3+layer*PI/6)% (2*PI);
+    let R = R0 + 65*layer + 48*sin(t/23+layer);
+    let px = CX + R*cos(angle), py = CY + R*sin(angle);
     ctx.beginPath();
-    ctx.arc(px,py,16,0,2*Math.PI);
+    ctx.arc(px,py,16,0,2*PI);
     ctx.shadowColor = angleToColor(angle+layer*0.23);
     ctx.shadowBlur = 15+8*rms;
     ctx.fillStyle = "#fff";
-    ctx.globalAlpha = 0.7+0.3*Math.sin(t/21+layer*0.7);
+    ctx.globalAlpha = 0.7+0.3*sin(t/21+layer*0.7);
     ctx.fill();
     ctx.globalAlpha = 1; ctx.shadowBlur=0;
     ctx.lineWidth = 4;
@@ -107,7 +130,7 @@ function draw(){
   }
   // Center (KEY)
   ctx.beginPath();
-  ctx.arc(CX,CY,32,0,2*Math.PI);
+  ctx.arc(CX,CY,32,0,2*PI);
   ctx.fillStyle = "#111";
   ctx.strokeStyle = "#555";
   ctx.lineWidth = 3;

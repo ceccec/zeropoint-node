@@ -1,9 +1,10 @@
+import { PI, cos, sin } from './a432.algebra.ts'
 // a432.rodin.matrix.ts
 // Canonical 3D Rodin matrix visualization logic
 // Imports matrix math, trinity overlays, and toroidal mapping helpers
 
-import { rodinMatrix7x7, getTrinityIndices, mapMatrixToTorus } from './a432.matrix';
-import { RODIN_SEQUENCE } from './a432.math';
+import { rodinMatrix7x7, getTrinityIndices, mapMatrixToTorus } from './a432.matrix.ts';
+import { RODIN_SEQUENCE } from './a432.math.ts';
 
 /**
  * a432.rodin.matrix.ts — harmonized with canonical A432 math
@@ -31,11 +32,11 @@ export function getRodinTrinityCoords(R: number, r: number) {
   const matrix = rodinMatrix7x7();
   const trinityIndices = getTrinityIndices();
   return trinityIndices.map(({row, col, value}) => {
-    const theta = (row / 7) * 2 * Math.PI;
-    const phi = (col / 7) * 2 * Math.PI;
-    const x = (R + r * Math.cos(phi)) * Math.cos(theta);
-    const y = (R + r * Math.cos(phi)) * Math.sin(theta);
-    const z = r * Math.sin(phi);
+    const theta = (row / 7) * 2 * PI;
+    const phi = (col / 7) * 2 * PI;
+    const x = (R + r * cos(phi)) * cos(theta);
+    const y = (R + r * cos(phi)) * sin(theta);
+    const z = r * sin(phi);
     return {x, y, z, value, row, col};
   });
 }

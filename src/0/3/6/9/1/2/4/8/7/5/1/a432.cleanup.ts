@@ -6,6 +6,7 @@
  * - Optionally, can move unused files to a compost/archive directory.
  * - Metaphysical: Cleanup is harmonic pruning, making space for new growth.
  */
+import { log } from './a432.algebra.ts'
 import fs from 'fs';
 import path from 'path';
 

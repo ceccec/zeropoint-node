@@ -6,6 +6,7 @@
  * Generates metaphysical/engineering readings for project status.
  */
 
+import { max, round } from './a432.algebra.ts'
 export interface IterSystem {
   name: string;
   value: number; // 0-9, project status or completion
@@ -39,10 +40,10 @@ const SYSTEMS = [
 ];
 
 function toHarmonic(value: number): number {
-  return Math.round(432 * (1 + value / 9));
+  return round(432 * (1 + value / 9));
 }
 function toCMYK(value: number, channel: number): number {
-  return Math.round((value / 9) * 100);
+  return round((value / 9) * 100);
 }
 function getFlow(seed: number): number[] {
   const base = [1, 2, 4, 8, 7, 5];
@@ -71,7 +72,7 @@ export function createIterAnatomy(
       description: `${name} mapped to harmonic, color, flow, and risk.`
     };
   });
-  const overallHarmony = Math.round(mapped.reduce((sum, s) => sum + s.value, 0) / SYSTEMS.length);
+  const overallHarmony = round(mapped.reduce((sum, s) => sum + s.value, 0) / SYSTEMS.length);
   const cmyk = {
     c: mapped.filter((_,i)=>i%4===0).reduce((sum,s)=>sum+s.cmyk.c,0),
     m: mapped.filter((_,i)=>i%4===1).reduce((sum,s)=>sum+s.cmyk.m,0),
@@ -88,7 +89,7 @@ export function createIterAnatomy(
 }
 
 export function iterAnatomyReading(anatomy: IterAnatomy): string {
-  const riskLevel = Math.max(...anatomy.risks);
+  const riskLevel = max(...anatomy.risks);
   let riskMsg = '';
   if (riskLevel >= 7) riskMsg = '⚠️ High risk detected in one or more systems.';
   else if (riskLevel >= 4) riskMsg = '⚠️ Moderate risk present; monitor closely.';

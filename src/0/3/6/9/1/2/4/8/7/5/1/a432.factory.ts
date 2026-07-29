@@ -4,24 +4,25 @@
  * DRY pattern: Define once, create everywhere
  */
 
-import { A432CoreState, createA432CoreState } from './a432.core';
-import { A432BalanceState, createA432BalanceState } from './a432.balance';
-import { A432ResonanceState, createA432ResonanceState } from './a432.resonance';
-import { A432ChallengeState, createA432ChallengeState } from './a432.challenges';
-import { A432FlowState, createA432FlowState } from './a432.flow';
-import { A432IntegrationState, createA432IntegrationState } from './a432.integration';
-import { A432ObservationState, createA432ObservationState } from './a432.observation';
-import { A432EvolutionState, createA432EvolutionState } from './a432.evolution';
-import { A432InnovationState, createA432InnovationState } from './a432.innovation';
-import { A432DocumentationState, createA432DocumentationState } from './a432.documentation';
-import { A432ExperienceState, createA432ExperienceState } from './a432.experience.ui';
-import { A432CMYKVoiceState, createA432CMYKVoiceState } from './a432.cmyk.voice';
-import { A432VortexSequence, createA432VortexSequence } from './a432.sequence';
-import { A432BooleanSequence, createA432BooleanSequence } from './a432.sequence';
-import { A432ConsciousnessSequence, createA432ConsciousnessSequence } from './a432.sequence';
-import { A432Event, createA432Event } from './a432.event';
-import { A432Block, createBlock } from './a432.block.chain';
-import { A432Module, A432ModuleCategory } from './a432.modules';
+import { abs, floor, round } from './a432.algebra.ts'
+import { A432CoreState, createA432CoreState } from './a432.core.ts';
+import { A432BalanceState, createA432BalanceState } from './a432.balance.ts';
+import { A432ResonanceState, createA432ResonanceState } from './a432.resonance.ts';
+import { A432ChallengeState, createA432ChallengeState } from './a432.challenges.ts';
+import { A432FlowState, createA432FlowState } from './a432.flow.ts';
+import { A432IntegrationState, createA432IntegrationState } from './a432.integration.ts';
+import { A432ObservationState, createA432ObservationState } from './a432.observation.ts';
+import { A432EvolutionState, createA432EvolutionState } from './a432.evolution.ts';
+import { A432InnovationState, createA432InnovationState } from './a432.innovation.ts';
+import { A432DocumentationState, createA432DocumentationState } from './a432.documentation.ts';
+import { A432ExperienceState, createA432ExperienceState } from './a432.experience.ui.ts';
+import { A432CMYKVoiceState, createA432CMYKVoiceState } from './a432.cmyk.voice.ts';
+import { A432VortexSequence, createA432VortexSequence } from './a432.sequence.ts';
+import { A432BooleanSequence, createA432BooleanSequence } from './a432.sequence.ts';
+import { A432ConsciousnessSequence, createA432ConsciousnessSequence } from './a432.sequence.ts';
+import { A432Event, createA432Event } from './a432.event.ts';
+import { A432Block, createBlock } from './a432.block.chain.ts';
+import { A432Module, A432ModuleCategory } from './a432.modules.ts';
 
 // === FACTORY INTERFACES ===
 export interface A432FactoryOptions {
@@ -275,7 +276,7 @@ export class A432Factory {
       return 0;
     });
     
-    return Math.floor(harmonyValues.reduce((sum, val) => sum + val, 0) / harmonyValues.length);
+    return floor(harmonyValues.reduce((sum, val) => sum + val, 0) / harmonyValues.length);
   }
 
   private calculateHarmonizedColor(harmony: number, dimension: number, polarity: 1 | -1): { hue: number; saturation: number; lightness: number } {
@@ -291,8 +292,8 @@ export class A432Factory {
     const sat = s / 100;
     const light = l / 100;
     
-    const c = (1 - Math.abs(2 * light - 1)) * sat;
-    const x = c * (1 - Math.abs((hue * 6) % 2 - 1));
+    const c = (1 - abs(2 * light - 1)) * sat;
+    const x = c * (1 - abs((hue * 6) % 2 - 1));
     const m = light - c / 2;
     
     let r = 0, g = 0, b = 0;
@@ -304,9 +305,9 @@ export class A432Factory {
     else { r = c; g = 0; b = x; }
     
     return {
-      r: Math.round((r + m) * 255),
-      g: Math.round((g + m) * 255),
-      b: Math.round((b + m) * 255)
+      r: round((r + m) * 255),
+      g: round((g + m) * 255),
+      b: round((b + m) * 255)
     };
   }
 
@@ -359,7 +360,7 @@ export function createA432ByFrequency(frequency: number, options: A432FactoryOpt
 export function harmonizeA432States(states: A432FactoryState[]): A432FactoryState[] {
   return states.map(state => ({
     ...state,
-    harmony: Math.floor(states.reduce((sum, s) => sum + s.harmony, 0) / states.length)
+    harmony: floor(states.reduce((sum, s) => sum + s.harmony, 0) / states.length)
   }));
 }
 

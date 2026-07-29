@@ -4,7 +4,7 @@
  * Phase 2: Patterns begin to align from full entropy
  */
 
-import { A432_FREQUENCY, A432_TRINITY, A432_RETURN } from './a432.core';
+import { A432_FREQUENCY, A432_TRINITY, A432_RETURN } from './a432.core.ts';
 
 export class A432HarmonicConvergence {
   private entropy: number;

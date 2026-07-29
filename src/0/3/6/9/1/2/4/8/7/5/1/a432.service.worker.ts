@@ -9,7 +9,7 @@
  */
 
 // Import canonical file list from a432.meta.ts
-import { getA432FilesToCache } from './a432.meta';
+import { getA432FilesToCache } from './a432.meta.ts';
 
 const A432_FILES_TO_CACHE: string[] = getA432FilesToCache();
 

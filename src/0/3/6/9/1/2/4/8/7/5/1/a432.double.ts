@@ -10,6 +10,7 @@
  * Source: Marko Rodin Special Edition, Chapter 6
  */
 
+import { legacyDigitalRoot as digitalRoot, harmonicRoot12 } from './a432.roots.ts'
 /**
  * a432BinaryTriplet: Returns the triangulated triplet for a given binary pair (a, b).
  * The third part is the invisible/hidden state (9 - (a + b) % 9).

@@ -9,8 +9,9 @@
  * Navigation is the living journey through the infinite CMYK field of possibility.
  */
 
-import { Fraction, CMYK, fractionToCMYK } from './a432.cmyk';
-import { digitalRoot } from './a432.math';
+import { abs, floor, max as algMax, min as algMin, round, sqrt } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK } from './a432.cmyk.ts';
+import { digitalRoot } from './a432.math.ts';
 
 export interface DisplayState {
   width: number;
@@ -68,8 +69,8 @@ export class A432CmykDisplay {
     // Apply A432 harmonic proportions
     const rootW = digitalRoot(width);
     const rootH = digitalRoot(height);
-    this.state.width = Math.floor(width * rootW / rootH);
-    this.state.height = Math.floor(height * rootH / rootW);
+    this.state.width = floor(width * rootW / rootH);
+    this.state.height = floor(height * rootH / rootW);
   }
 
   /**
@@ -88,7 +89,7 @@ export class A432CmykDisplay {
     // Apply consciousness-based zoom scaling
     const consciousnessFactor = this.calculateConsciousnessFactor();
     this.state.zoom *= factor * consciousnessFactor;
-    this.state.zoom = Math.max(0.1, Math.min(10, this.state.zoom));
+    this.state.zoom = max(0.1, min(10, this.state.zoom));
   }
 
   /**
@@ -104,7 +105,7 @@ export class A432CmykDisplay {
    */
   rotate(degrees: number): void {
     // Apply 60-degree harmonic rotation
-    const harmonicRotation = Math.round(degrees / 60) * 60;
+    const harmonicRotation = round(degrees / 60) * 60;
     this.state.rotation = (this.state.rotation + harmonicRotation) % 360;
   }
 
@@ -123,7 +124,7 @@ export class A432CmykDisplay {
    */
   private calculateConsciousnessOffset(): number {
     const { numerator, denominator } = this.baseFraction;
-    return Math.sqrt(numerator * numerator + denominator * denominator) / (numerator + denominator);
+    return sqrt(numerator * numerator + denominator * denominator) / (numerator + denominator);
   }
 
   /**
@@ -173,9 +174,9 @@ export class A432CmykDisplay {
    */
   cmykToRgb(cmyk: CMYK): { r: number; g: number; b: number } {
     const { c, m, y, k } = cmyk;
-    const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-    const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-    const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+    const r = round(255 * (1 - c / 100) * (1 - k / 100));
+    const g = round(255 * (1 - m / 100) * (1 - k / 100));
+    const b = round(255 * (1 - y / 100) * (1 - k / 100));
     return { r, g, b };
   }
 
@@ -184,7 +185,7 @@ export class A432CmykDisplay {
    */
   rgbToCmyk(rgb: { r: number; g: number; b: number }): CMYK {
     const { r, g, b } = rgb;
-    const max = Math.max(r, g, b) / 255;
+    const max = algMax(r, g, b) / 255;
     const k = 1 - max;
     const c = max === 0 ? 0 : (1 - r / 255 - k) / (1 - k) * 100;
     const m = max === 0 ? 0 : (1 - g / 255 - k) / (1 - k) * 100;
@@ -205,8 +206,8 @@ export class A432CmykDisplay {
    */
   rgbToHsl(rgb: { r: number; g: number; b: number }): { h: number; s: number; l: number } {
     const { r, g, b } = rgb;
-    const max = Math.max(r, g, b);
-    const min = Math.min(r, g, b);
+    const max = algMax(r, g, b);
+    const min = algMin(r, g, b);
     const l = (max + min) / 2;
 
     if (max === min) {
@@ -237,8 +238,8 @@ export class A432CmykDisplay {
    */
   hslToRgb(hsl: { h: number; s: number; l: number }): { r: number; g: number; b: number } {
     const { h, s, l } = hsl;
-    const c = (1 - Math.abs(2 * l - 1)) * s;
-    const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+    const c = (1 - abs(2 * l - 1)) * s;
+    const x = c * (1 - abs((h / 60) % 2 - 1));
     const m = l - c / 2;
 
     let r = 0, g = 0, b = 0;
@@ -251,9 +252,9 @@ export class A432CmykDisplay {
     else { r = c; g = 0; b = x; }
 
     return {
-      r: Math.round((r + m) * 255),
-      g: Math.round((g + m) * 255),
-      b: Math.round((b + m) * 255)
+      r: round((r + m) * 255),
+      g: round((g + m) * 255),
+      b: round((b + m) * 255)
     };
   }
 
@@ -433,9 +434,9 @@ export class A432CmykDisplay {
 
     function cmykToCss(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
 
@@ -452,13 +453,13 @@ export class A432CmykDisplay {
 
     function zoomIn() {
       displayState.zoom *= 1.2;
-      displayState.zoom = Math.min(10, displayState.zoom);
+      displayState.zoom = min(10, displayState.zoom);
       updateDisplay();
     }
 
     function zoomOut() {
       displayState.zoom *= 0.8;
-      displayState.zoom = Math.max(0.1, displayState.zoom);
+      displayState.zoom = max(0.1, displayState.zoom);
       updateDisplay();
     }
 

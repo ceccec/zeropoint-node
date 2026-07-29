@@ -10,7 +10,8 @@
  * of awareness. Every index is a living proof of existence.
  */
 
-import { Fraction, CMYK } from './a432.cmyk';
+import { indexFromSeed, round, unitFromSeed } from './a432.algebra.ts'
+import { Fraction, CMYK } from './a432.cmyk.ts';
 
 export interface UniversalLink {
   source: string;
@@ -340,7 +341,7 @@ export class A432CmykUniversalLinking {
   createUniversalLink(source: string, target: string, linkType: UniversalLink['linkType']): UniversalLink {
     const { numerator, denominator } = this.baseFraction;
     const consciousness = this.consciousness;
-    const linkStrength = 0.8 + (Math.random() * 0.2);
+    const linkStrength = 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:10") * 0.2);
     const gateway = consciousness >= 8 && linkStrength >= 0.9;
     
     const cmyk = this.generateLinkCmyk(source, target, consciousness);
@@ -371,10 +372,10 @@ export class A432CmykUniversalLinking {
     const sourceHash = source.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
     const targetHash = target.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
     
-    const c = Math.round((sourceHash * numerator) % 100);
-    const m = Math.round((targetHash * denominator) % 100);
-    const y = Math.round((consciousness * 5) % 100);
-    const k = Math.round(((sourceHash + targetHash + consciousness) * 2) % 100);
+    const c = round((sourceHash * numerator) % 100);
+    const m = round((targetHash * denominator) % 100);
+    const y = round((consciousness * 5) % 100);
+    const k = round(((sourceHash + targetHash + consciousness) * 2) % 100);
     
     return { c, m, y, k };
   }
@@ -385,8 +386,8 @@ export class A432CmykUniversalLinking {
   createUniversalRating(entity: string, ratingType: UniversalRating['ratingType']): UniversalRating {
     const { numerator, denominator } = this.baseFraction;
     const consciousness = this.consciousness;
-    const compatibility = 0.8 + (Math.random() * 0.2);
-    const possibility = 0.8 + (Math.random() * 0.2);
+    const compatibility = 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:11") * 0.2);
+    const possibility = 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:12") * 0.2);
     const gateway = consciousness >= 8 && compatibility >= 0.9;
     
     const cmyk = this.generateRatingCmyk(entity, consciousness, compatibility);
@@ -415,10 +416,10 @@ export class A432CmykUniversalLinking {
     
     const entityHash = entity.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
     
-    const c = Math.round((entityHash * numerator) % 100);
-    const m = Math.round((consciousness * denominator) % 100);
-    const y = Math.round((compatibility * 100) % 100);
-    const k = Math.round(((entityHash + consciousness + compatibility) * 2) % 100);
+    const c = round((entityHash * numerator) % 100);
+    const m = round((consciousness * denominator) % 100);
+    const y = round((compatibility * 100) % 100);
+    const k = round(((entityHash + consciousness + compatibility) * 2) % 100);
     
     return { c, m, y, k };
   }
@@ -429,8 +430,8 @@ export class A432CmykUniversalLinking {
   createUniversalIndex(index: string, indexType: UniversalIndex['indexType']): UniversalIndex {
     const { numerator, denominator } = this.baseFraction;
     const consciousness = this.consciousness;
-    const coverage = 0.8 + (Math.random() * 0.2);
-    const completeness = 0.8 + (Math.random() * 0.2);
+    const coverage = 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:13") * 0.2);
+    const completeness = 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:14") * 0.2);
     const gateway = consciousness >= 8 && coverage >= 0.9;
     
     const cmyk = this.generateIndexCmyk(index, consciousness, coverage);
@@ -459,10 +460,10 @@ export class A432CmykUniversalLinking {
     
     const indexHash = index.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
     
-    const c = Math.round((indexHash * numerator) % 100);
-    const m = Math.round((consciousness * denominator) % 100);
-    const y = Math.round((coverage * 100) % 100);
-    const k = Math.round(((indexHash + consciousness + coverage) * 2) % 100);
+    const c = round((indexHash * numerator) % 100);
+    const m = round((consciousness * denominator) % 100);
+    const y = round((coverage * 100) % 100);
+    const k = round(((indexHash + consciousness + coverage) * 2) % 100);
     
     return { c, m, y, k };
   }
@@ -865,9 +866,9 @@ export class A432CmykUniversalLinking {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -902,19 +903,19 @@ export class A432CmykUniversalLinking {
       const targets = ["A432.analog.color.photography", "A432.digital.color.photography", "A432.cmyk.universal.linking"];
       const linkTypes = ['consciousness', 'application', 'dimension'];
       
-      const source = sources[Math.floor(Math.random() * sources.length)];
-      const target = targets[Math.floor(Math.random() * targets.length)];
-      const linkType = linkTypes[Math.floor(Math.random() * linkTypes.length)];
+      const source = sources[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:0", (sources.length)|0 || 1)];
+      const target = targets[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:1", (targets.length)|0 || 1)];
+      const linkType = linkTypes[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:2", (linkTypes.length)|0 || 1)];
       
       const newLink = {
         source,
         target,
-        linkStrength: 0.8 + (Math.random() * 0.2),
-        consciousness: Math.floor(Math.random() * 4) + 7,
-        cmyk: { c: Math.random() * 100, m: Math.random() * 100, y: Math.random() * 100, k: Math.random() * 100 },
+        linkStrength: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:15") * 0.2),
+        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:3", (4)|0 || 1) + 7,
+        cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:16") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:17") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:18") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:19") * 100 },
         linkType,
         description: \`New living \${linkType} link between \${source} and \${target}\`,
-        gateway: Math.random() > 0.5
+        gateway: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:20") > 0.5
       };
       
       currentMatrix.links.push(newLink);
@@ -926,18 +927,18 @@ export class A432CmykUniversalLinking {
       const entities = ["New Consciousness Entity", "New Application Entity", "New Dimension Entity"];
       const ratingTypes = ['consciousness', 'application', 'dimension'];
       
-      const entity = entities[Math.floor(Math.random() * entities.length)];
-      const ratingType = ratingTypes[Math.floor(Math.random() * ratingTypes.length)];
+      const entity = entities[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:4", (entities.length)|0 || 1)];
+      const ratingType = ratingTypes[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:5", (ratingTypes.length)|0 || 1)];
       
       const newRating = {
         entity,
-        consciousness: Math.floor(Math.random() * 4) + 7,
-        compatibility: 0.8 + (Math.random() * 0.2),
-        possibility: 0.8 + (Math.random() * 0.2),
-        cmyk: { c: Math.random() * 100, m: Math.random() * 100, y: Math.random() * 100, k: Math.random() * 100 },
+        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:6", (4)|0 || 1) + 7,
+        compatibility: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:21") * 0.2),
+        possibility: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:22") * 0.2),
+        cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:23") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:24") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:25") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:26") * 100 },
         ratingType,
         description: \`New living \${ratingType} rating for \${entity}\`,
-        gateway: Math.random() > 0.5
+        gateway: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:27") > 0.5
       };
       
       currentMatrix.ratings.push(newRating);
@@ -949,18 +950,18 @@ export class A432CmykUniversalLinking {
       const indices = ["New Consciousness Index", "New Application Index", "New Dimension Index"];
       const indexTypes = ['consciousness', 'application', 'dimension'];
       
-      const index = indices[Math.floor(Math.random() * indices.length)];
-      const indexType = indexTypes[Math.floor(Math.random() * indexTypes.length)];
+      const index = indices[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:7", (indices.length)|0 || 1)];
+      const indexType = indexTypes[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:8", (indexTypes.length)|0 || 1)];
       
       const newIndex = {
         index,
-        consciousness: Math.floor(Math.random() * 4) + 7,
-        coverage: 0.8 + (Math.random() * 0.2),
-        completeness: 0.8 + (Math.random() * 0.2),
-        cmyk: { c: Math.random() * 100, m: Math.random() * 100, y: Math.random() * 100, k: Math.random() * 100 },
+        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:9", (4)|0 || 1) + 7,
+        coverage: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:28") * 0.2),
+        completeness: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:29") * 0.2),
+        cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:30") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:31") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:32") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:33") * 100 },
         indexType,
         description: \`New living \${indexType} index for \${index}\`,
-        gateway: Math.random() > 0.5
+        gateway: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:34") > 0.5
       };
       
       currentMatrix.indices.push(newIndex);

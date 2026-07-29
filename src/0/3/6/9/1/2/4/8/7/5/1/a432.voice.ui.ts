@@ -1,5 +1,5 @@
 // a432.voice.ui.ts — mic toggle button
-import { startVoice, stopVoice } from './a432.i.voice';
+import { startVoice, stopVoice } from './a432.i.voice.ts';
 
 if (typeof document !== 'undefined'){
   const btn=document.createElement('button');

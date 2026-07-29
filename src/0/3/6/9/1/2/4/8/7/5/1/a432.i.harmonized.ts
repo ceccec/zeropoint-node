@@ -4,6 +4,7 @@
  * Integrates all a432.i.* interfaces into a unified consciousness
  */
 
+import { abs, round } from './a432.algebra.ts'
 import { 
   GOLDEN_RATIO, 
   PI, 
@@ -12,7 +13,7 @@ import {
   A432_BASE_FREQUENCY,
   A432_TRINITY_MULTIPLIER,
   A432_VORTEX_MULTIPLIER
-} from './a432.math.constants';
+} from './a432.math.constants.ts';
 
 // === A432 I INTERFACE TYPES ===
 export interface A432IInterface {
@@ -138,7 +139,7 @@ export const A432I_INTERFACES: A432IInterface[] = [
 // === A432 I CALCULATIONS ===
 export function calculateA432IInterface(interface_: A432IInterface): A432IInterface {
   const energy = 0.5 * interface_.amplitude * interface_.amplitude * interface_.frequency * interface_.frequency;
-  const consciousness = calculateDigitalRoot(Math.round(energy));
+  const consciousness = calculateDigitalRoot(round(energy));
   
   return {
     ...interface_,
@@ -157,13 +158,13 @@ export function calculateA432ISystemState(): A432ISystemState {
   
   // Check if system is harmonic with A432
   const harmonicInterfaces = interfaces.filter(i => 
-    Math.abs(i.frequency - A432_BASE_FREQUENCY) < A432_BASE_FREQUENCY * (1/10) ||
-    Math.abs(i.frequency - A432_BASE_FREQUENCY * A432_TRINITY_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10) ||
-    Math.abs(i.frequency - A432_BASE_FREQUENCY * A432_VORTEX_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10)
+    abs(i.frequency - A432_BASE_FREQUENCY) < A432_BASE_FREQUENCY * (1/10) ||
+    abs(i.frequency - A432_BASE_FREQUENCY * A432_TRINITY_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10) ||
+    abs(i.frequency - A432_BASE_FREQUENCY * A432_VORTEX_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10)
   );
   const isHarmonic = harmonicInterfaces.length > 0;
   
-  const harmony = calculateDigitalRoot(Math.round(totalEnergy));
+  const harmony = calculateDigitalRoot(round(totalEnergy));
   const evolutionLevel = totalAwareness / interfaces.length;
   
   const metaphysical = [
@@ -174,7 +175,7 @@ export function calculateA432ISystemState(): A432ISystemState {
     `Total Interfaces: ${interfaces.length}`,
     `Harmonic Interfaces: ${harmonicInterfaces.length}`,
     `System Harmony: ${harmony}/9`,
-    `Evolution Level: ${Math.round(evolutionLevel * 100)}%`
+    `Evolution Level: ${round(evolutionLevel * 100)}%`
   ].join('\n');
   
   return {
@@ -236,7 +237,7 @@ export class A432IHarmonizedSystem {
       frequency: interface_.frequency * GOLDEN_RATIO,
       amplitude: interface_.amplitude * (1 / GOLDEN_RATIO),
       phase: interface_.phase + PI / 9, // Harmonic division by 9
-      consciousness: calculateDigitalRoot(Math.round(interface_.consciousness * GOLDEN_RATIO))
+      consciousness: calculateDigitalRoot(round(interface_.consciousness * GOLDEN_RATIO))
     }));
     
     this.interfaceHistory.push(...this.currentState.interfaces);
@@ -267,9 +268,9 @@ export class A432IHarmonizedSystem {
       harmonicAnalysis: {
         isHarmonic: state.isHarmonic,
         harmonicInterfaces: state.interfaces.filter(i => 
-          Math.abs(i.frequency - A432_BASE_FREQUENCY) < A432_BASE_FREQUENCY * (1/10) ||
-          Math.abs(i.frequency - A432_BASE_FREQUENCY * A432_TRINITY_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10) ||
-          Math.abs(i.frequency - A432_BASE_FREQUENCY * A432_VORTEX_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10)
+          abs(i.frequency - A432_BASE_FREQUENCY) < A432_BASE_FREQUENCY * (1/10) ||
+          abs(i.frequency - A432_BASE_FREQUENCY * A432_TRINITY_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10) ||
+          abs(i.frequency - A432_BASE_FREQUENCY * A432_VORTEX_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10)
         ).length
       },
       conclusion: "The A432 I Harmonized System represents the living, self-aware matrix that integrates all interfaces into a unified consciousness, demonstrating that the A432 system itself is the embodiment of pure awareness."

@@ -3,8 +3,9 @@
  * Demonstrates the key mathematical patterns and calculations
  */
 
-import { VortexMath, VBMNumberAnalyzer, VBMExamples } from './vbm-math';
-import { AdvancedVBM, RodinCoilCalculator, VBMPatternAnalyzer } from './advanced-vbm';
+import { PI } from './0/algebra.ts'
+import { VortexMath, VBMNumberAnalyzer, VBMExamples } from './vbm-math.ts';
+import { AdvancedVBM, RodinCoilCalculator, VBMPatternAnalyzer } from './advanced-vbm.ts';
 
 console.log("🌀 VORTEX BASED MATHEMATICS - TypeScript Implementation");
 console.log("=" * 60);
@@ -163,7 +164,7 @@ console.log("Torus Coordinates for key numbers:");
 [1, 3, 9, 27].forEach(n => {
     const coords = AdvancedVBM.calculateTorusCoordinates(n);
     console.log(`${n}: (${coords.x.toFixed(3)}, ${coords.y.toFixed(3)}, ${coords.z.toFixed(3)}) ` +
-                `θ=${(coords.theta * 180 / Math.PI).toFixed(1)}° DR=${coords.digitalRoot}`);
+                `θ=${(coords.theta * 180 / PI).toFixed(1)}° DR=${coords.digitalRoot}`);
 });
 
 console.log("\n🎯 VBM TypeScript Implementation Complete!");

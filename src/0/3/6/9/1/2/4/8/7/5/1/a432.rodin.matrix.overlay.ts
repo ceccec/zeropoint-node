@@ -5,7 +5,7 @@
  * Uses only canonical A432 math, sequence, and color logic.
  */
 
-import { RODIN_SEQUENCE, digitAngleToCMYK, cmykToCss } from './a432.math';
+import { RODIN_SEQUENCE, digitAngleToCMYK, cmykToCss } from './a432.math.ts';
 
 /**
  * Returns overlay data for a 7x7 Rodin matrix grid.

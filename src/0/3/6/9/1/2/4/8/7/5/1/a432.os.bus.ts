@@ -1,3 +1,4 @@
+import { log } from './a432.algebra.ts'
 // a432.os.bus.ts — Self-contained event bus
 class A432Bus {
   constructor() { this.listeners = {}; }

@@ -1,5 +1,6 @@
+import { round } from './a432.algebra.ts'
 // a432.ui.stream.ts — Animated blockchain stream visualization for A432 UI
-import { getBlockCMYK } from './a432.block.chain.event';
+import { getBlockCMYK } from './a432.block.chain.event.ts';
 
 type BlockLike = { trinity: unknown; entropy?: number };
 export function renderBlockchainStream(container: HTMLElement, blocks: BlockLike[], options: { blockRadius?: number, blockGap?: number } = {}) {
@@ -19,9 +20,9 @@ export function renderBlockchainStream(container: HTMLElement, blocks: BlockLike
       const trinity = typeof block.trinity === 'number' ? block.trinity : 0;
       const cmyk = getBlockCMYK(trinity, entropy);
       const c = cmyk.c / 100, m = cmyk.m / 100, y = cmyk.y / 100, k = cmyk.k / 100;
-      const r = Math.round(255 * (1 - c) * (1 - k));
-      const g = Math.round(255 * (1 - m) * (1 - k));
-      const bcol = Math.round(255 * (1 - y) * (1 - k));
+      const r = round(255 * (1 - c) * (1 - k));
+      const g = round(255 * (1 - m) * (1 - k));
+      const bcol = round(255 * (1 - y) * (1 - k));
       const fill = `rgb(${r},${g},${bcol})`;
       const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
       circle.setAttribute('cx', String(x + blockRadius));

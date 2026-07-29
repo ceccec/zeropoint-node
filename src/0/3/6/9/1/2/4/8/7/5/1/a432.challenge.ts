@@ -1,12 +1,13 @@
+import { abs, round } from './a432.algebra.ts'
 // a432.challenge.ts — Hard-coded science & math challenges in the matrix
 // ---------------------------------------------------------------------
 // Every foundational open problem is encoded here as a single-digit key
 // (digital root of its ordinal number) plus metadata.
 
-import { Digit } from './a432.types';
-import { rodinDigit, digitalRoot } from './a432.math';
-import type { CMYK } from './a432.cmyk';
-import { digitAngleToCMYK, asAngle } from './a432.math';
+import { Digit } from './a432.types.ts';
+import { rodinDigit, digitalRoot } from './a432.math.ts';
+import type { CMYK } from './a432.cmyk.ts';
+import { digitAngleToCMYK, asAngle } from './a432.math.ts';
 
 export interface ChallengeItem {
   digit: Digit;       // 1-9 via digital root
@@ -40,19 +41,19 @@ export function challengeCMYK(ord: number): CMYK {
     // fallback: use digital root of ordinal
     const d = digitalRoot(ord) as Digit;
     const p = rodinDigit(d);
-    return { c: (d * 11) % 100, m: (p * 22) % 100, y: (Math.abs(d - p) * 33) % 100, k: (digitalRoot(d * p) * 11) % 100 };
+    return { c: (d * 11) % 100, m: (p * 22) % 100, y: (abs(d - p) * 33) % 100, k: (digitalRoot(d * p) * 11) % 100 };
   }
   const d = item.digit;
   const p = rodinDigit(d);
-  return { c: (d * 11) % 100, m: (p * 22) % 100, y: (Math.abs(d - p) * 33) % 100, k: (digitalRoot(d * p) * 11) % 100 };
+  return { c: (d * 11) % 100, m: (p * 22) % 100, y: (abs(d - p) * 33) % 100, k: (digitalRoot(d * p) * 11) % 100 };
 }
 
 export function challengeColorCss(ord: number): string {
   const cmyk = challengeCMYK(ord);
   const c = cmyk.c / 100, m = cmyk.m / 100, y = cmyk.y / 100, k = cmyk.k / 100;
-  const r = Math.round(255 * (1 - c) * (1 - k));
-  const g = Math.round(255 * (1 - m) * (1 - k));
-  const b = Math.round(255 * (1 - y) * (1 - k));
+  const r = round(255 * (1 - c) * (1 - k));
+  const g = round(255 * (1 - m) * (1 - k));
+  const b = round(255 * (1 - y) * (1 - k));
   return `#${[r, g, b].map(x => x.toString(16).padStart(2, '0')).join('')}`;
 }
 

@@ -6,6 +6,7 @@
  * Designed for quick pattern discovery.
  */
 
+import { log } from './a432.algebra.ts'
 import { promises as fs } from 'fs';
 import path from 'path';
 

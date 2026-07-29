@@ -1,5 +1,5 @@
 // a432.ui.journey.ts — Guided journey engine for A432 UI
-import { recordEvent } from './a432.block.chain.event';
+import { recordEvent } from './a432.block.chain.event.ts';
 
 export async function runGuidedJourney(steps: Array<{ label: string; emitter: any; event: string | null; prompt: string }>, options: {
   intention?: string;

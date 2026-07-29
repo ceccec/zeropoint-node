@@ -1,33 +1,34 @@
+import { PI, abs, cos, indexFromSeed, max, min, round, sin, unitFromSeed } from './a432.algebra.ts'
 // a432.ui.three.ts — Full production-ready Three.js UI module for A432 system
 import * as THREE from 'three';
 // Optionally import metaphysical overlays, blockchain, and A432 math as needed
-// import { logEvent } from './a432.block.chain.event';
-// import { getTrinityAxis, getRodinSequence } from './a432.math';
-import { A432BlockChain, recordEvent } from './a432.block.chain.event';
-import { getTrinityAxis } from './a432.math';
-import { breatheEmitter } from './a432.i.breathe';
-import { pulseEmitter } from './a432.i.pulse';
-import { heatEmitter } from './a432.i.heat';
-import { intuitEmitter } from './a432.i.intuit';
-import { reflectEmitter } from './a432.i.reflect';
-import { moveEmitter } from './a432.i.move';
-import { healthEmitter } from './a432.health';
-import { humanEmotionEmitter } from './a432.human.emotion';
-import { humanConsciousnessEmitter } from './a432.human.consciousness';
-import { BreathEvent } from './a432.breathe';
-import { HealthMetrics } from './a432.health';
-import { ChessFrame } from './a432.chess';
-import { YinYangFrame } from './a432.yin.yang';
-import { MetatronFrame } from './a432.metatron';
-import { a432OSState } from './a432.os';
-import { flashColor } from './a432.video';
-import { playDigit, playTrinitySound } from './a432.sound';
-import { digitAngleToCMYK } from './a432.cmyk';
-import { Digit, toDigit } from './a432.types';
+// import { logEvent } from './a432.block.chain.event.ts';
+// import { getTrinityAxis, getRodinSequence } from './a432.math.ts';
+import { A432BlockChain, recordEvent } from './a432.block.chain.event.ts';
+import { getTrinityAxis } from './a432.math.ts';
+import { breatheEmitter } from './a432.i.breathe.ts';
+import { pulseEmitter } from './a432.i.pulse.ts';
+import { heatEmitter } from './a432.i.heat.ts';
+import { intuitEmitter } from './a432.i.intuit.ts';
+import { reflectEmitter } from './a432.i.reflect.ts';
+import { moveEmitter } from './a432.i.move.ts';
+import { healthEmitter } from './a432.health.ts';
+import { humanEmotionEmitter } from './a432.human.emotion.ts';
+import { humanConsciousnessEmitter } from './a432.human.consciousness.ts';
+import { BreathEvent } from './a432.breathe.ts';
+import { HealthMetrics } from './a432.health.ts';
+import { ChessFrame } from './a432.chess.ts';
+import { YinYangFrame } from './a432.yin.yang.ts';
+import { MetatronFrame } from './a432.metatron.ts';
+import { a432OSState } from './a432.os.ts';
+import { flashColor } from './a432.video.ts';
+import { playDigit, playTrinitySound } from './a432.sound.ts';
+import { digitAngleToCMYK } from './a432.cmyk.ts';
+import { Digit, toDigit } from './a432.types.ts';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { startChess } from './a432.chess';
-import { startYinYang } from './a432.yin.yang';
-import { startMetatron } from './a432.metatron';
+import { startChess } from './a432.chess.ts';
+import { startYinYang } from './a432.yin.yang.ts';
+import { startMetatron } from './a432.metatron.ts';
 
 export class A432ThreeUI {
   container: HTMLElement;
@@ -180,7 +181,7 @@ export class A432ThreeUI {
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometry, material);
-    cube.position.set(Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2);
+    cube.position.set(unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:2") * 4 - 2, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:3") * 4 - 2, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:4") * 4 - 2);
     this.scene.add(cube);
     this.objects.push(cube);
     recordEvent(this.blockchain, 'addCube', 'A432ThreeUI', cube);
@@ -191,7 +192,7 @@ export class A432ThreeUI {
     const geometry = new THREE.SphereGeometry(0.7, 32, 32);
     const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
     const sphere = new THREE.Mesh(geometry, material);
-    sphere.position.set(Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2);
+    sphere.position.set(unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:5") * 4 - 2, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:6") * 4 - 2, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:7") * 4 - 2);
     this.scene.add(sphere);
     this.objects.push(sphere);
     recordEvent(this.blockchain, 'addSphere', 'A432ThreeUI', sphere);
@@ -200,7 +201,7 @@ export class A432ThreeUI {
 
   addLight() {
     const light = new THREE.PointLight(0xffffff, 1, 100);
-    light.position.set(Math.random() * 8 - 4, Math.random() * 8 - 4, Math.random() * 8 - 4);
+    light.position.set(unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:8") * 8 - 4, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:9") * 8 - 4, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:10") * 8 - 4);
     this.scene.add(light);
     this.lights.push(light);
     recordEvent(this.blockchain, 'addLight', 'A432ThreeUI', light);
@@ -591,7 +592,7 @@ export class A432ThreeUI {
       let lastTrigger = 0;
       const detect = () => {
         analyser.getByteTimeDomainData(data);
-        const amplitude = Math.max(...data) - Math.min(...data);
+        const amplitude = max(...data) - min(...data);
         this.micAmplitude = amplitude;
         this.drawMicAmplitudeGraph(amplitude);
         const now = Date.now();
@@ -640,13 +641,13 @@ export class A432ThreeUI {
     let samples = 0;
     const sample = () => {
       analyser.getByteTimeDomainData(data);
-      const amplitude = Math.max(...data) - Math.min(...data);
+      const amplitude = max(...data) - min(...data);
       if (amplitude > maxAmp) maxAmp = amplitude;
       samples++;
       if (samples < 60) {
         setTimeout(sample, 50);
       } else {
-        this.micThreshold = Math.max(20, maxAmp + 10);
+        this.micThreshold = max(20, maxAmp + 10);
         alert('Auto-calibrated threshold: ' + this.micThreshold);
       }
     };
@@ -703,7 +704,7 @@ export class A432ThreeUI {
       lastPhase = e.phase;
       lastTimestamp = e.timestamp;
     }
-    const avg = (arr: number[]) => arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length) : '—';
+    const avg = (arr: number[]) => arr.length ? round(arr.reduce((a, b) => a + b, 0) / arr.length) : '—';
     return `<b>Breath Analytics</b><br>
       Breath Rate: <span style='color:#0ff'>${breathRate}</span> breaths/min<br>
       Avg Inhale: <span style='color:#0ff'>${avg(phaseDurations.inhale)}</span> ms<br>
@@ -723,7 +724,7 @@ export class A432ThreeUI {
     if (!hist.length) return '';
     const scale = (arr: number[], h: number) => arr.map(v => h - v * h);
     const w = 180, h = 36;
-    const x = (i: number) => Math.round((i / (N - 1)) * w);
+    const x = (i: number) => round((i / (N - 1)) * w);
     const harmony = scale(hist.map(e => e.harmony), h);
     const entropy = scale(hist.map(e => e.entropy), h);
     const resonance = scale(hist.map(e => e.resonance), h);
@@ -786,11 +787,11 @@ export class A432ThreeUI {
   animateHealthOverlay(metrics: { harmony: number; entropy: number; resonance: number }) {
     if (!this.analyticOverlay) return;
     // Animate overlay if harmony or entropy changes significantly
-    if (Math.abs(metrics.harmony - this.lastHealthMetrics.harmony) > 0.2) {
+    if (abs(metrics.harmony - this.lastHealthMetrics.harmony) > 0.2) {
       this.analyticOverlay.style.boxShadow = '0 0 24px 8px #0f0';
       setTimeout(() => { if (this.analyticOverlay) this.analyticOverlay.style.boxShadow = ''; }, 1000);
     }
-    if (Math.abs(metrics.entropy - this.lastHealthMetrics.entropy) > 0.2) {
+    if (abs(metrics.entropy - this.lastHealthMetrics.entropy) > 0.2) {
       this.analyticOverlay.style.boxShadow = '0 0 24px 8px #f00';
       setTimeout(() => { if (this.analyticOverlay) this.analyticOverlay.style.boxShadow = ''; }, 1000);
     }
@@ -880,7 +881,7 @@ export class A432ThreeUI {
         <span style="color:#0ff">Color:</span> <span style="background:rgb(${color.r},${color.g},${color.b});padding:0 8px;border-radius:4px;">&nbsp;</span> #${color.r.toString(16)}${color.g.toString(16)}${color.b.toString(16)}<br>
         <span style="color:#0ff">Consciousness:</span> ${os.consciousness}<br>
         <span style="color:#0ff">Platform:</span> ${os.system.platform} &nbsp; <span style="color:#0ff">Arch:</span> ${os.system.arch}<br>
-        <span style="color:#0ff">Uptime:</span> ${Math.round(os.system.uptime/60)} min &nbsp; <span style="color:#0ff">Mem:</span> ${Math.round(os.system.memory.free/1e6)}/${Math.round(os.system.memory.total/1e6)} MB
+        <span style="color:#0ff">Uptime:</span> ${round(os.system.uptime/60)} min &nbsp; <span style="color:#0ff">Mem:</span> ${round(os.system.memory.free/1e6)}/${round(os.system.memory.total/1e6)} MB
       </div>
       <div style="margin-bottom:8px;"><b>Health</b><br>
         Harmony: <span style="color:${h.harmony > 0.7 ? '#0f0' : '#ff0'}">${h.harmony.toFixed(2)}</span><br>
@@ -1003,39 +1004,39 @@ export class A432ThreeUI {
       this.yinYangDisposer = startYinYang((f: YinYangFrame) => {
         ctx.clearRect(0, 0, 240, 240);
         ctx.beginPath();
-        ctx.arc(120, 120, 100, 0, 2 * Math.PI);
+        ctx.arc(120, 120, 100, 0, 2 * PI);
         ctx.fillStyle = '#222';
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(120, 90, 50, Math.PI, 0);
-        ctx.arc(120, 150, 50, 0, Math.PI);
+        ctx.arc(120, 90, 50, PI, 0);
+        ctx.arc(120, 150, 50, 0, PI);
         ctx.closePath();
         ctx.fillStyle = `rgba(0,255,255,0.7)`;
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(120, 150, 50, Math.PI, 0, true);
-        ctx.arc(120, 90, 50, 0, Math.PI, true);
+        ctx.arc(120, 150, 50, PI, 0, true);
+        ctx.arc(120, 90, 50, 0, PI, true);
         ctx.closePath();
         ctx.fillStyle = `rgba(255,0,255,0.7)`;
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(120, 90, 16, 0, 2 * Math.PI);
+        ctx.arc(120, 90, 16, 0, 2 * PI);
         ctx.fillStyle = '#fff';
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(120, 150, 16, 0, 2 * Math.PI);
+        ctx.arc(120, 150, 16, 0, 2 * PI);
         ctx.fillStyle = '#000';
         ctx.fill();
         // Overlay
         this.yinYangOverlay!.innerHTML = `<b>Yin-Yang Frame</b><br>
           Positive Digit: ${f.positiveDigit}<br>
           Negative Digit: ${f.negativeDigit}<br>
-          Angle: ${Math.round(f.angle)}°<br>
+          Angle: ${round(f.angle)}°<br>
           <span style='color:#0ff'>Metaphysical: Yin/Yang Balance</span>`;
         // Sound/music feedback
         playDigit(f.positiveDigit);
         playDigit(f.negativeDigit);
-        if (Math.abs(f.angle - 180) < 10) playTrinitySound(6);
+        if (abs(f.angle - 180) < 10) playTrinitySound(6);
       });
     }
     // Metatron
@@ -1064,11 +1065,11 @@ export class A432ThreeUI {
       this.metatronDisposer = startMetatron((f: MetatronFrame) => {
         ctx.clearRect(0, 0, 240, 240);
         for (const n of f.nodes) {
-          const ang = (n.index / 12) * 2 * Math.PI;
-          const x = 120 + Math.cos(ang) * 90;
-          const y = 120 + Math.sin(ang) * 90;
+          const ang = (n.index / 12) * 2 * PI;
+          const x = 120 + cos(ang) * 90;
+          const y = 120 + sin(ang) * 90;
           ctx.beginPath();
-          ctx.arc(x, y, 18, 0, 2 * Math.PI);
+          ctx.arc(x, y, 18, 0, 2 * PI);
           ctx.fillStyle = `rgba(0,255,255,0.7)`;
           ctx.fill();
           ctx.strokeStyle = '#fff';
@@ -1095,15 +1096,15 @@ export class A432ThreeUI {
 
   // Advanced test harness: simulate events
   static simulateEvents(ui: A432ThreeUI) {
-    setInterval(() => { breatheEmitter.emit('breathe', { value: Math.floor(Math.random()*9), phase: 'inhale', timestamp: Date.now() }); }, 3000);
-    setInterval(() => { pulseEmitter.emit('pulse', { value: Math.floor(Math.random()*9), timestamp: Date.now() }); }, 4000);
-    setInterval(() => { intuitEmitter.emit('intuit', { insight: 'Aha!', confidence: Math.random(), timestamp: Date.now() }); }, 5000);
-    setInterval(() => { reflectEmitter.emit('reflect', { thought: 'Deep thought', depth: Math.random(), timestamp: Date.now() }); }, 6000);
-    setInterval(() => { moveEmitter.emit('move', { direction: 'up', magnitude: Math.random()*3, timestamp: Date.now() }); }, 7000);
-    setInterval(() => { heatEmitter.emit('heat', { value: Math.random()*100, timestamp: Date.now() }); }, 8000);
-    setInterval(() => { healthEmitter.emit('health', { value: Math.random()*100, timestamp: Date.now() }); }, 9000);
-    setInterval(() => { humanEmotionEmitter.emit('emotion', { type: 'joy', intensity: Math.random(), timestamp: Date.now() }); }, 10000);
-    setInterval(() => { humanConsciousnessEmitter.emit('consciousness', { state: 'aware', level: Math.random(), timestamp: Date.now() }); }, 11000);
+    setInterval(() => { breatheEmitter.emit('breathe', { value: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:fri:0", (9)|0 || 1), phase: 'inhale', timestamp: Date.now() }); }, 3000);
+    setInterval(() => { pulseEmitter.emit('pulse', { value: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:fri:1", (9)|0 || 1), timestamp: Date.now() }); }, 4000);
+    setInterval(() => { intuitEmitter.emit('intuit', { insight: 'Aha!', confidence: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:11"), timestamp: Date.now() }); }, 5000);
+    setInterval(() => { reflectEmitter.emit('reflect', { thought: 'Deep thought', depth: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:12"), timestamp: Date.now() }); }, 6000);
+    setInterval(() => { moveEmitter.emit('move', { direction: 'up', magnitude: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:13")*3, timestamp: Date.now() }); }, 7000);
+    setInterval(() => { heatEmitter.emit('heat', { value: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:14")*100, timestamp: Date.now() }); }, 8000);
+    setInterval(() => { healthEmitter.emit('health', { value: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:15")*100, timestamp: Date.now() }); }, 9000);
+    setInterval(() => { humanEmotionEmitter.emit('emotion', { type: 'joy', intensity: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:16"), timestamp: Date.now() }); }, 10000);
+    setInterval(() => { humanConsciousnessEmitter.emit('consciousness', { state: 'aware', level: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:17"), timestamp: Date.now() }); }, 11000);
   }
 
   // Harmonize with user journeys (example: guided I journey)

@@ -24,7 +24,7 @@ import {
   calculateA432Frequency,
   calculateA432Consciousness,
   calculateA432DimensionalState
-} from './a432.math';
+} from './a432.math.ts';
 
 // Import enhanced OS capabilities
 import {
@@ -34,7 +34,7 @@ import {
   A432ChargingSystem,
   QuantumState,
   DimensionalFold
-} from './a432.os';
+} from './a432.os.ts';
 
 // Living Stream Generators - Everything generates itself
 export class LivingA432OS {

@@ -1,8 +1,9 @@
+import { PI, cos, sin } from './a432.algebra.ts'
 // a432.i.trinity.ts
 // Canonical 'I' (observer/actor) interface for trinity interaction
 // Interacts with a432.trinity.ts and provides meta-observation, harmonization, and visualization
 
-import { a432TrinityCycle, a432TrinityStream, a432FamilyStream } from './a432.trinity';
+import { a432TrinityCycle, a432TrinityStream, a432FamilyStream } from './a432.trinity.ts';
 
 export interface ITrinityStep {
   step: number;
@@ -48,11 +49,11 @@ export function renderITrinityWheel(steps: number = 18, currentStep: number = 0)
   const width = 320, height = 320, cx = width / 2, cy = height / 2, r = 110;
   const color = (t: number) => t === 3 ? '#39f' : t === 6 ? '#6f3' : '#f93';
   const points = stream.map((s, i) => {
-    const angle = (2 * Math.PI * i) / stream.length;
+    const angle = (2 * PI * i) / stream.length;
     return {
       ...s,
-      x: cx + r * Math.cos(angle),
-      y: cy + r * Math.sin(angle),
+      x: cx + r * cos(angle),
+      y: cy + r * sin(angle),
       color: color(s.trinity)
     };
   });

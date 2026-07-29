@@ -13,6 +13,7 @@
  * @author A432 System
  */
 
+import { abs, sqrt } from './a432.algebra.ts'
 import {
   A432_FREQUENCY,
   A432_TRINITY,
@@ -23,7 +24,7 @@ import {
   a432Frequency,
   a432HSLFromRoot,
   a432RGBFromRoot
-} from './a432.core';
+} from './a432.core.ts';
 
 import { 
   GOLDEN_RATIO, 
@@ -32,7 +33,7 @@ import {
   SQRT_2, 
   SQRT_3,
   SACRED_GEOMETRY_RATIOS 
-} from './a432.math.constants';
+} from './a432.math.constants.ts';
 
 // === SACRED GEOMETRIC CONSTANTS ===
 // These define all mathematical relationships through sacred geometry
@@ -250,9 +251,9 @@ export function createSacredGeometricField(
 
   for (let x = -radius; x <= radius; x++) {
     for (let y = -radius; y <= radius; y++) {
-      const distance = Math.sqrt(x * x + y * y);
+      const distance = sqrt(x * x + y * y);
       if (distance <= radius) {
-        const dimension = digitalRoot(Math.abs(x) + Math.abs(y) + centerDimension);
+        const dimension = digitalRoot(abs(x) + abs(y) + centerDimension);
         const frequency = a432Frequency(dimension);
         const geometric = SACRED_GEOMETRIC_CONSTANTS.GOLDEN_RATIO.geometric;
 

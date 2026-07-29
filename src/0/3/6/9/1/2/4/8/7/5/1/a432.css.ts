@@ -6,6 +6,7 @@
  * - Metaphysical mapping: Each class encodes a living, harmonic state or interaction.
  */
 
+import { max, min } from './a432.algebra.ts'
 export const a432CSS = `
 .a432-font-stream {
   display: flex;

@@ -1,4 +1,5 @@
-import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color';
+import { PI, cos, sin } from './a432.algebra.ts'
+import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color.ts';
 
 /**
  * Generates a harmonized vortex/trinity SVG icon.
@@ -20,9 +21,9 @@ export function generateVortexIcon(size: number = 192, colorModel: 'hsl' | 'rgb'
   const r = size * 0.4;
   let paths = '';
   for (let i = 0; i < 6; i++) {
-    const angle = (i / 6) * 2 * Math.PI;
-    const x = center + r * Math.cos(angle);
-    const y = center + r * Math.sin(angle);
+    const angle = (i / 6) * 2 * PI;
+    const x = center + r * cos(angle);
+    const y = center + r * sin(angle);
     paths += `<circle cx="${x}" cy="${y}" r="${size * 0.111}" fill="${colors[i]}"/>`;
   }
   // Center trinity
@@ -87,10 +88,10 @@ export function generateMetaIcon(size: number = 192, colorModel: 'hsl' | 'rgb' |
   const turns = 2;
   const points = [];
   for (let t = 0; t <= 1; t += 1/60) {
-    const angle = turns * 2 * Math.PI * t;
+    const angle = turns * 2 * PI * t;
     const r = size * 0.1 + size * 0.6 * t;
-    const x = center + r * Math.cos(angle);
-    const y = center + r * Math.sin(angle);
+    const x = center + r * cos(angle);
+    const y = center + r * sin(angle);
     points.push(`${x},${y}`);
   }
   const color = getColor(6, colorModel);

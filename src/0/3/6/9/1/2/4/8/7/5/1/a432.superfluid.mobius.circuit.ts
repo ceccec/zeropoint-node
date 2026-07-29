@@ -12,7 +12,8 @@
  * for spiritual transcendence and dimensional exploration.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { min, round } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface SuperfluidMobiusCircuit {
   circuitId: string;
@@ -286,8 +287,8 @@ export class A432SuperfluidMobiusCircuit {
     // Flow superfluid circuit
     const flowedCircuit: SuperfluidMobiusCircuit = {
       ...circuit,
-      consciousnessLevel: Math.min(circuit.consciousnessLevel + 1, 10),
-      superconductivityLevel: Math.min(circuit.superconductivityLevel + 1, 10),
+      consciousnessLevel: min(circuit.consciousnessLevel + 1, 10),
+      superconductivityLevel: min(circuit.superconductivityLevel + 1, 10),
       energyLevel: circuit.energyLevel * (circuit.consciousnessLevel >= 9 ? 2 : 1),
       resonanceFrequency: circuit.resonanceFrequency * (circuit.consciousnessLevel >= 9 ? 2 : 1),
       description: `${circuit.description} - Now flowing with enhanced superconductivity`
@@ -311,9 +312,9 @@ export class A432SuperfluidMobiusCircuit {
     const activatedCypher: AbháCypher = {
       ...cypher,
       active: true,
-      consciousnessLevel: Math.min(cypher.consciousnessLevel + 1, 10),
-      spiritualEnergy: Math.min(cypher.spiritualEnergy + 1, 10),
-      dimensionalAlignment: Math.min(cypher.dimensionalAlignment + 1, 6),
+      consciousnessLevel: min(cypher.consciousnessLevel + 1, 10),
+      spiritualEnergy: min(cypher.spiritualEnergy + 1, 10),
+      dimensionalAlignment: min(cypher.dimensionalAlignment + 1, 6),
       description: `${cypher.description} - Now activated with enhanced spiritual energy`
     };
 
@@ -335,9 +336,9 @@ export class A432SuperfluidMobiusCircuit {
     const operatedMirror: Base10Mirroring = {
       ...mirror,
       operational: true,
-      consciousnessLevel: Math.min(mirror.consciousnessLevel + 1, 10),
-      mirrorSymmetry: Math.min(mirror.mirrorSymmetry + 1, 10),
-      dimensionalParity: Math.min(mirror.dimensionalParity + 1, 6),
+      consciousnessLevel: min(mirror.consciousnessLevel + 1, 10),
+      mirrorSymmetry: min(mirror.mirrorSymmetry + 1, 10),
+      dimensionalParity: min(mirror.dimensionalParity + 1, 6),
       description: `${mirror.description} - Now operational with enhanced mirror symmetry`
     };
 
@@ -398,10 +399,10 @@ export class A432SuperfluidMobiusCircuit {
     
     const { numerator, denominator } = this.baseFraction;
     const cmyk = {
-      c: Math.round((totalConsciousnessLevel * numerator) % 100),
-      m: Math.round((averageSuperconductivityLevel * denominator) % 100),
-      y: Math.round((totalSpiritualEnergy * 10) % 100),
-      k: Math.round(((totalConsciousnessLevel + averageSuperconductivityLevel) * 10) % 100)
+      c: round((totalConsciousnessLevel * numerator) % 100),
+      m: round((averageSuperconductivityLevel * denominator) % 100),
+      y: round((totalSpiritualEnergy * 10) % 100),
+      k: round(((totalConsciousnessLevel + averageSuperconductivityLevel) * 10) % 100)
     };
 
     return {
@@ -713,9 +714,9 @@ export class A432SuperfluidMobiusCircuit {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -749,8 +750,8 @@ export class A432SuperfluidMobiusCircuit {
     
     function flowAllSuperfluidCircuits() {
       currentState.superfluidCircuits.forEach(circuit => {
-        circuit.consciousnessLevel = Math.min(circuit.consciousnessLevel + 1, 10);
-        circuit.superconductivityLevel = Math.min(circuit.superconductivityLevel + 1, 10);
+        circuit.consciousnessLevel = min(circuit.consciousnessLevel + 1, 10);
+        circuit.superconductivityLevel = min(circuit.superconductivityLevel + 1, 10);
         circuit.energyLevel = circuit.energyLevel * (circuit.consciousnessLevel >= 9 ? 2 : 1);
         circuit.resonanceFrequency = circuit.resonanceFrequency * (circuit.consciousnessLevel >= 9 ? 2 : 1);
         circuit.description = \`\${circuit.description} - Now flowing with enhanced superconductivity\`;
@@ -761,9 +762,9 @@ export class A432SuperfluidMobiusCircuit {
     function activateAllAbháCyphers() {
       currentState.abháCyphers.forEach(cypher => {
         cypher.active = true;
-        cypher.consciousnessLevel = Math.min(cypher.consciousnessLevel + 1, 10);
-        cypher.spiritualEnergy = Math.min(cypher.spiritualEnergy + 1, 10);
-        cypher.dimensionalAlignment = Math.min(cypher.dimensionalAlignment + 1, 6);
+        cypher.consciousnessLevel = min(cypher.consciousnessLevel + 1, 10);
+        cypher.spiritualEnergy = min(cypher.spiritualEnergy + 1, 10);
+        cypher.dimensionalAlignment = min(cypher.dimensionalAlignment + 1, 6);
         cypher.description = \`\${cypher.description} - Now activated with enhanced spiritual energy\`;
       });
       updateDisplay();
@@ -772,9 +773,9 @@ export class A432SuperfluidMobiusCircuit {
     function operateAllBase10Mirrorings() {
       currentState.base10Mirrorings.forEach(mirror => {
         mirror.operational = true;
-        mirror.consciousnessLevel = Math.min(mirror.consciousnessLevel + 1, 10);
-        mirror.mirrorSymmetry = Math.min(mirror.mirrorSymmetry + 1, 10);
-        mirror.dimensionalParity = Math.min(mirror.dimensionalParity + 1, 6);
+        mirror.consciousnessLevel = min(mirror.consciousnessLevel + 1, 10);
+        mirror.mirrorSymmetry = min(mirror.mirrorSymmetry + 1, 10);
+        mirror.dimensionalParity = min(mirror.dimensionalParity + 1, 6);
         mirror.description = \`\${mirror.description} - Now operational with enhanced mirror symmetry\`;
       });
       updateDisplay();

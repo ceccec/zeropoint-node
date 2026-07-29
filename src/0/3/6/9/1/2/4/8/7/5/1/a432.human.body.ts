@@ -6,7 +6,8 @@
  * Provides metaphysical and mathematical documentation.
  */
 
-import { toHarmonic, toCMYK, getFlow, BodySystem } from './a432.body';
+import { round } from './a432.algebra.ts'
+import { toHarmonic, toCMYK, getFlow, BodySystem } from './a432.body.ts';
 
 export interface A432HumanBody {
   skeletal: BodySystem;
@@ -56,7 +57,7 @@ export function createA432HumanBody(
     flow: getFlow(channel),
     description: `${name.charAt(0).toUpperCase() + name.slice(1)} system mapped to harmonic, color, and flow.`
   }));
-  const overallHarmony = Math.round(mapped.reduce((sum, s) => sum + s.value, 0) / 8);
+  const overallHarmony = round(mapped.reduce((sum, s) => sum + s.value, 0) / 8);
   const cmyk = {
     c: mapped[0].cmyk.c,
     m: mapped[1].cmyk.m,

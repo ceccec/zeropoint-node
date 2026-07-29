@@ -6,9 +6,10 @@
  * Zero entropy: define once, harmonize everywhere.
  */
 
-import { A432_RETURN, A432_AXIS } from './a432.core';
-import { A432_TRINITY } from './a432';
-import { a432ModuleRegistry, A432Module } from './a432.modules';
+import { abs, floor, max, min } from './a432.algebra.ts'
+import { A432_RETURN, A432_AXIS } from './a432.core.ts';
+import { A432_TRINITY } from './a432.ts';
+import { a432ModuleRegistry, A432Module } from './a432.modules.ts';
 
 // === BALANCE INTERFACES ===
 export interface A432BalanceState {
@@ -57,7 +58,7 @@ export interface ResonanceBalance {
 
 // === CORE BALANCE FUNCTIONS ===
 export function createYinYangBalance(yin: number = 5, yang: number = 5): YinYangBalance {
-  const balance = Math.abs(yin - yang) <= 1 ? 9 : Math.max(0, 9 - Math.abs(yin - yang));
+  const balance = abs(yin - yang) <= 1 ? 9 : max(0, 9 - abs(yin - yang));
   const flow = yin > yang ? 'yin' : yang > yin ? 'yang' : 'balanced';
   const color = flow === 'yin' ? 'hsl(240, 70%, 30%)' : flow === 'yang' ? 'hsl(60, 70%, 70%)' : 'hsl(150, 70%, 50%)';
   const frequency = 432 * (balance / 9);
@@ -83,10 +84,10 @@ export function createTrinityBalance(): TrinityBalance {
 }
 
 export function createHarmonicEquilibrium(frequency: number = 432): HarmonicEquilibrium {
-  const amplitude = Math.min(9, Math.floor(frequency / 48));
+  const amplitude = min(9, floor(frequency / 48));
   const phase = (frequency % 360) / 40;
-  const resonance = Math.floor(frequency / 432 * 9);
-  const stability = Math.max(0, 9 - Math.abs(resonance - 5));
+  const resonance = floor(frequency / 432 * 9);
+  const stability = max(0, 9 - abs(resonance - 5));
   const color = `hsl(${frequency % 360}, 70%, ${50 + stability * 5}%)`;
   
   return { frequency, amplitude, phase, resonance, stability, color };
@@ -94,7 +95,7 @@ export function createHarmonicEquilibrium(frequency: number = 432): HarmonicEqui
 
 export function createResonanceBalance(primary: number = 4, secondary: number = 3, tertiary: number = 2): ResonanceBalance {
   const harmony = (primary + secondary + tertiary) % 9;
-  const dissonance = Math.max(0, 9 - harmony);
+  const dissonance = max(0, 9 - harmony);
   const color = `hsl(${harmony * 40}, 70%, ${50 + (9 - dissonance) * 5}%)`;
   
   return { primary, secondary, tertiary, harmony, dissonance, color };

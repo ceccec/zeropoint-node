@@ -5,7 +5,7 @@
  * Exports: proof, metaphysical meaning, analytic overlay, and blockchain event logger.
  */
 
-import { A432_SEQUENCE, digitAngleToCMYK, cmykToCss } from './a432.math';
+import { A432_SEQUENCE, digitAngleToCMYK, cmykToCss } from './a432.math.ts';
 
 /**
  * Canonical proof: In A432, wave and particle are two states of the same harmonic stream.

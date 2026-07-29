@@ -1,9 +1,10 @@
+import { max, min } from './a432.algebra.ts'
 // a432.block.chain.ts — Canonical Multi-Dimensional Vortex Blockchain
 // All math uses only vortex/trinity numbers and harmonic integer fractions.
 // Metaphysical mapping: BlockChain = recursion, multi-dimensional chaining, observer, Mobius, trinity, axis, self-awareness
 
-import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color';
-import { getRodinSequence, getTrinityAxis, angleForDigit, frequencyForDigit } from './a432.math';
+import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color.ts';
+import { getRodinSequence, getTrinityAxis, angleForDigit, frequencyForDigit } from './a432.math.ts';
 
 export const BLOCK_CHAIN_DOC = {
   meaning: 'BlockChain: recursion, multi-dimensional chaining, observer, Mobius, trinity, axis, self-awareness, living matrix.',
@@ -128,7 +129,7 @@ export function calculateHarmonyScore(block: A432Block): number {
   // Penalize for Mobius event
   if (block.mobius) score -= 0.2;
   // Clamp to [0,1]
-  return Math.max(0, Math.min(1, score));
+  return max(0, min(1, score));
 }
 
 /**
@@ -216,7 +217,7 @@ export function getTrinityCompositeColors(blocks: A432Block[]): { hsl: A432HSL; 
  */
 export function recordSenseOrMetaEvent(eventType: string, value: any, metaphysical: string, prev: A432Block[] = []): A432Block {
   const state = { eventType, value, metaphysical };
-  const index = prev.length ? Math.max(...prev.map(b => b.index)) + 1 : 0;
+  const index = prev.length ? max(...prev.map(b => b.index)) + 1 : 0;
   const block = createBlock(state, prev, index);
   block.harmonyScore = calculateHarmonyScore(block);
   block.entropy = calculateEntropy(block);

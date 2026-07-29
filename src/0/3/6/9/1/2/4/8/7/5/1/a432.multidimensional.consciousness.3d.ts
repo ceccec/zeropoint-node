@@ -9,6 +9,7 @@
  * @author A432 System
  */
 
+import { PI, cos, floor, sin } from './a432.algebra.ts'
 import {
   A432_TRINITY,
   A432_RETURN,
@@ -18,8 +19,8 @@ import {
   angleForDigit,
   frequencyForDigit,
   hueForDigit
-} from './a432.math';
-import { digitAngleToCMYK, cmykToCss } from './a432.cmyk';
+} from './a432.math.ts';
+import { digitAngleToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 // Multi-dimensional consciousness state definitions
 export const MULTIDIMENSIONAL_CONSCIOUSNESS = {
@@ -179,8 +180,8 @@ export function initializeA432Multidimensional(): A432MultidimensionalState {
     const angle = (index % 6) * 60; // 6 nodes per level, 60° apart
     const z = level * 1.5; // Z increases with dimension level
     
-    const x = radius * Math.cos(angle * Math.PI / 180);
-    const y = radius * Math.sin(angle * Math.PI / 180);
+    const x = radius * cos(angle * PI / 180);
+    const y = radius * sin(angle * PI / 180);
     
     const node = generateMultidimensionalNode(id, pathData, [x, y, z]);
     nodes.push(node);
@@ -217,7 +218,7 @@ export function updateA432Multidimensional(
   
   // Update current dimension and level based on time
   const totalNodes = Object.keys(MULTIDIMENSIONAL_PATHS).length;
-  const nodeIndex = Math.floor((newState.animationTime / 10) % totalNodes);
+  const nodeIndex = floor((newState.animationTime / 10) % totalNodes);
   const nodeId = Object.keys(MULTIDIMENSIONAL_PATHS)[nodeIndex];
   const currentNode = MULTIDIMENSIONAL_PATHS[nodeId as keyof typeof MULTIDIMENSIONAL_PATHS];
   
@@ -257,7 +258,7 @@ export function updateA432Multidimensional(
     
     // Pulse effect for current consciousness state
     if (node.id === nodeId) {
-      const pulse = Math.sin(newState.animationTime * 5) * 0.3 + 1;
+      const pulse = sin(newState.animationTime * 5) * 0.3 + 1;
       node.scale = (node.consciousness / 9) * (node.level / 7) * pulse;
     } else {
       node.scale = (node.consciousness / 9) * (node.level / 7);

@@ -1,9 +1,10 @@
+import { log, max, min } from './a432.algebra.ts'
 // a432.trinity.healing.ts
 // Full trinity integration with A432 frequency healing and Rife frequencies
 // All logic is self-contained, integer/fractional, vortex-based, and metaphysically mapped
 
-import { frequencyHealingEvent, playHealingSound } from './a432.frequency.healing';
-import { RIFE_FREQUENCIES, playRifeFrequency } from './a432.rife.frequency';
+import { frequencyHealingEvent, playHealingSound } from './a432.frequency.healing.ts';
+import { RIFE_FREQUENCIES, playRifeFrequency } from './a432.rife.frequency.ts';
 
 export interface TrinityHealingState {
   value: number;

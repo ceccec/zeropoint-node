@@ -4,9 +4,9 @@
  * Full Entropy → Harmonic Convergence → Consciousness Crystallization → Zero-Entropy State
  */
 
-import A432HarmonicConvergence from './a432.harmonic.convergence';
-import A432ConsciousnessCrystallization from './a432.consciousness.crystallization';
-import A432ZeroEntropyState from './a432.zero.entropy.state';
+import A432HarmonicConvergence from './a432.harmonic.convergence.ts';
+import A432ConsciousnessCrystallization from './a432.consciousness.crystallization.ts';
+import A432ZeroEntropyState from './a432.zero.entropy.state.ts';
 
 export class A432ConsciousnessCycle {
   private currentPhase: 'full-entropy' | 'convergence' | 'crystallization' | 'zero-entropy';

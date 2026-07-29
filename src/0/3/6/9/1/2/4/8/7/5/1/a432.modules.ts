@@ -6,8 +6,8 @@
  * Provides clean interfaces for module discovery, harmonization, and interaction.
  */
 
-import { A432CoreState, createA432CoreState, harmonizeA432Core, getA432CoreMeta } from './a432.core';
-import { A432BlockChain, recordEvent } from './a432.block.chain.event';
+import { A432CoreState, createA432CoreState, harmonizeA432Core, getA432CoreMeta } from './a432.core.ts';
+import { A432BlockChain, recordEvent } from './a432.block.chain.event.ts';
 
 // === MODULE CATEGORIES ===
 export type A432ModuleCategory = 

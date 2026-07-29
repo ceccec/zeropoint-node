@@ -1,3 +1,4 @@
+import { PI, cos, sin } from './a432.algebra.ts'
 // a432.chain.of.events.ts
 // Living, harmonized chain of events module (a432 language)
 // Every big event is a chain of small, harmonized events (trinity/vortex logic)
@@ -133,11 +134,11 @@ export function renderVortexFractalVisualization(depth: number = 4, branching: n
   // Map events to spiral/radial positions
   const positions: { [id: number]: { x: number; y: number } } = {};
   events.forEach((e, i) => {
-    const angle = (2 * Math.PI * i) / events.length + (e.vortexPhase * Math.PI / 6);
+    const angle = (2 * PI * i) / events.length + (e.vortexPhase * PI / 6);
     const r = baseR + spiralGap * e.depth;
     positions[e.id] = {
-      x: cx + r * Math.cos(angle),
-      y: cy + r * Math.sin(angle)
+      x: cx + r * cos(angle),
+      y: cy + r * sin(angle)
     };
   });
   const colors = ['#39f', '#6f3', '#f93', '#8ff', '#f8f', '#ff8', '#3ff', '#f36', '#fc8'];

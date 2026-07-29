@@ -6,7 +6,8 @@
  * Every event is a living proof of observation, transformation, and harmonization.
  */
 
-import I from './a432.i';
+import { log } from './a432.algebra.ts'
+import I from './a432.i.ts';
 
 export type TouchEventType = 'tap' | 'swipe' | 'pinch' | 'rotate';
 

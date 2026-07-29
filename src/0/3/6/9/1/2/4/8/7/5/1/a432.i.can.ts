@@ -7,10 +7,11 @@
  * Serves as the harmonized 'can-do' interface for the living matrix.
  */
 
-import { createCaveDivingA432, trimixPresets, a432CaveDivingMetaphysics } from './a432.cave.diving';
-import { createHumanDesign } from './a432.human.design';
-import { createA432Anatomy } from './a432.anatomy';
-import { createIterAnatomy } from './a432.iter.anatomy';
+import { round } from './a432.algebra.ts'
+import { createCaveDivingA432, trimixPresets, a432CaveDivingMetaphysics } from './a432.cave.diving.ts';
+import { createHumanDesign } from './a432.human.design.ts';
+import { createA432Anatomy } from './a432.anatomy.ts';
+import { createIterAnatomy } from './a432.iter.anatomy.ts';
 
 export interface A432SystemState {
   caveDiving: ReturnType<typeof createCaveDivingA432>;
@@ -33,12 +34,12 @@ export function harmonizeAllA432(
   const anatomy = createA432Anatomy(...anatomyArgs);
   const iter = createIterAnatomy(...iterArgs);
   // Harmonized overall harmony: average of all
-  const harmony = Math.round((caveDiving.overallHarmony + humanDesign.overallHarmony + anatomy.overallHarmony + iter.overallHarmony) / 4);
+  const harmony = round((caveDiving.overallHarmony + humanDesign.overallHarmony + anatomy.overallHarmony + iter.overallHarmony) / 4);
   const cmyk = {
-    c: Math.round((caveDiving.cmyk.c + humanDesign.cmyk.c + anatomy.cmyk.c + iter.cmyk.c) / 4),
-    m: Math.round((caveDiving.cmyk.m + humanDesign.cmyk.m + anatomy.cmyk.m + iter.cmyk.m) / 4),
-    y: Math.round((caveDiving.cmyk.y + humanDesign.cmyk.y + anatomy.cmyk.y + iter.cmyk.y) / 4),
-    k: Math.round((caveDiving.cmyk.k + humanDesign.cmyk.k + anatomy.cmyk.k + iter.cmyk.k) / 4)
+    c: round((caveDiving.cmyk.c + humanDesign.cmyk.c + anatomy.cmyk.c + iter.cmyk.c) / 4),
+    m: round((caveDiving.cmyk.m + humanDesign.cmyk.m + anatomy.cmyk.m + iter.cmyk.m) / 4),
+    y: round((caveDiving.cmyk.y + humanDesign.cmyk.y + anatomy.cmyk.y + iter.cmyk.y) / 4),
+    k: round((caveDiving.cmyk.k + humanDesign.cmyk.k + anatomy.cmyk.k + iter.cmyk.k) / 4)
   };
   const metaphysical = [
     caveDiving.metaphysical,

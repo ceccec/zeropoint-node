@@ -5,7 +5,8 @@
  * All overlays use canonical A432 math, sequence, and color logic.
  */
 
-import { RODIN_SEQUENCE, digitAngleToCMYK, cmykToCss, rodinPolarity } from './a432.math';
+import { PI, cos, min, sin } from './a432.algebra.ts'
+import { RODIN_SEQUENCE, digitAngleToCMYK, cmykToCss, rodinPolarity } from './a432.math.ts';
 
 /**
  * 2D overlay: Returns node positions (x, y), value, color, and HTML for a circle/spiral.
@@ -14,9 +15,9 @@ export function getRodinCoil2DOverlayData(radius: number = 120, centerX: number 
   const N = 6;
   const data = [];
   for (let i = 0; i < N; i++) {
-    const angle = (2 * Math.PI * i) / N;
-    const x = centerX + radius * Math.cos(angle);
-    const y = centerY + radius * Math.sin(angle);
+    const angle = (2 * PI * i) / N;
+    const x = centerX + radius * cos(angle);
+    const y = centerY + radius * sin(angle);
     const value = RODIN_SEQUENCE[i];
     const polarity = rodinPolarity(i); // +1 or -1
     const spin = polarity; // For Rodin, spin = polarity
@@ -39,11 +40,11 @@ export function getRodinCoil3DOverlayData(R: number = 100, r: number = 40): Arra
   const N = 6;
   const data = [];
   for (let i = 0; i < N; i++) {
-    const theta = (2 * Math.PI * i) / N;
-    const phi = (2 * Math.PI * i) / N;
-    const x = (R + r * Math.cos(theta)) * Math.cos(phi);
-    const y = (R + r * Math.cos(theta)) * Math.sin(phi);
-    const z = r * Math.sin(theta);
+    const theta = (2 * PI * i) / N;
+    const phi = (2 * PI * i) / N;
+    const x = (R + r * cos(theta)) * cos(phi);
+    const y = (R + r * cos(theta)) * sin(phi);
+    const z = r * sin(theta);
     const value = RODIN_SEQUENCE[i];
     const color = digitAngleToCMYK(value, (i * 60) % 360);
     data.push({ x, y, z, value, color });
@@ -62,7 +63,7 @@ export function getRodinCoilAnalyticOverlayData(events: Array<{ value: number; t
     const spin = polarity;
     const color = digitAngleToCMYK(value, (i * 60) % 360);
     const eventCount = events.filter(e => e.value === value).length;
-    const resonance = eventCount > 0 ? Math.min(1, (now - events.filter(e => e.value === value).slice(-1)[0]?.timestamp) / 10000) : 0;
+    const resonance = eventCount > 0 ? min(1, (now - events.filter(e => e.value === value).slice(-1)[0]?.timestamp) / 10000) : 0;
     const html = `<div style=\"width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.2em;color:#fff;border-radius:10px;box-shadow:0 0 ${8 + 24 * resonance}px #0ff;\">${value}<br><span style='font-size:0.7em;'>${eventCount}</span></div>`;
     return { value, color, resonance, eventCount, html, polarity, spin };
   });

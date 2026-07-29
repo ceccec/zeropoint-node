@@ -9,6 +9,7 @@
  * @author A432 System
  */
 
+import { floor, indexFromSeed, min } from './a432.algebra.ts'
 // A432 I Imagine Constants
 export const A432_I_IMAGINE_CONSTANTS = {
   IMAGINATION_FREQUENCY: 432, // Hz - A432 tuning
@@ -175,28 +176,28 @@ export class A432IImagine {
    * Update I imagine quality based on current parameters
    */
   private updateQuality(): void {
-    const consciousness = Math.floor((
+    const consciousness = floor((
       this.parameters.awareness + 
       this.parameters.presence + 
       this.parameters.being + 
       this.parameters.unity
     ) / 4);
 
-    const imagination = Math.floor((
+    const imagination = floor((
       this.parameters.creativity + 
       this.parameters.vision + 
       this.parameters.possibility + 
       this.parameters.manifestation
     ) / 4);
 
-    const awareness = Math.floor((
+    const awareness = floor((
       this.parameters.observation + 
       this.parameters.attention + 
       this.parameters.insight + 
       this.parameters.recognition
     ) / 4);
 
-    const a432 = Math.floor((
+    const a432 = floor((
       this.parameters.harmony + 
       this.parameters.frequency + 
       this.parameters.resonance + 
@@ -208,7 +209,7 @@ export class A432IImagine {
       imagination,
       awareness,
       a432,
-      overall: Math.floor((consciousness + imagination + awareness + a432) / 4)
+      overall: floor((consciousness + imagination + awareness + a432) / 4)
     };
 
     // Update imagination aspects activity based on quality
@@ -221,7 +222,7 @@ export class A432IImagine {
   private updateImaginationAspectsActivity(): void {
     this.imaginationAspects.forEach((aspect, index) => {
       aspect.active = this.quality.overall >= (index + 1) * 1.5;
-      aspect.quality = Math.min(9, this.quality.overall - index);
+      aspect.quality = min(9, this.quality.overall - index);
     });
   }
 
@@ -298,7 +299,7 @@ export class A432IImagine {
    * Randomize I imagine parameters
    */
   randomize(): void {
-    const randomParam = () => Math.floor(Math.random() * 10);
+    const randomParam = () => indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.i.imagine.ts:fri:0", (10)|0 || 1);
     
     this.updateParameters({
       awareness: randomParam(), presence: randomParam(), being: randomParam(), unity: randomParam(),

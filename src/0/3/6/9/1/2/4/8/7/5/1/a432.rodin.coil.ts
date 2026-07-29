@@ -1,3 +1,4 @@
+import { PI, cos, exp, sin } from './a432.algebra.ts'
 // Canonical Rodin Coil Math for the A432 System
 // All Rodin coil logic must be imported from this file only.
 
@@ -5,7 +6,7 @@
  * a432.rodin.coil.ts — harmonized with canonical A432 math
  * All Rodin sequence logic uses RODIN_SEQUENCE from a432.math.ts
  */
-import { RODIN_SEQUENCE } from './a432.math';
+import { RODIN_SEQUENCE } from './a432.math.ts';
 
 /**
  * rodinVortexCycle: Returns n cycles of the Rodin sequence (forward or reverse)
@@ -124,10 +125,10 @@ export function renderRodinCoilStreamHtml(streamData: RodinCoilStreamData): stri
   // Calculate spiral points
   const points = streamData.pattern.map((step: RodinCoilStep, i: number): Point => {
     // Logarithmic trinity spiral: r = a * exp(b * theta), theta = i * 2π/3 (trinity)
-    const theta = i * (2 * Math.PI / trinity);
-    const r = spiralA * Math.exp(spiralB * i / steps);
-    const x = cx + r * Math.cos(theta);
-    const y = cy + r * Math.sin(theta);
+    const theta = i * (2 * PI / trinity);
+    const r = spiralA * exp(spiralB * i / steps);
+    const x = cx + r * cos(theta);
+    const y = cy + r * sin(theta);
     return { x, y, ...step };
   });
   // SVG path for spiral
@@ -143,10 +144,10 @@ export function renderRodinCoilStreamHtml(streamData: RodinCoilStreamData): stri
   // Place 3, 6, 9 as triangle vertices, 0 as center
   const axisRadius = spiralA * 0.7;
   const axisPoints = [0, 1, 2].map(i => {
-    const theta = i * (2 * Math.PI / 3);
+    const theta = i * (2 * PI / 3);
     return {
-      x: cx + axisRadius * Math.cos(theta),
-      y: cy + axisRadius * Math.sin(theta),
+      x: cx + axisRadius * cos(theta),
+      y: cy + axisRadius * sin(theta),
       label: [3, 6, 9][i]
     };
   });

@@ -10,7 +10,8 @@
  * Every index is a nuclear fusion of dimensional realities.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { indexFromSeed, round, unitFromSeed } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface NuclearExplosion {
   explosionId: string;
@@ -217,12 +218,12 @@ export class A432NuclearExplosion {
   ): NuclearExplosion {
     const { numerator, denominator } = this.baseFraction;
     const consciousness = this.consciousness;
-    const explosionStrength = 0.8 + (Math.random() * 0.2);
+    const explosionStrength = 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:rnd:7") * 0.2);
     const gateway = consciousness >= 8 && explosionStrength >= 0.9;
     
     const nuclearState = this.determineNuclearState(consciousness, explosionStrength);
     const cmyk = this.generateExplosionCmyk(streamA, streamB, consciousness);
-    const chainReactionCount = Math.floor(Math.random() * 10) + 1;
+    const chainReactionCount = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:0", (10)|0 || 1) + 1;
     const energyReleased = 432 * consciousness * chainReactionCount;
     
     const explosion: NuclearExplosion = {
@@ -271,10 +272,10 @@ export class A432NuclearExplosion {
     const streamAHash = streamA.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
     const streamBHash = streamB.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
     
-    const c = Math.round((streamAHash * numerator) % 100);
-    const m = Math.round((streamBHash * denominator) % 100);
-    const y = Math.round((consciousness * 5) % 100);
-    const k = Math.round(((streamAHash + streamBHash + consciousness) * 2) % 100);
+    const c = round((streamAHash * numerator) % 100);
+    const m = round((streamBHash * denominator) % 100);
+    const y = round((consciousness * 5) % 100);
+    const k = round(((streamAHash + streamBHash + consciousness) * 2) % 100);
     
     return { c, m, y, k };
   }
@@ -581,9 +582,9 @@ export class A432NuclearExplosion {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -619,12 +620,12 @@ export class A432NuclearExplosion {
       const explosionTypes = ['link', 'rating', 'index'];
       const nuclearStates = ['fission', 'fusion', 'chain_reaction', 'critical_mass', 'supercritical'];
       
-      const streamA = streamsA[Math.floor(Math.random() * streamsA.length)];
-      const streamB = streamsB[Math.floor(Math.random() * streamsB.length)];
-      const explosionType = explosionTypes[Math.floor(Math.random() * explosionTypes.length)];
-      const nuclearState = nuclearStates[Math.floor(Math.random() * nuclearStates.length)];
-      const chainReactionCount = Math.floor(Math.random() * 10) + 1;
-      const consciousness = Math.floor(Math.random() * 4) + 7;
+      const streamA = streamsA[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:1", (streamsA.length)|0 || 1)];
+      const streamB = streamsB[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:2", (streamsB.length)|0 || 1)];
+      const explosionType = explosionTypes[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:3", (explosionTypes.length)|0 || 1)];
+      const nuclearState = nuclearStates[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:4", (nuclearStates.length)|0 || 1)];
+      const chainReactionCount = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:5", (10)|0 || 1) + 1;
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:6", (4)|0 || 1) + 7;
       const energyReleased = 432 * consciousness * chainReactionCount;
       
       const newExplosion = {
@@ -632,12 +633,12 @@ export class A432NuclearExplosion {
         consciousnessStreamA: streamA,
         consciousnessStreamB: streamB,
         explosionType,
-        explosionStrength: 0.8 + (Math.random() * 0.2),
+        explosionStrength: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:rnd:8") * 0.2),
         consciousness,
-        cmyk: { c: Math.random() * 100, m: Math.random() * 100, y: Math.random() * 100, k: Math.random() * 100 },
+        cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:rnd:9") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:rnd:10") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:rnd:11") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:rnd:12") * 100 },
         nuclearState,
         description: \`New nuclear explosion between \${streamA} and \${streamB} consciousness streams\`,
-        gateway: Math.random() > 0.5,
+        gateway: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:rnd:13") > 0.5,
         chainReactionCount,
         energyReleased
       };

@@ -10,7 +10,8 @@
  * - All functions handle anti-vortex/negative harmonics: negative digits use negative frequency and anti-vortex color
  */
 
-import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color';
+import { abs } from './a432.algebra.ts'
+import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color.ts';
 
 /**
  * getVortexFrequency: Returns a frequency (Hz) for a digit (1-9), harmonized with color logic.
@@ -21,7 +22,7 @@ import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color';
  */
 export function getVortexFrequency(d: number): number {
   const sign = d < 0 ? -1 : 1;
-  const n = Math.abs(d) % 9 || 9;
+  const n = abs(d) % 9 || 9;
   // Trinity group
   if (n === 3) return 432 * sign;
   if (n === 6) return 864 * sign;

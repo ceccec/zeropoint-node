@@ -6,7 +6,7 @@
  * Every movement is a living act of flow, recursion, and evolution.
  */
 
-import I from './a432.i';
+import I from './a432.i.ts';
 
 export function handleMotionEvent(type: 'move' | 'tilt' | 'shake', value: number, timestamp: number = Date.now()) {
   const trinity = ['creation', 'return', 'axis'];

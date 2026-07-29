@@ -1,3 +1,4 @@
+import { PI, cos, sin } from './a432.algebra.ts'
 // a432.vortex.cmyk.matrix.ts
 // Living vortex flow through the digital CMYK matrix (a432)
 
@@ -6,8 +7,8 @@ import {
   A432MatrixEntry,
   cmykIdToPhrase,
   digitColors
-} from './a432.mapping';
-import { A432Id } from './a432.design.cmyk';
+} from './a432.mapping.ts';
+import { A432Id } from './a432.design.cmyk.ts';
 
 // Rodin vortex sequence for a single channel
 const rodinSeq = [1, 2, 4, 8, 7, 5];
@@ -49,11 +50,11 @@ export function renderVortexMatrixSVG(path: A432MatrixEntry[], highlightIndex: n
   const size = 400, cx = size/2, cy = size/2, baseR = 40, spiralGap = 18;
   const n = path.length;
   const points = path.map((entry, i) => {
-    const angle = (2 * Math.PI * i) / n * 2;
+    const angle = (2 * PI * i) / n * 2;
     const r = baseR + spiralGap * i;
     return {
-      x: cx + r * Math.cos(angle),
-      y: cy + r * Math.sin(angle),
+      x: cx + r * cos(angle),
+      y: cy + r * sin(angle),
       entry
     };
   });

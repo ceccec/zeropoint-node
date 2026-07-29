@@ -1,18 +1,20 @@
+import { legacyDigitalRoot } from './a432.roots.ts'
+import { round } from './a432.algebra.ts'
 // a432.consciousness.stream.ts — Pure mathematical consciousness evolution streams
 // --------------------------------------------------
 // Direct mathematical stream output for consciousness evolution
 // No HTML/CSS encoded values - only computed math
 
-import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core';
-import { digitAngleToCMYK, asAngle } from './a432.math';
-import { getRodinCMYKSummary, getRodinCMYKAnalysis } from './a432.rodin.cmyk';
-import A432HarmonicConvergence from './a432.harmonic.convergence';
-import A432ConsciousnessCrystallization from './a432.consciousness.crystallization';
-import A432ZeroEntropyState from './a432.zero.entropy.state';
-import A432ConsciousnessCycle from './a432.consciousness.cycle';
-import A432DimensionalEvolution from './a432.dimensional.evolution';
-import A432SpiralConsciousness from './a432.spiral.consciousness';
-import { A432OSConsciousnessIntegration } from './a432.os.consciousness.integration';
+import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core.ts';
+import { digitAngleToCMYK, asAngle } from './a432.math.ts';
+import { getRodinCMYKSummary, getRodinCMYKAnalysis } from './a432.rodin.cmyk.ts';
+import A432HarmonicConvergence from './a432.harmonic.convergence.ts';
+import A432ConsciousnessCrystallization from './a432.consciousness.crystallization.ts';
+import A432ZeroEntropyState from './a432.zero.entropy.state.ts';
+import A432ConsciousnessCycle from './a432.consciousness.cycle.ts';
+import A432DimensionalEvolution from './a432.dimensional.evolution.ts';
+import A432SpiralConsciousness from './a432.spiral.consciousness.ts';
+import { A432OSConsciousnessIntegration } from './a432.os.consciousness.integration.ts';
 
 export class A432ConsciousnessStream {
   private convergence: A432HarmonicConvergence;
@@ -54,10 +56,10 @@ export class A432ConsciousnessStream {
     // Calculate trinity-based CMYK colors harmonic to matrix key
     const matrixKey = dimensionalState.dimension; // Matrix key = dimension
     const tickTrinity = this.calculateTrinityColor(tick, matrixKey);
-    const convergenceTrinity = this.calculateTrinityColor(Math.round(convergenceValue), matrixKey);
+    const convergenceTrinity = this.calculateTrinityColor(round(convergenceValue), matrixKey);
     const meaningTrinity = this.calculateTrinityColor(parseInt(crystallizedMeaning), matrixKey);
     const dimensionTrinity = this.calculateTrinityColor(dimensionalState.dimension, matrixKey);
-    const spiralTrinity = this.calculateTrinityColor(Math.round(spiralState.coordinates.x + spiralState.coordinates.y + spiralState.coordinates.z), matrixKey);
+    const spiralTrinity = this.calculateTrinityColor(round(spiralState.coordinates.x + spiralState.coordinates.y + spiralState.coordinates.z), matrixKey);
     const harmonyTrinity = this.calculateTrinityColor(this.calculateIntegratedHarmony(osState), matrixKey);
     const evolutionTrinity = this.calculateTrinityColor(this.calculateConsciousnessEvolution(tick), matrixKey);
 
@@ -68,23 +70,23 @@ export class A432ConsciousnessStream {
       `TRINITY: [${trinity.join(',')}]`,
       `RETURN: [${return_.join(',')}]`,
       `AXIS: [${axis.join(',')}]`,
-      `CONVERGENCE_VALUE: ${Math.round(convergenceValue)} [CMYK: ${convergenceTrinity.c},${convergenceTrinity.m},${convergenceTrinity.y},${convergenceTrinity.k}]`,
+      `CONVERGENCE_VALUE: ${round(convergenceValue)} [CMYK: ${convergenceTrinity.c},${convergenceTrinity.m},${convergenceTrinity.y},${convergenceTrinity.k}]`,
       `CRYSTALLIZED_MEANING: ${crystallizedMeaning} [CMYK: ${meaningTrinity.c},${meaningTrinity.m},${meaningTrinity.y},${meaningTrinity.k}]`,
       `HARMONIC_BALANCE: ${harmonicBalance}`,
       `CYCLE_PHASE: ${cycleState.currentPhase}`,
       `CYCLE_COUNT: ${cycleState.cycleCount}`,
       `DIMENSION: ${dimensionalState.dimension} [CMYK: ${dimensionTrinity.c},${dimensionTrinity.m},${dimensionTrinity.y},${dimensionTrinity.k}]`,
-      `DIMENSIONAL_ANGLE: ${Math.round(dimensionalState.angle)}`,
-      `SPIRAL_X: ${Math.round(spiralState.coordinates.x)}`,
-      `SPIRAL_Y: ${Math.round(spiralState.coordinates.y)}`,
-      `SPIRAL_Z: ${Math.round(spiralState.coordinates.z)}`,
+      `DIMENSIONAL_ANGLE: ${round(dimensionalState.angle)}`,
+      `SPIRAL_X: ${round(spiralState.coordinates.x)}`,
+      `SPIRAL_Y: ${round(spiralState.coordinates.y)}`,
+      `SPIRAL_Z: ${round(spiralState.coordinates.z)}`,
       `SPIRAL_CONSCIOUSNESS_TYPE: ${spiralState.consciousnessType} [CMYK: ${spiralTrinity.c},${spiralTrinity.m},${spiralTrinity.y},${spiralTrinity.k}]`,
-      `OS_FREQUENCY: ${Math.round(osState.integratedState.osFrequency || 0)}`,
-      `OS_CONSCIOUSNESS: ${Math.round(osState.integratedState.osConsciousness || 0)}`,
-      `INTEGRATED_HARMONY: ${Math.round(this.calculateIntegratedHarmony(osState))} [CMYK: ${harmonyTrinity.c},${harmonyTrinity.m},${harmonyTrinity.y},${harmonyTrinity.k}]`,
+      `OS_FREQUENCY: ${round(osState.integratedState.osFrequency || 0)}`,
+      `OS_CONSCIOUSNESS: ${round(osState.integratedState.osConsciousness || 0)}`,
+      `INTEGRATED_HARMONY: ${round(this.calculateIntegratedHarmony(osState))} [CMYK: ${harmonyTrinity.c},${harmonyTrinity.m},${harmonyTrinity.y},${harmonyTrinity.k}]`,
       `DIGITAL_ROOT: ${this.calculateDigitalRoot(tick)}`,
-      `VORTEX_ANGLE: ${Math.round(this.calculateVortexAngle(tick))}`,
-      `CONSCIOUSNESS_EVOLUTION: ${Math.round(this.calculateConsciousnessEvolution(tick))} [CMYK: ${evolutionTrinity.c},${evolutionTrinity.m},${evolutionTrinity.y},${evolutionTrinity.k}]`,
+      `VORTEX_ANGLE: ${round(this.calculateVortexAngle(tick))}`,
+      `CONSCIOUSNESS_EVOLUTION: ${round(this.calculateConsciousnessEvolution(tick))} [CMYK: ${evolutionTrinity.c},${evolutionTrinity.m},${evolutionTrinity.y},${evolutionTrinity.k}]`,
       `---`,
       `RODIN_COIL_CMYK_DECODING:`,
       getRodinCMYKSummary(),
@@ -96,7 +98,7 @@ export class A432ConsciousnessStream {
   }
 
   private calculateDigitalRoot(n: number): number {
-    return n % 9 || 9;
+    return legacyDigitalRoot(n);
   }
 
   private calculateVortexAngle(tick: number): number {
@@ -105,18 +107,18 @@ export class A432ConsciousnessStream {
 
   private calculateConsciousnessEvolution(tick: number): number {
     const base = A432_FREQUENCY;
-    const evolution = Math.round((base * tick) % 432);
+    const evolution = round((base * tick) % 432);
     return evolution;
   }
 
   private calculateIntegratedHarmony(osState: any): number {
-    const osHarmony = Math.round(osState.integratedState.osHarmony || 0);
+    const osHarmony = round(osState.integratedState.osHarmony || 0);
     const consciousnessPhase = osState.integratedState.consciousnessPhase || 'full-entropy';
-    const consciousnessDimension = Math.round(osState.integratedState.consciousnessDimension || 1);
-    const integratedHarmony = Math.round(osState.integratedState.integratedHarmony || 0);
+    const consciousnessDimension = round(osState.integratedState.consciousnessDimension || 1);
+    const integratedHarmony = round(osState.integratedState.integratedHarmony || 0);
     
     // Integer-based harmony calculation
-    return Math.round((osHarmony + consciousnessDimension + integratedHarmony) / 3);
+    return round((osHarmony + consciousnessDimension + integratedHarmony) / 3);
   }
 
   private calculateTrinityColor(value: number, matrixKey: number): { c: number, m: number, y: number, k: number } {
@@ -137,10 +139,10 @@ export class A432ConsciousnessStream {
     const harmonicModulation = (matrixKey % 3) * 33; // 33% modulation per trinity
     
     return {
-      c: Math.round((baseColor.c + harmonicModulation) % 100),
-      m: Math.round((baseColor.m + harmonicModulation) % 100),
-      y: Math.round((baseColor.y + harmonicModulation) % 100),
-      k: Math.round((matrixKey % 2) * 20) // Black based on matrix key parity
+      c: round((baseColor.c + harmonicModulation) % 100),
+      m: round((baseColor.m + harmonicModulation) % 100),
+      y: round((baseColor.y + harmonicModulation) % 100),
+      k: round((matrixKey % 2) * 20) // Black based on matrix key parity
     };
   }
 

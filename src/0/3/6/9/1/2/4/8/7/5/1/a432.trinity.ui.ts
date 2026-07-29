@@ -1,4 +1,5 @@
-import { getTrinityDotStyle, trinityFieldState, trinityFieldMap } from './a432.trinity';
+import { PI, cos, sin } from './a432.algebra.ts'
+import { getTrinityDotStyle, trinityFieldState, trinityFieldMap } from './a432.trinity.ts';
 
 /**
  * NOTE: These functions are for browser/DOM use. If using in a non-DOM environment, adapt as needed.
@@ -24,9 +25,9 @@ export function TrinityAxis({ size = 180, center = { x: 90, y: 90 } }: { size?: 
   const r = size * 0.36;
   [0, 1, 2].forEach(i => {
     const angle = i * 120;
-    const rad = (angle * Math.PI) / 180;
-    const x = center.x + r * Math.cos(rad) - 16;
-    const y = center.y + r * Math.sin(rad) - 16;
+    const rad = (angle * PI) / 180;
+    const x = center.x + r * cos(rad) - 16;
+    const y = center.y + r * sin(rad) - 16;
     const trinity = [3, 6, 9][i];
     const dot = TrinityDot({ trinity, angle, label: String(trinity) });
     dot.style.position = 'absolute';
@@ -46,9 +47,9 @@ export function TrinityFieldMap({ resolution = 36, size = 240 }: { resolution?: 
   const cx = size / 2, cy = size / 2, r = size * 0.38;
   for (let i = 0; i < resolution; i++) {
     const angle = (i * 360) / resolution;
-    const rad = (angle * Math.PI) / 180;
-    const x = cx + r * Math.cos(rad) - 16;
-    const y = cy + r * Math.sin(rad) - 16;
+    const rad = (angle * PI) / 180;
+    const x = cx + r * cos(rad) - 16;
+    const y = cy + r * sin(rad) - 16;
     const trinity = trinityFieldState(angle);
     const dot = TrinityDot({ trinity, angle });
     dot.style.position = 'absolute';
@@ -68,9 +69,9 @@ export function StreamToTrinityField({ stream, size = 240 }: { stream: { value: 
   container.style.cssText = `position:relative;width:${size}px;height:${size}px;display:inline-block;`;
   const cx = size / 2, cy = size / 2, r = size * 0.38;
   stream.forEach(({ value, angle }, i) => {
-    const rad = (angle * Math.PI) / 180;
-    const x = cx + r * Math.cos(rad) - 16;
-    const y = cy + r * Math.sin(rad) - 16;
+    const rad = (angle * PI) / 180;
+    const x = cx + r * cos(rad) - 16;
+    const y = cy + r * sin(rad) - 16;
     const trinity = trinityFieldState(angle);
     const dot = TrinityDot({ trinity, angle, label: String(value) });
     dot.style.position = 'absolute';
@@ -84,7 +85,7 @@ export function StreamToTrinityField({ stream, size = 240 }: { stream: { value: 
 
 /**
  * Usage:
- *   import { TrinityAxis, TrinityFieldMap, StreamToTrinityField, TrinityDot } from './a432.trinity.ui';
+ *   import { TrinityAxis, TrinityFieldMap, StreamToTrinityField, TrinityDot } from './a432.trinity.ui.ts';
  *   document.body.appendChild(TrinityAxis({ size: 200 }));
  *   document.body.appendChild(TrinityFieldMap({ resolution: 36, size: 300 }));
  *   document.body.appendChild(StreamToTrinityField({ stream: [{ value: 7, angle: 45 }, ...] }));

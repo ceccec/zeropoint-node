@@ -14,9 +14,9 @@
  * @author A432 System
  */
 
-import { Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk';
-import { DIMENSIONS, generateCMYKMatrixHtml } from './a432.cmyk.matrix';
-import { livingPiCMYKStream } from './a432.pi';
+import { Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
+import { DIMENSIONS, generateCMYKMatrixHtml } from './a432.cmyk.matrix.ts';
+import { livingPiCMYKStream } from './a432.pi.ts';
 
 /**
  * Trigger a living CMYK stream for a given dimension

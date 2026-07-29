@@ -4,8 +4,10 @@
  * Ensures consistency and prevents mathematical errors
  */
 
+import { E as ALGEBRA_E, PI as ALGEBRA_PI, abs, log2, pow, round, sqrt } from './a432.algebra.ts'
+import { legacyDigitalRoot } from './a432.roots.ts'
 // === GOLDEN RATIO ===
-export const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2; // φ = (1 + √5)/2 ≈ 1.618033988749895
+export const GOLDEN_RATIO = (1 + sqrt(5)) / 2; // φ = (1 + √5)/2 ≈ 1.618033988749895
 export const GOLDEN_RATIO_RECIPROCAL = 1 / GOLDEN_RATIO; // 1/φ ≈ 0.618033988749895
 export const GOLDEN_RATIO_SQUARED = GOLDEN_RATIO * GOLDEN_RATIO; // φ² ≈ 2.618033988749895
 
@@ -14,19 +16,19 @@ export const FIBONACCI_SEQUENCE = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]
 export const FIBONACCI_RATIOS = FIBONACCI_SEQUENCE.slice(1).map((n, i) => n / FIBONACCI_SEQUENCE[i]);
 
 // === PI AND CIRCULAR CONSTANTS ===
-export const PI = Math.PI; // π ≈ 3.141592653589793
-export const TAU = 2 * PI; // τ = 2π ≈ 6.283185307179586
-export const PI_OVER_2 = PI / 2; // π/2 ≈ 1.5707963267948966
-export const PI_OVER_4 = PI / 4; // π/4 ≈ 0.7853981633974483
+export const PI = ALGEBRA_PI; // algebra rational π (355/113)
+export const TAU = 2 * PI; // τ = 2π
+export const PI_OVER_2 = PI / 2;
+export const PI_OVER_4 = PI / 4;
 
 // === EULER'S NUMBER ===
-export const E = Math.E; // e ≈ 2.718281828459045
-export const E_SQUARED = E * E; // e² ≈ 7.38905609893065
+export const E = ALGEBRA_E;
+export const E_SQUARED = E * E;
 
 // === SQUARE ROOTS ===
-export const SQRT_2 = Math.sqrt(2); // √2 ≈ 1.4142135623730951
-export const SQRT_3 = Math.sqrt(3); // √3 ≈ 1.7320508075688772
-export const SQRT_5 = Math.sqrt(5); // √5 ≈ 2.23606797749979
+export const SQRT_2 = sqrt(2); // √2 ≈ 1.4142135623730951
+export const SQRT_3 = sqrt(3); // √3 ≈ 1.7320508075688772
+export const SQRT_5 = sqrt(5); // √5 ≈ 2.23606797749979
 
 // === A432 FREQUENCY CONSTANTS ===
 export const A432_BASE_FREQUENCY = 432; // Hz
@@ -68,7 +70,7 @@ export const SACRED_GEOMETRY_RATIOS = {
 
 // === MATHEMATICAL FUNCTIONS ===
 export function calculateGoldenRatio(n: number): number {
-  return Math.pow(GOLDEN_RATIO, n);
+  return pow(GOLDEN_RATIO, n);
 }
 
 export function calculateFibonacciRatio(n: number): number {
@@ -77,15 +79,11 @@ export function calculateFibonacciRatio(n: number): number {
 }
 
 export function calculateDigitalRoot(n: number): number {
-  let x = Math.abs(n);
-  while (x >= 10) {
-    x = String(x).split('').reduce((a, c) => a + Number(c), 0);
-  }
-  return x;
+  return legacyDigitalRoot(n)
 }
 
 export function calculateA432Frequency(octave: number): number {
-  return A432_BASE_FREQUENCY * Math.pow(A432_OCTAVE_RATIO, octave);
+  return A432_BASE_FREQUENCY * pow(A432_OCTAVE_RATIO, octave);
 }
 
 export function calculateTrinityFrequency(base: number): number {
@@ -98,16 +96,16 @@ export function calculateVortexFrequency(base: number): number {
 
 // === RATIO VALIDATION ===
 export function isGoldenRatio(ratio: number, tolerance: number = 0.01): boolean {
-  return Math.abs(ratio - GOLDEN_RATIO) < tolerance;
+  return abs(ratio - GOLDEN_RATIO) < tolerance;
 }
 
 export function isFibonacciRatio(ratio: number, tolerance: number = 0.01): boolean {
-  return FIBONACCI_RATIOS.some(fibRatio => Math.abs(ratio - fibRatio) < tolerance);
+  return FIBONACCI_RATIOS.some(fibRatio => abs(ratio - fibRatio) < tolerance);
 }
 
 export function isA432Harmonic(frequency: number, tolerance: number = 0.01): boolean {
-  const octave = Math.log2(frequency / A432_BASE_FREQUENCY);
-  return Math.abs(octave - Math.round(octave)) < tolerance;
+  const octave = log2(frequency / A432_BASE_FREQUENCY);
+  return abs(octave - round(octave)) < tolerance;
 }
 
 // === CONSTANT EXPORTS ===

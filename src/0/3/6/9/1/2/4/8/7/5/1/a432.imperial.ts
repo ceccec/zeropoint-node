@@ -19,7 +19,7 @@ import {
   a432Frequency,
   a432HSLFromRoot,
   a432RGBFromRoot
-} from './a432.core';
+} from './a432.core.ts';
 
 // === A432 IMPERIAL CONSTANTS ===
 export const A432_IMPERIAL_CONSTANTS = {

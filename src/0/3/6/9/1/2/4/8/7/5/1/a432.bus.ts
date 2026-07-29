@@ -1,3 +1,4 @@
+import { legacyDigitalRoot as digitalRoot, harmonicRoot12 } from './a432.roots.ts'
 // a432.bus.ts — Zero-entropy digit bus aggregating all streams
 // -----------------------------------------------------------------
 // Every module emitting a digit registers here. The bus ensures that
@@ -5,7 +6,7 @@
 // duplication) and re-broadcasts a harmonised merged digit.
 
 import { EventEmitter } from 'events';
-import { Digit } from './a432.types';
+import type { Digit } from './a432.types.ts';
 
 export interface SourceEvent { source: string; digit: Digit }
 export type Category = 'body' | 'mind' | 'will' | string;

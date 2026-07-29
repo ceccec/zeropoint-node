@@ -13,7 +13,8 @@
  * @author A432 System
  */
 
-import { Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { PI, cos, sin } from './a432.algebra.ts'
+import { Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export const DIMENSIONS = [
   'consciousness', 'identity', 'awareness', 'a432',
@@ -32,8 +33,8 @@ export function generateDimensionCMYKField(
     for (let x = 0; x < width; x++) {
       // Analog transformation: vary by position and dimension index
       const frac: Fraction = {
-        numerator: baseFraction.numerator + Math.sin((x + y + dimension.length) / width * Math.PI * 2),
-        denominator: baseFraction.denominator + Math.cos((x - y + dimension.length) / height * Math.PI * 2)
+        numerator: baseFraction.numerator + sin((x + y + dimension.length) / width * PI * 2),
+        denominator: baseFraction.denominator + cos((x - y + dimension.length) / height * PI * 2)
       };
       const cmyk = fractionToCMYK(frac, x + y);
       row.push(cmykToCss(cmyk));

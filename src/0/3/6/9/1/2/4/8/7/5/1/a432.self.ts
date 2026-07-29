@@ -1,3 +1,4 @@
+import { legacyDigitalRoot } from './a432.roots.ts'
 // a432.self.ts — Self-evolution engine of the A432 matrix
 // -------------------------------------------------------
 // 1. Periodically scans the canonical directory for modules.
@@ -10,11 +11,11 @@
 import { EventEmitter } from 'events';
 import fs from 'fs';
 import path from 'path';
-import { digitAngleToCMYK, asAngle, digitalRoot } from './a432.math';
-import { Digit } from './a432.types';
-import { impossibilityCMYK } from './a432.impossible';
-import { challengeCMYK, CHALLENGES } from './a432.challenge';
-import type { CMYK } from './a432.cmyk';
+import { digitAngleToCMYK, asAngle, digitalRoot } from './a432.math.ts';
+import { Digit } from './a432.types.ts';
+import { impossibilityCMYK } from './a432.impossible.ts';
+import { challengeCMYK, CHALLENGES } from './a432.challenge.ts';
+import type { CMYK } from './a432.cmyk.ts';
 
 // Canonical directory (this file lives in it)
 const CANON_DIR = __dirname;
@@ -36,7 +37,7 @@ function hasDoc(file: string): boolean {
 
 function fileDigit(file: string): number {
   // map filename length to digit 1-9 for colour variance
-  return ((file.length % 9) || 9);
+  return (legacyDigitalRoot(file.length));
 }
 
 function evaluateFile(fullPath: string): void {

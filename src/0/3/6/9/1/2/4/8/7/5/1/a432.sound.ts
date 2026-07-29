@@ -1,7 +1,7 @@
 // a432.sound.ts — Centralized A432 sound/music logic (DRY)
 //----------------------------------------------------------
-import { Digit } from './a432.types';
-import { frequencyForDigit } from './a432.math';
+import { Digit } from './a432.types.ts';
+import { frequencyForDigit } from './a432.math.ts';
 
 export const A432_FREQUENCY = 432;
 

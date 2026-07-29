@@ -1,10 +1,11 @@
+import { abs } from './a432.algebra.ts'
 // a432.yin.yang.ts
 // Living Yin-Yang module for the A432 matrix (fractional harmonics)
 
-import { vortexStream } from './a432.matrix';
-import { digitAngleToCMYK, type CMYK } from './a432.cmyk';
-import { TRINITY_POLARITY, asAngle } from './a432.math';
-import { AngleDeg, Digit } from './a432.types';
+import { vortexStream } from './a432.matrix.ts';
+import { digitAngleToCMYK, type CMYK } from './a432.cmyk.ts';
+import { TRINITY_POLARITY, asAngle } from './a432.math.ts';
+import { AngleDeg, Digit } from './a432.types.ts';
 
 export type Fraction = { numerator: number; denominator: number };
 
@@ -33,7 +34,7 @@ export function subtractFractions(a: Fraction, b: Fraction): Fraction {
 }
 
 export function simplifyFraction(f: Fraction): Fraction {
-  const gcd = (a: number, b: number): number => b === 0 ? Math.abs(a) : gcd(b, a % b);
+  const gcd = (a: number, b: number): number => b === 0 ? abs(a) : gcd(b, a % b);
   const d = gcd(f.numerator, f.denominator);
   return { numerator: f.numerator / d, denominator: f.denominator / d };
 }

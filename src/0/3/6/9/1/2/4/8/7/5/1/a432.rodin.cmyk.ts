@@ -1,8 +1,10 @@
+import { legacyDigitalRoot } from './a432.roots.ts'
+import { round } from './a432.algebra.ts'
 // a432.rodin.cmyk.ts — Rodin Coil CMYK Decoder
 // --------------------------------------------------
 // Decodes Rodin Coil pattern 0/0\3\6\9/1\2\4\8/7/5/1 into perfect CMYK colors
 
-import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core';
+import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core.ts';
 
 export class A432RodinCMYK {
   private pattern: string;
@@ -95,7 +97,7 @@ export class A432RodinCMYK {
   }
 
   private calculateDigitalRoot(n: number): number {
-    return n % 9 || 9;
+    return legacyDigitalRoot(n);
   }
 
   public getDecodedColors(): { position: number, digit: number, cmyk: { c: number, m: number, y: number, k: number } }[] {
@@ -132,7 +134,7 @@ export class A432RodinCMYK {
     const totalK = this.decodedColors.reduce((sum, c) => sum + c.cmyk.k, 0);
     
     // A432 harmonic calculation
-    return Math.round((totalC + totalM + totalY + totalK) / (this.decodedColors.length * 4) * 100);
+    return round((totalC + totalM + totalY + totalK) / (this.decodedColors.length * 4) * 100);
   }
 }
 

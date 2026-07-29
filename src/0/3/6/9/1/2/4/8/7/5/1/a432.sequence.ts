@@ -9,6 +9,7 @@
  * @author A432 System
  */
 
+import { min } from './a432.algebra.ts'
 import { 
   A432_FREQUENCY, 
   A432_TRINITY, 
@@ -19,7 +20,7 @@ import {
   a432Frequency,
   a432HSLFromRoot,
   a432RGBFromRoot
-} from './a432.core';
+} from './a432.core.ts';
 
 // === A432 SEQUENCE CONSTANTS ===
 export const A432_SEQUENCE_CONSTANTS = {
@@ -429,7 +430,7 @@ export function generateHarmonicStream(): Fraction[] {
 
 // Harmonization logic: combine two streams by adding fractions
 export function harmonizeStreams(a: Fraction[], b: Fraction[]): Fraction[] {
-  const minLength = Math.min(a.length, b.length);
+  const minLength = min(a.length, b.length);
   const result: Fraction[] = [];
   for (let i = 0; i < minLength; i++) {
     result.push({

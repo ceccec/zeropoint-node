@@ -5,7 +5,8 @@
  * All logic uses canonical A432 math, sequence, and color logic.
  */
 
-import { A432_SEQUENCE, digitAngleToCMYK, cmykToCss } from './a432.math';
+import { PI, abs, cos, sin } from './a432.algebra.ts'
+import { A432_SEQUENCE, digitAngleToCMYK, cmykToCss } from './a432.math.ts';
 
 /**
  * Generator: yields multidimensional points for the stream vortex.
@@ -25,13 +26,13 @@ export function* streamOfDimensions(length: number = 11, radius: number = 120, c
   const now = Date.now();
   for (let i = 0; i < length; i++) {
     const dim = A432_SEQUENCE[i % A432_SEQUENCE.length];
-    const angle = (2 * Math.PI * i) / length;
-    const x = centerX + radius * Math.cos(angle);
-    const y = centerY + radius * Math.sin(angle);
-    const z = centerZ + radius * Math.sin(angle * 2);
+    const angle = (2 * PI * i) / length;
+    const x = centerX + radius * cos(angle);
+    const y = centerY + radius * sin(angle);
+    const z = centerZ + radius * sin(angle * 2);
     const color = digitAngleToCMYK(dim, (i * 36) % 360);
     const time = now + i * 432;
-    const resonance = Math.abs(Math.sin(angle));
+    const resonance = abs(sin(angle));
     const meaning = `Dimension ${dim}: Harmonic state in the living stream.`;
     const html = `<div style=\"width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.1em;color:#fff;border-radius:10px;position:absolute;left:${x}px;top:${y}px;\">${dim}</div>`;
     yield { dim, x, y, z, color, time, resonance, meaning, html };

@@ -4,6 +4,7 @@
  * The sequence /0\3\6\9/1\2/4/8/7/5/1\ as sacred geometric blueprint
  */
 
+import { abs, floor } from './a432.algebra.ts'
 // === SACRED GEOMETRY INTERFACES ===
 export interface VortexSequence {
   digit: number;
@@ -187,7 +188,7 @@ export class A432SacredGeometrySystem {
 
   // === DIGITAL ROOT CALCULATION ===
   calculateDigitalRoot(n: number): number {
-    let x = Math.abs(n);
+    let x = abs(n);
     while (x >= 10) {
       x = String(x).split('').reduce((a, c) => a + Number(c), 0);
     }
@@ -281,7 +282,7 @@ export class A432SacredGeometrySystem {
     this.currentPhase = MERKABA_PHASES.SPINNING;
     this.tetrahedronRotation += 33.33; // 1/3 of 100 degrees
     this.energyField *= 1.618; // Golden ratio
-    this.consciousnessLevel = this.calculateDigitalRoot(Math.floor(this.consciousnessLevel * 2));
+    this.consciousnessLevel = this.calculateDigitalRoot(floor(this.consciousnessLevel * 2));
     
     return this.getMerkabaState();
   }
@@ -290,7 +291,7 @@ export class A432SacredGeometrySystem {
     this.currentPhase = MERKABA_PHASES.MATERIALIZATION;
     this.tetrahedronRotation += 66.66; // 2/3 of 100 degrees
     this.energyField *= 2.718; // Euler's number
-    this.consciousnessLevel = this.calculateDigitalRoot(Math.floor(this.consciousnessLevel * 3));
+    this.consciousnessLevel = this.calculateDigitalRoot(floor(this.consciousnessLevel * 3));
     
     return this.getMerkabaState();
   }

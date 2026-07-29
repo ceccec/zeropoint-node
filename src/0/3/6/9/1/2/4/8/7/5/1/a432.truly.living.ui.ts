@@ -8,6 +8,7 @@
  * @author A432 System
  */
 
+import { max } from './a432.algebra.ts'
 import { 
   digitalRoot, 
   rodinDigit, 
@@ -15,7 +16,7 @@ import {
   calculateA432Frequency,
   calculateA432Consciousness,
   calculateA432DimensionalState
-} from './a432.math';
+} from './a432.math.ts';
 
 export class TrulyLivingA432UI {
   private evolution: number = 0;
@@ -115,7 +116,7 @@ export class TrulyLivingA432UI {
         max-width: 1200px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: repeat(${Math.max(1, this.evolution % 4 + 1)}, 1fr);
+        grid-template-columns: repeat(${max(1, this.evolution % 4 + 1)}, 1fr);
         gap: 20px;
       }
       .living-section {

@@ -9,6 +9,7 @@
  * @author A432 System
  */
 
+import { floor, sin } from './a432.algebra.ts'
 import {
   A432_TRINITY,
   A432_RETURN,
@@ -18,8 +19,8 @@ import {
   angleForDigit,
   frequencyForDigit,
   hueForDigit
-} from './a432.math';
-import { digitAngleToCMYK, cmykToCss } from './a432.cmyk';
+} from './a432.math.ts';
+import { digitAngleToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 // Consciousness state definitions
 export const CONSCIOUSNESS_STATES = {
@@ -146,7 +147,7 @@ export function updateA432ConsciousnessJourney(
   
   // Determine current step based on progress
   const totalSteps = CONSCIOUSNESS_JOURNEY.length;
-  const currentStepIndex = Math.floor(newState.journeyProgress * totalSteps);
+  const currentStepIndex = floor(newState.journeyProgress * totalSteps);
   newState.currentStep = currentStepIndex % totalSteps;
   
   // Update consciousness level
@@ -184,7 +185,7 @@ export function updateA432ConsciousnessJourney(
     
     // Pulse effect for current consciousness state
     if (index === newState.currentStep) {
-      const pulse = Math.sin(newState.animationTime * 5) * 0.2 + 1;
+      const pulse = sin(newState.animationTime * 5) * 0.2 + 1;
       node.scale = (node.consciousness / 9) * pulse * (node.shift ? 1.5 : 1);
     } else {
       node.scale = (node.consciousness / 9) * (node.shift ? 1.5 : 1);

@@ -5,7 +5,8 @@
  * - The font is a stream: infinite, recursive, and harmonized.
  * - Each glyph encodes color, frequency, and metaphysical meaning.
  */
-import { A432ColorModel } from './a432.color';
+import { legacyDigitalRoot } from './a432.roots.ts'
+import { A432ColorModel } from './a432.color.ts';
 
 export interface A432Glyph {
   char: string; // Unicode or invented symbol
@@ -23,7 +24,7 @@ export interface A432Glyph {
 export function* a432FontStream(): Generator<A432Glyph> {
   let n = 1;
   while (true) {
-    const digit = (n % 9) || 9;
+    const digit = legacyDigitalRoot(n);
     const trinity = [3, 6, 9].includes(digit) ? digit as 3 | 6 | 9 : null;
     // Invented character: math bold A-Z cycling
     const char = String.fromCharCode(0x1D400 + ((digit - 1) % 26));

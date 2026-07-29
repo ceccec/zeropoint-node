@@ -9,6 +9,7 @@
  * Source: Marko Rodin Special Edition, Chapter 5
  */
 
+import { legacyDigitalRoot } from './a432.roots.ts'
 /**
  * a432MobiusCircuits: Returns the three Mobius circuits as arrays.
  * Left: [1,4,7], Right: [2,5,8], Gap: [3,6,9]
@@ -44,7 +45,7 @@ export function a432DiamondFacets(facets: number = 9): number[] {
   // Each facet is a digit, reflecting the primal point
   const result = [];
   for (let i = 1; i <= facets; i++) {
-    result.push(i % 9 === 0 ? 9 : i % 9);
+    result.push(legacyDigitalRoot(i));
   }
   return result;
 }

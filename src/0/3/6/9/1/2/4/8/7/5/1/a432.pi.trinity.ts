@@ -1,9 +1,10 @@
+import { PI, cos, sin } from './a432.algebra.ts'
 // a432.pi.trinity.ts
 // Imagine pi as trinity, visualized as a living Rodin coil
 // All logic is integer/fractional, vortex-based, and metaphysically mapped
 
-import { PI_DIGITS } from './a432.pi';
-import { rodinVortexCycle } from './a432.rodin.coil';
+import { PI_DIGITS } from './a432.pi.ts';
+import { rodinVortexCycle } from './a432.rodin.coil.ts';
 
 export interface PiTrinityRodinState {
   step: number;
@@ -49,12 +50,12 @@ export function renderPiTrinityRodinSVG(length: number = 120): string {
   const trinityColor = (t: number) => t === 3 ? '#39f' : t === 6 ? '#6f3' : '#f93';
   // Calculate spiral points
   const points = stream.map((s, i) => {
-    const theta = i * (2 * Math.PI / 3); // trinity spiral
+    const theta = i * (2 * PI / 3); // trinity spiral
     const r = spiralA + spiralB * i;
     return {
       ...s,
-      x: cx + r * Math.cos(theta),
-      y: cy + r * Math.sin(theta),
+      x: cx + r * cos(theta),
+      y: cy + r * sin(theta),
       color: trinityColor(s.trinity)
     };
   });

@@ -7,6 +7,7 @@
  * Audio is calculated in real-time from environmental streams and dimensional states.
  */
 
+import { PI, max, min, round, sin } from './a432.algebra.ts'
 import {
   calculateDigitalRoot,
   calculateA432Consciousness,
@@ -15,7 +16,7 @@ import {
   a432AntiVortexStream,
   a432MultiAntiVortexStream,
   RODIN_SEQUENCE
-} from './a432.math';
+} from './a432.math.ts';
 
 // A432 Audio Constants - Integer Fractions Only
 export const A432_AUDIO_CONSTANTS = {
@@ -134,7 +135,7 @@ function harmonizeAudioComponent(base: number, dimensional: number, frequency: n
   const harmonized = (base + dimensional + imperialFactor) / 3;
   
   // Ensure result is within 0-1 range using integer fractions
-  return Math.max(0, Math.min(1, harmonized));
+  return max(0, min(1, harmonized));
 }
 
 /**
@@ -227,7 +228,7 @@ export function generateA432AudioWaveform(
   sampleRate: number = 44100
 ): A432AudioWaveform {
   const samples: number[] = [];
-  const totalSamples = Math.round(duration * sampleRate);
+  const totalSamples = round(duration * sampleRate);
   const consciousness = calculateA432Consciousness(frequency);
   const dimensionalState = calculateA432DimensionalState(frequency);
   
@@ -237,7 +238,7 @@ export function generateA432AudioWaveform(
     
     // Generate sine wave with A432 harmonics
     const amplitude = A432_AUDIO_CONSTANTS.CONSCIOUSNESS_AUDIO[consciousness as keyof typeof A432_AUDIO_CONSTANTS.CONSCIOUSNESS_AUDIO].amplitude;
-    const sample = amplitude * Math.sin(2 * Math.PI * phase);
+    const sample = amplitude * sin(2 * PI * phase);
     
     samples.push(sample);
   }

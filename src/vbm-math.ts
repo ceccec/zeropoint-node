@@ -1,16 +1,12 @@
 /**
  * Vortex Based Mathematics (VBM) - TypeScript Implementation
  * Based on Marko Rodin's mathematical discoveries
- * 
- * Core concepts extracted from VBM theory:
- * - Digital root calculations (mod 9 arithmetic)
- * - The 1-2-4-8-7-5 Mobius Circuit (doubling sequence)
- * - The 3-6-9 Trinity (Spirit numbers)
- * - Torus number mapping
- * - Decoqubit calculations
- * - Polar number mates
- * - Three family number groups
+ *
+ * Wave 10: digitalRoot bridges to kernel legacy adapter (0→0).
  */
+
+import { abs, pow } from './0/algebra.ts'
+import { legacyDigitalRoot } from './0/3/6/9/1/2/4/8/7/5/1/a432.roots.ts'
 
 export class VortexMath {
     
@@ -20,26 +16,14 @@ export class VortexMath {
      * Equivalent to: n === 0 ? 0 : 1 + (n - 1) % 9
      */
     static digitalRoot(n: number): number {
-        if (n === 0) return 0;
-        if (n < 0) n = Math.abs(n);
-        
-        while (n >= 10) {
-            let sum = 0;
-            while (n > 0) {
-                sum += n % 10;
-                n = Math.floor(n / 10);
-            }
-            n = sum;
-        }
-        return n;
+        return legacyDigitalRoot(abs(n))
     }
 
     /**
      * Fast digital root calculation using modular arithmetic
      */
     static digitalRootFast(n: number): number {
-        if (n === 0) return 0;
-        return 1 + (Math.abs(n) - 1) % 9;
+        return legacyDigitalRoot(abs(n))
     }
 
     /**
@@ -49,7 +33,7 @@ export class VortexMath {
     static generateDoublingSequence(length: number = 12): number[] {
         const sequence: number[] = [];
         for (let i = 0; i < length; i++) {
-            const powerOf2 = Math.pow(2, i);
+            const powerOf2 = pow(2, i);
             sequence.push(this.digitalRoot(powerOf2));
         }
         return sequence;
@@ -220,7 +204,7 @@ export class VortexMath {
     static powerOfTenPattern(maxPower: number = 10): Array<{power: number, value: number, digitalRoot: number}> {
         const pattern: Array<{power: number, value: number, digitalRoot: number}> = [];
         for (let i = 0; i <= maxPower; i++) {
-            const value = Math.pow(10, i);
+            const value = pow(10, i);
             pattern.push({
                 power: i,
                 value,

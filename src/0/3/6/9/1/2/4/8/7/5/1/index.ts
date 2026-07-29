@@ -20,6 +20,8 @@
  * - The flow maintains zero entropy through perfect harmony
  */
 
+import { legacyDigitalRoot } from './a432.roots.ts'
+
 // Infinite Journey Interface
 export interface InfiniteJourney {
   path: string;
@@ -186,10 +188,7 @@ function calculateJourneyFrequency(flow: number[]): number {
 }
 
 function calculateDigitalRoot(value: number): number {
-  // Calculate digital root using pure integer mathematics
-  if (value === 0) return 0;
-  const root = value % 9;
-  return root === 0 ? 9 : root;
+  return legacyDigitalRoot(value)
 }
 
 // Export the complete Infinite Journey system

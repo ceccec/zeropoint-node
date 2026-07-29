@@ -1,10 +1,11 @@
+import { PI, cos, sin } from './a432.algebra.ts'
 // a432.matrix.ts
 // Canonical matrix-based vortex mathematics and visualization helpers
 // Implements: Rodin 7x7 matrix, trinity/axis overlays, toroidal/funnel mapping, and extension points for 3D animation.
 
-import { digitAngleToCMYK, type CMYK } from './a432.cmyk';
-import { TRINITY_AXIS, RODIN_SEQUENCE, cycleStream, TRINITY_POLARITY, asAngle, type AngleDeg } from './a432.math';
-import { Digit, asDigit } from './a432.types';
+import { digitAngleToCMYK, type CMYK } from './a432.cmyk.ts';
+import { TRINITY_AXIS, RODIN_SEQUENCE, cycleStream, TRINITY_POLARITY, asAngle, type AngleDeg } from './a432.math.ts';
+import { Digit, asDigit } from './a432.types.ts';
 
 /**
  * rodinMatrix7x7: Generates a 7x7 matrix of the Rodin sequence, showing all phase relationships.
@@ -47,11 +48,11 @@ export function mapMatrixToTorus(matrix: number[][], R: number, r: number): Arra
   const coords = [];
   for (let row = 0; row < 7; row++) {
     for (let col = 0; col < 7; col++) {
-      const theta = (row / 7) * 2 * Math.PI;
-      const phi = (col / 7) * 2 * Math.PI;
-      const x = (R + r * Math.cos(phi)) * Math.cos(theta);
-      const y = (R + r * Math.cos(phi)) * Math.sin(theta);
-      const z = r * Math.sin(phi);
+      const theta = (row / 7) * 2 * PI;
+      const phi = (col / 7) * 2 * PI;
+      const x = (R + r * cos(phi)) * cos(theta);
+      const y = (R + r * cos(phi)) * sin(theta);
+      const z = r * sin(phi);
       coords.push({x, y, z, value: matrix[row][col], row, col});
     }
   }

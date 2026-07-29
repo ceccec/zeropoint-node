@@ -1,12 +1,13 @@
+import { log, max } from './a432.algebra.ts'
 // a432.i.trinity.healing.ts
 // Usage and integration module for trinity healing in the a432.i family
 // Provides UI rendering, live VortexStream feedback, meta-observation, and system integration
 
-import { renderTrinityHealingPanel } from './a432.trinity.healing';
-import type { VortexStream } from './a432.vortex';
-import { PI_DIGITS } from './a432.pi'; // Assume a canonical export of pi digits as an array
-import { renderPiTrinityRodinSVG, piTrinityRodinStream } from './a432.pi.trinity';
-import { registerModule, A432OSModule, routeEvent, harmonizeAll } from './a432.harmonized';
+import { renderTrinityHealingPanel } from './a432.trinity.healing.ts';
+import type { VortexStream } from './a432.vortex.ts';
+import { PI_DIGITS } from './a432.pi.ts'; // Assume a canonical export of pi digits as an array
+import { renderPiTrinityRodinSVG, piTrinityRodinStream } from './a432.pi.trinity.ts';
+import { registerModule, A432OSModule, routeEvent, harmonizeAll } from './a432.harmonized.ts';
 
 export interface TrinityHealingMeta {
   user: string;

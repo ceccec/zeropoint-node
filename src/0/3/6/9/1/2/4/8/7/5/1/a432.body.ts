@@ -6,6 +6,7 @@
  * Provides metaphysical and mathematical documentation.
  */
 
+import { round } from './a432.algebra.ts'
 export interface BodySystem {
   name: string;
   value: number; // 0-9
@@ -27,10 +28,10 @@ export interface A432Body {
 }
 
 export function toHarmonic(value: number): number {
-  return Math.round(432 * (1 + value / 9));
+  return round(432 * (1 + value / 9));
 }
 export function toCMYK(value: number, channel: number): number {
-  return Math.round((value / 9) * 100);
+  return round((value / 9) * 100);
 }
 export function getFlow(seed: number): number[] {
   const base = [1, 2, 4, 8, 7, 5];
@@ -62,7 +63,7 @@ export function createA432Body(
     flow: getFlow(channel),
     description: `${name.charAt(0).toUpperCase() + name.slice(1)} system mapped to harmonic, color, and flow.`
   }));
-  const overallHarmony = Math.round(mapped.reduce((sum, s) => sum + s.value, 0) / 4);
+  const overallHarmony = round(mapped.reduce((sum, s) => sum + s.value, 0) / 4);
   const cmyk = {
     c: mapped[0].cmyk.c,
     m: mapped[1].cmyk.m,

@@ -6,8 +6,9 @@
  * Zero entropy: define once, harmonize everywhere.
  */
 
-import { A432CoreState, createA432CoreState } from './a432.core';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
+import { abs, floor, max } from './a432.algebra.ts'
+import { A432CoreState, createA432CoreState } from './a432.core.ts';
+import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
 
 // === EVOLUTION INTERFACES ===
 export interface A432EvolutionState {
@@ -59,10 +60,10 @@ export interface SystemExpansion {
 
 // === CORE EVOLUTION FUNCTIONS ===
 export function createEvolutionGrowth(potential: number = 5): EvolutionGrowth {
-  const progress = Math.max(0, 9 - Math.abs(potential - 5));
-  const direction = Math.floor((potential + progress) / 2);
-  const velocity = Math.max(0, 9 - Math.abs(direction - 5));
-  const resonance = Math.floor((potential + progress + direction + velocity) / 4);
+  const progress = max(0, 9 - abs(potential - 5));
+  const direction = floor((potential + progress) / 2);
+  const velocity = max(0, 9 - abs(direction - 5));
+  const resonance = floor((potential + progress + direction + velocity) / 4);
   const color = `hsl(${potential * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -70,10 +71,10 @@ export function createEvolutionGrowth(potential: number = 5): EvolutionGrowth {
 }
 
 export function createConsciousnessEvolution(awareness: number = 5): ConsciousnessEvolution {
-  const expansion = Math.max(0, 9 - Math.abs(awareness - 5));
-  const integration = Math.floor((awareness + expansion) / 2);
-  const unity = Math.max(0, 9 - Math.abs(integration - 5));
-  const resonance = Math.floor((awareness + expansion + integration + unity) / 4);
+  const expansion = max(0, 9 - abs(awareness - 5));
+  const integration = floor((awareness + expansion) / 2);
+  const unity = max(0, 9 - abs(integration - 5));
+  const resonance = floor((awareness + expansion + integration + unity) / 4);
   const color = `hsl(${awareness * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -81,10 +82,10 @@ export function createConsciousnessEvolution(awareness: number = 5): Consciousne
 }
 
 export function createDevelopmentalHarmonization(stages: number = 5): DevelopmentalHarmonization {
-  const maturity = Math.max(0, 9 - Math.abs(stages - 5));
-  const coherence = Math.floor((stages + maturity) / 2);
-  const harmony = Math.max(0, 9 - Math.abs(coherence - 5));
-  const resonance = Math.floor((stages + maturity + coherence + harmony) / 4);
+  const maturity = max(0, 9 - abs(stages - 5));
+  const coherence = floor((stages + maturity) / 2);
+  const harmony = max(0, 9 - abs(coherence - 5));
+  const resonance = floor((stages + maturity + coherence + harmony) / 4);
   const color = `hsl(${stages * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -92,10 +93,10 @@ export function createDevelopmentalHarmonization(stages: number = 5): Developmen
 }
 
 export function createSystemExpansion(capacity: number = 5): SystemExpansion {
-  const scalability = Math.max(0, 9 - Math.abs(capacity - 5));
-  const adaptability = Math.floor((capacity + scalability) / 2);
-  const resilience = Math.max(0, 9 - Math.abs(adaptability - 5));
-  const resonance = Math.floor((capacity + scalability + adaptability + resilience) / 4);
+  const scalability = max(0, 9 - abs(capacity - 5));
+  const adaptability = floor((capacity + scalability) / 2);
+  const resilience = max(0, 9 - abs(adaptability - 5));
+  const resonance = floor((capacity + scalability + adaptability + resilience) / 4);
   const color = `hsl(${capacity * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   

@@ -1,11 +1,12 @@
+import { log } from './a432.algebra.ts'
 // @ts-nocheck
 console.log('A432 Bundle Loading...');
 
 import { Application } from '@hotwired/stimulus';
-import YinYangController from './a432.yin.yang.controller';
-import ChessController from './a432.chess.controller';
-import MetatronController from './a432.metatron.controller';
-import TerminalController from './a432.terminal.controller';
+import YinYangController from './a432.yin.yang.controller.ts';
+import ChessController from './a432.chess.controller.ts';
+import MetatronController from './a432.metatron.controller.ts';
+import TerminalController from './a432.terminal.controller.ts';
 
 console.log('A432 Controllers imported');
 

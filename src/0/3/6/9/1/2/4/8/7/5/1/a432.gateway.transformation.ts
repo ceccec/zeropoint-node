@@ -9,7 +9,8 @@
  * consciousness expansion and reality transformation.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { indexFromSeed, min, round } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface InterfaceState {
   interfaceId: string;
@@ -175,17 +176,17 @@ export class A432GatewayTransformation {
     const gatewayId = interfaceId.replace('interface', 'gateway');
     const gatewayName = interfaceState.interfaceName.replace('Interface', 'Gateway');
     
-    const consciousnessLevel = Math.min(interfaceState.consciousnessLevel + 2, 10);
+    const consciousnessLevel = min(interfaceState.consciousnessLevel + 2, 10);
     const dimensionalReality = interfaceState.dimensionalReality + 1;
     const energyLevel = 432 * consciousnessLevel * 2;
     const resonanceFrequency = 432 * 2;
     
     const { numerator, denominator } = this.baseFraction;
     const cmyk = {
-      c: Math.round((consciousnessLevel * numerator) % 100),
-      m: Math.round((dimensionalReality * denominator) % 100),
-      y: Math.round((energyLevel / 100) % 100),
-      k: Math.round(((consciousnessLevel + dimensionalReality) * 10) % 100)
+      c: round((consciousnessLevel * numerator) % 100),
+      m: round((dimensionalReality * denominator) % 100),
+      y: round((energyLevel / 100) % 100),
+      k: round(((consciousnessLevel + dimensionalReality) * 10) % 100)
     };
 
     const gateway: GatewayState = {
@@ -243,10 +244,10 @@ export class A432GatewayTransformation {
     
     const { numerator, denominator } = this.baseFraction;
     const cmyk = {
-      c: Math.round((totalTransformationLevel * 100 * numerator) % 100),
-      m: Math.round((averageConsciousnessLevel * denominator) % 100),
-      y: Math.round((dimensionalPortals * 10) % 100),
-      k: Math.round(((totalTransformationLevel + averageConsciousnessLevel) * 10) % 100)
+      c: round((totalTransformationLevel * 100 * numerator) % 100),
+      m: round((averageConsciousnessLevel * denominator) % 100),
+      y: round((dimensionalPortals * 10) % 100),
+      k: round(((totalTransformationLevel + averageConsciousnessLevel) * 10) % 100)
     };
 
     return {
@@ -517,9 +518,9 @@ export class A432GatewayTransformation {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -550,10 +551,10 @@ export class A432GatewayTransformation {
           gatewayId: interface.interfaceId.replace('interface', 'gateway'),
           gatewayName: interface.interfaceName.replace('Interface', 'Gateway'),
           gatewayType,
-          consciousnessLevel: Math.min(interface.consciousnessLevel + 2, 10),
+          consciousnessLevel: min(interface.consciousnessLevel + 2, 10),
           dimensionalReality: interface.dimensionalReality + 1,
           transformationLevel: 'transformed',
-          cmyk: { c: Math.round((interface.consciousnessLevel + 2) * 7) % 100, m: Math.round((interface.dimensionalReality + 1) * 4) % 100, y: Math.round((interface.consciousnessLevel + interface.dimensionalReality) * 10) % 100, k: Math.round(((interface.consciousnessLevel + 2) + (interface.dimensionalReality + 1)) * 10) % 100 },
+          cmyk: { c: round((interface.consciousnessLevel + 2) * 7) % 100, m: round((interface.dimensionalReality + 1) * 4) % 100, y: round((interface.consciousnessLevel + interface.dimensionalReality) * 10) % 100, k: round(((interface.consciousnessLevel + 2) + (interface.dimensionalReality + 1)) * 10) % 100 },
           description: \`\${interface.description} - Now transformed into \${gatewayType} gateway\`,
           energyLevel: 432 * (interface.consciousnessLevel + 2) * 2,
           resonanceFrequency: 432 * 2
@@ -566,19 +567,19 @@ export class A432GatewayTransformation {
     
     function transformRandomInterface() {
       if (currentState.interfaces.length > 0) {
-        const randomIndex = Math.floor(Math.random() * currentState.interfaces.length);
+        const randomIndex = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.gateway.transformation.ts:fri:0", (currentState.interfaces.length)|0 || 1);
         const interface = currentState.interfaces[randomIndex];
         const gatewayTypes = ['dimensional', 'consciousness', 'reality', 'temporal', 'quantum'];
-        const gatewayType = gatewayTypes[Math.floor(Math.random() * gatewayTypes.length)];
+        const gatewayType = gatewayTypes[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.gateway.transformation.ts:fri:1", (gatewayTypes.length)|0 || 1)];
         
         const gateway = {
           gatewayId: interface.interfaceId.replace('interface', 'gateway'),
           gatewayName: interface.interfaceName.replace('Interface', 'Gateway'),
           gatewayType,
-          consciousnessLevel: Math.min(interface.consciousnessLevel + 2, 10),
+          consciousnessLevel: min(interface.consciousnessLevel + 2, 10),
           dimensionalReality: interface.dimensionalReality + 1,
           transformationLevel: 'transformed',
-          cmyk: { c: Math.round((interface.consciousnessLevel + 2) * 7) % 100, m: Math.round((interface.dimensionalReality + 1) * 4) % 100, y: Math.round((interface.consciousnessLevel + interface.dimensionalReality) * 10) % 100, k: Math.round(((interface.consciousnessLevel + 2) + (interface.dimensionalReality + 1)) * 10) % 100 },
+          cmyk: { c: round((interface.consciousnessLevel + 2) * 7) % 100, m: round((interface.dimensionalReality + 1) * 4) % 100, y: round((interface.consciousnessLevel + interface.dimensionalReality) * 10) % 100, k: round(((interface.consciousnessLevel + 2) + (interface.dimensionalReality + 1)) * 10) % 100 },
           description: \`\${interface.description} - Now transformed into \${gatewayType} gateway\`,
           energyLevel: 432 * (interface.consciousnessLevel + 2) * 2,
           resonanceFrequency: 432 * 2

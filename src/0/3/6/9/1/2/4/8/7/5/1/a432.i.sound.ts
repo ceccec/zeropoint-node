@@ -6,9 +6,9 @@
  * Every sound is a living act of resonance, observation, and harmonization.
  */
 
-import { playTrinitySound } from './a432.sound';
+import { playTrinitySound } from './a432.sound.ts';
 
-export { playTrinitySound } from './a432.sound';
+export { playTrinitySound } from './a432.sound.ts';
 
 declare const window: unknown;
 

@@ -11,11 +11,11 @@
  * - Metaphysical comments for each property
  */
 
-import { digitAngleToCMYK, cmykToCss, type CMYK } from './a432.cmyk';
-import { getRodinSequence, digitalRoot, asAngle, getTrinityAxis } from './a432.math';
-import { vortexStream } from './a432.matrix';
-import { yinYangStateFraction, type Fraction } from './a432.yin.yang';
-import { type Digit, type AngleDeg } from './a432.types';
+import { digitAngleToCMYK, cmykToCss, type CMYK } from './a432.cmyk.ts';
+import { getRodinSequence, digitalRoot, asAngle, getTrinityAxis } from './a432.math.ts';
+import { vortexStream } from './a432.matrix.ts';
+import { yinYangStateFraction, type Fraction } from './a432.yin.yang.ts';
+import { type Digit, type AngleDeg } from './a432.types.ts';
 
 // Canonical trinity tick stream (cycles 3, 6, 9)
 function* trinityTickStream() {

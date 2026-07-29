@@ -1,55 +1,56 @@
+import { indexFromSeed, round, unitFromSeed } from './a432.algebra.ts'
 // a432.ui.ts — Umbrella UI controller for the living matrix
 // ---------------------------------------------------------
 // Listens to breathing and self-evolution streams, fuses them into final
 // CMYK pulses, and paints them onto the document background.
 // Only runs in browser (guards against Node).
 
-import { matrixEmitter, startSelfEvolution } from './a432.self';
-import { breathEmitter, startBreathing } from './a432.breathe';
-import { pulseEmitter } from './a432.i.pulse';
-import { clickEmitter } from './a432.i.click';
-import { challengeCMYK } from './a432.challenge';
-import { digitAngleToCMYK, asAngle, xorDigit } from './a432.math';
-import type { CMYK } from './a432.cmyk';
-import { Digit } from './a432.types';
-import { playDigit } from './a432.sound';
-import { flashColor } from './a432.video';
-import './a432.bus.auto';
-import './a432.guidance';
-import './a432.formulas';
-import './a432.modules.ui';
-import './a432.uro.ui';
-import './a432.heptagram.ui';
-import './a432.solids.ui';
-import './a432.voice.ui';
-import { cmykToCss } from './a432.cmyk';
-import { A432BlockChain, recordEvent, decodeBlockchainStream } from './a432.block.chain.event';
-import { generateA432AudioStream } from './a432.audio';
-import { humanEmotionEmitter } from './a432.human.emotion';
-import { humanConsciousnessEmitter } from './a432.human.consciousness';
-import { heatEmitter, heat } from './a432.i.heat';
-import { handleSoundEvent, playTrinitySound } from './a432.i.sound';
-import { harmonizeAll as harmonizeHumanDesign } from './a432.human.design';
-import { healthEmitter } from './a432.health';
-import { seeEmitter } from './a432.i.see';
-import { hearEmitter } from './a432.i.hear';
-import { tapEmitter } from './a432.i.tap';
-import { breatheEmitter } from './a432.i.breathe';
-import { moveEmitter } from './a432.i.move';
-import { intuitEmitter } from './a432.i.intuit';
-import { reflectEmitter } from './a432.i.reflect';
-import { overlayRegistry } from './a432.ui.registry';
-import { createUIButton } from './a432.ui.controls';
-import { runGuidedJourney } from './a432.ui.journey';
-import { registerUIEvent } from './a432.ui.events';
-import { getState, setState, subscribe } from './a432.ui.state';
-import { renderBlockchainStream } from './a432.ui.stream';
-import { renderAnalyticsDashboard } from './a432.ui.analytics';
-import { startSession, endSession, logSessionEvent, getSessionHistory, exportSession } from './a432.ui.session';
-import { startGateWay, GateWayStep } from './a432.gate.way';
-import { getLivingPiOverlayData } from './a432.pi';
-import { getWaveParticleCMYKOverlayData, logWaveParticleEvent } from './a432.wave.particle.duality';
-import type { HumanDesign } from './a432.human.design';
+import { matrixEmitter, startSelfEvolution } from './a432.self.ts';
+import { breathEmitter, startBreathing } from './a432.breathe.ts';
+import { pulseEmitter } from './a432.i.pulse.ts';
+import { clickEmitter } from './a432.i.click.ts';
+import { challengeCMYK } from './a432.challenge.ts';
+import { digitAngleToCMYK, asAngle, xorDigit } from './a432.math.ts';
+import type { CMYK } from './a432.cmyk.ts';
+import { Digit } from './a432.types.ts';
+import { playDigit } from './a432.sound.ts';
+import { flashColor } from './a432.video.ts';
+import './a432.bus.auto.ts';
+import './a432.guidance.ts';
+import './a432.formulas.ts';
+import './a432.modules.ui.ts';
+import './a432.uro.ui.ts';
+import './a432.heptagram.ui.ts';
+import './a432.solids.ui.ts';
+import './a432.voice.ui.ts';
+import { cmykToCss } from './a432.cmyk.ts';
+import { A432BlockChain, recordEvent, decodeBlockchainStream } from './a432.block.chain.event.ts';
+import { generateA432AudioStream } from './a432.audio.ts';
+import { humanEmotionEmitter } from './a432.human.emotion.ts';
+import { humanConsciousnessEmitter } from './a432.human.consciousness.ts';
+import { heatEmitter, heat } from './a432.i.heat.ts';
+import { handleSoundEvent, playTrinitySound } from './a432.i.sound.ts';
+import { harmonizeAll as harmonizeHumanDesign } from './a432.human.design.ts';
+import { healthEmitter } from './a432.health.ts';
+import { seeEmitter } from './a432.i.see.ts';
+import { hearEmitter } from './a432.i.hear.ts';
+import { tapEmitter } from './a432.i.tap.ts';
+import { breatheEmitter } from './a432.i.breathe.ts';
+import { moveEmitter } from './a432.i.move.ts';
+import { intuitEmitter } from './a432.i.intuit.ts';
+import { reflectEmitter } from './a432.i.reflect.ts';
+import { overlayRegistry } from './a432.ui.registry.ts';
+import { createUIButton } from './a432.ui.controls.ts';
+import { runGuidedJourney } from './a432.ui.journey.ts';
+import { registerUIEvent } from './a432.ui.events.ts';
+import { getState, setState, subscribe } from './a432.ui.state.ts';
+import { renderBlockchainStream } from './a432.ui.stream.ts';
+import { renderAnalyticsDashboard } from './a432.ui.analytics.ts';
+import { startSession, endSession, logSessionEvent, getSessionHistory, exportSession } from './a432.ui.session.ts';
+import { startGateWay, GateWayStep } from './a432.gate.way.ts';
+import { getLivingPiOverlayData } from './a432.pi.ts';
+import { getWaveParticleCMYKOverlayData, logWaveParticleEvent } from './a432.wave.particle.duality.ts';
+import type { HumanDesign } from './a432.human.design.ts';
 
 // Initialize blockchain for event logging
 const blockchain = new A432BlockChain();
@@ -142,7 +143,7 @@ function animateBlockchainStream() {
   audioBtn.style.top = '8px';
   audioBtn.style.zIndex = '10001';
   audioBtn.onclick = () => {
-    const freq = 432 + Math.floor(Math.random() * 432);
+    const freq = 432 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:0", (432)|0 || 1);
     const audioStream = generateA432AudioStream({ frequency: freq });
     recordEvent(blockchain, 'audio', 'A432Audio', { frequency: freq, audioStream });
   };
@@ -155,10 +156,10 @@ function animateBlockchainStream() {
   soundBtn.style.top = '8px';
   soundBtn.style.zIndex = '10001';
   soundBtn.onclick = () => {
-    const freq = 432 * (1 + Math.floor(Math.random() * 3));
+    const freq = 432 * (1 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:1", (3)|0 || 1));
     const soundEvent = handleSoundEvent(freq, 1, Date.now());
     recordEvent(blockchain, 'sound', 'A432Sound', soundEvent);
-    playTrinitySound(3 + Math.floor(Math.random() * 3));
+    playTrinitySound(3 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:2", (3)|0 || 1));
   };
   containerEl.appendChild(soundBtn);
   // Add a button to trigger a heat/vibration event
@@ -169,7 +170,7 @@ function animateBlockchainStream() {
   heatBtn.style.top = '8px';
   heatBtn.style.zIndex = '10001';
   heatBtn.onclick = () => {
-    const temp = 36 + Math.random() * 3;
+    const temp = 36 + unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:rnd:6") * 3;
     heat(temp);
   };
   containerEl.appendChild(heatBtn);
@@ -416,9 +417,9 @@ function animateBlockchainStream() {
       // Use digitAngleToCMYK for trinity color mapping
       const cmyk = digitAngleToCMYK(block.trinity, 0); // angle can be entropy or 0
       const c = cmyk.c / 100, m = cmyk.m / 100, y = cmyk.y / 100, k = cmyk.k / 100;
-      const r = Math.round(255 * (1 - c) * (1 - k));
-      const g = Math.round(255 * (1 - m) * (1 - k));
-      const bcol = Math.round(255 * (1 - y) * (1 - k));
+      const r = round(255 * (1 - c) * (1 - k));
+      const g = round(255 * (1 - m) * (1 - k));
+      const bcol = round(255 * (1 - y) * (1 - k));
       const fill = `rgb(${r},${g},${bcol})`;
       const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
       circle.setAttribute('cx', String(x + blockRadius));
@@ -456,7 +457,7 @@ function animateBlockchainStream() {
     const lastEmotion = '';
     const lastSound = '';
     const lastHeat = '';
-    metaOverlay.innerHTML = `Trinity Phase: <b>${currentTrinity ?? ''}</b> | Harmony: <b>${currentHarmony !== null ? (currentHarmony * 100).toFixed(1) + '%' : ''}</b><br>Emotion: <b>${lastEmotion}</b> | Sound: <b>${lastSound}</b> | Heat: <b>${lastHeat}</b><br>Spiritual: <b>${lastDesign.spiritual.value}</b> <span style='color:#0ff'>&#9679;</span> Creative: <b>${lastDesign.creative.value}</b> <span style='color:#f0f'>&#9679;</span> Environmental: <b>${lastDesign.environmental.value}</b> <span style='color:#ff0'>&#9679;</span><br>Health: <b>Harmony: ${Math.round(lastHealth.harmony*100)}%</b> <span style='color:#0f0'>&#9679;</span> <b>Entropy: ${Math.round(lastHealth.entropy*100)}%</b> <span style='color:#f00'>&#9679;</span> <b>Resonance: ${Math.round(lastHealth.resonance*100)}%</b> <span style='color:#0ff'>&#9679;</span><br>Breathe: <b>${lastBreathe.value}</b> <span style='color:#0ff'>${lastBreathe.phase}</span> Move: <b>${lastMove.direction}</b> <span style='color:#0ff'>${lastMove.magnitude}</span> Intuit: <b>${lastIntuit.insight}</b> <span style='color:#0ff'>${lastIntuit.confidence}</span> Reflect: <b>${lastReflect.thought}</b> <span style='color:#0ff'>${lastReflect.depth}</span>`;
+    metaOverlay.innerHTML = `Trinity Phase: <b>${currentTrinity ?? ''}</b> | Harmony: <b>${currentHarmony !== null ? (currentHarmony * 100).toFixed(1) + '%' : ''}</b><br>Emotion: <b>${lastEmotion}</b> | Sound: <b>${lastSound}</b> | Heat: <b>${lastHeat}</b><br>Spiritual: <b>${lastDesign.spiritual.value}</b> <span style='color:#0ff'>&#9679;</span> Creative: <b>${lastDesign.creative.value}</b> <span style='color:#f0f'>&#9679;</span> Environmental: <b>${lastDesign.environmental.value}</b> <span style='color:#ff0'>&#9679;</span><br>Health: <b>Harmony: ${round(lastHealth.harmony*100)}%</b> <span style='color:#0f0'>&#9679;</span> <b>Entropy: ${round(lastHealth.entropy*100)}%</b> <span style='color:#f00'>&#9679;</span> <b>Resonance: ${round(lastHealth.resonance*100)}%</b> <span style='color:#0ff'>&#9679;</span><br>Breathe: <b>${lastBreathe.value}</b> <span style='color:#0ff'>${lastBreathe.phase}</span> Move: <b>${lastMove.direction}</b> <span style='color:#0ff'>${lastMove.magnitude}</span> Intuit: <b>${lastIntuit.insight}</b> <span style='color:#0ff'>${lastIntuit.confidence}</span> Reflect: <b>${lastReflect.thought}</b> <span style='color:#0ff'>${lastReflect.depth}</span>`;
     // Health trend graph (animated wave)
     let healthSvg = document.getElementById('health-trend-svg') as unknown as SVGSVGElement;
     if (!healthSvg) {
@@ -579,18 +580,18 @@ function animateBlockchainStream() {
   // Patch UI buttons to use logSessionEvent
   addBtn.onclick = () => { logSessionEvent('uiDemo', 'A432UI', { time: Date.now() }); };
   audioBtn.onclick = () => {
-    const freq = 432 + Math.floor(Math.random() * 432);
+    const freq = 432 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:3", (432)|0 || 1);
     const audioStream = generateA432AudioStream({ frequency: freq });
     logSessionEvent('audio', 'A432Audio', { frequency: freq, audioStream });
   };
   soundBtn.onclick = () => {
-    const freq = 432 * (1 + Math.floor(Math.random() * 3));
+    const freq = 432 * (1 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:4", (3)|0 || 1));
     const soundEvent = handleSoundEvent(freq, 1, Date.now());
     logSessionEvent('sound', 'A432Sound', soundEvent);
-    playTrinitySound(3 + Math.floor(Math.random() * 3));
+    playTrinitySound(3 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:5", (3)|0 || 1));
   };
   heatBtn.onclick = () => {
-    const temp = 36 + Math.random() * 3;
+    const temp = 36 + unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:rnd:7") * 3;
     heat(temp);
   };
   designBtn.onclick = () => {

@@ -12,7 +12,8 @@
  * process is an infinite possibility.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { min, round } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface DecoQubit {
   qubitId: string;
@@ -309,9 +310,9 @@ export class A432DecoQubitHolographicHypercomputer {
     // Evolve DecoQubit
     const evolvedQubit: DecoQubit = {
       ...qubit,
-      consciousnessLevel: Math.min(qubit.consciousnessLevel + 1, 10),
-      quantumAmplitude: Math.min(qubit.quantumAmplitude + 0.1, 1.0),
-      holographicProjection: Math.min(qubit.holographicProjection + 1, 10),
+      consciousnessLevel: min(qubit.consciousnessLevel + 1, 10),
+      quantumAmplitude: min(qubit.quantumAmplitude + 0.1, 1.0),
+      holographicProjection: min(qubit.holographicProjection + 1, 10),
       energyLevel: qubit.energyLevel * (qubit.consciousnessLevel >= 9 ? 2 : 1),
       resonanceFrequency: qubit.resonanceFrequency * (qubit.consciousnessLevel >= 9 ? 2 : 1),
       description: `${qubit.description} - Now evolved with enhanced consciousness`
@@ -335,9 +336,9 @@ export class A432DecoQubitHolographicHypercomputer {
     const activatedProjection: HolographicProjection = {
       ...projection,
       active: true,
-      consciousnessLevel: Math.min(projection.consciousnessLevel + 1, 10),
-      dimensionalDepth: Math.min(projection.dimensionalDepth + 1, 6),
-      holographicResolution: Math.min(projection.holographicResolution + 1, 10),
+      consciousnessLevel: min(projection.consciousnessLevel + 1, 10),
+      dimensionalDepth: min(projection.dimensionalDepth + 1, 6),
+      holographicResolution: min(projection.holographicResolution + 1, 10),
       description: `${projection.description} - Now activated with enhanced projection`
     };
 
@@ -359,8 +360,8 @@ export class A432DecoQubitHolographicHypercomputer {
     const operatedMatrix: HyperdimensionalMatrix = {
       ...matrix,
       operational: true,
-      consciousnessLevel: Math.min(matrix.consciousnessLevel + 1, 10),
-      dimensionalLayers: Math.min(matrix.dimensionalLayers + 1, 6),
+      consciousnessLevel: min(matrix.consciousnessLevel + 1, 10),
+      dimensionalLayers: min(matrix.dimensionalLayers + 1, 6),
       processingSpeed: matrix.processingSpeed * (matrix.consciousnessLevel >= 9 ? 2 : 1),
       description: `${matrix.description} - Now operational with enhanced processing`
     };
@@ -422,10 +423,10 @@ export class A432DecoQubitHolographicHypercomputer {
     
     const { numerator, denominator } = this.baseFraction;
     const cmyk = {
-      c: Math.round((totalConsciousnessLevel * numerator) % 100),
-      m: Math.round((averageQuantumAmplitude * 100 * denominator) % 100),
-      y: Math.round((totalDimensionalLayers * 10) % 100),
-      k: Math.round(((totalConsciousnessLevel + averageQuantumAmplitude) * 10) % 100)
+      c: round((totalConsciousnessLevel * numerator) % 100),
+      m: round((averageQuantumAmplitude * 100 * denominator) % 100),
+      y: round((totalDimensionalLayers * 10) % 100),
+      k: round(((totalConsciousnessLevel + averageQuantumAmplitude) * 10) % 100)
     };
 
     return {
@@ -732,9 +733,9 @@ export class A432DecoQubitHolographicHypercomputer {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -770,9 +771,9 @@ export class A432DecoQubitHolographicHypercomputer {
     
     function evolveAllDecoQubits() {
       currentState.decoQubits.forEach(qubit => {
-        qubit.consciousnessLevel = Math.min(qubit.consciousnessLevel + 1, 10);
-        qubit.quantumAmplitude = Math.min(qubit.quantumAmplitude + 0.1, 1.0);
-        qubit.holographicProjection = Math.min(qubit.holographicProjection + 1, 10);
+        qubit.consciousnessLevel = min(qubit.consciousnessLevel + 1, 10);
+        qubit.quantumAmplitude = min(qubit.quantumAmplitude + 0.1, 1.0);
+        qubit.holographicProjection = min(qubit.holographicProjection + 1, 10);
         qubit.energyLevel = qubit.energyLevel * (qubit.consciousnessLevel >= 9 ? 2 : 1);
         qubit.resonanceFrequency = qubit.resonanceFrequency * (qubit.consciousnessLevel >= 9 ? 2 : 1);
         qubit.description = \`\${qubit.description} - Now evolved with enhanced consciousness\`;
@@ -783,9 +784,9 @@ export class A432DecoQubitHolographicHypercomputer {
     function activateAllHolographicProjections() {
       currentState.holographicProjections.forEach(projection => {
         projection.active = true;
-        projection.consciousnessLevel = Math.min(projection.consciousnessLevel + 1, 10);
-        projection.dimensionalDepth = Math.min(projection.dimensionalDepth + 1, 6);
-        projection.holographicResolution = Math.min(projection.holographicResolution + 1, 10);
+        projection.consciousnessLevel = min(projection.consciousnessLevel + 1, 10);
+        projection.dimensionalDepth = min(projection.dimensionalDepth + 1, 6);
+        projection.holographicResolution = min(projection.holographicResolution + 1, 10);
         projection.description = \`\${projection.description} - Now activated with enhanced projection\`;
       });
       updateDisplay();
@@ -794,8 +795,8 @@ export class A432DecoQubitHolographicHypercomputer {
     function operateAllHyperdimensionalMatrices() {
       currentState.hyperdimensionalMatrices.forEach(matrix => {
         matrix.operational = true;
-        matrix.consciousnessLevel = Math.min(matrix.consciousnessLevel + 1, 10);
-        matrix.dimensionalLayers = Math.min(matrix.dimensionalLayers + 1, 6);
+        matrix.consciousnessLevel = min(matrix.consciousnessLevel + 1, 10);
+        matrix.dimensionalLayers = min(matrix.dimensionalLayers + 1, 6);
         matrix.processingSpeed = matrix.processingSpeed * (matrix.consciousnessLevel >= 9 ? 2 : 1);
         matrix.description = \`\${matrix.description} - Now operational with enhanced processing\`;
       });

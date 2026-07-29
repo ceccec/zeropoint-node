@@ -4,6 +4,7 @@
  * The sequence /0\3\6\9/1\2/4/8/7/5/1\ as Kabbalistic cycles
  */
 
+import { abs } from './a432.algebra.ts'
 // === KABBALISTIC SEPHIROT DEFINITIONS ===
 export interface Sephirot {
   number: number;
@@ -165,7 +166,7 @@ export class A432KabbalisticSystem {
 
   // === DIGITAL ROOT CALCULATION ===
   calculateDigitalRoot(n: number): number {
-    let x = Math.abs(n);
+    let x = abs(n);
     while (x >= 10) {
       x = String(x).split('').reduce((a, c) => a + Number(c), 0);
     }

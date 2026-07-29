@@ -1,7 +1,7 @@
 // a432.mapping.ts
 // Canonical mapping module for a432: digits, words, colors, frequencies, archetypes, chakras, notes
 
-import { A432Id } from './a432.design.cmyk';
+import { A432Id } from './a432.design.cmyk.ts';
 
 export const digitWords = [
   'Void',      // 0

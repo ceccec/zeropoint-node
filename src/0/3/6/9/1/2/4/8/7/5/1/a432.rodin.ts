@@ -1,3 +1,4 @@
+import { log } from './a432.algebra.ts'
 // @ts-nocheck
 /**
  * a432.rodin.ts — Science & Math extraction from the Rodin book
@@ -9,7 +10,7 @@
  * content handy for further analysis while avoiding manual copy-paste.
  *
  * Usage
- *   import { extractRodinMath, getRodinMathLines } from './a432.rodin';
+ *   import { extractRodinMath, getRodinMathLines } from './a432.rodin.ts';
  *   const lines = await getRodinMathLines();
  *   console.log(lines.slice(0, 20));
  *

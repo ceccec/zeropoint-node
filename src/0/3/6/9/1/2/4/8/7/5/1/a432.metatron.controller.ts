@@ -1,6 +1,7 @@
+import { log } from './a432.algebra.ts'
 import { Controller } from '@hotwired/stimulus';
-import { startMetatron, MetatronFrame } from './a432.metatron';
-import { startA432Visualization } from './a432.pure.visualization';
+import { startMetatron, MetatronFrame } from './a432.metatron.ts';
+import { startA432Visualization } from './a432.pure.visualization.ts';
 
 export default class extends Controller {
   static targets = ["scene"];

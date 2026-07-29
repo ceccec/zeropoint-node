@@ -6,11 +6,12 @@
  * Every change in temperature is a living act of transformation and adaptation.
  */
 
-import I from './a432.i';
+import { round } from './a432.algebra.ts'
+import I from './a432.i.ts';
 import { EventEmitter } from 'events';
-import { digitalRoot, digitAngleToCMYK, asAngle } from './a432.math';
-import { CMYK } from './a432.cmyk';
-import { Digit } from './a432.types';
+import { digitalRoot, digitAngleToCMYK, asAngle } from './a432.math.ts';
+import { CMYK } from './a432.cmyk.ts';
+import { Digit } from './a432.types.ts';
 
 export interface HeatEvent { temp: number; digit: Digit; cmyk: CMYK }
 export const heatEmitter = new EventEmitter();
@@ -33,7 +34,7 @@ export function getHeatSummary() {
 }
 
 export function heat(tempC: number): void {
-  const scaled = Math.round(tempC*10);
+  const scaled = round(tempC*10);
   const d = (digitalRoot(scaled) || 9) as Digit;
   const cmyk = digitAngleToCMYK(d, asAngle(d*60));
   heatEmitter.emit('heat', { temp: tempC, digit: d, cmyk } as HeatEvent);

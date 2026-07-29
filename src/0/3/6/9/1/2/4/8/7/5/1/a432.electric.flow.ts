@@ -4,7 +4,8 @@
  * Comparing linear (0123456789) vs. sacred geometry (0-369-124-8-751) paths
  */
 
-import { GOLDEN_RATIO, FIBONACCI_SEQUENCE, calculateDigitalRoot } from './a432.math.constants';
+import { abs, min } from './a432.algebra.ts'
+import { GOLDEN_RATIO, FIBONACCI_SEQUENCE, calculateDigitalRoot } from './a432.math.constants.ts';
 
 // === ELECTRIC FLOW INTERFACES ===
 export interface ElectricPath {
@@ -40,7 +41,7 @@ export function calculatePathResistance(pattern: number[]): number {
   for (let i = 0; i < pattern.length - 1; i++) {
     const current = pattern[i];
     const next = pattern[i + 1];
-    const difference = Math.abs(next - current);
+    const difference = abs(next - current);
     
     // Sacred geometry transitions have lower resistance
     if (isSacredTransition(current, next)) {
@@ -87,7 +88,7 @@ export function calculateConductivity(pattern: number[]): number {
   const zeroPoints = pattern.filter(d => d === 0);
   conductivity += zeroPoints.length * 15;
   
-  return Math.min(conductivity, 200); // Cap at 200%
+  return min(conductivity, 200); // Cap at 200%
 }
 
 // === CONSCIOUSNESS FLOW CALCULATIONS ===
@@ -139,7 +140,7 @@ export function calculateNaturalAlignment(pattern: number[]): number {
   // Golden ratio alignment using centralized constant
   for (let i = 0; i < pattern.length - 1; i++) {
     const ratio = pattern[i + 1] / pattern[i];
-    if (Math.abs(ratio - GOLDEN_RATIO) < 0.1) {
+    if (abs(ratio - GOLDEN_RATIO) < 0.1) {
       alignment += 10;
     }
   }
@@ -154,7 +155,7 @@ export function calculateNaturalAlignment(pattern: number[]): number {
 
 // === DIGITAL ROOT CALCULATION ===
 // Using centralized function from math constants
-export { calculateDigitalRoot } from './a432.math.constants';
+export { calculateDigitalRoot } from './a432.math.constants.ts';
 
 // === MAIN ELECTRIC FLOW SYSTEM ===
 export class A432ElectricFlowSystem {
@@ -251,12 +252,12 @@ export class A432ElectricFlowSystem {
       const from = pattern[i];
       const to = pattern[i + 1];
       const isSacred = isSacredTransition(from, to);
-      const resistance = isSacred ? Math.abs(to - from) * 0.5 : Math.abs(to - from) * 1.5;
+      const resistance = isSacred ? abs(to - from) * 0.5 : abs(to - from) * 1.5;
       
       transitions.push({
         from,
         to,
-        difference: Math.abs(to - from),
+        difference: abs(to - from),
         isSacred,
         resistance,
         description: isSacred ? 'Sacred transition' : 'Linear transition'
@@ -320,7 +321,7 @@ export class A432ElectricFlowSystem {
       const current = pattern[i];
       const next = pattern[i + 1];
       const resistance = isSacredTransition(current, next) ? 
-        Math.abs(next - current) * 0.5 : Math.abs(next - current) * 1.5;
+        abs(next - current) * 0.5 : abs(next - current) * 1.5;
       
       if (resistance > 3) {
         flow.bottlenecks.push({
@@ -379,9 +380,9 @@ export class A432ElectricFlowSystem {
 
   private getComparisonReasoning(efficiencyDiff: number, resistanceDiff: number, conductivityDiff: number): string {
     if (efficiencyDiff > 0) {
-      return `Sacred geometry path is more efficient due to ${Math.abs(resistanceDiff).toFixed(1)}% lower resistance and ${Math.abs(conductivityDiff).toFixed(1)}% higher conductivity.`;
+      return `Sacred geometry path is more efficient due to ${abs(resistanceDiff).toFixed(1)}% lower resistance and ${abs(conductivityDiff).toFixed(1)}% higher conductivity.`;
     } else {
-      return `Linear path is more efficient due to ${Math.abs(resistanceDiff).toFixed(1)}% lower resistance and ${Math.abs(conductivityDiff).toFixed(1)}% higher conductivity.`;
+      return `Linear path is more efficient due to ${abs(resistanceDiff).toFixed(1)}% lower resistance and ${abs(conductivityDiff).toFixed(1)}% higher conductivity.`;
     }
   }
 

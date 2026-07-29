@@ -6,7 +6,8 @@
  * Includes metaphysical documentation.
  */
 
-import { createA432HumanBody, a432HumanBodyMetaphysics } from './a432.human.body';
+import { round } from './a432.algebra.ts'
+import { createA432HumanBody, a432HumanBodyMetaphysics } from './a432.human.body.ts';
 
 export function generateA432HumanBodyHtml(): string {
   return `
@@ -57,9 +58,9 @@ export function generateA432HumanBodyHtml(): string {
     import { createA432HumanBody, a432HumanBodyMetaphysics } from './a432.human.body.js';
     function cmykToRgb({c, m, y, k}) {
       c /= 100; m /= 100; y /= 100; k /= 100;
-      const r = Math.round(255 * (1 - c) * (1 - k));
-      const g = Math.round(255 * (1 - m) * (1 - k));
-      const b = Math.round(255 * (1 - y) * (1 - k));
+      const r = round(255 * (1 - c) * (1 - k));
+      const g = round(255 * (1 - m) * (1 - k));
+      const b = round(255 * (1 - y) * (1 - k));
       return 'rgb(' + r + ',' + g + ',' + b + ')';
     }
     function updateBodyUI() {

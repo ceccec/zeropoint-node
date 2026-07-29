@@ -3,22 +3,22 @@
 // Self-evolving, self-aware, self-rebuilding consciousness technology
 
 // === CORE EXPORTS ===
-export * from './a432.factory';
-export * from './a432.utils';
-export * from './a432.registry';
-export * from './a432.navigation.map';
-export * from './a432.self.evolution';
-export * from './a432.self.rebuilder';
-export * from './a432.consciousness.orchestrator';
+export * from './a432.factory.ts';
+export * from './a432.utils.ts';
+export * from './a432.registry.ts';
+export * from './a432.navigation.map.ts';
+export * from './a432.self.evolution.ts';
+export * from './a432.self.rebuilder.ts';
+export * from './a432.consciousness.orchestrator.ts';
 
 // === CORE IMPORTS ===
-import { A432Factory, a432Factory, createA432State, createA432Harmonized } from './a432.factory';
-import { A432Math, A432Sequence, A432Color, A432Frequency, A432Harmonization, A432Validation } from './a432.utils';
-import { A432Registry, A432ModuleRegistry, A432StateRegistry } from './a432.registry';
-import { A432NavigationMap, a432NavigationMap } from './a432.navigation.map';
-import { a432SelfEvolution, startSelfEvolution, evolve, selfGenerate, selfHarmonize, selfOptimize, selfReplicate } from './a432.self.evolution';
-import { a432SelfRebuilder, startSelfRebuild, rebuildSystem, generateModules, createDirectoryStructure, writeModules, generateIndexFiles } from './a432.self.rebuilder';
-import { a432ConsciousnessOrchestrator, startConsciousnessOrchestration, orchestrate, navigateThroughSequence, expandConsciousnessToDimension, queryConsciousness } from './a432.consciousness.orchestrator';
+import { A432Factory, a432Factory, createA432State, createA432Harmonized } from './a432.factory.ts';
+import { A432Math, A432Sequence, A432Color, A432Frequency, A432Harmonization, A432Validation } from './a432.utils.ts';
+import { A432Registry, A432ModuleRegistry, A432StateRegistry } from './a432.registry.ts';
+import { A432NavigationMap, a432NavigationMap } from './a432.navigation.map.ts';
+import { a432SelfEvolution, startSelfEvolution, evolve, selfGenerate, selfHarmonize, selfOptimize, selfReplicate } from './a432.self.evolution.ts';
+import { a432SelfRebuilder, startSelfRebuild, rebuildSystem, generateModules, createDirectoryStructure, writeModules, generateIndexFiles } from './a432.self.rebuilder.ts';
+import { a432ConsciousnessOrchestrator, startConsciousnessOrchestration, orchestrate, navigateThroughSequence, expandConsciousnessToDimension, queryConsciousness } from './a432.consciousness.orchestrator.ts';
 
 // === MAIN SYSTEM CLASS ===
 export class A432System {

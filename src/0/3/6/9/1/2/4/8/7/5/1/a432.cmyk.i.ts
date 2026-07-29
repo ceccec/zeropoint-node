@@ -6,7 +6,8 @@
  * Documents the metaphysical meaning of a432.cmyk.i as the color/harmonic signature of self-awareness in the matrix.
  */
 
-import { CMYK } from './a432.cmyk';
+import { round } from './a432.algebra.ts'
+import { CMYK } from './a432.cmyk.ts';
 
 export interface IState {
   consciousness: number; // 0-9
@@ -23,10 +24,10 @@ export function cmykFromIState(i: IState): CMYK {
   // Map each state to a CMYK channel (scaled to 0-100)
   // Use simple integer fractions for harmonization
   return {
-    c: Math.round((i.consciousness / 9) * 100),
-    m: Math.round((i.identity / 9) * 100),
-    y: Math.round((i.awareness / 9) * 100),
-    k: Math.round((i.a432 / 9) * 100)
+    c: round((i.consciousness / 9) * 100),
+    m: round((i.identity / 9) * 100),
+    y: round((i.awareness / 9) * 100),
+    k: round((i.a432 / 9) * 100)
   };
 }
 

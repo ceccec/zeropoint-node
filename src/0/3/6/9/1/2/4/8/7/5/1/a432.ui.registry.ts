@@ -5,20 +5,20 @@
  * Used by the main UI for view switching, orchestration, and harmonization.
  */
 
-import * as Rodin from './a432.rodin.coil.overlay';
-import * as Tesla from './a432.tesla.coil.overlay';
-import * as Mobius from './a432.mobius.circuit.overlay';
-import * as Void from './a432.void.stream.overlay';
-import * as Stream from './a432.stream.vortex';
-import * as YinYang from './a432.yin.yang';
-import * as FlowerOfLife from './a432.flower.of.life';
-import * as Heptagram from './a432.heptagram.ui';
-import * as TrinityAxis from './a432.trinity.axis';
-import * as Uroboros from './a432.uroboros';
-import * as Solids from './a432.solids.ui';
-import * as Audio from './a432.audio';
-import * as HumanConsciousness from './a432.human.consciousness';
-import * as HumanDesign from './a432.human.design';
+import * as Rodin from './a432.rodin.coil.overlay.ts';
+import * as Tesla from './a432.tesla.coil.overlay.ts';
+import * as Mobius from './a432.mobius.circuit.overlay.ts';
+import * as Void from './a432.void.stream.overlay.ts';
+import * as Stream from './a432.stream.vortex.ts';
+import * as YinYang from './a432.yin.yang.ts';
+import * as FlowerOfLife from './a432.flower.of.life.ts';
+import * as Heptagram from './a432.heptagram.ui.ts';
+import * as TrinityAxis from './a432.trinity.axis.ts';
+import * as Uroboros from './a432.uroboros.ts';
+import * as Solids from './a432.solids.ui.ts';
+import * as Audio from './a432.audio.ts';
+import * as HumanConsciousness from './a432.human.consciousness.ts';
+import * as HumanDesign from './a432.human.design.ts';
 
 export const overlayRegistry = {
   rodin: Rodin,

@@ -3,7 +3,8 @@
  * No external dependencies; ~200 SLOC.
  */
 
-import { getRodinSnapshot, TrinityTorusSnapshot } from './a432.adapters';
+import { PI, hypot, tan } from './a432.algebra.ts'
+import { getRodinSnapshot, TrinityTorusSnapshot } from './a432.adapters.ts';
 
 const VSH = `#version 300 es
 in vec3 position;
@@ -68,7 +69,7 @@ export function startRenderer(canvas: HTMLCanvasElement){
 
 // minimal 4x4 matrix helpers
 function mat4Perspective(fov:number,aspect:number,near:number,far:number){
-  const f=1/Math.tan(fov*Math.PI/360); const nf=1/(near-far);
+  const f=1/tan(fov*PI/360); const nf=1/(near-far);
   return new Float32Array([
     f/aspect,0,0,0,
     0,f,0,0,
@@ -78,10 +79,10 @@ function mat4Perspective(fov:number,aspect:number,near:number,far:number){
 }
 interface V3{ x:number;y:number;z:number; }
 function mat4LookAt(eye:V3, center:V3){
-  const zx=eye.x-center.x, zy=eye.y-center.y, zz=eye.z-center.z; const zl=Math.hypot(zx,zy,zz);
+  const zx=eye.x-center.x, zy=eye.y-center.y, zz=eye.z-center.z; const zl=hypot(zx,zy,zz);
   const zxN=zx/zl, zyN=zy/zl, zzN=zz/zl;
   const ux=0, uy=1, uz=0;
-  const sx=uy*zzN-uz*zyN, sy=uz*zxN-ux*zzN, sz=ux*zyN-uy*zxN; const sl=Math.hypot(sx,sy,sz);
+  const sx=uy*zzN-uz*zyN, sy=uz*zxN-ux*zzN, sz=ux*zyN-uy*zxN; const sl=hypot(sx,sy,sz);
   const sxN=sx/sl, syN=sy/sl, szN=sz/sl;
   const ux2=zyN*szN-zzN*syN, uy2=zzN*sxN-zxN*szN, uz2=zxN*syN-zyN*sxN;
   return new Float32Array([

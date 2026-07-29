@@ -23,7 +23,7 @@ import {
   getSacredGeometricStats,
   sacredGeometricTests,
   sacredGeometricExamples
-} from './a432.sacred';
+} from './a432.sacred.ts';
 
 describe('A432 Sacred Geometric System - Zero Entropy Tests', () => {
   describe('Sacred Geometric Constants', () => {

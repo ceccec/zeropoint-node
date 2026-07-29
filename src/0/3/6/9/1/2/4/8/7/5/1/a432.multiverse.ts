@@ -1,5 +1,5 @@
 // a432.multiverse.ts
-import { currentUniverse } from './a432.universe';
+import { currentUniverse } from './a432.universe.ts';
 
 export interface A432MultiverseState {
   tick: number;

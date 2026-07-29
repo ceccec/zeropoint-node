@@ -5,7 +5,8 @@
  * All overlays use the Möbius sequence (Rodin sequence with sign alternation) and canonical A432 math/color logic.
  */
 
-import { MOBIUS_SEQUENCE, digitAngleToCMYK, cmykToCss, mobiusPolarity } from './a432.math';
+import { PI, abs, cos, min, sin } from './a432.algebra.ts'
+import { MOBIUS_SEQUENCE, digitAngleToCMYK, cmykToCss, mobiusPolarity } from './a432.math.ts';
 
 /**
  * 2D overlay: Returns node positions (x, y), value, color, and HTML for a circle/spiral.
@@ -14,9 +15,9 @@ export function getMobiusCircuit2DOverlayData(radius: number = 120, centerX: num
   const N = 6;
   const data = [];
   for (let i = 0; i < N; i++) {
-    const angle = (2 * Math.PI * i) / N;
-    const x = centerX + radius * Math.cos(angle);
-    const y = centerY + radius * Math.sin(angle);
+    const angle = (2 * PI * i) / N;
+    const x = centerX + radius * cos(angle);
+    const y = centerY + radius * sin(angle);
     const value = MOBIUS_SEQUENCE[i];
     const polarity = mobiusPolarity(i); // +1 or -1
     const spin = polarity;
@@ -37,13 +38,13 @@ export function getMobiusCircuit3DOverlayData(length: number = 6, R: number = 10
   const seq = MOBIUS_SEQUENCE.slice(0, length); // Use MOBIUS_SEQUENCE directly
   const data = [];
   for (let i = 0; i < length; i++) {
-    const theta = (2 * Math.PI * i) / length;
-    const phi = theta + Math.PI * (i % 2); // Möbius twist
-    const x = (R + r * Math.cos(theta)) * Math.cos(phi);
-    const y = (R + r * Math.cos(theta)) * Math.sin(phi);
-    const z = r * Math.sin(theta);
+    const theta = (2 * PI * i) / length;
+    const phi = theta + PI * (i % 2); // Möbius twist
+    const x = (R + r * cos(theta)) * cos(phi);
+    const y = (R + r * cos(theta)) * sin(phi);
+    const z = r * sin(theta);
     const value = seq[i];
-    const color = digitAngleToCMYK(Math.abs(value), (i * 60) % 360);
+    const color = digitAngleToCMYK(abs(value), (i * 60) % 360);
     data.push({ x, y, z, value, color });
   }
   return data;
@@ -60,7 +61,7 @@ export function getMobiusCircuitAnalyticOverlayData(events: Array<{ value: numbe
     const spin = polarity;
     const color = digitAngleToCMYK(value, (i * 60) % 360);
     const eventCount = events.filter(e => e.value === value).length;
-    const resonance = eventCount > 0 ? Math.min(1, (now - events.filter(e => e.value === value).slice(-1)[0]?.timestamp) / 10000) : 0;
+    const resonance = eventCount > 0 ? min(1, (now - events.filter(e => e.value === value).slice(-1)[0]?.timestamp) / 10000) : 0;
     const html = `<div style=\"width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.2em;color:#fff;border-radius:10px;box-shadow:0 0 ${8 + 24 * resonance}px #0ff;\">${value}<br><span style='font-size:0.7em;'>${eventCount}</span></div>`;
     return { value, color, resonance, eventCount, html, polarity, spin };
   });

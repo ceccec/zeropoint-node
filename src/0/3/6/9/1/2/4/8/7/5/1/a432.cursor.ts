@@ -1,7 +1,8 @@
+import { log } from './a432.algebra.ts'
 // a432.cursor.ts
 // Canonical living cursor/distributor for a432 matrix
 
-import { LivingIStream } from './a432.i.stream';
+import { LivingIStream } from './a432.i.stream.ts';
 
 export class A432Cursor {
   private path: number[] = [1];

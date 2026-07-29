@@ -6,8 +6,9 @@
  * Zero entropy: define once, harmonize everywhere.
  */
 
-import { A432CoreState, createA432CoreState } from './a432.core';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
+import { abs, floor, indexFromSeed, max } from './a432.algebra.ts'
+import { A432CoreState, createA432CoreState } from './a432.core.ts';
+import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
 
 // Canonical A432 re-export for challenges, possibilities, and solutions
 // This module allows all fractal UI/overlay modules to import harmonized challenge data
@@ -105,8 +106,8 @@ const SOLUTION_MODULES = [
 
 // === CORE CHALLENGE FUNCTIONS ===
 export function createChallengeModule(data: any): ChallengeModule {
-  const resolution = Math.floor(Math.random() * 10);
-  const harmonization = Math.max(0, 9 - Math.abs(resolution - 5));
+  const resolution = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:0", (10)|0 || 1);
+  const harmonization = max(0, 9 - abs(resolution - 5));
   const color = `hsl(${data.complexity * 40}, 70%, ${50 + harmonization * 5}%)`;
   const frequency = 432 * (harmonization / 9);
   
@@ -123,8 +124,8 @@ export function createChallengeModule(data: any): ChallengeModule {
 }
 
 export function createPossibilityModule(data: any): PossibilityModule {
-  const potential = Math.floor(Math.random() * 10);
-  const harmonization = Math.max(0, 9 - Math.abs(potential - 5));
+  const potential = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:1", (10)|0 || 1);
+  const harmonization = max(0, 9 - abs(potential - 5));
   const color = `hsl(${data.probability * 40}, 70%, ${50 + harmonization * 5}%)`;
   const frequency = 432 * (harmonization / 9);
   
@@ -141,8 +142,8 @@ export function createPossibilityModule(data: any): PossibilityModule {
 }
 
 export function createSolutionModule(data: any): SolutionModule {
-  const implementation = Math.floor(Math.random() * 10);
-  const harmonization = Math.max(0, 9 - Math.abs(implementation - 5));
+  const implementation = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:2", (10)|0 || 1);
+  const harmonization = max(0, 9 - abs(implementation - 5));
   const color = `hsl(${data.effectiveness * 40}, 70%, ${50 + harmonization * 5}%)`;
   const frequency = 432 * (harmonization / 9);
   
@@ -162,8 +163,8 @@ export function createChallengeIntegration(): ChallengeIntegration {
   const totalChallenges = CHALLENGE_MODULES.length;
   const totalPossibilities = POSSIBILITY_MODULES.length;
   const totalSolutions = SOLUTION_MODULES.length;
-  const harmonizationLevel = Math.floor((totalChallenges + totalPossibilities + totalSolutions) / 3);
-  const balance = Math.max(0, 9 - Math.abs(totalChallenges - totalSolutions));
+  const harmonizationLevel = floor((totalChallenges + totalPossibilities + totalSolutions) / 3);
+  const balance = max(0, 9 - abs(totalChallenges - totalSolutions));
   const color = `hsl(${harmonizationLevel * 40}, 70%, ${50 + balance * 5}%)`;
   const frequency = 432 * (harmonizationLevel / 9);
   
@@ -194,14 +195,14 @@ export function harmonizeA432Challenges(): A432ChallengeState {
   // Harmonize challenges with possibilities
   state.challenges.forEach((challenge, index) => {
     if (state.possibilities[index]) {
-      challenge.harmonization = Math.max(challenge.harmonization, state.possibilities[index].harmonization);
+      challenge.harmonization = max(challenge.harmonization, state.possibilities[index].harmonization);
     }
   });
   
   // Harmonize possibilities with solutions
   state.possibilities.forEach((possibility, index) => {
     if (state.solutions[index]) {
-      possibility.harmonization = Math.max(possibility.harmonization, state.solutions[index].harmonization);
+      possibility.harmonization = max(possibility.harmonization, state.solutions[index].harmonization);
     }
   });
   

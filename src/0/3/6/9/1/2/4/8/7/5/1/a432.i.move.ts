@@ -1,3 +1,4 @@
+import { log } from './a432.algebra.ts'
 // a432.i.move.ts — Move interface for the A432 matrix
 import { EventEmitter } from 'events';
 

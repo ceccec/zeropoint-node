@@ -1,3 +1,4 @@
+import { legacyDigitalRoot } from './a432.roots.ts'
 // a432.health.ts — Self-health analytics for the A432 matrix
 // ----------------------------------------------------------
 // Consumes digit events from matrixEmitter and breathEmitter,
@@ -5,9 +6,9 @@
 // metrics (harmony, entropy, resonance) using a432HarmonicAnalytics.
 
 import { EventEmitter } from 'events';
-import { matrixEmitter, MatrixEvent } from './a432.self';
-import { breathEmitter } from './a432.breathe';
-import { Digit } from './a432.types';
+import { matrixEmitter, MatrixEvent } from './a432.self.ts';
+import { breathEmitter } from './a432.breathe.ts';
+import { Digit } from './a432.types.ts';
 
 export interface HealthMetrics { harmony: number; entropy: number; resonance: number; }
 
@@ -37,7 +38,7 @@ function simpleHarmonicAnalytics(digits: Digit[]): HealthMetrics {
   const unique = new Set(digits).size;
   const entropy = unique / digits.length;
   const sum = digits.map(Number).reduce((a, b) => a + b, 0);
-  const resonance = sum === 0 ? 0 : (sum % 9 || 9);
+  const resonance = sum === 0 ? 0 : (legacyDigitalRoot(sum));
   return { harmony, entropy, resonance };
 }
 

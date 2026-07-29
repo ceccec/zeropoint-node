@@ -1,3 +1,4 @@
+import { legacyDigitalRoot } from './a432.roots.ts'
 // a432.trinity.visual.ts
 // Visualizes trinity interaction as a harmonic, animated SVG stream for the A432 system
 // All logic is self-contained, integer/fractional, and metaphysically mapped
@@ -43,7 +44,7 @@ export function renderTrinityInteraction(vortexStream?: unknown): string {
     'let overlayOn = false;',
     'function updateMeta() {',
     '  const sum = nodes.reduce((acc, n) => acc + n.value, 0);',
-    '  const digitalRoot = sum % 9 === 0 ? 9 : sum % 9;',
+    '  const digitalRoot = legacyDigitalRoot(sum);',
     '  document.getElementById("trinity-meta").textContent = `Sum: ${sum}, Digital Root: ${digitalRoot}`;',
     '}',
     '// --- Sound logic (Web Audio API, harmonic frequencies) ---',

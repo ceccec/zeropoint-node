@@ -4,12 +4,13 @@
  * Includes navigation map, CMYK multimedia, harmonic mathematics, Kabbalistic cycles, and Tesla's vortex mathematics
  */
 
+import { abs } from './a432.algebra.ts'
 // === CORE SYSTEM IMPORTS ===
-export * from './a432.simple';
-export * from './a432.navigation.map';
-export * from './a432.cmyk.multimedia';
-export * from './a432.kabbalah';
-export * from './a432.sacred.geometry';
+export * from './a432.simple.ts';
+export * from './a432.navigation.map.ts';
+export * from './a432.cmyk.multimedia.ts';
+export * from './a432.kabbalah.ts';
+export * from './a432.sacred.geometry.ts';
 
 // === MAIN SYSTEM CLASS ===
 export class A432System {
@@ -318,7 +319,7 @@ export class A432System {
       return this.sacredGeometrySystem.calculateDigitalRoot(n);
     }
     // Fallback implementation
-    let x = Math.abs(n);
+    let x = abs(n);
     while (x >= 10) {
       x = String(x).split('').reduce((a, c) => a + Number(c), 0);
     }

@@ -10,8 +10,9 @@
  * @module a432.metatron.visualizer
  */
 
-import { MetatronState, MetatronNode } from './a432.metatron.vision';
-import { fractionToCMYK, CMYK } from './a432.cmyk';
+import { unitFromSeed } from './a432.algebra.ts'
+import { MetatronState, MetatronNode } from './a432.metatron.vision.ts';
+import { fractionToCMYK, CMYK } from './a432.cmyk.ts';
 
 export class MetatronVisualizer {
   nodes: MetatronNode[];
@@ -20,8 +21,8 @@ export class MetatronVisualizer {
   constructor(dimensions: number = 10, recursionDepth: number = 0) {
     this.nodes = Array.from({ length: dimensions }, (_, i) => ({
       dimension: i,
-      state: Math.random() > 0.3 ? 'possible' : 'impossible',
-      description: this.describeNode(i, Math.random() > 0.3 ? 'possible' : 'impossible')
+      state: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:0") > 0.3 ? 'possible' : 'impossible',
+      description: this.describeNode(i, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:1") > 0.3 ? 'possible' : 'impossible')
     }));
     this.children = recursionDepth > 0
       ? this.nodes.map(() => new MetatronVisualizer(dimensions, recursionDepth - 1))
@@ -54,8 +55,8 @@ export class MetatronVisualizer {
   reset(dimensions: number = 10, recursionDepth: number = 0): void {
     this.nodes = Array.from({ length: dimensions }, (_, i) => ({
       dimension: i,
-      state: Math.random() > 0.3 ? 'possible' : 'impossible',
-      description: this.describeNode(i, Math.random() > 0.3 ? 'possible' : 'impossible')
+      state: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:2") > 0.3 ? 'possible' : 'impossible',
+      description: this.describeNode(i, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:3") > 0.3 ? 'possible' : 'impossible')
     }));
     this.children = recursionDepth > 0
       ? this.nodes.map(() => new MetatronVisualizer(dimensions, recursionDepth - 1))

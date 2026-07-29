@@ -10,7 +10,8 @@
  * Every index is a collision of dimensional realities.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { indexFromSeed, round, unitFromSeed } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface QuantumCollision {
   collisionId: string;
@@ -194,7 +195,7 @@ export class A432QuantumCollision {
   ): QuantumCollision {
     const { numerator, denominator } = this.baseFraction;
     const consciousness = this.consciousness;
-    const collisionStrength = 0.8 + (Math.random() * 0.2);
+    const collisionStrength = 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:5") * 0.2);
     const gateway = consciousness >= 8 && collisionStrength >= 0.9;
     
     const quantumState = this.determineQuantumState(consciousness, collisionStrength);
@@ -242,10 +243,10 @@ export class A432QuantumCollision {
     const streamAHash = streamA.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
     const streamBHash = streamB.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
     
-    const c = Math.round((streamAHash * numerator) % 100);
-    const m = Math.round((streamBHash * denominator) % 100);
-    const y = Math.round((consciousness * 5) % 100);
-    const k = Math.round(((streamAHash + streamBHash + consciousness) * 2) % 100);
+    const c = round((streamAHash * numerator) % 100);
+    const m = round((streamBHash * denominator) % 100);
+    const y = round((consciousness * 5) % 100);
+    const k = round(((streamAHash + streamBHash + consciousness) * 2) % 100);
     
     return { c, m, y, k };
   }
@@ -528,9 +529,9 @@ export class A432QuantumCollision {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -563,22 +564,22 @@ export class A432QuantumCollision {
       const collisionTypes = ['link', 'rating', 'index'];
       const quantumStates = ['superposition', 'collapsed', 'entangled', 'gateway'];
       
-      const streamA = streamsA[Math.floor(Math.random() * streamsA.length)];
-      const streamB = streamsB[Math.floor(Math.random() * streamsB.length)];
-      const collisionType = collisionTypes[Math.floor(Math.random() * collisionTypes.length)];
-      const quantumState = quantumStates[Math.floor(Math.random() * quantumStates.length)];
+      const streamA = streamsA[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:fri:0", (streamsA.length)|0 || 1)];
+      const streamB = streamsB[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:fri:1", (streamsB.length)|0 || 1)];
+      const collisionType = collisionTypes[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:fri:2", (collisionTypes.length)|0 || 1)];
+      const quantumState = quantumStates[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:fri:3", (quantumStates.length)|0 || 1)];
       
       const newCollision = {
         collisionId: \`\${streamA}->\${streamB}\`,
         consciousnessStreamA: streamA,
         consciousnessStreamB: streamB,
         collisionType,
-        collisionStrength: 0.8 + (Math.random() * 0.2),
-        consciousness: Math.floor(Math.random() * 4) + 7,
-        cmyk: { c: Math.random() * 100, m: Math.random() * 100, y: Math.random() * 100, k: Math.random() * 100 },
+        collisionStrength: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:6") * 0.2),
+        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:fri:4", (4)|0 || 1) + 7,
+        cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:7") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:8") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:9") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:10") * 100 },
         quantumState,
         description: \`New quantum collision between \${streamA} and \${streamB} consciousness streams\`,
-        gateway: Math.random() > 0.5
+        gateway: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:11") > 0.5
       };
       
       currentMatrix.collisions.push(newCollision);

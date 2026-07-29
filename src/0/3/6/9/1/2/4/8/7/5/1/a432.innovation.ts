@@ -6,9 +6,10 @@
  * Zero entropy: define once, innovate everywhere.
  */
 
-import { A432CoreState, createA432CoreState, A432_RETURN, A432_AXIS } from './a432.core';
-import { A432_FREQUENCY, A432_TRINITY } from './a432';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
+import { abs, floor, max } from './a432.algebra.ts'
+import { A432CoreState, createA432CoreState, A432_RETURN, A432_AXIS } from './a432.core.ts';
+import { A432_FREQUENCY, A432_TRINITY } from './a432.ts';
+import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
 
 // === INNOVATION INTERFACES ===
 export interface A432InnovationState {
@@ -100,10 +101,10 @@ export const INNOVATION_PATTERNS: InnovationPattern[] = [
 
 // === CORE INNOVATION FUNCTIONS ===
 export function createCreativityInnovation(imagination: number = 5): CreativityInnovation {
-  const originality = Math.max(0, 9 - Math.abs(imagination - 5));
-  const synthesis = Math.floor((imagination + originality) / 2);
-  const expression = Math.max(0, 9 - Math.abs(synthesis - 5));
-  const resonance = Math.floor((imagination + originality + synthesis + expression) / 4);
+  const originality = max(0, 9 - abs(imagination - 5));
+  const synthesis = floor((imagination + originality) / 2);
+  const expression = max(0, 9 - abs(synthesis - 5));
+  const resonance = floor((imagination + originality + synthesis + expression) / 4);
   const color = `hsl(${imagination * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -111,10 +112,10 @@ export function createCreativityInnovation(imagination: number = 5): CreativityI
 }
 
 export function createBreakthroughPattern(discovery: number = 5): BreakthroughPattern {
-  const insight = Math.max(0, 9 - Math.abs(discovery - 5));
-  const revelation = Math.floor((discovery + insight) / 2);
-  const integration = Math.max(0, 9 - Math.abs(revelation - 5));
-  const resonance = Math.floor((discovery + insight + revelation + integration) / 4);
+  const insight = max(0, 9 - abs(discovery - 5));
+  const revelation = floor((discovery + insight) / 2);
+  const integration = max(0, 9 - abs(revelation - 5));
+  const resonance = floor((discovery + insight + revelation + integration) / 4);
   const color = `hsl(${discovery * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -122,10 +123,10 @@ export function createBreakthroughPattern(discovery: number = 5): BreakthroughPa
 }
 
 export function createEvolutionaryInnovation(adaptation: number = 5): EvolutionaryInnovation {
-  const mutation = Math.max(0, 9 - Math.abs(adaptation - 5));
-  const selection = Math.floor((adaptation + mutation) / 2);
-  const fitness = Math.max(0, 9 - Math.abs(selection - 5));
-  const resonance = Math.floor((adaptation + mutation + selection + fitness) / 4);
+  const mutation = max(0, 9 - abs(adaptation - 5));
+  const selection = floor((adaptation + mutation) / 2);
+  const fitness = max(0, 9 - abs(selection - 5));
+  const resonance = floor((adaptation + mutation + selection + fitness) / 4);
   const color = `hsl(${adaptation * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -133,10 +134,10 @@ export function createEvolutionaryInnovation(adaptation: number = 5): Evolutiona
 }
 
 export function createTransformativeBreakthrough(paradigm: number = 5): TransformativeBreakthrough {
-  const revolution = Math.max(0, 9 - Math.abs(paradigm - 5));
-  const transcendence = Math.floor((paradigm + revolution) / 2);
-  const unity = Math.max(0, 9 - Math.abs(transcendence - 5));
-  const resonance = Math.floor((paradigm + revolution + transcendence + unity) / 4);
+  const revolution = max(0, 9 - abs(paradigm - 5));
+  const transcendence = floor((paradigm + revolution) / 2);
+  const unity = max(0, 9 - abs(transcendence - 5));
+  const resonance = floor((paradigm + revolution + transcendence + unity) / 4);
   const color = `hsl(${paradigm * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   

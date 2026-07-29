@@ -1,7 +1,8 @@
-import { decodePiDigits, piDigitStream, angleForDigit } from './a432.math';
-import { digitAngleToCMYK, type CMYK } from './a432.cmyk';
-import { Digit, AngleDeg, asAngle } from './a432.types';
-import { TrinitySwitch, DOT_TRINITY_SWITCH } from './a432.math';
+import { legacyDigitalRoot } from './a432.roots.ts'
+import { decodePiDigits, piDigitStream, angleForDigit } from './a432.math.ts';
+import { digitAngleToCMYK, type CMYK } from './a432.cmyk.ts';
+import { Digit, AngleDeg, asAngle } from './a432.types.ts';
+import { TrinitySwitch, DOT_TRINITY_SWITCH } from './a432.math.ts';
 
 /** Snapshot of a single π digit mapped through metric → imperial → trinity → polarity. */
 export interface PiSnapshot {
@@ -73,7 +74,7 @@ export function nineShockPositions(limit: number): number[] {
     if (window.length > 9) window.shift();
     if (window.length === 9) {
       const sum = window.reduce<number>((s, d) => s + (d as number), 0);
-      const dr = ((sum % 9) || 9);
+      const dr = (legacyDigitalRoot(sum));
       if (dr === 9) positions.push(idx);
     }
     idx += 1;

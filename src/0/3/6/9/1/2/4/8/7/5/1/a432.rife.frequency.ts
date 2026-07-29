@@ -1,9 +1,10 @@
+import { legacyDigitalRoot as digitalRoot, harmonicRoot12 } from './a432.roots.ts'
 // a432.rife.frequency.ts
 // Canonical Rife frequency module for the A432 system
 // Maps Rife healing/resonance frequencies to A432 harmonics, digital roots, and metaphysical overlays
 // All logic is integer/fractional, vortex-based, and metaphysically mapped
 
-import type { VortexStream } from './a432.vortex';
+import type { VortexStream } from './a432.vortex.ts';
 
 export interface RifeFrequency {
   name: string;

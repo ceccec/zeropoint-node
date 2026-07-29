@@ -17,7 +17,7 @@ import {
   digitalRoot, 
   frequencyForDigit,
   angleForDigit 
-} from './a432.math';
+} from './a432.math.ts';
 
 // --- Canonical VBM Audio Constants ---
 const VBM_SEQUENCE = [0, ...TRINITY_AXIS, ...RODIN_SEQUENCE] as const;

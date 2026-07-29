@@ -6,7 +6,7 @@
  * Every taste is a living act of integration, observation, and unity.
  */
 
-import I from './a432.i';
+import I from './a432.i.ts';
 
 export function handleTasteEvent(flavor: string, intensity: number, timestamp: number = Date.now()) {
   const trinity = ['creation', 'return', 'axis'];

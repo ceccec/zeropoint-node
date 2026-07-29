@@ -1,10 +1,10 @@
 // a432.modules.ui.ts — Interactive modules palette
 //--------------------------------------------------
-import { digitAngleToCMYK, asAngle } from './a432.math';
-import { emotionName } from './a432.emotion';
-import { Digit } from './a432.types';
-import { tap } from './a432.i.tap';
-import { cmykToCss } from './a432.cmyk';
+import { digitAngleToCMYK, asAngle } from './a432.math.ts';
+import { emotionName } from './a432.emotion.ts';
+import { Digit } from './a432.types.ts';
+import { tap } from './a432.i.tap.ts';
+import { cmykToCss } from './a432.cmyk.ts';
 
 function fileDigit(name:string):Digit{const sum=[...name].reduce((a,c)=>a+c.charCodeAt(0),0);const d=sum%9;return (d===0?9:d) as Digit;}
 

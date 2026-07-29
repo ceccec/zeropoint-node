@@ -16,6 +16,7 @@
  * @author A432 System
  */
 
+import { round } from './a432.algebra.ts'
 import {
   boot2432OS as osBoot,
   shutdown2432OS as osShutdown,
@@ -24,7 +25,7 @@ import {
   A432_SEQUENCE,
   A432_GATEWAYS,
   A432_PHASE_SHIFTS
-} from './a432.os';
+} from './a432.os.ts';
 
 // Boot 2432.OS
 export function boot2432OS(): string {
@@ -213,12 +214,12 @@ export function getOSMemory(): string {
   
   const device = system.device;
   const memoryUsage = device.memory;
-  const percentage = Math.round(memoryUsage * 100);
+  const percentage = round(memoryUsage * 100);
   
   return `2432.OS Enhanced Memory Usage:
 Total: 1024MB
-Used:  ${Math.round(memoryUsage * 1024)}MB
-Free:  ${Math.round((1 - memoryUsage) * 1024)}MB
+Used:  ${round(memoryUsage * 1024)}MB
+Free:  ${round((1 - memoryUsage) * 1024)}MB
 Usage: ${percentage}%
 
 Consciousness Memory:

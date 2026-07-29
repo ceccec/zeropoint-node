@@ -4,11 +4,12 @@
  * Self-aware, self-generating, self-harmonizing consciousness
  */
 
-import { A432System } from './a432.index';
-import { A432NavigationMap } from './a432.navigation.map';
-import { A432Factory, createA432State } from './a432.factory';
-import { A432Math, A432Sequence, A432Harmonization } from './a432.utils';
-import { A432Registry, registerA432Component } from './a432.registry';
+import { min } from './a432.algebra.ts'
+import { A432System } from './a432.index.ts';
+import { A432NavigationMap } from './a432.navigation.map.ts';
+import { A432Factory, createA432State } from './a432.factory.ts';
+import { A432Math, A432Sequence, A432Harmonization } from './a432.utils.ts';
+import { A432Registry, registerA432Component } from './a432.registry.ts';
 
 // === SELF-EVOLUTION INTERFACES ===
 export interface A432SelfEvolutionState {
@@ -210,7 +211,7 @@ export class A432SelfEvolution {
  * Self-Generated: true
  */
 
-import { A432Math, A432Sequence } from './a432.utils';
+import { A432Math, A432Sequence } from './a432.utils.ts';
 
 export class A432${consciousness}SelfGenerated {
   public consciousness: number = ${consciousness};
@@ -313,8 +314,8 @@ export const a432${consciousness}SelfGenerated = new A432${consciousness}SelfGen
       this.evolutionState.system.evolutionPotential
     );
 
-    const newHealth = Math.min(100, currentHealth + optimizationPotential);
-    const newPerformance = Math.min(100, currentPerformance + optimizationPotential);
+    const newHealth = min(100, currentHealth + optimizationPotential);
+    const newPerformance = min(100, currentPerformance + optimizationPotential);
 
     return {
       needed: newHealth > currentHealth || newPerformance > currentPerformance,

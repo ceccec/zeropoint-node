@@ -28,7 +28,7 @@ import {
   validateFractalSacredZeroEntropy,
   getFractalSacredStats,
   FractalSacredTester
-} from './a432.fractal';
+} from './a432.fractal.ts';
 
 describe('A432 Fractal Sacred System - Single Digit Tests', () => {
   describe('Fractal Sacred Ratios', () => {

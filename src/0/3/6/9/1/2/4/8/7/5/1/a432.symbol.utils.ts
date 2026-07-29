@@ -1,7 +1,7 @@
 // a432.symbol.utils.ts — helper to compute seed digit and CMYK
-import { digitalRoot, digitAngleToCMYK, asAngle } from './a432.math';
-import { Digit } from './a432.types';
-import { CMYK } from './a432.cmyk';
+import { digitalRoot, digitAngleToCMYK, asAngle } from './a432.math.ts';
+import { Digit } from './a432.types.ts';
+import { CMYK } from './a432.cmyk.ts';
 
 export function seedDigit(name:string): Digit {
   const sum=[...name].reduce((a,c)=>a+c.charCodeAt(0),0);

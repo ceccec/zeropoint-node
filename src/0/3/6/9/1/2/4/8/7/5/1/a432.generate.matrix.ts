@@ -39,10 +39,10 @@ function ensureFiles(count: number = 121) {
     const file = nextUniqueName(existing, pair);
     if (!existing.has(file)) {
       const [metric, vortex] = [Number(file[0]), Number(file[1])];
-      const content = `import { asDigit } from './a432.types';
-import { asAngle } from './a432.math';
-import { digitAngleToCMYK } from './a432.cmyk';
-import { TRINITY_POLARITY } from './a432.math';
+      const content = `import { asDigit } from './a432.types.ts';
+import { asAngle } from './a432.math.ts';
+import { digitAngleToCMYK } from './a432.cmyk.ts';
+import { TRINITY_POLARITY } from './a432.math.ts';
 
 export const metric = asDigit(${metric});
 export const vortex = asDigit(${vortex});

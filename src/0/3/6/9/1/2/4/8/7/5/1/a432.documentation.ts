@@ -6,9 +6,10 @@
  * Zero entropy: define once, document everywhere.
  */
 
-import { A432CoreState, createA432CoreState, A432_RETURN, A432_AXIS } from './a432.core';
-import { A432_FREQUENCY, A432_TRINITY } from './a432';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
+import { abs, floor, max, min } from './a432.algebra.ts'
+import { A432CoreState, createA432CoreState, A432_RETURN, A432_AXIS } from './a432.core.ts';
+import { A432_FREQUENCY, A432_TRINITY } from './a432.ts';
+import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
 
 // === DOCUMENTATION INTERFACES ===
 export interface A432DocumentationState {
@@ -153,10 +154,10 @@ register{ModuleName}();`,
 
 // === CORE DOCUMENTATION FUNCTIONS ===
 export function createAutoGeneration(templates: number = DOCUMENTATION_TEMPLATES.length): AutoGeneration {
-  const patterns = Math.min(9, templates);
-  const generation = Math.floor((templates + patterns) / 2);
-  const quality = Math.max(0, 9 - Math.abs(generation - 5));
-  const resonance = Math.floor((templates + patterns + generation + quality) / 4);
+  const patterns = min(9, templates);
+  const generation = floor((templates + patterns) / 2);
+  const quality = max(0, 9 - abs(generation - 5));
+  const resonance = floor((templates + patterns + generation + quality) / 4);
   const color = `hsl(${templates * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -164,10 +165,10 @@ export function createAutoGeneration(templates: number = DOCUMENTATION_TEMPLATES
 }
 
 export function createCrossReference(links: number = 8): CrossReference {
-  const coherence = Math.max(0, 9 - Math.abs(links - 5));
-  const navigation = Math.floor((links + coherence) / 2);
-  const integration = Math.max(0, 9 - Math.abs(navigation - 5));
-  const resonance = Math.floor((links + coherence + navigation + integration) / 4);
+  const coherence = max(0, 9 - abs(links - 5));
+  const navigation = floor((links + coherence) / 2);
+  const integration = max(0, 9 - abs(navigation - 5));
+  const resonance = floor((links + coherence + navigation + integration) / 4);
   const color = `hsl(${links * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -175,10 +176,10 @@ export function createCrossReference(links: number = 8): CrossReference {
 }
 
 export function createDocumentationHarmonization(consistency: number = 7): DocumentationHarmonization {
-  const completeness = Math.max(0, 9 - Math.abs(consistency - 5));
-  const accuracy = Math.floor((consistency + completeness) / 2);
-  const clarity = Math.max(0, 9 - Math.abs(accuracy - 5));
-  const resonance = Math.floor((consistency + completeness + accuracy + clarity) / 4);
+  const completeness = max(0, 9 - abs(consistency - 5));
+  const accuracy = floor((consistency + completeness) / 2);
+  const clarity = max(0, 9 - abs(accuracy - 5));
+  const resonance = floor((consistency + completeness + accuracy + clarity) / 4);
   const color = `hsl(${consistency * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -186,10 +187,10 @@ export function createDocumentationHarmonization(consistency: number = 7): Docum
 }
 
 export function createZeroEntropyDocumentation(uniqueness: number = 8): ZeroEntropyDocumentation {
-  const reusability = Math.max(0, 9 - Math.abs(uniqueness - 5));
-  const efficiency = Math.floor((uniqueness + reusability) / 2);
-  const balance = Math.max(0, 9 - Math.abs(efficiency - 5));
-  const resonance = Math.floor((uniqueness + reusability + efficiency + balance) / 4);
+  const reusability = max(0, 9 - abs(uniqueness - 5));
+  const efficiency = floor((uniqueness + reusability) / 2);
+  const balance = max(0, 9 - abs(efficiency - 5));
+  const resonance = floor((uniqueness + reusability + efficiency + balance) / 4);
   const color = `hsl(${uniqueness * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   

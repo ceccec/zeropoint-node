@@ -2,7 +2,7 @@
 // Canonical A432 stream module for terminal output and trinity events
 // All logic uses trinity numbers (3, 6, 9), digital root, and A432 math
 
-import { digitalRoot } from './a432.math';
+import { digitalRoot } from './a432.math.ts';
 export { digitalRoot };
 
 // Simple observable pattern for browser/Node

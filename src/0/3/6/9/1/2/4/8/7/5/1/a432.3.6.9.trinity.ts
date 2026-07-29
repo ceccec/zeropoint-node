@@ -2,7 +2,7 @@
 // Canonical pregnancy/creation trinity module (3, 6, 9)
 // Encodes metaphysical and mathematical logic of pregnancy, gestation, and birth as a trinity process
 
-import { getTrinityAxis } from './a432.math';
+import { getTrinityAxis } from './a432.math.ts';
 
 /**
  * Returns the canonical trinity stages of pregnancy: Creation (3), Gestation (6), Birth (9)

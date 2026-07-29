@@ -15,7 +15,7 @@ import {
   calculateA432Frequency,
   calculateA432Consciousness,
   calculateA432DimensionalState
-} from './a432.math';
+} from './a432.math.ts';
 
 // Living Streams - The mathematics presents itself
 export class LivingStreams {

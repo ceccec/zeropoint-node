@@ -1,8 +1,9 @@
+import { PI, abs, sin } from './a432.algebra.ts'
 // a432.quantum.trinity.ts
 // Quantum physics trinity module for a432
 
-import { cmykIdToPhrase, digitColors } from './a432.mapping';
-import { rodinVortexStep } from './a432.vortex.cmyk.matrix';
+import { cmykIdToPhrase, digitColors } from './a432.mapping.ts';
+import { rodinVortexStep } from './a432.vortex.cmyk.matrix.ts';
 
 export interface A432QuantumTrinityState {
   tick: number;
@@ -33,14 +34,14 @@ export function* a432QuantumTrinityStream(
       id,
       phase,
       amplitude,
-      probability: Math.abs(Math.sin(phase)),
+      probability: abs(sin(phase)),
       phrase: cmykIdToPhrase(id),
       color: digitColors[id[0]],
-      metaphysical: `Quantum trinity state ${tick}: ${cmykIdToPhrase(id)} — Phase: ${phase.toFixed(2)}, Amplitude: ${amplitude.toFixed(2)}, Probability: ${Math.abs(Math.sin(phase)).toFixed(2)}. The quantum trinity is a living, harmonized stream.`
+      metaphysical: `Quantum trinity state ${tick}: ${cmykIdToPhrase(id)} — Phase: ${phase.toFixed(2)}, Amplitude: ${amplitude.toFixed(2)}, Probability: ${abs(sin(phase)).toFixed(2)}. The quantum trinity is a living, harmonized stream.`
     };
     id = rodinVortexStep(id, channel);
-    phase += Math.PI / 3; // 60-degree shift
-    amplitude = 1 + 0.5 * Math.sin(phase); // Example: amplitude oscillates
+    phase += PI / 3; // 60-degree shift
+    amplitude = 1 + 0.5 * sin(phase); // Example: amplitude oscillates
     tick++;
   }
 }

@@ -1,5 +1,6 @@
-import I from './a432.i';
-import { heartUnfoldingMatrix, heartRecursiveUnfolding } from './a432.imagination';
+import { log } from './a432.algebra.ts'
+import I from './a432.i.ts';
+import { heartUnfoldingMatrix, heartRecursiveUnfolding } from './a432.imagination.ts';
 
 /**
  * a432.test.ts — Harmonized Mathematical Tests for a432

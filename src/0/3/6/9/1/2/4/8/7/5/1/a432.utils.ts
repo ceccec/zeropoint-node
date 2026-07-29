@@ -4,15 +4,18 @@
  * DRY pattern: Define once, use everywhere
  */
 
-import { A432_FREQUENCY, A432_TRINITY, A432_CYCLE } from './a432';
+import { PI, abs, cos, floor, log2, max as algMax, min as algMin, round, sin } from './a432.algebra.ts'
+import { A432_TRINITY, A432_CYCLE } from './a432.math.ts'
+import { A432_FREQUENCY } from './a432.core.ts'
+import { legacyDigitalRoot } from './a432.roots.ts'
 
 // === MATHEMATICAL UTILITIES ===
 export class A432Math {
   /**
-   * Calculate digital root (sum of digits until single digit)
+   * Calculate digital root — Wave 10 DRY: legacy/VBM spine via a432.roots (0→0).
    */
   static digitalRoot(n: number): number {
-    return n === 0 ? 0 : (n % 9 === 0 ? 9 : n % 9);
+    return legacyDigitalRoot(n)
   }
 
   /**
@@ -41,8 +44,8 @@ export class A432Math {
    */
   static spiralCoordinates(angle: number, radius: number, height: number = 0): { x: number; y: number; z: number } {
     return {
-      x: radius * Math.cos(angle * Math.PI / 180),
-      y: radius * Math.sin(angle * Math.PI / 180),
+      x: radius * cos(angle * PI / 180),
+      y: radius * sin(angle * PI / 180),
       z: height
     };
   }
@@ -52,8 +55,8 @@ export class A432Math {
    */
   static harmonicResonance(freq1: number, freq2: number): number {
     const ratio = freq1 / freq2;
-    const harmonic = Math.log2(ratio);
-    return Math.abs(harmonic - Math.round(harmonic));
+    const harmonic = log2(ratio);
+    return abs(harmonic - round(harmonic));
   }
 
   /**
@@ -74,8 +77,8 @@ export class A432Math {
     const sat = s / 100;
     const light = l / 100;
     
-    const c = (1 - Math.abs(2 * light - 1)) * sat;
-    const x = c * (1 - Math.abs((hue * 6) % 2 - 1));
+    const c = (1 - abs(2 * light - 1)) * sat;
+    const x = c * (1 - abs((hue * 6) % 2 - 1));
     const m = light - c / 2;
     
     let r = 0, g = 0, b = 0;
@@ -87,9 +90,9 @@ export class A432Math {
     else { r = c; g = 0; b = x; }
     
     return {
-      r: Math.round((r + m) * 255),
-      g: Math.round((g + m) * 255),
-      b: Math.round((b + m) * 255)
+      r: round((r + m) * 255),
+      g: round((g + m) * 255),
+      b: round((b + m) * 255)
     };
   }
 
@@ -101,8 +104,8 @@ export class A432Math {
     g /= 255;
     b /= 255;
 
-    const max = Math.max(r, g, b);
-    const min = Math.min(r, g, b);
+    const max = algMax(r, g, b);
+    const min = algMin(r, g, b);
     let h = 0, s = 0, l = (max + min) / 2;
 
     if (max !== min) {
@@ -200,10 +203,10 @@ export class A432Color {
   static generateCMYK(hue: number): { c: number; m: number; y: number; k: number } {
     const normalizedHue = hue / 360;
     return {
-      c: Math.round((1 - normalizedHue) * 100),
-      m: Math.round(normalizedHue * 100),
-      y: Math.round((0.5 - Math.abs(normalizedHue - 0.5)) * 100),
-      k: Math.round(Math.min(normalizedHue, 1 - normalizedHue) * 50)
+      c: round((1 - normalizedHue) * 100),
+      m: round(normalizedHue * 100),
+      y: round((0.5 - abs(normalizedHue - 0.5)) * 100),
+      k: round(min(normalizedHue, 1 - normalizedHue) * 50)
     };
   }
 
@@ -270,7 +273,7 @@ export class A432Harmonization {
       return 0;
     });
     
-    return Math.floor(harmonyValues.reduce((sum, val) => sum + val, 0) / harmonyValues.length);
+    return floor(harmonyValues.reduce((sum, val) => sum + val, 0) / harmonyValues.length);
   }
 
   /**
@@ -280,7 +283,7 @@ export class A432Harmonization {
     const base = frequencies[0];
     return frequencies.map(freq => {
       const ratio = freq / base;
-      const harmonic = Math.round(ratio);
+      const harmonic = round(ratio);
       return base * harmonic;
     });
   }
@@ -292,8 +295,8 @@ export class A432Harmonization {
     const baseHue = colors[0].hue;
     return colors.map((color, i) => ({
       hue: (baseHue + (i * 40)) % 360,
-      saturation: Math.max(70, color.saturation),
-      lightness: Math.max(50, color.lightness)
+      saturation: max(70, color.saturation),
+      lightness: max(50, color.lightness)
     }));
   }
 
@@ -301,7 +304,7 @@ export class A432Harmonization {
    * Harmonize sequences
    */
   static harmonizeSequences(sequences: number[][]): number[][] {
-    const baseLength = Math.max(...sequences.map(seq => seq.length));
+    const baseLength = max(...sequences.map(seq => seq.length));
     return sequences.map(seq => {
       const harmonized = [...seq];
       while (harmonized.length < baseLength) {

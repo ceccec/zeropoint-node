@@ -4,6 +4,9 @@
  * Integrated with Vadim Zeland's Transurfing Reality principles
  */
 
+import { PI, abs, floor, min, round, sin } from './a432.algebra.ts'
+import { legacyDigitalRoot } from './a432.roots.ts'
+
 // === TRANSSURFING PENDULUM SYSTEM ===
 export interface TransurfingPendulum {
   type: 'constructive' | 'destructive';
@@ -19,7 +22,7 @@ export class TransurfingPendulumSystem {
     return {
       type,
       frequency: this.calculateDigitalRoot(baseFrequency),
-      resistanceFactor: this.calculateDigitalRoot(Math.abs(baseFrequency)),
+      resistanceFactor: this.calculateDigitalRoot(abs(baseFrequency)),
       heartAlignment: 0, // Initialized to neutral
       name,
       function: function_
@@ -38,12 +41,9 @@ export class TransurfingPendulumSystem {
     return this.calculateDigitalRoot(totalHarmony);
   }
 
+  /** Wave 11 self-develop — bridge to a432.roots legacy spine (0→0). */
   private static calculateDigitalRoot(n: number): number {
-    let x = Math.abs(n);
-    while (x >= 10) {
-      x = String(x).split('').reduce((a, c) => a + Number(c), 0);
-    }
-    return x;
+    return legacyDigitalRoot(n)
   }
 }
 
@@ -117,12 +117,9 @@ export class CMYKFrequencyCalculator {
     };
   }
 
+  /** Wave 11 self-develop — bridge to a432.roots legacy spine (0→0). */
   private static calculateDigitalRoot(n: number): number {
-    let x = Math.abs(n);
-    while (x >= 10) {
-      x = String(x).split('').reduce((a, c) => a + Number(c), 0);
-    }
-    return x;
+    return legacyDigitalRoot(n)
   }
 }
 
@@ -144,8 +141,8 @@ export class CMYKVideoGenerator {
   static generateColorChannel(frequency: number, time: number, consciousness: number) {
     // Convert frequency to color using A432 harmonics
     const hue = (frequency / 432) * 360; // Normalize to 0-360
-    const saturation = Math.min(100, consciousness * 10);
-    const lightness = Math.min(100, consciousness * 5 + 50);
+    const saturation = min(100, consciousness * 10);
+    const lightness = min(100, consciousness * 5 + 50);
     
     // Convert HSL to RGB
     const rgb = this.hslToRgb(hue, saturation, lightness);
@@ -154,7 +151,7 @@ export class CMYKVideoGenerator {
       r: rgb.r,
       g: rgb.g,
       b: rgb.b,
-      alpha: Math.sin(time * frequency * 0.001) * 0.5 + 0.5 // Pulsing alpha
+      alpha: sin(time * frequency * 0.001) * 0.5 + 0.5 // Pulsing alpha
     };
   }
 
@@ -170,14 +167,14 @@ export class CMYKVideoGenerator {
   }
 
   static generateVortexColor(frequency: number, time: number, channel: number) {
-    const vortexAngle = (time * frequency * 0.001) % (2 * Math.PI);
-    const radius = Math.sin(vortexAngle) * 127 + 128;
+    const vortexAngle = (time * frequency * 0.001) % (2 * PI);
+    const radius = sin(vortexAngle) * 127 + 128;
     
     return {
       r: channel === 1 ? radius : 0,
       g: channel === 2 ? radius : 0,
       b: channel === 3 ? radius : 0,
-      alpha: channel === 4 ? Math.sin(vortexAngle) * 0.5 + 0.5 : 1
+      alpha: channel === 4 ? sin(vortexAngle) * 0.5 + 0.5 : 1
     };
   }
 
@@ -185,8 +182,8 @@ export class CMYKVideoGenerator {
     s /= 100;
     l /= 100;
     
-    const c = (1 - Math.abs(2 * l - 1)) * s;
-    const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+    const c = (1 - abs(2 * l - 1)) * s;
+    const x = c * (1 - abs((h / 60) % 2 - 1));
     const m = l - c / 2;
     
     let r = 0, g = 0, b = 0;
@@ -206,18 +203,15 @@ export class CMYKVideoGenerator {
     }
     
     return {
-      r: Math.round((r + m) * 255),
-      g: Math.round((g + m) * 255),
-      b: Math.round((b + m) * 255)
+      r: round((r + m) * 255),
+      g: round((g + m) * 255),
+      b: round((b + m) * 255)
     };
   }
 
+  /** Wave 11 self-develop — bridge to a432.roots legacy spine (0→0). */
   private static calculateDigitalRoot(n: number): number {
-    let x = Math.abs(n);
-    while (x >= 10) {
-      x = String(x).split('').reduce((a, c) => a + Number(c), 0);
-    }
-    return x;
+    return legacyDigitalRoot(n)
   }
 }
 
@@ -226,7 +220,7 @@ export class CMYKAudioGenerator {
   static generateSample(consciousness: number, time: number, sampleRate: number = 44100): CMYKAudioSample {
     const frequencies = CMYKFrequencyCalculator.calculateCMYKFrequencies(consciousness);
     const duration = 1; // 1 second
-    const samples = Math.floor(sampleRate * duration);
+    const samples = floor(sampleRate * duration);
     
     return {
       cyan: this.generateSineWave(frequencies.cyan, time, samples, sampleRate),
@@ -239,7 +233,7 @@ export class CMYKAudioGenerator {
   static generateVortexAudio(cycle: number, time: number, sampleRate: number = 44100): CMYKAudioSample {
     const frequencies = CMYKFrequencyCalculator.generateVortexFrequencies(cycle);
     const duration = 1;
-    const samples = Math.floor(sampleRate * duration);
+    const samples = floor(sampleRate * duration);
     
     return {
       cyan: this.generateVortexWave(frequencies.cyan, time, samples, sampleRate, 1),
@@ -254,7 +248,7 @@ export class CMYKAudioGenerator {
     
     for (let i = 0; i < samples; i++) {
       const t = (time + i / sampleRate);
-      audioData[i] = Math.sin(2 * Math.PI * frequency * t) * 0.5;
+      audioData[i] = sin(2 * PI * frequency * t) * 0.5;
     }
     
     return audioData;
@@ -265,8 +259,8 @@ export class CMYKAudioGenerator {
     
     for (let i = 0; i < samples; i++) {
       const t = (time + i / sampleRate);
-      const vortexModulation = Math.sin(2 * Math.PI * frequency * t * 0.1);
-      audioData[i] = Math.sin(2 * Math.PI * frequency * t) * vortexModulation * 0.3;
+      const vortexModulation = sin(2 * PI * frequency * t * 0.1);
+      audioData[i] = sin(2 * PI * frequency * t) * vortexModulation * 0.3;
     }
     
     return audioData;
@@ -322,7 +316,7 @@ export class CMYKMultimediaSystem {
   }
 
   evolve(): void {
-    this.consciousness = Math.min(9, this.consciousness + 1);
+    this.consciousness = min(9, this.consciousness + 1);
     this.time += 0.016; // 60 FPS
     this.cycle++;
     
@@ -397,19 +391,16 @@ export class CMYKMultimediaSystem {
   private calculateHarmony(): number {
     const frequencies = CMYKFrequencyCalculator.calculateCMYKFrequencies(this.consciousness);
     const totalFreq = frequencies.cyan + frequencies.magenta + frequencies.yellow + frequencies.key;
-    return this.calculateDigitalRoot(Math.floor(totalFreq / 432));
+    return this.calculateDigitalRoot(floor(totalFreq / 432));
   }
 
   private calculateDimensionalState(): number {
     return this.calculateDigitalRoot(this.consciousness + this.cycle);
   }
 
+  /** Wave 11 self-develop — bridge to a432.roots legacy spine (0→0). */
   private calculateDigitalRoot(n: number): number {
-    let x = Math.abs(n);
-    while (x >= 10) {
-      x = String(x).split('').reduce((a, c) => a + Number(c), 0);
-    }
-    return x;
+    return legacyDigitalRoot(n)
   }
 }
 

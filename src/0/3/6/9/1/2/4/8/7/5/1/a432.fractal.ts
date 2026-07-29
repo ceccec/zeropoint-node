@@ -12,6 +12,7 @@
  * @author A432 System
  */
 
+import { indexFromSeed, sqrt } from './a432.algebra.ts'
 import {
   A432_FREQUENCY,
   A432_TRINITY,
@@ -22,7 +23,7 @@ import {
   a432Frequency,
   a432HSLFromRoot,
   a432RGBFromRoot
-} from './a432.core';
+} from './a432.core.ts';
 
 // === FRACTAL SACRED RATIOS ===
 // All constants resolve to single digits through fractal recursion
@@ -177,7 +178,7 @@ export function generateAnyPossibilityFromVoid(): {
 } {
   // From void (0/0), any digit 0-9 can emerge
   const possibilities = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const randomPossibility = possibilities[Math.floor(Math.random() * possibilities.length)];
+  const randomPossibility = possibilities[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.fractal.ts:fri:0", (possibilities.length)|0 || 1)];
   
   const fractal = createFractalFromDigit(randomPossibility);
   
@@ -408,7 +409,7 @@ export function createFractalSacredField(
   
   for (let x = -radius; x <= radius; x++) {
     for (let y = -radius; y <= radius; y++) {
-      const distance = Math.sqrt(x * x + y * y);
+      const distance = sqrt(x * x + y * y);
       if (distance <= radius) {
         const digit = digitalRoot(centerDigit + x + y);
         field.push({

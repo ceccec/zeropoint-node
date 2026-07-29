@@ -7,6 +7,7 @@
  * Provides metaphysical and mathematical documentation.
  */
 
+import { round } from './a432.algebra.ts'
 export interface DecompressionState {
   output: number[]; // Array of values after decompression (0-9)
   decompressionRatio: number; // 0-1 (0 = no decompression, 1 = max decompression)
@@ -17,10 +18,10 @@ export interface DecompressionState {
 }
 
 function toHarmonic(ratio: number): number {
-  return Math.round(432 * (1 + ratio));
+  return round(432 * (1 + ratio));
 }
 function toCMYK(ratio: number, channel: number): number {
-  return Math.round(ratio * 100);
+  return round(ratio * 100);
 }
 function getFlow(seed: number): number[] {
   const base = [1, 2, 4, 8, 7, 5];
@@ -46,7 +47,7 @@ export function decompress(input: number[], targetLength: number): Decompression
       y: toCMYK(ratio, 2),
       k: toCMYK(ratio, 3)
     },
-    flow: getFlow(Math.round(ratio * 9)),
+    flow: getFlow(round(ratio * 9)),
     description: `Decompression to [${output.join(', ')}] yields ratio ${ratio.toFixed(2)}, harmonic ${toHarmonic(ratio)} Hz.`
   };
 }

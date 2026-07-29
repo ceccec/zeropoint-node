@@ -1,3 +1,4 @@
+import { PI, cos, sin } from './a432.algebra.ts'
 // a432.pure.visualization.ts
 // Pure A432 visualization using only a432.* modules
 // Everything is math to the digit - no exceptions
@@ -12,9 +13,9 @@ import {
   frequencyForDigit,
   hueForDigit,
   cycleStream
-} from './a432.math';
-import { digitAngleToCMYK, cmykToCss } from './a432.cmyk';
-import { A432_DIGIT_MEANINGS } from './a432.core';
+} from './a432.math.ts';
+import { digitAngleToCMYK, cmykToCss } from './a432.cmyk.ts';
+import { A432_DIGIT_MEANINGS } from './a432.core.ts';
 
 // Pure A432 constants - math to the digit
 const TRINITY_DIGITS = A432_TRINITY; // [4, 3, 2]
@@ -126,14 +127,14 @@ export function generateA432HTML(state: A432VisualState): string {
   
   // All positions derived from angles and digits
   const radius = digitalRoot(state.trinityDigit + state.returnDigit + state.axisDigit + state.sequenceDigit) * 10;
-  const trinityX = Math.cos(state.trinityAngle * Math.PI / 180) * radius;
-  const trinityY = Math.sin(state.trinityAngle * Math.PI / 180) * radius;
-  const returnX = Math.cos(state.returnAngle * Math.PI / 180) * radius;
-  const returnY = Math.sin(state.returnAngle * Math.PI / 180) * radius;
-  const axisX = Math.cos(state.axisAngle * Math.PI / 180) * radius;
-  const axisY = Math.sin(state.axisAngle * Math.PI / 180) * radius;
-  const sequenceX = Math.cos(state.sequenceAngle * Math.PI / 180) * radius;
-  const sequenceY = Math.sin(state.sequenceAngle * Math.PI / 180) * radius;
+  const trinityX = cos(state.trinityAngle * PI / 180) * radius;
+  const trinityY = sin(state.trinityAngle * PI / 180) * radius;
+  const returnX = cos(state.returnAngle * PI / 180) * radius;
+  const returnY = sin(state.returnAngle * PI / 180) * radius;
+  const axisX = cos(state.axisAngle * PI / 180) * radius;
+  const axisY = sin(state.axisAngle * PI / 180) * radius;
+  const sequenceX = cos(state.sequenceAngle * PI / 180) * radius;
+  const sequenceY = sin(state.sequenceAngle * PI / 180) * radius;
   
   // Container size derived from digits
   const containerSize = digitalRoot(state.trinityDigit + state.returnDigit + state.axisDigit + state.sequenceDigit) * 50;

@@ -1,3 +1,4 @@
+import { PI } from './a432.algebra.ts'
 /*
  * A432 Animation — Number Origins and Metaphysical Meaning
  *
@@ -29,8 +30,8 @@
  * All animation logic in this file is derived from these principles, ensuring metaphysical and mathematical harmony.
  */
 
-import { getAntiVortexColor } from './a432.color';
-import { getRodinSequence, a432AntiVortexStream, a432MultiAntiVortexStream } from './a432.math';
+import { getAntiVortexColor } from './a432.color.ts';
+import { getRodinSequence, a432AntiVortexStream, a432MultiAntiVortexStream } from './a432.math.ts';
 
 // Use canonical Rodin sequence
 const rodinPath: number[] = [...getRodinSequence()];
@@ -78,7 +79,7 @@ export function animateEmergence(
     if (cancelled) return;
     // Get the current digit and geometric state
     const digit = rodinPath[idx % rodinPath.length];
-    const angle = (idx / rodinPath.length) * 2 * Math.PI;
+    const angle = (idx / rodinPath.length) * 2 * PI;
     const radius = spiralRadius + spiralFactor * idx;
     const color = projectIAtStep(idx).getCurrentColor();
     const frequency = projectIAtStep(idx).getCurrentFrequency();
@@ -132,7 +133,7 @@ export function animateAntiVortex(
     // Get the anti-vortex frequency and digit for this step
     const frequency = gen.next().value as number;
     const digit = ((dimension + (-1 * idx) + 8) % 9) + 1;
-    const angle = (idx / 9) * 2 * Math.PI;
+    const angle = (idx / 9) * 2 * PI;
     const radius = spiralRadius + spiralFactor * idx;
     const color = getAntiVortexColor(digit);
     onStep({
@@ -186,7 +187,7 @@ export function animateMultiAntiVortex(
     const result = gen.next().value as Array<{ dimension: number; frequency: number; step: number }>;
     const states = result.map(({ dimension, frequency, step }) => {
       const digit = ((dimension + (-1 * idx) + 8) % 9) + 1;
-      const angle = (idx / 9) * 2 * Math.PI;
+      const angle = (idx / 9) * 2 * PI;
       const radius = spiralRadius + spiralFactor * idx;
       const color = getAntiVortexColor(digit);
       return {

@@ -1,10 +1,11 @@
+import { abs } from './a432.algebra.ts'
 // a432.impossible.ts — Central impossible gateway
 // -------------------------------------------------
 // All unresolvable states route through here, returning the digit-8 colour.
 
-import { digitAngleToCMYK, asAngle, rodinDigit, digitalRoot } from './a432.math';
-import type { CMYK } from './a432.cmyk';
-import { Digit } from './a432.types';
+import { digitAngleToCMYK, asAngle, rodinDigit, digitalRoot } from './a432.math.ts';
+import type { CMYK } from './a432.cmyk.ts';
+import { Digit } from './a432.types.ts';
 
 const IMPOSSIBLE_DIGIT = 8 as Digit; // 8 denotes recursion lock / void blue
 
@@ -57,7 +58,7 @@ export function handleImpossibleById(id: Digit): ImpossiblePayload {
 function formulaCMYK(d: Digit, p: Digit): CMYK {
   const C = (d * 11) % 100;
   const M = (p * 22) % 100;
-  const Y = (Math.abs(d - p) * 33) % 100;
+  const Y = (abs(d - p) * 33) % 100;
   const K = (digitalRoot(d * p) * 11) % 100;
   return { c: C, m: M, y: Y, k: K };
 }

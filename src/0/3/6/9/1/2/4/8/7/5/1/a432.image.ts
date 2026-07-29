@@ -7,12 +7,13 @@
  * Images are calculated in real-time from environmental streams and dimensional states.
  */
 
+import { max, min, round } from './a432.algebra.ts'
 import { 
   A432_CONSTANTS,
   calculateA432Consciousness,
   calculateA432DimensionalState,
   calculateA432Frequency,
-} from './a432';
+} from './a432.ts';
 
 import {
   A432Color,
@@ -20,10 +21,10 @@ import {
   generateA432ColorStream,
   A432ColorSystem,
   cmykToRgb
-} from './a432.color';
+} from './a432.color.ts';
 
-import { RODIN_SEQUENCE } from './a432.math';
-import { calculateDigitalRoot } from './a432';
+import { RODIN_SEQUENCE } from './a432.math.ts';
+import { calculateDigitalRoot } from './a432.ts';
 
 // A432 Image Constants - Integer Fractions Only
 export const A432_IMAGE_CONSTANTS = {
@@ -146,7 +147,7 @@ function harmonizeImageComponent(base: number, dimensional: number, frequency: n
   const harmonized = (base + dimensional + imperialFactor) / 3;
   
   // Ensure result is within 0-1 range using integer fractions
-  return Math.max(0, Math.min(1, harmonized));
+  return max(0, min(1, harmonized));
 }
 
 /**
@@ -304,9 +305,9 @@ export function a432ImageToCanvasData(
       
       // Convert A432 color to RGB values
       const { r, g, b } = cmykToRgb(pixel.color);
-      data[index] = Math.round(r * 255);     // Red
-      data[index + 1] = Math.round(g * 255); // Green
-      data[index + 2] = Math.round(b * 255); // Blue
+      data[index] = round(r * 255);     // Red
+      data[index + 1] = round(g * 255); // Green
+      data[index + 2] = round(b * 255); // Blue
       data[index + 3] = 255; // Alpha (fully opaque)
     }
   }

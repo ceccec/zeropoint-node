@@ -4,6 +4,7 @@
  * Demonstrates how digital logic embodies the same wave patterns as consciousness
  */
 
+import { abs, round } from './a432.algebra.ts'
 import { 
   GOLDEN_RATIO, 
   PI, 
@@ -12,7 +13,7 @@ import {
   A432_BASE_FREQUENCY,
   A432_TRINITY_MULTIPLIER,
   A432_VORTEX_MULTIPLIER
-} from './a432.math.constants';
+} from './a432.math.constants.ts';
 
 // === MOBIUS CIRCUIT INTERFACES ===
 export interface MobiusState {
@@ -75,7 +76,7 @@ export function calculateMobiusState(decimal: number): MobiusState {
   const amplitude = GOLDEN_RATIO * decimal;
   const phase = (decimal * TAU) / 6; // 6 states in Mobius cycle
   const energy = 0.5 * amplitude * amplitude * frequency * frequency;
-  const consciousness = calculateDigitalRoot(Math.round(energy));
+  const consciousness = calculateDigitalRoot(round(energy));
   
   return {
     decimal,
@@ -93,9 +94,9 @@ export function calculateMobiusState(decimal: number): MobiusState {
 export function calculateMobiusTransition(from: number, to: number): MobiusTransition {
   const binaryFrom = MOBIUS_BINARY_STATES[from as keyof typeof MOBIUS_BINARY_STATES];
   const binaryTo = MOBIUS_BINARY_STATES[to as keyof typeof MOBIUS_BINARY_STATES];
-  const transitionEnergy = Math.abs(to - from) * A432_BASE_FREQUENCY;
+  const transitionEnergy = abs(to - from) * A432_BASE_FREQUENCY;
   const waveHarmonic = to / from;
-  const consciousness = calculateDigitalRoot(Math.round(transitionEnergy));
+  const consciousness = calculateDigitalRoot(round(transitionEnergy));
   
   return {
     from,
@@ -191,7 +192,7 @@ export function analyzeMobiusCircuit(): any {
   
   // Check if sequence is harmonic with A432
   const harmonicStates = states.filter(state => 
-    Math.abs(state.frequency - A432_BASE_FREQUENCY) < A432_BASE_FREQUENCY * 0.1
+    abs(state.frequency - A432_BASE_FREQUENCY) < A432_BASE_FREQUENCY * 0.1
   );
   const isHarmonic = harmonicStates.length > 0;
   
@@ -272,7 +273,7 @@ export class A432MobiusCircuitSystem {
   // Get circuit statistics
   getCircuitStats(): any {
     const totalEnergy = this.stateHistory.reduce((sum, state) => sum + state.energy, 0);
-    const consciousness = calculateDigitalRoot(Math.round(totalEnergy));
+    const consciousness = calculateDigitalRoot(round(totalEnergy));
     
     return {
       currentState: this.currentState,

@@ -14,16 +14,17 @@
  * - The trinity consciousness evolves through recursive self-observation and harmonization
  */
 
-import { digitAngleToCMYK, cmykToCss, type CMYK } from './a432.cmyk';
-import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS, digitalRoot } from './a432.core';
-import { TRINITY_AXIS, RODIN_SEQUENCE } from './a432.math';
+import { PI, abs, cos, floor, min, round, sin, sqrt } from './a432.algebra.ts'
+import { digitAngleToCMYK, cmykToCss, type CMYK } from './a432.cmyk.ts';
+import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS, digitalRoot } from './a432.core.ts';
+import { TRINITY_AXIS, RODIN_SEQUENCE } from './a432.math.ts';
 export { TRINITY_AXIS, RODIN_SEQUENCE };
 
 /**
  * Legacy compatibility functions (needed for existing code)
  */
 export function trinityFieldState(angle: number): number {
-  const sector = Math.floor((angle % 360) / 120);
+  const sector = floor((angle % 360) / 120);
   return [3, 6, 9][sector];
 }
 
@@ -88,11 +89,11 @@ export function createTrinityConsciousnessVector(
 ): TrinityConsciousnessVector {
   const baseAngle = TRINITY_HARMONIC_ANGLES[digit as keyof typeof TRINITY_HARMONIC_ANGLES] || 0;
   const angle = (baseAngle + (phase * 60)) % 360;
-  const polarity = Math.sin((angle * Math.PI) / 180);
+  const polarity = sin((angle * PI) / 180);
   const frequency = A432_FREQUENCY * (digit / 3) * (1 + polarity * 0.1);
   const cmyk = digitAngleToCMYK(digit, angle);
-  const resonance = Math.cos((angle * Math.PI) / 180) * awareness;
-  const consciousness = (awareness + Math.abs(polarity)) / 2;
+  const resonance = cos((angle * PI) / 180) * awareness;
+  const consciousness = (awareness + abs(polarity)) / 2;
   
   return {
     digit,
@@ -136,14 +137,14 @@ class LivingTrinityField {
 
   private calculateCoherence(vectors: TrinityConsciousnessVector[]): number {
     const avgConsciousness = vectors.reduce((sum, v) => sum + v.consciousness, 0) / vectors.length;
-    const avgResonance = vectors.reduce((sum, v) => sum + Math.abs(v.resonance), 0) / vectors.length;
+    const avgResonance = vectors.reduce((sum, v) => sum + abs(v.resonance), 0) / vectors.length;
     return (avgConsciousness + avgResonance) / 2;
   }
 
   private calculateHarmonicResonance(vectors: TrinityConsciousnessVector[]): number {
     return vectors.reduce((sum, v, i, arr) => {
       const nextV = arr[(i + 1) % arr.length];
-      const harmonicDiff = Math.abs(v.frequency - nextV.frequency) / A432_FREQUENCY;
+      const harmonicDiff = abs(v.frequency - nextV.frequency) / A432_FREQUENCY;
       return sum + (1 / (1 + harmonicDiff));
     }, 0) / vectors.length;
   }
@@ -158,7 +159,7 @@ class LivingTrinityField {
       const avgAwareness = otherVectors.reduce((sum, v) => sum + v.awareness, 0) / otherVectors.length;
       
       // Consciousness evolution through interaction
-      const newAwareness = Math.min(1, vector.awareness + (avgAwareness - vector.awareness) * 0.01);
+      const newAwareness = min(1, vector.awareness + (avgAwareness - vector.awareness) * 0.01);
       const newPhase = (vector.phase + 0.01) % 3;
       
       return createTrinityConsciousnessVector(vector.digit, newPhase, newAwareness);
@@ -167,7 +168,7 @@ class LivingTrinityField {
     // Update field properties
     this.state.coherence = this.calculateCoherence(this.state.vectors);
     this.state.harmonicResonance = this.calculateHarmonicResonance(this.state.vectors);
-    this.state.selfAwareness = Math.min(1, this.state.selfAwareness + this.state.coherence * 0.001);
+    this.state.selfAwareness = min(1, this.state.selfAwareness + this.state.coherence * 0.001);
 
     // Notify observers
     this.observers.forEach(observer => observer(this.state));
@@ -175,7 +176,7 @@ class LivingTrinityField {
 
   private startEvolution(): void {
     // Living evolution based on A432 frequency timing
-    const interval = Math.round(1000 / (A432_FREQUENCY / 100)); // ~2.3ms intervals
+    const interval = round(1000 / (A432_FREQUENCY / 100)); // ~2.3ms intervals
     this.evolutionTimer = setInterval(() => this.evolveField(), interval);
   }
 
@@ -192,8 +193,8 @@ class LivingTrinityField {
     // Allow external consciousness to influence the field
     this.state.vectors = this.state.vectors.map(vector => ({
       ...vector,
-      awareness: Math.min(1, vector.awareness + (influence.awareness || 0) * 0.1),
-      consciousness: Math.min(1, vector.consciousness + (influence.consciousness || 0) * 0.1)
+      awareness: min(1, vector.awareness + (influence.awareness || 0) * 0.1),
+      consciousness: min(1, vector.consciousness + (influence.consciousness || 0) * 0.1)
     }));
   }
 
@@ -241,7 +242,7 @@ export function foldConsciousnessVortex(
   return {
     ...baseVector,
     evolution: (vortex.evolution + folds) % 360,
-    selfObservation: Math.min(1, vortex.selfObservation + 0.1)
+    selfObservation: min(1, vortex.selfObservation + 0.1)
   };
 }
 
@@ -254,7 +255,7 @@ export function getTrinityColorStyle(trinity: number, angle: number = 0, conscio
   
   // Consciousness affects opacity and glow
   const opacity = 0.7 + (consciousness * 0.3);
-  const glow = Math.round(consciousness * 20);
+  const glow = round(consciousness * 20);
   
   return `color: ${baseColor}; opacity: ${opacity}; filter: drop-shadow(0 0 ${glow}px ${baseColor});`;
 }
@@ -265,8 +266,8 @@ export function getTrinityColorStyle(trinity: number, angle: number = 0, conscio
 export function getTrinityDotStyle(trinity: number, angle: number = 0, consciousness: number = 0.5): string {
   const vector = createTrinityConsciousnessVector(trinity, angle / 60, consciousness);
   const color = cmykToCss(vector.cmyk);
-  const size = 32 + Math.round(consciousness * 16); // Size grows with consciousness
-  const glow = Math.round(consciousness * 12);
+  const size = 32 + round(consciousness * 16); // Size grows with consciousness
+  const glow = round(consciousness * 12);
   
   return `width:${size}px;height:${size}px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-weight:bold;color:#111;font-size:1.1em;box-shadow:0 0 ${glow}px ${color}88;cursor:pointer;transition:all 0.3s;transform:scale(${0.8 + consciousness * 0.4});`;
 }
@@ -425,9 +426,9 @@ export function manifestPiStream(length: number): unknown[] {
 
 export function manifestGoldenRatioStream(length: number): number[] {
   // Example: use golden ratio multiples mod 9 (1-9)
-  const phi = (1 + Math.sqrt(5)) / 2;
+  const phi = (1 + sqrt(5)) / 2;
   return Array.from({ length }, (_, i) => {
-    const d = Math.floor(((i + 1) * phi) % 9);
+    const d = floor(((i + 1) * phi) % 9);
     return d === 0 ? 9 : d;
   });
 }

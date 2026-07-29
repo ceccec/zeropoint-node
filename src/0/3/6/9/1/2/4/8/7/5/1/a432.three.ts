@@ -1,6 +1,7 @@
+import { PI, cos, sin } from './a432.algebra.ts'
 // a432.three.ts — Reusable Three.js 3D visualization for the A432 matrix
 import * as THREE from 'three';
-import { getRodinSequence, angleForDigit, getTrinityAxis } from './a432.math';
+import { getRodinSequence, angleForDigit, getTrinityAxis } from './a432.math.ts';
 
 export interface A432ThreeOptions {
   rodin?: boolean;
@@ -22,11 +23,11 @@ export function createA432Scene(container: HTMLElement, options: A432ThreeOption
   if (options.rodin !== false) {
     const rodinSeq = getRodinSequence();
     const points = rodinSeq.map((d, i) => {
-      const angle = angleForDigit(d) * (Math.PI / 180);
+      const angle = angleForDigit(d) * (PI / 180);
       const radius = 2 + i * 0.2;
       return new THREE.Vector3(
-        Math.cos(angle) * radius,
-        Math.sin(angle) * radius,
+        cos(angle) * radius,
+        sin(angle) * radius,
         i * 0.18
       );
     });
@@ -42,10 +43,10 @@ export function createA432Scene(container: HTMLElement, options: A432ThreeOption
     const mobiusPoints: THREE.Vector3[] = [];
     const segments = 180;
     for (let i = 0; i <= segments; i++) {
-      const t = (i / segments) * Math.PI * 2;
-      const x = Math.cos(t) * (3 + Math.cos(t / 2));
-      const y = Math.sin(t) * (3 + Math.cos(t / 2));
-      const z = Math.sin(t / 2);
+      const t = (i / segments) * PI * 2;
+      const x = cos(t) * (3 + cos(t / 2));
+      const y = sin(t) * (3 + cos(t / 2));
+      const z = sin(t / 2);
       mobiusPoints.push(new THREE.Vector3(x, y, z));
     }
     mobiusGeometry.setFromPoints(mobiusPoints);
@@ -58,13 +59,13 @@ export function createA432Scene(container: HTMLElement, options: A432ThreeOption
   if (options.trinity) {
     const trinity = getTrinityAxis();
     trinity.forEach((d, i) => {
-      const angle = angleForDigit(d) * (Math.PI / 180);
+      const angle = angleForDigit(d) * (PI / 180);
       const radius = 3.5;
       const sphere = new THREE.Mesh(
         new THREE.SphereGeometry(0.22, 24, 24),
         new THREE.MeshBasicMaterial({ color: [0x00ffff, 0xff00ff, 0xffff00][i] })
       );
-      sphere.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 0);
+      sphere.position.set(cos(angle) * radius, sin(angle) * radius, 0);
       scene.add(sphere);
     });
   }

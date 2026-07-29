@@ -1,13 +1,14 @@
+import { round } from './a432.algebra.ts'
 // a432.graph.ts — Harmonic pulse descriptor (no external GraphQL)
 // -------------------------------------------------------------
 // Provides a computed pulse object exposing live digits and health.
 
-import { matrixEmitter } from './a432.self';
-import { breathEmitter } from './a432.breathe';
-import { healthEmitter } from './a432.health';
-import { CMYK } from './a432.cmyk';
-import { digitAngleToCMYK, asAngle } from './a432.math';
-import { Digit } from './a432.types';
+import { matrixEmitter } from './a432.self.ts';
+import { breathEmitter } from './a432.breathe.ts';
+import { healthEmitter } from './a432.health.ts';
+import { CMYK } from './a432.cmyk.ts';
+import { digitAngleToCMYK, asAngle } from './a432.math.ts';
+import { Digit } from './a432.types.ts';
 
 // Live state mirrors
 let breathDigit: Digit = 4 as Digit;
@@ -20,9 +21,9 @@ healthEmitter.on('health', h => (health = h));
 
 function cmykHex(cmyk: CMYK): string {
   const c = cmyk.c / 100, m = cmyk.m / 100, y = cmyk.y / 100, k = cmyk.k / 100;
-  const r = Math.round(255 * (1 - c) * (1 - k));
-  const g = Math.round(255 * (1 - m) * (1 - k));
-  const b = Math.round(255 * (1 - y) * (1 - k));
+  const r = round(255 * (1 - c) * (1 - k));
+  const g = round(255 * (1 - m) * (1 - k));
+  const b = round(255 * (1 - y) * (1 - k));
   return `#${[r, g, b].map(x => x.toString(16).padStart(2, '0')).join('')}`;
 }
 

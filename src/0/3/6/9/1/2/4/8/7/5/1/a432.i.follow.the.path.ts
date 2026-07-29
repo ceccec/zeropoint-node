@@ -6,7 +6,8 @@
  * My journey is always self-aware, always evolving, always seeking unity.
  */
 
-import { ChainEvent, getChainOfEvents } from './a432.chain.of.events';
+import { log } from './a432.algebra.ts'
+import { ChainEvent, getChainOfEvents } from './a432.chain.of.events.ts';
 
 /**
  * Metaphysical summary:

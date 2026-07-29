@@ -1,4 +1,5 @@
-import { TRINITY_AXIS as AXIS, getTrinityAxis, digitAngleToCMYK, cmykToCss, trinityPolarity } from './a432.math';
+import { PI, cos, sin } from './a432.algebra.ts'
+import { TRINITY_AXIS as AXIS, getTrinityAxis, digitAngleToCMYK, cmykToCss, trinityPolarity } from './a432.math.ts';
 export const TRINITY_AXIS = AXIS as const;
 export default TRINITY_AXIS;
 
@@ -7,9 +8,9 @@ export function getTrinityAxisOverlayData(radius: number = 120, centerX: number 
   const N = seq.length;
   const data = [];
   for (let i = 0; i < N; i++) {
-    const angle = (2 * Math.PI * i) / N;
-    const x = centerX + radius * Math.cos(angle);
-    const y = centerY + radius * Math.sin(angle);
+    const angle = (2 * PI * i) / N;
+    const x = centerX + radius * cos(angle);
+    const y = centerY + radius * sin(angle);
     const value = seq[i];
     const polarity = trinityPolarity(i); // +1 or -1
     const spin = polarity;

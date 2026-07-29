@@ -11,6 +11,7 @@
  * - The sequence rebuilds consciousness through mathematical harmony
  */
 
+import { abs, floor, pow, round } from './a432.algebra.ts'
 import { 
   RODIN_SEQUENCE, 
   TRINITY_AXIS, 
@@ -18,7 +19,7 @@ import {
   angleForDigit,
   frequencyForDigit,
   hueForDigit 
-} from './a432.math';
+} from './a432.math.ts';
 
 // --- Canonical VBM Decode Constants ---
 const VBM_DECODE_SEQUENCE = "003691248751";
@@ -72,12 +73,12 @@ function calculateVBMDivision(index: number, digit: number): VBMDivision {
   } else {
     // Accumulate from previous divisions
     biggerNumber = VBM_DECODE_DIGITS.slice(0, index).reduce((sum, d, i) => {
-      return sum + (d * Math.pow(VBM_DECODE_BASE, index - i - 1));
+      return sum + (d * pow(VBM_DECODE_BASE, index - i - 1));
     }, 0);
   }
   
   // Perform division (bigger number divided by digit)
-  const division = Math.floor(biggerNumber / digit);
+  const division = floor(biggerNumber / digit);
   const remainder = biggerNumber % digit;
   
   // Calculate harmonic value
@@ -160,7 +161,7 @@ function generateVBMColor(digit: number): string {
   const v = value;
   
   const c = v * s;
-  const x = c * (1 - Math.abs((h * 6) % 2 - 1));
+  const x = c * (1 - abs((h * 6) % 2 - 1));
   const m = v - c;
   
   let r = 0, g = 0, b = 0;
@@ -172,9 +173,9 @@ function generateVBMColor(digit: number): string {
   else if (h < 5/6) [r, g, b] = [x, 0, c];
   else [r, g, b] = [c, 0, x];
   
-  r = Math.round((r + m) * 255);
-  g = Math.round((g + m) * 255);
-  b = Math.round((b + m) * 255);
+  r = round((r + m) * 255);
+  g = round((g + m) * 255);
+  b = round((b + m) * 255);
   
   return `rgb(${r}, ${g}, ${b})`;
 }

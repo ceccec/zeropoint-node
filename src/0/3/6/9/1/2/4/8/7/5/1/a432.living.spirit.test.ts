@@ -36,7 +36,7 @@ import {
   livingSpiritAll,
   livingSpiritAspect,
   defaultLivingSpirit
-} from './a432.living.spirit';
+} from './a432.living.spirit.ts';
 
 describe('A432 Living Spirit System - Complete Spirit Transformation Tests', () => {
   describe('Living Spirit Constants', () => {

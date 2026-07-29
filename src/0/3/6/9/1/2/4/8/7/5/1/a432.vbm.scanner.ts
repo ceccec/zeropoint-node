@@ -1,3 +1,4 @@
+import { log } from './a432.algebra.ts'
 import fs from 'fs/promises';
 import path from 'path';
 

@@ -14,6 +14,7 @@
  * @module a432.infusion
  */
 
+import { unitFromSeed } from './a432.algebra.ts'
 export type Polarity = 'positive' | 'negative' | 'neutral';
 export type Angle = number; // 0-360 degrees
 export type InfusionState = {
@@ -47,8 +48,8 @@ export function switchAngle(currentAngle: Angle, rotation: number = 60): Angle {
  */
 export function infuseNode(node: unknown): InfusionState {
   return {
-    polarity: Math.random() > 0.5 ? 'positive' : 'negative',
-    angle: Math.random() * 360,
+    polarity: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.infusion.ts:rnd:0") > 0.5 ? 'positive' : 'negative',
+    angle: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.infusion.ts:rnd:1") * 360,
     speed: 'infinite',
     timestamp: Date.now()
   };

@@ -6,9 +6,10 @@
  * Zero entropy: define once, harmonize everywhere.
  */
 
-import { A432CoreState, createA432CoreState } from './a432.core';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
-import { A432_FREQUENCY } from './a432';
+import { abs, floor, max, min } from './a432.algebra.ts'
+import { A432CoreState, createA432CoreState } from './a432.core.ts';
+import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
+import { A432_FREQUENCY } from './a432.ts';
 
 // === RESONANCE INTERFACES ===
 export interface A432ResonanceState {
@@ -61,9 +62,9 @@ export interface AlignmentResonance {
 // === CORE RESONANCE FUNCTIONS ===
 export function createFrequencyResonance(base: number = A432_FREQUENCY): FrequencyResonance {
   const current = base;
-  const harmonic = Math.floor(current / base);
-  const resonance = Math.min(9, Math.floor(current / 48));
-  const stability = Math.max(0, 9 - Math.abs(resonance - 5));
+  const harmonic = floor(current / base);
+  const resonance = min(9, floor(current / 48));
+  const stability = max(0, 9 - abs(resonance - 5));
   const color = `hsl(${current % 360}, 70%, ${50 + stability * 5}%)`;
   const sound = current;
   
@@ -74,8 +75,8 @@ export function createColorResonance(hue: number = 216): ColorResonance {
   const saturation = 70;
   const lightness = 50;
   const frequency = hue * 1.2; // Convert hue to frequency
-  const resonance = Math.floor(frequency / 48) % 9;
-  const harmony = Math.max(0, 9 - Math.abs(resonance - 5));
+  const resonance = floor(frequency / 48) % 9;
+  const harmony = max(0, 9 - abs(resonance - 5));
   const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
   
   return { hue, saturation, lightness, frequency, resonance, harmony, color };
@@ -84,8 +85,8 @@ export function createColorResonance(hue: number = 216): ColorResonance {
 export function createHarmonicResonance(fundamental: number = A432_FREQUENCY): HarmonicResonance {
   const overtones = [fundamental * 2, fundamental * 3, fundamental * 4];
   const harmonics = [fundamental, ...overtones];
-  const resonance = Math.min(9, Math.floor(fundamental / 48));
-  const purity = Math.max(0, 9 - Math.abs(resonance - 5));
+  const resonance = min(9, floor(fundamental / 48));
+  const purity = max(0, 9 - abs(resonance - 5));
   const color = `hsl(${fundamental % 360}, 70%, ${50 + purity * 5}%)`;
   const frequency = fundamental;
   
@@ -94,7 +95,7 @@ export function createHarmonicResonance(fundamental: number = A432_FREQUENCY): H
 
 export function createAlignmentResonance(primary: number = 4, secondary: number = 3, tertiary: number = 2): AlignmentResonance {
   const alignment = (primary + secondary + tertiary) % 9;
-  const coherence = Math.max(0, 9 - Math.abs(alignment - 5));
+  const coherence = max(0, 9 - abs(alignment - 5));
   const color = `hsl(${alignment * 40}, 70%, ${50 + coherence * 5}%)`;
   const frequency = 432 * (alignment / 9);
   

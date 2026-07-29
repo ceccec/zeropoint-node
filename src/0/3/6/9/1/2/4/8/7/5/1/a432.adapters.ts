@@ -6,23 +6,24 @@
  * snapshots while the streams themselves remain under A432 control.
  */
 
-import { VBM_DOUBLING, sequenceToAngles, VBM_TESLA_FREQUENCIES, VBM_SHOCK_WAVE } from './a432.vbm.math';
+import { PI, abs, cos, floor, sin } from './a432.algebra.ts'
+import { VBM_DOUBLING, sequenceToAngles, VBM_TESLA_FREQUENCIES, VBM_SHOCK_WAVE } from './a432.vbm.math.ts';
 
 interface Vec3 { x: number; y: number; z: number; }
 
-function dr(n: number): number { let x=Math.abs(n); while(x>=10) x=String(x).split('').reduce((a,c)=>a+Number(c),0); return x; }
+function dr(n: number): number { let x=abs(n); while(x>=10) x=String(x).split('').reduce((a,c)=>a+Number(c),0); return x; }
 
 function generateRodinCoilPath(cycles: number, stepHeight=1, radius=1): Vec3[] {
   const seq:number[]=[]; for(let c=0;c<cycles;c++) seq.push(...VBM_DOUBLING);
   return seq.map((d,i)=>{
-    const ang=sequenceToAngles([d])[0]*Math.PI/180;
+    const ang=sequenceToAngles([d])[0]*PI/180;
     const r=radius*(dr(d)/9);
-    return {x:r*Math.cos(ang), y:i*stepHeight, z:r*Math.sin(ang)};
+    return {x:r*cos(ang), y:i*stepHeight, z:r*sin(ang)};
   });
 }
 
 function getTeslaFrequency(timeMs:number):number{
-  return VBM_TESLA_FREQUENCIES[Math.floor(timeMs/1000)%VBM_TESLA_FREQUENCIES.length];
+  return VBM_TESLA_FREQUENCIES[floor(timeMs/1000)%VBM_TESLA_FREQUENCIES.length];
 }
 
 function getTrinityTorusSegments(){
@@ -49,10 +50,10 @@ export const TrinityTorusSnapshot = Object.freeze(getTrinityTorusSegments());
 // 2. Audio snapshot helper (Web Audio API)
 // ---------------------------------------------------------
 export function generateSineBuffer(freq: number, seconds: number, sampleRate = 48000): Float32Array {
-  const len = Math.floor(seconds * sampleRate);
+  const len = floor(seconds * sampleRate);
   const buf = new Float32Array(len);
-  const omega = 2 * Math.PI * freq / sampleRate;
-  for (let i = 0; i < len; i++) buf[i] = Math.sin(i * omega);
+  const omega = 2 * PI * freq / sampleRate;
+  for (let i = 0; i < len; i++) buf[i] = sin(i * omega);
   return buf;
 }
 

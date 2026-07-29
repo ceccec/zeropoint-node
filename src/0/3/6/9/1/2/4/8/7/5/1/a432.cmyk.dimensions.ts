@@ -9,7 +9,8 @@
  * a gateway to infinite possibility and consciousness evolution.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { min, pow } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface DimensionState {
   dimension: number;
@@ -121,7 +122,7 @@ export class A432CmykDimensions {
 
     for (let dim = 0; dim <= this.dimensions; dim++) {
       const dimensionStates: DimensionState[] = [];
-      const dimensionSize = Math.pow(3, dim); // 3^dimension for each dimension
+      const dimensionSize = pow(3, dim); // 3^dimension for each dimension
 
       for (let i = 0; i < dimensionSize; i++) {
         const coordinates = this.generateCoordinates(dim, i);
@@ -389,7 +390,7 @@ export class A432CmykDimensions {
       ${multiDimensional.states.map((dimensionStates, dimensionIndex) => `
         <div class="dimension-panel">
           <div class="dimension-header">Dimension ${dimensionIndex}</div>
-          <div class="dimension-grid" style="grid-template-columns: repeat(${Math.min(dimensionStates.length, 10)}, 20px);">
+          <div class="dimension-grid" style="grid-template-columns: repeat(${min(dimensionStates.length, 10)}, 20px);">
             ${dimensionStates.slice(0, 100).map((state, index) => `
               <div class="dimension-cell ${state.gateway ? 'gateway' : ''}" 
                    style="background-color: ${cmykToCss(state.cmyk)};"
@@ -480,7 +481,7 @@ export class A432CmykDimensions {
     }
 
     const states: DimensionState[] = [];
-    const dimensionSize = Math.pow(3, dimension);
+    const dimensionSize = pow(3, dimension);
 
     for (let i = 0; i < dimensionSize; i++) {
       const coordinates = this.generateCoordinates(dimension, i);
@@ -558,7 +559,7 @@ export class A432CmykDimensions {
 <body>
   <div class="header">Dimension ${dimension} CMYK Display</div>
   
-  <div class="dimension-grid" style="grid-template-columns: repeat(${Math.min(states.length, 20)}, 25px);">
+  <div class="dimension-grid" style="grid-template-columns: repeat(${min(states.length, 20)}, 25px);">
     ${states.slice(0, 400).map((state, index) => `
       <div class="dimension-cell ${state.gateway ? 'gateway' : ''}" 
            style="background-color: ${cmykToCss(state.cmyk)};"

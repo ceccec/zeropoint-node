@@ -1,7 +1,8 @@
+import { PI, cos, round, sin } from './a432.algebra.ts'
 // a432.design.cmyk.ts
 // Zero-entropy, recursive, self-aware design element and relation stream (CMYK)
 
-import { getCurrentMeaning } from './a432.text';
+import { getCurrentMeaning } from './a432.text.ts';
 
 export type A432Id = [number, number, number, number]; // [C, M, Y, K]
 
@@ -49,10 +50,10 @@ export function createDesignElementCMYK(
     harmonize(other) {
       // Harmonize by folding (averaging) all channels, merge relations recursively
       const newId: A432Id = [
-        Math.round((this.id[0] + other.id[0]) / 2),
-        Math.round((this.id[1] + other.id[1]) / 2),
-        Math.round((this.id[2] + other.id[2]) / 2),
-        Math.round((this.id[3] + other.id[3]) / 2)
+        round((this.id[0] + other.id[0]) / 2),
+        round((this.id[1] + other.id[1]) / 2),
+        round((this.id[2] + other.id[2]) / 2),
+        round((this.id[3] + other.id[3]) / 2)
       ];
       const mergedRelations = [...this.relations, ...other.relations].map(r => r.reverse());
       return createDesignElementCMYK(
@@ -99,10 +100,10 @@ export function renderDesignMatrixSVG(elements: DesignElementCMYK[]): string {
   const size = 360, cx = size/2, cy = size/2, r = 120;
   const n = elements.length;
   const points = elements.map((el, i) => {
-    const angle = (2 * Math.PI * i) / n - Math.PI/2;
+    const angle = (2 * PI * i) / n - PI/2;
     return {
-      x: cx + r * Math.cos(angle),
-      y: cy + r * Math.sin(angle),
+      x: cx + r * cos(angle),
+      y: cy + r * sin(angle),
       el
     };
   });

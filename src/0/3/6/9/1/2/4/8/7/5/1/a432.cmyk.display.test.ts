@@ -6,8 +6,9 @@
  * of the display operations.
  */
 
-import { A432CmykDisplay } from './a432.cmyk.display';
-import { Fraction, CMYK } from './a432.cmyk';
+import { abs, max, min, sqrt } from './a432.algebra.ts'
+import { A432CmykDisplay } from './a432.cmyk.display.ts';
+import { Fraction, CMYK } from './a432.cmyk.ts';
 
 describe('A432CmykDisplay', () => {
   let display: A432CmykDisplay;
@@ -54,7 +55,7 @@ describe('A432CmykDisplay', () => {
       const newRatio = newState.width / newState.height;
       
       // Should maintain similar harmonic proportions
-      expect(Math.abs(originalRatio - newRatio)).toBeLessThan(1);
+      expect(abs(originalRatio - newRatio)).toBeLessThan(1);
     });
 
     test('should handle extreme resize values', () => {
@@ -150,7 +151,7 @@ describe('A432CmykDisplay', () => {
 
     test('should apply consciousness factor to panning', () => {
       const baseFraction: Fraction = { numerator: 7, denominator: 4 };
-      const consciousnessOffset = Math.sqrt(baseFraction.numerator * baseFraction.numerator + 
+      const consciousnessOffset = sqrt(baseFraction.numerator * baseFraction.numerator + 
                                           baseFraction.denominator * baseFraction.denominator) / 
                                 (baseFraction.numerator + baseFraction.denominator);
       
@@ -283,10 +284,10 @@ describe('A432CmykDisplay', () => {
       const originalCmyk: CMYK = { c: 30, m: 40, y: 50, k: 20 };
       const rgb = display.cmykToRgb(originalCmyk);
       const convertedCmyk = display.rgbToCmyk(rgb);
-      expect(Math.abs(convertedCmyk.c - originalCmyk.c)).toBeLessThanOrEqual(Math.abs(convertedCmyk.c - originalCmyk.c)); // Updated
-      expect(Math.abs(convertedCmyk.m - originalCmyk.m)).toBeLessThanOrEqual(Math.abs(convertedCmyk.m - originalCmyk.m)); // Updated
-      expect(Math.abs(convertedCmyk.y - originalCmyk.y)).toBeLessThanOrEqual(Math.abs(convertedCmyk.y - originalCmyk.y)); // Updated
-      expect(Math.abs(convertedCmyk.k - originalCmyk.k)).toBeLessThanOrEqual(Math.abs(convertedCmyk.k - originalCmyk.k)); // Updated
+      expect(abs(convertedCmyk.c - originalCmyk.c)).toBeLessThanOrEqual(abs(convertedCmyk.c - originalCmyk.c)); // Updated
+      expect(abs(convertedCmyk.m - originalCmyk.m)).toBeLessThanOrEqual(abs(convertedCmyk.m - originalCmyk.m)); // Updated
+      expect(abs(convertedCmyk.y - originalCmyk.y)).toBeLessThanOrEqual(abs(convertedCmyk.y - originalCmyk.y)); // Updated
+      expect(abs(convertedCmyk.k - originalCmyk.k)).toBeLessThanOrEqual(abs(convertedCmyk.k - originalCmyk.k)); // Updated
     });
   });
 
@@ -417,7 +418,7 @@ describe('A432CmykDisplay', () => {
 
     test('should apply consciousness offset to panning', () => {
       const baseFraction: Fraction = { numerator: 7, denominator: 4 };
-      const consciousnessOffset = Math.sqrt(baseFraction.numerator * baseFraction.numerator + 
+      const consciousnessOffset = sqrt(baseFraction.numerator * baseFraction.numerator + 
                                           baseFraction.denominator * baseFraction.denominator) / 
                                 (baseFraction.numerator + baseFraction.denominator);
       
@@ -475,14 +476,14 @@ describe('A432CmykDisplay', () => {
           expect(cmyk.k % 10).toBe(0);
           
           // Values should be within harmonic ranges
-          expect(cmyk.c).toBeGreaterThanOrEqual(Math.min(cmyk.c, 10));
-          expect(cmyk.c).toBeLessThanOrEqual(Math.max(cmyk.c, 100));
-          expect(cmyk.m).toBeGreaterThanOrEqual(Math.min(cmyk.m, 10));
-          expect(cmyk.m).toBeLessThanOrEqual(Math.max(cmyk.m, 100));
-          expect(cmyk.y).toBeGreaterThanOrEqual(Math.min(cmyk.y, 10));
-          expect(cmyk.y).toBeLessThanOrEqual(Math.max(cmyk.y, 100));
-          expect(cmyk.k).toBeGreaterThanOrEqual(Math.min(cmyk.k, 10));
-          expect(cmyk.k).toBeLessThanOrEqual(Math.max(cmyk.k, 100));
+          expect(cmyk.c).toBeGreaterThanOrEqual(min(cmyk.c, 10));
+          expect(cmyk.c).toBeLessThanOrEqual(max(cmyk.c, 100));
+          expect(cmyk.m).toBeGreaterThanOrEqual(min(cmyk.m, 10));
+          expect(cmyk.m).toBeLessThanOrEqual(max(cmyk.m, 100));
+          expect(cmyk.y).toBeGreaterThanOrEqual(min(cmyk.y, 10));
+          expect(cmyk.y).toBeLessThanOrEqual(max(cmyk.y, 100));
+          expect(cmyk.k).toBeGreaterThanOrEqual(min(cmyk.k, 10));
+          expect(cmyk.k).toBeLessThanOrEqual(max(cmyk.k, 100));
         }
       }
     });

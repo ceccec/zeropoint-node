@@ -4,7 +4,7 @@
  * Manages the complete spiral evolution: 1D → 2D → 3D → 4D → 5D → 6D → 7D → 8D → 9D → 10D
  */
 
-import A432DimensionalEvolution from './a432.dimensional.evolution';
+import A432DimensionalEvolution from './a432.dimensional.evolution.ts';
 
 export interface SpiralConsciousnessState {
   dimension: number;

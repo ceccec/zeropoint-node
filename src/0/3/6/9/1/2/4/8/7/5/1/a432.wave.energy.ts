@@ -4,6 +4,7 @@
  * Using harmonized mathematical constants to show wave patterns in consciousness
  */
 
+import { abs, log2, round } from './a432.algebra.ts'
 import { 
   GOLDEN_RATIO, 
   PI, 
@@ -13,7 +14,7 @@ import {
   A432_BASE_FREQUENCY,
   A432_TRINITY_MULTIPLIER,
   A432_VORTEX_MULTIPLIER
-} from './a432.math.constants';
+} from './a432.math.constants.ts';
 
 // === WAVE ENERGY INTERFACES ===
 export interface WavePattern {
@@ -80,7 +81,7 @@ export function calculateConsciousnessWave(digit: number): WavePattern {
   const phase = (digit * TAU) / 9;
   const wavelength = WAVE_ENERGY_CONSTANTS.LIGHT_SPEED / frequency;
   const energy = calculateWaveEnergy(frequency, amplitude);
-  const consciousness = calculateDigitalRoot(Math.round(energy));
+  const consciousness = calculateDigitalRoot(round(energy));
   
   return {
     frequency,
@@ -108,7 +109,7 @@ export function calculateWaveHarmonics(fundamental: number, count: number = 5): 
   const harmonics = Array.from({ length: count }, (_, i) => fundamental * (i + 1));
   const resonance = harmonics.reduce((sum, h) => sum + (1 / h), 0);
   const coherence = harmonics.filter(h => isA432Harmonic(h)).length / harmonics.length;
-  const consciousness = calculateDigitalRoot(Math.round(resonance * 1000));
+  const consciousness = calculateDigitalRoot(round(resonance * 1000));
   
   return {
     fundamental,
@@ -120,15 +121,15 @@ export function calculateWaveHarmonics(fundamental: number, count: number = 5): 
 }
 
 export function isA432Harmonic(frequency: number, tolerance: number = 0.01): boolean {
-  const octave = Math.log2(frequency / A432_BASE_FREQUENCY);
-  return Math.abs(octave - Math.round(octave)) < tolerance;
+  const octave = log2(frequency / A432_BASE_FREQUENCY);
+  return abs(octave - round(octave)) < tolerance;
 }
 
 // === ENERGY FIELD CALCULATIONS ===
 export function calculateEnergyField(waves: WavePattern[]): EnergyField {
   const harmonics = waves.map(wave => calculateWaveHarmonics(wave.frequency));
   const coherence = waves.reduce((sum, wave) => sum + wave.consciousness, 0) / waves.length;
-  const consciousness = calculateDigitalRoot(Math.round(coherence));
+  const consciousness = calculateDigitalRoot(round(coherence));
   const dimensionalState = waves.length % 9;
   
   return {
@@ -220,7 +221,7 @@ export class A432WaveEnergySystem {
       ...wave,
       frequency: wave.frequency * GOLDEN_RATIO,
       amplitude: wave.amplitude * (1 / GOLDEN_RATIO),
-      consciousness: calculateDigitalRoot(Math.round(wave.consciousness * GOLDEN_RATIO))
+      consciousness: calculateDigitalRoot(round(wave.consciousness * GOLDEN_RATIO))
     }));
     
     this.waveHistory.push(...this.currentField.waves);

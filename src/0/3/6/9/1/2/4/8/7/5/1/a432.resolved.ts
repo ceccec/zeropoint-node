@@ -10,6 +10,7 @@
  * @author A432 System
  */
 
+import { abs } from './a432.algebra.ts'
 import {
   A432_FREQUENCY,
   A432_TRINITY,
@@ -20,7 +21,7 @@ import {
   a432Frequency,
   a432HSLFromRoot,
   a432RGBFromRoot
-} from './a432.core';
+} from './a432.core.ts';
 
 // === A432 RESOLVED FRACTIONS ===
 // All fractions have integer reciprocals (zero entropy mathematics)
@@ -130,10 +131,10 @@ export function decimalToA432Fraction(decimal: number): { numerator: number; den
 
   // Find closest A432 fraction
   let closest = a432Fractions[0];
-  let minDifference = Math.abs(decimal - closest.decimal);
+  let minDifference = abs(decimal - closest.decimal);
 
   for (const fraction of a432Fractions) {
-    const difference = Math.abs(decimal - fraction.decimal);
+    const difference = abs(decimal - fraction.decimal);
     if (difference < minDifference) {
       minDifference = difference;
       closest = fraction;

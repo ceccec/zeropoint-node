@@ -1,4 +1,4 @@
-import { waveParticleDualityProof, waveParticleDualityMetaphysics, getWaveParticleCMYKOverlayData, logWaveParticleEvent } from './a432.wave.particle.duality';
+import { waveParticleDualityProof, waveParticleDualityMetaphysics, getWaveParticleCMYKOverlayData, logWaveParticleEvent } from './a432.wave.particle.duality.ts';
 
 describe('a432.wave.particle.duality', () => {
   it('returns the canonical proof', () => {

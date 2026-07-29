@@ -12,7 +12,8 @@
  * @author A432 System
  */
 
-import { digitalRoot } from './a432.math';
+import { abs, floor, sqrt } from './a432.algebra.ts'
+import { digitalRoot } from './a432.math.ts';
 export { digitalRoot };
 
 export type Fraction = { numerator: number; denominator: number };
@@ -35,8 +36,8 @@ export function shiftRootPolarity(
   let den = fraction.denominator + hexShift;
 
   // Take square root, then digital root
-  num = digitalRoot(Math.floor(Math.sqrt(Math.abs(num))));
-  den = digitalRoot(Math.floor(Math.sqrt(Math.abs(den)))) || 1;
+  num = digitalRoot(floor(sqrt(abs(num))));
+  den = digitalRoot(floor(sqrt(abs(den)))) || 1;
 
   // Change polarity: alternate sign each step
   if (step % 2 === 0) num = -num;

@@ -14,8 +14,9 @@
  *   const disposer = startFlowerOfLife((frame) => { ... });
  *   // Call disposer() to stop.
  */
-import { CMYK, digitAngleToCMYK } from './a432.cmyk';
-import { asAngle } from './a432.math';
+import { PI, cos, sin } from './a432.algebra.ts'
+import { CMYK, digitAngleToCMYK } from './a432.cmyk.ts';
+import { asAngle } from './a432.math.ts';
 
 export interface FlowerOfLifeFrame {
   tick: number;
@@ -50,9 +51,9 @@ export function startFlowerOfLife(callback: (f: FlowerOfLifeFrame) => void): () 
     points[0].color = digitAngleToCMYK((tick % 10), asAngle(tick * 36));
     // 6 surrounding
     for (let i = 1; i < 7; i++) {
-      const ang = ((i - 1) / 6) * 2 * Math.PI + (tick * 0.03);
-      points[i].x = cx + Math.cos(ang) * R;
-      points[i].y = cy + Math.sin(ang) * R;
+      const ang = ((i - 1) / 6) * 2 * PI + (tick * 0.03);
+      points[i].x = cx + cos(ang) * R;
+      points[i].y = cy + sin(ang) * R;
       points[i].color = digitAngleToCMYK(((tick + i) % 10), asAngle(tick * 36 + i * 60));
     }
     callback({ tick: tick++, points: points.map(p => ({ ...p })), metaphysical });

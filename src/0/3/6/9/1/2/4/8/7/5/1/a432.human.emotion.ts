@@ -1,8 +1,9 @@
+import { log } from './a432.algebra.ts'
 // a432.human.emotion.ts — Map human vitality digit to emotion
-import { humanEmitter } from './a432.human';
-import { emotionName } from './a432.emotion';
+import { humanEmitter } from './a432.human.ts';
+import { emotionName } from './a432.emotion.ts';
 import { EventEmitter } from 'events';
-import { Digit } from './a432.types';
+import { Digit } from './a432.types.ts';
 
 export interface HumanEmotionEvent { digit: Digit; name: string }
 export const humanEmotionEmitter = new EventEmitter();

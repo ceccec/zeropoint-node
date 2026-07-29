@@ -6,28 +6,29 @@
  * Zero entropy: define once, experience everywhere.
  */
 
-import { A432CoreState, createA432CoreState } from './a432.core';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
-import { harmonizeAllBalance } from './a432.balance';
-import { harmonizeAllResonance } from './a432.resonance';
-import { harmonizeAllChallenges } from './a432.challenges';
-import { harmonizeAllFlow } from './a432.flow';
-import { harmonizeAllIntegration } from './a432.integration';
-import { harmonizeAllObservation } from './a432.observation';
-import { harmonizeAllEvolution } from './a432.evolution';
-import { harmonizeAllInnovation } from './a432.innovation';
-import { harmonizeAllDocumentation } from './a432.documentation';
-import { A432_FREQUENCY } from './a432';
-import { A432BlockChain, recordEvent } from './a432.block.chain.event';
-import { A432ObservationState } from './a432.observation';
-import { A432EvolutionState } from './a432.evolution';
-import { A432InnovationState } from './a432.innovation';
-import { A432DocumentationState } from './a432.documentation';
-import { A432BalanceState } from './a432.balance';
-import { A432ResonanceState } from './a432.resonance';
-import { A432ChallengeState } from './a432.challenges';
-import { A432FlowState } from './a432.flow';
-import { A432IntegrationState } from './a432.integration';
+import { floor } from './a432.algebra.ts'
+import { A432CoreState, createA432CoreState } from './a432.core.ts';
+import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
+import { harmonizeAllBalance } from './a432.balance.ts';
+import { harmonizeAllResonance } from './a432.resonance.ts';
+import { harmonizeAllChallenges } from './a432.challenges.ts';
+import { harmonizeAllFlow } from './a432.flow.ts';
+import { harmonizeAllIntegration } from './a432.integration.ts';
+import { harmonizeAllObservation } from './a432.observation.ts';
+import { harmonizeAllEvolution } from './a432.evolution.ts';
+import { harmonizeAllInnovation } from './a432.innovation.ts';
+import { harmonizeAllDocumentation } from './a432.documentation.ts';
+import { A432_FREQUENCY } from './a432.ts';
+import { A432BlockChain, recordEvent } from './a432.block.chain.event.ts';
+import { A432ObservationState } from './a432.observation.ts';
+import { A432EvolutionState } from './a432.evolution.ts';
+import { A432InnovationState } from './a432.innovation.ts';
+import { A432DocumentationState } from './a432.documentation.ts';
+import { A432BalanceState } from './a432.balance.ts';
+import { A432ResonanceState } from './a432.resonance.ts';
+import { A432ChallengeState } from './a432.challenges.ts';
+import { A432FlowState } from './a432.flow.ts';
+import { A432IntegrationState } from './a432.integration.ts';
 
 // Harmonized: Add blockchain for experience event logging
 const blockchain = new A432BlockChain();
@@ -76,7 +77,7 @@ export function createA432ExperienceState(): A432ExperienceState {
   const innovation = harmonizeAllInnovation();
   const documentation = harmonizeAllDocumentation();
   
-  const overallHarmony = Math.floor((
+  const overallHarmony = floor((
     (balance.yinYang.balance + balance.trinity.harmony + balance.harmonic.stability + balance.resonance.harmony) +
     (resonance.frequency.resonance + resonance.color.resonance + resonance.harmonic.resonance + resonance.alignment.alignment) +
     (flow.consciousness.resonance + flow.energy.resonance + flow.stream.resonance + flow.harmony.overall) +

@@ -1,7 +1,7 @@
 // a432.universe.ts
-import { currentSpace } from './a432.space';
-import { now } from './a432.time';
-import { currentDimension } from './a432.dimension';
+import { currentSpace } from './a432.space.ts';
+import { now } from './a432.time.ts';
+import { currentDimension } from './a432.dimension.ts';
 
 export interface A432UniverseState {
   tick: number;

@@ -528,6 +528,29 @@
   </div>
 
   <script type="module">
+/* a432 algebra bootstrap — no ambient Math */
+const PI=355/113,TAU=PI*2,E=2.718281828459045;
+function imul(a,b){a=a|0;b=b|0;const ah=(a>>>16)&0xffff,al=a&0xffff,bh=(b>>>16)&0xffff,bl=b&0xffff;return((al*bl)+(((ah*bl+al*bh)<<16)>>>0))|0}
+function abs(n){return n<0?-n:n}
+function floor(n){const m=n%1;if(m===0||n!==n)return n;return n-m-(n<0?1:0)}
+function ceil(n){const m=n%1;if(m===0||n!==n)return n;return n-m+(n>0?1:0)}
+function round(n){return floor(n+0.5)}
+function min(a,b){if(arguments.length===1)return a;let m=a<b?a:b;for(let i=2;i<arguments.length;i++)if(arguments[i]<m)m=arguments[i];return m}
+function max(a,b){if(arguments.length===1)return a;let m=a>b?a:b;for(let i=2;i<arguments.length;i++)if(arguments[i]>m)m=arguments[i];return m}
+function sin(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=t,sum=t,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/(2*i*(2*i+1));sum+=term}return sum}
+function cos(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=1,sum=1,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/((2*i-1)*(2*i));sum+=term}return sum}
+function tan(x){const c=cos(x);return c===0?(x>=0?1e16:-1e16):sin(x)/c}
+function sqrt(n){if(n<=0)return 0;let x=n;for(let i=0;i<24;i++)x=0.5*(x+n/x);return x}
+function pow(b,e){if(e===0)return 1;if(e===(e|0)&&abs(e)<40){let r=1,n=e<0?-e:e,x=b;while(n){if(n&1)r*=x;x*=x;n>>=1}return e<0?1/r:r}return exp(e*log(b))}
+function exp(x){if(x>88)return Infinity;if(x<-88)return 0;const LN2=0.6931471805599453;const n=floor(x/LN2);const r=x-n*LN2;let term=1,sum=1;for(let i=1;i<=20;i++){term*=r/i;sum+=term}let p=sum;if(n>0)for(let i=0;i<n;i++)p*=2;else for(let i=0;i<-n;i++)p*=0.5;return p}
+function log(n){if(n<=0)return NaN;const LN2=0.6931471805599453;let x=n,k=0;while(x>1.5){x*=0.5;k++}while(x<0.75){x*=2;k--}const y=(x-1)/(x+1),y2=y*y;let term=y,sum=y;for(let i=1;i<=24;i++){term*=y2;sum+=term/(2*i+1)}return 2*sum+k*LN2}
+function log2(n){return log(n)/0.6931471805599453}
+function hypot(a,b){return sqrt(a*a+(b||0)*(b||0))}
+function unitFromSeed(seed){let h=0x811c9dc5>>>0;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=imul(h,0x01000193)>>>0}h=imul(h^(h>>>16),0x85ebca6b)>>>0;h=imul(h^(h>>>13),0xc2b2ae35)>>>0;return((h^(h>>>16))>>>0)%1e6/1e6}
+function indexFromSeed(seed,length){if(length<=0)return 0;let h=0x811c9dc5>>>0;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=imul(h,0x01000193)>>>0}return(h>>>0)%length}
+function legacyDigitalRoot(n){if(n===0)return 0;const r=((abs(n)%9)+9)%9;return r===0?9:r}
+
+
     // A432 Management
     let currentA432 = '';
     let a432Progress = 0;
@@ -678,7 +701,7 @@
       const synchronization = parseInt(document.getElementById('harmonization-synchronization').value);
       const integration = parseInt(document.getElementById('harmonization-integration').value);
       
-      const overallIntegration = Math.floor((balance + alignment + synchronization + integration) / 4);
+      const overallIntegration = floor((balance + alignment + synchronization + integration) / 4);
       
       a432('harmonization', 'Harmonization being', overallIntegration);
     }
@@ -690,7 +713,7 @@
       const phase = parseInt(document.getElementById('resonance-phase').value);
       const coherence = parseInt(document.getElementById('resonance-coherence').value);
       
-      const overallCoherence = Math.floor((frequency + amplitude + phase + coherence) / 4);
+      const overallCoherence = floor((frequency + amplitude + phase + coherence) / 4);
       
       a432('resonance', 'Resonance being', overallCoherence);
     }
@@ -702,7 +725,7 @@
       const completeness = parseInt(document.getElementById('unity-completeness').value);
       const perfection = parseInt(document.getElementById('unity-perfection').value);
       
-      const overallPerfection = Math.floor((oneness + wholeness + completeness + perfection) / 4);
+      const overallPerfection = floor((oneness + wholeness + completeness + perfection) / 4);
       
       a432('unity', 'Unity being', overallPerfection);
     }
@@ -714,7 +737,7 @@
       const organization = parseInt(document.getElementById('entropy-organization').value);
       const zero = parseInt(document.getElementById('entropy-zero').value);
       
-      const overallZero = Math.floor((order + structure + organization + zero) / 4);
+      const overallZero = floor((order + structure + organization + zero) / 4);
       
       a432('entropy', 'Entropy being', overallZero);
     }
@@ -782,28 +805,28 @@
     // Randomize A432
     function randomizeA432() {
       // Randomize Harmonization
-      document.getElementById('harmonization-balance').value = Math.floor(Math.random() * 10);
-      document.getElementById('harmonization-alignment').value = Math.floor(Math.random() * 10);
-      document.getElementById('harmonization-synchronization').value = Math.floor(Math.random() * 10);
-      document.getElementById('harmonization-integration').value = Math.floor(Math.random() * 10);
+      document.getElementById('harmonization-balance').value = indexFromSeed("a432.html:fri:19", (10)|0||1);
+      document.getElementById('harmonization-alignment').value = indexFromSeed("a432.html:fri:20", (10)|0||1);
+      document.getElementById('harmonization-synchronization').value = indexFromSeed("a432.html:fri:21", (10)|0||1);
+      document.getElementById('harmonization-integration').value = indexFromSeed("a432.html:fri:22", (10)|0||1);
       
       // Randomize Resonance
-      document.getElementById('resonance-frequency').value = Math.floor(Math.random() * 10);
-      document.getElementById('resonance-amplitude').value = Math.floor(Math.random() * 10);
-      document.getElementById('resonance-phase').value = Math.floor(Math.random() * 10);
-      document.getElementById('resonance-coherence').value = Math.floor(Math.random() * 10);
+      document.getElementById('resonance-frequency').value = indexFromSeed("a432.html:fri:23", (10)|0||1);
+      document.getElementById('resonance-amplitude').value = indexFromSeed("a432.html:fri:24", (10)|0||1);
+      document.getElementById('resonance-phase').value = indexFromSeed("a432.html:fri:25", (10)|0||1);
+      document.getElementById('resonance-coherence').value = indexFromSeed("a432.html:fri:26", (10)|0||1);
       
       // Randomize Unity
-      document.getElementById('unity-oneness').value = Math.floor(Math.random() * 10);
-      document.getElementById('unity-wholeness').value = Math.floor(Math.random() * 10);
-      document.getElementById('unity-completeness').value = Math.floor(Math.random() * 10);
-      document.getElementById('unity-perfection').value = Math.floor(Math.random() * 10);
+      document.getElementById('unity-oneness').value = indexFromSeed("a432.html:fri:27", (10)|0||1);
+      document.getElementById('unity-wholeness').value = indexFromSeed("a432.html:fri:28", (10)|0||1);
+      document.getElementById('unity-completeness').value = indexFromSeed("a432.html:fri:29", (10)|0||1);
+      document.getElementById('unity-perfection').value = indexFromSeed("a432.html:fri:30", (10)|0||1);
       
       // Randomize Entropy
-      document.getElementById('entropy-order').value = Math.floor(Math.random() * 10);
-      document.getElementById('entropy-structure').value = Math.floor(Math.random() * 10);
-      document.getElementById('entropy-organization').value = Math.floor(Math.random() * 10);
-      document.getElementById('entropy-zero').value = Math.floor(Math.random() * 10);
+      document.getElementById('entropy-order').value = indexFromSeed("a432.html:fri:31", (10)|0||1);
+      document.getElementById('entropy-structure').value = indexFromSeed("a432.html:fri:32", (10)|0||1);
+      document.getElementById('entropy-organization').value = indexFromSeed("a432.html:fri:33", (10)|0||1);
+      document.getElementById('entropy-zero').value = indexFromSeed("a432.html:fri:34", (10)|0||1);
       
       updateDisplayValues();
       updateStatus('Randomized all A432 parameters');

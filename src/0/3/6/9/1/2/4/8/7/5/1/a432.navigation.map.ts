@@ -5,6 +5,8 @@
  * Integrated with Vadim Zeland's Transurfing Reality principles
  */
 
+import { abs, floor, max, min } from './a432.algebra.ts'
+import { legacyDigitalRoot } from './a432.roots.ts'
 export interface NavigationPart {
   digit: number;
   name: string;
@@ -413,7 +415,7 @@ export class A432NavigationMap {
     const nextVortex = this.vortexes.find(v => v.digit === nextDigit);
 
     // Calculate new coordinates based on spiral progression
-    const spiralFactor = Math.floor(currentIndex / sequence.length) + 1;
+    const spiralFactor = floor(currentIndex / sequence.length) + 1;
     const newCoordinates = {
       x: nextPart.coordinates.x * spiralFactor,
       y: nextPart.coordinates.y * spiralFactor,
@@ -452,15 +454,15 @@ export class A432NavigationMap {
     
     // Adjust based on pendulum field
     if (part.pendulumField === 'constructive') {
-      baseAlignment = Math.min(9, baseAlignment + 1);
+      baseAlignment = min(9, baseAlignment + 1);
     } else if (part.pendulumField === 'destructive') {
-      baseAlignment = Math.max(0, baseAlignment - 1);
+      baseAlignment = max(0, baseAlignment - 1);
     }
     
     // Apply gateway resistance
     if (gateway) {
       const resistance = gateway.pendulumResistance;
-      baseAlignment = Math.max(0, baseAlignment - resistance);
+      baseAlignment = max(0, baseAlignment - resistance);
     }
     
     return this.calculateDigitalRoot(baseAlignment);
@@ -632,11 +634,7 @@ export class A432NavigationMap {
    * Calculate digital root for Transurfing calculations
    */
   private calculateDigitalRoot(n: number): number {
-    let x = Math.abs(n);
-    while (x >= 10) {
-      x = String(x).split('').reduce((a, c) => a + Number(c), 0);
-    }
-    return x;
+    return legacyDigitalRoot(n)
   }
 }
 

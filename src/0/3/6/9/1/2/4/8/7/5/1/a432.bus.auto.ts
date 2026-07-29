@@ -1,9 +1,9 @@
 // a432.bus.auto.ts — automatic registration of core streams to the bus
-import { registerSource } from './a432.bus';
-import { breathEmitter } from './a432.breathe';
-import { matrixEmitter } from './a432.self';
-import { tapEmitter } from './a432.i.tap';
-import { Digit } from './a432.types';
+import { registerSource } from './a432.bus.ts';
+import { breathEmitter } from './a432.breathe.ts';
+import { matrixEmitter } from './a432.self.ts';
+import { tapEmitter } from './a432.i.tap.ts';
+import { Digit } from './a432.types.ts';
 
 registerSource('breath', breathEmitter, 'breath', (p: any) => p.value as Digit, 'body');
 registerSource('matrix', matrixEmitter, 'event', (p: any) => p.digit as Digit, 'mind');

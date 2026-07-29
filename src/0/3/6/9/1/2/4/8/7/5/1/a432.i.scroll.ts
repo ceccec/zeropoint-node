@@ -6,7 +6,8 @@
  * Every scroll is a living act of observation, flow, and harmonization.
  */
 
-import I from './a432.i';
+import { log } from './a432.algebra.ts'
+import I from './a432.i.ts';
 
 export type ScrollDirection = 'up' | 'down' | 'left' | 'right';
 

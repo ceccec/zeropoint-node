@@ -1,9 +1,10 @@
+import { PI, cos, sin } from './a432.algebra.ts'
 // a432.unification.hd.rodin.ts
 // Unifies Human Design and Rodin Coil as living, harmonized streams in the a432 system
 // Math, UI, and metaphysical summary included
 
-import { HDTrinity, harmonizeHDTrinity } from './a432.human.design.trinity';
-import { metaphysicalSummary as chainMeta } from './a432.chain.of.events';
+import { HDTrinity, harmonizeHDTrinity } from './a432.human.design.trinity.ts';
+import { metaphysicalSummary as chainMeta } from './a432.chain.of.events.ts';
 
 // Rodin Coil trinity (e.g., 3 phases of the vortex)
 export interface RodinTrinity {
@@ -44,10 +45,10 @@ export function harmonizeUnifiedTrinity(hd: HDTrinity, rodin: RodinTrinity): Uni
 export function renderUnifiedTrinitySVG(hd: HDTrinity, rodin: RodinTrinity, unified: UnifiedTrinity): string {
   // Simple triangle mapping: each point is a trinity value
   const size = 220, cx = size/2, cy = size/2, r = 80;
-  const angle = (i: number) => (2 * Math.PI * i) / 3 - Math.PI/2;
+  const angle = (i: number) => (2 * PI * i) / 3 - PI/2;
   const point = (val: number, i: number) => [
-    cx + r * Math.cos(angle(i)) * (0.7 + 0.3 * val / 9),
-    cy + r * Math.sin(angle(i)) * (0.7 + 0.3 * val / 9)
+    cx + r * cos(angle(i)) * (0.7 + 0.3 * val / 9),
+    cy + r * sin(angle(i)) * (0.7 + 0.3 * val / 9)
   ];
   const hdPoints = [hd.conscious, hd.unconscious, hd.design].map((v,i) => point(v,i));
   const rodinPoints = [rodin.phase1, rodin.phase2, rodin.phase3].map((v,i) => point(v,i));

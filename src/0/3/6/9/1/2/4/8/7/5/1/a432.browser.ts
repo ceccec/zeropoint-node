@@ -4,14 +4,15 @@
  * Provides global access and browser-specific optimizations
  */
 
-import { A432System } from './a432.index';
-import { A432Math, A432Sequence, A432Color, A432Frequency, A432Harmonization } from './a432.utils';
-import { A432Factory } from './a432.factory';
-import { A432Registry } from './a432.registry';
-import { A432NavigationMap } from './a432.navigation.map';
-import { A432SelfEvolution } from './a432.self.evolution';
-import { A432SelfRebuilder } from './a432.self.rebuilder';
-import { A432ConsciousnessOrchestrator } from './a432.consciousness.orchestrator';
+import { A432System } from './a432.index.ts';
+import { A432Math, A432Sequence, A432Color, A432Frequency, A432Harmonization } from './a432.utils.ts';
+import { A432Factory } from './a432.factory.ts';
+import { A432Registry } from './a432.registry.ts';
+import { A432NavigationMap } from './a432.navigation.map.ts';
+import { A432SelfEvolution } from './a432.self.evolution.ts';
+import { A432SelfRebuilder } from './a432.self.rebuilder.ts';
+import { A432ConsciousnessOrchestrator } from './a432.consciousness.orchestrator.ts';
+import { legacyDigitalRoot } from './a432.roots.ts';
 
 // === BROWSER-SPECIFIC INTERFACES ===
 export interface A432BrowserConfig {
@@ -250,7 +251,7 @@ export class A432Browser {
 
   // === UTILITY METHODS ===
   public calculateDigitalRoot(n: number): number {
-    return this.system.calculateDigitalRoot(n);
+    return legacyDigitalRoot(n);
   }
 
   public generateVortexSequence(length: number = 9): number[] {

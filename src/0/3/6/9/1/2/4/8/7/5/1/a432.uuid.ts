@@ -1,150 +1,93 @@
-// a432.uuid.ts — Canonical, Zero-Entropy UUID Generators for All Versions
-// All uuid generators are pure, reusable, and self-contained. No external libraries.
-// Exports: uuidV1, uuidV3, uuidV4, uuidV5
+/**
+ * a432.uuid.ts — Content-addressed UUID bridge (Wave 8 purge).
+ *
+ * Random / hand-minted ids are forbidden. All generators fold through
+ * kernel `toUuid` (FNV) so same seed ⇒ same address.
+ * Cryptographic seals live in `src/integrity` (SHA content-uuid).
+ *
+ * Export names uuidV1–V5 kept as thin adapters for legacy callers.
+ */
 
-const DUALITIES = [1/2,2/1,4/5,8/7,7/8,5/4,1/2];
-const TRINITIES = [3/6,6/9,9/3];
-const UNITIES   = [1/3,2/3,3/3];
+import { round } from './a432.algebra.ts'
+import {
+  toUuid,
+  merge,
+  VORTEX_ORBIT,
+  VORTEX_AXIS,
+} from '../../../../../../../../../../index.ts'
 
-const DUALITIES = [1/2,2/1,4/5,8/7,7/8,5/4,1/2];
-const TRINITIES = [3/6,6/9,9/3];
+const RODIN = [1, 2, 4, 8, 7, 5] as const
 
-const RODIN_SEQUENCE = [1, 2, 4, 8, 7, 5, 1];
-
-// Duality stream (Rodin sequence, paired, then inverted)
-function* dualityStream() {
-  let rodin = [1,2,4,8,7,5,1];
-  let i = 0;
-  while (true) {
-    let n = rodin[i % 6];
-    let d = rodin[(i+1) % 6];
-    yield n + '/' + d;
-    yield d + '/' + n;
-    i++;
-  }
+/** Timestamp folded with label — deterministic for a given ms + label. */
+export function uuidV1(label = 'v1', at: number = 0): string {
+  const t = at || 0
+  return toUuid(`a432.uuid.v1:${label}:${t}`)
 }
 
-// Trinity stream (3,6,9 cycle)
-function* trinityStream() {
-  let t = [3,6,9];
-  let i = 0;
-  while (true) {
-    let n = t[i % 3];
-    let d = t[(i+1) % 3];
-    yield n + '/' + d;
-    i++;
-  }
+/** Name-based soft address (FNV). Prefer content-uuid for proofs. */
+export function uuidV3(name: string): string {
+  return toUuid(`a432.uuid.v3:${name}`)
 }
 
-// --- Utility: Digit math random (for v4) ---
-function randomDigit() {
-  // Use Math.random, but only digits 0-9
-  return Math.floor(Math.random() * 10);
+/**
+ * Former Math.random path — now seed-required content address.
+ * Calling with no seed uses a fixed namespace (still deterministic, never random).
+ */
+export function uuidV4(seed = 'a432.uuid.v4:namespace'): string {
+  return toUuid(seed)
 }
 
-// --- UUID v1: Timestamp-based (simplified, not RFC-compliant) ---
-function uuidV1() {
-  var t = Date.now().toString();
-  var r = '';
-  for (var i = 0; i < 12; i++) r += randomDigit();
-  // Format: time-random
-  return t + '-' + r;
+/** Name product folded through kernel merge. */
+export function uuidV5(name: string): string {
+  return merge(toUuid('a432.uuid.v5'), toUuid(name))
 }
 
-// --- UUID v3: Name-based (MD5, but here: digit sum hash) ---
-function uuidV3(name) {
-  var sum = 0;
-  for (var i = 0; i < name.length; i++) sum += name.charCodeAt(i);
-  var hash = '';
-  for (var j = 0; j < 12; j++) hash += ((sum + j) % 10);
-  return hash;
+export function geometryUuid(step: number): string {
+  const n = step % 3 === 0 ? 3 : step % 3 === 1 ? 6 : 9
+  const d = step % 3 === 0 ? 6 : step % 3 === 1 ? 9 : 3
+  const angle = (step % 3) * 120
+  return toUuid(`a432.uuid.geometry:${n}/${d}@${angle}`)
 }
 
-// --- UUID v4: Random ---
-function uuidV4() {
-  var u = '';
-  for (var i = 0; i < 16; i++) u += randomDigit();
-  return u;
+export function soundUuid(step: number, base = 432): string {
+  const i = step % 6
+  const n = RODIN[i]!
+  const d = RODIN[(i + 1) % 6]!
+  const freq = round(base * (n / d))
+  return toUuid(`a432.uuid.sound:${n}/${d}@${freq}Hz`)
 }
 
-// --- UUID v5: Name-based (SHA-1, but here: digit product hash) ---
-function uuidV5(name) {
-  var prod = 1;
-  for (var i = 0; i < name.length; i++) prod = (prod * (name.charCodeAt(i) % 10 + 1)) % 100000;
-  var hash = '';
-  for (var j = 0; j < 12; j++) hash += ((prod + j) % 10);
-  return hash;
+export function colorUuid(step: number): string {
+  const n = step % 3 === 0 ? 3 : step % 3 === 1 ? 6 : 9
+  const d = step % 3 === 0 ? 6 : step % 3 === 1 ? 9 : 3
+  const hue = (step % 3) * 120
+  return toUuid(`a432.uuid.color:${n}/${d}@${hue}`)
 }
 
-// --- Geometry UUID: Map duality/trinity to geometric angle (degrees) ---
-function geometryUuid(step) {
-  // Trinity: 3/6, 6/9, 9/3 → 120° steps
-  var n = step % 3 === 0 ? 3 : step % 3 === 1 ? 6 : 9;
-  var d = step % 3 === 0 ? 6 : step % 3 === 1 ? 9 : 3;
-  var angle = (step % 3) * 120; // 0, 120, 240
-  return n + '/' + d + '@' + angle + 'deg';
+export function dimensionalVortexUuid(step: number): string {
+  const dim = VORTEX_ORBIT[step % VORTEX_ORBIT.length]!
+  const axis = VORTEX_AXIS[step % VORTEX_AXIS.length]!
+  return toUuid(`a432.uuid.vortex:${step}:${dim}:${axis}`)
 }
 
-// --- Sound UUID: Map duality/trinity to frequency ratio (Hz) ---
-function soundUuid(step, base) {
-  // Duality: 1/2, 2/1, ... mapped to frequency ratios
-  var rodin = [1,2,4,8,7,5,1];
-  var i = step % 6;
-  var n = rodin[i];
-  var d = rodin[(i+1)%6];
-  var ratio = n/d;
-  var freq = Math.round((base || 432) * ratio);
-  return n + '/' + d + '@' + freq + 'Hz';
+export function vortexMatrixUuid(seed = 'vortex-matrix'): string {
+  return toUuid(`a432.uuid.vortex-matrix:${seed}`)
 }
 
-// --- Color UUID: Map trinity to hue (degrees) ---
-function colorUuid(step) {
-  // Trinity: 3/6, 6/9, 9/3 → 0°, 120°, 240°
-  var n = step % 3 === 0 ? 3 : step % 3 === 1 ? 6 : 9;
-  var d = step % 3 === 0 ? 6 : step % 3 === 1 ? 9 : 3;
-  var hue = (step % 3) * 120;
-  return n + '/' + d + '@' + hue + 'deg';
+export function trinityMatrixUuid(seed = 'trinity-matrix'): string {
+  return toUuid(`a432.uuid.trinity-matrix:${seed}`)
 }
 
-// --- Dimensional Vortex UUID: Advances dimension, angle, and polarity at 1/1 ---
-function dimensionalVortexUuid(step) {
-  // Rodin sequence: 1,2,4,8,7,5,1 (cycle)
-  var rodin = [1,2,4,8,7,5,1];
-  var dim = 1;
-  var angle = 0;
-  var polarity = 1;
-  var i = 0;
-  var s = 0;
-  while (s <= step) {
-    var n = rodin[i % 6];
-    var d = rodin[(i+1) % 6];
-    if (n === 1 && d === 1) {
-      dim++;
-      angle += 60;
-      polarity *= -1;
-      if (s === step) return `1/1@${angle}deg|${dim}D|polarity:${polarity > 0 ? '+' : '-'}`;
-      i++;
-      s++;
-      continue;
-    }
-    if (s === step) return `${n}/${d}@${angle}deg|${dim}D|polarity:${polarity > 0 ? '+' : '-'}`;
-    i++;
-    s++;
-  }
+/** Living API — all paths content-addressed. */
+export const a432UUID = {
+  uuid: uuidV4,
+  vortexMatrixUuid,
+  trinityMatrixUuid,
+  geometryUuid,
+  soundUuid,
+  colorUuid,
+  dimensionalVortexUuid,
+  doc: 'a432.uuid bridges to kernel toUuid — no random hand-minted ids.',
 }
 
-// --- Living API (no arrays, no hardcoded text) ---
-const a432UUID = {
-  uuid: uuidV4, // Use uuidV4 as the base for a432UUID
-  vortexMatrixUuid: function() { return uuidV4(); }, // Placeholder, needs actual implementation
-  trinityMatrixUuid: function() { return uuidV4(); }, // Placeholder, needs actual implementation
-  geometryUuid: geometryUuid,
-  soundUuid: soundUuid,
-  colorUuid: colorUuid,
-  dimensionalVortexUuid: dimensionalVortexUuid,
-  doc: 'a432.uuid projects the trinity/duality pattern into geometry, sound, color, and now dimensional vortex. All mappings are pure digit math, no arrays.'
-};
-if (typeof window !== 'undefined') window.a432UUID = a432UUID;
-
-// --- Exports ---
-export { uuidV1, uuidV3, uuidV4, uuidV5 };
+export default a432UUID

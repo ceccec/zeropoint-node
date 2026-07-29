@@ -1,3 +1,4 @@
+import { sqrt } from './a432.algebra.ts'
 // a432.vector.ts
 // Harmonized 3D vector math for the A432 system
 // All logic is integer/fractional and metaphysically mapped
@@ -55,7 +56,7 @@ export function cross(a: Vector3, b: Vector3): Vector3 {
  * length: Harmonic magnitude (energy of the stream)
  */
 export function length(v: Vector3): number {
-  return Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+  return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
 /**

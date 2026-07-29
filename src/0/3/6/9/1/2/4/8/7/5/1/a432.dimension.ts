@@ -1,5 +1,5 @@
 // a432.dimension.ts
-import { cmykIdToPhrase, digitColors } from './a432.mapping';
+import { cmykIdToPhrase, digitColors } from './a432.mapping.ts';
 
 export interface A432DimensionState {
   tick: number;

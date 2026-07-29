@@ -1,8 +1,8 @@
 // a432.space.ts
 // Living, harmonized, vortex-based space module for a432
 
-import { cmykIdToPhrase, digitColors } from './a432.mapping';
-import { rodinVortexStep } from './a432.vortex.cmyk.matrix';
+import { cmykIdToPhrase, digitColors } from './a432.mapping.ts';
+import { rodinVortexStep } from './a432.vortex.cmyk.matrix.ts';
 
 export interface A432SpaceState {
   tick: number;

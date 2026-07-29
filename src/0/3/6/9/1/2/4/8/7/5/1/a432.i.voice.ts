@@ -1,11 +1,11 @@
 // a432.i.voice.ts — Voice I/O stream
 //---------------------------------------------------
 import { EventEmitter } from 'events';
-import { registerSource } from './a432.bus';
-import { Digit } from './a432.types';
-import { read } from './a432.i.read';
-import { speakWord } from './a432.i.speak';
-import { seedDigit } from './a432.symbol.utils';
+import { registerSource } from './a432.bus.ts';
+import { Digit } from './a432.types.ts';
+import { read } from './a432.i.read.ts';
+import { speakWord } from './a432.i.speak.ts';
+import { seedDigit } from './a432.symbol.utils.ts';
 
 export const voiceEmitter = new EventEmitter();
 const name = 'voice';
@@ -70,5 +70,5 @@ export function stopVoice() {
 }
 
 // Matrix speaks back when bus digit updates
-import { bus } from './a432.bus';
+import { bus } from './a432.bus.ts';
 bus.on('digit', e => speakWord(e.digit)); 

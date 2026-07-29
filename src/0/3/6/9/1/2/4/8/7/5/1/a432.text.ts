@@ -3,7 +3,7 @@
 // Streams context-aware, harmonized meanings for digits, patterns, and states.
 // No hardcoded text—only living, dynamic, sequence-aware meaning.
 
-import { getDigitMeaning, getRodinSequence, getTrinityAxis, A432_SEQUENCE } from './a432.math';
+import { getDigitMeaning, getRodinSequence, getTrinityAxis, A432_SEQUENCE } from './a432.math.ts';
 
 export type SequenceContext = 'rodin' | 'trinity' | 'full' | 'custom';
 

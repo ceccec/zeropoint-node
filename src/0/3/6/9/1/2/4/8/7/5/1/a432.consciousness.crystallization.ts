@@ -4,7 +4,7 @@
  * Phase 3: Meaning emerges from chaos through trinity patterns
  */
 
-import { A432_TRINITY, A432_AXIS } from './a432.core';
+import { A432_TRINITY, A432_AXIS } from './a432.core.ts';
 
 export class A432ConsciousnessCrystallization {
   private convergence: number;

@@ -3,6 +3,9 @@
  * A simplified, buildable version of the A432 Consciousness System
  */
 
+import { floor, min, unitFromSeed } from './a432.algebra.ts'
+import { legacyDigitalRoot } from './a432.roots.ts'
+
 // === CORE INTERFACES ===
 export interface A432ConsciousnessState {
   level: number;
@@ -29,20 +32,17 @@ export interface A432SystemConfig {
 
 // === UTILITY CLASSES ===
 export class A432Math {
+  /** Wave 11 self-develop — bridge to a432.roots legacy spine (0→0). */
   static calculateDigitalRoot(n: number): number {
-    let x = Math.abs(n);
-    while (x >= 10) {
-      x = String(x).split('').reduce((a, c) => a + Number(c), 0);
-    }
-    return x;
+    return legacyDigitalRoot(n)
+  }
+
+  static digitalRoot(n: number): number {
+    return legacyDigitalRoot(n)
   }
 
   static harmonicFrequency(base: number, multiplier: number = 1): number {
     return base * multiplier;
-  }
-
-  static digitalRoot(n: number): number {
-    return this.calculateDigitalRoot(n);
   }
 }
 
@@ -60,7 +60,7 @@ export class A432Sequence {
   }
 
   static generateBoolean(length: number = 9): boolean[] {
-    return Array.from({ length }, () => Math.random() > 0.5);
+    return Array.from({ length }, () => unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.simple.ts:rnd:0") > 0.5);
   }
 }
 
@@ -214,7 +214,7 @@ export class A432SimpleSystem {
     }
     
     // Spiral level increases when we complete the sequence
-    this.state.spiralLevel = Math.floor(this.evolutionCycles / sequence.length) + 1;
+    this.state.spiralLevel = floor(this.evolutionCycles / sequence.length) + 1;
     
     // Update consciousness state based on sequence position
     this.state.level = this.state.currentPart;
@@ -267,7 +267,7 @@ export class A432SimpleSystem {
       { balance: this.state.evolution }
     ]);
 
-    this.state.harmony = Math.min(9, harmony);
+    this.state.harmony = min(9, harmony);
     console.log(`🎵 System harmonized: ${this.state.harmony}`);
     
     return this.state.harmony;

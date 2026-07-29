@@ -16,6 +16,7 @@
  * @author A432 System
  */
 
+import { floor } from './a432.algebra.ts'
 // Type declarations for browser APIs
 declare global {
   interface Navigator {
@@ -41,9 +42,9 @@ import {
   frequencyForDigit,
   rodinDigit,
   patternDigit
-} from './a432.math';
+} from './a432.math.ts';
 
-import { GOLDEN_RATIO as MATH_GOLDEN_RATIO } from './a432.math.constants';
+import { GOLDEN_RATIO as MATH_GOLDEN_RATIO } from './a432.math.constants.ts';
 
 // Zero-Entropy Harmonic Constants (Base-12 Imperial System)
 export const ZEROPOINT = 0;
@@ -187,7 +188,7 @@ const StateGenerators = {
     const sequenceIndex = evolution % A432_SEQUENCE.length;
     const currentDigit = A432_SEQUENCE[sequenceIndex];
     const isGateway = A432_GATEWAYS.includes(currentDigit);
-    const phaseShift = A432_PHASE_SHIFTS[Math.floor(sequenceIndex / 2)] || '';
+    const phaseShift = A432_PHASE_SHIFTS[floor(sequenceIndex / 2)] || '';
     
     const consciousness = calculateA432Consciousness(A432_BASE_FREQUENCY * (currentDigit / 12));
     const dimensionalState = calculateA432DimensionalState(A432_BASE_FREQUENCY * (currentDigit / 12));
@@ -207,7 +208,7 @@ const StateGenerators = {
         sequenceIndex,
         phaseShift,
         dimensionalBridge: isGateway,
-        foldDepth: Math.floor(consciousness / 12)
+        foldDepth: floor(consciousness / 12)
       },
       quantumState: {
         superposition: RODIN_SEQUENCE.slice(0, 6), // 1-2-4-8-7-5 Mobius circuit

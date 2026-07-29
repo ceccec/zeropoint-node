@@ -7,18 +7,19 @@
  * Metaphysical Principle: Streams are never-ending, analog, and π-based. To observe a stream is to participate in its flow; to unobserve is to step out, not to stop the stream.
  */
 
+import { PI, sin } from './a432.algebra.ts'
 /**
  * Stream, Anti-Harmonic, and Inversion Principle:
  * All stream, anti-harmonic, and inversion logic in this module must use negative integers to represent anti-harmonics, phase reversals, vortex inversions, and anti-vortex states.
  * This ensures metaphysical duality, reversibility, and the living, analog nature of streams, as required by the A432 system.
  */
 // π-based stream sources
-import { piStream, piColorStream, piHarmonicStream } from './a432.pi';
+import { piStream, piColorStream, piHarmonicStream } from './a432.pi.ts';
 // Specialized π-based stream modules
-import * as PiColor from './a432.pi.color.stream';
-import * as PiSong from './a432.pi.song.stream';
-import * as PiVideo from './a432.pi.video.stream';
-import * as PiAudioVideo from './a432.pi.audio.video.stream';
+import * as PiColor from './a432.pi.color.stream.ts';
+import * as PiSong from './a432.pi.song.stream.ts';
+import * as PiVideo from './a432.pi.video.stream.ts';
+import * as PiAudioVideo from './a432.pi.audio.video.stream.ts';
 
 // --- Stream Interfaces ---
 export interface A432Stream<T> {
@@ -87,9 +88,9 @@ export function createVideoStream(frameCount: number = 12, gridSize: number = 9)
       const HALF = 1/2, TWO_THIRDS = 2/3, FOUR_THIRDS = 4/3;
       // Replace all decimals in color/geometry with these fractions
       return {
-        r: HALF + HALF * Math.sin(Math.PI * t),
-        g: HALF + HALF * Math.sin(Math.PI * t + 2*Math.PI/3),
-        b: HALF + HALF * Math.sin(Math.PI * t + 4*Math.PI/3)
+        r: HALF + HALF * sin(PI * t),
+        g: HALF + HALF * sin(PI * t + 2*PI/3),
+        b: HALF + HALF * sin(PI * t + 4*PI/3)
       };
     });
   });

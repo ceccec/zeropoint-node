@@ -1,7 +1,7 @@
-import { linearStream, vortexStream } from './a432.matrix';
-import { asDigit } from './a432.types';
-import { digitAngleToCMYK } from './a432.cmyk';
-import { TRINITY_POLARITY, asAngle } from './a432.math';
+import { linearStream, vortexStream } from './a432.matrix.ts';
+import { asDigit } from './a432.types.ts';
+import { digitAngleToCMYK } from './a432.cmyk.ts';
+import { TRINITY_POLARITY, asAngle } from './a432.math.ts';
 
 export interface QState { energy: number; spin: number; angle: number; color: ReturnType<typeof digitAngleToCMYK>; }
 

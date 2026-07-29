@@ -12,28 +12,30 @@
  * - Recursive self-reference: the core can observe itself
  */
 
-import { digitalRoot, A432_TRINITY, A432_RETURN, A432_AXIS, A432_SEQUENCE, getRodinSequence } from './a432.math';
-export { digitalRoot };
+import { abs, round } from './a432.algebra.ts'
+import { digitalRoot, harmonicRoot12, A432_TRINITY, A432_RETURN, A432_AXIS, A432_SEQUENCE, getRodinSequence, A432_DIGIT_MEANINGS } from './a432.math.ts';
+/** digitalRoot = legacyDigitalRoot (0→0). harmonicRoot12 = base-12 (1–12). */
+export { digitalRoot, harmonicRoot12, A432_DIGIT_MEANINGS };
+export {
+  kernelDigitalRoot,
+  classicDigitalRoot,
+  legacyDigitalRoot,
+} from './a432.roots.ts';
+
+// Kernel bridge (Wave 4) — fold / vortex / development torus from src/0.
+// digitalRoot above = legacyDigitalRoot; kernel uses digitalRoot(0)→9 via a432.roots as kernelDigitalRoot.
+export {
+  toUuid as kernelToUuid,
+  merge as kernelMerge,
+  fold as kernelFold,
+  VORTEX_SEQUENCE as KERNEL_VORTEX_SEQUENCE,
+  developmentVortex,
+} from '../../../../../../../../../../index.ts';
 
 // === CORE CONSTANTS ===
 export const A432_FREQUENCY = 432;
 export { A432_TRINITY, A432_RETURN, A432_AXIS };
 export const A432_CYCLE = A432_SEQUENCE;
-
-// === DIGIT MEANINGS ===
-export const A432_DIGIT_MEANINGS = [
-  { name: 'Void', description: 'The field, the unmanifest, pure potential; the source and destination of all cycles, the space in which all digits arise and return.' },
-  { name: 'Unity', description: 'Origin, source, singularity, beginning; the point of all creation and the seed of the matrix.' },
-  { name: 'Duality', description: 'Polarity, relationship, balance, reflection; the field of interaction and the principle of complementarity.' },
-  { name: 'Trinity', description: 'Synthesis, creation, harmony, flow; the generative principle, the creative process, and the harmonic seed.' },
-  { name: 'Foundation', description: 'Structure, stability, manifestation; the base of all form, the ground of being, and the matrix of reality.' },
-  { name: 'Life', description: 'Change, movement, growth, transformation; the living flow, evolution, and the pulse of the system.' },
-  { name: 'Harmony', description: 'Integration, resonance, beauty, equilibrium; the state of balance, the field of resonance, and the principle of unity in diversity.' },
-  { name: 'Mystery', description: 'Depth, intuition, inner knowing, inversion; the hidden, the unknown, the gateway to transformation and the anti-harmonic.' },
-  { name: 'Infinity', description: 'Power, expansion, infinite flow, recursion; the endless, the self-similar, the principle of recursion and the infinite loop.' },
-  { name: 'Completion', description: 'Fulfillment, wholeness, return, zero entropy; the end and the beginning, the return to source, and the closure of the cycle.' }
-];
-
 // === CORE FUNCTIONS ===
 export function nextInteraction(n: number, cycle: readonly number[] = A432_SEQUENCE): number {
   const idx = cycle.indexOf(n);
@@ -88,8 +90,8 @@ export function a432RGBFromRoot(root: number, polarity: 1 | -1 = 1): {r: number,
   const sat = hsl.saturation / 100;
   const light = hsl.lightness / 100;
   
-  const c = (1 - Math.abs(2 * light - 1)) * sat;
-  const x = c * (1 - Math.abs((hue * 6) % 2 - 1));
+  const c = (1 - abs(2 * light - 1)) * sat;
+  const x = c * (1 - abs((hue * 6) % 2 - 1));
   const m = light - c / 2;
   
   let r = 0, g = 0, b = 0;
@@ -101,9 +103,9 @@ export function a432RGBFromRoot(root: number, polarity: 1 | -1 = 1): {r: number,
   else { r = c; g = 0; b = x; }
   
   return {
-    r: Math.round((r + m) * 255),
-    g: Math.round((g + m) * 255),
-    b: Math.round((b + m) * 255)
+    r: round((r + m) * 255),
+    g: round((g + m) * 255),
+    b: round((b + m) * 255)
   };
 }
 

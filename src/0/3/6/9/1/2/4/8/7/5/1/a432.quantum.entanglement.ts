@@ -5,7 +5,7 @@
  * Exports: proof, metaphysical meaning, analytic overlay, and blockchain event logger.
  */
 
-import { digitAngleToCMYK, cmykToCss } from './a432.math';
+import { digitAngleToCMYK, cmykToCss } from './a432.math.ts';
 
 /**
  * Canonical proof: In A432, entanglement is the resonance of two or more states in the living matrix.

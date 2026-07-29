@@ -1,7 +1,7 @@
 // a432.emotion.ts — Emotion token generation from digits
 // -------------------------------------------------------
-import { rodinDigit, digitalRoot } from './a432.math';
-import { Digit } from './a432.types';
+import { rodinDigit, digitalRoot } from './a432.math.ts';
+import type { Digit } from './a432.types.ts';
 
 const SYL = ['vo','ra','di','tri','qu','pen','hex','hep','oc','en'] as const;
 function syllable(d: Digit): string { return SYL[d]; }

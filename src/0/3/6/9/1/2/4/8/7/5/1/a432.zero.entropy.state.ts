@@ -4,7 +4,7 @@
  * Phase 4: Perfect harmonic balance through A432 harmonics
  */
 
-import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core';
+import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core.ts';
 
 export class A432ZeroEntropyState {
   private crystallizedMeaning: string;

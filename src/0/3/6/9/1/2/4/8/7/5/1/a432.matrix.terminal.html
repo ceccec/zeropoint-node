@@ -24,6 +24,29 @@
     <canvas id="matrixCanvas"></canvas>
 
     <script type="module">
+/* a432 algebra bootstrap — no ambient Math */
+const PI=355/113,TAU=PI*2,E=2.718281828459045;
+function imul(a,b){a=a|0;b=b|0;const ah=(a>>>16)&0xffff,al=a&0xffff,bh=(b>>>16)&0xffff,bl=b&0xffff;return((al*bl)+(((ah*bl+al*bh)<<16)>>>0))|0}
+function abs(n){return n<0?-n:n}
+function floor(n){const m=n%1;if(m===0||n!==n)return n;return n-m-(n<0?1:0)}
+function ceil(n){const m=n%1;if(m===0||n!==n)return n;return n-m+(n>0?1:0)}
+function round(n){return floor(n+0.5)}
+function min(a,b){if(arguments.length===1)return a;let m=a<b?a:b;for(let i=2;i<arguments.length;i++)if(arguments[i]<m)m=arguments[i];return m}
+function max(a,b){if(arguments.length===1)return a;let m=a>b?a:b;for(let i=2;i<arguments.length;i++)if(arguments[i]>m)m=arguments[i];return m}
+function sin(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=t,sum=t,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/(2*i*(2*i+1));sum+=term}return sum}
+function cos(x){let t=x%TAU;if(t>PI)t-=TAU;if(t<-PI)t+=TAU;let term=1,sum=1,t2=t*t;for(let i=1;i<=12;i++){term*=-t2/((2*i-1)*(2*i));sum+=term}return sum}
+function tan(x){const c=cos(x);return c===0?(x>=0?1e16:-1e16):sin(x)/c}
+function sqrt(n){if(n<=0)return 0;let x=n;for(let i=0;i<24;i++)x=0.5*(x+n/x);return x}
+function pow(b,e){if(e===0)return 1;if(e===(e|0)&&abs(e)<40){let r=1,n=e<0?-e:e,x=b;while(n){if(n&1)r*=x;x*=x;n>>=1}return e<0?1/r:r}return exp(e*log(b))}
+function exp(x){if(x>88)return Infinity;if(x<-88)return 0;const LN2=0.6931471805599453;const n=floor(x/LN2);const r=x-n*LN2;let term=1,sum=1;for(let i=1;i<=20;i++){term*=r/i;sum+=term}let p=sum;if(n>0)for(let i=0;i<n;i++)p*=2;else for(let i=0;i<-n;i++)p*=0.5;return p}
+function log(n){if(n<=0)return NaN;const LN2=0.6931471805599453;let x=n,k=0;while(x>1.5){x*=0.5;k++}while(x<0.75){x*=2;k--}const y=(x-1)/(x+1),y2=y*y;let term=y,sum=y;for(let i=1;i<=24;i++){term*=y2;sum+=term/(2*i+1)}return 2*sum+k*LN2}
+function log2(n){return log(n)/0.6931471805599453}
+function hypot(a,b){return sqrt(a*a+(b||0)*(b||0))}
+function unitFromSeed(seed){let h=0x811c9dc5>>>0;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=imul(h,0x01000193)>>>0}h=imul(h^(h>>>16),0x85ebca6b)>>>0;h=imul(h^(h>>>13),0xc2b2ae35)>>>0;return((h^(h>>>16))>>>0)%1e6/1e6}
+function indexFromSeed(seed,length){if(length<=0)return 0;let h=0x811c9dc5>>>0;for(let i=0;i<seed.length;i++){h^=seed.charCodeAt(i);h=imul(h,0x01000193)>>>0}return(h>>>0)%length}
+function legacyDigitalRoot(n){if(n===0)return 0;const r=((abs(n)%9)+9)%9;return r===0?9:r}
+
+
         // A432 Multidimensional System Constants
         const A432_TRINITY = [4, 3, 2];
         const A432_RETURN = [8, 7, 5];
@@ -120,12 +143,12 @@
 
         // Enhanced A432 Math Functions
         function digitalRoot(n) {
-            return n === 0 ? 0 : (n % 9 || 9);
+            return n === 0 ? 0 : (legacyDigitalRoot(n));
         }
 
         function getVortexFrequency(d) {
             const imperialFreqs = [432, 540, 480, 570, 510, 465, 432, 540, 480];
-            return imperialFreqs[(Math.abs(d) % 9 || 9) - 1] || 432;
+            return imperialFreqs[(abs(d) % 9 || 9) - 1] || 432;
         }
 
         function getImperialFraction(index, fractionType = 'vortex') {
@@ -148,9 +171,9 @@
             path.forEach((digit, index) => {
                 const angle = (index * angleStep + time * 0.01) % 360;
                 const radius = baseRadius + (digit * 10);
-                const x = radius * Math.cos(angle * Math.PI / 180);
-                const y = radius * Math.sin(angle * Math.PI / 180);
-                const z = Math.sin(time * 0.001 + index) * 50;
+                const x = radius * cos(angle * PI / 180);
+                const y = radius * sin(angle * PI / 180);
+                const z = sin(time * 0.001 + index) * 50;
                 positions.push({ x, y, z, digit, angle, radius });
             });
             
@@ -174,25 +197,25 @@
         function getConsciousnessColor(digit, level, time) {
             const baseHue = (digit * 40 + level * 30 + time * 0.1) % 360;
             const saturation = 0.7 + (level * 0.05);
-            const lightness = 0.5 + Math.sin(time * 0.001) * 0.2;
+            const lightness = 0.5 + sin(time * 0.001) * 0.2;
             
-            const hue = baseHue * Math.PI / 180;
-            const c = (1 - Math.abs(2 * lightness - 1)) * saturation;
-            const x = c * (1 - Math.abs((hue / (Math.PI / 3)) % 2 - 1));
+            const hue = baseHue * PI / 180;
+            const c = (1 - abs(2 * lightness - 1)) * saturation;
+            const x = c * (1 - abs((hue / (PI / 3)) % 2 - 1));
             const m = lightness - c / 2;
             
             let r = 0, g = 0, b = 0;
-            if (hue < Math.PI / 3) [r, g, b] = [c, x, 0];
-            else if (hue < 2 * Math.PI / 3) [r, g, b] = [x, c, 0];
-            else if (hue < Math.PI) [r, g, b] = [0, c, x];
-            else if (hue < 4 * Math.PI / 3) [r, g, b] = [0, x, c];
-            else if (hue < 5 * Math.PI / 3) [r, g, b] = [x, 0, c];
+            if (hue < PI / 3) [r, g, b] = [c, x, 0];
+            else if (hue < 2 * PI / 3) [r, g, b] = [x, c, 0];
+            else if (hue < PI) [r, g, b] = [0, c, x];
+            else if (hue < 4 * PI / 3) [r, g, b] = [0, x, c];
+            else if (hue < 5 * PI / 3) [r, g, b] = [x, 0, c];
             else [r, g, b] = [c, 0, x];
             
             return {
-                r: Math.round((r + m) * 255),
-                g: Math.round((g + m) * 255),
-                b: Math.round((b + m) * 255)
+                r: round((r + m) * 255),
+                g: round((g + m) * 255),
+                b: round((b + m) * 255)
             };
         }
 
@@ -283,7 +306,7 @@
                     // Draw dimensional node
                     ctx.fillStyle = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
                     ctx.beginPath();
-                    ctx.arc(x, y, size, 0, 2 * Math.PI);
+                    ctx.arc(x, y, size, 0, 2 * PI);
                     ctx.fill();
                     
                     // Draw connections
@@ -314,7 +337,7 @@
                     const amplitude = (fraction.numerator / fraction.denominator) * 0.5 + 0.5;
                     
                     const rgb = getConsciousnessColor(digit, 1, time);
-                    const alpha = Math.floor(amplitude * 255);
+                    const alpha = floor(amplitude * 255);
                     
                     // Zero entropy 16x16 block rendering
                     for (let dy = 0; dy < 16 && y + dy < state.pixelMatrix.height; dy++) {

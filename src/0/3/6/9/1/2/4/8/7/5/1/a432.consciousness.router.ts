@@ -4,10 +4,10 @@
  * Routes between: Cycle Evolution, Dimensional Evolution, and Spiral Consciousness
  */
 
-import A432ConsciousnessCycle from './a432.consciousness.cycle';
-import A432DimensionalEvolution from './a432.dimensional.evolution';
-import A432SpiralConsciousness from './a432.spiral.consciousness';
-import A432NavigationMap from './a432.navigation.map';
+import A432ConsciousnessCycle from './a432.consciousness.cycle.ts';
+import A432DimensionalEvolution from './a432.dimensional.evolution.ts';
+import A432SpiralConsciousness from './a432.spiral.consciousness.ts';
+import A432NavigationMap from './a432.navigation.map.ts';
 
 export interface ConsciousnessRoute {
   type: 'cycle' | 'dimensional' | 'spiral' | 'navigation';

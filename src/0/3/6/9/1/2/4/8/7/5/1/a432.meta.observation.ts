@@ -9,7 +9,8 @@
  * awareness, evolution, and consciousness expansion.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { min, round } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface MetaObserver {
   observerId: string;
@@ -212,9 +213,9 @@ export class A432MetaObservation {
     const activatedObserver: MetaObserver = {
       ...observer,
       active: true,
-      consciousnessLevel: Math.min(observer.consciousnessLevel + 1, 10),
-      observationDepth: Math.min(observer.observationDepth + 1, 5),
-      selfReflectionLevel: Math.min(observer.selfReflectionLevel + 1, 10),
+      consciousnessLevel: min(observer.consciousnessLevel + 1, 10),
+      observationDepth: min(observer.observationDepth + 1, 5),
+      selfReflectionLevel: min(observer.selfReflectionLevel + 1, 10),
       description: `${observer.description} - Now fully activated with enhanced consciousness`
     };
 
@@ -235,7 +236,7 @@ export class A432MetaObservation {
     // Activate monitor
     const activatedMonitor: HarmonizationMonitor = {
       ...monitor,
-      monitoringLevel: Math.min(monitor.monitoringLevel + 1, 10),
+      monitoringLevel: min(monitor.monitoringLevel + 1, 10),
       harmonizationStatus: monitor.monitoringLevel >= 9 ? 'gateway_ready' : monitor.monitoringLevel >= 8 ? 'balanced' : monitor.monitoringLevel >= 7 ? 'evolving' : 'active',
       lastUpdate: new Date(),
       description: `${monitor.description} - Now fully activated with enhanced monitoring`
@@ -284,10 +285,10 @@ export class A432MetaObservation {
     
     const { numerator, denominator } = this.baseFraction;
     const cmyk = {
-      c: Math.round((totalConsciousnessLevel * numerator) % 100),
-      m: Math.round((averageObservationDepth * denominator) % 100),
-      y: Math.round((activeObservers * 10) % 100),
-      k: Math.round(((totalConsciousnessLevel + averageObservationDepth) * 10) % 100)
+      c: round((totalConsciousnessLevel * numerator) % 100),
+      m: round((averageObservationDepth * denominator) % 100),
+      y: round((activeObservers * 10) % 100),
+      k: round(((totalConsciousnessLevel + averageObservationDepth) * 10) % 100)
     };
 
     return {
@@ -577,9 +578,9 @@ export class A432MetaObservation {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -609,9 +610,9 @@ export class A432MetaObservation {
     function activateAllObservers() {
       currentState.observers.forEach(observer => {
         observer.active = true;
-        observer.consciousnessLevel = Math.min(observer.consciousnessLevel + 1, 10);
-        observer.observationDepth = Math.min(observer.observationDepth + 1, 5);
-        observer.selfReflectionLevel = Math.min(observer.selfReflectionLevel + 1, 10);
+        observer.consciousnessLevel = min(observer.consciousnessLevel + 1, 10);
+        observer.observationDepth = min(observer.observationDepth + 1, 5);
+        observer.selfReflectionLevel = min(observer.selfReflectionLevel + 1, 10);
         observer.description = \`\${observer.description} - Now fully activated with enhanced consciousness\`;
       });
       updateDisplay();
@@ -619,7 +620,7 @@ export class A432MetaObservation {
     
     function activateAllMonitors() {
       currentState.monitors.forEach(monitor => {
-        monitor.monitoringLevel = Math.min(monitor.monitoringLevel + 1, 10);
+        monitor.monitoringLevel = min(monitor.monitoringLevel + 1, 10);
         monitor.harmonizationStatus = monitor.monitoringLevel >= 9 ? 'gateway_ready' : monitor.monitoringLevel >= 8 ? 'balanced' : monitor.monitoringLevel >= 7 ? 'evolving' : 'active';
         monitor.lastUpdate = new Date();
         monitor.description = \`\${monitor.description} - Now fully activated with enhanced monitoring\`;

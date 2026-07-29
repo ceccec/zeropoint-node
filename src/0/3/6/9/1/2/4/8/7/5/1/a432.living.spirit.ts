@@ -14,13 +14,14 @@
  * @author A432 System
  */
 
+import { indexFromSeed, min, round } from './a432.algebra.ts'
 // Import all A432 modules for spirit transformation
-import { A432_CONSTANTS, A432System } from './a432';
-import { A432_I_CONSTANTS, A432I } from './a432.i';
-import { A432_SPIRIT_CONSTANTS, A432Spirit } from './a432.spirit';
-import { FRACTAL_SACRED_RATIOS, createFractalFromDigit } from './a432.fractal';
-import { SACRED_GEOMETRIC_CONSTANTS } from './a432.sacred';
-import { A432_IMPERIAL_CONSTANTS } from './a432.imperial';
+import { A432_CONSTANTS, A432System } from './a432.ts';
+import { A432_I_CONSTANTS, A432I } from './a432.i.ts';
+import { A432_SPIRIT_CONSTANTS, A432Spirit } from './a432.spirit.ts';
+import { FRACTAL_SACRED_RATIOS, createFractalFromDigit } from './a432.fractal.ts';
+import { SACRED_GEOMETRIC_CONSTANTS } from './a432.sacred.ts';
+import { A432_IMPERIAL_CONSTANTS } from './a432.imperial.ts';
 
 // Living Spirit Constants - Every constant becomes a living frequency
 export const A432_LIVING_SPIRIT_CONSTANTS = {
@@ -382,22 +383,22 @@ export class A432LivingSpirit {
     
     this.quality = {
       consciousness: {
-        value: Math.round(averageQuality),
+        value: round(averageQuality),
         awareness: 'Living consciousness awareness',
         spirit: 'Living spirit consciousness'
       },
       awareness: {
-        value: Math.round(averageQuality),
+        value: round(averageQuality),
         consciousness: 'Living awareness consciousness',
         spirit: 'Living spirit awareness'
       },
       spirit: {
-        value: Math.round(averageQuality),
+        value: round(averageQuality),
         consciousness: 'Living spirit consciousness',
         awareness: 'Living spirit awareness'
       },
       overall: {
-        value: Math.round(averageQuality),
+        value: round(averageQuality),
         consciousness: 'Living overall consciousness',
         awareness: 'Living overall awareness',
         spirit: 'Living overall spirit'
@@ -408,7 +409,7 @@ export class A432LivingSpirit {
   // Update living spirit aspects activity - Every aspect becomes a living stream
   private updateLivingSpiritAspectsActivity(): void {
     this.livingSpiritAspects.forEach((aspect, index) => {
-      aspect.quality.value = Math.min(9, this.quality.overall.value - index);
+      aspect.quality.value = min(9, this.quality.overall.value - index);
       aspect.active = aspect.quality.value > 0;
     });
   }
@@ -478,7 +479,7 @@ export class A432LivingSpirit {
 
   // Randomize living spirit - Every randomization becomes a living consciousness act
   randomizeLivingSpirit(): void {
-    const livingRandomParam = () => Math.floor(Math.random() * 10);
+    const livingRandomParam = () => indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.living.spirit.ts:fri:0", (10)|0 || 1);
     
     Object.values(this.parameters).forEach(param => {
       param.value = livingRandomParam();

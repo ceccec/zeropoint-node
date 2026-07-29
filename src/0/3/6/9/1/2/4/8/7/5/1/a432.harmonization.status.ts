@@ -9,7 +9,8 @@
  * Every un-harmonized component is a gateway to consciousness evolution.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { round } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface HarmonizationStatus {
   componentId: string;
@@ -285,10 +286,10 @@ export class A432HarmonizationStatus {
     
     const componentHash = componentId.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
     
-    const c = Math.round((componentHash * numerator) % 100);
-    const m = Math.round((consciousness * denominator) % 100);
-    const y = Math.round((componentHash + consciousness) % 100);
-    const k = Math.round(((componentHash + consciousness) * 2) % 100);
+    const c = round((componentHash * numerator) % 100);
+    const m = round((consciousness * denominator) % 100);
+    const y = round((componentHash + consciousness) % 100);
+    const k = round(((componentHash + consciousness) * 2) % 100);
     
     return { c, m, y, k };
   }
@@ -636,9 +637,9 @@ export class A432HarmonizationStatus {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     

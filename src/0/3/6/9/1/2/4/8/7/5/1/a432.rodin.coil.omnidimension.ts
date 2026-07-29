@@ -13,7 +13,8 @@
  * compacted, omni-dimensional hypersphere (torus). Any other base tears the torus skin.
  */
 
-import { Fraction, CMYK } from './a432.cmyk';
+import { max, round, sqrt as algSqrt } from './a432.algebra.ts'
+import { Fraction, CMYK } from './a432.cmyk.ts';
 
 export interface MobiusCircuitPair {
   pairId: string;
@@ -56,7 +57,7 @@ function isPrime(n: number): boolean {
  * Utility: Check if n is a prime squared (n = p^2, p prime)
  */
 function isPrimeSquared(n: number): boolean {
-  const sqrt = Math.sqrt(n);
+  const sqrt = algSqrt(n);
   return Number.isInteger(sqrt) && isPrime(sqrt);
 }
 
@@ -71,7 +72,7 @@ function getNumPairs(base: number): number {
     case 26: return 2;
     case 50: return 3;
     case 122: return 4;
-    default: return Math.max(1, Math.round(Math.sqrt(base) / 2));
+    default: return max(1, round(sqrt(base) / 2));
   }
 }
 

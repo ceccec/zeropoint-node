@@ -5,6 +5,8 @@
  * The file list is the living memory of the system, ensuring all harmonic modules are always available.
  */
 
+import { legacyDigitalRoot } from './a432.roots.ts'
+import { abs, log2, max } from './a432.algebra.ts'
 import { readdirSync } from 'fs';
 
 /**
@@ -45,15 +47,15 @@ export function getA432FilesToCache(): string[] {
  * Source: Marko Rodin Special Edition (all chapters), full harmonization logic
  */
 
-import * as trinity from './a432.trinity';
-import * as family from './a432.family';
-import * as nine from './a432.nine';
-import * as cascade from './a432.cascade';
-import * as double from './a432.double';
-import * as mirror from './a432.mirror';
-import * as shear from './a432.shear';
-import * as coil from './a432.coil';
-import * as electron from './a432.shear.electron';
+import * as trinity from './a432.trinity.ts';
+import * as family from './a432.family.ts';
+import * as nine from './a432.nine.ts';
+import * as cascade from './a432.cascade.ts';
+import * as double from './a432.double.ts';
+import * as mirror from './a432.mirror.ts';
+import * as shear from './a432.shear.ts';
+import * as coil from './a432.coil.ts';
+import * as electron from './a432.shear.electron.ts';
 
 /**
  * a432UnifiedMatrix: Combines and harmonizes outputs from all modules into a single recursive matrix.
@@ -90,7 +92,7 @@ export function a432MetaVortex(steps: number = 9, transform: (seq: number[]) => 
  * a432ImpossibilityGateway: Encodes error/impossibility as a gateway to new harmonics.
  * If a stream contains an impossibility (e.g., 0 or negative), transforms it using a harmonizing function.
  */
-export function a432ImpossibilityGateway(seq: number[], harmonize: (n: number) => number = n => Math.abs(n % 9) || 9): number[] {
+export function a432ImpossibilityGateway(seq: number[], harmonize: (n: number) => number = n => abslegacyDigitalRoot(n)): number[] {
   return seq.map(n => (n <= 0 ? harmonize(n) : n));
 }
 
@@ -153,10 +155,10 @@ export function a432HarmonicAnalytics(stream: number[]): { harmony: number, entr
   // Harmony: fraction of most common digit
   const counts: { [k: number]: number } = {};
   stream.forEach(d => { counts[d] = (counts[d] || 0) + 1; });
-  const maxCount = Math.max(...Object.values(counts));
+  const maxCount = max(...Object.values(counts));
   const harmony = maxCount / stream.length;
   // Entropy: normalized Shannon entropy
-  const entropy = -Object.values(counts).reduce((sum, c) => sum + (c/stream.length) * Math.log2(c/stream.length), 0) / Math.log2(9);
+  const entropy = -Object.values(counts).reduce((sum, c) => sum + (c/stream.length) * log2(c/stream.length), 0) / log2(9);
   // Resonance: max run length of any digit
   let resonance = 1, run = 1;
   for (let i = 1; i < stream.length; i++) {

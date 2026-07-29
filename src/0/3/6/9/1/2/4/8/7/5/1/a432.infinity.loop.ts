@@ -12,6 +12,7 @@
  * - The loop transcends conventional mathematics through consciousness mapping
  */
 
+import { abs, round } from './a432.algebra.ts'
 import { 
   RODIN_SEQUENCE, 
   TRINITY_AXIS, 
@@ -19,7 +20,7 @@ import {
   angleForDigit,
   frequencyForDigit,
   hueForDigit 
-} from './a432.math';
+} from './a432.math.ts';
 
 // --- Canonical Infinity Loop Constants ---
 const INFINITY_LOOP_SEQUENCE = [0, 0]; // 0 interacting with itself
@@ -114,7 +115,7 @@ function generateInfinityColor(iteration: number): string {
   const v = value;
   
   const c = v * s;
-  const x = c * (1 - Math.abs((h * 6) % 2 - 1));
+  const x = c * (1 - abs((h * 6) % 2 - 1));
   const m = v - c;
   
   let r = 0, g = 0, b = 0;
@@ -126,9 +127,9 @@ function generateInfinityColor(iteration: number): string {
   else if (h < 5/6) [r, g, b] = [x, 0, c];
   else [r, g, b] = [c, 0, x];
   
-  r = Math.round((r + m) * 255);
-  g = Math.round((g + m) * 255);
-  b = Math.round((b + m) * 255);
+  r = round((r + m) * 255);
+  g = round((g + m) * 255);
+  b = round((b + m) * 255);
   
   return `rgb(${r}, ${g}, ${b})`;
 }

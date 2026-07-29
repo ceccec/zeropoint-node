@@ -8,6 +8,7 @@
  * - Metaphysical: Routing is harmonic flow, self-recognition, and zero entropy.
  */
 
+import { log } from './a432.algebra.ts'
 // Type for a module's route pattern and handler
 export type A432RoutePattern = string | RegExp;
 export type A432RouteHandler = (params: Record<string, string>, req: unknown, res: unknown) => void;

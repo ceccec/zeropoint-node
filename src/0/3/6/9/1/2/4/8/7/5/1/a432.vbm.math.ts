@@ -10,8 +10,8 @@ import {
   primeSquaredRoots,
   angleForDigit,
   digitalRoot,
-} from './a432.math';
-import { RODIN_SEQUENCE } from './a432.math';
+} from './a432.math.ts';
+import { RODIN_SEQUENCE } from './a432.math.ts';
 
 // ——————————————————————————————————————————
 // 1. Trinity axis and doubling circuit (already canonical)
@@ -41,8 +41,8 @@ export function powersOfTwoMod9(n: number): number[] {
 // ——————————————————————————————————————————
 // 4. Fibonacci & prime-square digital-root helpers (imported)
 // ---------------------------------------------------------
-export { fibonacciRoots as VBM_FIBONACCI_ROOTS } from './a432.math';
-export { primeSquaredRoots as VBM_PRIME_SQR_ROOTS } from './a432.math';
+export { fibonacciRoots as VBM_FIBONACCI_ROOTS } from './a432.math.ts';
+export { primeSquaredRoots as VBM_PRIME_SQR_ROOTS } from './a432.math.ts';
 
 // ——————————————————————————————————————————
 // 5. Pyramid number map sequence (chapter on Great Pyramid)

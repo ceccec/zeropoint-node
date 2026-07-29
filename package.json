@@ -12,6 +12,25 @@
       "require": "./dist/a432.system.js",
       "types": "./dist/a432.system.d.ts"
     },
+    "./kernel": {
+      "import": "./src/kernel/index.ts",
+      "types": "./src/kernel/index.ts"
+    },
+    "./kernel/import-graph": {
+      "import": "./src/kernel/import-graph.ts",
+      "types": "./src/kernel/import-graph.ts"
+    },
+    "./0": {
+      "import": "./src/0/index.ts",
+      "types": "./src/0/index.ts"
+    },
+    "./integrity": {
+      "import": "./src/integrity/content-uuid.ts",
+      "types": "./src/integrity/content-uuid.ts"
+    },
+    "./mcp": {
+      "import": "./src/mcp/server.ts"
+    },
     "./simple": {
       "import": "./dist/a432.simple.esm.js",
       "require": "./dist/a432.simple.js",
@@ -74,6 +93,18 @@
     "build:types": "rollup -c --environment BUILD:types",
     "demo": "node dist/demo.js",
     "test": "node test-install.js",
+    "test:kernel": "node --experimental-strip-types src/kernel/smoke.test.ts",
+    "readme": "node --experimental-strip-types scripts/readme-gen.mjs",
+    "readme:check": "node --experimental-strip-types scripts/readme-gen.mjs --check",
+    "docs:pages": "node --experimental-strip-types scripts/docs-pages.mjs",
+    "docs:pages:check": "node --experimental-strip-types scripts/docs-pages.mjs --check",
+    "skills:seal": "node --experimental-strip-types scripts/skills-seal.mjs",
+    "skills:check": "node --experimental-strip-types scripts/skills-seal.mjs --check",
+    "mcp": "node --experimental-strip-types src/mcp/server.ts",
+    "mcp:smoke": "node --experimental-strip-types scripts/mcp-smoke.mjs",
+    "self:next": "node --experimental-strip-types scripts/self-next.mjs",
+    "math:ban": "node scripts/math-ban.mjs",
+    "check": "npm run test:kernel && npm run math:ban && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run mcp:smoke && npm run self:next",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

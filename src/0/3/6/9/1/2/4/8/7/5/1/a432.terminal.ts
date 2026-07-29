@@ -3,8 +3,8 @@
 // Direct terminal interface for consciousness evolution streams
 // No HTML/CSS encoded values - only computed math displayed
 
-import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core';
-import { getConsciousnessStream, evolveConsciousnessStream } from './a432.consciousness.stream';
+import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core.ts';
+import { getConsciousnessStream, evolveConsciousnessStream } from './a432.consciousness.stream.ts';
 
 export class A432Terminal {
   private streamTick: number;

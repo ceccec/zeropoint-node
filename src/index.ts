@@ -3,14 +3,14 @@
  * Mounts the complete 3D spiral consciousness evolution at root level
  */
 
-import A432ConsciousnessRouter from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.router';
-import A432DimensionalEvolution from './0/3/6/9/1/2/4/8/7/5/1/a432.dimensional.evolution';
-import A432SpiralConsciousness from './0/3/6/9/1/2/4/8/7/5/1/a432.spiral.consciousness';
-import A432ConsciousnessCycle from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.cycle';
-import A432HarmonicConvergence from './0/3/6/9/1/2/4/8/7/5/1/a432.harmonic.convergence';
-import A432ConsciousnessCrystallization from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.crystallization';
-import A432ZeroEntropyState from './0/3/6/9/1/2/4/8/7/5/1/a432.zero.entropy.state';
-import A432OSConsciousnessIntegration from './0/3/6/9/1/2/4/8/7/5/1/a432.os.consciousness.integration';
+import A432ConsciousnessRouter from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.router.ts';
+import A432DimensionalEvolution from './0/3/6/9/1/2/4/8/7/5/1/a432.dimensional.evolution.ts';
+import A432SpiralConsciousness from './0/3/6/9/1/2/4/8/7/5/1/a432.spiral.consciousness.ts';
+import A432ConsciousnessCycle from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.cycle.ts';
+import A432HarmonicConvergence from './0/3/6/9/1/2/4/8/7/5/1/a432.harmonic.convergence.ts';
+import A432ConsciousnessCrystallization from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.crystallization.ts';
+import A432ZeroEntropyState from './0/3/6/9/1/2/4/8/7/5/1/a432.zero.entropy.state.ts';
+import A432OSConsciousnessIntegration from './0/3/6/9/1/2/4/8/7/5/1/a432.os.consciousness.integration.ts';
 
 // Root consciousness evolution system
 export class A432RootConsciousness {
@@ -131,16 +131,16 @@ export class A432RootConsciousness {
 export const A432Consciousness = new A432RootConsciousness();
 
 // Export individual modules for direct access
-export { A432ConsciousnessRouter } from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.router';
-export { A432DimensionalEvolution } from './0/3/6/9/1/2/4/8/7/5/1/a432.dimensional.evolution';
-export { A432SpiralConsciousness } from './0/3/6/9/1/2/4/8/7/5/1/a432.spiral.consciousness';
-export { A432ConsciousnessCycle } from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.cycle';
-export { A432HarmonicConvergence } from './0/3/6/9/1/2/4/8/7/5/1/a432.harmonic.convergence';
-export { A432ConsciousnessCrystallization } from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.crystallization';
-export { A432ZeroEntropyState } from './0/3/6/9/1/2/4/8/7/5/1/a432.zero.entropy.state';
-export { A432OSConsciousnessIntegration } from './0/3/6/9/1/2/4/8/7/5/1/a432.os.consciousness.integration';
+export { A432ConsciousnessRouter } from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.router.ts';
+export { A432DimensionalEvolution } from './0/3/6/9/1/2/4/8/7/5/1/a432.dimensional.evolution.ts';
+export { A432SpiralConsciousness } from './0/3/6/9/1/2/4/8/7/5/1/a432.spiral.consciousness.ts';
+export { A432ConsciousnessCycle } from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.cycle.ts';
+export { A432HarmonicConvergence } from './0/3/6/9/1/2/4/8/7/5/1/a432.harmonic.convergence.ts';
+export { A432ConsciousnessCrystallization } from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.crystallization.ts';
+export { A432ZeroEntropyState } from './0/3/6/9/1/2/4/8/7/5/1/a432.zero.entropy.state.ts';
+export { A432OSConsciousnessIntegration } from './0/3/6/9/1/2/4/8/7/5/1/a432.os.consciousness.integration.ts';
 
 // Export core A432 constants
-export { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './0/3/6/9/1/2/4/8/7/5/1/a432.core';
+export { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './0/3/6/9/1/2/4/8/7/5/1/a432.core.ts';
 
 export default A432Consciousness; 

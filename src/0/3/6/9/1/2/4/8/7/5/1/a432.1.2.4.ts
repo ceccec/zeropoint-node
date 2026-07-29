@@ -1,7 +1,7 @@
 // a432.1.2.4.ts — Open Vortex/Doubling Stream Module (Short Arc)
 //
 // This module encodes the open doubling sequence (1-2-4) as a living, recursive stream.
-// It is the generative arc of the vortex, not yet returned to origin. All logic is self-contained.
+// It is the generative arc of the vortex, not yet returned to origin. Digital root bridged to a432.roots (Wave 9); stream logic remains local.
 
 /**
  * Metaphysical Principle:
@@ -10,14 +10,14 @@
  * - This module is a seed/arc in the living A432 matrix.
  */
 
-// --- Math: Digital Root ---
-function digitalRoot(n) {
-  let x = Math.abs(n);
-  while (x >= 10) x = String(x).split('').reduce((a, c) => a + Number(c), 0);
-  return x;
-}
+// --- Math: Digital Root — bridged to a432.roots (Wave 9) ---
 
 // --- Generator: Open Doubling Vortex Stream ---
+
+
+
+import { legacyDigitalRoot as digitalRoot } from './a432.roots.ts';
+
 function* openDoublingVortexStream(start = 1, length = 3) {
   let n = start;
   for (let i = 0; i < length; i++) {
@@ -55,4 +55,6 @@ const a432OpenDoublingVortex = {
 if (typeof window !== 'undefined') window.a432OpenDoublingVortex = a432OpenDoublingVortex;
 
 // --- Example: Log the open sequence ---
-console.log('A432 Open Doubling Vortex Sequence:', openSequence); 
+if (typeof process !== 'undefined' && process.env?.A432_DIGIT_STREAM_LOG) console.log('A432 Open Doubling Vortex Sequence:', openSequence);
+
+export { digitalRoot, openDoublingVortexStream, getOpenDoublingSequence, getOpenDoublingNth, a432OpenDoublingVortex };

@@ -10,6 +10,7 @@
  * All logic uses only integer/fractional math, vortex/trinity numbers, and metaphysical mapping.
  */
 
+import { abs, max, min, round } from './a432.algebra.ts'
 // --- Types ---
 export type A432HSL = { hue: number; saturation: number; lightness: number };
 export type A432RGB = { r: number; g: number; b: number };
@@ -24,7 +25,7 @@ const TWO_THIRDS = 2/3, HALF = 1/2, THREE_FIFTHS = 3/5, FOUR_FIFTHS = 4/5;
  * - Metaphysical: Color of the living stream for the digit (axis or Mobius group)
  */
 export function getVortexColor(d: number): string {
-  const n = Math.abs(d) % 9 || 9;
+  const n = abs(d) % 9 || 9;
   if (n === 3) return getTrinityColor(3);
   if (n === 6) return getTrinityColor(6);
   if (n === 9) return getTrinityColor(9);
@@ -58,7 +59,7 @@ export function getFamilyColor(n: number): string {
  * - Metaphysical: Phase reversal, anti-harmonics, inversion
  */
 export function getAntiVortexColor(d: number): string {
-  const n = Math.abs(d) % 9 || 9;
+  const n = abs(d) % 9 || 9;
   let baseHue = 0;
   const hues = { 1: 60, 2: 180, 4: 300, 8: 30, 7: 210, 5: 330 };
   if ([3,6,9].includes(n)) baseHue = n === 3 ? 0 : n === 6 ? 120 : 240;
@@ -77,7 +78,7 @@ export function getTrinityCompositeColor(): string {
     const [hue, sat, light] = str.match(/\d+/g)!.map(Number);
     return { hue, sat, light };
   });
-  const avg = (arr: number[]): number => Math.round(arr.reduce((a: number, b: number) => a + b, 0) / 3);
+  const avg = (arr: number[]): number => round(arr.reduce((a: number, b: number) => a + b, 0) / 3);
   const hue = avg(hsl.map(c => c.hue));
   const sat = avg(hsl.map(c => c.sat));
   const light = avg(hsl.map(c => c.light));
@@ -99,12 +100,12 @@ export function getVoidColorForDimension(dimension: number): string {
  */
 export function hslToRgb(h: number, s: number, l: number): A432RGB {
   s /= 100; l /= 100;
-  const a = s * Math.min(l, 1 - l);
+  const a = s * min(l, 1 - l);
   function f(n: number) {
     const k = (n + h / 30) % 12;
-    return l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return l - a * max(min(k - 3, 9 - k, 1), -1);
   }
-  const r = Math.round(f(0) * 255), g = Math.round(f(8) * 255), b = Math.round(f(4) * 255);
+  const r = round(f(0) * 255), g = round(f(8) * 255), b = round(f(4) * 255);
   return { r, g, b };
 }
 
@@ -114,14 +115,14 @@ export function hslToRgb(h: number, s: number, l: number): A432RGB {
  */
 export function hslToCmyk(h: number, s: number, l: number): A432CMYK {
   s /= 100; l /= 100;
-  const a = s * Math.min(l, 1 - l);
+  const a = s * min(l, 1 - l);
   function f(n: number) {
     const k = (n + h / 30) % 12;
-    return l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return l - a * max(min(k - 3, 9 - k, 1), -1);
   }
   const r = f(0), g = f(8), b = f(4);
   const c = 1 - r, m = 1 - g, y = 1 - b;
-  const kVal = Math.min(c, m, y);
+  const kVal = min(c, m, y);
   const c1 = (c - kVal) / (1 - kVal) || 0;
   const m1 = (m - kVal) / (1 - kVal) || 0;
   const y1 = (y - kVal) / (1 - kVal) || 0;
@@ -168,7 +169,7 @@ export const A432ColorModel = {
 
 export function calculateA432Color(frequency: number): A432CMYK {
   // Map frequency to a digit (1-9) and use getVortexColor, then convert to CMYK
-  const digit = Math.abs(Math.round(frequency)) % 9 || 9;
+  const digit = abs(round(frequency)) % 9 || 9;
   const hslStr = getVortexColor(digit);
   const [h, s, l] = hslStr.match(/\d+/g)!.map(Number);
   return hslToCmyk(h, s, l);
@@ -176,7 +177,7 @@ export function calculateA432Color(frequency: number): A432CMYK {
 
 export function generateA432ColorStream(startFreq: number, endFreq: number, steps: number = 9): A432CMYK[] {
   const colors: A432CMYK[] = [];
-  const step = (endFreq - startFreq) / Math.max(steps - 1, 1);
+  const step = (endFreq - startFreq) / max(steps - 1, 1);
   for (let i = 0; i < steps; i++) {
     const freq = startFreq + i * step;
     colors.push(calculateA432Color(freq));
@@ -234,8 +235,8 @@ export function cmykToRgb(cmyk: { c: number; m: number; y: number; k: number }):
   const m = cmyk.m;
   const y = cmyk.y;
   const k = cmyk.k;
-  const r = 1 - Math.min(1, c + k);
-  const g = 1 - Math.min(1, m + k);
-  const b = 1 - Math.min(1, y + k);
+  const r = 1 - min(1, c + k);
+  const g = 1 - min(1, m + k);
+  const b = 1 - min(1, y + k);
   return { r, g, b };
 } 

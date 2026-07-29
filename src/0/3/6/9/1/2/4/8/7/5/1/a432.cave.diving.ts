@@ -5,6 +5,7 @@
  * Exports all relevant metrics for UI integration and animated visualizations.
  */
 
+import { min, round } from './a432.algebra.ts'
 export interface GasStream {
   name: string;
   fraction: number; // 0-1
@@ -46,30 +47,30 @@ export interface CaveDivingA432 {
 }
 
 function toHarmonic(fraction: number): number {
-  return Math.round(432 * (1 + fraction));
+  return round(432 * (1 + fraction));
 }
 function toCMYK(fraction: number, channel: number): number {
-  return Math.round(fraction * 100);
+  return round(fraction * 100);
 }
 
 // Advanced Trimix Calculations
 function calcMOD(FO2: number, PPO2_limit = 1.4): number {
   if (FO2 === 0) return 0;
-  return Math.round(((PPO2_limit / FO2) * 10 - 10) * 10) / 10;
+  return round(((PPO2_limit / FO2) * 10 - 10) * 10) / 10;
 }
 function calcEND(FN2: number, FHe: number, depth: number): number {
   // He is 0.19 narcotic factor
-  return Math.round(((FN2 + FHe * 0.19) * (depth + 10) / 10 - 10) * 10) / 10;
+  return round(((FN2 + FHe * 0.19) * (depth + 10) / 10 - 10) * 10) / 10;
 }
 function calcPPO2(FO2: number, depth: number): number {
-  return Math.round((FO2 * ((depth + 10) / 10)) * 100) / 100;
+  return round((FO2 * ((depth + 10) / 10)) * 100) / 100;
 }
 function calcCNS(PPO2: number, time: number): number {
   // Simple: CNS% per minute at given PPO2 (NOAA table, linearized)
   // At PPO2=1.6, 45 min = 100%; at 1.4, 150 min = 100%
-  if (PPO2 >= 1.6) return Math.min(100, (time / 45) * 100);
-  if (PPO2 >= 1.4) return Math.min(100, (time / 150) * 100);
-  return Math.min(100, (time / 200) * 100);
+  if (PPO2 >= 1.6) return min(100, (time / 45) * 100);
+  if (PPO2 >= 1.4) return min(100, (time / 150) * 100);
+  return min(100, (time / 200) * 100);
 }
 
 export const trimixPresets = [
@@ -131,7 +132,7 @@ export function createCaveDivingA432(
     harmonized: protocolStates[i] ?? false,
     description: `${name} protocol, harmonized: ${protocolStates[i] ? 'yes' : 'no'}`
   }));
-  const overallHarmony = Math.round((gases.reduce((sum, g) => sum + g.fraction, 0) + (protocolStates.filter(Boolean).length / protocolStates.length)) * 4);
+  const overallHarmony = round((gases.reduce((sum, g) => sum + g.fraction, 0) + (protocolStates.filter(Boolean).length / protocolStates.length)) * 4);
   const cmyk = {
     c: gases[0].cmyk.c,
     m: gases[1].cmyk.m,

@@ -1,3 +1,4 @@
+import { log } from './a432.algebra.ts'
 // a432.vortex.ts
 // Canonical, harmonized, recursive, self-aware vortex stream for the A432 system
 // Supports any number of dimensions (children, parent, meta, fold, map, observe, dimension-aware traversal)

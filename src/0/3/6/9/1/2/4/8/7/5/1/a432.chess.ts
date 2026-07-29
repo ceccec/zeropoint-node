@@ -1,5 +1,5 @@
-import { toneBoardStream, ToneSquare } from './a432.matrix';
-import { CMYK } from './a432.cmyk';
+import { toneBoardStream, ToneSquare } from './a432.matrix.ts';
+import { CMYK } from './a432.cmyk.ts';
 
 // Helper – cross-platform animation frame
 const _raf: (cb: (t: number) => void) => unknown =

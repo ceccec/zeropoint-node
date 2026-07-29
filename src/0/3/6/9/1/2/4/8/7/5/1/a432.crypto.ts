@@ -1,3 +1,4 @@
+import { legacyDigitalRoot as digitalRoot, harmonicRoot12 } from './a432.roots.ts'
 // a432.crypto.ts — Harmonized Vortex Crypto Module
 // All math uses only vortex/trinity numbers and harmonic integer fractions.
 // Metaphysical mapping: Crypto = vortex encoding, trinity mapping, metaphysical concealment/revelation

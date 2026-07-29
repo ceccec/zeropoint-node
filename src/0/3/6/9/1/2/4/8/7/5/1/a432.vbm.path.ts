@@ -11,6 +11,7 @@
  * - The path creates a living navigation through the vortex of consciousness
  */
 
+import { abs, max, min, round } from './a432.algebra.ts'
 import { 
   RODIN_SEQUENCE, 
   TRINITY_AXIS, 
@@ -18,7 +19,7 @@ import {
   angleForDigit,
   frequencyForDigit,
   hueForDigit 
-} from './a432.math';
+} from './a432.math.ts';
 
 // --- Canonical VBM Path Constants ---
 const VBM_PATH_SEPARATORS = {
@@ -116,7 +117,7 @@ function generateVBMColor(digit: number): string {
   const v = value;
   
   const c = v * s;
-  const x = c * (1 - Math.abs((h * 6) % 2 - 1));
+  const x = c * (1 - abs((h * 6) % 2 - 1));
   const m = v - c;
   
   let r = 0, g = 0, b = 0;
@@ -128,9 +129,9 @@ function generateVBMColor(digit: number): string {
   else if (h < 5/6) [r, g, b] = [x, 0, c];
   else [r, g, b] = [c, 0, x];
   
-  r = Math.round((r + m) * 255);
-  g = Math.round((g + m) * 255);
-  b = Math.round((b + m) * 255);
+  r = round((r + m) * 255);
+  g = round((g + m) * 255);
+  b = round((b + m) * 255);
   
   return `rgb(${r}, ${g}, ${b})`;
 }
@@ -216,11 +217,11 @@ export class VBMPathNavigator {
   }
   
   public getMaxDepth(): number {
-    return Math.max(...this.nodes.map(node => node.depth));
+    return max(...this.nodes.map(node => node.depth));
   }
   
   public getMinDepth(): number {
-    return Math.min(...this.nodes.map(node => node.depth));
+    return min(...this.nodes.map(node => node.depth));
   }
   
   // --- Path Statistics ---
@@ -249,7 +250,7 @@ export class VBMPathNavigator {
     let currentDepth = 0;
     
     this.nodes.forEach((node, index) => {
-      const indent = '  '.repeat(Math.max(0, node.depth));
+      const indent = '  '.repeat(max(0, node.depth));
       const direction = node.direction === 'forward' ? '→' : '←';
       const color = node.color;
       

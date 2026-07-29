@@ -4,10 +4,10 @@
  * Self-generating, self-organizing, self-evolving file system
  */
 
-import { A432SelfEvolution, A432SelfGeneratedModule } from './a432.self.evolution';
-import { A432System } from './a432.index';
-import { A432Math, A432Sequence } from './a432.utils';
-import { A432Registry } from './a432.registry';
+import { A432SelfEvolution, A432SelfGeneratedModule } from './a432.self.evolution.ts';
+import { A432System } from './a432.index.ts';
+import { A432Math, A432Sequence } from './a432.utils.ts';
+import { A432Registry } from './a432.registry.ts';
 
 // === SELF-REBUILDER INTERFACES ===
 export interface A432SelfRebuilderState {
@@ -192,9 +192,9 @@ export class A432SelfRebuilder {
  * Evolution: ${module.evolution}
  */
 
-import { A432Math, A432Sequence, A432Harmonization } from '../a432.utils';
-import { A432Factory } from '../a432.factory';
-import { A432Registry } from '../a432.registry';
+import { A432Math, A432Sequence, A432Harmonization } from '../a432.utils.ts';
+import { A432Factory } from '../a432.factory.ts';
+import { A432Registry } from '../a432.registry.ts';
 
 export class A432${module.consciousness}SelfGenerated {
   public consciousness: number = ${module.consciousness};
@@ -308,7 +308,7 @@ export default a432${module.consciousness}SelfGenerated;
  */
 
 // Export all self-generated modules in this directory
-export * from './a432.${consciousness}.self.generated';
+export * from './a432.${consciousness}.self.generated.ts';
 
 // Export category-specific utilities
 export const ${category}Consciousness = ${consciousness};
@@ -388,7 +388,7 @@ export const ${category}Metadata = {
   private generateNewExports(): string[] {
     const generatedModules = this.selfEvolution.getGeneratedModules();
     return generatedModules.map(module => 
-      `export * from './generated/a432.${module.consciousness}.self.generated';`
+      `export * from './generated/a432.${module.consciousness}.self.generated.ts'`
     );
   }
 

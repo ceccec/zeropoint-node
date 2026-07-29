@@ -7,7 +7,8 @@
  * Provides metaphysical and mathematical documentation.
  */
 
-import { humanConsciousnessEmitter, HumanConsciousnessEvent } from './a432.human.consciousness';
+import { round } from './a432.algebra.ts'
+import { humanConsciousnessEmitter, HumanConsciousnessEvent } from './a432.human.consciousness.ts';
 
 export interface HumanAttribute {
   name: string;
@@ -34,10 +35,10 @@ export interface HumanDesign {
 }
 
 function toHarmonic(value: number): number {
-  return Math.round(432 * (1 + value / 9));
+  return round(432 * (1 + value / 9));
 }
 function toCMYK(value: number, channel: number): number {
-  return Math.round((value / 9) * 100);
+  return round((value / 9) * 100);
 }
 function getFlow(seed: number): number[] {
   const base = [1, 2, 4, 8, 7, 5];
@@ -79,7 +80,7 @@ export function createHumanDesign(
       description: `${name.charAt(0).toUpperCase() + name.slice(1)} attribute mapped to harmonic, color, and flow.`
     };
   });
-  const overallHarmony = Math.round(mapped.reduce((sum, a) => sum + a.value, 0) / 8);
+  const overallHarmony = round(mapped.reduce((sum, a) => sum + a.value, 0) / 8);
   const cmyk = {
     c: mapped[0].cmyk.c,
     m: mapped[1].cmyk.m,

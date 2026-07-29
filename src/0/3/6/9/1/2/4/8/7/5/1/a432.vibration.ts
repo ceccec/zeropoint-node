@@ -7,15 +7,16 @@
  * Vibrations are calculated in real-time from environmental streams and dimensional states.
  */
 
+import { PI, abs, cos, max, min, round, sin } from './a432.algebra.ts'
 import { 
   A432_CONSTANTS,
   calculateA432Consciousness,
   calculateA432DimensionalState,
   calculateA432Frequency,
-} from './a432';
+} from './a432.ts';
 
-import { RODIN_SEQUENCE } from './a432.math';
-import { calculateDigitalRoot } from './a432';
+import { RODIN_SEQUENCE } from './a432.math.ts';
+import { calculateDigitalRoot } from './a432.ts';
 
 // A432 Vibration Constants - Integer Fractions Only
 export const A432_VIBRATION_CONSTANTS = {
@@ -134,7 +135,7 @@ function harmonizeVibrationComponent(base: number, dimensional: number, frequenc
   const harmonized = (base + dimensional + imperialFactor) / 3;
   
   // Ensure result is within 0-1 range using integer fractions
-  return Math.max(0, Math.min(1, harmonized));
+  return max(0, min(1, harmonized));
 }
 
 /**
@@ -227,7 +228,7 @@ export function generateA432VibrationPattern(
   sampleRate: number = 60
 ): A432VibrationPattern {
   const samples: number[] = [];
-  const totalSamples = Math.round(duration * sampleRate);
+  const totalSamples = round(duration * sampleRate);
   const consciousness = calculateA432Consciousness(frequency);
   const dimensionalState = calculateA432DimensionalState(frequency);
   
@@ -240,7 +241,7 @@ export function generateA432VibrationPattern(
     const pattern = A432_VIBRATION_CONSTANTS.CONSCIOUSNESS_VIBRATION[consciousness as keyof typeof A432_VIBRATION_CONSTANTS.CONSCIOUSNESS_VIBRATION].pattern;
     
     // Combine sine and cosine for complex vibration pattern
-    const sample = intensity * (Math.sin(2 * Math.PI * phase) + pattern * Math.cos(2 * Math.PI * phase * 2));
+    const sample = intensity * (sin(2 * PI * phase) + pattern * cos(2 * PI * phase * 2));
     
     samples.push(sample);
   }
@@ -285,7 +286,7 @@ export function a432VibrationToDeviceVibration(
   if ('vibrate' in navigator) {
     // Convert vibration pattern to device vibration format
     const vibrationPattern = pattern.samples.map(sample => 
-      Math.round(Math.abs(sample) * 100) // Convert to milliseconds
+      round(abs(sample) * 100) // Convert to milliseconds
     );
     
     navigator.vibrate(vibrationPattern);

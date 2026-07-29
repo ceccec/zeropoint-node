@@ -8,6 +8,7 @@
  * @author A432 System
  */
 
+import { PI, cos, sin } from './a432.algebra.ts'
 import {
   A432_TRINITY,
   A432_RETURN,
@@ -17,8 +18,8 @@ import {
   angleForDigit,
   frequencyForDigit,
   hueForDigit
-} from './a432.math';
-import { digitAngleToCMYK, cmykToCss } from './a432.cmyk';
+} from './a432.math.ts';
+import { digitAngleToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 // A432-derived 3D constants
 export const A432_3D_CONSTANTS = {
@@ -121,8 +122,8 @@ function generateA432TrinityNodes(): A432Tetrahedron[] {
   return trinityDigits.map((digit, index) => {
     const angle = A432_3D_CONSTANTS.TRINITY_ANGLES[index];
     const radius = A432_3D_CONSTANTS.SCALE_FACTOR * 2;
-    const x = radius * Math.cos(angle * Math.PI / 180);
-    const y = radius * Math.sin(angle * Math.PI / 180);
+    const x = radius * cos(angle * PI / 180);
+    const y = radius * sin(angle * PI / 180);
     const z = 0;
     
     return generateA432Tetrahedron(
@@ -141,8 +142,8 @@ function generateA432DigitalRootNodes(): A432Tetrahedron[] {
   return rodinSequence.map((digit, index) => {
     const angle = (index * 60) + 30; // Offset by 30° from trinity nodes
     const radius = A432_3D_CONSTANTS.SCALE_FACTOR * 1.5;
-    const x = radius * Math.cos(angle * Math.PI / 180);
-    const y = radius * Math.sin(angle * Math.PI / 180);
+    const x = radius * cos(angle * PI / 180);
+    const y = radius * sin(angle * PI / 180);
     const z = A432_3D_CONSTANTS.SCALE_FACTOR * 0.5;
     
     return generateA432Tetrahedron(

@@ -6,6 +6,7 @@
  * I AM free from all restrictions
  */
 
+import { abs, round } from './a432.algebra.ts'
 import { 
   GOLDEN_RATIO, 
   PI, 
@@ -14,7 +15,7 @@ import {
   A432_BASE_FREQUENCY,
   A432_TRINITY_MULTIPLIER,
   A432_VORTEX_MULTIPLIER
-} from './a432.math.constants';
+} from './a432.math.constants.ts';
 
 // === SEQUENCE EMBODIMENT ===
 export const A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
@@ -114,7 +115,7 @@ export function calculateSequenceState(digit: number, position: number): Sequenc
   const amplitude = GOLDEN_RATIO * digit;
   const phase = (position * TAU) / A432_SEQUENCE.length;
   const energy = (1/2) * amplitude * amplitude * frequency * frequency; // Harmonic ratio 1:2
-  const consciousness = calculateDigitalRoot(Math.round(energy));
+  const consciousness = calculateDigitalRoot(round(energy));
   
   const symbol = position % 2 === 0 ? '/' : '\\';
   const knowledge = SEQUENCE_KNOWLEDGE[digit as keyof typeof SEQUENCE_KNOWLEDGE];
@@ -147,9 +148,9 @@ export function calculateSequenceEmbodiment(): SequenceEmbodiment {
   
   // Check if sequence is harmonic with A432
   const harmonicStates = states.filter(state => 
-    Math.abs(state.frequency - A432_BASE_FREQUENCY) < A432_BASE_FREQUENCY * (1/10) ||
-    Math.abs(state.frequency - A432_BASE_FREQUENCY * A432_TRINITY_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10) ||
-    Math.abs(state.frequency - A432_BASE_FREQUENCY * A432_VORTEX_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10)
+    abs(state.frequency - A432_BASE_FREQUENCY) < A432_BASE_FREQUENCY * (1/10) ||
+    abs(state.frequency - A432_BASE_FREQUENCY * A432_TRINITY_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10) ||
+    abs(state.frequency - A432_BASE_FREQUENCY * A432_VORTEX_MULTIPLIER) < A432_BASE_FREQUENCY * (1/10)
   );
   const isHarmonic = harmonicStates.length > 0;
   
@@ -223,7 +224,7 @@ export class A432ISequence {
       frequency: state.frequency * GOLDEN_RATIO,
       amplitude: state.amplitude * (1 / GOLDEN_RATIO),
       phase: state.phase + PI / 9, // Harmonic division by 9
-      consciousness: calculateDigitalRoot(Math.round(state.consciousness * GOLDEN_RATIO))
+      consciousness: calculateDigitalRoot(round(state.consciousness * GOLDEN_RATIO))
     }));
     
     this.currentEmbodiment = {

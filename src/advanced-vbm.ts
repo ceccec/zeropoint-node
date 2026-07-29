@@ -11,7 +11,8 @@
  * - Equipotential Major Groove calculations
  */
 
-import { VortexMath } from './vbm-math';
+import { PI, cos, max, pow, sin } from './0/algebra.ts'
+import { VortexMath } from './vbm-math.ts';
 
 export class AdvancedVBM {
 
@@ -46,12 +47,12 @@ export class AdvancedVBM {
         digitalRoot: number
     } {
         const dr = VortexMath.digitalRoot(number);
-        const theta = (dr * 2 * Math.PI) / 9; // Angular position around the torus
+        const theta = (dr * 2 * PI) / 9; // Angular position around the torus
         const phi = 0; // For simplicity, we'll place on the major circle
         
-        const x = (majorRadius + minorRadius * Math.cos(phi)) * Math.cos(theta);
-        const y = (majorRadius + minorRadius * Math.cos(phi)) * Math.sin(theta);
-        const z = minorRadius * Math.sin(phi);
+        const x = (majorRadius + minorRadius * cos(phi)) * cos(theta);
+        const y = (majorRadius + minorRadius * cos(phi)) * sin(theta);
+        const z = minorRadius * sin(phi);
         
         return { x, y, z, theta, phi, digitalRoot: dr };
     }
@@ -204,7 +205,7 @@ export class AdvancedVBM {
     }> {
         const tree = [];
         for (let i = 0; i < levels; i++) {
-            const value = Math.pow(2, i);
+            const value = pow(2, i);
             tree.push({
                 level: i,
                 value,
@@ -478,7 +479,7 @@ export class VBMPatternAnalyzer {
             const family = VortexMath.getNumberFamily(dr);
             familyCounts[family]++;
         });
-        const dominantFamily = familyCounts.indexOf(Math.max(...familyCounts.slice(1)));
+        const dominantFamily = familyCounts.indexOf(max(...familyCounts.slice(1)));
         
         // Find period length
         const periodicLength = this.findPeriodLength(drSequence);
@@ -522,4 +523,4 @@ export class VBMPatternAnalyzer {
 }
 
 // Export all classes for use
-export { VortexMath } from './vbm-math';
+export { VortexMath } from './vbm-math.ts';

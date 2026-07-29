@@ -1,7 +1,8 @@
+import { min, round } from './a432.algebra.ts'
 // a432.command.cmyk.ts
 // Every command is the matrix itself (CMYK): issuing a command is a living act of mixing the matrix channels
 
-import { metaphysicalSummary as chainMeta } from './a432.chain.of.events';
+import { metaphysicalSummary as chainMeta } from './a432.chain.of.events.ts';
 
 export interface A432CommandCMYK {
   c: number; // Cyan channel (clarity, logic)
@@ -15,10 +16,10 @@ export interface A432CommandCMYK {
 export function cmykToRgb(c: number, m: number, y: number, k: number): { r: number; g: number; b: number } {
   // All values 0-9, scale to 0-1
   const C = c / 9, M = m / 9, Y = y / 9, K = k / 9;
-  const r = 1 - Math.min(1, C + K);
-  const g = 1 - Math.min(1, M + K);
-  const b = 1 - Math.min(1, Y + K);
-  return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
+  const r = 1 - min(1, C + K);
+  const g = 1 - min(1, M + K);
+  const b = 1 - min(1, Y + K);
+  return { r: round(r * 255), g: round(g * 255), b: round(b * 255) };
 }
 
 export function executeCommandCMYK(cmd: A432CommandCMYK): { color: { r: number; g: number; b: number }, summary: string } {

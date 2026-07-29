@@ -6,8 +6,9 @@
  * Zero entropy: define once, harmonize everywhere.
  */
 
-import { A432CoreState, createA432CoreState } from './a432.core';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
+import { abs, floor, max } from './a432.algebra.ts'
+import { A432CoreState, createA432CoreState } from './a432.core.ts';
+import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
 
 // === INTEGRATION INTERFACES ===
 export interface A432IntegrationState {
@@ -59,9 +60,9 @@ export interface MetaIntegration {
 
 // === CORE INTEGRATION FUNCTIONS ===
 export function createChallengeSolutionIntegration(challenges: number = 5, solutions: number = 5): ChallengeSolutionIntegration {
-  const integration = Math.floor((challenges + solutions) / 2);
-  const balance = Math.max(0, 9 - Math.abs(challenges - solutions));
-  const harmony = Math.floor((integration + balance) / 2);
+  const integration = floor((challenges + solutions) / 2);
+  const balance = max(0, 9 - abs(challenges - solutions));
+  const harmony = floor((integration + balance) / 2);
   const color = `hsl(${harmony * 40}, 70%, ${50 + balance * 5}%)`;
   const frequency = 432 * (harmony / 9);
   
@@ -69,9 +70,9 @@ export function createChallengeSolutionIntegration(challenges: number = 5, solut
 }
 
 export function createStateTransformation(from: number = 3, to: number = 7): StateTransformation {
-  const transformation = Math.floor((from + to) / 2);
-  const stability = Math.max(0, 9 - Math.abs(transformation - 5));
-  const coherence = Math.floor((transformation + stability) / 2);
+  const transformation = floor((from + to) / 2);
+  const stability = max(0, 9 - abs(transformation - 5));
+  const coherence = floor((transformation + stability) / 2);
   const color = `hsl(${transformation * 40}, 70%, ${50 + coherence * 5}%)`;
   const frequency = 432 * (coherence / 9);
   
@@ -79,8 +80,8 @@ export function createStateTransformation(from: number = 3, to: number = 7): Sta
 }
 
 export function createCrossHarmony(primary: number = 4, secondary: number = 3, tertiary: number = 2): CrossHarmony {
-  const integration = Math.floor((primary + secondary + tertiary) / 3);
-  const balance = Math.max(0, 9 - Math.abs(integration - 5));
+  const integration = floor((primary + secondary + tertiary) / 3);
+  const balance = max(0, 9 - abs(integration - 5));
   const color = `hsl(${integration * 40}, 70%, ${50 + balance * 5}%)`;
   const frequency = 432 * (integration / 9);
   
@@ -88,9 +89,9 @@ export function createCrossHarmony(primary: number = 4, secondary: number = 3, t
 }
 
 export function createMetaIntegration(modules: number = 8, categories: number = 8): MetaIntegration {
-  const integration = Math.floor((modules + categories) / 2);
-  const harmony = Math.max(0, 9 - Math.abs(integration - 5));
-  const unity = Math.floor((integration + harmony) / 2);
+  const integration = floor((modules + categories) / 2);
+  const harmony = max(0, 9 - abs(integration - 5));
+  const unity = floor((integration + harmony) / 2);
   const color = `hsl(${unity * 40}, 70%, ${50 + harmony * 5}%)`;
   const frequency = 432 * (unity / 9);
   

@@ -1,9 +1,9 @@
 // a432.formulas.ts — Interactive formula panel in browser
 //--------------------------------------------------------
-import { bus } from './a432.bus';
-import { rodinDigit, digitalRoot, angleForDigit } from './a432.math';
-import { emotionName } from './a432.emotion';
-import { Digit } from './a432.types';
+import { bus } from './a432.bus.ts';
+import { rodinDigit, digitalRoot, angleForDigit } from './a432.math.ts';
+import { emotionName } from './a432.emotion.ts';
+import { Digit } from './a432.types.ts';
 
 function ensurePanel(): HTMLElement | null {
   if (typeof document === 'undefined') return null;

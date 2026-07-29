@@ -2,7 +2,7 @@
 // Harmonizes Human Design knowledge as module trinities in the a432 system
 // Each HD component (center, gate, channel, type, authority, profile) is a trinity, harmonized mathematically and metaphysically
 
-import { metaphysicalSummary as chainMeta } from './a432.chain.of.events';
+import { metaphysicalSummary as chainMeta } from './a432.chain.of.events.ts';
 
 export interface HDTrinity {
   conscious: number;   // conscious design (integer/fractional)

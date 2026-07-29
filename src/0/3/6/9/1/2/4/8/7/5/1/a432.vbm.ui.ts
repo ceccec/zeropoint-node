@@ -1,11 +1,12 @@
-import { VBM_DOUBLING, VBM_TESLA_FREQUENCIES, sequenceToAngles, VBM_SHOCK_WAVE } from './a432.vbm.math';
-import { digitAngleToCMYK, cmykToCss } from './a432.cmyk';
+import { PI, abs, cos, floor, sin } from './a432.algebra.ts'
+import { VBM_DOUBLING, VBM_TESLA_FREQUENCIES, sequenceToAngles, VBM_SHOCK_WAVE } from './a432.vbm.math.ts';
+import { digitAngleToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 /** Simple Vector3 type (avoid Three.js dependency in math layer) */
 export interface Vec3 { x: number; y: number; z: number; }
 
 // local digital-root helper (avoid extra import)
-function dr(n: number): number { let x=Math.abs(n); while(x>=10) x=String(x).split('').reduce((a,c)=>a+Number(c),0); return x; }
+function dr(n: number): number { let x=abs(n); while(x>=10) x=String(x).split('').reduce((a,c)=>a+Number(c),0); return x; }
 
 // ——————————————————————————————————————————
 // Rodin coil path generator (poloidal helix)
@@ -15,12 +16,12 @@ export function generateRodinCoilPath(cycles: number, stepHeight = 1, radius = 1
   for (let c = 0; c < cycles; c++) seq.push(...VBM_DOUBLING);
   const verts: Vec3[] = [];
   seq.forEach((digit, i) => {
-    const angle = sequenceToAngles([digit])[0] * (Math.PI / 180);
+    const angle = sequenceToAngles([digit])[0] * (PI / 180);
     const r = radius * (dr(digit) / 9);
     verts.push({
-      x: r * Math.cos(angle),
+      x: r * cos(angle),
       y: i * stepHeight,
-      z: r * Math.sin(angle)
+      z: r * sin(angle)
     });
   });
   return verts;
@@ -58,6 +59,6 @@ export function shockWaveValues(length: number): number[] {
 // Tesla frequency helper
 // ---------------------------------------------------------
 export function getTeslaFrequency(timeMs: number): number {
-  const idx = Math.floor(timeMs / 1000) % VBM_TESLA_FREQUENCIES.length;
+  const idx = floor(timeMs / 1000) % VBM_TESLA_FREQUENCIES.length;
   return VBM_TESLA_FREQUENCIES[idx];
 } 

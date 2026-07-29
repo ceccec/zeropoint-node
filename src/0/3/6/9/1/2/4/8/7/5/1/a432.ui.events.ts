@@ -1,6 +1,6 @@
 // a432.ui.events.ts — DRY event handler registry for A432 UI
-import { recordEvent } from './a432.block.chain.event';
-import { A432BlockChain } from './a432.block.chain.event';
+import { recordEvent } from './a432.block.chain.event.ts';
+import { A432BlockChain } from './a432.block.chain.event.ts';
 
 export function registerUIEvent({ emitter, event, handler, blockchainType, agent }: {
   emitter: { on(event: string, handler: (ev: unknown) => void): void };

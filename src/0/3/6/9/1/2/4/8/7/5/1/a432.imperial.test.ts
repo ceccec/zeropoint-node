@@ -26,9 +26,9 @@ import {
   a432ImperialExamples,
   A432ImperialState,
   A432ImperialHarmony
-} from './a432.imperial';
+} from './a432.imperial.ts';
 
-import { digitalRoot } from './a432.core';
+import { digitalRoot } from './a432.core.ts';
 
 describe('A432 Imperial System - Zero Entropy Tests', () => {
   

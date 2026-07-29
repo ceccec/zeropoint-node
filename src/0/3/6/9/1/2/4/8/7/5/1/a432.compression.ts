@@ -7,6 +7,7 @@
  * Provides metaphysical and mathematical documentation.
  */
 
+import { round } from './a432.algebra.ts'
 export interface CompressionState {
   input: number[]; // Array of values to compress (0-9)
   compressionRatio: number; // 0-1 (1 = no compression, 0 = max compression)
@@ -17,10 +18,10 @@ export interface CompressionState {
 }
 
 function toHarmonic(ratio: number): number {
-  return Math.round(432 * (1 + ratio));
+  return round(432 * (1 + ratio));
 }
 function toCMYK(ratio: number, channel: number): number {
-  return Math.round(ratio * 100);
+  return round(ratio * 100);
 }
 function getFlow(seed: number): number[] {
   const base = [1, 2, 4, 8, 7, 5];
@@ -41,7 +42,7 @@ export function compress(input: number[]): CompressionState {
       y: toCMYK(ratio, 2),
       k: toCMYK(ratio, 3)
     },
-    flow: getFlow(Math.round(ratio * 9)),
+    flow: getFlow(round(ratio * 9)),
     description: `Compression of [${input.join(', ')}] yields ratio ${ratio.toFixed(2)}, harmonic ${toHarmonic(ratio)} Hz.`
   };
 }

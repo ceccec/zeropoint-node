@@ -14,7 +14,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { cmykFilename, isCmykFilename } from './a432.cmyk.extension';
+import { cmykFilename, isCmykFilename } from './a432.cmyk.extension.ts';
 
 /**
  * List all folders in a directory (recursively)

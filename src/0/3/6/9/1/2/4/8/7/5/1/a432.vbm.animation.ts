@@ -10,6 +10,7 @@
  * - The torus represents the field of consciousness, with points as living thoughts
  */
 
+import { PI, cos, sin } from './a432.algebra.ts'
 import * as THREE from 'three';
 import { 
   RODIN_SEQUENCE, 
@@ -18,7 +19,7 @@ import {
   angleForDigit,
   frequencyForDigit,
   hueForDigit 
-} from './a432.math';
+} from './a432.math.ts';
 
 // --- Canonical VBM Animation Constants ---
 const VBM_SEQUENCE = [0, ...TRINITY_AXIS, ...RODIN_SEQUENCE] as const;
@@ -120,16 +121,16 @@ function calculateVBMPosition(
   const { digit, index } = point;
   
   // Phase around torus main circle (60° per step)
-  const theta = index * (VBM_STEP_ANGLE * Math.PI / 180) + time;
+  const theta = index * (VBM_STEP_ANGLE * PI / 180) + time;
   
   // Digital root drives minor circle
   const dr = digitalRoot(digit);
-  const phi = (dr / 9) * Math.PI * 2 + time * 1.3;
+  const phi = (dr / 9) * PI * 2 + time * 1.3;
   
   // Torus parametric coordinates
-  const x = (VBM_TORUS_RADIUS + VBM_TUBE_RADIUS * Math.cos(phi)) * Math.cos(theta);
-  const y = VBM_TUBE_RADIUS * Math.sin(phi) * 0.7; // Squeeze factor
-  const z = (VBM_TORUS_RADIUS + VBM_TUBE_RADIUS * Math.cos(phi)) * Math.sin(theta);
+  const x = (VBM_TORUS_RADIUS + VBM_TUBE_RADIUS * cos(phi)) * cos(theta);
+  const y = VBM_TUBE_RADIUS * sin(phi) * 0.7; // Squeeze factor
+  const z = (VBM_TORUS_RADIUS + VBM_TUBE_RADIUS * cos(phi)) * sin(theta);
   
   return new THREE.Vector3(x, y, z);
 }
@@ -138,7 +139,7 @@ function calculateVBMPosition(
 function calculateVBMScale(point: VBMAnimationPoint, time: number): number {
   const { digit, index } = point;
   const parity = digit % 2; // Even/odd determines pulsation phase
-  return 1 + 0.3 * Math.sin(time * 2 + index + parity * Math.PI);
+  return 1 + 0.3 * sin(time * 2 + index + parity * PI);
 }
 
 // --- VBM Animation Update ---
@@ -155,7 +156,7 @@ function updateVBMAnimation(state: VBMAnimationState): void {
     point.mesh.scale.set(scale, scale, scale);
     
     // Update color intensity based on frequency
-    const intensity = 0.5 + 0.3 * Math.sin(time * point.frequency / 100);
+    const intensity = 0.5 + 0.3 * sin(time * point.frequency / 100);
     (point.mesh.material as THREE.MeshPhongMaterial).color.setHSL(
       point.color.getHSL({ h: 0, s: 0, l: 0 }).h,
       0.7,

@@ -6,9 +6,10 @@
  * Zero entropy: define once, harmonize everywhere.
  */
 
-import { A432CoreState, createA432CoreState } from './a432.core';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules';
-import { A432_FREQUENCY } from './a432';
+import { abs, floor, max } from './a432.algebra.ts'
+import { A432CoreState, createA432CoreState } from './a432.core.ts';
+import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
+import { A432_FREQUENCY } from './a432.ts';
 
 // === FLOW INTERFACES ===
 export interface A432FlowState {
@@ -60,10 +61,10 @@ export interface FlowHarmony {
 
 // === CORE FLOW FUNCTIONS ===
 export function createConsciousnessFlow(awareness: number = 5): ConsciousnessFlow {
-  const clarity = Math.max(0, 9 - Math.abs(awareness - 5));
-  const focus = Math.floor((awareness + clarity) / 2);
-  const flow = Math.max(0, 9 - Math.abs(focus - 5));
-  const resonance = Math.floor((awareness + clarity + focus + flow) / 4);
+  const clarity = max(0, 9 - abs(awareness - 5));
+  const focus = floor((awareness + clarity) / 2);
+  const flow = max(0, 9 - abs(focus - 5));
+  const resonance = floor((awareness + clarity + focus + flow) / 4);
   const color = `hsl(${awareness * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -71,10 +72,10 @@ export function createConsciousnessFlow(awareness: number = 5): ConsciousnessFlo
 }
 
 export function createEnergyFlow(vitality: number = 5): EnergyFlow {
-  const intensity = Math.max(0, 9 - Math.abs(vitality - 5));
-  const direction = Math.floor((vitality + intensity) / 2);
-  const balance = Math.max(0, 9 - Math.abs(direction - 5));
-  const resonance = Math.floor((vitality + intensity + direction + balance) / 4);
+  const intensity = max(0, 9 - abs(vitality - 5));
+  const direction = floor((vitality + intensity) / 2);
+  const balance = max(0, 9 - abs(direction - 5));
+  const resonance = floor((vitality + intensity + direction + balance) / 4);
   const color = `hsl(${vitality * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -82,10 +83,10 @@ export function createEnergyFlow(vitality: number = 5): EnergyFlow {
 }
 
 export function createStreamFlow(velocity: number = 5): StreamFlow {
-  const volume = Math.max(0, 9 - Math.abs(velocity - 5));
-  const coherence = Math.floor((velocity + volume) / 2);
-  const harmony = Math.max(0, 9 - Math.abs(coherence - 5));
-  const resonance = Math.floor((velocity + volume + coherence + harmony) / 4);
+  const volume = max(0, 9 - abs(velocity - 5));
+  const coherence = floor((velocity + volume) / 2);
+  const harmony = max(0, 9 - abs(coherence - 5));
+  const resonance = floor((velocity + volume + coherence + harmony) / 4);
   const color = `hsl(${velocity * 40}, 70%, ${50 + resonance * 5}%)`;
   const frequency = 432 * (resonance / 9);
   
@@ -93,8 +94,8 @@ export function createStreamFlow(velocity: number = 5): StreamFlow {
 }
 
 export function createFlowHarmony(consciousness: number = 5, energy: number = 5, stream: number = 5): FlowHarmony {
-  const overall = Math.floor((consciousness + energy + stream) / 3);
-  const balance = Math.max(0, 9 - Math.abs(overall - 5));
+  const overall = floor((consciousness + energy + stream) / 3);
+  const balance = max(0, 9 - abs(overall - 5));
   const color = `hsl(${overall * 40}, 70%, ${50 + balance * 5}%)`;
   const frequency = 432 * (overall / 9);
   

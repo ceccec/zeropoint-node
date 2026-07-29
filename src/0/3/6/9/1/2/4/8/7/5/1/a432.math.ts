@@ -6,6 +6,7 @@
  * every computation references a single, zero-entropy source.
  */
 
+import { abs, max, min, round } from './a432.algebra.ts'
 // Zero-Entropy Harmonic Constants (Base-12 Imperial System)
 // ---------------------------------------------------------
 // These constants follow the imperial system's base-12 harmonic principles
@@ -54,12 +55,28 @@ export function* a432SequenceStream(): IterableIterator<number> {
 }
 
 // Unified import of branded numeric helpers and mappings from a432.types
-import type { Digit, Hz, AngleDeg } from './a432.types';
-import { asDigit, asHz, asAngle, toImperial, toTrinity, METRIC_VORTEX, TRINITY_MAP } from './a432.types';
-import { A432_DIGIT_MEANINGS } from './a432.core';
+import type { Digit, Hz, AngleDeg } from './a432.types.ts';
+import { asDigit, asHz, asAngle, toImperial, toTrinity, METRIC_VORTEX, TRINITY_MAP } from './a432.types.ts';
+import { harmonicRoot12, legacyDigitalRoot } from './a432.roots.ts';
 
-// Re-export so external modules keep same API surface
-export { Digit, Hz, AngleDeg, asDigit, asHz, asAngle };
+// Re-export so external modules keep same API surface (types vs values split for strip-types)
+export type { Digit, Hz, AngleDeg };
+export { asDigit, asHz, asAngle };
+
+/** Digit archetypes — live in math so core can re-export without math→core cycle. */
+export const A432_DIGIT_MEANINGS = [
+  { name: 'Void', description: 'The field, the unmanifest, pure potential; the source and destination of all cycles, the space in which all digits arise and return.' },
+  { name: 'Unity', description: 'Origin, source, singularity, beginning; the point of all creation and the seed of the matrix.' },
+  { name: 'Duality', description: 'Polarity, relationship, balance, reflection; the field of interaction and the principle of complementarity.' },
+  { name: 'Trinity', description: 'Synthesis, creation, harmony, flow; the generative principle, the creative process, and the harmonic seed.' },
+  { name: 'Foundation', description: 'Structure, stability, manifestation; the base of all form, the ground of being, and the matrix of reality.' },
+  { name: 'Life', description: 'Change, movement, growth, transformation; the living flow, evolution, and the pulse of the system.' },
+  { name: 'Harmony', description: 'Integration, resonance, beauty, equilibrium; the state of balance, the field of resonance, and the principle of unity in diversity.' },
+  { name: 'Mystery', description: 'Depth, intuition, inner knowing, inversion; the hidden, the unknown, the gateway to transformation and the anti-harmonic.' },
+  { name: 'Infinity', description: 'Power, expansion, infinite flow, recursion; the endless, the self-similar, the principle of recursion and the infinite loop.' },
+  { name: 'Completion', description: 'Fulfillment, wholeness, return, zero entropy; the end and the beginning, the return to source, and the closure of the cycle.' }
+];
+
 
 // DRY utility: XOR three digits, returning a Digit (never zero)
 export function xorDigit(a: Digit, b: Digit, c: Digit): Digit {
@@ -68,29 +85,17 @@ export function xorDigit(a: Digit, b: Digit, c: Digit): Digit {
 }
 
 // ——————————————————————————————————————————
-// 1. Zero-Entropy Digital Root (Base-12 Harmonic)
+// Digital root spines (Wave 14 purge — no name illusions)
 // ---------------------------------------------------------
-// Following imperial system principles: exact fractions, minimal entropy
-// Base-12 creates exact fractions: 1/2=0.6, 1/3=0.4, 1/4=0.3, 1/6=0.2
+// digitalRoot / calculateDigitalRoot → legacyDigitalRoot (0→0, classic 1–9)
+// harmonicRoot12 → base-12 residue (returns 1–12) — use ONLY when 1–12 is required
+// kernel digitalRoot(0)→9 lives in src/0 / a432.roots as kernelDigitalRoot
 
-export function digitalRoot(n: number): number {
-  if (n === 0) return 0;
-  // Use base-12 harmonic reduction (12-based digital root)
-  const r = n % 12;
-  return r === 0 ? 12 : r;
-}
-
-/**
- * calculateDigitalRoot: Returns the zero-entropy digital root using base-12 harmonics.
- * Metaphysical: Reduces any value to its core harmonic state with minimal entropy.
- * Base-12 creates exact fractions, eliminating computational waste.
- */
-export function calculateDigitalRoot(n: number): number {
-  if (n === 0) return 0;
-  // Base-12 harmonic reduction for zero entropy
-  const r = n % 12;
-  return r === 0 ? 12 : r;
-}
+export {
+  harmonicRoot12,
+  legacyDigitalRoot as digitalRoot,
+  legacyDigitalRoot as calculateDigitalRoot,
+};
 
 /**
  * calculateA432Consciousness: Maps frequency to consciousness using base-12 harmonics.
@@ -98,10 +103,9 @@ export function calculateDigitalRoot(n: number): number {
  * Uses base-12 digital root for exact fractional relationships.
  */
 export function calculateA432Consciousness(frequency: number): number {
-  // Map frequency to 1-12 using base-12 harmonic digital root
-  const dr = calculateDigitalRoot(Math.round(frequency));
-  // Clamp to 1-12 range for consciousness states
-  return Math.max(1, Math.min(12, dr));
+  // Map frequency to 1-12 using base-12 harmonic root (not classic digitalRoot)
+  const dr = harmonicRoot12(round(frequency));
+  return max(1, min(12, dr));
 }
 
 /**
@@ -111,7 +115,7 @@ export function calculateA432Consciousness(frequency: number): number {
  */
 export function calculateA432DimensionalState(frequency: number): number {
   // Map frequency to 0-11 using base-12 harmonics
-  return Math.abs(Math.round(frequency)) % 12;
+  return abs(round(frequency)) % 12;
 }
 
 /**
@@ -201,7 +205,7 @@ export function frequencyForDigit(d: number): number {
 
 /** Hue (0-360°) before CMYK conversion. */
 export function hueForDigit(d: number): number {
-  return (Math.abs(d) * 36) % 360;
+  return (abs(d) * 36) % 360;
 }
 
 // Convenience helpers ------------------------------------------------------
@@ -298,7 +302,7 @@ export function rodinPolarity(k: number): number {
 // ——————————————————————————————————————————
 // 9. CMYK mapping re-exports (color = math)
 // ---------------------------------------------------------
-export type { Fraction as CMYK_Fraction, CMYK } from './a432.cmyk';
+export type { Fraction as CMYK_Fraction, CMYK } from './a432.cmyk.ts';
 export {
   digitAngleToCMYK,
   fractionToCMYK,
@@ -308,7 +312,7 @@ export {
   rgbToHex,
   CMYK_COLORS,
   CMYK_FREQUENCIES
-} from './a432.cmyk'; 
+} from './a432.cmyk.ts'; 
 
 // ——————————————————————————————————————————
 // 10. Rodin Coil Harmonic Switch Functions
@@ -430,7 +434,7 @@ export function kineticShockWaveOfNine(length: number): number[] {
 // ---------------------------------------------------------
 /** Returns the digit string mirrored around its center (pad with 0). */
 export function mirrorBaseTen(num: number): number {
-  const s = String(Math.abs(num));
+  const s = String(abs(num));
   const rev = s.split('').reverse().join('');
   return Number(s + rev);
 } 

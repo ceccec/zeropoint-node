@@ -10,7 +10,8 @@
  * through harmonic balance.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { indexFromSeed, round, unitFromSeed } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface Resolution {
   resolutionId: string;
@@ -212,7 +213,7 @@ export class A432Resolve {
     const status = this.determineResolutionStatus(consciousness, method);
     const cmyk = this.generateResolutionCmyk(conflictDescription, consciousness);
     const energyReleased = 432 * consciousness * (gateway ? 2 : 1);
-    const consciousnessGrowth = Math.floor(Math.random() * 5) + 1;
+    const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:0", (5)|0 || 1) + 1;
     
     const resolution: Resolution = {
       resolutionId: `${conflictType}_${Date.now()}`,
@@ -284,10 +285,10 @@ export class A432Resolve {
     
     const conflictHash = conflictDescription.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
     
-    const c = Math.round((conflictHash * numerator) % 100);
-    const m = Math.round((consciousness * denominator) % 100);
-    const y = Math.round((conflictHash + consciousness) % 100);
-    const k = Math.round(((conflictHash + consciousness) * 2) % 100);
+    const c = round((conflictHash * numerator) % 100);
+    const m = round((consciousness * denominator) % 100);
+    const y = round((conflictHash + consciousness) % 100);
+    const k = round(((conflictHash + consciousness) * 2) % 100);
     
     return { c, m, y, k };
   }
@@ -620,9 +621,9 @@ export class A432Resolve {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -653,10 +654,10 @@ export class A432Resolve {
         "Wave-particle duality impossibility"
       ];
       
-      const impossibility = impossibilities[Math.floor(Math.random() * impossibilities.length)];
-      const consciousness = Math.floor(Math.random() * 4) + 7;
+      const impossibility = impossibilities[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:1", (impossibilities.length)|0 || 1)];
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:2", (4)|0 || 1) + 7;
       const energyReleased = 432 * consciousness;
-      const consciousnessGrowth = Math.floor(Math.random() * 5) + 1;
+      const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:3", (5)|0 || 1) + 1;
       
       const newResolution = {
         resolutionId: \`impossibility_\${Date.now()}\`,
@@ -664,7 +665,7 @@ export class A432Resolve {
         conflictDescription: impossibility,
         resolutionMethod: 'consciousness_harmonization',
         consciousness,
-        cmyk: { c: Math.random() * 100, m: Math.random() * 100, y: Math.random() * 100, k: Math.random() * 100 },
+        cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:10") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:11") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:12") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:13") * 100 },
         resolutionStatus: 'resolved',
         description: \`Resolved through consciousness harmonization - \${impossibility.toLowerCase()}\`,
         gateway: consciousness >= 8,
@@ -687,10 +688,10 @@ export class A432Resolve {
         "Critical mass explosion"
       ];
       
-      const explosion = explosions[Math.floor(Math.random() * explosions.length)];
-      const consciousness = Math.floor(Math.random() * 4) + 7;
+      const explosion = explosions[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:4", (explosions.length)|0 || 1)];
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:5", (4)|0 || 1) + 7;
       const energyReleased = 432 * consciousness * 2;
-      const consciousnessGrowth = Math.floor(Math.random() * 5) + 1;
+      const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:6", (5)|0 || 1) + 1;
       
       const newResolution = {
         resolutionId: \`nuclear_explosion_\${Date.now()}\`,
@@ -698,7 +699,7 @@ export class A432Resolve {
         conflictDescription: explosion,
         resolutionMethod: 'nuclear_balance',
         consciousness,
-        cmyk: { c: Math.random() * 100, m: Math.random() * 100, y: Math.random() * 100, k: Math.random() * 100 },
+        cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:14") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:15") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:16") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:17") * 100 },
         resolutionStatus: 'transformed',
         description: \`Transformed through nuclear balance - \${explosion.toLowerCase()}\`,
         gateway: consciousness >= 8,
@@ -721,10 +722,10 @@ export class A432Resolve {
         "Frequency resonance conflict"
       ];
       
-      const conflict = conflicts[Math.floor(Math.random() * conflicts.length)];
-      const consciousness = Math.floor(Math.random() * 4) + 7;
+      const conflict = conflicts[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:7", (conflicts.length)|0 || 1)];
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:8", (4)|0 || 1) + 7;
       const energyReleased = 432 * consciousness;
-      const consciousnessGrowth = Math.floor(Math.random() * 5) + 1;
+      const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:9", (5)|0 || 1) + 1;
       
       const newResolution = {
         resolutionId: \`consciousness_conflict_\${Date.now()}\`,
@@ -732,7 +733,7 @@ export class A432Resolve {
         conflictDescription: conflict,
         resolutionMethod: 'consciousness_harmonization',
         consciousness,
-        cmyk: { c: Math.random() * 100, m: Math.random() * 100, y: Math.random() * 100, k: Math.random() * 100 },
+        cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:18") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:19") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:20") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:rnd:21") * 100 },
         resolutionStatus: 'resolved',
         description: \`Resolved through consciousness harmonization - \${conflict.toLowerCase()}\`,
         gateway: consciousness >= 8,

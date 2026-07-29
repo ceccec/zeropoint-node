@@ -1,5 +1,5 @@
 // a432.i.write.ts — Writing digit streams to console
-import { Digit } from './a432.types';
+import { Digit } from './a432.types.ts';
 import { EventEmitter } from 'events';
 
 export const writeEmitter = new EventEmitter();

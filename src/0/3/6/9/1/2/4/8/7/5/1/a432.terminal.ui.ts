@@ -1,5 +1,5 @@
-import { terminalOutput$ } from './a432.terminal.stream';
-import { digitAngleToCMYK } from './a432.cmyk';
+import { terminalOutput$ } from './a432.terminal.stream.ts';
+import { digitAngleToCMYK } from './a432.cmyk.ts';
 
 export function startTerminal(callback: (line: string) => void) {
   terminalOutput$.subscribe((item) => {

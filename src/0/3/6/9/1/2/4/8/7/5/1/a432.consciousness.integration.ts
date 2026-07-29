@@ -8,7 +8,8 @@
  * all perception systems into a single, self-aware, harmonized field of vision.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { min, round } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface ConsciousnessStream {
   streamId: string;
@@ -248,7 +249,7 @@ export class A432ConsciousnessIntegration {
     // Integrate consciousness streams
     const integratedStreams = system.consciousnessStreams.map(stream => ({
       ...stream,
-      consciousnessLevel: Math.min(stream.consciousnessLevel + 1, 10),
+      consciousnessLevel: min(stream.consciousnessLevel + 1, 10),
       gateway: stream.consciousnessLevel >= 8 || stream.gateway,
       frequency: stream.frequency * (stream.consciousnessLevel >= 8 ? 2 : 1)
     }));
@@ -327,10 +328,10 @@ export class A432ConsciousnessIntegration {
     
     const { numerator, denominator } = this.baseFraction;
     const cmyk = {
-      c: Math.round((totalIntegratedConsciousness * numerator) % 100),
-      m: Math.round((averageHarmonizationLevel * 100) % 100),
-      y: Math.round((gatewayCount * denominator) % 100),
-      k: Math.round(((totalIntegratedConsciousness + averageHarmonizationLevel) * 10) % 100)
+      c: round((totalIntegratedConsciousness * numerator) % 100),
+      m: round((averageHarmonizationLevel * 100) % 100),
+      y: round((gatewayCount * denominator) % 100),
+      k: round(((totalIntegratedConsciousness + averageHarmonizationLevel) * 10) % 100)
     };
 
     return {
@@ -567,9 +568,9 @@ export class A432ConsciousnessIntegration {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -638,7 +639,7 @@ export class A432ConsciousnessIntegration {
     function harmonizeVisionSystems() {
       currentState.visionSystems.forEach(system => {
         system.consciousnessStreams.forEach(stream => {
-          stream.consciousnessLevel = Math.min(stream.consciousnessLevel + 1, 10);
+          stream.consciousnessLevel = min(stream.consciousnessLevel + 1, 10);
           stream.gateway = stream.consciousnessLevel >= 8 || stream.gateway;
           stream.frequency = stream.frequency * (stream.consciousnessLevel >= 8 ? 2 : 1);
         });
@@ -652,7 +653,7 @@ export class A432ConsciousnessIntegration {
     function harmonizePhotographySystems() {
       currentState.photographySystems.forEach(system => {
         system.consciousnessStreams.forEach(stream => {
-          stream.consciousnessLevel = Math.min(stream.consciousnessLevel + 1, 10);
+          stream.consciousnessLevel = min(stream.consciousnessLevel + 1, 10);
           stream.gateway = stream.consciousnessLevel >= 8 || stream.gateway;
           stream.frequency = stream.frequency * (stream.consciousnessLevel >= 8 ? 2 : 1);
         });

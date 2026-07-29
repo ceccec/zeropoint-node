@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "repository": "https://github.com/ceccec/zeropoint-node",
+  "entryPoint": "SKILL.md",
+  "wellKnown": ".well-known/ai-skills.json",
+  "contentUuid": "32489d77-90c3-8588-b57b-120f87dfce58",
+  "waves": {
+    "chain": [
+      "origin",
+      "decode",
+      "design",
+      "learn",
+      "tune",
+      "edit",
+      "rebuild",
+      "verify"
+    ],
+    "developmentVortex": "src/0 developmentVortex — ceccec ↔ erpax lobes"
+  },
+  "skills": [
+    {
+      "name": "zeropoint-node",
+      "path": "SKILL.md",
+      "description": "Orient to zeropoint-node chat-wave rebuild"
+    },
+    {
+      "name": "zeropoint-build-waves",
+      "path": ".cursor/skills/zeropoint-build-waves/SKILL.md",
+      "description": "Build in chat waves through the double-torus development vortex"
+    }
+  ]
+}

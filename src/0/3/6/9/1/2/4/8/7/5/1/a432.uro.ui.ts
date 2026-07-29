@@ -1,7 +1,8 @@
+import { PI } from './a432.algebra.ts'
 // a432.uro.ui.ts — Visual spiral of the uroboros stream
 //-------------------------------------------------------
-import { uroborosEmitter, UroborosEvent } from './a432.uroboros';
-import { cmykToCss } from './a432.cmyk';
+import { uroborosEmitter, UroborosEvent } from './a432.uroboros.ts';
+import { cmykToCss } from './a432.cmyk.ts';
 
 if (typeof document !== 'undefined') {
   // create canvas
@@ -22,7 +23,7 @@ if (typeof document !== 'undefined') {
   function draw() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     const radius = 60;
-    const seg = (Math.PI*2)/MAX;
+    const seg = (PI*2)/MAX;
     digits.forEach((e,i)=>{
       ctx.beginPath();
       ctx.moveTo(canvas.width/2, canvas.height/2);
@@ -35,7 +36,7 @@ if (typeof document !== 'undefined') {
 
   uroborosEmitter.on('uro', (e: UroborosEvent)=>{
     digits.push(e); if(digits.length>MAX) digits.shift();
-    rotation -= (Math.PI*2)/MAX; // rotate one segment per update
+    rotation -= (PI*2)/MAX; // rotate one segment per update
     draw();
   });
 } 

@@ -1,19 +1,20 @@
+import { abs, round } from './a432.algebra.ts'
 // a432.i.tap.ts — Touch/tap interaction as digit stream
 // ------------------------------------------------------
 // Converts a tap (x,y,pressure) into a single Digit via digitalRoot and emits
 // a CMYK-coloured event usable by the matrix.
 
 import { EventEmitter } from 'events';
-import { digitalRoot, digitAngleToCMYK, asAngle } from './a432.math';
-import type { CMYK } from './a432.cmyk';
-import { Digit } from './a432.types';
+import { digitalRoot, digitAngleToCMYK, asAngle } from './a432.math.ts';
+import type { CMYK } from './a432.cmyk.ts';
+import { Digit } from './a432.types.ts';
 
 export interface TapEvent { x: number; y: number; pressure: number; digit: Digit; cmyk: CMYK }
 
 export const tapEmitter = new EventEmitter();
 
 export function tap(x: number, y: number, pressure: number = 1): void {
-  const seed = Math.round(Math.abs(x) + Math.abs(y) + pressure * 10);
+  const seed = round(abs(x) + abs(y) + pressure * 10);
   const d = (digitalRoot(seed) || 9) as Digit;
   const cmyk = digitAngleToCMYK(d, asAngle(d * 60));
   tapEmitter.emit('tap', { x, y, pressure, digit: d, cmyk } as TapEvent);

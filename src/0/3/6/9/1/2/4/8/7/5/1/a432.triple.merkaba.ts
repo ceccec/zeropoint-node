@@ -18,8 +18,8 @@ import {
   angleForDigit,
   frequencyForDigit,
   hueForDigit
-} from './a432.math';
-import { digitAngleToCMYK, cmykToCss } from './a432.cmyk';
+} from './a432.math.ts';
+import { digitAngleToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 // Triple Merkaba Geometry Constants
 export const TRIPLE_MERKABA_CONSTANTS = {

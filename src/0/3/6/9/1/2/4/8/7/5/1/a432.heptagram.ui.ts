@@ -1,14 +1,15 @@
+import { PI, cos, sin } from './a432.algebra.ts'
 // a432.heptagram.ui.ts — 7-point star overlay synced with the uroboros
 //--------------------------------------------------------------------------
-import { uroborosEmitter, UroborosEvent } from './a432.uroboros';
-import { cmykToCss } from './a432.cmyk';
-import { digitAngleToCMYK, asAngle } from './a432.math';
-import { Digit } from './a432.types';
+import { uroborosEmitter, UroborosEvent } from './a432.uroboros.ts';
+import { cmykToCss } from './a432.cmyk.ts';
+import { digitAngleToCMYK, asAngle } from './a432.math.ts';
+import { Digit } from './a432.types.ts';
 
 // Rodin sequence (length 7 without trailing 1 duplicate)
 const RODIN: Digit[] = [1, 2, 4, 8, 7, 5, 1];
 const JUMP = 2; // {7/2} heptagram
-const SEG = (Math.PI * 2) / 7;
+const SEG = (PI * 2) / 7;
 
 if (typeof document !== 'undefined') {
   const canvas = document.createElement('canvas');
@@ -30,8 +31,8 @@ if (typeof document !== 'undefined') {
     const pts: Array<{x:number,y:number,digit:Digit}> = [];
     for (let i = 0; i < 7; i++) {
       const angle = rotation + i * JUMP * SEG;
-      const x = cx + r * Math.cos(angle);
-      const y = cy + r * Math.sin(angle);
+      const x = cx + r * cos(angle);
+      const y = cy + r * sin(angle);
       pts.push({ x, y, digit: RODIN[i] });
     }
     // Draw segments

@@ -14,9 +14,10 @@
  * @author A432 System
  */
 
-import { Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk';
-import { getVortexColor, hslToRgb } from './a432.color';
-import { A432_SEQUENCE, digitalRoot, getDigitMeaning } from './a432.math';
+import { abs } from './a432.algebra.ts'
+import { Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
+import { getVortexColor, hslToRgb } from './a432.color.ts';
+import { A432_SEQUENCE, digitalRoot, getDigitMeaning } from './a432.math.ts';
 
 // Living harmonic approximations of Pi (recursive, analog, all as fractions)
 export const LIVING_PI_FRACTIONS: Fraction[] = [
@@ -89,13 +90,13 @@ export function getLivingPiOverlayData(steps: number = 10): Array<{
 
 export function piStream(length: number = 32): number[] {
   // Return a stream of digital roots of Pi fractions
-  return generateLivingPiStream(length).map(frac => Math.abs(frac.numerator) % 9 || 9);
+  return generateLivingPiStream(length).map(frac => abs(frac.numerator) % 9 || 9);
 }
 
 export function piColorStream(length: number = 32): { r: number; g: number; b: number }[] {
   // Return a stream of RGB colors for Pi fractions
   return generateLivingPiStream(length).map(frac => {
-    const digit = Math.abs(frac.numerator) % 9 || 9;
+    const digit = abs(frac.numerator) % 9 || 9;
     const hslStr = getVortexColor(digit);
     const [h, s, l] = hslStr.match(/\d+/g)!.map(Number);
     return hslToRgb(h, s, l);
@@ -104,5 +105,5 @@ export function piColorStream(length: number = 32): { r: number; g: number; b: n
 
 export function piHarmonicStream(length: number = 32): number[] {
   // Return a stream of harmonic frequencies for Pi fractions
-  return generateLivingPiStream(length).map(frac => 432 * ((Math.abs(frac.numerator) % 9 || 9) / 9));
+  return generateLivingPiStream(length).map(frac => 432 * ((abs(frac.numerator) % 9 || 9) / 9));
 } 

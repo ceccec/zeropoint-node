@@ -1,5 +1,6 @@
+import { log } from './a432.algebra.ts'
 import { Controller } from '@hotwired/stimulus';
-import { startTerminal } from './a432.terminal.ui';
+import { startTerminal } from './a432.terminal.ui.ts';
 
 export default class extends Controller {
   static targets = ["out"];

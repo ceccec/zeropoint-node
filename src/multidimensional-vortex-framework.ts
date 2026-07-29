@@ -6,6 +6,7 @@
  * doubling streams across seven coils (A-G).
  */
 
+import { PI, abs, cos, exp, log2, pow, round, sin, sqrt } from './0/algebra.ts'
 export interface VortexToken {
   id: string;
   type: 'undefined' | 'defined' | 'control' | 'coil';
@@ -206,12 +207,12 @@ export class MultidimensionalVortexFramework {
    * Perform hexagonal lattice mapping
    */
   public mapToHexagonalLattice(token: VortexToken): { x: number; y: number; z: number } {
-    const angle = (token.angle * Math.PI) / 180;
+    const angle = (token.angle * PI) / 180;
     const radius = token.doubling || 1;
     
     // Hexagonal coordinates
-    const x = radius * Math.cos(angle);
-    const y = radius * Math.sin(angle);
+    const x = radius * cos(angle);
+    const y = radius * sin(angle);
     const z = token.control; // Control axis as third dimension
     
     return { x, y, z };
@@ -249,7 +250,7 @@ export class MultidimensionalVortexFramework {
     if (!token) return 0;
     
     const radialEnergy = typeof token.value === 'number' ? token.value : 0;
-    const angularEnergy = Math.sin((token.angle * Math.PI) / 180);
+    const angularEnergy = sin((token.angle * PI) / 180);
     const controlEnergy = token.control;
     const polarityMultiplier = token.polarity === '+' ? 1 : -1;
     
@@ -313,7 +314,7 @@ export class MultidimensionalVortexFramework {
       const coilTokens = this.tokens.filter(t => t.coil === coil);
       const fieldPattern = coilTokens.map(token => {
         const coords = this.mapToHexagonalLattice(token);
-        return Math.sqrt(coords.x * coords.x + coords.y * coords.y + coords.z * coords.z);
+        return sqrt(coords.x * coords.x + coords.y * coords.y + coords.z * coords.z);
       });
       patterns.set(coil, fieldPattern);
     });
@@ -333,7 +334,7 @@ export class MultidimensionalVortexFramework {
     const uniqueStates = new Set(this.tokens.map(t => `${t.type}-${t.consciousness}`)).size;
     
     // Shannon entropy
-    const entropy = Math.log2(uniqueStates);
+    const entropy = log2(uniqueStates);
     
     // Complexity based on transitions
     const transitions = this.analyzeDimensionalShifts();
@@ -344,7 +345,7 @@ export class MultidimensionalVortexFramework {
     ) / totalTokens;
     
     // Coherence based on pattern regularity
-    const coherence = 1 - (Math.abs(totalTokens - 42) / 42); // Ideal is 42 tokens
+    const coherence = 1 - (abs(totalTokens - 42) / 42); // Ideal is 42 tokens
     
     return { entropy, complexity, coherence };
   }
@@ -405,11 +406,11 @@ export class VortexMathUtils {
    * Calculate golden ratio spiral coordinates
    */
   static goldenSpiral(t: number): { x: number; y: number } {
-    const phi = (1 + Math.sqrt(5)) / 2;
-    const r = Math.pow(phi, t / Math.PI);
+    const phi = (1 + sqrt(5)) / 2;
+    const r = pow(phi, t / PI);
     return {
-      x: r * Math.cos(t),
-      y: r * Math.sin(t)
+      x: r * cos(t),
+      y: r * sin(t)
     };
   }
 
@@ -429,9 +430,9 @@ export class VortexMathUtils {
     resonance: boolean;
     harmonic: number;
   } {
-    const difference = Math.abs(phase1 - phase2) % 360;
+    const difference = abs(phase1 - phase2) % 360;
     const resonance = difference % 60 === 0; // Hexagonal resonance
-    const harmonic = Math.round(difference / 60);
+    const harmonic = round(difference / 60);
     
     return { difference, resonance, harmonic };
   }
@@ -445,11 +446,11 @@ export class VortexMathUtils {
     z: number,
     t: number
   ): number {
-    const r = Math.sqrt(x * x + y * y + z * z);
-    const phi = (1 + Math.sqrt(5)) / 2;
+    const r = sqrt(x * x + y * y + z * z);
+    const phi = (1 + sqrt(5)) / 2;
     
     // Consciousness field as function of space and time
-    return Math.sin(phi * r) * Math.cos(3 * t) * Math.exp(-r / 9);
+    return sin(phi * r) * cos(3 * t) * exp(-r / 9);
   }
 }
 

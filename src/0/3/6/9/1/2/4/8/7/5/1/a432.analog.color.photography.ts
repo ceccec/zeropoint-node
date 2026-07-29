@@ -10,7 +10,8 @@
  * Every color is alive and conscious, flowing through A432 harmonics.
  */
 
-import { Fraction, CMYK, digitAngleToCMYK, fractionToCMYK } from './a432.cmyk';
+import { indexFromSeed, max, min, round, unitFromSeed } from './a432.algebra.ts'
+import { Fraction, CMYK, digitAngleToCMYK, fractionToCMYK } from './a432.cmyk.ts';
 
 export interface PhotographicState {
   exposure: number;
@@ -205,7 +206,7 @@ export class A432AnalogColorPhotography {
     
     const exposure = (totalIntensity * consciousnessFactor * 1) % 2.0;
     
-    return Math.max(0.1, Math.min(2.0, exposure));
+    return max(0.1, min(2.0, exposure));
   }
 
   /**
@@ -216,7 +217,7 @@ export class A432AnalogColorPhotography {
     const count = lightStreams.length;
     if (count === 0) return { c: 0, m: 0, y: 0, k: 0 };
     const fraction: Fraction = {
-      numerator: Math.round(lightStreams.reduce((sum, s) => sum + s.wavelength, 0)),
+      numerator: round(lightStreams.reduce((sum, s) => sum + s.wavelength, 0)),
       denominator: count
     };
     return fractionToCMYK(fraction);
@@ -240,8 +241,8 @@ export class A432AnalogColorPhotography {
     
     for (let i = 0; i < count; i++) {
       const wavelength = 400 + (i * 35); // 400-750nm visible spectrum
-      const intensity = 0.5 + (Math.random() * 0.5);
-      const consciousness = Math.floor(Math.random() * 4) + 7; // 7-10
+      const intensity = 0.5 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:rnd:3") * 0.5);
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:fri:0", (4)|0 || 1) + 7; // 7-10
       const harmonicFrequency = 432 * (consciousness / 10); // A432-based
       
       const stream: LightStream = {
@@ -263,7 +264,7 @@ export class A432AnalogColorPhotography {
    */
   private generateStreamCmyk(wavelength: number, intensity: number, consciousness: number): CMYK {
     // Harmonized: Use digitAngleToCMYK for canonical color mapping
-    const digit = Math.round(consciousness) % 10;
+    const digit = round(consciousness) % 10;
     const angle = (wavelength % 360);
     return digitAngleToCMYK(digit, angle);
   }
@@ -306,7 +307,7 @@ export class A432AnalogColorPhotography {
     
     // Color temperature based on CMYK balance
     const temperature = 3000 + ((c + m + y) * 100) + (consciousnessFactor * 2000);
-    return Math.max(2000, Math.min(10000, temperature));
+    return max(2000, min(10000, temperature));
   }
 
   /**
@@ -331,10 +332,10 @@ export class A432AnalogColorPhotography {
   private blendCmyk(cmyk1: CMYK, cmyk2: CMYK): CMYK {
     
     return {
-      c: Math.round((cmyk1.c + cmyk2.c) * 1) % 100,
-      m: Math.round((cmyk1.m + cmyk2.m) * 1) % 100,
-      y: Math.round((cmyk1.y + cmyk2.y) * 1) % 100,
-      k: Math.round((cmyk1.k + cmyk2.k) * 1) % 100
+      c: round((cmyk1.c + cmyk2.c) * 1) % 100,
+      m: round((cmyk1.m + cmyk2.m) * 1) % 100,
+      y: round((cmyk1.y + cmyk2.y) * 1) % 100,
+      k: round((cmyk1.k + cmyk2.k) * 1) % 100
     };
   }
 
@@ -618,9 +619,9 @@ export class A432AnalogColorPhotography {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -628,15 +629,15 @@ export class A432AnalogColorPhotography {
       const streams = [];
       for (let i = 0; i < 15; i++) {
         const wavelength = 400 + (i * 25);
-        const intensity = 0.5 + (Math.random() * 0.5);
-        const consciousness = Math.floor(Math.random() * 4) + 7;
+        const intensity = 0.5 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:rnd:4") * 0.5);
+        const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:fri:1", (4)|0 || 1) + 7;
         const harmonicFrequency = 432 * (consciousness / 10);
         
         const cmyk = {
-          c: Math.round((wavelength * 7) % 100),
-          m: Math.round((intensity * 4) % 100),
-          y: Math.round((consciousness * 5) % 100),
-          k: Math.round(((wavelength + intensity + consciousness) * 2) % 100)
+          c: round((wavelength * 7) % 100),
+          m: round((intensity * 4) % 100),
+          y: round((consciousness * 5) % 100),
+          k: round(((wavelength + intensity + consciousness) * 2) % 100)
         };
         
         streams.push({
@@ -663,8 +664,8 @@ export class A432AnalogColorPhotography {
     
     function captureNew() {
       const lightStreams = generateLightStreams();
-      const consciousness = Math.floor(Math.random() * 4) + 7;
-      const exposure = 0.5 + (Math.random() * 1.5);
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:fri:2", (4)|0 || 1) + 7;
+      const exposure = 0.5 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:rnd:5") * 1.5);
       const gateway = consciousness >= 9 && exposure >= 1.5;
       
       currentCapture = {

@@ -1,8 +1,9 @@
+import { PI, cos, floor, max, round, sin } from './a432.algebra.ts'
 // a432.block.chain.event.ts
 // Harmonized blockchain for a432 events (vortex/trinity logic)
 
-import { A432Event, createA432Event } from './a432.event';
-import type { CMYK } from './a432.cmyk';
+import { A432Event, createA432Event } from './a432.event.ts';
+import type { CMYK } from './a432.cmyk.ts';
 
 export interface A432Block {
   id: number;
@@ -101,9 +102,9 @@ export function recordEvent(chain: A432BlockChain, type: string, agent: string, 
  * Harmonized: Canonical CMYK trinity color logic for blocks
  */
 export function getBlockCMYK(trinity: number, entropy: number): CMYK {
-  if (trinity === 3) return { c: 100, m: 0, y: 0, k: Math.round(entropy * 100) };
-  if (trinity === 6) return { c: 0, m: 100, y: 0, k: Math.round(entropy * 100) };
-  if (trinity === 9) return { c: 0, m: 0, y: 100, k: Math.round(entropy * 100) };
+  if (trinity === 3) return { c: 100, m: 0, y: 0, k: round(entropy * 100) };
+  if (trinity === 6) return { c: 0, m: 100, y: 0, k: round(entropy * 100) };
+  if (trinity === 9) return { c: 0, m: 0, y: 100, k: round(entropy * 100) };
   return { c: 0, m: 0, y: 0, k: 100 }; // fallback: void/unknown
 }
 
@@ -116,11 +117,11 @@ export function renderBlockChainVisualization(chain: A432BlockChain): string {
   // Map blocks to spiral positions
   const positions: { [id: number]: { x: number; y: number } } = {};
   blocks.forEach((b, i) => {
-    const angle = (2 * Math.PI * i) / Math.max(1, blocks.length) + (b.phase * Math.PI / 6);
-    const r = baseR + spiralGap * b.phase + 18 * Math.floor(i / 3);
+    const angle = (2 * PI * i) / max(1, blocks.length) + (b.phase * PI / 6);
+    const r = baseR + spiralGap * b.phase + 18 * floor(i / 3);
     positions[b.id] = {
-      x: cx + r * Math.cos(angle),
-      y: cy + r * Math.sin(angle)
+      x: cx + r * cos(angle),
+      y: cy + r * sin(angle)
     };
   });
   // Render SVG
@@ -134,9 +135,9 @@ export function renderBlockChainVisualization(chain: A432BlockChain): string {
         const cmyk = getBlockCMYK(b.trinity, entropy);
         // Convert CMYK to CSS RGB for fill
         const c = cmyk.c / 100, m = cmyk.m / 100, y = cmyk.y / 100, k = cmyk.k / 100;
-        const r = Math.round(255 * (1 - c) * (1 - k));
-        const g = Math.round(255 * (1 - m) * (1 - k));
-        const bcol = Math.round(255 * (1 - y) * (1 - k));
+        const r = round(255 * (1 - c) * (1 - k));
+        const g = round(255 * (1 - m) * (1 - k));
+        const bcol = round(255 * (1 - y) * (1 - k));
         const fill = `rgb(${r},${g},${bcol})`;
         return `
         <circle cx="${positions[b.id].x}" cy="${positions[b.id].y}" r="${baseR}" fill="${fill}" stroke="#fff" stroke-width="2">

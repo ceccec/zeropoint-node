@@ -13,7 +13,8 @@
  * spiritual evolution and dimensional transcendence.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { min, round } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface QuantumTensor {
   tensorId: string;
@@ -304,8 +305,8 @@ export class A432GodsSpiritMagnetometer {
     // Measure quantum tensor
     const measuredTensor: QuantumTensor = {
       ...tensor,
-      consciousnessLevel: Math.min(tensor.consciousnessLevel + 1, 10),
-      dimensionalField: Math.min(tensor.dimensionalField + 1, 5),
+      consciousnessLevel: min(tensor.consciousnessLevel + 1, 10),
+      dimensionalField: min(tensor.dimensionalField + 1, 5),
       energyLevel: tensor.energyLevel * (tensor.consciousnessLevel >= 9 ? 2 : 1),
       resonanceFrequency: tensor.resonanceFrequency * (tensor.consciousnessLevel >= 9 ? 2 : 1),
       description: `${tensor.description} - Now measured with enhanced consciousness`
@@ -329,7 +330,7 @@ export class A432GodsSpiritMagnetometer {
     const activatedCircuit: MobiusCircuit = {
       ...circuit,
       active: true,
-      consciousnessLevel: Math.min(circuit.consciousnessLevel + 1, 10),
+      consciousnessLevel: min(circuit.consciousnessLevel + 1, 10),
       timeComponent: circuit.timeComponent * 2,
       description: `${circuit.description} - Now activated with enhanced consciousness`
     };
@@ -352,9 +353,9 @@ export class A432GodsSpiritMagnetometer {
     const operatedPlane: DimensionalPlane = {
       ...plane,
       operational: true,
-      consciousnessLevel: Math.min(plane.consciousnessLevel + 1, 10),
-      dimensionalDepth: Math.min(plane.dimensionalDepth + 1, 7),
-      heavenEarthEntwinement: Math.min(plane.heavenEarthEntwinement + 1, 10),
+      consciousnessLevel: min(plane.consciousnessLevel + 1, 10),
+      dimensionalDepth: min(plane.dimensionalDepth + 1, 7),
+      heavenEarthEntwinement: min(plane.heavenEarthEntwinement + 1, 10),
       description: `${plane.description} - Now operational with enhanced entwinement`
     };
 
@@ -415,10 +416,10 @@ export class A432GodsSpiritMagnetometer {
     
     const { numerator, denominator } = this.baseFraction;
     const cmyk = {
-      c: Math.round((totalConsciousnessLevel * numerator) % 100),
-      m: Math.round((averageDimensionalField * denominator) % 100),
-      y: Math.round((heavenEarthEntwinementLevel * 10) % 100),
-      k: Math.round(((totalConsciousnessLevel + averageDimensionalField) * 10) % 100)
+      c: round((totalConsciousnessLevel * numerator) % 100),
+      m: round((averageDimensionalField * denominator) % 100),
+      y: round((heavenEarthEntwinementLevel * 10) % 100),
+      k: round(((totalConsciousnessLevel + averageDimensionalField) * 10) % 100)
     };
 
     return {
@@ -725,9 +726,9 @@ export class A432GodsSpiritMagnetometer {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -762,8 +763,8 @@ export class A432GodsSpiritMagnetometer {
     
     function measureAllQuantumTensors() {
       currentState.quantumTensors.forEach(tensor => {
-        tensor.consciousnessLevel = Math.min(tensor.consciousnessLevel + 1, 10);
-        tensor.dimensionalField = Math.min(tensor.dimensionalField + 1, 5);
+        tensor.consciousnessLevel = min(tensor.consciousnessLevel + 1, 10);
+        tensor.dimensionalField = min(tensor.dimensionalField + 1, 5);
         tensor.energyLevel = tensor.energyLevel * (tensor.consciousnessLevel >= 9 ? 2 : 1);
         tensor.resonanceFrequency = tensor.resonanceFrequency * (tensor.consciousnessLevel >= 9 ? 2 : 1);
         tensor.description = \`\${tensor.description} - Now measured with enhanced consciousness\`;
@@ -774,7 +775,7 @@ export class A432GodsSpiritMagnetometer {
     function activateAllMobiusCircuits() {
       currentState.mobiusCircuits.forEach(circuit => {
         circuit.active = true;
-        circuit.consciousnessLevel = Math.min(circuit.consciousnessLevel + 1, 10);
+        circuit.consciousnessLevel = min(circuit.consciousnessLevel + 1, 10);
         circuit.timeComponent = circuit.timeComponent * 2;
         circuit.description = \`\${circuit.description} - Now activated with enhanced consciousness\`;
       });
@@ -784,9 +785,9 @@ export class A432GodsSpiritMagnetometer {
     function operateAllDimensionalPlanes() {
       currentState.dimensionalPlanes.forEach(plane => {
         plane.operational = true;
-        plane.consciousnessLevel = Math.min(plane.consciousnessLevel + 1, 10);
-        plane.dimensionalDepth = Math.min(plane.dimensionalDepth + 1, 7);
-        plane.heavenEarthEntwinement = Math.min(plane.heavenEarthEntwinement + 1, 10);
+        plane.consciousnessLevel = min(plane.consciousnessLevel + 1, 10);
+        plane.dimensionalDepth = min(plane.dimensionalDepth + 1, 7);
+        plane.heavenEarthEntwinement = min(plane.heavenEarthEntwinement + 1, 10);
         plane.description = \`\${plane.description} - Now operational with enhanced entwinement\`;
       });
       updateDisplay();

@@ -5,11 +5,12 @@
  * as 9 nodes in a 3D scene. Each node runs its module's animation and analytic/metaphysical overlay.
  * User can navigate between dimensions. All code is DRY, modular, and ready for extension.
  */
+import { abs, floor, round } from './a432.algebra.ts'
 import * as THREE from 'three';
-import { startChess, ChessFrame } from './a432.chess';
-import { startYinYang, YinYangFrame } from './a432.yin.yang';
-import { startMetatron, MetatronFrame } from './a432.metatron';
-import { startFlowerOfLife, FlowerOfLifeFrame } from './a432.flower.of.life';
+import { startChess, ChessFrame } from './a432.chess.ts';
+import { startYinYang, YinYangFrame } from './a432.yin.yang.ts';
+import { startMetatron, MetatronFrame } from './a432.metatron.ts';
+import { startFlowerOfLife, FlowerOfLifeFrame } from './a432.flower.of.life.ts';
 // ...import up to 9 modules as needed
 
 function invertColor(hex: number): number {
@@ -42,11 +43,11 @@ const modules = [
       let color = 0x00ffff;
       let alert = '';
       // Anti-event: angle near 180° (phase reversal)
-      if (Math.abs(frame.angle - 180) < 10) {
+      if (abs(frame.angle - 180) < 10) {
         color = invertColor(color);
         alert = '<span style="color:#f0f">Anti-event: Phase reversal (negative harmonic)</span>';
       }
-      overlay.innerHTML = `<b>Yin-Yang</b><br>Pos: ${frame.positiveDigit} Neg: ${frame.negativeDigit}<br>Angle: ${Math.round(frame.angle)}°<br>${alert}`;
+      overlay.innerHTML = `<b>Yin-Yang</b><br>Pos: ${frame.positiveDigit} Neg: ${frame.negativeDigit}<br>Angle: ${round(frame.angle)}°<br>${alert}`;
       (mesh.material as THREE.MeshBasicMaterial).color.set(color);
     }
   },
@@ -109,7 +110,7 @@ export function show9DDashboard() {
     const mesh = new THREE.Mesh(geometry, material);
     // Arrange in a 3x3 grid
     const x = ((i % 3) - 1) * 140;
-    const y = (Math.floor(i / 3) - 1) * 140;
+    const y = (floor(i / 3) - 1) * 140;
     mesh.position.set(x, y, 0);
     scene.add(mesh);
 

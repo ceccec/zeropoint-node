@@ -1,8 +1,8 @@
 // a432.uroboros.test.ts — Harmonized test for eternal spiral digit generator
 
-import { uroborosEmitter, UroborosEvent } from './a432.uroboros';
-import { Digit } from './a432.types';
-import { registerSource } from './a432.bus';
+import { uroborosEmitter, UroborosEvent } from './a432.uroboros.ts';
+import { Digit } from './a432.types.ts';
+import { registerSource } from './a432.bus.ts';
 
 describe('a432.uroboros.ts', () => {
   it('emits uro events with correct digit, index, and cmyk', done => {

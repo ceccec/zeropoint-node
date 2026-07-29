@@ -1,3 +1,4 @@
+import { PI, cos, floor, max, sin } from './a432.algebra.ts'
 // a432.i.stream.ts
 // Living stream of awareness/events for a432.i (consciousness as vortex)
 
@@ -72,11 +73,11 @@ export function renderLivingIStreamVisualization(stream: LivingIStream): string 
   // Map nodes to spiral positions
   const positions: { [id: number]: { x: number; y: number } } = {};
   nodes.forEach((n, i) => {
-    const angle = (2 * Math.PI * i) / Math.max(1, nodes.length) + (n.phase * Math.PI / 6);
-    const r = baseR + spiralGap * n.phase + 18 * Math.floor(i / 3);
+    const angle = (2 * PI * i) / max(1, nodes.length) + (n.phase * PI / 6);
+    const r = baseR + spiralGap * n.phase + 18 * floor(i / 3);
     positions[n.id] = {
-      x: cx + r * Math.cos(angle),
-      y: cy + r * Math.sin(angle)
+      x: cx + r * cos(angle),
+      y: cy + r * sin(angle)
     };
   });
   const colors = ['#39f', '#6f3', '#f93'];

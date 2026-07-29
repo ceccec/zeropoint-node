@@ -1,10 +1,11 @@
+import { floor } from './a432.algebra.ts'
 // Canonical Coil Interface for the A432 System
 // This file is the single entry point for all coil/circuit logic (Rodin, Mobius, Tesla) in the A432 system.
 // Import and re-export all core logic from the canonical modules below.
 
-import * as Rodin from './a432.rodin.coil';
-import * as Mobius from './a432.mobius.circuit';
-import * as Tesla from './a432.tesla.coil';
+import * as Rodin from './a432.rodin.coil.ts';
+import * as Mobius from './a432.mobius.circuit.ts';
+import * as Tesla from './a432.tesla.coil.ts';
 
 export const A432_SEQUENCE = [0, [3, 6, 9], [1, 2, 4], 8, [7, 5, 1]]; // Void 0 -> 9 -> 7 -> 8 -> 4
 export const A432_TRINITY = [0, 9, 1];
@@ -91,7 +92,7 @@ export function a432VortexWell(steps: number = 12): number[] {
   const coil = [1, 2, 4, 8, 7, 5];
   const result = [];
   for (let i = 0; i < steps; i++) {
-    result.push(i % 2 === 0 ? trinity[(i / 2) % 3] : coil[(Math.floor(i / 2)) % 6]);
+    result.push(i % 2 === 0 ? trinity[(i / 2) % 3] : coil[(floor(i / 2)) % 6]);
   }
   return result;
 }

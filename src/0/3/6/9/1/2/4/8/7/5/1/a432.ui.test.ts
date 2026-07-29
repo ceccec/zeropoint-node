@@ -1,10 +1,10 @@
-import { startA432UI } from './a432.ui';
-import * as self from './a432.self';
-import * as breathe from './a432.breathe';
-import * as math from './a432.math';
-import * as sound from './a432.sound';
-import * as video from './a432.video';
-import { cmykToCss } from './a432.cmyk';
+import { startA432UI } from './a432.ui.ts';
+import * as self from './a432.self.ts';
+import * as breathe from './a432.breathe.ts';
+import * as math from './a432.math.ts';
+import * as sound from './a432.sound.ts';
+import * as video from './a432.video.ts';
+import { cmykToCss } from './a432.cmyk.ts';
 
 // Mock document and window for DOM side effects
 beforeAll(() => {

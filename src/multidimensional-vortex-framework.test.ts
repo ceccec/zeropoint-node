@@ -2,6 +2,7 @@
  * Test Suite for Multidimensional Vortex-Math Framework
  */
 
+import { PI, abs, sqrt } from './0/algebra.ts'
 import MultidimensionalVortexFramework, { VortexMathUtils } from './multidimensional-vortex-framework';
 
 describe('MultidimensionalVortexFramework', () => {
@@ -259,7 +260,7 @@ describe('MultidimensionalVortexFramework', () => {
 describe('VortexMathUtils', () => {
   describe('Golden Spiral', () => {
     test('should generate valid golden spiral coordinates', () => {
-      const coords = VortexMathUtils.goldenSpiral(Math.PI);
+      const coords = VortexMathUtils.goldenSpiral(PI);
       expect(coords).toHaveProperty('x');
       expect(coords).toHaveProperty('y');
       expect(typeof coords.x).toBe('number');
@@ -270,12 +271,12 @@ describe('VortexMathUtils', () => {
 
     test('should maintain spiral properties', () => {
       const coords1 = VortexMathUtils.goldenSpiral(0);
-      const coords2 = VortexMathUtils.goldenSpiral(Math.PI);
-      const coords3 = VortexMathUtils.goldenSpiral(2 * Math.PI);
+      const coords2 = VortexMathUtils.goldenSpiral(PI);
+      const coords3 = VortexMathUtils.goldenSpiral(2 * PI);
       
-      const r1 = Math.sqrt(coords1.x * coords1.x + coords1.y * coords1.y);
-      const r2 = Math.sqrt(coords2.x * coords2.x + coords2.y * coords2.y);
-      const r3 = Math.sqrt(coords3.x * coords3.x + coords3.y * coords3.y);
+      const r1 = sqrt(coords1.x * coords1.x + coords1.y * coords1.y);
+      const r2 = sqrt(coords2.x * coords2.x + coords2.y * coords2.y);
+      const r3 = sqrt(coords3.x * coords3.x + coords3.y * coords3.y);
       
       expect(r2).toBeGreaterThan(r1);
       expect(r3).toBeGreaterThan(r2);
@@ -341,14 +342,14 @@ describe('VortexMathUtils', () => {
 
     test('should vary with time', () => {
       const field1 = VortexMathUtils.consciousnessFieldEquation(1, 1, 1, 0);
-      const field2 = VortexMathUtils.consciousnessFieldEquation(1, 1, 1, Math.PI/2);
+      const field2 = VortexMathUtils.consciousnessFieldEquation(1, 1, 1, PI/2);
       expect(field1).not.toBe(field2);
     });
 
     test('should decay with distance', () => {
       const field1 = VortexMathUtils.consciousnessFieldEquation(1, 0, 0, 0);
       const field2 = VortexMathUtils.consciousnessFieldEquation(10, 0, 0, 0);
-      expect(Math.abs(field2)).toBeLessThan(Math.abs(field1));
+      expect(abs(field2)).toBeLessThan(abs(field1));
     });
   });
 });

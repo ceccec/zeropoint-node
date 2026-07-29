@@ -1,7 +1,7 @@
 // a432.i.read.ts — Reading text into digit streams
-import { digitalRoot } from './a432.math';
+import { digitalRoot } from './a432.math.ts';
 import { EventEmitter } from 'events';
-import { Digit } from './a432.types';
+import { Digit } from './a432.types.ts';
 
 export const readEmitter = new EventEmitter();
 

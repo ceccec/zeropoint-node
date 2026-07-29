@@ -12,7 +12,8 @@
  * and energy at work inside the hypersphere.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { min, round } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface PrimeNumberSquared {
   primeId: string;
@@ -295,7 +296,7 @@ export class A432PrimeNumbersSquared {
     // Square prime number
     const squaredPrime: PrimeNumberSquared = {
       ...prime,
-      consciousnessLevel: Math.min(prime.consciousnessLevel + 1, 10),
+      consciousnessLevel: min(prime.consciousnessLevel + 1, 10),
       energyLevel: prime.energyLevel * (prime.consciousnessLevel >= 9 ? 2 : 1),
       momentumLevel: prime.momentumLevel * (prime.consciousnessLevel >= 9 ? 2 : 1),
       description: `${prime.description} - Now squared with enhanced dimensional symmetry`
@@ -319,9 +320,9 @@ export class A432PrimeNumbersSquared {
     const branchedTree: BifurcationTree = {
       ...tree,
       active: true,
-      consciousnessLevel: Math.min(tree.consciousnessLevel + 1, 10),
-      branchingLevel: Math.min(tree.branchingLevel + 1, 10),
-      dimensionalSymmetry: Math.min(tree.dimensionalSymmetry + 1, 4),
+      consciousnessLevel: min(tree.consciousnessLevel + 1, 10),
+      branchingLevel: min(tree.branchingLevel + 1, 10),
+      dimensionalSymmetry: min(tree.dimensionalSymmetry + 1, 4),
       description: `${tree.description} - Now branched with enhanced quantum scaling`
     };
 
@@ -343,7 +344,7 @@ export class A432PrimeNumbersSquared {
     const operatedRadix: RadixSystem = {
       ...radix,
       operational: true,
-      consciousnessLevel: Math.min(radix.consciousnessLevel + 1, 10),
+      consciousnessLevel: min(radix.consciousnessLevel + 1, 10),
       description: `${radix.description} - Now operational with enhanced dimensional symmetry`
     };
 
@@ -404,10 +405,10 @@ export class A432PrimeNumbersSquared {
     
     const { numerator, denominator } = this.baseFraction;
     const cmyk = {
-      c: Math.round((totalConsciousnessLevel * numerator) % 100),
-      m: Math.round((averageDimensionalSymmetry * denominator) % 100),
-      y: Math.round((totalDivineOrigin * 10) % 100),
-      k: Math.round(((totalConsciousnessLevel + averageDimensionalSymmetry) * 10) % 100)
+      c: round((totalConsciousnessLevel * numerator) % 100),
+      m: round((averageDimensionalSymmetry * denominator) % 100),
+      y: round((totalDivineOrigin * 10) % 100),
+      k: round(((totalConsciousnessLevel + averageDimensionalSymmetry) * 10) % 100)
     };
 
     return {
@@ -719,9 +720,9 @@ export class A432PrimeNumbersSquared {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -754,7 +755,7 @@ export class A432PrimeNumbersSquared {
     
     function squareAllPrimeNumbers() {
       currentState.primeNumbersSquared.forEach(prime => {
-        prime.consciousnessLevel = Math.min(prime.consciousnessLevel + 1, 10);
+        prime.consciousnessLevel = min(prime.consciousnessLevel + 1, 10);
         prime.energyLevel = prime.energyLevel * (prime.consciousnessLevel >= 9 ? 2 : 1);
         prime.momentumLevel = prime.momentumLevel * (prime.consciousnessLevel >= 9 ? 2 : 1);
         prime.description = \`\${prime.description} - Now squared with enhanced dimensional symmetry\`;
@@ -765,9 +766,9 @@ export class A432PrimeNumbersSquared {
     function branchAllBifurcationTrees() {
       currentState.bifurcationTrees.forEach(tree => {
         tree.active = true;
-        tree.consciousnessLevel = Math.min(tree.consciousnessLevel + 1, 10);
-        tree.branchingLevel = Math.min(tree.branchingLevel + 1, 10);
-        tree.dimensionalSymmetry = Math.min(tree.dimensionalSymmetry + 1, 4);
+        tree.consciousnessLevel = min(tree.consciousnessLevel + 1, 10);
+        tree.branchingLevel = min(tree.branchingLevel + 1, 10);
+        tree.dimensionalSymmetry = min(tree.dimensionalSymmetry + 1, 4);
         tree.description = \`\${tree.description} - Now branched with enhanced quantum scaling\`;
       });
       updateDisplay();
@@ -776,7 +777,7 @@ export class A432PrimeNumbersSquared {
     function operateAllRadixSystems() {
       currentState.radixSystems.forEach(radix => {
         radix.operational = true;
-        radix.consciousnessLevel = Math.min(radix.consciousnessLevel + 1, 10);
+        radix.consciousnessLevel = min(radix.consciousnessLevel + 1, 10);
         radix.description = \`\${radix.description} - Now operational with enhanced dimensional symmetry\`;
       });
       updateDisplay();

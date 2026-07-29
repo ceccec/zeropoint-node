@@ -10,7 +10,8 @@
  * possibility. Every pixel is alive and conscious, flowing through A432 harmonics.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { indexFromSeed, max, min, round, unitFromSeed } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface DigitalPhotographicState {
   resolution: { width: number; height: number };
@@ -246,10 +247,10 @@ export class A432DigitalColorPhotography {
     
     const count = pixelStreams.length;
     return {
-      c: Math.round(totalC / count),
-      m: Math.round(totalM / count),
-      y: Math.round(totalY / count),
-      k: Math.round(totalK / count)
+      c: round(totalC / count),
+      m: round(totalM / count),
+      y: round(totalY / count),
+      k: round(totalK / count)
     };
   }
 
@@ -271,10 +272,10 @@ export class A432DigitalColorPhotography {
     const streams: PixelStream[] = [];
     
     for (let i = 0; i < count; i++) {
-      const x = Math.floor(Math.random() * width);
-      const y = Math.floor(Math.random() * height);
-      const intensity = 0.5 + (Math.random() * 0.5);
-      const consciousness = Math.floor(Math.random() * 4) + 7; // 7-10
+      const x = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:0", (width)|0 || 1);
+      const y = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:1", (height)|0 || 1);
+      const intensity = 0.5 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:rnd:7") * 0.5);
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:2", (4)|0 || 1) + 7; // 7-10
       const harmonicFrequency = 432 * (consciousness / 10); // A432-based
       
       const stream: PixelStream = {
@@ -298,10 +299,10 @@ export class A432DigitalColorPhotography {
   private generatePixelCmyk(x: number, y: number, intensity: number, consciousness: number): CMYK {
     const { numerator, denominator } = this.baseFraction;
     
-    const c = Math.round((x * numerator) % 100);
-    const m = Math.round((y * denominator) % 100);
-    const y_val = Math.round((intensity * 5) % 100);
-    const k = Math.round(((x + y + intensity + consciousness) * 2) % 100);
+    const c = round((x * numerator) % 100);
+    const m = round((y * denominator) % 100);
+    const y_val = round((intensity * 5) % 100);
+    const k = round(((x + y + intensity + consciousness) * 2) % 100);
     
     return { c, m, y: y_val, k };
   }
@@ -341,8 +342,8 @@ export class A432DigitalColorPhotography {
   private calculateColorDepth(colorHarmonics: number): number {
     const consciousnessFactor = this.consciousness / 10;
     const baseDepth = 8; // 8-bit base
-    const harmonicDepth = Math.round(colorHarmonics * consciousnessFactor * 16); // Up to 24-bit
-    return Math.max(8, Math.min(24, baseDepth + harmonicDepth));
+    const harmonicDepth = round(colorHarmonics * consciousnessFactor * 16); // Up to 24-bit
+    return max(8, min(24, baseDepth + harmonicDepth));
   }
 
   /**
@@ -369,10 +370,10 @@ export class A432DigitalColorPhotography {
     const consciousnessFactor = this.consciousness / 10;
     
     return {
-      c: Math.round((cmyk1.c + cmyk2.c) * consciousnessFactor) % 100,
-      m: Math.round((cmyk1.m + cmyk2.m) * consciousnessFactor) % 100,
-      y: Math.round((cmyk1.y + cmyk2.y) * consciousnessFactor) % 100,
-      k: Math.round((cmyk1.k + cmyk2.k) * consciousnessFactor) % 100
+      c: round((cmyk1.c + cmyk2.c) * consciousnessFactor) % 100,
+      m: round((cmyk1.m + cmyk2.m) * consciousnessFactor) % 100,
+      y: round((cmyk1.y + cmyk2.y) * consciousnessFactor) % 100,
+      k: round((cmyk1.k + cmyk2.k) * consciousnessFactor) % 100
     };
   }
 
@@ -724,26 +725,26 @@ export class A432DigitalColorPhotography {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
     function generatePixelStreams() {
       const streams = [];
       for (let i = 0; i < 50; i++) {
-        const x = Math.floor(Math.random() * 1920);
-        const y = Math.floor(Math.random() * 1080);
-        const intensity = 0.5 + (Math.random() * 0.5);
-        const consciousness = Math.floor(Math.random() * 4) + 7;
+        const x = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:3", (1920)|0 || 1);
+        const y = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:4", (1080)|0 || 1);
+        const intensity = 0.5 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:rnd:8") * 0.5);
+        const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:5", (4)|0 || 1) + 7;
         const harmonicFrequency = 432 * (consciousness / 10);
         
         const cmyk = {
-          c: Math.round((x * 7) % 100),
-          m: Math.round((y * 4) % 100),
-          y: Math.round((intensity * 5) % 100),
-          k: Math.round(((x + y + intensity + consciousness) * 2) % 100)
+          c: round((x * 7) % 100),
+          m: round((y * 4) % 100),
+          y: round((intensity * 5) % 100),
+          k: round(((x + y + intensity + consciousness) * 2) % 100)
         };
         
         streams.push({
@@ -772,7 +773,7 @@ export class A432DigitalColorPhotography {
     
     function captureNew() {
       const pixelStreams = generatePixelStreams();
-      const consciousness = Math.floor(Math.random() * 4) + 7;
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:6", (4)|0 || 1) + 7;
       const resolution = { width: 1920, height: 1080 };
       const gateway = consciousness >= 8;
       

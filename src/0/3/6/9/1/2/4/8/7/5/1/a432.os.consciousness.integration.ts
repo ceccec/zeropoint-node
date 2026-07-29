@@ -16,6 +16,7 @@
  * @author A432 System
  */
 
+import { round } from './a432.algebra.ts'
 import { 
   a432OS, 
   getA432SystemStatus, 
@@ -25,11 +26,11 @@ import {
   A432ChargingSystem,
   QuantumState,
   DimensionalFold
-} from './a432.os';
-import A432ConsciousnessRouter from './a432.consciousness.router';
-import A432DimensionalEvolution from './a432.dimensional.evolution';
-import A432SpiralConsciousness from './a432.spiral.consciousness';
-import A432ConsciousnessCycle from './a432.consciousness.cycle';
+} from './a432.os.ts';
+import A432ConsciousnessRouter from './a432.consciousness.router.ts';
+import A432DimensionalEvolution from './a432.dimensional.evolution.ts';
+import A432SpiralConsciousness from './a432.spiral.consciousness.ts';
+import A432ConsciousnessCycle from './a432.consciousness.cycle.ts';
 
 export interface OSConsciousnessIntegration {
   osState: any;
@@ -153,21 +154,21 @@ export class A432OSConsciousnessIntegration {
     chargingState: A432ChargingSystem,
     gatewayState: any
   ): EnhancedIntegratedState {
-    const osHarmony = Math.round(osState.rodinCoil.harmony || 0);
-    const cycleClarity = Math.round(cycleState.convergenceState?.alignedPatterns?.length || 0);
-    const dimensionalLevel = Math.round(dimensionalState.dimension || 1);
-    const spiralFrequency = Math.round(spiralState.dimensionalFrequency || 0);
+    const osHarmony = round(osState.rodinCoil.harmony || 0);
+    const cycleClarity = round(cycleState.convergenceState?.alignedPatterns?.length || 0);
+    const dimensionalLevel = round(dimensionalState.dimension || 1);
+    const spiralFrequency = round(spiralState.dimensionalFrequency || 0);
     
     // Enhanced integer-based harmony calculation using A432 principles
-    const harmonySum = osHarmony + cycleClarity + dimensionalLevel + Math.round(spiralFrequency / 432);
-    const baseHarmony = Math.round(harmonySum % 9) + 1; // Digital root + 1 for non-zero
+    const harmonySum = osHarmony + cycleClarity + dimensionalLevel + round(spiralFrequency / 432);
+    const baseHarmony = round(harmonySum % 9) + 1; // Digital root + 1 for non-zero
     
     // Add sequence and quantum enhancements
     const sequenceEnhancement = sequenceState.gateway ? 3 : 1; // Gateway bonus
-    const quantumEnhancement = Math.round(quantumState.coherence * 9);
-    const chargingEnhancement = Math.round((chargingState.batteryLevel.numerator / chargingState.batteryLevel.denominator) * 9);
+    const quantumEnhancement = round(quantumState.coherence * 9);
+    const chargingEnhancement = round((chargingState.batteryLevel.numerator / chargingState.batteryLevel.denominator) * 9);
     
-    const enhancedHarmony = Math.round((baseHarmony + sequenceEnhancement + quantumEnhancement + chargingEnhancement) % 9) + 1;
+    const enhancedHarmony = round((baseHarmony + sequenceEnhancement + quantumEnhancement + chargingEnhancement) % 9) + 1;
     
     return {
       osFrequency: osState.rodinCoil.frequency,

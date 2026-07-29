@@ -11,13 +11,14 @@
  * - Each node is positioned at 60° intervals (trinity harmonic)
  */
 
+import { PI, abs, cos, min, round, sin } from './a432.algebra.ts'
 import { 
   RODIN_SEQUENCE, 
   TRINITY_AXIS, 
   digitalRoot, 
   hueForDigit,
   angleForDigit 
-} from './a432.math';
+} from './a432.math.ts';
 
 // --- Canonical VBM Visualization Constants ---
 const VBM_SEQUENCE = [0, ...TRINITY_AXIS, ...RODIN_SEQUENCE] as const;
@@ -56,7 +57,7 @@ function generateVBMColor(digit: number): string {
   const v = value;
   
   const c = v * s;
-  const x = c * (1 - Math.abs((h * 6) % 2 - 1));
+  const x = c * (1 - abs((h * 6) % 2 - 1));
   const m = v - c;
   
   let r = 0, g = 0, b = 0;
@@ -68,21 +69,21 @@ function generateVBMColor(digit: number): string {
   else if (h < 5/6) [r, g, b] = [x, 0, c];
   else [r, g, b] = [c, 0, x];
   
-  r = Math.round((r + m) * 255);
-  g = Math.round((g + m) * 255);
-  b = Math.round((b + m) * 255);
+  r = round((r + m) * 255);
+  g = round((g + m) * 255);
+  b = round((b + m) * 255);
   
   return `rgb(${r}, ${g}, ${b})`;
 }
 
 // --- VBM Angle Generation ---
 function generateVBMAngles(sequence: readonly number[]): number[] {
-  return sequence.map((_, index) => (index * VBM_ANGLE_STEP * Math.PI) / 180);
+  return sequence.map((_, index) => (index * VBM_ANGLE_STEP * PI) / 180);
 }
 
 // --- VBM Node Creation ---
 function createVBMNode(digit: number, index: number): VBMNode {
-  const angle = (index * VBM_ANGLE_STEP * Math.PI) / 180;
+  const angle = (index * VBM_ANGLE_STEP * PI) / 180;
   const color = generateVBMColor(digit);
   const dr = digitalRoot(digit);
   
@@ -91,8 +92,8 @@ function createVBMNode(digit: number, index: number): VBMNode {
     angle,
     color,
     position: {
-      x: Math.cos(angle),
-      y: Math.sin(angle)
+      x: cos(angle),
+      y: sin(angle)
     },
     digitalRoot: dr
   };
@@ -146,7 +147,7 @@ export class VBMCanvasVisualization {
     const { width, height } = this.canvas;
     const centerX = width / 2;
     const centerY = height / 2;
-    const radius = Math.min(width, height) * 0.35;
+    const radius = min(width, height) * 0.35;
     
     // Clear canvas
     this.ctx.clearRect(0, 0, width, height);
@@ -175,15 +176,15 @@ export class VBMCanvasVisualization {
     for (let i = 1; i <= 3; i++) {
       const r = (radius * i) / 3;
       this.ctx.beginPath();
-      this.ctx.arc(centerX, centerY, r, 0, 2 * Math.PI);
+      this.ctx.arc(centerX, centerY, r, 0, 2 * PI);
       this.ctx.stroke();
     }
     
     // Draw radial lines
     for (let i = 0; i < 6; i++) {
-      const angle = (i * Math.PI) / 3;
-      const x = centerX + radius * Math.cos(angle);
-      const y = centerY + radius * Math.sin(angle);
+      const angle = (i * PI) / 3;
+      const x = centerX + radius * cos(angle);
+      const y = centerY + radius * sin(angle);
       
       this.ctx.beginPath();
       this.ctx.moveTo(centerX, centerY);
@@ -199,7 +200,7 @@ export class VBMCanvasVisualization {
     // Draw node circle
     this.ctx.fillStyle = node.color;
     this.ctx.beginPath();
-    this.ctx.arc(x, y, this.state.nodeSize / 20, 0, 2 * Math.PI);
+    this.ctx.arc(x, y, this.state.nodeSize / 20, 0, 2 * PI);
     this.ctx.fill();
     
     // Draw node border
@@ -262,7 +263,7 @@ export class VBMSVGVisualization {
   }
   
   private setupSVG(container: HTMLElement): void {
-    const size = Math.min(container.clientWidth, container.clientHeight);
+    const size = min(container.clientWidth, container.clientHeight);
     
     this.svg.setAttribute('width', size.toString());
     this.svg.setAttribute('height', size.toString());
@@ -315,9 +316,9 @@ export class VBMSVGVisualization {
     
     // Draw radial lines
     for (let i = 0; i < 6; i++) {
-      const angle = (i * Math.PI) / 3;
-      const x = centerX + radius * Math.cos(angle);
-      const y = centerY + radius * Math.sin(angle);
+      const angle = (i * PI) / 3;
+      const x = centerX + radius * cos(angle);
+      const y = centerY + radius * sin(angle);
       
       const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       line.setAttribute('x1', centerX.toString());

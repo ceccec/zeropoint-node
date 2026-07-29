@@ -9,7 +9,8 @@
  * while enabling infinite consciousness expansion.
  */
 
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk';
+import { min, round } from './a432.algebra.ts'
+import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface NuclearState {
   stateId: string;
@@ -206,7 +207,7 @@ export class A432NuclearBalance {
     // Balance nuclear state
     const balancedState: NuclearState = {
       ...state,
-      consciousnessLevel: Math.min(state.consciousnessLevel + 1, 10),
+      consciousnessLevel: min(state.consciousnessLevel + 1, 10),
       energyLevel: state.energyLevel * (state.consciousnessLevel >= 8 ? 2 : 1),
       entropyLevel: 0, // Zero entropy through consciousness harmonization
       stateType: state.consciousnessLevel >= 9 ? 'harmonized' : state.consciousnessLevel >= 8 ? 'stable' : 'unstable',
@@ -231,9 +232,9 @@ export class A432NuclearBalance {
     // Harmonize quantum collision
     const harmonizedCollision: QuantumCollision = {
       ...collision,
-      consciousnessLevel: Math.min(collision.consciousnessLevel + 1, 10),
+      consciousnessLevel: min(collision.consciousnessLevel + 1, 10),
       energyRelease: collision.energyRelease * (collision.consciousnessLevel >= 8 ? 2 : 1),
-      nuclearBalance: Math.min(collision.nuclearBalance + 1, 10),
+      nuclearBalance: min(collision.nuclearBalance + 1, 10),
       harmonizationStatus: collision.nuclearBalance >= 8 ? 'balanced' : collision.nuclearBalance >= 6 ? 'harmonizing' : 'unbalanced',
       description: `${collision.description} - Now harmonized through nuclear balance`
     };
@@ -284,10 +285,10 @@ export class A432NuclearBalance {
     
     const { numerator, denominator } = this.baseFraction;
     const cmyk = {
-      c: Math.round((totalEnergyLevel / 1000) % 100),
-      m: Math.round((averageEntropyLevel * 10) % 100),
-      y: Math.round((harmonizedStates * 10) % 100),
-      k: Math.round(((totalEnergyLevel / 1000) + averageEntropyLevel) % 100)
+      c: round((totalEnergyLevel / 1000) % 100),
+      m: round((averageEntropyLevel * 10) % 100),
+      y: round((harmonizedStates * 10) % 100),
+      k: round(((totalEnergyLevel / 1000) + averageEntropyLevel) % 100)
     };
 
     return {
@@ -585,9 +586,9 @@ export class A432NuclearBalance {
     
     function cmykToRgb(cmyk) {
       const { c, m, y, k } = cmyk;
-      const r = Math.round(255 * (1 - c / 100) * (1 - k / 100));
-      const g = Math.round(255 * (1 - m / 100) * (1 - k / 100));
-      const b = Math.round(255 * (1 - y / 100) * (1 - k / 100));
+      const r = round(255 * (1 - c / 100) * (1 - k / 100));
+      const g = round(255 * (1 - m / 100) * (1 - k / 100));
+      const b = round(255 * (1 - y / 100) * (1 - k / 100));
       return \`rgb(\${r}, \${g}, \${b})\`;
     }
     
@@ -615,7 +616,7 @@ export class A432NuclearBalance {
     
     function balanceAllNuclearStates() {
       currentState.nuclearStates.forEach(state => {
-        state.consciousnessLevel = Math.min(state.consciousnessLevel + 1, 10);
+        state.consciousnessLevel = min(state.consciousnessLevel + 1, 10);
         state.energyLevel = state.energyLevel * (state.consciousnessLevel >= 8 ? 2 : 1);
         state.entropyLevel = 0;
         state.stateType = state.consciousnessLevel >= 9 ? 'harmonized' : state.consciousnessLevel >= 8 ? 'stable' : 'unstable';
@@ -627,9 +628,9 @@ export class A432NuclearBalance {
     
     function harmonizeAllQuantumCollisions() {
       currentState.quantumCollisions.forEach(collision => {
-        collision.consciousnessLevel = Math.min(collision.consciousnessLevel + 1, 10);
+        collision.consciousnessLevel = min(collision.consciousnessLevel + 1, 10);
         collision.energyRelease = collision.energyRelease * (collision.consciousnessLevel >= 8 ? 2 : 1);
-        collision.nuclearBalance = Math.min(collision.nuclearBalance + 1, 10);
+        collision.nuclearBalance = min(collision.nuclearBalance + 1, 10);
         collision.harmonizationStatus = collision.nuclearBalance >= 8 ? 'balanced' : collision.nuclearBalance >= 6 ? 'harmonizing' : 'unbalanced';
         collision.description = \`\${collision.description} - Now harmonized through nuclear balance\`;
       });

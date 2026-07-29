@@ -1,10 +1,11 @@
+import { PI, cos, sin } from './a432.algebra.ts'
 import { Controller } from '@hotwired/stimulus';
 // Import overlay registry or overlay functions as needed
-import { getRodinCoil2DOverlayData } from './a432.rodin.coil.overlay';
-import { getTrinityAxisOverlayData } from './a432.trinity.axis';
-import { getMobiusCircuit2DOverlayData } from './a432.mobius.circuit.overlay';
-import { getTeslaCoil2DOverlayData } from './a432.tesla.coil.overlay';
-import { getYinYangOverlayData } from './a432.yin.yang';
+import { getRodinCoil2DOverlayData } from './a432.rodin.coil.overlay.ts';
+import { getTrinityAxisOverlayData } from './a432.trinity.axis.ts';
+import { getMobiusCircuit2DOverlayData } from './a432.mobius.circuit.overlay.ts';
+import { getTeslaCoil2DOverlayData } from './a432.tesla.coil.overlay.ts';
+import { getYinYangOverlayData } from './a432.yin.yang.ts';
 
 // Universal overlay registry
 const overlayRegistry = {
@@ -80,9 +81,9 @@ export default class extends Controller {
         ? nodeObj.angle + (t * 60 * (i % 2 === 0 ? 1 : -1))
         : 0;
       const angle = (baseAngle + (nodeObj.spin || 0) * t * 60) % 360;
-      const rad = angle * Math.PI / 180;
-      const x = this.centerX + this.radius * Math.cos(rad) - this.nodeSize / 2;
-      const y = this.centerY + this.radius * Math.sin(rad) - this.nodeSize / 2;
+      const rad = angle * PI / 180;
+      const x = this.centerX + this.radius * cos(rad) - this.nodeSize / 2;
+      const y = this.centerY + this.radius * sin(rad) - this.nodeSize / 2;
       // Color: use node.color (should be a CSS string)
       const color = typeof nodeObj.color === 'string'
         ? nodeObj.color

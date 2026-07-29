@@ -1,9 +1,10 @@
+import { pow, round } from './a432.algebra.ts'
 // a432.frequency.healing.ts
 // Canonical harmonic frequency healing module for the A432 system
 // Maps digital states to A432-based sound and color healing flows
 // All logic is integer/fractional, vortex-based, and metaphysically mapped
 
-import type { VortexStream } from './a432.vortex';
+import type { VortexStream } from './a432.vortex.ts';
 
 export interface HealingEvent {
   frequency: number;
@@ -20,7 +21,7 @@ export interface HealingEvent {
 export function generateHealingFrequencies(base: number = 432, count: number = 7): number[] {
   const harmonics: number[] = [];
   for (let i = 0; i < count; i++) {
-    harmonics.push(base * Math.pow(2, i - 3)); // Centered on 432
+    harmonics.push(base * pow(2, i - 3)); // Centered on 432
   }
   return harmonics;
 }
@@ -33,7 +34,7 @@ export function getHarmonicColor(frequency: number): string {
   // Map frequency to hue (0-360), using only integer/fractional math
   const base = 432;
   const ratio = frequency / base;
-  const hue = Math.round((ratio * 144) % 360); // 144 = 432/3, trinity harmonic
+  const hue = round((ratio * 144) % 360); // 144 = 432/3, trinity harmonic
   return `hsl(${hue}, 70%, 55%)`;
 }
 

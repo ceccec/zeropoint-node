@@ -1,0 +1,14 @@
+{
+  "skills": [
+    {
+      "name": "zeropoint-node",
+      "description": "Use when orienting to zeropoint-node — fold kernel, content-uuid, chat waves.",
+      "url": "/SKILL.md"
+    },
+    {
+      "name": "zeropoint-build-waves",
+      "description": "Use when advancing the next chat wave in the double-torus development vortex.",
+      "url": "/.cursor/skills/zeropoint-build-waves/SKILL.md"
+    }
+  ]
+}

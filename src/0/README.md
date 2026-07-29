@@ -41,4 +41,4 @@ lobeL (ceccec.github.io)  ⇄  throat (foldPair)  ⇄  lobeR (erpax)
 
 ## Status
 
-KERNEL_SEALED = true. Run `npm run check` for the development-vortex census + a432 import/export self-ref fold. Critical a432 bridges are `.ts`-resolvable under strip-types (Wave 9); residual extensionless under `src/` sealed Wave 19–20; browser `a432.algebra.js` export surface sealed Wave 21; HTML→missing `.js` sealed Wave 22 (feed tip on slip).
+KERNEL_SEALED = true. Run `npm run check` for the development-vortex census + a432 import/export self-ref fold. Critical a432 bridges are `.ts`-resolvable under strip-types (Wave 9); residual extensionless under `src/` sealed Wave 19–20; browser `a432.algebra.js` export surface sealed Wave 21; HTML→missing `.js` sealed Wave 22; TS→missing `.js` sealed Wave 23; orphan A432 `.js` sealed Wave 24 (feed tip on slip).

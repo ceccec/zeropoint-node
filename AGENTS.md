@@ -46,6 +46,8 @@ Migration complete when all hold:
 - [x] Dynamic `import()` extensionless under `src/` cleared (Wave 20; feed tip on slip)
 - [x] `a432.algebra.js` export surface mirrors `a432.algebra.ts` (Wave 21; feed tip on drift)
 - [x] HTML→missing `.js` retargeted to sibling `.ts` (Wave 22; feed tip on slip)
+- [x] TS→missing `.js` retargeted to sibling `.ts` (Wave 23; feed tip on slip)
+- [x] Orphan A432 `.js` twins dissolved (Wave 24; feed tip on slip)
 - [x] Real `SECURITY.md` (not erpax stub)
 - [x] No Payload/ERP in tree
 

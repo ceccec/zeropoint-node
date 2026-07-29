@@ -55,7 +55,7 @@ export function generateA432HumanBodyHtml(): string {
   </div>
   <div class="metaphysics" id="metaphysics"></div>
   <script type="module">
-    import { createA432HumanBody, a432HumanBodyMetaphysics } from './a432.human.body.js';
+    import { createA432HumanBody, a432HumanBodyMetaphysics } from './a432.human.body.ts';
     function cmykToRgb({c, m, y, k}) {
       c /= 100; m /= 100; y /= 100; k /= 100;
       const r = round(255 * (1 - c) * (1 - k));

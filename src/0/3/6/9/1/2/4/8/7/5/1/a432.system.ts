@@ -36,7 +36,7 @@ export class A432System {
   private async initializeSystems(): Promise<void> {
     // Initialize navigation map
     try {
-      const navigationModule = await import('./a432.navigation.map.js');
+      const navigationModule = await import('./a432.navigation.map.ts');
       const { A432NavigationMap } = navigationModule;
       this.navigationMap = new A432NavigationMap();
     } catch (error) {
@@ -45,7 +45,7 @@ export class A432System {
 
     // Initialize CMYK system
     try {
-      const cmykModule = await import('./a432.cmyk.multimedia.js');
+      const cmykModule = await import('./a432.cmyk.multimedia.ts');
       const { CMYKMultimediaSystem } = cmykModule;
       this.cmykSystem = CMYKMultimediaSystem.getInstance();
     } catch (error) {
@@ -54,7 +54,7 @@ export class A432System {
 
     // Initialize simple system
     try {
-      const simpleModule = await import('./a432.simple.js');
+      const simpleModule = await import('./a432.simple.ts');
       const { A432SimpleSystem } = simpleModule;
       this.simpleSystem = A432SimpleSystem.getInstance();
     } catch (error) {
@@ -63,7 +63,7 @@ export class A432System {
 
     // Initialize Kabbalistic system
     try {
-      const kabbalisticModule = await import('./a432.kabbalah.js');
+      const kabbalisticModule = await import('./a432.kabbalah.ts');
       const { A432KabbalisticSystem } = kabbalisticModule;
       this.kabbalisticSystem = A432KabbalisticSystem.getInstance();
     } catch (error) {
@@ -72,7 +72,7 @@ export class A432System {
 
     // Initialize Sacred Geometry system
     try {
-      const sacredGeometryModule = await import('./a432.sacred.geometry.js');
+      const sacredGeometryModule = await import('./a432.sacred.geometry.ts');
       const { A432SacredGeometrySystem } = sacredGeometryModule;
       this.sacredGeometrySystem = A432SacredGeometrySystem.getInstance();
     } catch (error) {

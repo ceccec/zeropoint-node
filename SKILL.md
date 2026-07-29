@@ -50,6 +50,8 @@ zeropoint-node is the **origin library** (published mid-2025). Later work in [ce
 | 20 Dynamic-import feed | sealed (3 `import()` specs in `a432.server`; scanner covers static + dynamic) |
 | 21 Algebra.js feed | sealed (`a432.algebra.js` mirrors `src/0/algebra` export surface; feed tip on drift) |
 | 22 HTML.js feed | sealed (15 HTML→missing `.js` retargeted to sibling `.ts`; feed tip on slip) |
+| 23 TS.js feed | sealed (6 TS→missing `.js` retargeted to sibling `.ts`; feed tip on slip) |
+| 24 Orphan.js feed | sealed (2 unreferenced A432 `.js` dissolved; feed tip on slip) |
 
 ## Surfaces
 
@@ -95,6 +97,8 @@ Three digital-root spines — use `a432.roots.ts` / `src/kernel/legacy.ts`, neve
 - Self-develop feed tip surfaces extensionless dynamic `import()` after static (Wave 20)
 - Self-develop feed tip surfaces `a432.algebra.js` export-surface drift after extensionless (Wave 21)
 - Self-develop feed tip surfaces HTML→missing `.js` after algebra.js (Wave 22; retarget sibling `.ts`)
+- Self-develop feed tip surfaces TS→missing `.js` after HTML.js (Wave 23; retarget sibling `.ts`)
+- Self-develop feed tip surfaces orphan A432 `.js` after TS.js (Wave 24; drop unreferenced twins; keep `a432.algebra.js`)
 - Self-develop prefers `mathBan` tips before digitalRoot forks
 
 ## Wave 10 — audit / DRY
@@ -110,4 +114,6 @@ Three digital-root spines — use `a432.roots.ts` / `src/kernel/legacy.ts`, neve
 - Critical bridge cluster: `a432.roots`, `a432.uuid`, `a432.os.math`, `a432.math`, `a432.core`, `a432.cmyk`, `a432.bus`, `a432.emotion`, `a432.navigation`, `a432.types`.
 - Mass extensionless→`.ts` across a432 completed (`scripts/extension-ts.mjs`); residual `src/` hits sealed Wave 19; dynamic `import()` sealed Wave 20 (feed tip on slip).
 - HTML module imports of missing `.js` retargeted to sibling `.ts` (Wave 22; feed tip on slip).
+- TS module imports of missing `.js` retargeted to sibling `.ts` (Wave 23; feed tip on slip).
+- Unreferenced A432 `.js` twins dissolved (Wave 24; feed tip on slip; `a432.algebra.js` kept).
 - Digit-stream `a432.1*.ts` import `legacyDigitalRoot` from `a432.roots` (see [`docs/DIGIT_STREAMS.md`](docs/DIGIT_STREAMS.md)).

@@ -8,7 +8,8 @@
  *
  * When hard gaps are clear, tip = feed (chat-wave continues through packaging /
  * thin-wrapper collapse / broken-JS / bundle drift / extensionless static+dynamic /
- * algebra.js export-surface / HTML→missing .js / next vortex phase).
+ * algebra.js export-surface / HTML→missing .js / TS→missing .js / orphan A432 .js /
+ * next vortex phase).
  * Idle only when feed has nothing left.
  */
 
@@ -163,6 +164,76 @@ function findBrokenHtmlImport(): { path: string; line: number; spec: string } | 
         line,
         spec,
       }
+    }
+  }
+  return null
+}
+
+/** TS module imports of relative .js whose file is missing — strip-types packaging feed residual. */
+function findBrokenTsJsImport(): { path: string; line: number; spec: string } | null {
+  const IMP = /(?:from\s+|import\s*\(\s*)['"](\.[^'"]+\.js)['"]/g
+  const SRC = join(REPO_ROOT, 'src')
+  function walk(dir: string, out: string[] = []): string[] {
+    for (const name of readdirSync(dir)) {
+      const p = join(dir, name)
+      if (statSync(p).isDirectory()) walk(p, out)
+      else if (name.endsWith('.ts') && !name.endsWith('.d.ts')) out.push(p)
+    }
+    return out
+  }
+  for (const file of walk(SRC)) {
+    const src = readFileSync(file, 'utf8')
+    let m: RegExpExecArray | null
+    IMP.lastIndex = 0
+    while ((m = IMP.exec(src))) {
+      const spec = m[1]!
+      const target = join(dirname(file), spec)
+      if (existsSync(target)) continue
+      const line = src.slice(0, m.index).split('\n').length
+      return {
+        path: relative(REPO_ROOT, file).replace(/\\/g, '/'),
+        line,
+        spec,
+      }
+    }
+  }
+  return null
+}
+
+/** A432 .js with no path-like reference from siblings — dead twin packaging feed residual. */
+function findOrphanA432Js(): { path: string; line: number } | null {
+  function walk(dir: string, pred: (name: string) => boolean, out: string[] = []): string[] {
+    for (const name of readdirSync(dir)) {
+      const p = join(dir, name)
+      if (statSync(p).isDirectory()) walk(p, pred, out)
+      else if (pred(name)) out.push(p)
+    }
+    return out
+  }
+  const jsFiles = walk(A432_DIR, (n) => n.endsWith('.js') && n !== 'a432.algebra.js')
+  const siblings = walk(A432_DIR, (n) => /\.(html|ts|js)$/.test(n) && !n.endsWith('.d.ts'))
+  for (const file of jsFiles) {
+    const base = relative(A432_DIR, file).replace(/\\/g, '/')
+    const name = base.split('/').pop()!
+    let referenced = false
+    for (const other of siblings) {
+      if (other === file) continue
+      const src = readFileSync(other, 'utf8')
+      // path-like mention of this basename (import / src / register / cache list)
+      if (
+        src.includes(`./${name}`) ||
+        src.includes(`'${name}'`) ||
+        src.includes(`"${name}"`) ||
+        src.includes(`/${name}`)
+      ) {
+        referenced = true
+        break
+      }
+    }
+    if (referenced) continue
+    return {
+      path: relative(REPO_ROOT, file).replace(/\\/g, '/'),
+      line: 1,
     }
   }
   return null
@@ -323,6 +394,30 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
         receipt: toUuid(`self-develop:feed:html-js:${htmlBroken.path}:${htmlBroken.line}`),
       }
     }
+    const tsJsBroken = findBrokenTsJsImport()
+    if (tsJsBroken) {
+      return {
+        kind: 'feed',
+        path: tsJsBroken.path,
+        line: tsJsBroken.line,
+        action: `chat-wave feed: retarget TS import ${tsJsBroken.spec} at ${tsJsBroken.path}:${tsJsBroken.line} — missing .js twin; use sibling .ts (strip-types) or drop dead import`,
+        statement: `Feed tip: TS missing .js ${tsJsBroken.path} → ${tsJsBroken.spec}`,
+        boundary: 'Hard gaps clear — TS→missing .js is packaging feed, not hard stall.',
+        receipt: toUuid(`self-develop:feed:ts-js:${tsJsBroken.path}:${tsJsBroken.line}`),
+      }
+    }
+    const orphanJs = findOrphanA432Js()
+    if (orphanJs) {
+      return {
+        kind: 'feed',
+        path: orphanJs.path,
+        line: orphanJs.line,
+        action: `chat-wave feed: dissolve orphan A432 .js at ${orphanJs.path} — no sibling path reference; drop dead twin (keep a432.algebra.js spine)`,
+        statement: `Feed tip: orphan A432 .js ${orphanJs.path}`,
+        boundary: 'Hard gaps clear — unreferenced A432 .js twins are packaging feed, not hard stall.',
+        receipt: toUuid(`self-develop:feed:orphan-js:${orphanJs.path}`),
+      }
+    }
     return {
       kind: 'feed',
       path: 'src/0/index.ts',
@@ -330,9 +425,9 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
       action:
         'chat-wave feed: edit/rebuild — open next chat lobe on WAVE_CHAIN; re-run npm run self:next after any edit — do not invent gaps',
       statement:
-        'Feed tip: WAVE_CHAIN edit→rebuild — packaging + extensionless + algebra.js + HTML.js residuals cleared',
+        'Feed tip: WAVE_CHAIN edit→rebuild — packaging + extensionless + algebra.js + HTML.js + TS.js + orphan.js residuals cleared',
       boundary: 'Hard packaging clear — keep chatting waves; tip advances only after real seals.',
-      receipt: toUuid('self-develop:feed:vortex:v22'),
+      receipt: toUuid('self-develop:feed:vortex:v24'),
     }
   }
   if (!hit) {
@@ -373,7 +468,7 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
 
 /** cross · fold · weave — next tip from live audit, not a hand checklist. */
 export function planTrinity(): PlanTrinity {
-  const matrix = { root: toUuid('plan-trinity:v22-html-js-feed') }
+  const matrix = { root: toUuid('plan-trinity:v24-orphan-js-feed') }
   return memoByRoot('planTrinity', matrix, () => {
     const audit = foldA432AuditCensus()
     const vortex = runVortexAll()
@@ -431,7 +526,7 @@ export function planTrinity(): PlanTrinity {
       sealed.root,
     ])
     const contentUuid = computeContentUuid({
-      kind: 'plan-trinity-v22',
+      kind: 'plan-trinity-v24',
       tip: tip.kind,
       path: tip.path,
       line: tip.line,

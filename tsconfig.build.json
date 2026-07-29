@@ -1,0 +1,38 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "declaration": false,
+    "declarationMap": false,
+    "noEmitOnError": false,
+    "noImplicitAny": false,
+    "noImplicitOverride": false,
+    "noImplicitReturns": false,
+    "noImplicitThis": false,
+    "strict": false,
+    "skipLibCheck": true
+  },
+  "files": [
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.system.ts",
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.simple.ts",
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.navigation.map.ts",
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.multimedia.ts",
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.kabbalah.ts",
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.sacred.geometry.ts",
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts",
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.wave.energy.ts",
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.mobius.circuit.ts",
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.i.ts"
+  ],
+  "include": [],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "src/**/*demo*.ts"
+  ]
+}

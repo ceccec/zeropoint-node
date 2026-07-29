@@ -8,4 +8,4 @@ Legacy path: `03691248751` · VBM `digitalRoot(0)→0` via adapters.
 
 See [SEQUENCE.md](../SEQUENCE.md).
 
-Receipt: `4885a78b-d092-8c60-83eb-c1b2a4ed92be`
+Receipt: `081e2b3f-9500-8137-bd72-881c94ad950a`

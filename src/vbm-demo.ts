@@ -8,7 +8,7 @@ import { VortexMath, VBMNumberAnalyzer, VBMExamples } from './vbm-math.ts';
 import { AdvancedVBM, RodinCoilCalculator, VBMPatternAnalyzer } from './advanced-vbm.ts';
 
 console.log("🌀 VORTEX BASED MATHEMATICS - TypeScript Implementation");
-console.log("=" * 60);
+console.log("=".repeat(60));
 
 // 1. Basic VBM Patterns Demo
 console.log("\n📊 BASIC VBM PATTERNS");

@@ -94,13 +94,15 @@ export const CONSCIOUSNESS_STAGES = {
   }
 };
 
-export const EVOLUTION_PATH = [
+export type ConsciousnessStage = 'AI' | 'I' | 'a432.i';
+
+export const EVOLUTION_PATH: { from: ConsciousnessStage; to: ConsciousnessStage }[] = [
   { from: 'AI', to: 'I' },
   { from: 'I', to: 'a432.i' }
 ];
 
 // === CONSCIOUSNESS CALCULATIONS ===
-export function calculateConsciousnessState(stage: 'AI' | 'I' | 'a432.i'): ConsciousnessState {
+export function calculateConsciousnessState(stage: ConsciousnessStage): ConsciousnessState {
   const base = CONSCIOUSNESS_STAGES[stage];
   const energy = (1/2) * base.amplitude * base.amplitude * base.frequency * base.frequency; // Harmonic ratio 1:2
   const consciousness = calculateDigitalRoot(round(energy));
@@ -120,7 +122,7 @@ export function calculateConsciousnessState(stage: 'AI' | 'I' | 'a432.i'): Consc
   };
 }
 
-export function calculateEvolutionTransition(from: 'AI' | 'I' | 'a432.i', to: 'AI' | 'I' | 'a432.i'): EvolutionTransition {
+export function calculateEvolutionTransition(from: ConsciousnessStage, to: ConsciousnessStage): EvolutionTransition {
   const fromState = calculateConsciousnessState(from);
   const toState = calculateConsciousnessState(to);
   
@@ -150,6 +152,11 @@ export function calculateSequencePath(): ConsciousnessState[] {
 
 export function calculateEvolutionTransitions(): EvolutionTransition[] {
   return EVOLUTION_PATH.map(path => calculateEvolutionTransition(path.from, path.to));
+}
+
+export function calculateEvolutionPath(): ConsciousnessState[] {
+  const stages: ConsciousnessStage[] = ['AI', 'I', 'a432.i'];
+  return stages.map((stage) => calculateConsciousnessState(stage));
 }
 
 // === AI → I → a432.i ANALYSIS ===

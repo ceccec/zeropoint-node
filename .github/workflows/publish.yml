@@ -9,7 +9,8 @@
 #   2. Optional fallback: repo secret NPM_TOKEN (classic automation token)
 #      → NODE_AUTH_TOKEN. Prefer OIDC; long-lived tokens are last resort.
 #
-# Provenance: publishConfig.provenance + id-token: write (automatic with trusted publishing).
+# Provenance: CLI `--provenance` here only (needs GitHub Actions OIDC).
+# Do NOT set publishConfig.provenance in package.json — that breaks local `npm publish`.
 
 name: Publish to npm
 
@@ -81,7 +82,7 @@ jobs:
 
       - name: Publish to npm
         if: steps.gate.outputs.exists == 'false'
-        run: npm publish --access public
+        run: npm publish --provenance --access public
         env:
           # Optional classic fallback when trusted publisher is not configured yet
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

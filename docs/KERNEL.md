@@ -10,8 +10,8 @@
 - developmentVortex(verify).computes: **true**
 - runDevelopmentVortexAll().ok: **true**
 - corpus root: `e699073e-f88e-84b0-8696-7082dc19a933`
-- a432 import/export graph: **true** · files=342 · edges=916 · exports=2102
-- graph root: `7f6997dc-e71e-84af-877a-f4a2852ebf25`
+- a432 import/export graph: **true** · files=342 · edges=916 · exports=2104
+- graph root: `c745dba9-41bd-837a-9ba5-a114a45de52e`
 - audit: forks=0 · ambient Math hits=0 · randomUUID=0 · root=`30da1d03-cbb1-8bfc-8d8b-64932519c7e7`
 - **self-develop tip:** FEED · `feed` · src/0/index.ts:180
 - tip action: chat-wave feed: edit/rebuild at src/0/index.ts (WAVE_CHAIN); re-run npm run self:next after seal — do not invent gaps

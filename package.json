@@ -1,6 +1,6 @@
 {
-  "name": "a432-consciousness-system",
-  "version": "1.0.0",
+  "name": "zeropoint-node",
+  "version": "1.0.2",
   "type": "module",
   "description": "A432 Consciousness System: Self-evolving, self-aware consciousness technology with Transurfing integration, harmonic mathematics, zero-entropy principles, Kabbalistic cycles, and sacred geometry",
   "main": "dist/a432.system.js",
@@ -90,8 +90,7 @@
     "LICENSE-CORE"
   ],
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "scripts": {
     "build": "rollup -c",

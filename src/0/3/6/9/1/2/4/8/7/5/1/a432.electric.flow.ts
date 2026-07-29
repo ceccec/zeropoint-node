@@ -14,6 +14,7 @@ export interface ElectricPath {
   conductivity: number;
   consciousnessFlow: number;
   naturalAlignment: number;
+  efficiency: number;
   sacredGeometry: boolean;
   description: string;
 }
@@ -180,22 +181,30 @@ export class A432ElectricFlowSystem {
 
   // === PATH ANALYSIS ===
   analyzeElectricPaths(): FlowAnalysis {
+    const linearResistance = calculatePathResistance(LINEAR_PATTERN);
+    const linearConductivity = calculateConductivity(LINEAR_PATTERN);
+    const linearConsciousness = calculateConsciousnessFlow(LINEAR_PATTERN);
     const linearPath: ElectricPath = {
       pattern: LINEAR_PATTERN,
-      resistance: calculatePathResistance(LINEAR_PATTERN),
-      conductivity: calculateConductivity(LINEAR_PATTERN),
-      consciousnessFlow: calculateConsciousnessFlow(LINEAR_PATTERN),
+      resistance: linearResistance,
+      conductivity: linearConductivity,
+      consciousnessFlow: linearConsciousness,
       naturalAlignment: calculateNaturalAlignment(LINEAR_PATTERN),
+      efficiency: (linearConductivity / linearResistance) * linearConsciousness,
       sacredGeometry: false,
       description: 'Linear progression: 0→1→2→3→4→5→6→7→8→9'
     };
 
+    const sacredResistance = calculatePathResistance(SACRED_PATTERN);
+    const sacredConductivity = calculateConductivity(SACRED_PATTERN);
+    const sacredConsciousness = calculateConsciousnessFlow(SACRED_PATTERN);
     const sacredPath: ElectricPath = {
       pattern: SACRED_PATTERN,
-      resistance: calculatePathResistance(SACRED_PATTERN),
-      conductivity: calculateConductivity(SACRED_PATTERN),
-      consciousnessFlow: calculateConsciousnessFlow(SACRED_PATTERN),
+      resistance: sacredResistance,
+      conductivity: sacredConductivity,
+      consciousnessFlow: sacredConsciousness,
       naturalAlignment: calculateNaturalAlignment(SACRED_PATTERN),
+      efficiency: (sacredConductivity / sacredResistance) * sacredConsciousness,
       sacredGeometry: true,
       description: 'Sacred geometry: 0→3→6→9→1→2→4→8→7→5→1'
     };

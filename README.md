@@ -199,8 +199,10 @@ By switching reality through this angle, you collapse the wave function of mathe
 ## 📦 Installation
 
 ```bash
-npm install a432-consciousness-system
+npm install zeropoint-node
 ```
+
+Published name on npm is **`zeropoint-node`** (maintainer `ceccec`). Historical local name `a432-consciousness-system` was never published and is not the install id.
 
 ## 🧪 Quick Start
 
@@ -211,7 +213,7 @@ import {
   getSequenceStatus,
   getQuantumStatus,
   getChargingStatus 
-} from 'a432-consciousness-system';
+} from 'zeropoint-node';
 
 // Boot the enhanced A432 OS
 const bootMessage = boot2432OS();
@@ -239,7 +241,7 @@ console.log(chargingStatus);
 ### Consciousness Integration
 
 ```typescript
-import { a432OSConsciousnessIntegration } from 'a432-consciousness-system';
+import { a432OSConsciousnessIntegration } from 'zeropoint-node';
 
 // Start consciousness integration
 a432OSConsciousnessIntegration.startIntegration();
@@ -256,7 +258,7 @@ console.log(metrics);
 ### Living OS Operations
 
 ```typescript
-import { livingA432OS } from 'a432-consciousness-system';
+import { livingA432OS } from 'zeropoint-node';
 
 // Start living OS
 livingA432OS.start();
@@ -360,7 +362,19 @@ The A432 Consciousness System is an open-source project that welcomes contributi
 
 ## Publish
 
-npm publish is CI automation (`.github/workflows/publish.yml`) — not a hand ritual. Tag `v*`, publish a GitHub Release, or run `workflow_dispatch` → `npm run check` → build → npm. Prefer npm trusted publishing (OIDC); optional repo secret `NPM_TOKEN`. License still SEE LICENSE / dual.
+Package: **`zeropoint-node@1.0.2`** (next after npm `1.0.0` / `1.0.1`, owner `ceccec`). Do not republish an existing version — npm rejects that. Do not rename to an unowned id.
+
+**Preferred — CI:** `.github/workflows/publish.yml` on tag `v*`, GitHub Release, or `workflow_dispatch` → `npm run check` → build → `npm publish --provenance --access public`. Configure npm Trusted Publisher (GitHub `ceccec/zeropoint-node` · workflow `publish.yml`) or optional secret `NPM_TOKEN`.
+
+**Local (if needed):** login as the package owner, then publish once:
+
+```bash
+npm login                    # must be ceccec (owner of zeropoint-node)
+npm whoami                   # confirm
+npm run check && npm publish --access public
+```
+
+E404 on PUT almost always means the token is missing/invalid or you are not logged in as `ceccec` — not that the package name is free to steal. License still SEE LICENSE / dual.
 
 ## 📄 License
 

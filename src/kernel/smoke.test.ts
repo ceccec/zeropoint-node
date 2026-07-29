@@ -22,7 +22,7 @@ import { legacyDigitalRoot } from './legacy.ts'
 import { runDevelopmentVortexAll } from './index.ts'
 import { foldA432ImportExportGraph, importExportGraphTip } from './import-graph.ts'
 import { foldA432AuditCensus, auditTip } from './audit.ts'
-import { nextSelfDevelopTip, planTrinity, selfBuild } from './self-develop.ts'
+import { nextSelfDevelopTip, planTrinity, selfBuild, isPreciseTip, tipFormOf } from './self-develop.ts'
 import { A432Math } from '../0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts'
 import { calculateDigitalRoot } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts'
 import { VortexMath } from '../vbm-math.ts'
@@ -30,7 +30,13 @@ import {
   computeContentUuid,
   verifyContentUuid,
 } from '../integrity/content-uuid.ts'
-import { appendReceipt, GENESIS_PREV, verifyReceiptLink } from '../integrity/receipt.ts'
+import {
+  appendReceipt,
+  computeReceiptId,
+  GENESIS_PREV,
+  verifyReceiptChain,
+  verifyReceiptLink,
+} from '../integrity/receipt.ts'
 import {
   kernelDigitalRoot,
   legacyDigitalRoot as rootsLegacyDigitalRoot,
@@ -95,9 +101,14 @@ const uuid = computeContentUuid(obj)
 assert(verifyContentUuid({ ...obj, uuid }).ok, 'content-uuid verifies')
 assert(!verifyContentUuid({ ...obj, uuid, wave: 2 }).ok, 'tamper detected')
 
-const r1 = appendReceipt(GENESIS_PREV, 'w1', { ok: true })
-const r2 = appendReceipt(r1.id, 'w2', { ok: true })
-assert(verifyReceiptLink(r1, r2), 'receipt chain')
+const r1 = appendReceipt(GENESIS_PREV, 'w1', { ok: true }, 1)
+const r2 = appendReceipt(r1.id, 'w2', { ok: true }, 2)
+assert(verifyReceiptLink(GENESIS_PREV, r1), 'genesis link')
+assert(verifyReceiptLink(r1, r2), 'receipt adjacent link')
+assert(r1.id === computeReceiptId(r1.prev, r1.contentUuid, r1.ts), 'id recomputes from prev+contentUuid+ts')
+assert(verifyReceiptChain([r1, r2]).ok, 'walk-verify chain')
+assert(!verifyReceiptChain([{ ...r1, id: r2.id }, r2]).ok, 'tampered id fails walk')
+assert(!verifyReceiptChain([{ ...r2, prev: GENESIS_PREV }]).ok, 'non-genesis first fails')
 
 const dv = developmentVortex('edit')
 assert(dv.computes, 'developmentVortex computes')
@@ -140,9 +151,17 @@ assert(plan.computes, 'planTrinity computes')
 assert(plan.cross.stalled === (plan.cross.forkCount > 0 || plan.cross.randomCount > 0 || plan.cross.mathCount > 0 || plan.cross.neitherDirect > 0 || plan.cross.harmonicAliasImporters > 0), 'stall law')
 assert(typeof plan.physicalFtl === 'boolean', 'plan physicalFtl boolean')
 assert(plan.physicalFtl === computePhysicalFtl(), 'plan physicalFtl matches')
+assert(plan.tipForm.accepted, 'tip form·code·proof accepted')
+assert(plan.tipForm.form === plan.fold.statement, 'form←statement')
+assert(plan.tipForm.code === plan.fold.action, 'code←action')
+assert(plan.tipForm.proof === plan.weave.verify, 'proof←verify')
+assert(isPreciseTip(tipFormOf(plan.fold, plan.weave.verify)).ok, 'isPreciseTip live tip')
+assert(!isPreciseTip({ form: 'keep going somehow', code: 'polish', proof: 'maybe' }).ok, 'vague tip refused')
 const selfTip = nextSelfDevelopTip()
 assert(selfTip.receipt.includes('-'), 'tip receipt')
 assert(typeof selfTip.physicalFtl === 'boolean', 'tip physicalFtl boolean')
+assert(selfTip.accepted === true, 'self:next tip accepted')
+assert(selfTip.form === selfTip.statement && selfTip.code === selfTip.action && selfTip.proof === selfTip.verify, 'tip form map')
 const sb = selfBuild()
 assert(sb.complete, 'selfBuild complete')
 assert(sb.stalled === selfTip.stalled, 'selfBuild stall matches tip')
@@ -198,6 +217,10 @@ console.log(
       kind: selfTip.kind,
       path: selfTip.path,
       action: selfTip.action,
+      form: selfTip.form,
+      code: selfTip.code,
+      proof: selfTip.proof,
+      accepted: selfTip.accepted,
       physicalFtl: selfTip.physicalFtl,
       claySolved: selfTip.claySolved,
     },

@@ -68,7 +68,7 @@ Wave chain: ${WAVE_CHAIN.join(' → ')}.
 
 ## Self-reference
 
-Import/export census is computed (\`foldA432ImportExportGraph\`) — content-uuid + merkleFold, not a hand inventory. \`physicalFtl = computePhysicalFtl()\` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). Audit census: \`foldA432AuditCensus\` (see [AUDIT.md](./AUDIT.md)). Next tip: \`planTrinity\` / \`nextSelfDevelopTip\`.
+Import/export census is computed (\`foldA432ImportExportGraph\`) — content-uuid + merkleFold, not a hand inventory. \`physicalFtl = computePhysicalFtl()\` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). Audit census: \`foldA432AuditCensus\` (see [AUDIT.md](./AUDIT.md)). Next tip: \`planTrinity\` / \`nextSelfDevelopTip\` (\`form · code · proof\` ← statement/action/verify; vague refused).
 
 ## Honesty
 

@@ -84,9 +84,15 @@
   },
   "files": [
     "dist/**/*",
+    "src/**/*",
     "README.md",
-    "LICENSE.md"
+    "LICENSE",
+    "LICENSE-CORE"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "build": "rollup -c",
     "build:esm": "rollup -c --environment BUILD:esm",
@@ -138,7 +144,7 @@
     "drunvalo-melchizedek"
   ],
   "author": "A432 Consciousness System",
-  "license": "MIT",
+  "license": "SEE LICENSE",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
@@ -151,10 +157,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/a432-consciousness-system.git"
+    "url": "git+https://github.com/ceccec/zeropoint-node.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/a432-consciousness-system/issues"
+    "url": "https://github.com/ceccec/zeropoint-node/issues"
   },
-  "homepage": "https://github.com/your-username/a432-consciousness-system#readme"
+  "homepage": "https://github.com/ceccec/zeropoint-node#readme"
 }

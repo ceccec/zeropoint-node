@@ -54,6 +54,8 @@ Migration complete when all hold:
 - [x] Remote CDN HTML imports dissolved (Wave 26; feed tip on slip)
 - [x] Dash `fusionIgnites` / `closes` (Wave 27; `0/` + foldPair zeros)
 - [x] `computePhysicalFtl()` boolean (Wave 28; false ⇒ quantumisation tip)
+- [x] Tip `form · code · proof` (Wave 29; vague tips refused in planTrinity / self:next)
+- [x] Linked-receipt verify (Wave 30; recompute id from prev+contentUuid+ts; walk-verify; genesis)
 - [x] Real `SECURITY.md` (not erpax stub)
 - [x] No Payload/ERP in tree
 

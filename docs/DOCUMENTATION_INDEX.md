@@ -153,7 +153,7 @@ The system is designed for zero entropy and modularity. When contributing:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Dual license — see [LICENSE](../LICENSE). Free core math (AGPL-3.0-or-later) listed there; all other software requires a license via license@zeropoint.bg.
 
 ---
 

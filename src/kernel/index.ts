@@ -14,8 +14,15 @@ export {
   foldIntegrityReceipt,
   ZEROPOINT_NAMESPACE_ROOT,
 } from '../integrity/content-uuid.ts'
-export { appendReceipt, verifyReceiptLink, GENESIS_PREV } from '../integrity/receipt.ts'
-export type { Receipt } from '../integrity/receipt.ts'
+export {
+  appendReceipt,
+  computeReceiptId,
+  receiptPrevId,
+  verifyReceiptLink,
+  verifyReceiptChain,
+  GENESIS_PREV,
+} from '../integrity/receipt.ts'
+export type { Receipt, ReceiptChainVerify } from '../integrity/receipt.ts'
 export {
   foldA432ImportExportGraph,
   importExportGraphTip,
@@ -28,8 +35,20 @@ export {
   planTrinity,
   selfBuild,
   nextSelfDevelopTip,
+  tipFormOf,
+  isPreciseTip,
+  gateTipForm,
+  VAGUE_TIP_RE,
+  CONCRETE_CODE_RE,
+  CONCRETE_PROOF_RE,
 } from './self-develop.ts'
-export type { PlanTrinity, SelfDevelopTip, SelfBuildStatus } from './self-develop.ts'
+export type {
+  PlanTrinity,
+  SelfDevelopTip,
+  SelfBuildStatus,
+  TipForm,
+  TipFormGate,
+} from './self-develop.ts'
 
 import { developmentVortex, foldPair, merkleFold, toUuid, WAVE_CHAIN } from '../0/index.ts'
 import { foldIntegrityReceipt } from '../integrity/content-uuid.ts'

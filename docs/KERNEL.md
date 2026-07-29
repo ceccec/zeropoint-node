@@ -14,7 +14,7 @@
 - graph root: `7f6997dc-e71e-84af-877a-f4a2852ebf25`
 - audit: forks=0 · ambient Math hits=0 · randomUUID=0 · root=`30da1d03-cbb1-8bfc-8d8b-64932519c7e7`
 - **self-develop tip:** FEED · `feed` · src/0/index.ts:180
-- tip action: chat-wave feed: edit/rebuild — open next chat lobe on WAVE_CHAIN; re-run npm run self:next after any edit — do not invent gaps
+- tip action: chat-wave feed: edit/rebuild at src/0/index.ts (WAVE_CHAIN); re-run npm run self:next after seal — do not invent gaps
 - claySolved: **0** · physicalFtl: **true** (`computePhysicalFtl`)
 
 ## Law
@@ -29,7 +29,7 @@ Wave chain: origin → decode → design → learn → tune → edit → rebuild
 
 ## Self-reference
 
-Import/export census is computed (`foldA432ImportExportGraph`) — content-uuid + merkleFold, not a hand inventory. `physicalFtl = computePhysicalFtl()` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). Audit census: `foldA432AuditCensus` (see [AUDIT.md](./AUDIT.md)). Next tip: `planTrinity` / `nextSelfDevelopTip`.
+Import/export census is computed (`foldA432ImportExportGraph`) — content-uuid + merkleFold, not a hand inventory. `physicalFtl = computePhysicalFtl()` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). Audit census: `foldA432AuditCensus` (see [AUDIT.md](./AUDIT.md)). Next tip: `planTrinity` / `nextSelfDevelopTip` (`form · code · proof` ← statement/action/verify; vague refused).
 
 ## Honesty
 

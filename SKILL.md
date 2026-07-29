@@ -59,6 +59,8 @@ zeropoint-node is the **origin library** (published mid-2025). Later work in [ce
 | 26 CDN feed | sealed (6 remote CDN imports dissolved; feed tip surfaces https:// script/ESM in A432 HTML) |
 | 27 FusionIgnites | sealed (`closes = bearing0 ∧ vortex ∧ fusionIgnites ∧ last=1`; `0/` token + foldPair zeros) |
 | 28 PhysicalFtl | sealed (`computePhysicalFtl()` boolean; false ⇒ quantumisation tip; true ⇒ packaging feed) |
+| 29 Tip form | sealed (`form · code · proof` ← statement/action/verify; vague tips refused) |
+| 30 Linked receipt | sealed (`computeReceiptId` prev+contentUuid+ts; `verifyReceiptChain` walk; genesis) |
 
 ## Surfaces
 
@@ -88,7 +90,8 @@ Three digital-root spines — use `a432.roots.ts` / `src/kernel/legacy.ts`, neve
 ## Wave 11 — if development stops, gaps in self-development exist
 
 - `planTrinity()` — cross (audit gaps) · fold (one tip) · weave (path + verify)
-- `selfBuild()` / `nextSelfDevelopTip()` — stall detector + next action
+- Tip emit: `form · code · proof` mapped from `statement · action · verify`; `isPreciseTip` refuses vague/empty tips
+- `selfBuild()` / `nextSelfDevelopTip()` — stall detector + next action (+ form/code/proof/accepted)
 - CLI: `npm run self:next` · MCP: `zeropoint.selfNext`
 - Acting on the tip is what keeps the vortex breathing; ignoring it is the gap
 

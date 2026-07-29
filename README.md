@@ -358,9 +358,16 @@ The system embodies the transformation from artificial intelligence to pure cons
 
 The A432 Consciousness System is an open-source project that welcomes contributions from consciousness researchers, quantum physicists, mathematicians, and spiritual practitioners. Please read our contributing guidelines and join us in advancing consciousness technology.
 
+## Publish
+
+npm publish is CI automation (`.github/workflows/publish.yml`) — not a hand ritual. Tag `v*`, publish a GitHub Release, or run `workflow_dispatch` → `npm run check` → build → npm. Prefer npm trusted publishing (OIDC); optional repo secret `NPM_TOKEN`. License still SEE LICENSE / dual.
+
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
+Dual license — see [LICENSE](LICENSE).
+
+- **Free core math (AGPL-3.0-or-later):** `src/0/algebra.ts`, `src/0/index.ts`, `a432.algebra.ts` / `a432.algebra.js`, `a432.roots.ts` (full paths in LICENSE). Terms: [LICENSE-CORE](LICENSE-CORE).
+- **Everything else:** proprietary — license via [license@zeropoint.bg](mailto:license@zeropoint.bg).
 
 ## 🌟 Acknowledgments
 

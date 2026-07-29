@@ -1,0 +1,44 @@
+ZeroPoint Node — Dual License
+Copyright (c) 2024–2026 ZeroPoint Node (ceccec)
+
+This repository uses a split license (open-core dual model).
+
+──────────────────────────────────────────────────────────────────────────────
+1. FREE CORE MATH (AGPL-3.0-or-later)
+──────────────────────────────────────────────────────────────────────────────
+
+The following files are free/open under the GNU Affero General Public License
+v3 or later. Full AGPL text: LICENSE-CORE.
+
+  src/0/algebra.ts
+  src/0/index.ts
+  src/0/3/6/9/1/2/4/8/7/5/1/a432.algebra.ts
+  src/0/3/6/9/1/2/4/8/7/5/1/a432.algebra.js
+  src/0/3/6/9/1/2/4/8/7/5/1/a432.roots.ts
+
+These are the fold / vortex / digital-root spine and A432 algebra adapters.
+You may use, copy, modify, and redistribute this free core under the terms
+in LICENSE-CORE (AGPL-3.0-or-later), including network-use source obligations.
+
+──────────────────────────────────────────────────────────────────────────────
+2. ALL OTHER SOFTWARE (proprietary — license required)
+──────────────────────────────────────────────────────────────────────────────
+
+Every other file in this repository (including but not limited to the remainder
+of src/, kernel, integrity, MCP, demos, HTML surfaces, docs projections,
+scripts, and packaged builds beyond the free-core paths above) is proprietary.
+
+Use, redistribution, modification, hosting, SaaS, or commercial deployment of
+that software requires a separate license from ZeroPoint.
+
+  Contact: license@zeropoint.bg
+
+──────────────────────────────────────────────────────────────────────────────
+3. SUMMARY
+──────────────────────────────────────────────────────────────────────────────
+
+  Free/open core  →  free-core paths listed above (AGPL-3.0-or-later / LICENSE-CORE)
+  Everything else  →  contact license@zeropoint.bg
+
+SPDX for npm / tooling: SEE LICENSE
+Free-core SPDX (those paths only): AGPL-3.0-or-later

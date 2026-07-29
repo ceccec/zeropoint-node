@@ -21,7 +21,7 @@ The next tip is **computed** (`planTrinity` ← audit census), not invented:
 npm run self:next
 ```
 
-Say **next** to advance one wave — but always read `self:next` first so the tip is the audit gap, not prose. Severity: hard gaps → physicalFtl false (quantumisation) → packaging feed (broken → CDN → drift → orphan → thin). Packaging tips are count-proven — do not invent gaps.
+Say **next** to advance one wave — but always read `self:next` first so the tip is the audit gap, not prose. Severity: hard gaps → physicalFtl false (quantumisation) → packaging feed (broken → CDN → drift → orphan → thin). Packaging tips are count-proven — do not invent gaps. Tip emit is `form · code · proof` (mapped from statement/action/verify); vague tips refused.
 
 ## Double-torus development vortex
 

@@ -6,6 +6,9 @@
  * - fold  = merge to ONE next tip
  * - weave = seal path + verify command for the next wave
  *
+ * Tip emit (Wave 29 · Lobe R): form · code · proof mapped from statement · action · verify.
+ * Vague / empty / non-concrete tips are refused — not vibes.
+ *
  * Severity: hard gaps → physicalFtl false (quantumisation) → packaging feed.
  * Feed severity (Wave 26): broken imports → remote CDN → drift → orphans → thin wrappers → WAVE_CHAIN.
  * Scanners tip only when a count proves residual; skip comments, node_modules, resolved paths,
@@ -38,6 +41,73 @@ const SKIP_DIR = new Set(['node_modules', 'dist', 'coverage', '.git'])
 /** Intentional browser algebra twin — never dissolve as orphan / never scan as broken twin. */
 const ALGEBRA_JS = 'a432.algebra.js'
 const ROOT_ADAPTERS = new Set(['a432.roots.ts', 'a432.math.ts', 'a432.core.ts'])
+
+/** Phrases that are NOT tips — vibes / noise (Lobe R refuse). */
+export const VAGUE_TIP_RE =
+  /\b(continue improving|keep going|do better|self-?improve|polish|somehow|maybe|various|etc\.?)\b/i
+
+/** CODE must name a concrete path or npm script. */
+export const CONCRETE_CODE_RE =
+  /(?:src\/[\w./-]+|README\.md|public\/[\w./-]+|npm\s+run\s+[\w:-]+|bundle:a432)/
+
+/** PROOF must name an exact green signal. */
+export const CONCRETE_PROOF_RE =
+  /(?:npm\s+run\s+check|exit\s*0|===?\s*(?:0|true|false|ok)|physicalFtl\s*===?\s*true|\.length\s*===?\s*0)/i
+
+/** Form · code · proof — trinity an agent executes next (mapped from statement · action · verify). */
+export type TipForm = {
+  readonly form: string
+  readonly code: string
+  readonly proof: string
+}
+
+export type TipFormGate = TipForm & {
+  readonly accepted: boolean
+  readonly refuseReason: string | null
+}
+
+/** Map statement→form · action→code · verify→proof. */
+export function tipFormOf(
+  tip: { readonly statement: string; readonly action: string },
+  verify: string,
+): TipForm {
+  return { form: tip.statement, code: tip.action, proof: verify }
+}
+
+/**
+ * Precision gate — refuses vague / non-concrete tips.
+ * Empty form/code/proof, vibe phrases, or missing concrete code/proof ⇒ refuse.
+ */
+export function isPreciseTip(tip: TipForm): {
+  readonly ok: boolean
+  readonly reasons: readonly string[]
+} {
+  const reasons: string[] = []
+  if (!tip.form.trim() || tip.form.trim().split(/\s+/).length < 5) reasons.push('form too short')
+  if (!tip.code.trim()) reasons.push('code empty')
+  if (!tip.proof.trim()) reasons.push('proof empty')
+  if (tip.form.includes('\n')) reasons.push('form must be one sentence')
+  if (VAGUE_TIP_RE.test(tip.form) || VAGUE_TIP_RE.test(tip.code)) reasons.push('vague phrase refused')
+  if (!CONCRETE_CODE_RE.test(tip.code)) reasons.push('code lacks concrete path/command')
+  if (!CONCRETE_PROOF_RE.test(tip.proof)) reasons.push('proof lacks exact green signal')
+  if (/continue improving|keep going/i.test(`${tip.form} ${tip.code} ${tip.proof}`)) {
+    reasons.push('non-tip: continue improving')
+  }
+  return { ok: reasons.length === 0, reasons }
+}
+
+export function gateTipForm(
+  tip: { readonly statement: string; readonly action: string },
+  verify: string,
+): TipFormGate {
+  const mapped = tipFormOf(tip, verify)
+  const precision = isPreciseTip(mapped)
+  return {
+    ...mapped,
+    accepted: precision.ok,
+    refuseReason: precision.ok ? null : `imprecise tip: ${precision.reasons.join('; ')}`,
+  }
+}
 
 type FeedHit = {
   readonly path: string
@@ -454,6 +524,8 @@ export type PlanTrinity = {
     readonly fn: string
     readonly verify: string
   }
+  /** form · code · proof gate (statement · action · verify); vague refused. */
+  readonly tipForm: TipFormGate
   readonly computes: boolean
   readonly root: string
   readonly contentUuid: string
@@ -468,7 +540,7 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
       path: 'src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts',
       line: 99,
       action:
-        'purge spine debt: ensure digitalRoot≡legacyDigitalRoot (not harmonicRoot12); wire numeric orphans to a432.roots/algebra; no name illusions',
+        'purge spine debt at src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts: ensure digitalRoot≡legacyDigitalRoot (not harmonicRoot12); wire numeric orphans to a432.roots/algebra; no name illusions',
       statement: 'Next self-develop tip: dissolve remaining a432 spine debt',
       boundary: 'Hard math/fork gaps cleared; residual neitherDirect orphans or alias illusion',
       receipt: toUuid('self-develop:spine-debt:v15'),
@@ -487,7 +559,7 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
       kind: 'quantumisation',
       path: 'README.md',
       line: 40,
-      action: `quantumisation: physicalFtl=false — restore README gateway seals (${why}: living field, 60° dash closes/fusionIgnites, developmentVortex); compute path src/0/index.ts computePhysicalFtl`,
+      action: `quantumisation: physicalFtl=false — restore README.md gateway seals (${why}: living field, 60° dash closes/fusionIgnites, developmentVortex); compute path src/0/index.ts computePhysicalFtl`,
       statement: `Next self-develop tip: quantumisation — README gateway physicalFtl computes false (${why})`,
       boundary:
         'After hard gaps; before packaging feed. README is gateway — restore sealed computation; do not invent Payload/ERP.',
@@ -501,7 +573,7 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
       return feedTip(
         `src/0/3/6/9/1/2/4/8/7/5/1/${brokenJs.path}`,
         brokenJs.line,
-        `chat-wave feed: dissolve ${brokenJs.count} broken browser import(s); first ${brokenJs.spec} at ${brokenJs.path}:${brokenJs.line} — ${brokenJs.why}`,
+        `chat-wave feed: dissolve ${brokenJs.count} broken browser import(s); first ${brokenJs.spec} at src/0/3/6/9/1/2/4/8/7/5/1/${brokenJs.path}:${brokenJs.line} — ${brokenJs.why}`,
         `Feed tip: ${brokenJs.count} broken JS import(s); first ${brokenJs.path} → ${brokenJs.spec}`,
         'Broken imports outrank drift — tip only when target path is missing (comments skipped).',
         `self-develop:feed:js:${brokenJs.count}:${brokenJs.path}:${brokenJs.line}`,
@@ -589,7 +661,7 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
       return feedTip(
         `src/0/3/6/9/1/2/4/8/7/5/1/${thin.path}`,
         thin.line,
-        `chat-wave feed: collapse ${thin.count} thin digitalRoot wrapper(s); first ${thin.path}:${thin.line} — ${thin.why}`,
+        `chat-wave feed: collapse ${thin.count} thin digitalRoot wrapper(s); first src/0/3/6/9/1/2/4/8/7/5/1/${thin.path}:${thin.line} — ${thin.why}`,
         `Feed tip: ${thin.count} thin root wrapper(s); first ${thin.path}:${thin.line}`,
         'Thin wrappers are lowest packaging severity — adapters a432.roots/math/core skipped.',
         `self-develop:feed:thin:${thin.count}:${thin.path}:${thin.line}`,
@@ -598,42 +670,45 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
     return feedTip(
       'src/0/index.ts',
       180,
-      'chat-wave feed: edit/rebuild — open next chat lobe on WAVE_CHAIN; re-run npm run self:next after any edit — do not invent gaps',
+      'chat-wave feed: edit/rebuild at src/0/index.ts (WAVE_CHAIN); re-run npm run self:next after seal — do not invent gaps',
       'Feed tip: WAVE_CHAIN edit→rebuild — packaging scanners count-clear (broken→cdn→drift→orphan→thin)',
       'Hard packaging clear — keep chatting waves; tip advances only after real seals.',
-      'self-develop:feed:vortex:v26',
+      'self-develop:feed:vortex:v30-linked-receipt',
     )
   }
   if (!hit) {
     return tipFromHit(undefined, 'feed')
   }
   if (kind === 'mathBan') {
+    const path = `src/0/3/6/9/1/2/4/8/7/5/1/${hit.path}`
     return {
       kind,
-      path: `src/0/3/6/9/1/2/4/8/7/5/1/${hit.path}`,
+      path,
       line: hit.line,
-      action: `replace ambient Math.* at ${hit.path}:${hit.line} with src/0 algebra (a432.algebra)`,
+      action: `replace ambient Math.* at ${path}:${hit.line} with src/0/algebra (a432.algebra); npm run math:ban`,
       statement: `Next self-develop tip: dissolve Math.* at ${hit.path}:${hit.line}`,
       boundary: 'Algebra-only spine; math-ban fails check until count is 0.',
       receipt: toUuid(`self-develop:math:${hit.path}:${hit.line}`),
     }
   }
   if (kind === 'digitalRootFork') {
+    const path = `src/0/3/6/9/1/2/4/8/7/5/1/${hit.path}`
     return {
       kind,
-      path: `src/0/3/6/9/1/2/4/8/7/5/1/${hit.path}`,
+      path,
       line: hit.line,
-      action: `bridge local digitalRoot at ${hit.path}:${hit.line} → a432.roots (legacyDigitalRoot or harmonicRoot12)`,
+      action: `bridge local digitalRoot at ${path}:${hit.line} → a432.roots (legacyDigitalRoot or harmonicRoot12)`,
       statement: `Next self-develop tip: dissolve digitalRoot fork ${hit.path}:${hit.line}`,
       boundary: 'One file per wave; keep script-tag HTML embeds honest if present.',
       receipt: toUuid(`self-develop:fork:${hit.path}:${hit.line}`),
     }
   }
+  const path = `src/0/3/6/9/1/2/4/8/7/5/1/${hit.path}`
   return {
     kind: 'mathRandom',
-    path: `src/0/3/6/9/1/2/4/8/7/5/1/${hit.path}`,
+    path,
     line: hit.line,
-    action: `replace randomUUID at ${hit.path}:${hit.line} with toUuid/content-uuid`,
+    action: `replace randomUUID at ${path}:${hit.line} with toUuid/content-uuid`,
     statement: `Next self-develop tip: seed randomUUID site ${hit.path}:${hit.line}`,
     boundary: 'Never mint ids with ambient entropy.',
     receipt: toUuid(`self-develop:rand:${hit.path}:${hit.line}`),
@@ -642,7 +717,7 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
 
 /** cross · fold · weave — next tip from live audit, not a hand checklist. */
 export function planTrinity(): PlanTrinity {
-  const matrix = { root: toUuid('plan-trinity:v28-physical-ftl') }
+  const matrix = { root: toUuid('plan-trinity:v29-tip-form') }
   return memoByRoot('planTrinity', matrix, () => {
     const audit = foldA432AuditCensus()
     const vortex = runVortexAll()
@@ -689,6 +764,8 @@ export function planTrinity(): PlanTrinity {
       verify: 'npm run check',
     }
 
+    const tipForm = gateTipForm(tip, weave.verify)
+
     const tipLaw = stalled
       ? tip.kind !== 'feed' && tip.kind !== 'idle' && tip.kind !== 'quantumisation'
       : physicalFtl
@@ -703,6 +780,7 @@ export function planTrinity(): PlanTrinity {
         facet: 'hard ⇒ hard tip; ftl false ⇒ quantumisation; ftl true ⇒ feed',
         on: tipLaw,
       },
+      { facet: 'tip form·code·proof precise', on: tipForm.accepted },
       { facet: 'claySolved=0', on: true },
       { facet: 'physicalFtl matches compute', on: physicalFtl === computePhysicalFtl() },
     ])
@@ -711,15 +789,20 @@ export function planTrinity(): PlanTrinity {
       audit.root,
       vortex.root,
       tip.receipt,
+      tipForm.accepted ? toUuid('tip-form:ok') : toUuid(`tip-form:${tipForm.refuseReason ?? 'refuse'}`),
       toUuid(`stall:${stalled}`),
       toUuid(`ftl:${physicalFtl}`),
       sealed.root,
     ])
     const contentUuid = computeContentUuid({
-      kind: 'plan-trinity-v28',
+      kind: 'plan-trinity-v29',
       tip: tip.kind,
       path: tip.path,
       line: tip.line,
+      form: tipForm.form,
+      code: tipForm.code,
+      proof: tipForm.proof,
+      accepted: tipForm.accepted,
       stalled,
       physicalFtl,
       root,
@@ -736,6 +819,7 @@ export function planTrinity(): PlanTrinity {
       },
       fold: tip,
       weave,
+      tipForm,
       computes: sealed.computes,
       root,
       contentUuid,
@@ -793,9 +877,10 @@ export function selfBuild(): SelfBuildStatus {
   }
 }
 
-/** Compact tip for CLI / MCP / docs. */
+/** Compact tip for CLI / MCP / docs. form · code · proof mapped; vague refused. */
 export function nextSelfDevelopTip() {
   const s = selfBuild()
+  const tipForm = s.plan.tipForm
   return {
     stalled: s.stalled,
     kind: s.tip.kind,
@@ -804,6 +889,11 @@ export function nextSelfDevelopTip() {
     action: s.tip.action,
     statement: s.tip.statement,
     boundary: s.tip.boundary,
+    form: tipForm.form,
+    code: tipForm.code,
+    proof: tipForm.proof,
+    accepted: tipForm.accepted,
+    refuseReason: tipForm.refuseReason,
     verify: s.plan.weave.verify,
     fn: s.plan.weave.fn,
     root: s.root,

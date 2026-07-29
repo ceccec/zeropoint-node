@@ -6,6 +6,7 @@
  * doubling streams across seven coils (A-G).
  */
 
+import { PI, max, sqrt } from './0/algebra.ts'
 import MultidimensionalVortexFramework, { VortexMathUtils, VortexToken } from './multidimensional-vortex-framework';
 
 console.log('🌌 MULTIDIMENSIONAL VORTEX-MATH FRAMEWORK DEMONSTRATION\n');
@@ -99,7 +100,7 @@ console.log('├─────┼─────────┼─────�
 
 tokens.slice(0, 7).forEach(token => {
   const coords = framework.mapToHexagonalLattice(token);
-  const magnitude = Math.sqrt(coords.x * coords.x + coords.y * coords.y + coords.z * coords.z);
+  const magnitude = sqrt(coords.x * coords.x + coords.y * coords.y + coords.z * coords.z);
   
   console.log(`│ ${token.id.padEnd(3)} │ ${coords.x.toFixed(3).padEnd(7)} │ ${coords.y.toFixed(3).padEnd(7)} │ ${coords.z.toFixed(3).padEnd(7)} │ ${magnitude.toFixed(3).padEnd(12)} │`);
 });
@@ -136,7 +137,7 @@ for (let phase = 0; phase < 10; phase++) {
   
   if (token) {
     const coords = framework.mapToHexagonalLattice(token);
-    fieldMagnitude = Math.sqrt(coords.x * coords.x + coords.y * coords.y + coords.z * coords.z);
+    fieldMagnitude = sqrt(coords.x * coords.x + coords.y * coords.y + coords.z * coords.z);
   }
   
   console.log(`│ ${String(phase).padEnd(5)} │ ${energy.toFixed(6).padEnd(12)} │ ${fieldMagnitude.toFixed(6).padEnd(15)} │`);
@@ -148,7 +149,7 @@ const fieldPatterns = framework.generateCoilFieldPatterns();
 console.log('Synchronized coil field patterns:');
 fieldPatterns.forEach((pattern, coil) => {
   const avgMagnitude = pattern.reduce((sum, val) => sum + val, 0) / pattern.length;
-  const maxMagnitude = Math.max(...pattern);
+  const maxMagnitude = max(...pattern);
   console.log(`  Coil ${coil}: ${pattern.length} points, avg=${avgMagnitude.toFixed(3)}, max=${maxMagnitude.toFixed(3)}`);
 });
 console.log();
@@ -216,7 +217,7 @@ console.log('│ t   │ X       │ Y       │ Field(x,y,0,t)│');
 console.log('├─────┼─────────┼─────────┼──────────────┤');
 
 for (let i = 0; i < 6; i++) {
-  const t = i * Math.PI / 3;
+  const t = i * PI / 3;
   const spiral = VortexMathUtils.goldenSpiral(t);
   const field = VortexMathUtils.consciousnessFieldEquation(spiral.x, spiral.y, 0, t);
   

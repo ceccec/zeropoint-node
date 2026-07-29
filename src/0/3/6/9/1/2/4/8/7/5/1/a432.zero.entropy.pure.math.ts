@@ -4,6 +4,8 @@
  * All operations use exact mathematical ratios
  */
 
+import { abs, floor, min, pow } from './a432.algebra.ts'
+import { legacyDigitalRoot } from './a432.roots.ts'
 // ============================================================================
 // HARDCODED FREQUENCY TABLES - All Integer Values
 // ============================================================================
@@ -87,15 +89,7 @@ export class ZeroEntropyPureMath {
    * Digital root calculation - pure integer math
    */
   private digitalRoot(n: number): number {
-    while (n >= 10) {
-      let sum = 0;
-      while (n > 0) {
-        sum += n % 10;
-        n = Math.floor(n / 10);
-      }
-      n = sum;
-    }
-    return n;
+    return legacyDigitalRoot(n)
   }
   
   /**
@@ -114,14 +108,14 @@ export class ZeroEntropyPureMath {
    * Calculate LCM using GCD
    */
   private lcm(a: number, b: number): number {
-    return Math.abs(a * b) / this.gcd(a, b);
+    return abs(a * b) / this.gcd(a, b);
   }
   
   /**
    * Integer division with remainder
    */
   private divmod(dividend: number, divisor: number): [number, number] {
-    const quotient = Math.floor(dividend / divisor);
+    const quotient = floor(dividend / divisor);
     const remainder = dividend % divisor;
     return [quotient, remainder];
   }
@@ -172,7 +166,7 @@ export class ZeroEntropyPureMath {
     let result = 1;
     
     while (low <= high) {
-      const mid = Math.floor((low + high) / 2);
+      const mid = floor((low + high) / 2);
       
       // Calculate mid^n
       let power = 1;
@@ -242,7 +236,7 @@ export class ZeroEntropyPureMath {
    * Calculate beat frequency between two frequencies
    */
   public beatFrequency(f1: number, f2: number): number {
-    return Math.abs(f1 - f2);
+    return abs(f1 - f2);
   }
   
   /**
@@ -251,7 +245,7 @@ export class ZeroEntropyPureMath {
   public combinationTones(f1: number, f2: number): { sum: number; difference: number } {
     return {
       sum: f1 + f2,
-      difference: Math.abs(f1 - f2),
+      difference: abs(f1 - f2),
     };
   }
   
@@ -467,7 +461,7 @@ export class ZeroEntropyPureMath {
     // Normalize variance to entropy scale
     // Lower variance = higher order = lower entropy
     const maxVariance = 1000000;
-    const normalizedVariance = Math.min(variance, maxVariance);
+    const normalizedVariance = min(variance, maxVariance);
     
     return maxVariance - normalizedVariance;
   }
@@ -503,10 +497,10 @@ export class ZeroEntropyPureMath {
     for (let i = -octaves; i <= octaves; i++) {
       if (i < 0) {
         // Lower octaves: divide by powers of 2
-        equivalents.push(baseFreq / Math.pow(2, Math.abs(i)));
+        equivalents.push(baseFreq / pow(2, abs(i)));
       } else {
         // Higher octaves: multiply by powers of 2
-        equivalents.push(baseFreq * Math.pow(2, i));
+        equivalents.push(baseFreq * pow(2, i));
       }
     }
     return equivalents;

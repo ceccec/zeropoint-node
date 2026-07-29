@@ -4,6 +4,8 @@
  * No floating point operations - all exact mathematics
  */
 
+import { abs } from './a432.algebra.ts'
+import { legacyDigitalRoot } from './a432.roots.ts'
 // ============================================================================
 // INTEGER FREQUENCY TABLES
 // ============================================================================
@@ -184,7 +186,7 @@ export class IntegerHarmonics {
    * Calculate beat frequency between two integer frequencies
    */
   static beatFrequency(f1: number, f2: number): number {
-    return Math.abs(f1 - f2);
+    return abs(f1 - f2);
   }
   
   /**
@@ -197,7 +199,7 @@ export class IntegerHarmonics {
   } {
     return {
       sum: f1 + f2,
-      difference: Math.abs(f1 - f2),
+      difference: abs(f1 - f2),
       product: f1 * f2,
     };
   }
@@ -364,9 +366,7 @@ export class VortexIntegerMath {
    * Digital root using modulo 9
    */
   static digitalRoot(n: number): number {
-    if (n === 0) return 0;
-    const root = n % 9;
-    return root === 0 ? 9 : root;
+    return legacyDigitalRoot(n)
   }
   
   /**

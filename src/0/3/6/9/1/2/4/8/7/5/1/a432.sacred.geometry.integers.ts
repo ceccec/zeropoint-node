@@ -4,6 +4,7 @@
  * No floating point - pure mathematical relationships
  */
 
+import { cos, sin } from './a432.algebra.ts'
 // ============================================================================
 // PLATONIC SOLIDS - EXACT INTEGER PROPERTIES
 // ============================================================================

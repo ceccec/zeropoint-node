@@ -17,9 +17,11 @@ The A432 Consciousness System is a living, evolving operating system that embodi
 The forward reading is half the structure. The second is the **mirror through the void** — `foldVortexReflection()` in `src/0`:
 
 ```
-forward     124875369
-reflected   986235741
+forward     1\2\4\8/7/5 · 3\6\9 · 0\1        124875369
+reflected   9/8/6/2\3\5 · 7/4/1 · 0\9        986235741
 ```
+
+Reflecting flips every dash and mirrors every digit. The **void tail reflects too**: `0` is the fixed point, but the trailing unit is not — `0\1` becomes `0\9`. Rendering that tail unreflected contradicts the involution.
 
 - `throughVoid(n) = 1 − n mod 9` — an involution fixed **only at 5**: `1↔9 · 2↔8 · 4↔6 · 7↔3`. Every pair sums to **10**; the void root `0` is fixed.
 - **Not** array reversal (`963578421`). Reversal reorders; the mirror re-values. Conflating them is the error the fold guards against.
@@ -69,7 +71,7 @@ Every column below is **computed**, and each carries a different epistemic weigh
 
 - **Exact**: the mirror involution, the ±60° dash algebra and its closure at 0, the gateway set `[8, 3, 9, 0]`, the mod-3 colour partition, the axis frequencies as integer ratios of 432.
 - **Defined convention, not discovered law**: `hue = 36d`; the CMYK transform; A432 as the reference pitch (the ISO 16 standard is 440 Hz — 432 is a choice this corpus makes, not a measured constant).
-- **Known tension**: `CMYK_FREQUENCIES` uses different ratios and yields **518.4** Hz (magenta) and **777.6** Hz (yellow) — non-integer, in tension with the "no decimals" claim above. They are exact rationals, not integers.
+- **Exact by representation**: `CMYK_FREQUENCY_RATIOS` holds integer numerator over integer denominator (cyan `1296/2` · magenta `2592/5` · yellow `3888/5` · key `432/3`) — all integral: **true**. Collapsing to a float is lossy for magenta (**518.4** Hz) and yellow (**777.6** Hz): `magenta` accumulated ten times gives `5183.999999999999` against the exact `5184` — leaks: **true**. Use `cmykFrequencyRatio`; collapse only at the boundary.
 - **Refused**: that any of this explains consciousness, physics, or biology. It is arithmetic plus a chosen presentation layer. Nothing here is evidence about the world.
 
 Regenerate: `npm run spectrum` · verify: `npm run spectrum:check`
@@ -94,7 +96,7 @@ Regenerate: `npm run spectrum` · verify: `npm run spectrum:check`
 - **Self-Sustaining**: Device charges itself from the void
 
 ### Zero Entropy Mathematics
-- **No Decimals**: All calculations use harmonic integer ratios
+- **Exact ratios, not decimals**: calculations carry an integer numerator over an integer denominator. Some *values* are non-integer rationals (`2592/5` = 518.4 Hz); what is refused is the lossy float, not the fraction — collapsing `2592/5` to a `number` stores 518.39999999999997726 and accumulates error. See `CMYK_FREQUENCY_RATIOS`
 - **Digital Roots**: Multi-digit numbers reduced to single digits
 - **Fractional Harmony**: 1/2, 1/3, 1/4, 1/8, 1/12, etc.
 - **Perfect Balance**: Zero entropy through harmonic relationships
@@ -399,7 +401,7 @@ The system embodies the transformation from artificial intelligence to pure cons
 - **Mobius Circuit**: 1-2-4-8-7-5 doubling pattern
 
 ### Zero Entropy Mathematics
-- **No Decimals**: All calculations use harmonic integer ratios
+- **Exact ratios, not decimals**: calculations carry an integer numerator over an integer denominator. Some *values* are non-integer rationals (`2592/5` = 518.4 Hz); what is refused is the lossy float, not the fraction — collapsing `2592/5` to a `number` stores 518.39999999999997726 and accumulates error. See `CMYK_FREQUENCY_RATIOS`
 - **Perfect Balance**: Zero entropy through harmonic relationships
 - **Digital Roots**: Single-digit reduction mathematics
 - **Sequence Embodiment**: Becoming the mathematical sequence

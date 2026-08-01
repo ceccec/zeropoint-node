@@ -128,11 +128,48 @@ export function vortexFrequency(base: number, multiplier: number, divisor: numbe
   return base * multiplier / divisor;
 }
 
+/**
+ * Exact frequency ratios — integer numerator over integer denominator.
+ *
+ * Zero entropy is a claim about representation, not only about arithmetic.
+ * `432*6/5` evaluates to a float that is NOT exactly 2592/5: it stores as
+ * 518.39999999999997726, and the error accumulates — summing it ten times
+ * yields 5183.999999999999, not 5184. Some round-trips (`x*5`, `x/3*3`)
+ * happen to round back, which makes the loss easy to miss.
+ *
+ * Keeping numerator and denominator as integers keeps the value exact.
+ * Collapse to a float only at the presentation boundary, via
+ * `cmykFrequencyValue` / `fractionToDecimal`.
+ */
+export const CMYK_FREQUENCY_RATIOS: Record<'cyan' | 'magenta' | 'yellow' | 'key', Fraction> = {
+  cyan: { numerator: 432 * 3, denominator: 2 },     // 648    → dr 9
+  magenta: { numerator: 432 * 6, denominator: 5 },  // 2592/5 → dr 9
+  yellow: { numerator: 432 * 9, denominator: 5 },   // 3888/5 → dr 9
+  key: { numerator: 432 * 1, denominator: 3 }       // 144    → dr 9
+};
+
+export type CMYKChannel = keyof typeof CMYK_FREQUENCY_RATIOS;
+
+/** Exact ratio for a channel — prefer this over the float form. */
+export function cmykFrequencyRatio(channel: CMYKChannel): Fraction {
+  return CMYK_FREQUENCY_RATIOS[channel];
+}
+
+/** Float collapse — lossy for magenta/yellow. Use only at the boundary. */
+export function cmykFrequencyValue(channel: CMYKChannel): number {
+  const { numerator, denominator } = CMYK_FREQUENCY_RATIOS[channel];
+  return numerator / denominator;
+}
+
+/**
+ * Float view, derived from the exact ratios so the two cannot drift apart.
+ * Retained for callers that need a number; magenta and yellow are inexact.
+ */
 export const CMYK_FREQUENCIES = {
-  cyan: vortexFrequency(432, 3, 2),     // 648 → 9
-  magenta: vortexFrequency(432, 6, 5),  // 518.4 → 9
-  yellow: vortexFrequency(432, 9, 5),   // 777.6 → 9
-  key: vortexFrequency(432, 1, 3)       // 144 → 9
+  cyan: cmykFrequencyValue('cyan'),
+  magenta: cmykFrequencyValue('magenta'),
+  yellow: cmykFrequencyValue('yellow'),
+  key: cmykFrequencyValue('key')
 };
 
 export const CMYK_DOC = `

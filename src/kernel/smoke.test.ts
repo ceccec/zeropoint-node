@@ -96,6 +96,10 @@ assert(reflection.valid, 'foldVortexReflection valid')
 assert(reflection.reflected.join('') === '986235741', 'reflected reading computes')
 assert(throughVoid(throughVoid(7)) === 7 && throughVoid(5) === 5, 'throughVoid involution fixed at 5')
 assert(reflection.gap.join(',') === '3,6,9', 'doubling gap IS the axis')
+assert(reflection.strokeForward === '1\\2\\4\\8/7/5 · 3\\6\\9 · 0\\1', 'forward stroke')
+// Void tail reflects to 0\9 — 0 is fixed, the trailing unit is not.
+assert(reflection.strokeReflected === '9/8/6/2\\3\\5 · 7/4/1 · 0\\9', 'reflected stroke tail 0\\9')
+assert(reflection.tailReflects, 'tail unit reflects rather than staying 1')
 assert(reflection.groupOrder === 54 && reflection.separateProduct === 12, 'AGL(1,Z/9) order 54')
 assert(isUuid(reflection.root), 'reflection root uuid')
 // Mirror is NOT array reversal — guards the two from being conflated.

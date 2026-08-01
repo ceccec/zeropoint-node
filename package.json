@@ -109,6 +109,9 @@
     "mcp:smoke": "node --experimental-strip-types scripts/mcp-smoke.mjs",
     "self:next": "node --experimental-strip-types scripts/self-next.mjs",
     "math:ban": "node scripts/math-ban.mjs",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "spectrum": "node --experimental-strip-types scripts/spectrum-gen.mjs",
     "spectrum:check": "node --experimental-strip-types scripts/spectrum-gen.mjs --check",
     "bundle:a432": "node scripts/build-a432-bundle.mjs",
@@ -154,7 +157,8 @@
     "rollup": "^4.0.0",
     "rollup-plugin-dts": "^6.0.0",
     "tslib": "^2.6.0",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "vitepress": "1.6.4"
   },
   "repository": {
     "type": "git",
@@ -163,5 +167,8 @@
   "bugs": {
     "url": "https://github.com/ceccec/zeropoint-node/issues"
   },
-  "homepage": "https://github.com/ceccec/zeropoint-node#readme"
+  "homepage": "https://github.com/ceccec/zeropoint-node#readme",
+  "dependencies": {
+    "@hotwired/stimulus": "3.2.2"
+  }
 }

@@ -17,10 +17,11 @@ The forward reading alone is half the structure. The second reading is the **mir
 
 ```
 forward     1\2\4\8/7/5 · 3\6\9 · 0\1     VORTEX_SEQUENCE  = 124875369
-reflected   9/8/6/2\3\5 · 7/4/1 · 0\1     VORTEX_MIRROR    = 986235741
+reflected   9/8/6/2\3\5 · 7/4/1 · 0\9     VORTEX_MIRROR    = 986235741
 ```
 
 - `throughVoid(n) = 1 − n mod 9` — an involution fixed **only at 5**: `1↔9 · 2↔8 · 4↔6 · 7↔3 · 5↔5`. Every pair sums to **10**. The void root `0` is fixed.
+- The **void tail reflects**: `0` is the fixed point of `throughVoid`, the trailing unit is not — `0\1` becomes `0\9`. `VORTEX_STROKE_REFLECTED` computes it; the smoke test pins it.
 - **Not** `VORTEX_REVERSE` (`963578421`), which is the array read backwards. Reversal reorders; the mirror re-values. Conflating the two is the error this section exists to prevent — `foldVortexReflection()` asserts they differ.
 
 Three entanglement claims, computed by `foldVortexReflection()` — never asserted:

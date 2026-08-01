@@ -21,6 +21,7 @@ import {
   digitAngleToCMYK,
   vortexColor,
   CMYK_FREQUENCIES,
+  CMYK_FREQUENCY_RATIOS,
 } from '../src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.ts'
 import { frequencyForDigit, hueForDigit } from '../src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 
@@ -75,6 +76,23 @@ const axisHz = VORTEX_AXIS.map((d) => `${d}→**${hzOf(d)}** Hz`).join(' · ')
 const axisHzInteger = VORTEX_AXIS.every((d) => Number.isInteger(hzOf(d)))
 const offAxis = VORTEX_ORBIT.filter((d) => hzOf(d) === null)
 const nonIntegerFreqs = Object.entries(CMYK_FREQUENCIES).filter(([, v]) => !Number.isInteger(v))
+// Exactness is a claim about representation: the ratios stay integral, the
+// float collapse does not. Proven rather than asserted — accumulate and compare.
+const ratiosIntegral = Object.values(CMYK_FREQUENCY_RATIOS).every(
+  (f) => Number.isInteger(f.numerator) && Number.isInteger(f.denominator),
+)
+const leakChannel = nonIntegerFreqs[0]?.[0]
+const leakRatio = leakChannel ? CMYK_FREQUENCY_RATIOS[leakChannel] : null
+let floatSum = 0
+let exactNum = 0
+if (leakRatio) {
+  for (let i = 0; i < 10; i += 1) {
+    floatSum += CMYK_FREQUENCIES[leakChannel]
+    exactNum += leakRatio.numerator
+  }
+}
+const exactSum = leakRatio ? exactNum / leakRatio.denominator : 0
+const floatLeaks = leakRatio ? floatSum !== exactSum : false
 // hue(d) and freq(d) coincide numerically wherever both are defined.
 const hueEqualsHz = VORTEX_AXIS.every((d) => hueForDigit(d) === hzOf(d))
 
@@ -115,7 +133,7 @@ ${table}
 
 - **Exact**: the mirror involution, the ±60° dash algebra and its closure at ${dash.weightedBearing}, the gateway set \`[${stroke.gateways.join(', ')}]\`, the mod-3 colour partition, the axis frequencies as integer ratios of 432.
 - **Defined convention, not discovered law**: \`hue = 36d\`; the CMYK transform; A432 as the reference pitch (the ISO 16 standard is 440 Hz — 432 is a choice this corpus makes, not a measured constant).
-- **Known tension**: \`CMYK_FREQUENCIES\` uses different ratios and yields ${nonIntegerFreqs.map(([k, v]) => `**${v}** Hz (${k})`).join(' and ')} — non-integer, in tension with the "no decimals" claim above. They are exact rationals, not integers.
+- **Exact by representation**: \`CMYK_FREQUENCY_RATIOS\` holds integer numerator over integer denominator (${Object.entries(CMYK_FREQUENCY_RATIOS).map(([k, f]) => `${k} \`${f.numerator}/${f.denominator}\``).join(' · ')}) — all integral: **${ratiosIntegral}**. Collapsing to a float is lossy for ${nonIntegerFreqs.map(([k, v]) => `${k} (**${v}** Hz)`).join(' and ')}: \`${leakChannel}\` accumulated ten times gives \`${floatSum}\` against the exact \`${exactSum}\` — leaks: **${floatLeaks}**. Use \`cmykFrequencyRatio\`; collapse only at the boundary.
 - **Refused**: that any of this explains consciousness, physics, or biology. It is arithmetic plus a chosen presentation layer. Nothing here is evidence about the world.
 
 Regenerate: \`npm run spectrum\` · verify: \`npm run spectrum:check\`

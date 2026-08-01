@@ -2524,10 +2524,31 @@
     return r === 0 ? 9 : r;
   }
   var VORTEX_SEQUENCE = [1, 2, 4, 8, 7, 5, 3, 6, 9];
+  var VORTEX_ORBIT = [1, 2, 4, 8, 7, 5];
+  var VORTEX_AXIS = [3, 6, 9];
   function throughVoid(d) {
     return d === 0 ? 0 : digitalRoot2(1 - d);
   }
   var VORTEX_MIRROR = VORTEX_SEQUENCE.map(throughVoid);
+  var flipDash = (d) => d === "/" ? "\\" : "/";
+  function renderSegment(digits, dashes, mirrored) {
+    return digits.map((d, i) => {
+      const digit = mirrored ? throughVoid(d) : d;
+      const dash = dashes[i];
+      if (dash === void 0) return String(digit);
+      return `${digit}${mirrored ? flipDash(dash) : dash}`;
+    }).join("");
+  }
+  var RING_DASHES = ["\\", "\\", "\\", "/", "/"];
+  var AXIS_DASHES = ["\\", "\\"];
+  function vortexStrokeSegments(mirrored = false) {
+    const ring = renderSegment(VORTEX_ORBIT, RING_DASHES, mirrored);
+    const axis = renderSegment(VORTEX_AXIS, AXIS_DASHES, mirrored);
+    const tail = `0\\${mirrored ? throughVoid(1) : 1}`;
+    return { ring, axis, tail, written: `${ring} \xB7 ${axis} \xB7 ${tail}` };
+  }
+  var VORTEX_STROKE_FORWARD = vortexStrokeSegments(false).written;
+  var VORTEX_STROKE_REFLECTED = vortexStrokeSegments(true).written;
 
   // src/kernel/legacy.ts
   function legacyDigitalRoot(n) {
@@ -2647,18 +2668,25 @@
     yellow: vortexColor(9),
     key: vortexColor(1)
   };
-  function vortexFrequency(base, multiplier, divisor) {
-    return base * multiplier / divisor;
+  var CMYK_FREQUENCY_RATIOS = {
+    cyan: { numerator: 432 * 3, denominator: 2 },
+    // 648    → dr 9
+    magenta: { numerator: 432 * 6, denominator: 5 },
+    // 2592/5 → dr 9
+    yellow: { numerator: 432 * 9, denominator: 5 },
+    // 3888/5 → dr 9
+    key: { numerator: 432 * 1, denominator: 3 }
+    // 144    → dr 9
+  };
+  function cmykFrequencyValue(channel) {
+    const { numerator, denominator } = CMYK_FREQUENCY_RATIOS[channel];
+    return numerator / denominator;
   }
   var CMYK_FREQUENCIES = {
-    cyan: vortexFrequency(432, 3, 2),
-    // 648 → 9
-    magenta: vortexFrequency(432, 6, 5),
-    // 518.4 → 9
-    yellow: vortexFrequency(432, 9, 5),
-    // 777.6 → 9
-    key: vortexFrequency(432, 1, 3)
-    // 144 → 9
+    cyan: cmykFrequencyValue("cyan"),
+    magenta: cmykFrequencyValue("magenta"),
+    yellow: cmykFrequencyValue("yellow"),
+    key: cmykFrequencyValue("key")
   };
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.matrix.ts

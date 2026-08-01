@@ -9,9 +9,11 @@ Legacy path: `03691248751` · VBM `digitalRoot(0)→0` via adapters.
 One structure, read twice — both lines computed, never typed:
 
 ```
-forward     124875369
-reflected   986235741
+forward     1\2\4\8/7/5 · 3\6\9 · 0\1        124875369
+reflected   9/8/6/2\3\5 · 7/4/1 · 0\9        986235741
 ```
+
+The void tail reflects: `0` is fixed, the trailing unit is not — `0\1` becomes `0\9`.
 
 Mirror `throughVoid(n) = 1 − n mod 9` — involution fixed only at 5; every pair sums to 10.
 
@@ -23,4 +25,4 @@ foldVortexReflection().valid: **true**
 
 See [SEQUENCE.md](../SEQUENCE.md).
 
-Receipt: `a8d9a4a1-3d6d-82c5-b2b7-f7ada9ba3532` · set `4652a65c-f3be-864e-a837-ebfb308084a5`
+Receipt: `9a2f4908-5253-8d22-8541-e24bb372689f` · set `4a012ea0-fc15-8fa1-83c2-cf0499bb0bf4`

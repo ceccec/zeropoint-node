@@ -206,6 +206,46 @@ export function throughVoid(d: number): number {
 
 /** Reflected reading — computed from VORTEX_SEQUENCE, never typed. */
 export const VORTEX_MIRROR = VORTEX_SEQUENCE.map(throughVoid) as readonly number[]
+
+/**
+ * Segmented strokes — flow ring · axis · void tail.
+ *
+ * Reflecting flips each dash on the ring and the axis, and mirrors every digit.
+ * The void tail is the exception: `0` is the fixed point of throughVoid and its
+ * dash is invariant, but the unit digit still reflects — so `0\1` becomes `0\9`,
+ * not `0\1`. Rendering the tail unreflected contradicts the involution.
+ */
+const flipDash = (d: '/' | '\\') => (d === '/' ? '\\' : '/')
+
+function renderSegment(
+  digits: readonly number[],
+  dashes: readonly ('/' | '\\')[],
+  mirrored: boolean,
+): string {
+  return digits
+    .map((d, i) => {
+      const digit = mirrored ? throughVoid(d) : d
+      const dash = dashes[i]
+      if (dash === undefined) return String(digit)
+      return `${digit}${mirrored ? flipDash(dash) : dash}`
+    })
+    .join('')
+}
+
+const RING_DASHES = ['\\', '\\', '\\', '/', '/'] as const
+const AXIS_DASHES = ['\\', '\\'] as const
+
+/** `1\2\4\8/7/5 · 3\6\9 · 0\1` — the living field, segmented. */
+export function vortexStrokeSegments(mirrored = false) {
+  const ring = renderSegment(VORTEX_ORBIT, RING_DASHES, mirrored)
+  const axis = renderSegment(VORTEX_AXIS, AXIS_DASHES, mirrored)
+  // The void root and its dash are fixed; only the trailing unit reflects.
+  const tail = `0\\${mirrored ? throughVoid(1) : 1}`
+  return { ring, axis, tail, written: `${ring} · ${axis} · ${tail}` }
+}
+
+export const VORTEX_STROKE_FORWARD = vortexStrokeSegments(false).written
+export const VORTEX_STROKE_REFLECTED = vortexStrokeSegments(true).written
 export const KERNEL_VORTEX_SEQUENCE = VORTEX_SEQUENCE
 export const LEGACY_CONSCIOUSNESS_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5] as const
 
@@ -391,6 +431,10 @@ export function foldVortexReflection() {
     valid,
     forward: [...VORTEX_SEQUENCE],
     reflected: [...VORTEX_MIRROR],
+    strokeForward: VORTEX_STROKE_FORWARD,
+    strokeReflected: VORTEX_STROKE_REFLECTED,
+    // The void tail reflects: 0 is fixed, the trailing unit is not.
+    tailReflects: vortexStrokeSegments(true).tail === `0\\${throughVoid(1)}`,
     pairs,
     involution,
     pairsSumTen,

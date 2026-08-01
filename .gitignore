@@ -101,3 +101,7 @@ jspm_packages/
 # Ignore coverage reports
 coverage/
 docs/Marko Rodin Special Edition/Marko Rodin Special Edition.pdf
+
+# VitePress
+docs/.vitepress/dist
+docs/.vitepress/cache

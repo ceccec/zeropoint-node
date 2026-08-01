@@ -291,13 +291,31 @@ function findUndeclaredPackageImport(): FeedHit | null {
   ])
   const IMP = /(?:from\s+|import\s*\(\s*)['"]([^'".][^'"]*)['"]/g
   const hits: FeedHit[] = []
-  for (const file of walkFiles(SRC_DIR, (n) => /\.(ts|mjs)$/.test(n) && !n.endsWith('.d.ts'))) {
+  // Scanning src/ alone has a blind spot that cost a red CI: the four packages
+  // actually breaking the lint job are imported by eslint.config.mjs at the
+  // repo root, which no src/ walk ever reaches. Build tooling is code too.
+  const rootConfigs = [
+    'eslint.config.mjs',
+    'rollup.config.js',
+    'jest.config.js',
+    'webpack.config.js',
+    'next-sitemap.config.cjs',
+  ]
+    .map((n) => join(REPO_ROOT, n))
+    .filter((p) => existsSync(p))
+  const scriptFiles = existsSync(join(REPO_ROOT, 'scripts'))
+    ? walkFiles(join(REPO_ROOT, 'scripts'), (n) => /\.(ts|mjs|js)$/.test(n))
+    : []
+  const srcFiles = walkFiles(SRC_DIR, (n) => /\.(ts|mjs)$/.test(n) && !n.endsWith('.d.ts'))
+  for (const file of [...srcFiles, ...scriptFiles, ...rootConfigs]) {
     const src = readFileSync(file, 'utf8')
     let m: RegExpExecArray | null
     IMP.lastIndex = 0
     while ((m = IMP.exec(src))) {
       const spec = m[1]!
       if (spec.startsWith('.') || spec.startsWith('/') || spec.startsWith('node:')) continue
+      // `import(`${importPath}`)` is a computed specifier, not a package name.
+      if (spec.includes('${')) continue
       if (isCommentOnly(lineAt(src, m.index))) continue
       // Scoped packages carry their scope: @scope/name.
       const bare = spec.startsWith('@') ? spec.split('/').slice(0, 2).join('/') : spec.split('/')[0]!

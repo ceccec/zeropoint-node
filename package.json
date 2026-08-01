@@ -150,14 +150,19 @@
   "author": "A432 Consciousness System",
   "license": "SEE LICENSE",
   "devDependencies": {
+    "@eslint/js": "10.0.1",
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/node": "24.3.0",
+    "eslint": "10.8.0",
+    "globals": "17.8.0",
+    "jest": "30.4.2",
     "rollup": "^4.0.0",
     "rollup-plugin-dts": "^6.0.0",
     "tslib": "^2.6.0",
     "typescript": "5.8.3",
+    "typescript-eslint": "8.65.0",
     "vitepress": "1.6.4"
   },
   "repository": {

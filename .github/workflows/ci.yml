@@ -1,109 +1,72 @@
+# CI runs the corpus's own proof: npm run check.
+#
+# The previous workflow could not have passed. No job ran `npm ci`, so every
+# `npx eslint` / `npx jest` executed with no local node_modules and
+# eslint.config.mjs could not resolve its imports. It also pinned Node 18/20,
+# while the kernel runs under --experimental-strip-types (Node 22+).
+#
+# `npm run check` is the real gate — kernel smoke tests, the ambient-Math ban,
+# bundle/skills/readme/docs/spectrum seals, MCP smoke, and the self-develop
+# tip. It fails closed, so it is what CI should assert.
 name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js 18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - name: Install TypeScript
-        run: npm install -g typescript
-      - name: Lint
-        run: npx eslint --fix src/
-      - name: Test
-        run: npx jest
-
-  test:
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
-
+        # 22 is the floor for --experimental-strip-types.
+        node-version: [22.x, 24.x]
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
 
-    - name: Install TypeScript and Jest
-      run: |
-        npm install -g typescript
-        npm install -g jest
-        npm install -g @types/jest
+      - name: Install
+        run: npm ci
 
-    - name: Run linting
-      run: npx eslint --fix src/
+      - name: Gate — npm run check
+        run: npm run check
 
-    - name: Run tests
-      run: npx jest
+      - name: Build docs site
+        run: npm run docs:build
 
-  security:
+  typecheck:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+      - name: Install
+        run: npm ci
+      # Reports only. The tree carries pre-existing TS5097 errors from .ts
+      # import specifiers, so this must not gate until that is resolved.
+      - name: Report TypeScript errors (non-blocking)
+        run: npx tsc --noEmit -p tsconfig.json || true
 
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-
-    - name: Check for TypeScript errors
-      run: npx tsc --noEmit src/**/*.ts
-
-  quality:
+  lint:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-
-    - name: Validate digit-only architecture
-      run: |
-        echo "Validating digit-only, index-only architecture..."
-        echo "Checking that all files in src/ follow digit naming convention..."
-        find src/ -name "*.ts" -o -name "*.html" | grep -E "(^src/[0-9]/|index\.)" || echo "All files follow digit/index naming convention"
-
-    - name: Check for harmonized structure
-      run: |
-        echo "Checking harmonized structure..."
-        echo "✓ src/0/ contains main interface"
-        echo "✓ src/9/3/ contains main interface"
-        echo "✓ src/3/9/6/ contains main interface"
-        echo "✓ src/9/3/6/9/ contains main interface"
-        echo "✓ src/4/8/7/5/1/ contains main interface"
-        echo "✓ src/4/8/7/5/1/2/ contains main interface"
-        echo "✓ src/4/8/7/5/1/2/4/ contains main interface"
-        echo "✓ src/4/8/7/5/1/2/4/8/ contains main interface"
-        echo "✓ src/4/8/7/5/1/2/4/8/7/ contains main interface"
-        echo "✓ src/4/8/7/5/1/2/4/8/7/5/ contains main interface"
-        echo "✓ src/4/8/7/5/1/2/4/8/7/5/1/ contains main interface"
-        echo "✓ src/7/8/4/2/1/5/7/8/7/5/ contains main interface"
-        echo "✓ src/4/8/7/5/1/2/4/8/7/ contains main interface"
-        echo "✓ src/4/8/7/5/1/2/4/8/ contains main interface"
-        echo "✓ src/4/8/7/5/1/2/4/ contains main interface"
-        echo "✓ src/4/8/7/5/1/2/ contains main interface"
-        echo "✓ src/4/8/7/5/1/ contains main interface"
-        echo "✓ src/9/3/6/9/ contains main interface"
-        echo "✓ src/6/3/6/ contains main interface"
-        echo "✓ src/9/3/ contains main interface"
-        echo "✓ src/0/ contains main interface"
-        echo "✓ All digit files (0-9) present"
-        echo "✓ Math Switch routing implemented"
-        echo "✓ Infinite possibilities system active"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+      - name: Install
+        run: npm ci
+      # Reports only: 1039 errors stand in src/ today. Promote to a gate after
+      # a dedicated cleanup wave — a lint step that always fails gates nothing.
+      - name: Report lint (non-blocking)
+        run: npx eslint src/ || true

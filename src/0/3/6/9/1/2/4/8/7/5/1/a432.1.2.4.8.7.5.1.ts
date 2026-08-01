@@ -43,8 +43,8 @@ function getCurrentFilename(): string {
 }
 
 function getSequenceFromFilename() {
-  var filename = getCurrentFilename();
-  var match = filename && filename.match(/a432\.([\d\.]+)\.ts$/);
+  const filename = getCurrentFilename();
+  const match = filename && filename.match(/a432\.([\d\.]+)\.ts$/);
   if (!match) return [];
   return match[1].split('.').map(Number);
 }
@@ -159,19 +159,19 @@ function decodeA432Filename(filename) {
 
 // --- Decode first part of filename (a432) into trinities and vortex relations ---
 function decodeA432Prefix() {
-  var filename = getCurrentFilename();
-  var match = filename && filename.match(/^(a\d+)/);
+  const filename = getCurrentFilename();
+  const match = filename && filename.match(/^(a\d+)/);
   if (!match) return {};
-  var prefix = match[1];
+  const prefix = match[1];
   // 'a' is 0, then digits
-  var digits = prefix.replace('a', '0').split('').map(Number);
+  const digits = prefix.replace('a', '0').split('').map(Number);
   // Trinities: [4,3,2] (generative), [3,6,9] (field/axis)
-  var generative = [digits[1], digits[2], digits[3]];
-  var field = [3, 6, 9];
+  const generative = [digits[1], digits[2], digits[3]];
+  const field = [3, 6, 9];
   // Vortex completion: how many 0/+/- needed to complete trinity
-  var missing = 3 - generative.filter(function(d) { return d !== 0; }).length;
+  const missing = 3 - generative.filter(function(d) { return d !== 0; }).length;
   // Example relation: 60° = 1/6 of 360°
-  var angleRelation = 360 / 6;
+  const angleRelation = 360 / 6;
   return {
     a: digits[0],
     generative: generative,
@@ -190,9 +190,9 @@ const AXIS = DIGITS;
 
 // --- Matrix Integrity Check: Enforce Canonical Filename ---
 (function enforceMatrixFilename() {
-  var expected = [1,2,4,8,7,5,1];
-  var actual = DIGITS;
-  var isValid = actual.length === expected.length && actual.every(function(d, i) { return d === expected[i]; });
+  const expected = [1,2,4,8,7,5,1];
+  const actual = DIGITS;
+  const isValid = actual.length === expected.length && actual.every(function(d, i) { return d === expected[i]; });
   if (!isValid) {
     throw new Error('A432 Matrix Integrity Error: This module must be named a432.1.2.4.8.7.5.1.ts and encode the canonical doubling sequence [1,2,4,8,7,5,1].\nIf the filename is changed, the metaphysical matrix is broken and the code will not run.');
   }
@@ -220,15 +220,15 @@ const SOUND_FREQUENCY = soundFrequencyFromTrinity(TRINITY);
 
 // --- Stream (array/generator) from digit sequence ---
 function* streamFromDigits(digits) {
-  for (var i = 0; i < digits.length; i++) yield digits[i];
+  for (let i = 0; i < digits.length; i++) yield digits[i];
 }
 const DIGIT_STREAM = streamFromDigits(DIGITS);
 
 // --- Font family/weight as function of color matrix, using digits only ---
 function fontFromColorIdAndDigits(colorId, digits) {
   // Use digits to select font family and weight
-  var family = 'Font' + (digits[0] || 1);
-  var weight = 100 * ((digits[1] || 1) % 9 + 1);
+  const family = 'Font' + (digits[0] || 1);
+  const weight = 100 * ((digits[1] || 1) % 9 + 1);
   return { family, weight, css: `font-family:${family};font-weight:${weight};` };
 }
 const FONT = fontFromColorIdAndDigits(COLOR_ID, DIGITS);
@@ -258,11 +258,11 @@ if (typeof process !== 'undefined' && process.env?.A432_DIGIT_STREAM_LOG) {
 
 // Generator for each digit in the filename sequence
 function* sequenceGenerator() {
-  var filename = getCurrentFilename();
-  var match = filename && filename.match(/a432\.([\d\.]+)\.ts$/);
+  const filename = getCurrentFilename();
+  const match = filename && filename.match(/a432\.([\d\.]+)\.ts$/);
   if (!match) return;
-  var str = match[1].replace(/\./g, '');
-  var i = 0;
+  const str = match[1].replace(/\./g, '');
+  let i = 0;
   while (i < str.length) {
     yield Number(str[i]);
     i++;
@@ -281,8 +281,8 @@ function* fieldTrinity() {
 
 // Example: generator for color channels from trinity
 function* colorChannelGenerator(trinityGen) {
-  var i = 0;
-  for (var d of trinityGen()) {
+  let i = 0;
+  for (const d of trinityGen()) {
     // Example: scale and yield as color channel
     yield d * 28 + 3;
     i++;
@@ -291,8 +291,8 @@ function* colorChannelGenerator(trinityGen) {
 
 // Example: generator for sound frequency from trinity
 function soundFrequencyFromTrinityGen(trinityGen) {
-  var sum = 0, count = 0;
-  for (var d of trinityGen()) {
+  let sum = 0, count = 0;
+  for (const d of trinityGen()) {
     sum += d;
     count++;
   }
@@ -301,38 +301,38 @@ function soundFrequencyFromTrinityGen(trinityGen) {
 
 // Example: generator for font family/weight from sequence
 function fontGenerator(seqGen) {
-  var i = 0, first = 1, second = 1;
-  for (var d of seqGen()) {
+  let i = 0, first = 1, second = 1;
+  for (const d of seqGen()) {
     if (i === 0) first = d;
     if (i === 1) second = d;
     i++;
   }
-  var family = 'Font' + first;
-  var weight = 100 * ((second % 9) + 1);
+  const family = 'Font' + first;
+  const weight = 100 * ((second % 9) + 1);
   return { family: family, weight: weight, css: 'font-family:' + family + ';font-weight:' + weight + ';' };
 }
 
 // --- a432.uuid: Living, deterministic UUID generator encoding all patterns ---
 function* a432uuid() {
   // Stream digit sequence
-  var seq = '';
-  for (var d of sequenceGenerator()) seq += d;
+  let seq = '';
+  for (const d of sequenceGenerator()) seq += d;
   // Stream generative trinity
-  var tri = '';
-  for (var t of generativeTrinity()) tri += t;
+  let tri = '';
+  for (const t of generativeTrinity()) tri += t;
   // Stream field trinity
-  var fld = '';
-  for (var f of fieldTrinity()) fld += f;
+  let fld = '';
+  for (const f of fieldTrinity()) fld += f;
   // Stream color channels
-  var col = '';
-  for (var c of colorChannelGenerator(generativeTrinity)) col += c;
+  let col = '';
+  for (const c of colorChannelGenerator(generativeTrinity)) col += c;
   // Sound frequency
-  var freq = '' + soundFrequencyFromTrinityGen(generativeTrinity);
+  const freq = '' + soundFrequencyFromTrinityGen(generativeTrinity);
   // Font code
-  var fontObj = fontGenerator(sequenceGenerator);
-  var font = '' + fontObj.family + fontObj.weight;
+  const fontObj = fontGenerator(sequenceGenerator);
+  const font = '' + fontObj.family + fontObj.weight;
   // Concatenate all (no arrays, just string math)
-  var uuid = seq + tri + fld + col + freq + font;
+  const uuid = seq + tri + fld + col + freq + font;
   while (true) yield uuid;
 }
 

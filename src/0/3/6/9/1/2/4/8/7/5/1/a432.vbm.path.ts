@@ -247,7 +247,7 @@ export class VBMPathNavigator {
   // --- Path Visualization ---
   public getPathVisualization(): string {
     let visualization = '';
-    let currentDepth = 0;
+    const currentDepth = 0;
     
     this.nodes.forEach((node, index) => {
       const indent = '  '.repeat(max(0, node.depth));

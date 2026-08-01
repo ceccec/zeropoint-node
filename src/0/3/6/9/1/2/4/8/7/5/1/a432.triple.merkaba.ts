@@ -150,7 +150,7 @@ function calculateTripleMerkabaHarmony(nodes: A432TripleMerkabaNode[]): number {
 }
 
 // Initialize Triple Merkaba vortex system
-let tripleMerkabaSystem: A432TripleMerkabaVortex = {
+const tripleMerkabaSystem: A432TripleMerkabaVortex = {
   trinityVoids: generateTrinityVoids(),
   digitalRootCircuit: generateDigitalRootCircuit(),
   nullSource: generateNullSource(),

@@ -342,7 +342,7 @@ export class IntegerHarmonics {
     // Find n such that 2^n is close to f2/f1
     let ratio = (f2 * 10000) / f1;
     let cents = 0;
-    let power = 10000; // 2^0 * 10000
+    const power = 10000; // 2^0 * 10000
     
     // Binary search for log2
     for (let i = 11; i >= -11; i--) {

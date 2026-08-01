@@ -8,13 +8,17 @@ import { defineConfig } from 'vitepress'
  * VitePress builds docs/ instead, so the generated projections (KERNEL.md,
  * AUDIT.md, SEQUENCE.md, pages/) are the site.
  *
- * base is the project-site path for ceccec/zeropoint-node.
+ * base is '/' because Pages serves this through the custom domain
+ * node.zeropoint.bg at the ROOT, not at the project path. Setting
+ * '/zeropoint-node/' emits asset URLs that 404 on that domain: the page still
+ * returns 200 with its HTML, so the deploy looks green while every stylesheet
+ * and script is missing. Verify assets, not the page status code.
  */
 export default defineConfig({
   title: 'ZeroPoint Node',
   description:
     'Vortex sequence, its reflection through the void, and the computed kernel that proves both.',
-  base: '/zeropoint-node/',
+  base: '/',
   srcDir: '.',
   outDir: '.vitepress/dist',
   cleanUrls: true,

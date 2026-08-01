@@ -401,7 +401,7 @@ export function primes(n: number): number[] {
 
 /** Prime-numbers-squared then reduced to single digits. */
 export function primeSquaredRoots(n: number): number[] {
-  return primes(n).map(p => digitalRoot(p * p));
+  return primes(n).map(p => legacyDigitalRoot(p * p));
 }
 
 // ——————————————————————————————————————————
@@ -414,7 +414,7 @@ export function fibonacci(n: number): number[] {
 }
 
 export function fibonacciRoots(n: number): number[] {
-  return fibonacci(n).map(digitalRoot);
+  return fibonacci(n).map(legacyDigitalRoot);
 }
 
 // ——————————————————————————————————————————

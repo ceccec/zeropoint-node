@@ -4,7 +4,7 @@ import { log } from './a432.algebra.ts'
  * a432.rodin.ts — Science & Math extraction from the Rodin book
  * -----------------------------------------------------------------
  * This module scans every plain-text chapter chunk under the project
- * (directories like src/*/chunks/*.txt) and extracts lines that look
+ * (directories like src/<n>/chunks/<file>.txt) and extracts lines that look
  * mathematical: ones containing numbers, equations, ratios, degrees,
  * frequency references, etc.  The goal is to keep the raw science/math
  * content handy for further analysis while avoiding manual copy-paste.

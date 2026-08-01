@@ -206,7 +206,7 @@ export class A432Color {
       c: round((1 - normalizedHue) * 100),
       m: round(normalizedHue * 100),
       y: round((0.5 - abs(normalizedHue - 0.5)) * 100),
-      k: round(min(normalizedHue, 1 - normalizedHue) * 50)
+      k: round(algMin(normalizedHue, 1 - normalizedHue) * 50)
     };
   }
 
@@ -295,8 +295,8 @@ export class A432Harmonization {
     const baseHue = colors[0].hue;
     return colors.map((color, i) => ({
       hue: (baseHue + (i * 40)) % 360,
-      saturation: max(70, color.saturation),
-      lightness: max(50, color.lightness)
+      saturation: algMax(70, color.saturation),
+      lightness: algMax(50, color.lightness)
     }));
   }
 
@@ -304,7 +304,7 @@ export class A432Harmonization {
    * Harmonize sequences
    */
   static harmonizeSequences(sequences: number[][]): number[][] {
-    const baseLength = max(...sequences.map(seq => seq.length));
+    const baseLength = algMax(...sequences.map(seq => seq.length));
     return sequences.map(seq => {
       const harmonized = [...seq];
       while (harmonized.length < baseLength) {

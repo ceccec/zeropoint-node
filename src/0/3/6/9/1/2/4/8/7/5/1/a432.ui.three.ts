@@ -1,6 +1,7 @@
 import { PI, abs, cos, indexFromSeed, max, min, round, sin, unitFromSeed } from './a432.algebra.ts'
 // a432.ui.three.ts — Full production-ready Three.js UI module for A432 system
 import * as THREE from 'three';
+import { startBreathing } from './a432.breathe.ts';
 // Optionally import metaphysical overlays, blockchain, and A432 math as needed
 // import { logEvent } from './a432.block.chain.event.ts';
 // import { getTrinityAxis, getRodinSequence } from './a432.math.ts';

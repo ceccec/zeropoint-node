@@ -89,7 +89,7 @@ export class A432CmykDisplay {
     // Apply consciousness-based zoom scaling
     const consciousnessFactor = this.calculateConsciousnessFactor();
     this.state.zoom *= factor * consciousnessFactor;
-    this.state.zoom = max(0.1, min(10, this.state.zoom));
+    this.state.zoom = algMax(0.1, algMin(10, this.state.zoom));
   }
 
   /**
@@ -453,13 +453,13 @@ export class A432CmykDisplay {
 
     function zoomIn() {
       displayState.zoom *= 1.2;
-      displayState.zoom = min(10, displayState.zoom);
+      displayState.zoom = algMin(10, displayState.zoom);
       updateDisplay();
     }
 
     function zoomOut() {
       displayState.zoom *= 0.8;
-      displayState.zoom = max(0.1, displayState.zoom);
+      displayState.zoom = algMax(0.1, displayState.zoom);
       updateDisplay();
     }
 

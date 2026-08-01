@@ -249,10 +249,9 @@ const a432LivingMatrix = {
 };
 if (typeof window !== 'undefined') window.a432LivingMatrix = a432LivingMatrix;
 
-// --- Example: Log the living trinity ---
-if (typeof process !== 'undefined' && process.env?.A432_DIGIT_STREAM_LOG) {
-  console.log('A432 Living Trinity:', a432LivingTrinity);
-} 
+// Removed: an example log of `a432LivingTrinity`, an identifier defined
+// nowhere in the tree. Guarded by A432_DIGIT_STREAM_LOG, it could only ever
+// throw ReferenceError if that variable were set. 
 
 // --- Zero-Array, Pure-Generator/Stream Refactor ---
 

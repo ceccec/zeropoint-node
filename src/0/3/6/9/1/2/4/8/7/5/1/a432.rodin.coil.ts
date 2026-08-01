@@ -6,7 +6,7 @@ import { PI, cos, exp, sin } from './a432.algebra.ts'
  * a432.rodin.coil.ts — harmonized with canonical A432 math
  * All Rodin sequence logic uses RODIN_SEQUENCE from a432.math.ts
  */
-import { RODIN_SEQUENCE } from './a432.math.ts';
+import { RODIN_SEQUENCE, rodinAngle } from './a432.math.ts';
 
 /**
  * rodinVortexCycle: Returns n cycles of the Rodin sequence (forward or reverse)

@@ -72,7 +72,7 @@ function getNumPairs(base: number): number {
     case 26: return 2;
     case 50: return 3;
     case 122: return 4;
-    default: return max(1, round(sqrt(base) / 2));
+    default: return max(1, round(algSqrt(base) / 2));
   }
 }
 

@@ -2519,7 +2519,7 @@
   var asAngle = (n) => n;
 
   // src/0/index.ts
-  function digitalRoot2(n) {
+  function digitalRoot(n) {
     const r = (n % 9 + 9) % 9;
     return r === 0 ? 9 : r;
   }
@@ -2527,7 +2527,7 @@
   var VORTEX_ORBIT = [1, 2, 4, 8, 7, 5];
   var VORTEX_AXIS = [3, 6, 9];
   function throughVoid(d) {
-    return d === 0 ? 0 : digitalRoot2(1 - d);
+    return d === 0 ? 0 : digitalRoot(1 - d);
   }
   var VORTEX_MIRROR = VORTEX_SEQUENCE.map(throughVoid);
   var flipDash = (d) => d === "/" ? "\\" : "/";
@@ -2553,7 +2553,7 @@
   // src/kernel/legacy.ts
   function legacyDigitalRoot(n) {
     if (n === 0) return 0;
-    return digitalRoot2(n);
+    return digitalRoot(n);
   }
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts

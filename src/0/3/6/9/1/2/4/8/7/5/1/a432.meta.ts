@@ -92,7 +92,7 @@ export function a432MetaVortex(steps: number = 9, transform: (seq: number[]) => 
  * a432ImpossibilityGateway: Encodes error/impossibility as a gateway to new harmonics.
  * If a stream contains an impossibility (e.g., 0 or negative), transforms it using a harmonizing function.
  */
-export function a432ImpossibilityGateway(seq: number[], harmonize: (n: number) => number = n => abslegacyDigitalRoot(n)): number[] {
+export function a432ImpossibilityGateway(seq: number[], harmonize: (n: number) => number = n => abs(legacyDigitalRoot(n))): number[] {
   return seq.map(n => (n <= 0 ? harmonize(n) : n));
 }
 

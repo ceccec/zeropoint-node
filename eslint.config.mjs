@@ -6,11 +6,20 @@ import { defineConfig } from "eslint/config";
 // Exclude build/output directories globally
 export default defineConfig([
   {
+    // Migrated from .eslintignore, which ESLint 9 no longer reads (it warns
+    // "ESLintIgnoreWarning" and silently ignores the file). None of the extra
+    // patterns match a file under src/ today, so this changes nothing that is
+    // linted — it only removes the deprecation warning and keeps the intent.
     ignores: [
       "dist/**/*",
       "public/**/*",
       "coverage/**/*",
-      "build/**/*"
+      "build/**/*",
+      "vendor/**/*",
+      "**/*.min.js",
+      "**/*.bundle.js",
+      "**/*.gz",
+      "**/*.map"
     ]
   },
   { files: ["src/0/3/6/9/1/2/4/8/7/5/1/**/*.{js,mjs,cjs,ts,mts,cts}"], plugins: { js }, extends: ["js/recommended"] },

@@ -1,8 +1,0 @@
-public/
-dist/
-node_modules/
-vendor/
-*.min.js
-*.bundle.js
-*.gz
-*.map 

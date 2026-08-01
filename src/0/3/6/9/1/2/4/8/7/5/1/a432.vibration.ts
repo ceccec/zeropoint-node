@@ -352,6 +352,14 @@ export const A432VibrationSystem = {
 
 export default A432VibrationSystem; 
 
+// Bridge: vibrating string modes compute from kernel foldStringTheory (Wave 32)
+export {
+  a432StringTheory,
+  vibratingStringModes,
+  compactifiedDimension,
+  stringTheoryProof,
+} from './a432.string.theory.ts'
+
 // a432.vibration.ts
 // Living, harmonized vibration stream/interface
 

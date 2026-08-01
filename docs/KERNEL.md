@@ -10,8 +10,8 @@
 - developmentVortex(verify).computes: **true**
 - runDevelopmentVortexAll().ok: **true**
 - corpus root: `e699073e-f88e-84b0-8696-7082dc19a933`
-- a432 import/export graph: **true** · files=342 · edges=916 · exports=2104
-- graph root: `c745dba9-41bd-837a-9ba5-a114a45de52e`
+- a432 import/export graph: **true** · files=343 · edges=918 · exports=2119
+- graph root: `1ce6f97e-42c4-87a6-9a54-fb76ab0dbf71`
 - audit: forks=0 · ambient Math hits=0 · randomUUID=0 · root=`30da1d03-cbb1-8bfc-8d8b-64932519c7e7`
 - **self-develop tip:** FEED · `feed` · src/0/index.ts:180
 - tip action: chat-wave feed: edit/rebuild at src/0/index.ts (WAVE_CHAIN); re-run npm run self:next after seal — do not invent gaps
@@ -35,4 +35,4 @@ Import/export census is computed (`foldA432ImportExportGraph`) — content-uuid 
 
 Exact: fold, digital root, vortex stroke, import graph fold, audit census, plan trinity, computePhysicalFtl (README gateway). Faithful: torus geometry. Refused: Clay solved (claySolved=0), Payload/ERP port. physicalFtl computes true|false — not a forever-hardcoded 0.
 
-Receipt content-uuid: `34d360fc-0782-8d2f-ac7f-cc40174bd17c`
+Receipt content-uuid: `2e56bd73-d602-8be1-8505-53fab1858917`

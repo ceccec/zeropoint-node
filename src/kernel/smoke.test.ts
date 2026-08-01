@@ -10,8 +10,12 @@ import {
   developmentVortex,
   digitalRoot,
   fold,
+  foldStringTheory,
   foldVortex,
+  foldVortexReflection,
   isUuid,
+  throughVoid,
+  VORTEX_REVERSE,
   KERNEL_SEALED,
   merge,
   toUuid,
@@ -86,6 +90,23 @@ assert(typeof getPath === 'function' && typeof nextSuggestion === 'function', 'n
 assert(uuidV4('purge-seed') === uuidV4('purge-seed'), 'a432.uuid deterministic')
 assert(uuidV4('a') !== uuidV4('b'), 'a432.uuid distinguishes')
 assert(foldVortex().valid, 'foldVortex valid')
+
+const reflection = foldVortexReflection()
+assert(reflection.valid, 'foldVortexReflection valid')
+assert(reflection.reflected.join('') === '986235741', 'reflected reading computes')
+assert(throughVoid(throughVoid(7)) === 7 && throughVoid(5) === 5, 'throughVoid involution fixed at 5')
+assert(reflection.gap.join(',') === '3,6,9', 'doubling gap IS the axis')
+assert(reflection.groupOrder === 54 && reflection.separateProduct === 12, 'AGL(1,Z/9) order 54')
+assert(isUuid(reflection.root), 'reflection root uuid')
+// Mirror is NOT array reversal — guards the two from being conflated.
+assert(reflection.reflected.join(',') !== VORTEX_REVERSE.join(','), 'mirror distinct from reverse')
+
+const stringTheory = foldStringTheory()
+assert(stringTheory.computes, 'foldStringTheory computes')
+assert(stringTheory.compactified.dimensionHint === 11, 'compactified 11 from living field')
+assert(stringTheory.modes.length === 6, 'six vibrating modes')
+assert(stringTheory.livingField === '1\\2\\4\\8/7/5/3\\6\\9/0\\1', 'string living field')
+assert(isUuid(stringTheory.brane) && isUuid(stringTheory.root), 'string roots uuid')
 
 const stroke = vortexStrokeGateways()
 assert(stroke.computes, 'stroke computes')

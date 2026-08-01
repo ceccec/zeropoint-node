@@ -179,20 +179,24 @@ const researchErrorFix = {
 
 ### **2. Dimensional Physics Research**
 ```typescript
-// Implementation: Multi-dimensional physics visualization
+// Implementation: string / worldsheet as living-field fold (not invented FTL)
+import { a432StringTheory, stringTheoryProof } from './a432.string.theory.ts';
+import { foldStringTheory } from '../../../../../../../../../../index.ts';
+
 const dimensionalPhysics = {
-  input: "Physics dimensional data",
-  process: "A432ColorSystem.calculateColorFromDimensionalState()",
-  output: "Physics color mapping",
-  application: "String theory, M-theory visualization"
+  input: 'Living field 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1',
+  process: 'foldStringTheory() / a432StringTheory()',
+  output: 'worldsheet · VORTEX_ORBIT modes · compactified 11',
+  application: 'String theory as fold projection (computes; physicalFtl = computePhysicalFtl())',
+  proof: stringTheoryProof(),
 };
 
 // Error Resolution: If physics dimensions undefined
 const physicsErrorFix = {
-  problem: "Undefined physics dimensions",
-  solution: "Use A432 dimensional constants",
-  implementation: "A432_CONSTANTS.DIMENSIONAL_STATES[dimension]",
-  result: "Valid physics dimensional mapping"
+  problem: 'Undefined physics dimensions',
+  solution: 'Seal living-field stroke + foldStringTheory',
+  implementation: 'foldStringTheory().compactified.dimensionHint === 11',
+  result: 'Valid compactification from living-field digit count',
 };
 ```
 

@@ -56,6 +56,8 @@ Migration complete when all hold:
 - [x] `computePhysicalFtl()` boolean (Wave 28; false ⇒ quantumisation tip)
 - [x] Tip `form · code · proof` (Wave 29; vague tips refused in planTrinity / self:next)
 - [x] Linked-receipt verify (Wave 30; recompute id from prev+contentUuid+ts; walk-verify; genesis)
+- [x] Orbit name collision (Wave 31; `VORTEX_SEQUENCE` 6-orbit → `VORTEX_ORBIT`; feed tip on slip)
+- [x] String theory fold (Wave 32; `foldStringTheory` · compactified 11 from living field; `a432.string.theory`)
 - [x] Real `SECURITY.md` (not erpax stub)
 - [x] No Payload/ERP in tree
 

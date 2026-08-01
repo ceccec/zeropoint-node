@@ -200,23 +200,27 @@ function resolveResearchError(subjectData: any) {
 
 ### **2. Dimensional Physics Research**
 ```typescript
-// Implementation Guide
+// Implementation Guide — string/worldsheet computes from src/0
+import { a432StringTheory, compactifiedDimension, stringTheoryProof } from './a432.string.theory.ts';
+import { foldStringTheory, computePhysicalFtl } from '../../../../../../../../../../index.ts';
+
 const physicsImplementation = {
-  input: "Physics dimensional data",
-  process: "A432ColorSystem.calculateColorFromDimensionalState()",
-  output: "Physics color mapping",
-  errorResolution: "Use A432 dimensional constants",
-  application: "String theory, M-theory visualization"
+  input: 'Living field stroke / VORTEX_ORBIT',
+  process: 'foldStringTheory() via a432.string.theory',
+  output: 'worldsheet · six modes · compactified 11',
+  errorResolution: 'Restore stroke.computes + dash.closes; re-run foldStringTheory',
+  application: 'String theory as fold projection (not spacetime FTL slogan)',
+  proof: stringTheoryProof(),
+  physicalFtl: computePhysicalFtl(),
 };
 
 // Error Resolution Example
-function resolvePhysicsError(physicsData: any) {
-  try {
-    return A432ColorSystem.calculateColorFromDimensionalState(physicsData.dimension);
-  } catch (error) {
-    const dimension = physicsData.dimension || A432_CONSTANTS.FOUNDATION_DIMENSION;
-    return A432ColorSystem.calculateColorFromDimensionalState(dimension);
+function resolvePhysicsError() {
+  const sealed = a432StringTheory();
+  if (!sealed.computes) {
+    return compactifiedDimension(); // tip: restore living-field seals
   }
+  return sealed.compactified;
 }
 ```
 

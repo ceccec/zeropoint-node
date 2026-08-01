@@ -36,11 +36,11 @@ lobeL (ceccec.github.io)  ⇄  throat (foldPair)  ⇄  lobeR (erpax)
 | Layer | Claim |
 | --- | --- |
 | **Exact** | fold, merge, merkle, digital root, vortex doubling mod 9, `computePhysicalFtl()` |
-| **Faithful** | torus / merkaba / animation as projections of folds |
+| **Faithful** | torus / merkaba / animation / string·worldsheet (`foldStringTheory`) as projections of folds |
 | **Refused** | Clay solved (`claySolved=0`), Payload/ERP port, hand-minted ids |
 
 `physicalFtl` computes `true|false` from **README gateway** seals (living field ∧ 60° dash closes incl. fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). False ⇒ self-develop tips **quantumisation**. Not a prose slogan.
 
 ## Status
 
-KERNEL_SEALED = true. Run `npm run check` for the development-vortex census + a432 import/export self-ref fold. Critical a432 bridges are `.ts`-resolvable under strip-types (Wave 9); residual extensionless under `src/` sealed Wave 19–20; browser `a432.algebra.js` export surface sealed Wave 21; HTML→missing `.js` sealed Wave 22; TS→missing `.js` sealed Wave 23; orphan A432 `.js` sealed Wave 24; feed scanners count-proven + severity-ordered Wave 25; remote CDN HTML imports dissolved Wave 26; dash `fusionIgnites` / `closes` sealed Wave 27; `computePhysicalFtl` boolean + quantumisation tip Wave 28 (tip on slip only); tip `form · code · proof` + vague refuse Wave 29; linked-receipt verify (prev+contentUuid+ts recompute · walk · genesis) Wave 30.
+KERNEL_SEALED = true. Run `npm run check` for the development-vortex census + a432 import/export self-ref fold. Critical a432 bridges are `.ts`-resolvable under strip-types (Wave 9); residual extensionless under `src/` sealed Wave 19–20; browser `a432.algebra.js` export surface sealed Wave 21; HTML→missing `.js` sealed Wave 22; TS→missing `.js` sealed Wave 23; orphan A432 `.js` sealed Wave 24; feed scanners count-proven + severity-ordered Wave 25; remote CDN HTML imports dissolved Wave 26; dash `fusionIgnites` / `closes` sealed Wave 27; `computePhysicalFtl` boolean + quantumisation tip Wave 28 (tip on slip only); tip `form · code · proof` + vague refuse Wave 29; linked-receipt verify (prev+contentUuid+ts recompute · walk · genesis) Wave 30; legacy `VORTEX_SEQUENCE` 6-orbit → `VORTEX_ORBIT` Wave 31 (feed tip on slip); string/worldsheet `foldStringTheory` + `a432.string.theory` Wave 32 (compactified 11 = living-field digit count).

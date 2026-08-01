@@ -2523,6 +2523,11 @@
     const r = (n % 9 + 9) % 9;
     return r === 0 ? 9 : r;
   }
+  var VORTEX_SEQUENCE = [1, 2, 4, 8, 7, 5, 3, 6, 9];
+  function throughVoid(d) {
+    return d === 0 ? 0 : digitalRoot2(1 - d);
+  }
+  var VORTEX_MIRROR = VORTEX_SEQUENCE.map(throughVoid);
 
   // src/kernel/legacy.ts
   function legacyDigitalRoot(n) {

@@ -10,8 +10,10 @@ import { fileURLToPath } from 'node:url'
 import {
   KERNEL_SEALED,
   VORTEX_SEQUENCE,
+  VORTEX_REVERSE,
   developmentVortex,
   foldVortex,
+  foldVortexReflection,
   vortexStrokeGateways,
   decodeVortexDashAngles,
   WAVE_CHAIN,
@@ -24,6 +26,7 @@ const outDir = resolve(root, 'docs/pages')
 
 const stroke = vortexStrokeGateways()
 const vortex = foldVortex()
+const reflection = foldVortexReflection()
 const dash = decodeVortexDashAngles()
 const dv = developmentVortex('verify')
 const graph = importExportGraphTip()
@@ -62,8 +65,19 @@ const pages = [
     slug: 'sequence-dual',
     title: 'Sequence dual',
     body: [
-      'Kernel spine: `124875369` + void 0 · `digitalRoot(0)→9`.',
+      `Kernel spine: \`${VORTEX_SEQUENCE.join('')}\` + void 0 · \`digitalRoot(0)→9\`.`,
       'Legacy path: `03691248751` · VBM `digitalRoot(0)→0` via adapters.',
+      'One structure, read twice — both lines computed, never typed:',
+      [
+        '```',
+        `forward     ${reflection.forward.join('')}`,
+        `reflected   ${reflection.reflected.join('')}`,
+        '```',
+      ].join('\n'),
+      `Mirror \`throughVoid(n) = 1 − n mod 9\` — involution fixed only at ${reflection.fixedPoints.join(',')}; every pair sums to 10.`,
+      `Not array reversal (\`${VORTEX_REVERSE.join('')}\`): reversal reorders, the mirror re-values.`,
+      `Entangled: doubling covers the orbit and its gap is exactly \`${reflection.gap.join(',')}\` · \`D∘M∘D⁻¹∘M = x+1\` · \`|⟨D,M⟩| = ${reflection.groupOrder}\` against \`${reflection.separateProduct}\` apart (excess ${reflection.excess}).`,
+      `foldVortexReflection().valid: **${reflection.valid}**`,
       'See [SEQUENCE.md](../SEQUENCE.md).',
     ].join('\n\n'),
   },
@@ -91,9 +105,19 @@ const indexLines = [
   '',
 ]
 
+/**
+ * Per-page receipt — content-addressed over the page's own title + body.
+ * Computed before embedding, so the stamp attests to what the page says.
+ * A set-level receipt over slugs alone cannot: it never moves when a body moves.
+ */
+function receiptOf(p) {
+  return computeContentUuid({ kind: 'docs-page', slug: p.slug, title: p.title, body: p.body })
+}
+
+/** Set root — folds every page receipt, so any body change moves it. */
 const receipt = computeContentUuid({
   kind: 'docs-pages',
-  slugs: pages.map((p) => p.slug),
+  pages: pages.map((p) => ({ slug: p.slug, receipt: receiptOf(p) })),
   stroke: stroke.written,
   vortexValid: vortex.valid,
   graphRoot: graph.root,
@@ -107,7 +131,7 @@ function renderPage(p) {
     '',
     p.body,
     '',
-    `Receipt: \`${receipt}\``,
+    `Receipt: \`${receiptOf(p)}\` · set \`${receipt}\``,
     '',
   ].join('\n')
 }

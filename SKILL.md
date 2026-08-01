@@ -61,6 +61,8 @@ zeropoint-node is the **origin library** (published mid-2025). Later work in [ce
 | 28 PhysicalFtl | sealed (`computePhysicalFtl()` boolean; false ⇒ quantumisation tip; true ⇒ packaging feed) |
 | 29 Tip form | sealed (`form · code · proof` ← statement/action/verify; vague tips refused) |
 | 30 Linked receipt | sealed (`computeReceiptId` prev+contentUuid+ts; `verifyReceiptChain` walk; genesis) |
+| 31 Orbit name | sealed (legacy `VORTEX_SEQUENCE` 6-orbit → `VORTEX_ORBIT` in 2 files; feed tip on slip) |
+| 32 String theory | sealed (`foldStringTheory` · `a432.string.theory`; compactified 11 = living-field digits) |
 
 ## Surfaces
 
@@ -102,7 +104,7 @@ Three digital-root spines — use `a432.roots.ts` / `src/kernel/legacy.ts`, neve
 - `npm run math:ban` — fails `check` on any non-comment `Math.*` on computing surfaces: `src/`, `public/`, `deployment/`, root demos (skips `dist/` gitignored rollup out, `coverage/`, `docs/`, `scripts/`, `node_modules`)
 - `npm run bundle:a432` — regenerate `public/a432.bundle.js` from algebra-clean sources + strip vendor Math
 - `npm run bundle:a432:check` — fail closed if public bundle drifted from `a432.main.ts` (wired into `npm run check`)
-- Feed severity (Wave 28): hard gaps → physicalFtl false (quantumisation) → broken imports (JS / HTML / TS) → remote CDN → drift (bundle / extensionless / algebra.js) → orphans → thin wrappers → WAVE_CHAIN
+- Feed severity (Wave 31): hard gaps → physicalFtl false (quantumisation) → broken imports (JS / HTML / TS) → remote CDN → drift (bundle / extensionless / algebra.js) → orphans → thin wrappers → VORTEX_SEQUENCE/6-orbit name collision → WAVE_CHAIN
 - Each packaging tip states residual **count** + why; skips comments, `node_modules`, resolved paths; keeps `a432.algebra.js` as intentional browser twin
 - `physicalFtl = computePhysicalFtl()` — not hardcoded `0`; false tips quantumisation (restore closes / fusionIgnites / vortex seals)
 - Self-develop prefers `mathBan` tips before digitalRoot forks
@@ -124,4 +126,5 @@ Three digital-root spines — use `a432.roots.ts` / `src/kernel/legacy.ts`, neve
 - Unreferenced A432 `.js` twins dissolved (Wave 24; feed tip on slip; `a432.algebra.js` kept).
 - Remote CDN `https://` script/ESM in A432 HTML dissolved (Wave 26; feed tip on slip).
 - Feed scanners reason with counts (Wave 25); do not invent gaps — tip only when residual count > 0.
+- Legacy `VORTEX_SEQUENCE` naming the Rodin 6-orbit retargeted to `VORTEX_ORBIT` (Wave 31; feed tip on slip).
 - Digit-stream `a432.1*.ts` import `legacyDigitalRoot` from `a432.roots` (see [`docs/DIGIT_STREAMS.md`](docs/DIGIT_STREAMS.md)).

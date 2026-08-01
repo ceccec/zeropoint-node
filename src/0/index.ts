@@ -194,6 +194,18 @@ export const VORTEX_SEQUENCE = [1, 2, 4, 8, 7, 5, 3, 6, 9] as const
 export const VORTEX_REVERSE = [9, 6, 3, 5, 7, 8, 4, 2, 1] as const
 export const VORTEX_ORBIT = [1, 2, 4, 8, 7, 5] as const
 export const VORTEX_AXIS = [3, 6, 9] as const
+
+/**
+ * Mirror through the void — `1 − n mod 9`, an involution fixed only at 5.
+ * Distinct from VORTEX_REVERSE (array reversal): this maps each digit onto its
+ * complement to 10 (1↔9 · 2↔8 · 4↔6 · 7↔3 · 5↔5). The void root 0 is fixed.
+ */
+export function throughVoid(d: number): number {
+  return d === 0 ? 0 : digitalRoot(1 - d)
+}
+
+/** Reflected reading — computed from VORTEX_SEQUENCE, never typed. */
+export const VORTEX_MIRROR = VORTEX_SEQUENCE.map(throughVoid) as readonly number[]
 export const KERNEL_VORTEX_SEQUENCE = VORTEX_SEQUENCE
 export const LEGACY_CONSCIOUSNESS_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5] as const
 
@@ -296,6 +308,116 @@ export function foldVortex() {
   }
 }
 
+/**
+ * The sequence and its reflection — one structure read twice.
+ *
+ * Proves (does not assert) the three entanglement claims over (Z/9Z):
+ *  - halves exchange: mirror(orbit) covers the axis, mirror(axis) lands in the orbit
+ *  - neither reaches the other alone: doubling closes on the orbit; its gap IS the axis
+ *  - commuted, they count: D∘M∘D⁻¹∘M = x↦x+1, and |<D,M>| = 54 against 6·2 = 12 apart
+ *
+ * Boundary: proven group theory over Z/9Z, used as the corpus order of work
+ * (build the axis before the branches; fold, do not climb). No claim outside arithmetic.
+ */
+export function foldVortexReflection() {
+  const digits = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  const pairs = digits.map((d) => {
+    const mirror = throughVoid(d)
+    return { digit: d, mirror, sum: d + mirror, fixed: mirror === d }
+  })
+  const involution = digits.every((d) => throughVoid(throughVoid(d)) === d) && throughVoid(0) === 0
+  const pairsSumTen = pairs.every((p) => p.sum === 10)
+  const fixedPoints = pairs.filter((p) => p.fixed).map((p) => p.digit)
+
+  // Halves exchange: each is the other's image, neither prior.
+  const orbitMirror = VORTEX_ORBIT.map(throughVoid)
+  const axisMirror = VORTEX_AXIS.map(throughVoid)
+  const axisSet = new Set<number>(VORTEX_AXIS)
+  const orbitSet = new Set<number>(VORTEX_ORBIT)
+  const exchangeHalves =
+    VORTEX_AXIS.every((d) => orbitMirror.includes(d)) && axisMirror.every((d) => orbitSet.has(d))
+
+  // Doubling alone closes on the orbit; the gap it never reaches is exactly the axis.
+  const reached = new Set<number>()
+  for (let d = 1, i = 0; i < 9 && !reached.has(d); i += 1) {
+    reached.add(d)
+    d = digitalRoot(d * 2)
+  }
+  const doublingCoversOrbit =
+    reached.size === VORTEX_ORBIT.length && VORTEX_ORBIT.every((d) => reached.has(d))
+  const gap = digits.filter((d) => !reached.has(d))
+  const gapIsAxis = gap.length === axisSet.size && gap.every((d) => axisSet.has(d))
+
+  // <D,M> as permutations of Z/9Z (digit 9 = residue 0).
+  const residues = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+  const asPerm = (f: (x: number) => number) => residues.map((x) => ((f(x) % 9) + 9) % 9)
+  const D = asPerm((x) => x * 2)
+  const M = asPerm((x) => 1 - x)
+  const Dinv = asPerm((x) => x * 5)
+  const after = (g: readonly number[], f: readonly number[]) => f.map((x) => g[x]!)
+  const identity = residues.slice()
+  const seen = new Map<string, readonly number[]>([[identity.join(), identity]])
+  const queue: (readonly number[])[] = [identity]
+  while (queue.length > 0) {
+    const p = queue.shift()!
+    for (const g of [D, M]) {
+      const next = after(g, p)
+      const key = next.join()
+      if (!seen.has(key)) {
+        seen.set(key, next)
+        queue.push(next)
+      }
+    }
+  }
+  const groupOrder = seen.size
+  const commutator = after(D, after(M, after(Dinv, M)))
+  const successor = residues.map((x) => (x + 1) % 9)
+  const commutatorIsSuccessor = commutator.every((v, i) => v === successor[i])
+  const separateProduct = VORTEX_ORBIT.length * 2
+
+  const valid =
+    involution &&
+    pairsSumTen &&
+    fixedPoints.length === 1 &&
+    fixedPoints[0] === 5 &&
+    exchangeHalves &&
+    doublingCoversOrbit &&
+    gapIsAxis &&
+    commutatorIsSuccessor &&
+    groupOrder === 54 &&
+    groupOrder > separateProduct
+
+  return {
+    valid,
+    forward: [...VORTEX_SEQUENCE],
+    reflected: [...VORTEX_MIRROR],
+    pairs,
+    involution,
+    pairsSumTen,
+    fixedPoints,
+    orbitMirror,
+    axisMirror,
+    exchangeHalves,
+    doublingCoversOrbit,
+    gap,
+    gapIsAxis,
+    commutatorIsSuccessor,
+    groupOrder,
+    separateProduct,
+    excess: groupOrder - separateProduct,
+    root: merkleFold([
+      toUuid(`vortex-reflection:forward:${VORTEX_SEQUENCE.join('')}`),
+      toUuid(`vortex-reflection:reflected:${VORTEX_MIRROR.join('')}`),
+      toUuid(`vortex-reflection:group:${groupOrder}:${commutator.join('')}`),
+    ]),
+    statement:
+      'One structure read twice: throughVoid(n)=1-n mod 9 is an involution fixed only at 5; ' +
+      'doubling covers the orbit and its gap is exactly the axis; D∘M∘D⁻¹∘M = x+1 and |<D,M>| = 54.',
+    boundary:
+      'Proven group theory over Z/9Z — AGL(1,Z/9). Used as order of work; no claim outside arithmetic.',
+  }
+}
+
 /** Stroke gateways over the ten-digit tour — four polarity reversals [8,3,9,0]. */
 export function vortexStrokeGateways() {
   const tour = [...VORTEX_SEQUENCE, 0]
@@ -390,6 +512,70 @@ export function asTorus(f: Fold): { x: number; y: number; z: number; lobe: numbe
   const theta = (seedFromText(`${f.merged}:theta`, 4) / 0xffff) * PI * 2
   const phi = (seedFromText(`${f.merged}:phi`, 4) / 0xffff) * PI * 2
   return { ...doubleTorusSurface(theta, phi, digit, lobe), lobe, digit }
+}
+
+/**
+ * foldStringTheory — faithful projection of string / worldsheet / compactification
+ * onto living-field folds. Vibrating modes = VORTEX_ORBIT; worldsheet = fold of
+ * forward↔reverse; compactified “11” = digit count of stroke.written cycle.
+ * Not a physics FTL slogan — physicalFtl stays computePhysicalFtl().
+ */
+export function foldStringTheory() {
+  const stroke = vortexStrokeGateways()
+  const vortex = foldVortex()
+  const dash = decodeVortexDashAngles()
+  const livingDigits = [...stroke.written.matchAll(/\d/g)].map((m) => Number.parseInt(m[0]!, 10))
+  const worldsheet = foldPair(
+    toUuid(`string:worldsheet:forward:${VORTEX_SEQUENCE.join('')}`),
+    toUuid(`string:worldsheet:reverse:${VORTEX_REVERSE.join('')}`),
+  )
+  const modes = VORTEX_ORBIT.map((digit, index) => {
+    const mode = foldPair(toUuid(`string:mode:${index}`), toUuid(`string:digit:${digit}`))
+    return {
+      index,
+      digit,
+      harmonic: digitalRoot(digit * (index + 1)),
+      receipt: mode.merged,
+    }
+  })
+  const axisFold = merkleFold(VORTEX_AXIS.map((d) => toUuid(`string:axis:${d}`)))
+  const brane = foldPair(worldsheet.merged, axisFold)
+  const compactified = {
+    dimensionHint: livingDigits.length,
+    root: digitalRoot(livingDigits.length),
+    livingField: stroke.written,
+    seal: toUuid(`string:compact:${stroke.written}:${livingDigits.length}`),
+  }
+  const sealed = computesGate('fold-string-theory', [
+    { facet: 'worldsheet bidirectional', on: worldsheet.bidirectional },
+    { facet: 'living-field stroke', on: stroke.computes },
+    { facet: 'foldVortex valid', on: vortex.valid },
+    { facet: 'dash closes', on: dash.closes },
+    { facet: 'compactified 11 from living field', on: compactified.dimensionHint === 11 },
+    { facet: 'six vibrating modes', on: modes.length === 6 },
+    { facet: 'brane uuid', on: isUuid(brane.merged) },
+  ])
+  return {
+    ...sealed,
+    worldsheet,
+    brane: brane.merged,
+    modes,
+    orbit: VORTEX_ORBIT,
+    axis: VORTEX_AXIS,
+    compactified,
+    livingField: stroke.written,
+    root: merkleFold([
+      sealed.root,
+      worldsheet.merged,
+      brane.merged,
+      compactified.seal,
+      ...modes.map((m) => m.receipt),
+    ]),
+    statement:
+      'String theory as fold: worldsheet = forward↔reverse; modes = VORTEX_ORBIT; compactified 11 = living-field digit count.',
+    boundary:
+      'Faithful fold projection — not spacetime geometry or FTL. physicalFtl = computePhysicalFtl() only.',
+  }
 }
 
 /**

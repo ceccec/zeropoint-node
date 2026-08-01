@@ -23,9 +23,9 @@ export { digitalRoot, a432Frequency, A432_FREQUENCY, A432_TRINITY } from './a432
 export { calculateA432Consciousness, calculateA432DimensionalState, calculateA432Frequency, calculateDigitalRoot } from './a432.math.ts';
 export { A432_DIGIT_MEANINGS } from './a432.core.ts';
 
-// Add RODIN_VORTEX_SEQUENCE export for Rodin vortex pattern
+// Rodin 6-orbit — kernel VORTEX_ORBIT; not VORTEX_SEQUENCE (9)
 import { A432_SEQUENCE_CONSTANTS } from './a432.sequence.ts';
-export const RODIN_VORTEX_SEQUENCE = A432_SEQUENCE_CONSTANTS.VORTEX_SEQUENCE;
+export const RODIN_VORTEX_SEQUENCE = A432_SEQUENCE_CONSTANTS.VORTEX_ORBIT;
 
 // Alias for legacy compatibility with encryption and other modules
 export const TRINITY = A432_TRINITY;

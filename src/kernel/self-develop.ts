@@ -10,7 +10,8 @@
  * Vague / empty / non-concrete tips are refused — not vibes.
  *
  * Severity: hard gaps → physicalFtl false (quantumisation) → packaging feed.
- * Feed severity (Wave 26): broken imports → remote CDN → drift → orphans → thin wrappers → WAVE_CHAIN.
+ * Feed severity (Wave 31): broken imports → remote CDN → drift → orphans → thin wrappers →
+ * VORTEX_SEQUENCE/6-orbit name collision → WAVE_CHAIN.
  * Scanners tip only when a count proves residual; skip comments, node_modules, resolved paths,
  * and intentional exceptions (keep a432.algebra.js as the browser twin).
  * Idle only when feed has nothing left.
@@ -176,6 +177,34 @@ function targetExists(fromFile: string, spec: string): boolean {
 function siblingTsForJs(fromFile: string, spec: string): boolean {
   if (!spec.endsWith('.js')) return false
   return existsSync(join(dirname(fromFile), spec.replace(/\.js$/i, '.ts')))
+}
+
+/**
+ * Legacy name collision: VORTEX_SEQUENCE bound to the Rodin 6-orbit [1,2,4,8,7,5].
+ * Kernel: VORTEX_SEQUENCE is 9 digits; VORTEX_ORBIT is the 6-orbit. Tip only when count > 0.
+ */
+function findVortexOrbitNameCollision(): FeedHit | null {
+  const COLLISION =
+    /\bVORTEX_SEQUENCE\s*[:=]\s*\[\s*1\s*,\s*2\s*,\s*4\s*,\s*8\s*,\s*7\s*,\s*5\s*\]/g
+  const hits: FeedHit[] = []
+  for (const file of walkFiles(SRC_DIR, (n) => /\.(ts|js|mjs)$/.test(n) && !n.endsWith('.d.ts'))) {
+    const src = readFileSync(file, 'utf8')
+    let m: RegExpExecArray | null
+    COLLISION.lastIndex = 0
+    while ((m = COLLISION.exec(src))) {
+      if (isCommentOnly(lineAt(src, m.index))) continue
+      hits.push({
+        path: relRepo(file),
+        line: lineOf(src, m.index),
+        spec: 'VORTEX_SEQUENCE→VORTEX_ORBIT',
+        count: 0,
+        why: 'VORTEX_SEQUENCE names the Rodin 6-orbit — kernel uses VORTEX_ORBIT; VORTEX_SEQUENCE is 9 digits',
+      })
+    }
+  }
+  if (!hits.length) return null
+  const first = hits[0]!
+  return { ...first, count: hits.length }
 }
 
 /** Thin local digitalRoot bodies that only bridge — packaging debt (lowest feed severity). */
@@ -567,7 +596,7 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
     }
   }
   if (kind === 'feed') {
-    // Severity: broken imports → remote CDN → drift → orphans → thin wrappers → WAVE_CHAIN
+    // Severity: broken imports → remote CDN → drift → orphans → thin wrappers → orbit name → WAVE_CHAIN
     const brokenJs = findBrokenJsImport()
     if (brokenJs) {
       return feedTip(
@@ -667,13 +696,24 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
         `self-develop:feed:thin:${thin.count}:${thin.path}:${thin.line}`,
       )
     }
+    const orbitName = findVortexOrbitNameCollision()
+    if (orbitName) {
+      return feedTip(
+        orbitName.path,
+        orbitName.line,
+        `chat-wave feed: rename ${orbitName.count} VORTEX_SEQUENCE 6-orbit collision(s) → VORTEX_ORBIT; first ${orbitName.path}:${orbitName.line} — ${orbitName.why}`,
+        `Feed tip: ${orbitName.count} VORTEX_SEQUENCE/6-orbit name collision(s); first ${orbitName.path}:${orbitName.line}`,
+        'Name collision after thin — kernel VORTEX_SEQUENCE is 9 digits; 6-orbit is VORTEX_ORBIT.',
+        `self-develop:feed:orbit-name:${orbitName.count}:${orbitName.path}:${orbitName.line}`,
+      )
+    }
     return feedTip(
       'src/0/index.ts',
       180,
       'chat-wave feed: edit/rebuild at src/0/index.ts (WAVE_CHAIN); re-run npm run self:next after seal — do not invent gaps',
-      'Feed tip: WAVE_CHAIN edit→rebuild — packaging scanners count-clear (broken→cdn→drift→orphan→thin)',
+      'Feed tip: WAVE_CHAIN edit→rebuild — packaging scanners count-clear (broken→cdn→drift→orphan→thin→orbit)',
       'Hard packaging clear — keep chatting waves; tip advances only after real seals.',
-      'self-develop:feed:vortex:v30-linked-receipt',
+      'self-develop:feed:vortex:v31-orbit-name',
     )
   }
   if (!hit) {

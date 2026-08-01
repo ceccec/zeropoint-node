@@ -24,8 +24,8 @@ import {
 
 // === A432 SEQUENCE CONSTANTS ===
 export const A432_SEQUENCE_CONSTANTS = {
-  // Rodin Vortex Pattern (1→2→4→8→7→5→1)
-  VORTEX_SEQUENCE: [1, 2, 4, 8, 7, 5],
+  // Rodin 6-orbit (1→2→4→8→7→5→1) — kernel name is VORTEX_ORBIT; not VORTEX_SEQUENCE (9)
+  VORTEX_ORBIT: [1, 2, 4, 8, 7, 5],
   
   // Trinity Gateway (3→6→9)
   TRINITY_SEQUENCE: [3, 6, 9],
@@ -79,7 +79,7 @@ export interface A432ConsciousnessSequence extends A432Sequence {
  * Create A432 Vortex Sequence
  */
 export function createA432VortexSequence(): A432VortexSequence {
-  const sequence = A432_SEQUENCE_CONSTANTS.VORTEX_SEQUENCE;
+  const sequence = A432_SEQUENCE_CONSTANTS.VORTEX_ORBIT;
   const vortexFlow = sequence.map(digit => digit);
   const digitalRoots = sequence.map(digit => digitalRoot(digit));
   const harmoniousStates = digitalRoots.map(root => getNextHarmoniousState(root));

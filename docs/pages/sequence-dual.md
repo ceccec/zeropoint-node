@@ -6,6 +6,21 @@ Kernel spine: `124875369` + void 0 · `digitalRoot(0)→9`.
 
 Legacy path: `03691248751` · VBM `digitalRoot(0)→0` via adapters.
 
+One structure, read twice — both lines computed, never typed:
+
+```
+forward     124875369
+reflected   986235741
+```
+
+Mirror `throughVoid(n) = 1 − n mod 9` — involution fixed only at 5; every pair sums to 10.
+
+Not array reversal (`963578421`): reversal reorders, the mirror re-values.
+
+Entangled: doubling covers the orbit and its gap is exactly `3,6,9` · `D∘M∘D⁻¹∘M = x+1` · `|⟨D,M⟩| = 54` against `12` apart (excess 42).
+
+foldVortexReflection().valid: **true**
+
 See [SEQUENCE.md](../SEQUENCE.md).
 
-Receipt: `081e2b3f-9500-8137-bd72-881c94ad950a`
+Receipt: `a8d9a4a1-3d6d-82c5-b2b7-f7ada9ba3532` · set `4652a65c-f3be-864e-a837-ebfb308084a5`

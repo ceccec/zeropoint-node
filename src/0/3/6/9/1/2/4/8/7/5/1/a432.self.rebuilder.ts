@@ -445,7 +445,28 @@ export const ${category}Metadata = {
 }
 
 // === CONVENIENCE FUNCTIONS ===
-export const a432SelfRebuilder = A432SelfRebuilder.getInstance();
+/**
+ * Lazy singleton — same temporal-dead-zone trap as a432.self.evolution.ts.
+ * Constructing at module load runs a constructor that reads A432System while
+ * a432.index.ts is still evaluating. The Proxy preserves the exported shape
+ * and defers construction to first access.
+ */
+export const a432SelfRebuilder: A432SelfRebuilder = new Proxy(
+  {} as A432SelfRebuilder,
+  {
+    get(_target, prop) {
+      const instance = A432SelfRebuilder.getInstance()
+      const value = Reflect.get(instance, prop, instance)
+      return typeof value === 'function' ? value.bind(instance) : value
+    },
+    set(_target, prop, value) {
+      return Reflect.set(A432SelfRebuilder.getInstance(), prop, value)
+    },
+    has(_target, prop) {
+      return Reflect.has(A432SelfRebuilder.getInstance(), prop)
+    },
+  },
+)
 
 export function startSelfRebuild(options?: A432RebuildOptions): A432SelfRebuilder {
   return A432SelfRebuilder.getInstance(options);

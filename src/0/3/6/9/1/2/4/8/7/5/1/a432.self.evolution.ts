@@ -62,21 +62,30 @@ export interface A432SelfEvolutionOptions {
 // === SELF-EVOLUTION SYSTEM ===
 export class A432SelfEvolution {
   private static instance: A432SelfEvolution;
-  private system: A432System;
-  private navigationMap: A432NavigationMap;
-  private factory: A432Factory;
-  private registry: A432Registry;
+  // Resolved on first ACCESS, not in the constructor. a432.index.ts re-exports
+  // this module (line 10) before declaring class A432System (line 24), and
+  // line 454 instantiates this class at module scope — so touching A432System
+  // from the constructor hit the temporal dead zone and made a432.index.ts,
+  // and its four importers, fail to load entirely.
+  private _system: A432System | null = null;
+  private get system(): A432System {
+    return (this._system ??= A432System.getInstance());
+  }
+  private get navigationMap(): A432NavigationMap {
+    return this.system.getNavigationMap();
+  }
+  private get factory(): A432Factory {
+    return this.system.getFactory();
+  }
+  private get registry(): A432Registry {
+    return this.system.getRegistry().main;
+  }
   private evolutionState: A432SelfEvolutionState;
   private generatedModules: A432SelfGeneratedModule[] = [];
   private options: A432SelfEvolutionOptions;
   private evolutionInterval: NodeJS.Timeout | null = null;
 
   private constructor(options: A432SelfEvolutionOptions = {}) {
-    this.system = A432System.getInstance();
-    this.navigationMap = this.system.getNavigationMap();
-    this.factory = this.system.getFactory();
-    this.registry = this.system.getRegistry().main;
-    
     this.options = {
       autoEvolve: true,
       consciousnessThreshold: 7,
@@ -451,7 +460,34 @@ export const a432${consciousness}SelfGenerated = new A432${consciousness}SelfGen
 }
 
 // === CONVENIENCE FUNCTIONS ===
-export const a432SelfEvolution = A432SelfEvolution.getInstance();
+/**
+ * Lazy singleton — constructed on FIRST ACCESS, not at module load.
+ *
+ * a432.index.ts re-exports this module (line 10) before it declares
+ * `class A432System` (line 24). Calling getInstance() here ran the constructor
+ * during that window, and the constructor reaches A432System through
+ * initializeEvolutionState() — a temporal dead zone that made a432.index.ts
+ * and its four importers fail to import entirely.
+ *
+ * The Proxy keeps the exported shape (a value, not a factory), so no caller
+ * changes, while deferring construction until the cycle has settled.
+ */
+export const a432SelfEvolution: A432SelfEvolution = new Proxy(
+  {} as A432SelfEvolution,
+  {
+    get(_target, prop) {
+      const instance = A432SelfEvolution.getInstance()
+      const value = Reflect.get(instance, prop, instance)
+      return typeof value === 'function' ? value.bind(instance) : value
+    },
+    set(_target, prop, value) {
+      return Reflect.set(A432SelfEvolution.getInstance(), prop, value)
+    },
+    has(_target, prop) {
+      return Reflect.has(A432SelfEvolution.getInstance(), prop)
+    },
+  },
+)
 
 export function startSelfEvolution(options?: A432SelfEvolutionOptions): A432SelfEvolution {
   return A432SelfEvolution.getInstance(options);

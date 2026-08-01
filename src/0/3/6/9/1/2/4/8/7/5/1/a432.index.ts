@@ -261,7 +261,28 @@ export class A432System {
 }
 
 // === GLOBAL INSTANCE ===
-export const a432System = A432System.getInstance();
+/**
+ * Lazy singleton — completes the cycle fix.
+ *
+ * a432.index.ts and a432.self.evolution.ts import each other, and the
+ * A432System constructor reads a432SelfEvolution. Whichever module is entered
+ * FIRST, the other is still mid-evaluation, so an eager getInstance() here hit
+ * the temporal dead zone from one direction even after the other side was
+ * deferred. Both ends must be lazy for the cycle to settle.
+ */
+export const a432System: A432System = new Proxy({} as A432System, {
+  get(_target, prop) {
+    const instance = A432System.getInstance()
+    const value = Reflect.get(instance, prop, instance)
+    return typeof value === 'function' ? value.bind(instance) : value
+  },
+  set(_target, prop, value) {
+    return Reflect.set(A432System.getInstance(), prop, value)
+  },
+  has(_target, prop) {
+    return Reflect.has(A432System.getInstance(), prop)
+  },
+})
 
 // === AUTO-INITIALIZATION ===
 if (typeof global !== 'undefined') {

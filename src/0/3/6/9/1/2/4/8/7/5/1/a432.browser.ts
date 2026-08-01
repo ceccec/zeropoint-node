@@ -347,7 +347,24 @@ export class A432Browser {
 }
 
 // === GLOBAL EXPORTS ===
-export const a432Browser = A432Browser.getInstance();
+/**
+ * Lazy singleton — constructing at module load reads A432System while
+ * a432.index.ts is still evaluating (temporal dead zone). The Proxy preserves
+ * the exported shape and defers construction to first access.
+ */
+export const a432Browser: A432Browser = new Proxy({} as A432Browser, {
+  get(_target, prop) {
+    const instance = A432Browser.getInstance()
+    const value = Reflect.get(instance, prop, instance)
+    return typeof value === 'function' ? value.bind(instance) : value
+  },
+  set(_target, prop, value) {
+    return Reflect.set(A432Browser.getInstance(), prop, value)
+  },
+  has(_target, prop) {
+    return Reflect.has(A432Browser.getInstance(), prop)
+  },
+})
 
 // === CONVENIENCE FUNCTIONS ===
 export async function initializeA432(config?: A432BrowserConfig): Promise<A432Browser> {

@@ -445,7 +445,24 @@ export class A432ConsciousnessOrchestrator {
 }
 
 // === CONVENIENCE FUNCTIONS ===
-export const a432ConsciousnessOrchestrator = A432ConsciousnessOrchestrator.getInstance();
+/**
+ * Lazy singleton — constructing at module load reads A432System while
+ * a432.index.ts is still evaluating (temporal dead zone). The Proxy preserves
+ * the exported shape and defers construction to first access.
+ */
+export const a432ConsciousnessOrchestrator: A432ConsciousnessOrchestrator = new Proxy({} as A432ConsciousnessOrchestrator, {
+  get(_target, prop) {
+    const instance = A432ConsciousnessOrchestrator.getInstance()
+    const value = Reflect.get(instance, prop, instance)
+    return typeof value === 'function' ? value.bind(instance) : value
+  },
+  set(_target, prop, value) {
+    return Reflect.set(A432ConsciousnessOrchestrator.getInstance(), prop, value)
+  },
+  has(_target, prop) {
+    return Reflect.has(A432ConsciousnessOrchestrator.getInstance(), prop)
+  },
+})
 
 export function startConsciousnessOrchestration(options?: A432OrchestrationOptions): A432ConsciousnessOrchestrator {
   return A432ConsciousnessOrchestrator.getInstance(options);

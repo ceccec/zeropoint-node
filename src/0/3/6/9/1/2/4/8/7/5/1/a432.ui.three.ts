@@ -1096,8 +1096,8 @@ export class A432ThreeUI {
 
   // Advanced test harness: simulate events
   static simulateEvents(ui: A432ThreeUI) {
-    setInterval(() => { breatheEmitter.emit('breathe', { value: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:fri:0", (9)|0 || 1), phase: 'inhale', timestamp: Date.now() }); }, 3000);
-    setInterval(() => { pulseEmitter.emit('pulse', { value: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:fri:1", (9)|0 || 1), timestamp: Date.now() }); }, 4000);
+    setInterval(() => { breatheEmitter.emit('breathe', { value: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:fri:0", 9), phase: 'inhale', timestamp: Date.now() }); }, 3000);
+    setInterval(() => { pulseEmitter.emit('pulse', { value: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:fri:1", 9), timestamp: Date.now() }); }, 4000);
     setInterval(() => { intuitEmitter.emit('intuit', { insight: 'Aha!', confidence: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:11"), timestamp: Date.now() }); }, 5000);
     setInterval(() => { reflectEmitter.emit('reflect', { thought: 'Deep thought', depth: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:12"), timestamp: Date.now() }); }, 6000);
     setInterval(() => { moveEmitter.emit('move', { direction: 'up', magnitude: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:13")*3, timestamp: Date.now() }); }, 7000);

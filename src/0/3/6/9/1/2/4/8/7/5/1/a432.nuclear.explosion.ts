@@ -223,7 +223,7 @@ export class A432NuclearExplosion {
     
     const nuclearState = this.determineNuclearState(consciousness, explosionStrength);
     const cmyk = this.generateExplosionCmyk(streamA, streamB, consciousness);
-    const chainReactionCount = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:0", (10)|0 || 1) + 1;
+    const chainReactionCount = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:0", 10) + 1;
     const energyReleased = 432 * consciousness * chainReactionCount;
     
     const explosion: NuclearExplosion = {
@@ -624,8 +624,8 @@ export class A432NuclearExplosion {
       const streamB = streamsB[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:2", (streamsB.length)|0 || 1)];
       const explosionType = explosionTypes[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:3", (explosionTypes.length)|0 || 1)];
       const nuclearState = nuclearStates[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:4", (nuclearStates.length)|0 || 1)];
-      const chainReactionCount = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:5", (10)|0 || 1) + 1;
-      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:6", (4)|0 || 1) + 7;
+      const chainReactionCount = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:5", 10) + 1;
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.nuclear.explosion.ts:fri:6", 4) + 7;
       const energyReleased = 432 * consciousness * chainReactionCount;
       
       const newExplosion = {

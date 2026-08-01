@@ -911,7 +911,7 @@ export class A432CmykUniversalLinking {
         source,
         target,
         linkStrength: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:15") * 0.2),
-        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:3", (4)|0 || 1) + 7,
+        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:3", 4) + 7,
         cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:16") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:17") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:18") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:19") * 100 },
         linkType,
         description: \`New living \${linkType} link between \${source} and \${target}\`,
@@ -932,7 +932,7 @@ export class A432CmykUniversalLinking {
       
       const newRating = {
         entity,
-        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:6", (4)|0 || 1) + 7,
+        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:6", 4) + 7,
         compatibility: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:21") * 0.2),
         possibility: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:22") * 0.2),
         cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:23") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:24") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:25") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:26") * 100 },
@@ -955,7 +955,7 @@ export class A432CmykUniversalLinking {
       
       const newIndex = {
         index,
-        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:9", (4)|0 || 1) + 7,
+        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:fri:9", 4) + 7,
         coverage: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:28") * 0.2),
         completeness: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:29") * 0.2),
         cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:30") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:31") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:32") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.universal.linking.ts:rnd:33") * 100 },

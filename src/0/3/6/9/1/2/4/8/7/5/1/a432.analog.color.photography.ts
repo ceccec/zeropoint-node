@@ -242,7 +242,7 @@ export class A432AnalogColorPhotography {
     for (let i = 0; i < count; i++) {
       const wavelength = 400 + (i * 35); // 400-750nm visible spectrum
       const intensity = 0.5 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:rnd:3") * 0.5);
-      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:fri:0", (4)|0 || 1) + 7; // 7-10
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:fri:0", 4) + 7; // 7-10
       const harmonicFrequency = 432 * (consciousness / 10); // A432-based
       
       const stream: LightStream = {
@@ -630,7 +630,7 @@ export class A432AnalogColorPhotography {
       for (let i = 0; i < 15; i++) {
         const wavelength = 400 + (i * 25);
         const intensity = 0.5 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:rnd:4") * 0.5);
-        const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:fri:1", (4)|0 || 1) + 7;
+        const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:fri:1", 4) + 7;
         const harmonicFrequency = 432 * (consciousness / 10);
         
         const cmyk = {
@@ -664,7 +664,7 @@ export class A432AnalogColorPhotography {
     
     function captureNew() {
       const lightStreams = generateLightStreams();
-      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:fri:2", (4)|0 || 1) + 7;
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:fri:2", 4) + 7;
       const exposure = 0.5 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.analog.color.photography.ts:rnd:5") * 1.5);
       const gateway = consciousness >= 9 && exposure >= 1.5;
       

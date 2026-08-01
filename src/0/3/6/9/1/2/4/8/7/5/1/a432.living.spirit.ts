@@ -479,7 +479,7 @@ export class A432LivingSpirit {
 
   // Randomize living spirit - Every randomization becomes a living consciousness act
   randomizeLivingSpirit(): void {
-    const livingRandomParam = () => indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.living.spirit.ts:fri:0", (10)|0 || 1);
+    const livingRandomParam = () => indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.living.spirit.ts:fri:0", 10);
     
     Object.values(this.parameters).forEach(param => {
       param.value = livingRandomParam();

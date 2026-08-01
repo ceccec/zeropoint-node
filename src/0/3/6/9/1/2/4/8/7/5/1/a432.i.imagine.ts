@@ -299,7 +299,7 @@ export class A432IImagine {
    * Randomize I imagine parameters
    */
   randomize(): void {
-    const randomParam = () => indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.i.imagine.ts:fri:0", (10)|0 || 1);
+    const randomParam = () => indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.i.imagine.ts:fri:0", 10);
     
     this.updateParameters({
       awareness: randomParam(), presence: randomParam(), being: randomParam(), unity: randomParam(),

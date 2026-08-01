@@ -143,7 +143,7 @@ function animateBlockchainStream() {
   audioBtn.style.top = '8px';
   audioBtn.style.zIndex = '10001';
   audioBtn.onclick = () => {
-    const freq = 432 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:0", (432)|0 || 1);
+    const freq = 432 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:0", 432);
     const audioStream = generateA432AudioStream({ frequency: freq });
     recordEvent(blockchain, 'audio', 'A432Audio', { frequency: freq, audioStream });
   };
@@ -156,10 +156,10 @@ function animateBlockchainStream() {
   soundBtn.style.top = '8px';
   soundBtn.style.zIndex = '10001';
   soundBtn.onclick = () => {
-    const freq = 432 * (1 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:1", (3)|0 || 1));
+    const freq = 432 * (1 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:1", 3));
     const soundEvent = handleSoundEvent(freq, 1, Date.now());
     recordEvent(blockchain, 'sound', 'A432Sound', soundEvent);
-    playTrinitySound(3 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:2", (3)|0 || 1));
+    playTrinitySound(3 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:2", 3));
   };
   containerEl.appendChild(soundBtn);
   // Add a button to trigger a heat/vibration event
@@ -580,15 +580,15 @@ function animateBlockchainStream() {
   // Patch UI buttons to use logSessionEvent
   addBtn.onclick = () => { logSessionEvent('uiDemo', 'A432UI', { time: Date.now() }); };
   audioBtn.onclick = () => {
-    const freq = 432 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:3", (432)|0 || 1);
+    const freq = 432 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:3", 432);
     const audioStream = generateA432AudioStream({ frequency: freq });
     logSessionEvent('audio', 'A432Audio', { frequency: freq, audioStream });
   };
   soundBtn.onclick = () => {
-    const freq = 432 * (1 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:4", (3)|0 || 1));
+    const freq = 432 * (1 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:4", 3));
     const soundEvent = handleSoundEvent(freq, 1, Date.now());
     logSessionEvent('sound', 'A432Sound', soundEvent);
-    playTrinitySound(3 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:5", (3)|0 || 1));
+    playTrinitySound(3 + indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:fri:5", 3));
   };
   heatBtn.onclick = () => {
     const temp = 36 + unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts:rnd:7") * 3;

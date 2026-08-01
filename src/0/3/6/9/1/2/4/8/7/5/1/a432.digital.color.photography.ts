@@ -275,7 +275,7 @@ export class A432DigitalColorPhotography {
       const x = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:0", (width)|0 || 1);
       const y = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:1", (height)|0 || 1);
       const intensity = 0.5 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:rnd:7") * 0.5);
-      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:2", (4)|0 || 1) + 7; // 7-10
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:2", 4) + 7; // 7-10
       const harmonicFrequency = 432 * (consciousness / 10); // A432-based
       
       const stream: PixelStream = {
@@ -734,10 +734,10 @@ export class A432DigitalColorPhotography {
     function generatePixelStreams() {
       const streams = [];
       for (let i = 0; i < 50; i++) {
-        const x = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:3", (1920)|0 || 1);
-        const y = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:4", (1080)|0 || 1);
+        const x = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:3", 1920);
+        const y = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:4", 1080);
         const intensity = 0.5 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:rnd:8") * 0.5);
-        const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:5", (4)|0 || 1) + 7;
+        const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:5", 4) + 7;
         const harmonicFrequency = 432 * (consciousness / 10);
         
         const cmyk = {
@@ -773,7 +773,7 @@ export class A432DigitalColorPhotography {
     
     function captureNew() {
       const pixelStreams = generatePixelStreams();
-      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:6", (4)|0 || 1) + 7;
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.digital.color.photography.ts:fri:6", 4) + 7;
       const resolution = { width: 1920, height: 1080 };
       const gateway = consciousness >= 8;
       

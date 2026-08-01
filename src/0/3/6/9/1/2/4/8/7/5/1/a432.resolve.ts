@@ -213,7 +213,7 @@ export class A432Resolve {
     const status = this.determineResolutionStatus(consciousness, method);
     const cmyk = this.generateResolutionCmyk(conflictDescription, consciousness);
     const energyReleased = 432 * consciousness * (gateway ? 2 : 1);
-    const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:0", (5)|0 || 1) + 1;
+    const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:0", 5) + 1;
     
     const resolution: Resolution = {
       resolutionId: `${conflictType}_${Date.now()}`,
@@ -655,9 +655,9 @@ export class A432Resolve {
       ];
       
       const impossibility = impossibilities[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:1", (impossibilities.length)|0 || 1)];
-      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:2", (4)|0 || 1) + 7;
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:2", 4) + 7;
       const energyReleased = 432 * consciousness;
-      const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:3", (5)|0 || 1) + 1;
+      const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:3", 5) + 1;
       
       const newResolution = {
         resolutionId: \`impossibility_\${Date.now()}\`,
@@ -689,9 +689,9 @@ export class A432Resolve {
       ];
       
       const explosion = explosions[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:4", (explosions.length)|0 || 1)];
-      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:5", (4)|0 || 1) + 7;
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:5", 4) + 7;
       const energyReleased = 432 * consciousness * 2;
-      const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:6", (5)|0 || 1) + 1;
+      const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:6", 5) + 1;
       
       const newResolution = {
         resolutionId: \`nuclear_explosion_\${Date.now()}\`,
@@ -723,9 +723,9 @@ export class A432Resolve {
       ];
       
       const conflict = conflicts[indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:7", (conflicts.length)|0 || 1)];
-      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:8", (4)|0 || 1) + 7;
+      const consciousness = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:8", 4) + 7;
       const energyReleased = 432 * consciousness;
-      const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:9", (5)|0 || 1) + 1;
+      const consciousnessGrowth = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.resolve.ts:fri:9", 5) + 1;
       
       const newResolution = {
         resolutionId: \`consciousness_conflict_\${Date.now()}\`,

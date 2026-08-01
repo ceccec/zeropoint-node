@@ -106,7 +106,7 @@ const SOLUTION_MODULES = [
 
 // === CORE CHALLENGE FUNCTIONS ===
 export function createChallengeModule(data: any): ChallengeModule {
-  const resolution = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:0", (10)|0 || 1);
+  const resolution = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:0", 10);
   const harmonization = max(0, 9 - abs(resolution - 5));
   const color = `hsl(${data.complexity * 40}, 70%, ${50 + harmonization * 5}%)`;
   const frequency = 432 * (harmonization / 9);
@@ -124,7 +124,7 @@ export function createChallengeModule(data: any): ChallengeModule {
 }
 
 export function createPossibilityModule(data: any): PossibilityModule {
-  const potential = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:1", (10)|0 || 1);
+  const potential = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:1", 10);
   const harmonization = max(0, 9 - abs(potential - 5));
   const color = `hsl(${data.probability * 40}, 70%, ${50 + harmonization * 5}%)`;
   const frequency = 432 * (harmonization / 9);
@@ -142,7 +142,7 @@ export function createPossibilityModule(data: any): PossibilityModule {
 }
 
 export function createSolutionModule(data: any): SolutionModule {
-  const implementation = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:2", (10)|0 || 1);
+  const implementation = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:2", 10);
   const harmonization = max(0, 9 - abs(implementation - 5));
   const color = `hsl(${data.effectiveness * 40}, 70%, ${50 + harmonization * 5}%)`;
   const frequency = 432 * (harmonization / 9);

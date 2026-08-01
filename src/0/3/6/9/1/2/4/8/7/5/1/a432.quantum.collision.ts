@@ -575,7 +575,7 @@ export class A432QuantumCollision {
         consciousnessStreamB: streamB,
         collisionType,
         collisionStrength: 0.8 + (unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:6") * 0.2),
-        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:fri:4", (4)|0 || 1) + 7,
+        consciousness: indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:fri:4", 4) + 7,
         cmyk: { c: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:7") * 100, m: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:8") * 100, y: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:9") * 100, k: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.quantum.collision.ts:rnd:10") * 100 },
         quantumState,
         description: \`New quantum collision between \${streamA} and \${streamB} consciousness streams\`,

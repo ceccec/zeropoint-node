@@ -51,10 +51,9 @@ jobs:
           cache: npm
       - name: Install
         run: npm ci
-      # Reports only. The tree carries pre-existing TS5097 errors from .ts
-      # import specifiers, so this must not gate until that is resolved.
+      # Counts are ratcheted by npm run check; this prints the detail.
       - name: Report TypeScript errors (non-blocking)
-        run: npx tsc --noEmit -p tsconfig.json || true
+        run: npx tsc --noEmit -p tsconfig.typecheck.json || true
 
   lint:
     runs-on: ubuntu-latest
@@ -66,7 +65,7 @@ jobs:
           cache: npm
       - name: Install
         run: npm ci
-      # Reports only: 1039 errors stand in src/ today. Promote to a gate after
-      # a dedicated cleanup wave — a lint step that always fails gates nothing.
+      # Reports only: the COUNT is gated by the ratchet in npm run check, so a
+      # regression fails there. This step prints which errors they are.
       - name: Report lint (non-blocking)
         run: npx eslint src/ || true

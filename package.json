@@ -112,11 +112,13 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
+    "ratchet": "node scripts/ratchet.mjs",
+    "ratchet:check": "node scripts/ratchet.mjs --check",
     "spectrum": "node --experimental-strip-types scripts/spectrum-gen.mjs",
     "spectrum:check": "node --experimental-strip-types scripts/spectrum-gen.mjs --check",
     "bundle:a432": "node scripts/build-a432-bundle.mjs",
     "bundle:a432:check": "node scripts/build-a432-bundle.mjs --check",
-    "check": "npm run test:kernel && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run spectrum && npm run spectrum:check && npm run mcp:smoke && npm run self:next",
+    "check": "npm run test:kernel && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run spectrum && npm run spectrum:check && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

@@ -1,0 +1,17 @@
+{
+  // Typecheck-only view of the tree.
+  //
+  // The kernel runs under `node --experimental-strip-types`, so its imports
+  // carry explicit .ts specifiers. Against the emitting tsconfig.json that is
+  // 914 TS5097 errors — 82% of every error in the tree — none of which are
+  // defects: they are the runtime's own import style.
+  //
+  // allowImportingTsExtensions requires noEmit, which tsconfig.json cannot set
+  // (it emits to dist/ with declarations). Hence a separate config: build
+  // settings stay untouched, and typecheck sees the tree as node runs it.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true
+  }
+}

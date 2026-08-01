@@ -32,6 +32,19 @@ export default defineConfig({
   // the gate for correctness, not the site builder.
   ignoreDeadLinks: true,
 
+  vite: {
+    build: {
+      // The only chunk over 500 kB is the local search index
+      // (@localSearchIndexroot, ~859 kB). It is NOT preloaded: index.html
+      // references it zero times, and VPLocalSearchBox pulls it in via a
+      // dynamic import when the user opens search. A MiniSearch index is one
+      // serialized blob, so it cannot be code-split, and Algolia is out
+      // because the CSP forbids external hosts. Raise the threshold and say
+      // why, rather than restructure something that costs nothing until used.
+      chunkSizeWarningLimit: 1000,
+    },
+  },
+
   themeConfig: {
     nav: [
       { text: 'Sequence', link: '/SEQUENCE' },

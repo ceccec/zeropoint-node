@@ -3,6 +3,7 @@
     "typecheck": 148,
     "lint": 935,
     "decimals": 657,
-    "unloadable": 11
+    "unloadable": 11,
+    "cycles": 2
   }
 }

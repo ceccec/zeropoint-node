@@ -130,7 +130,84 @@ function unloadableCount() {
   return failed
 }
 
+/**
+ * Import cycles — the structural entanglement.
+ *
+ * A cycle is not itself a bug, but it is the precondition for the temporal
+ * dead zone that made five modules unimportable (wave 52): inside a cycle,
+ * whichever module is entered first leaves the other mid-evaluation, so any
+ * work at module scope can read a binding before it is initialised.
+ *
+ * Two exist today and both are known: the a432.index quartet, and
+ * a432.cmyk <-> a432.math (which a432.cmyk.ts already documents and works
+ * around with a literal). Capping the count keeps new ones from appearing.
+ *
+ * Strongly-connected components via Tarjan; an SCC larger than one module
+ * is a cycle.
+ */
+function importCycleCount() {
+  const files = walk(join(ROOT, 'src'), (n) => n.endsWith('.ts') && !n.endsWith('.d.ts'))
+  const graph = new Map()
+  for (const file of files) {
+    const src = readFileSync(file, 'utf8')
+    const out = []
+    for (const m of src.matchAll(/(?:from|import\(?)\s*['"](\.[^'"]+)['"]/g)) {
+      let target = join(dirname(file), m[1])
+      if (!existsSync(target)) target = target.replace(/\.js$/, '.ts')
+      if (existsSync(target)) out.push(target)
+    }
+    graph.set(file, out)
+  }
+  let index = 0
+  const idx = new Map()
+  const low = new Map()
+  const onStack = new Set()
+  const stack = []
+  let cycles = 0
+  // Iterative Tarjan — the recursive form overflows on this tree.
+  for (const root of files) {
+    if (idx.has(root)) continue
+    const work = [[root, 0]]
+    while (work.length > 0) {
+      const frame = work[work.length - 1]
+      const [v, i] = frame
+      if (i === 0) {
+        idx.set(v, index)
+        low.set(v, index)
+        index += 1
+        stack.push(v)
+        onStack.add(v)
+      }
+      const edges = graph.get(v) ?? []
+      if (i < edges.length) {
+        frame[1] += 1
+        const w = edges[i]
+        if (!idx.has(w)) work.push([w, 0])
+        else if (onStack.has(w)) low.set(v, Math.min(low.get(v), idx.get(w)))
+      } else {
+        work.pop()
+        if (work.length > 0) {
+          const parent = work[work.length - 1][0]
+          low.set(parent, Math.min(low.get(parent), low.get(v)))
+        }
+        if (low.get(v) === idx.get(v)) {
+          let size = 0
+          let w
+          do {
+            w = stack.pop()
+            onStack.delete(w)
+            size += 1
+          } while (w !== v)
+          if (size > 1) cycles += 1
+        }
+      }
+    }
+  }
+  return cycles
+}
+
 const SURFACES = [
+  { id: 'cycles', label: 'import cycles', measure: importCycleCount },
   { id: 'typecheck', label: 'TypeScript errors', measure: typecheckCount },
   { id: 'lint', label: 'ESLint errors', measure: lintCount },
   { id: 'decimals', label: 'decimal-crack lines', measure: decimalCount },

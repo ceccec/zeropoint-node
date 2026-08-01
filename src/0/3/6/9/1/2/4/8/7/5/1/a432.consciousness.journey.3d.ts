@@ -225,4 +225,4 @@ export function generateA432ConsciousnessJourneyScene(state: A432ConsciousnessJo
 }
 
 // Export consciousness journey system
-export { A432ConsciousnessJourneyState as A432ConsciousnessState }; 
+export type { A432ConsciousnessJourneyState as A432ConsciousnessState }; 

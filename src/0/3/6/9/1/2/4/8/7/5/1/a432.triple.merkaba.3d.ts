@@ -267,4 +267,4 @@ export function generateA432TripleMerkaba3DScene(state: A432TripleMerkaba3DState
 }
 
 // Export the 3D system
-export { A432TripleMerkaba3DState as A4323DState }; 
+export type { A432TripleMerkaba3DState as A4323DState }; 

@@ -97,10 +97,44 @@ function decimalCount() {
   return lines
 }
 
+/**
+ * Modules that cannot be imported at all — the deepest signal here, because it
+ * is the only one that proves the code RUNS rather than merely typechecks.
+ *
+ * Each module is imported in its own process. Two results are NOT failures:
+ * a timeout means the module loaded and left a live handle (a timer, a
+ * stream), and a browser-only module dies on `document`/`self` by design.
+ */
+function unloadableCount() {
+  const files = walk(join(ROOT, 'src'), (n) => n.endsWith('.ts') && !n.endsWith('.d.ts') && !n.endsWith('.test.ts'))
+  const ENVIRONMENTAL = /\b(document|self|window|localStorage) is not defined\b/
+  let failed = 0
+  for (const file of files) {
+    const rel = relative(ROOT, file)
+    const src = `import(${JSON.stringify('./' + rel)}).then(()=>process.exit(0)).catch(e=>{console.error(e.message.split('\\n')[0]);process.exit(1)})`
+    try {
+      execFileSync('node', ['--experimental-strip-types', '-e', src], {
+        cwd: ROOT,
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+        timeout: 15000,
+        maxBuffer: 8 * 1024 * 1024,
+      })
+    } catch (err) {
+      // Killed by the timeout => it loaded and kept the event loop alive.
+      if (err.killed || err.signal) continue
+      if (ENVIRONMENTAL.test(err.stderr ?? '')) continue
+      failed += 1
+    }
+  }
+  return failed
+}
+
 const SURFACES = [
   { id: 'typecheck', label: 'TypeScript errors', measure: typecheckCount },
   { id: 'lint', label: 'ESLint errors', measure: lintCount },
   { id: 'decimals', label: 'decimal-crack lines', measure: decimalCount },
+  { id: 'unloadable', label: 'modules that fail to import', measure: unloadableCount },
 ]
 
 const prior = existsSync(STATE) ? JSON.parse(readFileSync(STATE, 'utf8')) : { ceilings: {} }

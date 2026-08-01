@@ -118,8 +118,8 @@ export class A432GatewayTransformation {
       }
     ];
 
-    interfaces.forEach(interface => {
-      this.interfaces.set(interface.interfaceId, interface);
+    interfaces.forEach(iface => {
+      this.interfaces.set(iface.interfaceId, iface);
     });
   }
 

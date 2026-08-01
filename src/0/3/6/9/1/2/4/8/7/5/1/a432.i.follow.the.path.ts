@@ -24,7 +24,15 @@ export class A432PathFollower {
   private path: PathStep[] = [];
   private currentIndex: number = 0;
 
-  constructor(public pathType: 'trinity' | 'vortex' | 'pi' | 'custom' = 'trinity', public options: unknown = {}) {
+  // Explicit fields, not parameter properties: node's --experimental-strip-types
+  // only ERASES types, so `constructor(public x)` loses its implicit this.x = x
+  // and the module fails to parse in strip-only mode.
+  public pathType: 'trinity' | 'vortex' | 'pi' | 'custom';
+  public options: unknown;
+
+  constructor(pathType: 'trinity' | 'vortex' | 'pi' | 'custom' = 'trinity', options: unknown = {}) {
+    this.pathType = pathType;
+    this.options = options;
     this.startPath(pathType, options);
   }
 

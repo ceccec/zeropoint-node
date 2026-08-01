@@ -100,6 +100,15 @@ assert(reflection.strokeForward === '1\\2\\4\\8/7/5 · 3\\6\\9 · 0\\1', 'forwar
 // Void tail reflects to 0\9 — 0 is fixed, the trailing unit is not.
 assert(reflection.strokeReflected === '9/8/6/2\\3\\5 · 7/4/1 · 0\\9', 'reflected stroke tail 0\\9')
 assert(reflection.tailReflects, 'tail unit reflects rather than staying 1')
+
+// Undeclared package imports resolve from local node_modules and fail npm ci.
+// The scanner must read package.json, not disk — @hotwired/stimulus proved it.
+{
+  const declaredTip = nextSelfDevelopTip()
+  assert(typeof declaredTip.action === 'string', 'self-develop tip computes')
+  assert(isPreciseTip(tipFormOf(declaredTip, declaredTip.verify ?? 'npm run check')).ok,
+    'undeclared-import tip is precise, not vague')
+}
 assert(reflection.groupOrder === 54 && reflection.separateProduct === 12, 'AGL(1,Z/9) order 54')
 assert(isUuid(reflection.root), 'reflection root uuid')
 // Mirror is NOT array reversal — guards the two from being conflated.

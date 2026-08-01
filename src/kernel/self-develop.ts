@@ -10,7 +10,8 @@
  * Vague / empty / non-concrete tips are refused — not vibes.
  *
  * Severity: hard gaps → physicalFtl false (quantumisation) → packaging feed.
- * Feed severity (Wave 31): broken imports → remote CDN → drift → orphans → thin wrappers →
+ * Feed severity (Wave 40): broken imports → undeclared packages → remote CDN → drift →
+ * orphans → thin wrappers →
  * VORTEX_SEQUENCE/6-orbit name collision → WAVE_CHAIN.
  * Scanners tip only when a count proves residual; skip comments, node_modules, resolved paths,
  * and intentional exceptions (keep a432.algebra.js as the browser twin).
@@ -20,6 +21,7 @@
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs'
 import { join, relative, dirname } from 'node:path'
 import { spawnSync } from 'node:child_process'
+import { builtinModules } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import {
   computePhysicalFtl,
@@ -254,6 +256,59 @@ function findBrokenJsImport(): FeedHit | null {
         spec,
         count: 0,
         why: `relative ${spec} does not exist beside ${rel} — dead browser twin import`,
+      })
+    }
+  }
+  if (!hits.length) return null
+  const first = hits[0]!
+  return { ...first, count: hits.length }
+}
+
+/**
+ * Bare package imports with no declaration in package.json.
+ *
+ * Local node_modules is the wrong instrument here: it ANSWERS. A package can
+ * sit there undeclared — installed once, never recorded — and every local build
+ * resolves it while a fresh `npm ci` fails. @hotwired/stimulus was exactly this:
+ * imported by five modules, absent from package.json AND from the lockfile.
+ * The declaration is what settles it, so this scans package.json, not disk.
+ *
+ * Ranked directly after broken relative imports: both are imports that cannot
+ * resolve, and this one hides until CI.
+ */
+function findUndeclaredPackageImport(): FeedHit | null {
+  const pkgPath = join(REPO_ROOT, 'package.json')
+  if (!existsSync(pkgPath)) return null
+  const pkg = JSON.parse(readFileSync(pkgPath, 'utf8')) as {
+    dependencies?: Record<string, string>
+    devDependencies?: Record<string, string>
+    peerDependencies?: Record<string, string>
+  }
+  const declared = new Set([
+    ...Object.keys(pkg.dependencies ?? {}),
+    ...Object.keys(pkg.devDependencies ?? {}),
+    ...Object.keys(pkg.peerDependencies ?? {}),
+  ])
+  const IMP = /(?:from\s+|import\s*\(\s*)['"]([^'".][^'"]*)['"]/g
+  const hits: FeedHit[] = []
+  for (const file of walkFiles(SRC_DIR, (n) => /\.(ts|mjs)$/.test(n) && !n.endsWith('.d.ts'))) {
+    const src = readFileSync(file, 'utf8')
+    let m: RegExpExecArray | null
+    IMP.lastIndex = 0
+    while ((m = IMP.exec(src))) {
+      const spec = m[1]!
+      if (spec.startsWith('.') || spec.startsWith('/') || spec.startsWith('node:')) continue
+      if (isCommentOnly(lineAt(src, m.index))) continue
+      // Scoped packages carry their scope: @scope/name.
+      const bare = spec.startsWith('@') ? spec.split('/').slice(0, 2).join('/') : spec.split('/')[0]!
+      if (builtinModules.includes(bare)) continue
+      if (declared.has(bare)) continue
+      hits.push({
+        path: relRepo(file),
+        line: lineOf(src, m.index),
+        spec: bare,
+        count: 0,
+        why: `${bare} is imported but not declared in package.json — resolves locally, fails npm ci`,
       })
     }
   }
@@ -596,7 +651,8 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
     }
   }
   if (kind === 'feed') {
-    // Severity: broken imports → remote CDN → drift → orphans → thin wrappers → orbit name → WAVE_CHAIN
+    // Severity: broken imports → undeclared packages → remote CDN → drift → orphans →
+    // thin wrappers → orbit name → WAVE_CHAIN
     const brokenJs = findBrokenJsImport()
     if (brokenJs) {
       return feedTip(
@@ -606,6 +662,17 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
         `Feed tip: ${brokenJs.count} broken JS import(s); first ${brokenJs.path} → ${brokenJs.spec}`,
         'Broken imports outrank drift — tip only when target path is missing (comments skipped).',
         `self-develop:feed:js:${brokenJs.count}:${brokenJs.path}:${brokenJs.line}`,
+      )
+    }
+    const undeclared = findUndeclaredPackageImport()
+    if (undeclared) {
+      return feedTip(
+        undeclared.path,
+        undeclared.line,
+        `chat-wave feed: declare or dissolve ${undeclared.count} undeclared package import(s); first ${undeclared.spec} at ${undeclared.path}:${undeclared.line} — npm install ${undeclared.spec}, or delete the dead module`,
+        `Feed tip: ${undeclared.count} undeclared package import(s); first ${undeclared.path} → ${undeclared.spec}`,
+        'Undeclared imports resolve from local node_modules and fail npm ci — package.json settles it, not disk.',
+        `self-develop:feed:undeclared:${undeclared.count}:${undeclared.path}:${undeclared.line}`,
       )
     }
     const htmlBroken = findBrokenHtmlImport()

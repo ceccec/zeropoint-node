@@ -13,8 +13,8 @@
 - a432 import/export graph: **true** · files=343 · edges=918 · exports=2123
 - graph root: `3d6768b6-e5b2-82c5-a7b6-dcbe3c4136a6`
 - audit: forks=0 · ambient Math hits=0 · randomUUID=0 · root=`30da1d03-cbb1-8bfc-8d8b-64932519c7e7`
-- **self-develop tip:** FEED · `feed` · src/0/index.ts:180
-- tip action: chat-wave feed: edit/rebuild at src/0/index.ts (WAVE_CHAIN); re-run npm run self:next after seal — do not invent gaps
+- **self-develop tip:** FEED · `feed` · src/0/3/6/9/1/2/4/8/7/5/1/a432.9d.dashboard.ts:9
+- tip action: chat-wave feed: declare or dissolve 6 undeclared package import(s); first three at src/0/3/6/9/1/2/4/8/7/5/1/a432.9d.dashboard.ts:9 — npm install three, or delete the dead module
 - claySolved: **0** · physicalFtl: **true** (`computePhysicalFtl`)
 
 ## Law
@@ -35,4 +35,4 @@ Import/export census is computed (`foldA432ImportExportGraph`) — content-uuid 
 
 Exact: fold, digital root, vortex stroke, import graph fold, audit census, plan trinity, computePhysicalFtl (README gateway). Faithful: torus geometry. Refused: Clay solved (claySolved=0), Payload/ERP port. physicalFtl computes true|false — not a forever-hardcoded 0.
 
-Receipt content-uuid: `34ffbe1d-ac85-862e-ae20-ec7b40d06c1b`
+Receipt content-uuid: `78693c15-effc-8b33-8630-8bb1890e02f8`

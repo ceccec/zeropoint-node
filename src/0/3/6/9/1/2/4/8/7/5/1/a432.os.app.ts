@@ -8,7 +8,7 @@ class A432App {
 // Example app
 class ExampleApp extends A432App {
   constructor() { super('Example'); }
-  getState() { return { message: 'Hello from ExampleApp!' }; }
+  override getState() { return { message: 'Hello from ExampleApp!' }; }
 }
 // const app = new ExampleApp();
 // app.getState(); 

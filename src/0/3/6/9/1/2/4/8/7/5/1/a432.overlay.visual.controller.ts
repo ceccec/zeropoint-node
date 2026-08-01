@@ -29,7 +29,7 @@ const overlayRegistry = {
  * <div data-controller="a432-overlay-visual" data-a432-overlay-visual-overlay-value="rodin"></div>
  */
 export default class extends Controller {
-  static values = { overlay: String, radius: Number, nodeSize: Number };
+  static override values = { overlay: String, radius: Number, nodeSize: Number };
 
   radius!: number;
   nodeSize!: number;
@@ -37,7 +37,7 @@ export default class extends Controller {
   centerY!: number;
   raf!: number;
 
-  connect() {
+  override connect() {
     // Use Stimulus value API for radius/nodeSize
     // @ts-ignore Stimulus value API
     this.radius = (this as { radiusValue?: number }).radiusValue ?? 120;
@@ -50,7 +50,7 @@ export default class extends Controller {
     this.startAnimation();
   }
 
-  disconnect() {
+  override disconnect() {
     cancelAnimationFrame(this.raf);
   }
 

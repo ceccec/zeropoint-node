@@ -18,7 +18,7 @@ export function getTrinityAxisOverlayData(radius: number = 120, centerX: number 
     if (polarity < 0) {
       color = { c: color.m, m: color.c, y: color.y, k: color.k };
     }
-    const html = `<div style=\"width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.2em;color:#fff;border-radius:10px;position:absolute;left:${x}px;top:${y}px;\">${value}</div>`;
+    const html = `<div style="width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.2em;color:#fff;border-radius:10px;position:absolute;left:${x}px;top:${y}px;">${value}</div>`;
     data.push({ x, y, value, color, html, polarity, spin });
   }
   return data;

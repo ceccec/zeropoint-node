@@ -20,7 +20,7 @@ export function getRodinMatrixOverlayData(): Array<Array<{ value: number; color:
       const idx = (row + col) % 6;
       const value = RODIN_SEQUENCE[idx];
       const color = digitAngleToCMYK(value, (idx * 60) % 360);
-      const html = `<div style=\"width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.2em;color:#fff;border-radius:10px;\">${value}</div>`;
+      const html = `<div style="width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.2em;color:#fff;border-radius:10px;">${value}</div>`;
       rowArr.push({ value, color, html });
     }
     grid.push(rowArr);

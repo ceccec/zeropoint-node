@@ -34,7 +34,7 @@ export function* streamOfDimensions(length: number = 11, radius: number = 120, c
     const time = now + i * 432;
     const resonance = abs(sin(angle));
     const meaning = `Dimension ${dim}: Harmonic state in the living stream.`;
-    const html = `<div style=\"width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.1em;color:#fff;border-radius:10px;position:absolute;left:${x}px;top:${y}px;\">${dim}</div>`;
+    const html = `<div style="width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.1em;color:#fff;border-radius:10px;position:absolute;left:${x}px;top:${y}px;">${dim}</div>`;
     yield { dim, x, y, z, color, time, resonance, meaning, html };
   }
 }

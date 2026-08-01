@@ -3,10 +3,10 @@ import { Controller } from '@hotwired/stimulus';
 import { startTerminal } from './a432.terminal.ui.ts';
 
 export default class extends Controller {
-  static targets = ["out"];
+  static override targets = ["out"];
   declare readonly outTarget: HTMLPreElement;
   #stop?:()=>void;
-  connect(){
+  override connect(){
     console.log('Terminal controller connecting...');
     const pre=this.outTarget;
     console.log('Terminal pre found:', pre);
@@ -19,5 +19,5 @@ export default class extends Controller {
     this.#stop = () => {}; // No cleanup needed
     console.log('Terminal controller connected');
   }
-  disconnect(){this.#stop?.();}
+  override disconnect(){this.#stop?.();}
 } 

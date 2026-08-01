@@ -36,7 +36,7 @@ export function getWaveParticleCMYKOverlayData(): Array<{
   ];
   return states.map(({ state, digit, angle }) => {
     const color = digitAngleToCMYK(digit, angle);
-    const html = `<div style=\"width:80px;height:80px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.1em;color:#fff;border-radius:16px;\">${state}</div>`;
+    const html = `<div style="width:80px;height:80px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.1em;color:#fff;border-radius:16px;">${state}</div>`;
     return { state, color, html };
   });
 }

@@ -44,7 +44,7 @@ function getCurrentFilename(): string {
 
 function getSequenceFromFilename() {
   const filename = getCurrentFilename();
-  const match = filename && filename.match(/a432\.([\d\.]+)\.ts$/);
+  const match = filename && filename.match(/a432\.([\d.]+)\.ts$/);
   if (!match) return [];
   return match[1].split('.').map(Number);
 }
@@ -142,7 +142,7 @@ const emergence = {
  */
 function decodeA432Filename(filename) {
   // Extract digit sequence from filename (ignore 'a432.' prefix and '.ts' suffix)
-  const match = filename.match(/a432\.([\d\.]+)\.ts$/);
+  const match = filename.match(/a432\.([\d.]+)\.ts$/);
   if (!match) return { digits: [], meaning: [] };
   const digits = match[1].split('.').map(Number);
   // Metaphysical meaning for each digit (example mapping)
@@ -258,7 +258,7 @@ if (typeof window !== 'undefined') window.a432LivingMatrix = a432LivingMatrix;
 // Generator for each digit in the filename sequence
 function* sequenceGenerator() {
   const filename = getCurrentFilename();
-  const match = filename && filename.match(/a432\.([\d\.]+)\.ts$/);
+  const match = filename && filename.match(/a432\.([\d.]+)\.ts$/);
   if (!match) return;
   const str = match[1].replace(/\./g, '');
   let i = 0;

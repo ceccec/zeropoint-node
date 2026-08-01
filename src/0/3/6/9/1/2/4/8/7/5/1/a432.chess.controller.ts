@@ -3,10 +3,10 @@ import { Controller } from '@hotwired/stimulus';
 import { startChess, type ChessFrame } from './a432.chess.ts';
 
 export default class extends Controller {
-  static targets = ["board"];
+  static override targets = ["board"];
   declare readonly boardTarget: HTMLTableElement;
   #stop?: () => void;
-  connect(){
+  override connect(){
     console.log('Chess controller connecting...');
     const table=this.boardTarget;
     console.log('Chess table found:', table);
@@ -26,5 +26,5 @@ export default class extends Controller {
     });
     console.log('Chess controller connected');
   }
-  disconnect(){this.#stop?.();}
+  override disconnect(){this.#stop?.();}
 } 

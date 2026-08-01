@@ -28,7 +28,7 @@ export function getVoidStreamOverlayData(length: number = 11): Array<{ dim: numb
     const dim = A432_SEQUENCE[i % A432_SEQUENCE.length];
     const color = digitAngleToCMYK(dim, (i * 36) % 360);
     const source = voidCompost[i % voidCompost.length]?.type || 'void';
-    const html = `<div style=\"width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.1em;color:#fff;border-radius:10px;\">${dim}<br><span style='font-size:0.7em;'>${source}</span></div>`;
+    const html = `<div style="width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.1em;color:#fff;border-radius:10px;">${dim}<br><span style='font-size:0.7em;'>${source}</span></div>`;
     return { dim, color, html, source };
   });
 }
@@ -43,7 +43,7 @@ export function animateVoidTransformation(frames: number = 20, length: number = 
     out.push(getVoidStreamOverlayData(length).map((d, i) => {
       // Animate color/opacity based on frame
       const opacity = max(0.2, 1 - abs(f - i) / frames);
-      const html = `<div style=\"width:48px;height:48px;background:${cmykToCss(d.color)};opacity:${opacity};display:flex;align-items:center;justify-content:center;font-size:1.1em;color:#fff;border-radius:10px;\">${d.dim}<br><span style='font-size:0.7em;'>${d.source}</span></div>`;
+      const html = `<div style="width:48px;height:48px;background:${cmykToCss(d.color)};opacity:${opacity};display:flex;align-items:center;justify-content:center;font-size:1.1em;color:#fff;border-radius:10px;">${d.dim}<br><span style='font-size:0.7em;'>${d.source}</span></div>`;
       return { ...d, html };
     }));
   }

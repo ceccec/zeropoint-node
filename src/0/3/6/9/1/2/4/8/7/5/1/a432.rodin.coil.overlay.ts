@@ -26,7 +26,7 @@ export function getRodinCoil2DOverlayData(radius: number = 120, centerX: number 
       // Phase-invert color for negative polarity
       color = { c: color.m, m: color.c, y: color.y, k: color.k };
     }
-    const html = `<div style=\"width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.2em;color:#fff;border-radius:10px;position:absolute;left:${x}px;top:${y}px;\">${value}</div>`;
+    const html = `<div style="width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.2em;color:#fff;border-radius:10px;position:absolute;left:${x}px;top:${y}px;">${value}</div>`;
     data.push({ x, y, value, color, html, polarity, spin });
   }
   return data;
@@ -64,7 +64,7 @@ export function getRodinCoilAnalyticOverlayData(events: Array<{ value: number; t
     const color = digitAngleToCMYK(value, (i * 60) % 360);
     const eventCount = events.filter(e => e.value === value).length;
     const resonance = eventCount > 0 ? min(1, (now - events.filter(e => e.value === value).slice(-1)[0]?.timestamp) / 10000) : 0;
-    const html = `<div style=\"width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.2em;color:#fff;border-radius:10px;box-shadow:0 0 ${8 + 24 * resonance}px #0ff;\">${value}<br><span style='font-size:0.7em;'>${eventCount}</span></div>`;
+    const html = `<div style="width:48px;height:48px;background:${cmykToCss(color)};display:flex;align-items:center;justify-content:center;font-size:1.2em;color:#fff;border-radius:10px;box-shadow:0 0 ${8 + 24 * resonance}px #0ff;">${value}<br><span style='font-size:0.7em;'>${eventCount}</span></div>`;
     return { value, color, resonance, eventCount, html, polarity, spin };
   });
 }

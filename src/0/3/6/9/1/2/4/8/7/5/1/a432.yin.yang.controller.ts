@@ -3,10 +3,10 @@ import { Controller } from '@hotwired/stimulus';
 import { startYinYang, type YinYangFrame } from './a432.yin.yang.ts';
 
 export default class extends Controller {
-  static targets = ["canvas"];
+  static override targets = ["canvas"];
   declare readonly canvasTarget: HTMLCanvasElement;
   #stop?: () => void;
-  connect() {
+  override connect() {
     console.log('YinYang controller connecting...');
     const canvas = this.canvasTarget;
     console.log('Canvas found:', canvas);
@@ -36,5 +36,5 @@ export default class extends Controller {
     });
     console.log('YinYang controller connected');
   }
-  disconnect(){ this.#stop?.(); }
+  override disconnect(){ this.#stop?.(); }
 } 

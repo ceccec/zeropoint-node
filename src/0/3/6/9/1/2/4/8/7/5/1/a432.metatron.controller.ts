@@ -4,10 +4,10 @@ import { startMetatron, type MetatronFrame } from './a432.metatron.ts';
 import { startA432Visualization } from './a432.pure.visualization.ts';
 
 export default class extends Controller {
-  static targets = ["scene"];
+  static override targets = ["scene"];
   declare readonly sceneTarget: SVGSVGElement;
   #stop?:()=>void;
-  connect(){
+  override connect(){
     console.log('Metatron controller connecting...');
     const svg=this.sceneTarget;
     console.log('Metatron SVG found:', svg);
@@ -32,5 +32,5 @@ export default class extends Controller {
     
     console.log('Pure A432 visualization mounted in Metatron quadrant');
   }
-  disconnect(){this.#stop?.();}
+  override disconnect(){this.#stop?.();}
 } 

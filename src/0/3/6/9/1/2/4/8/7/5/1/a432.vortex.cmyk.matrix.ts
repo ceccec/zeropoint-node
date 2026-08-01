@@ -4,11 +4,11 @@ import { PI, cos, sin } from './a432.algebra.ts'
 
 import {
   generateA432Matrix,
-  A432MatrixEntry,
+  type A432MatrixEntry,
   cmykIdToPhrase,
   digitColors
 } from './a432.mapping.ts';
-import { A432Id } from './a432.design.cmyk.ts';
+import { type A432Id } from './a432.design.cmyk.ts';
 
 // Rodin vortex sequence for a single channel
 const rodinSeq = [1, 2, 4, 8, 7, 5];

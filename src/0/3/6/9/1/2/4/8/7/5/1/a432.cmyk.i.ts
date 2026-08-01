@@ -7,7 +7,7 @@
  */
 
 import { round } from './a432.algebra.ts'
-import { CMYK } from './a432.cmyk.ts';
+import { type CMYK } from './a432.cmyk.ts';
 
 export interface IState {
   consciousness: number; // 0-9

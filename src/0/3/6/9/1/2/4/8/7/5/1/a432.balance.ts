@@ -9,7 +9,7 @@
 import { abs, floor, max, min } from './a432.algebra.ts'
 import { A432_RETURN, A432_AXIS } from './a432.core.ts';
 import { A432_TRINITY } from './a432.ts';
-import { a432ModuleRegistry, A432Module } from './a432.modules.ts';
+import { a432ModuleRegistry, type A432Module } from './a432.modules.ts';
 
 // === BALANCE INTERFACES ===
 export interface A432BalanceState {

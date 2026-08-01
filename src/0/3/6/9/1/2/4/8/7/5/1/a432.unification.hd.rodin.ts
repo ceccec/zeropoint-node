@@ -3,7 +3,7 @@ import { PI, cos, sin } from './a432.algebra.ts'
 // Unifies Human Design and Rodin Coil as living, harmonized streams in the a432 system
 // Math, UI, and metaphysical summary included
 
-import { HDTrinity, harmonizeHDTrinity } from './a432.human.design.trinity.ts';
+import { type HDTrinity, harmonizeHDTrinity } from './a432.human.design.trinity.ts';
 import { metaphysicalSummary as chainMeta } from './a432.chain.of.events.ts';
 
 // Rodin Coil trinity (e.g., 3 phases of the vortex)

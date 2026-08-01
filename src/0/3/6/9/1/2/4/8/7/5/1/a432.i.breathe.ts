@@ -1,7 +1,7 @@
 import { log } from './a432.algebra.ts'
 // a432.i.breathe.ts — Breathe interface for the A432 matrix
 import { EventEmitter } from 'events';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 export interface BreatheEvent {
   value: Digit;

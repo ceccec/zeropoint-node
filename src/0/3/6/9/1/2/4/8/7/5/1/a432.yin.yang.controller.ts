@@ -1,6 +1,6 @@
 import { PI, min } from './a432.algebra.ts'
 import { Controller } from '@hotwired/stimulus';
-import { startYinYang, YinYangFrame } from './a432.yin.yang.ts';
+import { startYinYang, type YinYangFrame } from './a432.yin.yang.ts';
 
 export default class extends Controller {
   static targets = ["canvas"];

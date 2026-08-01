@@ -14,7 +14,7 @@
  * @author A432 System
  */
 
-import { Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
+import { type Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 import { DIMENSIONS, generateCMYKMatrixHtml } from './a432.cmyk.matrix.ts';
 import { livingPiCMYKStream } from './a432.pi.ts';
 

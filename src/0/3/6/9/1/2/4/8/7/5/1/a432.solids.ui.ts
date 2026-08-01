@@ -1,10 +1,10 @@
 import { PI } from './a432.algebra.ts'
 // a432.solids.ui.ts — Platonic solids radial-face visualizer
 //-------------------------------------------------------------
-import { uroborosEmitter, UroborosEvent } from './a432.uroboros.ts';
+import { uroborosEmitter, type UroborosEvent } from './a432.uroboros.ts';
 import { cmykToCss } from './a432.cmyk.ts';
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 interface SolidCfg { name:string; faces:number; radius:number; yOffset:number; }
 const solids: SolidCfg[] = [

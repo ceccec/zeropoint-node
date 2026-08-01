@@ -12,7 +12,7 @@ import { EventEmitter } from 'events';
 import fs from 'fs';
 import path from 'path';
 import { digitAngleToCMYK, asAngle, digitalRoot } from './a432.math.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 import { impossibilityCMYK } from './a432.impossible.ts';
 import { challengeCMYK, CHALLENGES } from './a432.challenge.ts';
 import type { CMYK } from './a432.cmyk.ts';

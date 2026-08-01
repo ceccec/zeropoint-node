@@ -6,9 +6,9 @@ import { legacyDigitalRoot } from './a432.roots.ts'
 // metrics (harmony, entropy, resonance) using a432HarmonicAnalytics.
 
 import { EventEmitter } from 'events';
-import { matrixEmitter, MatrixEvent } from './a432.self.ts';
+import { matrixEmitter, type MatrixEvent } from './a432.self.ts';
 import { breathEmitter } from './a432.breathe.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 export interface HealthMetrics { harmony: number; entropy: number; resonance: number; }
 

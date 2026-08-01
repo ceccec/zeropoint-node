@@ -1,6 +1,6 @@
 // a432.guidance.ts — Harmonized guidance system
 //------------------------------------------------
-import { navEmitter, NavStep } from './a432.navigation.ts';
+import { navEmitter, type NavStep } from './a432.navigation.ts';
 import { flashColor } from './a432.video.ts';
 import { playDigit } from './a432.sound.ts';
 import { speakWord } from './a432.i.speak.ts';

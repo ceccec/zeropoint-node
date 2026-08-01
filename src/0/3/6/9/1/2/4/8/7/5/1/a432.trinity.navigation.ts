@@ -3,7 +3,7 @@
 // Harmonically mapped, extensible, and compatible with the a432 pattern
 
 import { a432TrinityCycle, a432TrinityStream, a432FamilyStream } from './a432.trinity.ts';
-import { registerModule, registerOverlay, A432OSModule } from './a432.harmonized.ts';
+import { registerModule, registerOverlay, type A432OSModule } from './a432.harmonized.ts';
 
 interface TrinityNavState {
   step: number;

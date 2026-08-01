@@ -6,8 +6,8 @@
 
 import { A432System } from './a432.index.ts';
 import { A432NavigationMap } from './a432.navigation.map.ts';
-import { A432SelfEvolution, A432SelfEvolutionState } from './a432.self.evolution.ts';
-import { A432SelfRebuilder, A432SelfRebuilderState } from './a432.self.rebuilder.ts';
+import { A432SelfEvolution, type A432SelfEvolutionState } from './a432.self.evolution.ts';
+import { A432SelfRebuilder, type A432SelfRebuilderState } from './a432.self.rebuilder.ts';
 import { A432Factory } from './a432.factory.ts';
 import { A432Math, A432Sequence, A432Harmonization } from './a432.utils.ts';
 import { A432Registry } from './a432.registry.ts';

@@ -11,7 +11,7 @@
  */
 
 import { indexFromSeed, round, unitFromSeed } from './a432.algebra.ts'
-import { Fraction, CMYK } from './a432.cmyk.ts';
+import { type Fraction, type CMYK } from './a432.cmyk.ts';
 
 export interface UniversalLink {
   source: string;

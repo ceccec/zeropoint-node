@@ -1,10 +1,10 @@
 import { PI, cos, sin } from './a432.algebra.ts'
 // a432.heptagram.ui.ts — 7-point star overlay synced with the uroboros
 //--------------------------------------------------------------------------
-import { uroborosEmitter, UroborosEvent } from './a432.uroboros.ts';
+import { uroborosEmitter, type UroborosEvent } from './a432.uroboros.ts';
 import { cmykToCss } from './a432.cmyk.ts';
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 // Rodin sequence (length 7 without trailing 1 duplicate)
 const RODIN: Digit[] = [1, 2, 4, 8, 7, 5, 1];

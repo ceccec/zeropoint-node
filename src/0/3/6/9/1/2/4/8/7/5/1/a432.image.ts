@@ -16,7 +16,7 @@ import {
 } from './a432.ts';
 
 import {
-  A432Color,
+  type A432Color,
   calculateA432Color,
   generateA432ColorStream,
   A432ColorSystem,

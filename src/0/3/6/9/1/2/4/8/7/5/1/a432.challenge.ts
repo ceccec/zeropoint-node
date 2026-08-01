@@ -4,7 +4,7 @@ import { abs, round } from './a432.algebra.ts'
 // Every foundational open problem is encoded here as a single-digit key
 // (digital root of its ordinal number) plus metadata.
 
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 import { rodinDigit, digitalRoot } from './a432.math.ts';
 import type { CMYK } from './a432.cmyk.ts';
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';

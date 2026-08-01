@@ -7,7 +7,7 @@ import { pulseEmitter } from './a432.i.pulse.ts';
 import { heatEmitter } from './a432.i.heat.ts';
 import { moveEmitter } from './a432.i.move.ts';
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 export interface VitalEvent { vitality: number; digit: Digit; cmyk: ReturnType<typeof digitAngleToCMYK> }
 export const humanEmitter = new EventEmitter();

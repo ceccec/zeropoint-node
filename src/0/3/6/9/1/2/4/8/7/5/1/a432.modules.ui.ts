@@ -2,7 +2,7 @@
 //--------------------------------------------------
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
 import { emotionName } from './a432.emotion.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 import { tap } from './a432.i.tap.ts';
 import { cmykToCss } from './a432.cmyk.ts';
 

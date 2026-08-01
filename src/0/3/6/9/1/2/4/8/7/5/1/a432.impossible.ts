@@ -5,7 +5,7 @@ import { abs } from './a432.algebra.ts'
 
 import { digitAngleToCMYK, asAngle, rodinDigit, digitalRoot } from './a432.math.ts';
 import type { CMYK } from './a432.cmyk.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 const IMPOSSIBLE_DIGIT = 8 as Digit; // 8 denotes recursion lock / void blue
 

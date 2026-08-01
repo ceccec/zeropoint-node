@@ -2,7 +2,7 @@ import { PI, cos, floor, max, round, sin } from './a432.algebra.ts'
 // a432.block.chain.event.ts
 // Harmonized blockchain for a432 events (vortex/trinity logic)
 
-import { A432Event, createA432Event } from './a432.event.ts';
+import { type A432Event, createA432Event } from './a432.event.ts';
 import type { CMYK } from './a432.cmyk.ts';
 
 export interface A432Block {

@@ -2,8 +2,8 @@ import { round } from './a432.algebra.ts'
 // a432.i.pulse.ts — Heartbeat interval to digit stream
 import { EventEmitter } from 'events';
 import { digitalRoot, digitAngleToCMYK, asAngle } from './a432.math.ts';
-import { CMYK } from './a432.cmyk.ts';
-import { Digit } from './a432.types.ts';
+import { type CMYK } from './a432.cmyk.ts';
+import { type Digit } from './a432.types.ts';
 
 export interface PulseEvent { bpm: number; digit: Digit; cmyk: CMYK }
 export const pulseEmitter = new EventEmitter();

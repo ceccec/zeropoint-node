@@ -1,5 +1,5 @@
 import { PI, cos, sin } from './a432.algebra.ts'
-import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color.ts';
+import { A432ColorModel, type A432HSL, type A432RGB, type A432CMYK } from './a432.color.ts';
 
 /**
  * Generates a harmonized vortex/trinity SVG icon.

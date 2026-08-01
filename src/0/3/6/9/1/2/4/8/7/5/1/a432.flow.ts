@@ -7,8 +7,8 @@
  */
 
 import { abs, floor, max } from './a432.algebra.ts'
-import { A432CoreState, createA432CoreState } from './a432.core.ts';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
+import { type A432CoreState, createA432CoreState } from './a432.core.ts';
+import { a432ModuleRegistry, type A432Module, type A432ModuleCategory } from './a432.modules.ts';
 import { A432_FREQUENCY } from './a432.ts';
 
 // === FLOW INTERFACES ===

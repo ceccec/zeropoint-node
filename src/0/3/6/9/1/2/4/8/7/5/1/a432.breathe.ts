@@ -8,7 +8,7 @@ import { round } from './a432.algebra.ts'
 import { EventEmitter } from 'events';
 import { asAngle, digitAngleToCMYK } from './a432.math.ts';
 import type { CMYK } from './a432.cmyk.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 export interface BreathEvent {
   phase: 'inhale' | 'hold' | 'exhale';

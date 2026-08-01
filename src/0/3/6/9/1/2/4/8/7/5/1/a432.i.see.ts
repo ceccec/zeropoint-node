@@ -1,8 +1,8 @@
 // a432.i.see.ts — Seeing CMYK pulses
-import { CMYK } from './a432.cmyk.ts';
+import { type CMYK } from './a432.cmyk.ts';
 import { digitalRoot } from './a432.math.ts';
 import { EventEmitter } from 'events';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 export const seeEmitter = new EventEmitter();
 

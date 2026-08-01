@@ -15,7 +15,7 @@
  */
 
 import { abs } from './a432.algebra.ts'
-import { Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
+import { type Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 import { getVortexColor, hslToRgb } from './a432.color.ts';
 import { A432_SEQUENCE, digitalRoot, getDigitMeaning } from './a432.math.ts';
 

@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import { seedDigit, seedColor } from './a432.symbol.utils.ts';
 import { registerSource } from './a432.bus.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 export const mobiusEmitter=new EventEmitter();
 const name='mobius';

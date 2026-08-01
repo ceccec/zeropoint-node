@@ -1,4 +1,4 @@
-import { Fraction } from './a432.math.ts';
+import { type Fraction } from './a432.math.ts';
 
 /**
  * VBMDigitRelations – raw digit sequences (as strings) extracted from VBM.txt.

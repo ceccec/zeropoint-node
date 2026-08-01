@@ -23,9 +23,9 @@ import {
   A432_SEQUENCE, 
   A432_GATEWAYS, 
   A432_PHASE_SHIFTS,
-  A432ChargingSystem,
-  QuantumState,
-  DimensionalFold
+  type A432ChargingSystem,
+  type QuantumState,
+  type DimensionalFold
 } from './a432.os.ts';
 import A432ConsciousnessRouter from './a432.consciousness.router.ts';
 import A432DimensionalEvolution from './a432.dimensional.evolution.ts';

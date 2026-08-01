@@ -11,7 +11,7 @@
  */
 
 import { abs } from './a432.algebra.ts'
-import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color.ts';
+import { A432ColorModel, type A432HSL, type A432RGB, type A432CMYK } from './a432.color.ts';
 
 /**
  * getVortexFrequency: Returns a frequency (Hz) for a digit (1-9), harmonized with color logic.

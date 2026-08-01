@@ -15,7 +15,7 @@
  *   // Call disposer() to stop.
  */
 import { PI, cos, sin } from './a432.algebra.ts'
-import { CMYK, digitAngleToCMYK } from './a432.cmyk.ts';
+import { type CMYK, digitAngleToCMYK } from './a432.cmyk.ts';
 import { asAngle } from './a432.math.ts';
 
 export interface FlowerOfLifeFrame {

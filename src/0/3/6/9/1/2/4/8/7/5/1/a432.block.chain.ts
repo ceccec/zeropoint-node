@@ -3,7 +3,7 @@ import { max, min } from './a432.algebra.ts'
 // All math uses only vortex/trinity numbers and harmonic integer fractions.
 // Metaphysical mapping: BlockChain = recursion, multi-dimensional chaining, observer, Mobius, trinity, axis, self-awareness
 
-import { A432ColorModel, A432HSL, A432RGB, A432CMYK } from './a432.color.ts';
+import { A432ColorModel, type A432HSL, type A432RGB, type A432CMYK } from './a432.color.ts';
 import { getRodinSequence, getTrinityAxis, angleForDigit, frequencyForDigit } from './a432.math.ts';
 
 export const BLOCK_CHAIN_DOC = {

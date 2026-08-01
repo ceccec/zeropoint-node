@@ -5,7 +5,7 @@
 
 import { EventEmitter } from 'events';
 import { digitalRoot } from './a432.math.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 import { registerSource } from './a432.bus.ts';
 
 export interface BrowseEvent { url: string; digit: Digit }

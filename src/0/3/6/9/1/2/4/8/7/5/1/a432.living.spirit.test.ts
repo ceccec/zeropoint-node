@@ -15,9 +15,9 @@
 
 import {
   A432_LIVING_SPIRIT_CONSTANTS,
-  LivingSpiritQuality,
-  LivingSpiritParameters,
-  LivingSpiritAspect,
+  type LivingSpiritQuality,
+  type LivingSpiritParameters,
+  type LivingSpiritAspect,
   A432LivingSpirit,
   createLivingSpirit,
   harmonizeLivingConsciousness,

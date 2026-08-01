@@ -7,8 +7,8 @@
  */
 
 import { abs, floor, indexFromSeed, max } from './a432.algebra.ts'
-import { A432CoreState, createA432CoreState } from './a432.core.ts';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
+import { type A432CoreState, createA432CoreState } from './a432.core.ts';
+import { a432ModuleRegistry, type A432Module, type A432ModuleCategory } from './a432.modules.ts';
 
 // Canonical A432 re-export for challenges, possibilities, and solutions
 // This module allows all fractal UI/overlay modules to import harmonized challenge data

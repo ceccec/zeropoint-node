@@ -10,7 +10,7 @@
  */
 
 import { min, pow } from './a432.algebra.ts'
-import { Fraction, CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
+import { type Fraction, type CMYK, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export interface DimensionState {
   dimension: number;

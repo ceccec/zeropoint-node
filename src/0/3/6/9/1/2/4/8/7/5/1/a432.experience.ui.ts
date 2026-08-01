@@ -7,8 +7,8 @@
  */
 
 import { floor } from './a432.algebra.ts'
-import { A432CoreState, createA432CoreState } from './a432.core.ts';
-import { a432ModuleRegistry, A432Module, A432ModuleCategory } from './a432.modules.ts';
+import { type A432CoreState, createA432CoreState } from './a432.core.ts';
+import { a432ModuleRegistry, type A432Module, type A432ModuleCategory } from './a432.modules.ts';
 import { harmonizeAllBalance } from './a432.balance.ts';
 import { harmonizeAllResonance } from './a432.resonance.ts';
 import { harmonizeAllChallenges } from './a432.challenges.ts';
@@ -20,15 +20,15 @@ import { harmonizeAllInnovation } from './a432.innovation.ts';
 import { harmonizeAllDocumentation } from './a432.documentation.ts';
 import { A432_FREQUENCY } from './a432.ts';
 import { A432BlockChain, recordEvent } from './a432.block.chain.event.ts';
-import { A432ObservationState } from './a432.observation.ts';
-import { A432EvolutionState } from './a432.evolution.ts';
-import { A432InnovationState } from './a432.innovation.ts';
-import { A432DocumentationState } from './a432.documentation.ts';
-import { A432BalanceState } from './a432.balance.ts';
-import { A432ResonanceState } from './a432.resonance.ts';
-import { A432ChallengeState } from './a432.challenges.ts';
-import { A432FlowState } from './a432.flow.ts';
-import { A432IntegrationState } from './a432.integration.ts';
+import { type A432ObservationState } from './a432.observation.ts';
+import { type A432EvolutionState } from './a432.evolution.ts';
+import { type A432InnovationState } from './a432.innovation.ts';
+import { type A432DocumentationState } from './a432.documentation.ts';
+import { type A432BalanceState } from './a432.balance.ts';
+import { type A432ResonanceState } from './a432.resonance.ts';
+import { type A432ChallengeState } from './a432.challenges.ts';
+import { type A432FlowState } from './a432.flow.ts';
+import { type A432IntegrationState } from './a432.integration.ts';
 
 // Harmonized: Add blockchain for experience event logging
 const blockchain = new A432BlockChain();

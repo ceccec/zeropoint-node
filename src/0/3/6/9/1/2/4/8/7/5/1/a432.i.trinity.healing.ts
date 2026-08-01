@@ -7,7 +7,7 @@ import { renderTrinityHealingPanel } from './a432.trinity.healing.ts';
 import type { VortexStream } from './a432.vortex.ts';
 import { PI_DIGITS } from './a432.pi.ts'; // Assume a canonical export of pi digits as an array
 import { renderPiTrinityRodinSVG, piTrinityRodinStream } from './a432.pi.trinity.ts';
-import { registerModule, A432OSModule, routeEvent, harmonizeAll } from './a432.harmonized.ts';
+import { registerModule, type A432OSModule, routeEvent, harmonizeAll } from './a432.harmonized.ts';
 
 export interface TrinityHealingMeta {
   user: string;

@@ -1,6 +1,6 @@
 // a432.video.ts — Visualize CMYK pulses on a canvas
 //---------------------------------------------------
-import { CMYK, cmykToCss } from './a432.cmyk.ts';
+import { type CMYK, cmykToCss } from './a432.cmyk.ts';
 
 let canvas: HTMLCanvasElement | null = null;
 let ctx: CanvasRenderingContext2D | null = null;

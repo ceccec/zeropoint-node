@@ -2,7 +2,7 @@
 import { EventEmitter } from 'events';
 import { digitalRoot } from './a432.math.ts';
 import { registerSource } from './a432.bus.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
 
 export const infinityEmitter = new EventEmitter();

@@ -8,7 +8,7 @@
  */
 
 import { round } from './a432.algebra.ts'
-import { humanConsciousnessEmitter, HumanConsciousnessEvent } from './a432.human.consciousness.ts';
+import { humanConsciousnessEmitter, type HumanConsciousnessEvent } from './a432.human.consciousness.ts';
 
 export interface HumanAttribute {
   name: string;

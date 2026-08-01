@@ -5,7 +5,7 @@ import { PI, cos, sin } from './a432.algebra.ts'
 
 import { digitAngleToCMYK, type CMYK } from './a432.cmyk.ts';
 import { TRINITY_AXIS, RODIN_SEQUENCE, cycleStream, TRINITY_POLARITY, asAngle, type AngleDeg } from './a432.math.ts';
-import { Digit, asDigit } from './a432.types.ts';
+import { type Digit, asDigit } from './a432.types.ts';
 
 /**
  * rodinMatrix7x7: Generates a 7x7 matrix of the Rodin sequence, showing all phase relationships.

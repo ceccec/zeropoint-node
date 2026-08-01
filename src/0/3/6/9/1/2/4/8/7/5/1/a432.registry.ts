@@ -4,8 +4,8 @@
  * DRY pattern: Register once, discover everywhere
  */
 
-import { A432Module, A432ModuleCategory } from './a432.modules.ts';
-import { A432FactoryState, createA432State } from './a432.factory.ts';
+import { type A432Module, type A432ModuleCategory } from './a432.modules.ts';
+import { type A432FactoryState, createA432State } from './a432.factory.ts';
 import { A432Validation } from './a432.utils.ts';
 
 // === REGISTRY INTERFACES ===

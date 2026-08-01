@@ -7,7 +7,7 @@
  */
 
 import { round } from './a432.algebra.ts'
-import { toHarmonic, toCMYK, getFlow, BodySystem } from './a432.body.ts';
+import { toHarmonic, toCMYK, getFlow, type BodySystem } from './a432.body.ts';
 
 export interface A432HumanBody {
   skeletal: BodySystem;

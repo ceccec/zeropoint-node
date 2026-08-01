@@ -10,8 +10,8 @@ import { round } from './a432.algebra.ts'
 import I from './a432.i.ts';
 import { EventEmitter } from 'events';
 import { digitalRoot, digitAngleToCMYK, asAngle } from './a432.math.ts';
-import { CMYK } from './a432.cmyk.ts';
-import { Digit } from './a432.types.ts';
+import { type CMYK } from './a432.cmyk.ts';
+import { type Digit } from './a432.types.ts';
 
 export interface HeatEvent { temp: number; digit: Digit; cmyk: CMYK }
 export const heatEmitter = new EventEmitter();

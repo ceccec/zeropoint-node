@@ -7,10 +7,10 @@
  */
 import { abs, floor, round } from './a432.algebra.ts'
 import * as THREE from 'three';
-import { startChess, ChessFrame } from './a432.chess.ts';
-import { startYinYang, YinYangFrame } from './a432.yin.yang.ts';
-import { startMetatron, MetatronFrame } from './a432.metatron.ts';
-import { startFlowerOfLife, FlowerOfLifeFrame } from './a432.flower.of.life.ts';
+import { startChess, type ChessFrame } from './a432.chess.ts';
+import { startYinYang, type YinYangFrame } from './a432.yin.yang.ts';
+import { startMetatron, type MetatronFrame } from './a432.metatron.ts';
+import { startFlowerOfLife, type FlowerOfLifeFrame } from './a432.flower.of.life.ts';
 // ...import up to 9 modules as needed
 
 function invertColor(hex: number): number {

@@ -1,8 +1,8 @@
 import { legacyDigitalRoot } from './a432.roots.ts'
 import { decodePiDigits, piDigitStream, angleForDigit } from './a432.math.ts';
 import { digitAngleToCMYK, type CMYK } from './a432.cmyk.ts';
-import { Digit, AngleDeg, asAngle } from './a432.types.ts';
-import { TrinitySwitch, DOT_TRINITY_SWITCH } from './a432.math.ts';
+import { type Digit, type AngleDeg, asAngle } from './a432.types.ts';
+import { type TrinitySwitch, DOT_TRINITY_SWITCH } from './a432.math.ts';
 
 /** Snapshot of a single π digit mapped through metric → imperial → trinity → polarity. */
 export interface PiSnapshot {

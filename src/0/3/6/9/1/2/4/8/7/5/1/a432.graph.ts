@@ -6,9 +6,9 @@ import { round } from './a432.algebra.ts'
 import { matrixEmitter } from './a432.self.ts';
 import { breathEmitter } from './a432.breathe.ts';
 import { healthEmitter } from './a432.health.ts';
-import { CMYK } from './a432.cmyk.ts';
+import { type CMYK } from './a432.cmyk.ts';
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 // Live state mirrors
 let breathDigit: Digit = 4 as Digit;

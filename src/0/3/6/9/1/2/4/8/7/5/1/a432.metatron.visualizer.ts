@@ -11,8 +11,8 @@
  */
 
 import { unitFromSeed } from './a432.algebra.ts'
-import { MetatronState, MetatronNode } from './a432.metatron.vision.ts';
-import { fractionToCMYK, CMYK } from './a432.cmyk.ts';
+import { type MetatronState, type MetatronNode } from './a432.metatron.vision.ts';
+import { fractionToCMYK, type CMYK } from './a432.cmyk.ts';
 
 export class MetatronVisualizer {
   nodes: MetatronNode[];

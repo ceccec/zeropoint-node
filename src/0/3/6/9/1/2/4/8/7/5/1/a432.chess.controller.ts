@@ -1,6 +1,6 @@
 import { log } from './a432.algebra.ts'
 import { Controller } from '@hotwired/stimulus';
-import { startChess, ChessFrame } from './a432.chess.ts';
+import { startChess, type ChessFrame } from './a432.chess.ts';
 
 export default class extends Controller {
   static targets = ["board"];

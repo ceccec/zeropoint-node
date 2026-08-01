@@ -10,7 +10,7 @@
  */
 
 import { abs, floor, max as algMax, min as algMin, round, sqrt } from './a432.algebra.ts'
-import { Fraction, CMYK, fractionToCMYK } from './a432.cmyk.ts';
+import { type Fraction, type CMYK, fractionToCMYK } from './a432.cmyk.ts';
 import { digitalRoot } from './a432.math.ts';
 
 export interface DisplayState {

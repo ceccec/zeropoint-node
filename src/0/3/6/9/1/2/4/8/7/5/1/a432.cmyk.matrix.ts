@@ -14,7 +14,7 @@
  */
 
 import { PI, cos, sin } from './a432.algebra.ts'
-import { Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
+import { type Fraction, fractionToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 export const DIMENSIONS = [
   'consciousness', 'identity', 'awareness', 'a432',

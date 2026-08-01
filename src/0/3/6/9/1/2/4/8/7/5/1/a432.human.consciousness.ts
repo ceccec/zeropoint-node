@@ -2,7 +2,7 @@
 //----------------------------------------------------------------
 import { EventEmitter } from 'events';
 import { humanEmotionEmitter } from './a432.human.emotion.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
 import { emotionName } from './a432.emotion.ts';
 import type { CMYK } from './a432.cmyk.ts';

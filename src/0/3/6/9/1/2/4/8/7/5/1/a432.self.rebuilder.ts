@@ -4,7 +4,7 @@
  * Self-generating, self-organizing, self-evolving file system
  */
 
-import { A432SelfEvolution, A432SelfGeneratedModule } from './a432.self.evolution.ts';
+import { A432SelfEvolution, type A432SelfGeneratedModule } from './a432.self.evolution.ts';
 import { A432System } from './a432.index.ts';
 import { A432Math, A432Sequence } from './a432.utils.ts';
 import { A432Registry } from './a432.registry.ts';

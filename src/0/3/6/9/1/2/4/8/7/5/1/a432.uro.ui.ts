@@ -1,7 +1,7 @@
 import { PI } from './a432.algebra.ts'
 // a432.uro.ui.ts — Visual spiral of the uroboros stream
 //-------------------------------------------------------
-import { uroborosEmitter, UroborosEvent } from './a432.uroboros.ts';
+import { uroborosEmitter, type UroborosEvent } from './a432.uroboros.ts';
 import { cmykToCss } from './a432.cmyk.ts';
 
 if (typeof document !== 'undefined') {

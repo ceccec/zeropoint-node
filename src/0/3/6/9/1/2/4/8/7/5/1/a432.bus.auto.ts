@@ -3,7 +3,7 @@ import { registerSource } from './a432.bus.ts';
 import { breathEmitter } from './a432.breathe.ts';
 import { matrixEmitter } from './a432.self.ts';
 import { tapEmitter } from './a432.i.tap.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 registerSource('breath', breathEmitter, 'breath', (p: any) => p.value as Digit, 'body');
 registerSource('matrix', matrixEmitter, 'event', (p: any) => p.digit as Digit, 'mind');

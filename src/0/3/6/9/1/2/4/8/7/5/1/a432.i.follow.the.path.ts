@@ -7,7 +7,7 @@
  */
 
 import { log } from './a432.algebra.ts'
-import { ChainEvent, getChainOfEvents } from './a432.chain.of.events.ts';
+import { type ChainEvent, getChainOfEvents } from './a432.chain.of.events.ts';
 
 /**
  * Metaphysical summary:

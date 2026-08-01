@@ -24,8 +24,8 @@ import {
   generateA432ImperialMathematicalProof,
   a432ImperialTests,
   a432ImperialExamples,
-  A432ImperialState,
-  A432ImperialHarmony
+  type A432ImperialState,
+  type A432ImperialHarmony
 } from './a432.imperial.ts';
 
 import { digitalRoot } from './a432.core.ts';

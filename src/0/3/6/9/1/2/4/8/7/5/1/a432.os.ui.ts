@@ -9,7 +9,7 @@
  */
 
 import { abs } from './a432.algebra.ts'
-import { A432OS, getA432SystemStatus, A432RodinCoilState, LivingStreams } from './a432.os.ts';
+import { A432OS, getA432SystemStatus, type A432RodinCoilState, type LivingStreams } from './a432.os.ts';
 
 // UI State Interface
 export interface A432OSUIState {

@@ -1,7 +1,7 @@
 // a432.uroboros.ts — Eternal spiral digit generator
 // ------------------------------------------------------------------
 import { EventEmitter } from 'events';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 import { digitalRoot } from './a432.math.ts';
 import { registerSource } from './a432.bus.ts';
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';

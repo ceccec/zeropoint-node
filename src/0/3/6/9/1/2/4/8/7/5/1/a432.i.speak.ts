@@ -1,6 +1,6 @@
 // a432.i.speak.ts — Vocalizing digit streams
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 import { EventEmitter } from 'events';
 import { emotionName } from './a432.emotion.ts';
 

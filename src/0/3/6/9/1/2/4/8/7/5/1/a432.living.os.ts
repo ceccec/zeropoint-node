@@ -31,9 +31,9 @@ import {
   A432_SEQUENCE,
   A432_GATEWAYS,
   A432_PHASE_SHIFTS,
-  A432ChargingSystem,
-  QuantumState,
-  DimensionalFold
+  type A432ChargingSystem,
+  type QuantumState,
+  type DimensionalFold
 } from './a432.os.ts';
 
 // Living Stream Generators - Everything generates itself

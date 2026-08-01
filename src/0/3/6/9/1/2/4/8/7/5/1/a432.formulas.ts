@@ -3,7 +3,7 @@
 import { bus } from './a432.bus.ts';
 import { rodinDigit, digitalRoot, angleForDigit } from './a432.math.ts';
 import { emotionName } from './a432.emotion.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 function ensurePanel(): HTMLElement | null {
   if (typeof document === 'undefined') return null;

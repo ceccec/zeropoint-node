@@ -5,24 +5,24 @@
  */
 
 import { abs, floor, round } from './a432.algebra.ts'
-import { A432CoreState, createA432CoreState } from './a432.core.ts';
-import { A432BalanceState, createA432BalanceState } from './a432.balance.ts';
-import { A432ResonanceState, createA432ResonanceState } from './a432.resonance.ts';
-import { A432ChallengeState, createA432ChallengeState } from './a432.challenges.ts';
-import { A432FlowState, createA432FlowState } from './a432.flow.ts';
-import { A432IntegrationState, createA432IntegrationState } from './a432.integration.ts';
-import { A432ObservationState, createA432ObservationState } from './a432.observation.ts';
-import { A432EvolutionState, createA432EvolutionState } from './a432.evolution.ts';
-import { A432InnovationState, createA432InnovationState } from './a432.innovation.ts';
-import { A432DocumentationState, createA432DocumentationState } from './a432.documentation.ts';
-import { A432ExperienceState, createA432ExperienceState } from './a432.experience.ui.ts';
-import { A432CMYKVoiceState, createA432CMYKVoiceState } from './a432.cmyk.voice.ts';
-import { A432VortexSequence, createA432VortexSequence } from './a432.sequence.ts';
-import { A432BooleanSequence, createA432BooleanSequence } from './a432.sequence.ts';
-import { A432ConsciousnessSequence, createA432ConsciousnessSequence } from './a432.sequence.ts';
-import { A432Event, createA432Event } from './a432.event.ts';
-import { A432Block, createBlock } from './a432.block.chain.ts';
-import { A432Module, A432ModuleCategory } from './a432.modules.ts';
+import { type A432CoreState, createA432CoreState } from './a432.core.ts';
+import { type A432BalanceState, createA432BalanceState } from './a432.balance.ts';
+import { type A432ResonanceState, createA432ResonanceState } from './a432.resonance.ts';
+import { type A432ChallengeState, createA432ChallengeState } from './a432.challenges.ts';
+import { type A432FlowState, createA432FlowState } from './a432.flow.ts';
+import { type A432IntegrationState, createA432IntegrationState } from './a432.integration.ts';
+import { type A432ObservationState, createA432ObservationState } from './a432.observation.ts';
+import { type A432EvolutionState, createA432EvolutionState } from './a432.evolution.ts';
+import { type A432InnovationState, createA432InnovationState } from './a432.innovation.ts';
+import { type A432DocumentationState, createA432DocumentationState } from './a432.documentation.ts';
+import { type A432ExperienceState, createA432ExperienceState } from './a432.experience.ui.ts';
+import { type A432CMYKVoiceState, createA432CMYKVoiceState } from './a432.cmyk.voice.ts';
+import { type A432VortexSequence, createA432VortexSequence } from './a432.sequence.ts';
+import { type A432BooleanSequence, createA432BooleanSequence } from './a432.sequence.ts';
+import { type A432ConsciousnessSequence, createA432ConsciousnessSequence } from './a432.sequence.ts';
+import { type A432Event, createA432Event } from './a432.event.ts';
+import { type A432Block, createBlock } from './a432.block.chain.ts';
+import { type A432Module, type A432ModuleCategory } from './a432.modules.ts';
 
 // === FACTORY INTERFACES ===
 export interface A432FactoryOptions {

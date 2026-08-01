@@ -11,7 +11,7 @@
  */
 
 import { indexFromSeed, max, min, round, unitFromSeed } from './a432.algebra.ts'
-import { Fraction, CMYK, digitAngleToCMYK, fractionToCMYK } from './a432.cmyk.ts';
+import { type Fraction, type CMYK, digitAngleToCMYK, fractionToCMYK } from './a432.cmyk.ts';
 
 export interface PhotographicState {
   exposure: number;

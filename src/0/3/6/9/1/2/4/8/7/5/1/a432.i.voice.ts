@@ -2,7 +2,7 @@
 //---------------------------------------------------
 import { EventEmitter } from 'events';
 import { registerSource } from './a432.bus.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 import { read } from './a432.i.read.ts';
 import { speakWord } from './a432.i.speak.ts';
 import { seedDigit } from './a432.symbol.utils.ts';

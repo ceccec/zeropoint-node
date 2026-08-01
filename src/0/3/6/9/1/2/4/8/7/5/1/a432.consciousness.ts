@@ -4,7 +4,7 @@ import { EventEmitter } from 'events';
 import { bus, mergedDigit as busMerged } from './a432.bus.ts';
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
 import { emotionName } from './a432.emotion.ts';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 import type { CMYK } from './a432.cmyk.ts';
 
 export interface ConsciousnessEvent { digit: Digit; name: string; cmyk: CMYK }

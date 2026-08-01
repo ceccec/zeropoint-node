@@ -3,7 +3,7 @@ import { log } from './a432.algebra.ts'
 import { humanEmitter } from './a432.human.ts';
 import { emotionName } from './a432.emotion.ts';
 import { EventEmitter } from 'events';
-import { Digit } from './a432.types.ts';
+import { type Digit } from './a432.types.ts';
 
 export interface HumanEmotionEvent { digit: Digit; name: string }
 export const humanEmotionEmitter = new EventEmitter();

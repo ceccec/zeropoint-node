@@ -5,7 +5,7 @@ import { abs } from './a432.algebra.ts'
 import { vortexStream } from './a432.matrix.ts';
 import { digitAngleToCMYK, type CMYK } from './a432.cmyk.ts';
 import { TRINITY_POLARITY, asAngle } from './a432.math.ts';
-import { AngleDeg, Digit } from './a432.types.ts';
+import { type AngleDeg, type Digit } from './a432.types.ts';
 
 export type Fraction = { numerator: number; denominator: number };
 

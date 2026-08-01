@@ -1,7 +1,7 @@
 import { a432SequenceStream } from './a432.math.ts';
 import { digitAngleToCMYK, type CMYK } from './a432.cmyk.ts';
 import { asAngle } from './a432.math.ts';
-import { Digit, AngleDeg } from './a432.types.ts';
+import { type Digit, type AngleDeg } from './a432.types.ts';
 
 // ——————————————————————————————————————————
 // Cross-platform animation frame helpers

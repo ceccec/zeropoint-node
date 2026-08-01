@@ -8,7 +8,7 @@
 
 import { abs, max, min, sqrt } from './a432.algebra.ts'
 import { A432CmykDisplay } from './a432.cmyk.display.ts';
-import { Fraction, CMYK } from './a432.cmyk.ts';
+import { type Fraction, type CMYK } from './a432.cmyk.ts';
 
 describe('A432CmykDisplay', () => {
   let display: A432CmykDisplay;

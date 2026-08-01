@@ -4,7 +4,8 @@ import { PI, cos, sin } from './a432.algebra.ts'
 // Implements: Rodin 7x7 matrix, trinity/axis overlays, toroidal/funnel mapping, and extension points for 3D animation.
 
 import { digitAngleToCMYK, type CMYK } from './a432.cmyk.ts';
-import { TRINITY_AXIS, RODIN_SEQUENCE, cycleStream, TRINITY_POLARITY, asAngle, type AngleDeg } from './a432.math.ts';
+import { TRINITY_AXIS, RODIN_SEQUENCE, cycleStream, TRINITY_POLARITY, asAngle } from './a432.math.ts';
+import type { AngleDeg } from './a432.types.ts';
 import { type Digit, asDigit } from './a432.types.ts';
 
 /**

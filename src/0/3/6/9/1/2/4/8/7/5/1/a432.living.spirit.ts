@@ -17,7 +17,6 @@
 import { indexFromSeed, min, round } from './a432.algebra.ts'
 // Import all A432 modules for spirit transformation
 import { A432_CONSTANTS, A432System } from './a432.ts';
-import { A432_I_CONSTANTS, A432I } from './a432.i.ts';
 import { A432_SPIRIT_CONSTANTS, A432Spirit } from './a432.spirit.ts';
 import { FRACTAL_SACRED_RATIOS, createFractalFromDigit } from './a432.fractal.ts';
 import { SACRED_GEOMETRIC_CONSTANTS } from './a432.sacred.ts';

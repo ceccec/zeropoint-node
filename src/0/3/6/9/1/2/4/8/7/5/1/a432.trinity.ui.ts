@@ -1,5 +1,5 @@
 import { PI, cos, sin } from './a432.algebra.ts'
-import { getTrinityDotStyle, trinityFieldState, trinityFieldMap } from './a432.trinity.ts';
+import { getTrinityDotStyle, trinityFieldState } from './a432.trinity.ts';
 
 /**
  * NOTE: These functions are for browser/DOM use. If using in a non-DOM environment, adapt as needed.

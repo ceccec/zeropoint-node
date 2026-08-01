@@ -3,7 +3,7 @@ import { PI, cos, sin } from './a432.algebra.ts'
 // Canonical 'I' (observer/actor) interface for trinity interaction
 // Interacts with a432.trinity.ts and provides meta-observation, harmonization, and visualization
 
-import { a432TrinityCycle, a432TrinityStream, a432FamilyStream } from './a432.trinity.ts';
+import { a432TrinityStream, a432FamilyStream } from './a432.trinity.ts';
 
 export interface ITrinityStep {
   step: number;

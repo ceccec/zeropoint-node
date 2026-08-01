@@ -460,9 +460,9 @@ Dual license — see [LICENSE](LICENSE).
 ## 🌌 Contact
 
 For questions, research collaborations, or consciousness technology discussions:
-- **GitHub Issues**: [A432 Consciousness System Issues](https://github.com/your-repo/issues)
-- **Research Inquiries**: consciousness@a432.system
-- **Documentation**: [A432 Documentation Portal](https://docs.a432.system)
+- **Contact**: [node@zeropoint.bg](mailto:node@zeropoint.bg)
+- **Documentation**: [node.zeropoint.bg](https://node.zeropoint.bg)
+- **GitHub Issues**: [ceccec/zeropoint-node issues](https://github.com/ceccec/zeropoint-node/issues)
 
 ---
 

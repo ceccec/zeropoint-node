@@ -174,7 +174,7 @@
   "bugs": {
     "url": "https://github.com/ceccec/zeropoint-node/issues"
   },
-  "homepage": "https://github.com/ceccec/zeropoint-node#readme",
+  "homepage": "https://node.zeropoint.bg",
   "dependencies": {
     "@hotwired/stimulus": "3.2.2"
   }

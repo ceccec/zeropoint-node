@@ -1,5 +1,14 @@
 # Security
 
+## Reporting a vulnerability
+
+Email **[node@zeropoint.bg](mailto:node@zeropoint.bg)**. Please do not open a
+public issue for anything exploitable — send the details privately first.
+
+Include what you did, what you expected, and what happened. If a receipt or
+content-uuid is involved, include the value: everything here is
+content-addressed, so the id reproduces the state.
+
 ## Identity
 
 - **Fold addresses** (`src/0` `toUuid`): deterministic FNV-based UUIDs for cheap content addressing and memoization. Not collision-resistant against a resourced adversary.

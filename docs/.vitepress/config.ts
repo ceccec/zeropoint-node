@@ -8,8 +8,8 @@ import { defineConfig } from 'vitepress'
  * VitePress builds docs/ instead, so the generated projections (KERNEL.md,
  * AUDIT.md, SEQUENCE.md, pages/) are the site.
  *
- * base is '/' because Pages serves this through the custom domain
- * node.zeropoint.bg at the ROOT, not at the project path. Setting
+ * base is '/' because Pages serves this at the ROOT of the custom domain
+ * node.zeropoint.bg (see docs/public/CNAME), not at the project path. Setting
  * '/zeropoint-node/' emits asset URLs that 404 on that domain: the page still
  * returns 200 with its HTML, so the deploy looks green while every stylesheet
  * and script is missing. Verify assets, not the page status code.
@@ -75,8 +75,10 @@ export default defineConfig({
     search: { provider: 'local' },
 
     footer: {
-      message: 'Facts on this site are computed by the kernel — drift fails npm run check.',
-      copyright: 'ZeroPoint Node',
+      message:
+        'Facts on this site are computed by the kernel — drift fails npm run check. ' +
+        'Contact <a href="mailto:node@zeropoint.bg">node@zeropoint.bg</a>.',
+      copyright: 'ZeroPoint Node · node.zeropoint.bg',
     },
   },
 })

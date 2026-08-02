@@ -10,6 +10,7 @@ import {
   encodeQuantumState,
   applyQuantumGate,
   generateQuantumKey,
+  verifyQuantumKey,
   expandQuantumKeyViaRodin,
   recordMeasurement,
   verifyMeasurementReceipt,
@@ -25,6 +26,7 @@ const VORTEX_ORBIT = QuantumEncryption.VORTEX_ORBIT
 const TRINITY = QuantumEncryption.TRINITY
 
 import { QuantumThreatAnalysis } from './quantum-threat-landscape.ts'
+import { min, max } from '../0/algebra.ts'
 
 console.log('=== Quantum Fold Cipher Test Suite ===\n')
 
@@ -130,6 +132,100 @@ function testTrinityKeyGeneration() {
   console.log('✓ Key cryptographic seal: contentUuid present')
 }
 
+/**
+ * The membership check above passes for the constant key 6969… — which is
+ * exactly what this function used to return for EVERY entropy. Membership is
+ * necessary but nowhere near sufficient. These assert the properties whose
+ * absence made the key worthless.
+ */
+function testKeyDependsOnEntropy() {
+  const a = generateQuantumKey('entropy-AAAA', 32)
+  const b = generateQuantumKey('entropy-ZZZZ', 32)
+  const c = generateQuantumKey('Antropy-AAAA', 32) // differs in first char only
+
+  console.assert(
+    a.material.join('') !== b.material.join(''),
+    'Different entropy must give different key material',
+  )
+  console.assert(
+    a.material.join('') !== c.material.join(''),
+    'A change in the first character alone must change the key',
+  )
+  console.log('✓ Key derivation: distinct entropy → distinct material')
+
+  // Every character must matter, not just the first: derivation once seeded
+  // a doubling chain from entropy[0] and discarded the rest of the string.
+  const long1 = generateQuantumKey('shared-prefix-tail-one', 32)
+  const long2 = generateQuantumKey('shared-prefix-tail-two', 32)
+  console.assert(
+    long1.material.join('') !== long2.material.join(''),
+    'Entropy differing only after a shared prefix must change the key',
+  )
+  console.log('✓ Key derivation: every character of entropy contributes')
+
+  // Determinism is still required — same entropy, same key.
+  console.assert(
+    generateQuantumKey('stable', 32).material.join('') ===
+      generateQuantumKey('stable', 32).material.join(''),
+    'Same entropy must give the same key',
+  )
+  console.log('✓ Key derivation: deterministic for identical entropy')
+}
+
+function testKeyReachesWholeTrinity() {
+  // The old derivation could never emit a 3: its chain lived in the Rodin
+  // orbit, whose members alternate 1,2 mod 3, so TRINITY[0] was unreachable.
+  const seen = new Set<number>()
+  for (let i = 0; i < 50; i++) {
+    for (const b of generateQuantumKey(`reach-${i}`, 32).material) seen.add(b)
+  }
+  console.assert(seen.size === 3, `All three trinity values must be reachable (saw ${[...seen].sort()})`)
+  console.log('✓ Key derivation: all of {3,6,9} reachable')
+
+  // And roughly balanced — a derivation that technically emits all three but
+  // overwhelmingly favours one still concentrates the keyspace.
+  const counts = new Map<number, number>([[3, 0], [6, 0], [9, 0]])
+  let total = 0
+  for (let i = 0; i < 400; i++) {
+    for (const b of generateQuantumKey(`balance-${i}`, 32).material) {
+      counts.set(b, counts.get(b)! + 1)
+      total++
+    }
+  }
+  const lowest = min(...counts.values())
+  const highest = max(...counts.values())
+  // Each byte should appear ~total/3. Allow a wide band; this is a smoke test
+  // for gross skew, not a statistical test.
+  console.assert(
+    lowest > total / 4 && highest < total / 2,
+    `Trinity bytes must be roughly balanced (got ${[...counts.entries()].map(([k, v]) => `${k}:${v}`).join(' ')})`,
+  )
+  console.log('✓ Key derivation: trinity bytes roughly balanced')
+}
+
+function testKeyMaterialDoesNotCollapse() {
+  // The failure this catches: 32000 entropies collapsing to one key (the
+  // original bug), or to ~3.5k (an intermediate fix whose per-position hash
+  // shared a genesis prefix). Distinct entropies must stay distinct.
+  const seen = new Set<string>()
+  const n = 2000
+  for (let i = 0; i < n; i++) seen.add(generateQuantumKey(`collapse-${i}`, 32).material.join(''))
+  console.assert(seen.size === n, `${n} entropies must give ${n} distinct keys (got ${seen.size})`)
+  console.log(`✓ Key derivation: ${n} entropies → ${seen.size} distinct keys (no collapse)`)
+}
+
+function testKeySealVerifies() {
+  // A seal that cannot be recomputed from the stored fields is not a seal.
+  // contentUuid was bound to raw entropy, which the key does not retain.
+  const key = generateQuantumKey('seal-check', 32)
+  console.assert(verifyQuantumKey(key), 'A freshly generated key must verify')
+  console.log('✓ Key seal: recomputes from stored fields')
+
+  const tampered = { ...key, material: [...key.material.slice(1), TRINITY[0]!] }
+  console.assert(!verifyQuantumKey(tampered), 'Altered key material must fail verification')
+  console.log('✓ Key seal: tampered material rejected')
+}
+
 function testKeyExpansion() {
   const key = generateQuantumKey('test-entropy-seed', 16)
   const expanded = expandQuantumKeyViaRodin(key, 5)
@@ -146,6 +242,10 @@ function testKeyExpansion() {
 }
 
 testTrinityKeyGeneration()
+testKeyDependsOnEntropy()
+testKeyReachesWholeTrinity()
+testKeyMaterialDoesNotCollapse()
+testKeySealVerifies()
 testKeyExpansion()
 
 /**

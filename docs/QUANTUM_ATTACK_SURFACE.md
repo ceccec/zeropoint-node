@@ -21,16 +21,45 @@ For each known quantum attack, we map:
 ### Attack 1: Brute-Force Key Search
 
 **What is broken:**
-- Attacker tries all 2^256 possible keys
-- Classical computer: 2^256 operations (infeasible)
-- Takes ~10^67 years (age of universe is 10^10 years)
+- Attacker enumerates the keyspace.
 
 **Fold defense:**
 - Tier 1: Content-address key via `toUuid()` → deterministic UUID
-- Tier 3: Trinity lattice [3,6,9] reduces effective keyspace structure
-- Bounded outcome (arithmetic, not measured): the keyspace stays 2^256, so brute-force stays infeasible under the stated assumptions
+- Tier 3: Trinity lattice [3,6,9] constrains key structure
 
-**Proof:** Key generation is deterministic but entropy-dependent. Same entropy → same key. Different entropy → different key (collision = hash failure).
+**Keyspace, computed rather than asserted.** An earlier revision of this
+section claimed "the keyspace stays 2^256". That is not this cipher's
+keyspace, and the claim is withdrawn.
+
+`generateQuantumKey` emits `keyLength` bytes drawn from the trinity `{3,6,9}` —
+three values per byte, not 256. The keyspace is therefore `3^keyLength`, i.e.
+`log2(3)·keyLength ≈ 1.585·keyLength` bits:
+
+| keyLength | Keyspace | Bits |
+|---|---|---|
+| 32 (default) | 3^32 | ≈ 50.7 |
+| 64 | 3^64 | ≈ 101.4 |
+| 162 | 3^162 | ≈ 256.8 |
+
+At the default of 32 the strength is about **50.7 bits**, which is
+brute-forceable — not "infeasible", and not comparable to a 256-bit cipher.
+Reaching 256-bit-equivalent strength under the trinity constraint needs
+`keyLength ≥ 162`.
+
+This is a consequence of the trinity constraint, which is a design premise of
+the framework rather than a defect in the implementation. It is recorded here
+so the constraint's cost is visible instead of implied away.
+
+**Proof:** Key generation is deterministic and entropy-dependent. Same entropy →
+same key; distinct entropy → distinct key. Both directions are asserted in
+`quantum-fold-cipher.test.ts`, along with reachability of all three trinity
+values and a no-collapse check (2000 entropies → 2000 distinct keys).
+
+**History:** these properties are tested because all of them once failed.
+The original derivation seeded a doubling chain from `entropy[0]` alone and
+indexed the trinity by a value that was never ≡ 0 mod 3, so it returned the
+constant `6969…` for *every* input — a keyspace of exactly 1, with the byte 3
+unreachable. The membership-only test in place at the time passed on it.
 
 **Test:**
 ```typescript

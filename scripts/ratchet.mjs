@@ -165,13 +165,37 @@ function importCycleCount() {
   const files = walk(join(ROOT, 'src'), (n) => n.endsWith('.ts') && !n.endsWith('.d.ts'))
   const graph = new Map()
   for (const file of files) {
-    const src = readFileSync(file, 'utf8')
+    // Edges come from the AST, not a regex. The regex form found 1012 edges
+    // against the AST's 1002: it counted import specifiers sitting inside
+    // COMMENTS as real dependencies — including the JSDoc usage example in
+    // a432.rodin.ts. The cycle count happened to match, but a commented-out
+    // import can just as easily invent a cycle or hide one.
+    const src = ts.createSourceFile(file, readFileSync(file, 'utf8'), ts.ScriptTarget.Latest, true)
     const out = []
-    for (const m of src.matchAll(/(?:from|import\(?)\s*['"](\.[^'"]+)['"]/g)) {
-      let target = join(dirname(file), m[1])
+    const add = (spec) => {
+      if (!spec?.startsWith('.')) return
+      let target = join(dirname(file), spec)
       if (!existsSync(target)) target = target.replace(/\.js$/, '.ts')
       if (existsSync(target)) out.push(target)
     }
+    const visit = (node) => {
+      if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier)) {
+        add(node.moduleSpecifier.text)
+      }
+      if (ts.isExportDeclaration(node) && node.moduleSpecifier && ts.isStringLiteral(node.moduleSpecifier)) {
+        add(node.moduleSpecifier.text)
+      }
+      if (
+        ts.isCallExpression(node) &&
+        node.expression.kind === ts.SyntaxKind.ImportKeyword &&
+        node.arguments[0] &&
+        ts.isStringLiteral(node.arguments[0])
+      ) {
+        add(node.arguments[0].text)
+      }
+      ts.forEachChild(node, visit)
+    }
+    visit(src)
     graph.set(file, out)
   }
   let index = 0

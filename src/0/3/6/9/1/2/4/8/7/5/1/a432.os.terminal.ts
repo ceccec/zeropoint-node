@@ -299,3 +299,54 @@ Evolution Path:
 Current: ${dimensionalFold.currentDimension}D
 Next Gateway: ${A432_GATEWAYS.find(g => g > dimensionalFold.currentDimension) || 'MAX'}`;
 } 
+
+/**
+ * Command dispatcher for the A432 OS terminal.
+ *
+ * Restored from commit 35bdecc, which removed it while rewriting this module
+ * and left a432.server.ts importing a function that no longer existed — so the
+ * server could not load at all.
+ *
+ * Four of the original ten cases are NOT restored: os.filesystem, os.logs,
+ * os.users and os.kill dispatched to getOSFileSystem / getOSLogs / getOSUsers /
+ * killOSProcess, which the same commit deleted. Restoring them would recreate
+ * the identical dangling-call bug. The six survivors are joined by the six
+ * getters 35bdecc added in their place.
+ */
+export function executeOSCommand(command: string): string {
+  const cmd = command.trim().toLowerCase()
+  switch (cmd) {
+    case 'os.boot':
+      return boot2432OS()
+    case 'os.shutdown':
+      return shutdown2432OS()
+    case 'os.status':
+      return getOSStatus()
+    case 'os.processes':
+      return getOSProcesses()
+    case 'os.memory':
+      return getOSMemory()
+    case 'os.network':
+      return getOSNetwork()
+    case 'os.sequence':
+      return getSequenceStatus()
+    case 'os.quantum':
+      return getQuantumStatus()
+    case 'os.charging':
+      return getChargingStatus()
+    case 'os.consciousness':
+      return getConsciousnessMetrics()
+    case 'os.info':
+      return getEnhancedSystemInfo()
+    case 'os.dimensions':
+      return getDimensionalStatus()
+    case 'os.help':
+      return [
+        'os.boot · os.shutdown · os.status · os.processes · os.memory',
+        'os.network · os.sequence · os.quantum · os.charging',
+        'os.consciousness · os.info · os.dimensions · os.help',
+      ].join('\n')
+    default:
+      return `Unknown command: ${command}. Try os.help`
+  }
+}

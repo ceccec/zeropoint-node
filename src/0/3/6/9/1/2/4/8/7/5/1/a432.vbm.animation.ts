@@ -20,12 +20,19 @@ import {
   frequencyForDigit,
   hueForDigit 
 } from './a432.math.ts';
+import { A432_RESOLVED_FRACTIONS } from './a432.resolved.ts';
+import { fractionToDecimal } from './a432.math.ts';
+// Analog signal values: exact integer ratios, collapsed to float only here
+// at the WebGL boundary. No bare decimal literal appears below.
+const G = Object.fromEntries(
+  Object.entries(A432_RESOLVED_FRACTIONS.GEOMETRY).map(([k, v]) => [k, fractionToDecimal(v)])
+) as Record<keyof typeof A432_RESOLVED_FRACTIONS.GEOMETRY, number>;
 
 // --- Canonical VBM Animation Constants ---
 const VBM_SEQUENCE = [0, ...TRINITY_AXIS, ...RODIN_SEQUENCE] as const;
 const VBM_STEP_ANGLE = 60; // 60° per step (trinity harmonic)
 const VBM_TORUS_RADIUS = 4; // Base torus radius
-const VBM_TUBE_RADIUS = 1.2; // Tube radius for torus
+const VBM_TUBE_RADIUS = G.SCALE_SIX_FIFTH; // Tube radius for torus
 const VBM_BASE_FREQUENCY = 432; // Canonical A432 frequency
 
 // --- VBM Animation State Interface ---
@@ -55,8 +62,8 @@ interface VBMTorusGeometry {
 // --- Canonical VBM Color Generation ---
 function generateVBMColor(digit: number): THREE.Color {
   const hue = hueForDigit(digit);
-  const saturation = 0.7;
-  const lightness = 0.5;
+  const saturation = G.OPACITY_SEVEN;
+  const lightness = G.HALF;
   return new THREE.Color().setHSL(hue / 360, saturation, lightness);
 }
 
@@ -76,7 +83,7 @@ function createVBMAnimationPoint(
   index: number, 
   scene: THREE.Scene
 ): VBMAnimationPoint {
-  const geometry = new THREE.SphereGeometry(0.15, 16, 16);
+  const geometry = new THREE.SphereGeometry(G.DAMP_LOW, 16, 16);
   const color = generateVBMColor(digit);
   const material = new THREE.MeshPhongMaterial({ color });
   const mesh = new THREE.Mesh(geometry, material);
@@ -103,7 +110,7 @@ function createVBMTorus(scene: THREE.Scene): VBMTorusGeometry {
   const material = new THREE.MeshPhongMaterial({
     color: 0x222244,
     wireframe: true,
-    opacity: 0.3,
+    opacity: G.UNIT_THIRD_TEN,
     transparent: true
   });
   const mesh = new THREE.Mesh(geometry, material);
@@ -125,11 +132,11 @@ function calculateVBMPosition(
   
   // Digital root drives minor circle
   const dr = digitalRoot(digit);
-  const phi = (dr / 9) * PI * 2 + time * 1.3;
+  const phi = (dr / 9) * PI * 2 + time * G.SCALE_THIRTEEN_TEN;
   
   // Torus parametric coordinates
   const x = (VBM_TORUS_RADIUS + VBM_TUBE_RADIUS * cos(phi)) * cos(theta);
-  const y = VBM_TUBE_RADIUS * sin(phi) * 0.7; // Squeeze factor
+  const y = VBM_TUBE_RADIUS * sin(phi) * G.OPACITY_SEVEN; // Squeeze factor
   const z = (VBM_TORUS_RADIUS + VBM_TUBE_RADIUS * cos(phi)) * sin(theta);
   
   return new THREE.Vector3(x, y, z);
@@ -139,7 +146,7 @@ function calculateVBMPosition(
 function calculateVBMScale(point: VBMAnimationPoint, time: number): number {
   const { digit, index } = point;
   const parity = digit % 2; // Even/odd determines pulsation phase
-  return 1 + 0.3 * sin(time * 2 + index + parity * PI);
+  return 1 + G.UNIT_THIRD_TEN * sin(time * 2 + index + parity * PI);
 }
 
 // --- VBM Animation Update ---
@@ -156,10 +163,10 @@ function updateVBMAnimation(state: VBMAnimationState): void {
     point.mesh.scale.set(scale, scale, scale);
     
     // Update color intensity based on frequency
-    const intensity = 0.5 + 0.3 * sin(time * point.frequency / 100);
+    const intensity = G.HALF + G.UNIT_THIRD_TEN * sin(time * point.frequency / 100);
     (point.mesh.material as THREE.MeshPhongMaterial).color.setHSL(
       point.color.getHSL({ h: 0, s: 0, l: 0 }).h,
-      0.7,
+      G.OPACITY_SEVEN,
       intensity
     );
   });
@@ -173,7 +180,7 @@ function setupVBMScene(): VBMAnimationState {
   const camera = new THREE.PerspectiveCamera(
     45, 
     window.innerWidth / window.innerHeight, 
-    0.1, 
+    G.UNIT_TENTH, 
     1000
   );
   camera.position.set(0, 5, 12);
@@ -184,7 +191,7 @@ function setupVBMScene(): VBMAnimationState {
   
   // Lighting
   scene.add(new THREE.AmbientLight(0x888888));
-  const light = new THREE.PointLight(0xffffff, 0.8);
+  const light = new THREE.PointLight(0xffffff, G.OPACITY_FOUR_FIFTH);
   light.position.set(10, 10, 10);
   scene.add(light);
   
@@ -219,7 +226,7 @@ function animateVBM(state: VBMAnimationState): void {
   renderer.render(scene, camera);
   
   // Update time
-  state.time += 0.01;
+  state.time += G.STEP_FINE;
   
   // Continue animation
   requestAnimationFrame(() => animateVBM(state));

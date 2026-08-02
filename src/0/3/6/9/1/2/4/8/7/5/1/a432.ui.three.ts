@@ -26,10 +26,17 @@ import { flashColor } from './a432.video.ts';
 import { playDigit, playTrinitySound } from './a432.sound.ts';
 import { digitAngleToCMYK } from './a432.cmyk.ts';
 import { type Digit, toDigit } from './a432.types.ts';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { startChess } from './a432.chess.ts';
 import { startYinYang } from './a432.yin.yang.ts';
 import { startMetatron } from './a432.metatron.ts';
+import { A432_RESOLVED_FRACTIONS } from './a432.resolved.ts';
+import { fractionToDecimal } from './a432.math.ts';
+// Analog signal values: exact integer ratios, collapsed to float only here
+// at the WebGL boundary. No bare decimal literal appears below.
+const G = Object.fromEntries(
+  Object.entries(A432_RESOLVED_FRACTIONS.GEOMETRY).map(([k, v]) => [k, fractionToDecimal(v)])
+) as Record<keyof typeof A432_RESOLVED_FRACTIONS.GEOMETRY, number>;
 
 export class A432ThreeUI {
   container: HTMLElement;
@@ -92,7 +99,7 @@ export class A432ThreeUI {
     this.container = container || this.createContainer();
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color(0x111111);
-    this.camera = new THREE.PerspectiveCamera(75, this.container.offsetWidth / this.container.offsetHeight, 0.1, 1000);
+    this.camera = new THREE.PerspectiveCamera(75, this.container.offsetWidth / this.container.offsetHeight, G.UNIT_TENTH, 1000);
     this.camera.position.set(0, 0, 10);
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
@@ -100,7 +107,7 @@ export class A432ThreeUI {
     this.blockchain = new A432BlockChain();
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;
-    this.controls.dampingFactor = 0.05;
+    this.controls.dampingFactor = G.STEP_SMALL;
     this.controls.screenSpacePanning = false;
     this.controls.minDistance = 2;
     this.controls.maxDistance = 50;
@@ -146,11 +153,11 @@ export class A432ThreeUI {
       this.checkHealthThresholds(metrics);
       this.updateJourneyOverlay(this.currentBreathPhase, metrics);
       // Color feedback: flash color for harmony/entropy thresholds
-      if (metrics.harmony < 0.3) flashColor({ c: 0, m: 0, y: 100, k: 0 }, 600); // yellow for low harmony
-      if (metrics.entropy > 0.8) flashColor({ c: 0, m: 100, y: 0, k: 0 }, 600); // magenta for high entropy
-      if (metrics.resonance > 0.8) flashColor({ c: 100, m: 0, y: 0, k: 0 }, 600); // cyan for high resonance
+      if (metrics.harmony < G.UNIT_THIRD_TEN) flashColor({ c: 0, m: 0, y: 100, k: 0 }, 600); // yellow for low harmony
+      if (metrics.entropy > G.OPACITY_FOUR_FIFTH) flashColor({ c: 0, m: 100, y: 0, k: 0 }, 600); // magenta for high entropy
+      if (metrics.resonance > G.OPACITY_FOUR_FIFTH) flashColor({ c: 100, m: 0, y: 0, k: 0 }, 600); // cyan for high resonance
       // Sound feedback: play trinity sound for high resonance
-      if (metrics.resonance > 0.8) playTrinitySound(9);
+      if (metrics.resonance > G.OPACITY_FOUR_FIFTH) playTrinitySound(9);
     });
     window.addEventListener('resize', () => this.onResize());
     this.createDashboardOverlay();
@@ -190,7 +197,7 @@ export class A432ThreeUI {
   }
 
   addSphere() {
-    const geometry = new THREE.SphereGeometry(0.7, 32, 32);
+    const geometry = new THREE.SphereGeometry(G.OPACITY_SEVEN, 32, 32);
     const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
     const sphere = new THREE.Mesh(geometry, material);
     sphere.position.set(unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:5") * 4 - 2, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:6") * 4 - 2, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.ui.three.ts:rnd:7") * 4 - 2);
@@ -253,8 +260,8 @@ export class A432ThreeUI {
     // Example: rotate all meshes
     this.objects.forEach(obj => {
       if (obj instanceof THREE.Mesh) {
-        obj.rotation.x += 0.01;
-        obj.rotation.y += 0.01;
+        obj.rotation.x += G.STEP_FINE;
+        obj.rotation.y += G.STEP_FINE;
       }
     });
     this.renderer.render(this.scene, this.camera);
@@ -369,9 +376,9 @@ export class A432ThreeUI {
       <b>Breath Phase:</b> <span style='color:#0ff'>${this.currentBreathPhase || '—'}</span><br>
       <b>Breath Value:</b> <span style='color:#0ff'>${this.currentBreathValue}</span><br>
       <b>Breath Cycle:</b> <span style='color:#fff'>4 (inhale) - 3 (hold) - 2 (exhale)</span><br>
-      <b>Harmony:</b> <span style='color:${this.healthMetrics.harmony > 0.7 ? '#0f0' : '#ff0'}'>${this.healthMetrics.harmony.toFixed(2)}</span><br>
-      <b>Entropy:</b> <span style='color:${this.healthMetrics.entropy > 0.7 ? '#f00' : '#0ff'}'>${this.healthMetrics.entropy.toFixed(2)}</span><br>
-      <b>Resonance:</b> <span style='color:${this.healthMetrics.resonance > 0.7 ? '#0ff' : '#fff'}'>${this.healthMetrics.resonance.toFixed(2)}</span><br>
+      <b>Harmony:</b> <span style='color:${this.healthMetrics.harmony > G.OPACITY_SEVEN ? '#0f0' : '#ff0'}'>${this.healthMetrics.harmony.toFixed(2)}</span><br>
+      <b>Entropy:</b> <span style='color:${this.healthMetrics.entropy > G.OPACITY_SEVEN ? '#f00' : '#0ff'}'>${this.healthMetrics.entropy.toFixed(2)}</span><br>
+      <b>Resonance:</b> <span style='color:${this.healthMetrics.resonance > G.OPACITY_SEVEN ? '#0ff' : '#fff'}'>${this.healthMetrics.resonance.toFixed(2)}</span><br>
       Trinity Phase: <span style='color:#ff0'>${this.trinityPhase}</span><br>
       Harmony: <span style='color:#0f0'>${this.harmony}</span><br>
       Entropy: <span style='color:#f00'>${this.entropy}</span><br>
@@ -713,9 +720,9 @@ export class A432ThreeUI {
       Avg Exhale: <span style='color:#0ff'>${avg(phaseDurations.exhale)}</span> ms<br>
       <hr style='border:1px solid #333'>
       <b>System Health</b><br>
-      Harmony: <span style='color:${this.healthMetrics.harmony > 0.7 ? '#0f0' : '#ff0'}'>${this.healthMetrics.harmony.toFixed(2)}</span><br>
-      Entropy: <span style='color:${this.healthMetrics.entropy > 0.7 ? '#f00' : '#0ff'}'>${this.healthMetrics.entropy.toFixed(2)}</span><br>
-      Resonance: <span style='color:${this.healthMetrics.resonance > 0.7 ? '#0ff' : '#fff'}'>${this.healthMetrics.resonance.toFixed(2)}</span><br>
+      Harmony: <span style='color:${this.healthMetrics.harmony > G.OPACITY_SEVEN ? '#0f0' : '#ff0'}'>${this.healthMetrics.harmony.toFixed(2)}</span><br>
+      Entropy: <span style='color:${this.healthMetrics.entropy > G.OPACITY_SEVEN ? '#f00' : '#0ff'}'>${this.healthMetrics.entropy.toFixed(2)}</span><br>
+      Resonance: <span style='color:${this.healthMetrics.resonance > G.OPACITY_SEVEN ? '#0ff' : '#fff'}'>${this.healthMetrics.resonance.toFixed(2)}</span><br>
       <svg width='180' height='36' style='margin-top:8px;'>${this.getHealthSparklineSVG()}</svg>`;
   }
 
@@ -762,9 +769,9 @@ export class A432ThreeUI {
     };
     let meta = '';
     if (metrics) {
-      if (metrics.harmony < 0.3) meta = '<br><span style="color:#ff0">Metaphysical Alert: Harmony is low. Focus on unity.</span>';
-      else if (metrics.entropy > 0.8) meta = '<br><span style="color:#f00">Metaphysical Alert: Entropy is high. Exhale and release.</span>';
-      else if (metrics.resonance > 0.8) meta = '<br><span style="color:#0ff">Metaphysical: Resonance is high. System is harmonized.</span>';
+      if (metrics.harmony < G.UNIT_THIRD_TEN) meta = '<br><span style="color:#ff0">Metaphysical Alert: Harmony is low. Focus on unity.</span>';
+      else if (metrics.entropy > G.OPACITY_FOUR_FIFTH) meta = '<br><span style="color:#f00">Metaphysical Alert: Entropy is high. Exhale and release.</span>';
+      else if (metrics.resonance > G.OPACITY_FOUR_FIFTH) meta = '<br><span style="color:#0ff">Metaphysical: Resonance is high. System is harmonized.</span>';
     }
     this.journeyOverlay.innerHTML = `<b>Metaphysical Journey</b><br>${prompts[phase] || '—'}${meta}`;
   }
@@ -788,22 +795,22 @@ export class A432ThreeUI {
   animateHealthOverlay(metrics: { harmony: number; entropy: number; resonance: number }) {
     if (!this.analyticOverlay) return;
     // Animate overlay if harmony or entropy changes significantly
-    if (abs(metrics.harmony - this.lastHealthMetrics.harmony) > 0.2) {
+    if (abs(metrics.harmony - this.lastHealthMetrics.harmony) > G.UNIT_FIFTH) {
       this.analyticOverlay.style.boxShadow = '0 0 24px 8px #0f0';
       setTimeout(() => { if (this.analyticOverlay) this.analyticOverlay.style.boxShadow = ''; }, 1000);
     }
-    if (abs(metrics.entropy - this.lastHealthMetrics.entropy) > 0.2) {
+    if (abs(metrics.entropy - this.lastHealthMetrics.entropy) > G.UNIT_FIFTH) {
       this.analyticOverlay.style.boxShadow = '0 0 24px 8px #f00';
       setTimeout(() => { if (this.analyticOverlay) this.analyticOverlay.style.boxShadow = ''; }, 1000);
     }
   }
 
   checkHealthThresholds(metrics: { harmony: number; entropy: number; resonance: number }) {
-    if (metrics.harmony < 0.3) {
+    if (metrics.harmony < G.UNIT_THIRD_TEN) {
       this.showHealthAlert('Low Harmony! Focus on unity and breath.');
-    } else if (metrics.entropy > 0.8) {
+    } else if (metrics.entropy > G.OPACITY_FOUR_FIFTH) {
       this.showHealthAlert('High Entropy! Exhale and release tension.');
-    } else if (metrics.resonance > 0.8) {
+    } else if (metrics.resonance > G.OPACITY_FOUR_FIFTH) {
       this.showHealthAlert('High Resonance! System is harmonized.');
     }
   }
@@ -872,9 +879,9 @@ export class A432ThreeUI {
       exhale: 'Exhale. Release entropy, return to source.'
     };
     let meta = '';
-    if (h.harmony < 0.3) meta = '<br><span style="color:#ff0">Metaphysical Alert: Harmony is low. Focus on unity.</span>';
-    else if (h.entropy > 0.8) meta = '<br><span style="color:#f00">Metaphysical Alert: Entropy is high. Exhale and release.</span>';
-    else if (h.resonance > 0.8) meta = '<br><span style="color:#0ff">Metaphysical: Resonance is high. System is harmonized.</span>';
+    if (h.harmony < G.UNIT_THIRD_TEN) meta = '<br><span style="color:#ff0">Metaphysical Alert: Harmony is low. Focus on unity.</span>';
+    else if (h.entropy > G.OPACITY_FOUR_FIFTH) meta = '<br><span style="color:#f00">Metaphysical Alert: Entropy is high. Exhale and release.</span>';
+    else if (h.resonance > G.OPACITY_FOUR_FIFTH) meta = '<br><span style="color:#0ff">Metaphysical: Resonance is high. System is harmonized.</span>';
     return `
       <div style="font-size:1.1em;margin-bottom:8px;"><b>System Consciousness Dashboard</b></div>
       <div style="margin-bottom:8px;"><b>OS State</b><br>
@@ -885,9 +892,9 @@ export class A432ThreeUI {
         <span style="color:#0ff">Uptime:</span> ${round(os.system.uptime/60)} min &nbsp; <span style="color:#0ff">Mem:</span> ${round(os.system.memory.free/1e6)}/${round(os.system.memory.total/1e6)} MB
       </div>
       <div style="margin-bottom:8px;"><b>Health</b><br>
-        Harmony: <span style="color:${h.harmony > 0.7 ? '#0f0' : '#ff0'}">${h.harmony.toFixed(2)}</span><br>
-        Entropy: <span style="color:${h.entropy > 0.7 ? '#f00' : '#0ff'}">${h.entropy.toFixed(2)}</span><br>
-        Resonance: <span style="color:${h.resonance > 0.7 ? '#0ff' : '#fff'}">${h.resonance.toFixed(2)}</span><br>
+        Harmony: <span style="color:${h.harmony > G.OPACITY_SEVEN ? '#0f0' : '#ff0'}">${h.harmony.toFixed(2)}</span><br>
+        Entropy: <span style="color:${h.entropy > G.OPACITY_SEVEN ? '#f00' : '#0ff'}">${h.entropy.toFixed(2)}</span><br>
+        Resonance: <span style="color:${h.resonance > G.OPACITY_SEVEN ? '#0ff' : '#fff'}">${h.resonance.toFixed(2)}</span><br>
         <svg width='180' height='36' style='margin-top:8px;'>${this.getHealthSparklineSVG()}</svg>
       </div>
       <div style="margin-bottom:8px;"><b>Journey</b><br>

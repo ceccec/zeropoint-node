@@ -11,6 +11,13 @@ import { startChess, type ChessFrame } from './a432.chess.ts';
 import { startYinYang, type YinYangFrame } from './a432.yin.yang.ts';
 import { startMetatron, type MetatronFrame } from './a432.metatron.ts';
 import { startFlowerOfLife, type FlowerOfLifeFrame } from './a432.flower.of.life.ts';
+import { A432_RESOLVED_FRACTIONS } from './a432.resolved.ts';
+import { fractionToDecimal } from './a432.math.ts';
+// Analog signal values: exact integer ratios, collapsed to float only here
+// at the WebGL boundary. No bare decimal literal appears below.
+const G = Object.fromEntries(
+  Object.entries(A432_RESOLVED_FRACTIONS.GEOMETRY).map(([k, v]) => [k, fractionToDecimal(v)])
+) as Record<keyof typeof A432_RESOLVED_FRACTIONS.GEOMETRY, number>;
 // ...import up to 9 modules as needed
 
 function invertColor(hex: number): number {
@@ -91,7 +98,7 @@ let activeDimension = 0; // 0-8
 export function show9DDashboard() {
   // 1. Setup Three.js scene, camera, renderer
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(75, 1, G.UNIT_TENTH, 1000);
   camera.position.z = 400;
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(600, 600);

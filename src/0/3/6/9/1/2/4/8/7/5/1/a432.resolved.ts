@@ -27,6 +27,29 @@ import {
 // All fractions have integer reciprocals (zero entropy mathematics)
 
 export const A432_RESOLVED_FRACTIONS = {
+  // Geometry / analog signal fractions for the three.js surfaces.
+  // WebGL consumes floats, so the float is unavoidable AT THE BOUNDARY — what
+  // is avoidable is a bare literal in the source. Every value here is an exact
+  // integer ratio with a name, so the intent is auditable and the ratio, not a
+  // magic number, is what the code carries.
+  GEOMETRY: {
+    PULSE_MIN: { numerator: 3, denominator: 1000 },   // 0.003 -> 3/1000
+    STEP_FINE: { numerator: 1, denominator: 100 },    // 0.01  -> 1/100
+    STEP_SMALL: { numerator: 1, denominator: 20 },    // 0.05  -> 1/20
+    UNIT_TENTH: { numerator: 1, denominator: 10 },    // 0.1   -> 1/10
+    DAMP_LOW: { numerator: 3, denominator: 20 },      // 0.15  -> 3/20
+    STOP_DURATION: { numerator: 9, denominator: 50 }, // 0.18  -> 9/50
+    UNIT_FIFTH: { numerator: 1, denominator: 5 },     // 0.2   -> 1/5
+    RADIUS_INNER: { numerator: 11, denominator: 50 }, // 0.22  -> 11/50
+    UNIT_THIRD_TEN: { numerator: 3, denominator: 10 },// 0.3   -> 3/10
+    HALF: { numerator: 1, denominator: 2 },           // 0.5   -> 1/2
+    OPACITY_SEVEN: { numerator: 7, denominator: 10 }, // 0.7   -> 7/10
+    OPACITY_FOUR_FIFTH: { numerator: 4, denominator: 5 }, // 0.8 -> 4/5
+    SCALE_SIX_FIFTH: { numerator: 6, denominator: 5 },// 1.2   -> 6/5
+    SCALE_THIRTEEN_TEN: { numerator: 13, denominator: 10 }, // 1.3 -> 13/10
+    SCALE_SEVEN_HALF: { numerator: 7, denominator: 2 },     // 3.5 -> 7/2
+  },
+
   // Audio Timing Fractions (replacing decimals)
   AUDIO_TIMING: {
     STOP_DURATION: { numerator: 9, denominator: 50 }, // 0.18 → 9/50

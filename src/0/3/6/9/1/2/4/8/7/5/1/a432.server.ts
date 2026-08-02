@@ -13,7 +13,8 @@
 //   POST /rodin/process                → Process custom pattern
 //   any other → 404 JSON with digit 8 colour
 
-import express, { Request, Response } from 'express';
+import express from 'express';
+import type { Request, Response } from 'express';
 import path from 'path';
 import { 
   resolveDivision, 
@@ -108,7 +109,9 @@ console.log('YIN_URL:', YIN_URL);
 console.log('YANG_URL:', YANG_URL);
 
 // TypeScript file serving - MUST come before static middleware
-app.get('/*.ts', async (req: Request, res: Response, next) => {
+// Express 5 uses path-to-regexp v8, which rejects a bare `*` wildcard:
+// '/*.ts' throws "Missing parameter name at index 2". Named splat instead.
+app.get('/{*path}.ts', async (req: Request, res: Response, next) => {
   const tsPath = path.join(CANON_DIR, req.path.replace(/^\//,''));
   
   // Check if file exists

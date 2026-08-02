@@ -1,6 +1,6 @@
 {
   "name": "zeropoint-node",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "A432 Consciousness System: Self-evolving, self-aware consciousness technology with Transurfing integration, harmonic mathematics, zero-entropy principles, Kabbalistic cycles, and sacred geometry",
   "main": "dist/a432.system.cjs",
@@ -80,13 +80,15 @@
       "import": "./dist/a432.i.esm.js",
       "require": "./dist/a432.i.cjs",
       "types": "./dist/a432.i.d.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist/**/*",
     "src/**/*.ts",
     "src/**/*.json",
     "README.md",
+    "CHANGELOG.md",
     "CITATION.cff",
     "LICENSE",
     "LICENSE-CORE"

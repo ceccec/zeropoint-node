@@ -597,8 +597,8 @@ function validateFrequency(frequency: number): boolean
 
 - [User Guide](USER_GUIDE.md) - Complete user guide
 - [Tesla 3-6-9 Gateways](TESLA_369_GATEWAYS.md) - Gateway system documentation
-- [Challenge System](../src/challenges/) - Challenge implementations
-- [Mathematical Foundation](../src/) - Core mathematical system
+- Challenge System - Challenge implementations
+- [Mathematical Foundation](https://github.com/ceccec/zeropoint-node/blob/main/src) - Core mathematical system
 
 ---
 

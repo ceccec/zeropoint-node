@@ -65,14 +65,14 @@ ZeroPoint Node is a complete consciousness technology system with 54 individual 
 - **API Reference**: [Developer API](API_REFERENCE.md)
 
 ### For Individual Components
-- **Challenge Index**: [All Challenges](CHALLENGE_INDEX.md)
-- **Possibilities**: [docs/possibilities/](possibilities/)
-- **Solutions**: [docs/solutions/](solutions/)
+- **Challenge Index**: All Challenges
+- **Possibilities**: docs/possibilities/
+- **Solutions**: docs/solutions/
 
 ### For Development
-- **Source Code**: [src/](../src/)
-- **Tests**: [src/possibilities/](../src/possibilities/) and [src/solutions/](../src/solutions/)
-- **Generation Script**: [scripts/generate-individual-files.js](../scripts/generate-individual-files.js)
+- **Source Code**: [src/](https://github.com/ceccec/zeropoint-node/blob/main/src)
+- **Tests**: src/possibilities/ and src/solutions/
+- **Generation Script**: scripts/generate-individual-files.js
 
 ## 📊 System Metrics
 
@@ -138,8 +138,8 @@ node scripts/generate-individual-files.js
 ## 📞 Support
 
 For questions, issues, or contributions:
-- **Documentation**: Check the [docs/](docs/) directory
-- **Source Code**: Explore [src/](../src/) directory
+- **Documentation**: Check the docs/ directory
+- **Source Code**: Explore [src/](https://github.com/ceccec/zeropoint-node/blob/main/src) directory
 - **Tests**: Run `npm test` for validation
 - **Generation**: Use `scripts/generate-individual-files.js`
 

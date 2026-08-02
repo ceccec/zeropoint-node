@@ -27,10 +27,9 @@ export default defineConfig({
   // docs/README.md would also map to / and collide with index.md.
   srcExclude: ['README.md', '**/node_modules/**'],
 
-  // The corpus carries 60 markdown files with cross-links that predate the
-  // site build; a dead link must not fail the docs build. npm run check is
-  // the gate for correctness, not the site builder.
-  ignoreDeadLinks: true,
+  // Fails closed on dead links. Every target here resolves; a broken one stops
+  // the deploy rather than shipping a 404 to readers.
+  ignoreDeadLinks: false,
 
   vite: {
     build: {

@@ -16,6 +16,7 @@
  * Counting rules live in one place so the gate and the report cannot disagree.
  */
 
+import ts from 'typescript'
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs'
 import { execFileSync, execFile } from 'node:child_process'
 import { cpus } from 'node:os'
@@ -77,25 +78,32 @@ function walk(dir, pred, out = []) {
 }
 
 /**
- * Bare float literals in executable code — same rules as findDecimalCrack:
- * strip block comments, then strings, then trailing comments; skip
- * import/export-from lines; never match inside an a.b.c digit chain.
+ * Bare float literals in EXECUTABLE code, via the TypeScript AST.
+ *
+ * This was regex-based and over-counted by 51% (657 lines vs 434). Stripping
+ * strings line-by-line cannot remove a MULTI-LINE template literal, so every
+ * decimal inside generated CSS/HTML — `opacity: 0.5`, `scale(1.5)` — counted
+ * as a code decimal. The earlier attempt at block-comment stripping was worse:
+ * a string containing the characters `/*` opened a phantom comment that
+ * swallowed real code.
+ *
+ * A NumericLiteral node is real code by construction — comment text and string
+ * contents never become one. No lexing by regex; ask the compiler.
  */
 function decimalCount() {
-  const DEC = /(?<![\w.])\d+\.\d+(?![\w.])/g
-  let lines = 0
-  for (const file of walk(join(ROOT, 'src'), (n) => n.endsWith('.ts') && !n.endsWith('.d.ts'))) {
-    const raw = readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '')
-    for (const line of raw.split('\n')) {
-      let code = line.replace(/'[^']*'|"[^"]*"|`[^`]*`/g, '')
-      const c = code.indexOf('//')
-      if (c >= 0) code = code.slice(0, c)
-      if (/^\s*(?:import|export)\s.*\sfrom\s/.test(code)) continue
-      DEC.lastIndex = 0
-      if (DEC.test(code)) lines += 1
+  const files = walk(join(ROOT, 'src'), (n) => n.endsWith('.ts') && !n.endsWith('.d.ts'))
+  const lines = new Set()
+  for (const file of files) {
+    const src = ts.createSourceFile(file, readFileSync(file, 'utf8'), ts.ScriptTarget.Latest, true)
+    const visit = (node) => {
+      if (ts.isNumericLiteral(node) && node.getText().includes('.')) {
+        lines.add(`${file}:${src.getLineAndCharacterOfPosition(node.getStart(src)).line}`)
+      }
+      ts.forEachChild(node, visit)
     }
+    visit(src)
   }
-  return lines
+  return lines.size
 }
 
 /**

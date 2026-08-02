@@ -36,9 +36,9 @@
 
 ### Fundamental Challenges
 - **[FUNDAMENTAL_SCIENCE_CHALLENGES.md](FUNDAMENTAL_SCIENCE_CHALLENGES.md)** - Overview of fundamental science challenges
-- **[CHALLENGE_INDEX.md](CHALLENGE_INDEX.md)** - Index of all world challenges and solutions
-- **[CHALLENGE_CASES_IMPLEMENTATION.md](CHALLENGE_CASES_IMPLEMENTATION.md)** - Implementation cases for challenges
-- **[CHALLENGE_GUIDANCE_SYSTEM.md](CHALLENGE_GUIDANCE_SYSTEM.md)** - Guidance system for challenge resolution
+- **CHALLENGE_INDEX.md** - Index of all world challenges and solutions
+- **CHALLENGE_CASES_IMPLEMENTATION.md** - Implementation cases for challenges
+- **CHALLENGE_GUIDANCE_SYSTEM.md** - Guidance system for challenge resolution
 
 ### Harmonized Solutions
 - **[HARMONIZED_OVERVIEW.md](HARMONIZED_OVERVIEW.md)** - Overview of harmonized solutions
@@ -153,7 +153,7 @@ The system is designed for zero entropy and modularity. When contributing:
 
 ## 📄 License
 
-Dual license — see [LICENSE](../LICENSE). Free core math (AGPL-3.0-or-later) listed there; all other software requires a license via license@zeropoint.bg.
+Dual license — see [LICENSE](https://github.com/ceccec/zeropoint-node/blob/main/LICENSE). Free core math (AGPL-3.0-or-later) listed there; all other software requires a license via license@zeropoint.bg.
 
 ---
 

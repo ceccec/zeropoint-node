@@ -312,7 +312,7 @@ Trinity State: YES
 
 - **3-6-9 Mathematical Harmony**: [369_MATHEMATICAL_HARMONY.md](369_MATHEMATICAL_HARMONY.md)
 - **Tesla 3-6-9 Gateways**: [TESLA_369_GATEWAYS.md](TESLA_369_GATEWAYS.md)
-- **Challenge Index**: [CHALLENGE_INDEX.md](CHALLENGE_INDEX.md)
+- **Challenge Index**: CHALLENGE_INDEX.md
 - **Harmonized Challenges**: [HARMONIZED_CHALLENGES.md](HARMONIZED_CHALLENGES.md)
 - **API Reference**: [API_REFERENCE.md](API_REFERENCE.md)
 

@@ -246,7 +246,80 @@ function importCycleCount() {
   return cycles
 }
 
+/**
+ * Modules reachable from NO entry point — dead weight.
+ *
+ * Entries are every rollup input, every package.json exports target, the
+ * kernel / mcp / smoke entries, AND every .ts a src/ HTML page imports. That
+ * last set matters: counting only the package entries reports 337 dead files,
+ * but 25 modules are loaded directly by browser pages, and following those
+ * brings the real figure to 281. Measuring without the HTML would have
+ * condemned 56 live files.
+ *
+ * Capping it means dead code can only shrink. Deletion can then land in small
+ * reviewed batches instead of one irreversible sweep.
+ */
+function unreachableCount() {
+  const isTs = (n) => n.endsWith('.ts') && !n.endsWith('.d.ts')
+  const all = walk(join(ROOT, 'src'), isTs)
+  const depsOf = (file) => {
+    const src = ts.createSourceFile(file, readFileSync(file, 'utf8'), ts.ScriptTarget.Latest, true)
+    const out = []
+    const add = (spec) => {
+      if (!spec?.startsWith('.')) return
+      let t = resolve(dirname(file), spec)
+      if (!existsSync(t)) t = t.replace(/\.js$/, '.ts')
+      if (existsSync(t) && t.endsWith('.ts')) out.push(t)
+    }
+    const visit = (n) => {
+      if (ts.isImportDeclaration(n) && ts.isStringLiteral(n.moduleSpecifier)) add(n.moduleSpecifier.text)
+      if (ts.isExportDeclaration(n) && n.moduleSpecifier && ts.isStringLiteral(n.moduleSpecifier)) add(n.moduleSpecifier.text)
+      if (ts.isCallExpression(n) && n.expression.kind === ts.SyntaxKind.ImportKeyword &&
+          n.arguments[0] && ts.isStringLiteral(n.arguments[0])) add(n.arguments[0].text)
+      ts.forEachChild(n, visit)
+    }
+    visit(src)
+    return out
+  }
+  const roots = new Set()
+  const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
+  const rollup = readFileSync(join(ROOT, 'rollup.config.js'), 'utf8')
+  for (const m of rollup.matchAll(/['"](src\/[^'"]+\.ts)['"]/g)) {
+    const p2 = join(ROOT, m[1])
+    if (existsSync(p2)) roots.add(p2)
+  }
+  for (const cond of Object.values(pkg.exports ?? {})) {
+    for (const target of Object.values(cond ?? {})) {
+      if (typeof target === 'string' && target.endsWith('.ts')) {
+        const p2 = join(ROOT, target.slice(2))
+        if (existsSync(p2)) roots.add(p2)
+      }
+    }
+  }
+  for (const e of ['src/kernel/index.ts', 'src/0/index.ts', 'src/mcp/server.ts', 'src/kernel/smoke.test.ts']) {
+    const p2 = join(ROOT, e)
+    if (existsSync(p2)) roots.add(p2)
+  }
+  for (const html of walk(join(ROOT, 'src'), (n) => n.endsWith('.html'))) {
+    const txt = readFileSync(html, 'utf8')
+    for (const m of txt.matchAll(/['"](\.\/[A-Za-z0-9._-]+\.ts)['"]/g)) {
+      const t = resolve(dirname(html), m[1])
+      if (existsSync(t)) roots.add(t)
+    }
+  }
+  const seen = new Set()
+  const queue = [...roots]
+  while (queue.length > 0) {
+    const f = queue.pop()
+    if (seen.has(f)) continue
+    seen.add(f)
+    for (const d of depsOf(f)) if (!seen.has(d)) queue.push(d)
+  }
+  return all.filter((f) => !seen.has(f)).length
+}
+
 const SURFACES = [
+  { id: 'unreachable', label: 'modules reachable from no entry', measure: unreachableCount },
   { id: 'cycles', label: 'import cycles', measure: importCycleCount },
   { id: 'typecheck', label: 'TypeScript errors', measure: typecheckCount },
   { id: 'lint', label: 'ESLint errors', measure: lintCount },

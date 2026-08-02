@@ -4,6 +4,7 @@
     "lint": 935,
     "decimals": 385,
     "unloadable": 3,
-    "cycles": 2
+    "cycles": 2,
+    "unreachable": 281
   }
 }

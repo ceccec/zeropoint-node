@@ -2457,7 +2457,7 @@
   Controller.values = {};
 
   // src/0/algebra.ts
-  var PI = 355 / 113;
+  var PI = 245850922 / 78256779;
   var TAU = PI * 2;
   var E = 2718281828459045 / 1e15;
   function abs(n) {

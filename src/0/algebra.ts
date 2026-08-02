@@ -4,7 +4,20 @@
  */
 
 /** 355/113 — fixed rational π (A432-adjacent integer ratio, not Math.PI). */
-export const PI = 355 / 113
+/**
+ * PI as an exact integer ratio.
+ *
+ * Was 355/113 — Milu, the classic rational approximation, correct to only ~7
+ * significant digits (relative error 8.5e-8). A double holds ~16, so every
+ * trig and geometry result here carried an avoidable error a hundred million
+ * times larger than the format allows.
+ *
+ * 245850922/78256779 is a later convergent of the same continued fraction and
+ * rounds to EXACTLY Math.PI as a double (measured error 0.00e+0). Still a pure
+ * integer over integer, so the no-decimals, no-Math.* rules both hold — the
+ * ratio just stops throwing away digits.
+ */
+export const PI = 245850922 / 78256779
 export const TAU = PI * 2
 /** Series base for exp/log — not Math.E. */
 export const E = 2718281828459045 / 1_000_000_000_000_000
@@ -119,7 +132,11 @@ export function tan(x: number): number {
 
 /** Newton square root — no Math.sqrt. */
 export function sqrt(n: number): number {
-  if (n <= 0) return 0
+  // A negative input has no real root. This returned 0, which is a plausible
+  // number for an impossible question — the caller cannot tell a genuine zero
+  // from a domain error. NaN is the standard contract and propagates.
+  if (n < 0) return NaN
+  if (n === 0) return 0
   let x = n
   for (let i = 0; i < 24; i++) {
     x = 0.5 * (x + n / x)
@@ -182,7 +199,11 @@ export { exp_ as exp }
 
 /** Natural log via artanh series on reduced argument. */
 export function log(n: number): number {
-  if (n <= 0) return NaN
+  // log(0) is -Infinity, not NaN: it is a limit, not a domain error. Only a
+  // NEGATIVE argument is undefined over the reals. Collapsing both to NaN lost
+  // that distinction, and log2(0) inherited it.
+  if (n === 0) return -Infinity
+  if (n < 0) return NaN
   const LN2 = 0.6931471805599453
   let x = n
   let k = 0

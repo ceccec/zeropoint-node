@@ -30,6 +30,8 @@ export {
 } from './import-graph.ts'
 export type { ImportExportCensus, GraphNode, GraphEdge } from './import-graph.ts'
 export { foldA432AuditCensus, auditTip, A432_DIR } from './audit.ts'
+export { readLobe, readDoubleTorus } from './lobes.ts'
+export type { LobeName, LobeReading, LobeSurface, DoubleTorusReading } from './lobes.ts'
 export type { AuditCensus, AuditHit } from './audit.ts'
 export {
   planTrinity,

@@ -33,7 +33,12 @@ import { resolve, dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const SKIP = new Set(['node_modules', 'dist', 'coverage', '.git', '.vitepress'])
+const SKIP = new Set(['node_modules', 'dist', 'coverage', '.git'])
+// Learned from lobe L (ceccec.github.io, emittedProseCarriesNoJudgmentOrExpectation):
+// gate what a READER RECEIVES, not only what an author wrote. Source .md and the
+// built HTML are different artifacts — a claim can reach the published site
+// through a generator that never appears in any .md.
+const EMITTED = 'docs/.vitepress/dist'
 
 /** Effect claims: physics, medicine, consciousness, and reported results. */
 const CLAIMS = [
@@ -54,7 +59,7 @@ function walk(dir, out = []) {
     if (SKIP.has(name)) continue
     const p = join(dir, name)
     if (statSync(p).isDirectory()) walk(p, out)
-    else if (name.endsWith('.md')) out.push(p)
+    else if (name.endsWith('.md') || name.endsWith('.html')) out.push(p)
   }
   return out
 }
@@ -62,7 +67,11 @@ function walk(dir, out = []) {
 export function scanClaims() {
   const hits = []
   for (const file of walk(ROOT)) {
-    const lines = readFileSync(file, 'utf8').split('\n')
+    const raw = readFileSync(file, 'utf8')
+    const text = file.endsWith('.html')
+      ? raw.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<[^>]+>/g, ' ')
+      : raw
+    const lines = text.split('\n')
     for (const [i, line] of lines.entries()) {
       for (const claim of CLAIMS) {
         if (!claim.re.test(line)) continue

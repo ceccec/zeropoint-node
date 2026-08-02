@@ -399,14 +399,30 @@ export class QuantumFoldCipher {
     return decryptQuantum(this.encryptedPayload)
   }
 
-  computesGate(): QuantumCipherGate {
-    // The verification facet attests the OTHER five. Sealing all six while
-    // verification is still false, then reading its own seal back, could
-    // never report ok — a self-referential deadlock. Decide it first.
-    const operational = this.facets.slice(0, 5)
+  /** The state as it stands after any gates — needed to tomograph it. */
+  get state(): QuantumStateUUID | null {
+    return this.preparedState
+  }
+
+  /**
+   * Seal every facet under one merkle root.
+   *
+   * `extraFacets` lets a higher layer compose its own facets into the same
+   * root — Phase 2 adds `state-tomography` this way. The dependency points
+   * one direction only (tomography imports the cipher, never the reverse),
+   * so composing here cannot introduce an import cycle.
+   */
+  computesGate(
+    extraFacets: ReadonlyArray<{ facet: string; on: boolean }> = [],
+  ): QuantumCipherGate {
+    // The verification facet attests every OTHER facet. Sealing all of them
+    // while verification is still false, then reading its own seal back,
+    // could never report ok — a self-referential deadlock. Decide it first,
+    // over the operational facets AND anything composed in.
+    const operational = [...this.facets.slice(0, 5), ...extraFacets]
     this.facets[5]!.on = operational.every((f) => f.on)
 
-    const sealed = sealFacets('quantum-cipher', this.facets)
+    const sealed = sealFacets('quantum-cipher', [...this.facets, ...extraFacets])
 
     return {
       ok: sealed.ok,
@@ -433,7 +449,16 @@ export class QuantumFoldCipher {
     const probe = '123456789'
     const d6 = !!this.encryptedPayload && vortexDecode(vortexEncode(probe)) === probe
     const d9 = this.gateProof?.orderMatters ?? false // Quantum threat: order matters
-    const dimensionsRodin = !!this.preparedState && this.preparedState.registerIdx >= 0 // Rodin doubling tracked
+    // The flow ring is the closure of doubling mod 9 over the 6-orbit. This
+    // read `registerIdx >= 0`, which every register satisfies — a tautology
+    // reported as a verified dimension. Verify the closure itself: doubling
+    // each orbit element mod 9 must land back inside the orbit, and must
+    // reach every element of it (one 6-cycle, not a shorter sub-cycle).
+    const doubled = VORTEX_ORBIT.map((d) => (d * 2) % 9 || 9)
+    const dimensionsRodin =
+      !!this.preparedState &&
+      doubled.every((d) => VORTEX_ORBIT.includes(d as never)) &&
+      new Set(doubled).size === VORTEX_ORBIT.length
     const d11 = this.computesGate().ok // Compactified: unified gate
 
     return {

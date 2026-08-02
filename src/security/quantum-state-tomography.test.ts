@@ -11,9 +11,14 @@
 import {
   QuantumStateTomography,
   tomographAgainstClaim,
+  computesGateWithTomography,
 } from './quantum-state-tomography.ts'
 
-import { encodeQuantumState, verifyMeasurementReceipt } from './quantum-fold-cipher.ts'
+import {
+  encodeQuantumState,
+  verifyMeasurementReceipt,
+  QuantumFoldCipher,
+} from './quantum-fold-cipher.ts'
 import { abs, min } from '../0/algebra.ts'
 
 console.log('=== Quantum State Tomography Test Suite (Phase 2) ===\n')
@@ -257,9 +262,66 @@ console.log('\nSECTION 6: Adversary Detection')
 }
 
 /**
- * SECTION 7: Measurement statistics preserved
+ * SECTION 7: Tier 5 composition — tomography as a seventh facet
  */
-console.log('\nSECTION 7: Statistics Preservation')
+console.log('\nSECTION 7: Compositional Integration (Tier 5)')
+
+{
+  const cipher = new QuantumFoldCipher()
+  cipher.generateKey('composition-entropy')
+  cipher.prepareState('Z', 0, 0)
+  cipher.applyGate('H')
+  cipher.measure()
+  cipher.encrypt('12345')
+
+  const { gate, tomography } = computesGateWithTomography(cipher, 300)
+
+  check(gate.facets.length === 7, `gate carries 7 facets (got ${gate.facets.length})`)
+  check(
+    gate.facets.some((f) => f.facet === 'state-tomography'),
+    'state-tomography facet is present in the sealed gate',
+  )
+  check(gate.ok, 'honest run: all seven facets pass, root is on')
+  check(tomography !== null, 'tomography result returned alongside the gate')
+
+  // The root must actually depend on the seventh facet, or composing it in
+  // proved nothing. Compare against the six-facet seal of the same cipher.
+  const sixFacetRoot = cipher.computesGate().root
+  check(gate.root !== sixFacetRoot, 'seventh facet changes the merkle root')
+}
+
+{
+  // A cipher with no prepared state must not produce a clean-looking root.
+  const cipher = new QuantumFoldCipher()
+  cipher.generateKey('no-state')
+  const { gate, tomography } = computesGateWithTomography(cipher, 50)
+
+  check(!gate.ok, 'unprepared state: gate is off')
+  check(tomography === null, 'unprepared state: no tomography result')
+  check(
+    gate.facets.some((f) => f.facet === 'state-tomography' && !f.on),
+    'the tomography facet is present and off, not silently absent',
+  )
+}
+
+{
+  // The facet must respond to fidelity, not merely to having run. Demanding
+  // a fidelity above 1 is unreachable, so an honest run must still fail.
+  const cipher = new QuantumFoldCipher()
+  cipher.generateKey('gate-sensitivity')
+  cipher.prepareState('Z', 0, 0)
+  cipher.applyGate('H')
+  cipher.measure()
+  cipher.encrypt('12345')
+
+  const impossible = computesGateWithTomography(cipher, 200, 2).gate
+  check(!impossible.ok, 'unreachable fidelity threshold turns the root off')
+}
+
+/**
+ * SECTION 8: Measurement statistics preserved
+ */
+console.log('\nSECTION 8: Statistics Preservation')
 
 {
   const state = encodeQuantumState('Z', 0, 7)

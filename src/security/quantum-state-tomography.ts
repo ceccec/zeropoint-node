@@ -28,8 +28,10 @@ import {
   encodeQuantumState,
   recordMeasurement,
   verifyMeasurementReceipt,
+  QuantumFoldCipher,
   type MeasurementReceipt,
   type QuantumStateUUID,
+  type QuantumCipherGate,
 } from './quantum-fold-cipher.ts'
 
 import { toUuid, merkleFold } from '../0/index.ts'
@@ -269,6 +271,36 @@ export class QuantumStateTomography {
       fidelities,
     }
   }
+}
+
+/**
+ * Tier 5 composition: the cipher's six facets plus a seventh that attests
+ * the prepared state actually tomographs to what the preparation claims.
+ *
+ * This lives here, not in the cipher, because the dependency runs one way —
+ * tomography imports the cipher. Reversing it would add an import cycle, and
+ * the cycle count is capped. `computesGate(extraFacets)` is the seam.
+ *
+ * The seventh facet is on only when measured fidelity clears the gate, so a
+ * substituted state turns the whole root off rather than passing quietly.
+ */
+export function computesGateWithTomography(
+  cipher: QuantumFoldCipher,
+  numShots: number = 1000,
+  minFidelity: number = MIN_FIDELITY_DEFAULT,
+): { gate: QuantumCipherGate; tomography: TomographyResult | null } {
+  const state = cipher.state
+  if (state === null) {
+    // No state prepared: the facet is off, and it must not silently vanish —
+    // an absent facet would leave the root looking like a clean six-facet run.
+    return { gate: cipher.computesGate([{ facet: 'state-tomography', on: false }]), tomography: null }
+  }
+
+  const tomo = new QuantumStateTomography()
+  const result = tomo.performTomography(state, numShots)
+  const on = result.fidelity >= minFidelity && tomo.verifyReceiptChain(result)
+
+  return { gate: cipher.computesGate([{ facet: 'state-tomography', on }]), tomography: result }
 }
 
 /**

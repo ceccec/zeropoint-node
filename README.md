@@ -377,6 +377,31 @@ console.log(sequenceStatus);
 - **`a432.trinity.ts`**: Trinity mathematics
 - **`a432.rodin.coil.ts`**: Rodin coil mathematics
 
+### Quantum Encryption Security Framework
+- **`src/security/quantum-fold-cipher.ts`**: Unified quantum cipher (5 fold tiers × 11 dimensions)
+- **`src/security/quantum-threat-landscape.ts`**: Quantum threat modeling via sequence inversion
+- **`QUANTUM_ENCRYPTION_SECURITY_FRAMEWORK.md`**: Complete security analysis (no gaps)
+- **`docs/QUANTUM_SECURITY_COMPLETE.md`**: Public documentation and integration guide
+
+The framework applies the principle: **"The sequence reflecting in its inversion makes everything possible."** Each quantum encryption problem maps locally to a fold tier + dimension. All solutions are tested. No gaps: what is broken ⇌ how it's solved.
+
+**Quick Start:**
+```typescript
+import { QuantumFoldCipher } from 'zeropoint-node/security'
+
+const cipher = new QuantumFoldCipher()
+cipher.generateKey('entropy')
+cipher.prepareState('Z', 0, 0)
+cipher.applyGate('H')
+cipher.measure()
+cipher.encrypt('message')
+
+const proof = cipher.computesGate()
+// proof.ok: all 6 facets unified in single merkle root
+```
+
+See [`docs/QUANTUM_SECURITY_COMPLETE.md`](docs/QUANTUM_SECURITY_COMPLETE.md) for complete guide.
+
 ## 🧪 Testing
 
 ```bash

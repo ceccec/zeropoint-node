@@ -24,6 +24,14 @@
       "import": "./src/0/index.ts",
       "types": "./src/0/index.ts"
     },
+    "./security": {
+      "import": "./src/security/quantum-fold-cipher.ts",
+      "types": "./src/security/quantum-fold-cipher.ts"
+    },
+    "./security/threat-analysis": {
+      "import": "./src/security/quantum-threat-landscape.ts",
+      "types": "./src/security/quantum-threat-landscape.ts"
+    },
     "./integrity": {
       "import": "./src/integrity/content-uuid.ts",
       "types": "./src/integrity/content-uuid.ts"

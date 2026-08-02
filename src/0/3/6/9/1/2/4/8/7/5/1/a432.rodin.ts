@@ -28,7 +28,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 
 /** Root directory of the repository (assumed two levels up from this file). */
-const PROJECT_ROOT = path.resolve(__dirname, '..', '..', '..', '..', '..', '..', '..', '..', '..', '..', '..');
+const PROJECT_ROOT = path.resolve(import.meta.dirname, '..', '..', '..', '..', '..', '..', '..', '..', '..', '..', '..');
 
 /** True when executed directly via `ts-node a432.rodin.ts` */
 const IS_CLI = require.main === module;

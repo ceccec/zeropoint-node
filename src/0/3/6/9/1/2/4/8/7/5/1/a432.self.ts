@@ -18,7 +18,7 @@ import { challengeCMYK, CHALLENGES } from './a432.challenge.ts';
 import type { CMYK } from './a432.cmyk.ts';
 
 // Canonical directory (this file lives in it)
-const CANON_DIR = __dirname;
+const CANON_DIR = import.meta.dirname;
 
 export type MatrixEvent =
   | { kind: 'possibility'; file: string; digit: Digit; cmyk: CMYK }

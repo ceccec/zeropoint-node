@@ -6,8 +6,8 @@ import { log } from './a432.algebra.ts'
 import fs from 'fs/promises';
 import path from 'path';
 
-const VBM = path.resolve(__dirname, 'rodin-knowledge/VBM.txt');
-const OUT = path.resolve(__dirname, 'extracted-vbm-science.txt');
+const VBM = path.resolve(import.meta.dirname, 'rodin-knowledge/VBM.txt');
+const OUT = path.resolve(import.meta.dirname, 'extracted-vbm-science.txt');
 
 const KEYWORDS = [
   'physics', 'energy', 'frequency', 'resonance', 'electron', 'coil', 'torus',

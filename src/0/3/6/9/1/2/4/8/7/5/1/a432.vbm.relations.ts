@@ -10,7 +10,7 @@ import { log } from './a432.algebra.ts'
 import { promises as fs } from 'fs';
 import path from 'path';
 
-const VBM_PATH = path.resolve(__dirname, 'rodin-knowledge/VBM.txt');
+const VBM_PATH = path.resolve(import.meta.dirname, 'rodin-knowledge/VBM.txt');
 
 /** Regex capturing sequences of 1–2-digit numbers separated by space, dot, comma or dash. */
 const SEQ_REGEX = /(\d{1,2}(?:[\s.,;-]+\d{1,2}){2,})/g;

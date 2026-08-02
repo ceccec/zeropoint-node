@@ -14,8 +14,8 @@ import { abs, max, round } from './a432.algebra.ts'
 
 import { legacyDigitalRoot as digitalRoot } from './a432.roots.ts';
 
-const FILENAME = typeof __filename !== 'undefined'
-  ? __filename
+const FILENAME = typeof import.meta.filename !== 'undefined'
+  ? import.meta.filename
   : (typeof document !== 'undefined' && document.currentScript && 'src' in document.currentScript
       ? document.currentScript.src.split('/').pop()
       : 'a432.1.2.4.8.7.5.1.ts');
@@ -35,8 +35,8 @@ const TRINITY_AXIS = [3, 6, 9].filter(function(d) { return DIGITS.indexOf(d) !==
 
 // --- Living Sequence: Always extracted from filename ---
 function getCurrentFilename(): string {
-  return typeof __filename !== 'undefined'
-    ? __filename
+  return typeof import.meta.filename !== 'undefined'
+    ? import.meta.filename
     : (typeof document !== 'undefined' && document.currentScript && 'src' in document.currentScript
         ? document.currentScript.src.split('/').pop() || 'a432.1.2.4.8.7.5.1.ts'
         : 'a432.1.2.4.8.7.5.1.ts');

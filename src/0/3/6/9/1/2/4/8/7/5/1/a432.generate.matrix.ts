@@ -8,7 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const CANON_DIR = path.resolve(__dirname, '../src/0/3/6/9/1/2/4/8/7/5/1');
+const CANON_DIR = path.resolve(import.meta.dirname, '../src/0/3/6/9/1/2/4/8/7/5/1');
 const VORTEX = [0,3,6,9,1,2,4,8,7,5];
 const METRIC = [0,1,2,3,4,5,6,7,8,9];
 

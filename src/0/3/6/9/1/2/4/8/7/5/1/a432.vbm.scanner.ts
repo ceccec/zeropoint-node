@@ -3,8 +3,8 @@ import fs from 'fs/promises';
 import path from 'path';
 
 // Path to VBM text
-const VBM_FILE = path.resolve(__dirname, 'rodin-knowledge/VBM.txt');
-const OUTPUT_JSON = path.resolve(__dirname, 'extracted-vbm-math.json');
+const VBM_FILE = path.resolve(import.meta.dirname, 'rodin-knowledge/VBM.txt');
+const OUTPUT_JSON = path.resolve(import.meta.dirname, 'extracted-vbm-math.json');
 
 // Regexes
 const RATIO_RE = /(\d+\s*[:/]\s*\d+)/g;

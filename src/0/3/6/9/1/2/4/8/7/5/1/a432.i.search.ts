@@ -9,7 +9,7 @@
 import I from './a432.i.ts';
 import { readdirSync } from 'fs';
 
-export function searchMatrix(query: string, dir: string = __dirname): Array<{ name: string; metaphysical: string }> {
+export function searchMatrix(query: string, dir: string = import.meta.dirname): Array<{ name: string; metaphysical: string }> {
   const files = readdirSync(dir).filter(f => f.includes(query));
   return files.map(name => ({
     name,

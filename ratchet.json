@@ -1,10 +1,10 @@
 {
   "ceilings": {
     "typecheck": 124,
-    "lint": 935,
+    "lint": 932,
     "decimals": 385,
     "cycles": 2,
     "unreachable": 281,
-    "unloadable": 34
+    "unloadable": 32
   }
 }

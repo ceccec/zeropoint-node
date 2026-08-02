@@ -10,7 +10,7 @@ import { log } from './a432.algebra.ts'
 import fs from 'fs';
 import path from 'path';
 
-const ROOT = path.resolve(__dirname);
+const ROOT = path.resolve(import.meta.dirname);
 const SRC_DIR = path.join(ROOT);
 const IGNORED = ['node_modules', 'compost', 'archive', '.git'];
 

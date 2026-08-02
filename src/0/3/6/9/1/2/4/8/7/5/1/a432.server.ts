@@ -72,7 +72,7 @@ const readFile = util.promisify(fs.readFile);
 // ---------------------------------------------------------
 const app = express();
 app.use(express.json());
-const CANON_DIR  = __dirname;
+const CANON_DIR  = import.meta.dirname;
 // Canonical vortex URLs (YANG = forward Rodin, YIN = reverse Rodin)
 const rodinYang = getRodinSequence(); // [1,2,4,8,7,5,1]
 const rodinYin = [...rodinYang].reverse(); // [1,5,7,8,4,2,1]

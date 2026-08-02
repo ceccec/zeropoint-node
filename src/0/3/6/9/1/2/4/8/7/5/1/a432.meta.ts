@@ -25,7 +25,7 @@ export function getA432FilesToCache(): string[] {
   // Dynamically discover all a432.*.html and .ts files
   let files: string[] = [];
   try {
-    files = readdirSync(__dirname)
+    files = readdirSync(import.meta.dirname)
       .filter(f => /^a432\..*\.(html|ts)$/.test(f))
       .map(f => './' + f);
   } catch (e) {

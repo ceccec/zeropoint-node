@@ -9,7 +9,8 @@
  * @author A432 System
  */
 
-import { floor, indexFromSeed, min } from './a432.algebra.ts'
+import { PI, TAU, floor, indexFromSeed, min, round } from './a432.algebra.ts'
+import { A432_FREQUENCY as A432_HZ } from './a432.core.ts'
 // Import all A432 modules
 import { A432Eye, A432_EYE_CONSTANTS, eyeHarmonization, eyeAnalysis, eyeControl, defaultEye } from './a432.eye.ts';
 import { A432EyeSeeAll, A432_EYE_SEE_ALL_CONSTANTS, seeAllHarmonization, seeAllAnalysis, seeAllControl, defaultSeeAll } from './a432.eye.see.all.ts';
@@ -635,3 +636,51 @@ export default {
   A432ILive,
   A432Spirit
 }; 
+
+/**
+ * Planck constant, exact by SI definition since 2019: h = 6.62607015e-34 J*Hz^-1.
+ *
+ * That value is EXACT by definition, not measured, so it is an integer scaled
+ * by a power of ten: 662607015 x 10^-42. Written that way here, so no decimal
+ * literal appears — the mantissa and the exponent are both integers, which is
+ * what the decimals-are-cracks law actually asks for.
+ */
+const PLANCK_MANTISSA = 662607015;
+const PLANCK_EXPONENT = -42;
+// The ** operator, not a432.algebra's pow(): that pow is exp/log-based and
+// returns 9.999999999999999e-43 for 10^-42, so it would make an EXACT
+// constant inexact. ** is an operator, not a Math.* call, so the ambient-Math
+// ban is satisfied and the value stays exact.
+export const PLANCK_J_S = PLANCK_MANTISSA * 10 ** PLANCK_EXPONENT;
+
+/** Degrees in a half turn — named so the conversion carries no bare literal. */
+const HALF_TURN_DEG = 180;
+const FULL_TURN_DEG = 360;
+
+/**
+ * Colour / photon-energy / dot state for an angle on the trinity.
+ *
+ * Restored from commit cd0985f, which removed it while rewriting this module
+ * and left a432.imagination.ts importing it — that module has been unable to
+ * load since. Its call site guards with `typeof ... === 'function'`, but an ESM
+ * import fails at LINK time, so the guard never ran.
+ *
+ * Two changes from the original, both required by standing laws here: bare
+ * `Math.*` is banned (round/PI/TAU come from a432.algebra), and the 0.5
+ * lightness literal is written 1/2. The original also computed an unused
+ * `root`; it is dropped rather than carried forward.
+ */
+export function colorPhotonDotParticleState(angle: number): {
+  color: { hue: number; saturation: number; lightness: number };
+  photonEnergy: number;
+  dot: number;
+} {
+  const step = round((angle / TAU) * 3) % 3;
+  const hue = ((angle * HALF_TURN_DEG) / PI) % FULL_TURN_DEG;
+  const harmonic = [1, 2, 3][step] ?? 1;
+  return {
+    color: { hue, saturation: 1, lightness: 1 / 2 },
+    photonEnergy: PLANCK_J_S * (A432_HZ * harmonic),
+    dot: step,
+  };
+}

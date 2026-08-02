@@ -1,0 +1,13 @@
+#!/bin/sh
+# Fuse the gate into the dev loop: a wave cannot leave this machine unsealed.
+#
+# `npm run check` is the corpus's own fail-closed proof — kernel smoke, the
+# ambient-Math ban, every generator seal, and the five ratcheted surfaces. It
+# runs in ~21s. If a surface GREW, this refuses the push; if a surface SHRANK,
+# it also refuses, because the improvement must be recorded in ratchet.json
+# rather than banked as slack.
+#
+# Escape hatch for a genuine emergency: git push --no-verify
+set -e
+echo "pre-push: npm run check"
+npm run check

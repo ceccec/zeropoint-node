@@ -17,7 +17,9 @@
  */
 
 import ts from 'typescript'
-import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs'
+import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, unlinkSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { pathToFileURL } from 'node:url'
 import { execFileSync, execFile } from 'node:child_process'
 import { cpus } from 'node:os'
 import { resolve, dirname, join, relative } from 'node:path'
@@ -26,6 +28,7 @@ import { fileURLToPath } from 'node:url'
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const STATE = join(ROOT, 'ratchet.json')
 const SKIP = new Set(['node_modules', 'dist', 'coverage', '.git'])
+let probeSeq = 0
 
 function run(cmd, args) {
   try {
@@ -124,12 +127,22 @@ async function unloadableCount() {
   const probe = (file) =>
     new Promise((resolve) => {
       const rel = relative(ROOT, file)
-      const src = `import(${JSON.stringify('./' + rel)}).then(()=>process.exit(0)).catch(e=>{console.error(e.message.split('\\n')[0]);process.exit(1)})`
+      // A temp FILE, not `node -e`. Under -e the module's own filename is
+      // "[eval]", so any module that inspects it sees the wrong name —
+      // a432.1.2.4.8.7.5.1.ts has a deliberate filename-integrity guard and
+      // threw under the probe while importing perfectly from a real file. The
+      // measurement was manufacturing the failure it reported.
+      const probeFile = join(tmpdir(), `zp-probe-${process.pid}-${probeSeq++}.mjs`)
+      writeFileSync(
+        probeFile,
+        `import(${JSON.stringify(pathToFileURL(file).href)}).then(()=>process.exit(0)).catch(e=>{console.error(e.message.split('\\n')[0]);process.exit(1)})`,
+      )
       execFile(
         'node',
-        ['--experimental-strip-types', '-e', src],
+        ['--experimental-strip-types', probeFile],
         { cwd: ROOT, encoding: 'utf8', timeout: 15000, maxBuffer: 8 * 1024 * 1024, killSignal: 'SIGKILL' },
         (err, _stdout, stderr) => {
+          try { unlinkSync(probeFile) } catch { /* best effort */ }
           if (!err) return resolve(0)
           // Killed by the timeout => it loaded and kept the event loop alive.
           if (err.killed || err.signal) return resolve(0)

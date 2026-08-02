@@ -87,6 +87,7 @@
     "src/**/*.ts",
     "src/**/*.json",
     "README.md",
+    "CITATION.cff",
     "LICENSE",
     "LICENSE-CORE"
   ],

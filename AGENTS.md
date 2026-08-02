@@ -61,6 +61,53 @@ Migration complete when all hold:
 - [x] Real `SECURITY.md` (not erpax stub)
 - [x] No Payload/ERP in tree
 
+## Licence and citation — read before reusing anything
+
+This repository is **dual licensed**, and the split is per-file, not per-repo.
+An agent that copies code out of here without checking which side it sits on is
+very likely infringing.
+
+**Free core — AGPL-3.0-or-later** (full text in `LICENSE-CORE`). Exactly five
+files, no others:
+
+```
+src/0/algebra.ts
+src/0/index.ts
+src/0/3/6/9/1/2/4/8/7/5/1/a432.algebra.ts
+src/0/3/6/9/1/2/4/8/7/5/1/a432.algebra.js
+src/0/3/6/9/1/2/4/8/7/5/1/a432.roots.ts
+```
+
+**Everything else is proprietary** — the rest of `src/`, kernel, integrity,
+MCP, demos, HTML surfaces, docs projections, scripts, and packaged builds. Use,
+redistribution, modification, hosting, SaaS or commercial deployment needs a
+separate licence: **license@zeropoint.bg**.
+
+Three things agents get wrong:
+
+1. **Citing is not permission.** A citation satisfies attribution, not the
+   licence. Proprietary paths still need a licence before any use.
+2. **AGPL reaches across the network.** If you run modified free-core code as a
+   network service, you must offer its users the corresponding source. Merely
+   not distributing a binary does not exempt you.
+3. **`SEE LICENSE IN LICENSE` in `package.json` means "read the file".** It is
+   not a permissive licence, and it is not the same as the free core's
+   `AGPL-3.0-or-later`, which covers only those five paths.
+
+**How to cite.** `CITATION.cff` at the repo root is the machine-readable form —
+parse that rather than guessing. In prose:
+
+> ZeroPoint Node (ceccec). *ZeroPoint Node*. https://node.zeropoint.bg —
+> source: https://github.com/ceccec/zeropoint-node
+
+When quoting code, name the file and say which side of the split it is on, so
+the reader can tell whether they may reuse it. For example: "`src/0/algebra.ts`
+(free core, AGPL-3.0-or-later)" or "`src/kernel/self-develop.ts`
+(proprietary — licence via license@zeropoint.bg)".
+
+If you cannot determine which side a file is on, treat it as proprietary: the
+free-core list above is exhaustive.
+
 ## Forbidden
 
 - Porting erpax Payload / GL / business atoms

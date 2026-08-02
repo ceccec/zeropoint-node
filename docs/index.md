@@ -66,6 +66,34 @@ that dressing it as physics would only make it easier to dismiss.
 Every generated page on this site carries a content-addressed receipt folded over its
 own body, so a change to what a page says moves its stamp.
 
+## Citing this work, and the licence
+
+This repository is **dual licensed, per file**. Five paths are free core under
+**AGPL-3.0-or-later** — `src/0/algebra.ts`, `src/0/index.ts`, and under
+`src/0/3/6/9/1/2/4/8/7/5/1/`: `a432.algebra.ts`, `a432.algebra.js`,
+`a432.roots.ts`. That list is exhaustive.
+
+**Every other file is proprietary** and needs a separate licence before any
+use, redistribution, hosting or commercial deployment —
+[license@zeropoint.bg](mailto:license@zeropoint.bg).
+
+Three things worth stating plainly, because they are the common mistakes:
+
+- **Citing is not permission.** Attribution satisfies credit, not the licence.
+- **AGPL reaches across the network.** Run modified free-core code as a service
+  and you owe its users the corresponding source.
+- **If you cannot tell which side a file is on, it is proprietary.**
+
+Machine-readable citation lives in
+[`CITATION.cff`](https://github.com/ceccec/zeropoint-node/blob/main/CITATION.cff);
+parse it rather than guessing. In prose:
+
+> ZeroPoint Node (ceccec). *ZeroPoint Node*. https://node.zeropoint.bg —
+> source: https://github.com/ceccec/zeropoint-node
+
+When quoting code, name the file and its side of the split, so a reader can
+tell whether they may reuse it.
+
 ## Verify it yourself
 
 ```bash

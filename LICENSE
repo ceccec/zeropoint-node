@@ -40,5 +40,6 @@ that software requires a separate license from ZeroPoint.
   Free/open core  →  free-core paths listed above (AGPL-3.0-or-later / LICENSE-CORE)
   Everything else  →  contact license@zeropoint.bg
 
-SPDX for npm / tooling: SEE LICENSE
+SPDX for npm / tooling: SEE LICENSE IN LICENSE   ("SEE LICENSE" alone is not
+valid SPDX and npm rejects it for new packages)
 Free-core SPDX (those paths only): AGPL-3.0-or-later

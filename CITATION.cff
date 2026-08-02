@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software, cite it as below. Read the licensing note first:
+  this repository is DUAL licensed and citation alone does not grant use.
+title: ZeroPoint Node
+abstract: >-
+  Vortex sequence and its reflection through the void, with a computed kernel
+  that proves both — fold / digital-root spine, A432 algebra adapters, and
+  content-addressed integrity receipts.
+
+  LICENSING, in short. This repository is split. Five files are free core under
+  AGPL-3.0-or-later (src/0/algebra.ts, src/0/index.ts, and under
+  src/0/3/6/9/1/2/4/8/7/5/1/: a432.algebra.ts, a432.algebra.js, a432.roots.ts).
+  EVERY other file is proprietary and needs a separate licence from ZeroPoint —
+  including the rest of src/, the kernel, integrity, MCP, demos, HTML surfaces,
+  docs projections, scripts, and packaged builds. Contact license@zeropoint.bg.
+
+  Citing this work is not permission to use it. AGPL-3.0-or-later also carries
+  network-use source obligations: if you run modified free-core code as a
+  network service, you must offer the corresponding source to its users.
+type: software
+authors:
+  - name: ZeroPoint Node (ceccec)
+    email: node@zeropoint.bg
+repository-code: https://github.com/ceccec/zeropoint-node
+url: https://node.zeropoint.bg
+version: 1.0.2
+license-url: https://github.com/ceccec/zeropoint-node/blob/main/LICENSE
+keywords:
+  - vortex-sequence
+  - digital-root
+  - a432
+  - content-addressing
+  - zero-entropy
+contact:
+  - name: ZeroPoint Node licensing
+    email: license@zeropoint.bg

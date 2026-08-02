@@ -119,23 +119,24 @@ export function hypot(a: number, b: number = 0, ...rest: number[]): number {
   return sqrt(s)
 }
 
-/** Integer-preferring power; fractional via exp/log. */
+/**
+ * Integer-preferring power; fractional via exp/log.
+ *
+ * Integer exponents use the ** OPERATOR, which rounds once. The previous
+ * exponentiation-by-squaring loop rounded twice for negative exponents: it
+ * computed the positive power and then took 1/r. 10^42 squares to exactly
+ * 1e42, but 1/1e42 is 9.999999999999999e-43, not 1e-42 — so pow(10, -42) was
+ * less accurate than the operator it was written to replace, and it silently
+ * made the SI-exact Planck constant inexact.
+ *
+ * ** is an operator, not a Math.* call, so the ambient-Math ban permits it
+ * (verified: npm run math:ban reports 0). The <64 magnitude guard existed only
+ * to bound the loop; the operator needs no bound.
+ */
 export function pow(base: number, exp: number): number {
   if (exp === 0) return 1
   if (base === 0) return exp > 0 ? 0 : Infinity
-  if (exp === (exp | 0) && abs(exp) < 64) {
-    let e = exp | 0
-    let b = base
-    let r = 1
-    const neg = e < 0
-    if (neg) e = -e
-    while (e > 0) {
-      if (e & 1) r *= b
-      b *= b
-      e >>= 1
-    }
-    return neg ? 1 / r : r
-  }
+  if (exp === (exp | 0)) return base ** exp
   return exp_(exp * log(base))
 }
 

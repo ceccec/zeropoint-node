@@ -647,10 +647,11 @@ export default {
  */
 const PLANCK_MANTISSA = 662607015;
 const PLANCK_EXPONENT = -42;
-// The ** operator, not a432.algebra's pow(): that pow is exp/log-based and
-// returns 9.999999999999999e-43 for 10^-42, so it would make an EXACT
-// constant inexact. ** is an operator, not a Math.* call, so the ambient-Math
-// ban is satisfied and the value stays exact.
+// The ** operator directly. algebra's pow() now agrees exactly here — its
+// integer branch was rounding twice (it built 10^42, then took 1/r) and has
+// been fixed to use ** itself. Kept explicit at this site because the value is
+// exact BY SI DEFINITION and should not depend on a helper's rounding.
+// ** is an operator, not a Math.* call, so the ambient-Math ban is satisfied.
 export const PLANCK_J_S = PLANCK_MANTISSA * 10 ** PLANCK_EXPONENT;
 
 /** Degrees in a half turn — named so the conversion carries no bare literal. */

@@ -10,8 +10,8 @@
  * Vague / empty / non-concrete tips are refused — not vibes.
  *
  * Severity: hard gaps → physicalFtl false (quantumisation) → packaging feed.
- * Feed severity (Wave 41): broken imports → undeclared packages → decimal cracks →
- * remote CDN → drift → orphans → thin wrappers →
+ * Feed severity (Wave 58): broken imports → undeclared packages → remote CDN →
+ * drift → orphans → thin wrappers →
  * VORTEX_SEQUENCE/6-orbit name collision → WAVE_CHAIN.
  * Scanners tip only when a count proves residual; skip comments, node_modules, resolved paths,
  * and intentional exceptions (keep a432.algebra.js as the browser twin).
@@ -336,48 +336,18 @@ function findUndeclaredPackageImport(): FeedHit | null {
 }
 
 /**
- * Bare float literals in executable code — decimal cracks.
+ * Decimal cracks are measured by the RATCHET, not here.
  *
- * Law (learned from ceccec.psg.bg `decimalsInCodeAreCracks`): a bare float is a
- * crack; carry an integer ratio bound to a named constant instead. The corpus
- * already proves why — 432*6/5 stores as 518.39999999999997726 and accumulates,
- * so exactness is a claim about representation, not only about arithmetic.
+ * This module used to carry findDecimalCrack, a regex scanner that
+ * over-counted by 51% — 657 lines against a true 434. It stripped strings line
+ * by line, which cannot remove a multi-line template literal, so every decimal
+ * inside generated CSS/HTML counted as code. scripts/ratchet.mjs now counts
+ * NumericLiteral nodes on the TypeScript AST, where comment text and string
+ * contents can never appear, and it GATES the count.
  *
- * Counting this needs care; a naive regex answers confidently and wrongly:
- *  - `a432.1.2.4.8.7.5.1.ts` and semver `1.0.2` are digit chains, not floats
- *  - `C0: 161280, // 16.128 Hz` is an INTEGER — the decimal is in the comment
- *  - import specifiers and string literals carry dots that are not numbers
- * Strip block comments, strings and trailing comments before matching, and
- * bound the match so `a.b.c` chains never qualify.
+ * Two instruments for one surface, only one of them gating and the other
+ * wrong, is the drift this corpus keeps paying for. One source of truth.
  */
-function findDecimalCrack(): FeedHit | null {
-  // No digit or dot may touch either side — rejects digit chains and versions.
-  const DEC = /(?<![\w.])\d+\.\d+(?![\w.])/g
-  const hits: FeedHit[] = []
-  for (const file of walkFiles(SRC_DIR, (n) => n.endsWith('.ts') && !n.endsWith('.d.ts'))) {
-    const raw = readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '')
-    const lines = raw.split('\n')
-    for (const [i, line] of lines.entries()) {
-      let code = line.replace(/'[^']*'|"[^"]*"|`[^`]*`/g, '')
-      const comment = code.indexOf('//')
-      if (comment >= 0) code = code.slice(0, comment)
-      if (/^\s*(?:import|export)\s.*\sfrom\s/.test(code)) continue
-      DEC.lastIndex = 0
-      const found = code.match(DEC)
-      if (!found) continue
-      hits.push({
-        path: relRepo(file),
-        line: i + 1,
-        spec: found[0],
-        count: 0,
-        why: `bare float ${found[0]} — carry an integer ratio bound to a named constant (decimals in code are cracks)`,
-      })
-    }
-  }
-  if (!hits.length) return null
-  const first = hits[0]!
-  return { ...first, count: hits.length }
-}
 
 /** public/a432.bundle.js stale vs algebra-clean a432.main.ts — packaging drift. */
 function findBundleDrift(): FeedHit | null {
@@ -713,8 +683,8 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
     }
   }
   if (kind === 'feed') {
-    // Severity: broken imports → undeclared packages → decimal cracks → remote CDN →
-    // drift → orphans → thin wrappers → orbit name → WAVE_CHAIN
+    // Severity: broken imports → undeclared packages → remote CDN → drift →
+    // orphans → thin wrappers → orbit name → WAVE_CHAIN (decimals: see ratchet)
     const brokenJs = findBrokenJsImport()
     if (brokenJs) {
       return feedTip(
@@ -735,17 +705,6 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
         `Feed tip: ${undeclared.count} undeclared package import(s); first ${undeclared.path} → ${undeclared.spec}`,
         'Undeclared imports resolve from local node_modules and fail npm ci — package.json settles it, not disk.',
         `self-develop:feed:undeclared:${undeclared.count}:${undeclared.path}:${undeclared.line}`,
-      )
-    }
-    const decimalCrack = findDecimalCrack()
-    if (decimalCrack) {
-      return feedTip(
-        decimalCrack.path,
-        decimalCrack.line,
-        `chat-wave feed: dissolve ${decimalCrack.count} decimal crack(s); first ${decimalCrack.spec} at ${decimalCrack.path}:${decimalCrack.line} — carry an integer ratio bound to a named constant`,
-        `Feed tip: ${decimalCrack.count} bare float literal(s); first ${decimalCrack.path} → ${decimalCrack.spec}`,
-        'Decimals in code are cracks — exactness is representation, not only arithmetic; comments/strings/imports excluded.',
-        `self-develop:feed:decimal:${decimalCrack.count}:${decimalCrack.path}:${decimalCrack.line}`,
       )
     }
     const htmlBroken = findBrokenHtmlImport()

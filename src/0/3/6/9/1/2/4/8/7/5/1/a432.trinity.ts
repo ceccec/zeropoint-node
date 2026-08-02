@@ -520,11 +520,50 @@ export function sacredSelfDivision(n: number): number {
   return rodinMap[n] ?? n;
 } 
 
-export function a432TrinityStream(steps: number = 9): number[] {
-  const base = [3, 6, 9];
+/**
+ * Walk the trinity axis for `steps`, starting at `start` (default 3).
+ *
+ * `start` was dropped in 76780c7: the signature became (steps) only, while
+ * a432.i.trinity.ts:19 and a432.trinity.navigation.ts:27 both still call it as
+ * (steps, start). JavaScript discards the extra argument silently, so those
+ * callers have been getting 3,6,9,3,6,... regardless of the start they asked
+ * for. Restored, and reusing TRINITY_AXIS instead of a second [3, 6, 9]
+ * literal. Default start = 3 reproduces the current output exactly.
+ */
+export function a432TrinityStream(steps: number = 9, start: number = 3): number[] {
+  const found = TRINITY_AXIS.indexOf(start);
+  const offset = found < 0 ? 0 : found;
   const stream: number[] = [];
   for (let i = 0; i < steps; i++) {
-    stream.push(base[i % base.length]);
+    stream.push(TRINITY_AXIS[(offset + i) % TRINITY_AXIS.length]!);
   }
   return stream;
 } 
+
+/**
+ * Family group step — the Rodin doubling orbit, one position forward.
+ *
+ * Restored from commit 76780c7, which deleted this and a432FamilyStream during
+ * a refactor while leaving a432.i.trinity.ts and a432.trinity.navigation.ts
+ * importing them; both modules have been unimportable since.
+ *
+ * The original hard-coded [1, 2, 4, 8, 7, 5, 1]. That is exactly
+ * RODIN_SEQUENCE, already imported here, so it is reused rather than
+ * duplicated. Behaviour is preserved for an unknown digit: indexOf returns -1,
+ * so the step lands on index 0 and yields the first element.
+ */
+export function a432FamilyGroup(n: number): number {
+  const idx = RODIN_SEQUENCE.indexOf(n)
+  return RODIN_SEQUENCE[(idx + 1) % RODIN_SEQUENCE.length]!
+}
+
+/** Walk the family group for `steps`, starting at `start` (default 1). */
+export function a432FamilyStream(steps: number, start: number = 1): number[] {
+  const result: number[] = []
+  let n = start
+  for (let i = 0; i < steps; i++) {
+    result.push(n)
+    n = a432FamilyGroup(n)
+  }
+  return result
+}

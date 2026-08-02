@@ -32,6 +32,10 @@
       "import": "./src/security/quantum-threat-landscape.ts",
       "types": "./src/security/quantum-threat-landscape.ts"
     },
+    "./security/tomography": {
+      "import": "./src/security/quantum-state-tomography.ts",
+      "types": "./src/security/quantum-state-tomography.ts"
+    },
     "./integrity": {
       "import": "./src/integrity/content-uuid.ts",
       "types": "./src/integrity/content-uuid.ts"
@@ -111,6 +115,7 @@
     "demo": "node dist/demo.js",
     "test": "node test-install.js",
     "test:kernel": "node --experimental-strip-types src/kernel/smoke.test.ts",
+    "test:security": "node --experimental-strip-types src/security/quantum-fold-cipher.test.ts > /dev/null && node --experimental-strip-types src/security/quantum-state-tomography.test.ts > /dev/null && echo security tests ok",
     "readme": "node --experimental-strip-types scripts/readme-gen.mjs",
     "readme:check": "node --experimental-strip-types scripts/readme-gen.mjs --check",
     "docs:pages": "node --experimental-strip-types scripts/docs-pages.mjs",
@@ -132,7 +137,7 @@
     "spectrum:check": "node --experimental-strip-types scripts/spectrum-gen.mjs --check",
     "bundle:a432": "node scripts/build-a432-bundle.mjs",
     "bundle:a432:check": "node scripts/build-a432-bundle.mjs --check",
-    "check": "npm run test:kernel && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run spectrum && npm run spectrum:check && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
+    "check": "npm run test:kernel && npm run test:security && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run spectrum && npm run spectrum:check && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
     "prepublishOnly": "npm run build",
     "prose": "node scripts/prose-claims.mjs --list",
     "prose:check": "node scripts/prose-claims.mjs"

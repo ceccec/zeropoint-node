@@ -28,7 +28,7 @@ For each known quantum attack, we map:
 **Fold defense:**
 - Tier 1: Content-address key via `toUuid()` → deterministic UUID
 - Tier 3: Trinity lattice [3,6,9] reduces effective keyspace structure
-- Result: Brute-force still infeasible (2^256 remains 2^256)
+- Bounded outcome (arithmetic, not measured): the keyspace stays 2^256, so brute-force stays infeasible under the stated assumptions
 
 **Proof:** Key generation is deterministic but entropy-dependent. Same entropy → same key. Different entropy → different key (collision = hash failure).
 
@@ -143,7 +143,7 @@ console.assert(!threats.quantum.marginPreserved)
 **Fold defense:**
 - Tier 1: Key is content-addressed (no speedup on identity)
 - Tier 3: Trinity lattice constrains key structure (no advantage to Grover)
-- Result: AES-256 → AES-128 effective, but still safe
+- Bounded outcome (model, not measured): AES-256's margin halves to an effective 128 bits, which stays inside the accepted safety bound
 
 **Why it's honest:**
 - We acknowledge Grover reduces security margin
@@ -206,7 +206,7 @@ console.assert(kyber.quantum.marginPreserved)
 **Fold defense:**
 - Tier 1: Every quantum state has UUID via `encodeQuantumState()`
 - Tier 2: `foldPair()` proves Alice's state ≠ Eve's resend
-- Result: Eve's tampering changes all state UUIDs → detected 100%
+- Tested outcome (unit test, not hardware): every tampered state changes its UUID and the suite detects each case
 
 **Proof:**
 ```

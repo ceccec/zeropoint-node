@@ -28,12 +28,16 @@ import {
 
 import {
   digitalRoot,
+  VORTEX_ORBIT,
 } from '../0/index.ts'
 
 /**
  * Vortex Constants
+ *
+ * The 6-orbit is the kernel's VORTEX_ORBIT — imported, not redeclared. The
+ * local copy was named VORTEX_SEQUENCE, which in the kernel means the 9-digit
+ * sequence: the same name for two different lists.
  */
-const VORTEX_SEQUENCE = [1, 2, 4, 8, 7, 5]
 const TRINITY = [3, 6, 9]
 const IMPERIAL_VORTEX = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1]
 
@@ -108,7 +112,9 @@ export function applyQuantumGate(
     fromState: state,
     toState,
     gate,
-    orderMatters: !bidirectional, // Non-commutative gates matter
+    // foldPair sets bidirectional when forward !== reverse — that IS
+    // order-sensitivity. Negating it reported every gate as commutative.
+    orderMatters: bidirectional,
     receipt,
   }
 }
@@ -193,7 +199,7 @@ export interface MeasurementReceipt {
   readonly id: string // receipt ID
   readonly prev: string // previous receipt ID or GENESIS
   readonly measurement: 0 | 1 // measurement outcome
-  readonly basis: 'Z' | 'X'
+  readonly basis: 'Z' | 'X' | 'Y' // 'Y' appears only in tomography measurements
   readonly qubitIdx: number
   readonly timestamp: number
 }
@@ -203,7 +209,7 @@ const GENESIS_PREV = toUuid('quantum-chain-genesis')
 export function recordMeasurement(
   prevReceipt: MeasurementReceipt | typeof GENESIS_PREV,
   measurement: 0 | 1,
-  basis: 'Z' | 'X',
+  basis: 'Z' | 'X' | 'Y',
   qubitIdx: number,
 ): MeasurementReceipt {
   const prevId = typeof prevReceipt === 'string' ? prevReceipt : prevReceipt.id
@@ -250,7 +256,7 @@ export function vortexEncode(input: string): string {
     .map((ch, i) => {
       const n = parseInt(ch, 10)
       if (isNaN(n) || n === 0) return ch
-      const shift = VORTEX_SEQUENCE[i % VORTEX_SEQUENCE.length]
+      const shift = VORTEX_ORBIT[i % VORTEX_ORBIT.length]
       const encoded = ((n + shift - 1) % 9) + 1
       return encoded.toString()
     })
@@ -263,7 +269,7 @@ export function vortexDecode(input: string): string {
     .map((ch, i) => {
       const n = parseInt(ch, 10)
       if (isNaN(n) || n === 0) return ch
-      const shift = VORTEX_SEQUENCE[i % VORTEX_SEQUENCE.length]
+      const shift = VORTEX_ORBIT[i % VORTEX_ORBIT.length]
       const decoded = ((n - shift + 8) % 9) + 1
       return decoded.toString()
     })
@@ -394,21 +400,17 @@ export class QuantumFoldCipher {
   }
 
   computesGate(): QuantumCipherGate {
-    // Seal all 6 facets with receipts
+    // The verification facet attests the OTHER five. Sealing all six while
+    // verification is still false, then reading its own seal back, could
+    // never report ok — a self-referential deadlock. Decide it first.
+    const operational = this.facets.slice(0, 5)
+    this.facets[5]!.on = operational.every((f) => f.on)
+
     const sealed = sealFacets('quantum-cipher', this.facets)
 
-    // Add computed receipt to each facet
-    const facetsWithReceipts = sealed.facets.map((f) => ({
-      facet: f.facet,
-      on: f.on,
-      receipt: f.receipt,
-    }))
-
-    this.facets[5]!.on = sealed.ok // Verification facet passes if all others do
-
     return {
-      ok: sealed.ok && this.facets[5]!.on,
-      facets: facetsWithReceipts,
+      ok: sealed.ok,
+      facets: sealed.facets.map((f) => ({ facet: f.facet, on: f.on, receipt: f.receipt })),
       root: sealed.root,
     }
   }
@@ -424,7 +426,12 @@ export class QuantumFoldCipher {
   } {
     const d0 = !!this.keyMaterial // Fold operation exists
     const d3 = !!this.keyMaterial && this.keyMaterial.material.every(b => [3, 6, 9].includes(b)) // Trinity check
-    const d6 = !!this.encryptedPayload && vortexDecode(this.encryptedPayload.ciphertext) === (this.encryptedPayload.receipt ? '1' : '0') // Reversibility (simplified check)
+    // Dimension 6 is the encode ⇌ decode symmetry. This compared decoded text
+    // against the string '1'/'0', which no plaintext equals — the dimension
+    // could never be present. Prove the bijection on every digit instead, so
+    // the check needs no retained plaintext to hold onto.
+    const probe = '123456789'
+    const d6 = !!this.encryptedPayload && vortexDecode(vortexEncode(probe)) === probe
     const d9 = this.gateProof?.orderMatters ?? false // Quantum threat: order matters
     const dimensionsRodin = !!this.preparedState && this.preparedState.registerIdx >= 0 // Rodin doubling tracked
     const d11 = this.computesGate().ok // Compactified: unified gate
@@ -470,7 +477,7 @@ export const QuantumEncryption = {
   QuantumFoldCipher,
 
   // Constants
-  VORTEX_SEQUENCE,
+  VORTEX_ORBIT,
   TRINITY,
   IMPERIAL_VORTEX,
 }

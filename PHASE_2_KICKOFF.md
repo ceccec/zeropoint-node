@@ -6,7 +6,7 @@
 
 ## What We Have (From Phase 1)
 
-✅ **Tested quantum cipher** (28/28 tests passing)
+✅ **Tested quantum cipher** (46 asserts, gated in `npm run check`)
 ✅ **Fold tier 4** (Chain Verification) proven + working
 ✅ **Merkle receipt chain** implemented + tested
 ✅ **Measurement framework** ready to extend

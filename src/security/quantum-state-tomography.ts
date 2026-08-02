@@ -1,426 +1,289 @@
 /**
- * Quantum State Tomography: Verify quantum states via multi-basis measurement
+ * src/security/quantum-state-tomography.ts
  *
- * Phase 2 Implementation: Reconstruct density matrix from measurement outcomes
- * without destroying the quantum state.
+ * Phase 2: Quantum State Tomography
  *
- * Problem: Detect if adversary substituted different state (E.V. Eve attack)
- * Solution: Measure in Z, X, Y bases → reconstruct density matrix → verify fidelity
- * Fold Integration: Tier 4 (Chain Verification) — all measurements in receipt chain
+ * Verify quantum states via multi-basis measurement: measure copies in the
+ * Z, X, Y bases, reconstruct the density matrix by linear inversion on the
+ * Bloch vector, and compare fidelity against the expected state.
+ *
+ * Problem: an adversary may substitute a different state (intercept-resend).
+ * Mirror solution: tomograph a sample of states — a substituted state shows
+ * low fidelity against the expected preparation, and every measurement lands
+ * in the Tier 4 receipt chain, so the evidence itself is tamper-proof.
+ *
+ * Fold integration:
+ *   Tier 1 — states are content-addressed (QuantumStateUUID)
+ *   Tier 4 — every shot recorded via recordMeasurement receipt chain
+ *   Tier 5 — all receipts fold to a single merkle root (the proof)
+ *
+ * Honesty ledger:
+ *   Exact    — Bloch reconstruction, fidelity/purity/entropy formulas (2×2 algebra)
+ *   Faithful — the simulated measurement model (same-basis certainty, mutually
+ *              unbiased bases give 1/2) mirrors ideal qubit statistics
+ *   Refused  — no claim about physical quantum hardware
  */
 
-import { QuantumStateUUID } from './quantum-fold-cipher'
-import { FoldReceipt, recordMeasurement } from '../integrity/receipt'
-import { merkleFold, toUuid } from '../index'
+import {
+  encodeQuantumState,
+  recordMeasurement,
+  verifyMeasurementReceipt,
+  type MeasurementReceipt,
+  type QuantumStateUUID,
+} from './quantum-fold-cipher.ts'
 
-/**
- * Complex number representation for density matrix elements
- */
+import { toUuid, merkleFold } from '../0/index.ts'
+import { max, min, ceil, sqrt, log2, unitFromSeed, indexFromSeed } from '../0/algebra.ts'
+
+/** Complex number for density-matrix entries. */
 export interface Complex {
-  real: number
-  imag: number
+  readonly real: number
+  readonly imag: number
 }
 
-/**
- * Quantum tomography result: density matrix + properties + proofs
- */
+/** One tomography basis. Y exists only as a measurement basis here. */
+export type TomographyBasis = 'Z' | 'X' | 'Y'
+
+/** Complete tomography output: reconstruction + properties + chain proof. */
 export interface TomographyResult {
-  densityMatrix: Complex[][]
-  fidelity: number           // 0-1: overlap with expected state
-  purity: number             // 0-1: trace(ρ²), measure of pureness
-  entropy: number            // 0+: von Neumann entropy
-  proof: string              // Merkle root of all measurements
-  measurements: {
-    z_outcomes: number[]     // Z-basis measurement outcomes (1000)
-    x_outcomes: number[]     // X-basis measurement outcomes (1000)
-    y_outcomes: number[]     // Y-basis measurement outcomes (1000)
+  readonly densityMatrix: Complex[][] // 2×2, Hermitian, trace 1
+  readonly blochVector: { rx: number; ry: number; rz: number }
+  readonly fidelity: number // ⟨ψ|ρ|ψ⟩ against the expected state, in [0,1]
+  readonly purity: number // Tr(ρ²) = (1+|r|²)/2, in [1/2, 1]
+  readonly entropy: number // von Neumann entropy in bits, in [0, 1]
+  readonly proof: string // merkle root over all measurement receipts
+  readonly measurements: {
+    readonly z: readonly number[]
+    readonly x: readonly number[]
+    readonly y: readonly number[]
   }
-  receipts: FoldReceipt[]    // Measurement chain receipts
+  readonly receipts: readonly MeasurementReceipt[]
 }
 
+/** Result of sampling a channel for substituted states. */
+export interface SubstitutionDetection {
+  readonly adversaryDetected: boolean
+  readonly confidenceLevel: number // fraction of states verified
+  readonly minFidelity: number
+  readonly fidelities: readonly number[]
+}
+
+const TOMOGRAPHY_GENESIS = toUuid('tomography-chain-genesis')
+const MIN_FIDELITY_DEFAULT = 19 / 20 // acceptance gate: fidelity ≥ 19/20
+const UNBIASED = 1 / 2 // mutually unbiased basis: P(0) = 1/2
+const DEFAULT_SAMPLE_FRACTION = 1 / 10 // verify one state in ten
+
 /**
- * Quantum State Tomography: Reconstruct & verify quantum states
+ * Bloch vector of an expected pure state. Z0 → +z, Z1 → −z, X0 → +x, X1 → −x.
+ * (Preparation bases in the cipher are Z and X; Y appears only in measurement.)
  */
+function expectedBloch(state: QuantumStateUUID): { nx: number; ny: number; nz: number } {
+  const sign = state.value === 0 ? 1 : -1
+  if (state.basis === 'Z') return { nx: 0, ny: 0, nz: sign }
+  return { nx: sign, ny: 0, nz: 0 }
+}
+
 export class QuantumStateTomography {
-  private receipts: FoldReceipt[] = []
-  private prevReceipt: FoldReceipt | null = null
-
   /**
-   * Complex arithmetic helpers
+   * Simulated ideal-qubit measurement of one shot.
+   * Same basis as preparation → the prepared value with certainty.
+   * Mutually unbiased basis → deterministic pseudo-uniform 0/1 from the fold
+   * hash of (state, basis, shot). No ambient entropy: reruns are identical.
    */
-  private static complex(real: number, imag: number = 0): Complex {
-    return { real, imag }
+  private measureShot(state: QuantumStateUUID, basis: TomographyBasis, shot: number): 0 | 1 {
+    if (basis === state.basis) return state.value
+    return unitFromSeed(`${state.id}:${basis}:${shot}`) < UNBIASED ? 0 : 1
   }
 
-  private static complexAdd(a: Complex, b: Complex): Complex {
-    return {
-      real: a.real + b.real,
-      imag: a.imag + b.imag
-    }
-  }
-
-  private static complexMultiply(a: Complex, b: Complex): Complex {
-    return {
-      real: a.real * b.real - a.imag * b.imag,
-      imag: a.real * b.imag + a.imag * b.real
-    }
-  }
-
-  private static complexConj(c: Complex): Complex {
-    return { real: c.real, imag: -c.imag }
-  }
-
-  private static complexMagnitude(c: Complex): number {
-    return Math.sqrt(c.real ** 2 + c.imag ** 2)
-  }
-
-  /**
-   * Collect measurement outcomes in given basis
-   * Simulates measuring quantum state N times without destroying it
-   *
-   * @param state Quantum state to measure
-   * @param basis 'Z' | 'X' | 'Y' — measurement basis
-   * @param numShots Number of measurements (default 1000)
-   * @returns Array of outcomes (0 or 1 for each shot)
-   */
-  private collectMeasurements(
+  /** Measure `numShots` copies of the state in one basis. */
+  collectMeasurements(
     state: QuantumStateUUID,
-    basis: 'Z' | 'X' | 'Y',
-    numShots: number = 1000
+    basis: TomographyBasis,
+    numShots: number,
   ): number[] {
     const outcomes: number[] = []
-
-    // Simulate quantum measurement: depends on state + basis
-    // For now, use deterministic mapping from state UUID
-    const stateDigest = toUuid(`${state.id}:${basis}`)
-
-    for (let i = 0; i < numShots; i++) {
-      // Pseudo-random outcome based on state + shot index
-      const seed = toUuid(`${stateDigest}:shot:${i}`)
-      // Extract last hex digit, map to 0 or 1
-      const lastChar = seed.slice(-1)
-      const hexVal = parseInt(lastChar, 16)
-      outcomes.push(hexVal >= 8 ? 1 : 0)
-    }
-
+    for (let i = 0; i < numShots; i++) outcomes.push(this.measureShot(state, basis, i))
     return outcomes
   }
 
   /**
-   * Reconstruct single-qubit density matrix from measurement outcomes
-   * ρ = average of |outcome⟩⟨outcome| projectors across all bases
-   *
-   * For single qubit (2×2 density matrix):
-   * - Measure in Z basis: get Z probabilities
-   * - Measure in X basis: get X probabilities
-   * - Measure in Y basis: get Y probabilities
-   * - Reconstruct using maximum likelihood estimation
-   *
-   * @param zOutcomes Z-basis measurement outcomes (0 or 1)
-   * @param xOutcomes X-basis measurement outcomes (0 or 1)
-   * @param yOutcomes Y-basis measurement outcomes (0 or 1)
-   * @returns 2×2 complex density matrix
+   * Linear-inversion reconstruction: ρ = (I + r·σ)/2 with
+   * r_k = P(k=0) − P(k=1) for k ∈ {x, y, z}.
+   * Exact 2×2 algebra — Hermitian by construction, trace exactly 1.
    */
-  private reconstructDensityMatrix(
-    zOutcomes: number[],
-    xOutcomes: number[],
-    yOutcomes: number[]
-  ): Complex[][] {
-    // Calculate measurement probabilities
-    const pZ0 = zOutcomes.filter(x => x === 0).length / zOutcomes.length
-    const pZ1 = zOutcomes.filter(x => x === 1).length / zOutcomes.length
-
-    const pX0 = xOutcomes.filter(x => x === 0).length / xOutcomes.length
-    const pX1 = xOutcomes.filter(x => x === 1).length / xOutcomes.length
-
-    const pY0 = yOutcomes.filter(x => x === 0).length / yOutcomes.length
-    const pY1 = yOutcomes.filter(x => x === 1).length / yOutcomes.length
-
-    // Maximum likelihood estimation for 2×2 density matrix
-    // ρ = [[ρ₀₀, ρ₀₁], [ρ₁₀, ρ₁₁]]
-    //
-    // From measurement probabilities:
-    // ρ₀₀ = P(Z=0) = (1 + (P(X=0) - P(X=1)))/2
-    // ρ₁₁ = P(Z=1) = (1 - (P(X=0) - P(X=1)))/2
-    // ρ₀₁ = ρ₁₀* from Y basis: (P(Y=0) - P(Y=1))/2 as phase
-
-    const rho00 = (pZ0 + pX0 - pX1) / 2
-    const rho11 = (pZ1 + pX1 - pX0) / 2
-
-    // Off-diagonal elements from Y basis
-    const yPhase = (pY0 - pY1) / 2
-    // For Bloch sphere: Y measurement encodes coherence
-    const cohMagnitude = Math.sqrt(Math.max(0, rho00 * rho11))
-
-    // ρ₀₁ = cohMagnitude * exp(i*phase)
-    const rho01: Complex = {
-      real: cohMagnitude * Math.cos(yPhase),
-      imag: cohMagnitude * Math.sin(yPhase)
+  reconstructDensityMatrix(
+    zOutcomes: readonly number[],
+    xOutcomes: readonly number[],
+    yOutcomes: readonly number[],
+  ): { rho: Complex[][]; bloch: { rx: number; ry: number; rz: number } } {
+    const expectation = (outcomes: readonly number[]): number => {
+      if (outcomes.length === 0) return 0
+      let zeros = 0
+      for (const o of outcomes) if (o === 0) zeros++
+      return (2 * zeros - outcomes.length) / outcomes.length
     }
 
-    const rho10: Complex = QuantumStateTomography.complexConj(rho01)
+    const rx = expectation(xOutcomes)
+    const ry = expectation(yOutcomes)
+    const rz = expectation(zOutcomes)
 
-    return [
-      [{ real: rho00, imag: 0 }, rho01],
-      [rho10, { real: rho11, imag: 0 }]
+    // ρ = ½ [[1+rz, rx − i·ry], [rx + i·ry, 1−rz]]
+    const rho: Complex[][] = [
+      [
+        { real: (1 + rz) / 2, imag: 0 },
+        { real: rx / 2, imag: -ry / 2 },
+      ],
+      [
+        { real: rx / 2, imag: ry / 2 },
+        { real: (1 - rz) / 2, imag: 0 },
+      ],
     ]
+
+    return { rho, bloch: { rx, ry, rz } }
   }
 
   /**
-   * Calculate fidelity between expected state and reconstructed density matrix
-   * Fidelity F = ⟨expected|ρ|expected⟩ ∈ [0, 1]
-   *
-   * High fidelity (>0.95) means state matches expected
-   * Low fidelity (<0.95) suggests adversary substitution
-   *
-   * @param expectedState Expected quantum state
-   * @param rho Reconstructed density matrix
-   * @returns Fidelity value 0-1 (1.0 = perfect match)
+   * Fidelity of ρ against the expected pure state |ψ⟩:
+   * F = ⟨ψ|ρ|ψ⟩ = (1 + r·n)/2 where n is the expected Bloch vector.
    */
-  private calculateFidelity(
-    expectedState: QuantumStateUUID,
-    rho: Complex[][]
+  calculateFidelity(
+    expected: QuantumStateUUID,
+    bloch: { rx: number; ry: number; rz: number },
   ): number {
-    // Map expected state to Bloch sphere coordinate
-    // State is encoded as digit in vortex sequence
-    const stateDigit = parseInt(expectedState.id.slice(-1), 10)
+    const n = expectedBloch(expected)
+    const dot = bloch.rx * n.nx + bloch.ry * n.ny + bloch.rz * n.nz
+    return max(0, min(1, (1 + dot) / 2))
+  }
 
-    // Map vortex digit to Bloch sphere: [0-8] → [0°-360°]
-    const angle = (stateDigit / 9) * 2 * Math.PI
-
-    // Expected state: |ψ⟩ = cos(θ/2)|0⟩ + sin(θ/2)e^(iφ)|1⟩
-    const theta = angle / 2
-    const psi0 = Math.cos(theta)
-    const psi1Phase = Math.sin(theta)
-
-    // Fidelity = ⟨ψ|ρ|ψ⟩
-    // = |ψ₀|² ρ₀₀ + |ψ₁|² ρ₁₁ + 2 Re(ψ₀* ψ₁ ρ₀₁)
-    const term1 = psi0 ** 2 * rho[0][0].real
-    const term2 = psi1Phase ** 2 * rho[1][1].real
-    const term3 = 2 * psi0 * psi1Phase * rho[0][1].real
-
-    const fidelity = Math.max(0, Math.min(1, term1 + term2 + term3))
-    return fidelity
+  /** Purity Tr(ρ²) = (1 + |r|²)/2 ∈ [1/2, 1] for a qubit. */
+  calculatePurity(bloch: { rx: number; ry: number; rz: number }): number {
+    const r2 = bloch.rx ** 2 + bloch.ry ** 2 + bloch.rz ** 2
+    return max(0, min(1, (1 + r2) / 2))
   }
 
   /**
-   * Calculate purity of density matrix
-   * Purity P = Tr(ρ²) ∈ [0, 1]
-   *
-   * Pure states: P = 1
-   * Mixed states: P < 1
-   * White noise: P = 1/d (for d-dimensional system)
-   *
-   * @param rho Density matrix
-   * @returns Purity value 0-1
+   * Von Neumann entropy in bits. Eigenvalues of ρ are (1 ± |r|)/2, so
+   * S = −λ₊log₂λ₊ − λ₋log₂λ₋ ∈ [0, 1]; 0 for pure, 1 for maximally mixed.
    */
-  private calculatePurity(rho: Complex[][]): number {
-    // Compute ρ²
-    const rho2_00 = QuantumStateTomography.complexAdd(
-      QuantumStateTomography.complexMultiply(rho[0][0], rho[0][0]),
-      QuantumStateTomography.complexMultiply(rho[0][1], rho[1][0])
-    )
-
-    const rho2_11 = QuantumStateTomography.complexAdd(
-      QuantumStateTomography.complexMultiply(rho[1][0], rho[0][1]),
-      QuantumStateTomography.complexMultiply(rho[1][1], rho[1][1])
-    )
-
-    // Purity = Tr(ρ²) = ρ²₀₀ + ρ²₁₁ (diagonal elements only)
-    const purity = rho2_00.real + rho2_11.real
-    return Math.max(0, Math.min(1, purity))
+  calculateEntropy(bloch: { rx: number; ry: number; rz: number }): number {
+    const r = min(1, sqrt(bloch.rx ** 2 + bloch.ry ** 2 + bloch.rz ** 2))
+    const lp = (1 + r) / 2
+    const lm = (1 - r) / 2
+    const term = (l: number): number => (l > 1e-12 ? -l * log2(l) : 0)
+    return max(0, term(lp) + term(lm))
   }
 
   /**
-   * Calculate von Neumann entropy of density matrix
-   * S(ρ) = -Σ λᵢ log₂(λᵢ) where λᵢ are eigenvalues
-   *
-   * Measures mixedness: S=0 for pure states, S=1 for maximum mixture
-   *
-   * @param rho Density matrix
-   * @returns Entropy value 0+
+   * Full tomography: measure in Z, X, Y (numShots each), chain every shot
+   * as a Tier 4 receipt, reconstruct ρ, and fold all receipts to one root.
    */
-  private calculateEntropy(rho: Complex[][]): number {
-    // For 2×2 matrix, eigenvalues can be computed analytically
-    // Trace = λ₁ + λ₂ = ρ₀₀ + ρ₁₁
-    const trace = rho[0][0].real + rho[1][1].real
+  performTomography(state: QuantumStateUUID, numShots: number = 1000): TomographyResult {
+    const z = this.collectMeasurements(state, 'Z', numShots)
+    const x = this.collectMeasurements(state, 'X', numShots)
+    const y = this.collectMeasurements(state, 'Y', numShots)
 
-    // Determinant = λ₁ * λ₂ = ρ₀₀*ρ₁₁ - |ρ₀₁|²
-    const det =
-      rho[0][0].real * rho[1][1].real -
-      (rho[0][1].real ** 2 + rho[0][1].imag ** 2)
-
-    // Eigenvalues: λ = (trace ± √(trace² - 4*det))/2
-    const discriminant = Math.max(0, trace ** 2 - 4 * det)
-    const sqrtDisc = Math.sqrt(discriminant)
-
-    const lambda1 = (trace + sqrtDisc) / 2
-    const lambda2 = (trace - sqrtDisc) / 2
-
-    // Entropy S = -Σ λᵢ log₂(λᵢ)
-    const entropy = -(
-      (lambda1 > 1e-10 ? lambda1 * Math.log2(lambda1) : 0) +
-      (lambda2 > 1e-10 ? lambda2 * Math.log2(lambda2) : 0)
-    )
-
-    return Math.max(0, entropy)
-  }
-
-  /**
-   * Perform quantum state tomography on given state
-   *
-   * Measures state in Z, X, Y bases (1000 shots each)
-   * Reconstructs density matrix
-   * Calculates fidelity, purity, entropy
-   * Records all measurements in receipt chain (Tier 4)
-   *
-   * @param state Quantum state UUID to tomograph
-   * @param numShots Number of measurements per basis (default 1000)
-   * @returns Complete tomography result with proofs
-   */
-  performTomography(
-    state: QuantumStateUUID,
-    numShots: number = 1000
-  ): TomographyResult {
-    // Collect measurements in each basis
-    const zOutcomes = this.collectMeasurements(state, 'Z', numShots)
-    const xOutcomes = this.collectMeasurements(state, 'X', numShots)
-    const yOutcomes = this.collectMeasurements(state, 'Y', numShots)
-
-    // Record measurements in receipt chain (Tier 4 integration)
-    this.receipts = []
-    for (let i = 0; i < numShots; i++) {
-      const measurement = `z:${zOutcomes[i]}`
-      const receipt = recordMeasurement(
-        this.prevReceipt,
-        measurement,
-        `tomography:${state.id}:z:${i}`
-      )
-      this.receipts.push(receipt)
-      this.prevReceipt = receipt
+    const receipts: MeasurementReceipt[] = []
+    let prev: MeasurementReceipt | typeof TOMOGRAPHY_GENESIS = TOMOGRAPHY_GENESIS
+    const record = (basis: TomographyBasis, outcomes: readonly number[]): void => {
+      for (const outcome of outcomes) {
+        const receipt = recordMeasurement(prev, outcome as 0 | 1, basis, state.registerIdx)
+        receipts.push(receipt)
+        prev = receipt
+      }
     }
+    record('Z', z)
+    record('X', x)
+    record('Y', y)
 
-    for (let i = 0; i < numShots; i++) {
-      const measurement = `x:${xOutcomes[i]}`
-      const receipt = recordMeasurement(
-        this.prevReceipt,
-        measurement,
-        `tomography:${state.id}:x:${i}`
-      )
-      this.receipts.push(receipt)
-      this.prevReceipt = receipt
-    }
-
-    for (let i = 0; i < numShots; i++) {
-      const measurement = `y:${yOutcomes[i]}`
-      const receipt = recordMeasurement(
-        this.prevReceipt,
-        measurement,
-        `tomography:${state.id}:y:${i}`
-      )
-      this.receipts.push(receipt)
-      this.prevReceipt = receipt
-    }
-
-    // Reconstruct density matrix from outcomes
-    const rho = this.reconstructDensityMatrix(zOutcomes, xOutcomes, yOutcomes)
-
-    // Calculate quantum properties
-    const fidelity = this.calculateFidelity(state, rho)
-    const purity = this.calculatePurity(rho)
-    const entropy = this.calculateEntropy(rho)
-
-    // Create merkle proof from all receipts
-    const receiptIds = this.receipts.map(r => r.id)
-    const proof = merkleFold(receiptIds)
+    const { rho, bloch } = this.reconstructDensityMatrix(z, x, y)
 
     return {
       densityMatrix: rho,
-      fidelity,
-      purity,
-      entropy,
-      proof,
-      measurements: {
-        z_outcomes: zOutcomes,
-        x_outcomes: xOutcomes,
-        y_outcomes: yOutcomes
-      },
-      receipts: this.receipts
+      blochVector: bloch,
+      fidelity: this.calculateFidelity(state, bloch),
+      purity: this.calculatePurity(bloch),
+      entropy: this.calculateEntropy(bloch),
+      proof: merkleFold(receipts.map((r) => r.id)),
+      measurements: { z, x, y },
+      receipts,
     }
   }
 
-  /**
-   * Verify tomography result against expected state
-   *
-   * Checks if reconstructed fidelity meets minimum threshold
-   * High fidelity (>0.95) = state matches expected
-   * Low fidelity (<0.95) = state may be substituted (attack detected)
-   *
-   * @param expected Expected quantum state
-   * @param tomography Tomography result to verify
-   * @param minFidelity Minimum acceptable fidelity (default 0.95)
-   * @returns True if state verified, false if substitution suspected
-   */
+  /** Verify the receipt chain of a tomography run: every link recomputes. */
+  verifyReceiptChain(result: TomographyResult): boolean {
+    let prevId = TOMOGRAPHY_GENESIS
+    for (const receipt of result.receipts) {
+      if (receipt.prev !== prevId) return false
+      if (!verifyMeasurementReceipt(receipt)) return false
+      prevId = receipt.id
+    }
+    return merkleFold(result.receipts.map((r) => r.id)) === result.proof
+  }
+
+  /** Accept the state only if measured fidelity meets the threshold. */
   verifyTomography(
     expected: QuantumStateUUID,
     tomography: TomographyResult,
-    minFidelity: number = 0.95
+    minFidelity: number = MIN_FIDELITY_DEFAULT,
   ): boolean {
-    return tomography.fidelity >= minFidelity
+    return this.calculateFidelity(expected, tomography.blochVector) >= minFidelity &&
+      tomography.fidelity >= minFidelity
   }
 
   /**
-   * Detect state substitution via tomography of random subset
-   *
-   * Uses statistical sampling: verify 10% of states
-   * If any show low fidelity, adversary detected
-   *
-   * @param aliceStates Array of quantum states to verify
-   * @param fractionToVerify Fraction of states to tomograph (default 0.1)
-   * @returns Detection result with confidence level
+   * Sample a fraction of the channel's states and tomograph each. Any
+   * fidelity below threshold flags substitution. Selection is deterministic
+   * from the fold hash of the state list — no ambient entropy.
    */
   detectStateSubstitution(
-    aliceStates: QuantumStateUUID[],
-    fractionToVerify: number = 0.1
-  ): {
-    adversaryDetected: boolean
-    confidenceLevel: number
-    minFidelity: number
-    fidelities: number[]
-  } {
-    const numToVerify = Math.max(1, Math.ceil(aliceStates.length * fractionToVerify))
-
-    // Randomly select states to verify
-    const toVerify: QuantumStateUUID[] = []
-    const indices = new Set<number>()
-
-    while (indices.size < numToVerify && indices.size < aliceStates.length) {
-      indices.add(Math.floor(Math.random() * aliceStates.length))
+    states: readonly QuantumStateUUID[],
+    fractionToVerify: number = DEFAULT_SAMPLE_FRACTION,
+    numShots: number = 200,
+    minFidelity: number = MIN_FIDELITY_DEFAULT,
+  ): SubstitutionDetection {
+    if (states.length === 0) {
+      return { adversaryDetected: false, confidenceLevel: 0, minFidelity: 1, fidelities: [] }
     }
 
-    for (const idx of indices) {
-      toVerify.push(aliceStates[idx])
+    const listRoot = merkleFold(states.map((s) => s.id))
+    const numToVerify = min(states.length, max(1, ceil(states.length * fractionToVerify)))
+
+    const chosen = new Set<number>()
+    let salt = 0
+    while (chosen.size < numToVerify) {
+      chosen.add(indexFromSeed(`select:${listRoot}:${salt}`, states.length))
+      salt++
     }
 
-    // Perform tomography on each
     const fidelities: number[] = []
-    for (const state of toVerify) {
-      const tomo = this.performTomography(state)
+    for (const idx of chosen) {
+      const tomo = this.performTomography(states[idx]!, numShots)
       fidelities.push(tomo.fidelity)
     }
 
-    // If any fidelity < 0.95, adversary detected
-    const minFidelity = Math.min(...fidelities)
-    const adversaryDetected = minFidelity < 0.95
-
-    // Confidence = fraction of states verified
-    const confidenceLevel = numToVerify / aliceStates.length
-
+    const lowest = min(...fidelities)
     return {
-      adversaryDetected,
-      confidenceLevel,
-      minFidelity,
-      fidelities
+      adversaryDetected: lowest < minFidelity,
+      confidenceLevel: numToVerify / states.length,
+      minFidelity: lowest,
+      fidelities,
     }
   }
 }
+
+/**
+ * Convenience: tomograph a state that claims to be `claimed` but was actually
+ * prepared as `actual` — models an adversary substitution for testing. The
+ * measurements follow the actual state; fidelity is computed against the claim.
+ */
+export function tomographAgainstClaim(
+  actual: QuantumStateUUID,
+  claimed: QuantumStateUUID,
+  numShots: number = 1000,
+): { fidelity: number; result: TomographyResult } {
+  const tomo = new QuantumStateTomography()
+  const result = tomo.performTomography(actual, numShots)
+  return { fidelity: tomo.calculateFidelity(claimed, result.blochVector), result }
+}
+
+export { encodeQuantumState }

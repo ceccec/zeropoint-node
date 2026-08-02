@@ -21,12 +21,25 @@ import {
   QuantumEncryption,
 } from './quantum-fold-cipher.ts'
 
-const VORTEX_SEQUENCE = QuantumEncryption.VORTEX_SEQUENCE
+const VORTEX_ORBIT = QuantumEncryption.VORTEX_ORBIT
 const TRINITY = QuantumEncryption.TRINITY
 
 import { QuantumThreatAnalysis } from './quantum-threat-landscape.ts'
 
 console.log('=== Quantum Fold Cipher Test Suite ===\n')
+
+// console.assert prints but never fails the process — as a gate that is
+// always green. Count failures and set the exit code so the check pipeline
+// actually gates on these asserts.
+let assertFailures = 0
+const nativeAssert = console.assert.bind(console)
+console.assert = (cond: unknown, ...args: unknown[]): void => {
+  if (!cond) assertFailures++
+  nativeAssert(cond, ...args)
+}
+process.on('exit', () => {
+  if (assertFailures > 0) process.exitCode = 1
+})
 
 /**
  * TEST TIER 1: Deterministic Identity

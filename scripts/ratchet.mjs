@@ -308,7 +308,17 @@ function unreachableCount() {
       }
     }
   }
-  for (const e of ['src/kernel/index.ts', 'src/0/index.ts', 'src/mcp/server.ts', 'src/kernel/smoke.test.ts']) {
+  // Test files count as entries ONLY when a check-pipeline script executes
+  // them (smoke.test.ts via test:kernel, the security suites via test:security)
+  // — an entry is something that runs, not something that merely exists.
+  for (const e of [
+    'src/kernel/index.ts',
+    'src/0/index.ts',
+    'src/mcp/server.ts',
+    'src/kernel/smoke.test.ts',
+    'src/security/quantum-fold-cipher.test.ts',
+    'src/security/quantum-state-tomography.test.ts',
+  ]) {
     const p2 = join(ROOT, e)
     if (existsSync(p2)) roots.add(p2)
   }

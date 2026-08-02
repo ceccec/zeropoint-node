@@ -12,7 +12,7 @@
 - [x] Attack surface analysis (11 attacks covered)
 - [x] Mathematical proofs (11 exact proofs)
 - [x] Integration patterns (7 production patterns)
-- [x] Tests (28/28 passing)
+- [x] Tests (46 asserts, exit-code gated in `npm run check`)
 - [x] Documentation (150+ pages)
 
 ---
@@ -353,7 +353,7 @@ Tuesday-Friday:
 
 ## 🟢 GO/NO-GO DECISION POINTS
 
-**Go to Phase 2:** Phase 1 tests passing 28/28 ✅
+**Go to Phase 2:** Phase 1 suites pass under `npm run check` ✅
 **Go to Phase 3:** Phase 2 fidelity >95% + >99% detection rate
 **Go to Phase 4:** Phase 3 logical error rate <10^-4
 **Go to Phase 5:** Phase 4 Byzantine tolerance proven

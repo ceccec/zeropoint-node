@@ -1,386 +1,290 @@
 /**
- * Quantum State Tomography Tests
+ * src/security/quantum-state-tomography.test.ts
  *
- * Phase 2 verification: Density matrix reconstruction, fidelity, purity, entropy
- * All measurements verified in receipt chain (Tier 4)
- * Adversary detection via statistical fidelity analysis
+ * Phase 2 tests: density-matrix reconstruction, fidelity, purity, entropy,
+ * receipt-chain integrity, and adversary detection.
+ *
+ * Principle: No gaps. Every reconstruction property, every chain link,
+ * every detection path tested. Deterministic — reruns are identical.
  */
 
-import { test } from 'node:test'
-import { strict as assert } from 'node:assert'
 import {
   QuantumStateTomography,
-  TomographyResult
-} from './quantum-state-tomography'
-import { QuantumFoldCipher } from './quantum-fold-cipher'
+  tomographAgainstClaim,
+} from './quantum-state-tomography.ts'
 
-// Helper: create test quantum state
-function createTestState(basis: 'Z' | 'X' | 'Y', value: 0 | 1, seed: number) {
-  const cipher = new QuantumFoldCipher()
-  cipher.generateKey(String(seed))
-  cipher.prepareState(basis, value, seed)
-  return cipher.stateUuid
+import { encodeQuantumState, verifyMeasurementReceipt } from './quantum-fold-cipher.ts'
+import { abs, min } from '../0/algebra.ts'
+
+console.log('=== Quantum State Tomography Test Suite (Phase 2) ===\n')
+
+// Integer ratios only — a bare float is a crack (lobe L's law).
+const GATE = 19 / 20 // fidelity acceptance gate
+const ORTHO_MAX = 1 / 20 // orthogonal substitution must land below this
+const STAT_TOL = 1 / 10 // sampling tolerance for unbiased-basis statistics
+const UNBIASED_LO = 7 / 20 // fidelity ≈ 1/2 window, lower edge
+const UNBIASED_HI = 13 / 20 // fidelity ≈ 1/2 window, upper edge
+const HALF = 1 / 2
+const PURE_MIN = 19 / 20 // pure preparation: purity must exceed this
+const ENTROPY_MAX = 3 / 20 // pure preparation: entropy must stay below this
+const HIGH_PURITY = 9 / 10
+const LOW_ENTROPY = 3 / 10
+const SAMPLE_FRACTION = 3 / 10 // fraction of channel sampled in detection tests
+const SAMPLE_FRACTION_MAX = 2 / 5
+
+let failures = 0
+function check(cond: boolean, label: string): void {
+  if (cond) {
+    console.log(`✓ ${label}`)
+  } else {
+    failures++
+    console.error(`✗ ${label}`)
+  }
 }
 
-test('Quantum State Tomography - Phase 2 Implementation', async t => {
-  const tomography = new QuantumStateTomography()
+const tomo = new QuantumStateTomography()
 
-  // ===== TIER 1: DENSITY MATRIX RECONSTRUCTION =====
+/**
+ * SECTION 1: Density matrix reconstruction
+ */
+console.log('SECTION 1: Density Matrix Reconstruction')
 
-  await t.test(
-    'reconstructs density matrix from measurement outcomes',
-    () => {
-      const state = createTestState('Z', 0, 1001)
-      const result = tomography.performTomography(state, 1000)
+{
+  const state = encodeQuantumState('Z', 0, 0)
+  const result = tomo.performTomography(state, 1000)
+  const rho = result.densityMatrix
 
-      // Result should have 2×2 density matrix
-      assert.equal(result.densityMatrix.length, 2)
-      assert.equal(result.densityMatrix[0].length, 2)
-      assert.equal(result.densityMatrix[1].length, 2)
+  const trace = rho[0]![0]!.real + rho[1]![1]!.real
+  check(abs(trace - 1) < 1e-9, 'trace(ρ) = 1 exactly (linear inversion)')
 
-      // Trace should be 1 (Tr(ρ) = 1 for valid density matrix)
-      const trace =
-        result.densityMatrix[0][0].real + result.densityMatrix[1][1].real
-      assert.ok(
-        Math.abs(trace - 1.0) < 0.05,
-        `Trace ${trace} should be close to 1.0`
-      )
-    }
+  check(
+    abs(rho[0]![1]!.real - rho[1]![0]!.real) < 1e-9 &&
+      abs(rho[0]![1]!.imag + rho[1]![0]!.imag) < 1e-9,
+    'ρ is Hermitian: ρ₀₁ = conj(ρ₁₀)',
   )
 
-  await t.test('density matrix is Hermitian (ρ = ρ†)', () => {
-    const state = createTestState('X', 1, 1002)
-    const result = tomography.performTomography(state, 1000)
-    const rho = result.densityMatrix
+  check(
+    rho[0]![0]!.imag === 0 && rho[1]![1]!.imag === 0,
+    'diagonal entries are real',
+  )
 
-    // Check Hermitian property: ρ₀₁ = ρ₁₀*
-    const rho01 = rho[0][1]
-    const rho10 = rho[1][0]
+  // Z-prepared |0⟩: rz = +1 exactly (same-basis certainty)
+  check(result.blochVector.rz === 1, 'Z|0⟩ reconstructs rz = +1 exactly')
+  check(abs(result.blochVector.rx) < STAT_TOL, 'Z|0⟩ has |rx| small (unbiased X stats)')
+  check(abs(result.blochVector.ry) < STAT_TOL, 'Z|0⟩ has |ry| small (unbiased Y stats)')
+}
 
-    // ρ₁₀ should be conjugate of ρ₀₁
-    assert.ok(
-      Math.abs(rho01.real - rho10.real) < 0.05,
-      'Real parts should match'
-    )
-    assert.ok(
-      Math.abs(rho01.imag + rho10.imag) < 0.05,
-      'Imaginary parts should be opposite'
-    )
+{
+  // Determinism: same state, same shots → identical reconstruction and proof
+  const state = encodeQuantumState('X', 1, 3)
+  const a = tomo.performTomography(state, 300)
+  const b = tomo.performTomography(state, 300)
+  check(
+    a.blochVector.rx === b.blochVector.rx &&
+      a.blochVector.ry === b.blochVector.ry &&
+      a.blochVector.rz === b.blochVector.rz,
+    'tomography is deterministic: identical Bloch vector on rerun',
+  )
+  // Proofs bind Tier 4 timestamps: each run is a distinct audit event,
+  // so both chains must verify independently (equality is not the contract).
+  check(
+    tomo.verifyReceiptChain(a) && tomo.verifyReceiptChain(b),
+    'each rerun produces its own valid time-bound audit chain',
+  )
+}
 
-    // Diagonal elements should be real
-    assert.ok(Math.abs(rho[0][0].imag) < 0.01, 'ρ₀₀ should be real')
-    assert.ok(Math.abs(rho[1][1].imag) < 0.01, 'ρ₁₁ should be real')
-  })
+/**
+ * SECTION 2: Fidelity
+ */
+console.log('\nSECTION 2: Fidelity')
 
-  await t.test('density matrix eigenvalues are non-negative', () => {
-    const state = createTestState('Y', 0, 1003)
-    const result = tomography.performTomography(state, 1000)
-    const rho = result.densityMatrix
-
-    // Compute eigenvalues analytically
-    const trace =
-      rho[0][0].real + rho[1][1].real
-    const det =
-      rho[0][0].real * rho[1][1].real -
-      (rho[0][1].real ** 2 + rho[0][1].imag ** 2)
-
-    const discriminant = Math.max(0, trace ** 2 - 4 * det)
-    const sqrtDisc = Math.sqrt(discriminant)
-
-    const lambda1 = (trace + sqrtDisc) / 2
-    const lambda2 = (trace - sqrtDisc) / 2
-
-    assert.ok(lambda1 >= -0.01, 'λ₁ should be non-negative')
-    assert.ok(lambda2 >= -0.01, 'λ₂ should be non-negative')
-  })
-
-  // ===== TIER 2: FIDELITY CALCULATION =====
-
-  await t.test('fidelity for identical state is high (>0.95)', () => {
-    const state = createTestState('Z', 0, 2001)
-    const result = tomography.performTomography(state, 1000)
-
-    // Fidelity should be high for state prepared in measurement basis
-    assert.ok(
-      result.fidelity > 0.90,
-      `Fidelity ${result.fidelity} should be > 0.90`
-    )
-  })
-
-  await t.test('fidelity is between 0 and 1', () => {
-    for (let i = 0; i < 10; i++) {
-      const basis = (['Z', 'X', 'Y'] as const)[i % 3]
-      const value = (i % 2) as 0 | 1
-      const state = createTestState(basis, value, 2000 + i)
-      const result = tomography.performTomography(state, 500)
-
-      assert.ok(result.fidelity >= 0, `Fidelity ${result.fidelity} >= 0`)
-      assert.ok(result.fidelity <= 1, `Fidelity ${result.fidelity} <= 1`)
+{
+  const bases = ['Z', 'X'] as const
+  let allHigh = true
+  let allBounded = true
+  for (const basis of bases) {
+    for (const value of [0, 1] as const) {
+      const state = encodeQuantumState(basis, value, 0)
+      const result = tomo.performTomography(state, 1000)
+      if (result.fidelity < GATE) allHigh = false
+      if (result.fidelity < 0 || result.fidelity > 1) allBounded = false
     }
-  })
+  }
+  check(allHigh, 'honest states reach fidelity ≥ 0.95 in all preparations')
+  check(allBounded, 'fidelity stays in [0, 1]')
+}
 
-  await t.test('different bases give different fidelities', () => {
-    const state = createTestState('Z', 0, 2010)
+{
+  // Orthogonal claim: actual Z|0⟩ claimed as Z|1⟩ → fidelity ≈ 0
+  const actual = encodeQuantumState('Z', 0, 0)
+  const claimed = encodeQuantumState('Z', 1, 0)
+  const { fidelity } = tomographAgainstClaim(actual, claimed, 1000)
+  check(fidelity < ORTHO_MAX, `orthogonal substitution collapses fidelity (got ${fidelity.toFixed(3)})`)
+}
 
-    // Tomography should give high fidelity
-    const tomo = tomography.performTomography(state, 1000)
-    assert.ok(tomo.fidelity > 0.85, 'Base fidelity should be decent')
-  })
+{
+  // Unbiased claim: actual Z|0⟩ claimed as X|0⟩ → fidelity ≈ 0.5
+  const actual = encodeQuantumState('Z', 0, 0)
+  const claimed = encodeQuantumState('X', 0, 0)
+  const { fidelity } = tomographAgainstClaim(actual, claimed, 1000)
+  check(
+    fidelity > UNBIASED_LO && fidelity < UNBIASED_HI,
+    `mutually unbiased substitution shows fidelity ≈ 1/2 (got ${fidelity.toFixed(3)})`,
+  )
+}
 
-  // ===== TIER 3: PURITY CALCULATION =====
+/**
+ * SECTION 3: Purity and entropy
+ */
+console.log('\nSECTION 3: Purity & Entropy')
 
-  await t.test('purity is between 0 and 1', () => {
-    for (let i = 0; i < 10; i++) {
-      const basis = (['Z', 'X', 'Y'] as const)[i % 3]
-      const value = (i % 2) as 0 | 1
-      const state = createTestState(basis, value, 3000 + i)
-      const result = tomography.performTomography(state, 500)
+{
+  let purityBounded = true
+  let entropyBounded = true
+  for (let i = 0; i < 8; i++) {
+    const state = encodeQuantumState(i % 2 === 0 ? 'Z' : 'X', (i % 2) as 0 | 1, i)
+    const r = tomo.performTomography(state, 500)
+    if (r.purity < HALF - 1e-9 || r.purity > 1 + 1e-9) purityBounded = false
+    if (r.entropy < 0 || r.entropy > 1 + 1e-9) entropyBounded = false
+  }
+  check(purityBounded, 'purity ∈ [1/2, 1] for all reconstructed qubits')
+  check(entropyBounded, 'entropy ∈ [0, 1] bits for all reconstructed qubits')
+}
 
-      assert.ok(result.purity >= 0, `Purity ${result.purity} >= 0`)
-      assert.ok(result.purity <= 1, `Purity ${result.purity} <= 1`)
-    }
-  })
+{
+  const state = encodeQuantumState('Z', 0, 0)
+  const r = tomo.performTomography(state, 1000)
+  check(r.purity > PURE_MIN, `pure preparation shows purity near 1 (got ${r.purity.toFixed(3)})`)
+  check(r.entropy < ENTROPY_MAX, `pure preparation shows entropy near 0 (got ${r.entropy.toFixed(3)})`)
+}
 
-  await t.test('pure states have purity close to 1', () => {
-    const state = createTestState('Z', 0, 3010)
-    const result = tomography.performTomography(state, 1000)
+{
+  // Purity/entropy consistency: higher purity ⇒ lower entropy
+  const pure = tomo.performTomography(encodeQuantumState('Z', 0, 0), 1000)
+  check(
+    pure.purity > HIGH_PURITY ? pure.entropy < LOW_ENTROPY : true,
+    'high purity implies low entropy (consistency)',
+  )
+}
 
-    // Should be relatively pure (prepared in definite basis)
-    assert.ok(
-      result.purity > 0.85,
-      `Pure state purity ${result.purity} should be > 0.85`
-    )
-  })
+/**
+ * SECTION 4: Receipt chain (Tier 4)
+ */
+console.log('\nSECTION 4: Receipt Chain Verification')
 
-  await t.test('purity <= 1 always (trace property)', () => {
-    // Run multiple states
-    for (let i = 0; i < 20; i++) {
-      const state = createTestState('Z', (i % 2) as 0 | 1, 3020 + i)
-      const result = tomography.performTomography(state, 500)
+{
+  const state = encodeQuantumState('Z', 0, 5)
+  const shots = 50
+  const result = tomo.performTomography(state, shots)
 
-      assert.ok(result.purity <= 1.01, `Purity ${result.purity} should be <= 1`)
-    }
-  })
+  check(result.receipts.length === 3 * shots, `all ${3 * shots} shots recorded (3 bases × ${shots})`)
 
-  // ===== TIER 4: ENTROPY CALCULATION =====
+  let allVerify = true
+  for (const receipt of result.receipts) {
+    if (!verifyMeasurementReceipt(receipt)) allVerify = false
+  }
+  check(allVerify, 'every receipt recomputes (no tampering)')
 
-  await t.test('entropy is non-negative', () => {
-    for (let i = 0; i < 10; i++) {
-      const basis = (['Z', 'X', 'Y'] as const)[i % 3]
-      const value = (i % 2) as 0 | 1
-      const state = createTestState(basis, value, 4000 + i)
-      const result = tomography.performTomography(state, 500)
+  let chained = true
+  for (let i = 1; i < result.receipts.length; i++) {
+    if (result.receipts[i]!.prev !== result.receipts[i - 1]!.id) chained = false
+  }
+  check(chained, 'receipts form a continuous chain (each links to previous)')
 
-      assert.ok(result.entropy >= 0, `Entropy ${result.entropy} >= 0`)
-    }
-  })
+  check(tomo.verifyReceiptChain(result), 'verifyReceiptChain(): full chain + merkle root verify')
 
-  await t.test('pure states have low entropy', () => {
-    const state = createTestState('Z', 0, 4010)
-    const result = tomography.performTomography(state, 1000)
+  // Tamper detection: swap two receipts → chain breaks
+  const tampered = {
+    ...result,
+    receipts: [...result.receipts.slice(1), result.receipts[0]!],
+  }
+  check(!tomo.verifyReceiptChain(tampered), 'reordered receipts are detected')
+}
 
-    // Pure states should have entropy close to 0
-    assert.ok(
-      result.entropy < 0.3,
-      `Pure state entropy ${result.entropy} should be < 0.3`
-    )
-  })
+/**
+ * SECTION 5: Verification gate
+ */
+console.log('\nSECTION 5: Verification Gate')
 
-  // ===== TIER 5: RECEIPT CHAIN VERIFICATION =====
+{
+  const state = encodeQuantumState('Z', 0, 0)
+  const result = tomo.performTomography(state, 1000)
+  check(tomo.verifyTomography(state, result), 'honest state passes the 0.95 gate')
 
-  await t.test('all measurements recorded in receipt chain', () => {
-    const state = createTestState('Z', 0, 5001)
-    const result = tomography.performTomography(state, 100)
+  const orthogonal = encodeQuantumState('Z', 1, 0)
+  check(
+    !tomo.verifyTomography(orthogonal, result),
+    'orthogonal expectation fails the 0.95 gate',
+  )
+}
 
-    // Should have 300 receipts (100 per basis × 3 bases)
-    assert.equal(
-      result.receipts.length,
-      300,
-      'Should have 300 measurement receipts'
-    )
+/**
+ * SECTION 6: Adversary detection
+ */
+console.log('\nSECTION 6: Adversary Detection')
 
-    // All receipts should be valid
-    for (const receipt of result.receipts) {
-      assert.ok(receipt.id, 'Receipt should have ID')
-      assert.ok(receipt.content, 'Receipt should have content')
-    }
-  })
+{
+  const honest = []
+  for (let i = 0; i < 30; i++) {
+    honest.push(encodeQuantumState(i % 2 === 0 ? 'Z' : 'X', (i % 3 === 0 ? 1 : 0) as 0 | 1, i))
+  }
+  const detection = tomo.detectStateSubstitution(honest, SAMPLE_FRACTION)
 
-  await t.test('receipt chain is continuous', () => {
-    const state = createTestState('Z', 0, 5002)
-    const result = tomography.performTomography(state, 50)
+  check(!detection.adversaryDetected, 'honest channel raises no alarm')
+  check(
+    detection.confidenceLevel >= SAMPLE_FRACTION && detection.confidenceLevel <= SAMPLE_FRACTION_MAX,
+    `confidence matches sampled fraction (got ${detection.confidenceLevel.toFixed(2)})`,
+  )
+  check(
+    detection.minFidelity === min(...detection.fidelities),
+    'reported minFidelity equals actual minimum',
+  )
 
-    // Each receipt should reference previous (except first)
-    for (let i = 1; i < result.receipts.length; i++) {
-      const current = result.receipts[i]
-      const previous = result.receipts[i - 1]
+  const rerun = tomo.detectStateSubstitution(honest, SAMPLE_FRACTION)
+  check(
+    detection.minFidelity === rerun.minFidelity &&
+      detection.fidelities.length === rerun.fidelities.length,
+    'detection sampling is deterministic (no ambient entropy)',
+  )
+}
 
-      // Previous should be in the chain
-      assert.ok(current.content.includes(previous.id), 'Should reference previous receipt')
-    }
-  })
+{
+  const empty = tomo.detectStateSubstitution([], HALF)
+  check(
+    !empty.adversaryDetected && empty.confidenceLevel === 0,
+    'empty channel: no detection, zero confidence',
+  )
+}
 
-  await t.test('proof is merkle root of all measurements', () => {
-    const state = createTestState('Z', 0, 5003)
-    const result = tomography.performTomography(state, 50)
+/**
+ * SECTION 7: Measurement statistics preserved
+ */
+console.log('\nSECTION 7: Statistics Preservation')
 
-    // Proof should be non-empty
-    assert.ok(result.proof, 'Proof should exist')
-    assert.ok(result.proof.length > 0, 'Proof should be non-empty')
+{
+  const state = encodeQuantumState('Z', 0, 7)
+  const result = tomo.performTomography(state, 1000)
+  const zZeros = result.measurements.z.filter((o) => o === 0).length / 1000
+  check(
+    abs(result.densityMatrix[0]![0]!.real - zZeros) < 1e-9,
+    'ρ₀₀ equals empirical P(Z=0) exactly (linear inversion)',
+  )
+}
 
-    // Proof should be a valid UUID format
-    assert.match(result.proof, /^[a-f0-9\-]+$/, 'Proof should be valid UUID')
-  })
-
-  // ===== TIER 6: ADVERSARY DETECTION =====
-
-  await t.test('detects substituted states via low fidelity', () => {
-    // Create many states
-    const validStates = []
-    for (let i = 0; i < 20; i++) {
-      validStates.push(createTestState('Z', (i % 2) as 0 | 1, 6000 + i))
-    }
-
-    // Verify subset
-    const detection = tomography.detectStateSubstitution(validStates, 0.5)
-
-    // Should verify 50% of states
-    assert.ok(detection.confidenceLevel >= 0.4, 'Should verify at least 40%')
-    assert.ok(detection.confidenceLevel <= 0.6, 'Should verify at most 60%')
-
-    // Should have fidelity measurements
-    assert.ok(
-      detection.fidelities.length > 0,
-      'Should have fidelity measurements'
-    )
-  })
-
-  await t.test('adversary detection has minimum fidelity', () => {
-    const validStates = []
-    for (let i = 0; i < 50; i++) {
-      validStates.push(createTestState('Z', 0, 6050 + i))
-    }
-
-    const detection = tomography.detectStateSubstitution(validStates, 0.2)
-
-    // Min fidelity should be the minimum of all fidelities
-    const allFids = detection.fidelities
-    const computedMin = Math.min(...allFids)
-    assert.equal(
-      detection.minFidelity,
-      computedMin,
-      'minFidelity should match actual minimum'
-    )
-  })
-
-  await t.test('verifyTomography rejects low fidelity states', () => {
-    const state = createTestState('Z', 0, 7001)
-    const result = tomography.performTomography(state, 1000)
-
-    // Create a result with artificially low fidelity for testing
-    const lowFidelityResult: TomographyResult = {
-      ...result,
-      fidelity: 0.85 // Below threshold
-    }
-
-    const verified = tomography.verifyTomography(state, lowFidelityResult, 0.95)
-    assert.equal(verified, false, 'Should reject low fidelity state')
-  })
-
-  await t.test('verifyTomography accepts high fidelity states', () => {
-    const state = createTestState('Z', 0, 7002)
-    const result = tomography.performTomography(state, 1000)
-
-    // High fidelity result
-    const highFidelityResult: TomographyResult = {
-      ...result,
-      fidelity: 0.98 // Above threshold
-    }
-
-    const verified = tomography.verifyTomography(state, highFidelityResult, 0.95)
-    assert.equal(verified, true, 'Should accept high fidelity state')
-  })
-
-  // ===== INTEGRATION TESTS =====
-
-  await t.test('complete tomography workflow', () => {
-    // Create quantum state
-    const cipher = new QuantumFoldCipher()
-    cipher.generateKey('test-entropy')
-    cipher.prepareState('Z', 0, 0)
-    const state = cipher.stateUuid
-
-    // Perform tomography
-    const tomo = new QuantumStateTomography()
-    const result = tomo.performTomography(state, 500)
-
-    // Verify result has all properties
-    assert.ok(result.densityMatrix, 'Has density matrix')
-    assert.ok(typeof result.fidelity === 'number', 'Has fidelity')
-    assert.ok(typeof result.purity === 'number', 'Has purity')
-    assert.ok(typeof result.entropy === 'number', 'Has entropy')
-    assert.ok(result.proof, 'Has proof')
-    assert.ok(result.measurements, 'Has measurements')
-    assert.ok(result.receipts, 'Has receipts')
-
-    // Verify measurements have all bases
-    assert.ok(result.measurements.z_outcomes, 'Has Z outcomes')
-    assert.ok(result.measurements.x_outcomes, 'Has X outcomes')
-    assert.ok(result.measurements.y_outcomes, 'Has Y outcomes')
-
-    // Verify quantum properties
-    assert.ok(result.fidelity > 0.8, 'Fidelity should be decent')
-    assert.ok(result.purity > 0.8, 'Purity should be decent')
-    assert.ok(result.entropy < 0.5, 'Entropy should be low for pure state')
-  })
-
-  await t.test('multiple states have different fidelities', () => {
-    const tomo = new QuantumStateTomography()
-    const states = [
-      createTestState('Z', 0, 8001),
-      createTestState('X', 1, 8002),
-      createTestState('Y', 0, 8003)
-    ]
-
-    const fidelities = states.map(s => tomo.performTomography(s, 500).fidelity)
-
-    // Not all should be identical (different states)
-    const unique = new Set(fidelities.map(f => f.toFixed(2))).size
-    assert.ok(unique >= 2, 'Different states should have varied fidelities')
-  })
-
-  // ===== CORRECTNESS CHECKS =====
-
-  await t.test('reconstructed state preserves measurement statistics', () => {
-    const state = createTestState('Z', 0, 9001)
-    const result = tomography.performTomography(state, 1000)
-
-    // Z-basis measurement statistics
-    const zProb0 = result.measurements.z_outcomes.filter(x => x === 0).length / 1000
-    const zProb1 = result.measurements.z_outcomes.filter(x => x === 1).length / 1000
-
-    // Density matrix diagonal should match Z measurements
-    assert.ok(
-      Math.abs(result.densityMatrix[0][0].real - zProb0) < 0.1,
-      'ρ₀₀ should match Z=0 probability'
-    )
-    assert.ok(
-      Math.abs(result.densityMatrix[1][1].real - zProb1) < 0.1,
-      'ρ₁₁ should match Z=1 probability'
-    )
-  })
-
-  await t.test('entropy consistent with purity', () => {
-    for (let i = 0; i < 20; i++) {
-      const state = createTestState('Z', (i % 2) as 0 | 1, 9010 + i)
-      const result = tomography.performTomography(state, 500)
-
-      // For single qubit: S = H(purity) where H is Shannon entropy
-      // Pure state (purity=1): entropy=0
-      // Mixed state (purity=0.5): entropy max
-      if (result.purity > 0.9) {
-        assert.ok(result.entropy < 0.3, 'High purity should give low entropy')
-      }
-    }
-  })
-})
+/**
+ * Summary
+ */
+console.log('\n=== TEST SUMMARY ===')
+if (failures === 0) {
+  console.log('All tomography tests passed:')
+  console.log('  ✓ Reconstruction: trace 1, Hermitian, deterministic')
+  console.log('  ✓ Fidelity: honest high, orthogonal ≈0, unbiased ≈1/2')
+  console.log('  ✓ Purity & entropy: bounded and consistent')
+  console.log('  ✓ Receipt chain: continuous, tamper-evident, merkle-sealed')
+  console.log('  ✓ Verification gate: accepts honest, rejects substituted')
+  console.log('  ✓ Adversary detection: deterministic sampling, exact minimum')
+  console.log('\nQuantum State Tomography (Phase 2) is ready. ✓')
+} else {
+  console.error(`\n${failures} test(s) FAILED`)
+  process.exit(1)
+}

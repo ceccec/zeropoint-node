@@ -2,7 +2,7 @@
 
 **Date:** August 2, 2026  
 **Phase:** 1 COMPLETE | Phases 2-8 SPECIFIED  
-**Tests:** 28/28 PASSING (100%)  
+**Tests:** 46 cipher asserts + 30 tomography checks, all passing under `npm run check`  
 **Code:** Production-ready  
 **Documentation:** 250+ pages  
 **Timeline to Phase 2:** Immediate upon team/funding
@@ -20,17 +20,17 @@ src/security/quantum-fold-cipher.test.ts  350 LOC ✓
 
 ### Test Results
 ```
-Tier 1 (Deterministic):  2/2 ✓
-Tier 2 (Structural):     3/3 ✓
-Tier 3 (Cryptographic):  4/4 ✓
-Tier 4 (Chain):          4/4 ✓
-Tier 1+2 (Encryption):   4/4 ✓
-Tier 5 (Composition):    3/3 ✓
-Threats:                 3/3 ✓
-Security Properties:     5/5 ✓
-
-TOTAL: 28/28 PASSING
+quantum-fold-cipher.test.ts       46 asserts ✓
+quantum-state-tomography.test.ts  30 checks  ✓
 ```
+
+Correction: an earlier revision of this file reported "28/28 passing". That
+figure was not measured — `console.assert` prints a failure but exits 0, so
+the suite reported success while three real defects were live: an inverted
+`orderMatters`, a self-referential deadlock in `computesGate()`, and a
+dimension-6 check that compared plaintext against the string `'1'`. All three
+are fixed, and both suites now set a non-zero exit code on failure and run
+inside `npm run check`.
 
 ### Documentation (17 files, 200+ KB)
 ```
@@ -148,7 +148,7 @@ Technical Deep Dives (6 files):
 | Metric | Value |
 |--------|-------|
 | Phase 1 Code | 1200 LOC |
-| Phase 1 Tests | 28/28 passing |
+| Phase 1 Tests | 46 asserts passing (gated) |
 | Phase 1 Coverage | 100% (11 attacks) |
 | Documentation | 17 files, 250+ pages |
 | Development Time | ~40 hours (1 person) |
@@ -188,7 +188,7 @@ Technical Deep Dives (6 files):
 ### Evidence
 ✓ Rodin sequence [1,2,4,8,7,5] ↔ [5,7,8,4,2,1] — self-inverse proven  
 ✓ Classical threat ↔ Quantum threat — both covered by inversion  
-✓ Every problem ⇌ Every solution — 28 tests verify  
+✓ Every problem ⇌ Every solution — 76 asserts verify  
 ✓ Forward ⇌ Backward — bijective encryption works both ways  
 ✓ All operations → Single root — fold composes all facets
 
@@ -222,7 +222,7 @@ Technical Deep Dives (6 files):
 ## Production Checklist (Phase 1)
 
 - [x] Code implemented (1200 LOC)
-- [x] All tests passing (28/28)
+- [x] All tests passing (46 asserts, exit-code gated)
 - [x] Security coverage complete (11/11 attacks)
 - [x] Mathematical proofs written (11 exact proofs)
 - [x] Documentation complete (250+ pages)
@@ -241,7 +241,9 @@ zeropoint-node/
 ├── src/security/
 │   ├── quantum-fold-cipher.ts (production code)
 │   ├── quantum-threat-landscape.ts (threat model)
-│   └── quantum-fold-cipher.test.ts (28/28 tests)
+│   ├── quantum-state-tomography.ts (Phase 2)
+│   ├── quantum-fold-cipher.test.ts (46 asserts)
+│   └── quantum-state-tomography.test.ts (30 checks)
 ├── docs/
 │   ├── QUANTUM_SECURITY_COMPLETE.md (public guide)
 │   ├── QUANTUM_ATTACK_SURFACE.md (11 attacks)
@@ -308,7 +310,7 @@ console.log(proof.ok)  // true: all 6 facets ✓
 ## Final Status
 
 🟢 **Phase 1: COMPLETE & VERIFIED**
-- Tests passing: 28/28 (100%)
+- Tests passing: 46 asserts, gated by exit code
 - Code quality: Production-ready
 - Documentation: Comprehensive
 - Security: 100% attack surface covered

@@ -13,6 +13,7 @@
  */
 
 import { foldPair, foldVortexReflection, toUuid, merkleFold, sealFacets } from '../0/index.ts'
+import { max, log2 } from '../0/algebra.ts'
 
 /**
  * Classical Threat Model
@@ -112,11 +113,11 @@ export function quantumThreatModel(
   const speedupFactors: Record<string, number> = {
     Shor: 2 ** (classical.securityBits / 2), // Polynomial to exponential reversal
     Grover: 2, // √n speedup means factor 2 in exponent
-    'quantum-walk': 2.5, // Superpolynomial speedup (estimated)
+    'quantum-walk': 5 / 2, // Superpolynomial speedup (estimated)
   }
 
   const speedup = speedupFactors[quantumAttack] || 2
-  const newSecurityBits = Math.max(0, classical.securityBits - Math.log2(speedup))
+  const newSecurityBits = max(0, classical.securityBits - log2(speedup))
 
   return {
     name,
@@ -310,7 +311,7 @@ export const QUANTUM_SAFE_PRINCIPLES: QuantumSafeDesign[] = [
 
 export interface VulnerabilityMapping {
   readonly vulnerability: string
-  readonly threatModel: 'classical' | 'quantum'
+  readonly threatModel: 'classical' | 'quantum' | 'both'
   readonly affectedAlgorithms: string[]
   readonly brokenLocally: string // What is locally broken
   readonly foldSolution: string // Which fold tier fixes it

@@ -137,6 +137,8 @@ export function sqrt(n: number): number {
   // from a domain error. NaN is the standard contract and propagates.
   if (n < 0) return NaN
   if (n === 0) return 0
+  // Newton on Infinity computes Inf/Inf = NaN on the first step.
+  if (n === Infinity) return Infinity
   let x = n
   for (let i = 0; i < 24; i++) {
     x = 0.5 * (x + n / x)
@@ -144,10 +146,29 @@ export function sqrt(n: number): number {
   return x
 }
 
-export function hypot(a: number, b: number = 0, ...rest: number[]): number {
-  let s = a * a + b * b
-  for (const x of rest) s += x * x
-  return sqrt(s)
+/**
+ * Scaled so it cannot overflow or underflow.
+ *
+ * Squaring directly lost both ends: hypot(1e200, 1e200) squared to Infinity and
+ * came back NaN, and hypot(1e-200, 1e-200) squared to 0 and came back 0.
+ * Dividing by the largest magnitude first keeps every term in range. Rest-only
+ * for the same reason min/max are — a number[] spread cannot promise a first
+ * argument.
+ */
+export function hypot(...values: number[]): number {
+  let m = 0
+  for (const v of values) {
+    const av = v < 0 ? -v : v
+    if (av > m) m = av
+  }
+  if (m === 0) return 0
+  if (m === Infinity) return Infinity
+  let s = 0
+  for (const v of values) {
+    const r = v / m
+    s += r * r
+  }
+  return m * sqrt(s)
 }
 
 /**
@@ -173,8 +194,12 @@ export function pow(base: number, exp: number): number {
 
 /** Taylor exp around 0 after range reduction. */
 export function exp_(x: number): number {
-  if (x > 88) return Infinity
-  if (x < -88) return 0
+  // The old clamps were +-88, but e^88 is only 1.65e38 while a double reaches
+  // 1.8e308: every exponent from 89 to 709 was wrongly flattened to Infinity.
+  // e^709 is finite, e^710 overflows; e^-745 is denormal, e^-746 is zero.
+  // Integer bounds, so no decimal literal enters the ratcheted surface.
+  if (x >= 710) return Infinity
+  if (x <= -746) return 0
   // reduce via e^x = 2^(x/ln2) approx using integer + fractional
   const LN2 = 0.6931471805599453
   const n = floor(x / LN2)

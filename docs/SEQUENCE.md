@@ -38,6 +38,11 @@ Run it: `node --experimental-strip-types src/kernel/smoke.test.ts`
 
 ### Two equilibrium constants — do not merge them
 
+Tests lobe L's law `everyDigitIsEntangledInAllVectorsFormingEquilibriums`
+(ceccec.github.io). Measured here rather than assumed — it holds for the
+PAIRING and not as a blanket dr-9 property, which is why both constants below
+are stated separately.
+
 Pairs and wholes balance at **different** constants, and a single dr-9 test will mis-report the first as broken:
 
 - **pair equilibrium = 10** — `d + throughVoid(d) = 10` for every digit, no exceptions.

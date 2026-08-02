@@ -84,6 +84,9 @@ function walk(dir, pred, out = []) {
 /**
  * Bare float literals in EXECUTABLE code, via the TypeScript AST.
  *
+ * Implements lobe L's law `decimalsInCodeAreCracks` (ceccec.github.io):
+ * a bare float is a crack; carry an integer ratio bound to a named constant.
+ *
  * This was regex-based and over-counted by 51% (657 lines vs 434). Stripping
  * strings line-by-line cannot remove a MULTI-LINE template literal, so every
  * decimal inside generated CSS/HTML — `opacity: 0.5`, `scale(1.5)` — counted

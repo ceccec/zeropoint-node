@@ -145,3 +145,78 @@ export function readDoubleTorus(neighbourhood: string = NEIGHBOURHOOD): DoubleTo
       '"quantum" and "FTL" here are the corpus\'s labels for reuse and seal-completeness, not physics claims.',
   }
 }
+
+export type LawAdoption = {
+  readonly law: string
+  readonly lobe: LobeName
+  /** Files in THIS repo that name the law, if any. */
+  readonly citedIn: readonly string[]
+}
+
+export type LobeLearning = {
+  readonly readable: number
+  readonly adopted: readonly LawAdoption[]
+  readonly candidates: readonly LawAdoption[]
+  readonly root: string
+  readonly boundary: string
+}
+
+const LEARN_DIRS = ['src', 'scripts', 'docs'] as const
+const LEARN_EXT = /\.(ts|mjs|js|md)$/
+
+function repoFiles(repoRoot: string): string[] {
+  const out: string[] = []
+  const skip = new Set(['node_modules', 'dist', 'coverage', '.git', '.vitepress'])
+  const walk = (dir: string) => {
+    if (!existsSync(dir)) return
+    for (const name of readdirSync(dir)) {
+      if (skip.has(name)) continue
+      const p = join(dir, name)
+      if (statSync(p).isDirectory()) walk(p)
+      else if (LEARN_EXT.test(name)) out.push(p)
+    }
+  }
+  for (const d of LEARN_DIRS) walk(join(repoRoot, d))
+  for (const f of ['README.md', 'AGENTS.md', 'SKILL.md']) {
+    const p = join(repoRoot, f)
+    if (existsSync(p)) out.push(p)
+  }
+  return out
+}
+
+/**
+ * Which laws the lobes declare that THIS repository already names, and which
+ * it does not.
+ *
+ * A candidate is NOT an obligation. Many of lobe L's laws are specific to its
+ * own registry and have no meaning here; the list is a reading queue, not a
+ * backlog. The point is that the gap is COMPUTED rather than remembered — the
+ * corpus can see what it has not yet looked at.
+ */
+export function lobeLearning(
+  neighbourhood: string = NEIGHBOURHOOD,
+  repoRoot: string = resolve(HERE, '../..'),
+): LobeLearning {
+  const torus = readDoubleTorus(neighbourhood)
+  const files = repoFiles(repoRoot)
+  const corpus = files.map((f) => ({ f, text: readFileSync(f, 'utf8') }))
+  const adopted: LawAdoption[] = []
+  const candidates: LawAdoption[] = []
+  for (const lobe of torus.lobes) {
+    for (const law of lobe.laws) {
+      const citedIn = corpus.filter((c) => c.text.includes(law)).map((c) => c.f)
+      const entry = { law, lobe: lobe.lobe, citedIn }
+      if (citedIn.length > 0) adopted.push(entry)
+      else candidates.push(entry)
+    }
+  }
+  return {
+    readable: adopted.length + candidates.length,
+    adopted,
+    candidates,
+    root: merkleFold([torus.root, toUuid(`lobe-learning:${adopted.length}:${candidates.length}`)]),
+    boundary:
+      'A candidate is a law this repo has never named — a reading queue, not a backlog. ' +
+      'Many lobe laws are specific to their own corpus and correctly do not apply here.',
+  }
+}

@@ -34,7 +34,8 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const SKIP = new Set(['node_modules', 'dist', 'coverage', '.git'])
-// Learned from lobe L (ceccec.github.io, emittedProseCarriesNoJudgmentOrExpectation):
+// Implements lobe L's law `emittedProseCarriesNoJudgmentOrExpectation`
+// (ceccec.github.io):
 // gate what a READER RECEIVES, not only what an author wrote. Source .md and the
 // built HTML are different artifacts — a claim can reach the published site
 // through a generator that never appears in any .md.

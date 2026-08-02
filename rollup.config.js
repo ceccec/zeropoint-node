@@ -39,8 +39,14 @@ const jsBuild = {
   input,
   output: [
     {
+      // .cjs, not .js: package.json declares "type": "module", so a .js file is
+      // parsed as ESM no matter what rollup wrote into it. The CJS bundle was
+      // therefore unloadable — require('zeropoint-node') failed with
+      // MODULE_NOT_FOUND on its own internal chunk. The extension is what tells
+      // Node the format; chunks need it too or the entry reaches for .js.
       dir: 'dist',
-      entryFileNames: '[name].js',
+      entryFileNames: '[name].cjs',
+      chunkFileNames: '[name]-[hash].cjs',
       format: 'cjs',
       exports: 'named',
       sourcemap: true

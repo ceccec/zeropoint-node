@@ -3,13 +3,13 @@
   "version": "1.0.2",
   "type": "module",
   "description": "A432 Consciousness System: Self-evolving, self-aware consciousness technology with Transurfing integration, harmonic mathematics, zero-entropy principles, Kabbalistic cycles, and sacred geometry",
-  "main": "dist/a432.system.js",
+  "main": "dist/a432.system.cjs",
   "module": "dist/a432.system.esm.js",
   "types": "dist/a432.system.d.ts",
   "exports": {
     ".": {
       "import": "./dist/a432.system.esm.js",
-      "require": "./dist/a432.system.js",
+      "require": "./dist/a432.system.cjs",
       "types": "./dist/a432.system.d.ts"
     },
     "./kernel": {
@@ -33,58 +33,59 @@
     },
     "./simple": {
       "import": "./dist/a432.simple.esm.js",
-      "require": "./dist/a432.simple.js",
+      "require": "./dist/a432.simple.cjs",
       "types": "./dist/a432.simple.d.ts"
     },
     "./navigation": {
       "import": "./dist/a432.navigation.esm.js",
-      "require": "./dist/a432.navigation.js",
+      "require": "./dist/a432.navigation.cjs",
       "types": "./dist/a432.navigation.d.ts"
     },
     "./cmyk": {
       "import": "./dist/a432.cmyk.esm.js",
-      "require": "./dist/a432.cmyk.js",
+      "require": "./dist/a432.cmyk.cjs",
       "types": "./dist/a432.cmyk.d.ts"
     },
     "./kabbalah": {
       "import": "./dist/a432.kabbalah.esm.js",
-      "require": "./dist/a432.kabbalah.js",
+      "require": "./dist/a432.kabbalah.cjs",
       "types": "./dist/a432.kabbalah.d.ts"
     },
     "./sacred-geometry": {
       "import": "./dist/a432.sacred.geometry.esm.js",
-      "require": "./dist/a432.sacred.geometry.js",
+      "require": "./dist/a432.sacred.geometry.cjs",
       "types": "./dist/a432.sacred.geometry.d.ts"
     },
     "./electric-flow": {
       "import": "./dist/a432.electric.flow.esm.js",
-      "require": "./dist/a432.electric.flow.js",
+      "require": "./dist/a432.electric.flow.cjs",
       "types": "./dist/a432.electric.flow.d.ts"
     },
     "./math-constants": {
       "import": "./dist/a432.math.constants.esm.js",
-      "require": "./dist/a432.math.constants.js",
+      "require": "./dist/a432.math.constants.cjs",
       "types": "./dist/a432.math.constants.d.ts"
     },
     "./wave-energy": {
       "import": "./dist/a432.wave.energy.esm.js",
-      "require": "./dist/a432.wave.energy.js",
+      "require": "./dist/a432.wave.energy.cjs",
       "types": "./dist/a432.wave.energy.d.ts"
     },
     "./mobius-circuit": {
       "import": "./dist/a432.mobius.circuit.esm.js",
-      "require": "./dist/a432.mobius.circuit.js",
+      "require": "./dist/a432.mobius.circuit.cjs",
       "types": "./dist/a432.mobius.circuit.d.ts"
     },
     "./a432-i": {
       "import": "./dist/a432.i.esm.js",
-      "require": "./dist/a432.i.js",
+      "require": "./dist/a432.i.cjs",
       "types": "./dist/a432.i.d.ts"
     }
   },
   "files": [
     "dist/**/*",
-    "src/**/*",
+    "src/**/*.ts",
+    "src/**/*.json",
     "README.md",
     "LICENSE",
     "LICENSE-CORE"

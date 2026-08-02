@@ -16,8 +16,8 @@
  * Counting rules live in one place so the gate and the report cannot disagree.
  */
 
-import ts from 'typescript'
 import { scanClaims } from './prose-claims.mjs'
+import { ts, config, walk as scanWalk, sourceFiles, parseTs, importTargets, readCapped } from './lib/scan.mjs'
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, unlinkSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { pathToFileURL } from 'node:url'
@@ -28,7 +28,6 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const STATE = join(ROOT, 'ratchet.json')
-const SKIP = new Set(['node_modules', 'dist', 'coverage', '.git'])
 let probeSeq = 0
 
 function run(cmd, args) {
@@ -71,14 +70,10 @@ function lintCount() {
   }
 }
 
+// walk / skip-set / AST parsing all live in ./lib/scan.mjs now — one
+// implementation, one memoised parse shared by every surface below.
 function walk(dir, pred, out = []) {
-  for (const name of readdirSync(dir)) {
-    if (SKIP.has(name)) continue
-    const p = join(dir, name)
-    if (statSync(p).isDirectory()) walk(p, pred, out)
-    else if (pred(name)) out.push(p)
-  }
-  return out
+  return scanWalk(dir, pred, { out })
 }
 
 /**

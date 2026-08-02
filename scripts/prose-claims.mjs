@@ -28,61 +28,69 @@
  * useful rather than noisy.
  */
 
-import { readFileSync, readdirSync, statSync } from 'node:fs'
-import { resolve, dirname, join, relative } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { config, walk, readCapped, compile, resolveInside } from './lib/scan.mjs'
+import { relative } from 'node:path'
+import { ROOT } from './lib/scan.mjs'
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const SKIP = new Set(['node_modules', 'dist', 'coverage', '.git'])
-// Implements lobe L's law `emittedProseCarriesNoJudgmentOrExpectation`
-// (ceccec.github.io):
-// gate what a READER RECEIVES, not only what an author wrote. Source .md and the
-// built HTML are different artifacts — a claim can reach the published site
-// through a generator that never appears in any .md.
-const EMITTED = 'docs/.vitepress/dist'
+const CFG = config().prose
+const CLAIMS = CFG.claims.map((c) => ({ id: c.id, re: compile(c.pattern) }))
+const BOUNDED = compile(CFG.boundedPattern)
+const MATCHES = (n) => CFG.extensions.some((e) => n.endsWith(e))
 
-/** Effect claims: physics, medicine, consciousness, and reported results. */
-const CLAIMS = [
-  { id: 'free-energy', re: /\b(zero[- ]point energy (harvest|extract)|charges? itself|self[- ]sustaining device|perpetual (motion|balance)|free energy)\b/i },
-  { id: 'consciousness', re: /\b(pure consciousness|deterministic enlightenment|consciousness (multiplier|technology)|transformation .{0,40}to pure consciousness|awareness at gateways)\b/i },
-  { id: 'medical', re: /\b(healing frequenc|harmonic medicine|cure[sd]?\b|therapeutic|treats? (disease|illness))\b/i },
-  { id: 'physics-result', re: /\b(particle masses|mₚ\/mₑ|spacetime geometry becomes|π (becomes|=) 3\b|perfect fractal ice|no spectral broadening)\b/i },
-  { id: 'experiment', re: /\b(experimental validation|laser test|water crystallography|Result:\s*\S)/i },
-  { id: 'solves', re: /\b(solves? (fundamental|world|humanity)|proves? (consciousness|reality|the universe))\b/i },
-]
-
-/** A claim next to any of these is already honestly framed. */
-const BOUNDED =
-  /\b(refus|boundary|not a claim|no claim|metaphor|analog(y|ies)|overlay, not|is not evidence|does not explain|faithful:|honesty|speculative|hypothes|would need|not measured|unproven|flagged)\b/i
-
-function walk(dir, out = []) {
-  for (const name of readdirSync(dir)) {
-    if (SKIP.has(name)) continue
-    const p = join(dir, name)
-    if (statSync(p).isDirectory()) walk(p, out)
-    else if (name.endsWith('.md') || name.endsWith('.html')) out.push(p)
-  }
-  return out
+/** Markup must not mask or manufacture a hit — strip tags and scripts first. */
+function textOf(file) {
+  const raw = readCapped(file)
+  if (raw === null) return null
+  return file.endsWith('.html')
+    ? raw.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<[^>]+>/g, ' ')
+    : raw
 }
 
 export function scanClaims() {
   const hits = []
-  for (const file of walk(ROOT)) {
-    const raw = readFileSync(file, 'utf8')
-    const text = file.endsWith('.html')
-      ? raw.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<[^>]+>/g, ' ')
-      : raw
+  const files = new Set()
+  for (const r of CFG.roots) {
+    for (const f of walk(resolveInside(r), MATCHES, { skipDirs: CFG.skipDirs })) files.add(f)
+  }
+  for (const file of [...files].sort()) {
+    const text = textOf(file)
+    if (text === null) continue
     const lines = text.split('\n')
+    // Fence-skipping is only safe when the fences BALANCE. PROOF.md and
+    // HARMONIC_MATH_SYSTEM.md have an odd number of markers, so tracking state
+    // blindly made the scanner go dark from the last unmatched fence to EOF and
+    // silently drop 34 real claims. If a file's fences do not pair, scan all of
+    // it: a false positive is visible, a false negative is not.
+    const fenceCount = lines.filter((l) => /^\s*(```|~~~)/.test(l)).length
+    const fencesBalance = fenceCount % 2 === 0
+    let inFence = false
     for (const [i, line] of lines.entries()) {
+      // Fenced code is code, not prose. `overUnity: '...'` inside an example
+      // block is a variable name, and flagging it says nothing about what the
+      // page asserts to a reader.
+      if (fencesBalance && /^\s*(```|~~~)/.test(line)) {
+        inFence = !inFence
+        continue
+      }
+      if (inFence) continue
       for (const claim of CLAIMS) {
+        claim.re.lastIndex = 0
         if (!claim.re.test(line)) continue
-        // A boundary governs its SECTION, not just its line. Look back to the
-        // nearest heading: if anything between that heading and this line marks
-        // the passage as bounded, the claim is already honestly framed. Only
-        // checking the adjacent lines under-credited section-level boundaries —
-        // a table row eight lines below an explicit "Boundary." paragraph still
-        // counted as unbounded.
+        // A boundary governs its SECTION. Look back to the nearest heading:
+        // anything between it and this line that frames the passage counts.
         let bounded = BOUNDED.test(`${line}\n${lines[i + 1] ?? ''}`)
+        // A HEADING that names a claim is bounded by the paragraph that
+        // FOLLOWS it — looking only backwards stopped at the heading itself and
+        // never saw its own section's boundary.
+        if (!bounded && /^#{1,6}\s/.test(line)) {
+          for (let j = i + 1; j < lines.length; j += 1) {
+            if (/^#{1,6}\s/.test(lines[j])) break
+            if (BOUNDED.test(lines[j])) {
+              bounded = true
+              break
+            }
+          }
+        }
         for (let j = i - 1; j >= 0 && !bounded; j -= 1) {
           if (/^#{1,6}\s/.test(lines[j])) break
           if (BOUNDED.test(lines[j])) bounded = true

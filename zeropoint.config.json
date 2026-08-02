@@ -1,0 +1,101 @@
+{
+  "$comment": "Single source of truth for every scanning tool. Nothing here is hardcoded in scripts/ or src/kernel/ \u2014 change it once and the ratchet, the prose gate and the lobe reader all follow.",
+  "skipDirs": [
+    "node_modules",
+    "dist",
+    "coverage",
+    ".git",
+    ".next",
+    ".cache"
+  ],
+  "source": {
+    "roots": [
+      "src"
+    ],
+    "extensions": [
+      ".ts"
+    ],
+    "excludeSuffixes": [
+      ".d.ts"
+    ]
+  },
+  "prose": {
+    "$comment": "Scans BOTH authored markdown and the emitted artifact \u2014 a claim can reach a reader through a generator that appears in no .md.",
+    "roots": [
+      "."
+    ],
+    "extensions": [
+      ".md",
+      ".html"
+    ],
+    "skipDirs": [
+      "node_modules",
+      "dist",
+      "coverage",
+      ".git"
+    ],
+    "claims": [
+      {
+        "id": "free-energy",
+        "pattern": "\\b(zero[- ]point energy (harvest|extract)|charges? itself|self[- ]sustaining device|perpetual (motion|balance)|free energy|over[- ]unity)\\b"
+      },
+      {
+        "id": "consciousness",
+        "pattern": "\\b(pure consciousness|deterministic enlightenment|consciousness (multiplier|technology)|transformation .{0,40}to pure consciousness|awareness at gateways)\\b"
+      },
+      {
+        "id": "medical",
+        "pattern": "\\b(healing frequenc|harmonic medicine|cure[sd]?\\b|therapeutic|treats? (disease|illness))\\b"
+      },
+      {
+        "id": "physics-result",
+        "pattern": "\\b(particle masses|m\u209a/m\u2091|spacetime geometry becomes|\u03c0 (becomes|=) 3\\b|perfect fractal ice|no spectral broadening)\\b"
+      },
+      {
+        "id": "experiment",
+        "pattern": "\\b(experimental validation|laser test|water crystallography|Result:\\s*\\S)"
+      },
+      {
+        "id": "solves",
+        "pattern": "\\b(solves? (fundamental|world|humanity)|proves? (consciousness|reality|the universe))\\b"
+      }
+    ],
+    "boundedPattern": "\\b(refus|boundary|not a claim|no claim|metaphor|analog(y|ies)|overlay, not|is not evidence|does not explain|faithful:|honesty|speculative|hypothes|would need|not measured|unproven|flagged)\\b"
+  },
+  "lobes": {
+    "$comment": "Sibling checkouts read from disk only. Add a lobe by naming it here; no code change required.",
+    "names": [
+      "ceccec.github.io",
+      "erpax"
+    ],
+    "surfaces": [
+      "AGENTS.md",
+      "SKILL.md",
+      "llms.txt",
+      "README.md"
+    ],
+    "lawPattern": "\\b([a-z][A-Za-z0-9]{6,}(?:Is|Are|Must|Refus|Carries|Holds|Fails|Requires)[A-Za-z0-9]*)\\b",
+    "citationRoots": [
+      "src",
+      "scripts",
+      "docs"
+    ],
+    "citationFiles": [
+      "README.md",
+      "AGENTS.md",
+      "SKILL.md"
+    ],
+    "citationExtensions": [
+      ".ts",
+      ".mjs",
+      ".js",
+      ".md"
+    ]
+  },
+  "limits": {
+    "$comment": "Security bounds. A scanner must not be turned into a memory-exhaustion vector by a large or hostile file.",
+    "maxFileBytes": 8388608,
+    "probeTimeoutMs": 15000,
+    "maxProcessBufferBytes": 67108864
+  }
+}

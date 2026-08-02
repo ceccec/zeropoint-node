@@ -17,7 +17,8 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs'
-import { execFileSync } from 'node:child_process'
+import { execFileSync, execFile } from 'node:child_process'
+import { cpus } from 'node:os'
 import { resolve, dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -105,27 +106,34 @@ function decimalCount() {
  * a timeout means the module loaded and left a live handle (a timer, a
  * stream), and a browser-only module dies on `document`/`self` by design.
  */
-function unloadableCount() {
+async function unloadableCount() {
   const files = walk(join(ROOT, 'src'), (n) => n.endsWith('.ts') && !n.endsWith('.d.ts') && !n.endsWith('.test.ts'))
   const ENVIRONMENTAL = /\b(document|self|window|localStorage) is not defined\b/
+  // One process per module is unavoidable: a failed import poisons the
+  // importing realm, so they cannot share one. They ARE independent though,
+  // so run cpus() at a time. Serially this was ~39s of a 53s gate.
+  const width = Math.max(4, Math.min(cpus().length, 16))
+  const probe = (file) =>
+    new Promise((resolve) => {
+      const rel = relative(ROOT, file)
+      const src = `import(${JSON.stringify('./' + rel)}).then(()=>process.exit(0)).catch(e=>{console.error(e.message.split('\\n')[0]);process.exit(1)})`
+      execFile(
+        'node',
+        ['--experimental-strip-types', '-e', src],
+        { cwd: ROOT, encoding: 'utf8', timeout: 15000, maxBuffer: 8 * 1024 * 1024, killSignal: 'SIGKILL' },
+        (err, _stdout, stderr) => {
+          if (!err) return resolve(0)
+          // Killed by the timeout => it loaded and kept the event loop alive.
+          if (err.killed || err.signal) return resolve(0)
+          if (ENVIRONMENTAL.test(stderr ?? '')) return resolve(0)
+          resolve(1)
+        },
+      )
+    })
   let failed = 0
-  for (const file of files) {
-    const rel = relative(ROOT, file)
-    const src = `import(${JSON.stringify('./' + rel)}).then(()=>process.exit(0)).catch(e=>{console.error(e.message.split('\\n')[0]);process.exit(1)})`
-    try {
-      execFileSync('node', ['--experimental-strip-types', '-e', src], {
-        cwd: ROOT,
-        encoding: 'utf8',
-        stdio: ['ignore', 'pipe', 'pipe'],
-        timeout: 15000,
-        maxBuffer: 8 * 1024 * 1024,
-      })
-    } catch (err) {
-      // Killed by the timeout => it loaded and kept the event loop alive.
-      if (err.killed || err.signal) continue
-      if (ENVIRONMENTAL.test(err.stderr ?? '')) continue
-      failed += 1
-    }
+  for (let i = 0; i < files.length; i += width) {
+    const batch = await Promise.all(files.slice(i, i + width).map(probe))
+    failed += batch.reduce((a, b) => a + b, 0)
   }
   return failed
 }
@@ -223,7 +231,7 @@ let fell = false
 const rows = []
 
 for (const s of SURFACES) {
-  const live = s.measure()
+  const live = await s.measure()
   // An unmeasurable surface must never pass quietly — a broken measurement
   // reads identically to a clean one, which is the failure this repo keeps
   // finding. Fail loudly instead.

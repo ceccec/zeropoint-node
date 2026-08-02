@@ -41,31 +41,18 @@ jobs:
       - name: Build docs site
         run: npm run docs:build
 
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 22.x
-          cache: npm
-      - name: Install
-        run: npm ci
-      # Counts are ratcheted by npm run check; this prints the detail.
+      # Detail only; the ratchet in `npm run check` is what fails on a
+      # regression. Runs on one leg to avoid duplicate output.
       - name: Report TypeScript errors (non-blocking)
+        if: matrix.node-version == '22.x'
         run: npx tsc --noEmit -p tsconfig.typecheck.json || true
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 22.x
-          cache: npm
-      - name: Install
-        run: npm ci
-      # Reports only: the COUNT is gated by the ratchet in npm run check, so a
-      # regression fails there. This step prints which errors they are.
       - name: Report lint (non-blocking)
+        if: matrix.node-version == '22.x'
         run: npx eslint src/ || true
+
+  # typecheck and lint were separate jobs, each paying its own checkout and
+  # npm ci to print detail the ratchet already GATES. Folded into the matrix
+  # job above as steps that reuse the install: three installs became one per
+  # leg. Both stay non-blocking — the counts fail in `npm run check`, these
+  # just show which errors they are.

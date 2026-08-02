@@ -36,11 +36,14 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Verify computed projections are current
-        # The site publishes generated census/receipt pages. If they have
-        # drifted from the live tree, publish stale docs rather than silently
-        # shipping them.
-        run: npm run check
+      - name: Verify published projections are current
+        # Only the checks that bear on what this job PUBLISHES: the generated
+        # census/receipt pages and the README spectrum block. The full gate
+        # (kernel smoke, ambient-Math ban, bundle/skills seals, ratchet,
+        # mcp smoke) already runs in CI on two Node versions — repeating it
+        # here paid ~15s of ratchet a third time to re-prove something that
+        # cannot affect the built site. Still fails closed on stale docs.
+        run: npm run verify:docs
 
       - name: Setup Pages
         uses: actions/configure-pages@v6

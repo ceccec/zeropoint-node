@@ -5,6 +5,7 @@
     "decimals": 385,
     "cycles": 2,
     "unreachable": 281,
-    "unloadable": 32
+    "unloadable": 32,
+    "prose": 112
   }
 }

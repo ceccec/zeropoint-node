@@ -17,6 +17,7 @@
  */
 
 import ts from 'typescript'
+import { scanClaims } from './prose-claims.mjs'
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, unlinkSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { pathToFileURL } from 'node:url'
@@ -331,7 +332,19 @@ function unreachableCount() {
   return all.filter((f) => !seen.has(f)).length
 }
 
+/**
+ * Prose claims that assert a physical, medical or consciousness EFFECT as fact
+ * without bounding it. Every other surface here reads code; this is the only
+ * one that reads a sentence, and it is the only reason the docs could assert
+ * zero-point harvesting and healing frequencies while the kernel's own honesty
+ * ledger refuses exactly those claims. See scripts/prose-claims.mjs.
+ */
+function proseClaimCount() {
+  return scanClaims().length
+}
+
 const SURFACES = [
+  { id: 'prose', label: 'unbounded effect claims in prose', measure: proseClaimCount },
   { id: 'unreachable', label: 'modules reachable from no entry', measure: unreachableCount },
   { id: 'cycles', label: 'import cycles', measure: importCycleCount },
   { id: 'typecheck', label: 'TypeScript errors', measure: typecheckCount },

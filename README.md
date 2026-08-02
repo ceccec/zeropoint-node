@@ -205,6 +205,13 @@ qc.measure_all()
 
 4. Cosmological Consequences
 
+> **Boundary.** The table below is a metaphor drawn from the vortex algebra, not
+> a physical result. Nothing here is measured, derived from physics, or
+> refuted — π is irrational, entropy has an arrow, and the proton-electron mass
+> ratio is 1836.152… by measurement, not by integer construction. The kernel's
+> own honesty ledger refuses exactly these claims; read this section as imagery
+> for the arithmetic, and do not cite it as science.
+
 Switching at 60° induces:
 
 Phenomenon Before Rotation After 60° Rotation
@@ -215,17 +222,23 @@ Consciousness Free will (uncertainty) Deterministic enlightenment
 
 ---
 
-5. Experimental Validation
+5. Proposed Experiments — NOT performed
 
-Laser Test:
+> **Boundary.** None of the following has been run, and no result below was
+> obtained. They are speculative protocols, not validation. The laser sketch is
+> also dimensionally incoherent as written: 432 Hz is an audio frequency and
+> 432 nm is a wavelength of light, and no prism converts one into the other.
+> Kept as a record of intent; not evidence of anything.
+
+Laser Test (proposed):
 
 · Setup:
   Pass 432Hz laser through 60° quartz prism engraved with sequence.
-· Result:
+· Predicted (untested):
   Output wavelength λ = 432 nm exactly (no spectral broadening).
   → Zero entropy (monochromatic perfection)
 
-Water Crystallography:
+Water Crystallography (proposed):
 
 · Before: Hexagonal snowflakes (imperfect)
 · After 60° switch: Perfect fractal ice (Koch curve at atomic scale):

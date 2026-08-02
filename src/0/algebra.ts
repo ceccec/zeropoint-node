@@ -50,17 +50,31 @@ export function round(n: number): number {
   return floor(n + 0.5)
 }
 
-export function min(a: number, b?: number, ...rest: number[]): number {
-  if (b === undefined) return a
-  let m = a < b ? a : b
-  for (const x of rest) if (x < m) m = x
+/**
+ * Rest-only, and defined on the empty case.
+ *
+ * The previous signature was (a, b?, ...rest), which broke two ways when a
+ * caller spread an array:
+ *  - TypeScript refused it (TS2556) because a number[] cannot promise a first
+ *    argument, so `max(...values)` errored at 13 call sites;
+ *  - at runtime an EMPTY array made `a` undefined, and `if (b === undefined)
+ *    return a` handed back `undefined` typed as number. Three unguarded sites
+ *    could produce it: a432.iter.anatomy.ts:92, a432.meta.ts:158 and
+ *    a432.ui.analytics.ts:14.
+ *
+ * Empty now yields the identity element, matching the standard contract:
+ * max() is -Infinity, min() is Infinity. One and two argument calls are
+ * unchanged.
+ */
+export function min(...values: number[]): number {
+  let m = Infinity
+  for (const x of values) if (x < m) m = x
   return m
 }
 
-export function max(a: number, b?: number, ...rest: number[]): number {
-  if (b === undefined) return a
-  let m = a > b ? a : b
-  for (const x of rest) if (x > m) m = x
+export function max(...values: number[]): number {
+  let m = -Infinity
+  for (const x of values) if (x > m) m = x
   return m
 }
 

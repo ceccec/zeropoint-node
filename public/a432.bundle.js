@@ -2471,16 +2471,14 @@
   function round(n) {
     return floor(n + 0.5);
   }
-  function min(a, b, ...rest) {
-    if (b === void 0) return a;
-    let m = a < b ? a : b;
-    for (const x of rest) if (x < m) m = x;
+  function min(...values) {
+    let m = Infinity;
+    for (const x of values) if (x < m) m = x;
     return m;
   }
-  function max(a, b, ...rest) {
-    if (b === void 0) return a;
-    let m = a > b ? a : b;
-    for (const x of rest) if (x > m) m = x;
+  function max(...values) {
+    let m = -Infinity;
+    for (const x of values) if (x > m) m = x;
     return m;
   }
   function reduceAngle(x) {

@@ -37,6 +37,7 @@ import { log2, ceil } from '../0/algebra.ts'
 // "FNV toUuid stays in src/0 for cheap folds; this module seals cryptographic
 // identity for proofs/manifests." The cipher had been sealing with toUuid.
 import { computeContentUuid, computeContentDigest } from '../integrity/content-uuid.ts'
+import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto'
 
 /**
  * Vortex Constants
@@ -383,45 +384,14 @@ export function verifyMeasurementReceipt(receipt: MeasurementReceipt): boolean {
  * `decryptQuantum` recovered the plaintext with no key at all. The cipher was
  * a fixed public permutation and its keyspace was 0 bits, not 50.7.
  *
- * The shift now folds the key element for the position into the orbit shift:
+ * Keying it by `material[i mod n]` was the intermediate step and was still
+ * broken: a repeating key falls to one known plaintext. The cipher now draws
+ * its shifts from a PRF keystream instead — see EncryptedPayload below.
  *
- *     s_i = (VORTEX_ORBIT[i mod 6] + material[i mod n]) mod 9
- *
- * Adding a constant mod 9 is still a bijection per position, so the round-trip
- * and the no-padding-oracle property (Proof 4) are unaffected. Key elements
- * lie in {3,6,9} ⇒ {3,6,0} mod 9, three distinct shifts per position, so the
- * effective keyspace equals the material keyspace with no collapse.
+ * `vortexEncode`/`vortexDecode` remain as the unkeyed algebraic primitive.
+ * They are what Proof 4 (bijection on {1..9}) is about, and dimension 6 uses
+ * them as a symmetry probe. They are NOT the cipher.
  */
-function keyedShift(material: readonly number[], i: number): number {
-  const orbit = VORTEX_ORBIT[i % VORTEX_ORBIT.length]!
-  const k = material.length === 0 ? 0 : material[i % material.length]!
-  return (orbit + k) % 9
-}
-
-/** Encrypt under a key. Distinct keys give distinct ciphertexts. */
-export function vortexEncodeKeyed(input: string, material: readonly number[]): string {
-  return input
-    .split('')
-    .map((ch, i) => {
-      const n = Number.parseInt(ch, 10)
-      if (Number.isNaN(n) || n === 0) return ch
-      return (((n + keyedShift(material, i) - 1) % 9) + 1).toString()
-    })
-    .join('')
-}
-
-/** Decrypt under a key. Requires the SAME key — there is no keyless path. */
-export function vortexDecodeKeyed(input: string, material: readonly number[]): string {
-  return input
-    .split('')
-    .map((ch, i) => {
-      const n = Number.parseInt(ch, 10)
-      if (Number.isNaN(n) || n === 0) return ch
-      return (((n - keyedShift(material, i) + 8 + 9) % 9) + 1).toString()
-    })
-    .join('')
-}
-
 export function vortexEncode(input: string): string {
   return input
     .split('')
@@ -450,39 +420,162 @@ export function vortexDecode(input: string): string {
 
 export interface EncryptedPayload {
   readonly ciphertext: string
+  readonly nonce: string // hex; MUST be unique per key
+  readonly tag: string // hex; HMAC-SHA256 over nonce ‖ ciphertext
   readonly keyUuid: string
   readonly stateUuid: string
   readonly receipt: string // Merkle receipt of encryption operation
 }
 
-export function encryptQuantum(plaintext: string, key: QuantumKey): EncryptedPayload {
-  // Keyed: the ciphertext depends on the key, which it previously did not.
-  const ciphertext = vortexEncodeKeyed(plaintext, key.material)
+/**
+ * THE CONSTRUCTION.
+ *
+ * What was here before was a repeating-key polyalphabetic substitution: the
+ * shift at position i came from `material[i mod n]`, so one known plaintext
+ * recovered the whole key by subtraction, with no search. Enlarging the
+ * keyspace did not touch that — the construction was the weakness, not the
+ * parameter.
+ *
+ * It is replaced by a stream cipher over the digit domain with encrypt-then-MAC:
+ *
+ *   subkeys   k_enc = HMAC-SHA256(contentDigest, "…/keystream/v1")
+ *             k_mac = HMAC-SHA256(contentDigest, "…/mac/v1")
+ *   keystream s_i   = HMAC-SHA256(k_enc, nonce ‖ counter) → bytes → Z/9
+ *   cipher    c_i   = ((p_i − 1 + s_i) mod 9) + 1
+ *   tag             = HMAC-SHA256(k_mac, nonce ‖ ciphertext)
+ *
+ * Why this fixes the attack: the keystream is PRF output, not the key. A known
+ * plaintext reveals s_i at that position and nothing more — recovering the key
+ * from it requires inverting HMAC-SHA256. And because the nonce is fresh per
+ * message, that keystream is never reused, so the recovered s_i has no future
+ * value either.
+ *
+ * Honest boundaries, none of which the algebra removes:
+ *   · The nonce MUST be unique per key. Reuse is a two-time pad and is
+ *     catastrophic — c ⊕ c′ leaks p − p′ regardless of key size. 128 random
+ *     bits make accidental collision negligible; deliberate reuse is fatal.
+ *   · Security rests on HMAC-SHA256, NOT on the vortex or trinity algebra.
+ *     The trinity material feeds the KDF; it contributes structure, not strength.
+ *   · This is a bespoke composition. It is a standard one (CTR-style stream +
+ *     encrypt-then-MAC over standard primitives), but for production a vetted
+ *     AEAD — AES-GCM or ChaCha20-Poly1305 — remains the better choice. Nothing
+ *     here beats them; this exists to keep the digit domain the framework needs.
+ *   · Domain is digits 1–9. Non-digit input is REJECTED rather than passed
+ *     through, because passthrough leaks plaintext directly into ciphertext.
+ */
 
-  // Create encryption receipt via fold
+const KEYSTREAM_LABEL = 'zeropoint/quantum-cipher/keystream/v1'
+const MAC_LABEL = 'zeropoint/quantum-cipher/mac/v1'
+const NONCE_BYTES = 16
+const DIGIT_MODULUS = 9
+/** Largest multiple of 9 at or below 256, for unbiased rejection sampling. */
+const REJECTION_BOUND = 252
+
+function subKey(key: QuantumKey, label: string): Buffer {
+  return createHmac('sha256', Buffer.from(key.contentDigest, 'hex')).update(label).digest()
+}
+
+function counterBytes(n: number): Buffer {
+  const b = Buffer.alloc(8)
+  b.writeUInt32BE(0, 0)
+  b.writeUInt32BE(n >>> 0, 4)
+  return b
+}
+
+/**
+ * Keystream shifts in Z/9, by rejection sampling.
+ *
+ * Bytes ≥ 252 are discarded rather than reduced: 256 is not a multiple of 9,
+ * so a plain `byte % 9` would make shifts 0–3 more likely than 4–8 and leak a
+ * bias into every ciphertext.
+ */
+function keystreamShifts(prfKey: Buffer, nonce: Buffer, count: number): number[] {
+  const shifts: number[] = []
+  let counter = 0
+  while (shifts.length < count) {
+    const block = createHmac('sha256', prfKey).update(nonce).update(counterBytes(counter)).digest()
+    for (const byte of block) {
+      if (shifts.length >= count) break
+      if (byte >= REJECTION_BOUND) continue
+      shifts.push(byte % DIGIT_MODULUS)
+    }
+    counter += 1
+  }
+  return shifts
+}
+
+function assertDigitDomain(text: string, what: string): void {
+  if (!/^[1-9]*$/.test(text)) {
+    throw new Error(`${what}: domain is digits 1-9; passthrough would leak plaintext`)
+  }
+}
+
+function macOf(key: QuantumKey, nonce: Buffer, ciphertext: string): Buffer {
+  return createHmac('sha256', subKey(key, MAC_LABEL)).update(nonce).update(ciphertext, 'utf8').digest()
+}
+
+export function encryptQuantum(
+  plaintext: string,
+  key: QuantumKey,
+  nonceHex?: string,
+): EncryptedPayload {
+  assertDigitDomain(plaintext, 'encryptQuantum')
+
+  // A fresh nonce per message is what keeps a recovered keystream worthless.
+  const nonce = nonceHex === undefined ? randomBytes(NONCE_BYTES) : Buffer.from(nonceHex, 'hex')
+  if (nonce.length !== NONCE_BYTES) {
+    throw new Error(`encryptQuantum: nonce must be ${NONCE_BYTES} bytes`)
+  }
+
+  const shifts = keystreamShifts(subKey(key, KEYSTREAM_LABEL), nonce, plaintext.length)
+  const ciphertext = plaintext
+    .split('')
+    .map((ch, i) => (((Number(ch) - 1 + shifts[i]!) % DIGIT_MODULUS) + 1).toString())
+    .join('')
+
+  const tag = macOf(key, nonce, ciphertext)
+
   const plaintextUuid = toUuid(`plaintext:${plaintext}`)
   const ciphertextUuid = toUuid(`ciphertext:${ciphertext}`)
-
-  // Prove encryption is reversible: forward and reverse folds
-  const { forward, reverse, merged } = foldPair(plaintextUuid, ciphertextUuid)
+  const { merged } = foldPair(plaintextUuid, ciphertextUuid)
 
   return {
     ciphertext,
+    nonce: nonce.toString('hex'),
+    tag: tag.toString('hex'),
     keyUuid: key.contentUuid,
     stateUuid: merged,
-    receipt: merged, // The merged fold proves encryption happened
+    receipt: merged,
   }
 }
 
 /**
- * Decrypt. The key is REQUIRED — this took only the payload, so anyone
- * holding a ciphertext could read it.
+ * Decrypt. Authenticates FIRST (encrypt-then-MAC), so a forged or modified
+ * ciphertext is rejected before any plaintext is derived from it.
  */
 export function decryptQuantum(payload: EncryptedPayload, key: QuantumKey): string {
   if (payload.keyUuid !== key.contentUuid) {
     throw new Error('decryptQuantum: key does not match the payload seal')
   }
-  return vortexDecodeKeyed(payload.ciphertext, key.material)
+  assertDigitDomain(payload.ciphertext, 'decryptQuantum')
+
+  const nonce = Buffer.from(payload.nonce, 'hex')
+  if (nonce.length !== NONCE_BYTES) throw new Error('decryptQuantum: malformed nonce')
+
+  const expected = macOf(key, nonce, payload.ciphertext)
+  const actual = Buffer.from(payload.tag, 'hex')
+  // Constant-time: a length check first, since timingSafeEqual throws on mismatch.
+  if (actual.length !== expected.length || !timingSafeEqual(actual, expected)) {
+    throw new Error('decryptQuantum: authentication failed — ciphertext forged or altered')
+  }
+
+  const shifts = keystreamShifts(subKey(key, KEYSTREAM_LABEL), nonce, payload.ciphertext.length)
+  return payload.ciphertext
+    .split('')
+    .map((ch, i) =>
+      ((((Number(ch) - 1 - shifts[i]!) % DIGIT_MODULUS) + DIGIT_MODULUS) % DIGIT_MODULUS + 1).toString(),
+    )
+    .join('')
 }
 
 /**
@@ -581,11 +674,17 @@ export class QuantumFoldCipher {
     // Refutable: the payload must be bound to THIS key, and the ciphertext
     // must be a well-formed vortex encoding (re-encoding its decoding is a
     // fixed point). Neither holds by virtue of encrypt() having been called.
-    const ct = this.encryptedPayload.ciphertext
-    const mat = this.keyMaterial.material
+    // Refutable: the payload must be bound to THIS key and must authenticate.
+    // A round-trip probe on the ciphertext alone would pass for any bytes.
+    let authenticates = false
+    try {
+      decryptQuantum(this.encryptedPayload, this.keyMaterial)
+      authenticates = true
+    } catch {
+      authenticates = false
+    }
     this.facets[4]!.on =
-      this.encryptedPayload.keyUuid === this.keyMaterial.contentUuid &&
-      vortexEncodeKeyed(vortexDecodeKeyed(ct, mat), mat) === ct
+      this.encryptedPayload.keyUuid === this.keyMaterial.contentUuid && authenticates
     return this.encryptedPayload
   }
 

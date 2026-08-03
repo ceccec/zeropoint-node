@@ -563,7 +563,8 @@ root, and an honest run passes all six computed facets.
 **Proven as a reduction, not as a strength claim:**
 - The R and R′ instantiations are isomorphic under σ, so an adversary transfers
   either way with identical advantage. This says nothing about whether either
-  is secure — and a known-plaintext attack says neither is.
+  is secure; it is a statement about the algebraic primitive, not about the
+  cipher built on it.
 
 **Withdrawn as unsupported:**
 - Any "security margin reduced by factor k" claim, and the `b − log₂(k)`
@@ -601,8 +602,8 @@ Proof 8 via the two-binding Tier 3 seal, Proof 10 via the σ reduction above.
 What remains is not a gap but a **boundary**, and it should not be mistaken for
 one: Proof 8 rests on SHA-256's collision resistance (a standard cryptographic
 assumption, not an algebraic result), and Proof 10 establishes an *equivalence*
-between instantiations rather than the security of either. The binding constraint on this
-cipher is its CONSTRUCTION, not any parameter: it is a repeating-key
-polyalphabetic substitution, and one known plaintext recovers the key with no
-search (`docs/QUANTUM_ATTACK_SURFACE.md`). No proof here improves that, and
-the keyspace — now 256.8 bits — was never what limited it.
+between instantiations rather than the security of either. The cipher's confidentiality and integrity now rest on
+HMAC-SHA256 (PRF keystream + encrypt-then-MAC), not on any proof in this file.
+The proofs here describe the algebraic layer — closure, subgroup, bijection,
+folds — which is the framework's structure, not its cryptographic strength.
+Keeping those two claims apart is the point of this document.

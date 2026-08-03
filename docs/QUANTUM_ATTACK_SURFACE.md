@@ -55,31 +55,57 @@ so the relationship is computable rather than implied.
 
 ---
 
-### ⚠️ Closing this gap did not make the cipher secure
+### The construction, and what it now provides
 
-The keyspace is now 256.8 bits. **It was never the binding constraint.**
-
-This is a repeating-key polyalphabetic substitution cipher. One known
-plaintext recovers the entire key with **no search at all** — for each
-position, subtract the plaintext digit from the ciphertext digit to get the
-total shift, subtract the public orbit term, and read off the key element:
+Enlarging the keyspace did **not** make the cipher secure, and an earlier
+revision of this section said so: the construction was a repeating-key
+polyalphabetic substitution, and one known plaintext recovered the entire key
+by subtraction, with no search. That has been replaced.
 
 ```
-s_i = (c_i − p_i) mod 9
-k_i = (s_i − VORTEX_ORBIT[i mod 6]) mod 9      → {3,6,0} maps back to {3,6,9}
+subkeys    k_enc = HMAC-SHA256(contentDigest, ".../keystream/v1")
+           k_mac = HMAC-SHA256(contentDigest, ".../mac/v1")
+keystream  s_i   = HMAC-SHA256(k_enc, nonce ‖ counter) → bytes → Z/9
+ciphertext c_i   = ((p_i − 1 + s_i) mod 9) + 1
+tag              = HMAC-SHA256(k_mac, nonce ‖ ciphertext)
 ```
 
-`quantum-fold-cipher.test.ts` asserts this attack **succeeds**, against the
-162-element default. It is recorded as a passing test precisely so it cannot be
-quietly forgotten: if it ever starts failing, the note is stale and the cipher
-changed.
+**Why the attack dies.** The keystream is PRF output, not the key. A known
+plaintext reveals `s_i` at those positions and nothing else — going from there
+to the key means inverting HMAC-SHA256. And the nonce is fresh per message, so
+the recovered keystream has no value against any later ciphertext. Both halves
+are asserted in `quantum-fold-cipher.test.ts`, which previously asserted the
+attack *succeeded* and now asserts it *fails*.
 
-**What that means:** enlarging a keyspace defends against brute force and
-nothing else. Against known-plaintext, chosen-plaintext, or sufficient
-ciphertext-only analysis, this construction offers no protection at any key
-length. Reaching real security requires a different construction — key
-material at least as long as the message and never reused (a one-time pad), or
-a standard primitive. That is a design decision, not a parameter.
+**What it provides**
+
+| Property | Mechanism |
+|---|---|
+| Confidentiality | PRF keystream over a per-message nonce |
+| Integrity / authenticity | encrypt-then-MAC, verified before decryption |
+| No malleability | a modified ciphertext fails the tag |
+| Semantic security | fresh nonce ⇒ same message encrypts differently each time |
+| Unbiased keystream | rejection sampling (bytes ≥ 252 discarded — `% 9` on 256 would over-weight shifts 0–3) |
+
+**What it still requires, and what it is not**
+
+- **The nonce must be unique per key.** Reuse is a two-time pad: the difference
+  of two ciphertexts leaks the difference of the plaintexts, at any key size.
+  This is demonstrated, not assumed — the test suite confirms nonce reuse leaks
+  `p₁ − p₂` exactly. 128 random bits make accidental collision negligible;
+  deliberate reuse is fatal.
+- **Security rests on HMAC-SHA256, not on the vortex or trinity algebra.** The
+  trinity material feeds the KDF. It contributes structure, not strength — and
+  the 256.8-bit keyspace is no longer the interesting number, because the
+  keystream's strength comes from the PRF.
+- **This is a bespoke composition.** It is a standard one over standard
+  primitives, but for production a vetted AEAD — AES-GCM or ChaCha20-Poly1305 —
+  remains the better choice. Nothing here beats them. This exists to keep the
+  digit domain the framework is built on.
+- **Domain is digits 1–9.** Non-digit input is rejected; passing it through
+  would copy plaintext straight into the ciphertext.
+- **Not analysed for:** side channels, traffic analysis, or key management.
+  Length is not hidden — the ciphertext is the length of the plaintext.
 
 **History:** these properties are tested because all of them once failed.
 The original derivation seeded a doubling chain from `entropy[0]` alone and

@@ -16,8 +16,6 @@ import {
   verifyMeasurementReceipt,
   vortexEncode,
   vortexDecode,
-  vortexEncodeKeyed,
-  vortexDecodeKeyed,
   keyspaceBits,
   keyLengthForBits,
   DEFAULT_KEY_LENGTH,
@@ -295,40 +293,120 @@ function testKeyspaceArithmetic() {
 }
 
 /**
- * RECORDED WEAKNESS, not a passing property.
+ * The known-plaintext attack that used to recover the whole key.
  *
- * Enlarging the keyspace to 256 bits does NOT make this cipher secure. It is a
- * repeating-key polyalphabetic substitution, so one known plaintext recovers
- * the whole key with no search. This test asserts the attack WORKS, so the
- * limitation is measured and cannot be quietly forgotten.
+ * This test previously asserted the attack SUCCEEDED, recording the weakness.
+ * The construction has been replaced — PRF keystream with a per-message nonce,
+ * encrypt-then-MAC — so it now asserts the attack FAILS. Both directions have
+ * been run against the real code; this is not a hopeful rewrite.
  */
-function testKnownPlaintextRecoversKey() {
+function testKnownPlaintextNoLongerRecoversKey() {
   const key = generateQuantumKey('a-very-secret-passphrase')
   const n = key.material.length
   const plain = Array.from({ length: n }, (_, i) => String((i % 9) + 1)).join('')
-  const cipher = encryptQuantum(plain, key).ciphertext
+  const payload = encryptQuantum(plain, key)
 
-  const recovered: number[] = []
+  // Attacker holds a full known plaintext and recovers the keystream from it.
+  const ks: number[] = []
   for (let i = 0; i < n; i++) {
-    const shift = (((Number(cipher[i]) - Number(plain[i])) % 9) + 9) % 9
-    const k = (((shift - VORTEX_ORBIT[i % VORTEX_ORBIT.length]!) % 9) + 9) % 9
-    recovered.push(k === 0 ? 9 : k)
+    ks.push((((Number(payload.ciphertext[i]) - Number(plain[i])) % 9) + 9) % 9)
   }
 
+  // 1. The keystream must not BE the key material.
+  const guessed = ks.map((sft) => (sft === 0 ? 9 : sft))
   console.assert(
-    recovered.join('') === key.material.join(''),
-    'The known-plaintext attack is expected to SUCCEED — if it fails, this note is stale',
+    guessed.join('') !== key.material.join(''),
+    'The recovered keystream must not equal the key material',
   )
-  console.log(
-    `✓ Recorded weakness: one known plaintext of ${n} digits recovers the whole key, no search`,
+  console.log('✓ Known-plaintext: the recovered keystream is not the key')
+
+  // 2. Replaying it against a second message must fail — the nonce is fresh.
+  const secret = '987654321987654321'
+  const second = encryptQuantum(secret, key)
+  const replayed = second.ciphertext
+    .split('')
+    .map((ch, i) => (((((Number(ch) - 1 - ks[i % n]!) % 9) + 9) % 9) + 1).toString())
+    .join('')
+  console.assert(replayed !== secret, 'A recovered keystream must not decrypt a later message')
+  console.log('✓ Known-plaintext: the keystream does not carry to another message')
+}
+
+function testAuthenticatedEncryption() {
+  const key = generateQuantumKey('aead-key')
+  const msg = '123456789'
+  const payload = encryptQuantum(msg, key)
+
+  console.assert(decryptQuantum(payload, key) === msg, 'Round-trip must hold')
+  console.log('✓ AEAD: round-trip under the correct key')
+
+  // Ciphertext tampering must be REJECTED, not silently decrypted to garbage.
+  const flipped = payload.ciphertext[0] === '9' ? '1' : '9'
+  let rejected = false
+  try {
+    decryptQuantum({ ...payload, ciphertext: flipped + payload.ciphertext.slice(1) }, key)
+  } catch { rejected = true }
+  console.assert(rejected, 'A modified ciphertext must fail authentication')
+  console.log('✓ AEAD: modified ciphertext rejected (encrypt-then-MAC)')
+
+  let tagRejected = false
+  try {
+    decryptQuantum({ ...payload, tag: 'ff' + payload.tag.slice(2) }, key)
+  } catch { tagRejected = true }
+  console.assert(tagRejected, 'A forged tag must be rejected')
+  console.log('✓ AEAD: forged tag rejected')
+
+  let nonceRejected = false
+  try {
+    decryptQuantum({ ...payload, nonce: '00'.repeat(16) }, key)
+  } catch { nonceRejected = true }
+  console.assert(nonceRejected, 'A swapped nonce must fail authentication')
+  console.log('✓ AEAD: swapped nonce rejected')
+
+  // Non-digit input is rejected rather than passed through, which would leak.
+  let domainRejected = false
+  try { encryptQuantum('12a45', key) } catch { domainRejected = true }
+  console.assert(domainRejected, 'Out-of-domain input must be rejected, not passed through')
+  console.log('✓ AEAD: non-digit input rejected (passthrough would leak plaintext)')
+}
+
+function testNonceMakesCiphertextsDiffer() {
+  const key = generateQuantumKey('nonce-key')
+  const msg = '123456789123456789'
+  const seen = new Set<string>()
+  for (let i = 0; i < 500; i++) seen.add(encryptQuantum(msg, key).ciphertext)
+  console.assert(
+    seen.size === 500,
+    `The same message under one key must give a fresh ciphertext each time (got ${seen.size})`,
   )
-  console.log('  → keyspace is NOT the binding constraint; the construction is')
+  console.log(`✓ Nonce: same key + same message → ${seen.size}/500 distinct ciphertexts`)
+
+  // The keystream must be unbiased over Z/9. `byte % 9` would over-weight 0-3,
+  // since 256 is not a multiple of 9; the construction rejects bytes >= 252.
+  const counts = new Array<number>(9).fill(0)
+  const flat = '111111111'
+  for (let t = 0; t < 3000; t++) {
+    for (const ch of encryptQuantum(flat, key).ciphertext) counts[Number(ch) - 1]! += 1
+  }
+  const total = counts.reduce((a, b) => a + b, 0)
+  const lo = min(...counts)
+  const hi = max(...counts)
+  // Wide band: a smoke test for gross bias, not a statistical test.
+  // Integer ratios only — a bare float is a crack (lobe L's law).
+  const BAND_LO = 17 / 20 // 0.85
+  const BAND_HI = 23 / 20 // 1.15
+  console.assert(
+    lo > (total / 9) * BAND_LO && hi < (total / 9) * BAND_HI,
+    `Keystream must be near-uniform over Z/9 (got ${counts.join(' ')})`,
+  )
+  console.log(`✓ Nonce: keystream near-uniform over Z/9 (${counts.join(' ')})`)
 }
 
 testTrinityKeyGeneration()
 testKeyIsActuallyUsed()
 testKeyspaceArithmetic()
-testKnownPlaintextRecoversKey()
+testKnownPlaintextNoLongerRecoversKey()
+testAuthenticatedEncryption()
+testNonceMakesCiphertextsDiffer()
 testKeyDependsOnEntropy()
 testKeyReachesWholeTrinity()
 testKeyMaterialDoesNotCollapse()
@@ -480,7 +558,7 @@ function testComputesGate() {
   cipher.prepareState()
   cipher.applyGate('H')
   cipher.measure()
-  cipher.encrypt('test')
+  cipher.encrypt('12345')
 
   const gate = cipher.computesGate()
 
@@ -603,7 +681,7 @@ function testNoGaps() {
         cipher.prepareState()
         cipher.applyGate('H')
         cipher.measure()
-        cipher.encrypt('test')
+        cipher.encrypt('12345')
         return cipher.computesGate().ok
       },
     },

@@ -125,6 +125,7 @@
     "mcp": "node --experimental-strip-types src/mcp/server.ts",
     "mcp:smoke": "node --experimental-strip-types scripts/mcp-smoke.mjs",
     "self:next": "node --experimental-strip-types scripts/self-next.mjs",
+    "tautology": "node scripts/facet-tautology.mjs",
     "math:ban": "node scripts/math-ban.mjs",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",

@@ -6,6 +6,7 @@
     "cycles": 2,
     "unreachable": 281,
     "unloadable": 32,
-    "prose": 73
+    "prose": 73,
+    "tautology": 1
   }
 }

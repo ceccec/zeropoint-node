@@ -17,6 +17,7 @@
  */
 
 import { scanClaims } from './prose-claims.mjs'
+import { scanTautologies, selfTest as tautologySelfTest } from './facet-tautology.mjs'
 import { ts, config, walk as scanWalk, sourceFiles, parseTs, importTargets, readCapped } from './lib/scan.mjs'
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, unlinkSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -351,8 +352,21 @@ function proseClaimCount() {
   return scanClaims().length
 }
 
+/**
+ * Boolean claims that cannot be false — see scripts/facet-tautology.mjs.
+ *
+ * Returns null (which this gate treats as fatal) when the predicate's own
+ * self-test fails: a broken matcher reports zero, and zero is exactly what a
+ * clean repo reports. An unverified measurement must not read as success.
+ */
+function tautologyCount() {
+  if (tautologySelfTest().length > 0) return null
+  return scanTautologies().length
+}
+
 const SURFACES = [
   { id: 'prose', label: 'unbounded effect claims in prose', measure: proseClaimCount },
+  { id: 'tautology', label: 'boolean claims that cannot be false', measure: tautologyCount },
   { id: 'unreachable', label: 'modules reachable from no entry', measure: unreachableCount },
   { id: 'cycles', label: 'import cycles', measure: importCycleCount },
   { id: 'typecheck', label: 'TypeScript errors', measure: typecheckCount },

@@ -394,22 +394,33 @@ export class QuantumFoldCipher {
 
   generateKey(entropy: string): QuantumKey {
     this.keyMaterial = generateQuantumKey(entropy, 32)
-    this.facets[0]!.on = true
+    // Refutable: the seal must recompute from the stored fields. This read
+    // `= true`, which recorded only that the method had run.
+    this.facets[0]!.on = verifyQuantumKey(this.keyMaterial)
     return this.keyMaterial
   }
 
   prepareState(basis: 'Z' | 'X' = 'Z', value: 0 | 1 = 0, qubitIdx: number = 0): QuantumStateUUID {
     if (!this.keyMaterial) throw new Error('Key not generated')
     this.preparedState = encodeQuantumState(basis, value, qubitIdx)
-    this.facets[1]!.on = true
+    // Refutable: the state id must be the content address of its own fields.
+    this.facets[1]!.on =
+      this.preparedState.id === encodeQuantumState(basis, value, qubitIdx).id
     return this.preparedState
   }
 
   applyGate(gate: string): QuantumGateProof {
     if (!this.preparedState) throw new Error('State not prepared')
-    this.gateProof = applyQuantumGate(this.preparedState, gate)
+    const from = this.preparedState
+    this.gateProof = applyQuantumGate(from, gate)
     this.preparedState = this.gateProof.toState // Update state after gate
-    this.facets[2]!.on = true
+    // Refutable: the post-gate address and the order receipt must both
+    // recompute from the pre-gate state and the gate name.
+    const expectedId = toUuid(`gate:${gate}:on:${from.id}`)
+    const { forward, reverse } = foldPair(from.id, expectedId)
+    this.facets[2]!.on =
+      this.gateProof.toState.id === expectedId &&
+      this.gateProof.receipt === merge(forward, reverse)
     return this.gateProof
   }
 
@@ -436,7 +447,13 @@ export class QuantumFoldCipher {
     if (!this.keyMaterial) throw new Error('Key not generated')
 
     this.encryptedPayload = encryptQuantum(plaintext, this.keyMaterial)
-    this.facets[4]!.on = true
+    // Refutable: the payload must be bound to THIS key, and the ciphertext
+    // must be a well-formed vortex encoding (re-encoding its decoding is a
+    // fixed point). Neither holds by virtue of encrypt() having been called.
+    const ct = this.encryptedPayload.ciphertext
+    this.facets[4]!.on =
+      this.encryptedPayload.keyUuid === this.keyMaterial.contentUuid &&
+      vortexEncode(vortexDecode(ct)) === ct
     return this.encryptedPayload
   }
 

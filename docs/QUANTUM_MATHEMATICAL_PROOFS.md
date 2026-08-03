@@ -1,6 +1,24 @@
 # Mathematical Proofs — Quantum Fold Cipher Foundations
 
-**Scope:** Exact proofs of algebraic properties used in the quantum cipher. No claims outside arithmetic.
+**Scope:** Algebraic properties used in the quantum cipher.
+
+**Verification status.** Every claim below was re-checked over its full
+computed range by `src/security/quantum-proofs.test.ts`, which runs in
+`npm run check`. That pass corrected six statements. The doc previously
+proved each claim by listing the cases it chose; a claim demonstrated on
+hand-picked data is not demonstrated.
+
+What changed:
+
+| # | Was | Is |
+|---|---|---|
+| 1 | "key expansion never leaves {1,2,4,8,7,5}" | expansion operates on the trinity {3,6,9}; the application was wrong |
+| 3 | "R′ is the multiplicative inverse of R", "bitwise reverse" | ill-posed; the inverse is of the *generator* (2 → 5). It is sequence reversal |
+| 5 | "if any leaf changes, the root changes" | true for values, **false for order** — `merkleFold` sorts |
+| 6 | pseudocode shown as plain FNV-1a | the real `hash32` differs, and `toUuid` folds four seeded words |
+| 7 | "n mod 9 = 0 ⟹ dr = 9" | omits n = 0, whose true digital root is 0 |
+| 8 | "Content-UUID uniqueness (SHA-256)" | the cipher uses the **FNV fold**, not SHA-256 |
+| 11 | "all 6 facets verified ⟹ operations consistent" | 4 of 6 facets were unconditionally `true`; now they compute |
 
 ---
 
@@ -24,9 +42,14 @@ Since every element maps back to S, S is closed under ×2 mod 9.
 
 **Consequence:** Iterating `k → 2k mod 9` on any element of S stays in S.
 
-**Application:** Rodin key expansion never produces bytes outside {1,2,4,8,7,5}, ensuring algebraic closure.
+**Application:** *Corrected.* This said "Rodin key expansion never produces
+bytes outside {1,2,4,8,7,5}". It does not: `expandQuantumKeyViaRodin` doubles
+**trinity** bytes, so its material stays in {3,6,9} (which is closed under
+doubling: 3→6, 6→3, 9→9 — Proof 2's set, not this one). The closure proved
+here is real; the code it was attached to is governed by Proof 2.
 
-**Q.E.D.**
+**Verified:** exhaustively over all 6 elements, and shown to be a single
+6-cycle rather than merely closed.
 
 ---
 
@@ -68,7 +91,13 @@ Since every element maps back to S, S is closed under ×2 mod 9.
 
 ## Proof 3: Rodin Sequence Involution (Self-Inverse)
 
-**Theorem:** Let R = [1,2,4,8,7,5] and R' = [5,7,8,4,2,1] (bitwise reverse). Then R' is the multiplicative inverse of R under doubling mod 9.
+**Theorem (restated).** Let R = [1,2,4,8,7,5]. Then reverse(R) = [5,7,8,4,2,1]
+is the orbit of 1 under the **inverse generator** 2⁻¹ = 5 (mod 9).
+
+> **Correction.** This previously read "R′ is the multiplicative inverse of R
+> (bitwise reverse)". Both parts were wrong. A *sequence* has no multiplicative
+> inverse — what inverts is the generator, 2 → 5, since 2·5 = 10 ≡ 1 (mod 9).
+> And reverse(R) is sequence reversal, not a bitwise operation.
 
 **Proof:**
 
@@ -93,9 +122,12 @@ Both are cyclic orders of same elements (different starting points).
 - Proof P(R') works for quantum threat (backward doubling)
 - Same proof structure ✓
 
-**Consequence:** Security argument that works for classical also works for quantum (by inversion).
+**Consequence (algebraic only):** forward doubling and its reverse traverse
+the same 6-cycle. This is a fact about the group ℤ/9*, and it is what Proof 10
+may legitimately rest on — no more.
 
-**Q.E.D.**
+**Verified:** 5 is confirmed as 2⁻¹ mod 9, and reverse(R) is confirmed to be
+the halving orbit.
 
 ---
 
@@ -150,11 +182,24 @@ By induction on tree depth:
    - ⟹ hash(left_root, right_root) ≠ hash(left_root', right_root) (collision resistance)
    - ⟹ root changes ✓
 
-**Consequence:** Any tampering with quantum material cascades to root. Detection: compare old root vs recomputed root.
+> **Correction — this holds for VALUES, not for ORDER.** `merkleFold` begins
+> with `[...leaves].sort()`. The root is therefore **permutation-invariant**:
+> reordering the leaves yields an identical root. What is built is a merkle
+> **set**, not a merkle list.
+>
+> The induction above is also stated for a binary tree; the implementation
+> promotes an odd trailing node unchanged (`b === undefined ? a : merge(a,b)`),
+> which the proof does not model.
 
-**Application:** Receipt chain verification and state tampering detection.
+**Consequence:** a change to any leaf VALUE cascades to the root. **No ordering
+claim may rest on this root.**
 
-**Q.E.D.**
+**Application:** receipt-chain verification does not rely on merkle ordering —
+it verifies the `prev` links, which is what actually detects a reordering. The
+tamper test in `quantum-state-tomography.test.ts` passes because of the link
+check, not the root.
+
+**Verified:** value-change detection and permutation-invariance both asserted.
 
 ---
 
@@ -178,11 +223,16 @@ Every step is a pure function (no randomness, no state, no time dependency).
 Given same input → same intermediate values → same output.
 ```
 
+> **Correction — the pseudocode is not the algorithm.** The real `hash32`
+> applies `h ^= h >>> 13` *inside* the loop and then a two-stage
+> murmur-style finaliser; `toUuid` folds **four** differently-seeded `hash32`
+> words into 16 bytes, then pins the UUID version and variant nibbles.
+> Determinism holds regardless — it follows from purity, not from the mixing.
+
 **Consequence:** `toUuid(seed)` is deterministic. Same state → same UUID.
 
-**Application:** Quantum state content-addressing.
-
-**Q.E.D.**
+**Verified:** 2000 repeat calls identical; 20000 distinct seeds give 20000
+distinct addresses.
 
 ---
 
@@ -208,7 +258,15 @@ n mod 9 = (d_k × 1 + ... + d_0 × 1) mod 9
 Iterating: dr(n) = dr(sum of digits) = ... eventually = n mod 9 (or 9 if result is 0).
 ```
 
+> **Correction — n = 0.** The rule as written ("n mod 9 = 0 ⟹ dr = 9") does not
+> exclude zero, whose true digital root is 0. The implementation returns
+> `digitalRoot(0) = 9`, a convention that is fine for this codebase but is not
+> the mathematical digital root.
+
 **Consequence:** Digital root is invariant under digit permutation (only depends on sum).
+
+**Verified:** exhaustively for n = 1..20000 against the closed form, and
+n = 1..5000 against iterated digit-summing.
 
 **Application:** Trinity constraint: key bytes ∈ {3,6,9} means digital root ∈ {3,6,9}.
 
@@ -216,7 +274,7 @@ Iterating: dr(n) = dr(sum of digits) = ... eventually = n mod 9 (or 9 if result 
 
 ---
 
-## Proof 8: Content-UUID Uniqueness (SHA-256)
+## Proof 8: Content-UUID Uniqueness — **the cipher does not use SHA-256**
 
 **Theorem:** For distinct inputs x ≠ y, SHA-256(x) ≠ SHA-256(y) with overwhelming probability (collision resistance).
 
@@ -226,13 +284,26 @@ By design of SHA-256 (cryptographic hash function):
 - Output space: 2^256 possible values
 - Given adversary cannot feasibly find collision in time < 2^128 operations (birthday bound)
 
-**Consequence:** Different quantum states (different serialization) → different UUID.
+> **Correction — this proof describes a function the cipher never calls.**
+> `QuantumFoldCipher` addresses content with `toUuid()`, the **FNV fold**.
+> SHA-256 does exist in this repo (`src/integrity/content-uuid.ts`), but the
+> cipher does not use it. Verified: `contentUuid` recomputes exactly from
+> `toUuid(...)`.
+>
+> The stated bound does not transfer. `toUuid` yields 128 bits with 6 pinned
+> by the UUID version/variant, so **122 free bits** — a birthday bound near
+> 2⁶¹, not 2¹²⁸. And FNV belongs to a hash family designed for speed, not
+> collision resistance; no collision-resistance analysis backs it.
+>
+> **Not claimed:** that collisions are practically findable. A birthday search
+> over 2,000,000 seeds found none, which is consistent with the structure. The
+> honest position is that the 2²⁵⁶ figure was unsupported — not that the fold
+> is broken.
 
-**Application:** Content-addressed pairing ensures state identity is unique.
+**Consequence:** distinct serializations map to distinct UUIDs in every range
+tested, on a 122-bit non-cryptographic digest.
 
-**Note:** This is a cryptographic assumption, not an algebraic proof. See NIST standards for formal definition.
-
-**Q.E.D.**
+**Status:** ASSUMPTION (weaker than the doc originally stated), not a proof.
 
 ---
 
@@ -300,11 +371,17 @@ Security margin reduction factor k applies to both:
   For both R and R' (inversion preserves scaling)
 ```
 
-**Consequence:** Quantum threat is not negation (cipher broken), it is inversion (security margin reduced by factor k).
+> **Correction — this is an analogy, not a proof.** The argument posits
+> "H′ = H but in reversed order … by symmetry", which assumes precisely what
+> is to be shown. Nothing establishes that a security reduction is invariant
+> under reversing a generator orbit. That R and R′ share a period is a fact
+> about ℤ/9*; it is not a statement about any cipher's hardness, and no step
+> connects the two.
 
-**Application:** Dimensional 9 (Completion) and Tier 4 (Chain Verification) handle quantum via inversion proof.
+**What is verified:** R and R′ have the same period (6) and the same element
+set. Nothing beyond that.
 
-**Q.E.D.**
+**Status:** NOT PROVEN. The summary table previously marked this ALGEBRAIC.
 
 ---
 
@@ -350,11 +427,24 @@ If all facets pass (on_i = true for all i):
   ⟹ proof.ok = true ✓
 ```
 
-**Consequence:** Single root seals entire quantum operation. Composition is proven secure or fails completely (no partial success).
+> **Correction — and a code fix.** The theorem needs each facet to be
+> *refutable*. Four of the six were assigned `= true` by the very method that
+> ran them (`generateKey` set facets[0], `prepareState` facets[1], `applyGate`
+> facets[2], `encrypt` facets[4]). They recorded that a step had **run**, not
+> that it was **valid**, so the gate was 2/6 load-bearing and "all six verified"
+> proved far less than it appeared to.
+>
+> All six now compute something that can fail: the key seal must recompute
+> (`verifyQuantumKey`), the state id must be the content address of its own
+> fields, the post-gate address and order receipt must recompute from the
+> pre-gate state, the measurement receipt must verify, and the payload must be
+> bound to the current key with a well-formed ciphertext.
 
-**Application:** Dimension 11 (Compactified) and Tier 5 (Compositional Integration).
+**Consequence:** a single root seals the operation, and each facet under it is
+now falsifiable.
 
-**Q.E.D.**
+**Verified:** `ok` is the conjunction of the facets, a flipped facet changes the
+root, and an honest run passes all six computed facets.
 
 ---
 
@@ -362,59 +452,64 @@ If all facets pass (on_i = true for all i):
 
 | # | Theorem | Status | Application |
 |---|---------|--------|------------|
-| 1 | Rodin closure mod 9 | **EXACT** | Key expansion doesn't escape {1,2,4,8,7,5} |
-| 2 | Trinity subgroup | **EXACT** | Key bytes stay in {3,6,9} |
-| 3 | Rodin involution | **EXACT** | Quantum inversion preserves security |
-| 4 | Vortex bijection | **EXACT** | No padding oracle (all ciphertexts valid) |
-| 5 | Merkle tree cascade | **EXACT** | Any tampering changes root |
-| 6 | FNV determinism | **EXACT** | State UUID is deterministic |
-| 7 | Digital root mod 9 | **EXACT** | Digit sum invariant |
-| 8 | SHA-256 collision resistance | **CRYPTOGRAPHIC** | Content-UUID uniqueness |
-| 9 | Receipt chain verification | **EXACT** | Measurement tampering detected |
-| 10 | Quantum inversion security | **ALGEBRAIC** | Quantum threat ≠ negation, is inversion |
-| 11 | Composition gate completeness | **EXACT** | All 6 facets unified → single root |
+| 1 | Rodin closure mod 9 | **EXACT** | closure holds; the stated *application* was wrong (see Proof 1) |
+| 2 | Trinity subgroup | **EXACT** | key bytes stay in {3,6,9} — this governs key expansion |
+| 3 | Rodin involution | **EXACT, restated** | reverse(R) is the inverse-generator orbit |
+| 4 | Vortex bijection | **EXACT** | bijective on {1..9}; 0 and non-digits bypass |
+| 5 | Merkle cascade | **PARTIAL** | holds for values; **fails for order** (merkleFold sorts) |
+| 6 | Determinism | **EXACT** | holds; the pseudocode shown was not the algorithm |
+| 7 | Digital root mod 9 | **EXACT for n ≥ 1** | n = 0 is a convention, not the digital root |
+| 8 | Content-UUID uniqueness | **ASSUMPTION** | FNV fold, 122 free bits — **not SHA-256** |
+| 9 | Receipt verification | **EXACT, bounded** | per-receipt only; an unkeyed chain can be rebuilt wholesale |
+| 10 | Quantum inversion security | **NOT PROVEN** | an analogy; only the shared period is verified |
+| 11 | Composition gate | **EXACT after fix** | 4 of 6 facets were unconditional; all now compute |
 
 ---
 
 ## Proof Scope Boundaries
 
-**Proven algebraically (no assumptions):**
-- Rodin closure, Trinity subgroup, Vortex bijection
-- Merkle tree properties, Digital root properties
-- Determinism of hash functions
+**Proven algebraically, over exhaustive ranges (no assumptions):**
+- Rodin closure and the single 6-cycle; Trinity subgroup (closure, identity,
+  inverses, associativity over all 27 triples); Vortex bijection over every
+  shift × digit; digital root for n = 1..20000; determinism of `toUuid`.
 
-**Proven via cryptographic standards (trusted but not algebraic):**
-- SHA-256 collision resistance
-- FNV hash determinism (design property)
+**Holds only in part:**
+- Merkle cascade — values yes, ordering no.
 
-**Proven via inversion symmetry (self-consistent, not absolute):**
-- Quantum threat model preserves security margin
-- Inversion proof shows both classical and quantum covered by same algebra
+**Assumption, and weaker than previously stated:**
+- Content-UUID uniqueness rests on a 122-bit **non-cryptographic** fold. The
+  earlier "2²⁵⁶ / 2¹²⁸ birthday" figure described SHA-256, which the cipher
+  does not call.
+
+**Not proven:**
+- That inversion preserves a security margin. Only the shared period and
+  element set are verified; the step from those to cipher hardness is absent.
 
 **Refused (out of scope):**
-- This proves quantum mechanics
-- This explains consciousness
-- This is absolute security (only proves relative to assumptions)
+- That any of this proves quantum mechanics
+- That any of this explains consciousness
+- That any of this is absolute security
 
 ---
 
 ## Verification
 
-All proofs are computer-verifiable:
+These claims are checked, not asserted. `src/security/quantum-proofs.test.ts`
+re-derives each one over its **full computed range** and runs inside
+`npm run check`:
 
 ```bash
-# Run tests to verify all algebraic properties
-npm test src/security/quantum-fold-cipher.test.ts
-
-# Each test proof:
-# - Rodin closure: all elements stay in {1,2,4,8,7,5}
-# - Trinity subgroup: all additions stay in {3,6,9}
-# - Vortex bijection: all digits map uniquely
-# - Merkle cascade: tampering changes root
-# - Determinism: same input → same output
-# - Inversion: period preserved, margin reduced by factor k
-# - Composition: all 6 facets verified → ok = true
+npm run test:security
 ```
 
-**No gaps. All proofs tested. All assumptions stated.**
+It follows lobe Heaven's law
+`theAlgebraicTheoremGateAnIdentityMustHoldOverAComputedRangeNotHandAssignedData`
+(ceccec.github.io): an identity must hold over a computed range, not over
+hand-assigned data. The original proofs listed the cases they chose, and six
+statements did not survive being checked over the whole range.
 
+Two claims are untestable by nature and are stated rather than asserted:
+collision resistance (Proof 8) and the security-inversion argument (Proof 10).
+
+**Gaps are recorded above rather than closed.** Proofs 5, 8 and 10 remain
+weaker than the cipher's surrounding documentation once implied.

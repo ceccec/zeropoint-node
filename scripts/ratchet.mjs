@@ -319,6 +319,7 @@ function unreachableCount() {
     'src/kernel/smoke.test.ts',
     'src/security/quantum-fold-cipher.test.ts',
     'src/security/quantum-state-tomography.test.ts',
+    'src/security/quantum-proofs.test.ts',
   ]) {
     const p2 = join(ROOT, e)
     if (existsSync(p2)) roots.add(p2)

@@ -76,7 +76,7 @@ function describe(text) {
 const isComputed = (rel, base) =>
   rel.startsWith('pages/') ||
   rel.startsWith('0/') ||
-  ['SEQUENCE.md', 'KERNEL.md', 'AUDIT.md', 'DIGIT_STREAMS.md'].includes(base)
+  ['SEQUENCE.md', 'KERNEL.md', 'AUDIT.md', 'DIGIT_STREAMS.md', 'A432_QUANTUM_SCAN.md'].includes(base)
 
 const GROUPS = [
   { title: 'Computed census & projections', test: (rel, base) => isComputed(rel, base) },

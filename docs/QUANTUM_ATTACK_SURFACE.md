@@ -55,6 +55,13 @@ same key; distinct entropy → distinct key. Both directions are asserted in
 `quantum-fold-cipher.test.ts`, along with reachability of all three trinity
 values and a no-collapse check (2000 entropies → 2000 distinct keys).
 
+**Seal strength (separate from keyspace).** The Tier 3 seal binding a key to
+its material and genesis is a full 256-bit SHA-256 digest (`contentDigest`),
+alongside a SHA-256-derived UUID for identity. Forging a key that verifies
+under a given seal is bounded by SHA-256, not by the trinity keyspace above.
+The two limits are independent: **the keyspace is the weaker one at ~50.7
+bits**, and it is what an attacker would attack.
+
 **History:** these properties are tested because all of them once failed.
 The original derivation seeded a doubling chain from `entropy[0]` alone and
 indexed the trinity by a value that was never ≡ 0 mod 3, so it returned the

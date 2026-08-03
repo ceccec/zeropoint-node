@@ -22,6 +22,7 @@ import {
   expandQuantumKeyViaRodin, recordMeasurement, verifyMeasurementReceipt,
   encodeQuantumState, QuantumFoldCipher,
 } from './quantum-fold-cipher.ts'
+import { computeContentUuid, computeContentDigest } from '../integrity/content-uuid.ts'
 
 console.log('=== Quantum Proof Verification (computed ranges) ===\n')
 
@@ -201,15 +202,47 @@ const mod9 = (x: number): number => (((x % 9) + 9) % 9) || 9
   check(digitalRoot(0) === 9, 'P7: digitalRoot(0) = 9 by convention here (true digital root of 0 is 0)')
 }
 
-/** PROOF 8 — what the cipher's content UUID actually is. */
+/** PROOF 8 — the Tier 3 seal is now genuinely SHA-256. */
 {
   const key = generateQuantumKey('proof-8', 32)
-  const viaFold = toUuid(`quantum-key:${key.material.join(',')}:genesis:${key.genesis}`)
-  check(
-    viaFold === key.contentUuid,
-    'P8: contentUuid is the FNV fold toUuid(), NOT SHA-256 (doc corrected)',
-  )
+  const sealed = { kind: 'quantum-key-v1', material: key.material, genesis: key.genesis }
+
+  // The seal is the SHA-256 path, not the FNV fold. Both bindings recompute.
+  check(computeContentUuid(sealed) === key.contentUuid, 'P8: contentUuid is the SHA-256 content UUID')
+  check(computeContentDigest(sealed) === key.contentDigest, 'P8: contentDigest is the full SHA-256 digest')
   check(verifyQuantumKey(key), 'P8: the seal recomputes from stored fields')
+
+  // It must NOT be the FNV fold any more — the exact regression to guard.
+  const viaFold = toUuid(`quantum-key:${key.material.join(',')}:genesis:${key.genesis}`)
+  check(viaFold !== key.contentUuid, 'P8: the seal is no longer the FNV fold')
+
+  // Full width: 256 bits of hex. A UUID-shaped seal would be 122 free bits and
+  // would cap the birthday bound at ~2^61 while the doc claimed 2^128.
+  check(/^[0-9a-f]{64}$/.test(key.contentDigest), 'P8: the digest is 64 hex chars = 256 bits, untruncated')
+  check(key.contentUuid.replace(/-/g, '').length === 32, 'P8: the UUID is 128 bits (122 free) — identity, not the bound')
+
+  // Tamper rejection on each binding independently.
+  check(!verifyQuantumKey({ ...key, material: [...key.material.slice(1), 3] }), 'P8: altered material rejected')
+  check(!verifyQuantumKey({ ...key, genesis: toUuid('other') }), 'P8: altered genesis rejected')
+  check(!verifyQuantumKey({ ...key, contentDigest: key.contentDigest.replace(/^./, 'f') }), 'P8: altered digest rejected')
+
+  // Distinct keys must seal distinctly, over a computed range.
+  const uuids = new Set<string>()
+  const digests = new Set<string>()
+  for (let i = 0; i < 5000; i++) {
+    const k = generateQuantumKey(`p8:${i}`, 32)
+    uuids.add(k.contentUuid)
+    digests.add(k.contentDigest)
+  }
+  check(uuids.size === 5000 && digests.size === 5000, 'P8: 5000 keys give 5000 distinct seals')
+
+  // Expanded round keys carry the same cryptographic binding.
+  const rounds = expandQuantumKeyViaRodin(key, 5)
+  check(rounds.every(verifyQuantumKey), 'P8: every expanded round key verifies under the same seal')
+  check(
+    new Set(rounds.map((k) => k.contentDigest)).size === rounds.length,
+    'P8: each round key seals to a distinct digest',
+  )
 }
 
 /** PROOF 9 — a tampered receipt fails recomputation. */

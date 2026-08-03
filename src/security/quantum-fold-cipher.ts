@@ -31,6 +31,12 @@ import {
   VORTEX_ORBIT,
 } from '../0/index.ts'
 
+// Tier 3 is the CRYPTOGRAPHIC seal, so it uses the SHA-256 path, not the FNV
+// fold. src/integrity/content-uuid.ts states the split in its own header:
+// "FNV toUuid stays in src/0 for cheap folds; this module seals cryptographic
+// identity for proofs/manifests." The cipher had been sealing with toUuid.
+import { computeContentUuid, computeContentDigest } from '../integrity/content-uuid.ts'
+
 /**
  * Vortex Constants
  *
@@ -133,8 +139,21 @@ export function applyQuantumGate(
 
 export interface QuantumKey {
   readonly material: number[] // bytes, each ∈ {3, 6, 9} (trinity-masked)
-  readonly contentUuid: string // SHA-256 binding
-  readonly genesis: string // random entropy that generated the key
+  /** Expansion round, when this is a derived round key. Part of the seal. */
+  readonly round?: number
+  /**
+   * SHA-256 content UUID (uuidv8). Interoperable identity, but a UUID is 128
+   * bits with 6 pinned by version/variant — 122 free bits, birthday ≈ 2⁶¹.
+   * Identity comparisons use this; the strength claim does NOT rest on it.
+   */
+  readonly contentUuid: string
+  /**
+   * Full 256-bit SHA-256 digest, untruncated. This is what carries the
+   * collision-resistance claim (birthday ≈ 2¹²⁸). Truncating to a UUID would
+   * have silently capped the bound at 2⁶¹ while the docs claimed 2¹²⁸.
+   */
+  readonly contentDigest: string
+  readonly genesis: string // the content address of the entropy that seeded it
 }
 
 /**
@@ -168,6 +187,24 @@ export interface QuantumKey {
  * bytes is log2(3)·keyLength bits, about 50.7 bits at the default 32. That is
  * the honest figure; see docs/QUANTUM_ATTACK_SURFACE.md.
  */
+/**
+ * The sealed representation of a key — the ONE definition of what gets hashed.
+ *
+ * Generation and verification previously built this separately, so expanded
+ * round keys sealed over one shape and verified against another and could
+ * never verify. Two places computing what must be identical is the defect;
+ * a single function is the fix.
+ */
+function keySealInput(
+  material: readonly number[],
+  genesis: string,
+  round?: number,
+): Record<string, unknown> {
+  return round === undefined
+    ? { kind: 'quantum-key-v1', material: [...material], genesis }
+    : { kind: 'quantum-key-expanded-v1', round, material: [...material], genesis }
+}
+
 export function generateQuantumKey(entropy: string, keyLength: number = 32): QuantumKey {
   const genesis = toUuid(`key:genesis:${entropy}`)
 
@@ -195,14 +232,28 @@ export function generateQuantumKey(entropy: string, keyLength: number = 32): Qua
   // raw entropy made contentUuid unrecomputable from the stored fields — a
   // seal nothing could check — and it kept the caller's entropy alive in the
   // hash input for no benefit.
-  const contentUuid = toUuid(`quantum-key:${material.join(',')}:genesis:${genesis}`)
-
-  return { material, contentUuid, genesis }
+  const sealed = keySealInput(material, genesis)
+  return {
+    material,
+    contentUuid: computeContentUuid(sealed),
+    contentDigest: computeContentDigest(sealed),
+    genesis,
+  }
 }
 
-/** Recompute the seal from the stored fields. Tier 3 is only a seal if this can run. */
+/**
+ * Recompute the seal from the stored fields. Tier 3 is only a seal if this
+ * can run, and only cryptographic if it runs over a cryptographic hash.
+ *
+ * Both bindings are checked. The digest is the one the strength claim rests
+ * on; the UUID is checked too so a mismatch between them cannot pass.
+ */
 export function verifyQuantumKey(key: QuantumKey): boolean {
-  return toUuid(`quantum-key:${key.material.join(',')}:genesis:${key.genesis}`) === key.contentUuid
+  const sealed = keySealInput(key.material, key.genesis, key.round)
+  return (
+    computeContentUuid(sealed) === key.contentUuid &&
+    computeContentDigest(sealed) === key.contentDigest
+  )
 }
 
 export function expandQuantumKeyViaRodin(
@@ -220,12 +271,14 @@ export function expandQuantumKeyViaRodin(
       return i % 3 === r % 3 ? TRINITY[r % 3] : doubled
     })
 
-    const contentUuid = toUuid(
-      `quantum-key-expanded:round:${r}:material:${current.join(',')}`
-    )
+    // Round keys are sealed the same way as the root key — an expanded key is
+    // still key material, so it carries the same cryptographic binding.
+    const sealed = keySealInput(current, key.genesis, r)
     expanded.push({
       material: [...current],
-      contentUuid,
+      round: r,
+      contentUuid: computeContentUuid(sealed),
+      contentDigest: computeContentDigest(sealed),
       genesis: key.genesis,
     })
   }

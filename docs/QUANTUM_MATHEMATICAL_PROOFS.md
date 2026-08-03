@@ -294,7 +294,7 @@ n = 1..5000 against iterated digit-summing.
 
 ---
 
-## Proof 8: Content-UUID Uniqueness — **the cipher does not use SHA-256**
+## Proof 8: Content-UUID Uniqueness (SHA-256)
 
 **Theorem:** For distinct inputs x ≠ y, SHA-256(x) ≠ SHA-256(y) with overwhelming probability (collision resistance).
 
@@ -304,26 +304,45 @@ By design of SHA-256 (cryptographic hash function):
 - Output space: 2^256 possible values
 - Given adversary cannot feasibly find collision in time < 2^128 operations (birthday bound)
 
-> **Correction — this proof describes a function the cipher never calls.**
-> `QuantumFoldCipher` addresses content with `toUuid()`, the **FNV fold**.
-> SHA-256 does exist in this repo (`src/integrity/content-uuid.ts`), but the
-> cipher does not use it. Verified: `contentUuid` recomputes exactly from
-> `toUuid(...)`.
+> **Gap, and how it was closed.** This proof once described a function the
+> cipher never called: `QuantumFoldCipher` sealed with `toUuid()`, the **FNV
+> fold**, while the proof claimed SHA-256. Two separate problems followed —
+> the wrong *algorithm family* (FNV is built for speed, not collision
+> resistance) and the wrong *width* (a UUID is 128 bits with 6 pinned by
+> version/variant, so 122 free bits and a birthday bound near 2⁶¹, not 2¹²⁸).
 >
-> The stated bound does not transfer. `toUuid` yields 128 bits with 6 pinned
-> by the UUID version/variant, so **122 free bits** — a birthday bound near
-> 2⁶¹, not 2¹²⁸. And FNV belongs to a hash family designed for speed, not
-> collision resistance; no collision-resistance analysis backs it.
+> Tier 3 is the **cryptographic** seal, and `src/integrity/content-uuid.ts`
+> already stated the intended split in its own header: *"FNV toUuid stays in
+> src/0 for cheap folds; this module seals cryptographic identity."* The cipher
+> was simply on the wrong side of it. It now seals through that module.
 >
-> **Not claimed:** that collisions are practically findable. A birthday search
-> over 2,000,000 seeds found none, which is consistent with the structure. The
-> honest position is that the 2²⁵⁶ figure was unsupported — not that the fold
-> is broken.
+> Both problems had to be fixed, not just the first. Sealing to a SHA-256
+> **UUID** alone would still have truncated to 122 bits while the doc claimed
+> 2¹²⁸ — the right algorithm at the wrong width. A key therefore carries two
+> bindings:
 
-**Consequence:** distinct serializations map to distinct UUIDs in every range
-tested, on a 122-bit non-cryptographic digest.
+| Field | Construction | Width | Carries |
+|---|---|---|---|
+| `contentUuid` | `computeContentUuid` (JCS → SHA-256 → uuidv8) | 122 free bits | interoperable identity |
+| `contentDigest` | `computeContentDigest` (full SHA-256 hex) | **256 bits** | the collision-resistance claim |
 
-**Status:** ASSUMPTION (weaker than the doc originally stated), not a proof.
+> `verifyQuantumKey` checks **both**, so a mismatch between them cannot pass.
+> One `keySealInput()` builds what gets hashed, for generation and verification
+> alike — they had built it separately, and expanded round keys sealed over one
+> shape while verifying against another, so they could never verify.
+
+**Consequence:** the birthday bound of 2¹²⁸ now rests on the full digest of a
+cryptographic hash, which is what the claim needed all along.
+
+**What is still assumed:** SHA-256's collision resistance itself. That is a
+standard cryptographic assumption, not an algebraic result — which is what this
+proof was always meant to say, and can now say truthfully.
+
+**Scope:** Tier 3 only. Tier 1 identity (`encodeQuantumState`, gate addresses)
+and the Tier 4 receipt chain still use the FNV fold, deliberately — those are
+cheap content addresses, and Proof 6 (determinism), not collision resistance,
+is what they rest on. The receipt chain's integrity comes from comparing
+against an independently held root (see Proof 9), not from the hash.
 
 ---
 
@@ -479,7 +498,7 @@ root, and an honest run passes all six computed facets.
 | 5 | Merkle cascade | **EXACT, split** | set fold for values; `merkleFoldOrdered` for sequences |
 | 6 | Determinism | **EXACT** | holds; the pseudocode shown was not the algorithm |
 | 7 | Digital root mod 9 | **EXACT for n ≥ 1** | n = 0 is a convention, not the digital root |
-| 8 | Content-UUID uniqueness | **ASSUMPTION** | FNV fold, 122 free bits — **not SHA-256** |
+| 8 | Content-UUID uniqueness | **ASSUMPTION (standard)** | SHA-256, full 256-bit digest — Tier 3 only |
 | 9 | Receipt verification | **EXACT, bounded** | per-receipt only; an unkeyed chain can be rebuilt wholesale |
 | 10 | Quantum inversion security | **NOT PROVEN** | an analogy; only the shared period is verified |
 | 11 | Composition gate | **EXACT after fix** | 4 of 6 facets were unconditional; all now compute |
@@ -497,10 +516,10 @@ root, and an honest run passes all six computed facets.
 - Merkle cascade — value changes in both folds; ordering in `merkleFoldOrdered`,
   verified exhaustively over all 120 permutations of 5 leaves.
 
-**Assumption, and weaker than previously stated:**
-- Content-UUID uniqueness rests on a 122-bit **non-cryptographic** fold. The
-  earlier "2²⁵⁶ / 2¹²⁸ birthday" figure described SHA-256, which the cipher
-  does not call.
+**Assumption (standard, and now the one actually relied on):**
+- Content-UUID uniqueness rests on SHA-256's collision resistance, over the
+  full 256-bit digest. This is Tier 3 only; Tier 1 and Tier 4 use the FNV fold
+  by design and rest on determinism (Proof 6) instead.
 
 **Not proven:**
 - That inversion preserves a security margin. Only the shared period and
@@ -532,8 +551,8 @@ statements did not survive being checked over the whole range.
 Two claims are untestable by nature and are stated rather than asserted:
 collision resistance (Proof 8) and the security-inversion argument (Proof 10).
 
-**Remaining gaps.** Proof 5's ordering gap is **closed** (see
-`merkleFoldOrdered`). Proofs 8 and 10 remain weaker than the cipher's
-surrounding documentation once implied, and are recorded rather than closed:
-8 would require moving the cipher to SHA-256, and 10 would require an actual
-security reduction. Both are design decisions, not omissions.
+**Remaining gaps.** Proofs 5 and 8 are **closed** — see `merkleFoldOrdered`
+and the two-binding Tier 3 seal. Proof 10 remains open and is recorded rather
+than closed: it would require an actual security reduction, not a restatement.
+It is marked NOT PROVEN above, and nothing in the codebase depends on it
+holding.

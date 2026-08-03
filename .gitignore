@@ -121,4 +121,9 @@ docs/.vitepress/cache
 # effect on agent behaviour, context, or reasoning — it starts a preview
 # server. If a shared one-command docs preview is ever wanted, track it
 # deliberately rather than by accident.
+#
+# settings.local.json is a per-machine tool permission allowlist. The .local.
+# marker is the convention for it, and permissions granted on one machine are
+# not a property of the project.
 .claude/launch.json
+.claude/settings.local.json

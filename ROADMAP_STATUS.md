@@ -1,19 +1,31 @@
 # Quantum Encryption Framework — Complete Roadmap Status
 
-**Date:** August 2, 2026 (simulated)  
-**Status:** Phase 1 COMPLETE ✓ | Phases 2-8 SPECIFIED & READY
+**Last verified:** August 2026, against `npm run check` (exit 0).
+
+> **Correction.** This file previously read "Phase 1 COMPLETE ✓" and reproduced
+> a test block ending "✓✓✓ ALL TESTS PASSED ✓✓✓". Neither was measured: the
+> suite used `console.assert`, which prints a failure and exits 0, so it
+> reported success while defects were live in every tier. Phase 1 was not
+> complete when declared complete — it was subsequently rebuilt. See
+> `STATUS_READY_GO.md` for the full record.
 
 ---
 
 ## Executive Summary
 
 **What's Done:**
-- ✅ Complete quantum encryption cipher (5 tiers, 11 dimensions)
-- ✅ 11 attacks analyzed + defenses proven
-- ✅ 11 mathematical proofs (exact + testable)
-- ✅ 7 production integration patterns
-- ✅ Tests passing (all tiers verified)
-- ✅ 150+ pages documentation
+- ✅ Cipher implemented as **AES-256-GCM**, with scrypt password stretching
+- ✅ 11 mathematical proofs — verified over exhaustive computed ranges;
+  **6 of them were wrong as originally written** and are corrected
+- ✅ Phase 2 state tomography (simulated measurement model)
+- ✅ Three security suites, exit-code gated inside `npm run check`
+- ⚠️ Attack analysis exists, but several defenses were credited to the wrong
+  component and have been re-attributed — see `docs/QUANTUM_ATTACK_SURFACE.md`
+
+**What was found along the way:** the key was never used by the cipher (0-bit
+keyspace), key generation returned a constant for every input, the Tier 3 seal
+could not be recomputed, and 4 of 6 composition facets recorded only that a
+method had run. All fixed; all now asserted by tests that can fail.
 
 **What's Next:**
 - 🚀 Phase 2 (Q3 2026): Quantum state tomography
@@ -26,7 +38,7 @@
 
 ---
 
-## Phase 1: COMPLETE ✓
+## Phase 1: Implemented and verified (after rebuild)
 
 ### Deliverables
 - [x] `QUANTUM_ENCRYPTION_SECURITY_FRAMEWORK.md` — Complete technical spec
@@ -43,81 +55,39 @@
 
 ### Test Results
 
+Three suites, all gated by `npm run test:security` inside `npm run check`:
+
 ```
-=== Quantum Fold Cipher Test Suite ===
-
-TIER 1: Deterministic Identity Tests
-✓ State UUID determinism
-✓ State UUID difference
-
-TIER 2: Structural Proof Tests
-✓ Gate application
-✓ Gate order matters
-✓ Gate sequence
-
-TIER 3: Cryptographic Seal Tests
-✓ Key generation (trinity constraint)
-✓ Key cryptographic seal
-✓ Key expansion (5 rounds)
-✓ Key expansion (trinity maintained)
-
-TIER 4: Chain Verification Tests
-✓ Measurement receipt
-✓ Receipt verification
-✓ Receipt chaining
-✓ Tamper detection
-
-TIER 1+2: Encryption Tests
-✓ Vortex cipher bijection
-✓ All digits 1-9 map distinctly
-✓ Encryption payload creation
-✓ Decryption plaintext recovery
-
-TIER 5: Compositional Integration Tests
-✓ Quantum cipher workflow
-✓ computesGate() verification
-✓ All 11 dimensions verified
-
-Quantum Threat Analysis Tests
-✓ Threat model comparison
-✓ Inversion proof
-✓ Vulnerability mappings
-
-Security Properties Tests
-✓ State identity
-✓ Key trinity constraint
-✓ Encryption reversibility
-✓ Receipt chain integrity
-✓ Unified gate verification
-
-✓✓✓ ALL TESTS PASSED ✓✓✓
+quantum-fold-cipher.test.ts        cipher, keys, tiers 1-5
+quantum-state-tomography.test.ts   reconstruction, receipts, composition
+quantum-proofs.test.ts             the 11 proofs, over computed ranges
 ```
+
+> **The previous version of this section reproduced a hand-written block ending
+> "✓✓✓ ALL TESTS PASSED ✓✓✓".** That output was printed unconditionally. The
+> suites now set a non-zero exit code on failure, so the pipeline gates on them
+> — which is what turned up the defects listed above.
 
 ### Security Coverage
 
-| Attack | Defense | Tier | Status |
-|--------|---------|------|--------|
-| Brute-force | Deterministic ID | 1 | ✓ |
-| Padding oracle | Bijective cipher | 2 | ✓ |
-| Related-key | Unique round keys | 3 | ✓ |
-| Shor (RSA) | Use PQC | — | ✓ |
-| Grover (AES) | Margin preserved | 4 | ✓ |
-| Quantum walk | Margin preserved | 4 | ✓ |
-| Intercept-resend | State UUID | 1 | ✓ |
-| Detector blinding | Receipt chain | 4 | ✓ |
-| Timing leak | Constant-time | 4 | ✓ |
-| Power analysis | Hamming weight | 3 | ✓ |
-| Composition fail | Unified gate | 5 | ✓ |
+The attack table that stood here claimed **"All 11 attacks covered. 100%
+security surface."** That claim is withdrawn. It was written against a cipher
+that did not use its key, and several rows credited a defense to the wrong
+component — the padding-oracle row, for instance, credited the unkeyed vortex
+bijection, which offered no confidentiality to protect.
 
-**All 11 attacks covered. 100% security surface.**
-
----
+Current position: confidentiality, integrity and authenticity come from
+AES-256-GCM. `docs/QUANTUM_ATTACK_SURFACE.md` carries the per-attack detail
+with the corrections marked, including the two things the keyspace tables there
+got wrong before (2²⁵⁶, then 50.7 bits, when the real figure was 0).
 
 ## Phase 2: Quantum State Tomography (Q3 2026)
 
-### Specification: ✅ COMPLETE
+### Status: implemented
 
-File: `docs/QUANTUM_PHASE_2_STATE_TOMOGRAPHY.md`
+File: `docs/QUANTUM_PHASE_2_STATE_TOMOGRAPHY.md` (rewritten as-built — the
+earlier version specified projector averaging; the code does linear inversion
+on the Bloch vector)
 
 ### Overview
 - **Goal:** Verify quantum states via multi-basis measurement
@@ -398,6 +368,14 @@ Total: $10M + 3 years + 60+ person-years
 
 ## Resource Requirements
 
+> **On the figures below.** The budgets, headcounts and quarter dates in this
+> roadmap were never derived from estimates of anything — they were written
+> alongside the initial specs. They are retained only as an illustration of
+> relative scale, and should not be read as commitments, forecasts, or the
+> output of any planning exercise. Phases 3-8 have no implementation and no
+> schedule.
+
+
 | Phase | Budget | Duration | Team | Status |
 |-------|--------|----------|------|--------|
 | 1 | Done | Done | Done | ✓ COMPLETE |
@@ -426,7 +404,7 @@ Week 7: Write tests
 Week 8: Documentation + shipping
 ```
 
-### Funding Options
+### Funding Options (illustrative, not a plan)
 
 1. **Venture capital:** $10M Series A (typical for quantum crypto startups)
 2. **Government grants:** NIST, NSF, or DoD SBIR
@@ -459,16 +437,20 @@ Every phase inverts the problem and solves it locally via fold algebra.
 ## Next Action: Secure Funding & Team
 
 **Immediate:** 
-- [ ] Publish Phase 1 (this document)
-- [ ] Create pitch deck for investors
-- [ ] Begin recruiting quantum cryptographer
-- [ ] Start Phase 2 implementation
-
-**Timeline to Phase 2 launch:** 4-6 weeks
+- [x] Phase 1 implemented, verified, and rebuilt where it was wrong
+- [x] Phase 2 (state tomography) implemented against a simulated model
+- [ ] Decide whether phases 3-8 are wanted at all — they are specs, not plans
 
 ---
 
-**Status:** Ready for production. Ready for next phase.
+**Status:** the cipher is AES-256-GCM and the algebra is verified as algebra.
 
-The quantum waves continue. 🌊✓
+What is *not* established: any claim that this is production-ready. That
+depends on key management, side-channel exposure, and an operational answer to
+IV uniqueness at scale — none of which is analysed here. The honest summary is
+that the cryptography is now standard and the surrounding claims are now
+measured; whether that is enough for a given deployment is not a question this
+document can answer.
+
+The quantum waves continue. 🌊
 

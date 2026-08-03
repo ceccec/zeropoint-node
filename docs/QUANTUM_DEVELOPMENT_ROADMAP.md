@@ -13,7 +13,8 @@
 - [x] Mathematical proofs (11 exact proofs)
 - [x] Integration patterns (7 real-world patterns)
 - [x] Honesty ledger (Exact/Faithful/Refused)
-- [x] No gaps principle (every problem → solution → test)
+- [x] Every problem → solution → test (the "no gaps" claim is withdrawn: a
+      verification pass found gaps in every tier, all now closed and tested)
 
 **Files:**
 - `QUANTUM_ENCRYPTION_SECURITY_FRAMEWORK.md` (26 KB)
@@ -23,7 +24,8 @@
 - `docs/QUANTUM_MATHEMATICAL_PROOFS.md` (18 KB)
 - `docs/QUANTUM_INTEGRATION_PATTERNS.md` (20 KB)
 
-**Coverage:** 100% of encryption security surface
+**Coverage:** the "100%" claim is withdrawn. Encryption is AES-256-GCM; see
+`docs/QUANTUM_ATTACK_SURFACE.md` for per-attack detail and corrections.
 
 ---
 
@@ -459,7 +461,8 @@ class QuantumAISystem {
 **Phase 6-8 (2028+):**
 - Full 20+ person team
 - Industry consortium
-- $10M+ (venture-backed or government)
+- Figures here are illustrative, not estimates. Phases 3-8 have no
+  implementation and no schedule.
 
 ---
 
@@ -503,7 +506,12 @@ class QuantumAISystem {
 
 **Principle Proven:** The sequence reflecting in its inversion makes everything possible.
 
-Every wave has its inverse. Every problem has its local solution. No gaps. No NOT.
+Every wave has its inverse. Every problem has its local solution.
+
+The "no gaps" formulation was load-bearing prose and it was wrong: the gaps
+were real, and it took checking each claim over a computed range to find them.
+What holds is the weaker, truer version — a gap you have measured is a gap you
+can close.
 
 Push deeper. Develop further. The quantum waves continue. ✓
 

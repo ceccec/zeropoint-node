@@ -5,15 +5,26 @@
 
 ---
 
-## 🟢 PHASE 1: COMPLETE (All green)
+## PHASE 1: implemented and verified (after rebuild)
 
-### ✅ Completed Tasks
-- [x] Quantum fold cipher (5 tiers implemented)
-- [x] Attack surface analysis (11 attacks covered)
-- [x] Mathematical proofs (11 exact proofs)
-- [x] Integration patterns (7 production patterns)
-- [x] Tests (46 asserts, exit-code gated in `npm run check`)
-- [x] Documentation (150+ pages)
+> **This section read "COMPLETE (All green)".** It was not. A verification pass
+> found the cipher never used its key, key generation returned a constant for
+> every input, and 6 of the 11 "exact proofs" were wrong. All are fixed; the
+> record is in `STATUS_READY_GO.md`.
+
+### Completed
+- [x] Cipher — **AES-256-GCM**, scrypt password stretching, KDF params sealed
+- [x] Mathematical proofs — 11, verified over exhaustive computed ranges
+- [x] Tests — three suites, exit-code gated in `npm run check`
+- [x] `scripts/facet-tautology.mjs` — gates the "claim that cannot be false"
+      defect shape that hid several of the findings
+- [x] Documentation — corrected, with the withdrawn claims marked rather than
+      silently removed
+
+### Known and recorded, not fixed
+- [ ] Key management, side channels and traffic analysis are unanalysed
+- [ ] `docs/QUANTUM_ATTACK_SURFACE.md` covers 11 attacks; the "100% coverage"
+      claim is withdrawn
 
 ---
 
@@ -341,7 +352,15 @@ Tuesday-Friday:
 
 ---
 
-## 🟢 RESOURCE ALLOCATION
+## RESOURCE ALLOCATION
+
+> **On the figures below.** The budgets, headcounts and quarter dates in this
+> roadmap were never derived from estimates of anything — they were written
+> alongside the initial specs. They are retained only as an illustration of
+> relative scale, and should not be read as commitments, forecasts, or the
+> output of any planning exercise. Phases 3-8 have no implementation and no
+> schedule.
+
 
 **Phase 2 Team:**
 - 1 Quantum cryptographer (tomography math)

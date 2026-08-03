@@ -1,19 +1,31 @@
-# Phase 2 Kickoff: Quantum State Tomography — Ready to Execute NOW
+# Phase 2 Kickoff — HISTORICAL
 
-**Status:** GO 🟢 | All dependencies met | Starting immediately
+> **Superseded.** Phase 2 is implemented. This file is the plan written
+> *before* the work, kept for the record; where it disagrees with the code, the
+> code is right. The as-built description is
+> `docs/QUANTUM_PHASE_2_STATE_TOMOGRAPHY.md`.
+>
+> Two things here did not survive contact with the implementation:
+>
+> - The reconstruction sketch below averages projectors. The code does **linear
+>   inversion on the Bloch vector**, which makes `trace(ρ) = 1` and
+>   `ρ₀₀ = P(Z=0)` exact equalities rather than approximations.
+> - "Detect ... with >99% confidence" describes a statistical bound. What the
+>   code computes is the **fraction of the channel sampled** — coverage, not
+>   confidence. Reporting one as the other would overstate it, so the criterion
+>   was restated rather than ticked.
+>
+> The Phase 1 status it depends on was also wrong at the time: the "tested
+> quantum cipher" it lists as a dependency did not use its key. See
+> `STATUS_READY_GO.md`.
 
----
+## What We Had (as claimed, before verification)
 
-## What We Have (From Phase 1)
-
-✅ **Tested quantum cipher** (46 asserts, gated in `npm run check`)
-✅ **Fold tier 4** (Chain Verification) proven + working
-✅ **Merkle receipt chain** implemented + tested
-✅ **Measurement framework** ready to extend
-✅ **All imports/exports** configured
-✅ **Documentation** complete
-
-**Can start Phase 2 today.** No blockers.
+✅ **Tested quantum cipher** — *the suite reported success while failing*
+✅ **Fold tier 4** (Chain Verification) — held up
+✅ **Merkle receipt chain** — held up, though it needed `merkleFoldOrdered`
+   before its root could detect a reordering
+✅ **Measurement framework** ready to extend — held up
 
 ---
 

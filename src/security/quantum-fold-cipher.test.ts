@@ -10,6 +10,8 @@ import {
   encodeQuantumState,
   applyQuantumGate,
   generateQuantumKey,
+  generateQuantumKeyFromPassword,
+  DEFAULT_SCRYPT,
   verifyQuantumKey,
   expandQuantumKeyViaRodin,
   recordMeasurement,
@@ -325,6 +327,75 @@ function testOldAttacksNoLongerApply() {
   console.log('✓ Construction: 96-bit IV, 128-bit tag')
 }
 
+/**
+ * Password stretching.
+ *
+ * The weakest link after the AES-GCM switch was that `generateQuantumKey`
+ * maps its input to material with cheap folds — one hash per guess — so
+ * `generateQuantumKey('password')` yielded a key exactly as strong as
+ * 'password'. scrypt raises the price per guess; it cannot create entropy.
+ */
+function testPasswordStretching() {
+  const password = 'correct horse battery staple'
+  const key = generateQuantumKeyFromPassword(password)
+
+  console.assert(key.kdf !== undefined, 'A password-derived key must record its KDF')
+  console.assert(key.kdf!.algorithm === 'scrypt', 'The KDF must be scrypt')
+  console.assert(key.kdf!.N === DEFAULT_SCRYPT.N, 'The default cost must be applied')
+  console.assert(key.kdf!.saltHex.length === 32, 'The salt must be 16 bytes')
+  console.log(`✓ Stretching: scrypt N=2^17, r=8, p=1, 16-byte salt recorded`)
+
+  // Reproducible given the salt — the correct KDF contract.
+  const again = generateQuantumKeyFromPassword(password, key.kdf!.saltHex)
+  console.assert(
+    again.material.join('') === key.material.join(''),
+    'Same password + same salt must give the same key',
+  )
+  console.log('✓ Stretching: same password + same salt → same key')
+
+  // A fresh salt must give a different key, or the salt is doing nothing and
+  // one precomputation would attack every user.
+  const fresh = generateQuantumKeyFromPassword(password)
+  console.assert(
+    fresh.material.join('') !== key.material.join(''),
+    'A fresh salt must give a different key',
+  )
+  console.assert(fresh.kdf!.saltHex !== key.kdf!.saltHex, 'Salts must not repeat')
+  console.log('✓ Stretching: a fresh salt gives a different key (no shared precomputation)')
+
+  // Different passwords, same salt, must diverge.
+  const other = generateQuantumKeyFromPassword('a different password', key.kdf!.saltHex)
+  console.assert(
+    other.material.join('') !== key.material.join(''),
+    'Different passwords must give different keys',
+  )
+  console.log('✓ Stretching: different passwords diverge under one salt')
+
+  // The KDF parameters are sealed, so a downgrade is detectable. Lowering N
+  // or swapping the salt is an attack, not a configuration choice.
+  console.assert(verifyQuantumKey(key), 'A password-derived key must verify')
+  console.assert(
+    !verifyQuantumKey({ ...key, kdf: { ...key.kdf!, N: 1024 } }),
+    'A lowered scrypt cost must fail the seal',
+  )
+  console.assert(
+    !verifyQuantumKey({ ...key, kdf: { ...key.kdf!, saltHex: '00'.repeat(16) } }),
+    'A swapped salt must fail the seal',
+  )
+  console.log('✓ Stretching: the seal covers the KDF — downgraded cost and swapped salt rejected')
+
+  // A short salt must be refused rather than quietly accepted.
+  let shortSalt = false
+  try { generateQuantumKeyFromPassword(password, 'abcd') } catch { shortSalt = true }
+  console.assert(shortSalt, 'A short salt must be rejected')
+  console.log('✓ Stretching: a short salt is rejected')
+
+  // And the key must actually work with the cipher.
+  const payload = encryptQuantum('secret', key)
+  console.assert(decryptQuantum(payload, key) === 'secret', 'A stretched key must encrypt/decrypt')
+  console.log('✓ Stretching: the derived key drives AES-GCM end to end')
+}
+
 function testAuthenticatedEncryption() {
   const key = generateQuantumKey('aead-key')
   const msg = 'hello — arbitrary UTF-8, 日本語, 12345'
@@ -377,6 +448,7 @@ testTrinityKeyGeneration()
 testKeyIsActuallyUsed()
 testKeyspaceArithmetic()
 testOldAttacksNoLongerApply()
+testPasswordStretching()
 testAuthenticatedEncryption()
 testSemanticSecurity()
 testKeyDependsOnEntropy()

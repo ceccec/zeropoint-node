@@ -37,7 +37,7 @@ import { log2, ceil } from '../0/algebra.ts'
 // "FNV toUuid stays in src/0 for cheap folds; this module seals cryptographic
 // identity for proofs/manifests." The cipher had been sealing with toUuid.
 import { computeContentUuid, computeContentDigest } from '../integrity/content-uuid.ts'
-import { createCipheriv, createDecipheriv, createHmac, randomBytes } from 'node:crypto'
+import { createCipheriv, createDecipheriv, createHmac, randomBytes, scryptSync } from 'node:crypto'
 
 /**
  * Vortex Constants
@@ -160,10 +160,24 @@ export function applyQuantumGate(
  * Bound via SHA-256 content UUID.
  */
 
+/**
+ * Password-stretching parameters, stored so the key can be re-derived and so
+ * a tampered salt or lowered cost is caught by the seal.
+ */
+export interface PasswordKdf {
+  readonly algorithm: 'scrypt'
+  readonly N: number // CPU/memory cost
+  readonly r: number // block size
+  readonly p: number // parallelisation
+  readonly saltHex: string
+}
+
 export interface QuantumKey {
   readonly material: number[] // bytes, each ∈ {3, 6, 9} (trinity-masked)
   /** Expansion round, when this is a derived round key. Part of the seal. */
   readonly round?: number
+  /** Present when the key came from a password. Part of the seal. */
+  readonly kdf?: PasswordKdf
   /**
    * SHA-256 content UUID (uuidv8). Interoperable identity, but a UUID is 128
    * bits with 6 pinned by version/variant — 122 free bits, birthday ≈ 2⁶¹.
@@ -205,6 +219,11 @@ export interface QuantumKey {
  * gave 32k distinct across 32k. (indexFromSeed is fine for its documented
  * job of picking ONE index; the fault was using it to build a joint vector.)
  *
+ * INPUT ENTROPY. This maps its input to material with cheap folds, so the key
+ * is only as strong as the input. That is correct for random bytes or another
+ * KDF's output, and WRONG for a human passphrase — use
+ * `generateQuantumKeyFromPassword` for those, which stretches with scrypt.
+ *
  * Keyspace note: the trinity constraint is a design premise of this framework,
  * and it is what bounds strength here — 3 values per byte over `keyLength`
  * bytes is log2(3)·keyLength bits, about 50.7 bits at the default 32. That is
@@ -222,10 +241,15 @@ function keySealInput(
   material: readonly number[],
   genesis: string,
   round?: number,
+  kdf?: PasswordKdf,
 ): Record<string, unknown> {
-  return round === undefined
-    ? { kind: 'quantum-key-v1', material: [...material], genesis }
-    : { kind: 'quantum-key-expanded-v1', round, material: [...material], genesis }
+  const base: Record<string, unknown> =
+    round === undefined
+      ? { kind: 'quantum-key-v1', material: [...material], genesis }
+      : { kind: 'quantum-key-expanded-v1', round, material: [...material], genesis }
+  // The KDF parameters are sealed too: a lowered cost or swapped salt is a
+  // downgrade attack, and it must not verify against the original key.
+  return kdf === undefined ? base : { ...base, kdf }
 }
 
 export function generateQuantumKey(
@@ -268,6 +292,71 @@ export function generateQuantumKey(
 }
 
 /**
+ * Password stretching — scrypt.
+ *
+ * `generateQuantumKey` maps its input to key material with cheap folds. That
+ * is correct for input that is ALREADY high-entropy (random bytes, another
+ * KDF's output) and wrong for anything a human typed: it costs an attacker
+ * one hash per guess, so the key is exactly as strong as the passphrase.
+ *
+ * This path runs the password through scrypt first, so each guess costs the
+ * attacker the same memory-hard work it costs the caller. It does not create
+ * entropy — a passphrase in a wordlist is still findable — it raises the price
+ * per guess, which is all any KDF can do.
+ *
+ * Defaults are OWASP's current scrypt guidance: N = 2^17, r = 8, p = 1
+ * (~128 MB, ~290 ms here). The cost is deliberately felt.
+ *
+ * The salt is REQUIRED for the derivation to be reproducible, and is generated
+ * when not supplied. Determinism is therefore "same password + same salt →
+ * same key", which is the correct contract for a KDF: a fixed salt across
+ * users would let one precomputation attack all of them.
+ */
+export const DEFAULT_SCRYPT: Omit<PasswordKdf, 'saltHex'> = {
+  algorithm: 'scrypt',
+  N: 1 << 17,
+  r: 8,
+  p: 1,
+}
+
+export const SCRYPT_SALT_BYTES = 16
+
+export function generateQuantumKeyFromPassword(
+  password: string,
+  saltHex?: string,
+  params: Omit<PasswordKdf, 'saltHex'> = DEFAULT_SCRYPT,
+  keyLength: number = DEFAULT_KEY_LENGTH,
+): QuantumKey {
+  const salt =
+    saltHex === undefined ? randomBytes(SCRYPT_SALT_BYTES) : Buffer.from(saltHex, 'hex')
+  if (salt.length < SCRYPT_SALT_BYTES) {
+    throw new Error(`generateQuantumKeyFromPassword: salt must be >= ${SCRYPT_SALT_BYTES} bytes`)
+  }
+
+  const kdf: PasswordKdf = { ...params, saltHex: salt.toString('hex') }
+  // 128·N·r bytes of memory is the whole point of scrypt; Node's default
+  // maxmem (32 MB) would reject the recommended parameters outright.
+  const stretched = scryptSync(password, salt, 32, {
+    N: kdf.N,
+    r: kdf.r,
+    p: kdf.p,
+    maxmem: 256 * kdf.N * kdf.r,
+  })
+
+  // The stretched output is high-entropy, so the ordinary derivation is the
+  // right tool for it from here on.
+  const base = generateQuantumKey(`scrypt:${stretched.toString('hex')}`, keyLength)
+  const sealed = keySealInput(base.material, base.genesis, undefined, kdf)
+  return {
+    material: base.material,
+    genesis: base.genesis,
+    kdf,
+    contentUuid: computeContentUuid(sealed),
+    contentDigest: computeContentDigest(sealed),
+  }
+}
+
+/**
  * Recompute the seal from the stored fields. Tier 3 is only a seal if this
  * can run, and only cryptographic if it runs over a cryptographic hash.
  *
@@ -275,7 +364,7 @@ export function generateQuantumKey(
  * on; the UUID is checked too so a mismatch between them cannot pass.
  */
 export function verifyQuantumKey(key: QuantumKey): boolean {
-  const sealed = keySealInput(key.material, key.genesis, key.round)
+  const sealed = keySealInput(key.material, key.genesis, key.round, key.kdf)
   return (
     computeContentUuid(sealed) === key.contentUuid &&
     computeContentDigest(sealed) === key.contentDigest

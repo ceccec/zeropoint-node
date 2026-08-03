@@ -108,11 +108,27 @@ copied through in the clear, and AES has no such hole.
   IVs bound safe use to roughly **2³² messages per key** (NIST SP 800-38D).
   Rotate keys before that.
 - **Key strength is bounded by the caller's entropy, not by the 256.8-bit
-  material space.** `generateQuantumKey('password')` yields a key no stronger
-  than `'password'`. There is **no password stretching** — no PBKDF2, scrypt or
-  Argon2 — so a low-entropy passphrase is directly brute-forceable no matter
-  what the rest of this document says. If keys come from human input, that is
-  the weakest link in the system and it is not addressed here.
+  material space** — and which function you call decides how much that costs an
+  attacker. There are two paths, and using the wrong one is the mistake this
+  section exists to prevent:
+
+  | Function | For | Cost per guess |
+  |---|---|---|
+  | `generateQuantumKey(entropy)` | input already high-entropy (random bytes, another KDF's output) | one cheap fold |
+  | `generateQuantumKeyFromPassword(password, salt?)` | anything a human typed | scrypt N=2¹⁷, r=8, p=1 (~128 MB, ~290 ms) |
+
+  scrypt **does not create entropy**. A passphrase in a wordlist is still
+  findable; stretching raises the price per guess, which is all any KDF can do.
+  A weak password remains a weak password.
+
+  The salt is generated if not supplied and is required for re-derivation, so
+  the contract is *same password + same salt → same key*. A fixed salt across
+  users would let one precomputation attack all of them, so each key carries
+  its own.
+
+  The KDF parameters are **inside the seal**: lowering `N` or swapping the salt
+  fails `verifyQuantumKey`. A downgrade is an attack, not a configuration
+  choice, and it is detectable rather than silent.
 - **Security rests on AES-GCM, not on the vortex or trinity algebra.** The
   trinity material feeds the KDF. It contributes structure, not strength.
 - **Not analysed for** side channels, traffic analysis, or key management, and

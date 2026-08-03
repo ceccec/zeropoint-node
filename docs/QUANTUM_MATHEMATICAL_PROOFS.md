@@ -18,6 +18,7 @@ What changed:
 | 6 | pseudocode shown as plain FNV-1a | the real `hash32` differs, and `toUuid` folds four seeded words |
 | 7 | "n mod 9 = 0 ⟹ dr = 9" | omits n = 0, whose true digital root is 0 |
 | 8 | "Content-UUID uniqueness (SHA-256)" | the cipher uses the **FNV fold**, not SHA-256 |
+| 10 | "S(R) ⟹ S(R′) … by symmetry" | assumed its conclusion; replaced by an exact **tight reduction** (**gap since closed**) |
 | 11 | "all 6 facets verified ⟹ operations consistent" | 4 of 6 facets were unconditionally `true`; now they compute |
 
 ---
@@ -410,17 +411,55 @@ Security margin reduction factor k applies to both:
   For both R and R' (inversion preserves scaling)
 ```
 
-> **Correction — this is an analogy, not a proof.** The argument posits
-> "H′ = H but in reversed order … by symmetry", which assumes precisely what
-> is to be shown. Nothing establishes that a security reduction is invariant
-> under reversing a generator orbit. That R and R′ share a period is a fact
-> about ℤ/9*; it is not a statement about any cipher's hardness, and no step
-> connects the two.
+> **The original argument was circular.** It posited "H′ = H but in reversed
+> order … by symmetry", which assumes precisely what was to be shown. Sharing a
+> period is a fact about ℤ/9*, not a statement about hardness, and no step
+> connected the two. It has been replaced by an actual reduction.
 
-**What is verified:** R and R′ have the same period (6) and the same element
-set. Nothing beyond that.
+### The reduction
 
-**Status:** NOT PROVEN. The summary table previously marked this ALGEBRAIC.
+The cipher's **only** dependence on the Rodin sequence is the shift applied at
+position *i*: `VORTEX_ORBIT[i % 6]`. So "the cipher under R′" means the same
+construction driven by the reversed shift sequence.
+
+**Theorem.** Let σ(i) = ⌊i/6⌋·6 + (5 − i mod 6) — reverse a position within its
+own 6-block. σ is an involution. Then for every message *m* and every position
+*i*:
+
+```
+E_R′(m)[i]  =  E_R(m∘σ)[σ(i)]
+```
+
+**Proof.** Position *i* under R′ uses shift R′[i mod 6] = R[5 − i mod 6].
+Position σ(i) under R uses shift R[σ(i) mod 6] = R[5 − i mod 6]. The same shift
+acts on the same digit, since (m∘σ)[σ(i)] = m[i]. ∎
+
+**Consequence — a tight, advantage-preserving reduction.** Given any adversary
+𝒜 against E_R′, the adversary ℬ = σ ∘ 𝒜 ∘ σ against E_R has **identical
+advantage** at O(n) overhead. σ is its own inverse, so the same construction
+runs in the other direction. No security loss, no assumptions, no constants.
+
+**Adversary-model agnostic.** σ is a syntactic isomorphism, so the equivalence
+holds for *every* adversary class — classical or quantum — precisely because it
+assumes nothing about the adversary. This is the defensible form of the
+original intent: the quantum instantiation is not a different problem.
+
+### What this does not say
+
+- **It does not say either instantiation is secure.** It says security
+  *transfers*. If E_R is broken, E_R′ is broken with the same effort. Given the
+  ~50.7-bit trinity keyspace, both are in fact weak.
+- **The "margin reduced by factor k" formula is withdrawn**, along with the
+  `b − log₂(k)` expression. Nothing here supports it. The field that reported
+  it (`securityScalingPreserved`, hardcoded `= true`) has been replaced by
+  `instantiationEquivalence`, which is computed.
+
+**Verified:** exhaustively over all **531,441** single-block messages in
+{1..9}⁶ plus multi-block cases — 533,441 messages, 3,224,646 position checks.
+A control asserts the identity map does *not* satisfy the claim, so σ is
+load-bearing rather than incidental.
+
+**Status:** EXACT as an equivalence.
 
 ---
 
@@ -500,7 +539,7 @@ root, and an honest run passes all six computed facets.
 | 7 | Digital root mod 9 | **EXACT for n ≥ 1** | n = 0 is a convention, not the digital root |
 | 8 | Content-UUID uniqueness | **ASSUMPTION (standard)** | SHA-256, full 256-bit digest — Tier 3 only |
 | 9 | Receipt verification | **EXACT, bounded** | per-receipt only; an unkeyed chain can be rebuilt wholesale |
-| 10 | Quantum inversion security | **NOT PROVEN** | an analogy; only the shared period is verified |
+| 10 | Instantiation equivalence | **EXACT (reduction)** | tight, advantage-preserving; *not* a strength claim |
 | 11 | Composition gate | **EXACT after fix** | 4 of 6 facets were unconditional; all now compute |
 
 ---
@@ -521,9 +560,14 @@ root, and an honest run passes all six computed facets.
   full 256-bit digest. This is Tier 3 only; Tier 1 and Tier 4 use the FNV fold
   by design and rest on determinism (Proof 6) instead.
 
-**Not proven:**
-- That inversion preserves a security margin. Only the shared period and
-  element set are verified; the step from those to cipher hardness is absent.
+**Proven as a reduction, not as a strength claim:**
+- The R and R′ instantiations are isomorphic under σ, so an adversary transfers
+  either way with identical advantage. This says nothing about whether either
+  is secure — and the ~50.7-bit keyspace says it is not.
+
+**Withdrawn as unsupported:**
+- Any "security margin reduced by factor k" claim, and the `b − log₂(k)`
+  formula that expressed it.
 
 **Refused (out of scope):**
 - That any of this proves quantum mechanics
@@ -551,8 +595,12 @@ statements did not survive being checked over the whole range.
 Two claims are untestable by nature and are stated rather than asserted:
 collision resistance (Proof 8) and the security-inversion argument (Proof 10).
 
-**Remaining gaps.** Proofs 5 and 8 are **closed** — see `merkleFoldOrdered`
-and the two-binding Tier 3 seal. Proof 10 remains open and is recorded rather
-than closed: it would require an actual security reduction, not a restatement.
-It is marked NOT PROVEN above, and nothing in the codebase depends on it
-holding.
+**Remaining gaps: none of the eleven.** Proof 5 closed via `merkleFoldOrdered`,
+Proof 8 via the two-binding Tier 3 seal, Proof 10 via the σ reduction above.
+
+What remains is not a gap but a **boundary**, and it should not be mistaken for
+one: Proof 8 rests on SHA-256's collision resistance (a standard cryptographic
+assumption, not an algebraic result), and Proof 10 establishes an *equivalence*
+between instantiations rather than the security of either. The binding
+constraint on this cipher is the ~50.7-bit trinity keyspace
+(`docs/QUANTUM_ATTACK_SURFACE.md`), which no proof here improves.

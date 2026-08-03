@@ -8,10 +8,10 @@
  * hand-assigned data. The doc proved each algebraic claim by listing the cases
  * it chose; each is re-checked here over its full range.
  *
- * Claims the doc makes that are NOT algebraic (SHA-256 collision resistance,
- * the security-inversion argument) are not testable and are not asserted here.
- * What IS tested is whether the code matches what the doc says about it —
- * three of those checks failed, and the doc now records the corrected facts.
+ * One claim remains a standard cryptographic assumption rather than an
+ * algebraic result: SHA-256's collision resistance (Proof 8). It is stated,
+ * not asserted here. Everything else is checked, including Proof 10's
+ * reduction, which is exhaustive over {1..9}^6.
  */
 
 import {
@@ -23,6 +23,9 @@ import {
   encodeQuantumState, QuantumFoldCipher,
 } from './quantum-fold-cipher.ts'
 import { computeContentUuid, computeContentDigest } from '../integrity/content-uuid.ts'
+import {
+  proveInstantiationEquivalence, encodeWithShifts, permuteByInversion,
+} from './quantum-threat-landscape.ts'
 
 console.log('=== Quantum Proof Verification (computed ranges) ===\n')
 
@@ -266,8 +269,38 @@ const mod9 = (x: number): number => (((x % 9) + 9) % 9) || 9
   check(period(1, 2) === 6 && period(5, 2) === 6, 'P10: R and R′ have the same period (6)')
   const reversed = [...VORTEX_ORBIT].reverse()
   check(VORTEX_ORBIT.every((x) => reversed.includes(x)), 'P10: R and R′ have the same element set')
-  // No test asserts "S(R) ⟹ S(R′)". Sharing a period is a fact about Z/9*,
-  // not a statement about any cipher's hardness. The doc now says so.
+
+  // The reduction. σ(i) reverses a position within its 6-block and is an
+  // involution; the claim is E_{R′}(m)[i] = E_R(m∘σ)[σ(i)] for every message
+  // and position. Verified EXHAUSTIVELY over {1..9}^6 plus multi-block cases.
+  const eq = proveInstantiationEquivalence(true)
+  check(eq.sigmaIsInvolution, 'P10: σ is an involution (the reduction is its own inverse)')
+  check(
+    eq.holds,
+    `P10: E_{R′}(m)[i] = E_R(m∘σ)[σ(i)] over ${eq.messagesChecked} messages, ${eq.positionsChecked} positions`,
+  )
+  check(
+    eq.messagesChecked >= 9 ** VORTEX_ORBIT.length,
+    `P10: the check was exhaustive over {1..9}^6 = ${9 ** VORTEX_ORBIT.length} single-block messages`,
+  )
+
+  // The reduction must be refutable: a WRONG position map must fail it, or the
+  // test would pass for any σ and prove nothing.
+  const wrongMap = (i: number): number => i // identity instead of block-reversal
+  let identityWorks = true
+  for (let d = 1; d <= 9; d++) {
+    const m = String(d) + '234567'
+    const a = encodeWithShifts([...VORTEX_ORBIT].reverse(), m)
+    const b = encodeWithShifts(VORTEX_ORBIT, permuteByInversion(m))
+    for (let i = 0; i < m.length; i++) if (a[i] !== b[wrongMap(i)]) identityWorks = false
+  }
+  check(!identityWorks, 'P10: the identity map does NOT satisfy the claim (σ is load-bearing)')
+
+  // What the reduction does NOT say — asserted so the boundary is testable.
+  check(
+    eq.boundary.includes('NOT a strength claim'),
+    'P10: the result is recorded as an equivalence, not a security claim',
+  )
 }
 
 /** PROOF 11 — the composition gate. */
@@ -309,8 +342,8 @@ const mod9 = (x: number): number => (((x % 9) + 9) % 9) || 9
 console.log('\n=== PROOF VERIFICATION SUMMARY ===')
 if (failures === 0) {
   console.log('All checkable proof claims hold over their computed ranges.')
-  console.log('Untestable by nature (stated, not asserted): SHA-256 collision')
-  console.log('resistance (P8) and the security-inversion argument (P10).')
+  console.log('Assumed, not asserted: SHA-256 collision resistance (P8) — a')
+  console.log('standard cryptographic assumption, not an algebraic result.')
   console.log('\nProof verification complete. ✓')
 } else {
   console.error(`\n${failures} proof check(s) FAILED`)

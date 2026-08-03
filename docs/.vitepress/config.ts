@@ -62,6 +62,8 @@ function excerptFor(relativePath: string): string {
       .replace(/<!--[\s\S]*?-->/g, ' ') // html comments
       .replace(/<[^>]+>/g, ' ') // html tags
       .replace(/^#{1,6}\s+.*$/gm, ' ') // headings
+      .replace(/^\s{0,3}[-*+]\s+/gm, '') // bullet list markers (else "- item" leaks in)
+      .replace(/^\s{0,3}\d+\.\s+/gm, '') // ordered list markers ("1. item")
       .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ') // images
       .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1') // links → their text
       .replace(/[*_`>|]/g, ' ') // inline markup

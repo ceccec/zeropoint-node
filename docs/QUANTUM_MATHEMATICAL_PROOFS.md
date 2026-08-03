@@ -563,7 +563,7 @@ root, and an honest run passes all six computed facets.
 **Proven as a reduction, not as a strength claim:**
 - The R and R′ instantiations are isomorphic under σ, so an adversary transfers
   either way with identical advantage. This says nothing about whether either
-  is secure — and the ~50.7-bit keyspace says it is not.
+  is secure — and a known-plaintext attack says neither is.
 
 **Withdrawn as unsupported:**
 - Any "security margin reduced by factor k" claim, and the `b − log₂(k)`
@@ -601,6 +601,8 @@ Proof 8 via the two-binding Tier 3 seal, Proof 10 via the σ reduction above.
 What remains is not a gap but a **boundary**, and it should not be mistaken for
 one: Proof 8 rests on SHA-256's collision resistance (a standard cryptographic
 assumption, not an algebraic result), and Proof 10 establishes an *equivalence*
-between instantiations rather than the security of either. The binding
-constraint on this cipher is the ~50.7-bit trinity keyspace
-(`docs/QUANTUM_ATTACK_SURFACE.md`), which no proof here improves.
+between instantiations rather than the security of either. The binding constraint on this
+cipher is its CONSTRUCTION, not any parameter: it is a repeating-key
+polyalphabetic substitution, and one known plaintext recovers the key with no
+search (`docs/QUANTUM_ATTACK_SURFACE.md`). No proof here improves that, and
+the keyspace — now 256.8 bits — was never what limited it.

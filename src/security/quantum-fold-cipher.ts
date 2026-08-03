@@ -30,6 +30,7 @@ import {
   digitalRoot,
   VORTEX_ORBIT,
 } from '../0/index.ts'
+import { log2, ceil } from '../0/algebra.ts'
 
 // Tier 3 is the CRYPTOGRAPHIC seal, so it uses the SHA-256 path, not the FNV
 // fold. src/integrity/content-uuid.ts states the split in its own header:
@@ -50,6 +51,27 @@ const IMPERIAL_VORTEX = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1]
 /** Positions in a dash-stripped UUID that carry structure rather than entropy. */
 const UUID_VERSION_NIBBLE = 12
 const UUID_VARIANT_NIBBLE = 16
+
+/**
+ * Keyspace arithmetic, computed rather than assumed.
+ *
+ * Each key element is drawn from the trinity {3,6,9} — THREE values, so it
+ * carries log2(3) ≈ 1.585 bits, not 8. The old default of 32 elements looks
+ * like "32 bytes = 256 bits" by analogy with AES-256, but it is 32·log2(3) ≈
+ * 50.7 bits. The analogy was the bug.
+ */
+export function keyspaceBits(keyLength: number): number {
+  return keyLength * log2(TRINITY.length)
+}
+
+/** Elements needed to reach a target strength under the trinity constraint. */
+export function keyLengthForBits(bits: number): number {
+  return ceil(bits / log2(TRINITY.length))
+}
+
+/** Default target: 256-bit keyspace ⇒ ceil(256 / log2 3) = 162 elements. */
+export const DEFAULT_KEY_BITS = 256
+export const DEFAULT_KEY_LENGTH = keyLengthForBits(DEFAULT_KEY_BITS)
 
 /**
  * TIER 1: Deterministic Identity
@@ -205,7 +227,10 @@ function keySealInput(
     : { kind: 'quantum-key-expanded-v1', round, material: [...material], genesis }
 }
 
-export function generateQuantumKey(entropy: string, keyLength: number = 32): QuantumKey {
+export function generateQuantumKey(
+  entropy: string,
+  keyLength: number = DEFAULT_KEY_LENGTH,
+): QuantumKey {
   const genesis = toUuid(`key:genesis:${entropy}`)
 
   const material: number[] = []
@@ -349,6 +374,54 @@ export function verifyMeasurementReceipt(receipt: MeasurementReceipt): boolean {
  * No padding oracle: no error conditions (all digits map to digits 1-9).
  */
 
+/**
+ * Keyed vortex shift.
+ *
+ * The unkeyed `vortexEncode`/`vortexDecode` below shift by position alone:
+ * `VORTEX_ORBIT[i % 6]`. `encryptQuantum` used them, so the key was never
+ * consulted — 500 distinct keys produced one identical ciphertext, and
+ * `decryptQuantum` recovered the plaintext with no key at all. The cipher was
+ * a fixed public permutation and its keyspace was 0 bits, not 50.7.
+ *
+ * The shift now folds the key element for the position into the orbit shift:
+ *
+ *     s_i = (VORTEX_ORBIT[i mod 6] + material[i mod n]) mod 9
+ *
+ * Adding a constant mod 9 is still a bijection per position, so the round-trip
+ * and the no-padding-oracle property (Proof 4) are unaffected. Key elements
+ * lie in {3,6,9} ⇒ {3,6,0} mod 9, three distinct shifts per position, so the
+ * effective keyspace equals the material keyspace with no collapse.
+ */
+function keyedShift(material: readonly number[], i: number): number {
+  const orbit = VORTEX_ORBIT[i % VORTEX_ORBIT.length]!
+  const k = material.length === 0 ? 0 : material[i % material.length]!
+  return (orbit + k) % 9
+}
+
+/** Encrypt under a key. Distinct keys give distinct ciphertexts. */
+export function vortexEncodeKeyed(input: string, material: readonly number[]): string {
+  return input
+    .split('')
+    .map((ch, i) => {
+      const n = Number.parseInt(ch, 10)
+      if (Number.isNaN(n) || n === 0) return ch
+      return (((n + keyedShift(material, i) - 1) % 9) + 1).toString()
+    })
+    .join('')
+}
+
+/** Decrypt under a key. Requires the SAME key — there is no keyless path. */
+export function vortexDecodeKeyed(input: string, material: readonly number[]): string {
+  return input
+    .split('')
+    .map((ch, i) => {
+      const n = Number.parseInt(ch, 10)
+      if (Number.isNaN(n) || n === 0) return ch
+      return (((n - keyedShift(material, i) + 8 + 9) % 9) + 1).toString()
+    })
+    .join('')
+}
+
 export function vortexEncode(input: string): string {
   return input
     .split('')
@@ -383,8 +456,8 @@ export interface EncryptedPayload {
 }
 
 export function encryptQuantum(plaintext: string, key: QuantumKey): EncryptedPayload {
-  // Apply vortex encoding (dimension 6: reversible encryption)
-  const ciphertext = vortexEncode(plaintext)
+  // Keyed: the ciphertext depends on the key, which it previously did not.
+  const ciphertext = vortexEncodeKeyed(plaintext, key.material)
 
   // Create encryption receipt via fold
   const plaintextUuid = toUuid(`plaintext:${plaintext}`)
@@ -401,10 +474,15 @@ export function encryptQuantum(plaintext: string, key: QuantumKey): EncryptedPay
   }
 }
 
-export function decryptQuantum(payload: EncryptedPayload): string {
-  // Apply vortex decoding (reverse of encoding)
-  const plaintext = vortexDecode(payload.ciphertext)
-  return plaintext
+/**
+ * Decrypt. The key is REQUIRED — this took only the payload, so anyone
+ * holding a ciphertext could read it.
+ */
+export function decryptQuantum(payload: EncryptedPayload, key: QuantumKey): string {
+  if (payload.keyUuid !== key.contentUuid) {
+    throw new Error('decryptQuantum: key does not match the payload seal')
+  }
+  return vortexDecodeKeyed(payload.ciphertext, key.material)
 }
 
 /**
@@ -446,7 +524,7 @@ export class QuantumFoldCipher {
   ]
 
   generateKey(entropy: string): QuantumKey {
-    this.keyMaterial = generateQuantumKey(entropy, 32)
+    this.keyMaterial = generateQuantumKey(entropy, DEFAULT_KEY_LENGTH)
     // Refutable: the seal must recompute from the stored fields. This read
     // `= true`, which recorded only that the method had run.
     this.facets[0]!.on = verifyQuantumKey(this.keyMaterial)
@@ -504,15 +582,17 @@ export class QuantumFoldCipher {
     // must be a well-formed vortex encoding (re-encoding its decoding is a
     // fixed point). Neither holds by virtue of encrypt() having been called.
     const ct = this.encryptedPayload.ciphertext
+    const mat = this.keyMaterial.material
     this.facets[4]!.on =
       this.encryptedPayload.keyUuid === this.keyMaterial.contentUuid &&
-      vortexEncode(vortexDecode(ct)) === ct
+      vortexEncodeKeyed(vortexDecodeKeyed(ct, mat), mat) === ct
     return this.encryptedPayload
   }
 
   decrypt(): string {
     if (!this.encryptedPayload) throw new Error('Nothing encrypted')
-    return decryptQuantum(this.encryptedPayload)
+    if (!this.keyMaterial) throw new Error('Key not generated')
+    return decryptQuantum(this.encryptedPayload, this.keyMaterial)
   }
 
   /** The state as it stands after any gates — needed to tomograph it. */

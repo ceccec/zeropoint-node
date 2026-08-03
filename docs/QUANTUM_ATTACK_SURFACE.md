@@ -27,40 +27,59 @@ For each known quantum attack, we map:
 - Tier 1: Content-address key via `toUuid()` → deterministic UUID
 - Tier 3: Trinity lattice [3,6,9] constrains key structure
 
-**Keyspace, computed rather than asserted.** An earlier revision of this
-section claimed "the keyspace stays 2^256". That is not this cipher's
-keyspace, and the claim is withdrawn.
+**Keyspace, computed rather than asserted.** Two earlier revisions of this
+section were both wrong. The first claimed "the keyspace stays 2^256". The
+second corrected that to ~50.7 bits. The real figure at the time was **0 bits**:
+`encryptQuantum` never consulted the key, and `decryptQuantum` took no key at
+all, so 500 distinct keys produced one identical ciphertext and anyone holding
+a ciphertext could read it. A keyspace that the cipher does not use is not a
+keyspace.
 
-`generateQuantumKey` emits `keyLength` bytes drawn from the trinity `{3,6,9}` —
-three values per byte, not 256. The keyspace is therefore `3^keyLength`, i.e.
-`log2(3)·keyLength ≈ 1.585·keyLength` bits:
+Both defects are fixed. The shift is now keyed —
+`s_i = (VORTEX_ORBIT[i mod 6] + material[i mod n]) mod 9` — and decryption
+requires the matching key.
+
+Each key element is one of **three** values, so it carries log2(3) ≈ 1.585
+bits, not 8. The old default of 32 elements reads as "32 bytes = 256 bits" by
+analogy with AES-256; that analogy was the bug.
 
 | keyLength | Keyspace | Bits |
 |---|---|---|
-| 32 (default) | 3^32 | ≈ 50.7 |
+| 32 (old default) | 3^32 | ≈ 50.7 |
 | 64 | 3^64 | ≈ 101.4 |
-| 162 | 3^162 | ≈ 256.8 |
+| **162 (current default)** | 3^162 | **≈ 256.8** |
 
-At the default of 32 the strength is about **50.7 bits**, which is
-brute-forceable — not "infeasible", and not comparable to a 256-bit cipher.
-Reaching 256-bit-equivalent strength under the trinity constraint needs
-`keyLength ≥ 162`.
+The default is now derived, not chosen: `DEFAULT_KEY_LENGTH =
+keyLengthForBits(256)`. `keyspaceBits()` and `keyLengthForBits()` are exported,
+so the relationship is computable rather than implied.
 
-This is a consequence of the trinity constraint, which is a design premise of
-the framework rather than a defect in the implementation. It is recorded here
-so the constraint's cost is visible instead of implied away.
+---
 
-**Proof:** Key generation is deterministic and entropy-dependent. Same entropy →
-same key; distinct entropy → distinct key. Both directions are asserted in
-`quantum-fold-cipher.test.ts`, along with reachability of all three trinity
-values and a no-collapse check (2000 entropies → 2000 distinct keys).
+### ⚠️ Closing this gap did not make the cipher secure
 
-**Seal strength (separate from keyspace).** The Tier 3 seal binding a key to
-its material and genesis is a full 256-bit SHA-256 digest (`contentDigest`),
-alongside a SHA-256-derived UUID for identity. Forging a key that verifies
-under a given seal is bounded by SHA-256, not by the trinity keyspace above.
-The two limits are independent: **the keyspace is the weaker one at ~50.7
-bits**, and it is what an attacker would attack.
+The keyspace is now 256.8 bits. **It was never the binding constraint.**
+
+This is a repeating-key polyalphabetic substitution cipher. One known
+plaintext recovers the entire key with **no search at all** — for each
+position, subtract the plaintext digit from the ciphertext digit to get the
+total shift, subtract the public orbit term, and read off the key element:
+
+```
+s_i = (c_i − p_i) mod 9
+k_i = (s_i − VORTEX_ORBIT[i mod 6]) mod 9      → {3,6,0} maps back to {3,6,9}
+```
+
+`quantum-fold-cipher.test.ts` asserts this attack **succeeds**, against the
+162-element default. It is recorded as a passing test precisely so it cannot be
+quietly forgotten: if it ever starts failing, the note is stale and the cipher
+changed.
+
+**What that means:** enlarging a keyspace defends against brute force and
+nothing else. Against known-plaintext, chosen-plaintext, or sufficient
+ciphertext-only analysis, this construction offers no protection at any key
+length. Reaching real security requires a different construction — key
+material at least as long as the message and never reused (a one-time pad), or
+a standard primitive. That is a design decision, not a parameter.
 
 **History:** these properties are tested because all of them once failed.
 The original derivation seeded a doubling chain from `entropy[0]` alone and

@@ -16,6 +16,11 @@ import {
   verifyMeasurementReceipt,
   vortexEncode,
   vortexDecode,
+  vortexEncodeKeyed,
+  vortexDecodeKeyed,
+  keyspaceBits,
+  keyLengthForBits,
+  DEFAULT_KEY_LENGTH,
   encryptQuantum,
   decryptQuantum,
   QuantumFoldCipher,
@@ -241,7 +246,89 @@ function testKeyExpansion() {
   console.log('✓ Key expansion: all rounds maintain trinity constraint')
 }
 
+/**
+ * The keyspace gap. Two separate failures, and the first made the second moot:
+ * the key was never consulted by encryptQuantum, and decryptQuantum took no
+ * key at all. 500 distinct keys produced ONE ciphertext. The documented
+ * "50.7-bit keyspace" was really 0 bits.
+ */
+function testKeyIsActuallyUsed() {
+  const msg = '123456789123456789'
+  const a = generateQuantumKey('alice-key')
+  const b = generateQuantumKey('bob-key')
+
+  const ca = encryptQuantum(msg, a)
+  const cb = encryptQuantum(msg, b)
+  console.assert(ca.ciphertext !== cb.ciphertext, 'Distinct keys must give distinct ciphertexts')
+  console.log('✓ Encryption: the ciphertext depends on the key')
+
+  // Over a computed range, not two samples.
+  const seen = new Set<string>()
+  for (let i = 0; i < 500; i++) {
+    seen.add(encryptQuantum(msg, generateQuantumKey(`ck:${i}`)).ciphertext)
+  }
+  console.assert(seen.size === 500, `500 keys must give 500 ciphertexts (got ${seen.size})`)
+  console.log(`✓ Encryption: 500 keys → ${seen.size} distinct ciphertexts`)
+
+  console.assert(decryptQuantum(ca, a) === msg, 'Correct key must recover the plaintext')
+  console.log('✓ Decryption: the correct key recovers the plaintext')
+
+  let rejected = false
+  try { decryptQuantum(ca, b) } catch { rejected = true }
+  console.assert(rejected, 'A mismatched key must be rejected, not silently wrong')
+  console.log('✓ Decryption: a mismatched key is rejected')
+}
+
+function testKeyspaceArithmetic() {
+  // Each element is one of THREE values, so it carries log2(3) bits, not 8.
+  console.assert(keyspaceBits(32) < 51, 'The old 32-element default is ~50.7 bits, not 256')
+  console.assert(keyspaceBits(DEFAULT_KEY_LENGTH) >= 256, 'The default must reach 256 bits')
+  console.assert(keyLengthForBits(256) === DEFAULT_KEY_LENGTH, 'The default must be derived, not picked')
+  console.log(
+    `✓ Keyspace: default ${DEFAULT_KEY_LENGTH} elements = ${keyspaceBits(DEFAULT_KEY_LENGTH).toFixed(1)} bits (32 would be ${keyspaceBits(32).toFixed(1)})`,
+  )
+
+  // The derivation must actually produce that many elements.
+  const key = generateQuantumKey('length-check')
+  console.assert(key.material.length === DEFAULT_KEY_LENGTH, 'Key material must be the full length')
+  console.log('✓ Keyspace: generated material is the full default length')
+}
+
+/**
+ * RECORDED WEAKNESS, not a passing property.
+ *
+ * Enlarging the keyspace to 256 bits does NOT make this cipher secure. It is a
+ * repeating-key polyalphabetic substitution, so one known plaintext recovers
+ * the whole key with no search. This test asserts the attack WORKS, so the
+ * limitation is measured and cannot be quietly forgotten.
+ */
+function testKnownPlaintextRecoversKey() {
+  const key = generateQuantumKey('a-very-secret-passphrase')
+  const n = key.material.length
+  const plain = Array.from({ length: n }, (_, i) => String((i % 9) + 1)).join('')
+  const cipher = encryptQuantum(plain, key).ciphertext
+
+  const recovered: number[] = []
+  for (let i = 0; i < n; i++) {
+    const shift = (((Number(cipher[i]) - Number(plain[i])) % 9) + 9) % 9
+    const k = (((shift - VORTEX_ORBIT[i % VORTEX_ORBIT.length]!) % 9) + 9) % 9
+    recovered.push(k === 0 ? 9 : k)
+  }
+
+  console.assert(
+    recovered.join('') === key.material.join(''),
+    'The known-plaintext attack is expected to SUCCEED — if it fails, this note is stale',
+  )
+  console.log(
+    `✓ Recorded weakness: one known plaintext of ${n} digits recovers the whole key, no search`,
+  )
+  console.log('  → keyspace is NOT the binding constraint; the construction is')
+}
+
 testTrinityKeyGeneration()
+testKeyIsActuallyUsed()
+testKeyspaceArithmetic()
+testKnownPlaintextRecoversKey()
 testKeyDependsOnEntropy()
 testKeyReachesWholeTrinity()
 testKeyMaterialDoesNotCollapse()
@@ -343,7 +430,7 @@ function testEncryptionPayload() {
   console.log('✓ Encryption: payload created with ciphertext and receipt')
 
   // Decrypt
-  const decrypted = decryptQuantum(payload)
+  const decrypted = decryptQuantum(payload, key)
   console.assert(decrypted === plaintext, 'Decryption must recover plaintext')
   console.log('✓ Decryption: plaintext recovered')
 }

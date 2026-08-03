@@ -218,6 +218,7 @@ export default defineConfig({
       { text: 'Kernel', link: '/KERNEL' },
       { text: 'Computed pages', link: '/pages/' },
       { text: 'Audit', link: '/AUDIT' },
+      { text: 'All docs', link: '/DOCUMENTATION_INDEX' },
     ],
 
     sidebar: [

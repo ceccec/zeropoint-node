@@ -55,57 +55,68 @@ so the relationship is computable rather than implied.
 
 ---
 
-### The construction, and what it now provides
+### The construction: AES-256-GCM
 
-Enlarging the keyspace did **not** make the cipher secure, and an earlier
-revision of this section said so: the construction was a repeating-key
-polyalphabetic substitution, and one known plaintext recovered the entire key
-by subtraction, with no search. That has been replaced.
+The cipher has been through four states, and the first three were all broken
+or bespoke:
+
+| | Construction | Status |
+|---|---|---|
+| 1 | position-only vortex shift | key never consulted — **0-bit keyspace** |
+| 2 | repeating key `material[i mod n]` | one known plaintext **recovered the key** |
+| 3 | HMAC-SHA256 keystream + encrypt-then-MAC | sound, but a bespoke composition |
+| 4 | **AES-256-GCM** | standard AEAD |
 
 ```
-subkeys    k_enc = HMAC-SHA256(contentDigest, ".../keystream/v1")
-           k_mac = HMAC-SHA256(contentDigest, ".../mac/v1")
-keystream  s_i   = HMAC-SHA256(k_enc, nonce ‖ counter) → bytes → Z/9
-ciphertext c_i   = ((p_i − 1 + s_i) mod 9) + 1
-tag              = HMAC-SHA256(k_mac, nonce ‖ ciphertext)
+k_aes  = HMAC-SHA256(contentDigest, ".../aes-gcm/v1")   → 32 bytes
+iv     = 12 random bytes, fresh per message
+AAD    = keyUuid, binding the payload to its key identity
+ct,tag = AES-256-GCM(k_aes, iv, plaintext, AAD)
 ```
 
-**Why the attack dies.** The keystream is PRF output, not the key. A known
-plaintext reveals `s_i` at those positions and nothing else — going from there
-to the key means inverting HMAC-SHA256. And the nonce is fresh per message, so
-the recovered keystream has no value against any later ciphertext. Both halves
-are asserted in `quantum-fold-cipher.test.ts`, which previously asserted the
-attack *succeeded* and now asserts it *fails*.
+Confidentiality, integrity and authenticity now come from GCM, verified inside
+`final()` before any plaintext is returned. There is no hand-rolled keystream,
+no hand-rolled MAC, no rejection sampling, and no modulus-bias question — those
+were all risks of writing the primitive rather than using one.
+
+The AAD binding is load-bearing, not decorative: decrypting the same ciphertext
+without it fails, so a payload cannot be re-labelled with another key's uuid and
+still authenticate.
+
+**What the switch costs.** The ciphertext is now **hex, not a digit string**.
+AES is byte-oriented, so the digit domain does not survive — and that domain was
+the only reason to build anything bespoke. Standard authenticated encryption is
+worth more than a format-preserving ciphertext. In exchange the plaintext domain
+became **unrestricted**: the old digit-only rule existed because non-digits were
+copied through in the clear, and AES has no such hole.
 
 **What it provides**
 
 | Property | Mechanism |
 |---|---|
-| Confidentiality | PRF keystream over a per-message nonce |
-| Integrity / authenticity | encrypt-then-MAC, verified before decryption |
-| No malleability | a modified ciphertext fails the tag |
-| Semantic security | fresh nonce ⇒ same message encrypts differently each time |
-| Unbiased keystream | rejection sampling (bytes ≥ 252 discarded — `% 9` on 256 would over-weight shifts 0–3) |
+| Confidentiality | AES-256 in counter mode |
+| Integrity / authenticity | GCM tag, verified before plaintext is returned |
+| Non-malleability | any bit flipped in ciphertext, tag or IV fails the tag |
+| Semantic security | fresh 96-bit IV per message (verified: 500/500 distinct) |
+| Key/payload binding | keyUuid as AAD |
 
 **What it still requires, and what it is not**
 
-- **The nonce must be unique per key.** Reuse is a two-time pad: the difference
-  of two ciphertexts leaks the difference of the plaintexts, at any key size.
-  This is demonstrated, not assumed — the test suite confirms nonce reuse leaks
-  `p₁ − p₂` exactly. 128 random bits make accidental collision negligible;
-  deliberate reuse is fatal.
-- **Security rests on HMAC-SHA256, not on the vortex or trinity algebra.** The
-  trinity material feeds the KDF. It contributes structure, not strength — and
-  the 256.8-bit keyspace is no longer the interesting number, because the
-  keystream's strength comes from the PRF.
-- **This is a bespoke composition.** It is a standard one over standard
-  primitives, but for production a vetted AEAD — AES-GCM or ChaCha20-Poly1305 —
-  remains the better choice. Nothing here beats them. This exists to keep the
-  digit domain the framework is built on.
-- **Domain is digits 1–9.** Non-digit input is rejected; passing it through
-  would copy plaintext straight into the ciphertext.
-- **Not analysed for:** side channels, traffic analysis, or key management.
-  Length is not hidden — the ciphertext is the length of the plaintext.
+- **The IV must be unique per key.** GCM fails *worse* than a stream cipher on
+  IV reuse: it leaks the authentication subkey as well as plaintext
+  differences, so forgery becomes possible, not just disclosure. Random 96-bit
+  IVs bound safe use to roughly **2³² messages per key** (NIST SP 800-38D).
+  Rotate keys before that.
+- **Key strength is bounded by the caller's entropy, not by the 256.8-bit
+  material space.** `generateQuantumKey('password')` yields a key no stronger
+  than `'password'`. There is **no password stretching** — no PBKDF2, scrypt or
+  Argon2 — so a low-entropy passphrase is directly brute-forceable no matter
+  what the rest of this document says. If keys come from human input, that is
+  the weakest link in the system and it is not addressed here.
+- **Security rests on AES-GCM, not on the vortex or trinity algebra.** The
+  trinity material feeds the KDF. It contributes structure, not strength.
+- **Not analysed for** side channels, traffic analysis, or key management, and
+  the ciphertext length reveals the plaintext length.
 
 **History:** these properties are tested because all of them once failed.
 The original derivation seeded a doubling chain from `entropy[0]` alone and
@@ -130,12 +141,21 @@ console.assert(key1.contentUuid !== key2.contentUuid)
 - Decryption succeeds or fails (oracle response)
 - Bleichenbacher attack: 2^20 queries → recover plaintext
 
-**Fold defense:**
-- Tier 2: Vortex cipher is bijective (all digits 1-9 → all digits 1-9)
-- No invalid ciphertexts (no error conditions)
-- No oracle: every ciphertext decrypts to something valid
+**Defense — AES-256-GCM.** GCM is a counter mode: there is no padding, so
+there is no padding to probe. It is also authenticated, so a manipulated
+ciphertext is *rejected* rather than decrypted into something an oracle could
+distinguish. Decryption returns plaintext or throws; there is no third outcome
+to leak a bit.
 
-**Proof:** Vortex digit shift is mod 9 permutation. All 9 digits map to 9 unique digits. No digit maps to 0 or invalid state.
+> **Correction.** An earlier revision credited this defense to the bijective
+> vortex cipher ("no invalid ciphertexts, so no oracle"). That reasoning was
+> sound about the *algebraic primitive* but wrong about the *cipher*: the
+> vortex shift was never keyed, so it offered no confidentiality to protect.
+> The bijection below is a property of `vortexEncode`, which is the primitive
+> Proof 4 concerns — not the encryption path.
+
+**Proof (of the primitive):** the vortex digit shift is a permutation mod 9.
+All 9 digits map to 9 unique digits; none maps to 0 or an invalid state.
 
 **Test:**
 ```typescript

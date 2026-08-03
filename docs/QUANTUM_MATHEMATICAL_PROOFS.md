@@ -603,7 +603,7 @@ What remains is not a gap but a **boundary**, and it should not be mistaken for
 one: Proof 8 rests on SHA-256's collision resistance (a standard cryptographic
 assumption, not an algebraic result), and Proof 10 establishes an *equivalence*
 between instantiations rather than the security of either. The cipher's confidentiality and integrity now rest on
-HMAC-SHA256 (PRF keystream + encrypt-then-MAC), not on any proof in this file.
+AES-256-GCM, not on any proof in this file.
 The proofs here describe the algebraic layer — closure, subgroup, bijection,
 folds — which is the framework's structure, not its cryptographic strength.
 Keeping those two claims apart is the point of this document.

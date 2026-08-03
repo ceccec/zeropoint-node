@@ -95,21 +95,35 @@ const key = generateQuantumKey(entropy, keyLength=32)
 
 **Why it works:** Trinity [3,6,9] form a closed subgroup mod 9. Combined with Rodin doubling expansion, key schedule stays "conscious" (structured) through all rounds.
 
-### 3. Reversible Encryption (Tier 1+2, Dimension 6)
+### 3. Encryption (Tier 1+2, Dimension 6)
 
 **Problem:** Asymmetric encryption (RSA) has padding oracles. Decryption errors leak information.
 
-**Solution:** Vortex cipher is bijective (all digits map bijectively to digits):
-```typescript
-const plaintext = '12345'
-const ciphertext = vortexEncode(plaintext)     // '23456' (each shifted)
-const recovered = vortexDecode(ciphertext)     // '12345' (shifts reversed)
+**Solution — the cipher is AES-256-GCM.** `encryptQuantum` / `decryptQuantum`
+are a thin wrapper over a standard AEAD:
 
-// Proof: all digits 1-9 always map to 1-9 (no error conditions)
-// No padding oracle: no invalid ciphertexts to distinguish
+```typescript
+const key = generateQuantumKey(entropy)        // trinity material → SHA-256 digest
+const payload = encryptQuantum('any UTF-8', key)  // AES-256-GCM, fresh 96-bit IV
+const recovered = decryptQuantum(payload, key)    // throws if forged or altered
 ```
 
-**Why it works:** Vortex shifting (mod 9) is a permutation group. Bijection is proven by exhaustive test: 9 digits map to 9 unique outputs.
+GCM is a counter mode, so there is no padding and therefore no padding oracle —
+and it authenticates, so a modified ciphertext is rejected rather than decrypted
+to plausible garbage.
+
+> **The vortex cipher is NOT the encryption.** `vortexEncode`/`vortexDecode`
+> remain as the **unkeyed algebraic primitive**: a bijection on digits 1–9,
+> which is what Proof 4 establishes and what dimension 6 probes as a symmetry.
+> Earlier revisions of this page presented it as the cipher. It never had a
+> key, and using it as one is what produced a 0-bit keyspace. Keep the two
+> apart: the algebra gives the framework its structure; AES-GCM gives the
+> cipher its strength.
+
+**Why it works:** confidentiality, integrity and authenticity all come from
+AES-256-GCM. See `docs/QUANTUM_ATTACK_SURFACE.md` for what it does not cover —
+notably that key strength is bounded by the caller's entropy, with no password
+stretching.
 
 ### 4. Quantum Threat Landscape (Tier 4, Dimension 9)
 

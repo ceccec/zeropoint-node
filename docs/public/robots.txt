@@ -1,0 +1,6 @@
+# node.zeropoint.bg — served verbatim from the site root (docs/public/).
+# Everything here is public, computed documentation meant to be indexed.
+User-agent: *
+Allow: /
+
+Sitemap: https://node.zeropoint.bg/sitemap.xml

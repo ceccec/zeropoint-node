@@ -131,6 +131,27 @@ export function merkleFold(leaves: readonly string[]): string {
   return layer[0]!
 }
 
+/**
+ * Order-preserving fold — for a SEQUENCE, where merkleFold is for a SET.
+ *
+ * merkleFold sorts its leaves, so its root is permutation-invariant. That is
+ * the right semantics for facets (declaration order must not change the seal)
+ * and the wrong semantics for anything ordered: a measurement series, a step
+ * log, a chain of events. Folding those through merkleFold silently discards
+ * the ordering, and a root that cannot see a reordering cannot attest one.
+ *
+ * This binds each leaf to its index before folding, so a permutation changes
+ * the pairing and therefore the root. It is built ON merkleFold rather than
+ * replacing it — the set fold stays exactly as the upstream kernel defines it.
+ *
+ * Position binding also separates equal leaves: [a, a] is not [a] repeated,
+ * because the two carry different index addresses.
+ */
+export function merkleFoldOrdered(leaves: readonly string[]): string {
+  if (leaves.length === 0) return toUuid('empty-sequence')
+  return merkleFold(leaves.map((leaf, i) => merge(toUuid(`ord:${i}`), leaf)))
+}
+
 export function sealFacets<F extends { facet: string; on: boolean }>(
   tag: string,
   facets: readonly F[],

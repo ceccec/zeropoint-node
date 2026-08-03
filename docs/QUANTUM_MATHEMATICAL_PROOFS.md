@@ -14,7 +14,7 @@ What changed:
 |---|---|---|
 | 1 | "key expansion never leaves {1,2,4,8,7,5}" | expansion operates on the trinity {3,6,9}; the application was wrong |
 | 3 | "R′ is the multiplicative inverse of R", "bitwise reverse" | ill-posed; the inverse is of the *generator* (2 → 5). It is sequence reversal |
-| 5 | "if any leaf changes, the root changes" | true for values, **false for order** — `merkleFold` sorts |
+| 5 | "if any leaf changes, the root changes" | true for values; for order it needs `merkleFoldOrdered` (**gap since closed**) |
 | 6 | pseudocode shown as plain FNV-1a | the real `hash32` differs, and `toUuid` folds four seeded words |
 | 7 | "n mod 9 = 0 ⟹ dr = 9" | omits n = 0, whose true digital root is 0 |
 | 8 | "Content-UUID uniqueness (SHA-256)" | the cipher uses the **FNV fold**, not SHA-256 |
@@ -182,24 +182,44 @@ By induction on tree depth:
    - ⟹ hash(left_root, right_root) ≠ hash(left_root', right_root) (collision resistance)
    - ⟹ root changes ✓
 
-> **Correction — this holds for VALUES, not for ORDER.** `merkleFold` begins
-> with `[...leaves].sort()`. The root is therefore **permutation-invariant**:
-> reordering the leaves yields an identical root. What is built is a merkle
-> **set**, not a merkle list.
+> **Correction — the theorem needed splitting in two.** `merkleFold` begins
+> with `[...leaves].sort()`, so its root is **permutation-invariant**. That was
+> reported here as a defect; it is not. It is the correct semantics for a
+> **set** — facet declaration order must not change a seal — and it matches the
+> upstream kernel (`ceccec/ceccec.github.io`, `src/0/index.ts`) exactly. Changing
+> it would diverge from upstream and churn every root in the repo.
 >
-> The induction above is also stated for a binary tree; the implementation
-> promotes an odd trailing node unchanged (`b === undefined ? a : merge(a,b)`),
-> which the proof does not model.
+> The real gap was that ordered data was being folded through a set fold. That
+> is now closed by a second primitive rather than by altering the first:
 
-**Consequence:** a change to any leaf VALUE cascades to the root. **No ordering
-claim may rest on this root.**
+| Fold | Semantics | Order | Use for |
+|---|---|---|---|
+| `merkleFold` | set | invariant | facets, unordered collections |
+| `merkleFoldOrdered` | sequence | **sensitive** | measurement series, step logs, event chains |
 
-**Application:** receipt-chain verification does not rely on merkle ordering —
-it verifies the `prev` links, which is what actually detects a reordering. The
-tamper test in `quantum-state-tomography.test.ts` passes because of the link
-check, not the root.
+> `merkleFoldOrdered` binds each leaf to its index (`merge(toUuid(\`ord:i\`), leaf)`)
+> before folding, so a permutation changes the pairing and therefore the root.
+> It is built **on** `merkleFold`, so the set fold is untouched. Position
+> binding also separates equal leaves, which a plain unsorted fold would not.
+>
+> The induction above is stated for a binary tree; the implementation promotes
+> an odd trailing node unchanged (`b === undefined ? a : merge(a,b)`), which the
+> proof does not model. Index binding makes that promotion unambiguous for
+> sequences, since no two positions carry the same address.
 
-**Verified:** value-change detection and permutation-invariance both asserted.
+**Consequence:** a leaf VALUE change cascades to the root in both folds. An
+ORDER change is detected by `merkleFoldOrdered` and — by design — not by
+`merkleFold`.
+
+**Application:** the tomography proof now uses the ordered fold, because a shot
+series is a sequence. Previously it used `merkleFold`, so a permuted run
+produced an identical root and its tamper test passed only on the `prev`-link
+check; the root alone could not see a reordering. It can now, and the test
+asserts exactly that, alongside the contrast case.
+
+**Verified:** value-change detection in both folds; all **120 permutations** of
+5 leaves give 120 distinct ordered roots and collapse to 1 set root; equal
+leaves are distinguished by position.
 
 ---
 
@@ -456,7 +476,7 @@ root, and an honest run passes all six computed facets.
 | 2 | Trinity subgroup | **EXACT** | key bytes stay in {3,6,9} — this governs key expansion |
 | 3 | Rodin involution | **EXACT, restated** | reverse(R) is the inverse-generator orbit |
 | 4 | Vortex bijection | **EXACT** | bijective on {1..9}; 0 and non-digits bypass |
-| 5 | Merkle cascade | **PARTIAL** | holds for values; **fails for order** (merkleFold sorts) |
+| 5 | Merkle cascade | **EXACT, split** | set fold for values; `merkleFoldOrdered` for sequences |
 | 6 | Determinism | **EXACT** | holds; the pseudocode shown was not the algorithm |
 | 7 | Digital root mod 9 | **EXACT for n ≥ 1** | n = 0 is a convention, not the digital root |
 | 8 | Content-UUID uniqueness | **ASSUMPTION** | FNV fold, 122 free bits — **not SHA-256** |
@@ -473,8 +493,9 @@ root, and an honest run passes all six computed facets.
   inverses, associativity over all 27 triples); Vortex bijection over every
   shift × digit; digital root for n = 1..20000; determinism of `toUuid`.
 
-**Holds only in part:**
-- Merkle cascade — values yes, ordering no.
+**Holds, once the theorem is split by structure:**
+- Merkle cascade — value changes in both folds; ordering in `merkleFoldOrdered`,
+  verified exhaustively over all 120 permutations of 5 leaves.
 
 **Assumption, and weaker than previously stated:**
 - Content-UUID uniqueness rests on a 122-bit **non-cryptographic** fold. The
@@ -511,5 +532,8 @@ statements did not survive being checked over the whole range.
 Two claims are untestable by nature and are stated rather than asserted:
 collision resistance (Proof 8) and the security-inversion argument (Proof 10).
 
-**Gaps are recorded above rather than closed.** Proofs 5, 8 and 10 remain
-weaker than the cipher's surrounding documentation once implied.
+**Remaining gaps.** Proof 5's ordering gap is **closed** (see
+`merkleFoldOrdered`). Proofs 8 and 10 remain weaker than the cipher's
+surrounding documentation once implied, and are recorded rather than closed:
+8 would require moving the cipher to SHA-256, and 10 would require an actual
+security reduction. Both are design decisions, not omissions.

@@ -15,7 +15,7 @@
  */
 
 import {
-  toUuid, merge, merkleFold, digitalRoot, sealFacets, VORTEX_ORBIT,
+  toUuid, merge, merkleFold, merkleFoldOrdered, digitalRoot, sealFacets, VORTEX_ORBIT,
 } from '../0/index.ts'
 import {
   vortexEncode, vortexDecode, generateQuantumKey, verifyQuantumKey,
@@ -121,13 +121,46 @@ const mod9 = (x: number): number => (((x % 9) + 9) % 9) || 9
   changed[0] = toUuid('a-modified')
   check(merkleFold(changed) !== root, 'P5: a leaf VALUE change changes the root')
 
-  // merkleFold sorts its input, so the root is permutation-invariant. This is
-  // asserted as the true behaviour — the doc's unqualified "any leaf change"
-  // does not cover reordering, and no ordering claim may rest on this root.
+  // merkleFold sorts its input, so its root is permutation-invariant. That is
+  // the correct semantics for a SET (facet order must not change a seal), and
+  // it matches the upstream kernel. It is asserted, not treated as a defect.
   const reordered = [leaves[2]!, leaves[0]!, leaves[3]!, leaves[1]!]
   check(
     merkleFold(reordered) === root,
-    'P5: leaf ORDER does NOT change the root (merkleFold sorts — a merkle SET)',
+    'P5: merkleFold is a SET fold — order does not change the root',
+  )
+
+  // The ordering gap is closed by merkleFoldOrdered, for SEQUENCES.
+  check(
+    merkleFoldOrdered(reordered) !== merkleFoldOrdered(leaves),
+    'P5: merkleFoldOrdered is a SEQUENCE fold — order DOES change the root',
+  )
+  check(
+    merkleFoldOrdered(changed) !== merkleFoldOrdered(leaves),
+    'P5: the ordered fold still detects a value change',
+  )
+  // Exhaustive over every permutation of 5 leaves: all must be distinguished.
+  const five = ['a', 'b', 'c', 'd', 'e'].map(toUuid)
+  const perms: string[][] = []
+  const permute = (rest: string[], acc: string[] = []): void => {
+    if (rest.length === 0) { perms.push(acc); return }
+    for (let i = 0; i < rest.length; i++) {
+      permute([...rest.slice(0, i), ...rest.slice(i + 1)], [...acc, rest[i]!])
+    }
+  }
+  permute(five)
+  const orderedRoots = new Set(perms.map(merkleFoldOrdered))
+  const setRoots = new Set(perms.map(merkleFold))
+  check(
+    orderedRoots.size === perms.length,
+    `P5: all ${perms.length} permutations of 5 leaves give distinct ordered roots`,
+  )
+  check(setRoots.size === 1, `P5: the same ${perms.length} permutations collapse to 1 set root`)
+  // Equal leaves must not collapse: position binding separates them.
+  check(
+    merkleFoldOrdered([leaves[0]!, leaves[0]!, leaves[1]!, leaves[1]!]) !==
+      merkleFoldOrdered([leaves[1]!, leaves[0]!, leaves[1]!, leaves[0]!]),
+    'P5: the ordered fold distinguishes equal leaves by position',
   )
 }
 

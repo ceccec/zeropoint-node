@@ -20,6 +20,7 @@ import {
   QuantumFoldCipher,
 } from './quantum-fold-cipher.ts'
 import { abs, min } from '../0/algebra.ts'
+import { merkleFold, merkleFoldOrdered } from '../0/index.ts'
 
 console.log('=== Quantum State Tomography Test Suite (Phase 2) ===\n')
 
@@ -204,6 +205,21 @@ console.log('\nSECTION 4: Receipt Chain Verification')
     receipts: [...result.receipts.slice(1), result.receipts[0]!],
   }
   check(!tomo.verifyReceiptChain(tampered), 'reordered receipts are detected')
+
+  // The ROOT alone must see a reordering, independent of the prev-link check.
+  // Under merkleFold (which sorts) it could not: a permuted run produced an
+  // identical root, so the proof attested a set of shots, not a series.
+  const ids = result.receipts.map((r) => r.id)
+  const permuted = [...ids.slice(1), ids[0]!]
+  check(
+    merkleFoldOrdered(permuted) !== result.proof,
+    'the proof root alone detects a reordering (ordered fold)',
+  )
+  check(
+    merkleFold(permuted) === merkleFold(ids),
+    'contrast: the set fold cannot — merkleFold(permuted) === merkleFold(original)',
+  )
+  check(merkleFoldOrdered(ids) === result.proof, 'the proof is the ordered fold of its receipts')
 }
 
 /**

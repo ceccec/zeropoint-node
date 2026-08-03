@@ -34,7 +34,7 @@ import {
   type QuantumCipherGate,
 } from './quantum-fold-cipher.ts'
 
-import { toUuid, merkleFold } from '../0/index.ts'
+import { toUuid, merkleFold, merkleFoldOrdered } from '../0/index.ts'
 import { max, min, ceil, sqrt, log2, unitFromSeed, indexFromSeed } from '../0/algebra.ts'
 
 /** Complex number for density-matrix entries. */
@@ -205,7 +205,9 @@ export class QuantumStateTomography {
       fidelity: this.calculateFidelity(state, bloch),
       purity: this.calculatePurity(bloch),
       entropy: this.calculateEntropy(bloch),
-      proof: merkleFold(receipts.map((r) => r.id)),
+      // Ordered: the shot sequence is a series, not a set. merkleFold sorts,
+      // so a reordered run would have produced an identical root.
+      proof: merkleFoldOrdered(receipts.map((r) => r.id)),
       measurements: { z, x, y },
       receipts,
     }
@@ -219,7 +221,7 @@ export class QuantumStateTomography {
       if (!verifyMeasurementReceipt(receipt)) return false
       prevId = receipt.id
     }
-    return merkleFold(result.receipts.map((r) => r.id)) === result.proof
+    return merkleFoldOrdered(result.receipts.map((r) => r.id)) === result.proof
   }
 
   /** Accept the state only if measured fidelity meets the threshold. */

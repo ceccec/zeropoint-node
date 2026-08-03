@@ -110,3 +110,15 @@ docs/.vitepress/cache
 # would have committed ~2.3MB of dependency cache.
 .vitepress/dist
 .vitepress/cache
+
+# Claude Code local state.
+#
+# NOTE: .claude/ is deliberately NOT blanket-ignored — .claude/workflows/*.mjs
+# are tracked, because they are shared agent capability. The split is between
+# what an agent can USE and what merely describes this machine.
+#
+# launch.json is a dev-server launcher (npm run docs:dev, port 5173). It has no
+# effect on agent behaviour, context, or reasoning — it starts a preview
+# server. If a shared one-command docs preview is ever wanted, track it
+# deliberately rather than by accident.
+.claude/launch.json

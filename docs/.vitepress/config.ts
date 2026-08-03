@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs'
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { defineConfig, type HeadConfig } from 'vitepress'
 
 /**
@@ -37,10 +40,51 @@ function pageUrl(relativePath: string): string {
   return `${HOSTNAME}/${path}`
 }
 
+// docs/ — the srcDir. config.ts lives in docs/.vitepress, so its parent is docs.
+const DOCS_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+
+/**
+ * A meta description mined from a page's OWN first prose, for the many computed
+ * and reference pages that carry no frontmatter `description`. Without this they
+ * would all inherit the one site description and read identically to a crawler;
+ * with it each page is indexed for the sentence it actually opens with.
+ *
+ * Deterministic and build-time only: strips frontmatter, code fences, comments,
+ * markup and headings, then takes the first ~160 characters at a word boundary.
+ * Fails open to '' so a missing or unreadable file never breaks the build.
+ */
+function excerptFor(relativePath: string): string {
+  try {
+    const raw = readFileSync(resolve(DOCS_ROOT, relativePath), 'utf8')
+    const text = raw
+      .replace(/^---\n[\s\S]*?\n---\n/, ' ') // frontmatter block
+      .replace(/```[\s\S]*?```/g, ' ') // fenced code
+      .replace(/<!--[\s\S]*?-->/g, ' ') // html comments
+      .replace(/<[^>]+>/g, ' ') // html tags
+      .replace(/^#{1,6}\s+.*$/gm, ' ') // headings
+      .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ') // images
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1') // links → their text
+      .replace(/[*_`>|]/g, ' ') // inline markup
+      .replace(/\s+/g, ' ')
+      .trim()
+    if (!text) return ''
+    const limit = 160
+    if (text.length <= limit) return text
+    const slice = text.slice(0, limit)
+    const cut = slice.lastIndexOf(' ')
+    return `${(cut > 80 ? slice.slice(0, cut) : slice).trim()}…`
+  } catch {
+    return ''
+  }
+}
+
 export default defineConfig({
   title: 'ZeroPoint Node',
   description:
     'Vortex sequence, its reflection through the void, and the computed kernel that proves both.',
+  // Sets <html lang>. A concrete signal for search engines and screen readers,
+  // and the value echoed into og:locale / JSON-LD inLanguage below.
+  lang: 'en-US',
   base: '/',
   srcDir: '.',
   outDir: '.vitepress/dist',
@@ -61,12 +105,12 @@ export default defineConfig({
   // step with the content without a hand-maintained list to drift.
   sitemap: { hostname: HOSTNAME },
 
-  // Site-wide social/meta tags. Per-page canonical, og:title/description and
-  // og:url are added in transformHead below, where pageData is available.
+  // Site-wide social/meta tags — only the ones that are identical on every page.
+  // Everything page-specific (canonical, og:url/title/description/type,
+  // article:modified_time, JSON-LD) is emitted per page in transformHead below.
   head: [
-    ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: 'ZeroPoint Node' }],
-    ['meta', { property: 'og:locale', content: 'en' }],
+    ['meta', { property: 'og:locale', content: 'en_US' }],
     // Absolute URL is mandatory: crawlers fetch og:image out of page context,
     // so a relative path resolves against their own host and 404s. The file is
     // docs/public/og.png (1200x630, the size Facebook/X/LinkedIn expect).
@@ -80,17 +124,32 @@ export default defineConfig({
     ['meta', { name: 'author', content: 'ZeroPoint Node (ceccec)' }],
   ],
 
+  // Give every page its OWN description before the head is built. VitePress then
+  // renders <meta name="description"> from this, and transformHead reuses it for
+  // og/twitter — so a page with no frontmatter description is still indexed for
+  // its own opening prose rather than the shared site tagline.
+  transformPageData: (pageData) => {
+    if (!pageData.description) {
+      const excerpt = excerptFor(pageData.relativePath)
+      if (excerpt) pageData.description = excerpt
+    }
+  },
+
   // Per-page SEO tags. Runs once per built page with that page's resolved data,
-  // so each HTML file ships its own canonical URL and Open Graph/Twitter title
-  // and description — the difference between every page reading as "ZeroPoint
+  // so each HTML file ships its own canonical URL, Open Graph/Twitter card, and
+  // a JSON-LD record — the difference between every page reading as "ZeroPoint
   // Node" to a crawler and each page being indexed for what it actually says.
   transformHead: ({ pageData, siteData }) => {
     const url = pageUrl(pageData.relativePath)
     const title = pageData.title || siteData.title
     const description = pageData.description || siteData.description
+    const isHome = pageData.relativePath === 'index.md'
+    // lastUpdated is a ms timestamp when the git-backed option is on (it is).
+    const modified = pageData.lastUpdated ? new Date(pageData.lastUpdated).toISOString() : undefined
 
     const tags: HeadConfig[] = [
       ['link', { rel: 'canonical', href: url }],
+      ['meta', { property: 'og:type', content: isHome ? 'website' : 'article' }],
       ['meta', { property: 'og:url', content: url }],
       ['meta', { property: 'og:title', content: title }],
       ['meta', { name: 'twitter:title', content: title }],
@@ -101,6 +160,40 @@ export default defineConfig({
         ['meta', { name: 'twitter:description', content: description }],
       )
     }
+    if (!isHome && modified) {
+      tags.push(['meta', { property: 'article:modified_time', content: modified }])
+    }
+
+    // Structured data: WebSite for the home page, TechArticle for every content
+    // page. Gives search engines an explicit typed record (headline, dates,
+    // canonical URL, publisher) instead of leaving them to infer it from markup.
+    const jsonLd = isHome
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: siteData.title,
+          url: `${HOSTNAME}/`,
+          description,
+          inLanguage: 'en-US',
+        }
+      : {
+          '@context': 'https://schema.org',
+          '@type': 'TechArticle',
+          headline: title,
+          description,
+          url,
+          mainEntityOfPage: url,
+          inLanguage: 'en-US',
+          ...(modified ? { dateModified: modified } : {}),
+          author: { '@type': 'Organization', name: 'ZeroPoint Node' },
+          publisher: {
+            '@type': 'Organization',
+            name: 'ZeroPoint Node',
+            url: `${HOSTNAME}/`,
+          },
+        }
+    tags.push(['script', { type: 'application/ld+json' }, JSON.stringify(jsonLd)])
+
     return tags
   },
 

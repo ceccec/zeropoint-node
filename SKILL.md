@@ -25,7 +25,7 @@ zeropoint-node is the **origin library** (published mid-2025). Later work in [ce
 - **Imbalance rejects.** Conservation violations fail closed.
 - **Do not port** Payload CMS or ERP collections.
 - **`physicalFtl = computePhysicalFtl()`** from README-wired seals. `false` ⇒ quantumisation tip. `claySolved` stays 0 unless an existing compute appears.
-- **Dual licence, per FILE.** Five paths are free core (AGPL-3.0-or-later): `src/0/algebra.ts`, `src/0/index.ts`, and under `src/0/3/6/9/1/2/4/8/7/5/1/` — `a432.algebra.ts`, `a432.algebra.js`, `a432.roots.ts`. **Everything else is proprietary** (license@zeropoint.bg). The list is exhaustive; if unsure, treat a file as proprietary. Citing is attribution, not permission — see `CITATION.cff` and the licence section in [AGENTS.md](AGENTS.md).
+- **CC BY-NC-ND 4.0, whole repo.** Attribution, non-commercial, no derivatives — see [LICENSE](LICENSE). No per-file split. Commercial use or modified/adapted redistribution needs a separate licence (license@zeropoint.bg). Citing is attribution, not permission — see `CITATION.cff` and the licence section in [AGENTS.md](AGENTS.md).
 
 ## Wave status
 

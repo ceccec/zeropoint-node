@@ -102,8 +102,7 @@
     "README.md",
     "CHANGELOG.md",
     "CITATION.cff",
-    "LICENSE",
-    "LICENSE-CORE"
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
@@ -178,7 +177,7 @@
     "drunvalo-melchizedek"
   ],
   "author": "A432 Consciousness System",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "CC-BY-NC-ND-4.0",
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@rollup/plugin-commonjs": "29.0.3",

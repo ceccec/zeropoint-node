@@ -491,14 +491,17 @@ npm whoami                   # confirm
 npm run check && npm publish --access public
 ```
 
-E404 on PUT almost always means the token is missing/invalid or you are not logged in as `ceccec` — not that the package name is free to steal. License still SEE LICENSE / dual.
+E404 on PUT almost always means the token is missing/invalid or you are not logged in as `ceccec` — not that the package name is free to steal. License: CC BY-NC-ND 4.0 (see LICENSE).
 
 ## 📄 License
 
-Dual license — see [LICENSE](LICENSE).
+Licensed under **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)** — see [LICENSE](LICENSE).
 
-- **Free core math (AGPL-3.0-or-later):** `src/0/algebra.ts`, `src/0/index.ts`, `a432.algebra.ts` / `a432.algebra.js`, `a432.roots.ts` (full paths in LICENSE). Terms: [LICENSE-CORE](LICENSE-CORE).
-- **Everything else:** proprietary — license via [license@zeropoint.bg](mailto:license@zeropoint.bg).
+- **Attribution** — credit ZeroPoint Node (ceccec) and link back to the source.
+- **NonCommercial** — no commercial use.
+- **NoDerivatives** — you may not distribute modified versions.
+
+Commercial licensing or any use beyond these terms: [license@zeropoint.bg](mailto:license@zeropoint.bg).
 
 ## 🌟 Acknowledgments
 

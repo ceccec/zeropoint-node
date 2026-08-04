@@ -5,7 +5,7 @@
 
 import {
   asVortex,
-  computePhysicalFtl,
+  computeVortexInvariantsHold,
   decodeVortexDashAngles,
   developmentVortex,
   digitalRoot,
@@ -155,9 +155,8 @@ assert(isUuid(all.root), 'all-root uuid')
 const graph = foldA432ImportExportGraph()
 assert(graph.computes, 'import/export graph computes')
 assert(graph.fileCount > 0, 'scanned a432 sources')
-assert(graph.claySolved === 0, 'claySolved remains 0')
-assert(typeof graph.physicalFtl === 'boolean', 'physicalFtl is computed boolean')
-assert(graph.physicalFtl === computePhysicalFtl(), 'graph physicalFtl matches compute')
+assert(typeof graph.vortexInvariantsHold === 'boolean', 'vortexInvariantsHold is computed boolean')
+assert(graph.vortexInvariantsHold === computeVortexInvariantsHold(), 'graph vortexInvariantsHold matches compute')
 assert(isUuid(graph.root) && isUuid(graph.contentRoot), 'graph roots uuid')
 const tip = importExportGraphTip()
 assert(tip.root === graph.root, 'tip matches full census root (memoByRoot)')
@@ -175,16 +174,15 @@ assert(calculateDigitalRoot(0) === 0 && calculateDigitalRoot(18) === 9, 'math.co
 assert(VortexMath.digitalRoot(0) === 0 && VortexMath.digitalRootFast(18) === 9, 'vbm-math→legacy')
 const audit = foldA432AuditCensus()
 assert(audit.computes, 'audit census computes')
-assert(audit.claySolved === 0, 'audit claySolved=0')
-assert(typeof audit.physicalFtl === 'boolean', 'audit physicalFtl boolean')
-assert(audit.physicalFtl === computePhysicalFtl(), 'audit physicalFtl matches compute')
+assert(typeof audit.vortexInvariantsHold === 'boolean', 'audit vortexInvariantsHold boolean')
+assert(audit.vortexInvariantsHold === computeVortexInvariantsHold(), 'audit vortexInvariantsHold matches compute')
 assert(auditTip().root === audit.root, 'audit tip memo')
 
 const plan = planTrinity()
 assert(plan.computes, 'planTrinity computes')
 assert(plan.cross.stalled === (plan.cross.forkCount > 0 || plan.cross.randomCount > 0 || plan.cross.mathCount > 0 || plan.cross.neitherDirect > 0 || plan.cross.harmonicAliasImporters > 0), 'stall law')
-assert(typeof plan.physicalFtl === 'boolean', 'plan physicalFtl boolean')
-assert(plan.physicalFtl === computePhysicalFtl(), 'plan physicalFtl matches')
+assert(typeof plan.vortexInvariantsHold === 'boolean', 'plan vortexInvariantsHold boolean')
+assert(plan.vortexInvariantsHold === computeVortexInvariantsHold(), 'plan vortexInvariantsHold matches')
 assert(plan.tipForm.accepted, 'tip form·code·proof accepted')
 assert(plan.tipForm.form === plan.fold.statement, 'form←statement')
 assert(plan.tipForm.code === plan.fold.action, 'code←action')
@@ -193,20 +191,20 @@ assert(isPreciseTip(tipFormOf(plan.fold, plan.weave.verify)).ok, 'isPreciseTip l
 assert(!isPreciseTip({ form: 'keep going somehow', code: 'polish', proof: 'maybe' }).ok, 'vague tip refused')
 const selfTip = nextSelfDevelopTip()
 assert(selfTip.receipt.includes('-'), 'tip receipt')
-assert(typeof selfTip.physicalFtl === 'boolean', 'tip physicalFtl boolean')
+assert(typeof selfTip.vortexInvariantsHold === 'boolean', 'tip vortexInvariantsHold boolean')
 assert(selfTip.accepted === true, 'self:next tip accepted')
 assert(selfTip.form === selfTip.statement && selfTip.code === selfTip.action && selfTip.proof === selfTip.verify, 'tip form map')
 const sb = selfBuild()
 assert(sb.complete, 'selfBuild complete')
 assert(sb.stalled === selfTip.stalled, 'selfBuild stall matches tip')
-assert(sb.physicalFtl === selfTip.physicalFtl, 'selfBuild physicalFtl matches tip')
+assert(sb.vortexInvariantsHold === selfTip.vortexInvariantsHold, 'selfBuild vortexInvariantsHold matches tip')
 if (sb.stalled) {
   assert(selfTip.kind !== 'idle' && selfTip.kind !== 'feed' && selfTip.kind !== 'quantumisation', 'stalled ⇒ hard tip')
-} else if (!sb.physicalFtl) {
-  assert(selfTip.kind === 'quantumisation', 'physicalFtl false ⇒ quantumisation tip')
+} else if (!sb.vortexInvariantsHold) {
+  assert(selfTip.kind === 'quantumisation', 'vortexInvariantsHold false ⇒ quantumisation tip')
 } else {
-  assert(selfTip.kind !== 'quantumisation', 'physicalFtl true ⇒ not quantumisation-for-ftl')
-  assert(selfTip.kind === 'feed', 'hard-clear ∧ physicalFtl true ⇒ feed tip')
+  assert(selfTip.kind !== 'quantumisation', 'vortexInvariantsHold true ⇒ not quantumisation-for-ftl')
+  assert(selfTip.kind === 'feed', 'hard-clear ∧ vortexInvariantsHold true ⇒ feed tip')
 }
 assert(audit.mathCount === 0, 'algebra-only: no Math.* under a432')
 
@@ -236,8 +234,7 @@ console.log(
       edgeCount: tip.edgeCount,
       exportCount: tip.exportCount,
       root: tip.root,
-      claySolved: tip.claySolved,
-      physicalFtl: tip.physicalFtl,
+      vortexInvariantsHold: tip.vortexInvariantsHold,
     },
     audit: {
       computes: audit.computes,
@@ -255,8 +252,7 @@ console.log(
       code: selfTip.code,
       proof: selfTip.proof,
       accepted: selfTip.accepted,
-      physicalFtl: selfTip.physicalFtl,
-      claySolved: selfTip.claySolved,
+      vortexInvariantsHold: selfTip.vortexInvariantsHold,
     },
   }),
 )

@@ -9,7 +9,7 @@
  * Tip emit (Wave 29 · Lobe R): form · code · proof mapped from statement · action · verify.
  * Vague / empty / non-concrete tips are refused — not vibes.
  *
- * Severity: hard gaps → physicalFtl false (quantumisation) → packaging feed.
+ * Severity: hard gaps → vortexInvariantsHold false (quantumisation) → packaging feed.
  * Feed severity (Wave 58): broken imports → undeclared packages → remote CDN →
  * drift → orphans → thin wrappers →
  * VORTEX_SEQUENCE/6-orbit name collision → WAVE_CHAIN.
@@ -24,7 +24,7 @@ import { spawnSync } from 'node:child_process'
 import { builtinModules } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import {
-  computePhysicalFtl,
+  computeVortexInvariantsHold,
   computesGate,
   decodeVortexDashAngles,
   developmentVortex,
@@ -55,7 +55,7 @@ export const CONCRETE_CODE_RE =
 
 /** PROOF must name an exact green signal. */
 export const CONCRETE_PROOF_RE =
-  /(?:npm\s+run\s+check|exit\s*0|===?\s*(?:0|true|false|ok)|physicalFtl\s*===?\s*true|\.length\s*===?\s*0)/i
+  /(?:npm\s+run\s+check|exit\s*0|===?\s*(?:0|true|false|ok)|vortexInvariantsHold\s*===?\s*true|\.length\s*===?\s*0)/i
 
 /** Form · code · proof — trinity an agent executes next (mapped from statement · action · verify). */
 export type TipForm = {
@@ -645,8 +645,7 @@ export type PlanTrinity = {
   readonly computes: boolean
   readonly root: string
   readonly contentUuid: string
-  readonly claySolved: 0
-  readonly physicalFtl: boolean
+  readonly vortexInvariantsHold: boolean
 }
 
 function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): SelfDevelopTip {
@@ -675,8 +674,8 @@ function tipFromHit(hit: AuditHit | undefined, kind: SelfDevelopTip['kind']): Se
       kind: 'quantumisation',
       path: 'README.md',
       line: 40,
-      action: `quantumisation: physicalFtl=false — restore README.md gateway seals (${why}: living field, 60° dash closes/fusionIgnites, developmentVortex); compute path src/0/index.ts computePhysicalFtl`,
-      statement: `Next self-develop tip: quantumisation — README gateway physicalFtl computes false (${why})`,
+      action: `quantumisation: vortexInvariantsHold=false — restore README.md gateway seals (${why}: living field, 60° dash closes/fusionIgnites, developmentVortex); compute path src/0/index.ts computeVortexInvariantsHold`,
+      statement: `Next self-develop tip: quantumisation — README gateway vortexInvariantsHold computes false (${why})`,
       boundary:
         'After hard gaps; before packaging feed. README is gateway — restore sealed computation; do not invent Payload/ERP.',
       receipt: toUuid(`self-develop:quantumisation:${why}`),
@@ -860,7 +859,7 @@ export function planTrinity(): PlanTrinity {
   return memoByRoot('planTrinity', matrix, () => {
     const audit = foldA432AuditCensus()
     const vortex = runVortexAll()
-    const physicalFtl = computePhysicalFtl()
+    const vortexInvariantsHold = computeVortexInvariantsHold()
     const hardGap = audit.mathCount > 0 || audit.forkCount > 0 || audit.randomCount > 0
     const spineDebt = audit.harmonicAliasImporters > 0 || audit.neitherDirect > 0
     const stalled = hardGap || spineDebt
@@ -875,14 +874,14 @@ export function planTrinity(): PlanTrinity {
               { path: 'a432.math.ts', kind: 'digitalRootFork', line: 99 },
               'spineDebt',
             )
-          : !physicalFtl
+          : !vortexInvariantsHold
             ? tipFromHit(undefined, 'quantumisation')
             : tipFromHit(undefined, 'feed')
 
     const weave = {
       nextWave: (stalled
         ? 'audit-dry'
-        : !physicalFtl
+        : !vortexInvariantsHold
           ? 'quantumisation'
           : 'feed') as WavePhase | 'audit-dry' | 'quantumisation' | 'feed',
       path: tip.path,
@@ -894,7 +893,7 @@ export function planTrinity(): PlanTrinity {
             : tip.kind === 'digitalRootFork'
               ? 'legacyDigitalRoot'
               : tip.kind === 'quantumisation'
-                ? 'computePhysicalFtl'
+                ? 'computeVortexInvariantsHold'
                 : tip.kind === 'feed'
                   ? 'developmentVortex'
                   : tip.kind === 'mathRandom'
@@ -907,7 +906,7 @@ export function planTrinity(): PlanTrinity {
 
     const tipLaw = stalled
       ? tip.kind !== 'feed' && tip.kind !== 'idle' && tip.kind !== 'quantumisation'
-      : physicalFtl
+      : vortexInvariantsHold
         ? tip.kind === 'feed'
         : tip.kind === 'quantumisation'
 
@@ -920,8 +919,7 @@ export function planTrinity(): PlanTrinity {
         on: tipLaw,
       },
       { facet: 'tip form·code·proof precise', on: tipForm.accepted },
-      { facet: 'claySolved=0', on: true },
-      { facet: 'physicalFtl matches compute', on: physicalFtl === computePhysicalFtl() },
+      { facet: 'vortexInvariantsHold matches compute', on: vortexInvariantsHold === computeVortexInvariantsHold() },
     ])
 
     const root = merkleFold([
@@ -930,7 +928,7 @@ export function planTrinity(): PlanTrinity {
       tip.receipt,
       tipForm.accepted ? toUuid('tip-form:ok') : toUuid(`tip-form:${tipForm.refuseReason ?? 'refuse'}`),
       toUuid(`stall:${stalled}`),
-      toUuid(`ftl:${physicalFtl}`),
+      toUuid(`ftl:${vortexInvariantsHold}`),
       sealed.root,
     ])
     const contentUuid = computeContentUuid({
@@ -943,7 +941,7 @@ export function planTrinity(): PlanTrinity {
       proof: tipForm.proof,
       accepted: tipForm.accepted,
       stalled,
-      physicalFtl,
+      vortexInvariantsHold,
       root,
     })
 
@@ -962,8 +960,7 @@ export function planTrinity(): PlanTrinity {
       computes: sealed.computes,
       root,
       contentUuid,
-      claySolved: 0 as const,
-      physicalFtl,
+      vortexInvariantsHold,
     }
   })
 }
@@ -976,8 +973,7 @@ export type SelfBuildStatus = {
   readonly plan: PlanTrinity
   readonly waveThroat: string
   readonly root: string
-  readonly claySolved: 0
-  readonly physicalFtl: boolean
+  readonly vortexInvariantsHold: boolean
 }
 
 function hardGapReason(plan: PlanTrinity): string {
@@ -992,16 +988,16 @@ function hardGapReason(plan: PlanTrinity): string {
 export function selfBuild(): SelfBuildStatus {
   const plan = planTrinity()
   const throat = developmentVortex('verify')
-  const physicalFtl = plan.physicalFtl
+  const vortexInvariantsHold = plan.vortexInvariantsHold
   const complete = plan.computes && throat.computes && WAVE_CHAIN.length === 8
   const stalled = plan.cross.stalled
   const reason = stalled
     ? hardGapReason(plan)
-    : !physicalFtl
-      ? `quantumisation: physicalFtl=false — ${plan.fold.statement}`
+    : !vortexInvariantsHold
+      ? `quantumisation: vortexInvariantsHold=false — ${plan.fold.statement}`
       : plan.fold.kind === 'feed'
         ? `feeding: ${plan.fold.statement}`
-        : 'no residual Math.*, forks, or spine debt; physicalFtl true; optional packaging tips only'
+        : 'no residual Math.*, forks, or spine debt; vortexInvariantsHold true; optional packaging tips only'
   const root = foldPair(plan.root, throat.root).merged
   return {
     complete,
@@ -1011,8 +1007,7 @@ export function selfBuild(): SelfBuildStatus {
     plan,
     waveThroat: throat.root,
     root,
-    claySolved: 0,
-    physicalFtl,
+    vortexInvariantsHold,
   }
 }
 
@@ -1037,7 +1032,6 @@ export function nextSelfDevelopTip() {
     fn: s.plan.weave.fn,
     root: s.root,
     receipt: s.tip.receipt,
-    claySolved: 0 as const,
-    physicalFtl: s.physicalFtl,
+    vortexInvariantsHold: s.vortexInvariantsHold,
   }
 }

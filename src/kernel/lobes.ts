@@ -16,7 +16,7 @@
  *   - erpax computes `ftlReport().holds` as reuse ∧ amortize∞ ∧ cracks=∅ —
  *     a statement about not recomputing work, not about signalling faster than
  *     light.
- *   - `computePhysicalFtl()` in src/0 derives a boolean from structural seals.
+ *   - `computeVortexInvariantsHold()` in src/0 derives a boolean from structural seals.
  * Nothing here transmits information superluminally, and nothing here runs on
  * quantum hardware. The names are the corpus's own labels for reuse and for
  * seal-completeness. Read them that way.

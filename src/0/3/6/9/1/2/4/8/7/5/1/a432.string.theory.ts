@@ -2,7 +2,7 @@
  * a432.string.theory — thin bridge from prose “string / M-theory visualization”
  * to kernel foldStringTheory (living field · VORTEX_ORBIT modes · compactified 11).
  *
- * No Math.*. No hand-minted ids. physicalFtl stays computePhysicalFtl().
+ * No Math.*. No hand-minted ids. vortexInvariantsHold stays computeVortexInvariantsHold().
  */
 
 import {
@@ -101,7 +101,7 @@ export const A432StringTheory = {
   orbit: stringTheoryOrbit,
   proof: stringTheoryProof,
   boundary:
-    'Faithful fold projection of living-field vortex — not spacetime FTL. Use computePhysicalFtl().',
+    'Faithful fold projection of the living-field vortex — arithmetic only.',
 }
 
 export default A432StringTheory

@@ -187,7 +187,7 @@ const dimensionalPhysics = {
   input: 'Living field 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1',
   process: 'foldStringTheory() / a432StringTheory()',
   output: 'worldsheet · VORTEX_ORBIT modes · compactified 11',
-  application: 'String theory as fold projection (computes; physicalFtl = computePhysicalFtl())',
+  application: 'String theory as fold projection (computes; vortexInvariantsHold = computeVortexInvariantsHold())',
   proof: stringTheoryProof(),
 };
 

@@ -11,9 +11,9 @@ Computed by `foldA432AuditCensus` — not a hand inventory.
 - randomUUID sites: **0**
 - neither roots nor algebra (direct): **0**
 - digitalRoot via math/core (harmonic alias): **0**
-- root: `30da1d03-cbb1-8bfc-8d8b-64932519c7e7`
-- content-uuid: `51ea9f62-7a1d-817c-92a5-809ec9bf5a6b`
-- claySolved: **0** · physicalFtl: **true** (`computePhysicalFtl`)
+- root: `fda38b71-78f7-84e2-a4a6-661ae6792a46`
+- content-uuid: `93aca268-0cf4-8700-8d1b-2d2dd067c4f8`
+- vortexInvariantsHold: **true** (`computeVortexInvariantsHold`)
 
 ## digitalRoot named forks (sample ≤40)
 
@@ -35,4 +35,4 @@ No ambient `Math.*` on computing surfaces (`src/`, `public/`, `deployment/`, roo
 
 _cleared_ — hard gaps idle; tip = feed (chat-wave learn→tune).
 
-Receipt content-uuid: `78499314-c866-8546-89ac-d0a78d56af1b`
+Receipt content-uuid: `615d0ee4-1486-8342-be89-c2d75ce5a9d4`

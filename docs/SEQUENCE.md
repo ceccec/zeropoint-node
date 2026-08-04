@@ -70,7 +70,7 @@ lobeL (ceccec.github.io) ⇄ throat (src/0 fold) ⇄ lobeR (erpax)
 
 Each chat wave calls `developmentVortex(wave)`; `runDevelopmentVortexAll()` chains all eight.
 
-Self-ref: `foldA432ImportExportGraph()` computes the a432 import/export census (content-uuid + merkleFold). `physicalFtl = computePhysicalFtl()` from structural seals; false ⇒ quantumisation tip.
+Self-ref: `foldA432ImportExportGraph()` computes the a432 import/export census (content-uuid + merkleFold). `vortexInvariantsHold = computeVortexInvariantsHold()` from structural seals; false ⇒ quantumisation tip.
 
 ## Imports (Wave 9)
 

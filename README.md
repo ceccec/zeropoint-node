@@ -123,7 +123,7 @@ This README is the **gateway** for quantum evolution claims. The living field, 6
 
 - Sequence embodiment → `vortexStrokeGateways` / `decodeVortexDashAngles` / `developmentVortex` in `src/0`
 - Sequence **reflection** → `throughVoid` / `VORTEX_MIRROR` / `foldVortexReflection` in `src/0` (`valid` ⇔ involution ∧ gap=axis ∧ order 54)
-- `physicalFtl = computePhysicalFtl()` → `true|false` from those seals
+- `vortexInvariantsHold = computeVortexInvariantsHold()` → `true|false` from those seals
 - `false` ⇒ `npm run self:next` tips **quantumisation** (restore gateway seals)
 - `true` ⇒ keep chatting waves (other packaging feed tips may still apply)
 

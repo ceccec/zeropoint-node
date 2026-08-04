@@ -169,8 +169,7 @@ function callTool(name: string, args: Record<string, unknown>) {
           stalled: sb.stalled,
           reason: sb.reason,
           complete: sb.complete,
-          physicalFtl: sb.physicalFtl,
-          claySolved: sb.claySolved,
+          vortexInvariantsHold: sb.vortexInvariantsHold,
         },
       }
     }

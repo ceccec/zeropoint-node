@@ -7,7 +7,7 @@
 - Origin A432 / vortex library (`ceccec/zeropoint-node`, first published 2025-07-08).
 - Rebuilding via **chat waves** by learning from `ceccec/ceccec.github.io` and `erpax/erpax`.
 - Not an ERP. Not Payload. Not a clone of either later repo.
-- **README is the gateway** — living field, 60° closes, quantum evolution language there must compute (`computePhysicalFtl`); false ⇒ quantumisation tip.
+- **README is the gateway** — living field, 60° closes, quantum evolution language there must compute (`computeVortexInvariantsHold`); false ⇒ quantumisation tip.
 
 ## Wave chain (one coherent batch per turn)
 
@@ -21,7 +21,7 @@ Say **next** to advance one wave. Do not skip gates. Do not invent ids.
 
 | Path | Role |
 | --- | --- |
-| `README.md` | **Gateway** — claims that must compute (living field / physicalFtl) |
+| `README.md` | **Gateway** — claims that must compute (living field / vortexInvariantsHold) |
 | `src/0/` | Kernel origin (imports nothing) |
 | `src/0/3/6/9/1/2/4/8/7/5/1/` | Legacy A432 module tree |
 | `src/0/3/6/9/1/2/4/8/7/5/1/a432.roots.ts` | Digital-root spine adapters |
@@ -53,7 +53,7 @@ Migration complete when all hold:
 - [x] Feed scanners count-proven + severity-ordered (Wave 25; skip comments / resolved / keep `a432.algebra.js`)
 - [x] Remote CDN HTML imports dissolved (Wave 26; feed tip on slip)
 - [x] Dash `fusionIgnites` / `closes` (Wave 27; `0/` + foldPair zeros)
-- [x] `computePhysicalFtl()` boolean (Wave 28; false ⇒ quantumisation tip)
+- [x] `computeVortexInvariantsHold()` boolean (Wave 28; false ⇒ quantumisation tip)
 - [x] Tip `form · code · proof` (Wave 29; vague tips refused in planTrinity / self:next)
 - [x] Linked-receipt verify (Wave 30; recompute id from prev+contentUuid+ts; walk-verify; genesis)
 - [x] Orbit name collision (Wave 31; `VORTEX_SEQUENCE` 6-orbit → `VORTEX_ORBIT`; feed tip on slip)
@@ -91,10 +91,10 @@ parse that rather than guessing. In prose:
 ## Forbidden
 
 - Porting erpax Payload / GL / business atoms
-- Claiming Clay solved (`claySolved` stays 0 unless an existing compute appears)
-- Hardcoding `physicalFtl: 0 as const` — use `computePhysicalFtl()`; false ⇒ quantumisation tip
+- Claiming Clay solved
+- Hardcoding `vortexInvariantsHold: 0 as const` — use `computeVortexInvariantsHold()`; false ⇒ quantumisation tip
 - Wet-linear full-tree rewrites in one turn
 - Editing generated projections by hand
 - Hand-minted / ambient-random ids (use `toUuid` / content-uuid / algebra `unitFromSeed`)
 - Ambient `Math.*` on any computing surface (use `src/0/algebra` / `a432.algebra.js` / HTML bootstrap; `npm run math:ban` fails closed on `src/`, `public/`, `deployment/`, root demos — `dist/` gitignored, rebuilt from clean sources)
-- Ignoring `npm run self:next` tip when hard-clear (tip=`feed` when physicalFtl true — keep chatting waves)
+- Ignoring `npm run self:next` tip when hard-clear (tip=`feed` when vortexInvariantsHold true — keep chatting waves)

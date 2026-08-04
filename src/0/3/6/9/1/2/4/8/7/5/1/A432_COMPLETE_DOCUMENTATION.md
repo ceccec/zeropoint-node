@@ -202,7 +202,7 @@ function resolveResearchError(subjectData: any) {
 ```typescript
 // Implementation Guide — string/worldsheet computes from src/0
 import { a432StringTheory, compactifiedDimension, stringTheoryProof } from './a432.string.theory.ts';
-import { foldStringTheory, computePhysicalFtl } from '../../../../../../../../../../index.ts';
+import { foldStringTheory, computeVortexInvariantsHold } from '../../../../../../../../../../index.ts';
 
 const physicsImplementation = {
   input: 'Living field stroke / VORTEX_ORBIT',
@@ -211,7 +211,7 @@ const physicsImplementation = {
   errorResolution: 'Restore stroke.computes + dash.closes; re-run foldStringTheory',
   application: 'String theory as fold projection (not spacetime FTL slogan)',
   proof: stringTheoryProof(),
-  physicalFtl: computePhysicalFtl(),
+  vortexInvariantsHold: computeVortexInvariantsHold(),
 };
 
 // Error Resolution Example

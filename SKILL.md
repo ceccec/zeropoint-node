@@ -24,7 +24,7 @@ zeropoint-node is the **origin library** (published mid-2025). Later work in [ce
 - **One wave = one batch.** Each wave feeds both lobes (ceccec ↔ erpax).
 - **Imbalance rejects.** Conservation violations fail closed.
 - **Do not port** Payload CMS or ERP collections.
-- **`physicalFtl = computePhysicalFtl()`** from README-wired seals. `false` ⇒ quantumisation tip. `claySolved` stays 0 unless an existing compute appears.
+- **`vortexInvariantsHold = computeVortexInvariantsHold()`** from README-wired seals. `false` ⇒ quantumisation tip.
 - **CC BY-NC-ND 4.0, whole repo.** Attribution, non-commercial, no derivatives — see [LICENSE](LICENSE). No per-file split. Commercial use or modified/adapted redistribution needs a separate licence (license@zeropoint.bg). Citing is attribution, not permission — see `CITATION.cff` and the licence section in [AGENTS.md](AGENTS.md).
 
 ## Wave status
@@ -59,7 +59,7 @@ zeropoint-node is the **origin library** (published mid-2025). Later work in [ce
 | 25 Scanner reason | sealed (feed tips count-proven; severity broken→drift→orphan→thin; skip comments / resolved / `a432.algebra.js`) |
 | 26 CDN feed | sealed (6 remote CDN imports dissolved; feed tip surfaces https:// script/ESM in A432 HTML) |
 | 27 FusionIgnites | sealed (`closes = bearing0 ∧ vortex ∧ fusionIgnites ∧ last=1`; `0/` token + foldPair zeros) |
-| 28 PhysicalFtl | sealed (`computePhysicalFtl()` boolean; false ⇒ quantumisation tip; true ⇒ packaging feed) |
+| 28 PhysicalFtl | sealed (`computeVortexInvariantsHold()` boolean; false ⇒ quantumisation tip; true ⇒ packaging feed) |
 | 29 Tip form | sealed (`form · code · proof` ← statement/action/verify; vague tips refused) |
 | 30 Linked receipt | sealed (`computeReceiptId` prev+contentUuid+ts; `verifyReceiptChain` walk; genesis) |
 | 31 Orbit name | sealed (legacy `VORTEX_SEQUENCE` 6-orbit → `VORTEX_ORBIT` in 2 files; feed tip on slip) |
@@ -78,7 +78,7 @@ zeropoint-node is the **origin library** (published mid-2025). Later work in [ce
 
 ## Self-reference (computed)
 
-`src/kernel/import-graph.ts` scans `a432.*` → import/export maps → content-uuid + merkleFold. Not a hand inventory. `physicalFtl = computePhysicalFtl()` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED); `claySolved=0`. False ⇒ quantumisation tip.
+`src/kernel/import-graph.ts` scans `a432.*` → import/export maps → content-uuid + merkleFold. Not a hand inventory. `vortexInvariantsHold = computeVortexInvariantsHold()` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). False ⇒ quantumisation tip.
 
 ## Root adapters
 
@@ -105,9 +105,9 @@ Three digital-root spines — use `a432.roots.ts` / `src/kernel/legacy.ts`, neve
 - `npm run math:ban` — fails `check` on any non-comment `Math.*` on computing surfaces: `src/`, `public/`, `deployment/`, root demos (skips `dist/` gitignored rollup out, `coverage/`, `docs/`, `scripts/`, `node_modules`)
 - `npm run bundle:a432` — regenerate `public/a432.bundle.js` from algebra-clean sources + strip vendor Math
 - `npm run bundle:a432:check` — fail closed if public bundle drifted from `a432.main.ts` (wired into `npm run check`)
-- Feed severity (Wave 31): hard gaps → physicalFtl false (quantumisation) → broken imports (JS / HTML / TS) → remote CDN → drift (bundle / extensionless / algebra.js) → orphans → thin wrappers → VORTEX_SEQUENCE/6-orbit name collision → WAVE_CHAIN
+- Feed severity (Wave 31): hard gaps → vortexInvariantsHold false (quantumisation) → broken imports (JS / HTML / TS) → remote CDN → drift (bundle / extensionless / algebra.js) → orphans → thin wrappers → VORTEX_SEQUENCE/6-orbit name collision → WAVE_CHAIN
 - Each packaging tip states residual **count** + why; skips comments, `node_modules`, resolved paths; keeps `a432.algebra.js` as intentional browser twin
-- `physicalFtl = computePhysicalFtl()` — not hardcoded `0`; false tips quantumisation (restore closes / fusionIgnites / vortex seals)
+- `vortexInvariantsHold = computeVortexInvariantsHold()` — not hardcoded `0`; false tips quantumisation (restore closes / fusionIgnites / vortex seals)
 - Self-develop prefers `mathBan` tips before digitalRoot forks
 
 ## Wave 10 — audit / DRY

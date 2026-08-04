@@ -11,15 +11,15 @@
 - runDevelopmentVortexAll().ok: **true**
 - corpus root: `e699073e-f88e-84b0-8696-7082dc19a933`
 - a432 import/export graph: **true** · files=343 · edges=926 · exports=2126
-- graph root: `351a4fc7-0c0f-8c56-b0b6-8fa44264a797`
-- audit: forks=0 · ambient Math hits=0 · randomUUID=0 · root=`30da1d03-cbb1-8bfc-8d8b-64932519c7e7`
+- graph root: `77bf4d94-bb53-8c87-9b92-f3f3d44087f4`
+- audit: forks=0 · ambient Math hits=0 · randomUUID=0 · root=`fda38b71-78f7-84e2-a4a6-661ae6792a46`
 - **self-develop tip:** FEED · `feed` · src/0/index.ts:180
 - tip action: chat-wave feed: edit/rebuild at src/0/index.ts (WAVE_CHAIN); re-run npm run self:next after seal — do not invent gaps
-- claySolved: **0** · physicalFtl: **true** (`computePhysicalFtl`)
+- vortexInvariantsHold: **true** (`computeVortexInvariantsHold`)
 
 ## Law
 
-If development stops, gaps in self-development exist. Run `npm run self:next` (computed from audit — not a hand checklist). Severity: hard gaps → physicalFtl false (quantumisation) → packaging feed.
+If development stops, gaps in self-development exist. Run `npm run self:next` (computed from audit — not a hand checklist). Severity: hard gaps → vortexInvariantsHold false (quantumisation) → packaging feed.
 
 ## Double-torus development
 
@@ -29,10 +29,6 @@ Wave chain: origin → decode → design → learn → tune → edit → rebuild
 
 ## Self-reference
 
-Import/export census is computed (`foldA432ImportExportGraph`) — content-uuid + merkleFold, not a hand inventory. `physicalFtl = computePhysicalFtl()` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). Audit census: `foldA432AuditCensus` (see [AUDIT.md](./AUDIT.md)). Next tip: `planTrinity` / `nextSelfDevelopTip` (`form · code · proof` ← statement/action/verify; vague refused).
+Import/export census is computed (`foldA432ImportExportGraph`) — content-uuid + merkleFold, not a hand inventory. `vortexInvariantsHold = computeVortexInvariantsHold()` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). Audit census: `foldA432AuditCensus` (see [AUDIT.md](./AUDIT.md)). Next tip: `planTrinity` / `nextSelfDevelopTip` (`form · code · proof` ← statement/action/verify; vague refused).
 
-## Honesty
-
-Exact: fold, digital root, vortex stroke, import graph fold, audit census, plan trinity, computePhysicalFtl (README gateway). Faithful: torus geometry. Refused: Clay solved (claySolved=0), Payload/ERP port. physicalFtl computes true|false — not a forever-hardcoded 0.
-
-Receipt content-uuid: `a4a9206a-0712-8670-912c-51008d26cde5`
+Receipt content-uuid: `b3b63643-4c95-8909-9615-9a7e4d8f78ba`

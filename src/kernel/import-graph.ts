@@ -4,15 +4,15 @@
  * Scans `a432.*` under `src/` → builds the import/export edge graph →
  * content-uuid + merkleFold census. Addresses are computed, never hand-inventoried.
  *
- * memoByRoot / one merkle walk = trinity speedup. physicalFtl = computePhysicalFtl()
- * (structural seals). claySolved remains 0 until an existing compute appears.
+ * memoByRoot / one merkle walk = trinity speedup. vortexInvariantsHold = computeVortexInvariantsHold()
+ * (structural seals).
  */
 
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative, resolve, dirname, extname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
-  computePhysicalFtl,
+  computeVortexInvariantsHold,
   computesGate,
   foldPair,
   memoByRoot,
@@ -57,8 +57,7 @@ export type ImportExportCensus = {
   readonly contentRoot: string
   readonly statement: string
   readonly boundary: string
-  readonly claySolved: 0
-  readonly physicalFtl: boolean
+  readonly vortexInvariantsHold: boolean
 }
 
 function isA432Source(name: string): boolean {
@@ -192,14 +191,14 @@ export function foldA432ImportExportGraph(srcRoot: string = SRC_ROOT): ImportExp
       softRoot,
     })
     const throat = foldPair(softRoot, contentRoot)
-    const physicalFtl = computePhysicalFtl()
+    const vortexInvariantsHold = computeVortexInvariantsHold()
     const sealed = computesGate('a432-import-export-graph', [
       { facet: 'scanned a432 sources', on: nodes.length > 0 },
       { facet: 'export map keyed by path', on: Object.keys(exportMap).length === nodes.length },
       { facet: 'merkle soft root', on: softRoot.length === 36 },
       { facet: 'content root', on: contentRoot.length === 36 },
       { facet: 'throat bidirectional', on: throat.bidirectional },
-      { facet: 'physicalFtl boolean', on: physicalFtl === true || physicalFtl === false },
+      { facet: 'vortexInvariantsHold boolean', on: vortexInvariantsHold === true || vortexInvariantsHold === false },
     ])
 
     return {
@@ -211,14 +210,13 @@ export function foldA432ImportExportGraph(srcRoot: string = SRC_ROOT): ImportExp
       edges,
       exportMap,
       importMap,
-      root: merkleFold([sealed.root, throat.merged, softRoot, contentRoot, toUuid(`ftl:${physicalFtl}`)]),
+      root: merkleFold([sealed.root, throat.merged, softRoot, contentRoot, toUuid(`ftl:${vortexInvariantsHold}`)]),
       contentRoot,
       statement:
         'a432.* import/export graph is self-referencing by computation: content-uuid + merkleFold, not a hand inventory.',
       boundary:
-        'memoByRoot / one merkle walk. physicalFtl=computePhysicalFtl(). claySolved=0. Not a Payload/ERP port.',
-      claySolved: 0 as const,
-      physicalFtl,
+        'memoByRoot / one merkle walk. vortexInvariantsHold=computeVortexInvariantsHold().',
+      vortexInvariantsHold,
     }
   })
 }
@@ -233,8 +231,7 @@ export function importExportGraphTip(srcRoot: string = SRC_ROOT) {
     exportCount: g.exportCount,
     root: g.root,
     contentRoot: g.contentRoot,
-    claySolved: g.claySolved,
-    physicalFtl: g.physicalFtl,
+    vortexInvariantsHold: g.vortexInvariantsHold,
     statement: g.statement,
   }
 }

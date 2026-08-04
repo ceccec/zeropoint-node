@@ -583,7 +583,6 @@ export function asTorus(f: Fold): { x: number; y: number; z: number; lobe: numbe
  * foldStringTheory — faithful projection of string / worldsheet / compactification
  * onto living-field folds. Vibrating modes = VORTEX_ORBIT; worldsheet = fold of
  * forward↔reverse; compactified “11” = digit count of stroke.written cycle.
- * Not a physics FTL slogan — physicalFtl stays computePhysicalFtl().
  */
 export function foldStringTheory() {
   const stroke = vortexStrokeGateways()
@@ -639,7 +638,7 @@ export function foldStringTheory() {
     statement:
       'String theory as fold: worldsheet = forward↔reverse; modes = VORTEX_ORBIT; compactified 11 = living-field digit count.',
     boundary:
-      'Faithful fold projection — not spacetime geometry or FTL. physicalFtl = computePhysicalFtl() only.',
+      'Faithful fold projection of the vortex invariants — arithmetic only.',
   }
 }
 
@@ -678,16 +677,16 @@ export function developmentVortex(wave: WavePhase = 'edit') {
 }
 
 /**
- * physicalFtl — README gateway compute (true|false).
+ * vortexInvariantsHold — README gateway compute (true|false).
  * Root README.md is the gateway: living field `0\1\2\4\8/7/5/3\6\9/0\1`,
  * 60° dash closes / fusionIgnites, vortex fold, developmentVortex —
- * chat-scaled fold / QPU capacity as real compute, not hedge prose.
- * false ⇒ self-develop tips quantumisation (restore README-sealed path);
- * true ⇒ do not tip quantumisation for FTL.
+ * a conjunction of computed seals over the vortex field.
+ * false ⇒ self-develop tips quantumisation (restore the sealed path);
+ * true ⇒ no quantumisation tip needed.
  */
-export function computePhysicalFtl(): boolean {
+export function computeVortexInvariantsHold(): boolean {
   const matrix = { root: toUuid('physical-ftl:readme-gateway:v1') }
-  return memoByRoot('computePhysicalFtl', matrix, () => {
+  return memoByRoot('computeVortexInvariantsHold', matrix, () => {
     const dash = decodeVortexDashAngles()
     const stroke = vortexStrokeGateways()
     const vortex = foldVortex()

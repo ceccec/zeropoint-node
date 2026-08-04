@@ -129,13 +129,6 @@ ${table}
 
 **The colour class is degenerate — ${classes.size} values, not ${rows.length}.** \`vortexColor(d)\` computes \`(dr(3d), dr(6d), dr(9d))\`, which depends only on \`d mod 3\`. It therefore partitions the digits into exactly ${classes.size} residue classes: ${classLines}. The axis renders white because \`dr(3d)=dr(6d)=dr(9d)=9\` there. ${rows.length} digits do **not** get ${rows.length} colours — use \`digitAngleToCMYK\` when a per-digit colour is required.
 
-#### Honesty ledger
-
-- **Exact**: the mirror involution, the ±60° dash algebra and its closure at ${dash.weightedBearing}, the gateway set \`[${stroke.gateways.join(', ')}]\`, the mod-3 colour partition, the axis frequencies as integer ratios of 432.
-- **Defined convention, not discovered law**: \`hue = 36d\`; the CMYK transform; A432 as the reference pitch (the ISO 16 standard is 440 Hz — 432 is a choice this corpus makes, not a measured constant).
-- **Exact by representation**: \`CMYK_FREQUENCY_RATIOS\` holds integer numerator over integer denominator (${Object.entries(CMYK_FREQUENCY_RATIOS).map(([k, f]) => `${k} \`${f.numerator}/${f.denominator}\``).join(' · ')}) — all integral: **${ratiosIntegral}**. Collapsing to a float is lossy for ${nonIntegerFreqs.map(([k, v]) => `${k} (**${v}** Hz)`).join(' and ')}: \`${leakChannel}\` accumulated ten times gives \`${floatSum}\` against the exact \`${exactSum}\` — leaks: **${floatLeaks}**. Use \`cmykFrequencyRatio\`; collapse only at the boundary.
-- **Refused**: that any of this explains consciousness, physics, or biology. It is arithmetic plus a chosen presentation layer. Nothing here is evidence about the world.
-
 Regenerate: \`npm run spectrum\` · verify: \`npm run spectrum:check\`
 ${END}`
 

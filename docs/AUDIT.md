@@ -2,7 +2,7 @@
 
 # A432 audit census (Wave 16)
 
-Computed by `foldA432AuditCensus` — not a hand inventory.
+Computed by `foldA432AuditCensus`.
 
 - files scanned: **377** (.ts + .js + .html)
 - digitalRoot named forks: **0**
@@ -35,4 +35,4 @@ No ambient `Math.*` on computing surfaces (`src/`, `public/`, `deployment/`, roo
 
 _cleared_ — hard gaps idle; tip = feed (chat-wave learn→tune).
 
-Receipt content-uuid: `615d0ee4-1486-8342-be89-c2d75ce5a9d4`
+Receipt content-uuid: `11749a16-c68f-860d-9658-30e1470b3714`

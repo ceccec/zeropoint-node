@@ -29,6 +29,6 @@ Wave chain: origin → decode → design → learn → tune → edit → rebuild
 
 ## Self-reference
 
-Import/export census is computed (`foldA432ImportExportGraph`) — content-uuid + merkleFold, not a hand inventory. `vortexInvariantsHold = computeVortexInvariantsHold()` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). Audit census: `foldA432AuditCensus` (see [AUDIT.md](./AUDIT.md)). Next tip: `planTrinity` / `nextSelfDevelopTip` (`form · code · proof` ← statement/action/verify; vague refused).
+Import/export census is computed (`foldA432ImportExportGraph`) — content-uuid + merkleFold. `vortexInvariantsHold = computeVortexInvariantsHold()` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). Audit census: `foldA432AuditCensus` (see [AUDIT.md](./AUDIT.md)). Next tip: `planTrinity` / `nextSelfDevelopTip` (`form · code · proof` ← statement/action/verify; vague refused).
 
-Receipt content-uuid: `b3b63643-4c95-8909-9615-9a7e4d8f78ba`
+Receipt content-uuid: `8385c2f5-3336-8ecb-b94a-68e12945a56e`

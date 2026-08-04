@@ -50,19 +50,6 @@ features:
     linkText: Kernel census
 ---
 
-## What this corpus claims, and what it refuses
-
-The arithmetic here is exact and checkable. The presentation layer built on top of it —
-colour mappings, a 432 Hz reference pitch — is a **chosen convention**, not a discovery.
-Those two things are kept apart deliberately, because the arithmetic is strong enough
-that dressing it as physics would only make it easier to dismiss.
-
-- **Exact**: the mirror involution, the ±60° dash algebra and its closure, the gateway
-  set, the mod-3 colour partition, the axis frequencies as integer ratios of 432.
-- **Defined convention**: `hue = 36d`; the CMYK transform; A432 as reference pitch
-  (the ISO 16 standard is 440 Hz).
-- **Refused**: that any of this explains consciousness, physics, or biology.
-
 Every generated page on this site carries a content-addressed receipt folded over its
 own body, so a change to what a page says moves its stamp.
 

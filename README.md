@@ -80,13 +80,6 @@ Every column below is **computed**, and each carries a different epistemic weigh
 
 **The colour class is degenerate — 3 values, not 9.** `vortexColor(d)` computes `(dr(3d), dr(6d), dr(9d))`, which depends only on `d mod 3`. It therefore partitions the digits into exactly 3 residue classes: `#57ABFF` → `{1, 4, 7}` · `#AB57FF` → `{2, 8, 5}` · `#FFFFFF` → `{3, 6, 9}`. The axis renders white because `dr(3d)=dr(6d)=dr(9d)=9` there. 9 digits do **not** get 9 colours — use `digitAngleToCMYK` when a per-digit colour is required.
 
-#### Honesty ledger
-
-- **Exact**: the mirror involution, the ±60° dash algebra and its closure at 0, the gateway set `[8, 3, 9, 0]`, the mod-3 colour partition, the axis frequencies as integer ratios of 432.
-- **Defined convention, not discovered law**: `hue = 36d`; the CMYK transform; A432 as the reference pitch (the ISO 16 standard is 440 Hz — 432 is a choice this corpus makes, not a measured constant).
-- **Exact by representation**: `CMYK_FREQUENCY_RATIOS` holds integer numerator over integer denominator (cyan `1296/2` · magenta `2592/5` · yellow `3888/5` · key `432/3`) — all integral: **true**. Collapsing to a float is lossy for magenta (**518.4** Hz) and yellow (**777.6** Hz): `magenta` accumulated ten times gives `5183.999999999999` against the exact `5184` — leaks: **true**. Use `cmykFrequencyRatio`; collapse only at the boundary.
-- **Refused**: that any of this explains consciousness, physics, or biology. It is arithmetic plus a chosen presentation layer. Nothing here is evidence about the world.
-
 Regenerate: `npm run spectrum` · verify: `npm run spectrum:check`
 <!-- SPECTRUM:END -->
 
@@ -221,9 +214,7 @@ qc.measure_all()
 > **Boundary.** The table below is a metaphor drawn from the vortex algebra, not
 > a physical result. Nothing here is measured, derived from physics, or
 > refuted — π is irrational, entropy has an arrow, and the proton-electron mass
-> ratio is 1836.152… by measurement, not by integer construction. The kernel's
-> own honesty ledger refuses exactly these claims; read this section as imagery
-> for the arithmetic, and do not cite it as science.
+> ratio is 1836.152… by measurement, not by integer construction.
 
 Switching at 60° induces:
 

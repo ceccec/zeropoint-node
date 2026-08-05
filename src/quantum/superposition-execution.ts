@@ -165,7 +165,6 @@ export function phase7_orchestratorAmplitudes(): readonly number[] {
     0.92, // Yang-Mills threshold amplitude
     0.88, // Hodge verification amplitude
     0.90, // BSD composition amplitude
-    0.96, // Poincaré healing amplitude
   ]
 }
 

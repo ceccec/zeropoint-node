@@ -1,10 +1,10 @@
 {
   "ceilings": {
-    "typecheck": 133,
+    "typecheck": 147,
     "lint": 939,
-    "decimals": 425,
+    "decimals": 453,
     "cycles": 2,
-    "unreachable": 281,
+    "unreachable": 283,
     "unloadable": 32,
     "prose": 71,
     "tautology": 1

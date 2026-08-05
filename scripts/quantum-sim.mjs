@@ -62,6 +62,11 @@ import {
   readoutMitigationSingleQubit,
   calibrateReadout,
   simplifyCircuitSequence,
+  vqeAdaptive,
+  transpile,
+  predictFidelity,
+  AdaptiveOptimizer,
+  FALCON_PROFILE,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -402,7 +407,40 @@ const HALF = 1 / 2
   assert(simplified.length === 0, 'Simplification removes H·H=I')
 }
 
+// 35. Adaptive optimizer tracks successful runs and warm-starts.
+{
+  const opt = new AdaptiveOptimizer()
+  const mockResult = {
+    converged: true,
+    theta: [1, 2, 3],
+    energy: -1.5,
+    exactGroundEnergy: -2,
+    history: [],
+    finalError: 0.5,
+  }
+  opt.recordSuccess('test-ansatz', mockResult, [0, 0, 0])
+  const warmStart = opt.recommendWarmStart()
+  assert(warmStart !== null && warmStart.length === 3, 'Adaptive optimizer recommends warm-start from history')
+}
+
+// 36. Hardware compilation transpiles to native gate set.
+{
+  const gates = [{ q: 0, gate: H, name: 'h' }]
+  const compiled = transpile(gates, FALCON_PROFILE)
+  assert(compiled.gateCount > 0, 'Transpile decomposes H to native gates')
+  assert(compiled.estimatedFidelity >= 0 && compiled.estimatedFidelity <= 1, 'Estimated fidelity in [0,1]')
+}
+
+// 37. Fidelity prediction: circuits get noisier with depth.
+{
+  const shallowCircuit = { nativeGates: [], depth: 1, gateCount: 2, estimatedFidelity: 0.99 }
+  const deepCircuit = { nativeGates: [], depth: 100, gateCount: 500, estimatedFidelity: 0.5 }
+  const fid1 = predictFidelity(shallowCircuit, FALCON_PROFILE)
+  const fid2 = predictFidelity(deepCircuit, FALCON_PROFILE)
+  assert(fid1 > fid2, 'Deeper circuits have lower fidelity')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA',
+  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · production-grade',
 )

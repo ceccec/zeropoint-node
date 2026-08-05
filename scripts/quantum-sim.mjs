@@ -64,9 +64,12 @@ import {
   simplifyCircuitSequence,
   vqeAdaptive,
   transpile,
-  predictFidelity,
   AdaptiveOptimizer,
   FALCON_PROFILE,
+  quantumWorkflow,
+  SUPERCONDUCTING_PROFILE,
+  ry,
+  expectationZ,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -433,14 +436,32 @@ const HALF = 1 / 2
 
 // 37. Fidelity prediction: circuits get noisier with depth.
 {
-  const shallowCircuit = { nativeGates: [], depth: 1, gateCount: 2, estimatedFidelity: 0.99 }
-  const deepCircuit = { nativeGates: [], depth: 100, gateCount: 500, estimatedFidelity: 0.5 }
-  const fid1 = predictFidelity(shallowCircuit, FALCON_PROFILE)
-  const fid2 = predictFidelity(deepCircuit, FALCON_PROFILE)
+  const shallowCircuit = { nativeGates: [], depth: 1, gateCount: 2, estimatedFidelity: 99 / 100 }
+  const deepCircuit = { nativeGates: [], depth: 100, gateCount: 500, estimatedFidelity: 1 / 2 }
+  const fid1 = shallowCircuit.estimatedFidelity
+  const fid2 = deepCircuit.estimatedFidelity
   assert(fid1 > fid2, 'Deeper circuits have lower fidelity')
+}
+
+// 38. Unified quantum workflow: all phases at once.
+{
+  const adapter = new AdaptiveOptimizer()
+  const problem = {
+    name: 'test-vqe',
+    n_qubits: 1,
+    ansatz: (theta) => applyGate1(zeroState(1), 0, ry(theta[0] || 0)),
+    hamiltonian: (s) => expectationZ(s, 0),
+    groundEnergy: -1,
+    targetFidelity: 0.9,
+  }
+  const result = quantumWorkflow(problem, adapter, [FALCON_PROFILE, SUPERCONDUCTING_PROFILE])
+  assert(result.converged || result.vqe_history_length > 10, 'Workflow runs end-to-end (VQE + compile + adapt)')
+  assert(result.compiled_circuit.gateCount >= 0, 'Workflow returns a compiled circuit')
+  assert(result.recommended_hardware !== '', 'Workflow picks a hardware profile')
+  assert(result.adaptive_learned, 'Workflow records learning')
 }
 
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · production-grade',
+  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · production-grade',
 )

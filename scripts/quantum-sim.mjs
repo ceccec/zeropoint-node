@@ -85,6 +85,18 @@ import {
   estimateSurfaceCodeThreshold,
   calculateLogicalFidelity,
   monitorSyndromePattern,
+  encodeFeatures,
+  ansatzRotationEntangle,
+  classifyMeasurement,
+  trainQMLCircuit,
+  extractQuantumHeuristics,
+  quantumInspiredRandomSearch,
+  profileProblem,
+  recommendSolver,
+  H2_HAMILTONIAN,
+  ISING_MODEL,
+  estimateGroundStateEnergy,
+  solveHybrid,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -577,7 +589,103 @@ const HALF = 1 / 2
   assert(pattern.confidenceRatio >= 0 && pattern.confidenceRatio <= 1, 'Confidence ratio valid')
 }
 
+// 51. Quantum machine learning: feature encoding.
+{
+  const reg = zeroState(2)
+  const features = [0.5, 0.25]
+  const encoded = encodeFeatures(reg, features)
+  assert(encoded.amps.length === 4, 'QML encoding preserves register')
+}
+
+// 52. QML parameterized ansatz: rotation-entanglement.
+{
+  const reg = zeroState(2)
+  const params = [0.1, 0.2, 0.3, 0.4]
+  const ansatz = ansatzRotationEntangle(reg, params)
+  assert(ansatz.amps.length === 4, 'Ansatz applies to all qubits')
+}
+
+// 53. QML classification measurement.
+{
+  const reg = zeroState(1)
+  const result = classifyMeasurement(reg, 12345)
+  assert(result.prediction === 0 || result.prediction === 1, 'Classification predicts 0 or 1')
+  assert(result.confidence >= 0 && result.confidence <= 1, 'Confidence in valid range')
+}
+
+// 54. Quantum-inspired classical: extract heuristics.
+{
+  const ansatze = [[0.1, 0.2], [0.3, 0.4], [0.5, 0.6]]
+  const heuristics = extractQuantumHeuristics(ansatze)
+  assert(heuristics.length > 0, 'Extract quantum heuristics from ansatze')
+  assert(heuristics[0].type !== undefined, 'Heuristics have types')
+}
+
+// 55. Quantum-inspired random search.
+{
+  const objective = (x) => x[0] ** 2 + x[1] ** 2 // Paraboloid
+  const result = quantumInspiredRandomSearch(objective, 2, 50, 54321)
+  assert(result.bestValue < 1, 'Optimization finds better than random start')
+  assert(result.bestX.length === 2, 'Solution has correct dimension')
+}
+
+// 56. Problem profiling: extract structure.
+{
+  const samples = [
+    { x: [0.1, 0.2], fx: 0.5 },
+    { x: [0.2, 0.3], fx: 0.6 },
+    { x: [0.3, 0.4], fx: 0.7 },
+  ]
+  const profile = profileProblem(samples)
+  assert(profile.dimension === 2, 'Profile detects dimension')
+  assert(profile.noiseLevel >= 0, 'Noise level non-negative')
+}
+
+// 57. Solver recommendation based on profile.
+{
+  const profile = { dimension: 2, noiseLevel: 0.01, sparsity: 1, symmetry: 'low' }
+  const rec = recommendSolver(profile)
+  assert(rec.solver !== undefined, 'Recommender returns solver')
+  assert(rec.estimatedSteps > 0, 'Estimated steps positive')
+}
+
+// 58. Physical simulation: H₂ Hamiltonian.
+{
+  assert(H2_HAMILTONIAN.name === 'H2', 'H₂ Hamiltonian defined')
+  assert(H2_HAMILTONIAN.terms.length > 0, 'H₂ has interaction terms')
+}
+
+// 59. Ground state estimation for molecular system.
+{
+  const result = estimateGroundStateEnergy(H2_HAMILTONIAN, 2, 20, 99999)
+  assert(result.ansatz.length === 2, 'Ground state ansatz has correct size')
+  assert(typeof result.groundEnergy === 'number', 'Ground energy computed')
+}
+
+// 60. Ising model simulation.
+{
+  assert(ISING_MODEL.name === 'Ising', 'Ising model defined')
+  const result = estimateGroundStateEnergy(ISING_MODEL, 3, 30, 12345)
+  assert(result.ansatz.length === 3, 'Ising ground state computed')
+}
+
+// 61. Hybrid orchestration: end-to-end solve.
+{
+  const adapter = new AdaptiveOptimizer()
+  const problem = {
+    name: 'hybrid-test',
+    objective: (x) => x[0] ** 2 + x[1] ** 2,
+    dimension: 2,
+    budget: 100,
+    seed: 77777,
+  }
+  const result = solveHybrid(problem, adapter)
+  assert(result.solver !== undefined, 'Hybrid returns solver choice')
+  assert(result.value >= 0, 'Objective value computed')
+  assert(result.stepsUsed > 0, 'Hybrid uses budget')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · state-tomography · error-correction-ftl · production-grade',
+  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · state-tomography · error-correction-ftl · qml · quantum-inspired-classical · self-tuning · physical-simulation · hybrid-orchestration · production-grade',
 )

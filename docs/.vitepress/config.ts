@@ -241,6 +241,13 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Quantum computing',
+        items: [
+          { text: 'Technical specification', link: '/QUANTUM_SPECIFICATION' },
+          { text: 'Usage guide', link: '/QUANTUM_GUIDE' },
+        ],
+      },
+      {
         text: 'Reference',
         items: [
           { text: 'All computed pages', link: '/pages/' },

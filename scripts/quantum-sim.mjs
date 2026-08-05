@@ -36,6 +36,8 @@ import {
   teleport,
   superdenseCoding,
   phaseEstimation,
+  bitFlipCode,
+  simon,
   cx,
 } from '../src/quantum/index.ts'
 
@@ -239,7 +241,27 @@ const HALF = 1 / 2
   assert(phaseEstimation(3, 1 / 2) === 4, 'QPE(φ=1/2, t=3) = 4')
 }
 
+// 21. Bit-flip error correction: a single X error on any data qubit is detected and undone.
+{
+  for (const [al, be] of [[cx(3 / 5), cx(4 / 5)], [cx(3 / 5), cx(0, 4 / 5)]]) {
+    for (const err of [-1, 0, 1, 2]) {
+      const { a0, a1 } = bitFlipCode(al, be, err)
+      assert(
+        near(a0.re, al.re) && near(a0.im, al.im) && near(a1.re, be.re) && near(a1.im, be.im),
+        `bit-flip code recovers the state after an error on qubit ${err}`,
+      )
+    }
+  }
+}
+
+// 22. Simon's algorithm recovers the hidden mask s from a 2-to-1 oracle.
+{
+  for (const [n, hidden] of [[2, 3], [3, 5], [3, 6], [4, 11]]) {
+    assert(simon(n, hidden) === hidden, `Simon recovers hidden mask ${hidden} (n=${n})`)
+  }
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · Bell/GHZ · QFT · Grover · BV · DJ · teleportation · superdense coding · phase estimation · sampling',
+  '  gates · Bell/GHZ · QFT · Grover · BV · DJ · teleport · superdense · QPE · error-correction · Simon · sampling',
 )

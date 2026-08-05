@@ -220,6 +220,110 @@ export function phaseEstimation(t: number, phi: number): number {
   return arg & ((1 << t) - 1) // drop the eigenstate bit
 }
 
+/**
+ * Three-qubit bit-flip error-correcting code. Encodes α|0⟩+β|1⟩ into
+ * α|000⟩+β|111⟩, optionally injects an X error on one data qubit, extracts the
+ * syndrome into two ancillas (parities that do NOT reveal α,β), corrects, and
+ * decodes. Returns qubit 0's amplitudes — equal to (α,β) for any single-qubit
+ * error, which is the whole point: a bit flip is detected and undone.
+ */
+export function bitFlipCode(alpha: Complex, beta: Complex, errorQubit = -1): { a0: Complex; a1: Complex } {
+  const amps = new Array<Complex>(32).fill(cx(0))
+  amps[0] = alpha
+  amps[1] = beta // |ψ⟩ on q0; q1..q4 = |0⟩
+  let s: Register = { n: 5, amps }
+  s = cnot(s, 0, 1) // encode: α|000⟩ + β|111⟩ on q0,q1,q2
+  s = cnot(s, 0, 2)
+  if (errorQubit >= 0) s = applyGate1(s, errorQubit, X) // inject a bit flip
+  s = cnot(s, 0, 3) // syndrome q3 = q0 ⊕ q1
+  s = cnot(s, 1, 3)
+  s = cnot(s, 0, 4) // syndrome q4 = q0 ⊕ q2
+  s = cnot(s, 2, 4)
+  const m3 = measureQubit(s, 3, 0)
+  s = m3.collapsed
+  const m4 = measureQubit(s, 4, 0)
+  s = m4.collapsed
+  const syndrome = (m3.bit << 1) | m4.bit
+  const correct = syndrome === 3 ? 0 : syndrome === 2 ? 1 : syndrome === 1 ? 2 : -1
+  if (correct >= 0) s = applyGate1(s, correct, X)
+  s = cnot(s, 0, 2) // decode
+  s = cnot(s, 0, 1)
+  const base = (m3.bit << 3) | (m4.bit << 4)
+  return { a0: s.amps[base]!, a1: s.amps[base | 1]! }
+}
+
+/** Nonzero null-space vector of the given GF(2) row vectors (n-bit), or 0 if none. */
+function gf2Nullspace(n: number, rows: readonly number[]): number {
+  const R = rows.slice()
+  const pivots: number[] = []
+  let r = 0
+  for (let col = 0; col < n && r < R.length; col += 1) {
+    let sel = -1
+    for (let i = r; i < R.length; i += 1)
+      if ((R[i]! >> col) & 1) {
+        sel = i
+        break
+      }
+    if (sel < 0) continue
+    const tmp = R[r]!
+    R[r] = R[sel]!
+    R[sel] = tmp
+    for (let i = 0; i < R.length; i += 1) if (i !== r && (R[i]! >> col) & 1) R[i]! ^= R[r]!
+    pivots.push(col)
+    r += 1
+  }
+  const isPivot = new Set(pivots)
+  let free = -1
+  for (let c = 0; c < n; c += 1)
+    if (!isPivot.has(c)) {
+      free = c
+      break
+    }
+  if (free < 0) return 0
+  let s = 1 << free
+  for (let i = 0; i < pivots.length; i += 1) {
+    const pc = pivots[i]!
+    let bit = 0
+    for (let c = 0; c < n; c += 1) if (c !== pc && (R[i]! >> c) & 1 && (s >> c) & 1) bit ^= 1
+    if (bit) s |= 1 << pc
+  }
+  return s
+}
+
+/**
+ * Simon's algorithm: recover the hidden mask s (f(x) = f(x⊕s), 2-to-1) with an
+ * exponential speedup over classical. Each run of H·oracle·H yields a y with
+ * y·s = 0 (mod 2); on the statevector the whole support {y : y·s = 0} appears
+ * at once, so one pass plus a GF(2) null-space solve recovers s exactly.
+ */
+export function simon(n: number, hidden: number): number {
+  const size = 1 << n
+  const total = 2 * n
+  const f = (x: number): number => {
+    const y = x ^ hidden
+    return x < y ? x : y
+  }
+  let s = zeroState(total)
+  for (let q = 0; q < n; q += 1) s = applyGate1(s, q, H)
+  const out = new Array<Complex>(1 << total).fill(cx(0)) // oracle: |x⟩|y⟩ → |x⟩|y⊕f(x)⟩
+  for (let idx = 0; idx < out.length; idx += 1) {
+    const a = s.amps[idx]!
+    if (a.re === 0 && a.im === 0) continue
+    const x = idx & (size - 1)
+    const y = (idx >> n) & (size - 1)
+    out[x | ((y ^ f(x)) << n)] = a
+  }
+  s = { n: total, amps: out }
+  for (let q = 0; q < n; q += 1) s = applyGate1(s, q, H)
+  const support: number[] = []
+  for (let y = 1; y < size; y += 1) {
+    let p = 0
+    for (let o = 0; o < size; o += 1) p += cabs2(s.amps[y | (o << n)]!)
+    if (p > 1e-9) support.push(y)
+  }
+  return gf2Nullspace(n, support)
+}
+
 export function sample(reg: Register, shots: number, seed = 1): number[] {
   const A = 1664525
   const C = 1013904223

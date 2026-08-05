@@ -37,7 +37,7 @@ import { log2, ceil } from '../0/algebra.ts'
 // "FNV toUuid stays in src/0 for cheap folds; this module seals cryptographic
 // identity for proofs/manifests." The cipher had been sealing with toUuid.
 import { computeContentUuid, computeContentDigest } from '../integrity/content-uuid.ts'
-import { createCipheriv, createDecipheriv, createHmac, randomBytes, scryptSync } from 'node:crypto'
+import { createCipheriv, createDecipheriv, createHmac, randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
 
 /**
  * Vortex Constants
@@ -365,10 +365,14 @@ export function generateQuantumKeyFromPassword(
  */
 export function verifyQuantumKey(key: QuantumKey): boolean {
   const sealed = keySealInput(key.material, key.genesis, key.round, key.kdf)
-  return (
-    computeContentUuid(sealed) === key.contentUuid &&
-    computeContentDigest(sealed) === key.contentDigest
-  )
+  try {
+    return (
+      timingSafeEqual(Buffer.from(computeContentUuid(sealed)), Buffer.from(key.contentUuid)) &&
+      timingSafeEqual(Buffer.from(computeContentDigest(sealed)), Buffer.from(key.contentDigest))
+    )
+  } catch {
+    return false
+  }
 }
 
 /**

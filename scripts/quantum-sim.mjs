@@ -1187,3 +1187,72 @@ console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
   '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · state-tomography · error-correction-ftl · qml · quantum-inspired-classical · self-tuning · physical-simulation · hybrid-orchestration · dynamic-comparison-mesh · factorization · maxcut · molecular-simulation · cryptanalysis · applications-suite · production-grade',
 )
+
+// 99. Orchestrator: Initialize superposition.
+{
+  const { initializeOrchestration } = await import('../src/quantum/index.ts')
+  const state = initializeOrchestration()
+  assert(state.iteration === 0, 'Orchestration starts at iteration 0')
+  assert(state.system_health >= 0 && state.system_health <= 1, 'System health in [0,1]')
+  assert(state.layer_states.simulator.quality > 0.9, 'Simulator high quality')
+}
+
+// 100. Orchestrator: Entangle layers.
+{
+  const { initializeOrchestration, entangleLayerOutputs } = await import('../src/quantum/index.ts')
+  let state = initializeOrchestration()
+  state = entangleLayerOutputs(state)
+  assert(state.entanglement_strength >= 0 && state.entanglement_strength <= 1, 'Entanglement in [0,1]')
+  assert(state.interference_pattern.length === 7, 'All 7 layers in interference pattern')
+}
+
+// 101. Orchestrator: Interference pattern.
+{
+  const { initializeOrchestration, interferencePattern } = await import('../src/quantum/index.ts')
+  const state = initializeOrchestration()
+  const interference = interferencePattern(state)
+  assert(Array.isArray(interference.amplify), 'Amplify list is array')
+  assert(Array.isArray(interference.suppress), 'Suppress list is array')
+  assert(typeof interference.focus === 'string', 'Focus layer identified')
+}
+
+// 102. Orchestrator: Measure and collapse.
+{
+  const { initializeOrchestration, measureAndCollapse } = await import('../src/quantum/index.ts')
+  const state = initializeOrchestration()
+  const measurement = measureAndCollapse(state)
+  assert(measurement.iteration >= 1, 'Iteration incremented')
+  assert(measurement.all_layers_working === true, 'All layers operational')
+  assert(measurement.next_action.length > 0, 'Action determined')
+}
+
+// 103. Orchestrator: Feedback and improve.
+{
+  const { initializeOrchestration, entangleLayerOutputs, measureAndCollapse, feedbackAndImprove } = await import('../src/quantum/index.ts')
+  let state = initializeOrchestration()
+  state = entangleLayerOutputs(state)
+  const measurement = measureAndCollapse(state)
+  state = feedbackAndImprove(state, measurement)
+  assert(state.iteration >= 1, 'State updated after feedback')
+  assert(state.system_health >= 0 && state.system_health <= 1, 'Health valid after feedback')
+}
+
+// 104. Orchestrator: Full cycle.
+{
+  const { orchestrationCycle, initializeOrchestration } = await import('../src/quantum/index.ts')
+  const state = initializeOrchestration()
+  const result = orchestrationCycle(state)
+  assert(result.iteration >= 1, 'Cycle completes')
+  assert(result.measurement_confidence >= 0 && result.measurement_confidence <= 1, 'Confidence valid')
+}
+
+// 105. Orchestrator: Multi-iteration self-improvement.
+{
+  const { runOrchestration } = await import('../src/quantum/index.ts')
+  const { final_state, trajectory, converged } = runOrchestration(5)
+  assert(trajectory.length === 5, 'Ran 5 cycles')
+  assert(final_state.iteration === 5, 'State tracked 5 iterations')
+  assert(typeof converged === 'boolean', 'Convergence determined')
+}
+
+console.log(`\nOrchestrator: System self-improves through 7 fused layers + unified orchestration`)

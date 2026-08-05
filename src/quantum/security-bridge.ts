@@ -8,7 +8,7 @@
  * Quantum heuristics guide cryptanalysis strategy selection.
  */
 
-import { abs, max, min, floor, sqrt } from '../0/algebra.ts'
+import { abs, max, min, floor, sqrt, log2 } from '../0/algebra.ts'
 import { analyzeRSA } from './applications.ts'
 
 // ============================================================================
@@ -44,7 +44,7 @@ export function assessRSA(keyLength: number): CryptoSchemeProfile {
   // - Classical requires ~2^112 operations (exponential, intractable)
   // - Complete break, not relative speedup. Scheme is immediately insecure.
   // Represented as log₂(keyLength³) ≈ 3 * log₂(keyLength)
-  const quantumSecurity = floor(3 * Math.log2(keyLength))
+  const quantumSecurity = floor(3 * log2(keyLength))
 
   return {
     scheme: `RSA-${keyLength}`,
@@ -68,7 +68,7 @@ export function assessECDLP(curveSize: number): CryptoSchemeProfile {
   // - Classical: ~2^128 operations (exponential, intractable)
   // - Complete break. Grover provides negligible advantage on this problem.
   // Represented as log₂ of polynomial gate count
-  const quantumSecurity = floor(Math.log2(curveSize * curveSize))
+  const quantumSecurity = floor(log2(curveSize * curveSize))
 
   return {
     scheme: `ECDLP-${curveSize}`,

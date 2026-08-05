@@ -33,6 +33,10 @@ import {
   sample,
   bernsteinVazirani,
   deutschJozsa,
+  teleport,
+  superdenseCoding,
+  phaseEstimation,
+  cx,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -200,7 +204,42 @@ const HALF = 1 / 2
   assert(deutschJozsa(4, (x) => ((x >> 2) & 1)) === 'balanced', 'DJ: parity-of-a-bit is balanced')
 }
 
+// 18. Teleportation moves an arbitrary qubit state to qubit 2 — for every measurement branch.
+{
+  const states = [
+    [cx(3 / 5), cx(4 / 5)], // real superposition (3/5)² + (4/5)² = 1
+    [cx(3 / 5), cx(0, 4 / 5)], // complex amplitude (phase carried too)
+  ]
+  for (const [al, be] of states) {
+    for (const [u0, u1] of [[0, 0], [9 / 10, 0], [0, 9 / 10], [9 / 10, 9 / 10]]) {
+      const { a0, a1 } = teleport(al, be, u0, u1)
+      assert(
+        near(a0.re, al.re) && near(a0.im, al.im) && near(a1.re, be.re) && near(a1.im, be.im),
+        'teleportation recovers the state (all branches, real + complex)',
+      )
+    }
+  }
+}
+
+// 19. Superdense coding: all four 2-bit messages decode correctly through one qubit.
+{
+  for (const b0 of [0, 1]) {
+    for (const b1 of [0, 1]) {
+      const [d0, d1] = superdenseCoding(b0, b1)
+      assert(d0 === b0 && d1 === b1, `superdense coding decodes (${b0},${b1})`)
+    }
+  }
+}
+
+// 20. Phase estimation returns φ·2ᵗ exactly for dyadic phases.
+{
+  assert(phaseEstimation(3, 1 / 8) === 1, 'QPE(φ=1/8, t=3) = 1')
+  assert(phaseEstimation(3, 1 / 4) === 2, 'QPE(φ=1/4, t=3) = 2')
+  assert(phaseEstimation(3, 3 / 8) === 3, 'QPE(φ=3/8, t=3) = 3')
+  assert(phaseEstimation(3, 1 / 2) === 4, 'QPE(φ=1/2, t=3) = 4')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  superposition · H²=I · Y|0⟩=i|1⟩ · Bell/GHZ · SWAP · Toffoli · QFT/iQFT · Grover · Bernstein–Vazirani · Deutsch–Jozsa · sampling',
+  '  gates · Bell/GHZ · QFT · Grover · BV · DJ · teleportation · superdense coding · phase estimation · sampling',
 )

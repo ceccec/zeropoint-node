@@ -16,14 +16,19 @@
 import { PI, sqrt, round } from '../0/algebra.ts'
 import {
   type Register,
+  type Complex,
   zeroState,
   applyGate1,
   applyControlled,
   measure,
+  measureQubit,
   probabilities,
   cabs2,
   cx,
   H,
+  X,
+  Z,
+  cnot,
   phase,
 } from './simulator.ts'
 import { swap } from './gates.ts'
@@ -46,31 +51,37 @@ function uniform(n: number): Register {
   return s
 }
 
-/** Quantum Fourier Transform on all n qubits (with the standard final bit-reversal). */
-export function qft(reg: Register): Register {
-  const n = reg.n
+/** The identity qubit list [0,1,…,n−1] — the default QFT register. */
+const allQubits = (n: number): number[] => Array.from({ length: n }, (_, i) => i)
+
+/**
+ * Quantum Fourier Transform over an ordered subset of qubits (default: all),
+ * with the standard final bit-reversal. Acting on a subset lets phase
+ * estimation transform only its counting register.
+ */
+export function qft(reg: Register, qubits: readonly number[] = allQubits(reg.n)): Register {
+  const m = qubits.length
   let s = reg
-  for (let j = n - 1; j >= 0; j -= 1) {
-    s = applyGate1(s, j, H)
+  for (let j = m - 1; j >= 0; j -= 1) {
+    s = applyGate1(s, qubits[j]!, H)
     for (let k = 1; k <= j; k += 1) {
-      // controlled R_k = phase 2π/2^{k+1} = π/2^k, control j−k onto target j
-      s = applyControlled(s, j - k, j, phase(PI / (1 << k)))
+      s = applyControlled(s, qubits[j - k]!, qubits[j]!, phase(PI / (1 << k)))
     }
   }
-  for (let i = 0; i < n >> 1; i += 1) s = swap(s, i, n - 1 - i)
+  for (let i = 0; i < m >> 1; i += 1) s = swap(s, qubits[i]!, qubits[m - 1 - i]!)
   return s
 }
 
-/** Inverse QFT — the exact adjoint of qft (reversed ops, negated phases). */
-export function iqft(reg: Register): Register {
-  const n = reg.n
+/** Inverse QFT — the exact adjoint of qft over the same qubit subset. */
+export function iqft(reg: Register, qubits: readonly number[] = allQubits(reg.n)): Register {
+  const m = qubits.length
   let s = reg
-  for (let i = 0; i < n >> 1; i += 1) s = swap(s, i, n - 1 - i)
-  for (let j = 0; j < n; j += 1) {
+  for (let i = 0; i < m >> 1; i += 1) s = swap(s, qubits[i]!, qubits[m - 1 - i]!)
+  for (let j = 0; j < m; j += 1) {
     for (let k = j; k >= 1; k -= 1) {
-      s = applyControlled(s, j - k, j, phase(-PI / (1 << k)))
+      s = applyControlled(s, qubits[j - k]!, qubits[j]!, phase(-PI / (1 << k)))
     }
-    s = applyGate1(s, j, H)
+    s = applyGate1(s, qubits[j]!, H)
   }
   return s
 }
@@ -139,6 +150,74 @@ export function deutschJozsa(n: number, f: (x: number) => 0 | 1): 'constant' | '
   s = { n, amps: s.amps.map((a, i) => (f(i) ? cx(-a.re, -a.im) : a)) }
   for (let q = 0; q < n; q += 1) s = applyGate1(s, q, H)
   return cabs2(s.amps[0]!) > 1 / 2 ? 'constant' : 'balanced'
+}
+
+/**
+ * Quantum teleportation: move an arbitrary one-qubit state α|0⟩+β|1⟩ from
+ * qubit 0 to qubit 2 using a shared Bell pair and two classical bits. The
+ * mid-circuit measurements are driven by u0,u1 ∈ [0,1); Bob's X/Z corrections
+ * are conditioned on the outcomes. Returns qubit 2's recovered amplitudes —
+ * equal to (α,β) up to numerical error, for any measurement branch.
+ */
+export function teleport(alpha: Complex, beta: Complex, u0 = 0, u1 = 0): { a0: Complex; a1: Complex } {
+  // amps index bits: q0 = bit0, q1 = bit1, q2 = bit2. Load |ψ⟩ on q0, |00⟩ on q1q2.
+  const amps = new Array<Complex>(8).fill(cx(0))
+  amps[0] = alpha
+  amps[1] = beta
+  let s: Register = { n: 3, amps }
+  s = applyGate1(s, 1, H) // Bell pair on q1,q2
+  s = cnot(s, 1, 2)
+  s = cnot(s, 0, 1) // Alice entangles her qubit
+  s = applyGate1(s, 0, H)
+  const m0 = measureQubit(s, 0, u0)
+  s = m0.collapsed
+  const m1 = measureQubit(s, 1, u1)
+  s = m1.collapsed
+  if (m1.bit === 1) s = applyGate1(s, 2, X) // Bob's corrections
+  if (m0.bit === 1) s = applyGate1(s, 2, Z)
+  // q2 amplitudes: support sits at q0=m0, q1=m1; read q2 = 0 vs 1.
+  const base = (m0.bit << 0) | (m1.bit << 1)
+  return { a0: s.amps[base]!, a1: s.amps[base | 4]! }
+}
+
+/**
+ * Superdense coding: with a shared Bell pair, Alice sends two classical bits
+ * (b0,b1) to Bob by acting on her single qubit with I/X/Z/ZX and transmitting
+ * it. Bob disentangles and reads both bits deterministically. Returns the
+ * decoded [b0, b1].
+ */
+export function superdenseCoding(b0: 0 | 1, b1: 0 | 1): [number, number] {
+  let s = cnot(applyGate1(zeroState(2), 0, H), 0, 1) // Bell pair
+  if (b1 === 1) s = applyGate1(s, 0, X) // Alice encodes on her qubit (q0)
+  if (b0 === 1) s = applyGate1(s, 0, Z)
+  s = cnot(s, 0, 1) // Bob decodes
+  s = applyGate1(s, 0, H)
+  const p = probabilities(s)
+  let arg = 0
+  for (let i = 1; i < p.length; i += 1) if (p[i]! > p[arg]!) arg = i
+  return [arg & 1, (arg >> 1) & 1]
+}
+
+/**
+ * Quantum phase estimation: estimate φ where U = phase(2πφ) has eigenvalue
+ * e^{2πiφ} on |1⟩. Uses t counting qubits (0..t−1) and one eigenstate qubit
+ * (index t) prepared in |1⟩. Returns the counting-register integer, which
+ * equals φ·2ᵗ exactly when φ is a dyadic k/2ᵗ.
+ */
+export function phaseEstimation(t: number, phi: number): number {
+  let s = zeroState(t + 1)
+  s = applyGate1(s, t, X) // eigenstate |1⟩
+  for (let q = 0; q < t; q += 1) s = applyGate1(s, q, H)
+  const twoPi = 2 * PI
+  for (let j = 0; j < t; j += 1) {
+    // controlled-U^{2^j} = controlled-phase(2π·φ·2^j), control j → eigenstate t
+    s = applyControlled(s, j, t, phase(twoPi * phi * (1 << j)))
+  }
+  s = iqft(s, allQubits(t)) // inverse QFT on the counting register only
+  const p = probabilities(s)
+  let arg = 0
+  for (let i = 1; i < p.length; i += 1) if (p[i]! > p[arg]!) arg = i
+  return arg & ((1 << t) - 1) // drop the eigenstate bit
 }
 
 export function sample(reg: Register, shots: number, seed = 1): number[] {

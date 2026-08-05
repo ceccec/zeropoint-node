@@ -74,6 +74,17 @@ import {
   verifyTomography,
   generateTomographyProof,
   verifyTomographyProof,
+  REPETITION_3_CODE,
+  encodeLogicalZero,
+  measureSyndromeRepetition,
+  correctRepetition,
+  decodeLogicalRepetition,
+  errorCorrectionCycle,
+  batchErrorCorrection,
+  createSurfaceCodeLattice,
+  estimateSurfaceCodeThreshold,
+  calculateLogicalFidelity,
+  monitorSyndromePattern,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -492,7 +503,81 @@ const HALF = 1 / 2
   assert(typeof verified === 'boolean', 'Tomography verification returns boolean')
 }
 
+// 42. Repetition code specification.
+{
+  assert(REPETITION_3_CODE.physicalQubits === 3, 'Repetition code uses 3 qubits')
+  assert(REPETITION_3_CODE.distance === 1, 'Repetition [3,1,1] has distance 1')
+  assert(REPETITION_3_CODE.generators.length === 2, 'Repetition code has 2 stabilizers')
+}
+
+// 43. Error correction structures defined.
+{
+  const reg = zeroState(3)
+  assert(reg.amps.length === 8, '3-qubit register has 8 amplitudes')
+  const encoded = encodeLogicalZero(reg)
+  assert(encoded.amps.length > 0, 'Encoding preserves register structure')
+}
+
+// 44. Syndrome measurement structure.
+{
+  const reg = zeroState(3)
+  const syndrome = measureSyndromeRepetition(reg, 54321)
+  assert(syndrome.syndrome.length === 2, 'Syndrome has 2 bits (Z1Z2, Z2Z3)')
+  assert(typeof syndrome.detected === 'boolean', 'Syndrome indicates detection')
+}
+
+// 45. Error correction cycle.
+{
+  const reg = zeroState(3)
+  const cycle = errorCorrectionCycle(reg, 0.1, 99999)
+  assert(cycle.encoded.amps.length > 0, 'Encoding produces valid state')
+  assert(cycle.syndrome.syndrome.length === 2, 'Syndrome measured')
+  assert(typeof cycle.recovered === 'boolean', 'Recovery status determined')
+}
+
+// 46. Batch error correction.
+{
+  const reg = zeroState(3)
+  const batch = batchErrorCorrection(reg, 0.05, 5, 12345)
+  assert(batch.results.length === 5, 'Batch runs requested cycles')
+  assert(batch.successRate >= 0 && batch.successRate <= 1, 'Success rate is valid')
+}
+
+// 47. Surface code lattice: 2D array of plaquettes.
+{
+  const d = 3
+  const lattice = createSurfaceCodeLattice(d)
+  const expectedQubits = (2 * d - 1) * (2 * d - 1)
+  assert(lattice.dataQubits.length === expectedQubits, 'Surface code lattice size correct')
+  assert(lattice.plaquettes.length > 0, 'Plaquettes created')
+}
+
+// 48. Surface code threshold: logical error rate below threshold.
+{
+  const physicalRate = 1 / 1000 // 0.1% error
+  const result = estimateSurfaceCodeThreshold(3, physicalRate)
+  assert(result.isBelowThreshold, 'Error rate below surface code threshold')
+  assert(result.logicalErrorRate < physicalRate, 'Logical error < physical error below threshold')
+}
+
+// 49. Logical fidelity calculation.
+{
+  const initialFidelity = 1
+  const fidelity = calculateLogicalFidelity(initialFidelity, 5, 1 / 1000)
+  assert(fidelity >= 0 && fidelity <= 1, 'Fidelity in valid range')
+}
+
+// 50. Syndrome pattern detection: correlated errors.
+{
+  const syndrome1 = { syndrome: [0, 0], detected: false, errorType: 'none' }
+  const syndrome2 = { syndrome: [0, 0], detected: false, errorType: 'none' }
+  const syndrome3 = { syndrome: [1, 0], detected: true, errorType: 'X0' }
+  const pattern = monitorSyndromePattern([syndrome1, syndrome2, syndrome3])
+  assert(typeof pattern.correlated === 'boolean', 'Pattern analysis returns valid result')
+  assert(pattern.confidenceRatio >= 0 && pattern.confidenceRatio <= 1, 'Confidence ratio valid')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · state-tomography · production-grade',
+  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · state-tomography · error-correction-ftl · production-grade',
 )

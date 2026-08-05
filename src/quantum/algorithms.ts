@@ -324,6 +324,122 @@ export function simon(n: number, hidden: number): number {
   return gf2Nullspace(n, support)
 }
 
+// ── Classical number theory helpers (integer-only, no ambient Math.*) ────────
+function gcdInt(a: number, b: number): number {
+  let x = a < 0 ? -a : a
+  let y = b < 0 ? -b : b
+  while (y !== 0) {
+    const t = x % y
+    x = y
+    y = t
+  }
+  return x
+}
+function modpow(base: number, exp: number, mod: number): number {
+  let result = 1
+  let b = base % mod
+  let e = exp
+  while (e > 0) {
+    if (e & 1) result = (result * b) % mod
+    b = (b * b) % mod
+    e >>>= 1
+  }
+  return result
+}
+function bitsFor(n: number): number {
+  let m = 0
+  while (1 << m < n) m += 1
+  return m
+}
+/** Best continued-fraction denominator ≤ maxDen approximating c/q — the period candidate. */
+function periodFromCounting(c: number, q: number, maxDen: number): number {
+  if (c === 0) return 0
+  let a = c
+  let b = q
+  let p0 = 0
+  let p1 = 1
+  let q0 = 1
+  let q1 = 0
+  while (b !== 0) {
+    const t = (a - (a % b)) / b
+    const p2 = t * p1 + p0
+    const den = t * q1 + q0
+    if (den > maxDen) break
+    p0 = p1
+    p1 = p2
+    q0 = q1
+    q1 = den
+    const r = a % b
+    a = b
+    b = r
+  }
+  return q1
+}
+
+/**
+ * Controlled modular multiplication: work register w ↦ (mult·w mod N) when the
+ * control qubit is 1, identity otherwise. mult must be coprime to N so the map
+ * is a bijection on {0..N−1} (out-of-range values are fixed). This is Shor's
+ * arithmetic oracle, applied directly as a statevector permutation.
+ */
+function controlledModMult(reg: Register, control: number, mult: number, N: number, t: number, m: number): Register {
+  const cbit = 1 << control
+  const workMask = ((1 << m) - 1) << t
+  const out = new Array<Complex>(reg.amps.length).fill(cx(0))
+  for (let idx = 0; idx < reg.amps.length; idx += 1) {
+    const a = reg.amps[idx]!
+    if ((idx & cbit) === 0) {
+      out[idx] = a
+      continue
+    }
+    const w = (idx >> t) & ((1 << m) - 1)
+    if (w >= N) {
+      out[idx] = a
+      continue
+    }
+    out[(idx & ~workMask) | (((mult * w) % N) << t)] = a
+  }
+  return { n: reg.n, amps: out }
+}
+
+/**
+ * Shor's algorithm: factor N by finding the period of x ↦ aˣ mod N with quantum
+ * phase estimation over the modular-multiplication unitary, then continued
+ * fractions + gcd. Returns a non-trivial factor pair, or null if this base
+ * yields an odd period or the trivial square root (classically: retry with
+ * another a). This is the real thing — QPE, inverse QFT, controlled modular
+ * arithmetic — reduced to the small statevector a simulator can hold (e.g. 15).
+ */
+export function shor(N: number, a: number): [number, number] | null {
+  const g = gcdInt(a, N)
+  if (g !== 1) return [g, N / g] // lucky common factor
+  const m = bitsFor(N)
+  const t = 2 * m // counting qubits
+  const q = 1 << t
+  const amps = new Array<Complex>(1 << (t + m)).fill(cx(0))
+  amps[1 << t] = cx(1) // work register = |1⟩, counting = |0⟩
+  let s: Register = { n: t + m, amps }
+  for (let j = 0; j < t; j += 1) s = applyGate1(s, j, H)
+  for (let j = 0; j < t; j += 1) s = controlledModMult(s, j, modpow(a, 1 << j, N), N, t, m)
+  s = iqft(s, allQubits(t))
+  const countProb = new Array<number>(q).fill(0)
+  for (let idx = 0; idx < s.amps.length; idx += 1) countProb[idx & (q - 1)]! += cabs2(s.amps[idx]!)
+  let r = 0
+  for (let c = 1; c < q; c += 1) {
+    if (countProb[c]! <= 1e-6) continue
+    const cand = periodFromCounting(c, q, N)
+    if (cand > 0 && modpow(a, cand, N) === 1 && (r === 0 || cand < r)) r = cand
+  }
+  if (r === 0 || r & 1) return null
+  const x = modpow(a, r >> 1, N)
+  if (x === N - 1) return null
+  const f1 = gcdInt(x - 1, N)
+  const f2 = gcdInt(x + 1, N)
+  if (f1 > 1 && f1 < N) return [f1, N / f1]
+  if (f2 > 1 && f2 < N) return [f2, N / f2]
+  return null
+}
+
 export function sample(reg: Register, shots: number, seed = 1): number[] {
   const A = 1664525
   const C = 1013904223

@@ -38,6 +38,7 @@ import {
   phaseEstimation,
   bitFlipCode,
   simon,
+  shor,
   cx,
 } from '../src/quantum/index.ts'
 
@@ -261,7 +262,19 @@ const HALF = 1 / 2
   }
 }
 
+// 23. Shor's algorithm factors 15 — quantum period-finding + continued fractions.
+{
+  const factors = (r) => (r ? [r[0], r[1]].sort((x, y) => x - y) : null)
+  for (const a of [2, 7, 8]) {
+    const f = factors(shor(15, a))
+    assert(f !== null && f[0] === 3 && f[1] === 5, `Shor factors 15 = 3 × 5 with base a=${a}`)
+  }
+  // a base with an even period whose square root is trivial should be rejected (null), not wrong.
+  const bad = shor(15, 4) // period 2, 4^1 = 4 ≢ 14, still factors; ensure it never returns a wrong pair
+  assert(bad === null || (bad[0] * bad[1] === 15 && bad[0] > 1 && bad[1] > 1), 'Shor never returns a wrong factorization')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · Bell/GHZ · QFT · Grover · BV · DJ · teleport · superdense · QPE · error-correction · Simon · sampling',
+  '  gates · Bell/GHZ · QFT · Grover · BV · DJ · teleport · superdense · QPE · error-correction · Simon · Shor · sampling',
 )

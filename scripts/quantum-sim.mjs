@@ -137,6 +137,11 @@ import {
   trackCompositionStrategy,
   recommendCompositionStrategy,
   adaptCompositionGraph,
+  diagnosisSystem,
+  generateRepairActions,
+  correctSystemOnce,
+  assessResilience,
+  assessProductionReadiness,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -1099,6 +1104,83 @@ const HALF = 1 / 2
   const adapted = adaptCompositionGraph(graph, ['B'], [{ module: 'B', alternative: 'B_alt' }])
   assert(adapted.nodes.includes('A'), 'Original nodes preserved')
   assert(adapted.edges.some((e) => e.from === 'B_alt' || e.to === 'B_alt'), 'Alternative module used')
+}
+
+// 91. Self-healing: system diagnosis.
+{
+  const diagnosis = diagnosisSystem(0.85, 0.80, 0.75, 0.1)
+  assert(diagnosis.health_score >= 0 && diagnosis.health_score <= 1, 'Health score in [0,1]')
+  assert(Array.isArray(diagnosis.detected_issues), 'Issues array returned')
+  assert(typeof diagnosis.requires_intervention === 'boolean', 'Intervention flag set')
+}
+
+// 92. Self-healing: healthy system.
+{
+  const diagnosis = diagnosisSystem(0.95, 0.95, 0.95, 0.05)
+  assert(diagnosis.requires_intervention === false, 'Healthy system needs no intervention')
+  assert(diagnosis.health_score > 0.9, 'Healthy system has high score')
+}
+
+// 93. Self-healing: sick system.
+{
+  const diagnosis = diagnosisSystem(0.3, 0.2, 0.4, 0.8)
+  assert(diagnosis.requires_intervention === true, 'Sick system requires intervention')
+  assert(diagnosis.health_score < 0.5, 'Sick system has low score')
+}
+
+// 94. Self-healing: generate repair actions.
+{
+  const bad_diagnosis = {
+    timestamp: 0,
+    health_score: 0.4,
+    detected_issues: [
+      { issue_type: 'verification_failure', severity: 0.8, affected_component: 'vortex-bridge', description: 'Low soundness', suggested_fix: 'Add checks' },
+    ],
+    requires_intervention: true,
+  }
+  const actions = generateRepairActions(bad_diagnosis)
+  assert(actions.length > 0, 'Repair actions generated')
+  assert(actions[0].priority >= 0 && actions[0].priority <= 1, 'Action priority valid')
+}
+
+// 95. Self-healing: correction cycle.
+{
+  const initial = diagnosisSystem(0.6, 0.6, 0.6, 0.3)
+  const cycles = correctSystemOnce(initial, 3)
+  assert(cycles.length > 0, 'Correction cycles run')
+  assert(cycles.every((c) => c.iteration >= 0), 'Iteration numbers valid')
+  const final_health = cycles[cycles.length - 1].diagnosis_after.health_score
+  assert(final_health >= 0 && final_health <= 1, 'Final health score in [0,1]')
+}
+
+// 96. Self-healing: assess resilience.
+{
+  const initial = diagnosisSystem(0.7, 0.7, 0.7, 0.2)
+  const cycles = correctSystemOnce(initial, 2)
+  const resilience = assessResilience(cycles)
+  assert(resilience.self_repair_capacity >= 0 && resilience.self_repair_capacity <= 1, 'Repair capacity in [0,1]')
+  assert(resilience.convergence_speed >= 0 && resilience.convergence_speed <= 1, 'Convergence speed in [0,1]')
+  assert(resilience.robustness >= 0 && resilience.robustness <= 1, 'Robustness in [0,1]')
+}
+
+// 97. Self-healing: production readiness.
+{
+  const profile = { self_repair_capacity: 0.8, convergence_speed: 0.75, robustness: 0.85 }
+  const readiness = assessProductionReadiness(profile)
+  assert(readiness.ready === true, 'Resilient system ready for production')
+  assert(readiness.confidence > 0.7, 'High confidence in resilience')
+}
+
+// 98. Self-healing: full cycle (diagnosis→repair→re-diagnosis).
+{
+  const initial = diagnosisSystem(0.5, 0.45, 0.5, 0.6)
+  assert(initial.requires_intervention, 'Initial system needs repair')
+  const cycles = correctSystemOnce(initial, 2)
+  const final = cycles[cycles.length - 1].diagnosis_after
+  assert(final.health_score >= initial.health_score, 'System health improved or stayed same')
+  const resilience = assessResilience(cycles)
+  const readiness = assessProductionReadiness(resilience)
+  assert(readiness.recommendation.length > 0, 'Readiness recommendation provided')
 }
 
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)

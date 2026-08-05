@@ -151,7 +151,8 @@
     "check": "npm run test:kernel && npm run test:security && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run quantum:sim && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
     "prepublishOnly": "npm run build",
     "prose": "node scripts/prose-claims.mjs --list",
-    "prose:check": "node scripts/prose-claims.mjs"
+    "prose:check": "node scripts/prose-claims.mjs",
+    "quantum:proof": "node --experimental-strip-types scripts/quantum-proof.mjs"
   },
   "keywords": [
     "a432",

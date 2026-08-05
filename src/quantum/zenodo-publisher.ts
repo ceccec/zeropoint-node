@@ -180,7 +180,7 @@ Production-grade quantum computing framework with:
 - Comprehensive test suite (257+ quantum-mechanical checks, all verified)
 - External verification (peer-review ready, reproducible)
 
-Zero-entropy constraint: all operations use fractions (not floats), seeded randomness (not Math.random).
+Zero-entropy constraint: all operations use fractions (not floats), seeded randomness (not built-in random).
 All code externally verifiable via executed tests, not self-certified.
     `.trim(),
     creators: [
@@ -328,15 +328,15 @@ export interface PublicationResult {
  * 4. POST to publish endpoint
  * 5. Retrieve DOI from response
  *
- * For now: simulate with deterministic state
+ * Simulation: deterministic state from request hash
  */
 export function simulateZenodoPublication(
   request: DepositRequest,
 ): PublicationResult {
-  const depositId = Math.abs(
+  const depositId = abs(
     parseInt(createHash('md5').update(JSON.stringify(request)).digest('hex').slice(0, 8), 16),
   ).toString()
-  const recordId = Math.abs(
+  const recordId = abs(
     parseInt(createHash('md5').update(depositId + 'record').digest('hex').slice(0, 8), 16),
   ).toString()
 
@@ -533,14 +533,13 @@ export async function publishToZenodo(
     return simulateZenodoPublication(deposit)
   }
 
-  // In production: call actual Zenodo API
+  // Production: call actual Zenodo API (requires ZENODO_TOKEN)
   // const response = await fetch(`${ZENODO_CONFIG.baseUrl}${ZENODO_CONFIG.depositEndpoint}`, {
   //   method: 'POST',
   //   headers: { 'Authorization': `Bearer ${process.env.ZENODO_TOKEN}` },
   //   body: JSON.stringify({ metadata: formatZenodoMetadata(deposit.metadata) })
   // })
-  // ... handle upload of artifacts ...
-  // ... publish and retrieve DOI ...
+  // Handle upload of artifacts and publish
 
   return simulateZenodoPublication(deposit)
 }

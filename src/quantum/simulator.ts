@@ -123,6 +123,13 @@ export const ry = (theta: number): Gate1 => [
   cx(sin(theta / 2)),
   cx(cos(theta / 2)),
 ]
+/** Rotation about X — e^{-iθX/2}, the QAOA mixer generator. */
+export const rx = (theta: number): Gate1 => [
+  cx(cos(theta / 2)),
+  cx(0, -sin(theta / 2)),
+  cx(0, -sin(theta / 2)),
+  cx(cos(theta / 2)),
+]
 
 // ── Composite gates ─────────────────────────────────────────────────────────
 export const cnot = (reg: Register, control: number, target: number): Register =>

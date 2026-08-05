@@ -51,6 +51,10 @@ import {
   depolarizing,
   amplitudeDamping,
   vqe1,
+  qaoaOptimize,
+  mostProbable,
+  cutValue,
+  maxCut,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -324,7 +328,21 @@ const HALF = 1 / 2
   }
 }
 
+// 28. QAOA finds an optimal MaxCut on small graphs.
+{
+  const cases = [
+    [3, [[0, 1], [1, 2], [2, 0]], 3 / 2], // triangle: MaxCut 2, random baseline 1.5
+    [4, [[0, 1], [1, 2], [2, 3], [3, 0]], 2], // 4-cycle: MaxCut 4, random baseline 2
+  ]
+  for (const [n, edges, baseline] of cases) {
+    const best = qaoaOptimize(n, edges)
+    const sol = mostProbable(best.reg)
+    assert(cutValue(sol, edges) === maxCut(n, edges), `QAOA's top bitstring is an optimal MaxCut (n=${n})`)
+    assert(best.expected > baseline, `QAOA beats the random-cut baseline (n=${n})`)
+  }
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · entanglement · QFT · Grover · BV · DJ · teleport · superdense · QPE · QEC · Simon · Shor · noise · VQE',
+  '  gates · entanglement · QFT · Grover · BV · DJ · teleport · superdense · QPE · QEC · Simon · Shor · noise · VQE · QAOA',
 )

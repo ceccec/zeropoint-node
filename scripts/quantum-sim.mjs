@@ -50,6 +50,7 @@ import {
   bitFlip,
   depolarizing,
   amplitudeDamping,
+  vqe1,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -315,7 +316,15 @@ const HALF = 1 / 2
   assert(near(measureProbs(damped)[0], 1) && near(trace(damped), 1), 'amplitude-damping(1): |1⟩→|0⟩')
 }
 
+// 27. VQE finds the ground-state energy of H = a·Z + b·X = −√(a²+b²).
+{
+  for (const [a, b] of [[1, 0], [3 / 5, 4 / 5], [1, 1], [2, 0]]) {
+    const r = vqe1(a, b)
+    assert(near(r.energy, r.exact, 1e-4), `VQE ground energy of ${a}Z+${b}X → ${r.exact.toFixed(4)} (got ${r.energy.toFixed(4)})`)
+  }
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · entanglement · QFT · Grover · BV · DJ · teleport · superdense · QPE · QEC · Simon · Shor · circuit DSL · density-matrix noise',
+  '  gates · entanglement · QFT · Grover · BV · DJ · teleport · superdense · QPE · QEC · Simon · Shor · noise · VQE',
 )

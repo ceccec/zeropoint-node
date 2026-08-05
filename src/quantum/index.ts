@@ -13,3 +13,5 @@
 export * from './simulator.ts'
 export * from './gates.ts'
 export * from './algorithms.ts'
+export * from './circuit.ts'
+export * from './density.ts'

@@ -40,6 +40,16 @@ import {
   simon,
   shor,
   cx,
+  circuit,
+  pure,
+  applyGate,
+  applyChannel,
+  measureProbs,
+  purity,
+  trace,
+  bitFlip,
+  depolarizing,
+  amplitudeDamping,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -274,7 +284,38 @@ const HALF = 1 / 2
   assert(bad === null || (bad[0] * bad[1] === 15 && bad[0] > 1 && bad[1] > 1), 'Shor never returns a wrong factorization')
 }
 
+// 24. Circuit DSL: circuit(2).h(0).cnot(0,1) builds the Bell state.
+{
+  const p = circuit(2).h(0).cnot(0, 1).probabilities()
+  assert(near(p[0], 1 / 2) && near(p[3], 1 / 2) && near(p[1], 0) && near(p[2], 0), 'DSL builds the Bell state')
+}
+
+// 25. Density matrix: a pure state has purity 1 and trace 1.
+{
+  const d = pure(applyGate1(zeroState(1), 0, H)) // |+⟩⟨+|
+  assert(near(purity(d), 1), 'pure state has purity 1')
+  assert(near(trace(d), 1), 'trace(ρ) = 1')
+  assert(near(applyGate(pure(zeroState(1)), 0, X).rho[1][1].re, 1), 'ρ→XρX† flips |0⟩⟨0| to |1⟩⟨1|')
+}
+
+// 26. Noise channels: bit-flip, depolarising, amplitude damping act as physics says.
+{
+  const zero = pure(zeroState(1))
+  const flipped = applyChannel(zero, 0, bitFlip(1)) // p=1 → |1⟩
+  assert(near(measureProbs(flipped)[1], 1) && near(trace(flipped), 1), 'bit-flip(1): |0⟩→|1⟩, trace preserved')
+
+  const half = applyChannel(zero, 0, bitFlip(1 / 2)) // p=1/2 → maximally mixed on the bit
+  assert(near(measureProbs(half)[0], 1 / 2) && near(purity(half), 1 / 2), 'bit-flip(1/2): purity drops to 1/2')
+
+  const dep = applyChannel(pure(applyGate1(zeroState(1), 0, H)), 0, depolarizing(1)) // → I/2
+  assert(near(purity(dep), 1 / 2) && near(measureProbs(dep)[0], 1 / 2), 'depolarising(1) → maximally mixed I/2')
+
+  const one = pure(applyGate1(zeroState(1), 0, X))
+  const damped = applyChannel(one, 0, amplitudeDamping(1)) // |1⟩ relaxes to |0⟩
+  assert(near(measureProbs(damped)[0], 1) && near(trace(damped), 1), 'amplitude-damping(1): |1⟩→|0⟩')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · Bell/GHZ · QFT · Grover · BV · DJ · teleport · superdense · QPE · error-correction · Simon · Shor · sampling',
+  '  gates · entanglement · QFT · Grover · BV · DJ · teleport · superdense · QPE · QEC · Simon · Shor · circuit DSL · density-matrix noise',
 )

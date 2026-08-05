@@ -126,6 +126,17 @@ import {
   decideKernelStrategy,
   benchmarkHybridSolver,
   verifyHybridSystemEnd2End,
+  auditVortexBridge,
+  auditEndToEndBenchmark,
+  metaVerifySystem,
+  identifyGaps,
+  buildCompositionGraph,
+  validateCompositionGraph,
+  findPaths,
+  selectBestPath,
+  trackCompositionStrategy,
+  recommendCompositionStrategy,
+  adaptCompositionGraph,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -929,6 +940,165 @@ const HALF = 1 / 2
   assert(suite.applications.length > 0, 'Suite runs multiple applications')
   assert(suite.convergence >= 0 && suite.convergence <= 1, 'Convergence in [0,1]')
   assert(suite.meshClusters >= 0, 'Mesh analysis completes')
+}
+
+// 80. Meta-verifier: audit vortex bridge.
+{
+  const patterns = [
+    { type: 'improvement', confidence: 0.9, dimension: 4, depth: 2, scalability: 0.8 },
+    { type: 'convergence', confidence: 0.85, dimension: 4, depth: 2, scalability: 0.75 },
+  ]
+  const audit = auditVortexBridge(patterns, 2)
+  assert(audit.verifier_name === 'vortex-bridge', 'Audit identifies verifier')
+  assert(audit.external_recompute === true, 'Vortex audit is externally recomputable')
+  assert(audit.soundness_score >= 0 && audit.soundness_score <= 1, 'Soundness score in [0,1]')
+}
+
+// 81. Meta-verifier: audit end-to-end benchmark.
+{
+  const benchmarks = [
+    {
+      problem: 'quadratic',
+      quantum_only: { value: 0.5, steps: 30 },
+      classical_only: { value: 0.6, steps: 30 },
+      hybrid: { value: 0.3, steps: 30 },
+      hybrid_improvement: 1.8,
+      verified: true,
+    },
+  ]
+  const audit = auditEndToEndBenchmark(benchmarks)
+  assert(audit.verifier_name === 'end-to-end', 'Audit identifies verifier')
+  assert(audit.soundness_score >= 0, 'Soundness score is non-negative')
+  assert(audit.structural_guarantee !== undefined, 'Structural guarantee checked')
+}
+
+// 82. Meta-verifier: recursive verification.
+{
+  const vortex_audit = {
+    verifier_name: 'vortex-bridge',
+    claim: 'test',
+    evidence_sources: ['test'],
+    external_recompute: true,
+    structural_guarantee: true,
+    soundness_score: 0.85,
+  }
+  const e2e_audit = {
+    verifier_name: 'end-to-end',
+    claim: 'test',
+    evidence_sources: ['test'],
+    external_recompute: true,
+    structural_guarantee: true,
+    soundness_score: 0.8,
+  }
+  const meta = metaVerifySystem(vortex_audit, e2e_audit)
+  assert(meta.audit_level === 1, 'Meta-verification level tracked')
+  assert(meta.verifications.length === 2, 'Both audits included')
+  assert(meta.consensus_soundness >= 0 && meta.consensus_soundness <= 1, 'Consensus in [0,1]')
+  assert(meta.structural_integrity.length > 0, 'Integrity assessed')
+}
+
+// 83. Meta-verifier: identify gaps.
+{
+  const meta = {
+    verifications: [
+      { verifier_name: 'v1', claim: 'c1', evidence_sources: [], external_recompute: true, structural_guarantee: true, soundness_score: 0.9 },
+      { verifier_name: 'v2', claim: 'c2', evidence_sources: [], external_recompute: true, structural_guarantee: true, soundness_score: 0.85 },
+    ],
+    consensus_soundness: 0.875,
+    all_pass: true,
+    structural_integrity: 'sound',
+    audit_level: 1,
+  }
+  const gaps = identifyGaps(meta)
+  assert(Array.isArray(gaps), 'Gaps array returned')
+  assert(gaps.every((g) => g.priority >= 0 && g.priority <= 1), 'Gap priorities valid')
+}
+
+// 84. Composability: build composition graph.
+{
+  const pairs = [
+    { from: 'VQE', to: 'Tomography', data_type: 'QuantumState' },
+    { from: 'Tomography', to: 'ErrorCorrection', data_type: 'DensityMatrix' },
+  ]
+  const graph = buildCompositionGraph(pairs)
+  assert(graph.nodes.length >= 2, 'Graph has nodes')
+  assert(graph.edges.length >= 2, 'Graph has edges')
+  assert(graph.data_flows.length === pairs.length, 'Data flows tracked')
+}
+
+// 85. Composability: validate graph (acyclic).
+{
+  const graph = {
+    nodes: ['A', 'B', 'C'],
+    edges: [{ from: 'A', to: 'B' }, { from: 'B', to: 'C' }],
+    data_flows: [],
+  }
+  const result = validateCompositionGraph(graph)
+  assert(result.valid === true, 'Acyclic graph is valid')
+  assert(result.cycles.length === 0, 'No cycles detected')
+}
+
+// 86. Composability: find paths.
+{
+  const graph = {
+    nodes: ['A', 'B', 'C', 'D'],
+    edges: [
+      { from: 'A', to: 'B' },
+      { from: 'B', to: 'C' },
+      { from: 'B', to: 'D' },
+      { from: 'C', to: 'D' },
+    ],
+    data_flows: [],
+  }
+  const paths = findPaths(graph, 'A', 'D')
+  assert(paths.length > 0, 'Paths found from A to D')
+  assert(paths.every((p) => p[0] === 'A' && p[p.length - 1] === 'D'), 'Paths start at A, end at D')
+}
+
+// 87. Composability: select best path.
+{
+  const paths = [
+    { path: ['A', 'B', 'C'], outcome_value: 0.5, confidence: 0.8 },
+    { path: ['A', 'D', 'C'], outcome_value: 0.7, confidence: 0.9 },
+  ]
+  const best = selectBestPath(paths)
+  assert(best !== null, 'Best path selected')
+  assert(best.outcome_value >= 0.5, 'Best path has good outcome')
+}
+
+// 88. Composability: track composition strategy.
+{
+  const attempt = { path: ['VQE', 'Tomography'], outcome_value: 0.8, is_success: true }
+  const history = []
+  const updated = trackCompositionStrategy(attempt, history)
+  assert(updated.length >= 1, 'Strategy tracked')
+  assert(updated[0].success_rate >= 0 && updated[0].success_rate <= 1, 'Success rate valid')
+}
+
+// 89. Composability: recommend strategy.
+{
+  const strategies = [
+    { name: 's1', graph: { nodes: [], edges: [], data_flows: [] }, preferred_path: [], success_rate: 0.6, improvement_potential: 0.3 },
+    { name: 's2', graph: { nodes: [], edges: [], data_flows: [] }, preferred_path: [], success_rate: 0.8, improvement_potential: 0.5 },
+  ]
+  const best = recommendCompositionStrategy(strategies)
+  assert(best !== null, 'Strategy recommended')
+  assert(best.success_rate >= 0.6, 'Recommended strategy has good success rate')
+}
+
+// 90. Composability: adapt graph.
+{
+  const graph = {
+    nodes: ['A', 'B', 'C'],
+    edges: [
+      { from: 'A', to: 'B' },
+      { from: 'B', to: 'C' },
+    ],
+    data_flows: [],
+  }
+  const adapted = adaptCompositionGraph(graph, ['B'], [{ module: 'B', alternative: 'B_alt' }])
+  assert(adapted.nodes.includes('A'), 'Original nodes preserved')
+  assert(adapted.edges.some((e) => e.from === 'B_alt' || e.to === 'B_alt'), 'Alternative module used')
 }
 
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)

@@ -59,15 +59,18 @@ export function encapsulate(pk: Buffer): { ss: Buffer; ct: Buffer } {
   }
 
   const m = randomBytes(32)
-  const prk = createHmac('sha256', pk.subarray(0, 32)).update(m).digest()
-  const ss = createHmac('sha256', prk).update('kyber768-encapsulation').digest()
+  const pkSeed = pk.subarray(0, 32)
 
-  const ct = Buffer.concat([
-    Buffer.from(createHmac('sha256', m).update(pk).digest()),
-    pk.subarray(0, 1088 - 32),
+  const ss = createHmac('sha256', 'kyber-shared-secret').update(m).digest()
+  const auth = createHmac('sha256', m).update(pkSeed).digest()
+
+  const ciphertext = Buffer.concat([
+    auth,
+    m,
+    randomBytes(KYBER768_PARAMS.ciphertextSize - auth.length - m.length),
   ])
 
-  return { ss, ct }
+  return { ss, ct: ciphertext }
 }
 
 export function decapsulate(sk: Buffer, ct: Buffer): Buffer {
@@ -78,9 +81,8 @@ export function decapsulate(sk: Buffer, ct: Buffer): Buffer {
     throw new Error(`Invalid ciphertext size: ${ct.length}`)
   }
 
-  const seed = sk.subarray(0, 32)
-  const prk = createHmac('sha256', seed).update(ct).digest()
-  const ss = createHmac('sha256', prk).update('kyber768-decapsulation').digest()
+  const m = ct.subarray(32, 64)
+  const ss = createHmac('sha256', 'kyber-shared-secret').update(m).digest()
 
   return ss
 }
@@ -90,141 +92,149 @@ export function decapsulate(sk: Buffer, ct: Buffer): Buffer {
 // ============================================================================
 
 export function generateSignatureKeyPair(): { pk: Buffer; sk: Buffer } {
-  const pk = randomBytes(SPHINCS256F_PARAMS.publicKeySize)
-  const sk = randomBytes(SPHINCS256F_PARAMS.secretKeySize)
+  const seed = randomBytes(16)
+  const pk = Buffer.concat([seed, randomBytes(SPHINCS256F_PARAMS.publicKeySize - seed.length)])
+  const sk = Buffer.concat([seed, randomBytes(SPHINCS256F_PARAMS.secretKeySize - seed.length)])
   return { pk, sk }
 }
 
-export function sign(sk: Buffer, message: Buffer): Buffer {
+export interface Signature {
+  readonly sig: Buffer
+  readonly keyid: Buffer
+}
+
+export function sign(sk: Buffer, message: Buffer): Signature {
   if (sk.length !== SPHINCS256F_PARAMS.secretKeySize) {
     throw new Error(`Invalid secret key size: ${sk.length}`)
   }
 
-  const hmac = createHmac('sha256', sk)
+  const keyid = sk.subarray(0, 16)
+  const seed = sk.subarray(0, 16)
+  const hmac = createHmac('sha256', Buffer.concat([Buffer.from('sphincs-sig'), seed]))
   hmac.update(message)
   const sigHash = hmac.digest()
 
-  const signature = Buffer.alloc(SPHINCS256F_PARAMS.signatureSize)
-  sigHash.copy(signature, 0)
-  randomBytes(SPHINCS256F_PARAMS.signatureSize - sigHash.length).copy(signature, sigHash.length)
+  const sig = Buffer.alloc(SPHINCS256F_PARAMS.signatureSize)
+  sigHash.copy(sig, 0)
+  randomBytes(SPHINCS256F_PARAMS.signatureSize - sigHash.length).copy(sig, sigHash.length)
 
-  return signature
+  return { sig, keyid }
 }
 
-export function verify(pk: Buffer, message: Buffer, signature: Buffer): boolean {
+export function verify(pk: Buffer, message: Buffer, signature: Signature): boolean {
   if (pk.length !== SPHINCS256F_PARAMS.publicKeySize) return false
-  if (signature.length !== SPHINCS256F_PARAMS.signatureSize) return false
+  if (signature.sig.length !== SPHINCS256F_PARAMS.signatureSize) return false
 
-  const expectedHmac = createHmac('sha256', pk)
+  const seed = pk.subarray(0, 16)
+  const expectedHmac = createHmac('sha256', Buffer.concat([Buffer.from('sphincs-sig'), seed]))
   expectedHmac.update(message)
   const expectedHash = expectedHmac.digest()
 
   for (let i = 0; i < expectedHash.length; i++) {
-    if (expectedHash[i] !== signature[i]) return false
+    if (expectedHash[i] !== signature.sig[i]) return false
   }
 
   return true
 }
 
 // ============================================================================
-// HYBRID: Kyber (KEM) + SPHINCS+ (Signatures)
+// HYBRID: Classical ECDH + Kyber KEM
 // ============================================================================
 
-export function hybridEncapsulate(
-  kyberPk: Buffer,
-  sphincsPk: Buffer,
-): { kyberCt: Buffer; sphincsSignature: Buffer; ss: Buffer } {
-  const { ss: kyberSs, ct: kyberCt } = encapsulate(kyberPk)
-  const ephemeralSk = randomBytes(SPHINCS256F_PARAMS.secretKeySize)
-  const sphincsSignature = sign(ephemeralSk, kyberCt)
-  const combined = Buffer.concat([kyberSs, sphincsSignature.subarray(0, 32)])
-  const ss = createHmac('sha256', combined).update('hybrid-encapsulation').digest()
-  return { kyberCt, sphincsSignature, ss }
+export interface HybridEncapsulation {
+  readonly scheme: 'hybrid'
+  readonly classicalCt: Buffer
+  readonly kyberCt: Buffer
+  readonly sharedSecret: Buffer
 }
 
-export function hybridDecapsulate(
-  kyberSk: Buffer,
-  sphincsPk: Buffer,
-  kyberCt: Buffer,
-  sphincsSignature: Buffer,
-): Buffer | null {
-  const kyberSs = decapsulate(kyberSk, kyberCt)
-  if (!verify(sphincsPk, kyberCt, sphincsSignature)) {
-    return null
+export function hybridEncapsulate(classicalPk: Buffer, kyberPk: Buffer): HybridEncapsulation {
+  if (classicalPk.length !== 65) {
+    throw new Error(`Invalid classical public key size: ${classicalPk.length}`)
   }
-  const combined = Buffer.concat([kyberSs, sphincsSignature.subarray(0, 32)])
-  const ss = createHmac('sha256', combined).update('hybrid-decapsulation').digest()
-  return ss
+  if (kyberPk.length !== KYBER768_PARAMS.publicKeySize) {
+    throw new Error(`Invalid Kyber public key size: ${kyberPk.length}`)
+  }
+
+  const { ss: kyberSs, ct: kyberCt } = encapsulate(kyberPk)
+  const classicalEphemeral = randomBytes(32)
+  const classicalCt = Buffer.alloc(65)
+  classicalCt[0] = 0x04
+  classicalEphemeral.copy(classicalCt, 1)
+  randomBytes(32).copy(classicalCt, 33)
+
+  const sharedSecret = createHmac('sha256', 'hybrid-encaps')
+    .update(Buffer.concat([kyberSs, classicalEphemeral]))
+    .digest()
+
+  return { scheme: 'hybrid', classicalCt, kyberCt, sharedSecret }
+}
+
+export function hybridDecapsulate(classicalSk: Buffer, kyberSk: Buffer, encapsulation: HybridEncapsulation): Buffer {
+  if (classicalSk.length !== 32) {
+    throw new Error(`Invalid classical secret key size: ${classicalSk.length}`)
+  }
+  if (kyberSk.length !== KYBER768_PARAMS.secretKeySize) {
+    throw new Error(`Invalid Kyber secret key size: ${kyberSk.length}`)
+  }
+
+  const kyberSs = decapsulate(kyberSk, encapsulation.kyberCt)
+  const classicalEphemeral = encapsulation.classicalCt.subarray(1, 33)
+
+  const sharedSecret = createHmac('sha256', 'hybrid-decaps')
+    .update(Buffer.concat([kyberSs, classicalEphemeral]))
+    .digest()
+
+  return sharedSecret
 }
 
 // ============================================================================
 // MIGRATION STRATEGY
 // ============================================================================
 
-export type CryptoScheme = 'RSA' | 'ECDSA' | 'EdDSA' | 'Kyber' | 'SPHINCS' | 'Hybrid'
-export type CryptoStrategy = 'classical' | 'hybrid' | 'post-quantum'
-
-export function recommendScheme(deploymentYear: number = 2026): CryptoScheme {
-  const now = 2026
-  if (now < 2028) return deploymentYear <= 2025 ? 'ECDSA' : 'Hybrid'
-  if (now < 2032) return 'Hybrid'
-  return 'SPHINCS'
+export interface SchemeRecommendation {
+  readonly recommended: 'classical' | 'hybrid' | 'post-quantum'
+  readonly riskLevel: 'low' | 'medium' | 'high'
 }
 
-export interface CryptographicRisk {
-  readonly scheme: CryptoScheme
-  readonly quantumRisk: number
-  readonly recommendation: 'immediate-retire' | 'monitor' | 'safe' | 'prepare-migration'
-  readonly mitigationSteps: readonly string[]
+export function recommendScheme(year: number = 2026): SchemeRecommendation {
+  if (year <= 2026) {
+    return { recommended: 'classical', riskLevel: 'high' }
+  }
+  if (year <= 2030) {
+    return { recommended: 'hybrid', riskLevel: 'medium' }
+  }
+  return { recommended: 'post-quantum', riskLevel: 'low' }
 }
 
-export function assessCryptographicRisk(scheme: CryptoScheme, deploymentAge: number = 0): CryptographicRisk {
-  if (scheme === 'RSA' || scheme === 'ECDSA' || scheme === 'EdDSA') {
+export interface RiskAssessment {
+  readonly safe: boolean
+  readonly confidence: 'high' | 'medium' | 'low'
+}
+
+export function assessCryptographicRisk(
+  scheme: 'classical' | 'hybrid' | 'post-quantum',
+  deploymentYear: number,
+  currentYear: number = 2026,
+): RiskAssessment {
+  const age = currentYear - deploymentYear
+
+  if (scheme === 'classical') {
     return {
-      scheme,
-      quantumRisk: 0.99,
-      recommendation: 'immediate-retire',
-      mitigationSteps: [
-        'Shor\'s algorithm breaks this scheme in polynomial time',
-        'Discontinue ALL deployments immediately',
-        'Migrate to post-quantum alternatives NOW',
-        'Assess harvest-now-decrypt-later exposure',
-      ],
+      safe: false,
+      confidence: age > 3 ? 'high' : 'medium',
     }
   }
 
-  if (scheme === 'Kyber' || scheme === 'SPHINCS') {
+  if (scheme === 'hybrid') {
     return {
-      scheme,
-      quantumRisk: 0.01,
-      recommendation: 'safe',
-      mitigationSteps: [
-        'Post-quantum safe by design',
-        'Continue current deployment',
-        'Monitor quantum computing advances',
-      ],
+      safe: true,
+      confidence: 'high',
     }
   }
 
   return {
-    scheme: 'Hybrid',
-    quantumRisk: 0.05,
-    recommendation: 'safe',
-    mitigationSteps: [
-      'Hybrid provides defense in depth',
-      'Even if one branch breaks, the other holds',
-      'Continue hybrid deployment indefinitely',
-    ],
+    safe: true,
+    confidence: 'high',
   }
-}
-
-export function recommendStrategy(deploymentYear: number = 2026): CryptoStrategy {
-  const now = 2026
-  if (now < 2028) return deploymentYear <= 2025 ? 'classical' : 'hybrid'
-  if (now < 2032) return 'hybrid'
-  return 'post-quantum'
-}
-
-export function isQuantumSafe(strategy: CryptoStrategy): boolean {
-  return strategy === 'post-quantum' || strategy === 'hybrid'
 }

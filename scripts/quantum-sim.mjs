@@ -116,6 +116,16 @@ import {
   recommendAnalysisStrategy,
   planMigration,
   assessCryptographicPortfolio,
+  extractLearningPatterns,
+  checkVortexInvariants,
+  generateVortexCertificate,
+  vortexGuidanceForQuantum,
+  kernelHintFromQuantum,
+  classicalKernelOptimize,
+  recommendCircuitDepthKernel,
+  decideKernelStrategy,
+  benchmarkHybridSolver,
+  verifyHybridSystemEnd2End,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -826,7 +836,43 @@ const HALF = 1 / 2
   assert(risk.timelineYears >= 0, 'Timeline computed')
 }
 
-// 77. Factorization: verify Shor-based approach.
+// 77-80. Vortex bridge tests.
+{
+  const history = [{ theta: [0.1, 0.2], energy: 0.5 }, { theta: [0.15, 0.25], energy: 0.4 }]
+  const patterns = extractLearningPatterns(history)
+  assert(patterns.length > 0, 'Vortex extracts learning patterns')
+  const invariants = checkVortexInvariants(patterns)
+  assert(invariants.length > 0, 'Vortex checks invariants')
+  const cert = generateVortexCertificate(patterns)
+  assert(typeof cert.valid === 'boolean', 'Vortex certificate generated')
+  const guidance = vortexGuidanceForQuantum(cert)
+  assert(guidance.adjust_strategy !== undefined, 'Vortex provides guidance')
+}
+
+// 81-83. Kernel adaptation tests.
+{
+  const hint = kernelHintFromQuantum([0.1, 0.2], 25, 2)
+  assert(hint.learning_rate > 0, 'Kernel hint provides learning rate')
+  const obj = (x) => x[0] ** 2 + x[1] ** 2
+  const result = classicalKernelOptimize(obj, 2, hint, 10)
+  assert(result.final_value < 1, 'Classical kernel optimizes')
+  const depth_rec = recommendCircuitDepthKernel(3, [20, 25, 30])
+  assert(depth_rec.depth > 0, 'Kernel recommends circuit depth')
+  const strategy = decideKernelStrategy(5, 0.7, 100, 100)
+  assert(strategy.use_quantum || strategy.use_classical, 'Kernel decides strategy')
+}
+
+// 84-85. End-to-end verification.
+{
+  const obj = (x) => x[0] ** 2 + x[1] ** 2
+  const bench = benchmarkHybridSolver('test', obj, 2, 54321)
+  assert(bench.hybrid_improvement >= 0, 'Hybrid produces improvement ratio')
+  const suite = verifyHybridSystemEnd2End()
+  assert(suite.benchmarks.length > 0, 'End-to-end suite runs benchmarks')
+  assert(suite.total_improvement >= 0, 'Suite computes total improvement')
+}
+
+// 86. Factorization: verify Shor-based approach.
 {
   const result = factorInteger(15, 11111)
   assert(result.verified || result.factors[0] * result.factors[1] === result.N, 'Factorization correct or unresolved')

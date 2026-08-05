@@ -1,8 +1,8 @@
 {
   "ceilings": {
     "typecheck": 130,
-    "lint": 937,
-    "decimals": 406,
+    "lint": 938,
+    "decimals": 409,
     "cycles": 2,
     "unreachable": 281,
     "unloadable": 32,

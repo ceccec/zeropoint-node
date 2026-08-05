@@ -110,6 +110,12 @@ import {
   analyzeRSA,
   solveApplication,
   runApplicationSuite,
+  assessRSA,
+  assessLWE,
+  assessQuantumRisk,
+  recommendAnalysisStrategy,
+  planMigration,
+  assessCryptographicPortfolio,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -764,7 +770,63 @@ const HALF = 1 / 2
   assert(quality.convergence >= 0, 'Convergence metric non-negative')
 }
 
-// 69. Factorization: verify Shor-based approach.
+// 69. Quantum-security bridge: RSA assessment.
+{
+  const rsa = assessRSA(2048)
+  assert(rsa.scheme === 'RSA-2048', 'RSA scheme identified')
+  assert(!rsa.postQuantumSafe, 'RSA marked vulnerable to quantum')
+}
+
+// 70. LWE lattice-based assessment.
+{
+  const lwe = assessLWE(1024)
+  assert(lwe.postQuantumSafe, 'LWE post-quantum safe')
+  assert(lwe.family === 'LWE', 'LWE family tracked')
+}
+
+// 71. Quantum risk assessment.
+{
+  const rsa = assessRSA(1024)
+  const risk = assessQuantumRisk(rsa, 0)
+  assert(risk.quantumRisk > 0, 'Quantum risk detected for pre-quantum scheme')
+  assert(risk.recommendation !== undefined, 'Recommendation provided')
+}
+
+// 72. Cryptanalysis strategy routing.
+{
+  const rsa = assessRSA(2048)
+  const strategy = recommendAnalysisStrategy(rsa)
+  assert(strategy.name.length > 0, 'Strategy recommended')
+  assert(strategy.effort > 0, 'Effort estimated')
+}
+
+// 73. Migration planning.
+{
+  const from = assessRSA(2048)
+  const to = assessLWE(1024)
+  const plan = planMigration(from, to)
+  assert(plan.phaseCount === 4, 'Migration has 4 phases')
+  assert(plan.phases.length === 4, 'Phases defined')
+}
+
+// 74. Portfolio risk assessment.
+{
+  const schemes = [assessRSA(1024), assessLWE(512)]
+  const report = assessCryptographicPortfolio(schemes, 2024)
+  assert(report.vulnerableCount >= 0, 'Vulnerable count tracked')
+  assert(report.safeCount >= 0, 'Safe count tracked')
+  assert(report.recommendations.length > 0, 'Portfolio recommendations provided')
+}
+
+// 75-76. Security continuity tests
+{
+  const rsa2048 = assessRSA(2048)
+  assert(rsa2048.keyLength === 2048, 'Key length preserved')
+  const risk = assessQuantumRisk(rsa2048, 5)
+  assert(risk.timelineYears >= 0, 'Timeline computed')
+}
+
+// 77. Factorization: verify Shor-based approach.
 {
   const result = factorInteger(15, 11111)
   assert(result.verified || result.factors[0] * result.factors[1] === result.N, 'Factorization correct or unresolved')
@@ -806,7 +868,7 @@ const HALF = 1 / 2
   assert(report.recommendation.length > 0, 'Recommendation provided')
 }
 
-// 75. End-to-end application solver.
+// 78. End-to-end application solver.
 {
   const adapter = new AdaptiveOptimizer()
   const prob = { type: 'factorization', data: 15, seed: 55555 }
@@ -815,7 +877,7 @@ const HALF = 1 / 2
   assert(result.effort >= 0, 'Effort tracked')
 }
 
-// 76. Comprehensive application suite.
+// 79. Comprehensive application suite.
 {
   const suite = runApplicationSuite(66666)
   assert(suite.applications.length > 0, 'Suite runs multiple applications')

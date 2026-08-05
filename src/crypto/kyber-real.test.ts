@@ -42,6 +42,8 @@ function testEncapsulationDecapsulation(): void {
 
   // Both parties should derive same shared secret
   if (!ss1.equals(ss2)) {
+    console.log('  ✗ Encapsulated SS: ' + ss1.toString('hex').slice(0, 32) + '...')
+    console.log('  ✗ Decapsulated SS: ' + ss2.toString('hex').slice(0, 32) + '...')
     throw new Error('Encapsulation/decapsulation mismatch: shared secrets do not match')
   }
 

@@ -33,17 +33,29 @@ export type Polynomial = Uint16Array // 256 coefficients mod 3329
 /-- Create polynomial from bytes using CBD sampling -/
 export function polyFromBytes(seed: Buffer, nonce: number): Polynomial {
   const poly = new Uint16Array(KYBER_N)
+
+  // Expand seed to 64 bytes (need 512 bits for 256 coefficients with eta=2)
   const shake = createHash('sha256')
   shake.update(seed)
   shake.update(Buffer.from([nonce]))
-  const bytes = shake.digest()
+  let bytes = shake.digest()
+
+  // For 256 coefficients with 2 bits each, we need 64 bytes
+  if (bytes.length < 64) {
+    // Expand by hashing again with incremented nonce
+    const shake2 = createHash('sha256')
+    shake2.update(seed)
+    shake2.update(Buffer.from([nonce + 256]))
+    bytes = Buffer.concat([bytes, shake2.digest()])
+  }
 
   // Centered binomial distribution: sample from {-KYBER_ETA1, ..., +KYBER_ETA1}
   for (let i = 0; i < KYBER_N; i++) {
-    const byte_pair = bytes[abs(floor(i / 4))]
-    const shift = (i % 4) * 2
-    const a = (byte_pair >> shift) & 1
-    const b = (byte_pair >> (shift + 1)) & 1
+    const byte_idx = floor((i * 2) / 8)
+    const bit_offset = (i * 2) % 8
+
+    const a = (bytes[byte_idx] >> bit_offset) & 1
+    const b = (bytes[byte_idx] >> (bit_offset + 1)) & 1
     poly[i] = (a - b + KYBER_Q) % KYBER_Q
   }
 
@@ -118,15 +130,21 @@ function inverseNTT(poly: Polynomial): Polynomial {
 
 /-- Modular exponentiation -/
 function modExp(base: number, exp: number, mod: number): number {
+  if (exp < 0) {
+    // For negative exponent: compute base^exp = (base^(-exp))^(-1)
+    // Using Fermat's little theorem: a^(-1) ≡ a^(p-2) mod p
+    const pos_exp = modExp(base, -exp, mod)
+    return modExp(pos_exp, mod - 2, mod)
+  }
+
   let result = 1
   base = base % mod
-  let e = exp < 0 ? exp + mod : exp
 
-  while (e > 0) {
-    if (e % 2 === 1) {
+  while (exp > 0) {
+    if (exp % 2 === 1) {
       result = (result * base) % mod
     }
-    e = floor(e / 2)
+    exp = floor(exp / 2)
     base = (base * base) % mod
   }
 
@@ -158,6 +176,7 @@ export interface KyberKeyPair {
 
 export function generateKeyPair(): KyberKeyPair {
   const d = randomBytes(32) // Seed for pseudorandom generation
+  const z = randomBytes(32) // Decapsulation seed
 
   // Generate matrix A and secret vectors s, e
   const A: Polynomial[][] = []
@@ -194,11 +213,12 @@ export function generateKeyPair(): KyberKeyPair {
     d,
   ])
 
-  // Encode secret key: s || e || seed || pk_hash
+  // Encode secret key: s || e || d || z || pk_hash (NIST FIPS 203)
   const secretKey = Buffer.concat([
     Buffer.from(polynomialsToBytes(s)),
     Buffer.from(polynomialsToBytes(e)),
     d,
+    z,
     createHash('sha256').update(publicKey).digest(),
   ])
 
@@ -294,9 +314,12 @@ export function decapsulate(secretKey: Buffer, ciphertext: Buffer): Buffer {
     throw new Error(`Invalid ciphertext size: ${ciphertext.length}`)
   }
 
-  // Extract s from secret key
+  // Extract s from secret key (first k*384 bytes)
   const s_bytes = secretKey.slice(0, KYBER_K * 384)
   const s = bytesToPolynomials(s_bytes, KYBER_K)
+
+  // Note: e, d, z, and pk_hash follow s in the secret key but aren't needed for basic decapsulation
+  // z would be used for implicit rejection (FO transform variant)
 
   // Decompress u and v from ciphertext
   const c1_size = KYBER_DU * KYBER_K * 32

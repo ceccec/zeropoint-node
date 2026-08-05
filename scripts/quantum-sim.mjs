@@ -97,6 +97,13 @@ import {
   ISING_MODEL,
   estimateGroundStateEnergy,
   solveHybrid,
+  initializeMesh,
+  addNodeToMesh,
+  pruneMesh,
+  clusterMesh,
+  extractPatterns,
+  recommendExploration,
+  assessMesh,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -685,7 +692,73 @@ const HALF = 1 / 2
   assert(result.stepsUsed > 0, 'Hybrid uses budget')
 }
 
+// 62. Dynamic comparison mesh: initialize population.
+{
+  const objective = (x) => x[0] ** 2 + x[1] ** 2
+  const mesh = initializeMesh(5, 2, objective, 11111)
+  assert(mesh.nodes.length === 5, 'Mesh initialized with 5 nodes')
+  assert(mesh.edges.length > 0, 'Edges connect nodes')
+}
+
+// 63. Add node to mesh: rewire topology.
+{
+  const objective = (x) => x[0] ** 2 + x[1] ** 2
+  const mesh = initializeMesh(3, 2, objective, 22222)
+  const newSol = [0.1, 0.1]
+  const updated = addNodeToMesh(mesh.nodes, mesh.edges, newSol, objective(newSol))
+  assert(updated.nodes.length === 4, 'Mesh grows with new node')
+}
+
+// 64. Prune mesh: keep elite + frontier.
+{
+  const objective = (x) => x[0] ** 2 + x[1] ** 2
+  const mesh = initializeMesh(10, 2, objective, 33333)
+  const pruned = pruneMesh(mesh.nodes, mesh.edges, 5)
+  assert(pruned.nodes.length === 5, 'Pruning reduces to target size')
+  assert(pruned.pruned.length === 5, 'Tracks pruned nodes')
+}
+
+// 65. Cluster mesh: identify solution islands.
+{
+  const objective = (x) => x[0] ** 2 + x[1] ** 2
+  const mesh = initializeMesh(8, 2, objective, 44444)
+  const clusters = clusterMesh(mesh.nodes, mesh.edges)
+  assert(clusters.length > 0, 'Mesh forms clusters')
+  assert(clusters[0].nodes.length > 0, 'Clusters contain nodes')
+}
+
+// 66. Extract patterns: improvement, bifurcation, stagnation.
+{
+  const objective = (x) => x[0] ** 2 + x[1] ** 2
+  const mesh = initializeMesh(6, 2, objective, 55555)
+  const clusters = clusterMesh(mesh.nodes, mesh.edges)
+  const patterns = extractPatterns(mesh.nodes, mesh.edges, clusters)
+  assert(typeof patterns !== 'undefined', 'Patterns extracted')
+  assert(patterns.length >= 0, 'Pattern analysis returns array')
+}
+
+// 67. Recommend exploration: find unexplored regions.
+{
+  const objective = (x) => x[0] ** 2 + x[1] ** 2
+  const mesh = initializeMesh(5, 2, objective, 66666)
+  const clusters = clusterMesh(mesh.nodes, mesh.edges)
+  const patterns = extractPatterns(mesh.nodes, mesh.edges, clusters)
+  const rec = recommendExploration(mesh.nodes, clusters, patterns, 2, 77777)
+  assert(rec.targets.length > 0, 'Recommender suggests targets')
+  assert(rec.rationale.length > 0, 'Provides rationale')
+}
+
+// 68. Mesh quality assessment.
+{
+  const objective = (x) => x[0] ** 2 + x[1] ** 2
+  const mesh = initializeMesh(5, 2, objective, 88888)
+  const quality = assessMesh(mesh.nodes, mesh.edges)
+  assert(quality.diversity >= 0, 'Diversity metric non-negative')
+  assert(quality.connectivity >= 0, 'Connectivity metric non-negative')
+  assert(quality.convergence >= 0, 'Convergence metric non-negative')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · state-tomography · error-correction-ftl · qml · quantum-inspired-classical · self-tuning · physical-simulation · hybrid-orchestration · production-grade',
+  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · state-tomography · error-correction-ftl · qml · quantum-inspired-classical · self-tuning · physical-simulation · hybrid-orchestration · dynamic-comparison-mesh · production-grade',
 )

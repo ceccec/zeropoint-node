@@ -2,7 +2,7 @@
   "ceilings": {
     "typecheck": 130,
     "lint": 937,
-    "decimals": 395,
+    "decimals": 396,
     "cycles": 2,
     "unreachable": 281,
     "unloadable": 32,

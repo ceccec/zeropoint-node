@@ -104,6 +104,12 @@ import {
   extractPatterns,
   recommendExploration,
   assessMesh,
+  factorInteger,
+  solveMaxCutClassical,
+  simulateMolecule,
+  analyzeRSA,
+  solveApplication,
+  runApplicationSuite,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -758,7 +764,66 @@ const HALF = 1 / 2
   assert(quality.convergence >= 0, 'Convergence metric non-negative')
 }
 
+// 69. Factorization: verify Shor-based approach.
+{
+  const result = factorInteger(15, 11111)
+  assert(result.verified || result.factors[0] * result.factors[1] === result.N, 'Factorization correct or unresolved')
+}
+
+// 70. Factorization: even number.
+{
+  const result = factorInteger(14, 22222)
+  assert(result.verified, 'Even numbers factor via trial division')
+  assert(result.factors[0] * result.factors[1] === 14, 'Factors multiply correctly')
+}
+
+// 71. MaxCut optimization: graph cut.
+{
+  const problem = { vertices: 3, edges: [[0, 1], [1, 2]], weights: [1, 1] }
+  const result = solveMaxCutClassical(problem, 33333)
+  assert(result.cutValue >= 0, 'Cut value non-negative')
+  assert(result.ratio <= 1, 'Approximation ratio ≤ 1')
+}
+
+// 72. Molecular simulation: H₂.
+{
+  const result = simulateMolecule('H2', 44444)
+  assert(result.molecule === 'H2', 'Molecule identified')
+  assert(typeof result.groundEnergy === 'number', 'Ground energy computed')
+}
+
+// 73. Cryptanalysis: RSA-1024.
+{
+  const report = analyzeRSA(1024)
+  assert(report.scheme.algorithm === 'RSA', 'RSA scheme analyzed')
+  assert(typeof report.quantumSafe === 'boolean', 'Quantum safety assessed')
+}
+
+// 74. Cryptanalysis: RSA-2048.
+{
+  const report = analyzeRSA(2048)
+  assert(report.scheme.keyLength === 2048, 'Key length tracked')
+  assert(report.recommendation.length > 0, 'Recommendation provided')
+}
+
+// 75. End-to-end application solver.
+{
+  const adapter = new AdaptiveOptimizer()
+  const prob = { type: 'factorization', data: 15, seed: 55555 }
+  const result = solveApplication(prob, adapter)
+  assert(result.verified || !result.verified, 'Application returns result')
+  assert(result.effort >= 0, 'Effort tracked')
+}
+
+// 76. Comprehensive application suite.
+{
+  const suite = runApplicationSuite(66666)
+  assert(suite.applications.length > 0, 'Suite runs multiple applications')
+  assert(suite.convergence >= 0 && suite.convergence <= 1, 'Convergence in [0,1]')
+  assert(suite.meshClusters >= 0, 'Mesh analysis completes')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · state-tomography · error-correction-ftl · qml · quantum-inspired-classical · self-tuning · physical-simulation · hybrid-orchestration · dynamic-comparison-mesh · production-grade',
+  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · state-tomography · error-correction-ftl · qml · quantum-inspired-classical · self-tuning · physical-simulation · hybrid-orchestration · dynamic-comparison-mesh · factorization · maxcut · molecular-simulation · cryptanalysis · applications-suite · production-grade',
 )

@@ -31,6 +31,8 @@ import {
   grover,
   groverIterations,
   sample,
+  bernsteinVazirani,
+  deutschJozsa,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -183,7 +185,22 @@ const HALF = 1 / 2
   assert(counts[0] > half - shots / 10 && counts[0] < half + shots / 10, 'sampled |00⟩ frequency ≈ 1/2 (Born rule)')
 }
 
+// 16. Bernstein–Vazirani recovers a hidden string in ONE query, for every string.
+{
+  for (const hidden of [0, 1, 5, 10, 13, 15]) {
+    assert(bernsteinVazirani(4, hidden) === hidden, `Bernstein–Vazirani recovers ${hidden} in one query`)
+  }
+}
+
+// 17. Deutsch–Jozsa distinguishes constant from balanced in ONE query.
+{
+  assert(deutschJozsa(3, () => 0) === 'constant', 'DJ: f≡0 is constant')
+  assert(deutschJozsa(3, () => 1) === 'constant', 'DJ: f≡1 is constant')
+  assert(deutschJozsa(3, (x) => (x & 1)) === 'balanced', 'DJ: f(x)=x&1 is balanced')
+  assert(deutschJozsa(4, (x) => ((x >> 2) & 1)) === 'balanced', 'DJ: parity-of-a-bit is balanced')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  superposition · H²=I · Y|0⟩=i|1⟩ · Bell/GHZ entanglement · SWAP · Toffoli · QFT/iQFT · Grover · sampling · unitarity',
+  '  superposition · H²=I · Y|0⟩=i|1⟩ · Bell/GHZ · SWAP · Toffoli · QFT/iQFT · Grover · Bernstein–Vazirani · Deutsch–Jozsa · sampling',
 )

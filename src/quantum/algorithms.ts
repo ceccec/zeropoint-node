@@ -20,11 +20,31 @@ import {
   applyGate1,
   applyControlled,
   measure,
+  probabilities,
+  cabs2,
   cx,
   H,
   phase,
 } from './simulator.ts'
 import { swap } from './gates.ts'
+
+/** Number of set bits in a non-negative integer. */
+function popcount(x: number): number {
+  let n = x
+  let c = 0
+  while (n !== 0) {
+    c += n & 1
+    n >>>= 1
+  }
+  return c
+}
+
+/** Uniform superposition H^⊗n |0…0⟩ over n qubits. */
+function uniform(n: number): Register {
+  let s = zeroState(n)
+  for (let q = 0; q < n; q += 1) s = applyGate1(s, q, H)
+  return s
+}
 
 /** Quantum Fourier Transform on all n qubits (with the standard final bit-reversal). */
 export function qft(reg: Register): Register {
@@ -93,6 +113,34 @@ export function grover(n: number, target: number, iterations?: number): Register
  * `seed`, so results are reproducible and this surface stays free of ambient
  * RNG. With enough shots the counts converge to size·|amplitudeᵢ|².
  */
+/**
+ * Bernstein–Vazirani: recover a hidden n-bit string s from the oracle
+ * f(x) = s·x (mod 2), in a SINGLE query. Sandwich a phase oracle
+ * (|x⟩ → (−1)^{s·x}|x⟩) between two layers of Hadamards; the state collapses
+ * onto |s⟩ deterministically. Returns the recovered integer (= hidden).
+ */
+export function bernsteinVazirani(n: number, hidden: number): number {
+  let s = uniform(n)
+  s = { n, amps: s.amps.map((a, i) => (popcount(i & hidden) & 1 ? cx(-a.re, -a.im) : a)) }
+  for (let q = 0; q < n; q += 1) s = applyGate1(s, q, H)
+  const p = probabilities(s)
+  let arg = 0
+  for (let i = 1; i < p.length; i += 1) if (p[i]! > p[arg]!) arg = i
+  return arg
+}
+
+/**
+ * Deutsch–Jozsa: decide whether f:{0,1}ⁿ→{0,1} (promised constant or balanced)
+ * is constant or balanced, in a SINGLE query. After the H·oracle·H sandwich the
+ * all-zeros outcome has probability 1 iff f is constant, 0 iff balanced.
+ */
+export function deutschJozsa(n: number, f: (x: number) => 0 | 1): 'constant' | 'balanced' {
+  let s = uniform(n)
+  s = { n, amps: s.amps.map((a, i) => (f(i) ? cx(-a.re, -a.im) : a)) }
+  for (let q = 0; q < n; q += 1) s = applyGate1(s, q, H)
+  return cabs2(s.amps[0]!) > 1 / 2 ? 'constant' : 'balanced'
+}
+
 export function sample(reg: Register, shots: number, seed = 1): number[] {
   const A = 1664525
   const C = 1013904223

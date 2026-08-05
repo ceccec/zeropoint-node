@@ -119,6 +119,35 @@ export function grover(n: number, target: number, iterations?: number): Register
 }
 
 /**
+ * Generalised Grover search: amplify every basis state satisfying `isMarked`
+ * (there may be several), using the optimal ⌊(π/4)√(N/M)⌋ iterations for M
+ * solutions. Returns the amplified state, or null when there are no solutions
+ * or all states match. The single-target `grover` is the M=1 special case.
+ */
+export function groverSearch(n: number, isMarked: (x: number) => boolean, markedCount?: number): Register | null {
+  const size = 1 << n
+  let m = markedCount ?? 0
+  if (m === 0) for (let x = 0; x < size; x += 1) if (isMarked(x)) m += 1
+  if (m === 0 || m >= size) return null
+  let s = zeroState(n)
+  for (let q = 0; q < n; q += 1) s = applyGate1(s, q, H)
+  const iters = round((PI / 4) * sqrt(size / m))
+  for (let it = 0; it < iters; it += 1) {
+    s = { n, amps: s.amps.map((a, i) => (isMarked(i) ? cx(-a.re, -a.im) : a)) }
+    let mr = 0
+    let mi = 0
+    for (const a of s.amps) {
+      mr += a.re
+      mi += a.im
+    }
+    mr /= size
+    mi /= size
+    s = { n, amps: s.amps.map((a) => cx(2 * mr - a.re, 2 * mi - a.im)) }
+  }
+  return s
+}
+
+/**
  * Measurement statistics: run `shots` Born-rule measurements and return a
  * histogram of outcome counts. Randomness is a deterministic LCG seeded by
  * `seed`, so results are reproducible and this surface stays free of ambient

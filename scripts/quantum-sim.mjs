@@ -30,6 +30,7 @@ import {
   iqft,
   grover,
   groverIterations,
+  groverSearch,
   sample,
   bernsteinVazirani,
   deutschJozsa,
@@ -342,7 +343,18 @@ const HALF = 1 / 2
   }
 }
 
+// 29. Generalized Grover amplifies multiple marked items (M solutions).
+{
+  const marked = new Set([3, 5, 9])
+  const s = groverSearch(4, (x) => marked.has(x))
+  const p = probabilities(s)
+  const pm = [...marked].reduce((a, i) => a + p[i], 0)
+  assert(marked.has(mostProbable(s)), 'generalized Grover: top outcome is a marked item')
+  assert(pm > 1 / 2, 'generalized Grover: marked states carry the majority of the probability')
+  assert(mostProbable(groverSearch(4, (x) => x === 11)) === 11, 'generalized Grover: M=1 case works')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · entanglement · QFT · Grover · BV · DJ · teleport · superdense · QPE · QEC · Simon · Shor · noise · VQE · QAOA',
+  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · teleport · superdense · QPE · QEC · Simon · Shor · noise · VQE · QAOA',
 )

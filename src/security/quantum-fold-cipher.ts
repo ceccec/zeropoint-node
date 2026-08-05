@@ -371,10 +371,100 @@ export function verifyQuantumKey(key: QuantumKey): boolean {
   )
 }
 
+/**
+ * HKDF-SHA256 Key Expansion (IETF Standard)
+ *
+ * Replaces the weak Rodin doubling (b*2) % 9 with HKDF-SHA256 per RFC 5869.
+ * Each round key is derived independently using HMAC-SHA256, making the
+ * expansion cryptographically strong:
+ *   - Non-reversible: cannot compute ki-1 from ki
+ *   - Non-cyclic: arbitrary number of rounds, no repetition
+ *   - Industry standard: vetted by IETF and cryptographic community
+ *
+ * Process:
+ *   PRK = HMAC-SHA256(salt=genesis, IKM=contentDigest)
+ *   T(i) = HMAC-SHA256(PRK, T(i-1) || info || counter) for i = 1..rounds
+ *   Round key material = map(T(i) bytes → trinity {3,6,9})
+ */
+function hkdfExpand(
+  prk: Buffer,
+  info: Buffer,
+  length: number,
+): Buffer {
+  const hash = 'sha256'
+  const hashLen = 32 // SHA-256 produces 32 bytes
+  const n = Math.ceil(length / hashLen)
+  const output: Buffer[] = []
+  let t = Buffer.alloc(0)
+
+  for (let i = 1; i <= n; i++) {
+    const input = Buffer.concat([t, info, Buffer.from([i])])
+    t = createHmac(hash, prk).update(input).digest()
+    output.push(t)
+  }
+
+  return Buffer.concat(output).subarray(0, length)
+}
+
+export function expandQuantumKeyViaHkdf(
+  key: QuantumKey,
+  rounds: number,
+): QuantumKey[] {
+  const expanded = [key]
+
+  // Extract phase: use genesis UUID as salt, contentDigest as input key material
+  const salt = Buffer.from(key.genesis.replace(/-/g, ''), 'hex')
+  const ikm = Buffer.from(key.contentDigest, 'hex')
+  const prk = createHmac('sha256', salt).update(ikm).digest()
+
+  for (let r = 0; r < rounds; r++) {
+    // Expand phase: derive round-specific key material
+    const info = Buffer.from(`quantum-key-round:${r}:expansion`, 'utf8')
+    const derivedBytes = hkdfExpand(prk, info, key.material.length)
+
+    // Map derived bytes to trinity values {3, 6, 9}
+    const current: number[] = []
+    for (let i = 0; i < derivedBytes.length; i++) {
+      const byte = derivedBytes[i]!
+      current.push(TRINITY[byte % TRINITY.length]!)
+    }
+
+    // Round keys are sealed the same way as the root key — an expanded key is
+    // still key material, so it carries the same cryptographic binding.
+    const sealed = keySealInput(current, key.genesis, r)
+    expanded.push({
+      material: current,
+      round: r,
+      contentUuid: computeContentUuid(sealed),
+      contentDigest: computeContentDigest(sealed),
+      genesis: key.genesis,
+    })
+  }
+
+  return expanded
+}
+
+/**
+ * Deprecated: weak Rodin doubling key expansion.
+ *
+ * DO NOT USE — replaced by expandQuantumKeyViaHkdf.
+ * Kept only for migration; new code must use HKDF-SHA256.
+ *
+ * Vulnerabilities in Rodin doubling:
+ *   - Deterministic linear cycle: b → 2b → 4b → 8b → 7b → 5b → 1b → 2b
+ *   - Reversible: given ki, compute ki-1 via modular inverse
+ *   - Enables key recovery attacks: attacker can walk back to seed
+ *
+ * @deprecated Use expandQuantumKeyViaHkdf instead
+ */
 export function expandQuantumKeyViaRodin(
   key: QuantumKey,
   rounds: number,
 ): QuantumKey[] {
+  console.warn(
+    'expandQuantumKeyViaRodin is DEPRECATED and cryptographically weak. ' +
+    'Use expandQuantumKeyViaHkdf (HKDF-SHA256) instead.',
+  )
   const expanded = [key]
   let current = [...key.material]
 
@@ -832,7 +922,8 @@ export const QuantumEncryption = {
 
   // Tier 3: Cryptographic Seal
   generateQuantumKey,
-  expandQuantumKeyViaRodin,
+  expandQuantumKeyViaHkdf,
+  expandQuantumKeyViaRodin, // Deprecated
 
   // Tier 4: Chain Verification
   recordMeasurement,

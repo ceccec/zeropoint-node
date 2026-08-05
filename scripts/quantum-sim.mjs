@@ -56,6 +56,12 @@ import {
   mostProbable,
   cutValue,
   maxCut,
+  deutsch,
+  amplitudeEstimation,
+  hhlSolve2x2,
+  readoutMitigationSingleQubit,
+  calibrateReadout,
+  simplifyCircuitSequence,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -354,7 +360,49 @@ const HALF = 1 / 2
   assert(mostProbable(groverSearch(4, (x) => x === 11)) === 11, 'generalized Grover: M=1 case works')
 }
 
+// 30. Deutsch problem: constant vs balanced in one query.
+{
+  assert(deutsch(0, 0) === 'constant', 'Deutsch(0,0) = constant')
+  assert(deutsch(1, 1) === 'constant', 'Deutsch(1,1) = constant')
+  assert(deutsch(0, 1) === 'balanced', 'Deutsch(0,1) = balanced')
+  assert(deutsch(1, 0) === 'balanced', 'Deutsch(1,0) = balanced')
+}
+
+// 31. Amplitude estimation approximates the probability of a marked set.
+{
+  const marked = (x) => x === 3 || x === 5 || x === 7
+  const estimate = amplitudeEstimation(3, marked, 3)
+  assert(estimate > 0.2 && estimate < 0.5, 'Amplitude estimation recovers probability in a reasonable range (3/8 expected)')
+}
+
+// 32. HHL solves a 2×2 linear system Ax=b.
+{
+  // Solve [[3, 1], [1, 3]] x = [1, 1], expect x ≈ [1/4, 1/4]
+  const { solution, success } = hhlSolve2x2(3, 1, 1, 3, 1, 1)
+  assert(success, 'HHL finds a solution for the test system')
+  assert(near(solution[0] + solution[1], 1 / 2, 1e-4), 'HHL solution has correct magnitude')
+}
+
+// 33. Readout error mitigation inverts measurement errors.
+{
+  const observedCounts = [600, 400] // 60% |0⟩, 40% |1⟩ observed
+  const p01 = 0.05, p10 = 0.05 // 5% error rate each direction
+  const [true0, true1] = readoutMitigationSingleQubit(observedCounts, p01, p10)
+  assert(true0 + true1 <= 1.05 && true0 + true1 >= 0.95, 'Mitigated probabilities sum to ~1')
+  assert(true0 > true1, 'Mitigated |0⟩ more probable than |1⟩ (correcting upward)')
+}
+
+// 34. Circuit simplification merges and cancels gates.
+{
+  const gates = [
+    { q: 0, gate: H },
+    { q: 0, gate: H }, // H·H = I, should cancel
+  ]
+  const simplified = simplifyCircuitSequence(gates)
+  assert(simplified.length === 0, 'Simplification removes H·H=I')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · teleport · superdense · QPE · QEC · Simon · Shor · noise · VQE · QAOA',
+  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA',
 )

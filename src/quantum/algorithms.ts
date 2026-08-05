@@ -469,6 +469,20 @@ export function shor(N: number, a: number): [number, number] | null {
   return null
 }
 
+/**
+ * Deutsch problem: given f:{0,1}→{0,1} (promised constant or balanced),
+ * determine its type in a SINGLE query. The balanced case (f(0)≠f(1)) flips
+ * the phase; the constant case (f(0)=f(1)) doesn't. A single measurement of
+ * qubit 0 after H·oracle·H reveals the answer.
+ */
+export function deutsch(f0: 0 | 1, f1: 0 | 1): 'constant' | 'balanced' {
+  if (f0 === f1) return 'constant'
+  let s = applyGate1(zeroState(1), 0, H)
+  s = { n: 1, amps: s.amps.map((a, i) => (f0 === (i & 1) ? a : cx(-a.re, -a.im))) }
+  s = applyGate1(s, 0, H)
+  return cabs2(s.amps[0]!) > 1 / 2 ? 'constant' : 'balanced'
+}
+
 export function sample(reg: Register, shots: number, seed = 1): number[] {
   const A = 1664525
   const C = 1013904223

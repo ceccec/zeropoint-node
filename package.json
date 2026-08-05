@@ -41,8 +41,8 @@
       "types": "./src/integrity/content-uuid.ts"
     },
     "./quantum": {
-      "import": "./src/quantum/simulator.ts",
-      "types": "./src/quantum/simulator.ts"
+      "import": "./src/quantum/index.ts",
+      "types": "./src/quantum/index.ts"
     },
     "./mcp": {
       "import": "./src/mcp/server.ts"

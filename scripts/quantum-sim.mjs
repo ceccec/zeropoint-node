@@ -24,7 +24,14 @@ import {
   Y,
   Z,
   S,
-} from '../src/quantum/simulator.ts'
+  swap,
+  toffoli,
+  qft,
+  iqft,
+  grover,
+  groverIterations,
+  sample,
+} from '../src/quantum/index.ts'
 
 let passed = 0
 function assert(cond, msg) {
@@ -115,5 +122,68 @@ const HALF = 1 / 2
   assert(near(norm(s), 1), 'norm = 1 after a multi-gate circuit (unitary evolution)')
 }
 
+// 10. SWAP exchanges qubits: SWAP|10⟩ = |01⟩.
+{
+  const s10 = applyGate1(zeroState(2), 1, X) // |10⟩ (qubit1 = 1)
+  const sw = swap(s10, 0, 1)
+  assert(near(probabilities(sw)[1], 1), 'SWAP|10⟩ = |01⟩')
+}
+
+// 11. Toffoli truth table: CCX|110⟩ = |111⟩, and leaves |100⟩ unchanged.
+{
+  let s = applyGate1(applyGate1(zeroState(3), 0, X), 1, X) // |110⟩ (bits 0,1 set)
+  s = toffoli(s, 0, 1, 2)
+  assert(near(probabilities(s)[7], 1), 'CCX|110⟩ = |111⟩ (both controls set)')
+  let t = applyGate1(zeroState(3), 0, X) // |100⟩ (only bit 0)
+  t = toffoli(t, 0, 1, 2)
+  assert(near(probabilities(t)[1], 1), 'CCX|100⟩ unchanged (a control is 0)')
+}
+
+// 12. QFT of |0…0⟩ is the uniform superposition (magnitude 1/√N on every state).
+{
+  const f = qft(zeroState(3))
+  const p = probabilities(f)
+  assert(
+    p.every((x) => near(x, 1 / 8)),
+    'QFT|000⟩ = uniform superposition (|amp|² = 1/8 each)',
+  )
+}
+
+// 13. iqft ∘ qft = identity — the transform is exactly invertible.
+{
+  let s = zeroState(3)
+  for (const [q, g] of [[0, H], [1, X], [2, S]]) s = applyGate1(s, q, g)
+  const round2 = iqft(qft(s))
+  const ok = s.amps.every((a, i) => near(a.re, round2.amps[i].re) && near(a.im, round2.amps[i].im))
+  assert(ok, 'iqft(qft(ψ)) = ψ for an arbitrary state')
+}
+
+// 14. Grover finds the marked item with high probability in ~(π/4)√N steps.
+{
+  const n = 3
+  const target = 5
+  const g = grover(n, target)
+  const p = probabilities(g)
+  assert(groverIterations(1 << n) === 2, 'Grover uses 2 iterations for N=8')
+  assert(p[target] > 9 / 10, `Grover amplifies the marked state to > 0.9 (got ${p[target].toFixed(3)})`)
+  assert(
+    p.every((x, i) => i === target || x <= p[target]),
+    'Grover: the marked state is the most probable',
+  )
+}
+
+// 15. Measurement statistics converge to the Born-rule probabilities.
+{
+  const bell = cnot(applyGate1(zeroState(2), 0, H), 0, 1)
+  const shots = 4000
+  const counts = sample(bell, shots, 7)
+  assert(counts[1] === 0 && counts[2] === 0, 'sampling never yields the zero-amplitude states |01⟩,|10⟩')
+  assert(counts[0] + counts[3] === shots, 'all shots land on |00⟩ or |11⟩')
+  const half = shots / 2
+  assert(counts[0] > half - shots / 10 && counts[0] < half + shots / 10, 'sampled |00⟩ frequency ≈ 1/2 (Born rule)')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
-console.log('  superposition · H²=I interference · Y|0⟩=i|1⟩ · Bell + GHZ entanglement · Born rule · unitarity')
+console.log(
+  '  superposition · H²=I · Y|0⟩=i|1⟩ · Bell/GHZ entanglement · SWAP · Toffoli · QFT/iQFT · Grover · sampling · unitarity',
+)

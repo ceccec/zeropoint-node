@@ -35,11 +35,16 @@ export interface SecurityAssessment {
 // Analyze RSA security profile
 export function assessRSA(keyLength: number): CryptoSchemeProfile {
   // Classical: ~O(exp(keyLength^(1/3))) via GNFS
-  const classicalSecurity = floor(keyLength / 3)
+  // RSA-2048: ~2^112 classical operations (exponentially hard)
+  const classicalSecurity = floor(keyLength / 18)
 
-  // Quantum: Shor's algorithm ~O(keyLength³) gate complexity
-  // Effective qubit cost to break: roughly keyLength * log(keyLength)
-  const quantumSecurity = keyLength
+  // Quantum: Shor's algorithm runs in O(keyLength³) gate complexity
+  // CRITICAL: This is NOT a speedup factor. Shor BREAKS RSA entirely.
+  // - RSA-2048 requires ~2048³ ≈ 2^33 gates (polynomial, trivial)
+  // - Classical requires ~2^112 operations (exponential, intractable)
+  // - Complete break, not relative speedup. Scheme is immediately insecure.
+  // Represented as log₂(keyLength³) ≈ 3 * log₂(keyLength)
+  const quantumSecurity = floor(3 * Math.log2(keyLength))
 
   return {
     scheme: `RSA-${keyLength}`,
@@ -54,11 +59,16 @@ export function assessRSA(keyLength: number): CryptoSchemeProfile {
 // Analyze ECDLP (elliptic curve discrete log) security
 export function assessECDLP(curveSize: number): CryptoSchemeProfile {
   // Classical: O(sqrt(order)) via Pollard rho
-  const classicalSecurity = floor(curveSize / 2)
+  // P-256: ~2^128 classical operations (exponentially hard)
+  const classicalSecurity = curveSize / 2
 
-  // Quantum: Grover's algorithm reduces to O(sqrt(order)) → essentially no advantage
-  // But still vulnerable to period-finding via Shor variant
-  const quantumSecurity = floor(curveSize / 2)
+  // Quantum: Shor's algorithm variant completely breaks ECDLP in polynomial time
+  // CRITICAL: Like RSA, this is NOT a "speedup". Shor BREAKS ECDLP entirely.
+  // - P-256: ~2048 quantum gates (polynomial, trivial)
+  // - Classical: ~2^128 operations (exponential, intractable)
+  // - Complete break. Grover provides negligible advantage on this problem.
+  // Represented as log₂ of polynomial gate count
+  const quantumSecurity = floor(Math.log2(curveSize * curveSize))
 
   return {
     scheme: `ECDLP-${curveSize}`,
@@ -120,33 +130,47 @@ export function assessQuantumRisk(scheme: CryptoSchemeProfile, yearsSinceDeploym
     timelineYears = 100
   } else {
     // Pre-quantum vulnerable schemes
-    const bitSecurityGap = scheme.classicalBitSecurity - scheme.quantumBitSecurity
-    const riskFactor = abs(bitSecurityGap) / max(scheme.classicalBitSecurity, 1)
 
-    // Risk model: scales with deployment age
-    // Assumes quantum computer progress roughly follows Moore's Law analog
-    const yearsToQuantumThreat = floor(
-      (2030 - yearsSinceDeployment) / 20, // Timeline estimate
-    )
-
-    quantumRisk = min(0.99, riskFactor + yearsSinceDeployment / 100)
-    timelineYears = max(0, yearsToQuantumThreat)
-
-    if (quantumRisk > 0.8) {
+    // RSA and ECDLP are COMPLETELY broken by Shor's algorithm in polynomial time
+    // Not a "speedup"—a total break. Always immediate-retire regardless of timeline.
+    if (scheme.family === 'RSA' || scheme.family === 'ECDLP') {
+      quantumRisk = 0.99
       recommendation = 'immediate-retire'
-      mitigationSteps.push('Discontinue new deployments immediately')
-      mitigationSteps.push('Migrate existing systems to post-quantum alternatives')
-      mitigationSteps.push('Assess harvest-now-decrypt-later exposure')
-    } else if (quantumRisk > 0.5) {
-      recommendation = 'prepare-migration'
-      mitigationSteps.push('Begin post-quantum migration planning')
-      mitigationSteps.push('Inventory all systems using this scheme')
-      mitigationSteps.push('Establish timeline for transition')
+      mitigationSteps.push('Shor\'s algorithm breaks this scheme entirely in polynomial time')
+      mitigationSteps.push('Discontinue ALL deployments immediately (not in 10 years)')
+      mitigationSteps.push('Migrate existing systems to post-quantum alternatives NOW')
+      mitigationSteps.push('Assess harvest-now-decrypt-later exposure for historical ciphertexts')
+      timelineYears = 0
     } else {
-      recommendation = 'monitor'
-      mitigationSteps.push('Monitor quantum computing advances')
-      mitigationSteps.push('Prepare contingency plans')
-      mitigationSteps.push('Consider hybrid classical-post-quantum deployment')
+      // Other pre-quantum schemes: conventional risk model
+      const bitSecurityGap = scheme.classicalBitSecurity - scheme.quantumBitSecurity
+      const riskFactor = abs(bitSecurityGap) / max(scheme.classicalBitSecurity, 1)
+
+      // Risk model: scales with deployment age
+      // Assumes quantum computer progress roughly follows Moore's Law analog
+      const yearsToQuantumThreat = floor(
+        (2030 - yearsSinceDeployment) / 20, // Timeline estimate
+      )
+
+      quantumRisk = min(0.99, riskFactor + yearsSinceDeployment / 100)
+      timelineYears = max(0, yearsToQuantumThreat)
+
+      if (quantumRisk > 0.8) {
+        recommendation = 'immediate-retire'
+        mitigationSteps.push('Discontinue new deployments immediately')
+        mitigationSteps.push('Migrate existing systems to post-quantum alternatives')
+        mitigationSteps.push('Assess harvest-now-decrypt-later exposure')
+      } else if (quantumRisk > 0.5) {
+        recommendation = 'prepare-migration'
+        mitigationSteps.push('Begin post-quantum migration planning')
+        mitigationSteps.push('Inventory all systems using this scheme')
+        mitigationSteps.push('Establish timeline for transition')
+      } else {
+        recommendation = 'monitor'
+        mitigationSteps.push('Monitor quantum computing advances')
+        mitigationSteps.push('Prepare contingency plans')
+        mitigationSteps.push('Consider hybrid classical-post-quantum deployment')
+      }
     }
   }
 

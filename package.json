@@ -40,6 +40,10 @@
       "import": "./src/integrity/content-uuid.ts",
       "types": "./src/integrity/content-uuid.ts"
     },
+    "./quantum": {
+      "import": "./src/quantum/simulator.ts",
+      "types": "./src/quantum/simulator.ts"
+    },
     "./mcp": {
       "import": "./src/mcp/server.ts"
     },
@@ -128,6 +132,7 @@
     "mcp": "node --experimental-strip-types src/mcp/server.ts",
     "mcp:smoke": "node --experimental-strip-types scripts/mcp-smoke.mjs",
     "self:next": "node --experimental-strip-types scripts/self-next.mjs",
+    "quantum:sim": "node --experimental-strip-types scripts/quantum-sim.mjs",
     "tautology": "node scripts/facet-tautology.mjs",
     "math:ban": "node scripts/math-ban.mjs",
     "docs:dev": "vitepress dev docs",
@@ -143,7 +148,7 @@
     "vortex:svg:check": "node --experimental-strip-types scripts/vortex-svg.mjs --check",
     "bundle:a432": "node scripts/build-a432-bundle.mjs",
     "bundle:a432:check": "node scripts/build-a432-bundle.mjs --check",
-    "check": "npm run test:kernel && npm run test:security && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
+    "check": "npm run test:kernel && npm run test:security && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run quantum:sim && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
     "prepublishOnly": "npm run build",
     "prose": "node scripts/prose-claims.mjs --list",
     "prose:check": "node scripts/prose-claims.mjs"

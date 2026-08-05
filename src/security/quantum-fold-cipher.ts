@@ -397,7 +397,7 @@ function hkdfExpand(
 ): Buffer {
   const hash = 'sha256'
   const hashLen = 32 // SHA-256 produces 32 bytes
-  const n = Math.ceil(length / hashLen)
+  const n = ceil(length / hashLen)
   const output: Buffer[] = []
   let t = Buffer.alloc(0)
 

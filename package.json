@@ -36,6 +36,10 @@
       "import": "./src/security/quantum-state-tomography.ts",
       "types": "./src/security/quantum-state-tomography.ts"
     },
+    "./security/post-quantum": {
+      "import": "./src/security/post-quantum-crypto.ts",
+      "types": "./src/security/post-quantum-crypto.ts"
+    },
     "./integrity": {
       "import": "./src/integrity/content-uuid.ts",
       "types": "./src/integrity/content-uuid.ts"
@@ -118,7 +122,7 @@
     "demo": "node dist/demo.js",
     "test": "node test-install.js",
     "test:kernel": "node --experimental-strip-types src/kernel/smoke.test.ts",
-    "test:security": "node --experimental-strip-types src/security/quantum-fold-cipher.test.ts > /dev/null && node --experimental-strip-types src/security/quantum-state-tomography.test.ts > /dev/null && node --experimental-strip-types src/security/quantum-proofs.test.ts > /dev/null && echo security tests ok",
+    "test:security": "node --experimental-strip-types src/security/quantum-fold-cipher.test.ts > /dev/null && node --experimental-strip-types src/security/quantum-state-tomography.test.ts > /dev/null && node --experimental-strip-types src/security/quantum-proofs.test.ts > /dev/null && node --experimental-strip-types src/security/post-quantum-crypto.test.ts > /dev/null && echo security tests ok",
     "readme": "node --experimental-strip-types scripts/readme-gen.mjs",
     "readme:check": "node --experimental-strip-types scripts/readme-gen.mjs --check",
     "docs:pages": "node --experimental-strip-types scripts/docs-pages.mjs",

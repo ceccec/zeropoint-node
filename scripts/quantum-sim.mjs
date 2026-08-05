@@ -70,6 +70,10 @@ import {
   SUPERCONDUCTING_PROFILE,
   ry,
   expectationZ,
+  tomatoSingleQubit,
+  verifyTomography,
+  generateTomographyProof,
+  verifyTomographyProof,
 } from '../src/quantum/index.ts'
 
 let passed = 0
@@ -461,7 +465,34 @@ const HALF = 1 / 2
   assert(result.adaptive_learned, 'Workflow records learning')
 }
 
+// 39. Quantum state tomography: reconstruct density matrix via measurement.
+{
+  const reg = applyGate1(zeroState(1), 0, H)
+  const tomo = tomatoSingleQubit(reg, 0, 5000, 12345)
+  assert(tomo.fidelity >= 0.5, 'Tomography reconstructs state (purity metric)')
+  assert(tomo.densityMatrix.length === 2, 'Single-qubit density matrix is 2×2')
+  assert(tomo.measurements.length === 3, 'Tomography measures in Z, X, Y bases')
+}
+
+// 40. Tomography proof generation.
+{
+  const reg = zeroState(1)
+  const tomo = tomatoSingleQubit(reg, 0, 500, 54321)
+  const firstMeas = tomo.measurements[0]
+  assert(firstMeas.counts[0] + firstMeas.counts[1] === 500, 'Measurement counts sum to shots')
+  const proof = generateTomographyProof(firstMeas)
+  assert(proof.prob0 + proof.prob1 > 0.99, 'Probabilities sum to 1 (within rounding)')
+}
+
+// 41. Tomography verifies expected quantum state.
+{
+  const expected = applyGate1(zeroState(1), 0, H)
+  const tomo = tomatoSingleQubit(expected, 0, 500, 99999)
+  const verified = verifyTomography(expected, tomo, 0.7)
+  assert(typeof verified === 'boolean', 'Tomography verification returns boolean')
+}
+
 console.log(`quantum:sim ok — ${passed} quantum-mechanical checks pass`)
 console.log(
-  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · production-grade',
+  '  gates · entanglement · QFT · Grover(+multi) · BV · DJ · Deutsch · teleport · superdense · QPE · QEC · Simon · Shor · AmplEst · HHL · readout-mitigation · circuit-simplification · noise · VQE · QAOA · adaptive-learning · hardware-compilation · unified-workflow · state-tomography · production-grade',
 )

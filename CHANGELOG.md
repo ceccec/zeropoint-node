@@ -56,6 +56,39 @@ primitive it replaced. **These change results**; review if you depend on them.
 - Resolved a circular-import temporal dead zone that made `a432.index.ts` and
   four dependents fail to import at all.
 
+### Fixed — cryptography
+
+- **Kyber-768 encapsulate/decapsulate never agreed.** Two independent defects,
+  either alone fatal. 12-bit serialization guarded the carry byte on
+  `shift > 0`, so every even-indexed coefficient above 255 was truncated to its
+  low byte — 118 of 256 for a typical polynomial, and both `t` and `s` are
+  serialized. Message decode used a single `>= q/2` threshold, but the ring
+  wraps: a 0-bit nudged negative by noise lands near `q` and read as 1, so bits
+  flipped on noise sign alone. The test is the band `[q/4, 3q/4)`.
+  Compression also floored twice against a `2^d - 1` scale, biasing one way
+  each time; at `d=4` that bias was the measured median decode error, ~111
+  against a budget of `q/4 = 832`. It rounds to the spec's `2^d` scale now.
+  Measured over 300 keypairs: median error 111 → 52, max 404 → 193.
+  2000/2000 round trips recover the shared secret.
+
+### Added — release gates
+
+- **`npm run check` is now the whole gate.** `docs:build` was the one CI step
+  outside it; a dead link in `QUANTUM_GUIDE.md` rode that gap through six
+  consecutive pushes with the gate green each time, and the published site did
+  not rebuild for two weeks. It runs in the chain now.
+- **Version sealing.** `package.json` is the single source of the release
+  number; `scripts/version-seal.mjs` derives `CITATION.cff`, a README block and
+  the CHANGELOG heading from it. `version:check` fails closed on drift, on a
+  missing or placeholder CHANGELOG entry, and on any version below an existing
+  CHANGELOG heading or git tag. Before this, `package.json` said 1.0.3 while
+  the README said 1.0.2. `npm version patch|minor|major` now reseals and tags
+  in one step.
+- **`version:test`, `test:quantum`, `test:crypto`.** The version gate ships a
+  10-case self-test, 9 of them failures it must catch, so a gate that cannot
+  fail is detectable. Four test suites that existed and passed were executed by
+  nothing; they run on every gate now.
+
 ### Changed
 
 - Dependencies bumped: `@rollup/plugin-node-resolve` 16.0.3,
@@ -76,6 +109,13 @@ primitive it replaced. **These change results**; review if you depend on them.
   `calculateDigitalRoot` can return `NaN` before initialisation completes and a
   number afterwards. There is no public way to await readiness. Fixing this
   requires an API change and is deferred.
+- `src/crypto/kyber-real.ts` **is not ML-KEM and must not protect anything.**
+  It is not a package export, but `files` ships `src/**/*.ts`, so a deep import
+  can reach it. The matrix `A` is CBD-sampled into `{-1,0,1}` instead of
+  uniform mod `q`, so the module-LWE instance underneath is not the hard
+  problem; noise is `eta=1` where ML-KEM-768 wants 2; SHA-256 stands in for
+  SHAKE; `e1`/`e2` are omitted; there is no Fujisaki-Okamoto step, so no
+  IND-CCA2 claim. The round trip is correct; the cryptography is not.
 - Importing the package writes 5 names onto `globalThis` and prints a banner to
   stdout.
 

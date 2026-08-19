@@ -35,11 +35,11 @@ jobs:
       - name: Install
         run: npm ci
 
+      # `npm run check` now builds the docs site too, so there is no separate
+      # docs step: it was the one CI step outside the gate, and a dead link
+      # rode that gap through six pushes with check green the whole way.
       - name: Gate — npm run check
         run: npm run check
-
-      - name: Build docs site
-        run: npm run docs:build
 
       # Detail only; the ratchet in `npm run check` is what fails on a
       # regression. Runs on one leg to avoid duplicate output.

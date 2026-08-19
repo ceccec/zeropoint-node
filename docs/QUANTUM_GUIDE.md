@@ -438,7 +438,7 @@ console.log(`|11⟩: ${(freq3 * 100).toFixed(1)}%`)
 
 - **Technical Specification:** [docs/QUANTUM_SPECIFICATION.md](QUANTUM_SPECIFICATION.md)
 - **Self-Checks:** `npm run quantum:sim` (90 externally-recomputable facts)
-- **Source Code:** [src/quantum/](../src/quantum/)
+- **Source Code:** [src/quantum/](https://github.com/ceccec/zeropoint-node/tree/main/src/quantum)
 
 ---
 

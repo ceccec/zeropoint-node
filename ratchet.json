@@ -4,7 +4,7 @@
     "lint": 939,
     "decimals": 460,
     "cycles": 2,
-    "unreachable": 285,
+    "unreachable": 283,
     "unloadable": 32,
     "prose": 71,
     "tautology": 1

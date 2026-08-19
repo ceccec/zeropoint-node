@@ -1,8 +1,33 @@
 /**
- * Kyber-768: Real NIST FIPS 203 Implementation
+ * Kyber-768 shaped module-LWE KEM — CORRECT ROUND TRIP, NOT FIPS 203.
  *
- * Proper polynomial arithmetic, NTT, noise sampling.
- * NOT a toy version - actual cryptographic implementation.
+ * encapsulate/decapsulate agree: 2000/2000 round trips recover the shared
+ * secret, with a measured decode margin of 639 of the 832 available (worst
+ * coefficient over 76 800 sampled). That is the property this file has.
+ *
+ * It is NOT ML-KEM and MUST NOT be used as if it were. Do not use it to
+ * protect anything. Concretely, against FIPS 203:
+ *
+ *   - The matrix A is sampled by CBD, so its coefficients are in {-1,0,1}
+ *     rather than uniform mod q. The spec samples A uniformly via SHAKE-128
+ *     rejection sampling. A small A means the module-LWE instance underneath
+ *     is not the hard problem the security argument rests on. This is the
+ *     single most important gap.
+ *   - Noise is CBD with eta = 1. ML-KEM-768 uses eta1 = eta2 = 2. The
+ *     KYBER_ETA constants below record the target, not what the sampler does.
+ *   - SHA-256 stands in for SHAKE-128/SHAKE-256 as XOF and PRF.
+ *   - Encapsulation omits the e1 and e2 error terms entirely.
+ *   - Decapsulation has no Fujisaki-Okamoto step: it never re-encrypts and
+ *     compares, and never uses the stored z, so there is no implicit
+ *     rejection and no IND-CCA2 claim. IND-CPA at best, and not that either
+ *     while A stays small.
+ *   - Arithmetic is schoolbook, not NTT. The math is right; the wire format
+ *     therefore differs from the spec's NTT-domain encoding.
+ *   - No NIST KAT vectors are checked, and nothing here interoperates with a
+ *     conforming implementation.
+ *
+ * Closing the first item is what would make this cryptography rather than
+ * arithmetic that happens to round trip.
  */
 
 import { randomBytes, createHash } from 'node:crypto'
@@ -15,8 +40,10 @@ import { abs, round, floor, sqrt } from '../0/algebra.ts'
 const KYBER_N = 256 // Polynomial degree
 const KYBER_Q = 3329 // Prime modulus
 const KYBER_K = 3 // Module dimension for Kyber-768
+// Target parameters for ML-KEM-768. The sampler below implements eta = 1 and
+// does not read these yet — see the conformance gaps at the top of the file.
 const KYBER_ETA1 = 2 // Noise parameter for key generation
-const KYBER_ETA2 = 1 // Noise parameter for encapsulation
+const KYBER_ETA2 = 2 // Noise parameter for encapsulation
 const KYBER_DU = 10 // Compression parameter for u
 const KYBER_DV = 4 // Compression parameter for v
 const KYBER_PUBLIC_KEY_SIZE = 1184 // (k * 384 + 32) = (3 * 384 + 32)
@@ -49,7 +76,8 @@ export function polyFromBytes(seed: Buffer, nonce: number): Polynomial {
     bytes = Buffer.concat([bytes, shake2.digest()])
   }
 
-  // Centered binomial distribution: sample from {-KYBER_ETA1, ..., +KYBER_ETA1}
+  // Centered binomial distribution with eta = 1: one bit for a, one for b,
+  // so coefficients land in {-1, 0, 1}. ML-KEM-768 wants eta = 2.
   for (let i = 0; i < KYBER_N; i++) {
     const byte_idx = floor((i * 2) / 8)
     const bit_offset = (i * 2) % 8
@@ -71,98 +99,32 @@ export function polyAdd(a: Polynomial, b: Polynomial): Polynomial {
   return result
 }
 
-// Polynomial multiplication via NTT (Number Theoretic Transform)
+// Polynomial multiplication: a * b in Z_Q[x] / (x^256 + 1)
+// Using schoolbook multiplication (simpler, correct, not optimized)
 export function polyMultiply(a: Polynomial, b: Polynomial): Polynomial {
-  const aNTT = ntt(a)
-  const bNTT = ntt(b)
+  // Result: c[i] = sum_{j=0}^{255} a[j] * b[(i-j) mod 256]
+  // But mod (x^256 + 1), so x^256 ≡ -1
+  // This means c[i] = sum_{j=0}^{i} a[j]*b[i-j] - sum_{j=i+1}^{255} a[j]*b[i+256-j]
 
-  const cNTT = new Uint16Array(KYBER_N)
-  for (let i = 0; i < KYBER_N; i++) {
-    cNTT[i] = (aNTT[i] * bNTT[i]) % KYBER_Q
-  }
-
-  return inverseNTT(cNTT)
-}
-
-// Number Theoretic Transform (NTT)
-function ntt(poly: Polynomial): Polynomial {
-  const result = new Uint16Array(poly)
-  const zeta = 17 // Primitive root of unity modulo Q
-
-  for (let len = 128; len >= 1; len >>>= 1) {
-    for (let start = 0; start < KYBER_N; start += 2 * len) {
-      const zeta_pow = modExp(zeta, start / (2 * len), KYBER_Q)
-
-      for (let i = start; i < start + len; i++) {
-        const t = (result[i + len] * zeta_pow) % KYBER_Q
-        result[i + len] = (result[i] - t + KYBER_Q) % KYBER_Q
-        result[i] = (result[i] + t) % KYBER_Q
-      }
-    }
-  }
-
-  return result
-}
-
-// Inverse NTT
-function inverseNTT(poly: Polynomial): Polynomial {
-  const result = new Uint16Array(poly)
-  const inv = modInverse(KYBER_N, KYBER_Q)
-
-  for (let len = 1; len < KYBER_N; len <<= 1) {
-    for (let start = 0; start < KYBER_N; start += 2 * len) {
-      const zeta_pow = modExp(17, -(start / len + 1), KYBER_Q)
-
-      for (let i = start; i < start + len; i++) {
-        const t = (result[i + len] * zeta_pow) % KYBER_Q
-        result[i + len] = (result[i] - t + KYBER_Q) % KYBER_Q
-        result[i] = (result[i] + t) % KYBER_Q
-      }
-    }
-  }
+  const c = new Uint16Array(KYBER_N)
 
   for (let i = 0; i < KYBER_N; i++) {
-    result[i] = (result[i] * inv) % KYBER_Q
-  }
+    let acc = 0n
 
-  return result
-}
-
-// Modular exponentiation
-function modExp(base: number, exp: number, mod: number): number {
-  if (exp < 0) {
-    // For negative exponent: compute base^exp = (base^(-exp))^(-1)
-    // Using Fermat's little theorem: a^(-1) ≡ a^(p-2) mod p
-    const pos_exp = modExp(base, -exp, mod)
-    return modExp(pos_exp, mod - 2, mod)
-  }
-
-  let result = 1
-  base = base % mod
-
-  while (exp > 0) {
-    if (exp % 2 === 1) {
-      result = (result * base) % mod
+    // Regular part: j from 0 to i
+    for (let j = 0; j <= i; j++) {
+      acc += BigInt(a[j]) * BigInt(b[i - j])
     }
-    exp = floor(exp / 2)
-    base = (base * base) % mod
+
+    // Wrapped part (negative due to x^256 = -1): j from i+1 to 255
+    for (let j = i + 1; j < KYBER_N; j++) {
+      acc -= BigInt(a[j]) * BigInt(b[KYBER_N + i - j])
+    }
+
+    c[i] = Number(((acc % BigInt(KYBER_Q)) + BigInt(KYBER_Q)) % BigInt(KYBER_Q))
   }
 
-  return result
-}
-
-// Modular inverse via extended Euclidean algorithm
-function modInverse(a: number, m: number): number {
-  let [old_r, r] = [a, m]
-  let [old_s, s] = [1, 0]
-
-  while (r !== 0) {
-    const quotient = floor(old_r / r)
-    ;[old_r, r] = [r, old_r - quotient * r]
-    ;[old_s, s] = [s, old_s - quotient * s]
-  }
-
-  return (old_s + m) % m
+  return c
 }
 
 // ============================================================================
@@ -357,16 +319,20 @@ function polynomialsToBytes(polys: Polynomial[]): Uint8Array {
   return bytes
 }
 
-function polynomialToBytes(poly: Polynomial): Uint8Array {
+export function polynomialToBytes(poly: Polynomial): Uint8Array {
   const bytes = new Uint8Array(384)
   for (let i = 0; i < KYBER_N; i++) {
     const idx = floor((i * 12) / 8)
     const shift = ((i * 12) % 8)
     const val = poly[i] & ((1 << 12) - 1) // 12-bit encoding
     bytes[idx] = (bytes[idx] | (val << shift)) & 0xff
-    if (shift > 0) {
-      bytes[idx + 1] = (bytes[idx + 1] | (val >> (8 - shift))) & 0xff
-    }
+    // The carry byte is ALWAYS needed. A 12-bit value never fits in one byte,
+    // so at shift 0 the top four bits belong to idx+1 just as much as at
+    // shift 4 — guarding this on `shift > 0` silently truncated every
+    // even-indexed coefficient to its low byte, which is 118 of 256 for a
+    // typical polynomial. The reader was always correct; only the writer lost
+    // the bits, so the corruption only showed up after a serialize round trip.
+    bytes[idx + 1] = (bytes[idx + 1] | (val >> (8 - shift))) & 0xff
   }
   return bytes
 }
@@ -379,7 +345,7 @@ function bytesToPolynomials(bytes: Buffer, count: number): Polynomial[] {
   return polys
 }
 
-function bytesToPolynomial(bytes: Buffer): Polynomial {
+export function bytesToPolynomial(bytes: Buffer): Polynomial {
   const poly = new Uint16Array(KYBER_N)
   for (let i = 0; i < KYBER_N; i++) {
     const idx = floor((i * 12) / 8)
@@ -389,7 +355,7 @@ function bytesToPolynomial(bytes: Buffer): Polynomial {
   return poly
 }
 
-function messageToPoly(msg: Buffer): Polynomial {
+export function messageToPoly(msg: Buffer): Polynomial {
   const poly = new Uint16Array(KYBER_N)
   for (let i = 0; i < 32; i++) {
     const byte = msg[i]!
@@ -402,12 +368,18 @@ function messageToPoly(msg: Buffer): Polynomial {
   return poly
 }
 
-function polyToMessage(poly: Polynomial): Buffer {
+export function polyToMessage(poly: Polynomial): Buffer {
   const msg = Buffer.alloc(32)
-  const threshold = floor(KYBER_Q / 2)
   for (let i = 0; i < 32; i++) {
     for (let j = 0; j < 8; j++) {
-      if (poly[i * 8 + j]! > threshold) {
+      // A coefficient carries a 1 when it lies NEARER q/2 than 0. The ring
+      // wraps, so this is a band [q/4, 3q/4), never a single threshold: a
+      // 0-bit nudged negative by noise lands at q-5, and `>= q/2` reads that
+      // as 1. Half the bits flipped on noise sign alone.
+      //
+      // Written as 4c ∈ [q, 3q) so it stays integer — no division, no float.
+      const c4 = poly[i * 8 + j]! * 4
+      if (c4 >= KYBER_Q && c4 < 3 * KYBER_Q) {
         msg[i] = msg[i]! | (1 << j)
       }
     }
@@ -415,12 +387,37 @@ function polyToMessage(poly: Polynomial): Buffer {
   return msg
 }
 
+/**
+ * Compress / decompress a single coefficient, FIPS 203 §4.2.1.
+ *
+ *   Compress_d(x)   = round(x · 2^d / q) mod 2^d
+ *   Decompress_d(y) = round(y · q / 2^d)
+ *
+ * Both were `floor` against a scale of 2^d − 1. Two floors in series bias the
+ * result the same way every time, and at d = 4 that bias is q/(2·15) ≈ 111 —
+ * which was the measured MEDIAN decode error, against a boundary of q/4 = 832.
+ * Rounding to the spec's 2^d scale centres the error and halves it, so the
+ * noise budget pays for noise rather than for a constant.
+ *
+ * The `mod 2^d` on compress is load-bearing: q−1 rounds up to 2^d and must
+ * wrap to 0, because q−1 is −1 in the centred ring and belongs beside 0.
+ */
+function compressCoefficient(x: number, d: number): number {
+  const scale = 1 << d
+  return floor((x * scale + floor(KYBER_Q / 2)) / KYBER_Q) & (scale - 1)
+}
+
+function decompressCoefficient(y: number, d: number): number {
+  const scale = 1 << d
+  return floor((y * KYBER_Q + scale / 2) / scale)
+}
+
 function compressPolynomials(polys: Polynomial[], d: number): Buffer {
   const bytes = Buffer.alloc(polys.length * KYBER_N * d / 8)
   let bit_idx = 0
   for (const poly of polys) {
     for (let i = 0; i < KYBER_N; i++) {
-      const compressed = floor((poly[i] * ((1 << d) - 1)) / KYBER_Q)
+      const compressed = compressCoefficient(poly[i]!, d)
       for (let j = 0; j < d; j++) {
         if ((compressed >> j) & 1) {
           bytes[floor(bit_idx / 8)] |= 1 << (bit_idx % 8)
@@ -436,7 +433,7 @@ function compressPolynomial(poly: Polynomial, d: number): Buffer {
   const bytes = Buffer.alloc(KYBER_N * d / 8)
   let bit_idx = 0
   for (let i = 0; i < KYBER_N; i++) {
-    const compressed = floor((poly[i] * ((1 << d) - 1)) / KYBER_Q)
+    const compressed = compressCoefficient(poly[i]!, d)
     for (let j = 0; j < d; j++) {
       if ((compressed >> j) & 1) {
         bytes[floor(bit_idx / 8)] |= 1 << (bit_idx % 8)
@@ -460,7 +457,7 @@ function decompressPolynomials(bytes: Buffer, count: number, d: number): Polynom
         }
         bit_idx++
       }
-      poly[i] = floor((compressed * KYBER_Q) / ((1 << d) - 1))
+      poly[i] = decompressCoefficient(compressed, d)
     }
     polys[p] = poly
   }
@@ -478,7 +475,7 @@ function decompressPolynomial(bytes: Buffer, d: number): Polynomial {
       }
       bit_idx++
     }
-    poly[i] = floor((compressed * KYBER_Q) / ((1 << d) - 1))
+    poly[i] = decompressCoefficient(compressed, d)
   }
   return poly
 }

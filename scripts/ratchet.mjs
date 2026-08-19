@@ -328,6 +328,8 @@ function unreachableCount() {
     'src/quantum/superposition-execution.test.ts',
     'src/quantum/millennium-bridge.test.ts',
     'src/quantum/zenodo-publisher.test.ts',
+    // test:crypto
+    'src/crypto/kyber-real.test.ts',
   ]) {
     const p2 = join(ROOT, e)
     if (existsSync(p2)) roots.add(p2)

@@ -38,3 +38,22 @@ export * from './proof-of-system.ts'
 export * from './orchestrator.ts'
 export * from './zenodo-publisher.ts'
 export * from './millennium-bridge.ts'
+
+// Named rather than star-exported: `measureAndCollapse` also exists in
+// orchestrator.ts, and an ambiguous star export would silently drop both.
+export type { SuperpositionPhase, QuantumExecution } from './superposition-execution.ts'
+export {
+  phase1_cryptographyAmplitudes,
+  phase2_leanProofAmplitudes,
+  phase3_algorithmAmplitudes,
+  phase4_errorCorrectionAmplitudes,
+  phase5_verificationAmplitudes,
+  phase6_reproducibilityAmplitudes,
+  phase7_orchestratorAmplitudes,
+  allPhaseAmplitudes,
+  parallelWorkStreams,
+  computeInterferencePattern,
+  measureAndCollapse as measureSuperpositionCollapse,
+  executeInSuperposition,
+  describeQuantumExecution,
+} from './superposition-execution.ts'

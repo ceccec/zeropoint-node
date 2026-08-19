@@ -320,6 +320,14 @@ function unreachableCount() {
     'src/security/quantum-fold-cipher.test.ts',
     'src/security/quantum-state-tomography.test.ts',
     'src/security/quantum-proofs.test.ts',
+    // test:security runs four suites; only three were listed, so
+    // post-quantum-crypto.test.ts counted as dead weight while running on
+    // every gate. The rule is 'executed by the pipeline', not 'listed here'.
+    'src/security/post-quantum-crypto.test.ts',
+    // test:quantum
+    'src/quantum/superposition-execution.test.ts',
+    'src/quantum/millennium-bridge.test.ts',
+    'src/quantum/zenodo-publisher.test.ts',
   ]) {
     const p2 = join(ROOT, e)
     if (existsSync(p2)) roots.add(p2)

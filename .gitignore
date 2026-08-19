@@ -127,3 +127,7 @@ docs/.vitepress/cache
 # not a property of the project.
 .claude/launch.json
 .claude/settings.local.json
+
+# Local debugging harnesses — kept out of src/ so they are neither shipped
+# (package.json files: src/**/*.ts) nor counted as dead modules by the ratchet.
+scratch/

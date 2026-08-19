@@ -28,9 +28,9 @@ const KYBER_SHARED_SECRET_SIZE = 32
 // POLYNOMIAL ARITHMETIC (mod Q)
 // ============================================================================
 
-export type Polynomial = Uint16Array // 256 coefficients mod 3329
+export type Polynomial = Uint16Array<ArrayBuffer> // 256 coefficients mod 3329
 
-/-- Create polynomial from bytes using CBD sampling -/
+// Create polynomial from bytes using CBD sampling
 export function polyFromBytes(seed: Buffer, nonce: number): Polynomial {
   const poly = new Uint16Array(KYBER_N)
 
@@ -62,7 +62,7 @@ export function polyFromBytes(seed: Buffer, nonce: number): Polynomial {
   return poly
 }
 
-/-- Polynomial addition mod Q -/
+// Polynomial addition mod Q
 export function polyAdd(a: Polynomial, b: Polynomial): Polynomial {
   const result = new Uint16Array(KYBER_N)
   for (let i = 0; i < KYBER_N; i++) {
@@ -71,7 +71,7 @@ export function polyAdd(a: Polynomial, b: Polynomial): Polynomial {
   return result
 }
 
-/-- Polynomial multiplication via NTT (Number Theoretic Transform) -/
+// Polynomial multiplication via NTT (Number Theoretic Transform)
 export function polyMultiply(a: Polynomial, b: Polynomial): Polynomial {
   const aNTT = ntt(a)
   const bNTT = ntt(b)
@@ -84,7 +84,7 @@ export function polyMultiply(a: Polynomial, b: Polynomial): Polynomial {
   return inverseNTT(cNTT)
 }
 
-/-- Number Theoretic Transform (NTT) -/
+// Number Theoretic Transform (NTT)
 function ntt(poly: Polynomial): Polynomial {
   const result = new Uint16Array(poly)
   const zeta = 17 // Primitive root of unity modulo Q
@@ -104,7 +104,7 @@ function ntt(poly: Polynomial): Polynomial {
   return result
 }
 
-/-- Inverse NTT -/
+// Inverse NTT
 function inverseNTT(poly: Polynomial): Polynomial {
   const result = new Uint16Array(poly)
   const inv = modInverse(KYBER_N, KYBER_Q)
@@ -128,7 +128,7 @@ function inverseNTT(poly: Polynomial): Polynomial {
   return result
 }
 
-/-- Modular exponentiation -/
+// Modular exponentiation
 function modExp(base: number, exp: number, mod: number): number {
   if (exp < 0) {
     // For negative exponent: compute base^exp = (base^(-exp))^(-1)
@@ -151,7 +151,7 @@ function modExp(base: number, exp: number, mod: number): number {
   return result
 }
 
-/-- Modular inverse via extended Euclidean algorithm -/
+// Modular inverse via extended Euclidean algorithm
 function modInverse(a: number, m: number): number {
   let [old_r, r] = [a, m]
   let [old_s, s] = [1, 0]

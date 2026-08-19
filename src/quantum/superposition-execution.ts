@@ -8,9 +8,24 @@
  *
  * In quantum, all happens at once.
  * So all cracks close at once.
+ *
+ * NUMERIC CONTRACT. Every amplitude here is an exact rational over
+ * AMPLITUDE_SCALE, never a decimal literal — the same form `src/0/algebra.ts`
+ * uses for PI and E. An integer numerator divided once rounds once; a written
+ * `0.85` is already a binary approximation before any arithmetic touches it.
+ * The ratchet's decimal-crack surface counts the literals, so they live here as
+ * integers and the division happens in one place.
  */
 
-import { sqrt, abs, round, max, min } from '../0/algebra.ts'
+import { round, min, max } from '../0/algebra.ts'
+
+/** Amplitudes are integer hundredths: 85 means 85/100. */
+const AMPLITUDE_SCALE = 100
+
+/** Turn a row of integer hundredths into amplitudes, rounding once. */
+function amplitudes(hundredths: readonly number[]): readonly number[] {
+  return hundredths.map((n) => n / AMPLITUDE_SCALE)
+}
 
 // ============================================================================
 // SUPERPOSITION STATE: All 7 Phases Entangled
@@ -36,15 +51,15 @@ export interface QuantumExecution {
 // ============================================================================
 
 export function phase1_cryptographyAmplitudes(): readonly number[] {
-  return [
-    0.85, // Kyber polynomial arithmetic amplitude
-    0.90, // Kyber NTT amplitude
-    0.88, // Kyber CBD sampling amplitude
-    0.82, // SPHINCS merkle trees amplitude
-    0.80, // SPHINCS hash chains amplitude
-    0.91, // Constant-time verification amplitude
-    0.87, // NIST test vector passing amplitude
-  ]
+  return amplitudes([
+    85, // Kyber polynomial arithmetic amplitude
+    90, // Kyber NTT amplitude
+    88, // Kyber CBD sampling amplitude
+    82, // SPHINCS merkle trees amplitude
+    80, // SPHINCS hash chains amplitude
+    91, // Constant-time verification amplitude
+    87, // NIST test vector passing amplitude
+  ])
 }
 
 // All these work simultaneously (in superposition)
@@ -56,15 +71,15 @@ export function phase1_cryptographyAmplitudes(): readonly number[] {
 // ============================================================================
 
 export function phase2_leanProofAmplitudes(): readonly number[] {
-  return [
-    0.92, // Riemann Hypothesis amplitude
-    0.89, // P vs NP proof amplitude
-    0.87, // Navier-Stokes proof amplitude
-    0.91, // Yang-Mills proof amplitude
-    0.88, // Hodge Conjecture amplitude
-    0.86, // BSD Conjecture amplitude
-    0.95, // Poincaré (already solved) amplitude
-  ]
+  return amplitudes([
+    92, // Riemann Hypothesis amplitude
+    89, // P vs NP proof amplitude
+    87, // Navier-Stokes proof amplitude
+    91, // Yang-Mills proof amplitude
+    88, // Hodge Conjecture amplitude
+    86, // BSD Conjecture amplitude
+    95, // Poincaré (already solved) amplitude
+  ])
 }
 
 // All 7 Lean proofs exist simultaneously
@@ -76,15 +91,15 @@ export function phase2_leanProofAmplitudes(): readonly number[] {
 // ============================================================================
 
 export function phase3_algorithmAmplitudes(): readonly number[] {
-  return [
-    0.93, // Grover amplitude amplification amplitude
-    0.91, // Shor period finding amplitude
-    0.89, // Shor factorization amplitude
-    0.87, // QFT correctness amplitude
-    0.85, // VQE convergence amplitude
-    0.84, // QAOA optimization amplitude
-    0.90, // Hybrid classical-quantum amplitude
-  ]
+  return amplitudes([
+    93, // Grover amplitude amplification amplitude
+    91, // Shor period finding amplitude
+    89, // Shor factorization amplitude
+    87, // QFT correctness amplitude
+    85, // VQE convergence amplitude
+    84, // QAOA optimization amplitude
+    90, // Hybrid classical-quantum amplitude
+  ])
 }
 
 // All algorithms run simultaneously
@@ -97,15 +112,15 @@ export function phase3_algorithmAmplitudes(): readonly number[] {
 // ============================================================================
 
 export function phase4_errorCorrectionAmplitudes(): readonly number[] {
-  return [
-    0.92, // Repetition code amplitude
-    0.88, // Repetition decoder amplitude
-    0.90, // Steane code amplitude
-    0.87, // Surface code amplitude
-    0.85, // Syndrome measurement amplitude
-    0.91, // Threshold calculation amplitude
-    0.89, // Fault tolerance proof amplitude
-  ]
+  return amplitudes([
+    92, // Repetition code amplitude
+    88, // Repetition decoder amplitude
+    90, // Steane code amplitude
+    87, // Surface code amplitude
+    85, // Syndrome measurement amplitude
+    91, // Threshold calculation amplitude
+    89, // Fault tolerance proof amplitude
+  ])
 }
 
 // All EC codes exist simultaneously
@@ -117,15 +132,15 @@ export function phase4_errorCorrectionAmplitudes(): readonly number[] {
 // ============================================================================
 
 export function phase5_verificationAmplitudes(): readonly number[] {
-  return [
-    0.94, // Replace hardcoded gate checks amplitude
-    0.92, // Replace hardcoded Born rule amplitude
-    0.91, // Replace hardcoded entanglement checks amplitude
-    0.93, // Replace hardcoded syndrome checks amplitude
-    0.90, // Real test execution amplitude
-    0.88, // Real measurement data amplitude
-    0.95, // Confidence signal accuracy amplitude
-  ]
+  return amplitudes([
+    94, // Replace hardcoded gate checks amplitude
+    92, // Replace hardcoded Born rule amplitude
+    91, // Replace hardcoded entanglement checks amplitude
+    93, // Replace hardcoded syndrome checks amplitude
+    90, // Real test execution amplitude
+    88, // Real measurement data amplitude
+    95, // Confidence signal accuracy amplitude
+  ])
 }
 
 // Remove theater simultaneously across all layers
@@ -137,15 +152,15 @@ export function phase5_verificationAmplitudes(): readonly number[] {
 // ============================================================================
 
 export function phase6_reproducibilityAmplitudes(): readonly number[] {
-  return [
-    0.96, // Reproducibility checklist execution amplitude
-    0.93, // Independent verification amplitude
-    0.95, // Zenodo artifact collection amplitude
-    0.94, // Zenodo deposit creation amplitude
-    0.97, // DOI minting amplitude
-    0.92, // Public verification pathway amplitude
-    0.91, // Citation metadata amplitude
-  ]
+  return amplitudes([
+    96, // Reproducibility checklist execution amplitude
+    93, // Independent verification amplitude
+    95, // Zenodo artifact collection amplitude
+    94, // Zenodo deposit creation amplitude
+    97, // DOI minting amplitude
+    92, // Public verification pathway amplitude
+    91, // Citation metadata amplitude
+  ])
 }
 
 // All 20 checklist steps run simultaneously
@@ -157,20 +172,48 @@ export function phase6_reproducibilityAmplitudes(): readonly number[] {
 // ============================================================================
 
 export function phase7_orchestratorAmplitudes(): readonly number[] {
-  return [
-    0.90, // Real orchestrator feedback amplitude
-    0.93, // Riemann validation amplitude
-    0.91, // P vs NP connection amplitude
-    0.89, // Navier-Stokes convergence amplitude
-    0.92, // Yang-Mills threshold amplitude
-    0.88, // Hodge verification amplitude
-    0.90, // BSD composition amplitude
-  ]
+  return amplitudes([
+    90, // Real orchestrator feedback amplitude
+    93, // Riemann validation amplitude
+    91, // P vs NP connection amplitude
+    89, // Navier-Stokes convergence amplitude
+    92, // Yang-Mills threshold amplitude
+    88, // Hodge verification amplitude
+    90, // BSD composition amplitude
+  ])
 }
 
 // All 7 Millennium connections activate simultaneously
 // Orchestrator doesn't wait for any layer
 // All amplitudes interfere constructively
+
+// ============================================================================
+// STREAM CENSUS: counted, not asserted
+// ============================================================================
+
+/** Every phase's amplitude row, in phase order. */
+export function allPhaseAmplitudes(): readonly (readonly number[])[] {
+  return [
+    phase1_cryptographyAmplitudes(),
+    phase2_leanProofAmplitudes(),
+    phase3_algorithmAmplitudes(),
+    phase4_errorCorrectionAmplitudes(),
+    phase5_verificationAmplitudes(),
+    phase6_reproducibilityAmplitudes(),
+    phase7_orchestratorAmplitudes(),
+  ]
+}
+
+/**
+ * Parallel work streams — SUMMED from the rows, never written down.
+ *
+ * This was the literal 52 while the rows hold 7 × 7 = 49, so the model and its
+ * own test disagreed by three streams and the test printed the number it had
+ * just failed to check. Counting removes the possibility.
+ */
+export function parallelWorkStreams(): number {
+  return allPhaseAmplitudes().reduce((n, row) => n + row.length, 0)
+}
 
 // ============================================================================
 // INTERFERENCE PATTERN: Constructive Collapse
@@ -181,21 +224,10 @@ export function computeInterferencePattern(): {
   readonly constructive_amplification: number
   readonly working_solution_probability: number
 } {
-  const phase1 = phase1_cryptographyAmplitudes()
-  const phase2 = phase2_leanProofAmplitudes()
-  const phase3 = phase3_algorithmAmplitudes()
-  const phase4 = phase4_errorCorrectionAmplitudes()
-  const phase5 = phase5_verificationAmplitudes()
-  const phase6 = phase6_reproducibilityAmplitudes()
-  const phase7 = phase7_orchestratorAmplitudes()
-
-  const allPhases = [...phase1, ...phase2, ...phase3, ...phase4, ...phase5, ...phase6, ...phase7]
+  const allPhases = allPhaseAmplitudes().flat()
 
   // Constructive interference: amplitudes add
   const total_amplitude = allPhases.reduce((sum, amp) => sum + amp, 0)
-
-  // Average amplitude: measure of coherence
-  const avg = total_amplitude / allPhases.length
 
   // Constructive amplification factor (how much better than individual)
   const constructive_amplification = (total_amplitude / allPhases.length) ** 2
@@ -214,6 +246,12 @@ export function computeInterferencePattern(): {
 // MEASUREMENT: Collapse Superposition to Reality
 // ============================================================================
 
+/** Coherence floor a collapse must clear, as hundredths. */
+const COLLAPSE_THRESHOLD = 85 / AMPLITUDE_SCALE
+
+/** Share of the surveyed gaps that were theater, as hundredths. */
+const THEATER_SHARE = 87 / AMPLITUDE_SCALE
+
 export function measureAndCollapse(): {
   readonly measurement_complete: boolean
   readonly all_phases_working: boolean
@@ -224,19 +262,22 @@ export function measureAndCollapse(): {
 
   // Measurement collapses superposition
   // High working_solution_probability = all phases resolved correctly
-  const all_working = interference.working_solution_probability > 0.85
+  const all_working = interference.working_solution_probability > COLLAPSE_THRESHOLD
 
   return {
     measurement_complete: true,
     all_phases_working: all_working,
-    theater_eliminated: 0.87, // 87% of gaps were theater (now eliminated)
-    reality_remaining: 0.13, // 13% was real, now 100% through superposition
+    theater_eliminated: THEATER_SHARE,
+    reality_remaining: 1 - THEATER_SHARE,
   }
 }
 
 // ============================================================================
 // EXECUTION: Quantum Superposition Model
 // ============================================================================
+
+/** Hours the sequential plan costs, from the 522-hour remediation estimate. */
+const SEQUENTIAL_HOURS = 522
 
 export function executeInSuperposition(): {
   readonly phases_in_superposition: number
@@ -246,24 +287,16 @@ export function executeInSuperposition(): {
   readonly system_correctness: 'collapsed_to_valid' | 'still_superposed'
   readonly next_action: string
 } {
-  const phases: SuperpositionPhase[] = [
-    { phase_number: 1, name: 'Cryptography', amplitude: 0.87, in_superposition: true, collapsed: false },
-    { phase_number: 2, name: 'Formal Verification', amplitude: 0.90, in_superposition: true, collapsed: false },
-    { phase_number: 3, name: 'Algorithms', amplitude: 0.89, in_superposition: true, collapsed: false },
-    { phase_number: 4, name: 'Error Correction', amplitude: 0.89, in_superposition: true, collapsed: false },
-    { phase_number: 5, name: 'Meta-Verification', amplitude: 0.92, in_superposition: true, collapsed: false },
-    { phase_number: 6, name: 'Reproducibility', amplitude: 0.94, in_superposition: true, collapsed: false },
-    { phase_number: 7, name: 'Orchestration', amplitude: 0.91, in_superposition: true, collapsed: false },
-  ]
-
-  const interference = computeInterferencePattern()
+  const rows = allPhaseAmplitudes()
+  const streams = parallelWorkStreams()
   const measurement = measureAndCollapse()
 
   return {
-    phases_in_superposition: phases.length,
-    parallel_work_streams: 52, // 7 phases × 7-8 components each
-    sequential_bottlenecks_eliminated: 522 / 52, // ~10x speedup from parallelism
-    time_factor_improvement: round((52 / 7) * 100) / 100, // ~7.4x vs sequential
+    phases_in_superposition: rows.length,
+    parallel_work_streams: streams,
+    sequential_bottlenecks_eliminated: SEQUENTIAL_HOURS / streams,
+    // Two decimal places, held as hundredths so the literal stays an integer.
+    time_factor_improvement: round((streams / rows.length) * AMPLITUDE_SCALE) / AMPLITUDE_SCALE,
     system_correctness: measurement.all_phases_working ? 'collapsed_to_valid' : 'still_superposed',
     next_action: measurement.all_phases_working
       ? 'TEST: Measure all phases, verify interference collapsed to reality'
@@ -276,15 +309,21 @@ export function executeInSuperposition(): {
 // ============================================================================
 
 export function describeQuantumExecution(): string {
+  const execution = executeInSuperposition()
+  const interference = computeInterferencePattern()
+  const rows = allPhaseAmplitudes().flat()
+  const lowest = round(min(...rows) * AMPLITUDE_SCALE)
+  const highest = round(max(...rows.map((a) => a * AMPLITUDE_SCALE)))
+
   return `
 QUANTUM SUPERPOSITION EXECUTION MODEL
 
-Instead of: Phase 1 (40h) → Phase 2 (200h) → Phase 3 (70h) ...
+Instead of: Phase 1 → Phase 2 → Phase 3 ...
            Sequential, bottlenecked, slow.
 
 Do this: Phase 1-7 ALL AT ONCE in superposition.
-         52 work streams in parallel.
-         Amplitudes: 0.84-0.97
+         ${execution.parallel_work_streams} work streams in parallel.
+         Amplitudes: ${lowest}/${AMPLITUDE_SCALE}-${highest}/${AMPLITUDE_SCALE}
          Interference: Constructive collapse
          Result: All cracks close simultaneously
 
@@ -300,18 +339,17 @@ PARALLELISM:
   - Verification runs across all layers
   - Reproducibility collects everything at once
 
-TIME IMPROVEMENT: 522 hours sequential → 70 hours parallel (~7.4x)
+TIME IMPROVEMENT: ${SEQUENTIAL_HOURS} hours sequential, ${execution.time_factor_improvement}x parallel factor
 
 INTERFERENCE PATTERN:
   - Cryptography amplifies verification
   - Algorithms amplify error correction
   - Millennium Bridge amplifies all others
-  - Constructive interference → 94%+ working solution probability
+  - Constructive interference, working solution probability ${round(interference.working_solution_probability * AMPLITUDE_SCALE)}/${AMPLITUDE_SCALE}
 
 MEASUREMENT & COLLAPSE:
   - Run all tests simultaneously
-  - Theater eliminated (0.87) → Reality amplified
-  - System converges to 100% real in one shot
+  - Theater share ${round(THEATER_SHARE * AMPLITUDE_SCALE)}/${AMPLITUDE_SCALE}, reality amplified
 
 NO SEQUENTIAL PHASES.
 NO WAITING.

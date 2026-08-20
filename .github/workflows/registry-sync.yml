@@ -34,6 +34,10 @@ on:
 
 permissions:
   contents: read
+  # Trusted publishing exchanges this for a short-lived npm token. publish.yml
+  # already proves the GitHub<->npm connection works for `npm publish`; whether
+  # it reaches `npm deprecate` is what the OIDC step below actually measures.
+  id-token: write
 
 concurrency:
   group: registry-sync
@@ -51,6 +55,10 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: npm
 
+      # Trusted publishing needs npm >= 11.5.1, same as publish.yml.
+      - name: Ensure modern npm
+        run: npm install -g npm@latest
+
       - name: Install
         run: npm ci
 
@@ -62,6 +70,30 @@ jobs:
       - name: Is a write-capable token configured?
         id: auth
         run: echo "present=${{ secrets.NPM_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
+
+      # MEASUREMENT, not assumption. npm is connected to GitHub via trusted
+      # publishing, so try the apply on that connection alone and record what
+      # the registry says. Never fails the job: the verify step below is the
+      # judge, and this exists to answer whether a token is needed at all.
+      - name: Try applying on the GitHub<->npm trusted connection (no token)
+        if: steps.auth.outputs.present != 'true'
+        id: oidc
+        continue-on-error: true
+        run: |
+          set +e
+          npm run registry:apply 2>&1 | tee /tmp/oidc.log
+          code=${PIPESTATUS[0]}
+          echo "exit=${code}" >> "$GITHUB_OUTPUT"
+          if grep -q 'EOTP' /tmp/oidc.log; then echo 'verdict=needs-otp' >> "$GITHUB_OUTPUT"
+          elif grep -qE 'ENEEDAUTH|E401|E403' /tmp/oidc.log; then echo 'verdict=not-authorised' >> "$GITHUB_OUTPUT"
+          elif [ "${code}" = "0" ]; then echo 'verdict=worked' >> "$GITHUB_OUTPUT"
+          else echo 'verdict=other' >> "$GITHUB_OUTPUT"; fi
+          exit 0
+
+      - name: What the trusted connection could do
+        if: steps.auth.outputs.present != 'true'
+        run: |
+          echo "trusted-publishing deprecate verdict: ${{ steps.oidc.outputs.verdict }} (exit ${{ steps.oidc.outputs.exit }})"
 
       - name: Apply declared deprecations
         if: steps.auth.outputs.present == 'true'

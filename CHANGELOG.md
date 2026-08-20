@@ -1,5 +1,84 @@
 # Changelog
 
+## 1.0.6
+
+### Added — thermodynamics
+
+- **`src/thermo/free-energy.ts`.** The Gibbs energy of the water reaction
+  (IUPAC's preferred name for the thermodynamic potential), computed from three
+  tabulated standard-state quantities rather than asserted:
+  `ΔG = ΔH − TΔS`. ΔG of formation is −237 kJ/mol and of splitting **+237**, so
+  splitting must be paid for. The reversible cell potential ΔG/(nF) is
+  1228.9 mV and the thermoneutral ΔH/(nF) is 1481.2 mV, the gap being TΔS. A
+  split-then-burn cycle breaks even **exactly** at perfect efficiency and loses
+  otherwise — checked over all 8000 points of the efficiency grid in 5% steps,
+  exhaustive rather than sampled.
+- **`src/thermo/wastewater-energy.ts`.** Polluted water in, combustion engine,
+  electricity and drinkable water out — which works, because the fuel is the
+  contamination and not the water. Anaerobic digestion to biogas, a CHP engine,
+  membranes for the water. At 13.9 J per mg of COD the plant exports power above
+  a **break-even of 4195 mg/L**, computed by scanning rather than declared:
+  municipal sewage sits below it, dairy and manure effluent well above.
+  Distillation is deliberately not the water step — 2.26 MJ/L of latent heat is
+  more than any realistic load carries.
+- Both invert. Entropy recovered from `(ΔH − ΔG)/T` returns the tabulated figure
+  exactly, the exact-rational cell potentials recover their energies with zero
+  drift, and the break-even found by inverting the arithmetic equals the one
+  found by scanning.
+
+### Added — seals, and an outside judge
+
+- **21 seals, up from 13.** New: the doubling circuit reaching {3,6,9} only by
+  reflection; the merkaba as two mirrored tetrahedra sharing the void; the
+  AGL(1,ℤ/9) action giving three as the index of {0,3,6} with stabiliser 18;
+  digit geometry being single-valued; the superposition model reporting its own
+  state; the Gibbs energy of splitting; the wastewater threshold; and every
+  model inverting.
+- **`npm run adjudicate`** puts every seal through `adjudicate()` from
+  `@uuidna/uuidna` — a third party that runs the predicate and returns a verdict
+  with a content-addressed receipt. All 21 come back VERIFIED. `adjudicate:check`
+  is in `npm run check`. Neither statement nor predicate is rewritten for the
+  adjudicator, or it would be judging a paraphrase.
+
+### Fixed
+
+- **`angleForDigit` mapped nine digits onto six angles** — 3 collided with 5, 2
+  with 6, 8 with 9 — because the trinity was pinned to 0/120/240 while the Rodin
+  digits were laid on a 60° lattice running through them. It is the enneagram
+  now, 40° per step, injective. `bearingForDigit` moves into the kernel and the
+  vortex SVG imports it; the SVG receipt is unchanged, which is how the move is
+  known to be byte-identical.
+- **`isValidPath` tested the final depth, not every prefix.** A path dipping
+  below its origin and climbing back passed. `balanced` now means what it says.
+  This cleared the last entry on the tautology surface, whose ceiling reaches
+  **zero**.
+- **The superposition model claimed simultaneity unconditionally** while
+  computing `still_superposed`. Its prose follows its measurement now.
+
+### Added — release automation
+
+- **`npm-deprecations.json`** declares which versions are deprecated and why,
+  and `scripts/npm-registry-sync.mjs` reconciles the registry to it, with the
+  safety rails in the script: never `dist-tags.latest`, never an unpublished
+  version, never every version at once. `registry-sync.yml` runs it daily and
+  `publish.yml` on release.
+- Measured, not assumed: npm trusted publishing is **publish-scoped**. It cannot
+  authorise a deprecate, which returns `404 … or you do not have permission`
+  even from the workflow the trusted publisher names.
+
+### Changed
+
+- New dependency `@uuidna/uuidna` — zero dependencies of its own, used for
+  external adjudication of the seals.
+
+### Known limitations
+
+- Deprecations for 1.0.0–1.0.3 are declared but **not live**: applying them needs
+  an npm automation token as the `NPM_TOKEN` secret, which OIDC cannot replace.
+  `registry-sync.yml` reports the gap on every run rather than forgetting it.
+- Everything listed under 1.0.5 and earlier still applies — in particular
+  ML-KEM-768 here is conformant but **not constant time**.
+
 ## 1.0.5
 
 ### Added — ML-KEM-768, actually conformant

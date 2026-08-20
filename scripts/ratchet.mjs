@@ -272,6 +272,23 @@ function importCycleCount() {
  * Capping it means dead code can only shrink. Deletion can then land in small
  * reviewed batches instead of one irreversible sweep.
  */
+/** Resolved rollup inputs, from the config object rather than its text. */
+function rollupInputs() {
+  const text = readFileSync(join(ROOT, 'rollup.config.js'), 'utf8')
+  // The config is ESM and importing it synchronously here is not possible, so
+  // the template-literal form is expanded instead: capture the base constant
+  // and every `${BASE}/name.ts` that uses it, plus any plain quoted path.
+  const roots = new Set()
+  const bases = new Map()
+  for (const m of text.matchAll(/const\s+([A-Z0-9_]+)\s*=\s*'([^']+)'/g)) bases.set(m[1], m[2])
+  for (const m of text.matchAll(/`\$\{([A-Z0-9_]+)\}\/([A-Za-z0-9._/-]+\.ts)`/g)) {
+    const base = bases.get(m[1])
+    if (base) roots.add(`${base}/${m[2]}`)
+  }
+  for (const m of text.matchAll(/['"](src\/[^'"]+\.ts)['"]/g)) roots.add(m[1])
+  return [...roots]
+}
+
 function unreachableCount() {
   const isTs = (n) => n.endsWith('.ts') && !n.endsWith('.d.ts')
   const all = walk(join(ROOT, 'src'), isTs)
@@ -296,9 +313,11 @@ function unreachableCount() {
   }
   const roots = new Set()
   const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
-  const rollup = readFileSync(join(ROOT, 'rollup.config.js'), 'utf8')
-  for (const m of rollup.matchAll(/['"](src\/[^'"]+\.ts)['"]/g)) {
-    const p2 = join(ROOT, m[1])
+  // Rollup inputs are read from the CONFIG OBJECT. The config builds them with
+  // template literals, so a regex over its text matches nothing and every
+  // bundle entry was being counted as unreachable — 8 modules' worth.
+  for (const input of rollupInputs()) {
+    const p2 = join(ROOT, input)
     if (existsSync(p2)) roots.add(p2)
   }
   for (const cond of Object.values(pkg.exports ?? {})) {
@@ -335,11 +354,21 @@ function unreachableCount() {
     const p2 = join(ROOT, e)
     if (existsSync(p2)) roots.add(p2)
   }
-  for (const html of walk(join(ROOT, 'src'), (n) => n.endsWith('.html'))) {
-    const txt = readFileSync(html, 'utf8')
-    for (const m of txt.matchAll(/['"](\.\/[A-Za-z0-9._-]+\.ts)['"]/g)) {
-      const t = resolve(dirname(html), m[1])
-      if (existsSync(t)) roots.add(t)
+  // Both trees: public/ pages reference src/ modules by full path, and looking
+  // only inside src/ missed 17 of them.
+  for (const dir of ['src', 'public']) {
+    const base = join(ROOT, dir)
+    if (!existsSync(base)) continue
+    for (const html of walk(base, (n) => n.endsWith('.html'))) {
+      const txt = readFileSync(html, 'utf8')
+      for (const m of txt.matchAll(/['"](\.\/[A-Za-z0-9._-]+\.ts)['"]/g)) {
+        const t = resolve(dirname(html), m[1])
+        if (existsSync(t)) roots.add(t)
+      }
+      for (const m of txt.matchAll(/['"]((?:\.\.\/)*src\/[A-Za-z0-9._/-]+\.ts)['"]/g)) {
+        const t = resolve(dirname(html), m[1])
+        if (existsSync(t)) roots.add(t)
+      }
     }
   }
   const seen = new Set()

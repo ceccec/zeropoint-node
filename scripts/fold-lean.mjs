@@ -30,6 +30,19 @@ import { join, dirname, resolve, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { VORTEX_SEQUENCE } from '../src/0/index.ts'
 import { foldToLean } from '../src/kernel/import-graph.ts'
+import rollupConfig from '../rollup.config.js'
+
+/** Resolved rollup inputs — read from the config object, never from its text. */
+const ROLLUP_INPUTS = (() => {
+  const arr = Array.isArray(rollupConfig) ? rollupConfig : [rollupConfig]
+  const out = new Set()
+  for (const c of arr) {
+    const i = c?.input
+    if (typeof i === 'string') out.add(i)
+    else if (i && typeof i === 'object') for (const v of Object.values(i)) out.add(v)
+  }
+  return [...out].filter((x) => typeof x === 'string' && x.endsWith('.ts'))
+})()
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const JSON_OUT = process.argv.includes('--json')
@@ -72,9 +85,12 @@ const graph = new Map(all.map((f) => [f, edgesOf(f)]))
 function entryPoints() {
   const roots = new Set()
   const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
-  const rollup = readFileSync(join(ROOT, 'rollup.config.js'), 'utf8')
-  for (const m of rollup.matchAll(/['"](src\/[^'"]+\.ts)['"]/g)) {
-    const p = join(ROOT, m[1])
+  // Rollup inputs come from the CONFIG, not from a regex over its text. The
+  // config builds them with template literals — `${A432}/a432.system.ts` — so
+  // a /['"](src\/...)['"]/  pattern matches nothing and silently counts every
+  // bundle entry as unreachable. Importing it gives the resolved strings.
+  for (const input of ROLLUP_INPUTS) {
+    const p = join(ROOT, input)
     if (existsSync(p)) roots.add(p)
   }
   for (const cond of Object.values(pkg.exports ?? {})) {
@@ -98,12 +114,22 @@ function entryPoints() {
     const p = join(ROOT, e)
     if (existsSync(p)) roots.add(p)
   }
-  // Browser pages load modules directly; those are entries too.
-  for (const html of walk(join(ROOT, 'src'), (n) => n.endsWith('.html'))) {
-    const txt = readFileSync(html, 'utf8')
-    for (const m of txt.matchAll(/['"](\.\/[A-Za-z0-9._-]+\.ts)['"]/g)) {
-      const t = resolve(dirname(html), m[1])
-      if (existsSync(t)) roots.add(t)
+  // Browser pages load modules directly; those are entries too. BOTH trees:
+  // public/ pages reference src/ modules by full path, and looking only inside
+  // src/ missed 17 of them.
+  for (const dir of ['src', 'public']) {
+    const base = join(ROOT, dir)
+    if (!existsSync(base)) continue
+    for (const html of walk(base, (n) => n.endsWith('.html'))) {
+      const txt = readFileSync(html, 'utf8')
+      for (const m of txt.matchAll(/['"](\.\/[A-Za-z0-9._-]+\.ts)['"]/g)) {
+        const t = resolve(dirname(html), m[1])
+        if (existsSync(t)) roots.add(t)
+      }
+      for (const m of txt.matchAll(/['"]((?:\.\.\/)*src\/[A-Za-z0-9._/-]+\.ts)['"]/g)) {
+        const t = resolve(dirname(html), m[1])
+        if (existsSync(t)) roots.add(t)
+      }
     }
   }
   return roots

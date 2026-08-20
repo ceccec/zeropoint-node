@@ -105,8 +105,8 @@ export class A432ConsciousnessCycle {
     insights: any;
     clarity: number;
   } {
-    let insights: any = {};
-    let clarity = 0;
+    let insights: any;
+    let clarity: number;
 
     switch (this.currentPhase) {
       case 'convergence':

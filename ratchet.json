@@ -1,7 +1,7 @@
 {
   "ceilings": {
     "typecheck": 117,
-    "lint": 631,
+    "lint": 587,
     "decimals": 280,
     "cycles": 1,
     "unreachable": 126,

@@ -296,7 +296,7 @@ export class A432Factory {
     const x = c * (1 - abs((hue * 6) % 2 - 1));
     const m = light - c / 2;
     
-    let r = 0, g = 0, b = 0;
+    let r: number, g: number, b: number;
     if (hue < 1/6) { r = c; g = x; b = 0; }
     else if (hue < 2/6) { r = x; g = c; b = 0; }
     else if (hue < 3/6) { r = 0; g = c; b = x; }

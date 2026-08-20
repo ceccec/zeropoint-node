@@ -65,7 +65,7 @@ interface VBMHarmonic {
 // --- Canonical VBM Division Logic ---
 function calculateVBMDivision(index: number, digit: number): VBMDivision {
   // The bigger number is the accumulated value from previous divisions
-  let biggerNumber = 0;
+  let biggerNumber: number;
   
   // Calculate bigger number based on position and previous divisions
   if (index === 0) {
@@ -164,7 +164,7 @@ function generateVBMColor(digit: number): string {
   const x = c * (1 - abs((h * 6) % 2 - 1));
   const m = v - c;
   
-  let r = 0, g = 0, b = 0;
+  let r: number, g: number, b: number;
   
   if (h < 1/6) [r, g, b] = [c, x, 0];
   else if (h < 2/6) [r, g, b] = [x, c, 0];

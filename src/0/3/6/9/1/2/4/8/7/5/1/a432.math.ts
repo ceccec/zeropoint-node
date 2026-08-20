@@ -87,8 +87,8 @@ export function xorDigit(a: Digit, b: Digit, c: Digit): Digit {
 // ——————————————————————————————————————————
 // Digital root spines (Wave 14 purge — no name illusions)
 // ---------------------------------------------------------
-// digitalRoot / calculateDigitalRoot → legacyDigitalRoot (0→0, classic 1–9)
-// harmonicRoot12 → base-12 residue (returns 1–12) — use ONLY when 1–12 is required
+// digitalRoot / calculateDigitalRoot → legacyDigitalRoot (0→0, classic 1-9)
+// harmonicRoot12 → base-12 residue (returns 1-12) — use ONLY when 1-12 is required
 // kernel digitalRoot(0)→9 lives in src/0 / a432.roots as kernelDigitalRoot
 
 export {
@@ -144,7 +144,7 @@ export const A432_CONSTANTS = {
 
 // ——————————————————————————————————————————
 // 2. Trinity Axis & Polarity
-//   3 → +1 6 → –1 9 → 0
+//   3 → +1 6 → -1 9 → 0
 // ---------------------------------------------------------
 // (Polarity mapping declared later with full Digit support.)
 
@@ -563,7 +563,7 @@ export function resolveDivision(numerator: Digit, denominator: Digit, angle: Ang
 // 17. π digit stream and A432 decoding
 // ---------------------------------------------------------
 
-// Pi digit generator (spigot, Rabinowitz–Wagon 1995)
+// Pi digit generator (spigot, Rabinowitz-Wagon 1995)
 export function* piDigitStream(limit: number): IterableIterator<Digit> {
   let q = 1n,
     r = 0n,

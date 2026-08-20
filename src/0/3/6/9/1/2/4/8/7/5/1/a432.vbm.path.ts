@@ -120,7 +120,7 @@ function generateVBMColor(digit: number): string {
   const x = c * (1 - abs((h * 6) % 2 - 1));
   const m = v - c;
   
-  let r = 0, g = 0, b = 0;
+  let r: number, g: number, b: number;
   
   if (h < 1/6) [r, g, b] = [c, x, 0];
   else if (h < 2/6) [r, g, b] = [x, c, 0];

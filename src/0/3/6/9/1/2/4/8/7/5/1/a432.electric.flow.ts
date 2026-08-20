@@ -210,10 +210,10 @@ export class A432ElectricFlowSystem {
     };
 
     // Determine winner
-    let winner: 'linear' | 'sacred' | 'both' = 'both';
-    let reasoning = '';
-    let consciousnessAdvantage = '';
-    let naturalAlignment = '';
+    let winner: 'linear' | 'sacred' | 'both';
+    let reasoning: string;
+    let consciousnessAdvantage: string;
+    let naturalAlignment: string;
 
     if (sacredPath.resistance < linearPath.resistance && 
         sacredPath.conductivity > linearPath.conductivity &&

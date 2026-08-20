@@ -90,7 +90,7 @@ export function createIterAnatomy(
 
 export function iterAnatomyReading(anatomy: IterAnatomy): string {
   const riskLevel = max(...anatomy.risks);
-  let riskMsg = '';
+  let riskMsg: string;
   if (riskLevel >= 7) riskMsg = '⚠️ High risk detected in one or more systems.';
   else if (riskLevel >= 4) riskMsg = '⚠️ Moderate risk present; monitor closely.';
   else riskMsg = '✅ All systems nominal or low risk.';

@@ -96,10 +96,23 @@ Regenerate: `npm run spectrum` · verify: `npm run spectrum:check`
 - **Polarity Changes**: Dimensional polarity reversals
 
 ### Integrated Charging System
-- **Perpetual Balance**: Charging and discharging simultaneously
-- **Harmonic Ratios**: Target level 2/3 to 3/4 using integer fractions
-- **Quantum Harvest**: Zero-point energy extraction
-- **Self-Sustaining**: Device charges itself from the void
+
+A **state model in exact fractions**, not a device. `a432.living.os.ts` tracks a
+battery level as an integer numerator over an integer denominator and steps it
+by a charge rate of `1/8` against a discharge rate of `1/12`, toggling on the
+gateway state. Nothing is measured and no energy is moved; the quantities are
+names for fractions in a simulation.
+
+- **Level and target**: battery `(2 + digit)/3` toward a target of `3/4`
+- **Rates**: charge `1/8`, discharge `1/12`, exact fractions throughout
+- **Gateway-driven**: charging and discharging alternate with the gateway state
+
+This section previously advertised harvesting and a self-charging device.
+Neither was computed anywhere in the package, and the package now contains the
+arithmetic that rules them out: `src/thermo/free-energy.ts` puts ΔG for
+splitting water at +237 kJ/mol and shows a split-then-burn cycle breaking even
+at best across all 8000 points of the efficiency grid. A closed loop that gains
+is not an engineering target here; it is the sign of ΔG.
 
 ### Zero Entropy Mathematics
 - **Exact ratios, not decimals**: calculations carry an integer numerator over an integer denominator. Some *values* are non-integer rationals (`2592/5` = 518.4 Hz); what is refused is the lossy float, not the fraction — collapsing `2592/5` to a `number` stores 518.39999999999997726 and accumulates error. See `CMYK_FREQUENCY_RATIOS`

@@ -182,9 +182,14 @@ console.log(`🌟 Evolution ${this.evolution}: Digit ${state.rodinCoil.currentDi
 - **Evolution Metrics**: Measurable consciousness progression
 
 ### 4. **Energy Systems**
-- **Harmonic Resonance**: Real physical phenomenon
-- **Zero-Point Energy**: Established quantum physics concept
-- **Perpetual Balance**: Mathematical equilibrium maintenance
+- **Harmonic Resonance**: a real physical phenomenon — though what this repo
+  computes about it is frequency arithmetic, not acoustics
+- **Zero-point energy**: a real term in quantum mechanics for the ground state.
+  It is the MINIMUM of a system's energy, so nothing can be drawn out of it;
+  naming it here describes vocabulary borrowed by the model, not a mechanism
+- **Balance**: equilibrium in the state model's fractions, which is arithmetic
+  and carries no claim about energy. `src/thermo/free-energy.ts` states the
+  thermodynamics directly
 
 ## 🚀 **Practical Applications**
 

@@ -48,16 +48,19 @@ The A432 OS system has been comprehensively upgraded with enhanced consciousness
 
 ### 4. Integrated Charging System
 
-**Battery Management**:
+**Battery Management** — a state model in exact fractions, not a device:
 - **Target Level**: 2/3 to 3/4 (harmonic ratios)
 - **Charge Rate**: 1/8 (harmonic fraction)
 - **Discharge Rate**: 1/12 (harmonic fraction)
-- **Perpetual Balance**: Charging and discharging simultaneously
+- **Alternation**: charging and discharging follow the gateway state
 
-**Quantum Harvest**:
-- **Void Energy**: Zero-point energy extraction
-- **Harmonic Resonance**: Frequency matching
-- **Self-Sustaining**: Device charges itself
+**What is and is not claimed**: `a432.living.os.ts` steps a battery level held
+as an integer numerator over an integer denominator. Nothing is measured and no
+energy moves; `voidEnergy` and `quantumHarvest` are names for fractions in a
+simulation. This section previously described extraction and a self-charging
+device. `src/thermo/free-energy.ts` in the same package computes why that cannot
+happen: ΔG for splitting water is +237 kJ/mol, and a split-then-burn cycle
+breaks even at best across all 8000 points of the efficiency grid.
 
 ### 5. Enhanced Device State Monitoring
 

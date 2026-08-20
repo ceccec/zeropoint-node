@@ -182,6 +182,25 @@ export function measure(reg: Register, unit: number): { outcome: number; collaps
  * renormalised state. On an entangled state this is where the correlation
  * bites — measuring one qubit of a Bell pair fixes the other.
  */
+/**
+ * The modulus of the LCG these modules use for deterministic sampling.
+ */
+export const RNG_MODULUS = 4294967296
+
+/**
+ * Map an LCG state onto the unit interval `measureQubit` expects.
+ *
+ * `measureQubit` takes a UNIT in [0, 1), not a seed. Four call sites passed the
+ * raw LCG state instead, which is an integer up to 2^32. Since the outcome test
+ * is `unit < 1 - pOne`, any state of 1 or more forced the outcome to 1 — so
+ * `measureZ` on |0> returned 999 ones in 1000 shots, and repetition-code
+ * syndrome extraction reported a clean codeword as an error.
+ */
+export function unitOf(seed: number): number {
+  const m = seed % RNG_MODULUS
+  return (m < 0 ? m + RNG_MODULUS : m) / RNG_MODULUS
+}
+
 export function measureQubit(reg: Register, q: number, unit: number): { bit: 0 | 1; collapsed: Register } {
   const bit = 1 << q
   let pOne = 0

@@ -9,14 +9,45 @@
  */
 
 import { floor, abs, max, min, round } from '../0/algebra.ts'
-import { type Register, zeroState, applyGate1, cnot, H, X, Z, probabilities, measureQubit } from './simulator.ts'
+import { type Register, zeroState, applyGate1, cnot, H, X, Z, probabilities, measureQubit, unitOf } from './simulator.ts'
 
 export interface StabilizerCode {
   readonly name: string
   readonly logicalQubits: number // Number of encoded logical qubits
   readonly physicalQubits: number // Number of physical qubits
   readonly distance: number // Minimum weight of logical operator
-  readonly generators: readonly (readonly number[])[] // Stabilizer generators
+  /**
+   * Stabiliser generators in SYMPLECTIC form: each row is 2n bits,
+   * [x_0..x_{n-1} | z_0..z_{n-1}].
+   *
+   * The previous n-bit form could not express a CSS code at all. An X-type and
+   * a Z-type generator over the same support are different operators but
+   * identical bit patterns, so the Steane code's six generators collapsed to
+   * three distinct rows — and the list that was there had seven rows, of which
+   * 13 of the 21 pairs anticommuted. A stabiliser group needs its generators to
+   * commute pairwise; that one was not a group.
+   *
+   * Two rows commute iff their symplectic product is even:
+   *   <g,h> = x_g . z_h + z_g . x_h  (mod 2)
+   */
+  readonly generators: readonly (readonly number[])[]
+  /** X-type supports, n bits each. */
+  readonly xGenerators: readonly (readonly number[])[]
+  /** Z-type supports, n bits each. */
+  readonly zGenerators: readonly (readonly number[])[]
+}
+
+/** Build a symplectic generator row from separate X and Z supports. */
+function symplectic(x: readonly number[], z: readonly number[]): number[] {
+  return [...x, ...z]
+}
+
+/** Symplectic product mod 2 — zero exactly when the two operators commute. */
+export function symplecticProduct(g: readonly number[], h: readonly number[]): 0 | 1 {
+  const n = g.length / 2
+  let acc = 0
+  for (let i = 0; i < n; i++) acc += g[i]! * h[n + i]! + g[n + i]! * h[i]!
+  return (acc % 2) as 0 | 1
 }
 
 export interface SyndromeResult {
@@ -42,28 +73,50 @@ export interface CorrelationValue {
 }
 
 // Simple 3-qubit repetition code: encode 1 logical qubit in 3 physical qubits
+const REPETITION_Z: number[][] = [
+  [1, 1, 0], // Z0 Z1
+  [0, 1, 1], // Z1 Z2
+]
+
 export const REPETITION_3_CODE: StabilizerCode = {
   name: 'Repetition [3,1,1]',
   logicalQubits: 1,
   physicalQubits: 3,
+  // Distance 1 as a QUANTUM code: it detects bit flips and is blind to phase
+  // flips, so a single Z is an undetectable logical error.
   distance: 1,
-  generators: [[1, 1, 0], [0, 1, 1]], // Z1 Z2, Z2 Z3
+  xGenerators: [],
+  zGenerators: REPETITION_Z,
+  generators: REPETITION_Z.map((z) => symplectic([0, 0, 0], z)),
 }
 
 // Steane code [7,1,3]: 7 physical qubits, 1 logical, distance 3
+/**
+ * The three parity checks of the classical [7,4,3] Hamming code. Steane's code
+ * is the CSS construction over them, so the SAME three supports appear once as
+ * X-type generators and once as Z-type — six in total, which is n - k = 7 - 1.
+ *
+ * Each pair overlaps in exactly two positions, so every X row commutes with
+ * every Z row.
+ */
+const HAMMING_CHECKS: number[][] = [
+  [0, 0, 0, 1, 1, 1, 1], // qubits 3,4,5,6
+  [0, 1, 1, 0, 0, 1, 1], // qubits 1,2,5,6
+  [1, 0, 1, 0, 1, 0, 1], // qubits 0,2,4,6
+]
+
+const ZERO7 = [0, 0, 0, 0, 0, 0, 0]
+
 export const STEANE_CODE: StabilizerCode = {
   name: 'Steane [7,1,3]',
   logicalQubits: 1,
   physicalQubits: 7,
   distance: 3,
+  xGenerators: HAMMING_CHECKS,
+  zGenerators: HAMMING_CHECKS,
   generators: [
-    [1, 1, 0, 1, 0, 0, 0], // Z stabilizers
-    [1, 0, 1, 0, 1, 0, 0],
-    [0, 1, 1, 0, 0, 1, 0],
-    [1, 1, 0, 0, 0, 0, 1],
-    [1, 0, 1, 0, 0, 1, 0],
-    [0, 1, 1, 0, 1, 0, 0],
-    [1, 0, 0, 1, 1, 0, 0],
+    ...HAMMING_CHECKS.map((x) => symplectic(x, ZERO7)),
+    ...HAMMING_CHECKS.map((z) => symplectic(ZERO7, z)),
   ],
 }
 
@@ -102,15 +155,15 @@ export function measureSyndromeRepetition(
 
   // Syndrome 0: Z1 Z2 (correlation between qubits 0 and 1)
   // In computational basis, this is even/odd parity of (q0, q1)
-  const m0 = measureQubit(reg, 0, s)
+  const m0 = measureQubit(reg, 0, unitOf(s))
   s = (1664525 * s + 1013904223) % 4294967296
-  const m1 = measureQubit(reg, 1, s)
+  const m1 = measureQubit(reg, 1, unitOf(s))
   s = (1664525 * s + 1013904223) % 4294967296
   const parity01 = (m0.bit + m1.bit) % 2
   syndrome.push(parity01 as 0 | 1)
 
   // Syndrome 1: Z2 Z3 (correlation between qubits 1 and 2)
-  const m2 = measureQubit(reg, 2, s)
+  const m2 = measureQubit(reg, 2, unitOf(s))
   const parity12 = (m1.bit + m2.bit) % 2
   syndrome.push(parity12 as 0 | 1)
 
@@ -136,11 +189,11 @@ export function correctRepetition(reg: Register, syndrome: SyndromeResult): Regi
 // Decode logical qubit (majority vote for repetition code)
 export function decodeLogicalRepetition(reg: Register, seed: number = 0): 0 | 1 {
   let s = seed
-  const m0 = measureQubit(reg, 0, s)
+  const m0 = measureQubit(reg, 0, unitOf(s))
   s = (1664525 * s + 1013904223) % 4294967296
-  const m1 = measureQubit(reg, 1, s)
+  const m1 = measureQubit(reg, 1, unitOf(s))
   s = (1664525 * s + 1013904223) % 4294967296
-  const m2 = measureQubit(reg, 2, s)
+  const m2 = measureQubit(reg, 2, unitOf(s))
 
   // Majority vote
   const vote = m0.bit + m1.bit + m2.bit

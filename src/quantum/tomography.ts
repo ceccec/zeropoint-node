@@ -5,7 +5,7 @@
  */
 
 import { sqrt, abs, floor, log2 } from '../0/algebra.ts'
-import { type Register, zeroState, applyGate1, H, S, cx, measureQubit, probabilities, cabs2 } from './simulator.ts'
+import { type Register, zeroState, applyGate1, H, S, cx, measureQubit, probabilities, cabs2, unitOf } from './simulator.ts'
 
 interface Complex {
   readonly re: number
@@ -44,7 +44,7 @@ export function measureZ(reg: Register, qubit: number, shots: number = 1000, see
   const counts = [0, 0]
   let s = seed
   for (let i = 0; i < shots; i++) {
-    const meas = measureQubit(reg, qubit, s)
+    const meas = measureQubit(reg, qubit, unitOf(s))
     counts[meas.bit]++
     s = (1664525 * s + 1013904223) % 4294967296
   }
@@ -58,7 +58,7 @@ export function measureX(reg: Register, qubit: number, shots: number = 1000, see
   const counts = [0, 0]
   let s = seed
   for (let i = 0; i < shots; i++) {
-    const meas = measureQubit(rotated, qubit, s)
+    const meas = measureQubit(rotated, qubit, unitOf(s))
     counts[meas.bit]++
     s = (1664525 * s + 1013904223) % 4294967296
   }
@@ -79,7 +79,7 @@ export function measureY(reg: Register, qubit: number, shots: number = 1000, see
   const counts = [0, 0]
   let s = seed
   for (let i = 0; i < shots; i++) {
-    const meas = measureQubit(s2, qubit, s)
+    const meas = measureQubit(s2, qubit, unitOf(s))
     counts[meas.bit]++
     s = (1664525 * s + 1013904223) % 4294967296
   }

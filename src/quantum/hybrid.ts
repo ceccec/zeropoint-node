@@ -9,7 +9,7 @@
  */
 
 import { sqrt, abs, floor, log2, max, min, round } from '../0/algebra.ts'
-import { type Register, zeroState, applyGate1, ry, rz, cnot, measureQubit, probabilities } from './simulator.ts'
+import { type Register, zeroState, applyGate1, ry, rz, cnot, measureQubit, probabilities, unitOf } from './simulator.ts'
 import { type VQEResult, vqeAdaptive } from './variational-optimizer.ts'
 import { AdaptiveOptimizer } from './adaptive.ts'
 
@@ -72,7 +72,7 @@ export function ansatzRotationEntangle(
 
 // Classify via measurement: measure qubit 0, output 0/1
 export function classifyMeasurement(reg: Register, seed: number = 0): ClassificationResult {
-  const meas = measureQubit(reg, 0, seed)
+  const meas = measureQubit(reg, 0, unitOf(seed))
   const probs = probabilities(reg)
   const confidence = max(probs[0]!, probs[1]!)
   const circuitDepth = 0 // Placeholder; actual depth from circuit analysis

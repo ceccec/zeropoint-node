@@ -41,6 +41,7 @@ import {
   shor,
   measureSyndromeRepetition,
   STEANE_CODE,
+  symplecticProduct,
   estimateSurfaceCodeThreshold,
 } from '../quantum/index.ts'
 import { ML_KEM_768 } from '../crypto/ml-kem.ts'
@@ -336,23 +337,40 @@ export const SEALS: Record<string, Seal> = {
   },
 
   steane_corrects_error: {
-    basis: 'Steane [7,1,3] parameters: 7 physical, 1 logical, distance 3, so floor((d-1)/2) = 1 arbitrary error is correctable, and every stabiliser generator has even weight overlap',
+    basis: 'Steane [[7,1,3]] is a stabiliser group: exactly n-k = 6 generators, symplectically independent (rank 6), pairwise commuting, and distance 3 corrects floor((d-1)/2) = 1 arbitrary error',
     decide: () => {
       const code = STEANE_CODE
-      if (code.physicalQubits !== 7 || code.logicalQubits !== 1 || code.distance !== 3) return false
-      const correctable = (code.distance - 1) / 2
-      if (correctable < 1) return false
-      // Stabiliser generators must pairwise commute: over GF(2) that is an even
-      // overlap between every pair of generator supports.
+      const n = code.physicalQubits
+      const k = code.logicalQubits
+      if (n !== 7 || k !== 1 || code.distance !== 3) return false
+      if ((code.distance - 1) / 2 < 1) return false
+
       const g = code.generators
+      // A stabiliser group for [[n,k,d]] needs exactly n - k generators.
+      if (g.length !== n - k) return false
+      // Every pair must commute, i.e. have symplectic product zero.
       for (let i = 0; i < g.length; i++) {
         for (let j = i + 1; j < g.length; j++) {
-          let overlap = 0
-          for (let b = 0; b < g[i]!.length; b++) overlap += g[i]![b]! & g[j]![b]!
-          if (overlap % 2 !== 0) return false
+          if (symplecticProduct(g[i]!, g[j]!) !== 0) return false
         }
       }
-      return true
+      // And they must be independent over GF(2), or they fix fewer qubits than
+      // claimed. Gaussian elimination on the 2n-bit rows.
+      const M = g.map((r) => [...r])
+      let rank = 0
+      for (let col = 0; col < 2 * n && rank < M.length; col++) {
+        let pivot = -1
+        for (let r = rank; r < M.length; r++) if (M[r]![col] === 1) { pivot = r; break }
+        if (pivot < 0) continue
+        const tmp = M[rank]!; M[rank] = M[pivot]!; M[pivot] = tmp
+        for (let r = 0; r < M.length; r++) {
+          if (r !== rank && M[r]![col] === 1) {
+            for (let b = 0; b < 2 * n; b++) M[r]![b] = M[r]![b]! ^ M[rank]![b]!
+          }
+        }
+        rank++
+      }
+      return rank === n - k
     },
   },
 

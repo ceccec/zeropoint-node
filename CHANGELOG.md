@@ -35,6 +35,58 @@
   matrix index order, changing `η₂`, truncating instead of rounding in
   `Compress`, or dropping the modulus check each make it fail.
 
+### Fixed — quantum measurement and the Steane code
+
+Both found by writing seals that could fail, in `src/verification/lean-bridge.ts`.
+
+- **`measureQubit` was being handed a raw LCG state where it wants a unit in
+  `[0,1)`.** Its outcome test is `unit < 1 - pOne`, so any state of 1 or more
+  forced the result to 1. Four call sites did this: repetition-code syndrome
+  extraction and majority-vote decoding, `classifyMeasurement`, and all three
+  tomography bases. `measureZ` on `|0>` returned 999 ones in 1000 shots, and
+  syndrome extraction reported a clean codeword as error `X0` while reporting a
+  real `X` error as clean — exactly inverted. `unitOf` now maps the LCG state
+  onto the unit interval at every site. Clean codewords give syndrome `[0,0]`;
+  `X` on qubit 0 gives `[1,0]`; `measureZ` on `|0>` gives 1000/0.
+
+- **`STEANE_CODE` was not a stabiliser group.** `[[7,1,3]]` needs `n - k = 6`
+  generators; it listed 7, of GF(2) rank 6, with 13 of 21 pairs anticommuting.
+  The `n`-bit representation could not express a CSS code at all — an X-type and
+  a Z-type generator over the same support are different operators but identical
+  bit patterns. `StabilizerCode.generators` is now symplectic, `[x | z]` of `2n`
+  bits, with `xGenerators`/`zGenerators` alongside, and Steane is built from the
+  three `[7,4,3]` Hamming checks used once as X-type and once as Z-type: 6
+  generators, symplectic rank 6, zero anticommuting pairs.
+
+  `npm run quantum:sim` reported 257 checks passing both before and after this
+  fix, including `QEC` and `state-tomography`. Neither defect was reachable from
+  any of them.
+
+### Changed — the Lean bridge stops claiming what it never checked
+
+- It reported `Verified: 2/2`, `Confidence: 100.0%` and `Production Grade
+  (Formally Verified)`, and exported `ready_for_publication: true`. None was
+  measured: the hash covered the theorem's *name*, so it never moved when a
+  proof changed, and `verifyProofCertificate` tested that some strings were
+  non-empty and a hash was 16 characters — true of every certificate the file
+  can build. `lean_version` was asserted although no Lean runs here, and 7 of
+  the 13 Lean scripts end in `sorry`.
+
+- A certificate now carries two separately reported facts. `lean_status` is
+  **read** from the script — `script`, `sorry`, `axiom` or `absent`. `seal` is
+  whether a recomputable predicate ran and held against the simulator. Verified
+  means the seal held. The hash covers statement and script.
+
+- All 8 theorems in the report now seal, each with a `basis` string saying
+  whether it decides the general statement or one instance — `grover_speedup`
+  at N=16 is not an asymptotic bound and says so. `ready_for_publication`
+  remains **false**: seals are computed instances, not machine-checked proofs,
+  and no Lean toolchain runs in this repository.
+
+- `kyber_security` claimed 128. ML-KEM-768 is NIST **category 3**.
+
+- `test:verification` runs the seals on every gate.
+
 ### Known limitations
 
 - **ML-KEM-768 here is not constant time.** JavaScript cannot promise that —

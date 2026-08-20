@@ -515,6 +515,44 @@ export const SEALS: Record<string, Seal> = {
       return fromThree.length === 4 && key(fromThree) === key(tetraDown)
     },
   },
+  agl_acts_on_the_three_triangles: {
+    basis: "AGL(1,Z/9) has order 54 and acts on the three triangles — the cosets of {0,3,6} in Z/9, which are the residue classes the merkaba seal uses. The action is transitive with stabiliser 18 and kernel 9, and the induced permutation group is AGL(1,Z/3) of order 6. So the count three is the index of {0,3,6}, derived from the group rather than assumed: orbit x stabiliser = 3 x 18 = 54.",
+    decide: () => {
+      const units = [1, 2, 4, 5, 7, 8] // the residues coprime to 9
+      const maps: ((x: number) => number)[] = []
+      for (const a of units) for (let b = 0; b < 9; b++) maps.push((x) => ((a * x + b) % 9 + 9) % 9)
+      if (maps.length !== 54) return false
+
+      // The three cosets of {0,3,6}. Written as residues, so 9 appears as 0.
+      const T = [[1, 4, 7], [2, 5, 8], [3, 6, 0]]
+      const key = (xs: readonly number[]) => [...new Set(xs)].sort((x, y) => x - y).join(',')
+      if (key([...T[0]!, ...T[1]!, ...T[2]!]) !== '0,1,2,3,4,5,6,7,8') return false
+
+      // The gateway triangle must be the axis the kernel declares, reduced mod 9.
+      if (key(T[2]!) !== key(VORTEX_AXIS.map((d) => d % 9))) return false
+
+      const index = new Map(T.map((t, i) => [key(t), i]))
+      const induced = new Set<string>()
+      let fixesAll = 0
+      let stabilisesFirst = 0
+      for (const f of maps) {
+        const image = T.map((t) => index.get(key(t.map(f))))
+        // Closure: an affine map must send a coset to a coset.
+        if (image.some((v) => v === undefined)) return false
+        const word = image.join('')
+        induced.add(word)
+        if (word === '012') fixesAll++
+        if (image[0] === 0) stabilisesFirst++
+      }
+
+      // Induced group is AGL(1,Z/3); kernel and stabiliser follow from it.
+      if (induced.size !== 6) return false
+      if (fixesAll !== 9) return false
+      if (stabilisesFirst !== 18) return false
+      // Transitive on three, so orbit x stabiliser recovers the whole group.
+      return 3 * stabilisesFirst === maps.length
+    },
+  },
 }
 
 // ============================================================================

@@ -738,7 +738,8 @@ const integratedSystem = {
 3. **Educational Platforms**: Interactive learning experiences
 4. **Scientific Visualization**: Research data visualization
 5. **Artistic Expression**: Mathematical art creation
-6. **Therapeutic Applications**: A432-based web therapy
+6. **Frequency arithmetic in the browser**: the same exact ratios, rendered.
+   No therapeutic effect is measured and no claim of benefit is made
 7. **Gaming**: Consciousness-based games
 8. **Social Platforms**: Consciousness-aware social networks
 

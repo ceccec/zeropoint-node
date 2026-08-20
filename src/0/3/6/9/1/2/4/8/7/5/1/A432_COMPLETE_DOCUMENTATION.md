@@ -271,7 +271,15 @@ function resolveDesignError(designRequirements: any) {
 }
 ```
 
-## **🏥 Medical and Therapeutic Applications**
+## **🏥 Medical and Therapeutic Applications — WITHDRAWN**
+
+> **Boundary statement, not a claim.** This section described colour and
+> frequency values as healing or therapeutic. No health effect is measured
+> anywhere in this repository, nothing here has been clinically evaluated,
+> and no claim of benefit is made or implied. The code below computes a
+> colour from an integer; that is all it does. It is retained to show what
+> was withdrawn rather than deleted silently. Do not use any of it to
+> inform a decision about anyone's health.
 
 ### **1. Consciousness-Based Healing**
 ```typescript

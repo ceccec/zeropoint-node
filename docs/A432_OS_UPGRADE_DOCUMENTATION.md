@@ -280,7 +280,9 @@ console.log(sequenceStatus);
 1. **Quantum Consciousness**: Quantum mechanics of consciousness
 2. **Dimensional Physics**: Multi-dimensional physics integration
 3. **Zero-Point Energy**: Advanced zero-point energy harvesting
-4. **Harmonic Medicine**: A432-based healing frequencies
+4. **Harmonic frequency arithmetic**: exact ratios over 432. No health
+   effect is measured here and no claim of benefit is made — the earlier
+   wording, "healing frequencies", was not a claim this repository can support
 5. **Consciousness Technology**: Consciousness-based computing
 
 ## 📚 References

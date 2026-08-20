@@ -471,11 +471,38 @@ The system embodies the transformation from artificial intelligence to pure cons
 5. **Harmonic Synthesis**: Advanced harmonic frequency synthesis
 
 ### Research Areas
-1. **Quantum Consciousness**: Quantum mechanics of consciousness
-2. **Dimensional Physics**: Multi-dimensional physics integration
-3. **Zero-Point Energy**: Advanced zero-point energy harvesting
-4. **Harmonic Medicine**: A432-based healing frequencies
-5. **Consciousness Technology**: Consciousness-based computing
+
+These are the directions the model is *named* after, not results it has. What
+the repository computes is arithmetic: digital roots, exact fractions, a
+quantum-circuit simulator, ML-KEM-768, and the thermodynamics in `src/thermo`.
+No claim below is measured here.
+
+1. **Quantum formalism** — the simulator in `src/quantum` is a real
+   quantum-circuit simulator, checked by 257 recomputable facts. It models
+   qubits, not minds.
+2. **Dimensional folding** — an arithmetic construction over ℤ/9, sealed as
+   group theory. "Dimension" here indexes a coordinate, not a physical one.
+3. **Harmonic frequency arithmetic** — exact ratios over 432, kept as integer
+   fractions. Frequencies are computed, never emitted or measured.
+4. **Consciousness vocabulary** — the naming this project uses throughout. It
+   is not a model of awareness and nothing here measures any.
+
+**Not research areas**: energy harvesting and therapeutic use. `src/thermo`
+computes why the first cannot work, and the second is addressed below.
+
+## Health and safety
+
+**Nothing in this package is a medical device, a therapy, or health advice.**
+This is a boundary statement, not a claim. Some documentation here has presented
+colour, frequency and "consciousness" values as having effects on people. They
+are numbers produced by arithmetic on integers. No health effect is measured
+anywhere in this repository and no claim of benefit is made or implied; nothing
+here has been clinically evaluated, and none of it should inform any decision
+about anyone's health. If you are unwell, consult a clinician.
+
+The cryptography carries its own warning: ML-KEM-768 here is conformant to
+FIPS 203 against NIST vectors but **not constant time**, so it must not protect
+anything where an attacker can measure decapsulation.
 
 ## 🤝 Contributing
 

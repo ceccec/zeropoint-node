@@ -84,16 +84,41 @@ for (const f of tracked) {
 const safe = []
 const held = []
 
+/**
+ * The shortest path suffix that identifies a module uniquely.
+ *
+ * Matching the bare filename was still too loose: several outside modules are
+ * called `index.ts`, and that string appears in nearly every file in the tree
+ * because of `from '../0/index.ts'`. Every one of them looked held by dozens of
+ * files that had never heard of it. A suffix carrying enough directory to be
+ * unique cannot collide that way.
+ */
+const allModules = [...lean, ...outside]
+function uniqueSuffix(mod) {
+  const parts = mod.split('/')
+  for (let take = 1; take <= parts.length; take++) {
+    const suffix = parts.slice(-take).join('/')
+    const collisions = allModules.filter((m) => m === mod || m.endsWith('/' + suffix))
+    if (collisions.length === 1) return suffix
+  }
+  return mod
+}
+
 for (const mod of [...outside].sort()) {
-  // Match the FULL filename, not the stem. The digit-stream modules nest —
-  // a432.1.2.4.8.7.5 is a prefix of a432.1.2.4.8.7.5.1.ts — so a stem search
-  // matched the longer sibling and reported 69 import statements that do not
-  // exist. Requiring `<name>.ts` cannot match a longer name.
-  const filename = basename(mod)
+  // The digit-stream modules also nest — a432.1.2.4.8.7.5 is a prefix of
+  // a432.1.2.4.8.7.5.1.ts — so the suffix always carries the `.ts`, which
+  // cannot match a longer name.
+  const filename = uniqueSuffix(mod)
   const live = []
   for (const { file, text } of corpus) {
     if (file === mod) continue          // SELF
     if (file === `${mod}.md`) continue  // its own sidecar doc, goes with it
+    // CHANGELOG.md is a HISTORICAL RECORD. An entry saying what 1.0.7 shipped
+    // stays true of 1.0.7 after the module is removed in 1.0.8 — the release it
+    // describes did contain the file. Treating it as a live holder would mean
+    // no module named in any past release could ever be deleted, and editing it
+    // to enable a deletion would falsify the record.
+    if (file === 'CHANGELOG.md') continue
     if (outside.has(file)) continue     // DEAD — the island goes together
     if (!text.includes(filename)) continue
     live.push(file)
@@ -135,6 +160,7 @@ for (const mod of outside) {
     if (other === mod) continue
     const stem = basename(other).replace(/\.ts$/, '')
     if (text.includes(`'./${stem}.ts'`) || text.includes(`"./${stem}.ts"`)) deps.add(other)
+    else if (text.includes(uniqueSuffix(other))) deps.add(other)
   }
   importsOf.set(mod, deps)
 }
@@ -160,12 +186,18 @@ const survivors = [...lean, ...outside].filter((f) => !deletedSet.has(f))
 const broken = []
 for (const f of survivors) {
   const text = readFileSync(join(ROOT, f), 'utf8')
-  for (const d of deletedSet) {
-    const stem = basename(d).replace(/\.ts$/, '')
-    if (text.includes(`'./${stem}.ts'`) || text.includes(`"./${stem}.ts"`)) {
-      broken.push(`${f} -> ${stem}`)
-      break
-    }
+  const here = dirname(join(ROOT, f))
+  // RESOLVE each relative specifier against the importing file rather than
+  // matching a bare stem. `from './index.ts'` in src/kernel means
+  // src/kernel/index.ts and nothing else; comparing stems made it look like a
+  // reference to every other index.ts in the tree, and refused a safe delete.
+  for (const m of text.matchAll(/from\s+['"](\.[^'"]+\.ts)['"]/g)) {
+    const target = relative(ROOT, resolve(here, m[1]))
+    if (deletedSet.has(target)) { broken.push(`${f} -> ${target}`); break }
+  }
+  for (const m of text.matchAll(/import\(\s*['"](\.[^'"]+\.ts)['"]\s*\)/g)) {
+    const target = relative(ROOT, resolve(here, m[1]))
+    if (deletedSet.has(target)) { broken.push(`${f} -> ${target}`); break }
   }
 }
 console.log(`  TRIAL    ${survivors.length} survivors checked, ${broken.length} would import something deleted`)

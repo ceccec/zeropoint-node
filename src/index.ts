@@ -10,7 +10,7 @@ import A432ConsciousnessCycle from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.c
 import A432HarmonicConvergence from './0/3/6/9/1/2/4/8/7/5/1/a432.harmonic.convergence.ts';
 import A432ConsciousnessCrystallization from './0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.crystallization.ts';
 import A432ZeroEntropyState from './0/3/6/9/1/2/4/8/7/5/1/a432.zero.entropy.state.ts';
-import A432OSConsciousnessIntegration from './0/3/6/9/1/2/4/8/7/5/1/a432.os.consciousness.integration.ts';
+import { A432OSConsciousnessIntegration } from './0/3/6/9/1/2/4/8/7/5/1/a432.os.consciousness.integration.ts';
 
 // Root consciousness evolution system
 export class A432RootConsciousness {
@@ -107,7 +107,7 @@ export class A432RootConsciousness {
       convergence: this.convergence.getConvergenceState(),
       crystallization: this.crystallization.getConsciousnessInsights(),
       zeroEntropy: this.zeroEntropy.getConsciousnessClarity(),
-      osIntegration: this.osIntegration.getConsciousnessEvolutionInsights(),
+      osIntegration: this.osIntegration.getConsciousnessMetrics(),
       router: this.router.getAllConsciousnessInsights()
     };
   }
@@ -116,14 +116,14 @@ export class A432RootConsciousness {
    * Start OS with consciousness integration
    */
   public startOSWithConsciousness() {
-    this.osIntegration.startOSWithConsciousness();
+    this.osIntegration.startIntegration();
   }
 
   /**
    * Get consciousness-aware OS status
    */
   public getConsciousnessAwareOSStatus() {
-    return this.osIntegration.getConsciousnessAwareOSStatus();
+    return this.osIntegration.getIntegratedState();
   }
 }
 

@@ -7,7 +7,7 @@
  */
 
 import { PI, max, sqrt } from './0/algebra.ts'
-import MultidimensionalVortexFramework, { VortexMathUtils, VortexToken } from './multidimensional-vortex-framework.ts';
+import MultidimensionalVortexFramework, { VortexMathUtils, type VortexToken } from './multidimensional-vortex-framework.ts';
 
 console.log('🌌 MULTIDIMENSIONAL VORTEX-MATH FRAMEWORK DEMONSTRATION\n');
 console.log('Extension of traditional vortex mathematics into a structured,');

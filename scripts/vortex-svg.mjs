@@ -28,8 +28,7 @@ import {
   throughVoid,
   foldVortexReflection,
   vortexStrokeGateways,
-  decodeVortexDashAngles,
-} from '../src/0/index.ts'
+  decodeVortexDashAngles, bearingForDigit } from '../src/0/index.ts'
 import { hueForDigit } from '../src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 import { computeContentUuid } from '../src/integrity/content-uuid.ts'
 
@@ -48,7 +47,8 @@ const R = 210
 const NODE_R = 34
 const round = (n) => Number(n.toFixed(2))
 const pos = (d) => {
-  const a = ((-90 + 40 * (d % 9)) * Math.PI) / 180
+  // Layout comes from the kernel so the drawing and the seals cannot disagree.
+  const a = (bearingForDigit(d) * Math.PI) / 180
   return { x: round(C + R * Math.cos(a)), y: round(C + R * Math.sin(a)) }
 }
 

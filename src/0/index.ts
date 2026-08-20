@@ -211,6 +211,22 @@ export const WAVE_CHAIN = [
 export type WavePhase = (typeof WAVE_CHAIN)[number]
 export const KERNEL_SEALED = true
 
+/**
+ * Enneagram bearing of a digit, in whole degrees clockwise from 12 o'clock.
+ *
+ * 9 sits at the top and 1..8 follow clockwise, one ninth of a turn apart. The
+ * step is 40° because the ring has nine positions, so every bearing is an
+ * integer and no trigonometry is needed to reason about the layout.
+ *
+ * This is the layout `scripts/vortex-svg.mjs` draws; it now imports this rather
+ * than repeating the formula. Note it is NOT `a432.math.ts` `angleForDigit`,
+ * which is degenerate — that one collides 3 with 5, 2 with 6 and 8 with 9,
+ * mapping nine digits onto six angles.
+ */
+export function bearingForDigit(d: number): number {
+  return (((-90 + 40 * (d % 9)) % 360) + 360) % 360
+}
+
 export const VORTEX_SEQUENCE = [1, 2, 4, 8, 7, 5, 3, 6, 9] as const
 export const VORTEX_REVERSE = [9, 6, 3, 5, 7, 8, 4, 2, 1] as const
 export const VORTEX_ORBIT = [1, 2, 4, 8, 7, 5] as const

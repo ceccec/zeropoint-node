@@ -30,7 +30,7 @@
  */
 
 import { createHash } from 'node:crypto'
-import { digitalRoot, throughVoid, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
+import { digitalRoot, throughVoid, bearingForDigit, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
 import {
   zeroState,
   applyGate1,
@@ -470,6 +470,49 @@ export const SEALS: Record<string, Seal> = {
       // When open, it must publish the shortfall rather than only naming it.
       if (admitsOpen && !text.includes('NOT ALL AT ONCE')) return false
       return true
+    },
+  },
+  merkaba_is_two_mirrored_tetrahedra: {
+    basis: "the residues mod 3 cut 1..9 into three triangles, each equilateral on the enneagram (120 degrees apart). Reflection through the void SWAPS {1,4,7} with {3,6,9} and fixes {2,5,8} setwise, with the void root 0 fixed throughout. So {3,6,9,0} and {1,4,7,0} are two tetrahedra sharing exactly the void and carried onto each other by the mirror — a merkaba, of which one tetrahedron is half. From 3 the four vertices are 3 with its two triangle partners and the void.",
+    decide: () => {
+      const RING = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      const cls = (r: number) => RING.filter((d) => d % 3 === r)
+      const up = cls(1)     // 1,4,7
+      const equator = cls(2) // 2,5,8
+      const down = cls(0)   // 3,6,9
+      const key = (a: readonly number[]) => [...a].sort((x, y) => x - y).join(',')
+
+      // Three classes of three, partitioning the ring.
+      if (up.length !== 3 || equator.length !== 3 || down.length !== 3) return false
+      if (key([...up, ...equator, ...down]) !== key(RING)) return false
+
+      // Each is equilateral on the enneagram: three gaps of 120 degrees.
+      for (const t of [up, equator, down]) {
+        const b = t.map(bearingForDigit).sort((x, y) => x - y)
+        const gaps = [b[1]! - b[0]!, b[2]! - b[1]!, 360 - (b[2]! - b[0]!)]
+        if (!gaps.every((g) => g === 120)) return false
+      }
+
+      // The mirror swaps the two tetrahedral bases and fixes the equator.
+      if (key(up.map(throughVoid)) !== key(down)) return false
+      if (key(down.map(throughVoid)) !== key(up)) return false
+      if (key(equator.map(throughVoid)) !== key(equator)) return false
+
+      // The void is the shared apex, and it is the mirror's fixed point.
+      if (throughVoid(0) !== 0) return false
+      const tetraDown = [...down, 0]
+      const tetraUp = [...up, 0]
+      if (tetraDown.length !== 4 || tetraUp.length !== 4) return false
+      const shared = tetraDown.filter((v) => tetraUp.includes(v))
+      if (key(shared) !== '0') return false
+
+      // The gateway triangle is the axis the kernel already declares, so this
+      // is the same structure the vortex constants describe, not a new one.
+      if (key(down) !== key(VORTEX_AXIS)) return false
+
+      // From 3: itself, its two triangle partners, and the void. Four keys.
+      const fromThree = [3, ...down.filter((d) => d !== 3), 0]
+      return fromThree.length === 4 && key(fromThree) === key(tetraDown)
     },
   },
 }

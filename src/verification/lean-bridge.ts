@@ -30,7 +30,7 @@
  */
 
 import { createHash } from 'node:crypto'
-import { digitalRoot, throughVoid, VORTEX_SEQUENCE } from '../0/index.ts'
+import { digitalRoot, throughVoid, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
 import {
   zeroState,
   applyGate1,
@@ -392,9 +392,12 @@ export const SEALS: Record<string, Seal> = {
       ML_KEM_768.ciphertextBytes === 1088,
   },
   doubling_avoids_the_triad: {
-    basis: 'gcd(2,9) = 1, so every power of 2 is a unit mod 9 and can never be a multiple of 3; 2 is a primitive root, so its orbit is all six units {1,2,4,5,7,8}; 2^6 = 64 = 1 mod 9 gives period 6, which makes six cases exhaustive rather than sampled. Reflection through the void carries {1,4,7} onto {9,6,3}, so the triad is reachable only by reflecting.',
+    basis: 'VORTEX_ORBIT and VORTEX_AXIS are pinned to computation, not trusted. gcd(2,9) = 1, so every power of 2 is a unit mod 9 and can never be a multiple of 3; 2 is a primitive root, so its orbit is all six units {1,2,4,5,7,8}; 2^6 = 64 = 1 mod 9 gives period 6, which makes six cases exhaustive rather than sampled. Reflection through the void carries {1,4,7} onto {9,6,3}, so the triad is reachable only by reflecting.',
     decide: () => {
-      const TRIAD = [3, 6, 9]
+      // Bound to the kernel's own constants, not retyped here. VORTEX_AXIS had
+      // no reader anywhere in the repository before this seal, so nothing
+      // checked it was the triad at all.
+      const TRIAD: readonly number[] = VORTEX_AXIS
 
       // Period 6, from 2^6 = 64 = 1 (mod 9). Without this the six cases below
       // would be a sample; with it they are the whole sequence.
@@ -416,10 +419,18 @@ export const SEALS: Record<string, Seal> = {
       const units = [1, 2, 4, 5, 7, 8]
       if (orbit.slice().sort((a, b) => a - b).join() !== units.join()) return false
 
-      // The triad IS the rest of the ring, and VORTEX_SEQUENCE reads orbit then
-      // triad, so the sequence is not an arbitrary ordering.
-      if (VORTEX_SEQUENCE.slice(0, 6).join() !== orbit.join()) return false
-      if (VORTEX_SEQUENCE.slice(6).join() !== TRIAD.join()) return false
+      // VORTEX_ORBIT must BE the computed orbit, in doubling order — the
+      // constant is pinned to the computation rather than trusted.
+      if (VORTEX_ORBIT.join() !== orbit.join()) return false
+
+      // And VORTEX_AXIS must be exactly what the orbit cannot reach: the
+      // complement of the orbit in 1..9, in ascending order.
+      const complement = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter((n) => !orbit.includes(n))
+      if (TRIAD.join() !== complement.join()) return false
+
+      // VORTEX_SEQUENCE reads orbit then axis, so it is not an arbitrary order.
+      if (VORTEX_SEQUENCE.slice(0, orbit.length).join() !== orbit.join()) return false
+      if (VORTEX_SEQUENCE.slice(orbit.length).join() !== TRIAD.join()) return false
 
       // Reflection is where the triad enters: 1 -> 9, 4 -> 6, 7 -> 3.
       if (throughVoid(1) !== 9 || throughVoid(4) !== 6 || throughVoid(7) !== 3) return false

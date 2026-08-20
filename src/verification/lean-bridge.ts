@@ -31,6 +31,7 @@
 
 import { createHash } from 'node:crypto'
 import { digitalRoot, throughVoid, bearingForDigit, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
+import { angleForDigit } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 import {
   zeroState,
   applyGate1,
@@ -551,6 +552,30 @@ export const SEALS: Record<string, Seal> = {
       if (stabilisesFirst !== 18) return false
       // Transitive on three, so orbit x stabiliser recovers the whole group.
       return 3 * stabilisesFirst === maps.length
+    },
+  },
+  digit_geometry_is_single_valued: {
+    basis: "the two independent digit geometries agree and are injective. a432.math.ts angleForDigit and the kernel's bearingForDigit are written separately — the a432 tree does not import the kernel — so this checks they place all nine digits identically and never put two digits at one bearing. angleForDigit used to map nine digits onto six angles, colliding 3 with 5, 2 with 6 and 8 with 9.",
+    decide: () => {
+      const RING = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+      // Injective: nine digits, nine distinct bearings, all whole degrees.
+      const kernel = RING.map(bearingForDigit)
+      if (new Set(kernel).size !== RING.length) return false
+      if (!kernel.every((b) => Number.isInteger(b) && b >= 0 && b < 360)) return false
+
+      // The two definitions must agree digit for digit.
+      if (!RING.every((d) => angleForDigit(d) === bearingForDigit(d))) return false
+
+      // Evenly spaced: consecutive bearings differ by one ninth of a turn.
+      const sorted = [...kernel].sort((a, b) => a - b)
+      for (let i = 1; i < sorted.length; i++) {
+        if (sorted[i]! - sorted[i - 1]! !== 40) return false
+      }
+
+      // 9 at the top is what fixes the ring's phase; without it any rotation
+      // would satisfy the spacing check above.
+      return bearingForDigit(9) === 270 && bearingForDigit(3) === 30
     },
   },
 }

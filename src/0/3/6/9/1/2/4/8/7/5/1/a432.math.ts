@@ -187,12 +187,20 @@ export function patternDigit(i: number): number {
  *  Rodin digits follow 60°·k.
  */
 export function angleForDigit(d: number): number {
-  if (d === 3) return 0;
-  if (d === 6) return 120;
-  if (d === 9) return 240;
-  // Rodin digits ordered as 1,2,4,8,7,5  mapping to k=0..5
-  const k = RODIN_SEQUENCE.indexOf(d);
-  return (k + 1) * 60; // 60°,120°,180°,240°,300°,360°(≡0)
+  // Enneagram bearing: 9 at 12 o'clock, then 1..8 clockwise, one ninth of a
+  // turn (40°) apart. Integer degrees, so no trigonometry is needed to reason
+  // about the layout, and injective on 1..9 by construction.
+  //
+  // It used to place the trinity at 0/120/240 and the Rodin digits on a 60°
+  // lattice, which put NINE digits on SIX angles: 3 collided with 5, 2 with 6,
+  // and 8 with 9. Two digits at one position is a bug under any convention —
+  // it made "north of 3" unanswerable and any layout built on it degenerate.
+  //
+  // This is the same formula as the kernel's `bearingForDigit`, which is what
+  // `scripts/vortex-svg.mjs` draws. The two are deliberately NOT wired
+  // together — the a432 tree does not import the kernel — so the seal
+  // `digit_geometry_is_single_valued` checks that they agree instead.
+  return (((-90 + 40 * (d % 9)) % 360) + 360) % 360;
 }
 
 /** A432-based frequency for a trinity digit using base-12 harmonics. */

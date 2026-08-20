@@ -2580,11 +2580,7 @@
   ];
   var FULL_PATTERN = [0, ...TRINITY_AXIS, 1, 2, 4, 8, 7, 5, 1];
   function angleForDigit(d) {
-    if (d === 3) return 0;
-    if (d === 6) return 120;
-    if (d === 9) return 240;
-    const k = RODIN_SEQUENCE.indexOf(d);
-    return (k + 1) * 60;
+    return ((-90 + 40 * (d % 9)) % 360 + 360) % 360;
   }
   function frequencyForDigit(d) {
     if (!TRINITY_AXIS.includes(d)) throw new Error("frequency only defined for trinity digits");

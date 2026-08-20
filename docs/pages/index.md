@@ -9,4 +9,4 @@ Projections of `src/0` / integrity / kernel — not second sources.
 - [Content-uuid](./content-uuid.md)
 - [Sequence dual](./sequence-dual.md)
 - [Development vortex](./development-vortex.md)
-Receipt: `0b956079-9e19-8d48-ab7b-7ccdf103d098`
+Receipt: `b8010912-074a-8bb1-b3e4-149f2d6748b8`

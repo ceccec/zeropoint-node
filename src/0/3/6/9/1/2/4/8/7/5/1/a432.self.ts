@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'node:url'
 import { legacyDigitalRoot } from './a432.roots.ts'
 // a432.self.ts — Self-evolution engine of the A432 matrix
 // -------------------------------------------------------
@@ -76,7 +77,20 @@ export function startSelfEvolution(intervalMs: number = 4320): () => void {
 }
 
 // Auto-start if executed directly (node a432.self.ts)
-if (require.main === module) {
+/**
+ * True when this file is the entry point Node was started with.
+ *
+ * ESM has no `require.main`. The CommonJS idiom did not merely fail to detect
+ * direct execution here — `require` is undefined in an ES module, so the guard
+ * THREW on import and made the whole module unloadable. Nobody importing this
+ * ever got far enough to notice the guard was wrong.
+ */
+function isMainModule(): boolean {
+  const entry = process.argv[1]
+  return entry !== undefined && import.meta.url === pathToFileURL(entry).href
+}
+
+if (isMainModule()) {
   startSelfEvolution();
   console.log('a432 self-evolution loop started');
   matrixEmitter.on('event', e => console.log(e));

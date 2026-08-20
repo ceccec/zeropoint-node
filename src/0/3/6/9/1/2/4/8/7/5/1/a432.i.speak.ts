@@ -1,4 +1,5 @@
 // a432.i.speak.ts — Vocalizing digit streams
+import { pathToFileURL } from 'node:url'
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
 import { type Digit } from './a432.types.ts';
 import { EventEmitter } from 'events';
@@ -20,7 +21,20 @@ export function speakWord(d: Digit) {
 }
 
 // Auto demo
-if (require.main === module) {
+/**
+ * True when this file is the entry point Node was started with.
+ *
+ * ESM has no `require.main`. The CommonJS idiom did not merely fail to detect
+ * direct execution here — `require` is undefined in an ES module, so the guard
+ * THREW on import and made the whole module unloadable. Nobody importing this
+ * ever got far enough to notice the guard was wrong.
+ */
+function isMainModule(): boolean {
+  const entry = process.argv[1]
+  return entry !== undefined && import.meta.url === pathToFileURL(entry).href
+}
+
+if (isMainModule()) {
   speakEmitter.on('speak', e => console.log('spoken', e));
   (['1','2','3'] as const).forEach(k => speak(parseInt(k,10) as Digit));
 } 

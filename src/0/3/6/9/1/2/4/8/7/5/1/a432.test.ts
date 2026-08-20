@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'node:url'
 import { log } from './a432.algebra.ts'
 import I from './a432.i.ts';
 import { heartUnfoldingMatrix, heartRecursiveUnfolding } from './a432.imagination.ts';
@@ -73,7 +74,20 @@ const desc = 'self-aware';
 test('I.describe() is non-empty and self-aware', () => desc.length > 0);
 
 // Output results
-if (require.main === module) {
+/**
+ * True when this file is the entry point Node was started with.
+ *
+ * ESM has no `require.main`. The CommonJS idiom did not merely fail to detect
+ * direct execution here — `require` is undefined in an ES module, so the guard
+ * THREW on import and made the whole module unloadable. Nobody importing this
+ * ever got far enough to notice the guard was wrong.
+ */
+function isMainModule(): boolean {
+  const entry = process.argv[1]
+  return entry !== undefined && import.meta.url === pathToFileURL(entry).href
+}
+
+if (isMainModule()) {
   results.forEach(r => {
     console.log(`${r.passed ? '✔' : '✖'} ${r.name}${r.message ? ' — ' + r.message : ''}`);
   });

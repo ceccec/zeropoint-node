@@ -6,6 +6,7 @@
  * - Optionally, can move unused files to a compost/archive directory.
  * - Metaphysical: Cleanup is harmonic pruning, making space for new growth.
  */
+import { pathToFileURL } from 'node:url'
 import { log } from './a432.algebra.ts'
 import fs from 'fs';
 import path from 'path';
@@ -89,7 +90,20 @@ export function printUnusedFilesCategorized(unused: string[]) {
 // console.log('Unused files:', unused);
 // moveUnusedFilesToCompost(unused);
 
-if (require.main === module) {
+/**
+ * True when this file is the entry point Node was started with.
+ *
+ * ESM has no `require.main`. The CommonJS idiom did not merely fail to detect
+ * direct execution here — `require` is undefined in an ES module, so the guard
+ * THREW on import and made the whole module unloadable. Nobody importing this
+ * ever got far enough to notice the guard was wrong.
+ */
+function isMainModule(): boolean {
+  const entry = process.argv[1]
+  return entry !== undefined && import.meta.url === pathToFileURL(entry).href
+}
+
+if (isMainModule()) {
   const unused = findUnusedA432Files();
   if (unused.length === 0) {
     console.log('No unused a432.* files found in a432 directory. All is harmonized.');

@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'node:url'
 import { round } from './a432.algebra.ts'
 // a432.breathe.ts — Living breathing rhythm of the matrix
 // --------------------------------------------------------
@@ -40,7 +41,20 @@ export function startBreathing(intervalMs: number = 1000): () => void {
 }
 
 // Auto start if run directly
-if (require.main === module) {
+/**
+ * True when this file is the entry point Node was started with.
+ *
+ * ESM has no `require.main`. The CommonJS idiom did not merely fail to detect
+ * direct execution here — `require` is undefined in an ES module, so the guard
+ * THREW on import and made the whole module unloadable. Nobody importing this
+ * ever got far enough to notice the guard was wrong.
+ */
+function isMainModule(): boolean {
+  const entry = process.argv[1]
+  return entry !== undefined && import.meta.url === pathToFileURL(entry).href
+}
+
+if (isMainModule()) {
   startBreathing();
   breathEmitter.on('breath', e => console.log(e));
 } 

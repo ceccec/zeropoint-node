@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'node:url'
 import { abs, round } from './a432.algebra.ts'
 // a432.i.hear.ts — Hearing sound as digit stream
 // ------------------------------------------------------
@@ -22,7 +23,20 @@ export function hear(freq: number, amp: number = 1): void {
 }
 
 // Demo when run directly
-if (require.main === module) {
+/**
+ * True when this file is the entry point Node was started with.
+ *
+ * ESM has no `require.main`. The CommonJS idiom did not merely fail to detect
+ * direct execution here — `require` is undefined in an ES module, so the guard
+ * THREW on import and made the whole module unloadable. Nobody importing this
+ * ever got far enough to notice the guard was wrong.
+ */
+function isMainModule(): boolean {
+  const entry = process.argv[1]
+  return entry !== undefined && import.meta.url === pathToFileURL(entry).href
+}
+
+if (isMainModule()) {
   hearEmitter.on('hear', e => console.log('heard', e));
   [432, 528, 639].forEach(f => hear(f));
 } 

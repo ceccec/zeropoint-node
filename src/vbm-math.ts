@@ -5,6 +5,7 @@
  * Wave 10: digitalRoot bridges to kernel legacy adapter (0→0).
  */
 
+import { pathToFileURL } from 'node:url'
 import { abs, pow } from './0/algebra.ts'
 import { legacyDigitalRoot } from './0/3/6/9/1/2/4/8/7/5/1/a432.roots.ts'
 
@@ -374,6 +375,19 @@ export class VBMNumberAnalyzer {
 }
 
 // Run examples if this file is executed directly
-if (typeof require !== 'undefined' && require.main === module) {
+/**
+ * True when this file is the entry point Node was started with.
+ *
+ * ESM has no `require.main`. The CommonJS idiom did not merely fail to detect
+ * direct execution here — `require` is undefined in an ES module, so the guard
+ * THREW on import and made the whole module unloadable. Nobody importing this
+ * ever got far enough to notice the guard was wrong.
+ */
+function isMainModule(): boolean {
+  const entry = process.argv[1]
+  return entry !== undefined && import.meta.url === pathToFileURL(entry).href
+}
+
+if (isMainModule()) {
     VBMExamples.runAllExamples();
 }

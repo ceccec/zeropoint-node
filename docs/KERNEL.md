@@ -10,8 +10,8 @@
 - developmentVortex(verify).computes: **true**
 - runDevelopmentVortexAll().ok: **true**
 - corpus root: `e699073e-f88e-84b0-8696-7082dc19a933`
-- a432 import/export graph: **true** · files=343 · edges=926 · exports=2126
-- graph root: `8f1c410e-847e-87c2-8eba-471e7274bb0a`
+- a432 import/export graph: **true** · files=343 · edges=941 · exports=2126
+- graph root: `fa6fb853-96a1-886a-a007-2a6f1aad9452`
 - audit: forks=0 · ambient Math hits=0 · randomUUID=0 · root=`fda38b71-78f7-84e2-a4a6-661ae6792a46`
 - **self-develop tip:** FEED · `feed` · src/0/index.ts:180
 - tip action: chat-wave feed: edit/rebuild at src/0/index.ts (WAVE_CHAIN); re-run npm run self:next after seal — do not invent gaps
@@ -31,4 +31,4 @@ Wave chain: origin → decode → design → learn → tune → edit → rebuild
 
 Import/export census is computed (`foldA432ImportExportGraph`) — content-uuid + merkleFold. `vortexInvariantsHold = computeVortexInvariantsHold()` from **README gateway** seals (living field ∧ 60° dash closes/fusionIgnites ∧ developmentVortex ∧ KERNEL_SEALED). Audit census: `foldA432AuditCensus` (see [AUDIT.md](./AUDIT.md)). Next tip: `planTrinity` / `nextSelfDevelopTip` (`form · code · proof` ← statement/action/verify; vague refused).
 
-Receipt content-uuid: `bf466985-2d5b-841a-bd43-5ef7cda9da0a`
+Receipt content-uuid: `97dff24b-1e8d-8029-9b25-3fe3f19d4959`

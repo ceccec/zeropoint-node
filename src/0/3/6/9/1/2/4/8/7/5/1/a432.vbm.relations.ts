@@ -6,6 +6,7 @@
  * Designed for quick pattern discovery.
  */
 
+import { pathToFileURL } from 'node:url'
 import { log } from './a432.algebra.ts'
 import { promises as fs } from 'fs';
 import path from 'path';
@@ -37,7 +38,20 @@ export async function extractVBMDigitRelations(): Promise<string[]> {
 }
 
 // CLI helper
-if (require.main === module) {
+/**
+ * True when this file is the entry point Node was started with.
+ *
+ * ESM has no `require.main`. The CommonJS idiom did not merely fail to detect
+ * direct execution here — `require` is undefined in an ES module, so the guard
+ * THREW on import and made the whole module unloadable. Nobody importing this
+ * ever got far enough to notice the guard was wrong.
+ */
+function isMainModule(): boolean {
+  const entry = process.argv[1]
+  return entry !== undefined && import.meta.url === pathToFileURL(entry).href
+}
+
+if (isMainModule()) {
   (async () => {
     const seqs = await extractVBMDigitRelations();
     seqs.forEach(s => console.log(s));

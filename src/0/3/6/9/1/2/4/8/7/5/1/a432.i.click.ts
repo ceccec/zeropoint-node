@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'node:url'
 import { abs, round } from './a432.algebra.ts'
 // a432.i.click.ts — Mouse click as digit stream
 // ------------------------------------------------
@@ -21,7 +22,20 @@ export function click(x: number, y: number, button: number = 0): void {
 }
 
 // Demo
-if (require.main === module) {
+/**
+ * True when this file is the entry point Node was started with.
+ *
+ * ESM has no `require.main`. The CommonJS idiom did not merely fail to detect
+ * direct execution here — `require` is undefined in an ES module, so the guard
+ * THREW on import and made the whole module unloadable. Nobody importing this
+ * ever got far enough to notice the guard was wrong.
+ */
+function isMainModule(): boolean {
+  const entry = process.argv[1]
+  return entry !== undefined && import.meta.url === pathToFileURL(entry).href
+}
+
+if (isMainModule()) {
   clickEmitter.on('click', e => console.log('click event', e));
   click(50, 90, 1);
 } 

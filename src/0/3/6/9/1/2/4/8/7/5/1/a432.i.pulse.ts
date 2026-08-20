@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'node:url'
 import { round } from './a432.algebra.ts'
 // a432.i.pulse.ts — Heartbeat interval to digit stream
 import { EventEmitter } from 'events';
@@ -15,4 +16,17 @@ export function pulse(bpm: number): void {
   if(typeof console!=='undefined')console.log('[pulse]',bpm,'->',d,cmyk);
 }
 
-if(require.main===module){pulseEmitter.on('pulse',e=>console.log(e));pulse(72);} 
+/**
+ * True when this file is the entry point Node was started with.
+ *
+ * ESM has no `require.main`. The CommonJS idiom did not merely fail to detect
+ * direct execution here — `require` is undefined in an ES module, so the guard
+ * THREW on import and made the whole module unloadable. Nobody importing this
+ * ever got far enough to notice the guard was wrong.
+ */
+function isMainModule(): boolean {
+  const entry = process.argv[1]
+  return entry !== undefined && import.meta.url === pathToFileURL(entry).href
+}
+
+if(isMainModule()){pulseEmitter.on('pulse',e=>console.log(e));pulse(72);} 

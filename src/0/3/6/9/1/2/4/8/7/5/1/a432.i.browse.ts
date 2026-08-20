@@ -3,6 +3,7 @@
 // Fetches a URL, digests its textual content into digit events.
 // Works in browser (fetch) and Node (global fetch in Node18+).
 
+import { pathToFileURL } from 'node:url'
 import { EventEmitter } from 'events';
 import { digitalRoot } from './a432.math.ts';
 import { type Digit } from './a432.types.ts';
@@ -24,4 +25,17 @@ export async function browse(url: string, maxChars = 2048): Promise<void> {
 registerSource('browse', browseEmitter, 'browse', p => p.digit as Digit, 'will');
 
 // Demo
-if(require.main===module){browseEmitter.on('browse',e=>console.log(e));browse('https://example.com').catch(console.error);} 
+/**
+ * True when this file is the entry point Node was started with.
+ *
+ * ESM has no `require.main`. The CommonJS idiom did not merely fail to detect
+ * direct execution here — `require` is undefined in an ES module, so the guard
+ * THREW on import and made the whole module unloadable. Nobody importing this
+ * ever got far enough to notice the guard was wrong.
+ */
+function isMainModule(): boolean {
+  const entry = process.argv[1]
+  return entry !== undefined && import.meta.url === pathToFileURL(entry).href
+}
+
+if(isMainModule()){browseEmitter.on('browse',e=>console.log(e));browse('https://example.com').catch(console.error);} 

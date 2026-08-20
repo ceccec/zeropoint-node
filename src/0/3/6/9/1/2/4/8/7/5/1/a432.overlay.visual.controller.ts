@@ -39,9 +39,7 @@ export default class extends Controller {
 
   override connect() {
     // Use Stimulus value API for radius/nodeSize
-    // @ts-ignore Stimulus value API
     this.radius = (this as { radiusValue?: number }).radiusValue ?? 120;
-    // @ts-ignore Stimulus value API
     this.nodeSize = (this as { nodeSizeValue?: number }).nodeSizeValue ?? 48;
     const el = this.element as HTMLElement;
     this.centerX = (el.offsetWidth || 320) / 2;
@@ -60,7 +58,6 @@ export default class extends Controller {
 
   animate() {
     this.element.innerHTML = '';
-    // @ts-ignore overlayRegistry dynamic access
     const overlayFn = overlayRegistry[(this as { overlayValue?: string }).overlayValue as keyof typeof overlayRegistry] || getRodinCoil2DOverlayData;
     const nodes = overlayFn(this.radius, this.centerX, this.centerY);
     const t = Date.now() / 1000;

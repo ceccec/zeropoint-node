@@ -323,11 +323,8 @@ export const TRINITY_PWA_MANIFEST = {
  * Call this in your PWA entry point.
  */
 export function registerTrinityServiceWorker(swPath = './a432.service.worker.js') {
-  // @ts-ignore - Browser globals not available in Node.js environment
   if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator && typeof window !== 'undefined') {
-    // @ts-ignore - Browser globals not available in Node.js environment
     window.addEventListener('load', () => {
-      // @ts-ignore - Browser globals not available in Node.js environment
       navigator.serviceWorker.register(swPath).then(
         (reg: unknown) => console.log('Trinity Service Worker registered:', (reg as { scope: string }).scope),
         (err: unknown) => console.error('Trinity Service Worker registration failed:', err)

@@ -1,5 +1,104 @@
 # Changelog
 
+## 1.0.7
+
+### Fixed — thirty modules could not be imported
+
+- **`require.main === module` in an ES module throws.** Fourteen files carried
+  that CommonJS guard to detect direct execution. The package is
+  `"type": "module"`, so `require` is undefined and the guard did not fail to
+  detect anything — it threw at load and took the whole module with it. Thirty
+  modules shipped in the tarball that a consumer could not import at all.
+  `isMainModule()` compares `import.meta.url` to the entry point, so those CLI
+  blocks now run on direct execution for the first time.
+- **`src/index.ts` imported a default export that does not exist**, so the
+  package's own index could not load. Fixing it exposed three calls to methods
+  that were never there — renames never propagated — which a consumer reaching
+  them would have hit as a `TypeError`.
+- **A type imported as a value** in `multidimensional-vortex-demo.ts` left an
+  import with no runtime binding after type stripping.
+- Modules that fail to import: **32 → 0**, and the ratchet ceiling is 0, so that
+  class of breakage now fails the gate outright.
+
+### Fixed — a service worker with type checking switched off
+
+- `a432.service.worker.ts` carried `@ts-nocheck` over the whole file, hiding
+  five errors. One was real: `caches.match()` resolves to `Response | undefined`
+  because a cache miss is normal, and the handler annotated the parameter
+  `Response`. The `||` on the same line existed precisely to handle the miss the
+  type denied could happen.
+- The other six suppressions in the tree **suppressed nothing** — identical
+  error counts with and without — which is worse than none, since they sit ready
+  to absorb the next real error on that line. All seven are gone.
+
+### Removed — claims this package could not support
+
+These are refused, not restated: no claim of benefit is made or implied by
+anything quoted below, and no health effect is measured anywhere in this
+package.
+
+- **Every medical claim is withdrawn.** The repository advertised "Medical and
+  Therapeutic Applications", with a worked example taking a "Patient
+  consciousness state" and returning "Healing color therapy". What the code does
+  is compute a colour from an integer. The README ships on npm and two of the
+  documents publish to the website, so these were addressed to readers who might
+  act on them.
+- **The README no longer advertises energy harvesting or a self-charging
+  device.** `src/thermo/free-energy.ts`, shipped in 1.0.6, computes why that
+  cannot work — and the same tarball's README claimed it anyway.
+- README gains a **Health and safety** section: nothing here is a medical
+  device, therapy or advice, no health effect is measured, and an unwell reader
+  should consult a clinician. It carries the ML-KEM timing warning too.
+
+### Added — lean is a definition now
+
+- **`npm run fold`** folds the module graph to its fixed point:
+  `fold(fold(S)) = fold(S)`. That fixed point is the definition of lean, rather
+  than a number anyone chose. It converges in two folds against a cap of
+  `VORTEX_SEQUENCE.length`, and the second fold changing nothing is the proof.
+- `foldToLean` and `leanIsFixed` live in the kernel, so the script and the seal
+  that verifies them call one implementation.
+- The fold carries a **termination bound**. Its two visited-guards are mutually
+  redundant: removing either is harmless, removing both makes it run forever —
+  and a hanging gate is worse than a failing one, because nothing gets a
+  verdict. It throws past the bound instead.
+
+### Changed — 22 seals, judged from outside
+
+- Eight new seals since 1.0.6, including the doubling circuit reaching the
+  gateway triangle only by reflection, the merkaba as two mirrored tetrahedra,
+  the `AGL(1,ℤ/9)` action, digit geometry being single-valued, and lean being a
+  fixed point.
+- `npm run adjudicate` puts all 22 through `adjudicate()` from `@uuidna/uuidna`,
+  an outside decision procedure, and `adjudicate:check` is in the gate.
+- `changelog:check` holds these notes to the code in both directions: every
+  figure stated must recompute, and every quantity carrying a unit must be one
+  some module produces.
+
+### Fixed — geometry and validity
+
+- `angleForDigit` mapped nine digits onto six angles, colliding 3 with 5, 2 with
+  6 and 8 with 9. It is the enneagram now, injective, agreeing with the vortex
+  SVG's layout — and the SVG receipt is unchanged, which is how the move is known
+  to be byte-identical.
+- `isValidPath` tested only the final depth, so a path dipping below its origin
+  and climbing back passed. `balanced` means every prefix now. That cleared the
+  last entry on the tautology surface, whose ceiling is **0**.
+- One import cycle broken: `a432.cmyk` imported `digitalRoot` back through
+  `a432.math`'s re-export, which does not use anything from cmyk. It imports
+  from the module that owns the symbol now.
+
+### Known limitations
+
+- The remaining import cycle is mutual by design — `A432System` holds its three
+  subsystems as fields while each calls `A432System.getInstance()` — so breaking
+  it needs dependency injection across the orchestration layer, not a rename.
+  All three already neutralise the temporal dead zone with lazy singletons.
+- 281 modules sit outside the lean fixed point. Nothing has been deleted;
+  whether to act on that is a separate decision, now with a definition behind it.
+- Everything under 1.0.6 and earlier still applies — in particular ML-KEM-768 is
+  conformant but **not constant time**, and nothing in `src/thermo` is a device.
+
 ## 1.0.6
 
 ### Added — thermodynamics

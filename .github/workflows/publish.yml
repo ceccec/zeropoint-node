@@ -93,3 +93,38 @@ jobs:
         env:
           # Optional classic fallback when trusted publisher is not configured yet
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # A release is exactly when the deprecation table should be reconciled:
+      # the version that supersedes the old ones has just gone out.
+      #
+      # This also isolates a question registry-sync.yml cannot answer. The
+      # trusted publisher is bound to THIS workflow file, so an OIDC write from
+      # any other workflow is rejected on identity alone — a 404 there proves
+      # nothing about whether trusted publishing covers `npm deprecate`. Run
+      # from here, the identity is right, so the result is about scope.
+      #
+      # continue-on-error: a failed reconcile must never fail a publish that
+      # already succeeded.
+      - name: Reconcile npm deprecations
+        id: deprecations
+        continue-on-error: true
+        run: |
+          set +e
+          npm run registry:apply 2>&1 | tee /tmp/dep.log
+          code=${PIPESTATUS[0]}
+          if [ "${code}" = "0" ]; then verdict=applied
+          elif grep -q 'EOTP' /tmp/dep.log; then verdict=needs-otp
+          elif grep -qE 'E404|E403|E401|ENEEDAUTH' /tmp/dep.log; then verdict=not-authorised
+          else verdict=other; fi
+          echo "verdict=${verdict}" >> "$GITHUB_OUTPUT"
+          echo "::notice::trusted-publishing deprecate from publish.yml: ${verdict} (exit ${code})"
+          exit 0
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Deprecation reconcile result
+        run: |
+          echo "verdict: ${{ steps.deprecations.outputs.verdict }}"
+          if [ "${{ steps.deprecations.outputs.verdict }}" != "applied" ]; then
+            echo "::warning::Deprecations declared in npm-deprecations.json are not live. See registry-sync.yml."
+          fi

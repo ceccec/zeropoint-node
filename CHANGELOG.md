@@ -1,5 +1,55 @@
 # Changelog
 
+## 1.0.8
+
+### Removed — 147 modules the package never reached
+
+- **147 source modules deleted**, 29 959 lines. Every one sat outside LEAN: the
+  fixed point of the module fold, `fold(fold(S)) = fold(S)`, reachable from no
+  package export, no rollup input, no page and no gate-run test. `npm run fold`
+  computes it and `npm run audit:outside` lists what remains with the reason
+  each is kept.
+- Nothing was deleted on the fold alone. Each removal passed a **closure** — the
+  set is closed under reverse dependency, so no surviving module can import a
+  removed one — and a **static trial** that predicts breakage before anything
+  leaves disk. The audit refuses to delete if the trial finds a single edge.
+
+### Added — the entry set is guarded
+
+- **`npm run entries:check`**, in the gate. LEAN is a fixed point, but the fold
+  takes the entry set as an INPUT, and an unrecognised entry does not error — it
+  silently shrinks LEAN and grows the set that looks safe to delete.
+- That is not hypothetical. `rollup.config.js` builds its inputs from template
+  literals, and both scanners extracted them with a pattern that matches quoted
+  strings, so **every bundle entry was being counted as unreachable**. Eight
+  modules were one command from deletion while a published bundle still used
+  them. The check now asserts every declared entry resolves, lands inside LEAN,
+  and that rollup contributes more than zero.
+
+### Fixed — the ratchet's unreachable figure was wrong
+
+- Same root cause: `modules reachable from no entry` had been overstated by 8
+  for as long as the template-literal bug stood. Corrected, and the ceiling
+  moved with it.
+
+### Changed — surfaces after the purge
+
+- `unreachable` 281 → 126, `TypeScript` 146 → 117, `ESLint` 932 → 631,
+  `decimal-crack` 453 → 280. `modules that fail to import` stayed at **0**
+  throughout, which is the measure that mattered: nothing broke.
+- Tarball 1911 → 1764 files.
+
+### Known limitations
+
+- 126 modules remain outside LEAN and are NOT deleted. 59 are named by something
+  live — a manifest, three pages, the generated bundle, the README's module
+  listing, 19 documents — and the other 67 are imported by those 59. Removing
+  them means deciding what the package should still offer, which is a design
+  question rather than a fold.
+- The remaining import cycle is mutual by design; see 1.0.7.
+- Everything under 1.0.7 and earlier still applies — ML-KEM-768 is conformant
+  but **not constant time**, and nothing in `src/thermo` is a device.
+
 ## 1.0.7
 
 ### Fixed — thirty modules could not be imported

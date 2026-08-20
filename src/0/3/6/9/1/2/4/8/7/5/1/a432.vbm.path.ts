@@ -265,8 +265,12 @@ export class VBMPathNavigator {
     // Check if all digits are valid (0-9)
     const validDigits = this.state.sequence.every(digit => digit >= 0 && digit <= 9);
     
-    // Check if path has balanced structure
-    const balanced = this.getCurrentDepth() >= 0;
+    // Balanced means the path never rises above its own origin in reverse:
+    // you cannot come back from deeper than you went. That is a condition on
+    // EVERY prefix, not just the end. Checking only the final depth let
+    // `\\3/6` pass — it dips to -1 and returns to 0 — and made the test
+    // unfalsifiable in shape, since a closing depth is rarely negative.
+    const balanced = this.nodes.every(node => node.depth >= 0);
     
     return validDigits && balanced;
   }

@@ -1,5 +1,50 @@
 # Changelog
 
+## 1.0.5
+
+### Added — ML-KEM-768, actually conformant
+
+- **`src/crypto/ml-kem.ts` implements FIPS 203 ML-KEM-768 and is verified
+  against NIST's own vectors.** It replaces `src/crypto/kyber-real.ts`, which
+  is deleted. That module called itself Kyber and was not: it sampled the
+  matrix `A` from a centred binomial, so its coefficients lived in `{-1,0,1}`
+  instead of uniform over `Z_q`, and the module-LWE instance underneath was not
+  the hard problem. 1.0.4 fixed its round trip; a round trip only ever showed
+  the scheme agreed with itself.
+
+  What is here now: NTT twiddle factors computed from `ζ = 17` and a
+  bit-reversal rather than copied from a table; uniform `A` by rejection
+  sampling from SHAKE-128; CBD noise at `η₁ = η₂ = 2` from a SHAKE-256 PRF;
+  `ByteEncode`/`ByteDecode`, `Compress`/`Decompress` at `d_u = 10`, `d_v = 4`;
+  K-PKE wrapped in the Fujisaki–Okamoto transform with implicit rejection and a
+  full-length ciphertext comparison; and the §7.2 modulus check on
+  encapsulation keys.
+
+- **Conformance is recomputable, not asserted.** `npm run test:crypto` runs
+  NIST ACVP vectors for FIPS 203, ML-KEM-768 — 25 key generation, 25
+  encapsulation, 10 decapsulation including the implicit-rejection path, and 10
+  encapsulation-key validation cases. The vectors ship in the package as
+  `src/crypto/ml-kem-768-acvp.json`, so a consumer can re-run them.
+
+- **`npm run kat:ml-kem`** goes wider: 10 000 keygen/encaps/decaps triples from
+  a deterministic SHAKE-128 stream, accumulated into one digest that must equal
+  the value C2SP/CCTV publishes from the pq-crystals reference implementation.
+  It matches. Not in `npm run check` — it takes ~33s against a ~2 min gate.
+
+- The suite is mutation-tested: perturbing one twiddle factor, swapping the
+  matrix index order, changing `η₂`, truncating instead of rounding in
+  `Compress`, or dropping the modulus check each make it fail.
+
+### Known limitations
+
+- **ML-KEM-768 here is not constant time.** JavaScript cannot promise that —
+  array indexing, JIT deoptimisation and garbage collection all leak timing.
+  Do not use it where an attacker can measure decapsulation. Conformance to
+  FIPS 203 output is a separate property from side-channel resistance, and only
+  the first is claimed.
+- Every limitation listed under 1.0.4 and 1.0.3 still applies, except the
+  `kyber-real.ts` warning, which no longer has a file to attach to.
+
 ## 1.0.4
 
 ### Fixed — cryptography

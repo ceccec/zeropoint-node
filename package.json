@@ -1,6 +1,6 @@
 {
   "name": "zeropoint-node",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "description": "A432 Consciousness System: Self-evolving, self-aware consciousness technology with Transurfing integration, harmonic mathematics, zero-entropy principles, Kabbalistic cycles, and sacred geometry",
   "main": "dist/a432.system.cjs",
@@ -124,7 +124,8 @@
     "test:kernel": "node --experimental-strip-types src/kernel/smoke.test.ts",
     "test:security": "node --experimental-strip-types src/security/quantum-fold-cipher.test.ts > /dev/null && node --experimental-strip-types src/security/quantum-state-tomography.test.ts > /dev/null && node --experimental-strip-types src/security/quantum-proofs.test.ts > /dev/null && node --experimental-strip-types src/security/post-quantum-crypto.test.ts > /dev/null && echo security tests ok",
     "test:quantum": "node --experimental-strip-types src/quantum/superposition-execution.test.ts > /dev/null && node --experimental-strip-types src/quantum/millennium-bridge.test.ts > /dev/null && node --experimental-strip-types src/quantum/zenodo-publisher.test.ts > /dev/null && echo quantum tests ok",
-    "test:crypto": "node --experimental-strip-types src/crypto/kyber-real.test.ts > /dev/null && echo crypto tests ok",
+    "test:crypto": "node --experimental-strip-types src/crypto/ml-kem.test.ts > /dev/null && echo crypto tests ok",
+    "kat:ml-kem": "node --experimental-strip-types scripts/ml-kem-accumulated-kat.mjs",
     "readme": "node --experimental-strip-types scripts/readme-gen.mjs",
     "readme:check": "node --experimental-strip-types scripts/readme-gen.mjs --check",
     "docs:pages": "node --experimental-strip-types scripts/docs-pages.mjs",

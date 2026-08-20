@@ -29,23 +29,32 @@ export function verifyQuantumSystem(): VerificationReport {
 
 ---
 
-## CRACK 2: Kyber Implementation — 100% on Toy Code
+## CRACK 2: Kyber Implementation — CLOSED
 
-**File**: `src/crypto/kyber-real.ts` (claimed as "real")
+**File**: `src/crypto/ml-kem.ts` (replaced `src/crypto/kyber-real.ts`, deleted)
 
-**Actual Status**:
-- ✅ NTT framework structure exists
-- ❌ NTT algorithm not actually implemented (just skeleton)
-- ❌ CBD sampling is broken (uses simple HMAC, not proper binomial)
-- ❌ Polynomial multiplication is slow (not using actual NTT)
-- ❌ Never tested against NIST test vectors
+This crack was real and is now closed. The old file was worse than this entry
+recorded: alongside the broken sampling, its encapsulate/decapsulate never
+agreed at all, and the matrix `A` was drawn from a centred binomial rather than
+uniformly, so the module-LWE instance underneath was not the hard problem.
 
-**Claimed**: "NIST FIPS 203 compliant"
-**Actual**: "Structurally similar to NIST, functionally incorrect"
+**Resolved by**:
+- ✅ NTT computed from ζ = 17 and a bit-reversal, not a copied table; checked
+  invertible and ring-homomorphic against a schoolbook negacyclic product
+- ✅ Uniform `A` by rejection sampling from SHAKE-128 (Algorithm 7)
+- ✅ CBD sampling at η₁ = η₂ = 2 from a SHAKE-256 PRF (Algorithm 8)
+- ✅ Fujisaki–Okamoto transform with implicit rejection, full-length compare
+- ✅ Tested against NIST's own ACVP vectors for FIPS 203, ML-KEM-768: 25 keygen,
+  25 encapsulation, 10 decapsulation, 10 encapsulation-key validation
+- ✅ Tested against 10 000 pq-crystals reference cases (`npm run kat:ml-kem`)
 
-**Decimal Reveals**: Confidence should be 0.15 (structure only)
+**Claimed**: FIPS 203 ML-KEM-768
+**Actual**: matches NIST ACVP vectors byte for byte; `npm run test:crypto`
+recomputes it. Not constant time — JavaScript cannot promise that, and the
+module says so.
 
-**True Signal**: 0.15 (15% compliant)
+**Remaining limitation**: timing side channels. Do not use where an attacker
+can measure decapsulation.
 
 ---
 

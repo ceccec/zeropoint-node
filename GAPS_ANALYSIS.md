@@ -106,12 +106,14 @@
 ## SECURITY: POST-QUANTUM CRYPTOGRAPHY
 **Reality Check**: ❌ TOY VERSIONS (not NIST-compliant)
 
-### Kyber-768
-- **Current**: HMAC-based toy version
-- **Real**: Needs proper NTT, polynomial arithmetic, CBD sampling
-- **Gap Size**: Very Large (400+ lines of real crypto)
-- **Status**: In progress (kyber-real.ts being built)
-- **Priority**: Critical
+### Kyber-768 → ML-KEM-768
+- **Current**: `src/crypto/ml-kem.ts`, FIPS 203 ML-KEM-768
+- **Gap Size**: was Very Large; closed
+- **Status**: ✅ Done — matches NIST ACVP vectors (25 keygen, 25 encaps, 10
+  decaps, 10 key-validation) and 10 000 pq-crystals reference cases
+- **Priority**: was Critical
+- **Caveat**: not constant time; unsuitable where decapsulation timing is
+  observable
 
 ### SPHINCS+-256f
 - **Current**: HMAC toy, no merkle trees or hash chains

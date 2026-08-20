@@ -14,18 +14,10 @@
  * reduction, which is exhaustive over {1..9}^6.
  */
 
-import {
-  toUuid, merge, merkleFold, merkleFoldOrdered, digitalRoot, sealFacets, VORTEX_ORBIT,
-} from '../0/index.ts'
-import {
-  vortexEncode, vortexDecode, generateQuantumKey, verifyQuantumKey,
-  expandQuantumKeyViaRodin, recordMeasurement, verifyMeasurementReceipt,
-  encodeQuantumState, QuantumFoldCipher,
-} from './quantum-fold-cipher.ts'
+import { toUuid, merkleFold, merkleFoldOrdered, digitalRoot, sealFacets, VORTEX_ORBIT } from '../0/index.ts'
+import { vortexEncode, vortexDecode, generateQuantumKey, verifyQuantumKey, expandQuantumKeyViaRodin, recordMeasurement, verifyMeasurementReceipt, QuantumFoldCipher } from './quantum-fold-cipher.ts'
 import { computeContentUuid, computeContentDigest } from '../integrity/content-uuid.ts'
-import {
-  proveInstantiationEquivalence, encodeWithShifts, permuteByInversion,
-} from './quantum-threat-landscape.ts'
+import { proveInstantiationEquivalence, encodeWithShifts, permuteByInversion } from './quantum-threat-landscape.ts'
 
 console.log('=== Quantum Proof Verification (computed ranges) ===\n')
 

@@ -5,8 +5,8 @@
  * fidelity vs depth trade-offs.
  */
 
-import { PI, sqrt, abs, min, max } from '../0/algebra.ts'
-import { type Gate1, H, X, Y, Z, S, T, phase, rz, ry, rx } from './simulator.ts'
+import { PI, max } from '../0/algebra.ts'
+import { type Gate1, rz, ry, rx } from './simulator.ts'
 
 export interface CompiledCircuit {
   readonly nativeGates: Array<{ q: number; gate: Gate1; name: string }>

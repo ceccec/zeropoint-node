@@ -1,4 +1,4 @@
-import { log } from './a432.algebra.ts'
+import './a432.algebra.ts'
 // a432.i.intuit.ts — Intuition interface for the A432 matrix
 import { EventEmitter } from 'events';
 

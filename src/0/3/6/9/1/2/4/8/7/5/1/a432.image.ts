@@ -8,20 +8,9 @@
  */
 
 import { max, min, round } from './a432.algebra.ts'
-import { 
-  A432_CONSTANTS,
-  calculateA432Consciousness,
-  calculateA432DimensionalState,
-  calculateA432Frequency,
-} from './a432.ts';
+import { calculateA432Consciousness, calculateA432DimensionalState, calculateA432Frequency } from './a432.ts';
 
-import {
-  type A432Color,
-  calculateA432Color,
-  generateA432ColorStream,
-  A432ColorSystem,
-  cmykToRgb
-} from './a432.color.ts';
+import { type A432Color, calculateA432Color, cmykToRgb } from './a432.color.ts';
 
 import { RODIN_SEQUENCE } from './a432.math.ts';
 import { calculateDigitalRoot } from './a432.ts';

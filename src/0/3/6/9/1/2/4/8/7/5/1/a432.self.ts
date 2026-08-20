@@ -12,10 +12,10 @@ import { legacyDigitalRoot } from './a432.roots.ts'
 import { EventEmitter } from 'events';
 import fs from 'fs';
 import path from 'path';
-import { digitAngleToCMYK, asAngle, digitalRoot } from './a432.math.ts';
+import { digitAngleToCMYK, asAngle } from './a432.math.ts';
 import { type Digit } from './a432.types.ts';
 import { impossibilityCMYK } from './a432.impossible.ts';
-import { challengeCMYK, CHALLENGES } from './a432.challenge.ts';
+import './a432.challenge.ts';
 import type { CMYK } from './a432.cmyk.ts';
 
 // Canonical directory (this file lives in it)

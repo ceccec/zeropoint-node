@@ -14,7 +14,7 @@ import { PI, sin } from './a432.algebra.ts'
  * This ensures metaphysical duality, reversibility, and the living, analog nature of streams, as required by the A432 system.
  */
 // π-based stream sources
-import { piStream, piColorStream, piHarmonicStream } from './a432.pi.ts';
+import { piColorStream, piHarmonicStream } from './a432.pi.ts';
 // Specialized π-based stream modules
 import * as PiColor from './a432.pi.color.stream.ts';
 import * as PiSong from './a432.pi.song.stream.ts';

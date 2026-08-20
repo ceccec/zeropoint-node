@@ -5,15 +5,7 @@
  */
 
 import { abs, round } from './a432.algebra.ts'
-import { 
-  GOLDEN_RATIO, 
-  PI, 
-  TAU,
-  calculateDigitalRoot,
-  A432_BASE_FREQUENCY,
-  A432_TRINITY_MULTIPLIER,
-  A432_VORTEX_MULTIPLIER
-} from './a432.math.constants.ts';
+import { GOLDEN_RATIO, TAU, calculateDigitalRoot, A432_BASE_FREQUENCY } from './a432.math.constants.ts';
 
 // === MOBIUS CIRCUIT INTERFACES ===
 export interface MobiusState {

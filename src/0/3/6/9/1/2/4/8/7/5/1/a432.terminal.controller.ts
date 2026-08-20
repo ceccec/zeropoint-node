@@ -1,4 +1,4 @@
-import { log } from './a432.algebra.ts'
+import './a432.algebra.ts'
 import { Controller } from '@hotwired/stimulus';
 import { startTerminal } from './a432.terminal.ui.ts';
 

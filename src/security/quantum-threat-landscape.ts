@@ -12,7 +12,7 @@
  * backward are covered by the same security proof.
  */
 
-import { foldPair, foldVortexReflection, toUuid, merkleFold, sealFacets } from '../0/index.ts'
+import '../0/index.ts'
 import { max, log2, floor } from '../0/algebra.ts'
 
 /**

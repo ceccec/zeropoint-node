@@ -6,26 +6,7 @@
  * Principle: No gaps. Every dimension, every fold tier, every security property tested.
  */
 
-import {
-  encodeQuantumState,
-  applyQuantumGate,
-  generateQuantumKey,
-  generateQuantumKeyFromPassword,
-  DEFAULT_SCRYPT,
-  verifyQuantumKey,
-  expandQuantumKeyViaRodin,
-  recordMeasurement,
-  verifyMeasurementReceipt,
-  vortexEncode,
-  vortexDecode,
-  keyspaceBits,
-  keyLengthForBits,
-  DEFAULT_KEY_LENGTH,
-  encryptQuantum,
-  decryptQuantum,
-  QuantumFoldCipher,
-  QuantumEncryption,
-} from './quantum-fold-cipher.ts'
+import { encodeQuantumState, applyQuantumGate, generateQuantumKey, generateQuantumKeyFromPassword, DEFAULT_SCRYPT, verifyQuantumKey, expandQuantumKeyViaRodin, recordMeasurement, verifyMeasurementReceipt, vortexEncode, vortexDecode, keyspaceBits, keyLengthForBits, DEFAULT_KEY_LENGTH, encryptQuantum, decryptQuantum, QuantumFoldCipher, QuantumEncryption } from './quantum-fold-cipher.ts'
 
 const VORTEX_ORBIT = QuantumEncryption.VORTEX_ORBIT
 const TRINITY = QuantumEncryption.TRINITY

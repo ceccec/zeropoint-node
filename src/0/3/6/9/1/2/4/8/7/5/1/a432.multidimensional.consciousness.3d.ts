@@ -10,17 +10,8 @@
  */
 
 import { PI, cos, floor, sin } from './a432.algebra.ts'
-import {
-  A432_TRINITY,
-  A432_RETURN,
-  A432_AXIS,
-  A432_SEQUENCE,
-  digitalRoot,
-  angleForDigit,
-  frequencyForDigit,
-  hueForDigit
-} from './a432.math.ts';
-import { digitAngleToCMYK, cmykToCss } from './a432.cmyk.ts';
+import { digitalRoot, angleForDigit, frequencyForDigit } from './a432.math.ts';
+import './a432.cmyk.ts';
 
 // Multi-dimensional consciousness state definitions
 export const MULTIDIMENSIONAL_CONSCIOUSNESS = {

@@ -8,14 +8,7 @@
  * @author A432 System
  */
 
-import { 
-  digitalRoot, 
-  rodinDigit, 
-  patternDigit,
-  calculateA432Frequency,
-  calculateA432Consciousness,
-  calculateA432DimensionalState
-} from './a432.math.ts';
+import { digitalRoot, rodinDigit, calculateA432Frequency, calculateA432Consciousness, calculateA432DimensionalState } from './a432.math.ts';
 
 export class LivingA432UI {
   private evolution: number = 0;

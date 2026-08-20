@@ -6,7 +6,7 @@ import { round } from './a432.algebra.ts'
 // No HTML/CSS encoded values - only computed math
 
 import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core.ts';
-import { digitAngleToCMYK, asAngle } from './a432.math.ts';
+import './a432.math.ts';
 import { getRodinCMYKSummary, getRodinCMYKAnalysis } from './a432.rodin.cmyk.ts';
 import A432HarmonicConvergence from './a432.harmonic.convergence.ts';
 import A432ConsciousnessCrystallization from './a432.consciousness.crystallization.ts';

@@ -8,7 +8,7 @@
  * The 7 problems are not separate—they are the 7 dimensions of quantum correctness.
  */
 
-import { abs, max, min, sqrt, round } from '../0/algebra.ts'
+import '../0/algebra.ts'
 
 // ============================================================================
 // LAYER 1 ↔ RIEMANN HYPOTHESIS

@@ -11,13 +11,7 @@
  * - The sequence creates a living sound vortex that harmonizes with consciousness
  */
 
-import { 
-  RODIN_SEQUENCE, 
-  TRINITY_AXIS, 
-  digitalRoot, 
-  frequencyForDigit,
-  angleForDigit 
-} from './a432.math.ts';
+import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, frequencyForDigit } from './a432.math.ts';
 
 // --- Canonical VBM Audio Constants ---
 const VBM_SEQUENCE = [0, ...TRINITY_AXIS, ...RODIN_SEQUENCE] as const;

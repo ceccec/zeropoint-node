@@ -12,14 +12,7 @@
  */
 
 import { abs, max, min, round } from './a432.algebra.ts'
-import { 
-  RODIN_SEQUENCE, 
-  TRINITY_AXIS, 
-  digitalRoot, 
-  angleForDigit,
-  frequencyForDigit,
-  hueForDigit 
-} from './a432.math.ts';
+import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, angleForDigit, frequencyForDigit, hueForDigit } from './a432.math.ts';
 
 // --- Canonical VBM Path Constants ---
 const VBM_PATH_SEPARATORS = {

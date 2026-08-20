@@ -11,17 +11,7 @@
  */
 
 import { abs } from './a432.algebra.ts'
-import {
-  A432_FREQUENCY,
-  A432_TRINITY,
-  A432_RETURN,
-  A432_AXIS,
-  A432_CYCLE,
-  digitalRoot,
-  a432Frequency,
-  a432HSLFromRoot,
-  a432RGBFromRoot
-} from './a432.core.ts';
+import './a432.core.ts';
 
 // === A432 RESOLVED FRACTIONS ===
 // All fractions have integer reciprocals (zero entropy mathematics)

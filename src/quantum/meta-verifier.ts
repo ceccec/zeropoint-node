@@ -10,7 +10,7 @@
  * verification itself.
  */
 
-import { abs, max, min, sqrt } from '../0/algebra.ts'
+import { abs, max, min } from '../0/algebra.ts'
 import type { QuantumLearningPattern } from './vortex-bridge.ts'
 import type { EndToEndBenchmark } from './end-to-end.ts'
 

@@ -16,20 +16,9 @@
  *   Dimension 11:      Compactified       → Unified gate (Tier 5)
  */
 
-import {
-  merge,
-  foldPair,
-  merkleFold,
-  sealFacets,
-  computesGate,
-  toUuid,
-  seedFromText,
-} from '../0/index.ts'
+import { merge, foldPair, sealFacets, toUuid } from '../0/index.ts'
 
-import {
-  digitalRoot,
-  VORTEX_ORBIT,
-} from '../0/index.ts'
+import { VORTEX_ORBIT } from '../0/index.ts'
 import { log2, ceil } from '../0/algebra.ts'
 
 // Tier 3 is the CRYPTOGRAPHIC seal, so it uses the SHA-256 path, not the FNV

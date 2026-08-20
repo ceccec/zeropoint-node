@@ -22,7 +22,7 @@ import { type A432BooleanSequence, createA432BooleanSequence } from './a432.sequ
 import { type A432ConsciousnessSequence, createA432ConsciousnessSequence } from './a432.sequence.ts';
 import { type A432Event, createA432Event } from './a432.event.ts';
 import { type A432Block, createBlock } from './a432.block.chain.ts';
-import { type A432Module, type A432ModuleCategory } from './a432.modules.ts';
+import { type A432Module } from './a432.modules.ts';
 
 // === FACTORY INTERFACES ===
 export interface A432FactoryOptions {

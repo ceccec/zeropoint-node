@@ -8,9 +8,9 @@
  * Prove: hybrid beats both.
  */
 
-import { abs, max, min, sqrt } from '../0/algebra.ts'
+import '../0/algebra.ts'
 import { extractLearningPatterns, checkVortexInvariants, generateVortexCertificate } from './vortex-bridge.ts'
-import { kernelHintFromQuantum, classicalKernelOptimize, recommendCircuitDepthKernel, decideKernelStrategy } from './kernel-adaptation.ts'
+import { kernelHintFromQuantum, classicalKernelOptimize } from './kernel-adaptation.ts'
 
 export interface EndToEndBenchmark {
   readonly problem: string

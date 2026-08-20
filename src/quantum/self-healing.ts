@@ -9,7 +9,7 @@
  * corrected state and try again.
  */
 
-import { abs, max, min, sqrt } from '../0/algebra.ts'
+import { max, min } from '../0/algebra.ts'
 
 // ============================================================================
 // SELF-DIAGNOSIS: DETECT FAILURES

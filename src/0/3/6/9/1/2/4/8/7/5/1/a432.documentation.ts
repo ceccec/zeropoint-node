@@ -7,8 +7,8 @@
  */
 
 import { abs, floor, max, min } from './a432.algebra.ts'
-import { type A432CoreState, createA432CoreState, A432_RETURN, A432_AXIS } from './a432.core.ts';
-import { A432_FREQUENCY, A432_TRINITY } from './a432.ts';
+import './a432.core.ts';
+import './a432.ts';
 import { a432ModuleRegistry, type A432Module, type A432ModuleCategory } from './a432.modules.ts';
 
 // === DOCUMENTATION INTERFACES ===

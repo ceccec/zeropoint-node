@@ -4,22 +4,9 @@
  * All integer-fraction decimals; no ambient Math.*.
  */
 
-import { PI, sqrt, round, abs, min, max } from '../0/algebra.ts'
-import {
-  type Register,
-  type Gate1,
-  zeroState,
-  applyGate1,
-  probabilities,
-  cnot,
-  cz,
-  measure,
-  H,
-  X,
-  Z,
-  rz,
-} from './simulator.ts'
-import { iqft } from './algorithms.ts'
+import { PI, sqrt, abs, min, max } from '../0/algebra.ts'
+import { type Gate1, zeroState, applyGate1, X } from './simulator.ts'
+import './algorithms.ts'
 
 // ── Quantum Amplitude Estimation (generalizes Grover) ──────────────────────
 /**

@@ -17,15 +17,7 @@
  */
 
 import { round } from './a432.algebra.ts'
-import {
-  boot2432OS as osBoot,
-  shutdown2432OS as osShutdown,
-  getA432SystemStatus,
-  getSystemInfo,
-  A432_SEQUENCE,
-  A432_GATEWAYS,
-  A432_PHASE_SHIFTS
-} from './a432.os.ts';
+import { boot2432OS as osBoot, shutdown2432OS as osShutdown, getA432SystemStatus, getSystemInfo, A432_SEQUENCE, A432_GATEWAYS, A432_PHASE_SHIFTS } from './a432.os.ts';
 
 // Boot 2432.OS
 export function boot2432OS(): string {

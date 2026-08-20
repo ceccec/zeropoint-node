@@ -9,7 +9,7 @@
  * Together: discovery + verification = trustworthy innovation.
  */
 
-import { abs, max, min, round, floor } from '../0/algebra.ts'
+import { abs, max, min } from '../0/algebra.ts'
 
 // ============================================================================
 // LEARNING PATTERN EXTRACTION

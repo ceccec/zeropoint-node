@@ -16,7 +16,7 @@
 
 import { PI, abs, cos, floor, min, round, sin, sqrt } from './a432.algebra.ts'
 import { digitAngleToCMYK, cmykToCss, type CMYK } from './a432.cmyk.ts';
-import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS, digitalRoot } from './a432.core.ts';
+import { A432_FREQUENCY } from './a432.core.ts';
 import { TRINITY_AXIS, RODIN_SEQUENCE } from './a432.math.ts';
 export { TRINITY_AXIS, RODIN_SEQUENCE };
 

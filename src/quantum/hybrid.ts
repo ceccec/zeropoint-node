@@ -8,9 +8,9 @@
  * System predicts problem type, routes to best solver, tracks success.
  */
 
-import { sqrt, abs, floor, log2, max, min, round } from '../0/algebra.ts'
+import { sqrt, abs, floor, max, min } from '../0/algebra.ts'
 import { type Register, zeroState, applyGate1, ry, rz, cnot, measureQubit, probabilities, unitOf } from './simulator.ts'
-import { type VQEResult, vqeAdaptive } from './variational-optimizer.ts'
+import { type VQEResult } from './variational-optimizer.ts'
 import { AdaptiveOptimizer } from './adaptive.ts'
 
 // ============================================================================

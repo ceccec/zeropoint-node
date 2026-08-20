@@ -8,6 +8,60 @@
   var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
   var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 
+  // src/0/algebra.ts
+  var PI = 245850922 / 78256779;
+  var TAU = PI * 2;
+  var E = 2718281828459045 / 1e15;
+  function abs(n) {
+    return n < 0 ? -n : n;
+  }
+  function floor(n) {
+    const m = n % 1;
+    if (m === 0 || n !== n) return n;
+    return n - m - (n < 0 ? 1 : 0);
+  }
+  function round(n) {
+    return floor(n + 0.5);
+  }
+  function min(...values) {
+    let m = Infinity;
+    for (const x of values) if (x < m) m = x;
+    return m;
+  }
+  function max(...values) {
+    let m = -Infinity;
+    for (const x of values) if (x > m) m = x;
+    return m;
+  }
+  function reduceAngle(x) {
+    let t = x % TAU;
+    if (t > PI) t -= TAU;
+    if (t < -PI) t += TAU;
+    return t;
+  }
+  function sin(x) {
+    const t = reduceAngle(x);
+    let term = t;
+    let sum = t;
+    const t2 = t * t;
+    for (let i = 1; i <= 12; i++) {
+      term *= -t2 / (2 * i * (2 * i + 1));
+      sum += term;
+    }
+    return sum;
+  }
+  function cos(x) {
+    const t = reduceAngle(x);
+    let term = 1;
+    let sum = 1;
+    const t2 = t * t;
+    for (let i = 1; i <= 12; i++) {
+      term *= -t2 / ((2 * i - 1) * (2 * i));
+      sum += term;
+    }
+    return sum;
+  }
+
   // node_modules/@hotwired/stimulus/dist/stimulus.js
   var EventListener = class {
     constructor(eventTarget, eventName, eventOptions) {
@@ -2456,60 +2510,6 @@
   Controller.outlets = [];
   Controller.values = {};
 
-  // src/0/algebra.ts
-  var PI = 245850922 / 78256779;
-  var TAU = PI * 2;
-  var E = 2718281828459045 / 1e15;
-  function abs(n) {
-    return n < 0 ? -n : n;
-  }
-  function floor(n) {
-    const m = n % 1;
-    if (m === 0 || n !== n) return n;
-    return n - m - (n < 0 ? 1 : 0);
-  }
-  function round(n) {
-    return floor(n + 0.5);
-  }
-  function min(...values) {
-    let m = Infinity;
-    for (const x of values) if (x < m) m = x;
-    return m;
-  }
-  function max(...values) {
-    let m = -Infinity;
-    for (const x of values) if (x > m) m = x;
-    return m;
-  }
-  function reduceAngle(x) {
-    let t = x % TAU;
-    if (t > PI) t -= TAU;
-    if (t < -PI) t += TAU;
-    return t;
-  }
-  function sin(x) {
-    const t = reduceAngle(x);
-    let term = t;
-    let sum = t;
-    const t2 = t * t;
-    for (let i = 1; i <= 12; i++) {
-      term *= -t2 / (2 * i * (2 * i + 1));
-      sum += term;
-    }
-    return sum;
-  }
-  function cos(x) {
-    const t = reduceAngle(x);
-    let term = 1;
-    let sum = 1;
-    const t2 = t * t;
-    for (let i = 1; i <= 12; i++) {
-      term *= -t2 / ((2 * i - 1) * (2 * i));
-      sum += term;
-    }
-    return sum;
-  }
-
   // src/0/index.ts
   function digitalRoot(n) {
     const r = (n % 9 + 9) % 9;
@@ -2842,6 +2842,10 @@
   };
   _stop2 = new WeakMap();
   a432_chess_controller_default.targets = ["board"];
+
+  // src/0/3/6/9/1/2/4/8/7/5/1/a432.metatron.ts
+  var _raf2 = typeof globalThis.requestAnimationFrame === "function" ? globalThis.requestAnimationFrame.bind(globalThis) : (cb) => setTimeout(() => cb(Date.now()), 16);
+  var _craf2 = typeof globalThis.cancelAnimationFrame === "function" ? globalThis.cancelAnimationFrame.bind(globalThis) : (id) => clearTimeout(id);
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.pure.visualization.ts
   var TRINITY_DIGITS = A432_TRINITY;

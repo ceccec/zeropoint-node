@@ -9,7 +9,7 @@
  * modules are interdependent, not in a single sequence.
  */
 
-import { abs, max, min, sqrt, round } from '../0/algebra.ts'
+import { round } from '../0/algebra.ts'
 
 // ============================================================================
 // COMPOSABILITY TYPES: HOW MODULES EXCHANGE DATA

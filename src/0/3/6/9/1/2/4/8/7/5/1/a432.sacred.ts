@@ -14,26 +14,9 @@
  */
 
 import { abs, sqrt } from './a432.algebra.ts'
-import {
-  A432_FREQUENCY,
-  A432_TRINITY,
-  A432_RETURN,
-  A432_AXIS,
-  A432_CYCLE,
-  digitalRoot,
-  a432Frequency,
-  a432HSLFromRoot,
-  a432RGBFromRoot
-} from './a432.core.ts';
+import { A432_FREQUENCY, digitalRoot, a432Frequency, a432HSLFromRoot } from './a432.core.ts';
 
-import { 
-  GOLDEN_RATIO, 
-  GOLDEN_RATIO_SQUARED, 
-  PI, 
-  SQRT_2, 
-  SQRT_3,
-  SACRED_GEOMETRY_RATIOS 
-} from './a432.math.constants.ts';
+import { GOLDEN_RATIO, PI, SQRT_2, SQRT_3 } from './a432.math.constants.ts';
 
 // === SACRED GEOMETRIC CONSTANTS ===
 // These define all mathematical relationships through sacred geometry

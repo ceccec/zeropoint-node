@@ -1,5 +1,5 @@
 import { pathToFileURL } from 'node:url'
-import { log } from './a432.algebra.ts'
+import './a432.algebra.ts'
 // @ts-nocheck
 /**
  * a432.rodin.ts — Science & Math extraction from the Rodin book

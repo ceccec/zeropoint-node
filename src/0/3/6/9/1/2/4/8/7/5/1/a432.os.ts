@@ -31,18 +31,7 @@ declare global {
 }
 
 // Import canonical A432 mathematics (zero-entropy base-12 harmonics)
-import { 
-  RODIN_SEQUENCE, 
-  TRINITY_AXIS, 
-  digitalRoot, 
-  calculateA432Consciousness,
-  calculateA432DimensionalState,
-  calculateA432Frequency,
-  angleForDigit,
-  frequencyForDigit,
-  rodinDigit,
-  patternDigit
-} from './a432.math.ts';
+import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, calculateA432Consciousness, calculateA432DimensionalState, angleForDigit } from './a432.math.ts';
 
 import { GOLDEN_RATIO as MATH_GOLDEN_RATIO } from './a432.math.constants.ts';
 

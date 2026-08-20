@@ -13,14 +13,7 @@
  */
 
 import { abs, round } from './a432.algebra.ts'
-import { 
-  RODIN_SEQUENCE, 
-  TRINITY_AXIS, 
-  digitalRoot, 
-  angleForDigit,
-  frequencyForDigit,
-  hueForDigit 
-} from './a432.math.ts';
+import { frequencyForDigit, hueForDigit } from './a432.math.ts';
 
 // --- Canonical Rodin Coil Constants ---
 const RODIN_COIL_CORE = [1, 2, 4, 8, 7, 5]; // Lossless kinetic energy

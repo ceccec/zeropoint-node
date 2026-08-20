@@ -12,13 +12,7 @@
  */
 
 import { PI, abs, cos, min, round, sin } from './a432.algebra.ts'
-import { 
-  RODIN_SEQUENCE, 
-  TRINITY_AXIS, 
-  digitalRoot, 
-  hueForDigit,
-  angleForDigit 
-} from './a432.math.ts';
+import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, hueForDigit } from './a432.math.ts';
 
 // --- Canonical VBM Visualization Constants ---
 const VBM_SEQUENCE = [0, ...TRINITY_AXIS, ...RODIN_SEQUENCE] as const;

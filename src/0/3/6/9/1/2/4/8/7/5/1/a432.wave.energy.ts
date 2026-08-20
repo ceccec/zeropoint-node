@@ -5,16 +5,7 @@
  */
 
 import { abs, log2, round } from './a432.algebra.ts'
-import { 
-  GOLDEN_RATIO, 
-  PI, 
-  TAU, 
-  FIBONACCI_SEQUENCE,
-  calculateDigitalRoot,
-  A432_BASE_FREQUENCY,
-  A432_TRINITY_MULTIPLIER,
-  A432_VORTEX_MULTIPLIER
-} from './a432.math.constants.ts';
+import { GOLDEN_RATIO, TAU, FIBONACCI_SEQUENCE, calculateDigitalRoot, A432_BASE_FREQUENCY, A432_VORTEX_MULTIPLIER } from './a432.math.constants.ts';
 
 // === WAVE ENERGY INTERFACES ===
 export interface WavePattern {

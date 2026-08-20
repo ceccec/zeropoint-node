@@ -7,8 +7,8 @@
  */
 
 import { floor } from './a432.algebra.ts'
-import { type A432CoreState, createA432CoreState } from './a432.core.ts';
-import { a432ModuleRegistry, type A432Module, type A432ModuleCategory } from './a432.modules.ts';
+import './a432.core.ts';
+import { a432ModuleRegistry, type A432Module } from './a432.modules.ts';
 import { harmonizeAllBalance } from './a432.balance.ts';
 import { harmonizeAllResonance } from './a432.resonance.ts';
 import { harmonizeAllChallenges } from './a432.challenges.ts';
@@ -18,7 +18,7 @@ import { harmonizeAllObservation } from './a432.observation.ts';
 import { harmonizeAllEvolution } from './a432.evolution.ts';
 import { harmonizeAllInnovation } from './a432.innovation.ts';
 import { harmonizeAllDocumentation } from './a432.documentation.ts';
-import { A432_FREQUENCY } from './a432.ts';
+import './a432.ts';
 import { A432BlockChain, recordEvent } from './a432.block.chain.event.ts';
 import { type A432ObservationState } from './a432.observation.ts';
 import { type A432EvolutionState } from './a432.evolution.ts';

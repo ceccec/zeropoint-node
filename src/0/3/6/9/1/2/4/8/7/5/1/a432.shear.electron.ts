@@ -11,7 +11,7 @@
  * Source: Marko Rodin Special Edition, Chapter 10
  */
 
-import { legacyDigitalRoot as digitalRoot, harmonicRoot12 } from './a432.roots.ts'
+import './a432.roots.ts'
 /**
  * a432ElectronShear: Returns the canonical electron harmonic shears (1, 4, 7).
  */

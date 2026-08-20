@@ -23,7 +23,7 @@
  * quantum principles applied recursively.
  */
 
-import { abs, max, min, sqrt, round } from '../0/algebra.ts'
+import { abs, min } from '../0/algebra.ts'
 import type { LayerProof } from './proof-of-system.ts'
 import type { MetaVerification } from './meta-verifier.ts'
 import type { CompositionGraph, CompositionPath } from './composability.ts'

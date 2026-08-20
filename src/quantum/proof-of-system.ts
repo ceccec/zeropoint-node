@@ -9,7 +9,7 @@
  * and produces a report that proves correctness without trusting any claims.
  */
 
-import { abs, max, min, sqrt, round } from '../0/algebra.ts'
+import { round } from '../0/algebra.ts'
 
 // ============================================================================
 // PROOF: RUN EACH LAYER AND COLLECT EVIDENCE

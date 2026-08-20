@@ -12,14 +12,7 @@
  */
 
 import { abs, floor, pow, round } from './a432.algebra.ts'
-import { 
-  RODIN_SEQUENCE, 
-  TRINITY_AXIS, 
-  digitalRoot, 
-  angleForDigit,
-  frequencyForDigit,
-  hueForDigit 
-} from './a432.math.ts';
+import { digitalRoot, angleForDigit, frequencyForDigit, hueForDigit } from './a432.math.ts';
 
 // --- Canonical VBM Decode Constants ---
 const VBM_DECODE_SEQUENCE = "003691248751";

@@ -10,17 +10,7 @@
  */
 
 import { min } from './a432.algebra.ts'
-import { 
-  A432_FREQUENCY, 
-  A432_TRINITY, 
-  A432_RETURN, 
-  A432_AXIS, 
-  A432_CYCLE,
-  digitalRoot,
-  a432Frequency,
-  a432HSLFromRoot,
-  a432RGBFromRoot
-} from './a432.core.ts';
+import { digitalRoot, a432Frequency, a432HSLFromRoot, a432RGBFromRoot } from './a432.core.ts';
 
 // === A432 SEQUENCE CONSTANTS ===
 export const A432_SEQUENCE_CONSTANTS = {

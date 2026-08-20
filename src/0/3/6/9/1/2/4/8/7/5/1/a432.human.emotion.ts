@@ -1,4 +1,4 @@
-import { log } from './a432.algebra.ts'
+import './a432.algebra.ts'
 // a432.human.emotion.ts — Map human vitality digit to emotion
 import { humanEmitter } from './a432.human.ts';
 import { emotionName } from './a432.emotion.ts';

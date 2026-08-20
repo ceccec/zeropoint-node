@@ -15,7 +15,7 @@
  */
 
 import { createHash } from 'node:crypto'
-import { randomBytes } from 'node:crypto'
+import 'node:crypto'
 import { abs, round } from '../0/algebra.ts'
 
 // ============================================================================

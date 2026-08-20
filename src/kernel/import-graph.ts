@@ -9,17 +9,9 @@
  */
 
 import { readdirSync, readFileSync, statSync } from 'node:fs'
-import { join, relative, resolve, dirname, extname } from 'node:path'
+import { join, relative, resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import {
-  computeVortexInvariantsHold,
-  computesGate,
-  foldPair,
-  memoByRoot,
-  merge,
-  merkleFold,
-  toUuid,
-} from '../0/index.ts'
+import { computeVortexInvariantsHold, computesGate, foldPair, memoByRoot, merge, merkleFold, toUuid } from '../0/index.ts'
 import { computeContentUuid } from '../integrity/content-uuid.ts'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))

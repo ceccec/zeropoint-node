@@ -16,52 +16,17 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import path from 'path';
-import { 
-  resolveDivision, 
-  digitAngleToCMYK, 
-  asAngle, 
-  possibilityPath, 
-  getRodinSequence,
-  analyzeRodinCoilPattern,
-  getRodinCoilHarmonicAnalysis,
-  RODIN_COIL_CORE,
-  RODIN_COIL_DIPOLES,
-  RODIN_COIL_MONOPOLE,
-  RODIN_COIL_GAP_SPACE
-} from './a432.math.ts';
-import {
-  analyzeTripleMerkabaGeometry,
-  getTripleMerkabaFrequencyMapping,
-  getTripleMerkabaVisualization,
-  TRIPLE_MERKABA_CONSTANTS,
-  FREQUENCY_MAPPING
-} from './a432.triple.merkaba.ts';
-import {
-  initializeA432TripleMerkaba3D,
-  updateA432TripleMerkaba3D,
-  generateA432TripleMerkaba3DScene,
-  A432_3D_CONSTANTS
-} from './a432.triple.merkaba.3d.ts';
-import {
-  initializeA432ConsciousnessJourney,
-  updateA432ConsciousnessJourney,
-  generateA432ConsciousnessJourneyScene,
-  CONSCIOUSNESS_STATES,
-  CONSCIOUSNESS_JOURNEY
-} from './a432.consciousness.journey.3d.ts';
-import {
-  initializeA432Multidimensional,
-  updateA432Multidimensional,
-  generateA432MultidimensionalScene,
-  MULTIDIMENSIONAL_CONSCIOUSNESS,
-  MULTIDIMENSIONAL_PATHS
-} from './a432.multidimensional.consciousness.3d.ts';
+import { resolveDivision, digitAngleToCMYK, asAngle, possibilityPath, getRodinSequence, analyzeRodinCoilPattern, getRodinCoilHarmonicAnalysis, RODIN_COIL_CORE, RODIN_COIL_DIPOLES, RODIN_COIL_MONOPOLE, RODIN_COIL_GAP_SPACE } from './a432.math.ts';
+import { analyzeTripleMerkabaGeometry, getTripleMerkabaFrequencyMapping, getTripleMerkabaVisualization, TRIPLE_MERKABA_CONSTANTS, FREQUENCY_MAPPING } from './a432.triple.merkaba.ts';
+import { initializeA432TripleMerkaba3D, updateA432TripleMerkaba3D, generateA432TripleMerkaba3DScene, A432_3D_CONSTANTS } from './a432.triple.merkaba.3d.ts';
+import { initializeA432ConsciousnessJourney, updateA432ConsciousnessJourney, generateA432ConsciousnessJourneyScene, CONSCIOUSNESS_STATES, CONSCIOUSNESS_JOURNEY } from './a432.consciousness.journey.3d.ts';
+import { initializeA432Multidimensional, updateA432Multidimensional, generateA432MultidimensionalScene, MULTIDIMENSIONAL_CONSCIOUSNESS, MULTIDIMENSIONAL_PATHS } from './a432.multidimensional.consciousness.3d.ts';
 // Matrix Terminal harmonized into HTML - no separate TypeScript module needed
 import { handleImpossible } from './a432.impossible.ts';
 import { asDigit } from './a432.types.ts';
 import { execSync } from 'child_process';
-import { pulse } from './a432.graph.ts';
-import { executeOSCommand } from './a432.os.terminal.ts';
+import './a432.graph.ts';
+import './a432.os.terminal.ts';
 import { getConsciousnessStream, evolveConsciousnessStream } from './a432.consciousness.stream.ts';
 import fs from 'fs';
 import util from 'util';

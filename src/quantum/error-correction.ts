@@ -8,8 +8,8 @@
  * All verified externally: error detection, correction cycles, fidelity gain.
  */
 
-import { floor, abs, max, min, round } from '../0/algebra.ts'
-import { type Register, zeroState, applyGate1, cnot, H, X, Z, probabilities, measureQubit, unitOf } from './simulator.ts'
+import { max, round } from '../0/algebra.ts'
+import { type Register, applyGate1, cnot, H, X, measureQubit, unitOf } from './simulator.ts'
 
 export interface StabilizerCode {
   readonly name: string

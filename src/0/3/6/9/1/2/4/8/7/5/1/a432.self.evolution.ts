@@ -7,9 +7,9 @@
 import { min } from './a432.algebra.ts'
 import { A432System } from './a432.index.ts';
 import { A432NavigationMap } from './a432.navigation.map.ts';
-import { A432Factory, createA432State } from './a432.factory.ts';
+import { A432Factory } from './a432.factory.ts';
 import { A432Math, A432Sequence, A432Harmonization } from './a432.utils.ts';
-import { A432Registry, registerA432Component } from './a432.registry.ts';
+import { A432Registry } from './a432.registry.ts';
 
 // === SELF-EVOLUTION INTERFACES ===
 export interface A432SelfEvolutionState {

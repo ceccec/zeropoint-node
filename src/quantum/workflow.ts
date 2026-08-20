@@ -11,7 +11,7 @@
 
 import { round, max } from '../0/algebra.ts'
 import { type Register } from './simulator.ts'
-import { type VQEResult, vqeAdaptive } from './variational-optimizer.ts'
+import { vqeAdaptive } from './variational-optimizer.ts'
 import { type CompiledCircuit, type HardwareProfile, transpile } from './hardware-compilation.ts'
 import { AdaptiveOptimizer } from './adaptive.ts'
 

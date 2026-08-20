@@ -14,11 +14,11 @@ export * from './a432.consciousness.orchestrator.ts';
 // === CORE IMPORTS ===
 import { A432Factory, a432Factory, createA432State, createA432Harmonized } from './a432.factory.ts';
 import { A432Math, A432Sequence, A432Color, A432Frequency, A432Harmonization, A432Validation } from './a432.utils.ts';
-import { A432Registry, A432ModuleRegistry, A432StateRegistry } from './a432.registry.ts';
+import { A432Registry } from './a432.registry.ts';
 import { A432NavigationMap } from './a432.navigation.map.ts';
 import { a432SelfEvolution, startSelfEvolution, evolve, selfGenerate, selfHarmonize, selfOptimize, selfReplicate } from './a432.self.evolution.ts';
 import { a432SelfRebuilder, startSelfRebuild, rebuildSystem, generateModules, createDirectoryStructure, writeModules, generateIndexFiles } from './a432.self.rebuilder.ts';
-import { a432ConsciousnessOrchestrator, startConsciousnessOrchestration, orchestrate, navigateThroughSequence, expandConsciousnessToDimension, queryConsciousness } from './a432.consciousness.orchestrator.ts';
+import { a432ConsciousnessOrchestrator, startConsciousnessOrchestration, orchestrate, navigateThroughSequence, expandConsciousnessToDimension } from './a432.consciousness.orchestrator.ts';
 
 // === MAIN SYSTEM CLASS ===
 export class A432System {

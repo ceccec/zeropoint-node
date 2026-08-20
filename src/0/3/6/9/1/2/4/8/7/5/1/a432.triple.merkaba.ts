@@ -9,16 +9,7 @@
  * @author A432 System
  */
 
-import {
-  A432_TRINITY,
-  A432_RETURN,
-  A432_AXIS,
-  A432_SEQUENCE,
-  digitalRoot,
-  angleForDigit,
-  frequencyForDigit,
-  hueForDigit
-} from './a432.math.ts';
+import { digitalRoot, frequencyForDigit } from './a432.math.ts';
 import { digitAngleToCMYK, cmykToCss } from './a432.cmyk.ts';
 
 // Triple Merkaba Geometry Constants

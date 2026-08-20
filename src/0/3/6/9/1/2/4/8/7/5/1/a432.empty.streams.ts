@@ -8,7 +8,7 @@
  * @author A432 System
  */
 
-import { indexFromSeed, round, unitFromSeed } from './a432.algebra.ts'
+import './a432.algebra.ts'
 import { harmonicRoot12 } from './a432.roots.ts'
 
 /** Script-tag embed cannot import ESM — body must match a432.roots harmonicRoot12. */

@@ -17,16 +17,7 @@
  */
 
 import { round } from './a432.algebra.ts'
-import { 
-  a432OS, 
-  getA432SystemStatus, 
-  A432_SEQUENCE, 
-  A432_GATEWAYS, 
-  A432_PHASE_SHIFTS,
-  type A432ChargingSystem,
-  type QuantumState,
-  type DimensionalFold
-} from './a432.os.ts';
+import { a432OS, A432_SEQUENCE, A432_GATEWAYS, A432_PHASE_SHIFTS, type A432ChargingSystem, type QuantumState } from './a432.os.ts';
 import A432ConsciousnessRouter from './a432.consciousness.router.ts';
 import A432DimensionalEvolution from './a432.dimensional.evolution.ts';
 import A432SpiralConsciousness from './a432.spiral.consciousness.ts';

@@ -7,8 +7,8 @@
  */
 
 import { abs, floor, max, min } from './a432.algebra.ts'
-import { type A432CoreState, createA432CoreState } from './a432.core.ts';
-import { a432ModuleRegistry, type A432Module, type A432ModuleCategory } from './a432.modules.ts';
+import './a432.core.ts';
+import { a432ModuleRegistry, type A432Module } from './a432.modules.ts';
 import { A432_FREQUENCY } from './a432.ts';
 
 // === RESONANCE INTERFACES ===

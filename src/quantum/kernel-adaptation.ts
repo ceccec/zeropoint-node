@@ -9,7 +9,7 @@
  * Quantum teaches Classical what works.
  */
 
-import { abs, max, min, round, floor, sqrt } from '../0/algebra.ts'
+import { abs, max, min, floor, sqrt } from '../0/algebra.ts'
 
 // ============================================================================
 // KERNEL HINTS FROM QUANTUM

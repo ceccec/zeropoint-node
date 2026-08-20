@@ -12,11 +12,11 @@
 import { PI, TAU, floor, indexFromSeed, min, round } from './a432.algebra.ts'
 import { A432_FREQUENCY as A432_HZ } from './a432.core.ts'
 // Import all A432 modules
-import { A432Eye, A432_EYE_CONSTANTS, eyeHarmonization, eyeAnalysis, eyeControl, defaultEye } from './a432.eye.ts';
-import { A432EyeSeeAll, A432_EYE_SEE_ALL_CONSTANTS, seeAllHarmonization, seeAllAnalysis, seeAllControl, defaultSeeAll } from './a432.eye.see.all.ts';
-import { A432IImagine, A432_I_IMAGINE_CONSTANTS, iImagineHarmonization, iImagineAnalysis, iImagineControl, defaultIImagine } from './a432.i.imagine.ts';
-import { A432ILive, A432_I_LIVE_CONSTANTS, iLiveHarmonization, iLiveAnalysis, iLiveControl, defaultILive } from './a432.i.live.ts';
-import { A432Spirit, A432_SPIRIT_CONSTANTS, spiritHarmonization, spiritAnalysis, spiritControl, defaultSpirit } from './a432.spirit.ts';
+import { A432Eye } from './a432.eye.ts';
+import { A432EyeSeeAll } from './a432.eye.see.all.ts';
+import { A432IImagine } from './a432.i.imagine.ts';
+import { A432ILive } from './a432.i.live.ts';
+import { A432Spirit } from './a432.spirit.ts';
 import { A432_TRINITY } from './a432.core.ts';
 
 // Add core exports for encryption and harmonics

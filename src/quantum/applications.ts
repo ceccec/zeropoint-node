@@ -10,10 +10,10 @@
  * hybrid orchestration → dynamic mesh discovery → verified solution.
  */
 
-import { sqrt, abs, floor, max, min, round } from '../0/algebra.ts'
+import { sqrt, floor, max, min } from '../0/algebra.ts'
 import { estimateGroundStateEnergy, H2_HAMILTONIAN, ISING_MODEL, solveHybrid } from './hybrid.ts'
 import { AdaptiveOptimizer } from './adaptive.ts'
-import { initializeMesh, clusterMesh, extractPatterns, recommendExploration } from './comparison-mesh.ts'
+import { initializeMesh, clusterMesh, extractPatterns } from './comparison-mesh.ts'
 
 // ============================================================================
 // APPLICATION 1: Integer Factorization (Shor's Algorithm)

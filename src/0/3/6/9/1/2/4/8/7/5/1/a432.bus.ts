@@ -1,4 +1,4 @@
-import { legacyDigitalRoot as digitalRoot, harmonicRoot12 } from './a432.roots.ts'
+import './a432.roots.ts'
 // a432.bus.ts — Zero-entropy digit bus aggregating all streams
 // -----------------------------------------------------------------
 // Every module emitting a digit registers here. The bus ensures that

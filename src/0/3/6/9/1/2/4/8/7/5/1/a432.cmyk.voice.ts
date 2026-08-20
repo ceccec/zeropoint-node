@@ -7,11 +7,11 @@
  */
 
 import { abs, floor, max, unitFromSeed } from './a432.algebra.ts'
-import { type A432CoreState, createA432CoreState } from './a432.core.ts';
-import { a432ModuleRegistry, type A432Module, type A432ModuleCategory } from './a432.modules.ts';
-import { A432_FREQUENCY } from './a432.ts';
-import { digitalRoot } from './a432.math.ts';
-import { scaleVortex, vortexColor, rgbToHex, CMYK_COLORS, CMYK_FREQUENCIES, vortexFrequency } from './a432.cmyk.ts';
+import './a432.core.ts';
+import { a432ModuleRegistry, type A432Module } from './a432.modules.ts';
+import './a432.ts';
+import './a432.math.ts';
+import { CMYK_COLORS, CMYK_FREQUENCIES } from './a432.cmyk.ts';
 
 // === CMYK VOICE INTERFACES ===
 export interface A432CMYKVoiceState {

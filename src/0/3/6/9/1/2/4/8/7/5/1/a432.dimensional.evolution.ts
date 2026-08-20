@@ -5,7 +5,7 @@
  */
 
 import { PI, cos, sin } from './a432.algebra.ts'
-import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core.ts';
+import { A432_FREQUENCY } from './a432.core.ts';
 
 export interface DimensionalState {
   dimension: number;

@@ -6,8 +6,8 @@
  */
 
 import { round, max } from '../0/algebra.ts'
-import { type Register } from './simulator.ts'
-import { type OptimizationHistory, type VQEResult } from './variational-optimizer.ts'
+import './simulator.ts'
+import { type VQEResult } from './variational-optimizer.ts'
 import { type CompiledCircuit, type HardwareProfile } from './hardware-compilation.ts'
 
 export interface AdaptiveState {

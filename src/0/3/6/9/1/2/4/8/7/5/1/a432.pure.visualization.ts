@@ -3,17 +3,7 @@ import { PI, cos, sin } from './a432.algebra.ts'
 // Pure A432 visualization using only a432.* modules
 // Everything is math to the digit - no exceptions
 
-import {
-  A432_TRINITY,
-  A432_RETURN,
-  A432_AXIS,
-  A432_SEQUENCE,
-  digitalRoot,
-  angleForDigit,
-  frequencyForDigit,
-  hueForDigit,
-  cycleStream
-} from './a432.math.ts';
+import { A432_TRINITY, A432_RETURN, A432_AXIS, A432_SEQUENCE, digitalRoot, angleForDigit, frequencyForDigit, hueForDigit } from './a432.math.ts';
 import { digitAngleToCMYK, cmykToCss } from './a432.cmyk.ts';
 import { A432_DIGIT_MEANINGS } from './a432.core.ts';
 

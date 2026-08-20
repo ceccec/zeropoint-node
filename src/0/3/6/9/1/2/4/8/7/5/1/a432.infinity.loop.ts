@@ -13,14 +13,7 @@
  */
 
 import { abs, round } from './a432.algebra.ts'
-import { 
-  RODIN_SEQUENCE, 
-  TRINITY_AXIS, 
-  digitalRoot, 
-  angleForDigit,
-  frequencyForDigit,
-  hueForDigit 
-} from './a432.math.ts';
+import { digitalRoot, angleForDigit, frequencyForDigit, hueForDigit } from './a432.math.ts';
 
 // --- Canonical Infinity Loop Constants ---
 const INFINITY_LOOP_SEQUENCE = [0, 0]; // 0 interacting with itself

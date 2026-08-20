@@ -5,8 +5,8 @@
  */
 
 import { type A432Module, type A432ModuleCategory } from './a432.modules.ts';
-import { type A432FactoryState, createA432State } from './a432.factory.ts';
-import { A432Validation } from './a432.utils.ts';
+import { type A432FactoryState } from './a432.factory.ts';
+import './a432.utils.ts';
 
 // === REGISTRY INTERFACES ===
 export interface A432RegistryEntry<T = any> {

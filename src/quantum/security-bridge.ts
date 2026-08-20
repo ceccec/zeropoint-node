@@ -8,8 +8,8 @@
  * Quantum heuristics guide cryptanalysis strategy selection.
  */
 
-import { abs, max, min, floor, sqrt, log2 } from '../0/algebra.ts'
-import { analyzeRSA } from './applications.ts'
+import { abs, max, min, floor, log2 } from '../0/algebra.ts'
+import './applications.ts'
 
 // ============================================================================
 // CRYPTOGRAPHIC SCHEME ASSESSMENT

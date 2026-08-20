@@ -1,4 +1,4 @@
-import { log } from './a432.algebra.ts'
+import './a432.algebra.ts'
 // @ts-nocheck
 console.log('A432 Bundle Loading...');
 

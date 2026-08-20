@@ -1,6 +1,6 @@
-import { log } from './a432.algebra.ts'
+import './a432.algebra.ts'
 import { Controller } from '@hotwired/stimulus';
-import { startMetatron, type MetatronFrame } from './a432.metatron.ts';
+import './a432.metatron.ts';
 import { startA432Visualization } from './a432.pure.visualization.ts';
 
 export default class extends Controller {

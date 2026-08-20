@@ -4,8 +4,8 @@
  * without destroying it — via statistics across many measurement runs.
  */
 
-import { sqrt, abs, floor, log2 } from '../0/algebra.ts'
-import { type Register, zeroState, applyGate1, H, S, cx, measureQubit, probabilities, cabs2, unitOf } from './simulator.ts'
+import { abs, floor, log2 } from '../0/algebra.ts'
+import { type Register, applyGate1, H, measureQubit, probabilities, unitOf } from './simulator.ts'
 
 interface Complex {
   readonly re: number

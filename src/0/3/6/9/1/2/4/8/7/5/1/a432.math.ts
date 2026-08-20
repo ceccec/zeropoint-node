@@ -56,7 +56,7 @@ export function* a432SequenceStream(): IterableIterator<number> {
 
 // Unified import of branded numeric helpers and mappings from a432.types
 import type { Digit, Hz, AngleDeg } from './a432.types.ts';
-import { asDigit, asHz, asAngle, toImperial, toTrinity, METRIC_VORTEX, TRINITY_MAP } from './a432.types.ts';
+import { asDigit, asHz, asAngle, toImperial, toTrinity } from './a432.types.ts';
 import { harmonicRoot12, legacyDigitalRoot } from './a432.roots.ts';
 
 // Re-export so external modules keep same API surface (types vs values split for strip-types)

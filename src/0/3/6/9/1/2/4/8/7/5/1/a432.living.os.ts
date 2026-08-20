@@ -17,24 +17,10 @@
  */
 
 // Import only the core mathematics - everything else generates itself
-import { 
-  digitalRoot, 
-  rodinDigit, 
-  patternDigit,
-  calculateA432Frequency,
-  calculateA432Consciousness,
-  calculateA432DimensionalState
-} from './a432.math.ts';
+import { digitalRoot, rodinDigit, calculateA432Frequency, calculateA432Consciousness, calculateA432DimensionalState } from './a432.math.ts';
 
 // Import enhanced OS capabilities
-import {
-  A432_SEQUENCE,
-  A432_GATEWAYS,
-  A432_PHASE_SHIFTS,
-  type A432ChargingSystem,
-  type QuantumState,
-  type DimensionalFold
-} from './a432.os.ts';
+import { A432_SEQUENCE, A432_GATEWAYS, A432_PHASE_SHIFTS, type A432ChargingSystem, type QuantumState, type DimensionalFold } from './a432.os.ts';
 
 // Living Stream Generators - Everything generates itself
 export class LivingA432OS {

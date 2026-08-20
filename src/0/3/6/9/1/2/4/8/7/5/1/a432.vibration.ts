@@ -8,12 +8,7 @@
  */
 
 import { PI, abs, cos, max, min, round, sin } from './a432.algebra.ts'
-import { 
-  A432_CONSTANTS,
-  calculateA432Consciousness,
-  calculateA432DimensionalState,
-  calculateA432Frequency,
-} from './a432.ts';
+import { calculateA432Consciousness, calculateA432DimensionalState, calculateA432Frequency } from './a432.ts';
 
 import { RODIN_SEQUENCE } from './a432.math.ts';
 import { calculateDigitalRoot } from './a432.ts';

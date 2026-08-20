@@ -8,7 +8,7 @@
  * Principle: solutions teach each other via topology. Mesh is the teacher.
  */
 
-import { sqrt, abs, floor, max, min, round } from '../0/algebra.ts'
+import { sqrt, abs, max, min } from '../0/algebra.ts'
 
 export interface MeshNode {
   readonly id: number

@@ -6,7 +6,7 @@
  * Integrated with Vadim Zeland's Transurfing Reality principles
  */
 
-import { abs, floor, max, min } from './a432.algebra.ts'
+import { floor, max, min } from './a432.algebra.ts'
 import { legacyDigitalRoot } from './a432.roots.ts'
 export interface NavigationPart {
   digit: number;

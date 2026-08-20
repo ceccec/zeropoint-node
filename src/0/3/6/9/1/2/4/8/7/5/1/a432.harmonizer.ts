@@ -7,7 +7,7 @@
  */
 
 import { a432ModuleRegistry, type A432Module, type A432ModuleCategory } from './a432.modules.ts';
-import { type A432CoreState, createA432CoreState, harmonizeA432Core } from './a432.core.ts';
+import './a432.core.ts';
 
 // === HARMONIZATION STRATEGIES ===
 export type HarmonizationStrategy = 

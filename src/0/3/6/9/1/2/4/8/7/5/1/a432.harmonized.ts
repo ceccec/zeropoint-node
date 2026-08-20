@@ -1,4 +1,4 @@
-import { legacyDigitalRoot as digitalRoot, harmonicRoot12 } from './a432.roots.ts'
+import './a432.roots.ts'
 // a432.harmonized.ts
 // Harmonized OS registry/router/aggregator for all modules in the A432 system
 // All logic is harmonically mapped, extensible, and compatible with the a432 pattern

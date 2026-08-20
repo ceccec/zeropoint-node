@@ -12,14 +12,7 @@
 
 import { PI, cos, sin } from './a432.algebra.ts'
 import * as THREE from 'three';
-import { 
-  RODIN_SEQUENCE, 
-  TRINITY_AXIS, 
-  digitalRoot, 
-  angleForDigit,
-  frequencyForDigit,
-  hueForDigit 
-} from './a432.math.ts';
+import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, frequencyForDigit, hueForDigit } from './a432.math.ts';
 import { A432_RESOLVED_FRACTIONS } from './a432.resolved.ts';
 import { fractionToDecimal } from './a432.math.ts';
 // Analog signal values: exact integer ratios, collapsed to float only here

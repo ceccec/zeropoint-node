@@ -7,7 +7,7 @@ import { abs, round } from './a432.algebra.ts'
 import { type Digit } from './a432.types.ts';
 import { rodinDigit, digitalRoot } from './a432.math.ts';
 import type { CMYK } from './a432.cmyk.ts';
-import { digitAngleToCMYK, asAngle } from './a432.math.ts';
+import './a432.math.ts';
 
 export interface ChallengeItem {
   digit: Digit;       // 1-9 via digital root

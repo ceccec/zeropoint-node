@@ -6,13 +6,7 @@
  */
 
 import { PI, sqrt, abs } from '../0/algebra.ts'
-import {
-  type Register,
-  zeroState,
-  applyGate1,
-  ry,
-  rz,
-} from './simulator.ts'
+import { type Register } from './simulator.ts'
 
 export interface OptimizationHistory {
   readonly iteration: number

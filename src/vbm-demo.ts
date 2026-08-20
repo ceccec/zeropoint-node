@@ -4,7 +4,7 @@
  */
 
 import { PI } from './0/algebra.ts'
-import { VortexMath, VBMNumberAnalyzer, VBMExamples } from './vbm-math.ts';
+import { VortexMath, VBMNumberAnalyzer } from './vbm-math.ts';
 import { AdvancedVBM, RodinCoilCalculator, VBMPatternAnalyzer } from './advanced-vbm.ts';
 
 console.log("🌀 VORTEX BASED MATHEMATICS - TypeScript Implementation");

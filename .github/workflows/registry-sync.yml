@@ -71,10 +71,16 @@ jobs:
         id: auth
         run: echo "present=${{ secrets.NPM_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
 
-      # MEASUREMENT, not assumption. npm is connected to GitHub via trusted
-      # publishing, so try the apply on that connection alone and record what
-      # the registry says. Never fails the job: the verify step below is the
-      # judge, and this exists to answer whether a token is needed at all.
+      # MEASURED 2026-08-20, from publish.yml where the trusted-publisher
+      # identity actually matches: the OIDC token is PUBLISH-SCOPED. A deprecate
+      # over it returns `PUT /zeropoint-node 404 ... or you do not have
+      # permission`, which is npm masking an authorisation failure. So this step
+      # is expected to report not-authorised until an automation token exists;
+      # it is kept because that expectation should keep being tested rather than
+      # assumed. Never fails the job — the verify step below is the judge.
+      #
+      # Note E404 counts as not-authorised: npm returns 404 on unauthorised
+      # writes so it does not leak whether a package exists.
       - name: Try applying on the GitHub<->npm trusted connection (no token)
         if: steps.auth.outputs.present != 'true'
         id: oidc
@@ -85,7 +91,7 @@ jobs:
           code=${PIPESTATUS[0]}
           echo "exit=${code}" >> "$GITHUB_OUTPUT"
           if grep -q 'EOTP' /tmp/oidc.log; then echo 'verdict=needs-otp' >> "$GITHUB_OUTPUT"
-          elif grep -qE 'ENEEDAUTH|E401|E403' /tmp/oidc.log; then echo 'verdict=not-authorised' >> "$GITHUB_OUTPUT"
+          elif grep -qE 'ENEEDAUTH|E401|E403|E404' /tmp/oidc.log; then echo 'verdict=not-authorised' >> "$GITHUB_OUTPUT"
           elif [ "${code}" = "0" ]; then echo 'verdict=worked' >> "$GITHUB_OUTPUT"
           else echo 'verdict=other' >> "$GITHUB_OUTPUT"; fi
           exit 0

@@ -330,6 +330,7 @@ function unreachableCount() {
     'src/quantum/zenodo-publisher.test.ts',
     // test:crypto
     'src/crypto/ml-kem.test.ts',
+    'src/verification/lean-bridge.test.ts',
   ]) {
     const p2 = join(ROOT, e)
     if (existsSync(p2)) roots.add(p2)

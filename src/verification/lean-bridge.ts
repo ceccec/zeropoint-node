@@ -1,27 +1,73 @@
 /**
- * Lean Bridge: Formal Verification API
+ * Lean bridge — what is actually checked, and what is only written down.
  *
- * Connects Lean 4 proof system to quantum system:
- * - Compile Lean theorems to proof certificates
- * - Embed proofs in quantum operations
- * - Verify system claims against Lean proofs
- * - Generate proof transcripts for publication
+ * This module used to report "Verified: 2/2", "Confidence: 100.0%" and
+ * "Production Grade (Formally Verified)". None of it was measured. The hash
+ * covered the theorem's NAME rather than its proof; `verifyProofCertificate`
+ * tested that some strings were non-empty and that a hash was 16 characters,
+ * which is true of every certificate this file can construct; `lean_version`
+ * was asserted although no Lean has ever run here; and seven of the thirteen
+ * Lean scripts below end in `sorry`, which is Lean for "not proved".
  *
- * All quantum properties are formally verified, not assumed.
+ * The scripts are kept verbatim — they were never the problem. What changed is
+ * that a certificate now carries two independent, separately reported facts:
+ *
+ *   lean_status  what the Lean source actually is: a script, a `sorry`
+ *                placeholder, an axiom, or absent. Derived by reading the
+ *                script, not declared.
+ *   seal         whether a RECOMPUTABLE predicate for that theorem ran and
+ *                held, against the simulator in `src/quantum/`. Not a proof of
+ *                the general theorem — a decision on a concrete instance.
+ *
+ * A theorem counts as verified here only when its seal holds. `sorry` scripts
+ * with a passing seal are reported as sealed-but-not-proved, because a checked
+ * instance is not a proof, and an unchecked proof script is not evidence.
+ * Nothing in this file claims Lean was invoked, because it was not.
+ *
+ * To make this honest at the Lean level someone must build the Lean
+ * development these scripts gesture at and run `lake build` in CI. Until then
+ * the seals are the real content and the scripts are documentation.
  */
 
 import { createHash } from 'node:crypto'
+import {
+  zeroState,
+  applyGate1,
+  isNormalized,
+  qft,
+  iqft,
+  grover,
+  groverIterations,
+  shor,
+  measureSyndromeRepetition,
+  STEANE_CODE,
+  estimateSurfaceCodeThreshold,
+} from '../quantum/index.ts'
+import { ML_KEM_768 } from '../crypto/ml-kem.ts'
+import { sqrt } from '../0/algebra.ts'
 
 // ============================================================================
 // PROOF CERTIFICATE TYPES
 // ============================================================================
+
+/** What the Lean source for a theorem actually is. Read, never declared. */
+export type LeanStatus = 'script' | 'sorry' | 'axiom' | 'absent'
+
+/** Whether a recomputable predicate ran and held for this theorem. */
+export type SealStatus = 'held' | 'failed' | 'none'
 
 export interface ProofCertificate {
   readonly theorem_name: string
   readonly statement: string
   readonly proof_script: string
   readonly verified_at: string
-  readonly lean_version: string
+  /** Derived from proof_script — 'sorry' means Lean would reject it. */
+  readonly lean_status: LeanStatus
+  /** 'none' when no executable predicate exists for this theorem. */
+  readonly seal: SealStatus
+  /** What the seal actually computes, so a reader can judge its weight. */
+  readonly seal_basis: string
+  /** Content address of statement + script. Changing either changes this. */
   readonly hash: string
 }
 
@@ -137,225 +183,409 @@ export const LEAN_PROOFS = {
     axiom lwe_hardness : ¬ (polynomial_time_solves_lwe 768 3329)
   `,
 } as const
+// ============================================================================
+// SEALS - recomputable predicates, the only thing here that counts as checked
+// ============================================================================
+
+// 1/sqrt(2) via the repo's algebra, not ambient Math.
+const SQRT1_2 = 1 / sqrt(2)
+type C = { re: number; im: number }
+const c = (re: number, im = 0): C => ({ re, im })
+
+const H: [C, C, C, C] = [c(SQRT1_2), c(SQRT1_2), c(SQRT1_2), c(-SQRT1_2)]
+const X: [C, C, C, C] = [c(0), c(1), c(1), c(0)]
+const Y: [C, C, C, C] = [c(0), c(0, -1), c(0, 1), c(0)]
+
+const CLOSE = 1e-9
+const near = (a: number, b: number): boolean => a - b < CLOSE && b - a < CLOSE
+
+interface Seal {
+  /** One line a reader can check the predicate against. */
+  readonly basis: string
+  /** Decides a concrete instance. Must be able to return false. */
+  readonly decide: () => boolean
+}
+
+/**
+ * Every seal decides an INSTANCE, never the universally quantified theorem.
+ * hadamard_squared checks H^2 = I on both computational basis states of one
+ * qubit, which for a linear map is the whole story; grover_speedup checks a
+ * success probability at one problem size, which is NOT the asymptotic claim.
+ * The basis string says which is which so the distinction cannot be lost.
+ */
+export const SEALS: Record<string, Seal> = {
+  hadamard_squared: {
+    basis: 'H applied twice to each basis state of one qubit returns the input amplitudes (linearity makes 2 states exhaustive)',
+    decide: () => {
+      for (const start of [0, 1]) {
+        let reg = zeroState(1)
+        if (start === 1) reg = applyGate1(reg, 0, X)
+        const twice = applyGate1(applyGate1(reg, 0, H), 0, H)
+        for (let i = 0; i < 2; i++) {
+          if (!near(twice.amps[i]!.re, reg.amps[i]!.re)) return false
+          if (!near(twice.amps[i]!.im, reg.amps[i]!.im)) return false
+        }
+      }
+      return true
+    },
+  },
+
+  hadamard_unitary: {
+    basis: 'H preserves the norm of a 3-qubit register (unitary maps are exactly the norm-preserving ones)',
+    decide: () => {
+      let reg = zeroState(3)
+      for (const q of [0, 1, 2]) reg = applyGate1(reg, q, H)
+      return isNormalized(reg)
+    },
+  },
+
+  pauliX_unitary: {
+    basis: 'X applied twice is the identity, and X preserves the norm',
+    decide: () => {
+      const reg = zeroState(2)
+      const twice = applyGate1(applyGate1(reg, 0, X), 0, X)
+      return isNormalized(twice) && near(twice.amps[0]!.re, 1)
+    },
+  },
+
+  pauli_anticomm: {
+    basis: 'XY and YX differ by an overall sign on both basis states of one qubit',
+    decide: () => {
+      for (const start of [0, 1]) {
+        let reg = zeroState(1)
+        if (start === 1) reg = applyGate1(reg, 0, X)
+        const xy = applyGate1(applyGate1(reg, 0, Y), 0, X)
+        const yx = applyGate1(applyGate1(reg, 0, X), 0, Y)
+        for (let i = 0; i < 2; i++) {
+          if (!near(xy.amps[i]!.re, -yx.amps[i]!.re)) return false
+          if (!near(xy.amps[i]!.im, -yx.amps[i]!.im)) return false
+        }
+      }
+      return true
+    },
+  },
+
+  born_rule_sum: {
+    basis: 'squared amplitudes sum to 1 after a Hadamard layer on 4 qubits',
+    decide: () => {
+      let reg = zeroState(4)
+      for (const q of [0, 1, 2, 3]) reg = applyGate1(reg, q, H)
+      const total = reg.amps.reduce((s, a) => s + a.re * a.re + a.im * a.im, 0)
+      return near(total, 1)
+    },
+  },
+
+  qft_unitary: {
+    basis: 'inverse QFT undoes QFT on a 3-qubit register, amplitude by amplitude',
+    decide: () => {
+      let reg = zeroState(3)
+      reg = applyGate1(reg, 0, H)
+      reg = applyGate1(reg, 2, X)
+      const back = iqft(qft(reg))
+      for (let i = 0; i < back.amps.length; i++) {
+        if (!near(back.amps[i]!.re, reg.amps[i]!.re)) return false
+        if (!near(back.amps[i]!.im, reg.amps[i]!.im)) return false
+      }
+      return true
+    },
+  },
+
+  grover_amplification: {
+    basis: 'Grover leaves the marked state with probability above the 1/N a random guess gets (n=4, N=16)',
+    decide: () => {
+      const n = 4
+      const target = 11
+      const out = grover(n, target, groverIterations(1 << n))
+      const p = out.amps[target]!.re ** 2 + out.amps[target]!.im ** 2
+      return p > 1 / (1 << n)
+    },
+  },
+
+  grover_speedup: {
+    basis: 'INSTANCE ONLY, not the asymptotic bound: round((pi/4)*sqrt(N)) iterations reach probability above 0.9 at N=16',
+    decide: () => {
+      const n = 4
+      const target = 6
+      const out = grover(n, target, groverIterations(1 << n))
+      const p = out.amps[target]!.re ** 2 + out.amps[target]!.im ** 2
+      return p > 9 / 10
+    },
+  },
+
+  shor_period_finding: {
+    basis: 'INSTANCE ONLY: shor(15, 7) returns non-trivial factors whose product is 15',
+    decide: () => {
+      const factors = shor(15, 7)
+      if (!Array.isArray(factors) || factors.length !== 2) return false
+      const [p, q] = factors as [number, number]
+      if (p <= 1 || q <= 1 || p >= 15 || q >= 15) return false
+      return p * q === 15
+    },
+  },
+
+  repetition_detects_error: {
+    basis: 'a clean 3-qubit codeword gives the zero syndrome and a single X error gives a non-zero one, so the syndrome distinguishes them',
+    decide: () => {
+      // |000> is the logical zero of the repetition code: no error, so the
+      // syndrome must be all zero. One X on qubit 0 must show up.
+      const clean = measureSyndromeRepetition(zeroState(3))
+      if (clean.detected || clean.syndrome.some((b) => b !== 0)) return false
+      const flipped = measureSyndromeRepetition(applyGate1(zeroState(3), 0, X))
+      return flipped.detected && flipped.syndrome.some((b) => b !== 0)
+    },
+  },
+
+  steane_corrects_error: {
+    basis: 'Steane [7,1,3] parameters: 7 physical, 1 logical, distance 3, so floor((d-1)/2) = 1 arbitrary error is correctable, and every stabiliser generator has even weight overlap',
+    decide: () => {
+      const code = STEANE_CODE
+      if (code.physicalQubits !== 7 || code.logicalQubits !== 1 || code.distance !== 3) return false
+      const correctable = (code.distance - 1) / 2
+      if (correctable < 1) return false
+      // Stabiliser generators must pairwise commute: over GF(2) that is an even
+      // overlap between every pair of generator supports.
+      const g = code.generators
+      for (let i = 0; i < g.length; i++) {
+        for (let j = i + 1; j < g.length; j++) {
+          let overlap = 0
+          for (let b = 0; b < g[i]!.length; b++) overlap += g[i]![b]! & g[j]![b]!
+          if (overlap % 2 !== 0) return false
+        }
+      }
+      return true
+    },
+  },
+
+  surface_code_threshold: {
+    basis: 'estimateSurfaceCodeThreshold separates the two sides of the 1% threshold: below it reports below, above it does not',
+    decide: () => {
+      const below = estimateSurfaceCodeThreshold(3, 1 / 1000)
+      const above = estimateSurfaceCodeThreshold(3, 1 / 10)
+      return below.isBelowThreshold === true && above.isBelowThreshold === false
+    },
+  },
+
+  kyber_security: {
+    basis: 'the shipped ML-KEM parameters are ML-KEM-768 (ek 1184, dk 2400, ct 1088). NIST puts that at category 3, NOT the 128 the Lean script states.',
+    decide: () =>
+      ML_KEM_768.encapsulationKeyBytes === 1184 &&
+      ML_KEM_768.decapsulationKeyBytes === 2400 &&
+      ML_KEM_768.ciphertextBytes === 1088,
+  },
+}
 
 // ============================================================================
-// PROOF GENERATION & VERIFICATION
+// PROOF GENERATION
 // ============================================================================
+
+/** Read what the Lean source is. A sorry anywhere means Lean would reject it. */
+export function readLeanStatus(script: string): LeanStatus {
+  const s = script.trim()
+  if (s.length === 0) return 'absent'
+  if (/\bsorry\b/.test(s)) return 'sorry'
+  if (/^axiom\b/m.test(s)) return 'axiom'
+  return 'script'
+}
+
+/**
+ * Content address of the claim. Covers the statement and the proof script, so
+ * editing either changes the hash. The previous version hashed the theorem's
+ * NAME, which stayed constant no matter what the proof said.
+ */
+export function computeProofHash(statement: string, proof_script: string): string {
+  return createHash('sha256').update(statement).update(' ').update(proof_script).digest('hex').slice(0, 16)
+}
+
+/** Run the seal for a theorem, if one exists. */
+export function runSeal(theorem_name: string): { seal: SealStatus; basis: string } {
+  const s = SEALS[theorem_name]
+  if (s === undefined) return { seal: 'none', basis: 'no executable predicate for this theorem' }
+  // A predicate that throws has not held. Letting it escape would turn a failed
+  // seal into a crashed process, which reads like an infrastructure problem
+  // rather than the negative result it is.
+  try {
+    return { seal: s.decide() ? 'held' : 'failed', basis: s.basis }
+  } catch {
+    return { seal: 'failed', basis: s.basis }
+  }
+}
+
+function baseCertificate(theorem_name: string, statement: string): ProofCertificate {
+  const proof_script = LEAN_PROOFS[theorem_name as keyof typeof LEAN_PROOFS] ?? ''
+  const { seal, basis } = runSeal(theorem_name)
+  return {
+    theorem_name,
+    statement,
+    proof_script,
+    verified_at: new Date().toISOString(),
+    lean_status: readLeanStatus(proof_script),
+    seal,
+    seal_basis: basis,
+    hash: computeProofHash(statement, proof_script),
+  }
+}
 
 export function generateGateCertificate(gate: 'Hadamard' | 'PauliX'): GateCertificate {
-  const gate_proofs = {
-    Hadamard: {
-      theorem_name: 'hadamard_unitary',
-      statement: 'IsUnitary hadamard',
-      property: 'unitary' as const,
-    },
-    PauliX: {
-      theorem_name: 'pauliX_unitary',
-      statement: 'IsUnitary pauliX',
-      property: 'unitary' as const,
-    },
-  }
-
-  const info = gate_proofs[gate]
-
+  const info = {
+    Hadamard: { theorem_name: 'hadamard_unitary', statement: 'IsUnitary hadamard', property: 'unitary' as const },
+    PauliX: { theorem_name: 'pauliX_unitary', statement: 'IsUnitary pauliX', property: 'unitary' as const },
+  }[gate]
+  const base = baseCertificate(info.theorem_name, info.statement)
   return {
+    ...base,
     gate_name: gate,
-    theorem_name: info.theorem_name,
-    statement: info.statement,
     property: info.property,
-    proof_script: LEAN_PROOFS[info.theorem_name as keyof typeof LEAN_PROOFS] || '',
-    verified_at: new Date().toISOString(),
-    lean_version: 'v4.8.0',
-    hash: computeProofHash(info.theorem_name),
+    proof_lines: base.proof_script.split('\n').filter((l) => l.trim().length > 0).length,
   }
 }
 
 export function generateAlgorithmCertificate(algo: 'Grover' | 'Shor' | 'QFT'): AlgorithmCertificate {
-  const algo_props = {
-    Grover: {
-      theorem_name: 'grover_speedup',
-      statement: 'Grover search runs in O(√N) time',
-      complexity_bound: 'O(√N)',
-      speedup_factor: 3.16, // sqrt(N) / log(N) ≈ sqrt(10) speedup over classical
-    },
-    Shor: {
-      theorem_name: 'shor_period_finding',
-      statement: 'Shor finds period r in O(log³N) gates',
-      complexity_bound: 'O(log³N)',
-      speedup_factor: 1e6, // Exponential speedup over classical GNFS
-    },
-    QFT: {
-      theorem_name: 'qft_unitary',
-      statement: 'QFT is unitary and computable in O(n²) gates',
-      complexity_bound: 'O(n²)',
-      speedup_factor: 1, // No direct speedup; enables other algorithms
-    },
-  }
-
-  const props = algo_props[algo]
-
+  const info = {
+    Grover: { theorem_name: 'grover_speedup', statement: 'Grover search runs in O(sqrt N) time', complexity_bound: 'O(sqrt N)', speedup_factor: 4 },
+    // Unsealed: no predicate exists, so no speedup factor is claimed.
+    Shor: { theorem_name: 'shor_period_finding', statement: 'Shor finds period r in O(log^3 N) gates', complexity_bound: 'O(log^3 N)', speedup_factor: 0 },
+    QFT: { theorem_name: 'qft_unitary', statement: 'QFT is unitary and computable in O(n^2) gates', complexity_bound: 'O(n^2)', speedup_factor: 1 },
+  }[algo]
   return {
+    ...baseCertificate(info.theorem_name, info.statement),
     algorithm: algo,
-    theorem_name: props.theorem_name,
-    statement: props.statement,
-    complexity_bound: props.complexity_bound,
-    speedup_factor: props.speedup_factor,
-    proof_script: LEAN_PROOFS[props.theorem_name as keyof typeof LEAN_PROOFS] || '',
-    verified_at: new Date().toISOString(),
-    lean_version: 'v4.8.0',
-    hash: computeProofHash(props.theorem_name),
+    complexity_bound: info.complexity_bound,
+    speedup_factor: info.speedup_factor,
   }
 }
 
 export function generateECCertificate(code: 'Repetition[3,1,1]' | 'Steane[7,1,3]' | 'Surface'): ECCertificate {
-  const ec_props = {
-    'Repetition[3,1,1]': {
-      theorem_name: 'repetition_detects_error',
-      statement: 'Repetition code detects single-qubit errors',
-      threshold: 0.05,
-      min_distance: 3,
-    },
-    'Steane[7,1,3]': {
-      theorem_name: 'steane_corrects_error',
-      statement: 'Steane code corrects arbitrary single-qubit errors',
-      threshold: 0.01,
-      min_distance: 3,
-    },
-    Surface: {
-      theorem_name: 'surface_code_threshold',
-      statement: 'Surface code corrects arbitrary errors below 1% threshold',
-      threshold: 0.01,
-      min_distance: 3,
-    },
-  }
-
-  const props = ec_props[code]
-
-  return {
-    code,
-    theorem_name: props.theorem_name,
-    statement: props.statement,
-    threshold: props.threshold,
-    min_distance: props.min_distance,
-    proof_script: LEAN_PROOFS[props.theorem_name as keyof typeof LEAN_PROOFS] || '',
-    verified_at: new Date().toISOString(),
-    lean_version: 'v4.8.0',
-    hash: computeProofHash(props.theorem_name),
-  }
+  const info = {
+    'Repetition[3,1,1]': { theorem_name: 'repetition_detects_error', statement: 'Repetition code detects single-qubit errors', threshold: 5 / 100, min_distance: 3 },
+    'Steane[7,1,3]': { theorem_name: 'steane_corrects_error', statement: 'Steane code corrects arbitrary single-qubit errors', threshold: 1 / 100, min_distance: 3 },
+    Surface: { theorem_name: 'surface_code_threshold', statement: 'Surface code corrects arbitrary errors below 1% threshold', threshold: 1 / 100, min_distance: 3 },
+  }[code]
+  return { ...baseCertificate(info.theorem_name, info.statement), code, threshold: info.threshold, min_distance: info.min_distance }
 }
 
 // ============================================================================
-// PROOF VERIFICATION & HASHING
+// VERIFICATION
 // ============================================================================
 
-export function computeProofHash(theorem_name: string): string {
-  // In production: run Lean compiler and hash compiled proof term
-  // For now: deterministic hash of theorem name
-  return createHash('sha256').update(theorem_name).digest('hex').slice(0, 16)
-}
-
+/**
+ * A certificate is verified when its seal HELD - a predicate ran and could
+ * have said no. Structural well-formedness is not verification; the previous
+ * implementation returned true for every certificate this file can build.
+ */
 export function verifyProofCertificate(cert: ProofCertificate): boolean {
-  // Verify proof certificate structure and integrity
-  return (
-    cert.theorem_name.length > 0 &&
-    cert.statement.length > 0 &&
-    cert.verified_at.length > 0 &&
-    cert.lean_version.startsWith('v4') &&
-    cert.hash.length === 16
-  )
+  return cert.seal === 'held'
 }
 
 export function verifyProofChain(certs: ProofCertificate[]): boolean {
-  // Verify all certificates in the chain are valid
-  return certs.every(verifyProofCertificate)
+  return certs.length > 0 && certs.every(verifyProofCertificate)
 }
 
 // ============================================================================
-// PROOF TRANSCRIPT GENERATION
+// TRANSCRIPT
 // ============================================================================
 
 export interface ProofTranscript {
   readonly title: string
   readonly theorems: readonly string[]
   readonly total_lines: number
-  readonly verified_count: number
-  readonly confidence: number // 0-1: formal proof confidence
+  readonly sealed_count: number
+  readonly unsealed: readonly string[]
+  readonly lean_sorry: readonly string[]
+  readonly confidence: number
   readonly timestamp: string
   readonly certificates: ProofCertificate[]
 }
 
 export function generateProofTranscript(certs: ProofCertificate[]): ProofTranscript {
-  const total_lines = certs.reduce((sum, c) => sum + (c.proof_script.split('\n').length || 0), 0)
-  const verified_count = certs.filter(verifyProofCertificate).length
-
+  const sealed = certs.filter(verifyProofCertificate)
   return {
-    title: 'Quantum Computing System: Formal Verification in Lean 4',
+    title: 'Quantum system: computational seals (Lean scripts NOT machine-checked)',
     theorems: certs.map((c) => c.theorem_name),
-    total_lines,
-    verified_count,
-    confidence: verified_count / certs.length,
+    total_lines: certs.reduce((sum, c) => sum + c.proof_script.split('\n').length, 0),
+    sealed_count: sealed.length,
+    unsealed: certs.filter((c) => c.seal !== 'held').map((c) => c.theorem_name),
+    lean_sorry: certs.filter((c) => c.lean_status === 'sorry').map((c) => c.theorem_name),
+    confidence: certs.length === 0 ? 0 : sealed.length / certs.length,
     timestamp: new Date().toISOString(),
     certificates: certs,
   }
 }
 
 // ============================================================================
-// SYSTEM VERIFICATION SUITE
+// SYSTEM REPORT
 // ============================================================================
 
 export interface VerificationReport {
-  readonly gates_verified: readonly string[]
-  readonly algorithms_verified: readonly string[]
-  readonly error_correction_verified: readonly string[]
-  readonly security_assumptions_formalized: readonly string[]
+  readonly gates_sealed: readonly string[]
+  readonly algorithms_sealed: readonly string[]
+  readonly error_correction_sealed: readonly string[]
+  readonly unsealed: readonly string[]
+  readonly security_assumptions_stated: readonly string[]
   readonly total_theorems: number
   readonly total_lines_of_proof: number
-  readonly overall_confidence: number
+  readonly sealed_fraction: number
+  readonly lean_machine_checked: false
+}
+
+function allCertificates(): ProofCertificate[] {
+  return [
+    ...(['Hadamard', 'PauliX'] as const).map(generateGateCertificate),
+    ...(['Grover', 'Shor', 'QFT'] as const).map(generateAlgorithmCertificate),
+    ...(['Repetition[3,1,1]', 'Steane[7,1,3]', 'Surface'] as const).map(generateECCertificate),
+  ]
 }
 
 export function verifyQuantumSystem(): VerificationReport {
-  const gate_certs = ['Hadamard', 'PauliX'].map((g) => generateGateCertificate(g as any))
-  const algo_certs = ['Grover', 'Shor', 'QFT'].map((a) => generateAlgorithmCertificate(a as any))
-  const ec_certs = ['Repetition[3,1,1]', 'Steane[7,1,3]', 'Surface'].map((c) =>
-    generateECCertificate(c as any),
-  )
-
-  const all_certs = [...gate_certs, ...algo_certs, ...ec_certs]
-  const total_lines = all_certs.reduce((sum, c) => sum + (c.proof_script.split('\n').length || 0), 0)
+  const gates = (['Hadamard', 'PauliX'] as const).map(generateGateCertificate)
+  const algos = (['Grover', 'Shor', 'QFT'] as const).map(generateAlgorithmCertificate)
+  const ecs = (['Repetition[3,1,1]', 'Steane[7,1,3]', 'Surface'] as const).map(generateECCertificate)
+  const all = [...gates, ...algos, ...ecs]
+  const held = (x: ProofCertificate): boolean => x.seal === 'held'
 
   return {
-    gates_verified: gate_certs.map((c) => c.gate_name),
-    algorithms_verified: algo_certs.map((c) => c.algorithm),
-    error_correction_verified: ec_certs.map((c) => c.code),
-    security_assumptions_formalized: ['LWE_hardness', 'Kyber_128bit_security', 'SPHINCS_EUF_CMA'],
-    total_theorems: all_certs.length,
-    total_lines_of_proof: total_lines,
-    overall_confidence: all_certs.filter(verifyProofCertificate).length / all_certs.length,
+    gates_sealed: gates.filter(held).map((x) => x.gate_name),
+    algorithms_sealed: algos.filter(held).map((x) => x.algorithm),
+    error_correction_sealed: ecs.filter(held).map((x) => x.code),
+    unsealed: all.filter((x) => !held(x)).map((x) => x.theorem_name),
+    // "stated", not "formalized": lwe_hardness is an axiom, and Kyber's level
+    // is a NIST categorisation (ML-KEM-768 is category 3), not a result proved
+    // anywhere in this repository.
+    security_assumptions_stated: [
+      'LWE_hardness (axiom, assumed)',
+      'ML-KEM-768 = NIST category 3',
+      'SPHINCS_EUF_CMA (not implemented)',
+    ],
+    total_theorems: all.length,
+    total_lines_of_proof: all.reduce((s, x) => s + x.proof_script.split('\n').length, 0),
+    sealed_fraction: all.filter(held).length / all.length,
+    lean_machine_checked: false,
   }
 }
 
 // ============================================================================
-// PROOF EXPORT FOR PUBLICATION
+// EXPORT FOR PUBLICATION
 // ============================================================================
 
 export function exportProofsForZenodo(): object {
   const report = verifyQuantumSystem()
-
-  const gate_proofs = ['Hadamard', 'PauliX'].map((g) => generateGateCertificate(g as any))
-  const algo_proofs = ['Grover', 'Shor', 'QFT'].map((a) => generateAlgorithmCertificate(a as any))
-  const ec_proofs = ['Repetition[3,1,1]', 'Steane[7,1,3]', 'Surface'].map((c) =>
-    generateECCertificate(c as any),
-  )
-
-  const transcript = generateProofTranscript([...gate_proofs, ...algo_proofs, ...ec_proofs])
+  const transcript = generateProofTranscript(allCertificates())
+  const sealed = report.total_theorems - report.unsealed.length
 
   return {
     system: 'Quantum Computing System',
-    verification_framework: 'Lean 4 Formal Proofs',
-    formal_verification_report: report,
+    verification_framework:
+      'Computational seals in TypeScript. Lean scripts are included as documentation and are NOT machine-checked.',
+    seal_report: report,
     proof_transcript: transcript,
-    confidence_level: 'Production Grade (Formally Verified)',
-    ready_for_publication: true,
+    // This previously read 'Production Grade (Formally Verified)' with
+    // ready_for_publication: true, regardless of what had been checked.
+    confidence_level: sealed + '/' + report.total_theorems + ' theorems carry a passing computational seal; 0/' + report.total_theorems + ' are machine-checked in Lean',
+    ready_for_publication: report.unsealed.length === 0 && report.lean_machine_checked,
+    caveats: [
+      'Seals decide concrete instances, not universally quantified statements.',
+      'No Lean toolchain runs in this repository; lean_status is read from the script text.',
+      report.unsealed.length + ' of ' + report.total_theorems + ' theorems have no executable predicate.',
+    ],
     timestamp: new Date().toISOString(),
   }
 }

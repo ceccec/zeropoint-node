@@ -1,247 +1,118 @@
 /**
- * Lean Bridge Verification Tests
+ * Lean bridge — what is sealed, what is not, and why.
  *
- * Tests the integration of Lean formal proofs with quantum system
+ * This suite exists because the previous one asserted "Verified: 2/2" and
+ * "Confidence: 100.0%" against a predicate that could not return false. Every
+ * check here can fail, and two of them PIN KNOWN DEFECTS: the seals for the
+ * repetition and Steane codes do not hold, because the code they describe is
+ * wrong. They are asserted as failing so that a silent "fix" which weakens the
+ * seal is caught, and so the defects stay visible instead of averaging away.
  */
 
 import {
+  SEALS,
+  runSeal,
+  readLeanStatus,
+  computeProofHash,
+  verifyProofCertificate,
   generateGateCertificate,
   generateAlgorithmCertificate,
   generateECCertificate,
-  verifyProofCertificate,
-  verifyProofChain,
+  generateProofTranscript,
   verifyQuantumSystem,
   exportProofsForZenodo,
-  computeProofHash,
-  generateProofTranscript,
+  LEAN_PROOFS,
 } from './lean-bridge.ts'
 
-function testGateCertificates(): void {
-  console.log('Test: Gate proof certificates...')
-
-  const hadamard = generateGateCertificate('Hadamard')
-  const pauliX = generateGateCertificate('PauliX')
-
-  if (!verifyProofCertificate(hadamard)) {
-    throw new Error('Hadamard certificate invalid')
-  }
-  if (!verifyProofCertificate(pauliX)) {
-    throw new Error('PauliX certificate invalid')
-  }
-
-  if (hadamard.theorem_name !== 'hadamard_unitary') {
-    throw new Error('Hadamard theorem name mismatch')
-  }
-  if (hadamard.property !== 'unitary') {
-    throw new Error('Hadamard property mismatch')
-  }
-
-  console.log(`  ✓ Hadamard certificate: ${hadamard.hash}`)
-  console.log(`  ✓ Hadamard theorem: ${hadamard.theorem_name}`)
-  console.log(`  ✓ PauliX certificate: ${pauliX.hash}`)
-}
-
-function testAlgorithmCertificates(): void {
-  console.log('Test: Algorithm proof certificates...')
-
-  const grover = generateAlgorithmCertificate('Grover')
-  const shor = generateAlgorithmCertificate('Shor')
-  const qft = generateAlgorithmCertificate('QFT')
-
-  if (!verifyProofCertificate(grover)) {
-    throw new Error('Grover certificate invalid')
-  }
-  if (!verifyProofCertificate(shor)) {
-    throw new Error('Shor certificate invalid')
-  }
-
-  if (grover.speedup_factor < 2) {
-    throw new Error(`Grover speedup too low: ${grover.speedup_factor}`)
-  }
-  if (shor.speedup_factor < 1000) {
-    throw new Error(`Shor speedup too low: ${shor.speedup_factor}`)
-  }
-
-  console.log(`  ✓ Grover speedup: ${grover.speedup_factor.toFixed(1)}x`)
-  console.log(`  ✓ Shor speedup: ${shor.speedup_factor.toFixed(0)}x`)
-  console.log(`  ✓ Grover complexity: ${grover.complexity_bound}`)
-  console.log(`  ✓ Shor complexity: ${shor.complexity_bound}`)
-}
-
-function testECCertificates(): void {
-  console.log('Test: Error correction proof certificates...')
-
-  const repetition = generateECCertificate('Repetition[3,1,1]')
-  const steane = generateECCertificate('Steane[7,1,3]')
-  const surface = generateECCertificate('Surface')
-
-  if (!verifyProofCertificate(repetition)) {
-    throw new Error('Repetition certificate invalid')
-  }
-  if (!verifyProofCertificate(steane)) {
-    throw new Error('Steane certificate invalid')
-  }
-  if (!verifyProofCertificate(surface)) {
-    throw new Error('Surface certificate invalid')
-  }
-
-  if (repetition.threshold <= 0 || repetition.threshold >= 1) {
-    throw new Error(`Invalid repetition threshold: ${repetition.threshold}`)
-  }
-
-  console.log(`  ✓ Repetition [3,1,1]: threshold ${repetition.threshold}`)
-  console.log(`  ✓ Steane [7,1,3]: threshold ${steane.threshold}`)
-  console.log(`  ✓ Surface code: threshold ${surface.threshold}`)
-}
-
-function testProofChain(): void {
-  console.log('Test: Proof chain verification...')
-
-  const certs = [
-    generateGateCertificate('Hadamard'),
-    generateAlgorithmCertificate('Grover'),
-    generateECCertificate('Repetition[3,1,1]'),
-  ]
-
-  if (!verifyProofChain(certs)) {
-    throw new Error('Proof chain verification failed')
-  }
-
-  console.log(`  ✓ ${certs.length} certificates verified`)
-  console.log(`  ✓ Proof chain integrity: valid`)
-}
-
-function testProofHash(): void {
-  console.log('Test: Proof hash computation...')
-
-  const hash1 = computeProofHash('hadamard_unitary')
-  const hash2 = computeProofHash('hadamard_unitary')
-  const hash3 = computeProofHash('pauliX_unitary')
-
-  if (hash1 !== hash2) {
-    throw new Error('Hash not deterministic')
-  }
-  if (hash1 === hash3) {
-    throw new Error('Different theorems have same hash')
-  }
-  if (hash1.length !== 16) {
-    throw new Error(`Hash wrong length: ${hash1.length}`)
-  }
-
-  console.log(`  ✓ Hash deterministic: ${hash1}`)
-  console.log(`  ✓ Hash collision-free`)
-}
-
-function testQuantumSystemVerification(): void {
-  console.log('Test: Complete quantum system verification...')
-
-  const report = verifyQuantumSystem()
-
-  if (report.total_theorems === 0) {
-    throw new Error('No theorems verified')
-  }
-  if (report.overall_confidence < 0.8) {
-    throw new Error(`Confidence too low: ${report.overall_confidence}`)
-  }
-  if (report.gates_verified.length === 0) {
-    throw new Error('No gates verified')
-  }
-  if (report.algorithms_verified.length === 0) {
-    throw new Error('No algorithms verified')
-  }
-  if (report.error_correction_verified.length === 0) {
-    throw new Error('No error correction verified')
-  }
-
-  console.log(`  ✓ ${report.total_theorems} theorems formalized`)
-  console.log(`  ✓ ${report.total_lines_of_proof} proof lines`)
-  console.log(`  ✓ Gates: ${report.gates_verified.join(', ')}`)
-  console.log(`  ✓ Algorithms: ${report.algorithms_verified.join(', ')}`)
-  console.log(`  ✓ Error correction: ${report.error_correction_verified.join(', ')}`)
-  console.log(`  ✓ Overall confidence: ${(report.overall_confidence * 100).toFixed(1)}%`)
-}
-
-function testProofTranscript(): void {
-  console.log('Test: Proof transcript generation...')
-
-  const certs = [
-    generateGateCertificate('Hadamard'),
-    generateAlgorithmCertificate('Grover'),
-  ]
-
-  const transcript = generateProofTranscript(certs)
-
-  if (!transcript.title) {
-    throw new Error('Transcript missing title')
-  }
-  if (transcript.theorems.length === 0) {
-    throw new Error('Transcript missing theorems')
-  }
-  if (transcript.verified_count === 0) {
-    throw new Error('Transcript has no verified theorems')
-  }
-  if (transcript.confidence < 0.5) {
-    throw new Error(`Transcript confidence too low: ${transcript.confidence}`)
-  }
-
-  console.log(`  ✓ Title: ${transcript.title}`)
-  console.log(`  ✓ Theorems: ${transcript.theorems.join(', ')}`)
-  console.log(`  ✓ Total proof lines: ${transcript.total_lines}`)
-  console.log(`  ✓ Verified: ${transcript.verified_count}/${certs.length}`)
-  console.log(`  ✓ Confidence: ${(transcript.confidence * 100).toFixed(1)}%`)
-}
-
-function testZenodoExport(): void {
-  console.log('Test: Zenodo publication export...')
-
-  const export_data = exportProofsForZenodo()
-
-  if (!export_data.system) {
-    throw new Error('Export missing system name')
-  }
-  if (!export_data.verification_framework) {
-    throw new Error('Export missing verification framework')
-  }
-  if (!export_data.formal_verification_report) {
-    throw new Error('Export missing verification report')
-  }
-  if (!export_data.ready_for_publication) {
-    throw new Error('Export not marked ready for publication')
-  }
-
-  const report = export_data.formal_verification_report as any
-  if (report.overall_confidence < 0.8) {
-    throw new Error('System confidence below publication threshold')
-  }
-
-  console.log(`  ✓ System: ${export_data.system}`)
-  console.log(`  ✓ Framework: ${export_data.verification_framework}`)
-  console.log(`  ✓ Confidence: ${(report.overall_confidence * 100).toFixed(1)}%`)
-  console.log(`  ✓ Ready for Zenodo: ${export_data.ready_for_publication}`)
-}
-
-// ============================================================================
-// TEST RUNNER
-// ============================================================================
-
-async function runTests(): Promise<void> {
-  console.log('🧪 Lean Bridge Verification Tests\n')
-
-  try {
-    testGateCertificates()
-    testAlgorithmCertificates()
-    testECCertificates()
-    testProofChain()
-    testProofHash()
-    testQuantumSystemVerification()
-    testProofTranscript()
-    testZenodoExport()
-
-    console.log('\n✅ All Lean bridge verification tests passed!')
-  } catch (error) {
-    console.error(`\n❌ Test failed: ${error instanceof Error ? error.message : String(error)}`)
-    process.exit(1)
+let failures = 0
+function check(name: string, ok: boolean, detail = ''): void {
+  if (ok) console.log('  ok   ' + name)
+  else {
+    failures++
+    console.log('  FAIL ' + name + (detail ? ' - ' + detail : ''))
   }
 }
 
-runTests()
+console.log('Lean bridge: computational seals\n')
+
+// ------------------------------------------------------------ seal outcomes
+console.log('Seals (each decides a concrete instance)')
+const held: string[] = []
+const notHeld: string[] = []
+for (const name of Object.keys(SEALS)) {
+  const r = runSeal(name)
+  ;(r.seal === 'held' ? held : notHeld).push(name)
+  console.log('  ' + (r.seal === 'held' ? 'held  ' : 'FAILED') + ' ' + name)
+}
+
+check('at least one seal holds', held.length > 0)
+check(
+  'seals that hold are the expected set',
+  held.length === Object.keys(SEALS).length - notHeld.length
+)
+
+// ------------------------------------------------- KNOWN DEFECTS, pinned
+console.log('\nKnown defects in src/quantum/error-correction.ts, pinned by failing seals')
+check(
+  'repetition_detects_error does NOT hold - measureQubit violates the Born rule',
+  runSeal('repetition_detects_error').seal === 'failed',
+  'if this now holds, the underlying bug was fixed: update this test'
+)
+check(
+  'steane_corrects_error does NOT hold - STEANE_CODE is not a stabiliser group',
+  runSeal('steane_corrects_error').seal === 'failed',
+  'if this now holds, the underlying bug was fixed: update this test'
+)
+
+// ------------------------------------------------------------ falsifiability
+console.log('\nThe verifier can say no')
+const fake = { ...generateGateCertificate('Hadamard'), seal: 'failed' as const }
+check('a failed seal is not verified', verifyProofCertificate(fake) === false)
+check('a held seal is verified', verifyProofCertificate(generateGateCertificate('Hadamard')) === true)
+
+// --------------------------------------------------------------- lean status
+console.log('\nLean status is read from the script, not declared')
+check("a script containing sorry reads as 'sorry'", readLeanStatus('theorem t : X := by\n  sorry') === 'sorry')
+check("an axiom reads as 'axiom'", readLeanStatus('axiom a : P') === 'axiom')
+check("an empty script reads as 'absent'", readLeanStatus('   ') === 'absent')
+check("a complete script reads as 'script'", readLeanStatus('theorem t : X := by decide') === 'script')
+const sorryCount = Object.values(LEAN_PROOFS).filter((s) => readLeanStatus(s) === 'sorry').length
+check('the sorry scripts are reported, not hidden', sorryCount > 0, sorryCount + ' found')
+console.log('       ' + sorryCount + ' of ' + Object.keys(LEAN_PROOFS).length + ' Lean scripts end in sorry')
+
+// ---------------------------------------------------------------- hashing
+console.log('\nHash covers content, not the name')
+const h1 = computeProofHash('IsUnitary hadamard', 'theorem a := by decide')
+const h2 = computeProofHash('IsUnitary hadamard', 'theorem a := by sorry')
+const h3 = computeProofHash('IsUnitary pauliX', 'theorem a := by decide')
+check('changing the proof script changes the hash', h1 !== h2)
+check('changing the statement changes the hash', h1 !== h3)
+check('the same content hashes the same', h1 === computeProofHash('IsUnitary hadamard', 'theorem a := by decide'))
+
+// --------------------------------------------------------------- reporting
+console.log('\nReporting does not overstate')
+const report = verifyQuantumSystem()
+check('lean_machine_checked is false', report.lean_machine_checked === false)
+check('sealed_fraction is below 1 while defects stand', report.sealed_fraction < 1)
+check('unsealed theorems are named', report.unsealed.length > 0)
+console.log('       sealed ' + (report.total_theorems - report.unsealed.length) + '/' + report.total_theorems + ': ' + report.unsealed.join(', ') + ' unsealed')
+
+const zenodo = exportProofsForZenodo() as { ready_for_publication: boolean; caveats: string[] }
+check('not marked ready for publication', zenodo.ready_for_publication === false)
+check('caveats are attached', zenodo.caveats.length >= 3)
+
+const transcript = generateProofTranscript([
+  generateGateCertificate('Hadamard'),
+  generateAlgorithmCertificate('Shor'),
+  generateECCertificate('Steane[7,1,3]'),
+])
+// Hadamard and Shor seal; Steane does not - so two of three.
+check('transcript confidence counts only held seals', transcript.confidence === 2 / 3, String(transcript.confidence))
+check('transcript names the unsealed', transcript.unsealed.includes('steane_corrects_error'))
+
+console.log('')
+if (failures > 0) {
+  console.error('lean-bridge: ' + failures + ' check(s) failed')
+  process.exit(1)
+}
+console.log('lean-bridge ok - seals honest, 2 known defects pinned as failing')

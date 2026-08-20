@@ -44,6 +44,13 @@
 const JOULES_PER_MG_COD_TENTHS = 139
 
 /**
+ * The same figure as J/mg, for prose that quotes it. Derived from the tenths
+ * above rather than written as 13.9 — a decimal literal here would be a second
+ * copy of the constant, and the ratchet counts those for exactly that reason.
+ */
+export const JOULES_PER_MG_COD = JOULES_PER_MG_COD_TENTHS / 10
+
+/**
  * Fraction of COD that anaerobic digestion converts to methane, as a
  * percentage. Well-run mesophilic digesters on soluble organics reach the
  * mid-sixties; the rest becomes biomass or leaves undigested.

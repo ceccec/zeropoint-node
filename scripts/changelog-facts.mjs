@@ -85,10 +85,53 @@ for (const f of facts) {
   if (!present) missing++
 }
 
-if (missing > 0) {
-  console.error(
-    `changelog:check FAIL — ${missing} figure(s) recompute to a value the "## ${version}" section does not state`,
-  )
+// ---------------------------------------------------------------- and back
+//
+// The check above is one-directional: it asks whether each computed value
+// APPEARS. That passes even if an invented figure sits beside the real ones,
+// which is the more likely way a note goes wrong — nobody deletes 4195, they
+// add a number that was never computed.
+//
+// So invert it. Every quantity stated with one of these units must be a value
+// the code produces. A figure that is not is either stale or was never
+// computed at all, and both are reported.
+const UNITS = [
+  { unit: 'mg/L', re: /([\d.]+)\s*mg\/L/g },
+  { unit: 'kJ/mol', re: /([\d.]+)\s*kJ\/mol/g },
+  { unit: 'mV', re: /([\d.]+)\s*mV/g },
+  { unit: 'J per mg', re: /([\d.]+)\s*J per mg/g },
+]
+const computed = new Set(facts.map((f) => f.value))
+// Values the code produces that are stated but not among the headline facts.
+for (const extra of [
+  String(thermo.toKilojoulesPerMole(thermo.ENTHALPY_FORMATION)),
+  String(thermo.toKilojoulesPerMole(thermo.GIBBS_FORMATION)),
+  String(waste.JOULES_PER_MG_COD),
+]) computed.add(extra)
+
+let unaccounted = 0
+for (const { unit, re } of UNITS) {
+  for (const m of section.matchAll(re)) {
+    const stated = m[1].replace(/^[+-]/, '')
+    if (computed.has(stated)) continue
+    console.log(`  UNTRACED ${(stated + ' ' + unit).padEnd(37)} stated but not produced by the code`)
+    unaccounted++
+  }
+}
+
+if (missing > 0 || unaccounted > 0) {
+  if (missing > 0) {
+    console.error(
+      `changelog:check FAIL — ${missing} figure(s) recompute to a value the "## ${version}" section does not state`,
+    )
+  }
+  if (unaccounted > 0) {
+    console.error(
+      `changelog:check FAIL — ${unaccounted} quantity(ies) stated in "## ${version}" are not produced by any module`,
+    )
+  }
   process.exit(1)
 }
-console.log(`changelog:check ok — ${facts.length} figures in "## ${version}" recompute from the code`)
+console.log(
+  `changelog:check ok — ${facts.length} figures recompute, and every quantity stated in "## ${version}" traces to code`,
+)

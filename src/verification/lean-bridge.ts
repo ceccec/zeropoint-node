@@ -43,6 +43,13 @@ import {
   selfTest as thermoSelfTest,
 } from '../thermo/free-energy.ts'
 import {
+  balanceFor,
+  breakEvenCod,
+  TYPICAL_LOADS,
+  TREATMENT_DEMAND_DECIJOULES_PER_LITRE,
+  selfTest as wastewaterSelfTest,
+} from '../thermo/wastewater-energy.ts'
+import {
   zeroState,
   applyGate1,
   isNormalized,
@@ -634,6 +641,49 @@ export const SEALS: Record<string, Seal> = {
         }
       }
       return checked === 8000
+    },
+  },
+  polluted_water_powers_its_own_cleaning_above_a_threshold: {
+    basis: "the described machine works, and the fuel is the pollution rather than the water. Clean water carries zero recoverable energy, so it can only owe the treatment demand; organic load carries 13.9 J per mg COD, and above a threshold of about 4200 mg/L the electricity generated exceeds what membrane treatment consumes. Municipal sewage sits below that line and dairy or manure effluent well above it. The threshold is found by scanning, so it is the same quantity the balance reports.",
+    decide: () => {
+      if (wastewaterSelfTest().length > 0) return false
+
+      // The water itself is not the fuel. At zero load there is nothing to
+      // burn, and the plant owes exactly the cost of cleaning.
+      const clean = balanceFor(0)
+      if (clean.energyInLoad !== 0) return false
+      if (clean.electricityGenerated !== 0) return false
+      if (clean.netElectricity !== -TREATMENT_DEMAND_DECIJOULES_PER_LITRE) return false
+
+      // A threshold exists and is a genuine boundary: it exports, and one
+      // milligram less does not.
+      const t = breakEvenCod()
+      if (!(t > 0)) return false
+      if (!(balanceFor(t).netElectricity > 0)) return false
+      if (balanceFor(t - 1).netElectricity > 0) return false
+
+      // Monotone in the load — more pollution never yields less electricity.
+      let previous = -1
+      for (let cod = 0; cod <= 20000; cod += 100) {
+        const e = balanceFor(cod).electricityGenerated
+        if (e < previous) return false
+        previous = e
+      }
+
+      // Conservation still binds: recovery is strictly below the energy the
+      // load contains, because capture and engine efficiency are each < 100%.
+      for (const { cod } of TYPICAL_LOADS) {
+        if (cod === 0) continue
+        const b = balanceFor(cod)
+        if (b.electricityGenerated >= b.energyInLoad) return false
+      }
+
+      // And the model must still place real streams where they actually fall.
+      const strongSewage = TYPICAL_LOADS.find((l) => l.name === 'municipal sewage, strong')
+      const dairy = TYPICAL_LOADS.find((l) => l.name === 'dairy processing')
+      if (!strongSewage || !dairy) return false
+      if (balanceFor(strongSewage.cod).selfPowering) return false
+      return balanceFor(dairy.cod).selfPowering
     },
   },
 }

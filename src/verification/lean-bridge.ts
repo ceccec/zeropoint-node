@@ -41,6 +41,9 @@ import {
   thermoneutralPotentialMicrovolts,
   roundTrip,
   selfTest as thermoSelfTest,
+  SCALE,
+  ELECTRONS,
+  FARADAY,
 } from '../thermo/free-energy.ts'
 import {
   balanceFor,
@@ -684,6 +687,46 @@ export const SEALS: Record<string, Seal> = {
       if (!strongSewage || !dairy) return false
       if (balanceFor(strongSewage.cod).selfPowering) return false
       return balanceFor(dairy.cod).selfPowering
+    },
+  },
+  every_model_inverts: {
+    basis: "each quantitative result recomputes a second, independent way and the two agree. Entropy recovered from (ΔH − ΔG)/T must equal the tabulated ΔS exactly; ΔG recovered from E·nF must return to within the microvolt the potential was rounded to, a bound this checks rather than waves at; and the break-even COD found by SCANNING must equal the one obtained by INVERTING the arithmetic, which is a different computation reaching the same integer. Reflection through the void inverts too, being its own inverse.",
+    decide: () => {
+      // --- free energy: invert ΔG = ΔH − TΔS to recover the entropy --------
+      // The forward pass multiplied T by ΔS; dividing it back out must land on
+      // the tabulated figure exactly, with no rounding introduced anywhere.
+      const T_CENTIKELVIN = 29815
+      const TABULATED_ENTROPY_MILLI = -163305
+      const recovered =
+        ((ENTHALPY_FORMATION - GIBBS_FORMATION) * 1000 * 100) / (T_CENTIKELVIN * SCALE)
+      if (recovered !== TABULATED_ENTROPY_MILLI) return false
+
+      // --- cell potential: invert E = ΔG/(nF) to recover ΔG ----------------
+      // The potential is rendered to whole microvolts, so the inverse cannot be
+      // exact. It must be within half a microvolt's worth of energy, which is
+      // nF/20 in these units — a real bound, not an eyeballed tolerance.
+      const microvolts = reversiblePotentialMicrovolts()
+      const backToGibbs = (microvolts * ELECTRONS * FARADAY) / 10
+      const drift = backToGibbs - GIBBS_SPLITTING
+      const magnitude = drift < 0 ? -drift : drift
+      if (!(2 * magnitude <= (ELECTRONS * FARADAY) / 10)) return false
+      // And it must be drift, not a systematic error: far below the value.
+      if (!(magnitude * 1000000 < GIBBS_SPLITTING)) return false
+
+      // --- break-even COD: scanning versus inverting ------------------------
+      // balanceFor rounds twice on the way up, so a closed form agreeing with
+      // the scan is a real check on both, not a restatement of one.
+      const scanned = breakEvenCod()
+      const numerator = TREATMENT_DEMAND_DECIJOULES_PER_LITRE * 10000
+      const denominator = 139 * 65 * 38
+      const exact = numerator / denominator
+      const inverted = exact % 1 === 0 ? exact + 1 : exact - (exact % 1) + 1
+      if (scanned !== inverted) return false
+
+      // --- reflection is its own inverse ------------------------------------
+      for (let d = 0; d <= 9; d++) if (throughVoid(throughVoid(d)) !== d) return false
+
+      return true
     },
   },
 }

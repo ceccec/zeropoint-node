@@ -3,7 +3,7 @@
     "typecheck": 146,
     "lint": 932,
     "decimals": 453,
-    "cycles": 2,
+    "cycles": 1,
     "unreachable": 281,
     "unloadable": 0,
     "prose": 59,

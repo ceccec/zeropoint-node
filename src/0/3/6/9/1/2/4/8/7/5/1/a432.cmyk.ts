@@ -10,7 +10,13 @@
  */
 
 import { abs, max, round, sign as algSign } from './a432.algebra.ts'
-import { digitalRoot } from './a432.math.ts';
+// Imported from the module that OWNS it, not through a432.math's re-export.
+// a432.math re-exports this file's symbols as a convenience and does not use
+// them, so importing digitalRoot back from there closed a cycle: a false edge
+// in one direction, a real dependency in the other. a432.roots re-exports
+// legacyDigitalRoot from the kernel and imports nothing from a432.math, so the
+// same function arrives with no cycle. Identical binding, unchanged call sites.
+import { legacyDigitalRoot as digitalRoot } from './a432.roots.ts';
 
 /**
  * Canonical CMYK sequence = reverse(A432_SEQUENCE).

@@ -2510,12 +2510,6 @@
     return sum;
   }
 
-  // src/0/3/6/9/1/2/4/8/7/5/1/a432.types.ts
-  var METRIC_VORTEX = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => n);
-  var IMPERIAL_VORTEX = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5].map((n) => n);
-  var asDigit = (n) => n;
-  var asAngle = (n) => n;
-
   // src/0/index.ts
   function digitalRoot(n) {
     const r = (n % 9 + 9) % 9;
@@ -2553,57 +2547,6 @@
     if (n === 0) return 0;
     return digitalRoot(n);
   }
-
-  // src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts
-  var TRINITY_AXIS = [3, 6, 9];
-  var A432_TRINITY = [4, 3, 2];
-  var A432_RETURN = [8, 7, 5];
-  var A432_AXIS = [9, 6, 3];
-  var RODIN_SEQUENCE = [1, 2, 4, 8, 7, 5, 1];
-  var A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
-  function* cycleStream(cycle) {
-    while (true) {
-      yield* cycle;
-    }
-  }
-  var A432_DIGIT_MEANINGS = [
-    { name: "Void", description: "The field, the unmanifest, pure potential; the source and destination of all cycles, the space in which all digits arise and return." },
-    { name: "Unity", description: "Origin, source, singularity, beginning; the point of all creation and the seed of the matrix." },
-    { name: "Duality", description: "Polarity, relationship, balance, reflection; the field of interaction and the principle of complementarity." },
-    { name: "Trinity", description: "Synthesis, creation, harmony, flow; the generative principle, the creative process, and the harmonic seed." },
-    { name: "Foundation", description: "Structure, stability, manifestation; the base of all form, the ground of being, and the matrix of reality." },
-    { name: "Life", description: "Change, movement, growth, transformation; the living flow, evolution, and the pulse of the system." },
-    { name: "Harmony", description: "Integration, resonance, beauty, equilibrium; the state of balance, the field of resonance, and the principle of unity in diversity." },
-    { name: "Mystery", description: "Depth, intuition, inner knowing, inversion; the hidden, the unknown, the gateway to transformation and the anti-harmonic." },
-    { name: "Infinity", description: "Power, expansion, infinite flow, recursion; the endless, the self-similar, the principle of recursion and the infinite loop." },
-    { name: "Completion", description: "Fulfillment, wholeness, return, zero entropy; the end and the beginning, the return to source, and the closure of the cycle." }
-  ];
-  var FULL_PATTERN = [0, ...TRINITY_AXIS, 1, 2, 4, 8, 7, 5, 1];
-  function angleForDigit(d) {
-    return ((-90 + 40 * (d % 9)) % 360 + 360) % 360;
-  }
-  function frequencyForDigit(d) {
-    if (!TRINITY_AXIS.includes(d)) throw new Error("frequency only defined for trinity digits");
-    return 432 * (d / 12);
-  }
-  function hueForDigit(d) {
-    return abs(d) * 36 % 360;
-  }
-  var D0 = asDigit(0);
-  var D9 = asDigit(9);
-  var TRINITY_POLARITY = {
-    [asDigit(3)]: 1,
-    [asDigit(6)]: -1,
-    [asDigit(9)]: 0,
-    [asDigit(0)]: 0,
-    [asDigit(1)]: 1,
-    [asDigit(2)]: 1,
-    [asDigit(4)]: -1,
-    [asDigit(5)]: -1,
-    [asDigit(7)]: 1,
-    [asDigit(8)]: -1
-  };
-  var DOT_TRINITY_SWITCH = { kind: "trinity", axisDigit: asDigit(3) };
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.ts
   function digitAngleToCMYK(digit, angle) {
@@ -2682,6 +2625,63 @@
     yellow: cmykFrequencyValue("yellow"),
     key: cmykFrequencyValue("key")
   };
+
+  // src/0/3/6/9/1/2/4/8/7/5/1/a432.types.ts
+  var METRIC_VORTEX = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => n);
+  var IMPERIAL_VORTEX = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5].map((n) => n);
+  var asDigit = (n) => n;
+  var asAngle = (n) => n;
+
+  // src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts
+  var TRINITY_AXIS = [3, 6, 9];
+  var A432_TRINITY = [4, 3, 2];
+  var A432_RETURN = [8, 7, 5];
+  var A432_AXIS = [9, 6, 3];
+  var RODIN_SEQUENCE = [1, 2, 4, 8, 7, 5, 1];
+  var A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+  function* cycleStream(cycle) {
+    while (true) {
+      yield* cycle;
+    }
+  }
+  var A432_DIGIT_MEANINGS = [
+    { name: "Void", description: "The field, the unmanifest, pure potential; the source and destination of all cycles, the space in which all digits arise and return." },
+    { name: "Unity", description: "Origin, source, singularity, beginning; the point of all creation and the seed of the matrix." },
+    { name: "Duality", description: "Polarity, relationship, balance, reflection; the field of interaction and the principle of complementarity." },
+    { name: "Trinity", description: "Synthesis, creation, harmony, flow; the generative principle, the creative process, and the harmonic seed." },
+    { name: "Foundation", description: "Structure, stability, manifestation; the base of all form, the ground of being, and the matrix of reality." },
+    { name: "Life", description: "Change, movement, growth, transformation; the living flow, evolution, and the pulse of the system." },
+    { name: "Harmony", description: "Integration, resonance, beauty, equilibrium; the state of balance, the field of resonance, and the principle of unity in diversity." },
+    { name: "Mystery", description: "Depth, intuition, inner knowing, inversion; the hidden, the unknown, the gateway to transformation and the anti-harmonic." },
+    { name: "Infinity", description: "Power, expansion, infinite flow, recursion; the endless, the self-similar, the principle of recursion and the infinite loop." },
+    { name: "Completion", description: "Fulfillment, wholeness, return, zero entropy; the end and the beginning, the return to source, and the closure of the cycle." }
+  ];
+  var FULL_PATTERN = [0, ...TRINITY_AXIS, 1, 2, 4, 8, 7, 5, 1];
+  function angleForDigit(d) {
+    return ((-90 + 40 * (d % 9)) % 360 + 360) % 360;
+  }
+  function frequencyForDigit(d) {
+    if (!TRINITY_AXIS.includes(d)) throw new Error("frequency only defined for trinity digits");
+    return 432 * (d / 12);
+  }
+  function hueForDigit(d) {
+    return abs(d) * 36 % 360;
+  }
+  var D0 = asDigit(0);
+  var D9 = asDigit(9);
+  var TRINITY_POLARITY = {
+    [asDigit(3)]: 1,
+    [asDigit(6)]: -1,
+    [asDigit(9)]: 0,
+    [asDigit(0)]: 0,
+    [asDigit(1)]: 1,
+    [asDigit(2)]: 1,
+    [asDigit(4)]: -1,
+    [asDigit(5)]: -1,
+    [asDigit(7)]: 1,
+    [asDigit(8)]: -1
+  };
+  var DOT_TRINITY_SWITCH = { kind: "trinity", axisDigit: asDigit(3) };
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.matrix.ts
   function* linearStream() {

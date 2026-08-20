@@ -32,6 +32,7 @@ import { execFileSync } from 'node:child_process'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const DELETE = process.argv.includes('--delete')
+const HELD_JSON = process.argv.includes('--held-json')
 
 // The fold is the authority on what is outside; run it rather than reimplement.
 const foldJson = JSON.parse(
@@ -84,17 +85,26 @@ const safe = []
 const held = []
 
 for (const mod of [...outside].sort()) {
-  const stem = basename(mod).replace(/\.ts$/, '')
+  // Match the FULL filename, not the stem. The digit-stream modules nest —
+  // a432.1.2.4.8.7.5 is a prefix of a432.1.2.4.8.7.5.1.ts — so a stem search
+  // matched the longer sibling and reported 69 import statements that do not
+  // exist. Requiring `<name>.ts` cannot match a longer name.
+  const filename = basename(mod)
   const live = []
   for (const { file, text } of corpus) {
     if (file === mod) continue          // SELF
+    if (file === `${mod}.md`) continue  // its own sidecar doc, goes with it
     if (outside.has(file)) continue     // DEAD — the island goes together
-    if (!text.includes(stem)) continue
+    if (!text.includes(filename)) continue
     live.push(file)
-    if (live.length >= 3) break
   }
   if (live.length === 0) safe.push(mod)
   else held.push({ mod, live })
+}
+
+if (HELD_JSON) {
+  console.log(JSON.stringify(held.map((h) => ({ mod: h.mod, live: h.live })), null, 1))
+  process.exit(0)
 }
 
 console.log(`audit — LEAN ${lean.size}, OUTSIDE ${outside.size}, searched ${corpus.length} tracked files\n`)

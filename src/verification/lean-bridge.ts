@@ -33,6 +33,16 @@ import { createHash } from 'node:crypto'
 import { digitalRoot, throughVoid, bearingForDigit, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
 import { angleForDigit } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 import {
+  GIBBS_FORMATION,
+  GIBBS_SPLITTING,
+  ENTHALPY_FORMATION,
+  ENTHALPY_SPLITTING,
+  reversiblePotentialMicrovolts,
+  thermoneutralPotentialMicrovolts,
+  roundTrip,
+  selfTest as thermoSelfTest,
+} from '../thermo/free-energy.ts'
+import {
   zeroState,
   applyGate1,
   isNormalized,
@@ -576,6 +586,54 @@ export const SEALS: Record<string, Seal> = {
       // 9 at the top is what fixes the ring's phase; without it any rotation
       // would satisfy the spacing check above.
       return bearingForDigit(9) === 270 && bearingForDigit(3) === 30
+    },
+  },
+  free_energy_of_splitting_is_positive: {
+    basis: "ΔG = ΔH − TΔS for water, from tabulated standard-state values. Formation is −237 kJ/mol and splitting is +237, so splitting must be paid for; the reversible cell potential ΔG/(nF) is 1229 mV and the thermoneutral ΔH/(nF) is 1481 mV, the gap being TΔS. A split-then-burn cycle breaks even at perfect efficiency and loses otherwise — checked exhaustively over the efficiency grid, not sampled. This is the sign of ΔG, not an engineering limit.",
+    decide: () => {
+      if (thermoSelfTest().length > 0) return false
+
+      // The sign is the claim. Formation releases work; splitting costs it.
+      if (!(GIBBS_FORMATION < 0)) return false
+      if (!(GIBBS_SPLITTING > 0)) return false
+
+      // One ledger, read in two directions — so what splitting costs is
+      // exactly what burning returns, before any device takes its cut.
+      if (ENTHALPY_SPLITTING !== -ENTHALPY_FORMATION) return false
+      if (GIBBS_SPLITTING !== -GIBBS_FORMATION) return false
+
+      // Free energy is strictly less than enthalpy: TΔS is real and is owed.
+      if (!(GIBBS_SPLITTING < ENTHALPY_SPLITTING)) return false
+      const rev = reversiblePotentialMicrovolts()
+      const thermo = thermoneutralPotentialMicrovolts()
+      if (!(thermo > rev)) return false
+
+      // The perfect cycle breaks even EXACTLY — the boundary case, and the one
+      // most favourable to a closed loop.
+      const ideal = roundTrip(100, 100, 100)
+      if (ideal.net !== 0) return false
+
+      // And no cycle anywhere on the grid gains. Exhaustive over 5% steps in
+      // all three efficiencies: 8000 combinations, none of them sampled.
+      //
+      // The verdict is recomputed from the two energies rather than read off
+      // `gainsEnergy`. Trusting that flag let a mutant hardcode it to false and
+      // still pass — a seal must not accept the answer from the thing it is
+      // judging. `net` is cross-checked against its own definition for the same
+      // reason.
+      let checked = 0
+      for (let e = 5; e <= 100; e += 5) {
+        for (let m = 5; m <= 100; m += 5) {
+          for (let g = 5; g <= 100; g += 5) {
+            checked++
+            const r = roundTrip(e, m, g)
+            if (r.net !== r.outputRecovered - r.inputRequired) return false
+            if (r.outputRecovered > r.inputRequired) return false
+            if (r.gainsEnergy !== r.net > 0) return false
+          }
+        }
+      }
+      return checked === 8000
     },
   },
 }

@@ -235,3 +235,61 @@ export function importExportGraphTip(srcRoot: string = SRC_ROOT) {
     statement: g.statement,
   }
 }
+
+/**
+ * Fold a dependency graph to the set reachable from `entries`.
+ *
+ * LEAN is defined as the fixed point of this fold: fold(fold(S)) = fold(S). One
+ * pass already reaches the closure, so the second pass proving no change is
+ * what makes "lean" a definition rather than a number someone chose. Cycles
+ * terminate because a visited node is never queued twice.
+ *
+ * Kept here rather than in a build script so that the script and the seal that
+ * verifies it call the SAME code. Two implementations of a definition agree
+ * only until they do not.
+ */
+export function foldToLean(
+  graph: ReadonlyMap<string, readonly string[]>,
+  entries: Iterable<string>,
+): Set<string> {
+  const seen = new Set<string>()
+  const queue: string[] = []
+  for (const e of entries) if (graph.has(e)) queue.push(e)
+
+  // A finite graph cannot need more pops than it has edges plus entries. The
+  // bound is not decoration: the two guards below are mutually redundant, so
+  // removing EITHER is harmless and removing BOTH makes this loop run forever.
+  // Measured — with both gone the seal did not report false, it HUNG, and a
+  // gate that hangs is worse than one that fails because nothing gets a
+  // verdict. This turns that into an exception, which a seal can catch.
+  let budget = 1
+  for (const [, deps] of graph) budget += deps.length + 1
+  let pops = 0
+
+  while (queue.length > 0) {
+    if (++pops > budget) {
+      throw new Error(`foldToLean exceeded ${budget} pops on a graph of ${graph.size} nodes — not terminating`)
+    }
+    const node = queue.pop()!
+    if (seen.has(node)) continue
+    seen.add(node)
+    for (const next of graph.get(node) ?? []) {
+      if (graph.has(next) && !seen.has(next)) queue.push(next)
+    }
+  }
+  return seen
+}
+
+/** True when one more fold changes nothing — the definition is well founded. */
+export function leanIsFixed(
+  graph: ReadonlyMap<string, readonly string[]>,
+  entries: Iterable<string>,
+): boolean {
+  const once = foldToLean(graph, entries)
+  const restricted = new Map<string, readonly string[]>()
+  for (const [k, v] of graph) if (once.has(k)) restricted.set(k, v.filter((d) => once.has(d)))
+  const twice = foldToLean(restricted, [...entries].filter((e) => once.has(e)))
+  if (twice.size !== once.size) return false
+  for (const f of once) if (!twice.has(f)) return false
+  return true
+}

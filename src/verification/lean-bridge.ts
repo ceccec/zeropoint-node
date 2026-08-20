@@ -32,6 +32,7 @@
 import { createHash } from 'node:crypto'
 import { digitalRoot, throughVoid, bearingForDigit, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
 import { angleForDigit } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
+import { foldToLean, leanIsFixed } from '../kernel/import-graph.ts'
 import {
   GIBBS_FORMATION,
   GIBBS_SPLITTING,
@@ -735,6 +736,42 @@ export const SEALS: Record<string, Seal> = {
       for (let d = 0; d <= 9; d++) if (throughVoid(throughVoid(d)) !== d) return false
 
       return true
+    },
+  },
+  lean_is_a_fixed_point: {
+    basis: "LEAN is defined as the fixed point of the reachability fold, not as a number anyone chose: fold(fold(S)) = fold(S). This checks the fold on graphs whose answers are known by hand — a chain, a cycle, a disconnected node, an entry outside the graph — and checks idempotence on each. Cycles must terminate rather than reaching the answer by luck, and an unreachable node must stay out however many times the fold is applied.",
+    decide: () => {
+      const key = (s: Set<string>) => [...s].sort().join(',')
+
+      // A chain, a 2-cycle, and an isolated node, all in one graph.
+      const g = new Map<string, readonly string[]>([
+        ['a', ['b']], ['b', ['c']], ['c', []],
+        ['x', ['y']], ['y', ['x']],
+        ['z', []],
+      ])
+
+      // Reachability, by hand.
+      if (key(foldToLean(g, ['a'])) !== 'a,b,c') return false
+      // A cycle must terminate and include both nodes exactly once.
+      if (key(foldToLean(g, ['x'])) !== 'x,y') return false
+      // An isolated node is reachable only from itself.
+      if (key(foldToLean(g, ['z'])) !== 'z') return false
+      // Nothing is reachable from nothing.
+      if (foldToLean(g, []).size !== 0) return false
+      // An entry that is not in the graph contributes nothing rather than throwing.
+      if (foldToLean(g, ['absent']).size !== 0) return false
+      // z is outside the fold from a, and stays outside however often we fold.
+      if (foldToLean(g, ['a']).has('z')) return false
+
+      // The definition must be well founded on every one of these.
+      for (const entries of [['a'], ['x'], ['z'], [], ['a', 'x'], ['absent']]) {
+        if (!leanIsFixed(g, entries)) return false
+      }
+
+      // And on a graph where an entry reaches everything, lean is everything.
+      const full = new Map<string, readonly string[]>([['r', ['a', 'x', 'z']], ['a', ['b']], ['b', []], ['x', ['x']], ['z', []]])
+      if (key(foldToLean(full, ['r'])) !== 'a,b,r,x,z') return false
+      return leanIsFixed(full, ['r'])
     },
   },
 }

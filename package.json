@@ -130,6 +130,7 @@
     "registry:check": "node scripts/npm-registry-sync.mjs",
     "registry:apply": "node scripts/npm-registry-sync.mjs --apply",
     "registry:test": "node scripts/npm-registry-sync.mjs --self-test",
+    "fold": "node --experimental-strip-types scripts/fold-lean.mjs",
     "adjudicate": "node --experimental-strip-types scripts/adjudicate-seals.mjs",
     "adjudicate:check": "node --experimental-strip-types scripts/adjudicate-seals.mjs --check",
     "readme": "node --experimental-strip-types scripts/readme-gen.mjs",

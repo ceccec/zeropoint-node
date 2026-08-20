@@ -44,6 +44,9 @@ import {
   SCALE,
   ELECTRONS,
   FARADAY,
+  reversiblePotentialExact,
+  thermoneutralPotentialExact,
+  energyFromPotential,
 } from '../thermo/free-energy.ts'
 import {
   balanceFor,
@@ -690,7 +693,7 @@ export const SEALS: Record<string, Seal> = {
     },
   },
   every_model_inverts: {
-    basis: "each quantitative result recomputes a second, independent way and the two agree. Entropy recovered from (ΔH − ΔG)/T must equal the tabulated ΔS exactly; ΔG recovered from E·nF must return to within the microvolt the potential was rounded to, a bound this checks rather than waves at; and the break-even COD found by SCANNING must equal the one obtained by INVERTING the arithmetic, which is a different computation reaching the same integer. Reflection through the void inverts too, being its own inverse.",
+    basis: "each quantitative result recomputes a second, independent way and the two agree. Entropy recovered from (ΔH − ΔG)/T must equal the tabulated ΔS exactly; ΔG recovered from the EXACT rational potential must return with zero drift, while the rounded microvolt form is separately held to half a microvolt's worth of energy; and the break-even COD found by SCANNING must equal the one obtained by INVERTING the arithmetic, which is a different computation reaching the same integer. Reflection through the void inverts too, being its own inverse.",
     decide: () => {
       // --- free energy: invert ΔG = ΔH − TΔS to recover the entropy --------
       // The forward pass multiplied T by ΔS; dividing it back out must land on
@@ -702,15 +705,20 @@ export const SEALS: Record<string, Seal> = {
       if (recovered !== TABULATED_ENTROPY_MILLI) return false
 
       // --- cell potential: invert E = ΔG/(nF) to recover ΔG ----------------
-      // The potential is rendered to whole microvolts, so the inverse cannot be
-      // exact. It must be within half a microvolt's worth of energy, which is
-      // nF/20 in these units — a real bound, not an eyeballed tolerance.
+      // Exactly, from the rational form. This used to be a bounded check
+      // because the microvolt rounding made an exact inverse impossible; the
+      // exact potentials exist so that the demand can be equality.
+      if (energyFromPotential(reversiblePotentialExact()) !== GIBBS_SPLITTING) return false
+      if (energyFromPotential(thermoneutralPotentialExact()) !== ENTHALPY_SPLITTING) return false
+
+      // The ROUNDED form still cannot invert exactly, and must not pretend to.
+      // Its drift is held to half a microvolt's worth of energy — nF/20 in
+      // these units, a derived bound rather than an eyeballed tolerance.
       const microvolts = reversiblePotentialMicrovolts()
       const backToGibbs = (microvolts * ELECTRONS * FARADAY) / 10
       const drift = backToGibbs - GIBBS_SPLITTING
       const magnitude = drift < 0 ? -drift : drift
       if (!(2 * magnitude <= (ELECTRONS * FARADAY) / 10)) return false
-      // And it must be drift, not a systematic error: far below the value.
       if (!(magnitude * 1000000 < GIBBS_SPLITTING)) return false
 
       // --- break-even COD: scanning versus inverting ------------------------

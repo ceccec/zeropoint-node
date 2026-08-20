@@ -97,16 +97,56 @@ export const GIBBS_SPLITTING = -GIBBS_FORMATION
 // CELL POTENTIALS — the same numbers, in volts
 // ============================================================================
 
+/** An exact rational, so no precision is lost before it is rendered. */
+export interface ExactPotential {
+  /** Microvolts, as numerator/denominator. */
+  readonly numerator: number
+  readonly denominator: number
+}
+
 /**
- * Reversible cell potential, E° = ΔG/(nF), in microvolts.
+ * Reversible cell potential E° = ΔG/(nF) as an EXACT fraction of a microvolt.
+ *
+ * The rounded form below cannot be inverted exactly — quantising to whole
+ * microvolts throws away what the inverse would need. Returning the fraction
+ * keeps ΔG recoverable with no drift at all, which is what lets
+ * `every_model_inverts` demand equality rather than a tolerance.
+ */
+export function reversiblePotentialExact(): ExactPotential {
+  return { numerator: GIBBS_SPLITTING * 10, denominator: ELECTRONS * FARADAY }
+}
+
+/** Thermoneutral potential ΔH/(nF), likewise exact. */
+export function thermoneutralPotentialExact(): ExactPotential {
+  return { numerator: ENTHALPY_SPLITTING * 10, denominator: ELECTRONS * FARADAY }
+}
+
+/**
+ * Recover the energy an exact potential came from, in 10⁻⁵ J/mol.
+ *
+ * E is `numerator/denominator` microvolts and energy = E·nF/10, where the
+ * denominator IS nF — so it cancels. The cancellation is done here rather than
+ * by multiplying it out: `numerator × denominator` is about 4.6e16, past the
+ * 2^53 where doubles stop counting exactly, and multiplying it out reintroduced
+ * the very drift these exact potentials exist to remove.
+ */
+export function energyFromPotential(p: ExactPotential): number {
+  if (p.denominator !== ELECTRONS * FARADAY) {
+    throw new RangeError(`potential denominator must be nF = ${ELECTRONS * FARADAY}, got ${p.denominator}`)
+  }
+  return p.numerator / 10
+}
+
+/**
+ * Reversible cell potential, E° = ΔG/(nF), in whole microvolts.
  *
  * The least voltage that can split water at all. Below it the reaction does not
- * run, however the cell is built.
+ * run, however the cell is built. Rounded for display; use
+ * `reversiblePotentialExact` when the value will be computed with further.
  */
 export function reversiblePotentialMicrovolts(): number {
-  // GIBBS_SPLITTING is in 10^-5 J/mol; dividing by nF gives 10^-5 V, so scale
-  // by 10 to reach microvolts, rounding once.
-  return round(GIBBS_SPLITTING * 10, ELECTRONS * FARADAY)
+  const { numerator, denominator } = reversiblePotentialExact()
+  return round(numerator, denominator)
 }
 
 /**
@@ -117,7 +157,8 @@ export function reversiblePotentialMicrovolts(): number {
  * above the reversible potential, and the gap is TΔS.
  */
 export function thermoneutralPotentialMicrovolts(): number {
-  return round(ENTHALPY_SPLITTING * 10, ELECTRONS * FARADAY)
+  const { numerator, denominator } = thermoneutralPotentialExact()
+  return round(numerator, denominator)
 }
 
 // ============================================================================
@@ -205,6 +246,14 @@ export function selfTest(): string[] {
   if (rev !== 1229) fail.push(`reversible potential ${rev} mV, expected 1229`)
   if (thermo !== 1481) fail.push(`thermoneutral potential ${thermo} mV, expected 1481`)
   if (!(thermo > rev)) fail.push('thermoneutral potential is not above the reversible one')
+
+  // The exact potentials must invert with NO drift — that is their purpose.
+  if (energyFromPotential(reversiblePotentialExact()) !== GIBBS_SPLITTING) {
+    fail.push('reversible potential does not invert exactly')
+  }
+  if (energyFromPotential(thermoneutralPotentialExact()) !== ENTHALPY_SPLITTING) {
+    fail.push('thermoneutral potential does not invert exactly')
+  }
 
   // The ideal cycle breaks even and never better.
   const ideal = roundTrip(100, 100, 100)

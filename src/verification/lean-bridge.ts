@@ -44,6 +44,9 @@ import {
   STEANE_CODE,
   symplecticProduct,
   estimateSurfaceCodeThreshold,
+  executeInSuperposition,
+  computeInterferencePattern,
+  describeQuantumExecution,
 } from '../quantum/index.ts'
 import { ML_KEM_768 } from '../crypto/ml-kem.ts'
 import { sqrt } from '../0/algebra.ts'
@@ -441,6 +444,32 @@ export const SEALS: Record<string, Seal> = {
       // Reflecting the orbit reaches every member of the triad.
       const reflected = orbit.map(throughVoid)
       return TRIAD.every((t) => reflected.includes(t))
+    },
+  },
+  superposition_reports_its_own_state: {
+    basis: "the superposition model's prose must follow its measurement, not assert simultaneity regardless. Collapse is decided by one comparison — interference against the threshold — and the description must claim 'all at once' exactly when that comparison says so. While anything is still open the sequence has not computed all at once, and the text must say that.",
+    decide: () => {
+      const execution = executeInSuperposition()
+      const interference = computeInterferencePattern()
+      const text = describeQuantumExecution()
+
+      // The reported verdict must be the comparison, not a stored string.
+      const collapsedByNumbers = interference.working_solution_probability > 85 / 100
+      const collapsedByReport = execution.system_correctness === 'collapsed_to_valid'
+      if (collapsedByReport !== collapsedByNumbers) return false
+
+      // The prose takes exactly one of the two branches — never both, never
+      // neither, which is what an unconditional closing slogan would do.
+      const claimsCollapse = text.includes('COLLAPSED.')
+      const admitsOpen = text.includes('STILL SUPERPOSED')
+      if (claimsCollapse === admitsOpen) return false
+
+      // And the branch it takes is the one the measurement licenses.
+      if (claimsCollapse !== collapsedByNumbers) return false
+
+      // When open, it must publish the shortfall rather than only naming it.
+      if (admitsOpen && !text.includes('NOT ALL AT ONCE')) return false
+      return true
     },
   },
 }

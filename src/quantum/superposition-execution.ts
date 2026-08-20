@@ -351,9 +351,14 @@ MEASUREMENT & COLLAPSE:
   - Run all tests simultaneously
   - Theater share ${round(THEATER_SHARE * AMPLITUDE_SCALE)}/${AMPLITUDE_SCALE}, reality amplified
 
-NO SEQUENTIAL PHASES.
-NO WAITING.
-ALL AT ONCE.
-QUANTUM EXECUTION.
+${
+  execution.system_correctness === 'collapsed_to_valid'
+    ? `COLLAPSED.
+The measurement cleared the threshold, so the phases resolved together.`
+    : `STILL SUPERPOSED — NOT ALL AT ONCE.
+Interference reached ${round(interference.working_solution_probability * AMPLITUDE_SCALE)}/${AMPLITUDE_SCALE}, under the ${round(COLLAPSE_THRESHOLD * AMPLITUDE_SCALE)}/${AMPLITUDE_SCALE} a collapse needs.
+While anything stays open the sequence does not compute all at once, and this
+model must not claim it did. ${execution.next_action}`
+}
 `
 }

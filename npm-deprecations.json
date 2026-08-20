@@ -1,0 +1,22 @@
+{
+  "_": "Declared state of npm deprecations for this package. scripts/npm-registry-sync.mjs reconciles the registry to this file. Edit here; never run npm deprecate by hand, or the reason ends up in a shell history instead of in the repository.",
+  "package": "zeropoint-node",
+  "deprecate": [
+    {
+      "version": "1.0.0",
+      "reason": "CJS entry cannot load: rollup emitted CommonJS into .js under \"type\": \"module\", so require() fails on the package's own chunk. The tarball also ships 87 MB of scanned page imagery. Use 1.0.5."
+    },
+    {
+      "version": "1.0.1",
+      "reason": "CJS entry cannot load: rollup emitted CommonJS into .js under \"type\": \"module\", so require() fails on the package's own chunk. The tarball also ships 87 MB of scanned page imagery. Use 1.0.5."
+    },
+    {
+      "version": "1.0.2",
+      "reason": "CJS entry cannot load: rollup emitted CommonJS into .js under \"type\": \"module\", so require() fails on the package's own chunk. The tarball also ships 87 MB of scanned page imagery. Use 1.0.5."
+    },
+    {
+      "version": "1.0.3",
+      "reason": "Ships src/crypto/kyber-real.ts, which fails its own encapsulate/decapsulate round trip (0 of 20 measured) under a header reading 'Real NIST FIPS 203 Implementation'. Both claims were false. Use 1.0.5: ML-KEM-768 verified against NIST ACVP vectors."
+    }
+  ]
+}

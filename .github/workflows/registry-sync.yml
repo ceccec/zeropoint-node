@@ -1,0 +1,84 @@
+# Reconcile npm to npm-deprecations.json — automation, not a reminder.
+#
+# Deprecations were being carried as instructions to a human: "run this
+# command". Twice that produced a deprecation reported as done which had never
+# reached the registry, and nothing detected the gap because nothing looked.
+# The declared state now lives in npm-deprecations.json and this workflow makes
+# the registry match it.
+#
+# AUTH. `npm deprecate` is a write, and this account is 2FA `auth-and-writes`,
+# so an interactive token fails with EOTP. OIDC trusted publishing (used by
+# publish.yml) is publish-scoped and will not authorise a deprecate. Applying
+# therefore needs an npm AUTOMATION token — automation tokens are exempt from
+# 2FA — stored as the NPM_TOKEN repository secret.
+#
+#   npmjs.com -> Access Tokens -> Generate -> Automation
+#   gh secret set NPM_TOKEN --repo ceccec/zeropoint-node
+#
+# Without that secret the apply step is skipped and the check still runs, so the
+# drift is reported on every push and every day rather than forgotten.
+
+name: Registry sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'npm-deprecations.json'
+      - 'scripts/npm-registry-sync.mjs'
+      - '.github/workflows/registry-sync.yml'
+  schedule:
+    # Daily. A published version can be deprecated out of band; this notices.
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: registry-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # The diff logic must be able to report drift before it is trusted to
+      # decide that nothing needs doing.
+      - name: Self-test the diff
+        run: npm run registry:test
+
+      - name: Is a write-capable token configured?
+        id: auth
+        run: echo "present=${{ secrets.NPM_TOKEN != '' }}" >> "$GITHUB_OUTPUT"
+
+      - name: Apply declared deprecations
+        if: steps.auth.outputs.present == 'true'
+        run: npm run registry:apply
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Runs either way. With a token this verifies the apply landed; without
+      # one it is the standing report that the registry does not match the
+      # declaration, and it fails the workflow so the gap stays visible.
+      - name: Verify the registry matches the declaration
+        run: npm run registry:check
+
+      - name: How to finish this
+        if: failure() && steps.auth.outputs.present != 'true'
+        run: |
+          echo "::error::No NPM_TOKEN secret, so the deprecations above could not be applied."
+          echo "Create an npm Automation token (exempt from 2FA) and add it:"
+          echo "  gh secret set NPM_TOKEN --repo ceccec/zeropoint-node"
+          echo "Then re-run this workflow. Nothing else is manual after that."

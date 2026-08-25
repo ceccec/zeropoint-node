@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.0.10
+
+### Added — the sponsorship reaches npm
+
+- 1.0.9 put the sponsorship link in the documentation site's nav, social row and
+  footer, but **not in the README** — and the README is what npm renders, which
+  is where most readers actually arrive. Verified by unpacking published 1.0.9:
+  zero occurrences of the link.
+- The README now carries a **Sponsor** section saying what sponsorship funds —
+  the gates, which take the longest and show the least — and stating plainly
+  that the licence is unchanged, nothing is gated behind it, and no sponsor gets
+  a say in what the checks report.
+
+### Known limitations
+
+- Unchanged from 1.0.9: 1.0.0–1.0.3 stay undeprecated pending an npm automation
+  token, 126 modules stay outside LEAN, ML-KEM-768 is conformant but **not
+  constant time**, and nothing in `src/thermo` is a device.
+
 ## 1.0.9
 
 ### Fixed — dead stores and invisible characters

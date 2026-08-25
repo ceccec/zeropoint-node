@@ -1,5 +1,53 @@
 # Changelog
 
+## 1.0.9
+
+### Fixed — dead stores and invisible characters
+
+- **42 useless assignments removed.** Every one initialised a variable that was
+  then assigned in each branch of an exhaustive conditional, so the initial
+  value was provably never read. ESLint proves that, which is why nothing was
+  hidden behind them — cleanup rather than a bug hunt. Trialled on one file
+  first: TypeScript reported the same 2 unrelated errors before and after, so
+  the rewrite was mechanical before it was applied to the other 13.
+- **Two invisible characters** in `a432.math.ts`: EM SPACES (`U+2003`) reading
+  as indentation, and an EN DASH inside `-1` reading as a minus. In a comment,
+  so nothing computed differently — but a lookalike minus in a line explaining
+  signs is worse than useless.
+
+### Changed — 307 unused import specifiers removed
+
+- The risk was the graph, not the removal. An unused import is still an import
+  EDGE, and the fold counts edges, so stripping imports can push a module out of
+  LEAN and grow `unreachable` — trading one surface for another while looking
+  like a cleanup. Specifiers are removed but statements are not: when every
+  specifier goes, what remains is a side-effect import of the same module,
+  preserving both the edge and any top-level effect. LEAN 139 and OUTSIDE 126
+  either side, TypeScript held at 117.
+- Unused locals and parameters are untouched. A parameter often exists to
+  satisfy a signature, and that is a judgement rather than a sweep.
+
+### Added — sponsorship, without a tracker
+
+- The documentation site carries a sponsorship link in the nav, the social row
+  and the footer. VitePress's `carbonAds` was considered and **refused**: its
+  `code` identifies a Carbon placement rather than a destination, so it cannot
+  point elsewhere, and enabling it injects Carbon's serve script into every page
+  of a site whose whole claim is that its facts recompute locally. The heart
+  icon is inlined, so even that costs no request — the built page adds zero
+  external `<script src>`.
+
+### Known limitations
+
+- Deprecations for 1.0.0–1.0.3 remain declared and **not live**. The scheduled
+  `registry-sync` run reports it daily; applying needs an npm automation token
+  as the `NPM_TOKEN` secret, which OIDC cannot replace.
+- 126 modules stay outside LEAN, held by a manifest, three pages, the generated
+  bundle, the README listing or one of 19 documents. Removing them decides what
+  the package offers, which is not something a fold settles.
+- Everything under 1.0.8 and earlier still applies — ML-KEM-768 is conformant
+  but **not constant time**, and nothing in `src/thermo` is a device.
+
 ## 1.0.8
 
 ### Removed — 147 modules the package never reached

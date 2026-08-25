@@ -80,6 +80,23 @@ function excerptFor(relativePath: string): string {
   }
 }
 
+/**
+ * Sponsorship. A single outbound link, no script.
+ *
+ * The alternative on the table was VitePress's `carbonAds`, which injects
+ * Carbon's serve script into every page. That is a third-party request and a
+ * tracker on a site whose entire claim is that its facts are recomputable
+ * locally — and it cannot point anywhere else, since the code identifies a
+ * Carbon placement rather than a destination. A link costs the reader nothing.
+ */
+const SPONSOR_URL = 'https://revolut.me/ceccec'
+
+/** Inline heart, so the icon needs no network request either. */
+const SPONSOR_ICON =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+  '<path d="M12 21s-6.7-4.35-9.2-8.2C1 10 2 6.5 5.2 5.6 7.4 5 9.5 6 12 8.5 14.5 6 16.6 5 18.8 5.6 22 6.5 23 10 21.2 12.8 18.7 16.65 12 21 12 21z"/>' +
+  '</svg>'
+
 export default defineConfig({
   title: 'ZeroPoint Node',
   description:
@@ -219,6 +236,7 @@ export default defineConfig({
       { text: 'Computed pages', link: '/pages/' },
       { text: 'Audit', link: '/AUDIT' },
       { text: 'All docs', link: '/DOCUMENTATION_INDEX' },
+      { text: 'Sponsor', link: SPONSOR_URL },
     ],
 
     sidebar: [
@@ -258,13 +276,22 @@ export default defineConfig({
       },
     ],
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/ceccec/zeropoint-node' }],
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/ceccec/zeropoint-node' },
+      // Carbon Ads was considered and rejected: `carbonAds` loads Carbon's own
+      // serve script from their CDN, so it cannot be pointed at another URL —
+      // a placeholder code just fails to load, and a real one would put a
+      // third-party tracker on every page of a site whose whole claim is that
+      // its facts are locally recomputable. A plain link carries no script.
+      { icon: { svg: SPONSOR_ICON }, link: SPONSOR_URL, ariaLabel: 'Sponsor this work' },
+    ],
 
     search: { provider: 'local' },
 
     footer: {
       message:
         'Facts on this site are computed by the kernel — drift fails npm run check. ' +
+        `<a href="${SPONSOR_URL}" rel="noopener">Sponsor this work</a> · ` +
         'Contact <a href="mailto:node@zeropoint.bg">node@zeropoint.bg</a>.',
       copyright: 'ZeroPoint Node · node.zeropoint.bg',
     },

@@ -235,7 +235,7 @@
   "homepage": "https://node.zeropoint.bg",
   "dependencies": {
     "@hotwired/stimulus": "3.2.2",
-    "@uuidna/uuidna": "0.2.7",
+    "@uuidna/uuidna": "0.2.9",
     "express": "5.2.1",
     "three": "0.185.1"
   }

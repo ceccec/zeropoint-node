@@ -251,11 +251,22 @@ export function feedbackAndImprove(
   const boost = 0.05 // 5% improvement per iteration
   const decay = 0.98 // Strong layers maintain, don't overfit
 
-  let updated = { ...state }
+  // `{ ...state }` copies the TOP LEVEL only, so the copy's `layer_states` was
+  // the same object as the caller's. Both loops then assigned into it, and this
+  // function — which takes a state and returns a new one — mutated the state it
+  // was given. Measured: after one call, the input's layer_states had changed.
+  // The readonly types were reporting exactly that, and the fix is a second
+  // copy rather than a cast.
+  //
+  // Note on the names: `suppress` is the WEAK set (quality < 0.7) and gets the
+  // boost, `amplify` is the STRONG set (> 0.8) and gets the decay. That reads
+  // backwards but is correct — the fields classify the interference, they do
+  // not name the action taken here, which is what the comments above describe.
+  const layer_states = { ...state.layer_states }
 
   for (const layer_name of interference.suppress) {
     const key = layer_name as keyof typeof state.layer_states
-    updated.layer_states[key] = {
+    layer_states[key] = {
       working: true,
       quality: min(1, state.layer_states[key].quality + boost),
     }
@@ -263,14 +274,13 @@ export function feedbackAndImprove(
 
   for (const layer_name of interference.amplify) {
     const key = layer_name as keyof typeof state.layer_states
-    updated.layer_states[key] = {
+    layer_states[key] = {
       working: true,
       quality: state.layer_states[key].quality * decay,
     }
   }
 
-  // Iterate
-  updated = { ...updated, iteration: state.iteration + 1 }
+  const updated = { ...state, layer_states, iteration: state.iteration + 1 }
 
   // Re-entangle with new state
   return entangleLayerOutputs(updated)

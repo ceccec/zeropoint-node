@@ -170,7 +170,7 @@
     "vortex:svg:check": "node --experimental-strip-types scripts/vortex-svg.mjs --check",
     "bundle:a432": "node scripts/build-a432-bundle.mjs",
     "bundle:a432:check": "node scripts/build-a432-bundle.mjs --check",
-    "check": "npm run version:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run version:check && npm run changelog:check && npm run test:kernel && npm run test:security && npm run test:quantum && npm run test:crypto && npm run adjudicate:check && npm run test:verification && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
+    "check": "npm run version:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run version:check && npm run changelog:check && npm run test:kernel && npm run test:security && npm run test:quantum && npm run test:crypto && npm run test:a432 && npm run adjudicate:check && npm run test:verification && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
     "prepublishOnly": "npm run build",
     "prose": "node scripts/prose-claims.mjs --list",
     "prose:check": "node scripts/prose-claims.mjs",
@@ -180,7 +180,9 @@
     "postversion": "echo \"tagged v$npm_package_version — fill in the CHANGELOG entry if it is still a stub, then: git push --follow-tags\"",
     "notes": "node scripts/release-notes.mjs",
     "notes:test": "node scripts/release-notes.test.mjs",
-    "notes:check": "node scripts/release-notes.mjs --check"
+    "notes:check": "node scripts/release-notes.mjs --check",
+    "test:a432": "node --experimental-strip-types src/0/3/6/9/1/2/4/8/7/5/1/a432.test.ts",
+    "test:a432:seed": "node --experimental-strip-types src/0/3/6/9/1/2/4/8/7/5/1/a432.test.ts --seed"
   },
   "keywords": [
     "a432",

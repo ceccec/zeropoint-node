@@ -18,6 +18,7 @@ import { PI, abs, cos, floor, min, round, sin, sqrt } from './a432.algebra.ts'
 import { digitAngleToCMYK, cmykToCss, type CMYK } from './a432.cmyk.ts';
 import { A432_FREQUENCY } from './a432.core.ts';
 import { TRINITY_AXIS, RODIN_SEQUENCE } from './a432.math.ts';
+import { throughVoid } from '../../../../../../../../../../index.ts';
 export { TRINITY_AXIS, RODIN_SEQUENCE };
 
 /**
@@ -34,13 +35,37 @@ export function trinityFieldFold(angleA: number, angleB: number): number {
   return trinityFieldState(mergedAngle);
 }
 
+const isTriad = (n: number): boolean => n === 3 || n === 6 || n === 9;
+
+/**
+ * The trinity axis reached from a Rodin sequence.
+ *
+ * This filtered rodinSeq for 3, 6 and 9 directly, and therefore always returned
+ * an empty array — the sealed theorem doubling_avoids_the_triad proves that the
+ * doubling circuit never contains them, because gcd(2,9) = 1 makes every power
+ * of two a unit mod 9. Filtering for something a proof says is not there is not
+ * a search that sometimes fails; it is one that cannot succeed.
+ *
+ * The same theorem says how the triad IS reached: by reflection through the
+ * void, which carries 1, 4 and 7 onto 9, 6 and 3. So the sequence is reflected
+ * first, and the triad members of the reflection are the axis.
+ */
 export function getTrinityAxisFromRodin(rodinSeq: number[] = RODIN_SEQUENCE): number[] {
-  return Array.from(new Set(rodinSeq.filter(n => n === 3 || n === 6 || n === 9)));
+  const reflected = rodinSeq.map(throughVoid).filter(isTriad);
+  return Array.from(new Set(reflected)).sort((a, b) => a - b);
 }
 
+/**
+ * The trinity triangulation reached from a Rodin sequence.
+ *
+ * This declared a rodinSeq parameter and then ignored it, testing membership
+ * against a hardcoded cycle instead, so every input produced the same answer.
+ * It now answers about the sequence it was actually given, by the same
+ * reflection: 3, 9, 6 in triangulation order, keeping those the input can reach.
+ */
 export function getTrinityTriangulationFromRodin(rodinSeq: number[] = RODIN_SEQUENCE): number[] {
-  const fullCycle = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
-  return [3, 9, 6].filter(n => fullCycle.includes(n));
+  const reachable = new Set(rodinSeq.map(throughVoid).filter(isTriad));
+  return [3, 9, 6].filter(n => reachable.has(n));
 }
 
 // Use canonical constants from a432.math.ts

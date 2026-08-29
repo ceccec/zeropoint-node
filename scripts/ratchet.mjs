@@ -363,6 +363,8 @@ function unreachableCount() {
     // test:crypto
     'src/crypto/ml-kem.test.ts',
     'src/verification/lean-bridge.test.ts',
+    // test:a432 — the property suite over the a432 layer
+    'src/0/3/6/9/1/2/4/8/7/5/1/a432.test.ts',
   ]) {
     const p2 = join(ROOT, e)
     if (existsSync(p2)) roots.add(p2)

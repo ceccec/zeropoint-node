@@ -1,0 +1,59 @@
+{
+  "browserOnly": {
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.main.ts": "document is not defined"
+  },
+  "stateful": {
+    "a432.bus.ts:mergedDigit": "returns a different value on a second call with no arguments",
+    "a432.consciousness.stream.ts:evolveConsciousnessStream": "returns a different value on a second call with no arguments",
+    "a432.consciousness.stream.ts:getConsciousnessStream": "returns a different value on a second call with no arguments",
+    "a432.documentation.ts:generateDocumentationIndex": "returns a different value on a second call with no arguments",
+    "a432.experience.ui.ts:createA432ExperienceState": "returns a different value on a second call with no arguments",
+    "a432.experience.ui.ts:harmonizeA432Experience": "returns a different value on a second call with no arguments",
+    "a432.index.ts:exportA432Registry": "returns a different value on a second call with no arguments",
+    "a432.index.ts:getA432RegistryStats": "returns a different value on a second call with no arguments",
+    "a432.living.ui.ts:getLivingUIStatus": "returns a different value on a second call with no arguments",
+    "a432.navigation.ts:getPath": "returns a different value on a second call with no arguments",
+    "a432.navigation.ts:nextSuggestion": "returns a different value on a second call with no arguments",
+    "a432.os.ts:a432OSState": "returns a different value on a second call with no arguments",
+    "a432.os.ts:getA432SystemStatus": "returns a different value on a second call with no arguments",
+    "a432.os.ts:getSystemInfo": "returns a different value on a second call with no arguments",
+    "a432.registry.ts:exportA432Registry": "returns a different value on a second call with no arguments",
+    "a432.registry.ts:getA432RegistryStats": "returns a different value on a second call with no arguments",
+    "a432.stream.vortex.ts:getStreamVortexOverlayData": "returns a different value on a second call with no arguments",
+    "a432.time.ts:now": "returns a different value on a second call with no arguments"
+  },
+  "notDigits": {
+    "a432.mirror.ts:a432PrimeSquaredBases": "returns numbers outside 0..9, so it is not a digit sequence",
+    "a432.pi.ts:piHarmonicStream": "returns numbers outside 0..9, so it is not a digit sequence",
+    "a432.shear.electron.ts:a432NestedVortices": "returns numbers outside 0..9, so it is not a digit sequence",
+    "a432.vbm.audio.ts:getVBMAudioFrequencies": "returns numbers outside 0..9, so it is not a digit sequence",
+    "a432.vbm.visualization.ts:getVBMVisualizationAngles": "returns numbers outside 0..9, so it is not a digit sequence"
+  },
+  "emptyByDesign": {
+    "a432.harmonized.ts:getAllHarmonizationStrategies": "returns an empty array with no arguments",
+    "a432.index.ts:getAllA432Modules": "returns an empty array with no arguments",
+    "a432.matrix.ts:getTrinityIndices": "returns an empty array with no arguments",
+    "a432.navigation.ts:getPath": "returns an empty array with no arguments",
+    "a432.registry.ts:getAllA432Modules": "returns an empty array with no arguments",
+    "a432.ui.session.ts:getSessionHistory": "returns an empty array with no arguments"
+  },
+  "triadByDesign": {
+    "a432.coil.ts:a432VortexWell": "named for the doubling circuit but contains 3, 6 or 9",
+    "a432.trinity.ts:getTrinityAxisFromRodin": "named for the doubling circuit but contains 3, 6 or 9",
+    "a432.trinity.ts:getTrinityTriangulationFromRodin": "named for the doubling circuit but contains 3, 6 or 9"
+  },
+  "sharedValues": {
+    "getDoublingSequence = getRodinSequence": "[1,2,4,8,7,5,1]",
+    "a432ApertureFlow = a432RodinCoil = getOpenDoublingSequence = rodinOrbit = stringTheoryOrbit": "[1,2,4,8,7,5]",
+    "a432DandelionPuff = a432DiamondFacets = generateConsciousness": "[1,2,3,4,5,6,7,8,9]",
+    "a432ClosedSystem = a432ConsciousnessMap = a432RodinCoilStream = a432ToroidalMap": "[1,2,4,8,7,5,1,2,4,8,7,5]",
+    "a432HeatDissipation = a432Palindrome396 = a432SpiritDispersion": "[3,9,6,6,9,3,3,9,6]",
+    "getMetaDescriptions = getRecursiveMetaObservation": "[\"TrinityNavigation: Navigates, observes, and harmonizes the trinity and family streams.\"]",
+    "generateCycle = getVBMAudioSequence = getVBMVisualizationSequence": "[0,3,6,9,1,2,4,8,7,5,1]",
+    "generateVortex = generateVortexSequence": "[1,2,4,8,7,5,1,2,4]",
+    "getTrinityAxis = getTrinityAxisFromRodin = manifestTrinityAxis = stringTheoryAxis": "[3,6,9]",
+    "a432MetaVortex = a432UnifiedMatrix": "{\"trinity\":[3,6,9,3,6,9,3,6,9],\"family\":{\"F1\":[1,2,4,8,7,5,1],\"F2\":[3,9,6,3],\"F3\":[9]},\"nine\":[3,9,6,3,9,6,3,9,6],\"casca…",
+    "a432ElectronShear = a432Shears": "[1,4,7]",
+    "getCurrentNavState = trinityPrev": "{\"step\":1,\"trinity\":3,\"family\":1,\"archetype\":\"Creation\",\"metaphysical\":\"Step 1: Trinity 3 (Creation), Family 1\"}"
+  }
+}

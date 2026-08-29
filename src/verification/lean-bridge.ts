@@ -33,6 +33,10 @@ import { createHash } from 'node:crypto'
 import { digitalRoot, throughVoid, bearingForDigit, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
 import { angleForDigit } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 import { A432Sequence } from '../0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts'
+import { getTrinityAxis } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
+import { a432RodinCoil } from '../0/3/6/9/1/2/4/8/7/5/1/a432.coil.ts'
+import { a432Shears } from '../0/3/6/9/1/2/4/8/7/5/1/a432.shear.ts'
+import { a432ElectronShear } from '../0/3/6/9/1/2/4/8/7/5/1/a432.shear.electron.ts'
 import { foldToLean, leanIsFixed } from '../kernel/import-graph.ts'
 import {
   GIBBS_FORMATION,
@@ -506,6 +510,31 @@ export const SEALS: Record<string, Seal> = {
 
       // And it must no longer be the counting sequence wearing the name.
       return A432Sequence.generateVortex(9).join() !== A432Sequence.generateConsciousness(9).join()
+    },
+  },
+  a432_constants_do_not_drift_from_the_kernel: {
+    basis: "An isolated collision trial over all 198 a432 modules found the kernel's constants RETYPED as literals in module after module: [1,2,4,8,7,5] in a432.coil, [3,6,9] in a432.trinity, [1,4,7] in both a432.shear and a432.shear.electron. Each retyped copy is a place that can drift with nothing noticing, which is exactly how generateVortex became the counting sequence. Some modules already bind to the kernel — a432.string.theory returns VORTEX_ORBIT itself and cannot drift — so this seal holds the literal copies to the same standard by recomputing the agreement instead of trusting it.",
+    decide: () => {
+      // The doubling circuit, retyped as a literal in a432.coil.
+      if (a432RodinCoil().join() !== VORTEX_ORBIT.join()) return false
+
+      // The triad. a432.math derives it by slicing A432_SEQUENCE, so this also
+      // pins that sequence's ordering, not just the three digits.
+      if (getTrinityAxis().join() !== VORTEX_AXIS.join()) return false
+
+      // [1,4,7] is not a kernel constant, so it is derived rather than
+      // compared to another literal: it is exactly the set that reflection
+      // through the void carries ONTO the triad. Computing the preimage is
+      // what keeps this from being one hardcoded array checked against another.
+      const preimage = VORTEX_AXIS.map((t) => throughVoid(t)).sort((a, b) => a - b)
+      if (a432Shears().slice().sort((a, b) => a - b).join() !== preimage.join()) return false
+      if (a432ElectronShear().join() !== a432Shears().join()) return false
+
+      // And the preimage must actually reflect back onto the triad, so the
+      // relation is verified in both directions rather than assumed from the
+      // fact that throughVoid produced it.
+      const TRIAD: readonly number[] = VORTEX_AXIS
+      return preimage.every((n) => TRIAD.includes(throughVoid(n)))
     },
   },
   superposition_reports_its_own_state: {

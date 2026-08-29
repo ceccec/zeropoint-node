@@ -1,9 +1,21 @@
 /**
  * a432.resolved.ts — A432 Decimal Conflict Resolution
  *
- * Eliminates all decimal conflicts and maintains zero entropy mathematics
- * with only integer fractions whose reciprocals are integers.
- * All decimals are replaced with A432-compliant fractions.
+ * Eliminates all decimal conflicts by carrying every quantity as an exact
+ * integer ratio instead of a decimal literal.
+ *
+ * This file used to claim "only integer fractions whose reciprocals are
+ * integers", and validateAllA432Fractions() checked exactly that and returned
+ * false: 23 of the 37 fractions here fail it. The rule was not achievable.
+ * A reciprocal-integer fraction is precisely 1/n, and values the UI and audio
+ * actually need — 4/5 for a focus level, 19/20 for a threshold — have no 1/n
+ * form at all. The validator was faithful to a rule the data could never meet.
+ *
+ * The property that matters, and that all 37 do satisfy, is canonical exactness:
+ * integer numerator, non-zero positive denominator, in lowest terms. That is
+ * what keeps decimals out of the source, and lowest terms is the part that
+ * earns the name zero entropy — one value has exactly one representation, so
+ * 2/4 and 1/2 cannot both appear and drift apart.
  *
  * @module A432.Resolved
  * @version 1.0.0
@@ -14,7 +26,8 @@ import { abs } from './a432.algebra.ts'
 import './a432.core.ts';
 
 // === A432 RESOLVED FRACTIONS ===
-// All fractions have integer reciprocals (zero entropy mathematics)
+// Every fraction is an exact ratio in lowest terms (zero entropy: one
+// representation per value). See validateA432Fraction for the checked rule.
 
 export const A432_RESOLVED_FRACTIONS = {
   // Geometry / analog signal fractions for the three.js surfaces.
@@ -172,23 +185,55 @@ export function calculateA432FractionValue(fraction: { numerator: number; denomi
   return fraction.numerator / fraction.denominator;
 }
 
+/** Greatest common divisor, for the lowest-terms test. Integers only. */
+function gcd(a: number, b: number): number {
+  let x = abs(a);
+  let y = abs(b);
+  while (y !== 0) {
+    const t = y;
+    y = x % y;
+    x = t;
+  }
+  return x;
+}
+
 /**
- * Validate A432 fraction (integer reciprocals only)
+ * Validate an A432 fraction: an exact ratio in canonical form.
+ *
+ * Three conditions, and each one rules out a way a decimal could re-enter or a
+ * value could acquire a second spelling:
+ *
+ *   integer parts      a non-integer numerator IS the decimal this file exists
+ *                      to eliminate, just wearing a fraction's clothes
+ *   denominator > 0    zero is undefined; a negative denominator gives every
+ *                      value a second spelling (-1/2 and 1/-2)
+ *   lowest terms       the zero-entropy condition proper: one value, exactly
+ *                      one representation, so 2/4 and 1/2 cannot drift apart
+ *
+ * This replaces a check for `denominator / numerator` being an integer, which
+ * admits only 1/n and which 23 of this file's 37 fractions could never satisfy.
+ * For that narrower property, which is a real thing about some of them but not
+ * a validity condition, see isUnitReciprocal.
  */
 export function validateA432Fraction(fraction: { numerator: number; denominator: number }): boolean {
-  // Check if numerator and denominator are integers
   if (!Number.isInteger(fraction.numerator) || !Number.isInteger(fraction.denominator)) {
     return false;
   }
-
-  // Check if denominator is not zero
-  if (fraction.denominator === 0) {
+  if (fraction.denominator <= 0) {
     return false;
   }
+  return gcd(fraction.numerator, fraction.denominator) === 1;
+}
 
-  // Check if the reciprocal is an integer (for zero entropy)
-  const reciprocal = fraction.denominator / fraction.numerator;
-  return Number.isInteger(reciprocal);
+/**
+ * Whether a fraction is a unit reciprocal, 1/n.
+ *
+ * The old validator's rule, kept under a name that says what it tests. 14 of
+ * the 37 fractions here are of this form; the rest are exact ratios that
+ * simply are not 1/n, which is a fact about them and not a defect.
+ */
+export function isUnitReciprocal(fraction: { numerator: number; denominator: number }): boolean {
+  return validateA432Fraction(fraction) && fraction.numerator === 1;
 }
 
 // === RESOLVED CONSTANTS ===

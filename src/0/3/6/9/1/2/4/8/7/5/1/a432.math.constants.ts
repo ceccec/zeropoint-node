@@ -13,7 +13,9 @@ export const GOLDEN_RATIO_SQUARED = GOLDEN_RATIO * GOLDEN_RATIO; // φ² ≈ 2.6
 
 // === FIBONACCI SEQUENCE ===
 export const FIBONACCI_SEQUENCE = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144];
-export const FIBONACCI_RATIOS = FIBONACCI_SEQUENCE.slice(1).map((n, i) => n / FIBONACCI_SEQUENCE[i]);
+// F(k+1)/F(k) for k >= 1. Starting at k = 0 divided by F(0) = 0, so the first
+// element of this exported constant was Infinity.
+export const FIBONACCI_RATIOS = FIBONACCI_SEQUENCE.slice(2).map((n, i) => n / FIBONACCI_SEQUENCE[i + 1]);
 
 // === PI AND CIRCULAR CONSTANTS ===
 export const PI = ALGEBRA_PI; // algebra rational π (355/113)
@@ -74,7 +76,9 @@ export function calculateGoldenRatio(n: number): number {
 }
 
 export function calculateFibonacciRatio(n: number): number {
-  if (n < 0 || n >= FIBONACCI_SEQUENCE.length - 1) return 0;
+  // The guard covered the index range but not the divisor: F(0) is 0, so n = 0
+  // returned Infinity. The ratio is defined from n = 1.
+  if (n < 1 || n >= FIBONACCI_SEQUENCE.length - 1) return 0;
   return FIBONACCI_SEQUENCE[n + 1] / FIBONACCI_SEQUENCE[n];
 }
 

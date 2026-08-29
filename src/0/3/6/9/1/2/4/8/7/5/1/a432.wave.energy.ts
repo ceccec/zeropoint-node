@@ -70,7 +70,12 @@ export function calculateConsciousnessWave(digit: number): WavePattern {
   const frequency = A432_BASE_FREQUENCY * (digit / 9);
   const amplitude = GOLDEN_RATIO * digit;
   const phase = (digit * TAU) / 9;
-  const wavelength = WAVE_ENERGY_CONSTANTS.LIGHT_SPEED / frequency;
+  // Digit 0 is the void, and it does not oscillate: frequency is 0, so c/f was
+  // Infinity and every later sum touching it collapsed to NaN. 0 here encodes
+  // "no spatial period" — the wave has none because there is no wave — rather
+  // than a length of zero. The void is the FIRST digit of this repository's own
+  // sequence, so this was on the main path, not an edge case.
+  const wavelength = frequency === 0 ? 0 : WAVE_ENERGY_CONSTANTS.LIGHT_SPEED / frequency;
   const energy = calculateWaveEnergy(frequency, amplitude);
   const consciousness = calculateDigitalRoot(round(energy));
   
@@ -98,7 +103,10 @@ export function calculateA432SequenceWave(): WavePattern[] {
 // === WAVE HARMONICS ===
 export function calculateWaveHarmonics(fundamental: number, count: number = 5): WaveHarmonic {
   const harmonics = Array.from({ length: count }, (_, i) => fundamental * (i + 1));
-  const resonance = harmonics.reduce((sum, h) => sum + (1 / h), 0);
+  // A harmonic at zero frequency contributes no resonance. Summing 1/0 made
+  // resonance Infinity, and digitalRoot(round(Infinity * 1000)) is NaN — which
+  // is how a NaN reached an exported constant.
+  const resonance = harmonics.reduce((sum, h) => sum + (h === 0 ? 0 : 1 / h), 0);
   const coherence = harmonics.filter(h => isA432Harmonic(h)).length / harmonics.length;
   const consciousness = calculateDigitalRoot(round(resonance * 1000));
   

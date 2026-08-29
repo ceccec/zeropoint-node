@@ -32,6 +32,7 @@
 import { createHash } from 'node:crypto'
 import { digitalRoot, throughVoid, bearingForDigit, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
 import { angleForDigit } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
+import { A432Sequence } from '../0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts'
 import { foldToLean, leanIsFixed } from '../kernel/import-graph.ts'
 import {
   GIBBS_FORMATION,
@@ -473,6 +474,38 @@ export const SEALS: Record<string, Seal> = {
       // Reflecting the orbit reaches every member of the triad.
       const reflected = orbit.map(throughVoid)
       return TRIAD.every((t) => reflected.includes(t))
+    },
+  },
+  a432_vortex_is_the_doubling_orbit: {
+    basis: "A432Sequence.generateVortex returned digitalRoot(i + 1) — the counting sequence 1..9 — under the name 'vortex'. Two things gave it away: it was byte-identical to generateConsciousness(9), and it contained 3, 6 and 9, which doubling_avoids_the_triad proves the doubling circuit can never reach. Nothing caught it because no test in the repository names it and the a432 surface has no tests at all. This binds the a432 layer's vortex to the kernel's VORTEX_ORBIT so the two cannot drift apart again.",
+    decide: () => {
+      // One period. Must BE the kernel's orbit — not merely orbit-shaped.
+      const period = A432Sequence.generateVortex(VORTEX_ORBIT.length)
+      if (period.join() !== VORTEX_ORBIT.join()) return false
+
+      // The bug's own signature: the triad must be absent. This is the
+      // conjunct that the counting sequence fails, so it is what makes the
+      // seal falsifiable rather than decorative. VORTEX_AXIS is narrowed to
+      // 3 | 6 | 9, so it is widened to compare against arbitrary digits.
+      const TRIAD: readonly number[] = VORTEX_AXIS
+      if (period.some((d) => TRIAD.includes(d))) return false
+
+      // Every term a unit mod 9, which is why the triad is unreachable.
+      if (period.some((d) => d % 3 === 0)) return false
+
+      // It is the doubling map, step by step, not a list that happens to match.
+      for (let i = 0; i < period.length; i++) {
+        if (digitalRoot(period[i]! * 2) !== period[(i + 1) % period.length]!) return false
+      }
+
+      // Period 6: asking for more repeats the circuit rather than continuing to
+      // count. The old implementation ran 1..9 and then wrapped, so length 12
+      // is where the two disagree most visibly.
+      const twice = A432Sequence.generateVortex(VORTEX_ORBIT.length * 2)
+      if (twice.slice(0, VORTEX_ORBIT.length).join() !== twice.slice(VORTEX_ORBIT.length).join()) return false
+
+      // And it must no longer be the counting sequence wearing the name.
+      return A432Sequence.generateVortex(9).join() !== A432Sequence.generateConsciousness(9).join()
     },
   },
   superposition_reports_its_own_state: {

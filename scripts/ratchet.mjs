@@ -124,6 +124,7 @@ async function unloadableCount() {
   // importing realm, so they cannot share one. They ARE independent though,
   // so run cpus() at a time. Serially this was ~39s of a 53s gate.
   const width = Math.max(4, Math.min(cpus().length, 16))
+  const hung = []
   const probe = (file) =>
     new Promise((resolve) => {
       const rel = relative(ROOT, file)
@@ -135,17 +136,28 @@ async function unloadableCount() {
       const probeFile = join(tmpdir(), `zp-probe-${process.pid}-${probeSeq++}.mjs`)
       writeFileSync(
         probeFile,
-        `import(${JSON.stringify(pathToFileURL(file).href)}).then(()=>process.exit(0)).catch(e=>{console.error(e.message.split('\\n')[0]);process.exit(1)})`,
+        // The marker is the whole point. A module that finishes importing and
+        // then holds the event loop open, and a module still looping at module
+        // scope, are both killed by the timeout and look IDENTICAL from the
+        // outside. Printing after the import resolves is what tells them apart:
+        // if the timeout fires and the marker was never written, the import
+        // never completed and the module is genuinely unloadable.
+        `import(${JSON.stringify(pathToFileURL(file).href)}).then(()=>{console.log('ZP-IMPORT-RESOLVED');process.exit(0)}).catch(e=>{console.error(e.message.split('\\n')[0]);process.exit(1)})`,
       )
       execFile(
         'node',
         ['--experimental-strip-types', probeFile],
         { cwd: ROOT, encoding: 'utf8', timeout: 15000, maxBuffer: 8 * 1024 * 1024, killSignal: 'SIGKILL' },
-        (err, _stdout, stderr) => {
+        (err, stdout, stderr) => {
           try { unlinkSync(probeFile) } catch { /* best effort */ }
           if (!err) return resolve(0)
-          // Killed by the timeout => it loaded and kept the event loop alive.
-          if (err.killed || err.signal) return resolve(0)
+          if (err.killed || err.signal) {
+            // Timed out. Loadable ONLY if the import actually resolved first;
+            // otherwise it is still evaluating and never produced its exports.
+            if ((stdout ?? '').includes('ZP-IMPORT-RESOLVED')) return resolve(0)
+            hung.push(rel)
+            return resolve(1)
+          }
           if (ENVIRONMENTAL.test(stderr ?? '')) return resolve(0)
           resolve(1)
         },
@@ -156,6 +168,7 @@ async function unloadableCount() {
     const batch = await Promise.all(files.slice(i, i + width).map(probe))
     failed += batch.reduce((a, b) => a + b, 0)
   }
+  for (const h of hung) console.error(`  unloadable: ${h} never finished evaluating (timed out before its import resolved)`)
   return failed
 }
 

@@ -57,3 +57,13 @@ export {
   executeInSuperposition,
   describeQuantumExecution,
 } from './superposition-execution.ts'
+
+// Named rather than star-exported: `selfTest` exists in several modules here,
+// and an ambiguous star export silently drops every one of them.
+export type { QueryComparison, Separation, Standing } from './advantage.ts'
+export {
+  groverQueries,
+  deutschJozsaQueries,
+  SEPARATIONS,
+  selfTest as advantageSelfTest,
+} from './advantage.ts'

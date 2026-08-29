@@ -69,6 +69,10 @@ import {
   STEANE_CODE,
   symplecticProduct,
   estimateSurfaceCodeThreshold,
+  groverQueries,
+  deutschJozsaQueries,
+  SEPARATIONS,
+  advantageSelfTest,
   executeInSuperposition,
   computeInterferencePattern,
   describeQuantumExecution,
@@ -774,6 +778,43 @@ export const SEALS: Record<string, Seal> = {
       return leanIsFixed(full, ['r'])
     },
   },
+  simulation_shows_no_query_advantage: {
+    basis: "the algorithm's query count beats classical and the SIMULATION's does not, and both are checked. Grover asks about sqrt(N) times as an algorithm, against N classically — a proven separation with a matching BBBV lower bound. Simulating one such query costs 2^n oracle evaluations, so the simulation makes MORE calls than classical, always, by construction. A repository that claimed to demonstrate quantum advantage by simulation would be measuring the wrong quantity, so this seal requires the simulation to lose.",
+    decide: () => {
+      if (advantageSelfTest().length > 0) return false
+
+      for (const qubits of [4, 6, 8]) {
+        const r = groverQueries(qubits, (1 << qubits) - 1)
+        if (!r.correct) return false
+        // The algorithm wins.
+        if (!(r.algorithmQueries < r.classicalWorstCase)) return false
+        // The simulation loses, and must — one query costs the state vector.
+        if (!(r.simulatedOracleCalls > r.classicalWorstCase)) return false
+        if (r.simulatedOracleCalls !== r.algorithmQueries * r.space) return false
+      }
+
+      // The algorithmic gap widens; a constant factor would not be a speedup.
+      const a = groverQueries(4, 15)
+      const b = groverQueries(8, 255)
+      if (!(b.classicalWorstCase - b.algorithmQueries > a.classicalWorstCase - a.algorithmQueries)) return false
+
+      // Deutsch-Jozsa: one algorithmic query, and the simulation pays the space.
+      const dj = deutschJozsaQueries(4, true)
+      if (dj.algorithmQueries !== 1 || !dj.correct) return false
+      if (!(dj.simulatedOracleCalls >= dj.space)) return false
+
+      // Shor must be recorded as CONDITIONAL, and Deutsch-Jozsa's exponential
+      // must carry its exact-classical condition. Dropping either is the
+      // overstatement this seal exists to prevent.
+      const shor = SEPARATIONS.find((x) => x.algorithm === 'Shor')
+      const dozsa = SEPARATIONS.find((x) => x.algorithm === 'Deutsch-Jozsa')
+      const grover = SEPARATIONS.find((x) => x.algorithm === 'Grover')
+      if (shor?.standing !== 'conditional') return false
+      if (dozsa?.standing !== 'proven-against-exact-classical') return false
+      return grover?.standing === 'proven'
+    },
+  },
+
 }
 
 // ============================================================================

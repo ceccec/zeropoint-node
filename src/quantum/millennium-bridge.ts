@@ -46,14 +46,29 @@ export function layer1_riemannSimulator(): RiemannLayer {
 /**
  * P vs NP: Can every problem verifiable in polynomial time be solved in polynomial time?
  *
- * Maps to: Quantum Algorithms
- * Why: Shor (NP → P for factoring), Grover (speedup for search)
- * Gap: Algorithm definitions exist but not end-to-end tested
- * Solution: P vs NP gap IS the algorithm completeness gap
+ * Maps to: Quantum Algorithms — as a NAMING, not a result. Three corrections,
+ * because the previous version of this comment stated two things that are false
+ * and one that is misleading:
  *
- * Shor proves factoring is in BQP (Quantum Polynomial)
- * If NP ⊆ BQP, then Shor solves the NP-completeness problem
- * Grover gives quadratic speedup for any search (generic NP solver)
+ *   "Shor (NP → P for factoring)" is wrong twice over. Factoring is not known
+ *   to be NP-complete — it sits in NP ∩ co-NP, which is strong evidence it is
+ *   NOT NP-complete — so solving it settles nothing about NP. And Shor puts
+ *   factoring in BQP, not in P; those are different classes.
+ *
+ *   "Grover ... (generic NP solver)" is wrong. Grover is a QUADRATIC speedup on
+ *   brute force: 2^n becomes 2^(n/2), which is still exponential. That is not
+ *   polynomial time and does not solve NP-complete problems efficiently. The
+ *   BBBV lower bound proves no quantum algorithm does better on unstructured
+ *   search, so this is a ceiling rather than a starting point.
+ *
+ *   "If NP ⊆ BQP, then Shor solves the NP-completeness problem" is a
+ *   conditional whose antecedent is an open question widely believed false.
+ *   Stating it beside two claimed results reads as though it followed from
+ *   them. It does not.
+ *
+ * What IS true: Shor places factoring in BQP, and no classical lower bound for
+ * factoring is known, so the speedup is conditional. See src/quantum/advantage.ts,
+ * which counts the queries and records which separations are theorems.
  */
 
 export interface PvsNPLayer {

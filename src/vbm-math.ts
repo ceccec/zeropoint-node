@@ -7,6 +7,7 @@
 
 import { pathToFileURL } from 'node:url'
 import { abs, pow } from './0/algebra.ts'
+import { VORTEX_ORBIT, VORTEX_AXIS } from './0/index.ts'
 import { legacyDigitalRoot } from './0/3/6/9/1/2/4/8/7/5/1/a432.roots.ts'
 
 export class VortexMath {
@@ -41,10 +42,14 @@ export class VortexMath {
     }
 
     /**
-     * Get the core Mobius Circuit pattern [1,2,4,8,7,5]
+     * The core Mobius circuit — the kernel's VORTEX_ORBIT, not a second copy.
+     *
+     * This returned a literal, so it was one of 91 places in the tree holding
+     * its own copy of a constant the kernel already exports. Bound rather than
+     * retyped, it cannot drift from the definition.
      */
     static getMobiusCircuit(): number[] {
-        return [1, 2, 4, 8, 7, 5];
+        return [...VORTEX_ORBIT];
     }
 
     /**
@@ -52,7 +57,7 @@ export class VortexMath {
      * These numbers form the higher dimensional control axis in VBM
      */
     static getSpiritNumbers(): number[] {
-        return [3, 6, 9];
+        return [...VORTEX_AXIS];
     }
 
     /**

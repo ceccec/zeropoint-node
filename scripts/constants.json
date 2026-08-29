@@ -1,0 +1,226 @@
+{
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.1.2.4.8.7.5.1.ts::VORTEX_AXIS": {
+    "count": 4,
+    "why": "retypes VORTEX_AXIS, e.g. const TRINITY_AXIS = [3, 6, 9].filter(function(d) { return DIGITS.indexOf(d) !== -1; });"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.1.2.4.8.7.5.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. const openSequence = getOpenDoublingSequence(); // [1,2,4,8,7,5]"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.block.chain.ts::VORTEX_SEQUENCE": {
+    "count": 1,
+    "why": "retypes VORTEX_SEQUENCE, e.g. if (![1,2,4,8,7,5,3,6,9].includes(block.dimension)) score -= 0.3;"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.body.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. const base = [1, 2, 4, 8, 7, 5];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.cascade.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. gap: [3, 6, 9]"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.coil.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. export const A432_SEQUENCE = [0, [3, 6, 9], [1, 2, 4], 8, [7, 5, 1]]; // Void 0 -> 9 -> 7 -> 8 -> 4"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.coil.ts::VORTEX_ORBIT": {
+    "count": 4,
+    "why": "retypes VORTEX_ORBIT, e.g. return [1, 2, 4, 8, 7, 5];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.color.ts::VORTEX_AXIS": {
+    "count": 2,
+    "why": "retypes VORTEX_AXIS, e.g. if ([3,6,9].includes(n)) baseHue = n === 3 ? 0 : n === 6 ? 120 : 240;"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.color.ts::VORTEX_ORBIT": {
+    "count": 2,
+    "why": "retypes VORTEX_ORBIT, e.g. if ([1,2,4,8,7,5].includes(n)) return getFamilyColor(n);"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.journey.3d.ts::VORTEX_AXIS": {
+    "count": 2,
+    "why": "retypes VORTEX_AXIS, e.g. } else if ([3, 6, 9].includes(digit)) {"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.double.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. export function a432ClosedSystem(steps: number = 12, stream: number[] = [1,2,4,8,7,5]): number[] {"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. const teslaNumbers = pattern.filter(d => [3, 6, 9].includes(d));"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.empty.streams.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. const sequence = [1, 2, 4, 8, 7, 5];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.event.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. const trinity = [3, 6, 9][phase];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.family.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. const F1 = [1, 2, 4, 8, 7, 5];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.human.design.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. const base = [1, 2, 4, 8, 7, 5];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.imperial.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. SILVER: [3, 6, 9], // Trinity gateway"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.imperial.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. GOLDEN: [1, 2, 4, 8, 7, 5], // Rodin vortex"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.iter.anatomy.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. const base = [1, 2, 4, 8, 7, 5];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.living.os.ts::VORTEX_AXIS": {
+    "count": 2,
+    "why": "retypes VORTEX_AXIS, e.g. trinityAxis: [3, 6, 9], // Generated from mathematics"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::VORTEX_AXIS": {
+    "count": 5,
+    "why": "retypes VORTEX_AXIS, e.g. export const TRINITY_AXIS: readonly number[] = [3, 6, 9];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::VORTEX_ORBIT": {
+    "count": 3,
+    "why": "retypes VORTEX_ORBIT, e.g. export const RODIN_COIL_CORE: readonly number[] = [1, 2, 4, 8, 7, 5]; // Lossless kinetic energy"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.matrix.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. const trinity = [3, 6, 9];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.mirror.ts::VORTEX_ORBIT": {
+    "count": 2,
+    "why": "retypes VORTEX_ORBIT, e.g. export function a432MobiusMirror(seq: number[] = [1,2,4,8,7,5]): number[] {"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.mobius.circuit.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. export const MOBIUS_SEQUENCE = [1, 2, 4, 8, 7, 5];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.multidimensional.consciousness.3d.ts::VORTEX_AXIS": {
+    "count": 2,
+    "why": "retypes VORTEX_AXIS, e.g. if ([3, 6, 9].includes(firstDigit)) {"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.multidimensional.consciousness.3d.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. '6D_F1': { path: [1, 2, 4, 8, 7, 5], dimension: 'F1', level: 6, color: '#ffff00' },"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.quantum.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. if (TRINITY_POLARITY[σ]===0) spin = [3,6,9][energy%3];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.rodin.cmyk.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. const spiritDigits = this.decodedColors.filter(c => [3,6,9].includes(c.digit));"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.rodin.cmyk.ts::VORTEX_ORBIT": {
+    "count": 2,
+    "why": "retypes VORTEX_ORBIT, e.g. const rodinSequence = [1, 2, 4, 8, 7, 5];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.rodin.coil.harmonic.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. const RODIN_COIL_CORE = [1, 2, 4, 8, 7, 5]; // Lossless kinetic energy"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.rodin.coil.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. label: [3, 6, 9][i]"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.sacred.geometry.ts::VORTEX_AXIS": {
+    "count": 4,
+    "why": "retypes VORTEX_AXIS, e.g. sequence: [3, 6, 9],"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.sacred.geometry.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. const vortexGroup = digits.filter(d => [1, 2, 4, 8, 7, 5].includes(d));"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.sequence.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. TRINITY_SEQUENCE: [3, 6, 9],"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.sequence.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. VORTEX_ORBIT: [1, 2, 4, 8, 7, 5],"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.tesla.coil.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. export const TESLA_GATEWAYS = [3, 6, 9] as const;"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.trinity.ts::VORTEX_AXIS": {
+    "count": 3,
+    "why": "retypes VORTEX_AXIS, e.g. return [3, 6, 9][sector];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.triple.merkaba.3d.ts::VORTEX_AXIS": {
+    "count": 4,
+    "why": "retypes VORTEX_AXIS, e.g. } else if ([3, 6, 9].includes(digit)) {"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.triple.merkaba.3d.ts::VORTEX_ORBIT": {
+    "count": 2,
+    "why": "retypes VORTEX_ORBIT, e.g. const rodinSequence = [1, 2, 4, 8, 7, 5];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.triple.merkaba.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. } else if ([3, 6, 9].includes(digit)) {"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.triple.merkaba.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. const rodinSequence = [1, 2, 4, 8, 7, 5];"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. TRINITY: [3, 6, 9], // Trinity Gateway"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. VORTEX: [1, 2, 4, 8, 7, 5], // Rodin Vortex Pattern"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.ui.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. if ([3,6,9].includes(block.trinity)) {"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.uuid.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. const RODIN = [1, 2, 4, 8, 7, 5] as const"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.vbm.animation.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. trinity: 'Trinity axis [3, 6, 9] represents the field of consciousness',"
+  },
+  "src/0/3/6/9/1/2/4/8/7/5/1/a432.vortex.cmyk.matrix.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. const rodinSeq = [1, 2, 4, 8, 7, 5];"
+  },
+  "src/advanced-vbm.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. const hasSpirit = drSequence.some(dr => [3, 6, 9].includes(dr));"
+  },
+  "src/multidimensional-vortex-framework.ts::VORTEX_AXIS": {
+    "count": 2,
+    "why": "retypes VORTEX_AXIS, e.g. private readonly CONTROL_SEQUENCE = [3, 6, 9];"
+  },
+  "src/multidimensional-vortex-framework.ts::VORTEX_ORBIT": {
+    "count": 2,
+    "why": "retypes VORTEX_ORBIT, e.g. private readonly DOUBLING_SEQUENCE = [1, 2, 4, 8, 7, 5];"
+  },
+  "src/security/quantum-fold-cipher.ts::VORTEX_AXIS": {
+    "count": 2,
+    "why": "retypes VORTEX_AXIS, e.g. const TRINITY = [3, 6, 9]"
+  },
+  "src/security/quantum-threat-landscape.ts::VORTEX_AXIS": {
+    "count": 1,
+    "why": "retypes VORTEX_AXIS, e.g. description: 'Keys constrained to trinity lattice [3,6,9] (fold Tier 3)',"
+  },
+  "src/security/quantum-threat-landscape.ts::VORTEX_ORBIT": {
+    "count": 2,
+    "why": "retypes VORTEX_ORBIT, e.g. export const RODIN_SEQUENCE_CLASSICAL = [1, 2, 4, 8, 7, 5] as const"
+  },
+  "src/vbm-math.ts::VORTEX_AXIS": {
+    "count": 2,
+    "why": "retypes VORTEX_AXIS, e.g. family3: [3, 6, 9]"
+  },
+  "src/verification/lean-bridge.ts::VORTEX_ORBIT": {
+    "count": 1,
+    "why": "retypes VORTEX_ORBIT, e.g. basis: \"An isolated collision trial over all 198 a432 modules found the kernel's constants RETYPED a"
+  }
+}

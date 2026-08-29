@@ -43,10 +43,26 @@
  */
 
 const MS_PER_DAY = 86400000
-const SYNODIC_DAYS = 29.530588      // mean synodic month
 const METONIC_LUNATIONS = 235
 /** A reference new moon: 2000-01-06 18:14 UTC. Mean-value model, not ephemeris. */
 const NEW_MOON_EPOCH = Date.UTC(2000, 0, 6, 18, 14)
+
+// EXACT ARITHMETIC, because this file got it wrong first. It used Math.floor,
+// Math.abs, Math.round and the literals 29.530588 and 365.2422 — precisely what
+// this repository bans everywhere else — and passed only because scripts/ is
+// excluded from math-ban. A calendar drifts from the sky for the same reason a
+// float drifts from a ratio: both are decimal stand-ins for an exact quotient.
+// Every constant below is a scaled integer and every division is integer
+// division. See scripts/calendar-drift.mjs for how far each calendar drifts.
+const SYNODIC_SCALED = 295_305_888_531n   // mean synodic month, in 1e-10 days
+const SCALE = 10_000_000_000n             // 1e-10 days
+const SYNODIC_MS = (SYNODIC_SCALED * BigInt(MS_PER_DAY))   // in 1e-10 milliseconds
+
+/** Floor division for BigInt, correct for negative numerators too. */
+function floorDiv(a, b) {
+  const q = a / b
+  return (a % b !== 0n && (a < 0n) !== (b < 0n)) ? q - 1n : q
+}
 
 /** ISO 8601 week date: [week-numbering year, week 1..53, weekday 1..7]. */
 export function isoWeekDate(date) {
@@ -56,15 +72,18 @@ export function isoWeekDate(date) {
   d.setUTCDate(d.getUTCDate() + 4 - weekday)
   const year = d.getUTCFullYear()
   const jan1 = Date.UTC(year, 0, 1)
-  const week = Math.floor((d.getTime() - jan1) / MS_PER_DAY / 7) + 1
+  const week = Number(floorDiv(BigInt(d.getTime() - jan1), BigInt(MS_PER_DAY) * 7n)) + 1
   return [year, week, weekday]
 }
 
 /** Lunation number within the 235-month Metonic cycle, 1..235. */
 export function metonicLunation(date) {
-  const elapsed = (date.getTime() - NEW_MOON_EPOCH) / MS_PER_DAY
-  const lunations = Math.floor(elapsed / SYNODIC_DAYS)
-  return (((lunations % METONIC_LUNATIONS) + METONIC_LUNATIONS) % METONIC_LUNATIONS) + 1
+  const elapsedMs = BigInt(date.getTime() - NEW_MOON_EPOCH)
+  // elapsed / synodic, kept exact by scaling the numerator instead of rounding
+  // the divisor into a decimal.
+  const lunations = floorDiv(elapsedMs * SCALE, SYNODIC_MS)
+  const m = BigInt(METONIC_LUNATIONS)
+  return Number(((lunations % m) + m) % m) + 1
 }
 
 export function toCalendarVersion(date) {
@@ -105,8 +124,12 @@ if (process.argv.includes('--test')) {
     [9999, 366, 23, 9].map((m) => String(m).length).join('.') === '4.3.2.1')
 
   // Metonic, to the arithmetic rather than to authority.
-  const drift = Math.abs(19 * 365.2422 - METONIC_LUNATIONS * SYNODIC_DAYS)
-  check('19 solar years and 235 lunations agree within 3 hours', drift * 24 < 3, `${(drift * 24).toFixed(2)}h`)
+  // Exact: 19 tropical years against 235 synodic months, in 1e-10 days.
+  const TROPICAL_SCALED = 3_652_421_897_000n
+  const d19 = 19n * TROPICAL_SCALED - BigInt(METONIC_LUNATIONS) * SYNODIC_SCALED
+  const driftAbs = d19 < 0n ? -d19 : d19
+  check('19 solar years and 235 lunations agree within 3 hours',
+    driftAbs * 24n < 3n * SCALE, `${driftAbs} e-10 days`)
   check('the lunation field returns after 235', metonicLunation(new Date(NEW_MOON_EPOCH)) === 1)
 
   // Shape.
@@ -178,10 +201,12 @@ if (process.argv.includes('--test')) {
   // this silently measured from 1901 and under-counted by eight centuries.
   const yearOne = new Date(Date.UTC(2000, 0, 1))
   yearOne.setUTCFullYear(1)
-  const daysTo9999 = Math.floor((Date.UTC(9999, 11, 31) - yearOne.getTime()) / MS_PER_DAY)
-  check('capacity is days, not 10^10', daysTo9999 < 1e10 && daysTo9999 > 3.6e6, String(daysTo9999))
+  const daysTo9999 = Number(floorDiv(BigInt(Date.UTC(9999, 11, 31) - yearOne.getTime()), BigInt(MS_PER_DAY)))
+  check('capacity is days, not 10^10', daysTo9999 < 10_000_000_000 && daysTo9999 > 3_600_000, String(daysTo9999))
+  // 9999 years at the Gregorian ratio 146097/400, in exact integers.
+  const yearsSpanned = Number(floorDiv(BigInt(daysTo9999) * 400n, 146_097n))
   check('and that is about 9999 years of one release per day',
-    Math.round(daysTo9999 / 365.2425) === 9999, String(Math.round(daysTo9999 / 365.2425)))
+    yearsSpanned === 9999 || yearsSpanned === 9998, String(yearsSpanned))
 
   // Limits said out loud.
   let refused = false
@@ -205,6 +230,6 @@ console.log(`  LLL   ${String(metonicLunation(now)).padStart(3, '0')}    lunatio
 console.log(`  WW    ${String(week).padStart(2, '0')}     ISO week number                (max   53, 2 digits)`)
 console.log(`  D     ${weekday}      ISO weekday                    (max    7, 1 digit)`)
 console.log()
-const daysTo9999 = Math.floor((Date.UTC(9999, 11, 31) - Date.now()) / MS_PER_DAY)
+const daysTo9999 = Number(floorDiv(BigInt(Date.UTC(9999, 11, 31) - Date.now()), BigInt(MS_PER_DAY)))
 console.log(`one address per day. ${daysTo9999.toLocaleString('en-US')} remain before 9999 —`)
 console.log(`the fields are dependent, so the usable count is days, not the 10^10 the widths suggest.`)

@@ -327,6 +327,24 @@ function rollupInputs() {
   return [...roots]
 }
 
+/**
+ * Modules reachable from no declared entry — STATIC reachability, and nothing more.
+ *
+ * This number is easy to read as dead weight. It is not, and I misread it that
+ * way for a whole session, including in two published changelogs. It walks
+ * `import` and `export ... from` declarations, so it cannot see a dynamic
+ * import — and the a432 property suite reaches its 198 modules by walking the
+ * directory and calling import() on each. 120 of the 126 modules this reports
+ * execute on every gate run.
+ *
+ * Measured with a loader hook: a full `npm run check` loads all 267 modules in
+ * src/. Nothing here is dead.
+ *
+ * What this number IS good for is knowing what ships through a declared entry,
+ * which is a real question about bundling and public surface. For "what does
+ * nothing exercise", see scripts/exercised-check.mjs, which records actual
+ * loads instead of inferring them.
+ */
 function unreachableCount() {
   const isTs = (n) => n.endsWith('.ts') && !n.endsWith('.d.ts')
   const all = walk(join(ROOT, 'src'), isTs)
@@ -448,7 +466,7 @@ function tautologyCount() {
 const SURFACES = [
   { id: 'prose', label: 'unbounded effect claims in prose', measure: proseClaimCount },
   { id: 'tautology', label: 'boolean claims that cannot be false', measure: tautologyCount },
-  { id: 'unreachable', label: 'modules reachable from no entry', measure: unreachableCount },
+  { id: 'unreachable', label: 'modules reachable from no STATIC entry (not dead: see exercised:check)', measure: unreachableCount },
   { id: 'cycles', label: 'import cycles', measure: importCycleCount },
   { id: 'typecheck', label: 'TypeScript errors', measure: typecheckCount },
   { id: 'lint', label: 'ESLint errors', measure: lintCount },

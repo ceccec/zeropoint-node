@@ -1,5 +1,87 @@
 # Changelog
 
+## 1.0.11
+
+### Fixed — a function named vortex that returned the counting sequence
+
+- **`generateVortex` did not generate a vortex.** It returned
+  `[1,2,3,4,5,6,7,8,9]` — counting. Two things gave it away and neither was
+  being looked at: the output was byte-identical to `generateConsciousness(9)`,
+  a differently-named function meant to compute a different thing; and it
+  contained 3, 6 and 9, which the repository's own sealed theorem
+  `doubling_avoids_the_triad` proves the doubling circuit can never reach. **The
+  proof that this function was wrong was already in the repository**, and
+  nothing connected the two. It now generates the orbit by doubling rather than
+  storing a literal: 1, 2, 4, 8, 7, 5.
+- **Three copies of it, not one.** A collision trial over all 198 `a432.*`
+  modules — call every export that runs with no arguments, group by output value
+  — found the same defect in `a432.simple.ts`, and a third latent in a fallback
+  branch at `a432.system.ts`. That one never showed, because the two delegates
+  above it almost always answer first, so the wrong branch is the one nothing
+  runs. Exercised directly with no delegates it returned 1..9.
+- **`validateAllA432Fractions()` returned false, and was right to.** The
+  validator faithfully implemented the rule its file documented — "only integer
+  fractions whose reciprocals are integers" — and 23 of that file's 37 fractions
+  failed it. The rule is unachievable: a reciprocal-integer fraction is
+  precisely 1/n, and values the UI and audio need (4/5 for a focus level, 19/20
+  for a threshold) have no 1/n form. The documentation was wrong, not the data.
+  The validator now checks what all 37 satisfy and what actually protects the
+  file: integer parts, positive denominator, and lowest terms. It still rejects
+  a decimal numerator, and it adds a check the old rule never made — lowest
+  terms, so 2/4 and 1/2 cannot both appear and drift apart. The narrow property
+  survives as `isUnitReciprocal`, named for what it tests.
+
+### Fixed — a check that could not fail
+
+- **The ratchet's unloadable probe scored a timeout as a pass.** Its reasoning
+  was that a timeout means the module loaded and then held the event loop open.
+  That inference is not available from the outside: a module that finished
+  importing and one still looping at module scope look identical to the probe.
+  All six modules that timed out really do resolve first, so the reported count
+  of zero was honest — but by luck, not measurement. The probe now prints a
+  marker after the import resolves and treats a timeout as a pass only if the
+  marker was written. Verified both ways: a module with a module-scope infinite
+  loop is caught and named, and the six event-loop holders still pass.
+
+### Added — two seals, and a way in for 55 pages
+
+- **25 seals**, up from 23. `a432_vortex_is_the_doubling_orbit` binds the a432
+  layer's vortex to the kernel's `VORTEX_ORBIT`; reverting the function to the
+  counting sequence turns it UNVERIFIED.
+  `a432_constants_do_not_drift_from_the_kernel` addresses what the collision
+  trial exposed — the kernel's constants retyped as literals across the layer,
+  each copy a place that can drift unnoticed. `[1,4,7]` is derived there rather
+  than compared against another array: it is the preimage of the triad under
+  reflection through the void, checked in both directions.
+- **55 of 70 built pages were in neither nav nor sidebar** — sitemapped, indexed
+  and unreachable by anyone browsing. Nothing noticed because nothing was
+  looking: the dead-link checker asks whether links point at pages, never
+  whether pages have links pointing at them. `npm run pages:check` asks the
+  second question. The sidebar is now computed from the filesystem rather than
+  hand-listed, because listing 55 entries would fix those 55 and leave the 56th
+  to orphan identically. 69 of 70 are linked; the remaining one is the home
+  page, reached by the logo.
+
+### Added — the GitHub Release, which nothing had ever created
+
+- Ten versions were tagged and published to npm with the Releases page empty.
+  `publish.yml` triggers on `release: published`, which reads like it handles
+  releases and does the opposite — it waits for one made by hand. `release.yml`
+  creates it, and `scripts/release-notes.mjs` takes the notes from this file
+  rather than generating a second description that could disagree with it. It
+  fails closed on a missing, empty, too-short or stub section: a release
+  announcing nothing is worse than no release. Its test is 15 cases, 11 of them
+  failures it must catch.
+
+### Known limitations
+
+- Unchanged from 1.0.10: 1.0.0–1.0.3 stay undeprecated pending an npm automation
+  token, 126 modules stay outside LEAN, ML-KEM-768 is conformant but **not
+  constant time**, and nothing in `src/thermo` is a device.
+- The 198 `a432.*` modules — 35,876 lines and 1,489 exports — still have **no
+  test files**. That is why a function named vortex could return the counting
+  sequence in three places. The two new seals cover the constants, not the
+  layer.
 ## 1.0.10
 
 ### Added — the sponsorship reaches npm

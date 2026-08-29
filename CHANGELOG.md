@@ -1,5 +1,84 @@
 # Changelog
 
+## 1.0.12
+
+### Added — the a432 layer has tests
+
+- **198 modules, 35,876 lines, 1,489 exports, and until now no tests at all.**
+  That is why a function named `generateVortex` could return the counting
+  sequence in three separate places without a word. Writing 198 example-based
+  test files would not have caught it: nobody writes an assertion for a function
+  they believe already works, and if they did they would write it from the same
+  wrong belief that produced the bug.
+- So the tests are **properties over every module**, run in 0.55s: every module
+  loads, nullary exports are deterministic, digit sequences hold digits, an
+  empty return is a decision, anything named for the doubling circuit stays in
+  the orbit and advances by doubling, and no two differently-named functions
+  quietly return the same value. A new module is covered the day it appears.
+  Exceptions are declared in `a432.test.json` and a declaration that stops being
+  true fails too.
+- It immediately found two defects. **`getTrinityAxisFromRodin` always returned
+  `[]`** — it filtered the doubling circuit for 3, 6 and 9, which
+  `doubling_avoids_the_triad` proves are never in it, so this was not a search
+  that sometimes failed but one that could not succeed. It reflects through the
+  void now, which is how the theorem says the triad is actually reached.
+  **`getTrinityTriangulationFromRodin` declared a parameter and ignored it**, so
+  every input gave the same answer.
+
+### Added — a census of retyped constants
+
+- A sweep of the other 56 modules found the kernel's constants **retyped 89
+  times across 56 file/constant pairs** — `VORTEX_ORBIT` 37 times,
+  `VORTEX_AXIS` 51 — in `kernel/`, `security/`, the vbm modules and a432. Each
+  copy is somewhere a value the kernel already exports can drift unnoticed.
+- `npm run constants:check` asks this of the whole tree. Not every literal is a
+  defect — default parameters and membership tests are fine — so the answer is a
+  declaration with a reason rather than a ban. **The patterns are derived**: the
+  kernel is imported and the literals to hunt for are built from it at run time,
+  because retyping them in the checker would make it the very thing it checks
+  for. `vbm-math` is bound rather than declared, which took the count from 91
+  to 89.
+
+### Added — versioning explored as an address and a calendar
+
+- The four gateways cut the vortex tour into fields of width **4.3.2.1** — a
+  dotted quad with a descending staircase rather than IPv4's equal octets.
+  Cutting *before* each gateway instead gives five fields, so four is a result
+  and not a choice of where to cut. Compatibility becomes an operation:
+  `^` is a /3 prefix mask and `~` is /6.
+- Read as a calendar those widths are the minimal ones for year, lunation,
+  ISO week and weekday — `2026.095.35.6`. Worth less than it looks, and the
+  test says so: an hour-based reading fits the same widths, so the match
+  constrains without determining.
+- **These are sketches, not this package's versioning.** `package.json` remains
+  the single source. Their self-tests are in the gate because the computed
+  halves guard the kernel stroke.
+
+### Fixed — a calendar drifts like a float
+
+- `version-calendar.mjs` used `Math.floor`, `Math.abs` and the literals
+  `29.530588` and `365.2422` — precisely what this repository bans everywhere
+  else — and passed only because `scripts/` is excluded from `math-ban`. A
+  calendar drifts from the sky for the same reason a float drifts from a ratio.
+  Rewritten in exact scaled integers; the output is byte-identical, so it is
+  exact rather than merely different.
+- `npm run calendar:drift` then measures each calendar as the integer ratio it
+  is, in exact arithmetic. Gregorian tracks the sun an order of magnitude better
+  than any ancient cycle; Hipparchic is the only one whose lunar drift is
+  negative. The constructions are checked as arithmetic, not quoted.
+
+### Known limitations
+
+- Unchanged from 1.0.11: 1.0.0–1.0.3 stay undeprecated pending an npm
+  automation token, 126 modules stay outside LEAN, ML-KEM-768 is conformant but
+  **not constant time**, and nothing in `src/thermo` is a device.
+- The 89 retyped constants are **declared, not fixed**. One file was bound to
+  the kernel as a demonstration; the other 55 pairs are recorded so the next
+  copy cannot arrive unnoticed, which is a smaller claim than having removed
+  them.
+- The mean tropical year and mean synodic month are **observed**, not derived,
+  and both are slowly changing. Exact arithmetic removes drift between the code
+  and its intent; it cannot remove drift between the intent and the sky.
 ## 1.0.11
 
 ### Fixed — a function named vortex that returned the counting sequence

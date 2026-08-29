@@ -20,7 +20,7 @@ authors:
     email: node@zeropoint.bg
 repository-code: https://github.com/ceccec/zeropoint-node
 url: https://node.zeropoint.bg
-version: 1.0.11
+version: 1.0.12
 license: CC-BY-NC-ND-4.0
 license-url: https://github.com/ceccec/zeropoint-node/blob/main/LICENSE
 keywords:

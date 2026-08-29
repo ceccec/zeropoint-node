@@ -47,10 +47,20 @@ export class A432Math {
 }
 
 export class A432Sequence {
+  /**
+   * The vortex sequence: the doubling circuit 1,2,4,8,7,5.
+   *
+   * This is the second copy of the same defect fixed in a432.utils.ts — it
+   * walked digitalRoot(i + 1), which is counting, not a vortex. A collision
+   * trial found it: the output was identical to a differently-named function,
+   * and it contained 3, 6 and 9, which doubling provably never reaches.
+   */
   static generateVortexSequence(length: number = 9): number[] {
-    const sequence = [];
+    const sequence: number[] = [];
+    let v = 1;
     for (let i = 0; i < length; i++) {
-      sequence.push(A432Math.calculateDigitalRoot(i + 1));
+      sequence.push(v);
+      v = A432Math.calculateDigitalRoot(v * 2);
     }
     return sequence;
   }

@@ -1,0 +1,117 @@
+# Create the GitHub Release. Nothing did this before.
+#
+# publish.yml triggers on `release: published`, which reads like it handles
+# releases and does the opposite — it waits for one somebody makes by hand.
+# Ten versions were tagged and published to npm with the Releases page empty,
+# because no workflow was ever asked to write to it.
+#
+# Order matters and is enforced by `needs`: npm first, GitHub Release second.
+# A release that announces a version npm does not have is a broken link for
+# every reader who follows it, and unlike a missing release it cannot be
+# fixed by waiting.
+#
+# Notes come from CHANGELOG.md via scripts/release-notes.mjs, which fails
+# closed on a missing or stub section. The notes were reviewed in the same
+# commit as the change; generating a second description here would only create
+# something that can disagree with the first.
+
+name: GitHub Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to create a release for (e.g. v1.0.9)'
+        required: true
+        type: string
+
+permissions:
+  contents: write # creating a release writes to the repository
+
+concurrency:
+  group: gh-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # Wait for npm. On a tag push both workflows start together, so without this
+  # the release can appear while `npm install` for that version still 404s.
+  await-npm:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - name: Wait for the version to appear on npm
+        run: |
+          NAME="$(node -p "require('./package.json').name")"
+          VER="${GITHUB_REF_NAME#v}"
+          for i in $(seq 1 30); do
+            if npm view "${NAME}@${VER}" version >/dev/null 2>&1; then
+              echo "${NAME}@${VER} is on npm"; exit 0
+            fi
+            echo "attempt ${i}/30: not yet on npm, waiting 20s"; sleep 20
+          done
+          echo "::error::${NAME}@${VER} never appeared on npm; not announcing a release for it"
+          exit 1
+
+  release:
+    runs-on: ubuntu-latest
+    # `always()` so workflow_dispatch (which skips await-npm) still runs, while
+    # a genuine npm failure on a tag push still blocks the release.
+    needs: [await-npm]
+    if: always() && needs.await-npm.result != 'failure'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Resolve version
+        id: v
+        run: |
+          TAG="${{ inputs.tag || github.ref_name }}"
+          VER="${TAG#v}"
+          PKG="$(node -p "require('./package.json').version")"
+          if [ "$VER" != "$PKG" ]; then
+            echo "::error::Tag ${TAG} does not match package.json version ${PKG}"
+            exit 1
+          fi
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "version=${VER}" >> "$GITHUB_OUTPUT"
+
+      # Fail-closed: no notes, no release.
+      - name: Extract release notes from CHANGELOG
+        run: |
+          node scripts/release-notes.mjs --check "${{ steps.v.outputs.version }}"
+          {
+            node scripts/release-notes.mjs "${{ steps.v.outputs.version }}"
+            echo
+            echo "---"
+            echo
+            echo "Published to npm as [\`zeropoint-node@${{ steps.v.outputs.version }}\`](https://www.npmjs.com/package/zeropoint-node/v/${{ steps.v.outputs.version }}) with build provenance."
+          } > /tmp/notes.md
+
+      - name: Create or update the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${{ steps.v.outputs.tag }}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "release ${TAG} exists — updating its notes"
+            gh release edit "$TAG" --notes-file /tmp/notes.md --title "$TAG"
+          else
+            gh release create "$TAG" --notes-file /tmp/notes.md --title "$TAG" --verify-tag
+          fi
+          gh release view "$TAG" --json url,name --jq '"created: " + .url'

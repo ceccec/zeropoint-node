@@ -7,6 +7,7 @@
     "unreachable": 126,
     "unloadable": 0,
     "prose": 59,
-    "tautology": 0
+    "tautology": 0,
+    "frameworkTests": 6
   }
 }

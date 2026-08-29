@@ -430,7 +430,19 @@ export class VortexMathUtils {
     resonance: boolean;
     harmonic: number;
   } {
-    const difference = abs(phase1 - phase2) % 360;
+    // Two corrections, both needed for this to be an angle at all.
+    //
+    // Phases are equal modulo 360, so -10 and 350 are the same phase and must
+    // give the same relationship to 10. Without normalising the inputs they
+    // gave 20 and 340.
+    //
+    // And the separation between two angles is the SHORTER arc. abs(a - b)
+    // returns the reflex angle whenever the gap exceeds 180, so 10 and 350 —
+    // which are 20 degrees apart — reported 340. That fed `harmonic`, turning
+    // round(20/60) = 0 into round(340/60) = 6.
+    const norm = (p: number): number => ((p % 360) + 360) % 360;
+    const raw = abs(norm(phase1) - norm(phase2));
+    const difference = raw > 180 ? 360 - raw : raw;
     const resonance = difference % 60 === 0; // Hexagonal resonance
     const harmonic = round(difference / 60);
     

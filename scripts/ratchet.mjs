@@ -59,6 +59,31 @@ function typecheckCount() {
   return (out.match(/error TS\d+/g) ?? []).length
 }
 
+/**
+ * Failing assertions in the framework test file that nothing used to run.
+ *
+ * src/multidimensional-vortex-framework.test.ts has 122 expect() calls and was
+ * executed by nothing — not package.json, not the gate, not CI. It sat outside
+ * LEAN, which is how it surfaced. The first time it ever ran, 7 assertions
+ * disagreed with the implementation.
+ *
+ * One was conclusively the code's fault and is fixed: calculatePhaseRelationship
+ * neither normalised its inputs modulo 360 nor took the shorter arc, so 10 and
+ * 350 — twenty degrees apart — reported 340.
+ *
+ * The remaining 6 are disagreements about intended DESIGN (does a token's angle
+ * track the global index, or its position within a coil?) and adjudicating them
+ * from outside would be guessing. They are ratcheted instead: the file now runs
+ * on every gate, and the count can only come down.
+ */
+function frameworkTestFailures() {
+  const out = run('node', ['--experimental-strip-types', 'scripts/jest-lite.mjs',
+    'src/multidimensional-vortex-framework.test.ts', '--count'])
+  const line = (out ?? '').trim().split('\n').filter((l) => /^\d+\s+\d+$/.test(l.trim())).pop()
+  if (!line) return null
+  return Number(line.trim().split(/\s+/)[1])
+}
+
 /** ESLint errors (warnings excluded — they are not the ratcheted surface). */
 function lintCount() {
   const out = run('npx', ['eslint', 'src/', '-f', 'json'])
@@ -427,6 +452,7 @@ const SURFACES = [
   { id: 'cycles', label: 'import cycles', measure: importCycleCount },
   { id: 'typecheck', label: 'TypeScript errors', measure: typecheckCount },
   { id: 'lint', label: 'ESLint errors', measure: lintCount },
+  { id: 'frameworkTests', label: 'failing assertions in the framework test file', measure: frameworkTestFailures },
   { id: 'decimals', label: 'decimal-crack lines', measure: decimalCount },
   { id: 'unloadable', label: 'modules that fail to import', measure: unloadableCount },
 ]

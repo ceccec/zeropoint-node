@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig, type HeadConfig } from 'vitepress'
@@ -96,6 +96,122 @@ const SPONSOR_ICON =
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
   '<path d="M12 21s-6.7-4.35-9.2-8.2C1 10 2 6.5 5.2 5.6 7.4 5 9.5 6 12 8.5 14.5 6 16.6 5 18.8 5.6 22 6.5 23 10 21.2 12.8 18.7 16.65 12 21 12 21z"/>' +
   '</svg>'
+
+/** The hand-ordered groups that lead the sidebar; everything else follows. */
+const CURATED = [
+      {
+        text: 'The sequence',
+        items: [
+          { text: 'Sequence spines', link: '/SEQUENCE' },
+          { text: 'Sequence dual', link: '/pages/sequence-dual' },
+          { text: 'Vortex stroke', link: '/pages/vortex-stroke' },
+          { text: 'Origin', link: '/pages/origin' },
+        ],
+      },
+      {
+        text: 'Computed census',
+        items: [
+          { text: 'Kernel census', link: '/KERNEL' },
+          { text: 'A432 audit census', link: '/AUDIT' },
+          { text: 'Development vortex', link: '/pages/development-vortex' },
+          { text: 'Content uuid', link: '/pages/content-uuid' },
+        ],
+      },
+      {
+        text: 'Quantum computing',
+        items: [
+          { text: 'Technical specification', link: '/QUANTUM_SPECIFICATION' },
+          { text: 'Usage guide', link: '/QUANTUM_GUIDE' },
+        ],
+      },
+      {
+        text: 'Reference',
+        items: [
+          { text: 'All computed pages', link: '/pages/' },
+          { text: 'Quick start', link: '/QUICK_START' },
+          { text: 'API reference', link: '/API_REFERENCE' },
+          { text: 'Mathematical principles', link: '/MATHEMATICAL_PRINCIPLES' },
+        ],
+      },
+    ] as const
+
+/**
+ * The sidebar is COMPUTED from the files on disk, not typed out.
+ *
+ * The site built 70 pages and linked 15. The other 55 were sitemapped and
+ * indexed but appeared in no menu, so a reader could not find them and nothing
+ * noticed — the dead-link check asks whether links point at pages, never
+ * whether pages have links pointing at them. Hand-listing 55 entries would fix
+ * those 55 and leave the 56th to orphan exactly the same way.
+ *
+ * So the groups below are derived. A new page under docs/ joins a section the
+ * moment it exists, and `npm run pages:check` fails if one somehow does not.
+ */
+// DOCS_ROOT is already derived from import.meta.url above; __dirname does not
+// exist in ESM and silently resolved to an unrelated directory.
+const DOCS_DIR = DOCS_ROOT
+
+/** First `# heading` in a file, else a readable form of the filename. */
+function titleOf(file: string, route: string): string {
+  try {
+    const m = readFileSync(file, 'utf8').match(/^#\s+(.+)$/m)
+    if (m) return m[1].replace(/[*`_]/g, '').trim().slice(0, 70)
+  } catch { /* fall through to the filename */ }
+  return route.split('/').pop()!.replace(/[-_]/g, ' ')
+}
+
+function pagesUnder(dir: string, out: { route: string; file: string }[] = []) {
+  for (const name of readdirSync(dir)) {
+    if (name === '.vitepress' || name === 'public' || name === 'node_modules') continue
+    const full = resolve(dir, name)
+    if (statSync(full).isDirectory()) pagesUnder(full, out)
+    else if (name.endsWith('.md') && name !== 'README.md') {
+      const rel = full.slice(DOCS_DIR.length + 1).replace(/\\/g, '/')
+      const noExt = rel.replace(/\.md$/, '')
+      const route =
+        noExt === 'index' ? '/' : noExt.endsWith('/index') ? `/${noExt.slice(0, -6)}/` : `/${noExt}`
+      out.push({ route, file: full })
+    }
+  }
+  return out
+}
+
+/** Group by the shape of the route, so families stay together. */
+const SECTIONS: readonly { readonly text: string; readonly match: (r: string) => boolean }[] = [
+  { text: 'Zeropoint digits', match: (r) => r.startsWith('/0/') },
+  { text: 'A432 system', match: (r) => r.startsWith('/A432_') },
+  { text: 'Quantum', match: (r) => r.startsWith('/QUANTUM_') },
+  { text: 'Harmonics', match: (r) => /^\/(HARMONI|TRINITY_|TESLA_)/.test(r) },
+  { text: 'Zeropoint reference', match: (r) => r.startsWith('/ZEROPOINT_') },
+]
+
+function computedSidebar() {
+  const all = pagesUnder(DOCS_DIR)
+  const curatedRoutes = new Set(CURATED.flatMap((g) => g.items.map((i) => i.link)))
+  const taken = new Set(curatedRoutes)
+
+  const sections = SECTIONS.map((s) => {
+    const items = all
+      .filter((p) => !taken.has(p.route) && s.match(p.route))
+      .sort((a, b) => a.route.localeCompare(b.route))
+      .map((p) => {
+        taken.add(p.route)
+        return { text: titleOf(p.file, p.route), link: p.route }
+      })
+    return { text: s.text, collapsed: true, items }
+  }).filter((s) => s.items.length > 0)
+
+  const rest = all
+    .filter((p) => !taken.has(p.route) && p.route !== '/')
+    .sort((a, b) => a.route.localeCompare(b.route))
+    .map((p) => ({ text: titleOf(p.file, p.route), link: p.route }))
+
+  return [
+    ...CURATED,
+    ...sections,
+    ...(rest.length > 0 ? [{ text: 'Everything else', collapsed: true, items: rest }] : []),
+  ]
+}
 
 export default defineConfig({
   title: 'ZeroPoint Node',
@@ -239,42 +355,7 @@ export default defineConfig({
       { text: 'Sponsor', link: SPONSOR_URL },
     ],
 
-    sidebar: [
-      {
-        text: 'The sequence',
-        items: [
-          { text: 'Sequence spines', link: '/SEQUENCE' },
-          { text: 'Sequence dual', link: '/pages/sequence-dual' },
-          { text: 'Vortex stroke', link: '/pages/vortex-stroke' },
-          { text: 'Origin', link: '/pages/origin' },
-        ],
-      },
-      {
-        text: 'Computed census',
-        items: [
-          { text: 'Kernel census', link: '/KERNEL' },
-          { text: 'A432 audit census', link: '/AUDIT' },
-          { text: 'Development vortex', link: '/pages/development-vortex' },
-          { text: 'Content uuid', link: '/pages/content-uuid' },
-        ],
-      },
-      {
-        text: 'Quantum computing',
-        items: [
-          { text: 'Technical specification', link: '/QUANTUM_SPECIFICATION' },
-          { text: 'Usage guide', link: '/QUANTUM_GUIDE' },
-        ],
-      },
-      {
-        text: 'Reference',
-        items: [
-          { text: 'All computed pages', link: '/pages/' },
-          { text: 'Quick start', link: '/QUICK_START' },
-          { text: 'API reference', link: '/API_REFERENCE' },
-          { text: 'Mathematical principles', link: '/MATHEMATICAL_PRINCIPLES' },
-        ],
-      },
-    ],
+    sidebar: computedSidebar(),
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/ceccec/zeropoint-node' },

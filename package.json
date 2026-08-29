@@ -193,7 +193,8 @@
     "constants:seed": "node scripts/constants-check.mjs --seed",
     "finite:check": "node scripts/finite-check.mjs",
     "exercised:check": "node scripts/exercised-check.mjs",
-    "standard:check": "node scripts/standard-functions.mjs"
+    "standard:check": "node scripts/standard-functions.mjs",
+    "untested": "node scripts/untested-exports.mjs"
   },
   "keywords": [
     "a432",

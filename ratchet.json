@@ -8,6 +8,7 @@
     "unloadable": 0,
     "prose": 59,
     "tautology": 0,
-    "frameworkTests": 6
+    "frameworkTests": 6,
+    "untestedExports": 375
   }
 }

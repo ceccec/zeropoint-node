@@ -131,3 +131,4 @@ docs/.vitepress/cache
 # Local debugging harnesses — kept out of src/ so they are neither shipped
 # (package.json files: src/**/*.ts) nor counted as dead modules by the ratchet.
 scratch/
+untested-exports.txt

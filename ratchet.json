@@ -1,6 +1,6 @@
 {
   "ceilings": {
-    "typecheck": 103,
+    "typecheck": 96,
     "lint": 371,
     "decimals": 280,
     "cycles": 1,

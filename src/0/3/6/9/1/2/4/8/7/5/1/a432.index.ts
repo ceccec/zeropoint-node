@@ -96,7 +96,7 @@ export class A432System {
   }
 
   getConsciousnessEvolution(): number {
-    return this.selfEvolution.getEvolutionState().level;
+    return this.selfEvolution.getEvolutionState().consciousness.evolution;
   }
 
   getSystemHarmony(): number {
@@ -168,11 +168,11 @@ export class A432System {
 
   // === UTILITY METHODS ===
   calculateDigitalRoot(n: number): number {
-    return A432Math.calculateDigitalRoot(n);
+    return A432Math.digitalRoot(n);
   }
 
   generateVortexSequence(length: number = 9): number[] {
-    return A432Sequence.generateVortexSequence(length);
+    return A432Sequence.generateVortex(length);
   }
 
   generateColorMatrix(polarity: 1 | -1 = 1): any[] {
@@ -180,7 +180,7 @@ export class A432System {
   }
 
   calculateHarmonicFrequency(base: number, multiplier: number = 1): number {
-    return A432Frequency.calculateHarmonicFrequency(base, multiplier);
+    return A432Math.harmonicFrequency(base, multiplier);
   }
 
   calculateHarmony(states: any[]): number {
@@ -223,7 +223,7 @@ export class A432System {
   }
 
   getEvolutionCycles(): number {
-    return this.selfEvolution.getEvolutionState().cycles;
+    return this.selfEvolution.getEvolutionState().evolution.totalCycles;
   }
 
   getTotalCycles(): number {

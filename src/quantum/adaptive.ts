@@ -38,11 +38,18 @@ export class AdaptiveOptimizer {
    */
   recordSuccess(name: string, result: VQEResult, initialTheta: number[]): void {
     if (result.converged) {
-      this.state.successfulAnsatze.push({ name, theta: result.theta })
-      this.state.convergedRuns += 1
+      // Rebuilt rather than mutated. These fields are readonly, and assigning
+      // through the annotation was the same defect fixed in orchestrator.ts:
+      // the type was reporting a real violation, not being pedantic.
       const steps = result.history.length
-      this.state.averageConvergenceSteps =
-        (this.state.averageConvergenceSteps * (this.state.convergedRuns - 1) + steps) / this.state.convergedRuns
+      const convergedRuns = this.state.convergedRuns + 1
+      this.state = {
+        ...this.state,
+        successfulAnsatze: [...this.state.successfulAnsatze, { name, theta: result.theta }],
+        convergedRuns,
+        averageConvergenceSteps:
+          (this.state.averageConvergenceSteps * (convergedRuns - 1) + steps) / convergedRuns,
+      }
     }
   }
 

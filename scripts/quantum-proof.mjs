@@ -41,7 +41,13 @@ for (const layer of report.layers_verified) {
 // Display summary
 console.log('\n' + '═'.repeat(70))
 console.log('\n📊 SYSTEM PROOF SUMMARY\n')
-console.log(`Status:             ${report.system_verified ? '✅ VERIFIED' : '❌ FAILED'}`)
+// Three states, not two — the same distinction the proof document makes.
+// Reading `!verified` as `FAILED` is how a layer that verifies nothing gets
+// reported as a layer that failed.
+const anyFailed = report.total_passed < report.total_checks
+console.log(`Status:             ${
+  report.system_verified ? '✅ VERIFIED' : anyFailed ? '❌ FAILED' : '⚠️  INCOMPLETE'
+}`)
 console.log(`Confidence:         ${Math.round(report.confidence_score * 100)}%`)
 console.log(`Checks Passed:      ${report.total_passed}/${report.total_checks}`)
 console.log(`Layers Verified:    ${report.layers_verified.filter((l) => l.passed).length}/${report.layers_verified.length}`)
@@ -70,10 +76,20 @@ if (report.system_verified && report.confidence_score > 0.9) {
   console.log('The system passes all checks but confidence is not maximum.')
   console.log('Review the evidence above and consider additional testing.')
   console.log('')
-} else {
+} else if (report.total_passed < report.total_checks) {
   console.log('\n❌ SYSTEM VERIFICATION FAILED\n')
-  console.log('One or more layers failed verification.')
-  console.log('The system requires repair before production use.')
+  console.log(`${report.total_checks - report.total_passed} check(s) did not hold.`)
+  console.log('')
+} else {
+  // FAILED and INCOMPLETE are different things. Every check that ran passed;
+  // what is missing is a layer that runs none. This branch printed FAILED for
+  // both, contradicting the proof document it had just printed above — which
+  // says INCOMPLETE and names the empty layers.
+  const empty = report.layers_verified.filter((l) => l.checks_total === 0)
+  console.log('\n⚠️  SYSTEM VERIFICATION INCOMPLETE\n')
+  console.log(`All ${report.total_passed} checks that ran passed.`)
+  console.log(`${empty.length} of ${report.layers_verified.length} layers run no checks: ${empty.map((l) => l.layer_name).join(', ')}.`)
+  console.log('Their claims were prose and were removed rather than asserted.')
   console.log('')
 }
 

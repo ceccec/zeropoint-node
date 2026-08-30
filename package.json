@@ -57,11 +57,6 @@
       "require": "./dist/quantum.cjs",
       "types": "./dist/quantum.d.ts"
     },
-    "./mcp": {
-      "import": "./dist/mcp.esm.js",
-      "require": "./dist/mcp.cjs",
-      "types": "./dist/mcp.d.ts"
-    },
     "./simple": {
       "import": "./dist/a432.simple.esm.js",
       "require": "./dist/a432.simple.cjs",
@@ -277,5 +272,8 @@
     "@uuidna/uuidna": "0.2.9",
     "express": "5.2.1",
     "three": "0.185.1"
+  },
+  "bin": {
+    "zeropoint-mcp": "./dist/mcp.cjs"
   }
 }

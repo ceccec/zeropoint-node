@@ -10,6 +10,7 @@
     "tautology": 0,
     "frameworkTests": 6,
     "untestedExports": 369,
-    "docFunctions": 96
+    "docFunctions": 96,
+    "entryPoints": 10
   }
 }

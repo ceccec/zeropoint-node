@@ -476,6 +476,18 @@ function docFunctionCount() {
   return line ? Number(line) : null
 }
 
+/**
+ * Advertised entry points a consumer cannot import.
+ *
+ * package.json advertises 22 subpaths; 10 resolve to src/*.ts, and Node refuses
+ * to strip types under node_modules. See scripts/entrypoints-usable.mjs.
+ */
+function brokenEntryPointCount() {
+  const out = run('node', ['scripts/entrypoints-usable.mjs', '--count'])
+  const line = (out ?? '').trim().split('\n').map((l) => l.trim()).filter((l) => /^\d+$/.test(l)).pop()
+  return line ? Number(line) : null
+}
+
 const SURFACES = [
   { id: 'prose', label: 'unbounded effect claims in prose', measure: proseClaimCount },
   { id: 'tautology', label: 'boolean claims that cannot be false', measure: tautologyCount },
@@ -486,6 +498,7 @@ const SURFACES = [
   { id: 'frameworkTests', label: 'failing assertions in the framework test file', measure: frameworkTestFailures },
   { id: 'decimals', label: 'decimal-crack lines', measure: decimalCount },
   { id: 'docFunctions', label: 'documented functions absent from src', measure: docFunctionCount },
+  { id: 'entryPoints', label: 'advertised entry points a consumer cannot import', measure: brokenEntryPointCount },
   { id: 'unloadable', label: 'modules that fail to import', measure: unloadableCount },
 ]
 

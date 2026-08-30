@@ -1,5 +1,45 @@
 # Changelog
 
+## 1.0.14
+
+### Fixed — the 1.0.13 quick start showed an import that does not work
+
+- 1.0.13 rewrote `docs/QUICK_START.md` around
+  `import { digitalRoot } from 'zeropoint-node/0'` and said it had been verified
+  by installing the package and running it. It had been verified by installing
+  from a **local directory**, which does not reproduce the restriction that
+  matters: Node refuses to strip types for anything under `node_modules`.
+
+  ```
+  ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING
+  ```
+
+  The example works in a clone and fails for everyone who installs from npm.
+  Testing against a path that is not the one users take is not testing, and
+  shipping it was the exact defect that page had just been rewritten to fix.
+- The examples are now run against the package **installed from npm into an
+  empty directory**, and they are ones that work:
+  `A432Math.digitalRoot(432)` is 9 and
+  `A432Sequence.generateVortexSequence(6)` is `[1, 2, 4, 8, 7, 5]` — the
+  function corrected in 1.0.11, now visibly right for consumers.
+
+### Added — `npm run entrypoints`
+
+- The underlying defect is larger than the doc. `package.json` advertises **22
+  entry points and only 12 can be imported by a consumer.** The other 10 —
+  including `zeropoint-node/0`, the kernel — resolve to `src/*.ts`. The kernel
+  is reachable in a clone of this repository and not from npm.
+- Ratcheted at 10 rather than gated at zero: making them importable means
+  building ten more bundles, which is a packaging change and not a one-line fix.
+  The rule enforced today is that the number cannot grow — a new entry point may
+  not be advertised unless a consumer can import it.
+- The quick start now states this limitation instead of stepping around it.
+
+### Known limitations
+
+- Unchanged from 1.0.13, plus: **10 of 22 advertised entry points are not
+  importable from npm.** The kernel API that most of the documentation describes
+  is currently repo-only.
 ## 1.0.13
 
 ### Fixed — things that could not fail, and one that could not be found

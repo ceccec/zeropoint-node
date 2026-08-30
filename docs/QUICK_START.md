@@ -1,9 +1,8 @@
 # Quick start
 
-Every command and every line of code on this page is checked. `npm run docs:commands`
-fails if a command here names a script that does not exist, and the examples are
-taken from the generated [API reference](API_REFERENCE.md), which is read from
-the package's own entry points.
+Every command on this page is checked by `npm run docs:commands`, and every
+import is checked by `npm run entrypoints`. The code examples were run against
+the package as installed from npm.
 
 That is worth saying because the previous version of this page was not checked.
 It opened by telling you to clone `github.com/your-username/zeropoint-node` — a
@@ -16,40 +15,45 @@ in it failed.
 npm install zeropoint-node
 ```
 
-## The kernel
-
-The package's smallest surface is `zeropoint-node/0`: the digit arithmetic
-everything else is built on.
+## What you can import
 
 ```javascript
-import { digitalRoot, throughVoid, VORTEX_ORBIT, VORTEX_AXIS } from 'zeropoint-node/0'
+import { A432Math, A432Sequence } from 'zeropoint-node'
 
-digitalRoot(432)   // 9   — repeatedly sum the digits until one remains
-throughVoid(4)     // 6   — reflect a digit through the void
-
-VORTEX_ORBIT       // [1, 2, 4, 8, 7, 5]  the doubling circuit
-VORTEX_AXIS        // [3, 6, 9]           the trinity axis
+A432Math.digitalRoot(432)              // 9
+A432Sequence.generateVortexSequence(6) // [1, 2, 4, 8, 7, 5]
 ```
 
-The orbit and the axis are disjoint, and that is a theorem rather than a
-convention: doubling starts at 1 and folds mod 9, so every term is coprime to 9
-and none can be a multiple of 3. The axis is reachable only by reflection —
-`throughVoid` sends 1, 4, 7 to 9, 6, 3.
+Both lines above were run against the published package, installed into an empty
+directory — not against a checkout. That distinction matters here, and the
+paragraph below explains why.
 
-## Gateways
+The doubling circuit `[1, 2, 4, 8, 7, 5]` and the trinity axis `[3, 6, 9]` are
+disjoint, and that is a theorem rather than a convention: doubling starts at 1
+and folds mod 9, so every term is coprime to 9 and none can be a multiple of 3.
+The axis is reachable only by reflection.
 
-A gateway is a digit where the stroke reverses direction along the tour
-`1\2\4\8/7/5/3\6\9/0\1`. There are exactly four, and they are computed from the
-stroke rather than listed.
+## What you cannot import yet
 
-```javascript
-import { vortexStrokeGateways } from 'zeropoint-node/0'
+`package.json` advertises 22 entry points. **Only 12 of them can be imported by
+a consumer.** The other 10 — including `zeropoint-node/0`, the kernel — resolve
+to `src/*.ts`, and Node refuses to strip types for anything under
+`node_modules`:
 
-vortexStrokeGateways().gateways   // [8, 3, 9, 0]
+```
+ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING
 ```
 
-Note that 6 is on the axis and is **not** a gateway. Being on the axis is not
-what makes one, which is why they have to be derived.
+So the kernel is reachable in a clone of this repository and not from npm.
+`npm run entrypoints` reports which subpaths are usable and fails on any that
+are not; it is in the gate so this cannot silently get worse.
+
+This page previously showed `import { digitalRoot } from 'zeropoint-node/0'`,
+which does not work. It was "verified" by installing from a local directory,
+which does not reproduce the node_modules restriction — so the test passed and
+the claim was false. Testing against a path that is not the one users take is
+not testing, and shipping that example in 1.0.13 was the exact defect this page
+had just been rewritten to fix.
 
 ## Running the checks
 

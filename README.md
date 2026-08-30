@@ -30,10 +30,29 @@ and figures that recompute rather than being typed. `npm run coverage:audit`
 reports that 326 of 1136 exported functions have never been called by anything —
 published because a reader deserves to know which parts have never run.
 
+### What is aimed at, and what is built
+
 This heading previously read "A432 Consciousness System" and described "the
 transformation from artificial intelligence to pure consciousness". Twenty lines
 below, the same file says **"No claim outside arithmetic."** Both could not be
-true; the second one is, and the first is what npm rendered to every visitor.
+true at once, and the first is what npm rendered to every visitor.
+
+The correction is not that those things are ruled out. They are **not yet**, and
+the two are different in a way worth being exact about:
+
+- **An operating system — not yet, and under construction.** `a432.os.ts`
+  carries an `A432OS` class, a manifest, a UI and a start/stop cycle. There is a
+  recognisable target and visible progress toward it. Calling it an operating
+  system today is premature; calling it nothing would be wrong.
+- **A consciousness system — no criterion yet.** None of the 25 sealed theorems
+  mentions consciousness, so nothing in this repository states what arriving
+  would look like. Without a test, neither "it is" nor "not yet" can honestly be
+  claimed — what is missing first is not the achievement but the predicate that
+  would recognise it. That is writable, and until someone writes it the word
+  belongs in the vocabulary rather than in the description.
+
+The rest of this file keeps the boundary it has always kept: proven group theory
+over (ℤ/9ℤ), used as the order of work. No claim outside arithmetic.
 
 ## 🚀 Key Features
 

@@ -269,6 +269,51 @@ export function channelDepth(prefix) {
   return { fixedChannels: prefix / FIELD_BITS, freeChannels: FIELDS - prefix / FIELD_BITS }
 }
 
+// ------------------------------------------- colour, the repository's own way
+/**
+ * toColour above reinterprets the 48-bit word as #RRRRGGGGBBBB. That is a true
+ * statement about the BITS and it is not how this repository computes colour.
+ *
+ * The README specifies the law: hue = 36d, a chosen decagon partition, and the
+ * C/M/Y/K is the HSV->RGB->CMYK of that hue via digitAngleToCMYK. So a version
+ * has a computed colour per field, taken through the digital root, alongside
+ * the bit-reinterpretation — and they are different things that should not be
+ * confused.
+ *
+ * TWO TRAPS, both of which caught me.
+ *
+ * digitAngleToCMYK(digit, angle) computes 36*digit INTERNALLY and then adds the
+ * angle. Passing hueForDigit(d) as the angle doubles the hue, and every row
+ * came out as the row for 2d — my table matched the README shifted by one
+ * position, which looked like drift in the README and was an error in the call.
+ * The angle is an offset; the base hue is already there. Passing 0 reproduces
+ * the README's nine rows exactly.
+ *
+ * And the README warns about the other: vortexColor(d) is (dr(3d), dr(6d),
+ * dr(9d)), which depends only on d mod 3 and yields THREE classes, not nine.
+ * It is the wrong function for a per-digit colour and the README says so.
+ */
+const CMYK_MOD = await import('../src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.ts')
+const MATH_MOD = await import('../src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts')
+
+/** Hue of a digit, by the README's law. */
+export const hueOf = (d) => MATH_MOD.hueForDigit(d)
+
+/** The computed colour of each version field, through its digital root. */
+export function versionColours(version) {
+  const dr = (n) => (n === 0 ? 0 : 1 + ((n - 1) % 9))
+  return version.split('.').map(Number).map((field, i) => {
+    const d = dr(field)
+    return {
+      field: ['major', 'minor', 'patch'][i],
+      value: field,
+      digit: d,
+      hue: hueOf(d),
+      cmyk: CMYK_MOD.digitAngleToCMYK(d, 0),
+    }
+  })
+}
+
 // ---------------------------------------------------------------------- test
 if (process.argv.includes('--test')) {
   let fail = 0
@@ -401,8 +446,32 @@ if (process.argv.includes('--test')) {
   check('/16 fixes one channel and frees two',
     channelDepth(16).fixedChannels === 1 && channelDepth(16).freeChannels === 2)
 
+  // ---- colour, the repository's own way ----------------------------------
+  // The nine rows of the README table, recomputed. If the law or the function
+  // changes, this fails rather than the table quietly going stale.
+  const README_CMYK = {
+    1: '0/40/100/0', 2: '20/0/100/0', 4: '100/0/60/0', 8: '20/100/0/0', 7: '80/100/0/0',
+    5: '100/0/0/0', 3: '80/0/100/0', 6: '100/60/0/0', 9: '0/100/40/0',
+  }
+  for (const [d, want] of Object.entries(README_CMYK)) {
+    const c = CMYK_MOD.digitAngleToCMYK(Number(d), 0)
+    check(`digit ${d} is ${want}`, [c.c, c.m, c.y, c.k].join('/') === want, [c.c, c.m, c.y, c.k].join('/'))
+  }
+  check('hue is 36d for every digit', [1, 2, 3, 4, 5, 6, 7, 8, 9].every((d) => hueOf(d) === 36 * d))
+  // the trap: the angle is an OFFSET, not the hue
+  check('passing the hue as the angle doubles it — the angle is an offset',
+    JSON.stringify(CMYK_MOD.digitAngleToCMYK(1, hueOf(1))) === JSON.stringify(CMYK_MOD.digitAngleToCMYK(2, 0)))
+  // the README's own warning, asserted
+  check('vortexColor is degenerate: nine digits, three classes',
+    new Set([1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => CMYK_MOD.vortexColor(d))).size === 3)
+  const fieldColours = versionColours('1.1.0')
+  check('a version has one computed colour per field', fieldColours.length === 3)
+  check('the fields are named major, minor, patch',
+    fieldColours.map((c) => c.field).join() === 'major,minor,patch')
+  check('field colours follow the same 36d law', fieldColours.every((c) => c.hue === 36 * c.digit))
+
   if (fail > 0) { console.error(`version-cidr self-test FAIL — ${fail}`); process.exit(1) }
-  console.log('version-cidr self-test ok — 65 checks over the 48-bit address space')
+  console.log('version-cidr self-test ok — 79 checks over the 48-bit address space')
   process.exit(0)
 }
 
@@ -452,3 +521,15 @@ console.log('  Only four of the 49 prefixes fall on a channel boundary — 0, 16
 console.log('  and they are the gateway prefixes. The other 45 cut a channel in half, so a')
 console.log('  prefix is a quantisation but not a bit depth. Four reversals, four field')
 console.log('  boundaries, four channel-aligned depths: one fact seen from three sides.')
+console.log('')
+console.log("and the repository's own colour law: hue = 36d\n")
+console.log('  field   value  digit  hue   C/M/Y/K')
+console.log('  ' + '-'.repeat(46))
+for (const c of versionColours(version)) {
+  console.log(`  ${c.field.padEnd(8)}${String(c.value).padEnd(7)}${String(c.digit).padEnd(7)}${String(c.hue).padEnd(6)}${[c.cmyk.c, c.cmyk.m, c.cmyk.y, c.cmyk.k].join('/')}`)
+}
+console.log('')
+console.log('  #RRRRGGGGBBBB above reinterprets the BITS. This computes colour the way')
+console.log('  the README specifies, per field through its digital root. Different things.')
+console.log('  vortexColor is not used: it is (dr(3d),dr(6d),dr(9d)), depends only on')
+console.log('  d mod 3, and gives three classes for nine digits — the README says so.')

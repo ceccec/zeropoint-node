@@ -738,3 +738,71 @@ console.log('  ✓ Tier 5: Compositional Integration')
 console.log('  ✓ Quantum Threat Analysis')
 console.log('  ✓ Security Properties (No Gaps)')
 console.log('\nQuantum Fold Cipher is ready for use. ✓')
+
+// ============================================================================
+// HKDF — the replacement the deprecation notice points at
+// ============================================================================
+//
+// expandQuantumKeyViaRodin prints "DEPRECATED and cryptographically weak, use
+// expandQuantumKeyViaHkdf instead" on every gate run, and expandQuantumKeyViaHkdf
+// had no test. A coverage audit found it: 369 exported functions are never
+// called, and this was one of them. Steering users to an unverified replacement
+// is worse than the warning is worth.
+//
+// The oracle is Node's own crypto.hkdfSync, an independent RFC 5869
+// implementation. Full HKDF is Extract then Expand, so computing the PRK here
+// with HMAC and expanding it must reproduce Node's answer byte for byte. That
+// checks the algorithm against the standard rather than against itself.
+
+import { createHmac as hkdfHmac, hkdfSync } from 'node:crypto'
+import { hkdfExpand as zpHkdfExpand, expandQuantumKeyViaHkdf as zpExpand } from './quantum-fold-cipher.ts'
+
+{
+  let hkdfFailures = 0
+  const hcheck = (name: string, ok: boolean, detail = ''): void => {
+    if (ok) { console.log('  ✓ ' + name); return }
+    hkdfFailures++
+    console.log('  ✗ ' + name + (detail ? ' — ' + detail : ''))
+  }
+
+  console.log('\nHKDF-Expand against Node\'s RFC 5869 implementation')
+
+  // RFC 5869 Appendix A.1 inputs, plus lengths that straddle the 32-byte block
+  // boundary — 1, 31, 32, 33 and 64 are where an off-by-one in the T(i) loop
+  // or the final truncation would show.
+  const ikm = Buffer.alloc(22, 0x0b)
+  const salt = Buffer.from('000102030405060708090a0b0c', 'hex')
+  const info = Buffer.from('f0f1f2f3f4f5f6f7f8f9', 'hex')
+  const prk = hkdfHmac('sha256', salt).update(ikm).digest()
+
+  for (const len of [1, 31, 32, 33, 42, 64, 100]) {
+    const mine = zpHkdfExpand(prk, info, len)
+    const node = Buffer.from(hkdfSync('sha256', ikm, salt, info, len))
+    hcheck(`length ${len} matches node:crypto`, mine.equals(node), `${mine.toString('hex').slice(0, 24)}… vs ${node.toString('hex').slice(0, 24)}…`)
+  }
+
+  // Empty info, and a different salt, so the test does not depend on one fixture.
+  const prk2 = hkdfHmac('sha256', Buffer.alloc(0)).update(ikm).digest()
+  hcheck('empty salt and info match node:crypto',
+    zpHkdfExpand(prk2, Buffer.alloc(0), 42).equals(Buffer.from(hkdfSync('sha256', ikm, Buffer.alloc(0), Buffer.alloc(0), 42))))
+
+  // Distinct info must give distinct output, or the info parameter is ignored.
+  hcheck('info actually changes the output',
+    !zpHkdfExpand(prk, Buffer.from('a'), 32).equals(zpHkdfExpand(prk, Buffer.from('b'), 32)))
+
+  // And the expansion built on it.
+  const key = { material: [3, 6, 9, 3, 6, 9], round: 0, genesis: '00112233-4455-6677-8899-aabbccddeeff', contentDigest: 'ab'.repeat(32), seal: '' } as never
+  const rounds = zpExpand(key, 3)
+  hcheck('expandQuantumKeyViaHkdf returns the root plus one key per round', rounds.length === 4, String(rounds.length))
+  hcheck('every derived value is on the trinity axis',
+    rounds.slice(1).every((k) => k.material.every((d) => d === 3 || d === 6 || d === 9)))
+  hcheck('rounds differ from each other',
+    new Set(rounds.slice(1).map((k) => k.material.join())).size === 3)
+  hcheck('expansion is deterministic',
+    JSON.stringify(zpExpand(key, 3)) === JSON.stringify(rounds))
+
+  if (hkdfFailures > 0) {
+    console.error(`HKDF checks FAILED — ${hkdfFailures}`)
+    process.exit(1)
+  }
+}

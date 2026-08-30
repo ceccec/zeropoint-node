@@ -379,7 +379,11 @@ export function verifyQuantumKey(key: QuantumKey): boolean {
  *   T(i) = HMAC-SHA256(PRK, T(i-1) || info || counter) for i = 1..rounds
  *   Round key material = map(T(i) bytes → trinity {3,6,9})
  */
-function hkdfExpand(
+// Exported for testing, the same reason ml-kem exports keyGenFromSeeds. The
+// deprecation notice on expandQuantumKeyViaRodin tells callers to use
+// expandQuantumKeyViaHkdf instead, and nothing verified the HKDF underneath it.
+// Exported, it can be checked against Node's own RFC 5869 implementation.
+export function hkdfExpand(
   prk: Buffer,
   info: Buffer,
   length: number,

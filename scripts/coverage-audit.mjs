@@ -168,5 +168,8 @@ if (problems.length > 0) {
   console.error(`coverage:audit FAIL — ${problems.length} problem(s)`)
   process.exit(1)
 }
+if (process.argv.includes('--list')) {
+  for (const k of neverCalled) console.log(k)
+}
 console.log('coverage:audit ok — every unloaded module is declared, and every declaration still holds')
 process.exit(0)

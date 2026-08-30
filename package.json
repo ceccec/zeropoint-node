@@ -13,43 +13,54 @@
       "types": "./dist/a432.system.d.ts"
     },
     "./kernel": {
-      "import": "./src/kernel/index.ts",
-      "types": "./src/kernel/index.ts"
+      "import": "./dist/kernel.esm.js",
+      "require": "./dist/kernel.cjs",
+      "types": "./dist/kernel.d.ts"
     },
     "./kernel/import-graph": {
-      "import": "./src/kernel/import-graph.ts",
-      "types": "./src/kernel/import-graph.ts"
+      "import": "./dist/kernel.import-graph.esm.js",
+      "require": "./dist/kernel.import-graph.cjs",
+      "types": "./dist/kernel.import-graph.d.ts"
     },
     "./0": {
-      "import": "./src/0/index.ts",
-      "types": "./src/0/index.ts"
+      "import": "./dist/zero.esm.js",
+      "require": "./dist/zero.cjs",
+      "types": "./dist/zero.d.ts"
     },
     "./security": {
-      "import": "./src/security/quantum-fold-cipher.ts",
-      "types": "./src/security/quantum-fold-cipher.ts"
+      "import": "./dist/security.esm.js",
+      "require": "./dist/security.cjs",
+      "types": "./dist/security.d.ts"
     },
     "./security/threat-analysis": {
-      "import": "./src/security/quantum-threat-landscape.ts",
-      "types": "./src/security/quantum-threat-landscape.ts"
+      "import": "./dist/security.threat-analysis.esm.js",
+      "require": "./dist/security.threat-analysis.cjs",
+      "types": "./dist/security.threat-analysis.d.ts"
     },
     "./security/tomography": {
-      "import": "./src/security/quantum-state-tomography.ts",
-      "types": "./src/security/quantum-state-tomography.ts"
+      "import": "./dist/security.tomography.esm.js",
+      "require": "./dist/security.tomography.cjs",
+      "types": "./dist/security.tomography.d.ts"
     },
     "./security/post-quantum": {
-      "import": "./src/security/post-quantum-crypto.ts",
-      "types": "./src/security/post-quantum-crypto.ts"
+      "import": "./dist/security.post-quantum.esm.js",
+      "require": "./dist/security.post-quantum.cjs",
+      "types": "./dist/security.post-quantum.d.ts"
     },
     "./integrity": {
-      "import": "./src/integrity/content-uuid.ts",
-      "types": "./src/integrity/content-uuid.ts"
+      "import": "./dist/integrity.esm.js",
+      "require": "./dist/integrity.cjs",
+      "types": "./dist/integrity.d.ts"
     },
     "./quantum": {
-      "import": "./src/quantum/index.ts",
-      "types": "./src/quantum/index.ts"
+      "import": "./dist/quantum.esm.js",
+      "require": "./dist/quantum.cjs",
+      "types": "./dist/quantum.d.ts"
     },
     "./mcp": {
-      "import": "./src/mcp/server.ts"
+      "import": "./dist/mcp.esm.js",
+      "require": "./dist/mcp.cjs",
+      "types": "./dist/mcp.d.ts"
     },
     "./simple": {
       "import": "./dist/a432.simple.esm.js",

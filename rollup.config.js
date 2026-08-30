@@ -17,7 +17,24 @@ const entries = [
   { name: 'a432.math.constants', input: `${A432}/a432.math.constants.ts` },
   { name: 'a432.wave.energy', input: `${A432}/a432.wave.energy.ts` },
   { name: 'a432.mobius.circuit', input: `${A432}/a432.mobius.circuit.ts` },
-  { name: 'a432.i', input: `${A432}/a432.i.ts` }
+  { name: 'a432.i', input: `${A432}/a432.i.ts` },
+
+  // The kernel and its neighbours. package.json advertised these as entry
+  // points while pointing them at src/*.ts, and Node refuses to strip types
+  // under node_modules — so `import { digitalRoot } from 'zeropoint-node/0'`
+  // worked in a clone and failed for everyone who installed the package. They
+  // are built now, and scripts/entrypoints-usable.mjs fails if a subpath ever
+  // points back at source.
+  { name: 'kernel', input: 'src/kernel/index.ts' },
+  { name: 'kernel.import-graph', input: 'src/kernel/import-graph.ts' },
+  { name: 'zero', input: 'src/0/index.ts' },
+  { name: 'security', input: 'src/security/quantum-fold-cipher.ts' },
+  { name: 'security.threat-analysis', input: 'src/security/quantum-threat-landscape.ts' },
+  { name: 'security.tomography', input: 'src/security/quantum-state-tomography.ts' },
+  { name: 'security.post-quantum', input: 'src/security/post-quantum-crypto.ts' },
+  { name: 'integrity', input: 'src/integrity/content-uuid.ts' },
+  { name: 'quantum', input: 'src/quantum/index.ts' },
+  { name: 'mcp', input: 'src/mcp/server.ts' }
 ];
 
 const external = ['express', 'three', '@hotwired/stimulus'];

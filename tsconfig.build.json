@@ -25,7 +25,17 @@
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.wave.energy.ts",
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.mobius.circuit.ts",
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.i.ts"
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.i.ts",
+    "src/kernel/index.ts",
+    "src/kernel/import-graph.ts",
+    "src/0/index.ts",
+    "src/security/quantum-fold-cipher.ts",
+    "src/security/quantum-threat-landscape.ts",
+    "src/security/quantum-state-tomography.ts",
+    "src/security/post-quantum-crypto.ts",
+    "src/integrity/content-uuid.ts",
+    "src/quantum/index.ts",
+    "src/mcp/server.ts"
   ],
   "include": [],
   "exclude": [

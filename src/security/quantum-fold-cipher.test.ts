@@ -390,10 +390,22 @@ function testAuthenticatedEncryption() {
   console.assert(decryptQuantum(encryptQuantum('', key), key) === '', 'Empty plaintext must round-trip')
   console.log('✓ AEAD: plaintext domain is unrestricted (no passthrough leak)')
 
+  // Flip the first byte rather than SET it. These cases read
+  // `'ff' + hex.slice(2)`, which changes nothing when the byte is already ff —
+  // so about one run in 256 the "modified" ciphertext was identical, decryption
+  // correctly succeeded, and the assertion that it must fail authentication
+  // failed instead. It surfaced as an intermittent security-test failure that
+  // passed 40 times out of 40 when run alone.
+  //
+  // A mutation that sometimes does not mutate proves nothing on those runs, and
+  // XOR with 0xff always changes the byte.
+  const flipFirstByte = (hex: string): string =>
+    ((parseInt(hex.slice(0, 2), 16) ^ 0xff).toString(16).padStart(2, '0')) + hex.slice(2)
+
   const cases: Array<[string, Partial<typeof payload>]> = [
-    ['modified ciphertext', { ciphertext: 'ff' + payload.ciphertext.slice(2) }],
-    ['forged tag', { tag: 'ff' + payload.tag.slice(2) }],
-    ['swapped iv', { nonce: '00'.repeat(12) }],
+    ['modified ciphertext', { ciphertext: flipFirstByte(payload.ciphertext) }],
+    ['forged tag', { tag: flipFirstByte(payload.tag) }],
+    ['swapped iv', { nonce: flipFirstByte(payload.nonce) }],
   ]
   for (const [label, mutation] of cases) {
     let rejected = false

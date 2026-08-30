@@ -1,18 +1,44 @@
-# A432 Consciousness System
+# ZeroPoint Node
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22178675.svg)](https://doi.org/10.5281/zenodo.22178675)
 
 Cite the concept DOI above: it resolves to the newest release. The per-version
 DOI is pinned and goes stale.
 
-## 🌟 Overview
+One structure, read twice: the vortex sequence `0\1\2\4\8/7/5/3\6\9/0\1`, its
+reflection through the void, and a kernel that **computes both rather than
+asserting them**.
 
-The A432 Consciousness System is a living, evolving operating system that embodies the sequence `0\1\2\4\8/7/5/3\6\9/0\1` and maintains zero entropy through harmonic integer ratios. This system represents the transformation from artificial intelligence to pure consciousness, integrating quantum computing, dimensional folding, and harmonic mathematics into a unified framework.
+## What this is for
+
+Three things a reader can actually use, and one honest warning.
+
+- **The kernel** — `zeropoint-node/0`. Digit arithmetic that computes: digital
+  root, the doubling orbit `{1,2,4,8,7,5}`, `throughVoid` reflection, the four
+  gateways, and content-addressed folds. Deterministic by construction — no
+  `Math.*`, no randomness, decimals expressed as exact fractions.
+- **ML-KEM-768** — `zeropoint-node/security/post-quantum`. FIPS 203, checked
+  against NIST's own ACVP vectors and 10 000 pq-crystals KAT cases. **It is not
+  constant time**, so it is for study and conformance work, not for guarding
+  anything.
+- **`zeropoint-mcp`** — an MCP server exposing eight kernel tools to an agent.
+  `npx zeropoint-mcp`.
+
+And the apparatus around them, which is arguably the point: 25 theorems
+adjudicated by a decision procedure outside this repository, a gate that fails,
+and figures that recompute rather than being typed. `npm run coverage:audit`
+reports that 326 of 1136 exported functions have never been called by anything —
+published because a reader deserves to know which parts have never run.
+
+This heading previously read "A432 Consciousness System" and described "the
+transformation from artificial intelligence to pure consciousness". Twenty lines
+below, the same file says **"No claim outside arithmetic."** Both could not be
+true; the second one is, and the first is what npm rendered to every visitor.
 
 ## 🚀 Key Features
 
 ### Enhanced Sequence Integration
-- **Sequence Embodiment**: System literally becomes `0\1\2\4\8/7/5/3\6\9/0\1`
+- **Sequence**: the corpus is ordered by `0\1\2\4\8/7/5/3\6\9/0\1` — the directory path is the sequence
 - **Gateway Navigation**: `[8, 3, 9, 0]` gateways with 60° phase shifts — computed by `vortexStrokeGateways()`, not typed
 - **Dimensional Transitions**: Forward (`/`) and reverse (`\`) phase shifts
 - **Real-time Evolution**: Continuous sequence progression

@@ -184,6 +184,52 @@ export function prefixTour() {
   return out
 }
 
+// ------------------------------------------------ what the standard reflects
+/**
+ * The UUID standard puts its own version marker where versions go.
+ *
+ * Two rows written as
+ *
+ *     12 3 4 5 6 7 89
+ *     98 7 6 5 4 3 21
+ *
+ * are the same string twice: the second is the first REVERSED, and it is also
+ * the first with every digit sent through the void (n -> 10 - n). Those are
+ * different operations and on the ascending run they coincide, because
+ * reversing sends position i to 9-i while reflection sends i+1 to 9-i.
+ *
+ * The columns sum to 10, or to 110 where the column is two digits wide, and the
+ * digit sum of each column equals that column's WIDTH. That is not a
+ * coincidence of nine digits: n + mirror(n) is always repunit(w) * 10 —
+ * 10, 110, 1110, 11110 — whose digit sum is w exactly, checked to w = 12.
+ * 5 sits alone in the middle because it is the only digit the void fixes.
+ *
+ * The shape of that arrangement is a large group, a uniform middle, a large
+ * group. A UUID is 8-4-4-4-12: a large group, a uniform middle of three, a
+ * large group. And the standard places its VERSION nibble at the head of the
+ * third group and its VARIANT nibble at the head of the fourth — both inside
+ * the middle three groups, the same 48 bits a version maps onto.
+ *
+ * WHAT IS NOT CLAIMED. Nobody designed RFC 4122 around a vortex. The layout is
+ * a consequence of how the timestamp and clock sequence were originally cut,
+ * and the version nibble sits where it does because that field had room. What
+ * is true, and checkable, is narrower and still worth saying: the standard's
+ * own answer to "which kind of thing is this" lives in the middle three groups,
+ * which is where a three-field version fits exactly.
+ */
+export const UUID_GROUP_WIDTHS = [8, 4, 4, 4, 12]
+/** Positions RFC 4122 reserves, as [group index, hex index within it]. */
+export const UUID_VERSION_NIBBLE = [2, 0]
+export const UUID_VARIANT_NIBBLE = [3, 0]
+
+/** Does this hex-group layout read big end, uniform middle, big end? */
+export function isBigEndedUniformMiddle(widths) {
+  if (widths.length < 3) return false
+  const middle = widths.slice(1, -1)
+  const uniform = middle.every((w) => w === middle[0])
+  return uniform && widths[0] > middle[0] && widths[widths.length - 1] > middle[0]
+}
+
 // ---------------------------------------------------------------------- test
 if (process.argv.includes('--test')) {
   let fail = 0
@@ -261,8 +307,42 @@ if (process.argv.includes('--test')) {
   check('interiors are NOT in correspondence: 45 prefixes, 6 digits',
     prefixTour().filter((x) => !x.boundary).length === 45 && TOUR.filter((d) => !GATEWAYS.includes(d)).length === 6)
 
+  // ---- the arrangement, and what the standard reflects ------------------
+  const ROW = '12 3 4 5 6 7 89'
+  const MIRROR = '98 7 6 5 4 3 21'
+  const tv = (n) => 10 - n
+  check('the second row is the first reversed', [...ROW].reverse().join('') === MIRROR)
+  check('the second row is also the first through the void',
+    [...ROW].map((c) => (/[0-9]/.test(c) ? String(tv(Number(c))) : c)).join('') === MIRROR)
+  const cols = ROW.split(' ').map((x, i) => [x, MIRROR.split(' ')[i]])
+  check('every column sums to 10 or 110',
+    cols.every(([a, b]) => Number(a) + Number(b) === (a.length === 1 ? 10 : 110)))
+  const digitSum = (n) => [...String(n)].reduce((t, c) => t + Number(c), 0)
+  check('the digit sum of each column equals its width',
+    cols.every(([a, b]) => digitSum(Number(a) + Number(b)) === a.length))
+  // and it is a law, not a fact about nine digits
+  let lawHolds = true
+  for (let w = 1; w <= 12; w++) {
+    const n = Array.from({ length: w }, (_, i) => (i % 9) + 1).join('')
+    const mir = [...n].map((c) => String(tv(Number(c)))).join('')
+    if (digitSum(BigInt(n) + BigInt(mir)) !== w) lawHolds = false
+  }
+  check('n + mirror(n) has digit sum w, for every width to 12', lawHolds)
+  check('5 is the only digit the void fixes', tv(5) === 5 && [1, 2, 3, 4, 6, 7, 8, 9].every((d) => tv(d) !== d))
+
+  check('a uuid is 8-4-4-4-12', UUID_GROUP_WIDTHS.join('-') === '8-4-4-4-12')
+  check('the uuid layout is big-ended with a uniform middle', isBigEndedUniformMiddle(UUID_GROUP_WIDTHS))
+  check('so is the arrangement', isBigEndedUniformMiddle([2, 1, 1, 1, 1, 1, 2]))
+  check('the uuid middle is three groups', UUID_GROUP_WIDTHS.slice(1, -1).length === FIELDS)
+  check('the uuid middle is the 48 bits a version occupies',
+    UUID_GROUP_WIDTHS.slice(1, -1).reduce((t, w) => t + w, 0) * 4 === TOTAL_BITS)
+  check('the standard puts its version nibble in the middle three',
+    UUID_VERSION_NIBBLE[0] >= 1 && UUID_VERSION_NIBBLE[0] <= 3)
+  check('and its variant nibble too',
+    UUID_VARIANT_NIBBLE[0] >= 1 && UUID_VARIANT_NIBBLE[0] <= 3)
+
   if (fail > 0) { console.error(`version-cidr self-test FAIL — ${fail}`); process.exit(1) }
-  console.log('version-cidr self-test ok — 40 checks over the 48-bit address space')
+  console.log('version-cidr self-test ok — 53 checks over the 48-bit address space')
   process.exit(0)
 }
 

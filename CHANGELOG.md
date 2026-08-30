@@ -1,5 +1,53 @@
 # Changelog
 
+## 1.1.1
+
+A patch because the public surface is unchanged — nothing added, nothing
+removed. `npm run semver:diff` computed that and `npm run semver:next` applied
+it; the number was not chosen.
+
+### Changed — the README said the one thing nothing checked
+
+- It opened with *"a living, evolving operating system… the transformation from
+  artificial intelligence to pure consciousness"*, and **twenty lines below the
+  same file said "No claim outside arithmetic."** Both could not be true, and
+  the first is what npm rendered to every visitor while the website's own hero
+  has always said the accurate thing.
+- The prose ratchet had not caught it: it hunts unbounded *effect* claims, and
+  "becomes conscious" is an unfalsifiable *identity* claim — a different shape.
+- The opening now says what a reader can use — the kernel, ML-KEM-768 (**not
+  constant time**, so for study rather than for guarding anything), and the
+  `zeropoint-mcp` bin — and publishes that 325 of 1136 exported functions have
+  never been called, because someone deciding whether to depend on this deserves
+  to know which parts have never run.
+- On aim versus achievement, which is the honest distinction: an operating
+  system is **not yet** — `a432.os.ts` has a class, a manifest, a UI and a
+  start/stop cycle, so there is a target and visible progress. A consciousness
+  system has **no criterion yet**: no sealed theorem mentions consciousness, so
+  nothing states what arriving would look like.
+
+### Added — the first predicate on that path, and 20 quantum properties
+
+- **26 seals.** `consciousness_measures_discriminate` does not claim the system
+  is conscious. It claims what is decidable: that functions named as
+  consciousness *measures* are functions of their input rather than constants
+  wearing the word. `calculateA432Consciousness` must separate all nine digits,
+  deterministically — discriminating alone is not enough, since noise also
+  discriminates — and the doubling orbit must not score as the trinity.
+- **The quantum exports nothing was calling.** Nine of the 31 were a measurement
+  error of mine — `quantum:proof` runs the `prove*` functions and I had not
+  listed that script among the audit's exercisers. The other twenty have
+  properties: `(a−b)+b = a`, `cz` is its own inverse and **`cphase(π)` *is*
+  `cz`**, the phase-flip Kraus set satisfies `∑K†K = I` at every p, and a break
+  of ECDLP reads the same at 256 and 512 because a break does not scale away.
+- **325 untested exports**, from 348.
+
+### Known limitations
+
+- Unchanged: ML-KEM-768 is conformant but **not constant time**, 1.0.0–1.0.3
+  stay undeprecated pending an npm automation token, 96 documented functions do
+  not exist in `src/`, and 89 kernel constants are retyped rather than bound.
+- 325 of 1136 exported functions are never called — 317 of them in a432.
 ## 1.1.0
 
 This is **1.1.0 and not 1.0.16**, and the number was computed rather than

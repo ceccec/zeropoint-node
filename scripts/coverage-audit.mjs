@@ -55,11 +55,16 @@ const EXERCISERS = [
   ['src/quantum/superposition-execution.test.ts', null],
   ['src/quantum/millennium-bridge.test.ts', null],
   ['src/quantum/zenodo-publisher.test.ts', null],
+  ['src/quantum/untested-exports.test.ts', null],
   ['src/crypto/ml-kem.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.test.ts', null],
   ['src/verification/lean-bridge.test.ts', null],
   ['src/multidimensional-vortex-framework.test.ts', 'scripts/jest-lite.mjs'],
   ['scripts/quantum-sim.mjs', null],
+  // Forgotten the first time, and it exercises the nine prove* functions that
+  // then appeared as untested. Same error as counting only the test:* suites
+  // and blaming quantum for 149 — the fix is to list what actually runs.
+  ['scripts/quantum-proof.mjs', null],
   ['scripts/mcp-smoke.mjs', null],
   ['scripts/self-next.mjs', null],
   ['scripts/adjudicate-seals.mjs', null],

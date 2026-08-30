@@ -404,6 +404,7 @@ function unreachableCount() {
     'src/quantum/superposition-execution.test.ts',
     'src/quantum/millennium-bridge.test.ts',
     'src/quantum/zenodo-publisher.test.ts',
+    'src/quantum/untested-exports.test.ts',
     // test:crypto
     'src/crypto/ml-kem.test.ts',
     'src/verification/lean-bridge.test.ts',

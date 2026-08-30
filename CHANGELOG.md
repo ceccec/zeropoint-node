@@ -1,5 +1,47 @@
 # Changelog
 
+## 1.1.0
+
+This is **1.1.0 and not 1.0.16**, and the number was computed rather than
+chosen. That is the change.
+
+### Added — the version number is an output now
+
+- Everything already derived FROM the version: `CITATION.cff`, `.zenodo.json`,
+  the README block, the CHANGELOG heading, the git tag, the npm publish, the
+  GitHub release notes, and the Zenodo DOI. **Nothing decided what the version
+  should BE.** It was asserted by hand and propagated, which is how removing an
+  entry point nearly shipped as a patch.
+- `npm run semver:diff` installs the published package and compares its surface
+  to the working tree. Something removed is MAJOR, something added is MINOR, an
+  identical surface is PATCH. `npm run semver:next` applies that number and
+  propagates it to every derived surface; `npm run semver:check` fails if
+  `package.json` claims less than the diff requires — verified by claiming
+  1.0.16 for this release, which it refuses.
+- Stated limit: this reads the **surface**. A function that still exists but
+  returns something different is a breaking change it cannot see, and the file
+  says so rather than implying the number is fully derived.
+
+### Added — `zeropoint-mcp`
+
+- `src/mcp/server.ts` carries a `#!/usr/bin/env node` shebang and exports
+  nothing: it is an executable. It was advertised as a library entry point, so a
+  consumer who followed the exports map imported it and got an empty object.
+  It is a **bin** now — verified from a packed tarball, `zeropoint-mcp` answers
+  a `tools/list` JSON-RPC request.
+- `./mcp` stays in the exports map. Removing it would be a MAJOR bump, and
+  charging users a major version for our tidiness — over an entry that returns
+  `{}` — is not a trade worth making. It is declared in `npm run entrypoints`
+  with that reason.
+
+### Fixed
+
+- `entrypoints` asked only whether a subpath resolves to something importable,
+  and `./mcp` does. Resolving is not being usable, so it asks both questions
+  now: an advertised entry point must import **and** export something.
+- `quantum-proof.mjs` printed "SYSTEM VERIFICATION FAILED" directly above its
+  own report reading INCOMPLETE. Nothing failed — 24 of 24 checks hold and one
+  layer verifies nothing. Both read INCOMPLETE and name the empty layer.
 ## 1.0.15
 
 ### Fixed — the kernel is importable from npm

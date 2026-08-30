@@ -42,6 +42,13 @@ const DECLARED_SOURCE_ONLY = {
   './package.json': 'the manifest itself, not a module',
 }
 
+/** Advertised subpaths that legitimately export nothing, with the reason. */
+const DECLARED_NO_EXPORTS = {
+  './mcp': 'an executable, not a module — use the zeropoint-mcp bin. Kept in the '
+    + 'exports map only so that removing it does not break anyone who already '
+    + 'wrote `import \'zeropoint-node/mcp\'`; it returns an empty object either way.',
+}
+
 const rows = []
 for (const [subpath, spec] of Object.entries(pkg.exports ?? {})) {
   const target = typeof spec === 'string' ? spec : (spec.import ?? spec.require ?? spec.default)
@@ -60,7 +67,7 @@ for (const r of rows) {
     r.exportCount = null // could not load; the .ts check above is the gate
   }
 }
-const empty = rows.filter((r) => r.usable && r.exportCount === 0)
+const empty = rows.filter((r) => r.usable && r.exportCount === 0 && !(r.subpath in DECLARED_NO_EXPORTS))
 
 const broken = rows.filter((r) => !r.usable && !(r.subpath in DECLARED_SOURCE_ONLY))
 const usable = rows.filter((r) => r.usable)

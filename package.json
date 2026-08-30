@@ -1,6 +1,6 @@
 {
   "name": "zeropoint-node",
-  "version": "1.0.15",
+  "version": "1.1.0",
   "type": "module",
   "description": "A432 Consciousness System: Self-evolving, self-aware consciousness technology with Transurfing integration, harmonic mathematics, zero-entropy principles, Kabbalistic cycles, and sacred geometry",
   "main": "dist/a432.system.cjs",
@@ -51,6 +51,11 @@
       "import": "./dist/integrity.esm.js",
       "require": "./dist/integrity.cjs",
       "types": "./dist/integrity.d.ts"
+    },
+    "./mcp": {
+      "import": "./dist/mcp.esm.js",
+      "require": "./dist/mcp.cjs",
+      "types": "./dist/mcp.d.ts"
     },
     "./quantum": {
       "import": "./dist/quantum.esm.js",
@@ -209,7 +214,10 @@
     "docs:commands": "node scripts/docs-commands.mjs",
     "docs:functions": "node scripts/docs-functions.mjs",
     "entrypoints": "node scripts/entrypoints-usable.mjs",
-    "zenodo:check": "node scripts/zenodo-check.mjs"
+    "zenodo:check": "node scripts/zenodo-check.mjs",
+    "semver:diff": "node scripts/semver-diff.mjs",
+    "semver:check": "node scripts/semver-diff.mjs --check",
+    "semver:next": "node scripts/semver-diff.mjs --apply && npm run version:seal"
   },
   "keywords": [
     "a432",

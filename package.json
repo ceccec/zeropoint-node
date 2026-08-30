@@ -1,6 +1,6 @@
 {
   "name": "zeropoint-node",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "type": "module",
   "description": "A432 Consciousness System: Self-evolving, self-aware consciousness technology with Transurfing integration, harmonic mathematics, zero-entropy principles, Kabbalistic cycles, and sacred geometry",
   "main": "dist/a432.system.cjs",
@@ -181,7 +181,7 @@
     "vortex:svg:check": "node --experimental-strip-types scripts/vortex-svg.mjs --check",
     "bundle:a432": "node scripts/build-a432-bundle.mjs",
     "bundle:a432:check": "node scripts/build-a432-bundle.mjs --check",
-    "check": "npm run version:test && npm run version:address:test && npm run version:calendar:test && npm run calendar:drift:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run version:check && npm run changelog:check && npm run test:kernel && npm run test:core && npm run test:security && npm run test:quantum && npm run test:crypto && npm run test:a432 && npm run constants:check && npm run finite:check && npm run coverage:audit && npm run standard:check && npm run adjudicate:check && npm run test:verification && npm run math:ban && npm run silent:check && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run api:reference && npm run api:reference:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run docs:commands && npm run entrypoints && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run quantum:proof && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
+    "check": "npm run version:test && npm run version:address:test && npm run version:calendar:test && npm run calendar:drift:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run version:check && npm run zenodo:check && npm run changelog:check && npm run test:kernel && npm run test:core && npm run test:security && npm run test:quantum && npm run test:crypto && npm run test:a432 && npm run constants:check && npm run finite:check && npm run coverage:audit && npm run standard:check && npm run adjudicate:check && npm run test:verification && npm run math:ban && npm run silent:check && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run api:reference && npm run api:reference:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run docs:commands && npm run entrypoints && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run quantum:proof && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
     "prepublishOnly": "npm run build",
     "prose": "node scripts/prose-claims.mjs --list",
     "prose:check": "node scripts/prose-claims.mjs",
@@ -213,7 +213,8 @@
     "docs:names": "node scripts/docs-names.mjs",
     "docs:commands": "node scripts/docs-commands.mjs",
     "docs:functions": "node scripts/docs-functions.mjs",
-    "entrypoints": "node scripts/entrypoints-usable.mjs"
+    "entrypoints": "node scripts/entrypoints-usable.mjs",
+    "zenodo:check": "node scripts/zenodo-check.mjs"
   },
   "keywords": [
     "a432",

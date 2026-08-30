@@ -111,6 +111,53 @@ if (CHECK && cffNext !== cff) {
   fail.push(`CITATION.cff version is ${/^version: (.+)$/m.exec(cff)[1]}, package.json is ${version}`)
 }
 
+// ---- surface 1b: .zenodo.json ------------------------------------------------
+//
+// Zenodo mints the DOI from this file when a GitHub release fires the webhook.
+// It sat at version 1.0.0 while the package reached 1.0.14, and it declared
+// "license": "MIT" for a repository that is CC BY-NC-ND 4.0 — so a DOI minted
+// from it would have misstated the licence CITATION.cff explicitly warns about.
+// Sealed here so neither can drift again.
+//
+// Optional: a tree without .zenodo.json is a valid tree, and the ten fixtures
+// in version-seal.test.mjs are exactly that. Reading it unconditionally threw
+// before any check ran and took 9 of the 10 self-tests down with it — the
+// suite caught a change that broke the tool everywhere it was not looking.
+const zenodoPath = p('.zenodo.json')
+let zenodoRaw = null
+let zenodo = null
+try { zenodoRaw = readFileSync(zenodoPath, 'utf8'); zenodo = JSON.parse(zenodoRaw) } catch { /* absent */ }
+const cffLicence = /^license: (.+)$/m.exec(cff)?.[1]?.trim()
+// CITATION.cff is the authority for anything both files describe. Keeping a
+// second copy is what let .zenodo.json say "MIT" for a CC BY-NC-ND repository
+// while CITATION.cff said the opposite, and a DOI minted from the wrong one
+// would have published the wrong terms.
+const cffField = (name) => {
+  const m = new RegExp(`^${name}: (.+)$`, 'm').exec(cff)
+  return m ? m[1].trim() : null
+}
+const cffTitle = cffField('title')
+const cffUrl = cffField('url')
+const zenodoNextObj = zenodo === null ? null : {
+  ...zenodo,
+  version,
+  ...(cffTitle ? { title: cffTitle } : {}),
+  ...(cffLicence ? { license: cffLicence.toLowerCase() } : {}),
+  ...(cffUrl ? { related_identifiers: [
+    { identifier: 'https://github.com/ceccec/zeropoint-node', relation: 'isSupplementedBy', resource_type: 'software' },
+    { identifier: cffUrl, relation: 'isDocumentedBy', resource_type: 'other' },
+  ] } : {}),
+}
+const zenodoNext = zenodoNextObj === null ? null : JSON.stringify(zenodoNextObj, null, 2) + '\n'
+if (CHECK && zenodo !== null) {
+  if (zenodo.version !== version) {
+    fail.push(`.zenodo.json version is ${zenodo.version}, package.json is ${version}`)
+  }
+  if (zenodoNext !== zenodoRaw) {
+    fail.push('.zenodo.json has drifted from CITATION.cff and package.json — run npm run version:seal')
+  }
+}
+
 // ---- surface 2: README VERSION block ----------------------------------------
 const readmePath = p('README.md')
 const readme = readFileSync(readmePath, 'utf8')
@@ -215,6 +262,7 @@ if (CHECK) {
 }
 
 if (cffNext !== cff) writeFileSync(cffPath, cffNext)
+if (zenodoNext !== null && zenodoNext !== zenodoRaw) writeFileSync(zenodoPath, zenodoNext)
 if (readmeNext !== readme) writeFileSync(readmePath, readmeNext)
 if (changelogNext !== changelog) writeFileSync(changelogPath, changelogNext)
 

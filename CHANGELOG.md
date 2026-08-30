@@ -1,5 +1,63 @@
 # Changelog
 
+## 1.0.15
+
+### Fixed — the kernel is importable from npm
+
+- `package.json` advertised **22 entry points and 10 could not be imported**,
+  including `zeropoint-node/0` — the kernel most of the documentation describes.
+  They resolved to `src/*.ts`, and Node refuses to strip types under
+  `node_modules`. All ten are built into `dist/` now and the exports map points
+  there.
+
+  ```javascript
+  import { digitalRoot, VORTEX_ORBIT } from 'zeropoint-node/0'
+  // 9, [1, 2, 4, 8, 7, 5]
+  ```
+
+  Verified from a packed tarball installed into an empty directory: **20 of 20
+  library subpaths import cleanly.** `npm run entrypoints` fails if a subpath
+  ever points back at source.
+
+### Fixed — twelve releases minted no DOI
+
+- Zenodo's webhook is active and accepted every one of the twelve releases with
+  HTTP 202. **202 means accepted, not published**: each deposition then failed
+  out of sight, and the error was `"Extra metadata load failed."` — Zenodo could
+  not load `.zenodo.json`. Three things in it were rejected:
+  - `communities` named `quantum-computing` and `reproducible-research`, and
+    **neither exists on Zenodo** — both return 404. An unresolvable community
+    fails the whole load.
+  - `subjects` were plain strings; the schema wants objects carrying a term, an
+    identifier and a scheme.
+  - a creator carried `"orcid": ""`. An empty string is not "unknown", it is an
+    invalid ORCID.
+- Separately, and worse in kind: the file declared **`"license": "MIT"` for a
+  repository that is CC BY-NC-ND 4.0.** A DOI minted from it would have
+  published terms that `LICENSE` and `CITATION.cff` both contradict.
+- **CITATION.cff is the authority now.** `.zenodo.json` derives its title,
+  licence and version from it through `npm run version:seal`, so the two cannot
+  disagree. It had sat at version 1.0.0 while the package reached 1.0.14.
+- `npm run zenodo:check` validates the file locally, before a release, because
+  the feedback loop through Zenodo is one release long and silent at the end.
+  All four causes above fail it.
+
+### Fixed — a security test that sometimes lied
+
+- The tamper cases in the AEAD suite were written as
+  `'ff' + payload.ciphertext.slice(2)`, which **changes nothing when the first
+  byte is already `ff`**. About one run in 256 the "modified" ciphertext was
+  identical, decryption correctly succeeded, and the assertion that it must fail
+  authentication failed instead. The cipher was never wrong; the test was. All
+  three cases flip the first byte with XOR now, which always changes it.
+
+### Known limitations
+
+- Unchanged from 1.0.14, minus the entry points. `./mcp` is built and
+  advertised but starts a server on import — it is an executable, not a library
+  surface.
+- Whether this release actually mints a DOI is not yet known. The metadata now
+  loads locally and the webhook is active; the next release is the test.
 ## 1.0.14
 
 ### Fixed — the 1.0.13 quick start showed an import that does not work

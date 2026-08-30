@@ -1,52 +1,37 @@
 {
-  "title": "Quantum Computing System: Production-Grade Simulator, Algorithms, and Hybrid Orchestration with External Verification",
-  "description": "Complete quantum computing system with 205+ externally verifiable checks spanning simulation, algorithms, error correction, hybrid orchestration, meta-verification, composability, self-healing, and post-quantum cryptography. All claims independently reproducible without trusting implementation.",
+  "title": "ZeroPoint Node",
+  "description": "Vortex sequence and its reflection through the void, with a computed kernel that proves both — fold / digital-root spine, A432 algebra adapters, and content-addressed integrity receipts. Claims are checked by a gate that can fail: sealed theorems adjudicated by an outside decision procedure, and coverage reported rather than asserted.",
   "creators": [
     {
       "name": "Rouschev, Tsvetan",
-      "affiliation": "Independent Researcher",
-      "orcid": ""
+      "affiliation": "Independent Researcher"
     }
   ],
-  "contributors": [],
   "keywords": [
-    "quantum computing",
-    "quantum simulation",
-    "quantum algorithms",
-    "quantum error correction",
-    "variational quantum eigensolver",
-    "hybrid quantum-classical",
+    "vortex mathematics",
+    "digital root",
+    "content addressing",
     "reproducible research",
     "external verification",
-    "post-quantum cryptography",
-    "quantum machine learning"
+    "quantum simulation",
+    "post-quantum cryptography"
   ],
-  "license": "MIT",
+  "license": "cc-by-nc-nd-4.0",
   "language": "en",
   "upload_type": "software",
-  "publication_date": "2026-08-05",
-  "version": "1.0.0",
-  "subjects": [
-    "Quantum Computing",
-    "Quantum Simulation",
-    "Quantum Algorithms",
-    "Computer Science"
-  ],
+  "publication_date": "2026-08-30",
+  "version": "1.0.15",
   "related_identifiers": [
     {
       "identifier": "https://github.com/ceccec/zeropoint-node",
       "relation": "isSupplementedBy",
       "resource_type": "software"
-    }
-  ],
-  "communities": [
-    {
-      "identifier": "quantum-computing"
     },
     {
-      "identifier": "reproducible-research"
+      "identifier": "https://node.zeropoint.bg",
+      "relation": "isDocumentedBy",
+      "resource_type": "other"
     }
   ],
-  "access_right": "open",
-  "grants": []
+  "access_right": "open"
 }

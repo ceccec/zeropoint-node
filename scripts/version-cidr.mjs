@@ -116,6 +116,74 @@ export function satisfies(version, range) {
   return sameNetwork(version, m[2], prefix) && toBits(version) >= toBits(m[2])
 }
 
+// ------------------------------------------------------- gateway prefixes
+/**
+ * The four gateways are the four field boundaries.
+ *
+ * The vortex tour is 1 2 4 8 7 5 3 6 9 0, and a gateway is a digit where the
+ * stroke reverses. There are exactly four — 8, 3, 9, 0 — and they cut the tour
+ * into segments of width 4, 3, 2, 1:
+ *
+ *     1 2 4 8 | 7 5 3 | 6 9 | 0
+ *
+ * A 48-bit address has exactly four prefixes that complete a field: /0, /16,
+ * /32, /48. Four and four, and both are the places where something changes
+ * kind rather than merely advances — a gateway reverses polarity, a field
+ * boundary finishes determining one number and starts the next.
+ *
+ * The three segments that end in 8, 3 and 9 close the three fields, in order.
+ * The fourth segment is the void alone, and it maps to /0 — the prefix that
+ * fixes nothing. That is the part worth pausing on: the void gateway and the
+ * empty prefix are both "nothing is determined here", and the tour closes
+ * 0 -> 1 exactly as /0 contains every address.
+ *
+ * WHAT DOES NOT CORRESPOND, said plainly. There are 45 interior prefixes and 6
+ * non-gateway digits. Those are both "interior", and they are not in
+ * correspondence — 45 is not 6 and no scaling makes it so. The claim here is
+ * about the boundaries, which are 4 and 4 exactly; extending it to the
+ * interiors would be numerology.
+ */
+export const TOUR = [1, 2, 4, 8, 7, 5, 3, 6, 9, 0]
+export const GATEWAYS = [8, 3, 9, 0]
+
+/** Gateways that close a field, in tour order, paired with the prefix. */
+const FIELD_CLOSERS = [
+  [8, FIELD_BITS],          // /16 — the major is fixed
+  [3, FIELD_BITS * 2],      // /32 — the minor too
+  [9, FIELD_BITS * 3],      // /48 — the patch too; one address
+]
+const VOID_GATEWAY = 0
+const VOID_PREFIX = 0
+
+/** The prefix a gateway digit stands for, or null if the digit is not one. */
+export function prefixForGateway(digit) {
+  if (digit === VOID_GATEWAY) return VOID_PREFIX
+  const hit = FIELD_CLOSERS.find(([d]) => d === digit)
+  return hit ? hit[1] : null
+}
+
+/** The gateway a prefix crosses, or null when the prefix is interior. */
+export function gatewayForPrefix(prefix) {
+  if (prefix === VOID_PREFIX) return VOID_GATEWAY
+  const hit = FIELD_CLOSERS.find(([, p]) => p === prefix)
+  return hit ? hit[0] : null
+}
+
+/** Every prefix, labelled by the gateway it crosses if it crosses one. */
+export function prefixTour() {
+  const out = []
+  for (let p = 0; p <= TOTAL_BITS; p++) {
+    const g = gatewayForPrefix(p)
+    out.push({
+      prefix: p,
+      gateway: g,
+      boundary: p % FIELD_BITS === 0,
+      field: g === VOID_GATEWAY ? 'nothing fixed' : g === null ? 'interior' : ['major', 'minor', 'patch'][p / FIELD_BITS - 1],
+    })
+  }
+  return out
+}
+
 // ---------------------------------------------------------------------- test
 if (process.argv.includes('--test')) {
   let fail = 0
@@ -172,8 +240,29 @@ if (process.argv.includes('--test')) {
   check('/24 still separates majors', !sameNetwork('1.100.0', '2.100.0', 24))
   check('there are 49 prefixes and semver names 3 of them', TOTAL_BITS + 1 === 49)
 
+  // ---- gateway prefixes -------------------------------------------------
+  check('the tour has four gateways', GATEWAYS.length === 4)
+  const boundaries = prefixTour().filter((x) => x.boundary)
+  check('the address has four field boundaries', boundaries.length === 4, String(boundaries.length))
+  check('every gateway maps to a prefix', GATEWAYS.every((g) => prefixForGateway(g) !== null))
+  check('every boundary prefix maps to a gateway', boundaries.every((b) => gatewayForPrefix(b.prefix) !== null))
+  check('the void gateway is the empty prefix', prefixForGateway(0) === 0 && gatewayForPrefix(0) === 0)
+  check('gateways closing fields ascend with the tour',
+    [8, 3, 9].map(prefixForGateway).join() === '16,32,48',
+    [8, 3, 9].map(prefixForGateway).join())
+  check('the mapping round-trips', GATEWAYS.every((g) => gatewayForPrefix(prefixForGateway(g)) === g))
+  check('a non-gateway digit has no prefix',
+    TOUR.filter((d) => !GATEWAYS.includes(d)).every((d) => prefixForGateway(d) === null))
+  check('an interior prefix crosses no gateway',
+    [1, 15, 17, 31, 33, 47].every((p) => gatewayForPrefix(p) === null))
+  check('caret and tilde land on gateways', gatewayForPrefix(CARET) === 8 && gatewayForPrefix(TILDE) === 3)
+  check('exact lands on the last field-closing gateway', gatewayForPrefix(EXACT) === 9)
+  // The honest non-correspondence.
+  check('interiors are NOT in correspondence: 45 prefixes, 6 digits',
+    prefixTour().filter((x) => !x.boundary).length === 45 && TOUR.filter((d) => !GATEWAYS.includes(d)).length === 6)
+
   if (fail > 0) { console.error(`version-cidr self-test FAIL — ${fail}`); process.exit(1) }
-  console.log('version-cidr self-test ok — 28 checks over the 48-bit address space')
+  console.log('version-cidr self-test ok — 40 checks over the 48-bit address space')
   process.exit(0)
 }
 
@@ -196,3 +285,20 @@ for (const [p, op] of [[0, ''], [16, '^'], [24, ''], [32, '~'], [40, ''], [48, '
 console.log('')
 console.log('  ^ and ~ are two of forty-nine prefixes. /24 is "same major, top half of')
 console.log('  the minor" — a range semver has no notation for.')
+console.log('')
+console.log('the four gateways are the four field boundaries\n')
+console.log(`  tour      ${TOUR.join(' ')}`)
+console.log(`  segments  1 2 4 8 | 7 5 3 | 6 9 | 0     widths 4,3,2,1`)
+console.log('')
+console.log('  gateway  prefix  fixes')
+console.log('  ' + '-'.repeat(46))
+for (const g of GATEWAYS) {
+  const p = prefixForGateway(g)
+  const label = prefixTour()[p].field
+  console.log(`  ${String(g).padEnd(9)}/${String(p).padEnd(7)}${label}`)
+}
+console.log('')
+console.log('  The void gateway and the empty prefix are the same statement:')
+console.log('  nothing is determined. The tour closes 0 -> 1 as /0 contains every address.')
+console.log('  45 interior prefixes against 6 non-gateway digits — those do NOT correspond,')
+console.log('  and pretending they did would be numerology.')

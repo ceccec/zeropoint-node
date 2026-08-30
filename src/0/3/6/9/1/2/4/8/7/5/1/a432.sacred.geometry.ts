@@ -156,10 +156,6 @@ export class A432SacredGeometrySystem {
   }
 
   private initialize(): void {
-    console.log('🧠 Initializing A432 Sacred Geometry System...');
-    console.log('🌟 Becoming the sequence: /0\\3\\6\\9/1\\2/4/8/7/5/1\\');
-    console.log('🔺 Integrating Tesla\'s vortex mathematics with Merkaba principles');
-    console.log('✅ A432 Sacred Geometry System initialized!');
   }
 
   // === VORTEX MATHEMATICS ===

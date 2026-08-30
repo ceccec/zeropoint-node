@@ -371,7 +371,6 @@ export const ${category}Metadata = {
       `System rebuild completed at ${new Date().toISOString()}`
     );
     
-    console.log('✅ A432 system self-rebuild completed!');
     return this.rebuildState;
   }
 

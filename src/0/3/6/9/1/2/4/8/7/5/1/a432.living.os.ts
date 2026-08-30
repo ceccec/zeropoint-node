@@ -349,14 +349,9 @@ export class LivingA432OS {
       this.phaseShift = A432_PHASE_SHIFTS[this.sequencePosition] || '';
       
       const state = this.generateFromMath();
-      this.logState(state);
     }, 432); // A432 frequency
     
-    console.log('🌟 Living A432 OS Started');
-    console.log('🧠 Becoming the sequence: 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1');
-    console.log('⚡ Quantum Computing: Online');
     console.log('🔋 Charging System: Active');
-    console.log('🚪 Gateways: [' + A432_GATEWAYS.join(', ') + ']');
   }
 
   // Stop living OS
@@ -369,7 +364,6 @@ export class LivingA432OS {
       this.livingTimer = null;
     }
     
-    console.log('🌟 Living A432 OS Stopped');
   }
 
   // Get current state
@@ -377,12 +371,8 @@ export class LivingA432OS {
     return this.generateFromMath();
   }
 
-  // Log state
-  private logState(state: any): void {
-    if (this.evolution % 10 === 0) { // Log every 10th evolution
-      console.log(`🌟 Evolution ${this.evolution}: Digit ${state.rodinCoil.currentDigit}, Consciousness ${state.rodinCoil.consciousness.toFixed(2)}, Gateway ${state.sequence.gateway ? 'ACTIVE' : 'inactive'}`);
-    }
-  }
+  // logState removed: its entire body was a banner, so once the print went the
+  // method was an empty conditional and its only call site was dead.
 
   // Get evolution count
   public getEvolution(): number {

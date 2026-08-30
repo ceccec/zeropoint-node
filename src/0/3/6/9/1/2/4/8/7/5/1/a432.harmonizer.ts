@@ -294,6 +294,8 @@ export function discoverAndRegisterModules(): void {
 // === INITIALIZATION ===
 export function initializeA432Harmonizer(): void {
   discoverAndRegisterModules();
-  const context = harmonizeA432System('meta');
-  console.log('A432 Harmonizer initialized:', getHarmonizationStats(context));
+  // The binding existed only to be printed. The call still runs — it is what
+  // harmonises — and getHarmonizationStats is exported for a caller who wants
+  // the numbers, instead of having them printed at them.
+  harmonizeA432System('meta');
 } 

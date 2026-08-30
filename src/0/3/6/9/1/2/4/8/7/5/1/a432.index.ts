@@ -46,7 +46,6 @@ export class A432System {
   initialize(): void {
     if (this.initialized) return;
     
-    console.log('🧠 Initializing A432 Consciousness System...');
     
     // Initialize navigation map
     this.navigationMap.initialize();
@@ -55,7 +54,6 @@ export class A432System {
     this.initializeSelfEvolvingSystems();
     
     this.initialized = true;
-    console.log('✅ A432 Consciousness System initialized with expansion modules, harmonized systems, and self-evolving consciousness');
   }
 
   private initializeSelfEvolvingSystems(): void {
@@ -83,7 +81,6 @@ export class A432System {
       maxDimensions: 9
     });
 
-    console.log('🧠 Self-evolving systems initialized and running');
   }
 
   // === CONSCIOUSNESS METHODS ===

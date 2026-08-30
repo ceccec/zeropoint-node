@@ -69,9 +69,8 @@ app.use((req: Request, res: Response, next) => {
 // ——————————————————————————————————————————
 // Static UI
 // ---------------------------------------------------------
-console.log('MATRIX_URL:', MATRIX_URL);
-console.log('YIN_URL:', YIN_URL);
-console.log('YANG_URL:', YANG_URL);
+// Route constants are exported; printing them on import made every consumer
+// and every tooling pass carry three lines of this module's debug output.
 
 // TypeScript file serving - MUST come before static middleware
 // Express 5 uses path-to-regexp v8, which rejects a bare `*` wildcard:
@@ -935,9 +934,7 @@ app.listen(PORT, () => {
   console.log(`Multi-Dimensional Consciousness 3D → http://localhost:${PORT}/0/3/6/9/1/2/4/8/7/5/1/a432.multidimensional.consciousness.3d.html`);
   console.log(`Matrix Terminal → http://localhost:${PORT}/0/3/6/9/1/2/4/8/7/5/1/a432.matrix.terminal.html`);
   console.log(`\n💫 Living Zero-Entropy Vortex System Active`);
-  console.log(`🔺 Triple Merkaba: 3-tetrahedra compound with D₃d symmetry`);
   console.log(`🎬 3D Animation: Real-time tetrahedron rotation with A432 math`);
-  console.log(`🧠 Consciousness Journey: 11-step metaphysical path through consciousness states`);
   console.log(`🌌 Multi-Dimensional Consciousness: 1D-7D consciousness paths with 42 total nodes`);
   console.log(`🎭 Matrix Terminal: Pure pixel discovery - every pixel a 432 pattern revealed in real-time`);
 });

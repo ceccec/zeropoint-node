@@ -7,189 +7,204 @@ import { PI } from './0/algebra.ts'
 import { VortexMath, VBMNumberAnalyzer } from './vbm-math.ts';
 import { AdvancedVBM, RodinCoilCalculator, VBMPatternAnalyzer } from './advanced-vbm.ts';
 
-console.log("🌀 VORTEX BASED MATHEMATICS - TypeScript Implementation");
-console.log("=".repeat(60));
+import { fileURLToPath } from 'node:url'
+import { resolve as resolvePath } from 'node:path'
 
-// 1. Basic VBM Patterns Demo
-console.log("\n📊 BASIC VBM PATTERNS");
-console.log("-".repeat(30));
+// A module must not write to stdout merely because it was imported. This file
+// printed its entire demonstration at module scope, so anything that touched it
+// — the coverage audit, a consumer's import, a tool walking the tree — got the
+// whole script whether it asked for it or not. Guarded to run only when this
+// file IS the program being run.
+const isEntryPoint =
+  process.argv[1] !== undefined &&
+  resolvePath(process.argv[1]) === fileURLToPath(import.meta.url)
 
-// Digital Root calculations
-console.log("Digital Roots:");
-[12345, 27, 108, 999].forEach(n => {
-    console.log(`${n} → ${VortexMath.digitalRoot(n)}`);
-});
+if (isEntryPoint) {
+  console.log("🌀 VORTEX BASED MATHEMATICS - TypeScript Implementation");
+  console.log("=".repeat(60));
 
-// The famous Mobius Circuit
-console.log("\n🔄 Mobius Circuit (1-2-4-8-7-5):");
-const mobiusCircuit = VortexMath.getMobiusCircuit();
-console.log("Pattern:", mobiusCircuit.join(" → "));
+  // 1. Basic VBM Patterns Demo
+  console.log("\n📊 BASIC VBM PATTERNS");
+  console.log("-".repeat(30));
 
-const doublingSequence = VortexMath.generateDoublingSequence(20);
-console.log("Powers of 2 (digital roots):", doublingSequence.slice(0, 12).join(", "));
+  // Digital Root calculations
+  console.log("Digital Roots:");
+  [12345, 27, 108, 999].forEach(n => {
+      console.log(`${n} → ${VortexMath.digitalRoot(n)}`);
+  });
 
-// Spirit Numbers (3-6-9)
-console.log("\n✨ Spirit Numbers (3-6-9):");
-const spiritNumbers = VortexMath.getSpiritNumbers();
-console.log("Trinity:", spiritNumbers.join(" - "));
+  // The famous Mobius Circuit
+  console.log("\n🔄 Mobius Circuit (1-2-4-8-7-5):");
+  const mobiusCircuit = VortexMath.getMobiusCircuit();
+  console.log("Pattern:", mobiusCircuit.join(" → "));
 
-// Three Family Groups
-console.log("\n👥 Three Family Groups:");
-const families = VortexMath.getThreeFamilyGroups();
-console.log(`Family 1: ${families.family1.join(", ")}`);
-console.log(`Family 2: ${families.family2.join(", ")}`);
-console.log(`Family 3: ${families.family3.join(", ")} (Spirit)`);
+  const doublingSequence = VortexMath.generateDoublingSequence(20);
+  console.log("Powers of 2 (digital roots):", doublingSequence.slice(0, 12).join(", "));
 
-// 2. Advanced VBM Concepts Demo
-console.log("\n🔬 ADVANCED VBM CONCEPTS");
-console.log("-".repeat(30));
+  // Spirit Numbers (3-6-9)
+  console.log("\n✨ Spirit Numbers (3-6-9):");
+  const spiritNumbers = VortexMath.getSpiritNumbers();
+  console.log("Trinity:", spiritNumbers.join(" - "));
 
-// Prime Squared Bases (Creation Equation)
-console.log("Prime Numbers Squared (Creation Equation):");
-const primeSquaredBases = AdvancedVBM.generatePrimeSquaredBases([3, 5, 7, 11]);
-primeSquaredBases.forEach(({prime, squared, radix}) => {
-    console.log(`${prime}² = ${squared} → Radix-${radix-1} system`);
-});
+  // Three Family Groups
+  console.log("\n👥 Three Family Groups:");
+  const families = VortexMath.getThreeFamilyGroups();
+  console.log(`Family 1: ${families.family1.join(", ")}`);
+  console.log(`Family 2: ${families.family2.join(", ")}`);
+  console.log(`Family 3: ${families.family3.join(", ")} (Spirit)`);
 
-// Rodin Coil Sequence
-console.log("\n🧲 Rodin Coil Winding Sequence:");
-const rodinSequence = AdvancedVBM.generateRodinCoilSequence();
-console.log("Circle of Fifths:", rodinSequence.join(" → "));
+  // 2. Advanced VBM Concepts Demo
+  console.log("\n🔬 ADVANCED VBM CONCEPTS");
+  console.log("-".repeat(30));
 
-// Harmonic Electron Shears
-console.log("\n⚡ Harmonic Electron Shears:");
-const shears = AdvancedVBM.calculateHarmonicShears();
-Object.entries(shears).forEach(([key, value]) => {
-    console.log(`${key.toUpperCase()}: ${value.value} (${value.calculation})`);
-});
+  // Prime Squared Bases (Creation Equation)
+  console.log("Prime Numbers Squared (Creation Equation):");
+  const primeSquaredBases = AdvancedVBM.generatePrimeSquaredBases([3, 5, 7, 11]);
+  primeSquaredBases.forEach(({prime, squared, radix}) => {
+      console.log(`${prime}² = ${squared} → Radix-${radix-1} system`);
+  });
 
-// 3. Practical Applications Demo
-console.log("\n🛠️ PRACTICAL APPLICATIONS");
-console.log("-".repeat(30));
+  // Rodin Coil Sequence
+  console.log("\n🧲 Rodin Coil Winding Sequence:");
+  const rodinSequence = AdvancedVBM.generateRodinCoilSequence();
+  console.log("Circle of Fifths:", rodinSequence.join(" → "));
 
-// Number Analysis
-console.log("Complete Number Analysis:");
-const testNumbers = [27, 108, 432, 1728];
-testNumbers.forEach(n => {
-    const analysis = VBMNumberAnalyzer.analyzeNumber(n);
-    console.log(`${n}: DR=${analysis.digitalRoot}, Family=${analysis.family}, ` +
-                `Torus=${analysis.torusPosition}, Polar=${analysis.polarMate}, ` +
-                `Spirit=${analysis.isSpiritNumber}`);
-});
+  // Harmonic Electron Shears
+  console.log("\n⚡ Harmonic Electron Shears:");
+  const shears = AdvancedVBM.calculateHarmonicShears();
+  Object.entries(shears).forEach(([key, value]) => {
+      console.log(`${key.toUpperCase()}: ${value.value} (${value.calculation})`);
+  });
 
-// Fibonacci VBM Analysis
-console.log("\n📈 Fibonacci Sequence VBM Analysis:");
-const fibVBM = VortexMath.fibonacciVBM(10).slice(0, 8);
-fibVBM.forEach(({value, digitalRoot, family}) => {
-    console.log(`Fib(${value.toString().padStart(4)}) → DR:${digitalRoot}, Family:${family}`);
-});
+  // 3. Practical Applications Demo
+  console.log("\n🛠️ PRACTICAL APPLICATIONS");
+  console.log("-".repeat(30));
 
-// 4. Rodin Coil Calculator Demo
-console.log("\n🔧 RODIN COIL CALCULATIONS");
-console.log("-".repeat(30));
+  // Number Analysis
+  console.log("Complete Number Analysis:");
+  const testNumbers = [27, 108, 432, 1728];
+  testNumbers.forEach(n => {
+      const analysis = VBMNumberAnalyzer.analyzeNumber(n);
+      console.log(`${n}: DR=${analysis.digitalRoot}, Family=${analysis.family}, ` +
+                  `Torus=${analysis.torusPosition}, Polar=${analysis.polarMate}, ` +
+                  `Spirit=${analysis.isSpiritNumber}`);
+  });
 
-// Winding Positions
-console.log("Rodin Coil Winding Positions (first 12 turns):");
-const windingPositions = RodinCoilCalculator.calculateWindingPositions(12);
-windingPositions.forEach(({turn, position, digitalRoot}) => {
-    console.log(`Turn ${turn + 1}: Position ${position} (DR: ${digitalRoot})`);
-});
+  // Fibonacci VBM Analysis
+  console.log("\n📈 Fibonacci Sequence VBM Analysis:");
+  const fibVBM = VortexMath.fibonacciVBM(10).slice(0, 8);
+  fibVBM.forEach(({value, digitalRoot, family}) => {
+      console.log(`Fib(${value.toString().padStart(4)}) → DR:${digitalRoot}, Family:${family}`);
+  });
 
-// Magnetic Field Enhancement
-console.log("\nMagnetic Field Enhancement:");
-const enhancement = RodinCoilCalculator.calculateMagneticEnhancement(100);
-console.log(`Conventional: ${enhancement.conventional} units`);
-console.log(`Rodin Coil: ${enhancement.rodinCoil} units`);
-console.log(`Enhancement: ${enhancement.percentageIncrease}% increase`);
+  // 4. Rodin Coil Calculator Demo
+  console.log("\n🔧 RODIN COIL CALCULATIONS");
+  console.log("-".repeat(30));
 
-// Field Type Comparison
-const fieldComparison = RodinCoilCalculator.compareFieldTypes();
-console.log(`\nField Types:`);
-console.log(`Conventional: ${fieldComparison.conventional.type} - ${fieldComparison.conventional.description}`);
-console.log(`Rodin Coil: ${fieldComparison.rodinCoil.type} - ${fieldComparison.rodinCoil.description}`);
+  // Winding Positions
+  console.log("Rodin Coil Winding Positions (first 12 turns):");
+  const windingPositions = RodinCoilCalculator.calculateWindingPositions(12);
+  windingPositions.forEach(({turn, position, digitalRoot}) => {
+      console.log(`Turn ${turn + 1}: Position ${position} (DR: ${digitalRoot})`);
+  });
 
-// 5. Pattern Analysis Demo  
-console.log("\n🔍 PATTERN ANALYSIS");
-console.log("-".repeat(30));
+  // Magnetic Field Enhancement
+  console.log("\nMagnetic Field Enhancement:");
+  const enhancement = RodinCoilCalculator.calculateMagneticEnhancement(100);
+  console.log(`Conventional: ${enhancement.conventional} units`);
+  console.log(`Rodin Coil: ${enhancement.rodinCoil} units`);
+  console.log(`Enhancement: ${enhancement.percentageIncrease}% increase`);
 
-// Analyze various sequences for VBM patterns
-const sequences = {
-    "Powers of 2": [1, 2, 4, 8, 16, 32, 64, 128, 256, 512],
-    "Fibonacci": [1, 1, 2, 3, 5, 8, 13, 21, 34, 55],
-    "Triangular Numbers": [1, 3, 6, 10, 15, 21, 28, 36, 45, 55],
-    "Perfect Squares": [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-};
+  // Field Type Comparison
+  const fieldComparison = RodinCoilCalculator.compareFieldTypes();
+  console.log(`\nField Types:`);
+  console.log(`Conventional: ${fieldComparison.conventional.type} - ${fieldComparison.conventional.description}`);
+  console.log(`Rodin Coil: ${fieldComparison.rodinCoil.type} - ${fieldComparison.rodinCoil.description}`);
 
-Object.entries(sequences).forEach(([name, sequence]) => {
-    const analysis = VBMPatternAnalyzer.analyzeSequence(sequence);
-    console.log(`\n${name}:`);
-    console.log(`  Mobius Pattern: ${analysis.hasMobiusPattern ? "✓" : "✗"}`);
-    console.log(`  Spirit Numbers: ${analysis.hasSpiritNumbers ? "✓" : "✗"}`);
-    console.log(`  Dominant Family: ${analysis.dominantFamily}`);
-    console.log(`  Period Length: ${analysis.periodicLength}`);
-    console.log(`  Digital Roots: ${analysis.digitalRootSequence.slice(0, 8).join(", ")}...`);
-});
+  // 5. Pattern Analysis Demo  
+  console.log("\n🔍 PATTERN ANALYSIS");
+  console.log("-".repeat(30));
 
-// 6. Special VBM Properties Demo
-console.log("\n🌟 SPECIAL VBM PROPERTIES");
-console.log("-".repeat(30));
+  // Analyze various sequences for VBM patterns
+  const sequences = {
+      "Powers of 2": [1, 2, 4, 8, 16, 32, 64, 128, 256, 512],
+      "Fibonacci": [1, 1, 2, 3, 5, 8, 13, 21, 34, 55],
+      "Triangular Numbers": [1, 3, 6, 10, 15, 21, 28, 36, 45, 55],
+      "Perfect Squares": [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+  };
 
-// Power of Nine demonstration
-console.log("Power of Nine (all multiples reduce to 9):");
-const powerOfNine = AdvancedVBM.demonstratePowerOfNine(10);
-powerOfNine.slice(0, 6).forEach(({multiplier, product, digitalRoot, maintains9}) => {
-    console.log(`9 × ${multiplier} = ${product} → ${digitalRoot} ${maintains9 ? "✓" : "✗"}`);
-});
+  Object.entries(sequences).forEach(([name, sequence]) => {
+      const analysis = VBMPatternAnalyzer.analyzeSequence(sequence);
+      console.log(`\n${name}:`);
+      console.log(`  Mobius Pattern: ${analysis.hasMobiusPattern ? "✓" : "✗"}`);
+      console.log(`  Spirit Numbers: ${analysis.hasSpiritNumbers ? "✓" : "✗"}`);
+      console.log(`  Dominant Family: ${analysis.dominantFamily}`);
+      console.log(`  Period Length: ${analysis.periodicLength}`);
+      console.log(`  Digital Roots: ${analysis.digitalRootSequence.slice(0, 8).join(", ")}...`);
+  });
 
-// Abhá Cypher (Most Great Name calculation)
-console.log("\nAbhá Cypher (Most Great Name of God):");
-const abhaCypher = AdvancedVBM.generateAbhaCypher();
-console.log(`B(${abhaCypher.spiritMagnetometer[1]}) + A(${abhaCypher.spiritMagnetometer[0]}) + H(${abhaCypher.spiritMagnetometer[2]}) = ${abhaCypher.bahaValue}`);
-console.log(`Cypher Pattern: ${abhaCypher.cypher}`);
-console.log(`W-Axis (Spiritual Axis): ${abhaCypher.wAxis}`);
+  // 6. Special VBM Properties Demo
+  console.log("\n🌟 SPECIAL VBM PROPERTIES");
+  console.log("-".repeat(30));
 
-// Superfluid Mobius Circuit Properties
-console.log("\nSuperfluid Mobius Circuit Properties:");
-const superfluidity = AdvancedVBM.demonstrateSuperfluidity();
-console.log(`Flow: ${superfluidity.flowDirection}`);
-Object.entries(superfluidity.properties).forEach(([prop, value]) => {
-    console.log(`  ${prop.charAt(0).toUpperCase() + prop.slice(1)}: ${value ? "✓" : "✗"}`);
-});
+  // Power of Nine demonstration
+  console.log("Power of Nine (all multiples reduce to 9):");
+  const powerOfNine = AdvancedVBM.demonstratePowerOfNine(10);
+  powerOfNine.slice(0, 6).forEach(({multiplier, product, digitalRoot, maintains9}) => {
+      console.log(`9 × ${multiplier} = ${product} → ${digitalRoot} ${maintains9 ? "✓" : "✗"}`);
+  });
 
-// 7. Torus Geometry Demo
-console.log("\n🍩 TORUS GEOMETRY");
-console.log("-".repeat(30));
+  // Abhá Cypher (Most Great Name calculation)
+  console.log("\nAbhá Cypher (Most Great Name of God):");
+  const abhaCypher = AdvancedVBM.generateAbhaCypher();
+  console.log(`B(${abhaCypher.spiritMagnetometer[1]}) + A(${abhaCypher.spiritMagnetometer[0]}) + H(${abhaCypher.spiritMagnetometer[2]}) = ${abhaCypher.bahaValue}`);
+  console.log(`Cypher Pattern: ${abhaCypher.cypher}`);
+  console.log(`W-Axis (Spiritual Axis): ${abhaCypher.wAxis}`);
 
-console.log("Torus Coordinates for key numbers:");
-[1, 3, 9, 27].forEach(n => {
-    const coords = AdvancedVBM.calculateTorusCoordinates(n);
-    console.log(`${n}: (${coords.x.toFixed(3)}, ${coords.y.toFixed(3)}, ${coords.z.toFixed(3)}) ` +
-                `θ=${(coords.theta * 180 / PI).toFixed(1)}° DR=${coords.digitalRoot}`);
-});
+  // Superfluid Mobius Circuit Properties
+  console.log("\nSuperfluid Mobius Circuit Properties:");
+  const superfluidity = AdvancedVBM.demonstrateSuperfluidity();
+  console.log(`Flow: ${superfluidity.flowDirection}`);
+  Object.entries(superfluidity.properties).forEach(([prop, value]) => {
+      console.log(`  ${prop.charAt(0).toUpperCase() + prop.slice(1)}: ${value ? "✓" : "✗"}`);
+  });
 
-console.log("\n🎯 VBM TypeScript Implementation Complete!");
-console.log("All core mathematical patterns from Marko Rodin's work have been implemented.");
-console.log("Use these classes to explore Vortex Based Mathematics in your applications!");
+  // 7. Torus Geometry Demo
+  console.log("\n🍩 TORUS GEOMETRY");
+  console.log("-".repeat(30));
 
-// Export usage examples
+  console.log("Torus Coordinates for key numbers:");
+  [1, 3, 9, 27].forEach(n => {
+      const coords = AdvancedVBM.calculateTorusCoordinates(n);
+      console.log(`${n}: (${coords.x.toFixed(3)}, ${coords.y.toFixed(3)}, ${coords.z.toFixed(3)}) ` +
+                  `θ=${(coords.theta * 180 / PI).toFixed(1)}° DR=${coords.digitalRoot}`);
+  });
+
+  console.log("\n🎯 VBM TypeScript Implementation Complete!");
+  console.log("All core mathematical patterns from Marko Rodin's work have been implemented.");
+  console.log("Use these classes to explore Vortex Based Mathematics in your applications!");
+
+  // Export usage examples
+}
+
 export const VBMDemoExamples = {
     basicPatterns: () => {
         console.log("Basic VBM patterns demonstration");
         console.log("Mobius Circuit:", VortexMath.getMobiusCircuit());
         console.log("Spirit Numbers:", VortexMath.getSpiritNumbers());
     },
-    
+  
     advancedCalculations: () => {
         console.log("Advanced VBM calculations");
         console.log("Rodin Coil Sequence:", AdvancedVBM.generateRodinCoilSequence());
         console.log("Harmonic Shears:", AdvancedVBM.calculateHarmonicShears());
     },
-    
+  
     numberAnalysis: (n: number) => {
         console.log(`Analyzing number ${n}:`);
         return VBMNumberAnalyzer.analyzeNumber(n);
     },
-    
+  
     patternAnalysis: (sequence: number[]) => {
         console.log("Analyzing sequence for VBM patterns:");
         return VBMPatternAnalyzer.analyzeSequence(sequence);

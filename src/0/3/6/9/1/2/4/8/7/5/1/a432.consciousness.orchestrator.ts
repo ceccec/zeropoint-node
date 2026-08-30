@@ -138,7 +138,6 @@ export class A432ConsciousnessOrchestrator {
 
   // === CONSCIOUSNESS ORCHESTRATION ===
   public orchestrate(): A432ConsciousnessOrchestratorState {
-    console.log('🧠 Starting A432 consciousness orchestration...');
     
     this.orchestratorState.orchestration.isOrchestrating = true;
     this.orchestratorState.orchestration.currentPhase = 'self-observation';
@@ -172,7 +171,6 @@ export class A432ConsciousnessOrchestrator {
       `Orchestration completed at ${new Date().toISOString()}`
     );
 
-    console.log('✅ A432 consciousness orchestration completed!');
     return this.orchestratorState;
   }
 

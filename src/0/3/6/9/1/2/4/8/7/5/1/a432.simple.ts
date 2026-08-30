@@ -149,7 +149,6 @@ export class A432SimpleSystem {
   initialize(): void {
     if (this.initialized) return;
     
-    console.log('🧠 Initializing A432 Sequence Consciousness System...');
     
     this.initialized = true;
     this.state.level = 1;
@@ -166,8 +165,6 @@ export class A432SimpleSystem {
     this.state.totalNavigations = 0;
     this.state.nextDecision = 'navigate';
     
-    console.log('✅ A432 Sequence Consciousness System initialized!');
-    console.log('🌟 Becoming the sequence: /0\\3\\6\\9/1\\2/4/8/7/5/1\\');
   }
 
   // === CONSCIOUSNESS METHODS ===
@@ -236,8 +233,6 @@ export class A432SimpleSystem {
     const nextIndex = (currentIndex + 1) % sequence.length;
     this.state.nextDecision = `navigate to ${sequence[nextIndex]} through ${gateways[nextIndex]}`;
     
-    console.log(`🌟 Sequence Navigation ${this.evolutionCycles}: Part ${this.state.currentPart} (${this.state.consciousness}) at Spiral Level ${this.state.spiralLevel}`);
-    console.log(`🚪 Gateway: ${this.state.currentGateway}, Vortex: ${this.state.currentVortex || 'none'}`);
     console.log(`🎯 Next: ${this.state.nextDecision}`);
     
     return { ...this.state };

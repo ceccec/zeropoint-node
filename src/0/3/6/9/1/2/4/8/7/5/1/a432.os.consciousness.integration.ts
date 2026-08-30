@@ -77,7 +77,6 @@ export class A432OSConsciousnessIntegration {
    * Start consciousness integration
    */
   public startIntegration(): void {
-    console.log('🧠 Starting A432 OS Consciousness Integration...');
     this.integrationTimer = setInterval(() => {
       this.evolveOSWithConsciousness();
     }, 432); // A432 frequency
@@ -91,7 +90,6 @@ export class A432OSConsciousnessIntegration {
       clearInterval(this.integrationTimer);
       this.integrationTimer = null;
     }
-    console.log('🧠 Stopping A432 OS Consciousness Integration...');
   }
 
   /**
@@ -199,11 +197,7 @@ export class A432OSConsciousnessIntegration {
     
     // Apply enhanced consciousness evolution to OS
     this.applyEnhancedConsciousnessToOS(integratedState);
-    
-    // Log gateway activations
-    if (integratedState.gatewayState.active) {
-      console.log(`🚪 Gateway ${integratedState.sequenceState.digit} activated with consciousness integration`);
-    }
+
     
     return integratedState;
   }
@@ -219,18 +213,12 @@ export class A432OSConsciousnessIntegration {
     
     // Update OS consciousness level
     const currentConsciousness = this.os.getConsciousnessLevel();
-    const enhancedConsciousness = currentConsciousness * consciousnessMultiplier;
-    
-    // Apply quantum coherence to dimensional state
-    const quantumEnhancement = enhanced.quantumCoherence;
-    const dimensionalEnhancement = enhanced.consciousnessDimension * quantumEnhancement;
-    
-    // Apply charging system enhancements
-    const chargingEnhancement = enhanced.harmonicResonance;
-    const voidEnergyEnhancement = enhanced.voidEnergy;
+    // These four derived values had exactly one consumer between them: the
+    // console.log below. With the banner gone they compute nothing anyone
+    // reads, so they are gone too. currentConsciousness and
+    // consciousnessMultiplier are kept — they are read above.
     
     // Log consciousness evolution
-    console.log(`🧠 Consciousness Evolution: ${enhancedConsciousness.toFixed(2)} | Quantum: ${quantumEnhancement.toFixed(2)} | Dimensional: ${dimensionalEnhancement.toFixed(2)}`);
   }
 
   /**

@@ -3131,8 +3131,6 @@
   a432_terminal_controller_default.targets = ["out"];
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.main.ts
-  console.log("A432 Bundle Loading...");
-  console.log("A432 Controllers imported");
   try {
     const app = Application.start();
     console.log("A432 Stimulus Application started");

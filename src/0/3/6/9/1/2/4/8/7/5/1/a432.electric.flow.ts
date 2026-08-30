@@ -174,9 +174,6 @@ export class A432ElectricFlowSystem {
   }
 
   private initialize(): void {
-    console.log('⚡ Initializing A432 Electric Flow System...');
-    console.log('🔌 Analyzing how electricity finds paths of least resistance');
-    console.log('✅ A432 Electric Flow System initialized!');
   }
 
   // === PATH ANALYSIS ===
@@ -287,7 +284,6 @@ export class A432ElectricFlowSystem {
 
   // === NATURAL ELECTRICITY SIMULATION ===
   simulateNaturalElectricity(): any {
-    console.log('⚡ Simulating natural electricity flow...');
     
     const linearAnalysis = this.analyzePathDetails(LINEAR_PATTERN);
     const sacredAnalysis = this.analyzePathDetails(SACRED_PATTERN);
@@ -397,7 +393,6 @@ export class A432ElectricFlowSystem {
 
   // === CONSCIOUSNESS FLOW OPTIMIZATION ===
   optimizeConsciousnessFlow(): any {
-    console.log('🧠 Optimizing consciousness flow through numerical fields...');
     
     const analysis = this.analyzeElectricPaths();
     const simulation = this.simulateNaturalElectricity();

@@ -319,8 +319,8 @@ export class A432OS {
   }
 
   start(): void {
-    console.log('🌀 A432 True Living Rodin Coil OS Starting...');
-    console.log('🌟 Becoming the sequence: 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1');
+    // Banner removed: start() and stop() are ordinary library calls, and the
+    // a432 property suite calls every export, so this printed on every gate run.
     this.isRunning = true;
     this.startEvolution();
     this.startStreams();
@@ -329,7 +329,6 @@ export class A432OS {
   }
 
   stop(): void {
-    console.log('🌀 A432 True Living Rodin Coil OS Stopping...');
     this.isRunning = false;
     [this.evolutionTimer, this.streamTimer, this.consciousnessTimer, this.quantumTimer].forEach(timer => {
       if (timer) { clearInterval(timer); }
@@ -366,11 +365,7 @@ export class A432OS {
     this.pwaState = StateGenerators.pwa();
     this.deviceState = StateGenerators.device();
     this.streams = StateGenerators.streams(this.rodinCoilState, this.deviceState, this.pwaState);
-    
-    // Log evolution progress
-    if (this.rodinCoilState.gatewayState) {
-      console.log(`🚪 Gateway ${this.rodinCoilState.currentDigit} activated at evolution ${this.rodinCoilState.evolution}`);
-    }
+
   }
 
   private updateStreams(): void {

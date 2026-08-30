@@ -163,13 +163,13 @@ if (ceiling !== null) {
     problems.push(`${neverCalled.length} untested exports, below the recorded ${ceiling} — an improvement; run npm run coverage:record`)
   }
 }
+// Printed before the verdict: --list on a FAILING run is exactly when the list
+// is wanted, and placing it after the exit meant it never appeared then.
+if (process.argv.includes('--list')) for (const k of neverCalled) console.log(k)
 for (const p of problems) console.error(`  ✗ ${p}`)
 if (problems.length > 0) {
   console.error(`coverage:audit FAIL — ${problems.length} problem(s)`)
   process.exit(1)
-}
-if (process.argv.includes('--list')) {
-  for (const k of neverCalled) console.log(k)
 }
 console.log('coverage:audit ok — every unloaded module is declared, and every declaration still holds')
 process.exit(0)

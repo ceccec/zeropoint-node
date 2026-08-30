@@ -179,7 +179,6 @@ const DisplayUpdaters = {
  * Boot A432 OS UI
  */
 export function bootA432OSUI(): void {
-  console.log('🌀 A432 True Living Rodin Coil OS UI Booted');
   const os = new A432OS();
   os.start();
   setInterval(updateUI, uiState.updateInterval);

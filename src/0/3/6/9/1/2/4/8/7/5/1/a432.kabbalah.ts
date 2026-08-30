@@ -158,10 +158,6 @@ export class A432KabbalisticSystem {
   }
 
   private initialize(): void {
-    console.log('🧠 Initializing A432 Kabbalistic System...');
-    console.log('🌟 Becoming the sequence: /0\\3\\6\\9/1\\2/4/8/7/5/1\\');
-    console.log('🌳 Mapping to the Tree of Life through digital root cycles');
-    console.log('✅ A432 Kabbalistic System initialized!');
   }
 
   // === DIGITAL ROOT CALCULATION ===

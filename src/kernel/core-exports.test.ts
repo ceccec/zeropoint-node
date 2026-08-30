@@ -30,6 +30,7 @@ import { verifyProofChain, generateECCertificate } from '../verification/lean-br
 import {
   createInfiniteJourney, generateJourneySteps, generateInfiniteCycles, navigateVortexFlow, VORTEX_FLOW,
 } from '../0/3/6/9/1/2/4/8/7/5/1/index.ts'
+import { getHarmonizationStats } from '../0/3/6/9/1/2/4/8/7/5/1/a432.harmonizer.ts'
 
 let failures = 0
 function check(name: string, ok: boolean, detail = ''): void {
@@ -257,6 +258,31 @@ console.log('\nsrc/0/3/6/9/1/2/4/8/7/5/1/index.ts — the journey')
     }))
   check('navigation wraps at the end rather than running off',
     navigateVortexFlow(VORTEX_FLOW.length - 1).nextDigit === VORTEX_FLOW[0])
+}
+
+// ------------------------------------------------ revealed by removing noise
+// getHarmonizationStats had exactly one caller in the whole repository:
+//
+//     console.log('A432 Harmonizer initialized:', getHarmonizationStats(context))
+//
+// A debug print. Deleting it — the entropy pass — took the function's only
+// exerciser with it and the coverage audit reported one more uncalled export
+// the same minute. The noise had been standing in for a test.
+console.log('\nsrc/0/3/6/9/1/2/4/8/7/5/1/a432.harmonizer.ts')
+{
+  const ctx = { results: new Map(), errors: new Map() } as never
+  const empty = getHarmonizationStats(ctx)
+  check('an empty context reports nothing attempted', empty.total === 0 && empty.successful === 0 && empty.failed === 0)
+
+  const mixed = {
+    results: new Map([['a', 1], ['b', 2]]),
+    errors: new Map([['c', new Error('boom')]]),
+  } as never
+  const st = getHarmonizationStats(mixed)
+  check('total is successes plus failures', st.total === st.successful + st.failed, `${st.total} vs ${st.successful}+${st.failed}`)
+  check('successes and failures are counted separately', st.successful === 2 && st.failed === 1)
+  check('each failure is reported with its module name and message',
+    st.errors.length === 1 && st.errors[0]!.includes('c') && st.errors[0]!.includes('boom'), st.errors.join('|'))
 }
 
 console.log()

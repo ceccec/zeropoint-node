@@ -170,7 +170,7 @@
     "vortex:svg:check": "node --experimental-strip-types scripts/vortex-svg.mjs --check",
     "bundle:a432": "node scripts/build-a432-bundle.mjs",
     "bundle:a432:check": "node scripts/build-a432-bundle.mjs --check",
-    "check": "npm run version:test && npm run version:address:test && npm run version:calendar:test && npm run calendar:drift:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run version:check && npm run changelog:check && npm run test:kernel && npm run test:security && npm run test:quantum && npm run test:crypto && npm run test:a432 && npm run constants:check && npm run finite:check && npm run coverage:audit && npm run standard:check && npm run adjudicate:check && npm run test:verification && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
+    "check": "npm run version:test && npm run version:address:test && npm run version:calendar:test && npm run calendar:drift:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run version:check && npm run changelog:check && npm run test:kernel && npm run test:core && npm run test:security && npm run test:quantum && npm run test:crypto && npm run test:a432 && npm run constants:check && npm run finite:check && npm run coverage:audit && npm run standard:check && npm run adjudicate:check && npm run test:verification && npm run math:ban && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
     "prepublishOnly": "npm run build",
     "prose": "node scripts/prose-claims.mjs --list",
     "prose:check": "node scripts/prose-claims.mjs",
@@ -194,7 +194,8 @@
     "finite:check": "node scripts/finite-check.mjs",
     "standard:check": "node scripts/standard-functions.mjs",
     "coverage:audit": "node scripts/coverage-audit.mjs",
-    "coverage:record": "node scripts/coverage-audit.mjs --record"
+    "coverage:record": "node scripts/coverage-audit.mjs --record",
+    "test:core": "node --experimental-strip-types src/kernel/core-exports.test.ts"
   },
   "keywords": [
     "a432",

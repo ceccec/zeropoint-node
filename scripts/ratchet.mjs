@@ -392,6 +392,7 @@ function unreachableCount() {
     'src/0/index.ts',
     'src/mcp/server.ts',
     'src/kernel/smoke.test.ts',
+    'src/kernel/core-exports.test.ts',
     'src/security/quantum-fold-cipher.test.ts',
     'src/security/quantum-state-tomography.test.ts',
     'src/security/quantum-proofs.test.ts',

@@ -40,7 +40,6 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const UNLOADED_OK = {
   'src/multidimensional-vortex-demo.ts': 'a demo, printed for humans; nothing asserts on it',
   'src/vbm-demo.ts': 'a demo, printed for humans; nothing asserts on it',
-  'src/0/3/6/9/1/2/4/8/7/5/1/index.ts': 'a barrel that only re-exports; its targets are all covered',
   'src/advanced-vbm.ts': 'genuinely untested — the honest entry in this list',
   'src/mcp/server.ts': 'IS exercised, by mcp:smoke, which spawns it as a child and kills it — a killed process never flushes coverage, so this is a limit of the measurement rather than a gap in the testing',
 }
@@ -48,6 +47,7 @@ const UNLOADED_OK = {
 /** Everything that actually runs src/ code. Not the same as everything named "test". */
 const EXERCISERS = [
   ['src/kernel/smoke.test.ts', null],
+  ['src/kernel/core-exports.test.ts', null],
   ['src/security/quantum-fold-cipher.test.ts', null],
   ['src/security/quantum-state-tomography.test.ts', null],
   ['src/security/quantum-proofs.test.ts', null],

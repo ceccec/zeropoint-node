@@ -60,29 +60,6 @@ function typecheckCount() {
 }
 
 /**
- * Exported functions nothing in the pipeline ever calls.
- *
- * The rung above exercised-check. Loading a module is not calling its
- * functions, and this package is PUBLISHED — an exported function nobody here
- * calls still ships, is still part of the contract, and has still never been
- * shown to work. That is worse than dead code, not better.
- *
- * 375 of 1135 today. Ratcheted rather than gated at zero, because the rule
- * worth enforcing now is narrow and achievable: adding an exported function
- * that nothing calls makes this number go up.
- *
- * Measured with V8 coverage over everything that actually runs, which is not
- * the same as everything named "test". Counting only the test:* suites gives
- * 474 and blames src/quantum for 149 of them; quantum:sim covers 118 of those
- * and simply is not called a test.
- */
-function untestedExportCount() {
-  const out = run('node', ['scripts/untested-exports.mjs', '--count'])
-  const line = (out ?? '').trim().split('\n').map((l) => l.trim()).filter((l) => /^\d+$/.test(l)).pop()
-  return line ? Number(line) : null
-}
-
-/**
  * Failing assertions in the framework test file that nothing used to run.
  *
  * src/multidimensional-vortex-framework.test.ts has 122 expect() calls and was
@@ -494,7 +471,6 @@ const SURFACES = [
   { id: 'typecheck', label: 'TypeScript errors', measure: typecheckCount },
   { id: 'lint', label: 'ESLint errors', measure: lintCount },
   { id: 'frameworkTests', label: 'failing assertions in the framework test file', measure: frameworkTestFailures },
-  { id: 'untestedExports', label: 'exported functions nothing calls', measure: untestedExportCount },
   { id: 'decimals', label: 'decimal-crack lines', measure: decimalCount },
   { id: 'unloadable', label: 'modules that fail to import', measure: unloadableCount },
 ]

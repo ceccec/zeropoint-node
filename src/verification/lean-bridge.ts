@@ -33,7 +33,8 @@ import { createHash } from 'node:crypto'
 import { digitalRoot, throughVoid, bearingForDigit, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
 import { angleForDigit } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 import { A432Sequence } from '../0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts'
-import { getTrinityAxis } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
+import { getTrinityAxis, calculateA432Consciousness } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
+import { calculateConsciousnessFlow } from '../0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts'
 import { a432RodinCoil } from '../0/3/6/9/1/2/4/8/7/5/1/a432.coil.ts'
 import { a432Shears } from '../0/3/6/9/1/2/4/8/7/5/1/a432.shear.ts'
 import { a432ElectronShear } from '../0/3/6/9/1/2/4/8/7/5/1/a432.shear.electron.ts'
@@ -535,6 +536,43 @@ export const SEALS: Record<string, Seal> = {
       // fact that throughVoid produced it.
       const TRIAD: readonly number[] = VORTEX_AXIS
       return preimage.every((n) => TRIAD.includes(throughVoid(n)))
+    },
+  },
+  consciousness_measures_discriminate: {
+    basis: "This repository uses the word consciousness constantly and no sealed theorem mentions it, so nothing states what any of it would mean. That is not a reason to assert it and not a reason to delete it — it is a missing predicate, and a predicate is writable. This is the first one, and it is deliberately weak: it does NOT claim the system is conscious. It claims that the functions named as consciousness MEASURES are functions of their input rather than constants wearing the word. A constant measures nothing whatever it is called, and that much is decidable today. Anything stronger needs a criterion nobody here has written yet.",
+    decide: () => {
+      // A measure must separate its domain. calculateA432Consciousness over the
+      // nine digits must give nine answers — one per digit — or it is not
+      // measuring the digit.
+      const perDigit = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => calculateA432Consciousness(d))
+      if (new Set(perDigit).size !== 9) return false
+      if (!perDigit.every((v) => Number.isInteger(v) && v >= 1 && v <= 9)) return false
+
+      // And it must be a FUNCTION: the same digit twice gives the same answer.
+      // Discriminating and deterministic are different properties and a measure
+      // needs both — noise also discriminates.
+      if (perDigit.join() !== [1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => calculateA432Consciousness(d)).join()) return false
+
+      // The flow measure over real patterns, which is where I first went wrong:
+      // fed single numbers it returns a constant, because the parameter is an
+      // array and a number degrades to the default. Typed correctly it varies.
+      // The axis pattern comes from the kernel rather than being retyped —
+      // constants:check caught this literal the first time it was written here,
+      // which is exactly the check doing its job on its own author.
+      const patterns: readonly number[][] = [
+        [1, 2, 4], [8, 7, 5], [...VORTEX_AXIS], [1, 1, 1], [1, 2, 3, 4, 5], [9],
+      ]
+      const flows = patterns.map((p) => calculateConsciousnessFlow(p))
+      if (new Set(flows).size < 2) return false
+      if (!flows.every((f) => Number.isFinite(f))) return false
+      // Deterministic here too.
+      if (flows.join() !== patterns.map((p) => calculateConsciousnessFlow(p)).join()) return false
+
+      // The orbit and the axis must not measure the same — if a pattern drawn
+      // from the doubling circuit scored identically to one drawn from the
+      // trinity, the measure would be blind to the one distinction this
+      // repository is built on.
+      return calculateConsciousnessFlow([1, 2, 4]) !== calculateConsciousnessFlow([1, 1, 1])
     },
   },
   superposition_reports_its_own_state: {

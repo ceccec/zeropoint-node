@@ -1,5 +1,84 @@
 # Changelog
 
+## 1.0.13
+
+### Fixed — things that could not fail, and one that could not be found
+
+- **Ten functions named `prove*` proved nothing.** Every check in
+  `proof-of-system.ts` pushed a sentence onto an array and incremented a
+  counter: 28 increments, not one behind a branch, in a file whose only import
+  was `round`. It touched no quantum code and reported `system_verified: true`,
+  `confidence_score: 1`, 32 of 32, under the line *"outsiders can reproduce this
+  proof by running the same tests."* There were no tests. A check now runs a
+  predicate, counts only on true, and counts a throw as a failure. **32 fake
+  checks became 24 real ones** against the simulator, algorithms,
+  error-correction, variational and self-healing code. The report distinguishes
+  FAILED from INCOMPLETE, because a layer that verifies nothing is an absence,
+  not a failure.
+- **A `NaN` was living in an exported constant.** `FIBONACCI_RATIOS[0]` was
+  `Infinity` and a wave-energy object carried a `NaN` — both from unguarded
+  division by zero reached from digit **0**, the first digit of this
+  repository's own sequence. `npm run finite:check` walks every export of all
+  254 modules and fails on any non-finite value. No allowlist: a `NaN` in an
+  exported number has no correct version.
+- **`expandQuantumKeyViaHkdf` had no test** — the function the deprecation
+  notice on `expandQuantumKeyViaRodin` tells callers to use instead. Verified
+  against `node:crypto`'s own RFC 5869 implementation across seven lengths
+  straddling the 32-byte block boundary. That mattered: omitting the `T(i-1)`
+  feedback chain passes every length up to 32 and only fails from 33.
+- **A test file with 122 assertions had never once run.** Nothing executed
+  `multidimensional-vortex-framework.test.ts` — not package.json, not the gate,
+  not CI. On its first run, 7 assertions disagreed with the implementation. One
+  was conclusively the code's fault: `calculatePhaseRelationship` neither
+  normalised its inputs nor took the shorter arc, so 10 and 350 — twenty degrees
+  apart — reported 340.
+
+### Added — measuring what runs, not what is labelled
+
+- **`coverage:audit`** reports what nothing exercises, using V8 coverage. **348
+  of 1136 exported functions are never called (31%)**, concentrated in a432.
+  The number is in the quick start, because a reader deserves to know which
+  parts have never been executed.
+- **`silent:check`** — importing a module now prints nothing. Nine modules wrote
+  **361 lines** to stdout merely for being loaded; the gate log fell from 1535
+  lines to under 700.
+- **`standard:check`** — 43 implementations of `digitalRoot` must agree. They
+  differ on exactly two inputs: `0`, a deliberate named split between the kernel
+  and legacy conventions, and `-1`, which is undefined domain and is left
+  undecided rather than given an invented convention.
+- **`constants:check`** — the kernel's constants are retyped **89 times** across
+  56 file/constant pairs. Each is declared with a reason; a new copy fails.
+- **`docs:commands`** — every documented command must name something that
+  exists. It did not: **all three commands in QUICK_START failed**, and it told
+  readers to clone a placeholder URL.
+- **`api:reference` is generated.** The hand-written one documented 32 functions,
+  **28 of which did not exist**. It is read from the `exports` map now — 472
+  exports across 10 entry points, digest-checked.
+
+### Changed
+
+- **QUICK_START is rewritten and verified as a consumer** — packed, installed
+  into an empty directory, and imported. Every command and example on it is
+  checked by the gate.
+- The gate is faster despite doing more: the same test files had been running
+  three times per run. **71s → 48s.**
+
+### Known limitations
+
+- Unchanged from 1.0.12: 1.0.0–1.0.3 stay undeprecated pending an npm
+  automation token, ML-KEM-768 is conformant but **not constant time**, and
+  nothing in `src/thermo` is a device.
+- **348 exported functions are never called.** The core is now covered; the debt
+  is in a432 (321) and quantum (31).
+- **96 functions declared across 23 documents do not exist in `src/`.**
+  `USER_GUIDE.md` declares 13 and is missing 11. Ratcheted so it cannot grow,
+  not fixed — each needs judgement about what the document was for.
+- The 89 retyped constants are **declared, not bound.** One file was bound as a
+  demonstration; the rest are recorded so the next copy cannot arrive unnoticed.
+- One correction to earlier releases: **"126 modules outside LEAN" was reported
+  as dead weight in the 1.0.11 and 1.0.12 notes, and that was wrong.** It is
+  static reachability, which cannot see a dynamic import. 120 of those modules
+  execute on every gate run, and a loader hook confirms all 267 load.
 ## 1.0.12
 
 ### Added — the a432 layer has tests

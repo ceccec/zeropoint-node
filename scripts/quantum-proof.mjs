@@ -78,3 +78,15 @@ if (report.system_verified && report.confidence_score > 0.9) {
 }
 
 console.log('═'.repeat(70) + '\n')
+
+// Exit non-zero when a check that RAN did not hold. Not when a layer is empty:
+// three of the seven verify nothing, because their claims were prose and were
+// removed rather than asserted, and an absence is not a failure. This script
+// exited 0 unconditionally while the layers underneath it counted sentences.
+const failed = report.total_checks - report.total_passed
+if (failed > 0) {
+  console.error(`quantum:proof FAIL — ${failed} of ${report.total_checks} checks did not hold`)
+  process.exit(1)
+}
+console.log(`quantum:proof ok — ${report.total_passed}/${report.total_checks} checks recomputed and held`)
+process.exit(0)

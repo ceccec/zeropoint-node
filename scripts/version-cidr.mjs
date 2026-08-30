@@ -230,6 +230,45 @@ export function isBigEndedUniformMiddle(widths) {
   return uniform && widths[0] > middle[0] && widths[widths.length - 1] > middle[0]
 }
 
+// --------------------------------------------------------------- colour
+/**
+ * Three fields of sixteen bits is deep colour.
+ *
+ * 48 bits is exactly 16 bits per channel across three channels — the deepest
+ * colour PNG and TIFF carry, and 2^48 = 281474976710656 distinct colours,
+ * 16777216 times what 24-bit truecolour holds. That number is not a new one
+ * here: it is the size of the /0 network, printed above, because they are the
+ * same space counted twice.
+ *
+ * And the notation agrees. A 48-bit colour is #RRRRGGGGBBBB — twelve hex
+ * digits in three groups of four, which is the UUID's middle exactly.
+ *
+ *     version   1.1.0
+ *     hex       0001-0001-0000
+ *     colour    #000100010000
+ *
+ * WHAT THIS SHARPENS. A prefix quantises the space, but a prefix is not a bit
+ * depth: /24 fixes all of R and the top byte of G, which is not "8 bits per
+ * channel" — it cuts a channel in half. Only four of the forty-nine prefixes
+ * fall on a channel boundary, and they are 0, 16, 32, 48 — the same four the
+ * gateways map to. So the gateway prefixes are exactly the quantisations that
+ * respect a channel, and the other 45 split one.
+ *
+ * That is the third time the same four appear: four polarity reversals in the
+ * tour, four field boundaries in the address, four channel-aligned depths. It
+ * is one fact — 48 divides into three 16s — seen from three sides, not three
+ * facts.
+ */
+export function toColour(version) {
+  return '#' + toHexGroups(version).split('-').join('')
+}
+
+/** Bits per channel a prefix leaves free, or null when it splits a channel. */
+export function channelDepth(prefix) {
+  if (prefix % FIELD_BITS !== 0) return null
+  return { fixedChannels: prefix / FIELD_BITS, freeChannels: FIELDS - prefix / FIELD_BITS }
+}
+
 // ---------------------------------------------------------------------- test
 if (process.argv.includes('--test')) {
   let fail = 0
@@ -341,8 +380,29 @@ if (process.argv.includes('--test')) {
   check('and its variant nibble too',
     UUID_VARIANT_NIBBLE[0] >= 1 && UUID_VARIANT_NIBBLE[0] <= 3)
 
+  // ---- colour ------------------------------------------------------------
+  check('48 bits is three 16-bit channels', FIELDS * FIELD_BITS === 48)
+  check('the space is 2^48 colours', (1n << 48n) === 281474976710656n)
+  check('that is the /0 network size', networkSize(0) === (1n << 48n))
+  check('it is 2^24 times truecolour', (1n << 48n) / (1n << 24n) === (1n << 24n))
+  check('a colour is twelve hex digits', toColour('1.1.0').length === 13, toColour('1.1.0'))
+  check('1.1.0 is #000100010000', toColour('1.1.0') === '#000100010000', toColour('1.1.0'))
+  check('the colour is the uuid middle without the dashes',
+    toColour('1.1.0').slice(1) === toHexGroups('1.1.0').split('-').join(''))
+  // the sharpening: gateway prefixes are the channel-aligned ones
+  const alignedPrefixes = []
+  for (let p = 0; p <= TOTAL_BITS; p++) if (channelDepth(p) !== null) alignedPrefixes.push(p)
+  check('exactly four prefixes fall on a channel boundary', alignedPrefixes.length === 4, String(alignedPrefixes.length))
+  check('they are the gateway prefixes',
+    alignedPrefixes.every((p) => gatewayForPrefix(p) !== null) &&
+    GATEWAYS.every((g) => alignedPrefixes.includes(prefixForGateway(g))))
+  check('the other 45 split a channel', TOTAL_BITS + 1 - alignedPrefixes.length === 45)
+  check('/24 splits a channel rather than halving the depth', channelDepth(24) === null)
+  check('/16 fixes one channel and frees two',
+    channelDepth(16).fixedChannels === 1 && channelDepth(16).freeChannels === 2)
+
   if (fail > 0) { console.error(`version-cidr self-test FAIL — ${fail}`); process.exit(1) }
-  console.log('version-cidr self-test ok — 53 checks over the 48-bit address space')
+  console.log('version-cidr self-test ok — 65 checks over the 48-bit address space')
   process.exit(0)
 }
 
@@ -382,3 +442,13 @@ console.log('  The void gateway and the empty prefix are the same statement:')
 console.log('  nothing is determined. The tour closes 0 -> 1 as /0 contains every address.')
 console.log('  45 interior prefixes against 6 non-gateway digits — those do NOT correspond,')
 console.log('  and pretending they did would be numerology.')
+console.log('')
+console.log('the same 48 bits are a colour\n')
+console.log(`  version   ${version}`)
+console.log(`  colour    ${toColour(version)}   (16 bits per channel — deep colour)`)
+console.log(`  space     ${(1n << 48n).toLocaleString('en-US')} colours, ${((1n << 48n) / (1n << 24n)).toLocaleString('en-US')}x truecolour`)
+console.log('')
+console.log('  Only four of the 49 prefixes fall on a channel boundary — 0, 16, 32, 48 —')
+console.log('  and they are the gateway prefixes. The other 45 cut a channel in half, so a')
+console.log('  prefix is a quantisation but not a bit depth. Four reversals, four field')
+console.log('  boundaries, four channel-aligned depths: one fact seen from three sides.')

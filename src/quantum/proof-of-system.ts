@@ -12,6 +12,9 @@
 import { round } from '../0/algebra.ts'
 import { H, X, Z, applyGate1, cabs2, zeroState, probabilities } from './simulator.ts'
 import { adjoint } from './gates.ts'
+import { vqe1 } from './variational.ts'
+import { estimateGroundStateEnergy, H2_HAMILTONIAN } from './hybrid.ts'
+import { diagnosisSystem } from './self-healing.ts'
 import { groverSearch, groverIterations, deutschJozsa, qft, iqft } from './algorithms.ts'
 import {
   encodeLogicalZero, correctRepetition, decodeLogicalRepetition, measureSyndromeRepetition,
@@ -172,12 +175,36 @@ export function proveQuantumAlgorithms(): LayerProof {
 // ============================================================================
 
 export function proveHybridComputing(): LayerProof {
-  // The three claims here — VQE convergence, QML accuracy improving with
-  // training, quantum-inspired classical beating a random baseline — were
-  // prose. None is computed in this file, and each needs a run with a
-  // controlled baseline to mean anything. Removed rather than asserted. The
-  // variational code has its own coverage under npm run quantum:sim.
-  return layer('Hybrid computing', [])
+  // I deleted this layer first, calling VQE convergence uncomputable here. It
+  // is not: vqe1 returns both the energy it reached and the exact answer, so
+  // convergence is a subtraction. Deleting a claim is only honest when the
+  // claim cannot be checked, and "I did not look hard enough" is not that.
+  return layer('Hybrid computing', [
+    runCheck('VQE converges to the exact ground state', () => {
+      const r = vqe1(1, 0, 100)
+      const err = r.energy - r.exact
+      return err < CLOSE && err > -CLOSE
+    }),
+    runCheck('VQE error decreases monotonically as steps increase', () => {
+      let previous = Infinity
+      for (const steps of [2, 5, 10, 40, 100]) {
+        const r = vqe1(1, 0, steps)
+        const err = r.energy > r.exact ? r.energy - r.exact : r.exact - r.energy
+        if (err > previous) return false
+        previous = err
+      }
+      return true
+    }),
+    runCheck('VQE never reports an energy below the exact ground state', () =>
+      // A variational method is an UPPER bound. Going below the true minimum
+      // means the estimate is wrong, not that it did unusually well.
+      [2, 5, 10, 40, 100].every((steps) => {
+        const r = vqe1(1, 0, steps)
+        return r.energy >= r.exact - CLOSE
+      })),
+    runCheck('the H2 ground-state estimate is a finite number', () =>
+      Number.isFinite(estimateGroundStateEnergy(H2_HAMILTONIAN, 30).groundEnergy)),
+  ])
 }
 
 // ============================================================================
@@ -211,10 +238,14 @@ export function proveDiscoveryAndEC(): LayerProof {
 // ============================================================================
 
 export function proveMetaVerification(): LayerProof {
-  // Vortex-bridge acyclicity, end-to-end improvement, audit consensus: all
-  // prose, none computed. The repository's real meta-verification is the 25
+  // Still empty, and this one I did check. auditVortexBridge, metaVerifySystem
+  // and checkVortexInvariants all require inputs produced by a full pipeline
+  // run, so a check here would either fabricate those inputs — proving only
+  // that the fabrication is self-consistent — or duplicate what quantum:sim
+  // already does end to end. The repository's real meta-verification is the 25
   // seals in src/verification/lean-bridge.ts, each adjudicated by an outside
-  // decision procedure.
+  // decision procedure, and uuidna returns UNVERIFIED for the prose form of
+  // these claims because no decidable predicate accompanies them.
   return layer('Meta-verification', [])
 }
 
@@ -247,10 +278,31 @@ export function proveComposability(): LayerProof {
 // ============================================================================
 
 export function proveSelfHealing(): LayerProof {
-  // Failure-detection sensitivity, contextual repair, monotonic health: prose,
-  // and the kind of claim that needs an injected fault and a measured recovery
-  // to mean anything. Removed rather than asserted.
-  return layer('Self-healing', [])
+  // The original claim was "failure detection sensitive and specific", which I
+  // dismissed as needing an injected fault. diagnosisSystem takes four
+  // soundness numbers and returns a diagnosis, so the fault is just an
+  // argument — sensitivity and specificity are two calls.
+  return layer('Self-healing', [
+    runCheck('a healthy system raises no issues (specificity)', () => {
+      const d = diagnosisSystem(1, 1, 1, 0)
+      return d.detected_issues.length === 0 && d.requires_intervention === false
+    }),
+    runCheck('a broken system raises issues and demands intervention (sensitivity)', () => {
+      const d = diagnosisSystem(0, 0, 0, 1)
+      return d.detected_issues.length > 0 && d.requires_intervention === true
+    }),
+    runCheck('health score falls as soundness falls', () => {
+      const good = diagnosisSystem(1, 1, 1, 0).health_score
+      const mid = diagnosisSystem(1 / 2, 1 / 2, 1 / 2, 1 / 2).health_score
+      const bad = diagnosisSystem(0, 0, 0, 1).health_score
+      return good > mid && mid > bad
+    }),
+    runCheck('health score stays within 0..1', () =>
+      [[1, 1, 1, 0], [1 / 2, 1 / 2, 1 / 2, 1 / 2], [0, 0, 0, 1]].every(([a, b, c, d]) => {
+        const h = diagnosisSystem(a!, b!, c!, d!).health_score
+        return Number.isFinite(h) && h >= 0 && h <= 1
+      })),
+  ])
 }
 
 export function proveSystem(): SystemProofReport {

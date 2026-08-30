@@ -72,7 +72,8 @@ ZeroPoint Node is a complete consciousness technology system with 54 individual 
 ### For Development
 - **Source Code**: [src/](https://github.com/ceccec/zeropoint-node/blob/main/src)
 - **Tests**: src/possibilities/ and src/solutions/
-- **Generation Script**: scripts/generate-individual-files.js
+- **Generation Script**: removed — this document is no longer generated, and
+  naming a script that does not exist sent readers looking for it.
 
 ## 📊 System Metrics
 
@@ -132,7 +133,8 @@ ls docs/solutions/
 
 ### 4. Generate New Files
 ```bash
-node scripts/generate-individual-files.js
+# scripts/generate-individual-files.js no longer exists; this file is
+# maintained by hand now.
 ```
 
 ## 📞 Support

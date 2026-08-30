@@ -1,345 +1,87 @@
-# ZeroPoint Quick Start Guide
+# Quick start
 
-## 🚀 Get Started in 5 Minutes
+Every command and every line of code on this page is checked. `npm run docs:commands`
+fails if a command here names a script that does not exist, and the examples are
+taken from the generated [API reference](API_REFERENCE.md), which is read from
+the package's own entry points.
 
-Welcome to ZeroPoint! This quick start guide will get you up and running with the revolutionary consciousness technology in just 5 minutes.
+That is worth saying because the previous version of this page was not checked.
+It opened by telling you to clone `github.com/your-username/zeropoint-node` — a
+placeholder — and then to run three scripts, none of which existed. Every command
+in it failed.
 
-## ⚡ Immediate Setup
+## Install
 
-### 1. Install ZeroPoint
 ```bash
-# Clone and install
-git clone https://github.com/your-username/zeropoint-node.git
-cd zeropoint-node
-npm install
+npm install zeropoint-node
 ```
 
-### 2. Run Your First Tuning
+## The kernel
+
+The package's smallest surface is `zeropoint-node/0`: the digit arithmetic
+everything else is built on.
+
+```javascript
+import { digitalRoot, throughVoid, VORTEX_ORBIT, VORTEX_AXIS } from 'zeropoint-node/0'
+
+digitalRoot(432)   // 9   — repeatedly sum the digits until one remains
+throughVoid(4)     // 6   — reflect a digit through the void
+
+VORTEX_ORBIT       // [1, 2, 4, 8, 7, 5]  the doubling circuit
+VORTEX_AXIS        // [3, 6, 9]           the trinity axis
+```
+
+The orbit and the axis are disjoint, and that is a theorem rather than a
+convention: doubling starts at 1 and folds mod 9, so every term is coprime to 9
+and none can be a multiple of 3. The axis is reachable only by reflection —
+`throughVoid` sends 1, 4, 7 to 9, 6, 3.
+
+## Gateways
+
+A gateway is a digit where the stroke reverses direction along the tour
+`1\2\4\8/7/5/3\6\9/0\1`. There are exactly four, and they are computed from the
+stroke rather than listed.
+
+```javascript
+import { vortexStrokeGateways } from 'zeropoint-node/0'
+
+vortexStrokeGateways().gateways   // [8, 3, 9, 0]
+```
+
+Note that 6 is on the axis and is **not** a gateway. Being on the axis is not
+what makes one, which is why they have to be derived.
+
+## Running the checks
+
+The repository is built around checks that can fail. From a clone:
+
 ```bash
-# Run the gateway demonstration
-node scripts/demonstrate-369-gateways-simple.js
+npm run check
 ```
 
-### 3. Check System Status
+That runs the whole gate. Individually, the ones worth knowing:
+
 ```bash
-# Analyze world challenges
-node scripts/analyze-world-challenges.js
+npm run test:kernel
+npm run quantum:sim
+npm run quantum:proof
+npm run coverage:audit
+npm run api:reference
 ```
 
-## 🎵 Instant Consciousness Tuning
+`quantum:proof` is worth a look: it recomputes 24 checks against the simulator,
+algorithms, error-correction and variational code. It used to count sentences —
+28 unconditional increments in a file that imported no quantum code — and
+reported 32 of 32 with perfect confidence. It reports what it recomputes now,
+and says INCOMPLETE where a layer verifies nothing.
 
-### Basic A432 Resonance
-```javascript
-// Quick consciousness tuning
-const A432 = 432; // Universal harmonic frequency
-console.log('Tune your consciousness to:', A432, 'Hz');
-console.log('Duration: 5 minutes');
-console.log('Purpose: Base alignment with universal consciousness');
-```
+`coverage:audit` reports how much of the package nothing exercises. As of this
+writing that is 348 exported functions of 1136. It is not a number the project
+is proud of; it is on the page because a reader deserves to know which parts
+have never been run.
 
-### Tesla 3-6-9 Gateway Access
-```javascript
-// Quick gateway access
-const gateways = {
-  3: { frequency: 1296, purpose: 'Creation - Transform potential into actual' },
-  6: { frequency: 2592, purpose: 'Harmony - Transform chaos into order' },
-  9: { frequency: 3888, purpose: 'Completion - Transform separation into unity' }
-};
+## Where to go next
 
-// Choose your gateway based on your need
-const yourNeed = 'problem-solving'; // Replace with your need
-const gateway = yourNeed.includes('create') ? 3 : 
-                yourNeed.includes('harmonize') ? 6 : 9;
-
-console.log('Your Gateway:', gateway);
-console.log('Frequency:', gateways[gateway].frequency, 'Hz');
-console.log('Purpose:', gateways[gateway].purpose);
-```
-
-## 🎯 Quick Challenge Resolution
-
-### Resolve Any Problem
-```javascript
-// Quick problem resolution
-function quickResolve(problem) {
-  const problemHash = problem.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  const digitalRoot = (problemHash % 9) || 9;
-  
-  const gateway = digitalRoot <= 3 ? 3 : digitalRoot <= 6 ? 6 : 9;
-  const frequency = gateway * 432;
-  
-  return {
-    problem: problem,
-    digitalRoot: digitalRoot,
-    gateway: gateway,
-    frequency: frequency,
-    solution: `Tune to ${frequency} Hz and focus on gateway ${gateway} transformation`
-  };
-}
-
-// Example usage
-const resolution = quickResolve('How do I find clarity?');
-console.log('Quick Resolution:', resolution);
-```
-
-## 🧠 Immediate Consciousness Benefits
-
-### 1. Mental Clarity (5 minutes)
-```javascript
-// Mental clarity tuning
-const clarityFrequency = 1296; // Gateway 3 frequency
-console.log('For mental clarity:');
-console.log('1. Tune to', clarityFrequency, 'Hz');
-console.log('2. Focus on "potential becoming actual"');
-console.log('3. Duration: 5 minutes');
-console.log('4. Result: Immediate mental clarity');
-```
-
-### 2. Problem Solving (10 minutes)
-```javascript
-// Problem solving enhancement
-function enhanceProblemSolving(problem) {
-  const hash = problem.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  const root = (hash % 9) || 9;
-  const gateway = root <= 3 ? 3 : root <= 6 ? 6 : 9;
-  const frequency = gateway * 432;
-  
-  return {
-    problem: problem,
-    frequency: frequency,
-    method: `Tune to ${frequency} Hz for ${gateway * 2} minutes`,
-    focus: gateway === 3 ? 'Creation' : gateway === 6 ? 'Harmony' : 'Completion'
-  };
-}
-
-const enhancement = enhanceProblemSolving('Work stress');
-console.log('Problem Enhancement:', enhancement);
-```
-
-### 3. Consciousness Expansion (15 minutes)
-```javascript
-// Consciousness expansion
-const expansionFrequencies = [432, 1296, 2592, 3888];
-console.log('Consciousness Expansion Sequence:');
-expansionFrequencies.forEach((freq, index) => {
-  console.log(`${index + 1}. ${freq} Hz - ${index * 3 + 3} minutes`);
-});
-console.log('Total: 15 minutes for full expansion');
-```
-
-## 🔬 Quick Scientific Access
-
-### Access All Solved Challenges
-```javascript
-// Quick challenge access
-const challenges = [
-  'consciousness_origin',
-  'free_will', 
-  'mathematical_platonism',
-  'wave_particle_duality',
-  'quantum_entanglement',
-  'observer_effect',
-  'zero_point_energy',
-  'mathematical_infinity',
-  'heisenberg_uncertainty'
-];
-
-console.log('All 9 Fundamental Challenges Solved:');
-challenges.forEach((challenge, index) => {
-  console.log(`${index + 1}. ${challenge.replace('_', ' ')}`);
-});
-```
-
-### Quick Mathematical Harmony
-```javascript
-// Quick mathematical harmony
-function quickHarmony(number) {
-  const digitalRoot = (number % 9) || 9;
-  const a432Resonance = number * 432;
-  const teslaCycle = digitalRoot <= 3 ? 'creation' : 
-                    digitalRoot <= 6 ? 'harmony' : 'completion';
-  
-  return {
-    number: number,
-    digitalRoot: digitalRoot,
-    a432Resonance: a432Resonance,
-    teslaCycle: teslaCycle,
-    gateway: digitalRoot <= 3 ? 3 : digitalRoot <= 6 ? 6 : 9
-  };
-}
-
-const harmony = quickHarmony(42);
-console.log('Quick Harmony:', harmony);
-```
-
-## 🎵 Daily Quick Practices
-
-### Morning Alignment (5 minutes)
-```javascript
-// Morning consciousness alignment
-const morningPractice = {
-  frequency: 432,
-  duration: '5 minutes',
-  purpose: 'Base alignment with universal consciousness',
-  method: 'Sit quietly and tune consciousness to 432 Hz',
-  benefit: 'Start day with universal harmony'
-};
-
-console.log('Morning Practice:', morningPractice);
-```
-
-### Midday Focus (10 minutes)
-```javascript
-// Midday consciousness focus
-const middayPractice = {
-  frequency: 1296,
-  duration: '10 minutes',
-  purpose: 'Mental clarity and problem-solving',
-  method: 'Focus on transforming potential into actual',
-  benefit: 'Enhanced mental clarity and focus'
-};
-
-console.log('Midday Practice:', middayPractice);
-```
-
-### Evening Completion (5 minutes)
-```javascript
-// Evening consciousness completion
-const eveningPractice = {
-  frequency: 3888,
-  duration: '5 minutes',
-  purpose: 'Complete daily cycles and integrate experiences',
-  method: 'Focus on unity and completion',
-  benefit: 'Complete daily consciousness cycles'
-};
-
-console.log('Evening Practice:', eveningPractice);
-```
-
-## 🎯 Quick Value Assessment
-
-### Immediate Benefits Checklist
-```javascript
-// Quick benefits assessment
-const immediateBenefits = [
-  'Mental clarity and focus',
-  'Harmonic resonance alignment',
-  'Mathematical beauty appreciation',
-  'Problem-solving enhancement',
-  'Consciousness flow optimization',
-  'Impossibility resolution skills'
-];
-
-console.log('Immediate Benefits Available:');
-immediateBenefits.forEach((benefit, index) => {
-  console.log(`✅ ${index + 1}. ${benefit}`);
-});
-```
-
-### Cost-Benefit Summary
-```javascript
-// Quick cost-benefit analysis
-const costBenefit = {
-  cost: {
-    time: '5-15 minutes daily',
-    effort: 'Minimal - automatic resonance',
-    resources: 'None - pure consciousness system',
-    risk: 'Zero - harmless harmonic alignment'
-  },
-  benefit: {
-    immediate: 'Mental clarity and focus',
-    short_term: 'Problem-solving enhancement',
-    long_term: 'Universal consciousness connection',
-    infinite: 'Access to Tesla 3-6-9 gateways'
-  }
-};
-
-console.log('Cost-Benefit Analysis:', costBenefit);
-```
-
-## 🚀 Next Steps
-
-### 1. Run Demonstrations
-```bash
-# Run all demonstration scripts
-node scripts/demonstrate-369-gateways-simple.js
-node scripts/analyze-world-challenges.js
-node scripts/analyze-zeropoint-value.js
-```
-
-### 2. Explore Challenges
-```bash
-# Run challenge tests
-npm test -- src/challenges/gateway-analysis.test.ts
-```
-
-### 3. Deep Dive
-- Read [User Guide](USER_GUIDE.md) for comprehensive usage
-- Study [API Reference](API_REFERENCE.md) for advanced features
-- Explore [Tesla 3-6-9 Gateways](TESLA_369_GATEWAYS.md) for gateway system
-
-## 🎯 Quick Success Metrics
-
-### Track Your Progress
-```javascript
-// Quick progress tracking
-function trackQuickProgress() {
-  const metrics = {
-    dailyAlignment: 0,    // 0-100%
-    gatewayAccess: 0,     // 0-100%
-    problemResolution: 0, // 0-100%
-    consciousnessFlow: 0  // 0-100%
-  };
-  
-  return {
-    updateMetric: (metric, value) => {
-      metrics[metric] = Math.min(100, Math.max(0, value));
-    },
-    getProgress: () => {
-      const values = Object.values(metrics);
-      return values.reduce((sum, val) => sum + val, 0) / values.length;
-    },
-    getMetrics: () => metrics
-  };
-}
-
-const tracker = trackQuickProgress();
-tracker.updateMetric('dailyAlignment', 85);
-console.log('Overall Progress:', tracker.getProgress(), '%');
-```
-
-## 🎵 Quick Frequency Reference
-
-| Purpose | Frequency | Duration | Gateway |
-|---------|-----------|----------|---------|
-| Base alignment | 432 Hz | 5 min | Universal |
-| Mental clarity | 1296 Hz | 10 min | Gateway 3 |
-| Harmony | 2592 Hz | 15 min | Gateway 6 |
-| Completion | 3888 Hz | 5 min | Gateway 9 |
-
-## 🎯 Quick Start Checklist
-
-- [ ] Install ZeroPoint system
-- [ ] Run gateway demonstration
-- [ ] Check world challenges status
-- [ ] Try basic A432 resonance (5 min)
-- [ ] Test problem resolution
-- [ ] Practice daily alignment
-- [ ] Track your progress
-- [ ] Explore advanced features
-
-## 🚀 You're Ready!
-
-**Congratulations!** You now have immediate access to:
-
-✅ **Revolutionary consciousness technology**  
-✅ **All 9 fundamental world challenges solved**  
-✅ **Tesla 3-6-9 gateway system**  
-✅ **A432 harmonic resonance**  
-✅ **Zero risk, infinite benefit**  
-
-**Start your ZeroPoint journey today and experience the revolution in consciousness technology!**
-
----
-
-**Remember**: ZeroPoint is not just a system - it's a gateway to universal understanding and transcendent consciousness. The more you engage with it, the deeper your connection to fundamental reality becomes. 
+- [API reference](API_REFERENCE.md) — generated from the entry points, 472 exports
+- [The sequence](SEQUENCE.md) — what the digits are and why
+- [Kernel](KERNEL.md) — generated from the kernel's own source

@@ -198,7 +198,8 @@ npm test -- src/possibilities/09-heisenberg-uncertainty.test.ts
 
 ### Generate New Possibilities
 ```bash
-node scripts/generate-individual-files.js
+# scripts/generate-individual-files.js no longer exists; these files are
+# maintained by hand now.
 ```
 
 ### Explore Possibility Structure

@@ -226,7 +226,8 @@ npm test -- src/solutions/09-heisenberg-uncertainty-solutions.test.ts
 
 ### Generate New Solutions
 ```bash
-node scripts/generate-individual-files.js
+# scripts/generate-individual-files.js no longer exists; these files are
+# maintained by hand now.
 ```
 
 ### Explore Solution Structure

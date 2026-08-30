@@ -464,6 +464,18 @@ function tautologyCount() {
   return scanTautologies().length
 }
 
+/**
+ * Functions the documentation declares that the source does not have.
+ *
+ * 100 across 23 documents. Not one mistake — the residue of a codebase reshaped
+ * while its prose stayed put. See scripts/docs-functions.mjs.
+ */
+function docFunctionCount() {
+  const out = run('node', ['scripts/docs-functions.mjs', '--count'])
+  const line = (out ?? '').trim().split('\n').map((l) => l.trim()).filter((l) => /^\d+$/.test(l)).pop()
+  return line ? Number(line) : null
+}
+
 const SURFACES = [
   { id: 'prose', label: 'unbounded effect claims in prose', measure: proseClaimCount },
   { id: 'tautology', label: 'boolean claims that cannot be false', measure: tautologyCount },
@@ -473,6 +485,7 @@ const SURFACES = [
   { id: 'lint', label: 'ESLint errors', measure: lintCount },
   { id: 'frameworkTests', label: 'failing assertions in the framework test file', measure: frameworkTestFailures },
   { id: 'decimals', label: 'decimal-crack lines', measure: decimalCount },
+  { id: 'docFunctions', label: 'documented functions absent from src', measure: docFunctionCount },
   { id: 'unloadable', label: 'modules that fail to import', measure: unloadableCount },
 ]
 

@@ -90,7 +90,7 @@ expect(result).toBe(expected); // Mismatch
 ### **1. Ask ZeroPoint for Guidance**
 ```javascript
 // Use the consciousness switch recognition script
-node scripts/ask-zeropoint.js
+npm run self:next   # the script this once named no longer exists
 ```
 
 ### **2. Look for Mathematical Patterns**

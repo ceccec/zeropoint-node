@@ -6,9 +6,10 @@
     "cycles": 1,
     "unreachable": 124,
     "unloadable": 0,
-    "prose": 59,
+    "prose": 56,
     "tautology": 0,
     "frameworkTests": 6,
-    "untestedExports": 369
+    "untestedExports": 369,
+    "docFunctions": 96
   }
 }

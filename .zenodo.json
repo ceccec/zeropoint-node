@@ -31,6 +31,11 @@
       "identifier": "https://node.zeropoint.bg",
       "relation": "isDocumentedBy",
       "resource_type": "other"
+    },
+    {
+      "identifier": "10.5281/zenodo.22178675",
+      "relation": "isVersionOf",
+      "resource_type": "software"
     }
   ],
   "access_right": "open"

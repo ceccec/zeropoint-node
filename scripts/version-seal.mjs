@@ -146,6 +146,9 @@ const zenodoNextObj = zenodo === null ? null : {
   ...(cffUrl ? { related_identifiers: [
     { identifier: 'https://github.com/ceccec/zeropoint-node', relation: 'isSupplementedBy', resource_type: 'software' },
     { identifier: cffUrl, relation: 'isDocumentedBy', resource_type: 'other' },
+    // The CONCEPT doi, taken from CITATION.cff. It resolves to the newest
+    // release, so it stays true; the per-version doi does not.
+    ...(cffField('doi') ? [{ identifier: cffField('doi'), relation: 'isVersionOf', resource_type: 'software' }] : []),
   ] } : {}),
 }
 const zenodoNext = zenodoNextObj === null ? null : JSON.stringify(zenodoNextObj, null, 2) + '\n'

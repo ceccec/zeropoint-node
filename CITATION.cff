@@ -18,6 +18,14 @@ type: software
 authors:
   - name: ZeroPoint Node (ceccec)
     email: node@zeropoint.bg
+# The CONCEPT doi, not the version doi. 10.5281/zenodo.22178675 always resolves
+# to the newest release; 10.5281/zenodo.22178676 is pinned to 1.0.15 and will be
+# wrong the moment there is a 1.0.16. Cite the one that stays true.
+doi: 10.5281/zenodo.22178675
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22178675
+    description: Concept DOI — resolves to the latest version
 repository-code: https://github.com/ceccec/zeropoint-node
 url: https://node.zeropoint.bg
 version: 1.0.15

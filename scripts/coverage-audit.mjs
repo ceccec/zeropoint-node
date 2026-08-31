@@ -30,6 +30,7 @@
 
 import { readdirSync, statSync, readFileSync, writeFileSync, rmSync, mkdirSync } from 'node:fs'
 import { execFile } from 'node:child_process'
+import { pipelineSrcSuites } from './lib/pipeline.mjs'
 import { resolve, dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { tmpdir } from 'node:os'
@@ -84,6 +85,27 @@ function walk(dir, out = []) {
 const covDir = join(tmpdir(), `zp-cov-${process.pid}`)
 rmSync(covDir, { recursive: true, force: true })
 mkdirSync(covDir, { recursive: true })
+
+// EXERCISERS is a runtime list, not a mirror of the pipeline: it deliberately
+// omits the heavy scripts check also runs (the ratchet, the docs build) and
+// includes things check does not name directly. What it must never do is MISS
+// a suite. It did exactly that once — test:security runs four suites and only
+// three were listed — and the same omission had already happened in the
+// ratchet's own copy of this list.
+//
+// So the list stays hand-held for what it runs, and the pipeline is read for
+// what it must contain. Forgetting a new suite is now a failure with a name in
+// it rather than a number that quietly drops.
+{
+  const listed = new Set(EXERCISERS.map(([file]) => file))
+  const missing = pipelineSrcSuites(ROOT).filter((f) => !listed.has(f))
+  if (missing.length) {
+    console.error(`coverage:audit FAIL — ${missing.length} suite(s) run by npm run check but absent from EXERCISERS:`)
+    for (const m of missing) console.error(`  ${m}`)
+    console.error('  Add them, or coverage is measured without them and the untested count is wrong.')
+    process.exit(1)
+  }
+}
 
 // The single pass, genuinely concurrent. This wrapped execFileSync in a
 // Promise first, which looks parallel and is not — execFileSync blocks, so

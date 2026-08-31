@@ -11,6 +11,7 @@
     "frameworkTests": 0,
     "untestedExports": 369,
     "docFunctions": 96,
-    "entryPoints": 0
+    "entryPoints": 0,
+    "unguardedReadme": 24140
   }
 }

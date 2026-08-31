@@ -17,6 +17,7 @@
  */
 
 import { scanClaims } from './prose-claims.mjs'
+import { pipelineFiles } from './lib/pipeline.mjs'
 import { scanTautologies, selfTest as tautologySelfTest } from './facet-tautology.mjs'
 import { ts, config, walk as scanWalk, sourceFiles, parseTs, importTargets, readCapped } from './lib/scan.mjs'
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, unlinkSync } from 'node:fs'
@@ -345,6 +346,35 @@ function rollupInputs() {
  * nothing exercise", see scripts/exercised-check.mjs, which records actual
  * loads instead of inferring them.
  */
+/**
+ * README bytes that no generator guards.
+ *
+ * Three blocks of README.md are generated and checked — VORTEX, SPECTRUM,
+ * VERSION. Everything else is hand-written prose that no check reads, which
+ * was not obvious until a probe corrupted forty bytes in the middle of the
+ * file and every checker in the pipeline passed. 17% of the front page is
+ * verified; this counts the rest.
+ *
+ * It is not a demand that the whole README be generated — prose that explains
+ * intent should be written by a person. It is a ceiling, so the unverified
+ * share shrinks as claims move into blocks that something can recompute.
+ */
+function unguardedReadmeBytes() {
+  const readme = join(ROOT, 'README.md')
+  if (!existsSync(readme)) return 0
+  const text = readFileSync(readme, 'utf8')
+  let guarded = 0
+  for (const name of ['VORTEX', 'SPECTRUM', 'VERSION']) {
+    const begin = text.indexOf(`<!-- ${name}:BEGIN`)
+    if (begin < 0) continue
+    const endMark = `<!-- ${name}:END -->`
+    const end = text.indexOf(endMark, begin)
+    if (end < 0) continue
+    guarded += end + endMark.length - begin
+  }
+  return Buffer.byteLength(text, 'utf8') - guarded
+}
+
 function unreachableCount() {
   const isTs = (n) => n.endsWith('.ts') && !n.endsWith('.d.ts')
   const all = walk(join(ROOT, 'src'), isTs)
@@ -397,16 +427,11 @@ function unreachableCount() {
     const p2 = join(ROOT, e)
     if (existsSync(p2)) roots.add(p2)
   }
-  const expand = (name, seen = new Set()) => {
-    if (seen.has(name)) return ''
-    seen.add(name)
-    const body = pkg.scripts?.[name]
-    if (!body) return ''
-    return body.replace(/npm run ([A-Za-z0-9:._-]+)/g, (_, n) => ' ' + expand(n, seen) + ' ')
-  }
-  for (const m of expand('check').matchAll(/(?:^|[\s'"])((?:src|scripts)\/[A-Za-z0-9._\/-]+\.ts)/g)) {
-    const p2 = join(ROOT, m[1])
-    if (existsSync(p2)) roots.add(p2)
+  // The same derivation coverage-audit checks itself against — one
+  // implementation, so the two cannot disagree about what the pipeline runs.
+  for (const f of pipelineFiles(ROOT)) {
+    const p2 = join(ROOT, f)
+    if (f.endsWith('.ts') && existsSync(p2)) roots.add(p2)
   }
   // Both trees: public/ pages reference src/ modules by full path, and looking
   // only inside src/ missed 17 of them.
@@ -486,6 +511,7 @@ function brokenEntryPointCount() {
 const SURFACES = [
   { id: 'prose', label: 'unbounded effect claims in prose', measure: proseClaimCount },
   { id: 'tautology', label: 'boolean claims that cannot be false', measure: tautologyCount },
+  { id: 'unguardedReadme', label: 'README bytes no generator guards', measure: unguardedReadmeBytes },
   { id: 'unreachable', label: 'modules reachable from no STATIC entry (not dead: see exercised:check)', measure: unreachableCount },
   { id: 'cycles', label: 'import cycles', measure: importCycleCount },
   { id: 'typecheck', label: 'TypeScript errors', measure: typecheckCount },

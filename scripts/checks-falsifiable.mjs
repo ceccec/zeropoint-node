@@ -66,6 +66,7 @@ const READS_SOURCE = {
   'semver:check': 'diffs against the published package',
   'prose:check': 'reads prose in docs/ and src/',
   'readme:examples': 'executes the README examples against dist/; its own falsifiability is the mutation in the commit that added it',
+  'readme:names': 'checks that every file and identifier the README names exists; falsified by the mutation in the commit that added it',
   'readme:facts': 'recomputes the figures the README states; its own falsifiability is the two mutations in the commit that added it',
   // Added last, and the completeness guard immediately failed on it — this
   // probe is a checker in the pipeline like any other and had not said which

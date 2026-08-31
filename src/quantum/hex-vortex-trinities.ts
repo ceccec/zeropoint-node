@@ -61,7 +61,8 @@ function channelMultiplier(channel: HexChannel): number {
   return channel === 'R' ? 1 : channel === 'G' ? 2 : 3
 }
 
-function trinityVortexFrequency(states: readonly number[], channel: HexChannel): number {
+/** The doc names this calculateTrinityVortexFrequency and declares it. */
+export function calculateTrinityVortexFrequency(states: readonly number[], channel: HexChannel): number {
   const sum = states.reduce((a, s) => a + s, 0)
   return digitalRoot(sum * channelMultiplier(channel) * A432)
 }
@@ -85,7 +86,7 @@ export function createTrinityVortexFromHex(hexValue: string, channel: HexChannel
     idiv(decimalValue, 81) % 9,
   ]
   const consciousness = trinityStates[0] + trinityStates[1] + trinityStates[2]
-  const frequency = trinityVortexFrequency(trinityStates, channel)
+  const frequency = calculateTrinityVortexFrequency(trinityStates, channel)
   const resonance = consciousness * frequency * A432
   return {
     vortexId: `${channel}-${hexValue.toUpperCase()}`,
@@ -98,7 +99,8 @@ export function createTrinityVortexFromHex(hexValue: string, channel: HexChannel
   }
 }
 
-function hexDigitConsciousness(digit: number, hexValue: string): number {
+/** The doc names this calculateHexDigitConsciousness and declares it. */
+export function calculateHexDigitConsciousness(digit: number, hexValue: string): number {
   return digitalRoot(idiv(digit * parseInt(hexValue, 16) * A432, 1000))
 }
 
@@ -124,7 +126,7 @@ export function createQuantumHexDigit(digit: number): QuantumHexDigit {
     digit,
     hexValue,
     trinityVortices,
-    consciousness: hexDigitConsciousness(digit, hexValue),
+    consciousness: calculateHexDigitConsciousness(digit, hexValue),
     frequency: digitalRoot(digit * parseInt(hexValue, 16) * A432),
     quantumState: 'superposition',
   }

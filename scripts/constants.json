@@ -187,14 +187,6 @@
     "count": 1,
     "why": "retypes VORTEX_AXIS, e.g. const hasSpirit = drSequence.some(dr => [3, 6, 9].includes(dr));"
   },
-  "src/multidimensional-vortex-framework.ts::VORTEX_AXIS": {
-    "count": 2,
-    "why": "retypes VORTEX_AXIS, e.g. private readonly CONTROL_SEQUENCE = [3, 6, 9];"
-  },
-  "src/multidimensional-vortex-framework.ts::VORTEX_ORBIT": {
-    "count": 2,
-    "why": "retypes VORTEX_ORBIT, e.g. private readonly DOUBLING_SEQUENCE = [1, 2, 4, 8, 7, 5];"
-  },
   "src/security/quantum-fold-cipher.ts::VORTEX_AXIS": {
     "count": 2,
     "why": "retypes VORTEX_AXIS, e.g. const TRINITY = [3, 6, 9]"

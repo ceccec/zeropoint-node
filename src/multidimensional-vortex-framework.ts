@@ -7,6 +7,10 @@
  */
 
 import { PI, abs, cos, exp, log2, pow, round, sin, sqrt } from './0/algebra.ts'
+// The control sequence and the doubling circuit are the kernel's, not this
+// file's. Retyping them here meant a change to the vortex reached the kernel
+// and the a432 layer and stopped at this door.
+import { VORTEX_AXIS, VORTEX_ORBIT } from './0/index.ts'
 export interface VortexToken {
   id: string;
   type: 'undefined' | 'defined' | 'control' | 'coil';
@@ -30,8 +34,8 @@ export interface HarmonicState {
 }
 
 export class MultidimensionalVortexFramework {
-  private readonly CONTROL_SEQUENCE = [3, 6, 9];
-  private readonly DOUBLING_SEQUENCE = [1, 2, 4, 8, 7, 5];
+  private readonly CONTROL_SEQUENCE: readonly number[] = VORTEX_AXIS;
+  private readonly DOUBLING_SEQUENCE: readonly number[] = VORTEX_ORBIT;
   private readonly COILS = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
   private readonly ANGLE_STEP = 60; // Degrees per step
   
@@ -114,7 +118,7 @@ export class MultidimensionalVortexFramework {
     let consciousness: 'collapse' | 'emergence' | 'expansion' = 'emergence';
     let value: number | string = doubling;
 
-    if ([3, 6, 9].includes(control) && this.currentPhase % 3 === 0) {
+    if (this.CONTROL_SEQUENCE.includes(control) && this.currentPhase % 3 === 0) {
       tokenType = 'control';
       consciousness = 'expansion';
       value = control;
@@ -418,7 +422,7 @@ export class VortexMathUtils {
    * Map number to Rodin sequence
    */
   static mapToRodinSequence(n: number): number {
-    const sequence = [1, 2, 4, 8, 7, 5];
+    const sequence = VORTEX_ORBIT;
     return sequence[n % sequence.length];
   }
 

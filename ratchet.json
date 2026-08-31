@@ -8,7 +8,7 @@
     "unloadable": 0,
     "prose": 55,
     "tautology": 0,
-    "frameworkTests": 6,
+    "frameworkTests": 0,
     "untestedExports": 369,
     "docFunctions": 96,
     "entryPoints": 0

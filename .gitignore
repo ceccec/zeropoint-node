@@ -132,3 +132,4 @@ docs/.vitepress/cache
 # (package.json files: src/**/*.ts) nor counted as dead modules by the ratchet.
 scratch/
 untested-exports.txt
+.readme-examples/

@@ -12,6 +12,24 @@ export * from './a432.cmyk.multimedia.ts';
 export * from './a432.kabbalah.ts';
 export * from './a432.sacred.geometry.ts';
 
+// The README's Quick Start imports boot2432OS, getOSStatus, getSequenceStatus,
+// getQuantumStatus and getChargingStatus from 'zeropoint-node'. All five
+// existed in src and none was reachable from this entry, so the first example
+// a reader runs returned undefined for every name in it.
+//
+// boot2432OS and shutdown2432OS are defined TWICE — a432.os.ts returns the OS
+// object, a432.os.terminal.ts returns a printable string and wraps the former.
+// The README writes `const bootMessage = boot2432OS(); console.log(bootMessage)`,
+// so it means the string. The terminal pair is re-exported explicitly, which
+// outranks the star exports; the object-returning pair keeps its meaning under
+// names that say what it returns.
+export * from './a432.os.terminal.ts';
+export * from './a432.os.consciousness.integration.ts';
+export * from './a432.living.os.ts';
+export { boot2432OS, shutdown2432OS } from './a432.os.terminal.ts';
+export { boot2432OS as bootA432OSInstance, shutdown2432OS as shutdownA432OSInstance } from './a432.os.ts';
+export type { A432OS } from './a432.os.ts';
+
 // === MAIN SYSTEM CLASS ===
 export class A432System {
   private static instance: A432System;

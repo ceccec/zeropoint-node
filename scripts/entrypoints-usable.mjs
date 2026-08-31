@@ -63,16 +63,24 @@ for (const r of rows) {
   try {
     const mod = await import(pathToFileURL(join(ROOT, r.target)).href)
     r.exportCount = Object.keys(mod).length
-  } catch {
-    r.exportCount = null // could not load; the .ts check above is the gate
+  } catch (e) {
+    // This used to set null and move on, with a comment saying the .ts check
+    // above was the gate. It was not: that only catches a subpath pointing at
+    // source, and a target that does not EXIST sailed through. dist/ is
+    // gitignored, so in CI there was no dist at all and this check passed
+    // while importing nothing — the check written to fix ten unusable entry
+    // points was itself unable to fail there.
+    r.exportCount = null
+    r.loadError = (e && e.message ? e.message : String(e)).split('\n')[0]
   }
 }
 const empty = rows.filter((r) => r.usable && r.exportCount === 0 && !(r.subpath in DECLARED_NO_EXPORTS))
+const unloadable = rows.filter((r) => r.usable && r.exportCount === null && !(r.subpath in DECLARED_SOURCE_ONLY))
 
 const broken = rows.filter((r) => !r.usable && !(r.subpath in DECLARED_SOURCE_ONLY))
 const usable = rows.filter((r) => r.usable)
 
-if (process.argv.includes('--count')) { console.log(String(broken.length + empty.length)); process.exit(0) }
+if (process.argv.includes('--count')) { console.log(String(broken.length + empty.length + unloadable.length)); process.exit(0) }
 console.log(
   `entrypoints — ${rows.length} advertised, ${usable.length} importable, ` +
     `${empty.length} importable but exporting nothing`,
@@ -82,6 +90,17 @@ for (const r of empty) {
 }
 for (const r of broken) {
   console.error(`  ✗ ${r.subpath} -> ${r.target} — a .ts target cannot be imported from node_modules`)
+}
+for (const r of unloadable) {
+  console.error(`  ✗ ${r.subpath} -> ${r.target} — advertised but could not be imported: ${r.loadError}`)
+}
+if (unloadable.length > 0) {
+  console.error(
+    `entrypoints FAIL — ${unloadable.length} advertised entry point(s) could not be loaded. ` +
+      'If dist/ is missing, run npm run build: this check is worthless without it, ' +
+      'and passed for months in CI because a missing file was swallowed as null.',
+  )
+  process.exit(1)
 }
 if (process.argv.includes('--count')) { console.log(String(broken.length)); process.exit(0) }
 if (empty.length > 0) {

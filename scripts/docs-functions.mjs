@@ -57,11 +57,22 @@ for(const f of walk(ROOT,n=>n.endsWith('.md'))){
   if(rel==='CHANGELOG.md'||rel.startsWith('node_modules/'))continue
   const t=readFileSync(f,'utf8')
   // things declared as functions in fenced code, and headings that name one
-  const decl=[...new Set([
+  let decl=[...new Set([
+    // A function with an EMPTY body in a doc is an illustration, not a
+    // declaration that something should exist. ZEROPOINT_CODE_RULES.md shows
+    // `function calculate0() { }` under a "CORRECT" heading and
+    // `function calculate10() { }` under "WRONG", to demonstrate a naming
+    // rule about single digits. All six were counted as functions the repo
+    // owed an implementation, and two of them the document explicitly calls
+    // mistakes. Implementing those would have been obeying a typo.
+    ...[...t.matchAll(/^(?:export\s+)?(?:async\s+)?function\s+([A-Za-z0-9_$]+)\s*\([^)]*\)(?:\s*:[^{]*)?\s*\{\s*\}/gm)].map(m=>'\u0000illustration:'+m[1]),
     ...[...t.matchAll(/^(?:export\s+)?(?:async\s+)?function\s+([A-Za-z0-9_$]+)/gm)].map(m=>m[1]),
     ...[...t.matchAll(/^#{2,4}\s+`?([a-z][A-Za-z0-9_$]{3,})\(/gm)].map(m=>m[1]),
     ...[...t.matchAll(/^\s*[-*]\s+`([a-z][A-Za-z0-9_$]{3,})\(\)`/gm)].map(m=>m[1]),
   ])]
+  // Drop the illustrations, and any real declaration that shares their name.
+  const illustrations=new Set(decl.filter(d=>d.startsWith('\u0000illustration:')).map(d=>d.slice('\u0000illustration:'.length)))
+  decl=decl.filter(d=>!d.startsWith('\u0000illustration:')&&!illustrations.has(d))
   if(decl.length===0)continue
   const absent=decl.filter(d=>!names.has(d))
   if(absent.length) rows.push({rel,decl:decl.length,absent})

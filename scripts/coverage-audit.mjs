@@ -57,6 +57,7 @@ const EXERCISERS = [
   ['src/quantum/millennium-bridge.test.ts', null],
   ['src/quantum/zenodo-publisher.test.ts', null],
   ['src/quantum/untested-exports.test.ts', null],
+  ['src/quantum/hex-vortex-trinities.test.ts', null],
   ['src/crypto/ml-kem.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.math.test.ts', null],

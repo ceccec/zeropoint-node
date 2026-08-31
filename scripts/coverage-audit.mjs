@@ -63,6 +63,8 @@ const EXERCISERS = [
   ['src/quantum/a432-vortex-pi.test.ts', null],
   ['src/quantum/zeropoint-validators.test.ts', null],
   ['src/quantum/tesla-gateways.test.ts', null],
+  ['src/quantum/trinity-vortex.test.ts', null],
+  ['src/quantum/reality-streams.test.ts', null],
   ['src/crypto/ml-kem.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.math.test.ts', null],

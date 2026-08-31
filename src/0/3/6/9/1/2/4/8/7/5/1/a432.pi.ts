@@ -98,7 +98,11 @@ export function piColorStream(length: number = 32): { r: number; g: number; b: n
   return generateLivingPiStream(length).map(frac => {
     const digit = abs(frac.numerator) % 9 || 9;
     const hslStr = getVortexColor(digit);
-    const [h, s, l] = hslStr.match(/\d+/g)!.map(Number);
+    // HSL strings here carry fractional saturation — 2/3 * 100 is 66.666... —
+    // and /\d+/g splits a decimal into two matches. 'hsl(210, 66.66666666666666%, 40%)'
+    // parsed as [210, 66, 66666666666666, 40], so lightness became a fourteen-digit
+    // number and the real 40 was dropped entirely. [\d.]+ keeps the number whole.
+    const [h, s, l] = hslStr.match(/[\d.]+/g)!.map(Number);
     return hslToRgb(h, s, l);
   });
 }

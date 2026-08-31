@@ -11,6 +11,7 @@
  */
 
 import { abs, max, min, round } from './a432.algebra.ts'
+import { digitalRoot } from '../../../../../../../../../../index.ts'
 // --- Types ---
 export type A432HSL = { hue: number; saturation: number; lightness: number };
 export type A432RGB = { r: number; g: number; b: number };
@@ -75,7 +76,11 @@ export function getAntiVortexColor(d: number): string {
  */
 export function getTrinityCompositeColor(): string {
   const hsl = [3, 6, 9].map(getTrinityColor).map(str => {
-    const [hue, sat, light] = str.match(/\d+/g)!.map(Number);
+    // HSL strings here carry fractional saturation — 2/3 * 100 is 66.666... —
+    // and /\d+/g splits a decimal into two matches. 'hsl(210, 66.66666666666666%, 40%)'
+    // parsed as [210, 66, 66666666666666, 40], so lightness became a fourteen-digit
+    // number and the real 40 was dropped entirely. [\d.]+ keeps the number whole.
+    const [hue, sat, light] = str.match(/[\d.]+/g)!.map(Number);
     return { hue, sat, light };
   });
   const avg = (arr: number[]): number => round(arr.reduce((a: number, b: number) => a + b, 0) / 3);
@@ -135,7 +140,7 @@ export function hslToCmyk(h: number, s: number, l: number): A432CMYK {
  */
 export function getTrinityCompositeCMYK(): A432CMYK {
   const hsl = getTrinityCompositeColor();
-  const [h, s, l] = hsl.match(/\d+/g)!.map(Number);
+  const [h, s, l] = hsl.match(/[\d.]+/g)!.map(Number);
   return hslToCmyk(h, s, l);
 }
 
@@ -144,7 +149,7 @@ export function getTrinityCompositeCMYK(): A432CMYK {
  */
 export function getAllColorModels(d: number | 'void' = 'void'): { hsl: A432HSL, rgb: A432RGB, cmyk: A432CMYK } {
   const hslStr = typeof d === 'number' ? getVortexColor(d) : getTrinityCompositeColor();
-  const [h, s, l] = hslStr.match(/\d+/g)!.map(Number);
+  const [h, s, l] = hslStr.match(/[\d.]+/g)!.map(Number);
   const hsl: A432HSL = { hue: h, saturation: s, lightness: l };
   const rgb = hslToRgb(h, s, l);
   const cmyk = hslToCmyk(h, s, l);
@@ -171,7 +176,7 @@ export function calculateA432Color(frequency: number): A432CMYK {
   // Map frequency to a digit (1-9) and use getVortexColor, then convert to CMYK
   const digit = abs(round(frequency)) % 9 || 9;
   const hslStr = getVortexColor(digit);
-  const [h, s, l] = hslStr.match(/\d+/g)!.map(Number);
+  const [h, s, l] = hslStr.match(/[\d.]+/g)!.map(Number);
   return hslToCmyk(h, s, l);
 }
 
@@ -185,7 +190,41 @@ export function generateA432ColorStream(startFreq: number, endFreq: number, step
   return colors;
 }
 
-export const A432ColorSystem = A432ColorModel;
+/**
+ * The three methods A432_COMPLETE_DOCUMENTATION.md calls on A432ColorSystem.
+ *
+ * Sixteen documented error resolvers wrap these, and none of the three
+ * existed — the resolvers could not have been written without them. The
+ * document names them and describes what each is for but gives no formula, so
+ * each is defined in terms of colour functions this file already exports and
+ * the digital root the rest of the repo reduces with. That keeps them
+ * consistent with the colour law rather than inventing a second one.
+ */
+export function calculateColor(frequency: number): A432CMYK {
+  return calculateA432Color(frequency);
+}
+
+/** Consciousness reduces to a digit, and the digit has a vortex colour. */
+export function calculateColorFromConsciousness(consciousness: number): A432CMYK {
+  if (!Number.isFinite(consciousness)) throw new Error(`calculateColorFromConsciousness: ${consciousness} is not finite`);
+  return calculateA432Color(digitalRoot(abs(round(consciousness))));
+}
+
+/**
+ * The document's own note for this one is "use digital root calculation
+ * (0-9)", which is the definition followed here.
+ */
+export function calculateColorFromDimensionalState(dimensionalState: number): A432CMYK {
+  if (!Number.isFinite(dimensionalState)) throw new Error(`calculateColorFromDimensionalState: ${dimensionalState} is not finite`);
+  return calculateA432Color(digitalRoot(abs(round(dimensionalState))));
+}
+
+export const A432ColorSystem = {
+  ...A432ColorModel,
+  calculateColor,
+  calculateColorFromConsciousness,
+  calculateColorFromDimensionalState,
+};
 
 // a432.color.ts
 // Living, harmonized color stream/interface

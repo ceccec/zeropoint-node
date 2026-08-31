@@ -1,5 +1,58 @@
 # Changelog
 
+## 1.3.0
+
+A minor: one new entry point and 20 new exports, nothing removed or changed.
+Almost all of it is code that already existed and could not be reached.
+
+**The README's Quick Start returned `undefined` for every name in it.** The
+first example a reader copies imports `boot2432OS`, `getOSStatus`,
+`getSequenceStatus`, `getQuantumStatus` and `getChargingStatus` from
+`zeropoint-node`. Against 1.2.0, all five are undefined, as were
+`a432OSConsciousnessIntegration` and `livingA432OS` in the other two examples.
+All seven existed in `src`; none was reachable from the `.` entry. They are
+re-exported now and every example in the README runs as written.
+
+`boot2432OS` is defined twice — `a432.os.ts` returns the OS object and
+`a432.os.terminal.ts` returns a printable string. The README does
+`const bootMessage = boot2432OS(); console.log(bootMessage)`, so it means the
+string; the object-returning pair is now `bootA432OSInstance` /
+`shutdownA432OSInstance`.
+
+**`./a432-math` is a new entry point.** `a432.math.ts` held `primes()`,
+`simplify()`, the imperial/metric conversions and the fraction arithmetic, and
+no subpath reached any of it — so the infinite-loop fix in `primes()` and the
+mile-was-a-tenth-of-a-mile fix both shipped in 1.2.0 inside code no consumer
+could call. 84 exports, verified against the built bundle.
+
+Two checks were added because both of those gaps were found by hand, and a gap
+found by hand recurs:
+
+- `readme:examples` extracts every README block importing from
+  `zeropoint-node`, rewrites the specifiers through the package's own exports
+  map to the built files, and runs them. Resolving to `src/` instead would pass
+  while the published package failed, which is exactly what shipped a broken
+  quick start in 1.0.13.
+- `readme:facts` recomputes every figure the README states about this
+  repository. It found the README claiming 25 sealed theorems in one place, 25
+  in another, 22 in a third and "a ratchet on eight surfaces" in a fourth, when
+  the answers were 26, 26, 26 and 12.
+
+**A check that could not fail.** `dist/` is gitignored, so CI has no `dist` at
+all — and `entrypoints` passed there anyway. It swallowed a missing target in
+`catch { r.exportCount = null }` and only failed on `exportCount === 0`, so a
+file that does not exist sailed through while a file that exists and exports
+nothing did not. The check written to fix ten unusable entry points had been
+unable to fail in CI for its whole life. An unloadable target is a failure now,
+and `npm run check` builds first, so the gate no longer depends on a `dist`
+someone left lying around.
+
+**A DOI carried a number nothing computed.** `zenodo-publisher.ts` wrote
+"Comprehensive test suite (257+ quantum-mechanical checks, all verified)" into
+the metadata of every minted DOI. 257 traced to three hardcoded strings and to
+nothing else; `proveSystem` recomputes 24. All three interpolate the computed
+count now, and "all verified" became "all recomputable", which is the property
+that actually holds.
 ## 1.2.0
 
 A minor because 110 exports were added and none removed or changed. The

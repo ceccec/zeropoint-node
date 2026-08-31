@@ -24,7 +24,7 @@ Three things a reader can actually use, and one honest warning.
 - **`zeropoint-mcp`** — an MCP server exposing eight kernel tools to an agent.
   `npx zeropoint-mcp`.
 
-And the apparatus around them, which is arguably the point: 25 theorems
+And the apparatus around them, which is arguably the point: 26 theorems
 adjudicated by a decision procedure outside this repository, a gate that fails,
 and figures that recompute rather than being typed. `npm run coverage:audit`
 reports that 326 of 1136 exported functions have never been called by anything —
@@ -44,7 +44,7 @@ the two are different in a way worth being exact about:
   carries an `A432OS` class, a manifest, a UI and a start/stop cycle. There is a
   recognisable target and visible progress toward it. Calling it an operating
   system today is premature; calling it nothing would be wrong.
-- **A consciousness system — no criterion yet.** None of the 25 sealed theorems
+- **A consciousness system — no criterion yet.** None of the 26 sealed theorems
   mentions consciousness, so nothing in this repository states what arriving
   would look like. Without a test, neither "it is" nor "not yet" can honestly be
   claimed — what is missing first is not the achievement but the predicate that
@@ -565,8 +565,8 @@ If this work is useful to you, you can support it at
 
 What sponsorship funds is the part that takes the longest and shows the least:
 the gates. ML-KEM-768 checked against NIST's own ACVP vectors and 10 000
-pq-crystals reference cases; 22 seals that each decide something finite and are
-adjudicated from outside the repository; a ratchet on eight surfaces that only
+pq-crystals reference cases; 26 seals that each decide something finite and are
+adjudicated from outside the repository; a ratchet on twelve surfaces that only
 ever moves down. None of that is visible in a feature list, and all of it is
 what makes the claims here worth reading.
 

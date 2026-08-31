@@ -18,6 +18,7 @@
 
 import { scanClaims } from './prose-claims.mjs'
 import { pipelineFiles } from './lib/pipeline.mjs'
+import { checkedReadmeLines } from './lib/readme-figures.mjs'
 import { scanTautologies, selfTest as tautologySelfTest } from './facet-tautology.mjs'
 import { ts, config, walk as scanWalk, sourceFiles, parseTs, importTargets, readCapped } from './lib/scan.mjs'
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, unlinkSync } from 'node:fs'
@@ -372,10 +373,20 @@ function rollupInputs() {
  * page that no machine can contradict shrinks as claims move into blocks
  * something recomputes.
  */
+const checkedReadmeLinesSync = await (async () => {
+  try {
+    return await checkedReadmeLines(ROOT, readFileSync(join(ROOT, 'README.md'), 'utf8'))
+  } catch {
+    return new Set() // README missing: nothing to credit
+  }
+})()
+
 function unguardedReadmeBytes() {
   const readme = join(ROOT, 'README.md')
   if (!existsSync(readme)) return 0
   const text = readFileSync(readme, 'utf8')
+  const allLines = text.split('\n')
+  const checkedLines = [...checkedReadmeLinesSync].map((n) => allLines[n - 1] ?? '')
   let guarded = 0
   for (const name of ['VORTEX', 'SPECTRUM', 'VERSION']) {
     const begin = text.indexOf(`<!-- ${name}:BEGIN`)
@@ -385,6 +396,11 @@ function unguardedReadmeBytes() {
     if (end < 0) continue
     guarded += end + endMark.length - begin
   }
+  // A line whose figure readme:facts recomputes is not unguarded prose — a
+  // machine can and does contradict it. Those lines were counted here while
+  // the README said 25 theorems, 25 again, 22 seals and eight ratchet
+  // surfaces, and the real answers were 26, 26, 26 and 12.
+  for (const line of checkedLines) guarded += Buffer.byteLength(line + '\n', 'utf8')
   return Buffer.byteLength(text, 'utf8') - guarded
 }
 

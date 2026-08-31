@@ -15,6 +15,11 @@ const entries = [
   { name: 'a432.sacred.geometry', input: `${A432}/a432.sacred.geometry.ts` },
   { name: 'a432.electric.flow', input: `${A432}/a432.electric.flow.ts` },
   { name: 'a432.math.constants', input: `${A432}/a432.math.constants.ts` },
+  // a432.math.ts held primes(), simplify(), the imperial/metric conversions
+  // and the fraction arithmetic, and no subpath reached any of it. A fix to an
+  // infinite loop in primes() shipped in 1.2.0 inside code no consumer could
+  // call.
+  { name: 'a432.math', input: `${A432}/a432.math.ts` },
   { name: 'a432.wave.energy', input: `${A432}/a432.wave.energy.ts` },
   { name: 'a432.mobius.circuit', input: `${A432}/a432.mobius.circuit.ts` },
   { name: 'a432.i', input: `${A432}/a432.i.ts` },

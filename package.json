@@ -97,6 +97,11 @@
       "require": "./dist/a432.math.constants.cjs",
       "types": "./dist/a432.math.constants.d.ts"
     },
+    "./a432-math": {
+      "import": "./dist/a432.math.esm.js",
+      "require": "./dist/a432.math.cjs",
+      "types": "./dist/a432.math.d.ts"
+    },
     "./wave-energy": {
       "import": "./dist/a432.wave.energy.esm.js",
       "require": "./dist/a432.wave.energy.cjs",
@@ -161,6 +166,7 @@
     "adjudicate:check": "node --experimental-strip-types scripts/adjudicate-seals.mjs --check",
     "readme": "node --experimental-strip-types scripts/readme-gen.mjs",
     "readme:check": "node --experimental-strip-types scripts/readme-gen.mjs --check",
+    "readme:facts": "node --experimental-strip-types scripts/readme-facts.mjs",
     "docs:pages": "node --experimental-strip-types scripts/docs-pages.mjs",
     "docs:pages:check": "node --experimental-strip-types scripts/docs-pages.mjs --check",
     "docs:index": "node scripts/docs-index.mjs",
@@ -192,7 +198,7 @@
     "vortex:svg:check": "node --experimental-strip-types scripts/vortex-svg.mjs --check",
     "bundle:a432": "node scripts/build-a432-bundle.mjs",
     "bundle:a432:check": "node scripts/build-a432-bundle.mjs --check",
-    "check": "npm run version:test && npm run version:address:test && npm run version:cidr:test && npm run version:calendar:test && npm run calendar:drift:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run version:check && npm run zenodo:check && npm run changelog:check && npm run test:kernel && npm run test:core && npm run test:security && npm run test:quantum && npm run test:hex-trinities && npm run test:frequency-flow && npm run test:error-resolvers && npm run test:vortex-pi && npm run test:validators && npm run test:gateways && npm run test:trinity && npm run test:reality-streams && npm run test:completions && npm run test:science-challenges && npm run test:phases-audit && npm run test:crypto && npm run test:a432 && npm run test:a432:math && npm run constants:check && npm run falsifiable:check && npm run finite:check && npm run coverage:audit && npm run standard:check && npm run adjudicate:check && npm run test:verification && npm run math:ban && npm run silent:check && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run api:reference && npm run api:reference:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run docs:commands && npm run entrypoints && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run quantum:proof && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
+    "check": "npm run version:test && npm run version:address:test && npm run version:cidr:test && npm run version:calendar:test && npm run calendar:drift:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run version:check && npm run zenodo:check && npm run changelog:check && npm run test:kernel && npm run test:core && npm run test:security && npm run test:quantum && npm run test:hex-trinities && npm run test:frequency-flow && npm run test:error-resolvers && npm run test:vortex-pi && npm run test:validators && npm run test:gateways && npm run test:trinity && npm run test:reality-streams && npm run test:completions && npm run test:science-challenges && npm run test:phases-audit && npm run test:crypto && npm run test:a432 && npm run test:a432:math && npm run constants:check && npm run falsifiable:check && npm run finite:check && npm run coverage:audit && npm run standard:check && npm run adjudicate:check && npm run test:verification && npm run math:ban && npm run silent:check && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run readme:facts && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run api:reference && npm run api:reference:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run docs:commands && npm run entrypoints && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run quantum:proof && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
     "prepublishOnly": "npm run build",
     "prose": "node scripts/prose-claims.mjs --list",
     "prose:check": "node scripts/prose-claims.mjs",

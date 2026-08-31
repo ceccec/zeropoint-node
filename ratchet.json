@@ -9,9 +9,8 @@
     "prose": 55,
     "tautology": 0,
     "frameworkTests": 0,
-    "untestedExports": 369,
     "docFunctions": 9,
     "entryPoints": 0,
-    "unguardedReadme": 24140
+    "unguardedReadme": 23827
   }
 }

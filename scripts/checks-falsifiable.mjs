@@ -65,6 +65,7 @@ const READS_SOURCE = {
   'registry:check': 'reads the npm registry',
   'semver:check': 'diffs against the published package',
   'prose:check': 'reads prose in docs/ and src/',
+  'readme:facts': 'recomputes the figures the README states; its own falsifiability is the two mutations in the commit that added it',
   // Added last, and the completeness guard immediately failed on it — this
   // probe is a checker in the pipeline like any other and had not said which
   // kind it was. It reads no artifact of its own; it corrupts other people's.

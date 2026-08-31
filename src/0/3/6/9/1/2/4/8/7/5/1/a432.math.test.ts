@@ -27,6 +27,9 @@ import {
   metricToImperial,
   mmToMetric,
   simplify,
+  multiplyFractions,
+  generateVortexSequence,
+  RODIN_SEQUENCE,
 } from './a432.math.ts'
 import { VORTEX_AXIS, VORTEX_ORBIT, digitalRoot } from '../../../../../../../../../../index.ts'
 import { abs } from './a432.algebra.ts'
@@ -217,6 +220,54 @@ console.log('a432.math.ts — laws\n')
   check('decodePiDigits columns are all digits',
     pi.every(d => [d.metric, d.imperial, d.trinity].every(v => Number.isInteger(v) && v >= 0 && v <= 9)))
   check('decodePiDigits(0) is empty', decodePiDigits(0).length === 0)
+}
+
+// ——————————————————————————————————————————————————————————————
+// The two functions docs/A432_SCIENTIFIC_VALIDATION.md declared
+{
+  const cross = (a: { numerator: number; denominator: number }, b: { numerator: number; denominator: number }) =>
+    a.numerator * b.denominator === b.numerator * a.denominator
+  const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b))
+  const F = (n: number, d: number) => ({ numerator: n, denominator: d })
+
+  const pairs: Array<[{ numerator: number; denominator: number }, { numerator: number; denominator: number }]> = [
+    [F(2, 3), F(3, 4)], [F(1, 2), F(2, 1)], [F(5, 7), F(7, 5)], [F(9, 4), F(4, 9)], [F(1, 1), F(13, 17)],
+  ]
+  let valueOk = true, lowestOk = true, commutes = true
+  for (const [a, b] of pairs) {
+    const r = multiplyFractions(a, b)
+    // The product before reduction, compared by cross-multiplication so the
+    // assertion never divides and never sees a float.
+    if (!cross(r, F(a.numerator * b.numerator, a.denominator * b.denominator))) valueOk = false
+    if (gcd(r.numerator, r.denominator) !== 1) lowestOk = false
+    const swapped = multiplyFractions(b, a)
+    if (swapped.numerator !== r.numerator || swapped.denominator !== r.denominator) commutes = false
+  }
+  check('multiplyFractions preserves the exact product', valueOk)
+  check('multiplyFractions returns lowest terms', lowestOk)
+  check('multiplyFractions commutes', commutes)
+  check('multiplying by 1/1 changes nothing',
+    cross(multiplyFractions(F(7, 9), F(1, 1)), F(7, 9)))
+  check('a fraction times its reciprocal is one',
+    cross(multiplyFractions(F(5, 7), F(7, 5)), F(1, 1)))
+  check('multiplyFractions is associative',
+    JSON.stringify(multiplyFractions(multiplyFractions(F(2, 3), F(3, 5)), F(5, 7))) ===
+    JSON.stringify(multiplyFractions(F(2, 3), multiplyFractions(F(3, 5), F(5, 7)))))
+
+  const seq = generateVortexSequence(30)
+  check('generateVortexSequence respects the requested length', seq.length === 30)
+  check('generateVortexSequence(0) is empty', generateVortexSequence(0).length === 0)
+  check('generateVortexSequence cycles RODIN_SEQUENCE',
+    seq.every((v, i) => v === RODIN_SEQUENCE[i % RODIN_SEQUENCE.length]), JSON.stringify(seq.slice(0, 8)))
+  // The seven-element form closes onto 1, so the period is 7 and 1 appears
+  // twice at the seam. That is the sequence the doc indexes, and stating it
+  // here means a silent switch to the six-element orbit fails instead.
+  check('the period is seven, not six', seq[0] === seq[7] && seq[6] === 1 && seq[7] === 1,
+    JSON.stringify(seq.slice(0, 9)))
+  check('every element of the doubling circuit appears',
+    VORTEX_ORBIT.every(d => seq.includes(d)))
+  check('generateVortexSequence emits only digits',
+    seq.every(d => Number.isInteger(d) && d >= 0 && d <= 9))
 }
 
 console.log()

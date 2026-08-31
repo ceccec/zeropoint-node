@@ -474,6 +474,33 @@ export function simplify({ numerator, denominator }: Fraction): Fraction {
   return { numerator: numerator / g, denominator: denominator / g };
 }
 
+/**
+ * docs/A432_SCIENTIFIC_VALIDATION.md declares these two and neither existed.
+ *
+ * The doc calls the reducer reduceFraction; this file has always called it
+ * simplify, so multiplyFractions uses that rather than adding a second name
+ * for one operation.
+ */
+export function multiplyFractions(a: Fraction, b: Fraction): Fraction {
+  return simplify({
+    numerator: a.numerator * b.numerator,
+    denominator: a.denominator * b.denominator,
+  });
+}
+
+/**
+ * The Rodin sequence, cycled to the requested length.
+ *
+ * Transcribed from the doc, which indexes RODIN_SEQUENCE — the seven-element
+ * form that closes back onto 1. So the period here is 7 and the 1 appears
+ * twice at the seam, which is the sequence as written rather than the
+ * six-element doubling circuit (VORTEX_ORBIT) underneath it. Both are in this
+ * file; this one follows the specification it came from.
+ */
+export function generateVortexSequence(length: number): number[] {
+  return Array.from({ length }, (_, i) => RODIN_SEQUENCE[i % RODIN_SEQUENCE.length]);
+}
+
 // Conversion ratios expressed as Fraction (metric in millimetres)
 const IMPERIAL_TO_MM: Record<string, Fraction> = {
   inch: { numerator: 254, denominator: 10 },      // 25.4 mm

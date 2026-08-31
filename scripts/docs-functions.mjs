@@ -19,14 +19,38 @@
  *   npm run docs:functions -- --count  the ratchet's number
  */
 import {readFileSync, readdirSync, statSync} from 'node:fs'
+import ts from 'typescript'
 import {join, relative} from 'node:path'
 const ROOT=process.cwd()
 function walk(d,pred,out=[]){for(const n of readdirSync(d)){if(['node_modules','.git','dist','coverage'].includes(n))continue
   const f=join(d,n); if(statSync(f).isDirectory())walk(f,pred,out); else if(pred(n))out.push(f)}return out}
-// every identifier anywhere in the source
+// Every name src/ actually DECLARES as something callable.
+//
+// This used to collect every identifier anywhere in src/, which meant a name
+// written once in a comment counted as implemented. 21 documented functions
+// were "present" on that rule while existing nowhere but prose, and the number
+// this script prints was 91 when the honest answer was 112. I benefited from
+// the flaw myself: implementing two specified functions moved the count by one,
+// because one of the names was already sitting in a comment.
+//
+// The names are taken from the TypeScript AST now — declarations, not text —
+// so a mention cannot satisfy a claim that something exists.
 const names=new Set()
+const collect=(node)=>{
+  if(ts.isFunctionDeclaration(node)&&node.name) names.add(node.name.text)
+  if(ts.isClassDeclaration(node)&&node.name) names.add(node.name.text)
+  if(ts.isInterfaceDeclaration(node)&&node.name) names.add(node.name.text)
+  if(ts.isTypeAliasDeclaration(node)&&node.name) names.add(node.name.text)
+  if(ts.isEnumDeclaration(node)&&node.name) names.add(node.name.text)
+  if(ts.isVariableDeclaration(node)&&ts.isIdentifier(node.name)) names.add(node.name.text)
+  if((ts.isMethodDeclaration(node)||ts.isMethodSignature(node))&&node.name&&ts.isIdentifier(node.name)) names.add(node.name.text)
+  if(ts.isPropertyAssignment(node)&&ts.isIdentifier(node.name)&&node.initializer&&
+     (ts.isArrowFunction(node.initializer)||ts.isFunctionExpression(node.initializer))) names.add(node.name.text)
+  if(ts.isPropertyDeclaration(node)&&ts.isIdentifier(node.name)) names.add(node.name.text)
+  ts.forEachChild(node,collect)
+}
 for(const f of walk(join(ROOT,'src'),n=>n.endsWith('.ts')&&!n.endsWith('.d.ts')))
-  for(const m of readFileSync(f,'utf8').matchAll(/[A-Za-z_$][A-Za-z0-9_$]*/g)) names.add(m[0])
+  collect(ts.createSourceFile(f,readFileSync(f,'utf8'),ts.ScriptTarget.Latest,true))
 const rows=[]
 for(const f of walk(ROOT,n=>n.endsWith('.md'))){
   const rel=relative(ROOT,f).replace(/\\/g,'/')

@@ -147,8 +147,13 @@ export class LivingA432OS {
     const isCharging = this.gatewayState;
     const isDischarging = !this.gatewayState;
     const quantumHarvest = this.gatewayState;
-    const voidEnergy = (currentDigit / 9) * (this.gatewayState ? 1 : 0.5);
-    const harmonicResonance = digitalRoot(currentDigit * 432) / 9;
+    // digit/9 at a gateway, half that otherwise. Written as the fraction it is:
+    // the 0.5 literal here was one of the decimal cracks the ratchet counts,
+    // inside the very function the README calls "exact fractions throughout".
+    const voidEnergyFraction = { numerator: currentDigit, denominator: this.gatewayState ? 9 : 18 };
+    const harmonicResonanceFraction = { numerator: digitalRoot(currentDigit * 432), denominator: 9 };
+    const voidEnergy = voidEnergyFraction.numerator / voidEnergyFraction.denominator;
+    const harmonicResonance = harmonicResonanceFraction.numerator / harmonicResonanceFraction.denominator;
     
     return {
       batteryLevel,
@@ -159,7 +164,9 @@ export class LivingA432OS {
       isDischarging,
       quantumHarvest,
       voidEnergy,
-      harmonicResonance
+      harmonicResonance,
+      voidEnergyFraction,
+      harmonicResonanceFraction
     };
   }
 

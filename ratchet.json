@@ -2,14 +2,14 @@
   "ceilings": {
     "typecheck": 96,
     "lint": 370,
-    "decimals": 280,
+    "decimals": 279,
     "cycles": 1,
     "unreachable": 119,
     "unloadable": 0,
     "prose": 55,
     "tautology": 0,
     "frameworkTests": 0,
-    "docFunctions": 9,
+    "docFunctions": 4,
     "entryPoints": 0,
     "unguardedReadme": 23752
   }

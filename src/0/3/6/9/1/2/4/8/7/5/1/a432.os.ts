@@ -111,6 +111,12 @@ export interface A432ChargingSystem {
   quantumHarvest: boolean;
   voidEnergy: number;
   harmonicResonance: number;
+  // The README describes this system as "exact fractions throughout", and four
+  // of its fields were. These two were not: voidEnergy carried a bare 0.5 and
+  // a division, which the decimal-crack surface counts. The float fields stay
+  // so nothing that reads them breaks; these carry the same quantities exactly.
+  voidEnergyFraction: { numerator: number; denominator: number };
+  harmonicResonanceFraction: { numerator: number; denominator: number };
 }
 
 // Enhanced Device State Interface (Zero Entropy)
@@ -243,8 +249,11 @@ const StateGenerators = {
       isCharging: true,
       isDischarging: true,
       quantumHarvest: true,
-      voidEnergy: 1/8, // Void energy fraction
-      harmonicResonance: 3/2 // Perfect fifth resonance
+      voidEnergy: 1 / 8, // Void energy fraction
+      harmonicResonance: 3 / 2, // Perfect fifth resonance
+      // Same two quantities, carried exactly rather than as the quotient.
+      voidEnergyFraction: { numerator: 1, denominator: 8 },
+      harmonicResonanceFraction: { numerator: 3, denominator: 2 }
     };
   },
 

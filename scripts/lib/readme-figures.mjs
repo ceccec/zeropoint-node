@@ -35,6 +35,12 @@ export async function readmeFigures(root) {
       where: 'ratchet.json ceilings',
       pattern: new RegExp(String.raw`ratchet on (\d+|${WORDS}) surfaces`, 'gi'),
     },
+    {
+      what: 'quantum proof checks',
+      value: (await import(pathToFileURL(join(root, 'src/quantum/proof-of-system.ts')).href)).proveSystem().total_checks,
+      where: 'src/quantum/proof-of-system.ts proveSystem',
+      pattern: new RegExp(String.raw`checked by (\d+|${WORDS}) recomputable (?:facts|checks)`, 'gi'),
+    },
   ]
 }
 

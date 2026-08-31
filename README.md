@@ -528,7 +528,7 @@ quantum-circuit simulator, ML-KEM-768, and the thermodynamics in `src/thermo`.
 No claim below is measured here.
 
 1. **Quantum formalism** — the simulator in `src/quantum` is a real
-   quantum-circuit simulator, checked by 257 recomputable facts. It models
+   quantum-circuit simulator, checked by 24 recomputable facts. It models
    qubits, not minds.
 2. **Dimensional folding** — an arithmetic construction over ℤ/9, sealed as
    group theory. "Dimension" here indexes a coordinate, not a physical one.

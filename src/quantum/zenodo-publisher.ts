@@ -17,6 +17,11 @@
 import { createHash } from 'node:crypto'
 import 'node:crypto'
 import { abs, round } from '../0/algebra.ts'
+// 257 was written into three strings here and into the README, and nothing
+// computed it. These strings go into Zenodo's metadata for a minted DOI, so
+// the claim was outward-facing and unverifiable at once. The count comes from
+// the proof that recomputes the checks.
+import { proveSystem } from './proof-of-system.ts'
 
 // ============================================================================
 // ZENODO CONFIGURATION & CONSTANTS
@@ -91,7 +96,7 @@ export function createArtifactManifest(): DepositArtifacts {
         category: 'proof',
         size: 0,
         sha256: '',
-        description: 'Quantum system correctness proofs (257+ checks)',
+        description: `Quantum system correctness proofs (${proveSystem().total_checks} checks)`,
       },
       {
         filename: 'security-audit.json',
@@ -177,7 +182,7 @@ Production-grade quantum computing framework with:
 - Self-healing system (failure detection, repair automation)
 - Unified orchestrator (7-layer fusion via quantum principles)
 - Post-quantum cryptography (Kyber-768 KEM, SPHINCS+-256f signatures, hybrid modes)
-- Comprehensive test suite (257+ quantum-mechanical checks, all verified)
+- Comprehensive test suite (${proveSystem().total_checks} quantum-mechanical checks, all recomputable)
 - External verification (peer-review ready, reproducible)
 
 Zero-entropy constraint: all operations use fractions (not floats), seeded randomness (not built-in random).
@@ -466,7 +471,7 @@ export function verifyReproducibility(request: DepositRequest): ReproducibilityR
     {
       name: 'Test proofs included',
       passed: request.artifacts.proofs.length > 0,
-      detail: `${request.artifacts.proofs.length} proof artifacts (257+ quantum checks)`,
+      detail: `${request.artifacts.proofs.length} proof artifacts (${proveSystem().total_checks} quantum checks)`,
     },
     {
       name: 'Benchmarks included',

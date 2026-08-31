@@ -1,5 +1,49 @@
 # Changelog
 
+## 1.3.1
+
+A patch. Six exports added, nothing removed — and from this release the
+version is computed patch-first: an additive change takes a PATCH, and only a
+breaking one bumps beyond it. 1.2.0 went straight to 1.3.0 because the tool
+computed MINOR from twenty added exports and skipped the whole 1.2.x space in
+one step. That rule now lives in `scripts/semver-diff.mjs` rather than in
+anyone's memory, and leaving the patch line is a decision (`--level=minor`),
+not an inference.
+
+**The harmonic solutions vortex, which I twice called unimplementable.** I
+classified `docs/HARMONIC_SOLUTIONS_VORTEX.md` as bullet descriptions with
+nothing to build, having read its five-bullet "Core Functions" list and
+stopped. The document above that list specifies the whole construction: nine
+solved challenges, three gateways each, 27 solutions, and a formula for every
+derived quantity —
+
+    Harmonic Resonance  = solution frequency / A432
+    A432 Harmonic       = A432 x gateway x solution number
+    Harmonic Completion = sum of A432 harmonics / (A432 x 9 x 27)
+
+All five functions and the class the document declares are implemented, with
+the ratios carried as exact fractions rather than quotients. 27 solutions, 9
+per gateway, balanced — the numbers the document states, now computed.
+
+That takes documented functions absent from src to its floor: 96 at the start
+of this work, 4 now, and those four are the `QUANTUM_PHASES_3_TO_8` signing and
+ambient-encryption recipes, refused on evidence and recorded as an executable
+audit rather than a note.
+
+**The charging system now is what the README says it is.** The README describes
+it as "charge 1/8, discharge 1/12, exact fractions throughout". Four of its six
+quantities were fractions; `voidEnergy` was `(digit / 9) * (gateway ? 1 : 0.5)`
+— a bare float literal, one of the 280 the decimal-crack surface counts, inside
+the very function the README holds up as exact. Both derived quantities carry
+exact fractions now, alongside the floats so nothing that reads them breaks.
+
+**Two more README guards.** `readme:names` checks that every file and
+identifier the README names exists, matched against declarations from the
+TypeScript AST rather than the text of `src/` — so a name that appears only in
+a comment does not count. I had verified both of those by hand and moved on,
+which is exactly how the Quick Start came to import five names that did not
+exist: correct when written, verified once, and nothing noticed when it
+stopped being true.
 ## 1.3.0
 
 A minor: one new entry point and 20 new exports, nothing removed or changed.

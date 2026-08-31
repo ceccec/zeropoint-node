@@ -79,14 +79,6 @@
     "count": 2,
     "why": "retypes VORTEX_AXIS, e.g. trinityAxis: [3, 6, 9], // Generated from mathematics"
   },
-  "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::VORTEX_AXIS": {
-    "count": 5,
-    "why": "retypes VORTEX_AXIS, e.g. export const TRINITY_AXIS: readonly number[] = [3, 6, 9];"
-  },
-  "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::VORTEX_ORBIT": {
-    "count": 3,
-    "why": "retypes VORTEX_ORBIT, e.g. export const RODIN_COIL_CORE: readonly number[] = [1, 2, 4, 8, 7, 5]; // Lossless kinetic energy"
-  },
   "src/0/3/6/9/1/2/4/8/7/5/1/a432.matrix.ts::VORTEX_AXIS": {
     "count": 1,
     "why": "retypes VORTEX_AXIS, e.g. const trinity = [3, 6, 9];"

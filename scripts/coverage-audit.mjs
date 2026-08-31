@@ -58,6 +58,7 @@ const EXERCISERS = [
   ['src/quantum/untested-exports.test.ts', null],
   ['src/crypto/ml-kem.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.math.test.ts', null],
   ['src/verification/lean-bridge.test.ts', null],
   ['src/multidimensional-vortex-framework.test.ts', 'scripts/jest-lite.mjs'],
   ['scripts/quantum-sim.mjs', null],

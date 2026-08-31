@@ -7,13 +7,17 @@
  */
 
 import { abs, max, min, round } from './a432.algebra.ts'
+// The header above promises "a single, zero-entropy source". It was not one:
+// the axis was retyped five times and the orbit three. Both now come from the
+// kernel, so a change there reaches every name below instead of eight of them.
+import { VORTEX_AXIS, VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 // Zero-Entropy Harmonic Constants (Base-12 Imperial System)
 // ---------------------------------------------------------
 // These constants follow the imperial system's base-12 harmonic principles
 // that minimize computational entropy and align with quantum mechanical systems
 
 // Trinity axis: 3, 6, 9 (perfect fifths in base-12)
-export const TRINITY_AXIS: readonly number[] = [3, 6, 9];
+export const TRINITY_AXIS: readonly number[] = VORTEX_AXIS;
 
 // A432 Trinity: 4, 3, 2 (harmonic ratios 4:3:2)
 export const A432_TRINITY: readonly [4,3,2] = [4, 3, 2];
@@ -26,8 +30,8 @@ export const A432_AXIS:    readonly [9,6,3] = [9, 6, 3];
 
 // Rodin Coil: Base-12 harmonic sequence (1, 2, 4, 8, 7, 5, 1)
 // This sequence creates exact fractions in base-12: 1/2=0.6, 1/3=0.4, 1/4=0.3, 1/6=0.2
-export const RODIN_SEQUENCE: readonly number[] = [1, 2, 4, 8, 7, 5, 1];
-export const RODIN_COIL_CORE: readonly number[] = [1, 2, 4, 8, 7, 5]; // Lossless kinetic energy
+export const RODIN_SEQUENCE: readonly number[] = [...VORTEX_ORBIT, 1];
+export const RODIN_COIL_CORE: readonly number[] = VORTEX_ORBIT; // Lossless kinetic energy
 export const RODIN_COIL_DIPOLES: readonly number[] = [3, 6]; // Magnetic dipoles (perfect fifths)
 export const RODIN_COIL_MONOPOLE = 9; // Invisible monopole (trinity completion)
 export const RODIN_COIL_GAP_SPACE: readonly number[] = [3, 9, 6, 6, 9, 3]; // Spirit Flux-field
@@ -138,7 +142,7 @@ export function calculateA432Frequency(dimensionalState: number): number {
  */
 export const A432_CONSTANTS = {
   RODIN_SEQUENCE: [1, 2, 4, 8, 7, 5, 1],
-  TRINITY_AXIS: [3, 6, 9],
+  TRINITY_AXIS: [...VORTEX_AXIS],
   BASE_FREQUENCY: 432
 };
 
@@ -157,7 +161,7 @@ export const A432_CONSTANTS = {
 
 export function rodinDigit(k: number): number {
   // Use the canonical 1-2-4-8-7-5 sequence (excluding final 1)
-  const sequence = [1, 2, 4, 8, 7, 5];
+  const sequence = VORTEX_ORBIT;
   return sequence[k % sequence.length];
 }
 
@@ -243,7 +247,7 @@ export const nextRodinDigit = getNextRodinValue;
 // ——————————————————————————————————————————
 // 6. Tesla Trinity helpers (3-6-9 insight)
 // ---------------------------------------------------------
-export const TESLA_TRINITY: number[] = [3, 6, 9];
+export const TESLA_TRINITY: number[] = [...VORTEX_AXIS];
 
 export function isTeslaDigit(d: number): boolean {
   return TESLA_TRINITY.includes(d);
@@ -259,13 +263,13 @@ export function teslaPattern(length: number): number[] {
 }
 
 // Canonical Tesla sequence and polarity
-export const TESLA_SEQUENCE = [3, 6, 9];
+export const TESLA_SEQUENCE = [...VORTEX_AXIS];
 export function teslaPolarity(i: number): number {
   // Canonical: [1, -1, 1] for [3, 6, 9]
   return [1, -1, 1][i % 3];
 }
 // Canonical Mobius sequence and polarity
-export const MOBIUS_SEQUENCE = [1, 2, 4, 8, 7, 5];
+export const MOBIUS_SEQUENCE = [...VORTEX_ORBIT];
 export function mobiusPolarity(i: number): number {
   // Canonical: [1, -1, 1, -1, 1, -1]
   return [1, -1, 1, -1, 1, -1][i % 6];
@@ -399,10 +403,18 @@ const PRIMES: number[] = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
 
 /** Returns the first n prime numbers (extend PRIMES if n>10). */
 export function primes(n: number): number[] {
+  // The candidate was recomputed as `last + 2` INSIDE the loop, so a composite
+  // candidate left PRIMES unchanged and the next iteration tried the same
+  // number again — forever. It survived to n = 11 only because the seed list
+  // already held eleven primes and the loop never ran. primes(12) needs 37,
+  // reaches 33 = 3 x 11, and spins. primeSquaredRoots hung with it.
+  //
+  // The candidate now advances whether or not it was prime, which is the whole
+  // fix: progress must not depend on success.
+  let candidate = PRIMES[PRIMES.length - 1]!;
   while (PRIMES.length < n) {
-    const candidate = PRIMES[PRIMES.length - 1] + 2;
-    const isPrime = PRIMES.every(p => candidate % p !== 0);
-    if (isPrime) PRIMES.push(candidate);
+    candidate += 2;
+    if (PRIMES.every(p => p * p > candidate || candidate % p !== 0)) PRIMES.push(candidate);
   }
   return PRIMES.slice(0, n);
 }
@@ -433,7 +445,7 @@ export function fibonacciRoots(n: number): number[] {
  * Example for length 12 → 3 6 9 3 6 9 3 6 9 3 6 9
  */
 export function kineticShockWaveOfNine(length: number): number[] {
-  const pattern = [3, 6, 9];
+  const pattern = VORTEX_AXIS;
   return Array.from({ length }, (_, i) => pattern[i % 3]);
 }
 
@@ -467,7 +479,10 @@ const IMPERIAL_TO_MM: Record<string, Fraction> = {
   inch: { numerator: 254, denominator: 10 },      // 25.4 mm
   foot: { numerator: 3048, denominator: 10 },     // 304.8 mm
   yard: { numerator: 9144, denominator: 10 },     // 914.4 mm
-  mile: { numerator: 1609344, denominator: 10 }   // 160934.4 mm
+  // A mile is 5280 ft = 5280 x 304.8 mm = 1 609 344 mm. This read 1609344/10,
+  // i.e. 160 934.4 mm — exactly a tenth of a mile. inch, foot and yard were
+  // right, so nothing downstream disagreed loudly enough to notice.
+  mile: { numerator: 16093440, denominator: 10 }  // 1 609 344 mm
 };
 
 const MM_TO_IMPERIAL: Record<string, Fraction> = {

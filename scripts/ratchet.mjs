@@ -385,33 +385,27 @@ function unreachableCount() {
     }
   }
   // Test files count as entries ONLY when a check-pipeline script executes
-  // them (smoke.test.ts via test:kernel, the security suites via test:security)
-  // — an entry is something that runs, not something that merely exists.
-  for (const e of [
-    'src/kernel/index.ts',
-    'src/0/index.ts',
-    'src/mcp/server.ts',
-    'src/kernel/smoke.test.ts',
-    'src/kernel/core-exports.test.ts',
-    'src/security/quantum-fold-cipher.test.ts',
-    'src/security/quantum-state-tomography.test.ts',
-    'src/security/quantum-proofs.test.ts',
-    // test:security runs four suites; only three were listed, so
-    // post-quantum-crypto.test.ts counted as dead weight while running on
-    // every gate. The rule is 'executed by the pipeline', not 'listed here'.
-    'src/security/post-quantum-crypto.test.ts',
-    // test:quantum
-    'src/quantum/superposition-execution.test.ts',
-    'src/quantum/millennium-bridge.test.ts',
-    'src/quantum/zenodo-publisher.test.ts',
-    'src/quantum/untested-exports.test.ts',
-    // test:crypto
-    'src/crypto/ml-kem.test.ts',
-    'src/verification/lean-bridge.test.ts',
-    // test:a432 — the property suite over the a432 layer
-    'src/0/3/6/9/1/2/4/8/7/5/1/a432.test.ts',
-  ]) {
+  // them — an entry is something that RUNS, not something that merely exists.
+  //
+  // That rule used to be enforced by a hand-written list, and the list drifted
+  // twice: test:security runs four suites and only three were listed, so
+  // post-quantum-crypto.test.ts counted as dead weight while executing on every
+  // gate run. A list that restates what package.json already says will drift
+  // again. So the pipeline is now READ instead of transcribed: expand `check`
+  // through its `npm run` references and take every .ts path it actually names.
+  for (const e of ['src/kernel/index.ts', 'src/0/index.ts', 'src/mcp/server.ts']) {
     const p2 = join(ROOT, e)
+    if (existsSync(p2)) roots.add(p2)
+  }
+  const expand = (name, seen = new Set()) => {
+    if (seen.has(name)) return ''
+    seen.add(name)
+    const body = pkg.scripts?.[name]
+    if (!body) return ''
+    return body.replace(/npm run ([A-Za-z0-9:._-]+)/g, (_, n) => ' ' + expand(n, seen) + ' ')
+  }
+  for (const m of expand('check').matchAll(/(?:^|[\s'"])((?:src|scripts)\/[A-Za-z0-9._\/-]+\.ts)/g)) {
+    const p2 = join(ROOT, m[1])
     if (existsSync(p2)) roots.add(p2)
   }
   // Both trees: public/ pages reference src/ modules by full path, and looking

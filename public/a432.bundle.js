@@ -2633,11 +2633,11 @@
   var asAngle = (n) => n;
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts
-  var TRINITY_AXIS = [3, 6, 9];
+  var TRINITY_AXIS = VORTEX_AXIS;
   var A432_TRINITY = [4, 3, 2];
   var A432_RETURN = [8, 7, 5];
   var A432_AXIS = [9, 6, 3];
-  var RODIN_SEQUENCE = [1, 2, 4, 8, 7, 5, 1];
+  var RODIN_SEQUENCE = [...VORTEX_ORBIT, 1];
   var A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
   function* cycleStream(cycle) {
     while (true) {
@@ -2656,6 +2656,11 @@
     { name: "Infinity", description: "Power, expansion, infinite flow, recursion; the endless, the self-similar, the principle of recursion and the infinite loop." },
     { name: "Completion", description: "Fulfillment, wholeness, return, zero entropy; the end and the beginning, the return to source, and the closure of the cycle." }
   ];
+  var A432_CONSTANTS = {
+    RODIN_SEQUENCE: [1, 2, 4, 8, 7, 5, 1],
+    TRINITY_AXIS: [...VORTEX_AXIS],
+    BASE_FREQUENCY: 432
+  };
   var FULL_PATTERN = [0, ...TRINITY_AXIS, 1, 2, 4, 8, 7, 5, 1];
   function angleForDigit(d) {
     return ((-90 + 40 * (d % 9)) % 360 + 360) % 360;
@@ -2667,6 +2672,9 @@
   function hueForDigit(d) {
     return abs(d) * 36 % 360;
   }
+  var TESLA_TRINITY = [...VORTEX_AXIS];
+  var TESLA_SEQUENCE = [...VORTEX_AXIS];
+  var MOBIUS_SEQUENCE = [...VORTEX_ORBIT];
   var D0 = asDigit(0);
   var D9 = asDigit(9);
   var TRINITY_POLARITY = {

@@ -407,7 +407,17 @@ export function proveSystem(): SystemProofReport {
 export function exportProofJSON(report: SystemProofReport): string {
   return JSON.stringify(
     {
-      status: report.system_verified ? 'verified' : 'failed',
+      // The prose distinguishes VERIFIED / FAILED / INCOMPLETE; this field used
+      // to collapse that to two and emit 'failed' when nothing had failed —
+      // 24 of 24 checks passing, one layer simply running none. A machine
+      // reading only the JSON drew the opposite conclusion from the document
+      // beside it. Same three states here.
+      status: report.system_verified
+        ? 'verified'
+        : report.total_passed < report.total_checks
+          ? 'failed'
+          : 'incomplete',
+      unverified_layers: report.layers_verified.filter((l) => l.checks_total === 0).map((l) => l.layer_name),
       confidence: report.confidence_score,
       checks: {
         passed: report.total_passed,

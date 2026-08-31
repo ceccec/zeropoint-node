@@ -67,3 +67,28 @@ export {
   SEPARATIONS,
   selfTest as advantageSelfTest,
 } from './advantage.ts'
+
+// The functions the repo's own documentation declared for a long time before
+// they existed. Implemented across eleven commits and re-exported here,
+// because a function nothing can import is not shipped — the semver tool
+// correctly reported "the public surface is unchanged" while 87 new functions
+// sat behind no entry point at all.
+export * from './hex-vortex-trinities.ts'
+export * from './a432-frequency-flow.ts'
+export * from './a432-error-resolvers.ts'
+export * from './a432-vortex-pi.ts'
+export * from './zeropoint-validators.ts'
+export * from './tesla-gateways.ts'
+export * from './trinity-vortex.ts'
+export * from './reality-streams.ts'
+export * from './zeropoint-completions.ts'
+export * from './science-challenges.ts'
+
+// Two documents use the name VortexFlow for different things:
+// ZEROPOINT_A432_FREQUENCY_FLOW means a transition between two digits, and
+// CONFUSION_POSSIBILITY_SOLUTION means whether a flow between two digits is
+// possible at all. An explicit re-export outranks the star exports above and
+// settles which one the bare name refers to; the other keeps its meaning under
+// a name that says which document it came from.
+export type { VortexFlow } from './a432-frequency-flow.ts'
+export type { VortexFlow as TrinityVortexFlow } from './trinity-vortex.ts'

@@ -59,7 +59,15 @@ const facts = [
     what: 'seal count',
     value: String(Object.keys(SEALS).length),
     where: 'lean-bridge SEALS',
-    mentions: /\bseals?\b/i,
+    // /\bseals?\b/ matched the VERB. A 1.2.0 note saying a cipher "seals its
+    // facet configuration" is not discussing how many seals lean-bridge has,
+    // and demanding it state 26 forced a number into notes it did not belong
+    // in — which is the failure the comment above says this field exists to
+    // prevent. It has to be the count that is mentioned, not the act.
+    // Note the flags: the first alternatives are case-insensitive prose, but
+    // SEALS is the identifier and must stay case-SENSITIVE. My first attempt put
+    // it inside an /i group, where it matched the verb "seals" all over again.
+    mentions: /\bseal count\b|\b\d+\s+seals\b|\bseals\s*:|\bSEALS\b/,
   },
   {
     what: 'Gibbs energy of splitting, kJ/mol',

@@ -1,5 +1,61 @@
 # Changelog
 
+## 1.2.0
+
+A minor because 110 exports were added and none removed or changed. The
+version is computed by diffing the published package's surface against this
+one, not chosen.
+
+**The repo's documentation declared 96 functions that did not exist.** 87 of
+them now do, across ten new modules reachable from the `./quantum` entry, with
+around 300 assertions stating their laws over whole input spaces rather than
+over chosen examples — every byte 0-255, every digit pair, every degenerate
+input a signature permits.
+
+Implementing them turned up three faults in code that was already shipping:
+
+- `calculateA432Color` read HSL strings back with `match(/\d+/g)`. Saturation
+  here is `2/3 x 100 = 66.666...`, and `\d+` splits a decimal into two matches,
+  so `hsl(210, 66.66666666666666%, 40%)` parsed as `[210, 66, 66666666666666, 40]`:
+  lightness became a fourteen-digit number and the real 40 was dropped. The `k`
+  channel of a CMYK value, which is defined on [0,1], was coming back as
+  -1106666666664.9956. Five sites across `a432.color.ts` and `a432.pi.ts`.
+- `primes()` recomputed its candidate inside the loop and only advanced on
+  success, so a composite candidate left the state unchanged and the next
+  iteration tried the same number forever. `primes(12)` never returned.
+- `IMPERIAL_TO_MM.mile` was 1609344/10 = 160 934.4 mm, exactly a tenth of a
+  mile. inch, foot and yard were correct, so nothing downstream disagreed.
+
+**Four documented functions were deliberately not implemented.** All four wrap
+this repo's own tested `QuantumFoldCipher`, so this was never about inventing
+cryptography — it is what the documented recipes do when run. `signTransaction`
+returns the same value for every transaction and every private key; it seals
+the cipher's facet configuration, which no input reaches. Shipping a constant
+under that name is worse than shipping nothing. `encryptAmbient` and
+`decryptAmbient` both call `prepareState` before `generateKey` and throw before
+doing anything, and `decryptAmbient` never passes its `ciphertext` argument to
+anything at all. `executeContract` is a signature with no body. The reasoning
+is committed as `src/security/quantum-phases-audit.test.ts`, which recomputes
+each claim, so if a recipe ever starts binding its input the test fails and
+says the function may now be worth implementing.
+
+Also in this release:
+
+- Six framework assertions adjudicated. Five were the test being wrong,
+  including one that asserted a spherically symmetric field should distinguish
+  (1,0,0) from (0,1,0). The sixth found a dead branch: vortex type 'A' requires
+  `control === 0`, and the control sequence is [3,6,9], so it is unreachable
+  through the public method for every input.
+- Half the gate is `X && X --check`, and nothing ever handed one a damaged
+  artifact to confirm it would say no. `checks-falsifiable` does. It failed on
+  its first run and found that `readme:check` does not read README.md, and that
+  40 corrupted bytes of README prose pass every check in the pipeline. The
+  unguarded share of the front page is now a ratchet surface.
+- Two scripts kept hand-written copies of what `npm run check` executes, and
+  both had drifted. They read the pipeline now.
+- `docs:functions` counted a name written in a comment as implemented, and
+  counted six empty-bodied naming illustrations — two of which the document
+  itself marks as wrong.
 ## 1.1.1
 
 A patch because the public surface is unchanged — nothing added, nothing

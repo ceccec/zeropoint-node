@@ -31,11 +31,17 @@ for(const f of walk(ROOT,n=>n.endsWith('.md'))){
   if(rel==='CHANGELOG.md')continue
   const t=readFileSync(f,'utf8')
   const bad=[]
+  // Both patterns were anchored to ^\s*, so only a command on its own line was
+  // checked. 73% of the command mentions in the docs are written inline, in
+  // prose or in backticks, and every one of them was invisible: a bogus
+  // `npm run nonsense` inside a sentence passed. Unanchored this covers 95
+  // mentions instead of 26, and found nothing broken — the docs were accurate,
+  // they were just mostly unverified.
   // node path/to/file
-  for(const m of t.matchAll(/^\s*node\s+([^\s`'"]+\.(?:js|mjs|ts))/gm))
+  for(const m of t.matchAll(/node\s+([^\s`'"]+\.(?:js|mjs|ts))/g))
     if(!existsSync(join(ROOT,m[1]))) bad.push('node '+m[1])
   // npm run <script>
-  for(const m of t.matchAll(/^\s*npm run ([a-z0-9:_-]+)/gm))
+  for(const m of t.matchAll(/npm run ([a-z0-9:_-]+)/g))
     if(!scripts.has(m[1])) bad.push('npm run '+m[1])
   if(bad.length) rows.push({rel, bad:[...new Set(bad)]})
 }

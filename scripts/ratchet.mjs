@@ -350,14 +350,27 @@ function rollupInputs() {
  * README bytes that no generator guards.
  *
  * Three blocks of README.md are generated and checked — VORTEX, SPECTRUM,
- * VERSION. Everything else is hand-written prose that no check reads, which
- * was not obvious until a probe corrupted forty bytes in the middle of the
- * file and every checker in the pipeline passed. 17% of the front page is
- * verified; this counts the rest.
+ * VERSION — and they hold up: damage inside the SPECTRUM block is caught by
+ * spectrum:check and correctly ignored by the other two. They are 17% of the
+ * file.
  *
- * It is not a demand that the whole README be generated — prose that explains
- * intent should be written by a person. It is a ceiling, so the unverified
- * share shrinks as claims move into blocks that something can recompute.
+ * A correction to what I first wrote here. I claimed the remaining bytes were
+ * "read by nothing", having probed seven checkers with forty corrupted bytes
+ * of prose. Two scripts that DO read README.md were not among the seven.
+ * docs:commands walks every .md file from the root and verifies that each
+ * documented command names a script or file that exists; version-cidr checks
+ * the colour law stated in the README against the code. So the front page is
+ * not unread. Its command references and its colour arithmetic are checked.
+ *
+ * What is unchecked is the prose: the claims about what this package is, what
+ * it does, and what it is for. Corrupting forty bytes of that passes every
+ * check in the pipeline, which is the thing worth counting and the reason this
+ * number exists.
+ *
+ * It is not a demand that the README be generated — prose that explains intent
+ * should be written by a person. It is a ceiling, so the share of the front
+ * page that no machine can contradict shrinks as claims move into blocks
+ * something recomputes.
  */
 function unguardedReadmeBytes() {
   const readme = join(ROOT, 'README.md')

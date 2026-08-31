@@ -11,8 +11,18 @@
  * reports what the difference actually is:
  *
  *   MAJOR  something a consumer could import is gone, or an export disappeared
- *   MINOR  a new entry point or export, nothing removed
- *   PATCH  the surface is identical
+ *   PATCH  everything else — a new entry point, a new export, or no change
+ *
+ * That deviates from stock semver, which calls an additive change MINOR, and
+ * the deviation is deliberate: this project releases the patch line first and
+ * only leaves it when something breaks. 1.2.0 went straight to 1.3.0 because
+ * this file computed MINOR from twenty added exports, and the whole 1.2.x
+ * patch space was skipped in one step. A rule I have to remember is one I will
+ * forget, so it lives here.
+ *
+ * A minor or major bump is therefore never inferred from additions. Breaking
+ * detection is untouched and still forces MAJOR, which is the case where the
+ * version number has to carry a warning.
  *
  * It is deliberately about the SURFACE, not behaviour. A function that still
  * exists but now returns something else is a breaking change this cannot see,
@@ -88,7 +98,18 @@ const addedBins = after.bin.filter((b) => !before.bin.includes(b))
 
 const breaking = removedPaths.length + removedExports.length + removedBins.length
 const additive = addedPaths.length + addedExports.length + addedBins.length
-const level = breaking > 0 ? 'major' : additive > 0 ? 'minor' : 'patch'
+// Additive changes take a PATCH. Only a removal forces a bump beyond it.
+//
+// --level=minor overrides that, because leaving the patch line is a decision
+// someone makes rather than one a diff infers. It cannot override a MAJOR: if
+// something was removed, the version has to say so.
+const forced = (process.argv.find((a) => a.startsWith('--level=')) ?? '').split('=')[1]
+if (forced && !['minor', 'major'].includes(forced)) {
+  console.error(`semver: --level=${forced} is not a level I can force (minor, major)`)
+  process.exit(2)
+}
+const computed = breaking > 0 ? 'major' : 'patch'
+const level = computed === 'major' ? 'major' : (forced ?? computed)
 
 const [maj, min, pat] = before.version.split('.').map(Number)
 const next = level === 'major' ? `${maj + 1}.0.0` : level === 'minor' ? `${maj}.${min + 1}.0` : `${maj}.${min}.${pat + 1}`

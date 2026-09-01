@@ -1,5 +1,48 @@
 # Changelog
 
+## 1.3.5
+
+A patch: 0 exports added, 0 removed. Three pieces of work, and two of them are
+corrections to things this repository was saying about itself.
+
+**`millennium-bridge.ts` argued with itself.** It mapped seven quantum layers
+onto the seven Millennium Prize Problems and then claimed the mapping did work:
+"solving the problem solves the gap", "solutions emit themselves", and — in
+Layer 1 — "the simulator IS a verification of Riemann structure". Six of the
+seven are open; the seventh was settled by Perelman in 2002-03 and nothing here
+contributed to that either.
+
+The file already contained its own refutation. Layer 2 carries three careful
+corrections — that factoring is not known to be NP-complete, that Shor places it
+in BQP rather than P, and that Grover is a quadratic speedup which "does not
+solve NP-complete problems efficiently" — and two hundred lines below, the
+realization string said "Shor/Grover prove quantum solves NP-complete". Every
+layer now states what is implemented and that its namesake problem is open, the
+scope travels on the returned object rather than only in a comment, and a test
+lists seven withdrawn claims and fails if any returns. That test caught one
+immediately: the rewrite *quoted* a withdrawn claim while explaining it had been
+withdrawn, which leaves the phrase in the value a consumer receives.
+
+No status literal is touched and nothing is renamed. `status: 'COMPLETE'` stays,
+meaning the LAYER is implemented, never that the problem is settled — those
+literals are in the public types and the tests assert them, so changing them
+would be a breaking change bought for no honesty.
+
+**The wave engine reported no gaps while the gate counted thousands.**
+`self:next` states a law — "if development stops, gaps in self-development
+exist" — and decided from five sources that were all zero, so every run emitted
+a generic tip telling the reader to keep chatting waves. It now ranks the
+surfaces the gate already measures and names the largest with what to do about
+it. Surfaces carry a unit, because the first ranking put a 28015-**byte** total
+ahead of 297 untested functions, and "28015 outstanding" is a category error
+rather than a work item.
+
+**The import cycle is gone: 1 → 0.** `a432.index.ts` imported three self-*
+subsystems and all three imported `A432System` back out of it. It was known and
+worked around three times — every one of those modules resolved its reference
+lazily, each with a comment about the hazard. The three need three methods
+between them, so that is a contract now and the system registers against it.
+Reachability fell 119 → 115 as a consequence.
 ## 1.3.4
 
 A patch with no surface change at all: 0 exports added, 0 removed. Everything

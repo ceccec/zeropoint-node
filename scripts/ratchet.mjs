@@ -555,6 +555,13 @@ const SURFACES = [
 const prior = existsSync(STATE) ? JSON.parse(readFileSync(STATE, 'utf8')) : { ceilings: {} }
 const ceilings = { ...(prior.ceilings ?? {}) }
 const isCheck = process.argv.includes('--check')
+const raise = (process.argv.find((a) => a.startsWith('--raise=')) ?? '').split('=')[1] ?? null
+const reason = (process.argv.find((a) => a.startsWith('--reason=')) ?? '').split('=').slice(1).join('=')
+if (raise && !reason) {
+  console.error('ratchet: --raise needs --reason="why this increase is correct"')
+  process.exit(2)
+}
+let raisedNow = null
 
 let grew = false
 let fell = false
@@ -576,8 +583,20 @@ for (const s of SURFACES) {
     continue
   }
   if (live > ceiling) {
-    grew = true
-    rows.push(`  ${s.label}: ${live} > ceiling ${ceiling}  ✗ GREW by ${live - ceiling}`)
+    // A ceiling can be RAISED, but only by naming the surface and giving a
+    // reason. A ratchet that can never rise makes writing documentation
+    // impossible — this surface counts README prose, and adding a true
+    // section to the README is not a regression. A ratchet that rises
+    // silently is not a ratchet. So: explicit, one surface at a time, with
+    // the reason recorded in ratchet.json where the next person will see it.
+    if (!isCheck && raise === s.id) {
+      raisedNow = { id: s.id, from: ceiling, to: live, reason }
+      ceilings[s.id] = live
+      rows.push(`  ${s.label}: ${live} > ceiling ${ceiling}  ↑ RAISED by ${live - ceiling} — ${reason}`)
+    } else {
+      grew = true
+      rows.push(`  ${s.label}: ${live} > ceiling ${ceiling}  ✗ GREW by ${live - ceiling}`)
+    }
   } else if (live < ceiling) {
     fell = true
     if (!isCheck) ceilings[s.id] = live
@@ -592,7 +611,13 @@ for (const r of rows) console.log(r)
 
 if (isCheck) {
   if (grew) {
-    console.error('ratchet: a surface grew — fix the regression, or run npm run ratchet if it is intended')
+    // The old message said "run npm run ratchet if it is intended". It did
+    // nothing: the writer only ever lowered. I followed my own advice and
+    // watched it silently fail.
+    console.error(
+      'ratchet: a surface grew — fix the regression, or raise that one ceiling deliberately:\n'
+      + '  npm run ratchet -- --raise=<surface> --reason="why this increase is correct"',
+    )
     process.exit(1)
   }
   if (fell) {
@@ -603,5 +628,7 @@ if (isCheck) {
   process.exit(0)
 }
 
-writeFileSync(STATE, `${JSON.stringify({ ceilings }, null, 2)}\n`)
+const priorRaises = (() => { try { return JSON.parse(readFileSync(STATE, 'utf8')).raised ?? {} } catch { return {} } })()
+const raised = raisedNow ? { ...priorRaises, [raisedNow.id]: { from: raisedNow.from, to: raisedNow.to, reason: raisedNow.reason } } : priorRaises
+writeFileSync(STATE, `${JSON.stringify(Object.keys(raised).length ? { ceilings, raised } : { ceilings }, null, 2)}\n`)
 console.log('wrote ratchet.json')

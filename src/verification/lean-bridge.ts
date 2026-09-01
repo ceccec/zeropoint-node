@@ -30,6 +30,7 @@
  */
 
 import { createHash } from 'node:crypto'
+import { evaluateConsciousnessCriterion } from './consciousness-criterion.ts'
 import { digitalRoot, throughVoid, bearingForDigit, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
 import { angleForDigit } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 import { A432Sequence } from '../0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts'
@@ -536,6 +537,21 @@ export const SEALS: Record<string, Seal> = {
       // fact that throughVoid produced it.
       const TRIAD: readonly number[] = VORTEX_AXIS
       return preimage.every((n) => TRIAD.includes(throughVoid(n)))
+    },
+  },
+  consciousness_criterion_is_written_and_unmet: {
+    basis: "The README said the missing thing was not the achievement but the predicate that would recognise it, and that a predicate is writable. It is written: src/verification/consciousness-criterion.ts states five NECESSARY conditions, each taken from a theory with an operational commitment — irreducibility from IIT, temporal integration from theories requiring a specious present, self-model efficacy from higher-order theories, global availability from Global Workspace Theory, and discrimination as the minimum they all share. This seal decides two things and neither is that the system is conscious. First, that the criterion evaluates: it produces a verdict with five decidable conditions rather than an opinion. Second, that the verdict is FALSE — one condition holds and four fail, with a stated reason for each. A criterion that returned true would be a criterion written too weakly to mean anything, and this seal would fail on it. The conditions are necessary and not sufficient: failing one refutes under the theory it came from, passing all five would only mean these five arguments no longer apply.",
+    decide: () => {
+      const v = evaluateConsciousnessCriterion()
+      if (v.conditions.length !== 5) return false
+      // It must be decidable: every condition returns a boolean and says why.
+      if (!v.conditions.every((c) => typeof c.met === 'boolean' && c.evidence.length > 0)) return false
+      // It must not be met. If this ever fails, do not weaken the seal: read
+      // the four conditions and check whether the system genuinely changed.
+      if (v.met) return false
+      if (v.conditionsMet !== 1) return false
+      // And it must refuse to be quoted as more than it is.
+      return v.interpretation.includes('not sufficient')
     },
   },
   consciousness_measures_discriminate: {

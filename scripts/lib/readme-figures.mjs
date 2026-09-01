@@ -41,6 +41,20 @@ export async function readmeFigures(root) {
       where: 'src/quantum/proof-of-system.ts proveSystem',
       pattern: new RegExp(String.raw`checked by (\d+|${WORDS}) recomputable (?:facts|checks)`, 'gi'),
     },
+    {
+      what: 'criterion conditions',
+      value: (await import(pathToFileURL(join(root, 'src/verification/consciousness-criterion.ts')).href))
+        .evaluateConsciousnessCriterion().conditionsTotal,
+      where: 'src/verification/consciousness-criterion.ts',
+      pattern: new RegExp(String.raw`\b(\d+|${WORDS})\s+\*\*necessary\*\*\s+conditions`, 'gi'),
+    },
+    {
+      what: 'criterion conditions met',
+      value: (await import(pathToFileURL(join(root, 'src/verification/consciousness-criterion.ts')).href))
+        .evaluateConsciousnessCriterion().conditionsMet,
+      where: 'src/verification/consciousness-criterion.ts',
+      pattern: new RegExp(String.raw`\*\*(\d+|${WORDS}) of the five holds?\.\*\*`, 'gi'),
+    },
   ]
 }
 

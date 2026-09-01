@@ -11,6 +11,13 @@
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 23752
+    "unguardedReadme": 25034
+  },
+  "raised": {
+    "unguardedReadme": {
+      "from": 23752,
+      "to": 25034,
+      "reason": "the consciousness criterion section: 1282 bytes documenting a predicate that did not exist, whose two load-bearing figures (five conditions, one met) are checked by readme:facts and cannot overstate the result"
+    }
   }
 }

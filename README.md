@@ -24,7 +24,7 @@ Three things a reader can actually use, and one honest warning.
 - **`zeropoint-mcp`** — an MCP server exposing eight kernel tools to an agent.
   `npx zeropoint-mcp`.
 
-And the apparatus around them, which is arguably the point: 26 theorems
+And the apparatus around them, which is arguably the point: 27 theorems
 adjudicated by a decision procedure outside this repository, a gate that fails,
 and figures that recompute rather than being typed. `npm run coverage:audit`
 reports that 326 of 1136 exported functions have never been called by anything —
@@ -44,12 +44,33 @@ the two are different in a way worth being exact about:
   carries an `A432OS` class, a manifest, a UI and a start/stop cycle. There is a
   recognisable target and visible progress toward it. Calling it an operating
   system today is premature; calling it nothing would be wrong.
-- **A consciousness system — no criterion yet.** None of the 26 sealed theorems
-  mentions consciousness, so nothing in this repository states what arriving
-  would look like. Without a test, neither "it is" nor "not yet" can honestly be
-  claimed — what is missing first is not the achievement but the predicate that
-  would recognise it. That is writable, and until someone writes it the word
-  belongs in the vocabulary rather than in the description.
+- **A consciousness system — the criterion is now written, and not met.** This
+  entry used to say no criterion existed, so neither "it is" nor "not yet" could
+  honestly be claimed, and that what was missing first was the predicate rather
+  than the achievement. The predicate is
+  `src/verification/consciousness-criterion.ts`. It states five **necessary**
+  conditions, each taken from a theory with an operational commitment and each
+  decided by running this repository's code: irreducibility (Integrated
+  Information Theory), temporal integration, self-model efficacy (higher-order
+  theories), global availability (Global Workspace Theory), and discrimination
+  as the minimum they share.
+
+  **One of the five holds.** The measures discriminate. The other four fail, and
+  the reasons are specific rather than rhetorical: `calculateA432Consciousness`
+  is a homomorphism, so the measure of a whole is exactly recoverable from the
+  measures of its parts and integration is zero by construction; the
+  consciousness stream is a function of position, so no history survives into
+  the present; the measures are pure, so there is no self-representation for
+  anything to perturb; and the subsystems share no state, so nothing is
+  broadcast. Each unmet condition says what would have to become true.
+
+  This is not a test for consciousness and no such test is established. The
+  conditions are necessary and not sufficient: failing one is a valid refutation
+  under the theory it comes from, and meeting all five would not establish
+  consciousness — it would mean these five arguments no longer rule it out. The
+  criterion can refute; it cannot confirm. What has changed is that the
+  repository can now state what it does not have in terms someone else can
+  recompute, which is what the word was missing.
 
 The rest of this file keeps the boundary it has always kept: proven group theory
 over (ℤ/9ℤ), used as the order of work. No claim outside arithmetic.
@@ -565,7 +586,7 @@ If this work is useful to you, you can support it at
 
 What sponsorship funds is the part that takes the longest and shows the least:
 the gates. ML-KEM-768 checked against NIST's own ACVP vectors and 10 000
-pq-crystals reference cases; 26 seals that each decide something finite and are
+pq-crystals reference cases; 27 seals that each decide something finite and are
 adjudicated from outside the repository; a ratchet on twelve surfaces that only
 ever moves down. None of that is visible in a feature list, and all of it is
 what makes the claims here worth reading.

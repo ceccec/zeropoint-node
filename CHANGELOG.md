@@ -1,5 +1,41 @@
 # Changelog
 
+## 1.3.8
+
+A patch: no code change, 0 exports either way. Two records that were true but
+unverifiable, made checkable — and two bugs found by making them so.
+
+**The README's figures are generated now, not merely checked.** uuidna.com
+states the standard plainly: "all numbers read from the sealed ledger at build
+time — the page cannot say more than the ledger proves." This repository was one
+step short: `readme:facts` checked seven figures and failed on drift, which
+catches the problem after it exists and only when someone runs the check.
+`npm run readme` now writes the figures from what the code computes, so the
+number in the sentence *is* the number the code returned. The check remains, so
+a hand-edited README still fails rather than being quietly corrected.
+
+Writing that found two defects, the second worse than the first. `--fix`
+replaced the stated number by searching the matched text, and in
+"**`A432OS` meets 3 of the 7**" the first "3" is the one inside `A432OS` — it
+wrote `A472OS` into the README. Then the checker reported **ok** on the
+corrupted file, because its pattern no longer matched anything, an unmatched
+figure printed "not stated in the README", and the run passed having checked
+nothing. Absence is a failure now: deleting a figure's sentence fails by name.
+That hole predated `--fix` and would have hidden any figure whose sentence was
+reworded.
+
+**Authorship is checked against the commit record.** The history carried three
+author identities — a spelling variant and an editor's "Cursor Agent" signature
+— all the same person. `.mailmap` maps them, rewriting nothing: every commit
+hash, signature and tag is untouched. `rights:check` now reads the authors out
+of the history and fails if there is more than one after `.mailmap`, or if the
+sole author is not the holder the copyright notice names. Outside a git checkout
+it says it cannot check rather than reporting a verdict it did not reach.
+
+And CI was passing that check for the wrong reason: `ci.yml` used a default
+shallow checkout with no tags, so `rights-check` saw one commit, `version-seal`
+had no tags to compare against, and `changelog-facts` had no log. Five things in
+`npm run check` read git. It fetches full history and tags now.
 ## 1.3.7
 
 A patch: no code change, 0 exports added or removed. The licence record.

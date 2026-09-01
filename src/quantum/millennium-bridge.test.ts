@@ -14,6 +14,8 @@ import {
   layer7_poincareSelfHealing,
   recognizeMillenniumBridge,
   emitNextWaves,
+  millenniumProblems,
+  openMillenniumProblems,
 } from './millennium-bridge.ts'
 
 function testRiemannLayer(): void {
@@ -265,16 +267,45 @@ runTests()
   }
   console.log('  ✓ the bridge carries its scope on the object, not only in a comment')
 
-  if (!bridge.scope.includes('Perelman')) {
-    console.error('  ✗ the scope must name the one problem that IS settled, and by whom')
-    process.exit(1)
-  }
-  console.log('  ✓ the scope names Poincaré as settled by Perelman, independently of this repository')
+  // The scope is COMPUTED, so what is checked is the computation rather than a
+  // sentence. A count typed into prose is a claim nothing recomputes; these
+  // assertions fail if the layers and the sentence ever disagree.
+  const problems = millenniumProblems()
+  const open = openMillenniumProblems()
 
-  const openCount = bridge.layers.filter((l) => !String(l.status).includes('SOLVED')).length
-  if (openCount !== 6) {
-    console.error(`  ✗ six of the seven problems are open; the layers report ${openCount}`)
+  if (problems.length !== bridge.layers.length) {
+    console.error(`  ✗ ${problems.length} problems named but ${bridge.layers.length} layers`)
     process.exit(1)
   }
-  console.log('  ✓ six of the seven are open, and the layers say so')
+  console.log(`  ✓ one problem named per layer (${problems.length})`)
+
+  if (new Set(problems).size !== problems.length) {
+    console.error('  ✗ two layers name the same problem')
+    process.exit(1)
+  }
+  console.log('  ✓ no problem is named twice')
+
+  if (!bridge.scope.includes(`${open.length} are open`)) {
+    console.error(`  ✗ the scope does not state the computed open count of ${open.length}`)
+    process.exit(1)
+  }
+  console.log(`  ✓ the scope states the count it computes (${open.length} of ${problems.length} open)`)
+
+  const missing = open.filter((p) => !bridge.scope.includes(p))
+  if (missing.length > 0) {
+    console.error(`  ✗ the scope omits open problems it should name: ${missing.join(', ')}`)
+    process.exit(1)
+  }
+  console.log('  ✓ every open problem is named in the scope, not summarised away')
+
+  const settled = problems.filter((p) => !open.includes(p))
+  if (settled.length !== 1 || !settled[0].includes('Poincaré')) {
+    console.error(`  ✗ exactly one of these is settled and it is Poincaré; got ${settled.join(', ')}`)
+    process.exit(1)
+  }
+  if (!bridge.scope.includes('Perelman')) {
+    console.error('  ✗ the settled one must be attributed')
+    process.exit(1)
+  }
+  console.log('  ✓ the one settled problem is named, attributed, and marked independent of this repository')
 }

@@ -14,7 +14,7 @@ title: ZeroPoint Quantum Module — Technical Specification
 
 A faithful, minimal quantum-circuit simulator built on complex-amplitude statevectors and unitary gates. Every algorithm is verified by externally-recomputable quantum-mechanical facts — not self-assertions. This specification defines the data model, interfaces, verification contract, and 90 self-checks that comprise the standard.
 
-**Honest scope:** this is a correct, pure-state + mixed-state simulator for small quantum systems (exponential in qubit count). Not a framework for noise architecture, hardware backends, or variational optimization loops (those are layers above).
+This is a correct, pure-state + mixed-state simulator for small quantum systems (exponential in qubit count). Not a framework for noise architecture, hardware backends, or variational optimization loops (those are layers above).
 
 ---
 

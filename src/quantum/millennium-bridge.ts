@@ -1,14 +1,15 @@
 /**
  * Millennium Bridge: 7 quantum layers NAMED AFTER 7 Millennium Prize Problems.
  *
- * HONEST SCOPE. This file is a naming scheme. It solves none of the seven, it
- * verifies none of the seven, and nothing in it is evidence about any of them.
+ * This file is a naming scheme. It solves none of the problems it names, it
+ * verifies none of them, and nothing in it is evidence about any of them.
  * Six of the seven are open problems; the seventh, Poincaré, was settled by
  * Perelman in 2002-03 and this file did not contribute to that either. A layer
  * whose `status` reads COMPLETE means the LAYER is implemented, never that the
  * problem it borrows its name from is settled.
  *
- * The header previously read: "Each gap in the quantum system maps to a
+ * A paragraph that has to announce itself as honest implies the rest is not,
+ * so this one does not. The header previously read: "Each gap in the quantum system maps to a
  * Millennium Problem. Solving the problem solves the gap. When the mapping is
  * recognized, solutions emit themselves. The 7 problems are not separate — they
  * are the 7 dimensions of quantum correctness." That is not a scope note, it is
@@ -326,17 +327,69 @@ export interface MillenniumBridge {
   readonly realization: string
 }
 
+/**
+ * Which of the seven are settled, and by whom. The ONLY hand-written fact in
+ * the scope, and it is a fact about mathematics rather than about this
+ * repository: Perelman proved the Poincaré conjecture by Ricci flow with
+ * surgery, in preprints of 2002-03. Everything else below is derived.
+ *
+ * A layer's `status` is about the LAYER — whether it is implemented — so it
+ * cannot answer whether the problem is open. That is why this table exists
+ * rather than being read off the statuses.
+ */
+const SETTLED_BY: Readonly<Record<string, string>> = {
+  'Poincaré Conjecture': 'Perelman, 2002-03, by Ricci flow with surgery',
+}
+
+/** Every problem the layers name, in layer order. */
+export function millenniumProblems(): readonly string[] {
+  return recognizeMillenniumLayers().map((l) => l.problem)
+}
+
+/** The ones with no entry above: open, counted rather than asserted. */
+export function openMillenniumProblems(): readonly string[] {
+  return millenniumProblems().filter((problem) => !(problem in SETTLED_BY))
+}
+
+/**
+ * The scope, computed.
+ *
+ * It used to be a paragraph asserting "six of the seven are open", which is a
+ * claim nothing recomputed — the same failure as a README stating a count. Add
+ * a layer and the paragraph would have been wrong and silent about it. The
+ * count, the names and the settled attribution are all derived from the layers
+ * now, so the sentence cannot drift from the thing it describes.
+ */
+export function millenniumScope(): string {
+  const problems = millenniumProblems()
+  const open = openMillenniumProblems()
+  const settled = problems.filter((p) => p in SETTLED_BY)
+  const settledText = settled
+    .map((p) => `${p} was settled by ${SETTLED_BY[p]}, independently of this repository`)
+    .join('; ')
+  return (
+    `This file solves none of the ${problems.length} Millennium Problems, verifies none of them, `
+    + `and is not evidence about any of them. ${open.length} are open: ${open.join(', ')}. `
+    + `${settledText}. A layer status describes the layer, never the problem.`
+  )
+}
+
+/** The layers, in order. Split out so the scope can count them. */
+export function recognizeMillenniumLayers(): MillenniumBridge['layers'] {
+  return [
+    layer1_riemannSimulator(),
+    layer2_pvsNPAlgorithms(),
+    layer3_navierStokesHybrid(),
+    layer4_yangMillsEC(),
+    layer5_hodgeVerification(),
+    layer6_bsdComposability(),
+    layer7_poincareSelfHealing(),
+  ]
+}
+
 export function recognizeMillenniumBridge(): MillenniumBridge {
   return {
-    layers: [
-      layer1_riemannSimulator(),
-      layer2_pvsNPAlgorithms(),
-      layer3_navierStokesHybrid(),
-      layer4_yangMillsEC(),
-      layer5_hodgeVerification(),
-      layer6_bsdComposability(),
-      layer7_poincareSelfHealing(),
-    ],
+    layers: recognizeMillenniumLayers(),
     // What this string used to say, kept here rather than inside the value: it
     // claimed the gaps "were never real gaps, they were recognition gaps" and
     // that "the mathematics of the Millennium Problems IS the solution
@@ -365,10 +418,7 @@ Layer 7 (Poincaré)      settled by Perelman in 2002-03, by Ricci flow with
 
 Recognising an analogy does not close a problem.
     `,
-    scope:
-      'This file solves none of the seven Millennium Problems, verifies none of them, and is not '
-      + 'evidence about any of them. Six are open; Poincaré was settled by Perelman in 2002-03, '
-      + 'independently of this repository. A layer status of COMPLETE describes the layer, never the problem.',
+    scope: millenniumScope(),
   }
 }
 

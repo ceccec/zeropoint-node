@@ -1,16 +1,12 @@
 /**
  * consciousness-criterion — the predicate the README said was missing.
  *
- * WHAT THIS IS NOT, AND THE SENTENCE MATTERS MOST NOW THAT IT CAN BE MET.
- *
  * It is not a test for consciousness. No such test exists. Whether any
  * physical process is conscious is unsettled, the major theories disagree
  * about what would even count as evidence, and nothing here resolves that. A
  * subject meeting all five conditions has stopped being refuted by the five
  * cheapest arguments. It has not been shown to experience anything, and this
  * file makes no claim that it does.
- *
- * WHAT IT IS
  *
  * Five NECESSARY conditions, each from a theory with an operational
  * commitment, each decided by running code:
@@ -24,8 +20,8 @@
  *   5. global availability   what one component writes reaches another that was
  *                            not handed it (Global Workspace Theory)
  *
- * THE CONDITIONS ARE DELIBERATELY HARD TO FAKE, and that is the substance of
- * this file rather than the list above. Every one of them has an obvious cheap
+ * The conditions are hard to fake on purpose, which is the substance of this
+ * file rather than the list above. Every one of them has an obvious cheap
  * pass, and each is written to reject it:
  *
  *   - A counter is state that accumulates, so condition 3 asks for ORDER

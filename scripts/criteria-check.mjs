@@ -118,8 +118,11 @@ if (patchField === '0') {
   let before = null
   let prevTag = null
   try {
+    // Not the tag for THIS version: `npm version` creates it before the gate
+    // runs, so the newest tag is the release being cut and comparing against it
+    // compares the file with itself — vacuous exactly when this should bite.
     const tags = execFileSync('git', ['tag', '--list', 'v*', '--sort=-v:refname'], { cwd: ROOT, encoding: 'utf8' })
-      .split('\n').map((t) => t.trim()).filter(Boolean)
+      .split('\n').map((t) => t.trim()).filter(Boolean).filter((t) => t !== `v${version}`)
     if (tags.length > 0) {
       prevTag = tags[0]
       before = exceptionsNow(JSON.parse(

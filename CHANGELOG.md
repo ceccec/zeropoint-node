@@ -1,5 +1,77 @@
 # Changelog
 
+## 1.4.0
+
+The carry. Patch 9 was the last patch, so this is the equilibrium point and not
+a feature release: patch-first still decides what a change is worth, and this
+decides only that the field ran out of room to say it.
+
+**The patch field is one digit because the digit space is the vortex.** Nothing
+checked that, so 1.3.10 would have published — it is valid semver, and
+`toAddress` pads patch to four digits and accepts up to 9999, so the address
+model had no objection either; `version-address`'s own self-test uses 1.0.11 and
+1.0.12. I first argued the constraint from a collision in `sameNetwork` and was
+wrong: it takes fixed-width addresses, so there is no ambiguity there. The width
+is a project decision and only a check can hold it.
+
+The set is not a decision. The doubling orbit `{1,2,4,8,7,5}` and the axis
+`{3,6,9}` are disjoint and together cover 1..9 exactly; with the void 0 they are
+ten values and no others. That is why one digit is the right width — the digit
+space and the vortex are the same set, and a two-digit patch is not a position
+in it. The allowed digits are read from the kernel rather than written as 0..9,
+so corrupting `VORTEX_AXIS` until the orbit and axis overlap fails the check
+with its own reason instead of silently accepting a number that is no longer a
+node. `version:check` says which set the digit is in: 1.3.9 was on the axis.
+
+**A `*.*.0` may not be the release that granted itself an exception.** A passing
+ratchet already means every one of the twelve surfaces sits exactly at its
+ceiling — it fails on unrecorded shrink as well as on growth, so slack cannot
+survive a green run, and that part needed no new rule. What a green run does
+allow is raising a ceiling or declaring a measure changed. Both are legitimate,
+both are recorded in `ratchet.json`, and neither may happen in a `.0`: grant the
+exception in a patch, then carry. Checked against the previous tag, so it reads
+what this release changed rather than what the file has accumulated.
+
+**The ruler may not change without saying so.** `ratchet.json` recorded
+deliberate raises with reasons and nothing recorded a change to the MEASURE —
+edit how a surface is counted, run `npm run ratchet`, and the ceiling
+re-baselines against a different ruler while the shrink-only guarantee still
+reads as intact. This is a failure I nearly committed rather than one I read
+about: the ratchet refused a README edit because the corrections ran 3135 bytes
+longer than the errors they replaced, and the first fix I reached for was
+widening what counts as guarded prose so the new lines would be credited. Each
+measure is now fingerprinted from its syntax tree printed without comments, so
+rewording the explanation above a measure is free and changing what it counts is
+not — the control mutation, which must NOT fail, is a comment reword.
+
+**A retracted claim is a machine-readable statement, so it is checked.** The
+README's opening records that its heading "previously read" a sentence its own
+next paragraph refutes — the sentence is quoted there and is not restated here,
+because writing about a withdrawn claim is how it comes back. The correction was
+made to the heading; the sentence was still in the file three
+more times, including the footer, which is the last line a reader sees. This
+repository writes retractions deliberately — nine across five files — so each
+one says a specific sentence is no longer claimed, and `retracted:check` fails
+when the withdrawn claim is still asserted in the same file. It found one I had
+not: `millennium-bridge.ts` retracts a paragraph for asserting a count and then
+states it twice more, once inside a string a consumer receives. That string
+interpolates the computed count now.
+
+**The Contributing section was wrong about the licence.** It invited
+contributions from four kinds of researcher and pointed at guidelines that did
+not exist, under CC BY-NC-ND, where a patch is a derivative work — so offering
+one and merging it both need written permission first. `rights:check` fails when
+the section invites contributions a NoDerivatives licence forbids without saying
+permission is needed. Planned Features was five lines with no status and wrong
+in both directions: quantum machine learning is built, and four others name an
+arithmetic part that exists and a presentation part that does not.
+
+`readme:names` matched only bold-backtick paths and identifiers written with
+parentheses or in SCREAMING_CASE, so a section could name six files and eleven
+functions and pass having checked none of them — I wrote exactly that section
+and it passed. 20 files and 7 identifiers before, 34 and 24 now.
+
+Unbounded effect claims in prose: 55 down to 50.
 ## 1.3.9
 
 A patch: 17 functions that returned a number which was not one, and four

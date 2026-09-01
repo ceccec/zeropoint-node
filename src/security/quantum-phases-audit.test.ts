@@ -31,11 +31,9 @@
  * so — which is the point of writing the decision down in code.
  */
 import { QuantumFoldCipher } from './quantum-fold-cipher.ts'
+import { createCheck } from '../verification/harness.ts'
 
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 /** The documented signTransaction recipe, verbatim. */
 function documentedSignRecipe(tx: unknown, genesis: string): string {
@@ -99,6 +97,6 @@ function documentedSignRecipe(tx: unknown, genesis: string): string {
 }
 
 console.log()
-if (failures > 0) { console.error(`quantum-phases-audit FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`quantum-phases-audit FAIL — ${failures()}`); process.exit(1) }
 console.log('quantum-phases-audit ok — the four remain unimplemented for the reasons above')
 process.exit(0)

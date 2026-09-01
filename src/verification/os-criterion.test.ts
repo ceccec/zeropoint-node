@@ -9,11 +9,9 @@
 import { evaluateOsCriterion, unmetOsConditions } from './os-criterion.ts'
 import { A432OS } from '../0/3/6/9/1/2/4/8/7/5/1/a432.os.ts'
 import { kernelAsCandidate, A432Kernel } from '../0/3/6/9/1/2/4/8/7/5/1/a432.os.kernel.ts'
+import { createCheck } from './harness.ts'
 
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 const asCandidate = (os: A432OS) => ({
   spawn: (name: string, run: () => void) => os.spawn(name, run),
@@ -86,6 +84,6 @@ check('the criterion is deterministic for a fresh candidate',
   === JSON.stringify(evaluateOsCriterion(kernelAsCandidate()).conditionsMet))
 
 console.log()
-if (failures > 0) { console.error(`os-criterion FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`os-criterion FAIL — ${failures()}`); process.exit(1) }
 console.log('os-criterion ok — A432OS 7/7 through the kernel, and a lifecycle-only candidate still 1/7')
 process.exit(0)

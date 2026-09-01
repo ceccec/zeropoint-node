@@ -1,12 +1,10 @@
 import * as C from './science-challenges.ts'
 import { digitalRoot, VORTEX_ORBIT } from '../0/index.ts'
 import { A432_CONSTANTS } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
+import { createCheck } from '../verification/harness.ts'
 
 const A432 = A432_CONSTANTS.BASE_FREQUENCY
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 {
   let cycleOk = true, harmonicOk = true
@@ -87,6 +85,6 @@ const check = (label: string, ok: boolean, detail = '') => {
 }
 
 console.log()
-if (failures > 0) { console.error(`science-challenges FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`science-challenges FAIL — ${failures()}`); process.exit(1) }
 console.log('science-challenges ok')
 process.exit(0)

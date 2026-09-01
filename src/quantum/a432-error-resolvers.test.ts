@@ -4,11 +4,9 @@
  */
 import * as R from './a432-error-resolvers.ts'
 import { calculateA432Color, getVortexColor, getTrinityCompositeCMYK, hslToCmyk } from '../0/3/6/9/1/2/4/8/7/5/1/a432.color.ts'
+import { createCheck } from '../verification/harness.ts'
 
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 const isCmyk = (v: unknown): boolean =>
   !!v && (['c', 'm', 'y', 'k'] as const).every((k) => {
     const n = (v as Record<string, unknown>)[k]
@@ -74,6 +72,6 @@ const isCmyk = (v: unknown): boolean =>
 }
 
 console.log()
-if (failures > 0) { console.error(`a432-error-resolvers FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`a432-error-resolvers FAIL — ${failures()}`); process.exit(1) }
 console.log('a432-error-resolvers ok')
 process.exit(0)

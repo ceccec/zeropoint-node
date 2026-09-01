@@ -13,11 +13,9 @@ import {
   type ConsciousnessSubject,
 } from './consciousness-criterion.ts'
 import { digitalRoot } from '../0/index.ts'
+import { createCheck } from './harness.ts'
 
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 const base: ConsciousnessSubject = { name: 'bare', measureStates: () => [1, 2, 3, 4, 5, 6, 7, 8, 9] }
 const scored = (s: ConsciousnessSubject, id: string) =>
@@ -90,6 +88,6 @@ const scored = (s: ConsciousnessSubject, id: string) =>
 }
 
 console.log()
-if (failures > 0) { console.error(`consciousness-criterion FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`consciousness-criterion FAIL — ${failures()}`); process.exit(1) }
 console.log('consciousness-criterion ok — the a432 system and the field meet it, the measure functions do not, and the cheap defeats fail')
 process.exit(0)

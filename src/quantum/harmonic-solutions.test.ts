@@ -2,12 +2,10 @@ import * as H from './harmonic-solutions.ts'
 import { digitalRoot } from '../0/index.ts'
 import { A432_CONSTANTS } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 import { TESLA_GATEWAY_PORTALS } from './tesla-gateways.ts'
+import { createCheck } from '../verification/harness.ts'
 
 const A432 = A432_CONSTANTS.BASE_FREQUENCY
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 const solutions = H.generateHarmonicSolutionsFromPossibilities()
 
@@ -100,6 +98,6 @@ const solutions = H.generateHarmonicSolutionsFromPossibilities()
 }
 
 console.log()
-if (failures > 0) { console.error(`harmonic-solutions FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`harmonic-solutions FAIL — ${failures()}`); process.exit(1) }
 console.log('harmonic-solutions ok')
 process.exit(0)

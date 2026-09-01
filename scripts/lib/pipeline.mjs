@@ -11,6 +11,16 @@
  * instead. `check` is expanded through its `npm run` references and the file
  * arguments of every `node` invocation are collected.
  *
+ * DO NOT FOLD THE test:* SCRIPTS INTO ONE RUNNER. There are 26 of them and the
+ * `check` chain is 75 steps, so collapsing them into `npm run test:suites`
+ * looks like obvious tidying. Measured: it takes this derivation from 31 suites
+ * to 0, because the paths would move inside a runner script where the expansion
+ * cannot see them. That silently breaks two things at once — the ratchet's
+ * reachability roots, so 31 test files become "reachable from no entry", and
+ * coverage-audit's completeness guard, which has nothing left to compare its
+ * EXERCISERS against. The scripts are not duplication; they are the
+ * declaration this file reads.
+ *
  * This does NOT claim to be everything that runs: a script may import or spawn
  * further modules of its own (the ratchet runs the framework suite internally,
  * the a432 property suite reaches its modules by directory walk). It is the

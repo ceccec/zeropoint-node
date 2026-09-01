@@ -5,11 +5,9 @@
  */
 import * as F from './integrated-field.ts'
 import { digitalRoot } from '../0/index.ts'
+import { createCheck } from '../verification/harness.ts'
 
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 // Coupling: the whole point. a's next value must depend on b.
 {
@@ -91,6 +89,6 @@ const check = (label: string, ok: boolean, detail = '') => {
 }
 
 console.log()
-if (failures > 0) { console.error(`integrated-field FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`integrated-field FAIL — ${failures()}`); process.exit(1) }
 console.log('integrated-field ok')
 process.exit(0)

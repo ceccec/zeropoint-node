@@ -1,9 +1,7 @@
 import * as V from './a432-vortex-pi.ts'
+import { createCheck } from '../verification/harness.ts'
 
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 const finite = (n: number) => typeof n === 'number' && Number.isFinite(n)
 
 // The document's central claim: the decimal point of pi is a gateway, so a
@@ -95,6 +93,6 @@ const finite = (n: number) => typeof n === 'number' && Number.isFinite(n)
 }
 
 console.log()
-if (failures > 0) { console.error(`a432-vortex-pi FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`a432-vortex-pi FAIL — ${failures()}`); process.exit(1) }
 console.log('a432-vortex-pi ok')
 process.exit(0)

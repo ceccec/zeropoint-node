@@ -1,10 +1,8 @@
 import * as S from './reality-streams.ts'
 import { digitalRoot, VORTEX_ORBIT } from '../0/index.ts'
+import { createCheck } from '../verification/harness.ts'
 
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 // The one function the document actually implements.
 {
@@ -83,6 +81,6 @@ const check = (label: string, ok: boolean, detail = '') => {
 }
 
 console.log()
-if (failures > 0) { console.error(`reality-streams FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`reality-streams FAIL — ${failures()}`); process.exit(1) }
 console.log('reality-streams ok')
 process.exit(0)

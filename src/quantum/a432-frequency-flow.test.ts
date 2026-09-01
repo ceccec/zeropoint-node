@@ -9,12 +9,10 @@ import {
 } from './a432-frequency-flow.ts'
 import { digitalRoot } from '../0/index.ts'
 import { A432_CONSTANTS } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
+import { createCheck } from '../verification/harness.ts'
 
 const A432 = A432_CONSTANTS.BASE_FREQUENCY
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 // The document states the sequence; the repository stores the a432 layer at a
 // path made of the same digits. Asserting they are equal means neither can be
@@ -80,6 +78,6 @@ const check = (label: string, ok: boolean, detail = '') => {
 }
 
 console.log()
-if (failures > 0) { console.error(`a432-frequency-flow FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`a432-frequency-flow FAIL — ${failures()}`); process.exit(1) }
 console.log('a432-frequency-flow ok')
 process.exit(0)

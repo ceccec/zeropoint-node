@@ -1,9 +1,7 @@
 import { validateSingleDigits, validateMathCalculation, validateMathematicalPurity } from './zeropoint-validators.ts'
+import { createCheck } from '../verification/harness.ts'
 
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 check('0 through 9 are single digits', [0,1,2,3,4,5,6,7,8,9].every(validateSingleDigits))
 check('10 and above are not', [10, 11, 100, 1e9].every(d => !validateSingleDigits(d)))
@@ -23,6 +21,6 @@ check('the purity check is not a constant',
   'it must recompute something')
 
 console.log()
-if (failures > 0) { console.error(`zeropoint-validators FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`zeropoint-validators FAIL — ${failures()}`); process.exit(1) }
 console.log('zeropoint-validators ok')
 process.exit(0)

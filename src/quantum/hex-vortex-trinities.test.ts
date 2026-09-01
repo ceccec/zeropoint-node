@@ -12,12 +12,10 @@ import {
 } from './hex-vortex-trinities.ts'
 import { digitalRoot } from '../0/index.ts'
 import { A432_CONSTANTS } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
+import { createCheck } from '../verification/harness.ts'
 
 const A432 = A432_CONSTANTS.BASE_FREQUENCY
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 const hex = (n: number) => n.toString(16).padStart(2, '0').toUpperCase()
 const CHANNELS = [['R', 1], ['G', 2], ['B', 3]] as const
@@ -130,6 +128,6 @@ const CHANNELS = [['R', 1], ['G', 2], ['B', 3]] as const
 }
 
 console.log()
-if (failures > 0) { console.error(`hex-vortex-trinities FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`hex-vortex-trinities FAIL — ${failures()}`); process.exit(1) }
 console.log('hex-vortex-trinities ok')
 process.exit(0)

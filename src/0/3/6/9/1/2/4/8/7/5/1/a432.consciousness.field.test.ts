@@ -9,11 +9,9 @@
  */
 import * as F from './a432.consciousness.field.ts'
 import { calculateA432Consciousness, calculateA432DimensionalState } from './a432.math.ts'
+import { createCheck } from '../../../../../../../../../../../verification/harness.ts'
 
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 // Coupling through the measures.
 {
@@ -97,6 +95,6 @@ const check = (label: string, ok: boolean, detail = '') => {
 }
 
 console.log()
-if (failures > 0) { console.error(`a432.consciousness.field FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`a432.consciousness.field FAIL — ${failures()}`); process.exit(1) }
 console.log('a432.consciousness.field ok — the system has the properties, the measures are unchanged')
 process.exit(0)

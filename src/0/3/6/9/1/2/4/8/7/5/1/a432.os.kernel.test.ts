@@ -10,11 +10,9 @@
  */
 import { A432Kernel, RESOURCE_POOL, SCHEDULING_QUANTUM } from './a432.os.kernel.ts'
 import { max, min } from './a432.algebra.ts'
+import { createCheck } from '../../../../../../../../../../../verification/harness.ts'
 
-let failures = 0
-const check = (label: string, ok: boolean, detail = '') => {
-  if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
-}
+const { check, failures } = createCheck()
 
 // Scheduling: every runnable task must eventually be selected. A scheduler
 // that always picks the first task is a loop with extra steps.
@@ -125,6 +123,6 @@ const check = (label: string, ok: boolean, detail = '') => {
 }
 
 console.log()
-if (failures > 0) { console.error(`a432.os.kernel FAIL — ${failures}`); process.exit(1) }
+if (failures() > 0) { console.error(`a432.os.kernel FAIL — ${failures()}`); process.exit(1) }
 console.log('a432.os.kernel ok')
 process.exit(0)

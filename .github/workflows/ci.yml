@@ -24,7 +24,16 @@ jobs:
         # 22 is the floor for --experimental-strip-types.
         node-version: [22.x, 24.x]
     steps:
+      # Full history and tags. Five things in `npm run check` read git:
+      # version-seal compares against existing tags, changelog-facts reads the
+      # log, semver-diff needs the published surface, and rights-check verifies
+      # the copyright holder is the sole author of the history. A shallow clone
+      # leaves every one of them passing on one commit and no tags — green for
+      # the wrong reason, which is worse than red.
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v7

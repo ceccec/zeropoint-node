@@ -23,7 +23,8 @@
  *
  *   npm run rights:check
  */
-import { readFileSync } from 'node:fs'
+import { readFileSync, existsSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -74,6 +75,41 @@ if (!license.includes(String(pkg.license).replace(/-/g, ' ').replace('CC BY NC N
 if (!license.includes('ORCID')) problems.push('the attribution form names no ORCID, so the holder is not identifiable beyond a name')
 if (!license.includes('github.com/ceccec/zeropoint-node')) problems.push('the attribution form gives no source to cite')
 if (!/copyright:/.test(cff)) problems.push('CITATION.cff records no copyright line beside the licence it conditions')
+
+// The holder, checked against the commit record rather than taken on trust.
+//
+// The notice names one person. Whether that is true of the work is a question
+// about who wrote it, and git knows. Three author identities appear in the
+// history — a spelling variant and an editor's "Cursor Agent" signature — and
+// .mailmap resolves them to the one author they are, without rewriting a
+// single hash. This asserts what that resolution produces, so the copyright
+// line is computed against the record instead of being a string someone typed.
+//
+// Skipped rather than failed outside a git checkout: the published tarball
+// contains no history, and a check that cannot run must say so rather than
+// invent a verdict.
+if (!existsSync(join(ROOT, '.git'))) {
+  console.log('  note: no git checkout here, so authorship is not checked against the commit record')
+} else {
+  let authors = []
+  try {
+    authors = execFileSync('git', ['log', '--format=%aN'], { cwd: ROOT, encoding: 'utf8' })
+      .split('\n').map((x) => x.trim()).filter(Boolean)
+  } catch { authors = [] }
+  const distinct = [...new Set(authors)]
+  if (distinct.length === 0) {
+    console.log('  note: no commit history readable here; authorship not checked against it')
+  } else if (distinct.length > 1) {
+    problems.push(
+      `the history has ${distinct.length} distinct authors after .mailmap (${distinct.join(', ')}) `
+      + 'but the notice names one holder — map them in .mailmap, or the notice is not the whole story',
+    )
+  } else if (holder && distinct[0] !== holder) {
+    problems.push(`the sole author of ${authors.length} commits is "${distinct[0]}" but the notice names "${holder}"`)
+  } else {
+    console.log(`  ✓ sole author of ${authors.length} commits, after .mailmap, is the named holder`)
+  }
+}
 
 console.log(`rights:check — holder "${holder}" (${years}), licence ${pkg.license}, stated in 4 places`)
 if (problems.length > 0) {

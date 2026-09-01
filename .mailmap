@@ -1,0 +1,21 @@
+# Author identities, mapped to the one person behind them.
+#
+# The history carries three author identities: "Tsvetan Rouschev", a
+# "Tsvetan Roustchev" spelling variant, and "Cursor Agent" from an editor's
+# commit signature. All three are the same author, working under different
+# tool configurations. That is a fact about who wrote the work, and the
+# copyright notice in LICENSE names a single holder on the strength of it, so
+# it belongs in the repository rather than in someone's memory.
+#
+# .mailmap is the right instrument because it rewrites NOTHING. Every commit
+# hash, signature and timestamp is untouched; git and its tooling simply
+# resolve these identities to one when they report authorship. Rewriting the
+# history to tidy names would invalidate every hash, every signature and every
+# tag, to fix a display problem.
+#
+# "GitHub <noreply@github.com>" appears as a COMMITTER on web-UI merges and is
+# deliberately not mapped: it committed, it did not author, and claiming
+# otherwise would be the opposite of what this file is for.
+Tsvetan Rouschev <675674+ceccec@users.noreply.github.com> <cursoragent@cursor.com>
+Tsvetan Rouschev <675674+ceccec@users.noreply.github.com> Cursor Agent <cursoragent@cursor.com>
+Tsvetan Rouschev <675674+ceccec@users.noreply.github.com> Tsvetan Roustchev <675674+ceccec@users.noreply.github.com>

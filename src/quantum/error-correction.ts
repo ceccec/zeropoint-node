@@ -44,6 +44,13 @@ function symplectic(x: readonly number[], z: readonly number[]): number[] {
 
 /** Symplectic product mod 2 — zero exactly when the two operators commute. */
 export function symplecticProduct(g: readonly number[], h: readonly number[]): 0 | 1 {
+  // Unequal or odd lengths indexed past the end of h, and undefined * number
+  // is NaN — returned as though it were the declared 0 | 1.
+  if (g.length !== h.length || g.length % 2 !== 0) {
+    throw new RangeError(
+      `symplecticProduct: operands must have equal even length, got ${g.length} and ${h.length}`
+    )
+  }
   const n = g.length / 2
   let acc = 0
   for (let i = 0; i < n; i++) acc += g[i]! * h[n + i]! + g[n + i]! * h[i]!

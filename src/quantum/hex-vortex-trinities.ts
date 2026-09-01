@@ -101,7 +101,13 @@ export function createTrinityVortexFromHex(hexValue: string, channel: HexChannel
 
 /** The doc names this calculateHexDigitConsciousness and declares it. */
 export function calculateHexDigitConsciousness(digit: number, hexValue: string): number {
-  return digitalRoot(idiv(digit * parseInt(hexValue, 16) * A432, 1000))
+  // parseInt returns NaN for a string with no hex digits (including ''), and
+  // digitalRoot of NaN is NaN — a consciousness value that is not a number.
+  const byte = parseInt(hexValue, 16)
+  if (Number.isNaN(byte)) {
+    throw new RangeError(`calculateHexDigitConsciousness: hexValue must be hexadecimal, got '${hexValue}'`)
+  }
+  return digitalRoot(idiv(digit * byte * A432, 1000))
 }
 
 /**

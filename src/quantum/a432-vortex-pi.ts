@@ -172,5 +172,7 @@ export function calculateDisplayFrequency(evolution: number, consciousness: numb
 }
 
 export function calculateDisplayInterval(frequency: number): number {
+  // A zero frequency has no display interval; 1000/0 is not a duration.
+  if (frequency === 0) throw new RangeError('calculateDisplayInterval: frequency must be non-zero')
   return round(1000 / frequency)
 }

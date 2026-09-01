@@ -131,6 +131,8 @@ export const CMYK_COLORS = {
 
 // Vortex frequency logic
 export function vortexFrequency(base: number, multiplier: number, divisor: number): number {
+  // A zero divisor is outside the domain, not a frequency of Infinity.
+  if (divisor === 0) throw new RangeError('vortexFrequency: divisor must be non-zero');
   return base * multiplier / divisor;
 }
 

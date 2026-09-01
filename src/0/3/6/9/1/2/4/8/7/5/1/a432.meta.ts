@@ -152,6 +152,10 @@ export function a432RecursiveMetaVortex(
  * Returns { harmony: number, entropy: number, resonance: number }
  */
 export function a432HarmonicAnalytics(stream: number[]): { harmony: number, entropy: number, resonance: number } {
+  // An empty stream has no most-common digit, no distribution and no run.
+  // Each statistic below divides by stream.length, so 0 digits gave
+  // max(...[]) = -Infinity and 0/0 = NaN rather than an empty aggregate.
+  if (stream.length === 0) return { harmony: 0, entropy: 0, resonance: 0 };
   // Harmony: fraction of most common digit
   const counts: { [k: number]: number } = {};
   stream.forEach(d => { counts[d] = (counts[d] || 0) + 1; });

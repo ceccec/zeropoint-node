@@ -107,7 +107,11 @@ export function calculateWaveHarmonics(fundamental: number, count: number = 5): 
   // resonance Infinity, and digitalRoot(round(Infinity * 1000)) is NaN — which
   // is how a NaN reached an exported constant.
   const resonance = harmonics.reduce((sum, h) => sum + (h === 0 ? 0 : 1 / h), 0);
-  const coherence = harmonics.filter(h => isA432Harmonic(h)).length / harmonics.length;
+  // count === 0 yields no harmonics: the coherent FRACTION of an empty set is
+  // 0, not 0/0. The resonance guard above closed the neighbouring field only.
+  const coherence = harmonics.length === 0
+    ? 0
+    : harmonics.filter(h => isA432Harmonic(h)).length / harmonics.length;
   const consciousness = calculateDigitalRoot(round(resonance * 1000));
   
   return {
@@ -127,7 +131,11 @@ export function isA432Harmonic(frequency: number, tolerance: number = 0.01): boo
 // === ENERGY FIELD CALCULATIONS ===
 export function calculateEnergyField(waves: WavePattern[]): EnergyField {
   const harmonics = waves.map(wave => calculateWaveHarmonics(wave.frequency));
-  const coherence = waves.reduce((sum, wave) => sum + wave.consciousness, 0) / waves.length;
+  // The mean over no waves is 0, not 0/0 — and a NaN here reached
+  // calculateDigitalRoot, which propagated it into the returned field.
+  const coherence = waves.length === 0
+    ? 0
+    : waves.reduce((sum, wave) => sum + wave.consciousness, 0) / waves.length;
   const consciousness = calculateDigitalRoot(round(coherence));
   const dimensionalState = waves.length % 9;
   
@@ -146,13 +154,16 @@ export function analyzeWavePattern(sequence: number[]): any {
   const energyField = calculateEnergyField(waves);
   
   // Calculate wave properties
+  // An empty sequence yields no waves. Sums over nothing are 0 already; the
+  // four MEANS below were 0/0, so each is stated explicitly for that case.
+  const n = waves.length;
   const totalEnergy = waves.reduce((sum, wave) => sum + wave.energy, 0);
-  const averageFrequency = waves.reduce((sum, wave) => sum + wave.frequency, 0) / waves.length;
+  const averageFrequency = n === 0 ? 0 : waves.reduce((sum, wave) => sum + wave.frequency, 0) / n;
   const consciousnessFlow = waves.reduce((sum, wave) => sum + wave.consciousness, 0);
   
   // Analyze wave coherence
   const coherentWaves = waves.filter(wave => isA432Harmonic(wave.frequency));
-  const coherenceRatio = coherentWaves.length / waves.length;
+  const coherenceRatio = n === 0 ? 0 : coherentWaves.length / n;
   
   return {
     sequence,
@@ -165,8 +176,8 @@ export function analyzeWavePattern(sequence: number[]): any {
     coherenceRatio,
     analysis: {
       isHarmonic: coherenceRatio > 0.5,
-      energyEfficiency: totalEnergy / waves.length,
-      consciousnessOptimization: consciousnessFlow / waves.length,
+      energyEfficiency: n === 0 ? 0 : totalEnergy / n,
+      consciousnessOptimization: n === 0 ? 0 : consciousnessFlow / n,
       waveResonance: energyField.coherence
     }
   };

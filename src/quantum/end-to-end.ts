@@ -69,7 +69,14 @@ export function benchmarkHybridSolver(
   const hint = cert.valid ? kernelHintFromQuantum(quantum_x, 30, dimension, seed + 2000) : null
   const classical_result = classicalKernelOptimize(objective, dimension, hint, 30, seed + 3000)
 
-  const hybrid_improvement = (quantum_value + classical_value) / (2 * classical_result.final_value)
+  // A classical run that reaches the exact optimum has final_value 0, and
+  // dividing by it made hybrid_improvement Infinity — which then satisfied
+  // `hybrid_improvement > 1` below, so the BETTER the classical baseline, the
+  // more improvement the hybrid claimed. With no classical value to improve
+  // on, the ratio is undefined and the honest improvement factor is 1 (none).
+  const hybrid_improvement = classical_result.final_value === 0
+    ? 1
+    : (quantum_value + classical_value) / (2 * classical_result.final_value)
 
   return {
     problem: problem_name,

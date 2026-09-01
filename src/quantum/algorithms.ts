@@ -440,6 +440,11 @@ function controlledModMult(reg: Register, control: number, mult: number, N: numb
  * arithmetic — reduced to the small statevector a simulator can hold (e.g. 15).
  */
 export function shor(N: number, a: number): [number, number] | null {
+  // N < 2 has no factorisation to find, and N === 0 made the lucky-factor
+  // branch return [0, 0/0] — a NaN inside a [number, number].
+  if (!Number.isInteger(N) || N < 2) {
+    throw new RangeError(`shor: N must be an integer of at least 2, got ${N}`)
+  }
   const g = gcdInt(a, N)
   if (g !== 1) return [g, N / g] // lucky common factor
   const m = bitsFor(N)

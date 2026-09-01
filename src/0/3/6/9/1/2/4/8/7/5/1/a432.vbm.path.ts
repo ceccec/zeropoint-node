@@ -209,11 +209,17 @@ export class VBMPathNavigator {
     return this.nodes.filter(node => RODIN_SEQUENCE.includes(node.digit));
   }
   
+  // A path with no moves — any string with no separator, e.g. "3" — leaves the
+  // navigator at depth 0 for its whole life, so 0 is the depth trajectory, not
+  // a fallback. It agrees with getCurrentDepth(), which already returns 0 here.
+  // Previously max(...[]) gave -Infinity and min(...[]) gave Infinity.
   public getMaxDepth(): number {
+    if (this.nodes.length === 0) return 0;
     return max(...this.nodes.map(node => node.depth));
   }
   
   public getMinDepth(): number {
+    if (this.nodes.length === 0) return 0;
     return min(...this.nodes.map(node => node.depth));
   }
   
@@ -233,7 +239,9 @@ export class VBMPathNavigator {
       maxDepth: this.getMaxDepth(),
       minDepth: this.getMinDepth(),
       currentDepth: this.getCurrentDepth(),
-      averageDepth: this.nodes.reduce((sum, node) => sum + node.depth, 0) / this.nodes.length
+      averageDepth: this.nodes.length === 0
+        ? 0
+        : this.nodes.reduce((sum, node) => sum + node.depth, 0) / this.nodes.length
     };
   }
   

@@ -61,6 +61,8 @@ export interface AlignmentResonance {
 
 // === CORE RESONANCE FUNCTIONS ===
 export function createFrequencyResonance(base: number = A432_FREQUENCY): FrequencyResonance {
+  // base is the divisor for the harmonic ratio; zero has no harmonic.
+  if (base === 0) throw new RangeError('createFrequencyResonance: base must be non-zero');
   const current = base;
   const harmonic = floor(current / base);
   const resonance = min(9, floor(current / 48));

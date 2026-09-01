@@ -238,7 +238,8 @@ export class A432Registry {
       }
     }
 
-    const cacheHitRate = this.options.cacheEnabled ? 
+    // An empty registry has served no lookups, so its hit rate is 0 — not 0/0.
+    const cacheHitRate = this.options.cacheEnabled && this.entries.size > 0 ?
       (this.cache.size / this.entries.size) * 100 : 0;
 
     return {

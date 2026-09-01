@@ -451,6 +451,8 @@ export const QuantumThreatAnalysis = {
 
 /** σ — reverse a position within its block. An involution. */
 export function invertPosition(i: number, block: number = RODIN_SEQUENCE_CLASSICAL.length): number {
+  // block is a stride, used as a divisor and a modulus; 0 gives NaN.
+  if (block < 1) throw new RangeError(`invertPosition: block must be at least 1, got ${block}`)
   return floor(i / block) * block + (block - 1 - (i % block))
 }
 

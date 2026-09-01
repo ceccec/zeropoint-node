@@ -78,6 +78,8 @@ export function calibrateReadout(
   shots: number,
   seed: number,
 ): { p01: number; p10: number; calibrationAccuracy: number } {
+  // Every rate below is a count over `shots`; zero shots estimate nothing.
+  if (shots < 1) throw new RangeError(`calibrateReadout: shots must be at least 1, got ${shots}`)
   // Simulate: prepare |0⟩ and measure
   const zero = zeroState(1)
   let zero_measured_as_1 = 0

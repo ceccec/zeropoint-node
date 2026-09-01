@@ -34,6 +34,8 @@ export interface SecurityAssessment {
 
 // Analyze RSA security profile
 export function assessRSA(keyLength: number): CryptoSchemeProfile {
+  // keyLength feeds log2; 0 gave -Infinity and a non-finite bit count.
+  if (keyLength < 1) throw new RangeError(`assessRSA: keyLength must be positive, got ${keyLength}`)
   // Classical: ~O(exp(keyLength^(1/3))) via GNFS
   // RSA-2048: ~2^112 classical operations (exponentially hard)
   const classicalSecurity = floor(keyLength / 18)
@@ -58,6 +60,8 @@ export function assessRSA(keyLength: number): CryptoSchemeProfile {
 
 // Analyze ECDLP (elliptic curve discrete log) security
 export function assessECDLP(curveSize: number): CryptoSchemeProfile {
+  // curveSize feeds log2; 0 gave -Infinity and a non-finite bit count.
+  if (curveSize < 1) throw new RangeError(`assessECDLP: curveSize must be positive, got ${curveSize}`)
   // Classical: O(sqrt(order)) via Pollard rho
   // P-256: ~2^128 classical operations (exponentially hard)
   const classicalSecurity = curveSize / 2

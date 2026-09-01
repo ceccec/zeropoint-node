@@ -85,6 +85,16 @@ export function calculateMobiusState(decimal: number): MobiusState {
 }
 
 export function calculateMobiusTransition(from: number, to: number): MobiusTransition {
+  // Only the six orbit digits are Mobius states. A non-state produced an
+  // undefined binary word typed as string, and from === 0 made the wave
+  // harmonic to/from Infinity.
+  for (const d of [from, to]) {
+    if (!(d in MOBIUS_BINARY_STATES)) {
+      throw new RangeError(
+        `calculateMobiusTransition: ${d} is not a Mobius state (expected one of 1,2,4,8,7,5)`
+      );
+    }
+  }
   const binaryFrom = MOBIUS_BINARY_STATES[from as keyof typeof MOBIUS_BINARY_STATES];
   const binaryTo = MOBIUS_BINARY_STATES[to as keyof typeof MOBIUS_BINARY_STATES];
   const transitionEnergy = abs(to - from) * A432_BASE_FREQUENCY;

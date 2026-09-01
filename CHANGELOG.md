@@ -1,5 +1,95 @@
 # Changelog
 
+## 1.3.9
+
+A patch: 17 functions that returned a number which was not one, and four
+dependencies no consumer could reach.
+
+**A NaN that does not exist until someone calls.** `finite:check` has been in
+the gate for a while, and it passed on all of this, because it walks exported
+*values* and skips functions — a function is not a number. That left the whole
+class where the defect is created on call. Probing every export with a typical
+argument and a degenerate one (`0`, `''`, `[]`) returned 22 non-finite results.
+Five are correct: `min()` and `max()` over no arguments are identity elements,
+`log(0)` is a limit rather than a domain error, and a round trip at zero
+efficiency really does require infinite input. Seventeen were not.
+
+The worst inflated a verification claim. `verifyHybridSystemEnd2End` divides by
+the classical optimum, and a run that reaches it exactly has `final_value` 0 —
+so `hybrid_improvement` was `Infinity`, and the next line reads
+`verified: cert.valid && hybrid_improvement > 1`. The better the classical
+baseline, the more improvement the hybrid reported.
+
+Two causes, so two kinds of fix. An aggregate over an empty collection has a
+value: the coherent fraction of no harmonics is 0, and a VBM path with no moves
+sits at depth 0 for its whole life, which is what `getCurrentDepth` already
+said. A zero divisor passed as an argument does not have a value, so
+`vortexFrequency`, `createFrequencyResonance`, `calculateDisplayInterval`,
+`shor`, `assessRSA`, `assessECDLP`, `invertPosition` and `calibrateReadout` now
+reject it. So does `symplecticProduct`, which declared `0 | 1` and returned
+`NaN` on operands of unequal length, and `calculateMobiusTransition`, which
+accepted digits that are not Möbius states and handed back an undefined binary
+word typed as `string`.
+
+`calculateWaveHarmonics` carried a comment about this exact bug being fixed for
+its `resonance` field. The `coherence` on the next line still divided by zero:
+the earlier fix stopped at the field that had been reported.
+
+`finite:check` now also calls every export whose parameters it can construct —
+2530 calls — and walks the return. Throwing is a pass; rejecting an input is the
+honest answer. Here an allowlist is required, and the difference from the value
+pass is real: a non-finite constant is always a mistake, while a non-finite
+return is sometimes correct in the extended reals. Those five are named with
+their reasons, and an entry that stops being non-finite fails too, so a guard
+added later forces its justification to be deleted with it.
+
+**Four dependencies no consumer could reach.** `npm i zeropoint-node@1.3.8`
+installs 72 packages and 48MB; the package itself unpacks to 6.6MB. The other
+41MB was four runtime dependencies, and not one is imported by any file
+reachable from any entry in the `exports` map — checked by following relative
+chunk imports out of all 46 built entry files.
+
+They were not unused, they were unreachable. `three` drives a WebGL animation in
+one file, `express` a demo server, `@hotwired/stimulus` four browser
+controllers, and `@uuidna/uuidna` is the third-party adjudicator this
+repository's own gate runs. Each is needed to build or verify this repository
+and none is needed to consume it, which is what devDependencies means. All four
+move, and `dependencies` is now empty. Installing the packed tarball with
+`--omit=dev` gives 1 package and 7.6MB, and all 23 entry points load — 23 by
+`import` and 23 by `require` — with no runtime dependency present at all.
+
+`@uuidna/uuidna` is the one that must never be ported locally, whatever it
+weighs. Its entire value is being a third party: an adjudicator vendored into
+this repository would turn external verification into self-certification, which
+is the single thing the seals exist to avoid.
+
+`jest` is deleted along with `jest.config.js`. Zero of the 29 test scripts
+invoked it, and the config required `ts-jest`, which was never installed — so it
+could not have loaded. `scripts/jest-lite.mjs` already existed, written because
+jest could not run these files.
+
+**`deps:check`** keeps this true in both directions. A declared dependency
+nothing reaches is dead weight every consumer pays for. A package an entry point
+imports without declaring is worse: it resolves here, where the package sits in
+devDependencies, and throws `MODULE_NOT_FOUND` for the consumer. Moving a
+dependency out is safe only while something checks the second. Specifiers come
+from the syntax tree, not from a pattern in the text: a regex first reported that
+`u` and a fragment of a closing brace were undeclared dependencies, because this
+package embeds source text in its own output, so `from '...'` occurs inside
+string literals that import nothing.
+
+`falsifiable:check` refused the new checker until it declared which kind it was —
+the completeness guard doing its job on the commit that adds a gate.
+
+**And the release machinery had a gap of its own,** found by cutting this
+release. `version:seal` writes four files; the `version` hook staged three, so
+`.zenodo.json` was written and left behind. The commit a tag points at would
+carry the previous version — caught by `version:check` in CI every time, which
+is why it never shipped, and quietly fixed by hand at each release instead. The
+hook stages it now. Its `publication_date` was worse: nothing wrote it at all,
+so 1.3.8 shipped carrying 1.3.7's date. `version:seal` stamps it on a real seal
+run. `--check` does not verify it — a check running later cannot know when the
+release happened, so generating it is what keeps it true.
 ## 1.3.8
 
 A patch: no code change, 0 exports either way. Two records that were true but

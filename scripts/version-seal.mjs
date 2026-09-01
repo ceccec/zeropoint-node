@@ -138,9 +138,16 @@ const cffField = (name) => {
 }
 const cffTitle = cffField('title')
 const cffUrl = cffField('url')
+// The release date. Zenodo publishes this as the record's date, and nothing
+// wrote it: it stayed at whatever release last set it by hand — 1.3.8 shipped
+// with 1.3.7's date. Stamped on a real seal run only. --check cannot verify it,
+// because a check running later has no way to know when the release happened;
+// generating it is what keeps it true, not comparing it.
+const releaseDate = new Date().toISOString().slice(0, 10)
 const zenodoNextObj = zenodo === null ? null : {
   ...zenodo,
   version,
+  ...(CHECK ? {} : { publication_date: releaseDate }),
   ...(cffTitle ? { title: cffTitle } : {}),
   ...(cffLicence ? { license: cffLicence.toLowerCase() } : {}),
   ...(cffUrl ? { related_identifiers: [

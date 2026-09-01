@@ -186,7 +186,7 @@ export function quantumInspiredRandomSearch(
   readonly bestValue: number
   readonly evals: number
 } {
-  let bestX = new Array(dimension).fill(0)
+  let bestX: readonly number[] = new Array<number>(dimension).fill(0)
   let bestValue = Infinity
   let s = seed
 
@@ -207,7 +207,7 @@ export function quantumInspiredRandomSearch(
       const fx = objectiveFunction(xCurrent)
       if (fx < bestValue) {
         bestValue = fx
-        bestX = xCurrent.slice() as unknown as readonly number[]
+        bestX = xCurrent.slice()
       }
 
       // Gradient-free step
@@ -428,13 +428,15 @@ export function solveHybrid(
   }
 
   // Phase 4: Record learning
+  // recordSuccess also takes the point the search started from; the sampled
+  // starts are the only initial thetas this function has.
   adapter.recordSuccess(problem.name, {
     theta: solution as any,
     energy: value,
     converged: value < 0,
     finalError: abs(value),
     history: [],
-  } as unknown as VQEResult)
+  } as unknown as VQEResult, [...(samples[0]?.x ?? new Array<number>(problem.dimension).fill(0))])
 
   return {
     problem: problem.name,

@@ -13,6 +13,7 @@ import { round, max } from '../0/algebra.ts'
 import { type Register } from './simulator.ts'
 import { vqeAdaptive } from './variational-optimizer.ts'
 import { type CompiledCircuit, type HardwareProfile, transpile } from './hardware-compilation.ts'
+import { type Gate1 } from './simulator.ts'
 import { AdaptiveOptimizer } from './adaptive.ts'
 
 export interface QuantumProblem {
@@ -69,7 +70,9 @@ export function quantumWorkflow(
 
   // Phase 3: Prepare circuit for compilation (convert to gate sequence)
   const gates = problem.ansatz(vqe_result.theta)
-  const gate_sequence = [
+  // Gate1 is a four-element tuple; the literal below infers Complex[] without
+  // the annotation, which transpile rejects.
+  const gate_sequence: Array<{ q: number; gate: Gate1; name: string }> = [
     { q: 0, gate: [{ re: 1, im: 0 }, { re: 0, im: 0 }, { re: 0, im: 0 }, { re: 1, im: 0 }], name: 'id' },
   ]
 

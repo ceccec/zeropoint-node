@@ -134,7 +134,7 @@ export class AdvancedVBM {
             const dr = VortexMath.digitalRoot(i + 1);
             vortices.push({
                 position: i,
-                rotation: i % 2 === 0 ? 'clockwise' : 'counterclockwise',
+                rotation: (i % 2 === 0 ? 'clockwise' : 'counterclockwise') as 'clockwise' | 'counterclockwise',
                 digitalRoot: dr,
                 family: VortexMath.getNumberFamily(dr)
             });
@@ -365,7 +365,7 @@ export class AdvancedVBM {
                     position: [row, col] as [number, number],
                     value,
                     digitalRoot: dr,
-                    polarity: (row + col) % 2 === 0 ? 'positive' : 'negative',
+                    polarity: ((row + col) % 2 === 0 ? 'positive' : 'negative') as 'positive' | 'negative',
                     family: VortexMath.getNumberFamily(dr)
                 });
             }

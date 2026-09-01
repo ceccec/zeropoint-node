@@ -365,7 +365,9 @@ export function harmonizeA432States(states: A432FactoryState[]): A432FactoryStat
 }
 
 export function getA432FactoryStats(): { cacheSize: number; cacheKeys: string[] } {
-  return a432Factory.getCacheStats();
+  // getCacheStats answers { size, keys }; this promised { cacheSize, cacheKeys }.
+  const { size, keys } = a432Factory.getCacheStats();
+  return { cacheSize: size, cacheKeys: keys };
 }
 
 export function clearA432FactoryCache(): void {

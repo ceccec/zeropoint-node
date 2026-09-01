@@ -46,7 +46,7 @@ export interface A432CoilCommon {
 }
 
 // Union type for all coil types, compatible with A432CoilCommon
-export type A432Coil = (Rodin.RodinCoilStep & A432CoilCommon) | (Mobius.MobiusStrip & A432CoilCommon) | (Tesla.TeslaCoil & A432CoilCommon);
+export type A432Coil = (Rodin.RodinCoilStep & A432CoilCommon) | (Mobius.MobiusCircuit & A432CoilCommon) | (Tesla.TeslaCoil & A432CoilCommon);
 
 // Re-export all core logic
 export { Rodin, Mobius, Tesla };

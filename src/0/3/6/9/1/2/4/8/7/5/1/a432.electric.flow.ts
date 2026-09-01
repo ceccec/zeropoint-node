@@ -315,8 +315,10 @@ export class A432ElectricFlowSystem {
       consciousnessFlow: calculateConsciousnessFlow(pattern),
       naturalAlignment: calculateNaturalAlignment(pattern),
       efficiency: 0,
-      bottlenecks: [],
-      optimalSegments: []
+      // Both inferred never[] from the empty literal, so every push below was
+      // an error against a type nothing could satisfy.
+      bottlenecks: [] as Array<{ position: number; from: number; to: number; resistance: number; type: string }>,
+      optimalSegments: [] as Array<{ position: number; segment: number[]; resistance: number; conductivity: number; type: string }>
     };
 
     flow.efficiency = (flow.conductivity / flow.resistance) * flow.consciousnessFlow;

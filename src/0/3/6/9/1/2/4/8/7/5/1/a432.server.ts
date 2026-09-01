@@ -105,8 +105,10 @@ app.get('/core', (req: Request, res: Response) => {
 
 // Living A432 OS endpoint
 app.get('/living', (req: Request, res: Response) => {
-  import('./a432.living.os.ts').then(({ getLivingA432Status }) => {
-    res.json(getLivingA432Status());
+  // a432.living.os.ts exports the OS instance, not a getLivingA432Status
+  // function: the destructure yielded undefined and calling it threw.
+  import('./a432.living.os.ts').then(({ livingA432OS }) => {
+    res.json(livingA432OS.getState());
   });
 });
 
@@ -236,7 +238,7 @@ app.post('/rodin/process', (req: Request, res: Response) => {
     
     rodinPatterns[id] = pattern;
     
-    res.status(201).json({
+    return res.status(201).json({
       id,
       pattern,
       analysis,
@@ -245,7 +247,7 @@ app.post('/rodin/process', (req: Request, res: Response) => {
       timestamp: Date.now()
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       error: 'Invalid pattern',
       message: error instanceof Error ? error.message : 'Unknown error',
       pattern
@@ -269,7 +271,7 @@ app.get('/rodin/process/:id', (req: Request, res: Response) => {
     const analysis = analyzeRodinCoilPattern(pattern);
     const harmonicAnalysis = getRodinCoilHarmonicAnalysis(pattern);
     
-    res.json({
+    return res.json({
       id,
       pattern,
       analysis,
@@ -277,7 +279,7 @@ app.get('/rodin/process/:id', (req: Request, res: Response) => {
       timestamp: Date.now()
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Analysis failed',
       message: error instanceof Error ? error.message : 'Unknown error',
       id,
@@ -314,7 +316,7 @@ app.delete('/rodin/process/:id', (req: Request, res: Response) => {
   }
   
   delete rodinPatterns[id];
-  res.status(204).end();
+  return res.status(204).end();
 });
 
 // ——————————————————————————————————————————
@@ -677,7 +679,7 @@ app.get('/1/:id', (req: Request, res: Response) => {
   const id = Number(req.params.id);
   const path = possibilities[id];
   if (!path) return res.status(404).json(handleImpossible('possibility id not found'));
-  res.json({ id, path });
+  return res.json({ id, path });
 });
 
 app.put('/1/:id', (req: Request, res: Response) => {
@@ -688,14 +690,14 @@ app.put('/1/:id', (req: Request, res: Response) => {
   const out: string[] = [];
   for (let i = 0; i < steps; i++) out.push(gen.next().value as string);
   possibilities[id] = out;
-  res.json({ id, path: out });
+  return res.json({ id, path: out });
 });
 
 app.delete('/1/:id', (req: Request, res: Response) => {
   const id = Number(req.params.id);
   if (!(id in possibilities)) return res.status(404).json(handleImpossible('possibility id not found'));
   delete possibilities[id];
-  res.status(204).end();
+  return res.status(204).end();
 });
 
 // Resource 2 — git-vortex (read-only) -------------------------------------
@@ -719,7 +721,7 @@ app.get('/2/:id', (req: Request, res: Response) => {
   const v = VORTEX[idx % 11];
   const angle = asAngle(v * 60);
   const cmyk = digitAngleToCMYK(v, angle);
-  res.json({ idx, hash, v, angle, cmyk });
+  return res.json({ idx, hash, v, angle, cmyk });
 });
 
 // Modules list endpoint -----------------------------------------------

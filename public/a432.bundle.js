@@ -3154,6 +3154,6 @@
     window.Stimulus = app;
   } catch (error2) {
     console.error("A432 Error:", error2);
-    document.body.innerHTML += '<div style="position:fixed;top:130px;left:10px;color:red;background:white;padding:10px;z-index:9999;">ERROR: ' + error2.message + "</div>";
+    document.body.innerHTML += '<div style="position:fixed;top:130px;left:10px;color:red;background:white;padding:10px;z-index:9999;">ERROR: ' + (error2 instanceof Error ? error2.message : String(error2)) + "</div>";
   }
 })();

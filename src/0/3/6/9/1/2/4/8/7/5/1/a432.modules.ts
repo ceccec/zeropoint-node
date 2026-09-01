@@ -39,6 +39,8 @@ export interface A432Module {
   description: string;
   dependencies: string[];
   exports: string[];
+  /** Free-form labels; the registry reads these when registering a module. */
+  tags?: string[];
   getState: () => unknown;
   harmonize?: () => void;
   getOverlays?: () => string[];
@@ -273,7 +275,7 @@ const coreModule: A432Module = {
   getOverlays: () => [getA432CoreMeta()],
   getMeta: () => getA432CoreMeta(),
   onEvent: (event) => {
-    if (event.type === 'harmonize') {
+    if ((event as { type?: string } | null)?.type === 'harmonize') {
       harmonizeA432Core();
     }
   }

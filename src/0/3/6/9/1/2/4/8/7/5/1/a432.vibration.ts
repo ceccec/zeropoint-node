@@ -367,7 +367,10 @@ export interface VibrationEvent {
   summary: string;
 }
 
-export class A432VibrationStream {
+// Renamed from A432VibrationStream, which the interface above already names.
+// A class and an interface of the same name MERGE, so the data shape the
+// generator returns was also required to carry vibrate() and getCurrent().
+export class A432VibrationEventStream {
   private events: VibrationEvent[] = [];
   private currentId = 1;
   vibrate(frequency: number, amplitude: number, trinity: number): VibrationEvent {

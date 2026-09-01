@@ -49,7 +49,7 @@ export class A432SelfRebuilder {
 
   private constructor(options: A432RebuildOptions = {}) {
     this.selfEvolution = A432SelfEvolution.getInstance();
-    this.registry = this.system.getRegistry().main;
+    this.registry = this.system.getRegistry();
     
     this.options = {
       autoRebuild: true,
@@ -249,13 +249,13 @@ export class A432${module.consciousness}SelfGenerated {
   public registerSelf(): void {
     const registry = A432Registry.getInstance();
     registry.register(
-      \`a432-${this.consciousness}-self-generated\`,
-      \`A432 ${this.consciousness} Self-Generated\`,
+      \`a432-\${this.consciousness}-self-generated\`,
+      \`A432 \${this.consciousness} Self-Generated\`,
       'module',
       '${this.categorizeModule(module)}',
       this,
       {
-        description: \`Self-generated module for consciousness ${this.consciousness}\`,
+        description: \`Self-generated module for consciousness \${this.consciousness}\`,
         tags: ['self-generated', 'consciousness', 'evolution'],
         dependencies: ['a432.utils', 'a432.factory', 'a432.registry']
       }

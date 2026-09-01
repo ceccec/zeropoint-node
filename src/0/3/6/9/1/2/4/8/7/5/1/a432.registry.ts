@@ -53,7 +53,10 @@ export class A432Registry {
   private cache: Map<string, any> = new Map();
   private options: A432RegistryOptions;
 
-  private constructor(options: A432RegistryOptions = {}) {
+  // protected, not private: A432ModuleRegistry and the specialised registries
+  // below extend this, which a private constructor forbids. External `new` is
+  // still blocked, so the singleton holds.
+  protected constructor(options: A432RegistryOptions = {}) {
     this.options = {
       autoDiscover: true,
       cacheEnabled: true,

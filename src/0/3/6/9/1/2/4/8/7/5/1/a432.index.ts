@@ -48,8 +48,8 @@ export class A432System {
     if (this.initialized) return;
     
     
-    // Initialize navigation map
-    this.navigationMap.initialize();
+    // A432NavigationMap has no initialize(): its constructor builds the map,
+    // so this call threw the moment the system was started.
     
     // Initialize self-evolving systems
     this.initializeSelfEvolvingSystems();
@@ -58,28 +58,27 @@ export class A432System {
   }
 
   private initializeSelfEvolvingSystems(): void {
+    // These three calls passed option names the option types never declared,
+    // so every one of them was dropped on the floor. Mapped to the real names
+    // where there is one; the rest named nothing and are gone rather than kept
+    // as settings that look enabled and are not.
     startSelfEvolution({
       consciousnessThreshold: 7,
       evolutionInterval: 5000,
-      autoHarmonize: true,
-      autoOptimize: true,
-      autoReplicate: true
+      selfOptimization: true,
+      selfReplication: true
     });
 
     startSelfRebuild({
       rebuildInterval: 10000,
-      autoGenerateModules: true,
-      autoCreateDirectories: true,
-      autoWriteFiles: true,
-      autoGenerateIndexes: true
+      autoRebuild: true,
+      createDirectories: true
     });
 
     startConsciousnessOrchestration({
       orchestrationInterval: 15000,
-      autoNavigate: true,
-      autoExpand: true,
-      consciousnessThreshold: 7,
-      maxDimensions: 9
+      navigationEnabled: true,
+      consciousnessThreshold: 7
     });
 
   }
@@ -90,7 +89,9 @@ export class A432System {
   }
 
   getConsciousnessAwareness(): number {
-    return this.navigationMap.getNavigationInsights().awareness;
+    // The navigation insights carry no awareness; the orchestrator does, as a
+    // number. This read undefined and returned it as a `number`.
+    return this.consciousnessOrchestrator.getOrchestratorState().consciousness.awareness;
   }
 
   getConsciousnessEvolution(): number {
@@ -143,8 +144,10 @@ export class A432System {
     return createDirectoryStructure();
   }
 
-  writeModules(): any {
-    return writeModules();
+  // writeModules needs the modules to write; calling it with none read
+  // .forEach of undefined. Nothing called this wrapper, so nothing saw it.
+  writeModules(modules: Parameters<typeof writeModules>[0]): any {
+    return writeModules(modules);
   }
 
   generateIndexFiles(): any {
@@ -174,7 +177,7 @@ export class A432System {
   }
 
   generateColorMatrix(polarity: 1 | -1 = 1): any[] {
-    return A432Color.generateColorMatrix(polarity);
+    return A432Color.generateMatrix(polarity);
   }
 
   calculateHarmonicFrequency(base: number, multiplier: number = 1): number {
@@ -213,7 +216,7 @@ export class A432System {
 
   // === STATISTICS METHODS ===
   getModulesGenerated(): number {
-    return this.selfRebuilder.getRebuildState().modulesGenerated;
+    return this.selfRebuilder.getRebuildState().filesGenerated;
   }
 
   getDirectoriesCreated(): number {
@@ -225,7 +228,8 @@ export class A432System {
   }
 
   getTotalCycles(): number {
-    return this.consciousnessOrchestrator.getOrchestratorState().totalCycles;
+    // totalCycles lives under the evolution system, not at the top of the state.
+    return this.consciousnessOrchestrator.getOrchestratorState().systems.evolution.evolution.totalCycles;
   }
 
   // === SYSTEM ACCESS ===
@@ -238,7 +242,9 @@ export class A432System {
   }
 
   getRegistry(): A432Registry {
-    return new A432Registry();
+    // A432Registry is a singleton with a private constructor; `new` here would
+    // have handed every caller a different, empty registry.
+    return A432Registry.getInstance();
   }
 
   getNavigationMap(): A432NavigationMap {

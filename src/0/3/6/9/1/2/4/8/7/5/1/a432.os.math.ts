@@ -2,7 +2,7 @@ import { abs, round } from './a432.algebra.ts'
 // a432.os.math.ts — OS math via root adapters (no local digitalRoot fork)
 import { legacyDigitalRoot as digitalRoot } from './a432.roots.ts'
 
-function a432Color(digit, angle) {
+function a432Color(digit: number, angle: number) {
   const baseHue = (abs(digit) * 36) % 360;
   const hue = (baseHue + angle) % 360;
   const s = 1, v = 1;

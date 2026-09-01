@@ -252,7 +252,8 @@ export function createHarmonizedModule(
     getOverlays,
     getMeta,
     onEvent: (event) => {
-      if (event.type === 'harmonize' && harmonize) {
+      // A432Module types this `unknown`, deliberately: an event may be anything.
+      if ((event as { type?: string } | null)?.type === 'harmonize' && harmonize) {
         harmonize();
       }
     }

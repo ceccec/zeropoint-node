@@ -28,5 +28,5 @@ try {
   window.Stimulus = app;
 } catch (error) {
   console.error('A432 Error:', error);
-  document.body.innerHTML += '<div style="position:fixed;top:130px;left:10px;color:red;background:white;padding:10px;z-index:9999;">ERROR: ' + error.message + '</div>';
+  document.body.innerHTML += '<div style="position:fixed;top:130px;left:10px;color:red;background:white;padding:10px;z-index:9999;">ERROR: ' + (error instanceof Error ? error.message : String(error)) + '</div>';
 } 

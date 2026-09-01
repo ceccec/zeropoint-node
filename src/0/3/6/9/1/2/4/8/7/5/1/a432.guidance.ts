@@ -7,7 +7,9 @@ import { speakWord } from './a432.i.speak.ts';
 
 navEmitter.on('step', (s: NavStep) => {
   flashColor(s.cmyk, 600);
-  playDigit(s.digit, 0.25, 0.15).catch(()=>{});
+  // playDigit returns void, so .catch() here read a property of undefined and
+  // threw on every navigation step that reached it.
+  playDigit(s.digit, 0.25, 0.15);
   speakWord(s.digit);
 });
 

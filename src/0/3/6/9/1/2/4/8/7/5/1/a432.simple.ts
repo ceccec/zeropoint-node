@@ -91,10 +91,24 @@ export class A432Frequency {
 }
 
 export class A432Harmonization {
-  static calculateHarmony(states: Array<{ harmony?: number; resonance?: number; balance?: number }>): number {
+  // The three fields are probed, not required: callers pass evolution,
+  // factory and consciousness states that each carry some of them. Typed as
+  // numbers, the signature rejected every real caller — and worse, hid that
+  // A432FactoryState.resonance is an OBJECT, so `sum + (state.resonance || 0)`
+  // concatenated rather than added and the harmony came back NaN.
+  static calculateHarmony(states: ReadonlyArray<object>): number {
+    // Objects, probed. An all-optional shape is a weak type and rejects a
+    // state carrying none of the three; an index signature does not help
+    // either, because the callers pass INTERFACES, which have no implicit
+    // one. What this function actually does is look for three fields and
+    // use them if they are numbers, so that is what it now asks for.
+    const field = (o: object, k: string) => {
+      const v = (o as Record<string, unknown>)[k]
+      return typeof v === 'number' && Number.isFinite(v) ? v : null
+    }
     if (states.length === 0) return 0;
     const total = states.reduce((sum, state) => {
-      return sum + (state.harmony || 0) + (state.resonance || 0) + (state.balance || 0);
+      return sum + (field(state, 'harmony') ?? 0) + (field(state, 'resonance') ?? 0) + (field(state, 'balance') ?? 0);
     }, 0);
     return total / states.length;
   }

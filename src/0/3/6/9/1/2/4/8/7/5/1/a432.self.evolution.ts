@@ -77,7 +77,7 @@ export class A432SelfEvolution {
     return this.system.getFactory();
   }
   private get registry(): A432Registry {
-    return this.system.getRegistry().main;
+    return this.system.getRegistry();
   }
   private evolutionState: A432SelfEvolutionState;
   private generatedModules: A432SelfGeneratedModule[] = [];

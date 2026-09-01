@@ -175,7 +175,8 @@ export function decimalToA432Fraction(decimal: number): { numerator: number; den
  */
 export function getA432Fraction(category: string, name: string): { numerator: number; denominator: number } {
   const categories = A432_RESOLVED_FRACTIONS as Record<string, unknown>;
-  return (categories[category] as Record<string, unknown>)?.[name] || { numerator: 1, denominator: 1 };
+  const found = (categories[category] as Record<string, { numerator: number; denominator: number }> | undefined)?.[name];
+  return found ?? { numerator: 1, denominator: 1 };
 }
 
 /**

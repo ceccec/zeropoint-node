@@ -51,7 +51,7 @@ const isTriad = (n: number): boolean => n === 3 || n === 6 || n === 9;
  * void, which carries 1, 4 and 7 onto 9, 6 and 3. So the sequence is reflected
  * first, and the triad members of the reflection are the axis.
  */
-export function getTrinityAxisFromRodin(rodinSeq: number[] = RODIN_SEQUENCE): number[] {
+export function getTrinityAxisFromRodin(rodinSeq: readonly number[] = RODIN_SEQUENCE): number[] {
   const reflected = rodinSeq.map(throughVoid).filter(isTriad);
   return Array.from(new Set(reflected)).sort((a, b) => a - b);
 }
@@ -64,7 +64,7 @@ export function getTrinityAxisFromRodin(rodinSeq: number[] = RODIN_SEQUENCE): nu
  * It now answers about the sequence it was actually given, by the same
  * reflection: 3, 9, 6 in triangulation order, keeping those the input can reach.
  */
-export function getTrinityTriangulationFromRodin(rodinSeq: number[] = RODIN_SEQUENCE): number[] {
+export function getTrinityTriangulationFromRodin(rodinSeq: readonly number[] = RODIN_SEQUENCE): number[] {
   const reachable = new Set(rodinSeq.map(throughVoid).filter(isTriad));
   return [3, 9, 6].filter(n => reachable.has(n));
 }

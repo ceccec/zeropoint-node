@@ -83,7 +83,9 @@ export function measureY(reg: Register, qubit: number, shots: number = 1000, see
     counts[meas.bit]++
     s = (1664525 * s + 1013904223) % 4294967296
   }
-  return { basis: 'Y', qubit, shots, counts: counts as readonly [number, number], seed }
+  // counts is built with exactly two slots; naming them makes that a tuple
+  // rather than an assertion the compiler cannot check.
+  return { basis: 'Y', qubit, shots, counts: [counts[0]!, counts[1]!] as readonly [number, number], seed }
 }
 
 // Single-qubit tomography: measure in Z, X, Y bases

@@ -118,7 +118,10 @@ export class LivingA432OS {
   private generateQuantumState(): QuantumState {
     const currentDigit = rodinDigit(this.evolution % 6);
     const superposition = [currentDigit, (currentDigit + 1) % 10, (currentDigit + 2) % 10];
-    const entanglement = new Set([currentDigit, rodinDigit((currentDigit + 3) % 6)]);
+    // QuantumState declares Map<string, number>; this built a Set, and every
+    // reader survived only because both answer .size.
+    const partner = rodinDigit((currentDigit + 3) % 6);
+    const entanglement = new Map([[String(currentDigit), partner], [String(partner), currentDigit]]);
     const tunneling = currentDigit === 0;
     const interference = digitalRoot(currentDigit * 432);
     const measurement = calculateA432Consciousness(432 * (currentDigit / 12));
@@ -245,9 +248,12 @@ export class LivingA432OS {
   }
 
   // Generate entanglement state
-  private generateEntanglement(): Set<number> {
+  private generateEntanglement(): Map<string, number> {
+    // QuantumState declares a Map of correlated states; this returned a Set,
+    // which every reader survived only because both answer .size.
     const currentDigit = rodinDigit(this.evolution % 6);
-    return new Set([currentDigit, rodinDigit((currentDigit + 3) % 6)]);
+    const partner = rodinDigit((currentDigit + 3) % 6);
+    return new Map([[String(currentDigit), partner], [String(partner), currentDigit]]);
   }
 
   // Generate life word from digit

@@ -72,7 +72,7 @@ export class A432ConsciousnessOrchestrator {
     this.selfEvolution = A432SelfEvolution.getInstance();
     this.selfRebuilder = A432SelfRebuilder.getInstance();
     this.factory = this.system.getFactory();
-    this.registry = this.system.getRegistry().main;
+    this.registry = this.system.getRegistry();
     
     this.options = {
       autoOrchestrate: true,

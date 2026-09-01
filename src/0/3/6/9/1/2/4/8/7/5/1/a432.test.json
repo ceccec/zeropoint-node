@@ -9,6 +9,7 @@
     "a432.documentation.ts:generateDocumentationIndex": "returns a different value on a second call with no arguments",
     "a432.experience.ui.ts:createA432ExperienceState": "returns a different value on a second call with no arguments",
     "a432.experience.ui.ts:harmonizeA432Experience": "returns a different value on a second call with no arguments",
+    "a432.graph.ts:pulse": "returns a different value on a second call with no arguments",
     "a432.index.ts:exportA432Registry": "returns a different value on a second call with no arguments",
     "a432.index.ts:getA432RegistryStats": "returns a different value on a second call with no arguments",
     "a432.living.ui.ts:getLivingUIStatus": "returns a different value on a second call with no arguments",
@@ -52,7 +53,7 @@
     "generateCycle = getVBMAudioSequence = getVBMVisualizationSequence": "[0,3,6,9,1,2,4,8,7,5,1]",
     "generateVortex = generateVortexSequence": "[1,2,4,8,7,5,1,2,4]",
     "getTrinityAxis = getTrinityAxisFromRodin = manifestTrinityAxis = stringTheoryAxis": "[3,6,9]",
-    "a432MetaVortex = a432UnifiedMatrix": "{\"trinity\":[3,6,9,3,6,9,3,6,9],\"family\":{\"F1\":[1,2,4,8,7,5,1],\"F2\":[3,9,6,3],\"F3\":[9]},\"nine\":[3,9,6,3,9,6,3,9,6],\"casca…",
+    "a432MetaVortex = a432UnifiedMatrix": "{\"trinity\":[3,6,9,3,6,9,3,6,9],\"family\":{\"F1\":[1,2,4,8,7,5,1],\"F2\":[3,9,6,3],\"F3\":[9]},\"nine\":[3,9,6,3,9,6,3,9,6],\"casca\u2026",
     "a432ElectronShear = a432Shears": "[1,4,7]",
     "getCurrentNavState = trinityPrev": "{\"step\":1,\"trinity\":3,\"family\":1,\"archetype\":\"Creation\",\"metaphysical\":\"Step 1: Trinity 3 (Creation), Family 1\"}",
     "a432TransitionFactorises = isAlive": "both return false, and they are unrelated: a432TransitionFactorises decides whether the consciousness field's transition factorises (it does not, which is the point), and isAlive reports liveness. Two nullary booleans agreeing is a coincidence of the codomain, not a duplicated implementation."

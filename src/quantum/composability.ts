@@ -46,7 +46,9 @@ export function buildCompositionGraph(
 ): CompositionGraph {
   const nodes = Array.from(new Set(module_pairs.flatMap((p) => [p.from, p.to])))
   const edges = module_pairs.map((p) => ({ from: p.from, to: p.to }))
-  const data_flows = module_pairs
+  // The declared shape is { edge, type }; module_pairs is { from, to, data_type },
+  // so this returned data_flows in a shape no consumer of the type expects.
+  const data_flows = module_pairs.map((p) => ({ edge: { from: p.from, to: p.to }, type: p.data_type }))
 
   return { nodes, edges, data_flows }
 }
@@ -249,7 +251,9 @@ export function adaptCompositionGraph(
   problem_modules: readonly string[], // Modules that are failing
   alternatives: readonly { readonly module: string; readonly alternative: string }[],
 ): CompositionGraph {
-  let new_edges = graph.edges
+  // graph.edges is readonly and this function rewires it; the pushes below
+  // were mutating a frozen contract through a type that forbade it.
+  let new_edges = [...graph.edges]
 
   for (const { module, alternative } of alternatives) {
     if (problem_modules.includes(module)) {

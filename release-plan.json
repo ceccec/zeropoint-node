@@ -12,7 +12,7 @@
       "surface": "typecheck",
       "from": 96,
       "to": 0,
-      "why": "The smallest surface with a definite end: 96 parameters the compiler is guessing at. Annotating them cannot change behaviour, which makes it the right opener for a run whose later patches do."
+      "why": "Planned as \"96 parameters the compiler is guessing at, and annotating them cannot change behaviour\". That was written from the ratchet label rather than the data and was wrong: only 23 were implicit-any parameters. The other 73 were real type errors, and a dozen of them were runtime bugs \u2014 .catch() on a void return, getRegistry().main where getRegistry returns the registry, a call to an initialize() that does not exist, a dynamic import destructuring an export the module never had, and calculateHarmony summing an object into a number."
     },
     "2": {
       "set": "orbit",
@@ -58,9 +58,9 @@
       "set": "orbit",
       "gateway": false,
       "surface": "untestedExports",
-      "from": 297,
+      "from": 295,
       "to": 220,
-      "why": "Tests that assert a LAW, not that a function returns something. A generic determinism harness would collapse this number without adding coverage, and is refused for that reason."
+      "why": "Tests that assert a LAW, not that a function returns something. A generic determinism harness would collapse this number without adding coverage, and is refused for that reason. Started at 297; the typecheck patch removed two on its way past."
     },
     "8": {
       "set": "orbit",

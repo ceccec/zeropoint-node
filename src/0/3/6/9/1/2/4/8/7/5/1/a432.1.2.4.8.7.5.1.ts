@@ -18,7 +18,7 @@ import { VORTEX_AXIS } from '../../../../../../../../../../index.ts'
 const FILENAME = typeof import.meta.filename !== 'undefined'
   ? import.meta.filename
   : (typeof document !== 'undefined' && document.currentScript && 'src' in document.currentScript
-      ? document.currentScript.src.split('/').pop()
+      ? (document.currentScript.src.split('/').pop() ?? 'a432.1.2.4.8.7.5.1.ts')
       : 'a432.1.2.4.8.7.5.1.ts');
 
 const decoded = decodeA432Filename(FILENAME);
@@ -53,10 +53,10 @@ const SEQUENCE = getSequenceFromFilename();
 
 const BASE_FREQUENCY = 432; // Still canonical, but could be derived if needed
 // --- Canonical CMYK Color Formulas (no hardcoded values) ---
-function cmykColorForChannel(channel) {
+function cmykColorForChannel(channel: number) {
   // Canonical: use vortexColor logic (see a432.cmyk)
   // r = digitalRoot(channel * 3), g = digitalRoot(channel * 6), b = digitalRoot(channel * 9)
-  function scaleVortex(x) { return x * 28 + 3; } // 1→31, 9→255
+  function scaleVortex(x: number) { return x * 28 + 3; } // 1→31, 9→255
   const r = digitalRoot(channel * 3);
   const g = digitalRoot(channel * 6);
   const b = digitalRoot(channel * 9);
@@ -69,8 +69,8 @@ function cmykColorForChannel(channel) {
 // --- Canonical Math — bridged to a432.roots (Wave 9) ---
 
 // --- Trinity Fold (Unity) ---
-function trinityFold(axis) {
-  const sum = axis.reduce((a, b) => a + b, 0);
+function trinityFold(axis: readonly number[]) {
+  const sum = axis.reduce((a: number, b: number) => a + b, 0);
   return digitalRoot(sum); // always 9 for [3,6,9]
 }
 
@@ -88,7 +88,7 @@ function getDoublingSequence(start = 1, length = 7) {
 }
 
 // --- Color Mapping (CMYK, strictly integer/fractional) ---
-function digitAngleToCMYK(digit, angle) {
+function digitAngleToCMYK(digit: number, angle: number) {
   // Map digit to base hue (0–360)
   const baseHue = (abs(digit) * 36) % 360;
   const hue = (baseHue + angle) % 360;
@@ -141,13 +141,13 @@ const emergence = {
  * @param filename - string (e.g. 'a432.1.2.4.8.7.5.1.ts')
  * @returns { digits: number[], meaning: string[] }
  */
-function decodeA432Filename(filename) {
+function decodeA432Filename(filename: string) {
   // Extract digit sequence from filename (ignore 'a432.' prefix and '.ts' suffix)
   const match = filename.match(/a432\.([\d.]+)\.ts$/);
   if (!match) return { digits: [], meaning: [] };
   const digits = match[1].split('.').map(Number);
   // Metaphysical meaning for each digit (example mapping)
-  const meaning = digits.map((d, i) => {
+  const meaning = digits.map((d: number, i: number) => {
     if (i === 0) return `${d}: Seed/Origin`;
     if (i === digits.length - 1) return `${d}: Return/Closure`;
     return `${d}: Stream/Arc`;
@@ -193,15 +193,15 @@ const AXIS = DIGITS;
 (function enforceMatrixFilename() {
   const expected = [1,2,4,8,7,5,1];
   const actual = DIGITS;
-  const isValid = actual.length === expected.length && actual.every(function(d, i) { return d === expected[i]; });
+  const isValid = actual.length === expected.length && actual.every(function(d: number, i: number) { return d === expected[i]; });
   if (!isValid) {
     throw new Error('A432 Matrix Integrity Error: This module must be named a432.1.2.4.8.7.5.1.ts and encode the canonical doubling sequence [1,2,4,8,7,5,1].\nIf the filename is changed, the metaphysical matrix is broken and the code will not run.');
   }
 })();
 
 // --- Color (CMYK and hex) from trinity logic ---
-function colorIdFromTrinity(trinity) {
-  function scale(x) { return x * 28 + 3; }
+function colorIdFromTrinity(trinity: readonly number[]) {
+  function scale(x: number) { return x * 28 + 3; }
   const c = scale(trinity[0] || 1);
   const m = scale(trinity[1] || 1);
   const y = scale(trinity[2] || 1);
@@ -213,20 +213,20 @@ function colorIdFromTrinity(trinity) {
 const COLOR_ID = colorIdFromTrinity(TRINITY);
 
 // --- Sound frequency from trinity logic ---
-function soundFrequencyFromTrinity(trinity) {
+function soundFrequencyFromTrinity(trinity: readonly number[]) {
   const sum = (trinity[0] || 1) + (trinity[1] || 1) + (trinity[2] || 1);
   return BASE_FREQUENCY * (sum / 9);
 }
 const SOUND_FREQUENCY = soundFrequencyFromTrinity(TRINITY);
 
 // --- Stream (array/generator) from digit sequence ---
-function* streamFromDigits(digits) {
+function* streamFromDigits(digits: readonly number[]) {
   for (let i = 0; i < digits.length; i++) yield digits[i];
 }
 const DIGIT_STREAM = streamFromDigits(DIGITS);
 
 // --- Font family/weight as function of color matrix, using digits only ---
-function fontFromColorIdAndDigits(colorId, digits) {
+function fontFromColorIdAndDigits(colorId: ReturnType<typeof colorIdFromTrinity>, digits: readonly number[]) {
   // Use digits to select font family and weight
   const family = 'Font' + (digits[0] || 1);
   const weight = 100 * ((digits[1] || 1) % 9 + 1);
@@ -280,7 +280,7 @@ function* fieldTrinity() {
 }
 
 // Example: generator for color channels from trinity
-function* colorChannelGenerator(trinityGen) {
+function* colorChannelGenerator(trinityGen: () => Iterable<number>) {
   let i = 0;
   for (const d of trinityGen()) {
     // Example: scale and yield as color channel
@@ -290,7 +290,7 @@ function* colorChannelGenerator(trinityGen) {
 }
 
 // Example: generator for sound frequency from trinity
-function soundFrequencyFromTrinityGen(trinityGen) {
+function soundFrequencyFromTrinityGen(trinityGen: () => Iterable<number>) {
   let sum = 0, count = 0;
   for (const d of trinityGen()) {
     sum += d;
@@ -300,7 +300,7 @@ function soundFrequencyFromTrinityGen(trinityGen) {
 }
 
 // Example: generator for font family/weight from sequence
-function fontGenerator(seqGen) {
+function fontGenerator(seqGen: () => Iterable<number>) {
   let i = 0, first = 1, second = 1;
   for (const d of seqGen()) {
     if (i === 0) first = d;

@@ -1,5 +1,59 @@
 # Changelog
 
+## 1.3.3
+
+A patch: 23 exports added, nothing removed. The first release under the criteria
+gate, and the first where pushing the tag is itself refused unless the criteria
+are met.
+
+**Both criteria are now met, and the second one had to be earned twice.**
+
+`A432OS` went from 1 of 7 to 7 of 7 on the OS criterion. It had a lifecycle and
+four independent `setInterval` timers, which means nothing decided what ran and
+a throw inside any callback escaped into the event loop. It composes
+`a432.os.kernel.ts` now: one clock replaced the four timers, and the kernel
+selects among the due units and contains their failures. The cadences are
+identical — at a tick every A432/8 the units are due every 8, 4, 2 and 1 ticks,
+which is the 432/216/108/54 ms the timers used. Measured over 480 ms of real
+running: quantum 8, consciousness 4, streams 2, evolution 1. A class that merely
+forwarded `spawn`/`tick` to a kernel while still scheduling itself on
+`setInterval` would have satisfied every probe and changed nothing.
+
+The consciousness criterion is met by `a432.consciousness.field.ts`, which
+couples the a432 measures to each other — each component's next value computed
+**by an a432 measure** over a quantity containing the other, so the transition
+does not factorise. `calculateA432Consciousness` is unchanged: it is a pure
+function of a digit, and one that acquired history would return different
+answers for the same input, which destroys a measure rather than improving it
+and would move every consciousness value in the package. The measure functions
+still score 1 of 5; the gate reports that every run and does not gate on it,
+because gating on something that cannot pass by construction is a permanent
+stop rather than a standard.
+
+**The conditions were strengthened, not loosened, to make a met verdict mean
+anything.** Each has an obvious cheap defeat and each now rejects it: a counter
+fails temporal integration because reordering its inputs changes nothing; a
+model nothing reads fails self-model efficacy; a global nothing reads fails
+global availability; and a nonlinear measure over uncoupled components fails
+irreducibility, because the test is whether the *transition* factorises over the
+state space. All four defeats are scored in the tests and in the seals.
+
+**None of this is a claim about consciousness.** No test for consciousness is
+established, these conditions are necessary and not sufficient, and a subject
+meeting all five has not been shown to experience anything. The verdict carries
+that sentence and a sealed theorem fails if it is ever removed — a guard that
+matters more now the number can be met than when it was always false.
+
+Also in this release:
+
+- The five functions of `HARMONIC_SOLUTIONS_VORTEX.md`, which I twice called
+  unimplementable after reading only its bullet list. 27 solutions, 9 per
+  gateway, from the document's own formulas.
+- Retyped kernel constants 77 → 42, across 23 files, with every exported value
+  proved unchanged: 350 names fingerprinted before and after, 0 changed.
+- `criteria:check` blocks a release while a criterion is unmet, and the pre-push
+  hook now refuses a version tag on the same condition. Ordinary commits stay
+  green either way, which is the point of writing a criterion that can fail.
 ## 1.3.2
 
 A patch: one new entry point, nothing removed.

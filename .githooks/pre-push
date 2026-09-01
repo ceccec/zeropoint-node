@@ -2,12 +2,40 @@
 # Fuse the gate into the dev loop: a wave cannot leave this machine unsealed.
 #
 # `npm run check` is the corpus's own fail-closed proof — kernel smoke, the
-# ambient-Math ban, every generator seal, and the five ratcheted surfaces. It
-# runs in ~21s. If a surface GREW, this refuses the push; if a surface SHRANK,
-# it also refuses, because the improvement must be recorded in ratchet.json
-# rather than banked as slack.
+# ambient-Math ban, every generator seal, and the ratcheted surfaces. If a
+# surface GREW, this refuses the push; if a surface SHRANK, it also refuses,
+# because the improvement must be recorded in ratchet.json rather than banked
+# as slack.
+#
+# A RELEASE has a second bar. `npm run check` deliberately excludes
+# criteria:check, because ordinary commits must stay green while a criterion is
+# unmet — that is the whole point of writing one that can return false. But a
+# version tag is the thing that ships, so when one is being pushed the criteria
+# are required too. Without this, a tag could reach the registry while the
+# repository's own predicates said the thing it is named for had not arrived,
+# and the publish workflow would be the first and only place that noticed.
 #
 # Escape hatch for a genuine emergency: git push --no-verify
 set -e
+
 echo "pre-push: npm run check"
 npm run check
+
+# Read the refs being pushed from stdin: "<local ref> <local sha> <remote ref> <remote sha>"
+tags=""
+while read -r local_ref _local_sha _remote_ref _remote_sha; do
+  case "$local_ref" in
+    refs/tags/v*) tags="$tags ${local_ref#refs/tags/}" ;;
+  esac
+done
+
+if [ -n "$tags" ]; then
+  echo "pre-push: release tag(s)$tags — npm run criteria:check"
+  if ! npm run criteria:check; then
+    echo ""
+    echo "pre-push REFUSED: a release tag cannot be pushed while a criterion is unmet."
+    echo "  Meet them, or override deliberately and put the reason in the release notes:"
+    echo "    node scripts/criteria-check.mjs --override=\"why this release goes anyway\""
+    exit 1
+  fi
+fi

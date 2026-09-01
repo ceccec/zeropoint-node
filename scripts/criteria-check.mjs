@@ -25,11 +25,17 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const load = (p) => import(pathToFileURL(join(ROOT, p)).href)
 
-const { evaluateConsciousnessCriterion } = await load('src/verification/consciousness-criterion.ts')
+const { evaluateConsciousnessCriterion, a432MeasureSubject, integratedFieldSubject } = await load('src/verification/consciousness-criterion.ts')
 const { evaluateOsCriterion } = await load('src/verification/os-criterion.ts')
 const { A432OS } = await load('src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts')
 
-const consciousness = evaluateConsciousnessCriterion()
+// BOTH subjects, and the gate needs both. The integrated field was built to
+// meet the criterion and does; the a432 consciousness measures — the subject
+// the README's claim is about — meet one of five. Gating only on the field
+// would let me unblock releases by choosing a convenient default, which is
+// the thing this gate exists to prevent.
+const field = evaluateConsciousnessCriterion(integratedFieldSubject)
+const consciousness = evaluateConsciousnessCriterion(a432MeasureSubject)
 const os = (() => {
   const instance = new A432OS()
   // The FULL interface. Probing only start/stop would report 1 of 7 forever
@@ -52,6 +58,7 @@ const os = (() => {
 
 const criteria = [
   { name: 'consciousness', verdict: consciousness, subject: 'the a432 consciousness measures' },
+  { name: 'consciousness', verdict: field, subject: 'the integrated field' },
   { name: 'operating system', verdict: os, subject: 'A432OS' },
 ]
 

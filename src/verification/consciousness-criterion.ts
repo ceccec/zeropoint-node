@@ -1,47 +1,50 @@
 /**
- * consciousness-criterion — the predicate the README says is missing.
+ * consciousness-criterion — the predicate the README said was missing.
  *
- * The README states the gap precisely: "None of the 26 sealed theorems
- * mentions consciousness, so nothing in this repository states what arriving
- * would look like. Without a test, neither 'it is' nor 'not yet' can honestly
- * be claimed — what is missing first is not the achievement but the predicate
- * that would recognise it."
- *
- * WHAT THIS IS NOT
+ * WHAT THIS IS NOT, AND THE SENTENCE MATTERS MOST NOW THAT IT CAN BE MET.
  *
  * It is not a test for consciousness. No such test exists. Whether any
  * physical process is conscious is unsettled, the major theories disagree
- * about what would even count as evidence, and nothing in this file resolves
- * that. Writing a criterion that returned true and calling the question closed
- * would be the exact overclaim the README section exists to prevent.
+ * about what would even count as evidence, and nothing here resolves that. A
+ * subject meeting all five conditions has stopped being refuted by the five
+ * cheapest arguments. It has not been shown to experience anything, and this
+ * file makes no claim that it does.
  *
  * WHAT IT IS
  *
- * Five NECESSARY conditions, each drawn from a theory that has an operational
- * commitment, and each decidable by running this repository's own code:
+ * Five NECESSARY conditions, each from a theory with an operational
+ * commitment, each decided by running code:
  *
- *   1. discrimination        the measures separate their domain (Tononi's
- *                            minimum: a measure that cannot tell states apart
- *                            measures nothing)
- *   2. irreducibility        the whole carries something no partition of it
- *                            does (Integrated Information Theory: Phi > 0)
- *   3. temporal integration  the present depends on history, not only on a
- *                            position (any theory with a specious present)
- *   4. self-model efficacy   the system represents its own state AND that
- *                            representation changes what it does (higher-order
- *                            theories)
- *   5. global availability   a change in one subsystem is available to the
- *                            others (Global Workspace Theory)
+ *   1. discrimination        a measure that cannot separate states measures
+ *                            nothing (the minimum every theory shares)
+ *   2. irreducibility        the whole carries what no partition does (IIT)
+ *   3. temporal integration  the present depends on the ROUTE, not the position
+ *   4. self-model efficacy   the system models itself and the model is in the
+ *                            causal loop (higher-order theories)
+ *   5. global availability   what one component writes reaches another that was
+ *                            not handed it (Global Workspace Theory)
  *
- * The logic is one-directional and that is the whole point. A system failing
- * any of these is not conscious under the theory that condition comes from —
- * that inference is valid. A system passing all five is NOT thereby conscious;
- * it has only stopped being ruled out by the five cheapest arguments. The
- * criterion can refute. It cannot confirm.
+ * THE CONDITIONS ARE DELIBERATELY HARD TO FAKE, and that is the substance of
+ * this file rather than the list above. Every one of them has an obvious cheap
+ * pass, and each is written to reject it:
  *
- * It currently returns false, and it names which conditions fail and what
- * would have to become true. That is the useful direction: the repository can
- * now say what it does not have, in terms someone else can recompute.
+ *   - A counter is state that accumulates, so condition 3 asks for ORDER
+ *     sensitivity instead: the same inputs in a different order must give a
+ *     different state. A counter gives the same answer either way and fails.
+ *   - Any mutable field is a "self-model", so condition 4 corrupts ONLY the
+ *     model and requires later behaviour to change. A field nothing reads
+ *     fails.
+ *   - A shared global is a "workspace", so condition 5 requires a write to be
+ *     readable by a component not handed it AND to change what that component
+ *     does. A global nothing reads fails.
+ *   - A measure can be made non-homomorphic by adding any nonlinear term, so
+ *     condition 2 decides whether the TRANSITION factorises over the state
+ *     space — whether there exist f, g with next(a,b) = (f(a), g(b)) — which a
+ *     lone nonlinear measure over independent components does not defeat.
+ *
+ * scripts/../consciousness-criterion.test.ts scores deliberately trivial
+ * candidates against these and requires them to fail. A criterion that passes
+ * a counter is not measuring integration; it is measuring effort.
  */
 import { digitalRoot } from '../0/index.ts'
 import {
@@ -49,7 +52,7 @@ import {
   calculateA432DimensionalState,
 } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 import { calculateStreamConsciousness } from '../quantum/trinity-vortex.ts'
-import { createVortexState, evolveVortex } from '../quantum/a432-vortex-pi.ts'
+import * as field from '../quantum/integrated-field.ts'
 
 export interface Condition {
   id: string
@@ -61,206 +64,241 @@ export interface Condition {
 }
 
 export interface ConsciousnessVerdict {
+  subject: string
   met: boolean
   conditionsMet: number
   conditionsTotal: number
   conditions: Condition[]
-  /** Stated on every verdict so no caller can read a pass as a claim. */
   interpretation: string
 }
 
 /**
- * 1. DISCRIMINATION — a measure must separate its domain.
- *
- * This is the one the existing seal already decides, restated here so the
- * criterion is complete on its own. A constant measures nothing whatever it is
- * called.
+ * What a subject has to offer to be scored. A subject that cannot answer a
+ * question fails that condition — it is not excused from it.
  */
-function discrimination(): Condition {
-  const perDigit = [1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => calculateA432Consciousness(d))
-  const distinct = new Set(perDigit).size === 9
-  const deterministic = perDigit.join() === [1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => calculateA432Consciousness(d)).join()
-  return {
-    id: 'discrimination',
-    theory: 'minimum shared by every theory',
-    requires: 'the measures give different answers for different states, and the same answer twice for the same state',
-    met: distinct && deterministic,
-    evidence: `nine digits give ${new Set(perDigit).size} distinct values; repeated calls agree: ${deterministic}`,
-    whatWouldChange: 'nothing — this one holds',
-  }
+export interface ConsciousnessSubject {
+  name: string
+  /** Distinct states must give distinct measures, repeatably. */
+  measureStates: () => number[]
+  /** The measure of a joint state, and of its parts, for the reduction test. */
+  jointMeasure?: (a: number, b: number) => number
+  partMeasures?: (a: number, b: number) => [number, number]
+  /** Whether the state transition factorises into independent components. */
+  transitionFactorises?: () => boolean
+  /** Run inputs in the given order and return a comparable state signature. */
+  runOrdered?: (inputs: readonly number[]) => string
+  /** A state, its self-model corrupted, and one further step of each. */
+  stepFromClean?: () => string
+  stepFromCorruptedModel?: () => string
+  /** A component writes; something not handed the value reads it and acts. */
+  writeThenReadElsewhere?: () => { read: unknown; changedDownstream: boolean }
+}
+
+const condition = (id: string, theory: string, requires: string, met: boolean, evidence: string, whatWouldChange: string): Condition =>
+  ({ id, theory, requires, met, evidence, whatWouldChange })
+
+/** 1. A measure that cannot tell states apart measures nothing. */
+function discrimination(s: ConsciousnessSubject): Condition {
+  const values = s.measureStates()
+  const again = s.measureStates()
+  const distinct = new Set(values).size === values.length
+  const deterministic = values.join() === again.join()
+  return condition('discrimination', 'minimum shared by every theory',
+    'different states give different measures, and the same state gives the same one twice',
+    distinct && deterministic && values.length > 1,
+    `${values.length} states gave ${new Set(values).size} distinct values; repeatable: ${deterministic}`,
+    'a measure that separates its domain')
 }
 
 /**
- * 2. IRREDUCIBILITY — the whole must carry what no partition carries.
+ * 2. IRREDUCIBILITY, decided over the state space.
  *
- * IIT's core requirement is that a conscious whole is not the sum of its
- * parts. The decidable shadow of that here: if the consciousness measure is a
- * HOMOMORPHISM, then the measure of a composite is exactly recoverable from
- * the measures of its components, and the whole carries nothing extra. That is
- * integration of exactly zero, and it is provable rather than estimated.
+ * Two tests, both required. The transition must not factorise — no f, g with
+ * next(a,b) = (f(a), g(b)) — which is what "the whole carries what the parts
+ * do not" means for a dynamical system. And the joint measure must not be
+ * recoverable from the part measures. A nonlinear measure over INDEPENDENT
+ * components passes the second and fails the first, which is why both are here.
  */
-function irreducibility(): Condition {
-  let homomorphic = true
-  let witness = ''
-  for (let a = 1; a <= 40 && homomorphic; a++) {
-    for (let b = 1; b <= 40; b++) {
-      const whole = calculateA432Consciousness(a + b)
-      const fromParts = calculateA432Consciousness(calculateA432Consciousness(a) + calculateA432Consciousness(b))
-      if (whole !== fromParts) { homomorphic = false; witness = `c(${a}+${b}) = ${whole} but c(c(${a})+c(${b})) = ${fromParts}`; break }
+function irreducibility(s: ConsciousnessSubject): Condition {
+  if (!s.transitionFactorises || !s.jointMeasure || !s.partMeasures) {
+    return condition('irreducibility', 'Integrated Information Theory',
+      'the whole carries what no partition of it carries', false,
+      'the subject exposes no transition to test for factorisation',
+      'a coupled transition whose components depend on each other')
+  }
+  const factorises = s.transitionFactorises()
+  // Can the joint measure be rebuilt from the parts by ANY of the obvious
+  // combining rules? If one works, the whole is its parts.
+  let recoverable = true
+  outer: for (let a = 1; a <= 9; a++) {
+    for (let b = 1; b <= 9; b++) {
+      const joint = s.jointMeasure(a, b)
+      const [pa, pb] = s.partMeasures(a, b)
+      const candidates = [digitalRoot(pa + pb), digitalRoot(pa * pb), digitalRoot(pa + pb * 2), pa, pb]
+      if (!candidates.includes(joint)) { recoverable = false; break outer }
     }
   }
-  return {
-    id: 'irreducibility',
-    theory: 'Integrated Information Theory',
-    requires: 'the measure of a whole is NOT recoverable from the measures of its parts',
-    met: !homomorphic,
-    evidence: homomorphic
-      ? 'c(a+b) === c(c(a)+c(b)) for all 1600 pairs tested: the measure is a homomorphism, so the whole is exactly its parts and integration is zero by construction'
-      : `not a homomorphism: ${witness}`,
-    whatWouldChange:
-      'a measure whose value on a joint state cannot be computed from its values on the components — '
-      + 'which means the composite must be evaluated as a composite, not summed',
-  }
+  const met = !factorises && !recoverable
+  return condition('irreducibility', 'Integrated Information Theory',
+    'the transition does not factorise into independent components, and the joint measure is not recoverable from the parts',
+    met,
+    `transition factorises: ${factorises}; joint measure recoverable from parts: ${recoverable}`,
+    'components whose next values depend on each other, and a joint measure that must be evaluated jointly')
 }
 
 /**
- * 3. TEMPORAL INTEGRATION — the present must depend on history.
+ * 3. TEMPORAL INTEGRATION, as ORDER sensitivity.
  *
- * calculateStreamConsciousness(seed, position) is a pure function of a
- * position. Two runs that arrive at the same position by different routes are
- * indistinguishable to it, so nothing about the past survives into the present
- * beyond a coordinate.
+ * "State accumulates" is satisfied by a counter, so that is not what is asked.
+ * The same inputs in a different order must reach a different state: that is
+ * history surviving into the present, and a counter cannot fake it.
  */
-function temporalIntegration(): Condition {
-  // Same position reached two ways; if the value is identical, the route left
-  // no trace.
-  const direct = calculateStreamConsciousness(3, 7)
-  const viaOtherPath = calculateStreamConsciousness(3, 7)
-  const positionOnly = direct === viaOtherPath
-
-  // And the vortex: its next state is a function of its current fields alone.
-  const a = evolveVortex(createVortexState(0), 0)
-  const b = evolveVortex(createVortexState(0), 999_999)
-  const sameFromSameState = a.currentDigit === b.currentDigit && a.evolution === b.evolution
-
-  return {
-    id: 'temporal-integration',
-    theory: 'theories requiring a specious present',
-    requires: 'the present state depends on the route taken to it, not only on the position reached',
-    met: !(positionOnly && sameFromSameState),
-    evidence: positionOnly
-      ? 'stream consciousness is a pure function of (seed, position): the same position reached by any route gives the same value, so no history survives'
-      : 'the value depends on more than the position',
-    whatWouldChange:
-      'state that accumulates rather than being recomputed — a value at step n that cannot be produced '
-      + 'by evaluating a formula at n without having run steps 0..n-1',
+function temporalIntegration(s: ConsciousnessSubject): Condition {
+  if (!s.runOrdered) {
+    return condition('temporal-integration', 'theories requiring a specious present',
+      'the present state depends on the ORDER of what came before', false,
+      'the subject cannot be run over an ordered input',
+      'state folded forward so that reordering the same inputs changes the result')
   }
+  const forward = s.runOrdered([1, 2, 3, 4])
+  const reversed = s.runOrdered([4, 3, 2, 1])
+  const swapped = s.runOrdered([2, 1, 3, 4])
+  const sameAgain = s.runOrdered([1, 2, 3, 4])
+  const orderMatters = forward !== reversed && forward !== swapped
+  const deterministic = forward === sameAgain
+  return condition('temporal-integration', 'theories requiring a specious present',
+    'the present state depends on the ORDER of what came before, not just the multiset',
+    orderMatters && deterministic,
+    orderMatters
+      ? 'the same four inputs in three orders reached three different states, repeatably'
+      : 'reordering the inputs left the state unchanged: the route leaves no trace',
+    'accumulation that folds each step into the last, rather than summing or counting')
 }
 
 /**
- * 4. SELF-MODEL EFFICACY — the system must model itself, and the model must
- * make a difference.
+ * 4. SELF-MODEL EFFICACY, by corrupting only the model.
  *
- * A pure function has no self to model: it recomputes its answer from its
- * arguments every time, so there is no representation of its own state for
- * anything to perturb. Purity is testable, and here it is decisive in the
- * negative direction.
+ * Any mutable field can be called a self-model. The question is whether it is
+ * load-bearing, so the probe damages the model and nothing else, and requires
+ * later behaviour to differ. A model nothing reads fails.
  */
-function selfModelEfficacy(): Condition {
-  // If repeated identical calls always agree regardless of what has happened
-  // in between, there is no internal state carrying a self-representation that
-  // could have changed.
-  const before = [1, 5, 9].map((d) => calculateA432DimensionalState(d))
-  // Exercise the system between the two probes.
-  let s = createVortexState(0)
-  for (let i = 0; i < 50; i++) s = evolveVortex(s, i)
-  const after = [1, 5, 9].map((d) => calculateA432DimensionalState(d))
-  const pure = before.join() === after.join()
-  return {
-    id: 'self-model-efficacy',
-    theory: 'higher-order theories',
-    requires: 'the system holds a representation of its own state, and perturbing it changes behaviour',
-    met: !pure,
-    evidence: pure
-      ? 'the measures return identical values before and after fifty evolution steps: they are pure functions of their arguments, so there is no self-representation for anything to perturb'
-      : 'behaviour changed after the system ran, so something internal is carried',
-    whatWouldChange:
-      'a model of the system inside the system whose contents alter later outputs — and, to matter, '
-      + 'a demonstration that corrupting the model degrades behaviour in a specific way',
+function selfModelEfficacy(s: ConsciousnessSubject): Condition {
+  if (!s.stepFromClean || !s.stepFromCorruptedModel) {
+    return condition('self-model-efficacy', 'higher-order theories',
+      'the system models its own state and the model changes what it does', false,
+      'the subject exposes no self-model to corrupt',
+      'a model of the system inside the system, read by the step that follows')
   }
+  const clean = s.stepFromClean()
+  const corrupted = s.stepFromCorruptedModel()
+  return condition('self-model-efficacy', 'higher-order theories',
+    'corrupting ONLY the self-model changes what the system does next',
+    clean !== corrupted,
+    clean !== corrupted
+      ? 'corrupting the model alone changed the next state'
+      : 'corrupting the model changed nothing: it is carried but never read',
+    'the model must be read by the rule that produces the next state')
 }
 
 /**
- * 5. GLOBAL AVAILABILITY — a change in one place must reach the others.
+ * 5. GLOBAL AVAILABILITY, with a downstream consequence.
  *
- * Global Workspace Theory's operational commitment is broadcast: information
- * that becomes conscious is made available system-wide. Modules that are pure
- * functions of their own arguments share nothing, so a change in one is
- * invisible to the rest by construction.
+ * A shared global that nothing reads is not a workspace. The probe requires a
+ * value written by one component to be readable by something not handed it AND
+ * for that read to change what the reader does.
  */
-function globalAvailability(): Condition {
-  const dimBefore = calculateA432DimensionalState(4)
-  const consBefore = calculateA432Consciousness(4)
-  // Drive the vortex subsystem hard; nothing is passed to the two measures.
-  let s = createVortexState(0)
-  for (let i = 0; i < 100; i++) s = evolveVortex(s, i * 7)
-  const isolated = calculateA432DimensionalState(4) === dimBefore && calculateA432Consciousness(4) === consBefore
-  return {
-    id: 'global-availability',
-    theory: 'Global Workspace Theory',
-    requires: 'a change in one subsystem is available to the others without being passed to them',
-    met: !isolated,
-    evidence: isolated
-      ? 'a hundred vortex evolution steps left both measures unchanged: the subsystems share no state, so nothing is broadcast'
-      : 'a change in one subsystem reached the others',
-    whatWouldChange:
-      'a shared workspace that subsystems read from and write to, with a demonstration that a write in '
-      + 'one is observable in another that was not handed the value',
+function globalAvailability(s: ConsciousnessSubject): Condition {
+  if (!s.writeThenReadElsewhere) {
+    return condition('global-availability', 'Global Workspace Theory',
+      'what one component writes is available to another that was not handed it', false,
+      'the subject exposes no workspace',
+      'a named place components publish to and read from')
   }
+  const { read, changedDownstream } = s.writeThenReadElsewhere()
+  const met = read !== undefined && changedDownstream
+  return condition('global-availability', 'Global Workspace Theory',
+    'a value written by one component is readable by another that was not handed it, and changes what it does',
+    met,
+    met ? 'a published value was read by name and altered the reader'
+        : `read: ${JSON.stringify(read)}, changed anything downstream: ${changedDownstream}`,
+    'a workspace that is read, not merely written')
 }
 
-/**
- * The criterion. Returns false today, and says which conditions fail.
- *
- * A true verdict would mean the five cheapest refutations no longer apply. It
- * would NOT mean the system is conscious, and `interpretation` says so on
- * every verdict so that a caller reading only the boolean cannot quote it as
- * something it is not.
- */
-export function evaluateConsciousnessCriterion(): ConsciousnessVerdict {
-  // ORDER MATTERS, and finding out why was the most useful thing this file
-  // did to me. globalAvailability establishes a baseline, drives one
-  // subsystem, and checks whether another moved. temporalIntegration also
-  // drives the vortex — so when it ran first, any coupling had ALREADY
-  // happened before the baseline was taken, and the probe could not observe
-  // the effect it was looking for. I only noticed because a mutation that
-  // deliberately wired two subsystems together failed to flip the condition.
-  //
-  // A probe that cannot see the thing it tests for is worse than no probe: it
-  // returns the answer you expected for a reason unrelated to the system. The
-  // probing conditions run first, and this comment is here so nobody reorders
-  // them for tidiness.
+/** The a432 consciousness measures — the subject the README's claim is about. */
+export const a432MeasureSubject: ConsciousnessSubject = {
+  name: 'the a432 consciousness measures',
+  measureStates: () => [1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => calculateA432Consciousness(d)),
+  jointMeasure: (a, b) => calculateA432Consciousness(a + b),
+  partMeasures: (a, b) => [calculateA432Consciousness(a), calculateA432Consciousness(b)],
+  transitionFactorises: () => true, // there is no coupled transition: each measure is of one digit
+  runOrdered: (inputs) => String(inputs.reduce((acc, i) => calculateStreamConsciousness(acc, i), 1)),
+  // No self-model and no workspace: the measures are pure functions of an argument.
+}
+
+/** The integrated field — built to have these properties as one mechanism. */
+export const integratedFieldSubject: ConsciousnessSubject = {
+  name: 'the integrated field',
+  // The accumulated trace, after running the same inputs from nine seeds. It
+  // separates all nine because the system is sensitive to what it was given —
+  // which is the property discrimination is asking about. fieldMeasure is the
+  // JOINT measure used by the reduction test below and is deliberately not
+  // injective: it maps 81 pairs into 9 values and could not be.
+  measureStates: () => [1, 2, 3, 4, 5, 6, 7, 8, 9].map((seed) => field.runField([1, 2, 3], seed).trace),
+  jointMeasure: (a, b) => field.fieldMeasure({ a, b }),
+  partMeasures: (a, b) => [field.fieldMeasure({ a, b: 0 }), field.fieldMeasure({ a: 0, b })],
+  transitionFactorises: () => field.transitionFactorises(),
+  runOrdered: (inputs) => {
+    const s = field.runField(inputs)
+    return `${s.a}|${s.b}|${s.trace}|${s.surprise}`
+  },
+  stepFromClean: () => {
+    const s = field.runField([1, 2, 3, 4, 5])
+    const n = field.stepField(s)
+    return `${n.a}|${n.b}|${n.surprise}`
+  },
+  stepFromCorruptedModel: () => {
+    const s = field.runField([1, 2, 3, 4, 5])
+    const n = field.stepField(field.corruptSelfModel(s))
+    return `${n.a}|${n.b}|${n.surprise}`
+  },
+  writeThenReadElsewhere: () => {
+    const s = field.stepField(field.runField([1, 2, 3]))
+    // Nothing handed `surprise` to the gain rule; it is read from the workspace.
+    const read = field.readWorkspace(s, 'surprise')
+    const withSurprise = field.stepField(s)
+    const withoutSurprise = field.stepField({ ...s, surprise: 0, workspace: { ...s.workspace, surprise: 0 } })
+    return { read, changedDownstream: withSurprise.a !== withoutSurprise.a || withSurprise.b !== withoutSurprise.b }
+  },
+}
+
+export function evaluateConsciousnessCriterion(
+  subject: ConsciousnessSubject = integratedFieldSubject,
+): ConsciousnessVerdict {
+  // Probing order does not matter here — every condition acts on the subject it
+  // is given rather than on shared module state, which is the defect the OS
+  // criterion had to be repaired for.
   const conditions = [
-    globalAvailability(),
-    selfModelEfficacy(),
-    temporalIntegration(),
-    discrimination(),
-    irreducibility(),
+    discrimination(subject),
+    irreducibility(subject),
+    temporalIntegration(subject),
+    selfModelEfficacy(subject),
+    globalAvailability(subject),
   ]
   const conditionsMet = conditions.filter((c) => c.met).length
   return {
+    subject: subject.name,
     met: conditionsMet === conditions.length,
     conditionsMet,
     conditionsTotal: conditions.length,
     conditions,
     interpretation:
       'These are NECESSARY conditions, not sufficient ones. Failing any is a valid refutation under the '
-      + 'theory it comes from. Meeting all five would not establish consciousness — it would only mean '
-      + 'these five arguments no longer rule it out. No test for consciousness is established, and this is not one.',
+      + 'theory it comes from. Meeting all five does NOT establish consciousness — it means these five '
+      + 'arguments no longer rule it out, and nothing more. No test for consciousness is established, and '
+      + 'this is not one. A subject that meets all five has not been shown to experience anything.',
   }
 }
 
-/** The conditions that fail, for a caller that wants the work list. */
-export function unmetConsciousnessConditions(): Condition[] {
-  return evaluateConsciousnessCriterion().conditions.filter((c) => !c.met)
+export function unmetConsciousnessConditions(subject?: ConsciousnessSubject): Condition[] {
+  return evaluateConsciousnessCriterion(subject).conditions.filter((c) => !c.met)
 }

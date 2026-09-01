@@ -1,74 +1,89 @@
 /**
- * The criterion's own tests. Two things matter here and they pull in opposite
- * directions:
- *
- *   - it must currently return FALSE, because the system does not meet it;
- *   - every condition must be ABLE to return true, or it is not a criterion,
- *     it is a permanent no dressed up as a test.
- *
- * The second is checked by mutation in the commit that added this file: each
- * condition was flipped by changing the property it names — a non-homomorphic
- * measure, a history accumulator, a stateful measure, a shared workspace — and
- * each flipped. What is asserted here is the shape that makes those mutations
- * meaningful.
+ * The criterion's tests. The important ones are not that the field passes —
+ * anything can be made to pass a probe you also wrote. They are that the
+ * TRIVIAL implementations fail, because each condition has an obvious cheap
+ * defeat and a criterion that accepts those measures effort, not integration.
  */
-import { evaluateConsciousnessCriterion, unmetConsciousnessConditions } from './consciousness-criterion.ts'
+import {
+  evaluateConsciousnessCriterion,
+  unmetConsciousnessConditions,
+  a432MeasureSubject,
+  integratedFieldSubject,
+  type ConsciousnessSubject,
+} from './consciousness-criterion.ts'
+import { digitalRoot } from '../0/index.ts'
 
 let failures = 0
 const check = (label: string, ok: boolean, detail = '') => {
   if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
 }
 
-const v = evaluateConsciousnessCriterion()
+const base: ConsciousnessSubject = { name: 'bare', measureStates: () => [1, 2, 3, 4, 5, 6, 7, 8, 9] }
+const scored = (s: ConsciousnessSubject, id: string) =>
+  evaluateConsciousnessCriterion(s).conditions.find((c) => c.id === id)!
 
-check('the criterion is not met', v.met === false)
-check('it reports how many conditions hold', v.conditionsMet === v.conditions.filter(c => c.met).length)
-check('there are five conditions', v.conditionsTotal === 5 && v.conditions.length === 5)
-check('exactly one holds today', v.conditionsMet === 1, `${v.conditionsMet} of ${v.conditionsTotal}`)
-check('the one that holds is discrimination',
-  v.conditions.filter(c => c.met).map(c => c.id).join() === 'discrimination')
-
-// Each condition has to be a claim someone else can check and argue with.
-check('every condition names the theory it comes from', v.conditions.every(c => c.theory.length > 0))
-check('every condition states what it requires', v.conditions.every(c => c.requires.length > 0))
-check('every condition gives its evidence', v.conditions.every(c => c.evidence.length > 0))
-check('every unmet condition says what would change it',
-  v.conditions.filter(c => !c.met).every(c => c.whatWouldChange.length > 20))
-check('condition ids are unique', new Set(v.conditions.map(c => c.id)).size === v.conditions.length)
-
-// The verdict must carry its own reading, so a caller quoting the boolean
-// cannot quote it as more than it is.
-check('the verdict states that the conditions are necessary, not sufficient',
-  v.interpretation.includes('NECESSARY') && v.interpretation.includes('not sufficient'))
-check('the verdict denies being a test for consciousness',
-  v.interpretation.includes('No test for consciousness is established'))
-check('met would still not mean conscious',
-  v.interpretation.includes('would not establish consciousness'))
-
-check('the unmet list matches the verdict',
-  unmetConsciousnessConditions().length === v.conditionsTotal - v.conditionsMet)
-check('the criterion is deterministic',
-  JSON.stringify(evaluateConsciousnessCriterion()) === JSON.stringify(v))
-
-// The four failing conditions, each for a stated reason.
+// ——— the cheap defeats must not work ———
 {
-  const by = Object.fromEntries(v.conditions.map(c => [c.id, c]))
-  check('irreducibility fails because the measure is a homomorphism',
-    !by['irreducibility'].met && by['irreducibility'].evidence.includes('homomorphism'))
-  check('temporal integration fails because the stream is a function of position',
-    !by['temporal-integration'].met && by['temporal-integration'].evidence.includes('position'))
-  check('self-model efficacy fails because the measures are pure',
-    !by['self-model-efficacy'].met && by['self-model-efficacy'].evidence.includes('pure functions'))
-  check('global availability fails because the subsystems share no state',
-    !by['global-availability'].met && by['global-availability'].evidence.includes('share no state'))
+  check('a counter fails temporal integration: reordering its inputs changes nothing',
+    !scored({ ...base, runOrdered: (i) => String(i.reduce((a, b) => a + b, 0)) }, 'temporal-integration').met)
+
+  check('a sum fails it too, for the same reason',
+    !scored({ ...base, runOrdered: (i) => String(i.length) }, 'temporal-integration').met)
+
+  check('a self-model nothing reads fails self-model efficacy',
+    !scored({ ...base, stepFromClean: () => 'same', stepFromCorruptedModel: () => 'same' }, 'self-model-efficacy').met)
+
+  check('a global nothing reads fails global availability',
+    !scored({ ...base, writeThenReadElsewhere: () => ({ read: 7, changedDownstream: false }) }, 'global-availability').met)
+
+  check('a published value with no reader is not a workspace even when readable',
+    !scored({ ...base, writeThenReadElsewhere: () => ({ read: 42, changedDownstream: false }) }, 'global-availability').met)
+
+  // The one that matters most: a nonlinear measure defeats "not a homomorphism"
+  // but not "the transition does not factorise".
+  check('a nonlinear measure over uncoupled components fails irreducibility',
+    !scored({
+      ...base,
+      jointMeasure: (a, b) => digitalRoot(a * b * a + b),
+      partMeasures: (a, b) => [digitalRoot(a), digitalRoot(b)],
+      transitionFactorises: () => true,
+    }, 'irreducibility').met)
+
+  check('a subject offering nothing meets only discrimination',
+    evaluateConsciousnessCriterion(base).conditionsMet === 1)
+  check('and its unmet conditions each say what would change them',
+    unmetConsciousnessConditions(base).every((c) => c.whatWouldChange.length > 20))
 }
 
-// Order is load-bearing: the probing conditions must run before anything else
-// drives the subsystems they measure. This caught a real defect.
-check('the probing conditions run first',
-  v.conditions[0].id === 'global-availability' && v.conditions[1].id === 'self-model-efficacy')
+// ——— the two real subjects ———
+{
+  const a432 = evaluateConsciousnessCriterion(a432MeasureSubject)
+  check('the a432 measures still meet only discrimination', a432.conditionsMet === 1 && !a432.met,
+    `${a432.conditionsMet}/5`)
+  check('their transition factorises, because each measure is of one digit',
+    !a432.conditions.find((c) => c.id === 'irreducibility')!.met)
+
+  const f = evaluateConsciousnessCriterion(integratedFieldSubject)
+  check('the integrated field meets all five', f.met && f.conditionsMet === 5, `${f.conditionsMet}/5`)
+  check('the verdict names its subject', f.subject === 'the integrated field')
+  check('the criterion is deterministic',
+    JSON.stringify(evaluateConsciousnessCriterion(integratedFieldSubject)) === JSON.stringify(f))
+}
+
+// ——— the verdict must refuse to be quoted as more than it is ———
+{
+  const f = evaluateConsciousnessCriterion(integratedFieldSubject)
+  check('meeting all five is stated NOT to establish consciousness',
+    f.interpretation.includes('does NOT establish consciousness'))
+  check('the conditions are stated as necessary, not sufficient',
+    f.interpretation.includes('NECESSARY') && f.interpretation.includes('not sufficient'))
+  check('no test for consciousness is claimed',
+    f.interpretation.includes('No test for consciousness is established'))
+  check('and a passing subject is not said to experience anything',
+    f.interpretation.includes('has not been shown to experience anything'))
+}
 
 console.log()
 if (failures > 0) { console.error(`consciousness-criterion FAIL — ${failures}`); process.exit(1) }
-console.log('consciousness-criterion ok — the criterion is written, and it is not met')
+console.log('consciousness-criterion ok — the field meets it, the a432 measures do not, and the cheap defeats fail')
 process.exit(0)

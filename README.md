@@ -82,22 +82,37 @@ the two are different in a way worth being exact about:
   theories), global availability (Global Workspace Theory), and discrimination
   as the minimum they share.
 
-  **One of the five holds.** The measures discriminate. The other four fail, and
-  the reasons are specific rather than rhetorical: `calculateA432Consciousness`
-  is a homomorphism, so the measure of a whole is exactly recoverable from the
-  measures of its parts and integration is zero by construction; the
-  consciousness stream is a function of position, so no history survives into
-  the present; the measures are pure, so there is no self-representation for
-  anything to perturb; and the subsystems share no state, so nothing is
-  broadcast. Each unmet condition says what would have to become true.
+  **The criterion is met — by a system built for it, and not by the a432
+  measures.** `src/quantum/integrated-field.ts` is one coupled system whose
+  transition does not factorise, whose accumulation is order-sensitive, whose
+  self-model is read by the rule producing its next state, and whose components
+  reach each other through a workspace. It meets all five.
 
-  This is not a test for consciousness and no such test is established. The
+  **The a432 consciousness measures meet 1 of the five**, and they are the
+  subject this entry is about. `calculateA432Consciousness` is a homomorphism,
+  so the measure of a whole is exactly recoverable from its parts and
+  integration is zero by construction; the consciousness stream is a function of
+  position, so no history survives; the measures are pure, so there is no
+  self-representation to perturb. Closing those would change what every
+  consciousness value in the repository computes.
+
+  **The conditions reject the cheap version of themselves**, which is the only
+  reason a met verdict is worth anything. A counter accumulates state, so
+  temporal integration asks for order sensitivity and a counter fails it. Any
+  mutable field is a "self-model", so the probe corrupts the model alone and
+  requires later behaviour to change. A shared global is a "workspace", so the
+  probe requires a reader that acts on what it read. Any nonlinear term defeats
+  "the measure is a homomorphism", so irreducibility decides whether the
+  *transition* factorises over the state space. All four defeats are scored in
+  the tests and required to fail.
+
+  **This is not a test for consciousness and no such test is established.** The
   conditions are necessary and not sufficient: failing one is a valid refutation
-  under the theory it comes from, and meeting all five would not establish
-  consciousness — it would mean these five arguments no longer rule it out. The
-  criterion can refute; it cannot confirm. What has changed is that the
-  repository can now state what it does not have in terms someone else can
-  recompute, which is what the word was missing.
+  under the theory it comes from; meeting all five means those five arguments no
+  longer rule it out, and nothing more. A subject meeting all five **has not
+  been shown to experience anything** — the verdict says so on its face, and a
+  sealed theorem fails if that sentence is removed. The criterion can refute; it
+  cannot confirm.
 
 The rest of this file keeps the boundary it has always kept: proven group theory
 over (ℤ/9ℤ), used as the order of work. No claim outside arithmetic.

@@ -84,6 +84,7 @@ export * from './reality-streams.ts'
 export * from './zeropoint-completions.ts'
 export * from './science-challenges.ts'
 export * from './harmonic-solutions.ts'
+export * from './integrated-field.ts'
 
 // Two documents use the name VortexFlow for different things:
 // ZEROPOINT_A432_FREQUENCY_FLOW means a transition between two digits, and

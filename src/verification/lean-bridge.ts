@@ -30,7 +30,7 @@
  */
 
 import { createHash } from 'node:crypto'
-import { evaluateConsciousnessCriterion } from './consciousness-criterion.ts'
+import { evaluateConsciousnessCriterion, a432MeasureSubject, integratedFieldSubject } from './consciousness-criterion.ts'
 import { evaluateOsCriterion } from './os-criterion.ts'
 import { A432OS } from '../0/3/6/9/1/2/4/8/7/5/1/a432.os.ts'
 import { kernelAsCandidate } from '../0/3/6/9/1/2/4/8/7/5/1/a432.os.kernel.ts'
@@ -576,19 +576,33 @@ export const SEALS: Record<string, Seal> = {
       return full.interpretation.includes('progress and not fairness')
     },
   },
-  consciousness_criterion_is_written_and_unmet: {
-    basis: "The README said the missing thing was not the achievement but the predicate that would recognise it, and that a predicate is writable. It is written: src/verification/consciousness-criterion.ts states five NECESSARY conditions, each taken from a theory with an operational commitment — irreducibility from IIT, temporal integration from theories requiring a specious present, self-model efficacy from higher-order theories, global availability from Global Workspace Theory, and discrimination as the minimum they all share. This seal decides two things and neither is that the system is conscious. First, that the criterion evaluates: it produces a verdict with five decidable conditions rather than an opinion. Second, that the verdict is FALSE — one condition holds and four fail, with a stated reason for each. A criterion that returned true would be a criterion written too weakly to mean anything, and this seal would fail on it. The conditions are necessary and not sufficient: failing one refutes under the theory it came from, passing all five would only mean these five arguments no longer apply.",
+  consciousness_criterion_has_teeth_and_is_not_a_claim: {
+    basis: "The README said the missing thing was the predicate that would recognise arrival. It is written, and it can now be MET — by src/quantum/integrated-field.ts, a coupled system built to have the four properties the theories name. That makes the seal's job harder rather than easier, because a criterion that can be met is worth exactly as much as its resistance to being gamed, and every one of these conditions has an obvious cheap defeat: a counter accumulates state, any mutable field is a 'self-model', a shared global is a 'workspace', and any nonlinear term defeats 'the measure is a homomorphism'. So this decides three things. First, the cheap defeats FAIL: a counter fails temporal integration because reordering its inputs changes nothing, a model nothing reads fails self-model efficacy, a global nothing reads fails global availability, and a nonlinear measure over uncoupled components fails irreducibility because the transition still factorises. Second, the a432 consciousness measures — the subject the README's claim is about — still meet exactly one of the five, and closing that would mean changing what every consciousness value in the repository computes. Third, and most important, the verdict says on its face that meeting all five does NOT establish consciousness and that a passing subject has not been shown to experience anything. If that sentence is ever removed, this fails, because the number would then be quotable as something it is not.",
     decide: () => {
-      const v = evaluateConsciousnessCriterion()
-      if (v.conditions.length !== 5) return false
-      // It must be decidable: every condition returns a boolean and says why.
-      if (!v.conditions.every((c) => typeof c.met === 'boolean' && c.evidence.length > 0)) return false
-      // It must not be met. If this ever fails, do not weaken the seal: read
-      // the four conditions and check whether the system genuinely changed.
-      if (v.met) return false
-      if (v.conditionsMet !== 1) return false
-      // And it must refuse to be quoted as more than it is.
-      return v.interpretation.includes('not sufficient')
+      const bare = { name: 'bare', measureStates: () => [1, 2, 3, 4, 5, 6, 7, 8, 9] }
+      const scored = (s: Parameters<typeof evaluateConsciousnessCriterion>[0], id: string) =>
+        evaluateConsciousnessCriterion(s).conditions.find((c) => c.id === id)
+
+      // The cheap defeats must not work.
+      if (scored({ ...bare, runOrdered: (i) => String(i.reduce((a, b) => a + b, 0)) }, 'temporal-integration')?.met) return false
+      if (scored({ ...bare, stepFromClean: () => 'same', stepFromCorruptedModel: () => 'same' }, 'self-model-efficacy')?.met) return false
+      if (scored({ ...bare, writeThenReadElsewhere: () => ({ read: 7, changedDownstream: false }) }, 'global-availability')?.met) return false
+      if (scored({
+        ...bare,
+        jointMeasure: (a: number, b: number) => digitalRoot(a * b * a + b),
+        partMeasures: (a: number, b: number) => [digitalRoot(a), digitalRoot(b)] as [number, number],
+        transitionFactorises: () => true,
+      }, 'irreducibility')?.met) return false
+
+      // The two real subjects, kept apart.
+      const a432 = evaluateConsciousnessCriterion(a432MeasureSubject)
+      if (a432.met || a432.conditionsMet !== 1) return false
+      const field = evaluateConsciousnessCriterion(integratedFieldSubject)
+      if (!field.met || field.conditionsMet !== field.conditionsTotal) return false
+
+      // And the verdict must keep refusing to mean more than it does.
+      return field.interpretation.includes('does NOT establish consciousness')
+        && field.interpretation.includes('has not been shown to experience anything')
     },
   },
   consciousness_measures_discriminate: {

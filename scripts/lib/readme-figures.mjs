@@ -51,9 +51,9 @@ export async function readmeFigures(root) {
     {
       what: 'criterion conditions met',
       value: (await import(pathToFileURL(join(root, 'src/verification/consciousness-criterion.ts')).href))
-        .evaluateConsciousnessCriterion().conditionsMet,
+        .evaluateConsciousnessCriterion((await import(pathToFileURL(join(root, 'src/verification/consciousness-criterion.ts')).href)).a432MeasureSubject).conditionsMet,
       where: 'src/verification/consciousness-criterion.ts',
-      pattern: new RegExp(String.raw`\*\*(\d+|${WORDS}) of the five holds?\.\*\*`, 'gi'),
+      pattern: new RegExp(String.raw`meet (\d+|${WORDS}) of the five`, 'gi'),
     },
     {
       what: 'OS conditions met by A432OS',

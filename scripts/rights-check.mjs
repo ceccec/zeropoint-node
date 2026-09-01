@@ -111,6 +111,42 @@ if (!existsSync(join(ROOT, '.git'))) {
   }
 }
 
+// --- what the README offers must be within what the licence grants ----------
+//
+// The Contributing section invited contributions from four kinds of researcher
+// and pointed at contributing guidelines that did not exist. The licence is
+// NoDerivatives: a patch is a derivative work, so both contributing one and
+// merging it need written permission first. Inviting them anyway put anyone who
+// accepted the invitation in the wrong, and it is the section a contributor
+// reads before doing the work.
+//
+// Only checked when the licence actually forbids derivatives. Under a permissive
+// licence an unqualified invitation is correct and this says nothing.
+const INVITATIONS = [
+  /welcomes contributions/i,
+  /open[- ]source project/i,
+  /\bpull requests?\b/i,
+  /contributing guidelines/i,
+]
+// Naming the constraint anywhere in the section is enough; how it is worded is
+// not this check's business.
+const QUALIFIERS = [/NoDerivatives/i, /written permission/i, /\bND\b/, /license@/i]
+
+if (/nd/i.test(String(pkg.license).split('-').slice(-2, -1)[0] ?? '') || /-ND-/i.test(pkg.license)) {
+  const readme = existsSync(join(ROOT, 'README.md')) ? read('README.md') : ''
+  // The section, not the whole file: a qualifier in the LICENSE preamble at the
+  // top does not qualify an invitation 600 lines below it.
+  const m = /^##+ .*Contributing.*$/mi.exec(readme)
+  const section = m ? readme.slice(m.index).split(/^##+ /m).slice(0, 2).join('') : ''
+  const invited = INVITATIONS.filter((re) => re.test(section)).map((re) => String(re))
+  if (invited.length > 0 && !QUALIFIERS.some((re) => re.test(section))) {
+    problems.push(
+      `the README's Contributing section invites contributions (${invited.length} phrase(s)) but the licence is `
+      + `${pkg.license} — a patch is a derivative work, so the section must say permission is needed first`,
+    )
+  }
+}
+
 console.log(`rights:check — holder "${holder}" (${years}), licence ${pkg.license}, stated in 4 places`)
 if (problems.length > 0) {
   for (const p of problems) console.error(`  ✗ ${p}`)

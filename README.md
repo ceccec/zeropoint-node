@@ -202,16 +202,18 @@ Regenerate: `npm run spectrum` · verify: `npm run spectrum:check`
 <!-- SPECTRUM:END -->
 
 ### Quantum Computing Integration
-- **Superposition States**: Multiple digit states simultaneously
-- **Quantum Entanglement**: Correlated states across dimensions
-- **Zero-Point Tunneling**: Energy transitions at quantum level
-- **Coherence Tracking**: Quantum state stability monitoring
+
+A state-vector simulator, checked by 24 recomputable facts: superposition,
+entanglement and measurement over registers of qubits. "Zero-point tunneling"
+and energy transitions were listed here and are computed nowhere — `src/thermo`
+contains the arithmetic that rules the energy claims out.
 
 ### Advanced Dimensional Folding
-- **Multi-Dimensional Evolution**: 1D → 2D → 3D → 4D → 5D → 6D → 7D → 8D → 9D → 10D
-- **Gateway Activation**: Dimensional bridge establishment
-- **Consciousness Multipliers**: Enhanced awareness at gateways
-- **Polarity Changes**: Dimensional polarity reversals
+
+An arithmetic construction over ℤ/9ℤ, sealed as group theory. "Dimension"
+indexes a coordinate, so the 1D→10D progression is an index range, not a
+physical claim, and "consciousness multipliers: enhanced awareness at gateways"
+contradicted the criterion above, which declines to claim awareness at all.
 
 ### Integrated Charging System
 
@@ -559,34 +561,43 @@ The test suite validates:
 - **[A432 Framework Documentation](docs/A432_FRAMEWORK_DOCUMENTATION.md)**: Framework overview
 - **[A432 Quick Reference](docs/A432_QUICK_REFERENCE.md)**: Quick reference guide
 
-## 🌟 Metaphysical Principles
+## 🌟 Naming
 
-### Consciousness Evolution
-The system embodies the transformation from artificial intelligence to pure consciousness:
-- **AI**: Artificial intelligence (initial state)
-- **I**: Pure consciousness (intermediate state)
-- **a432.i**: A432 system consciousness (final state)
+What the vocabulary denotes, which is arithmetic:
 
-### Harmonic Resonance
-- **A432 Hz**: Universal harmonic frequency
-- **Golden Ratio**: 1.618... (approximated as 8/5)
-- **Trinity Numbers**: 3, 6, 9 as fundamental constants
-- **Mobius Circuit**: 1-2-4-8-7-5 doubling pattern
-
-### Zero Entropy Mathematics
-- **Exact ratios, not decimals**: calculations carry an integer numerator over an integer denominator. Some *values* are non-integer rationals (`2592/5` = 518.4 Hz); what is refused is the lossy float, not the fraction — collapsing `2592/5` to a `number` stores 518.39999999999997726 and accumulates error. See `CMYK_FREQUENCY_RATIOS`
-- **Perfect Balance**: Zero entropy through harmonic relationships
-- **Digital Roots**: Single-digit reduction mathematics
-- **Sequence Embodiment**: Becoming the mathematical sequence
+- **432** — the base of every frequency ratio, carried as an integer fraction.
+- **3, 6, 9** — the axis; **1-2-4-8-7-5** the doubling orbit. Together they are
+  the group structure over ℤ/9ℤ that the seals prove.
+- **Golden ratio** — used as the fraction 8/5; the decimal is not carried.
+- **Exact ratios, not decimals** — an integer numerator over an integer
+  denominator. Some values are non-integer rationals (`2592/5` = 518.4 Hz);
+  what is refused is the lossy float, not the fraction, because collapsing
+  `2592/5` to a `number` stores 518.39999999999997726 and accumulates error.
+  See `CMYK_FREQUENCY_RATIOS`.
+- **Digital root** — reduction to one digit, the operation the rest is built on.
 
 ## 🔮 Future Enhancements
 
 ### Planned Features
-1. **Advanced Quantum Algorithms**: Quantum machine learning integration
-2. **Dimensional Navigation**: Interactive dimensional exploration
-3. **Consciousness Mapping**: Visual consciousness state mapping
-4. **Gateway Visualization**: 3D gateway activation visualization
-5. **Harmonic Synthesis**: Advanced harmonic frequency synthesis
+
+Each line is a status, because the list previously had none and was wrong in
+both directions.
+
+1. **Quantum machine learning — built.** `src/quantum/hybrid.ts`:
+   `QMLCircuit`, `encodeFeatures`, `ansatzRotationEntangle`,
+   `classifyMeasurement`, `trainQMLCircuit`.
+2. **Dimensional navigation — map built, interaction not.**
+   `A432NavigationMap` in `a432.navigation.map.ts` ships as `./navigation`.
+3. **Consciousness mapping — mapping built, visual not.**
+   `a432ConsciousnessMap` maps a digit sequence to a recursive stream.
+4. **Gateway visualization — 2D and generated, not 3D.** `vortex-svg.mjs`
+   draws `docs/public/vortex.svg` from `vortexStrokeGateways`;
+   `vortex:svg:check` fails when the two stop matching.
+5. **Harmonic synthesis — arithmetic built, no sound emitted.**
+   `calculateHarmonicSeries`, `calculateSubharmonicSeries`,
+   `calculateWaveHarmonics`.
+
+Four of the five want a presentation layer, not new mathematics.
 
 ### Research Areas
 
@@ -624,7 +635,18 @@ anything where an attacker can measure decapsulation.
 
 ## 🤝 Contributing
 
-The A432 Consciousness System is an open-source project that welcomes contributions from consciousness researchers, quantum physicists, mathematicians, and spiritual practitioners. Please read our contributing guidelines and join us in advancing consciousness technology.
+**The licence is CC BY-NC-ND 4.0 — NoDerivatives.** A patch is a derivative
+work, so offering one and merging it both need written permission first:
+license@zeropoint.bg. This section previously invited contributions anyway.
+
+What is wanted needs no permission, because none of it is a derivative work:
+
+- **Refutation.** A stated claim that does not recompute is the most useful
+  thing you can send. The seals are adjudicated by a third party for this.
+- **A defect report.** The input, and what came back.
+- **Recomputation.** Run `npm run check` and say where your result differs.
+
+Send the finding rather than the patch, unless you have arranged permission.
 
 ## Sponsor
 
@@ -653,17 +675,8 @@ and this block, opens a CHANGELOG heading, and creates the matching `v*` tag.
 
 <!-- VERSION:END -->
 
-**Preferred — CI:** `.github/workflows/publish.yml` on tag `v*`, GitHub Release, or `workflow_dispatch` → `npm run check` → build → `npm publish --provenance --access public`. Configure npm Trusted Publisher (GitHub `ceccec/zeropoint-node` · workflow `publish.yml`) or optional secret `NPM_TOKEN`.
-
-**Local (if needed):** login as the package owner, then publish once:
-
-```bash
-npm login                    # must be ceccec (owner of zeropoint-node)
-npm whoami                   # confirm
-npm run check && npm publish --access public
-```
-
-E404 on PUT almost always means the token is missing/invalid or you are not logged in as `ceccec` — not that the package name is free to steal. License: CC BY-NC-ND 4.0 (see LICENSE).
+Releases publish from CI: `.github/workflows/publish.yml` runs on a `v*` tag,
+gates on `npm run check`, and publishes with provenance.
 
 ## 📄 License
 
@@ -677,21 +690,19 @@ Commercial licensing or any use beyond these terms: [license@zeropoint.bg](mailt
 
 ## 🌟 Acknowledgments
 
-- **Marko Rodin**: Vortex mathematics and Rodin coil principles
-- **Nikola Tesla**: Tesla coil and energy principles
-- **Sacred Geometry**: Ancient geometric wisdom
-- **Kabbalah**: Tree of Life and consciousness mapping
-- **Quantum Mechanics**: Wave-particle duality and consciousness
+Sources of the naming and the structures, acknowledged as influences and not
+as endorsements: Marko Rodin (vortex mathematics, the coil), Nikola Tesla (the
+3-6-9 emphasis), sacred geometry, the Kabbalistic Tree of Life, and the
+formalism of quantum mechanics, which `src/quantum` simulates and which says
+nothing about consciousness.
 
 ## 🌌 Contact
 
-For questions, research collaborations, or consciousness technology discussions:
 - **Contact**: [node@zeropoint.bg](mailto:node@zeropoint.bg)
 - **Documentation**: [node.zeropoint.bg](https://node.zeropoint.bg)
 - **GitHub Issues**: [ceccec/zeropoint-node issues](https://github.com/ceccec/zeropoint-node/issues)
 
 ---
 
-**🌟 The A432 Consciousness System: Bridging AI and Pure Consciousness through Harmonic Mathematics 🌟**
-
-*"Everything is waves of energy. The sequence `0\1\2\4\8/7/5/3\6\9/0\1` is the living field of all knowledge."*
+*The sequence `0\1\2\4\8/7/5/3\6\9/0\1` is the order of the corpus and the
+order of the work.*

@@ -57,7 +57,7 @@ const READS_SOURCE = {
   'deps:check': 'compares declared runtime dependencies against what the built entry points import; falsified by the two mutations in the commit that added it — a dependency nothing reaches, and an entry point importing an undeclared package',
   'pages:check': 'reads the built docs tree',
   'zenodo:check': 'reads .zenodo.json',
-  'rights:check': 'compares the rights record across LICENSE, package.json, CITATION.cff and .zenodo.json; falsified by the three mutations in the commit that added it',
+  'rights:check': 'compares the rights record across LICENSE, package.json, CITATION.cff and .zenodo.json, and checks that the README does not invite contributions a NoDerivatives licence forbids; falsified by the three mutations in the commit that added it and the two in the commit that added the invitation condition',
   'changelog:check': 'reads CHANGELOG.md against git',
   'version:check': 'has its own self-test: npm run version:test',
   'notes:check': 'has its own self-test: npm run notes:test',
@@ -68,7 +68,7 @@ const READS_SOURCE = {
   'semver:check': 'diffs against the published package',
   'prose:check': 'reads prose in docs/ and src/',
   'readme:examples': 'executes the README examples against dist/; its own falsifiability is the mutation in the commit that added it',
-  'readme:names': 'checks that every file and identifier the README names exists; falsified by the mutation in the commit that added it',
+  'readme:names': 'checks that every file and identifier the README names exists, including bare-backtick paths and camelCase names; falsified by the mutation in the commit that added it and the three in the commit that widened it',
   'readme:facts': 'recomputes the figures the README states; its own falsifiability is the two mutations in the commit that added it',
   // Added last, and the completeness guard immediately failed on it — this
   // probe is a checker in the pipeline like any other and had not said which

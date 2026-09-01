@@ -56,22 +56,45 @@ for (const f of allFiles) {
  */
 const NOT_OURS = new Set(['NPM_TOKEN', 'GITHUB_TOKEN', 'ZENODO_TOKEN', 'NODE_V8_COVERAGE'])
 
+/**
+ * Platform globals are not ours to declare either — the README names
+ * `setInterval` when describing what the OS kernel replaced. Asking the
+ * runtime is better than listing them: the list cannot fall behind, and a name
+ * src/ DOES declare is accepted above this on the `declared` branch, so a
+ * collision with a global never hides one of our own identifiers.
+ */
+const isGlobal = (n) => Object.hasOwn(globalThis, n) || typeof globalThis[n] !== 'undefined'
+
 const problems = []
 
-// Files: **`a432.os.ts`** style, and bare `src/...` paths.
+// Files: any backticked path with a source extension, bold or not. It was
+// **`a432.os.ts`** only, which meant a file named in ordinary backticks was
+// not checked — and a whole section could name six of them and pass.
 const files = new Set()
-for (const m of readme.matchAll(/\*\*`([A-Za-z0-9._/-]+\.(?:ts|md|json|js|mjs))`\*\*/g)) files.add(m[1])
+for (const m of readme.matchAll(/`([A-Za-z0-9._/-]+\.(?:ts|md|json|js|mjs))`/g)) files.add(m[1])
 for (const f of files) {
   if (existsSync(join(ROOT, f)) || byBasename.has(basename(f))) continue
   problems.push(`names the file ${f}, which does not exist`)
 }
 
-// Identifiers: `someFunction()` and `SOME_CONSTANT`.
+// Identifiers: `someFunction()`, `SOME_CONSTANT`, and a bare `camelCase` or
+// `PascalCase` token. The third form is why this was widened: naming
+// `trainQMLCircuit` without parentheses was indistinguishable from prose, so
+// eleven identifiers in one section went unchecked.
+//
+// An interior capital is what separates an identifier from an English word in
+// backticks. `three`, `express` and `dependencies` are all backticked in this
+// README and none is ours to declare; requiring a capital excludes them
+// without an allowlist to maintain.
 const names = new Set()
 for (const m of readme.matchAll(/`([A-Za-z_$][A-Za-z0-9_$]*)\(\)`/g)) names.add(m[1])
 for (const m of readme.matchAll(/`([A-Z][A-Z0-9_]{3,})`/g)) names.add(m[1])
+for (const m of readme.matchAll(/`([a-zA-Z_$][a-zA-Z0-9_$]*)`/g)) {
+  const n = m[1]
+  if (/[A-Z]/.test(n.slice(1)) && !/^[A-Z][A-Z0-9_]*$/.test(n)) names.add(n)
+}
 for (const n of names) {
-  if (NOT_OURS.has(n) || declared.has(n)) continue
+  if (NOT_OURS.has(n) || declared.has(n) || isGlobal(n)) continue
   problems.push(`names ${n}, which src/ does not declare`)
 }
 

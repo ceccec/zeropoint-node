@@ -6,12 +6,12 @@
     "cycles": 0,
     "unreachable": 115,
     "unloadable": 0,
-    "prose": 55,
+    "prose": 50,
     "tautology": 0,
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 28015
+    "unguardedReadme": 27962
   },
   "raised": {
     "unguardedReadme": {

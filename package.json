@@ -171,6 +171,7 @@
     "registry:test": "node scripts/npm-registry-sync.mjs --self-test",
     "fold": "node --experimental-strip-types scripts/fold-lean.mjs",
     "entries:check": "node --experimental-strip-types scripts/entries-check.mjs",
+    "deps:check": "node scripts/deps-check.mjs",
     "pages:check": "node --experimental-strip-types scripts/pages-check.mjs",
     "pages:seed": "node --experimental-strip-types scripts/pages-check.mjs --seed",
     "audit:outside": "node --experimental-strip-types scripts/audit-outside.mjs",
@@ -212,7 +213,7 @@
     "vortex:svg:check": "node --experimental-strip-types scripts/vortex-svg.mjs --check",
     "bundle:a432": "node scripts/build-a432-bundle.mjs",
     "bundle:a432:check": "node scripts/build-a432-bundle.mjs --check",
-    "check": "npm run build && npm run version:test && npm run version:address:test && npm run version:cidr:test && npm run version:calendar:test && npm run calendar:drift:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run version:check && npm run zenodo:check && npm run rights:check && npm run changelog:check && npm run test:kernel && npm run test:core && npm run test:measured-debt && npm run test:security && npm run test:quantum && npm run test:hex-trinities && npm run test:frequency-flow && npm run test:error-resolvers && npm run test:vortex-pi && npm run test:validators && npm run test:gateways && npm run test:trinity && npm run test:reality-streams && npm run test:completions && npm run test:science-challenges && npm run test:harmonic-solutions && npm run test:phases-audit && npm run test:crypto && npm run test:a432 && npm run test:a432:math && npm run constants:check && npm run falsifiable:check && npm run finite:check && npm run coverage:audit && npm run standard:check && npm run adjudicate:check && npm run test:verification && npm run test:consciousness-criterion && npm run test:integrated-field && npm run test:a432-consciousness-field && npm run test:system-provider && npm run test:os-criterion && npm run test:os-kernel && npm run math:ban && npm run silent:check && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run readme:facts && npm run readme:names && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run api:reference && npm run api:reference:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run docs:commands && npm run entrypoints && npm run readme:examples && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run quantum:proof && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
+    "check": "npm run build && npm run version:test && npm run version:address:test && npm run version:cidr:test && npm run version:calendar:test && npm run calendar:drift:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run deps:check && npm run version:check && npm run zenodo:check && npm run rights:check && npm run changelog:check && npm run test:kernel && npm run test:core && npm run test:measured-debt && npm run test:security && npm run test:quantum && npm run test:hex-trinities && npm run test:frequency-flow && npm run test:error-resolvers && npm run test:vortex-pi && npm run test:validators && npm run test:gateways && npm run test:trinity && npm run test:reality-streams && npm run test:completions && npm run test:science-challenges && npm run test:harmonic-solutions && npm run test:phases-audit && npm run test:crypto && npm run test:a432 && npm run test:a432:math && npm run constants:check && npm run falsifiable:check && npm run finite:check && npm run coverage:audit && npm run standard:check && npm run adjudicate:check && npm run test:verification && npm run test:consciousness-criterion && npm run test:integrated-field && npm run test:a432-consciousness-field && npm run test:system-provider && npm run test:os-criterion && npm run test:os-kernel && npm run math:ban && npm run silent:check && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run readme:facts && npm run readme:names && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run api:reference && npm run api:reference:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run docs:commands && npm run entrypoints && npm run readme:examples && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run quantum:proof && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
     "criteria:check": "node --experimental-strip-types scripts/criteria-check.mjs",
     "prepublishOnly": "npm run build",
     "prose": "node scripts/prose-claims.mjs --list",
@@ -220,7 +221,7 @@
     "quantum:proof": "node --experimental-strip-types scripts/quantum-proof.mjs",
     "preversion": "npm run check",
     "version": "npm run version:seal && git add CITATION.cff README.md CHANGELOG.md",
-    "postversion": "echo \"tagged v$npm_package_version — fill in the CHANGELOG entry if it is still a stub, then: git push --follow-tags\"",
+    "postversion": "echo \"tagged v$npm_package_version \u2014 fill in the CHANGELOG entry if it is still a stub, then: git push --follow-tags\"",
     "notes": "node scripts/release-notes.mjs",
     "notes:test": "node scripts/release-notes.test.mjs",
     "notes:check": "node scripts/release-notes.mjs --check",
@@ -293,17 +294,20 @@
   "license": "CC-BY-NC-ND-4.0",
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@hotwired/stimulus": "3.2.2",
     "@rollup/plugin-commonjs": "29.0.3",
     "@rollup/plugin-node-resolve": "16.0.3",
     "@rollup/plugin-typescript": "12.3.0",
     "@types/express": "5.0.6",
     "@types/node": "26.1.2",
     "@types/three": "0.185.3",
+    "@uuidna/uuidna": "0.2.9",
     "eslint": "10.8.0",
+    "express": "5.2.1",
     "globals": "17.9.0",
-    "jest": "30.4.2",
     "rollup": "^4.0.0",
     "rollup-plugin-dts": "6.4.1",
+    "three": "0.185.1",
     "tslib": "^2.6.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.65.0",
@@ -317,12 +321,6 @@
     "url": "https://github.com/ceccec/zeropoint-node/issues"
   },
   "homepage": "https://node.zeropoint.bg",
-  "dependencies": {
-    "@hotwired/stimulus": "3.2.2",
-    "@uuidna/uuidna": "0.2.9",
-    "express": "5.2.1",
-    "three": "0.185.1"
-  },
   "bin": {
     "zeropoint-mcp": "./dist/mcp.cjs"
   }

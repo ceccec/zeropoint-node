@@ -50,10 +50,11 @@ const GUARDS = {
  */
 const READS_SOURCE = {
   'constants:check': 'reads src/ for retyped kernel constants',
-  'finite:check': 'imports every module and inspects exported values',
+  'finite:check': 'imports every module, inspects exported values, and calls every export it can construct arguments for; falsified by the three mutations in the commit that added the call pass',
   'silent:check': 'imports every module and watches stdout',
   'standard:check': 'compares digitalRoot implementations across src/',
   'entries:check': 'reads package.json exports',
+  'deps:check': 'compares declared runtime dependencies against what the built entry points import; falsified by the two mutations in the commit that added it — a dependency nothing reaches, and an entry point importing an undeclared package',
   'pages:check': 'reads the built docs tree',
   'zenodo:check': 'reads .zenodo.json',
   'rights:check': 'compares the rights record across LICENSE, package.json, CITATION.cff and .zenodo.json; falsified by the three mutations in the commit that added it',

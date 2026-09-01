@@ -61,7 +61,15 @@ export async function readmeFigures(root) {
         const { evaluateOsCriterion } = await import(pathToFileURL(join(root, 'src/verification/os-criterion.ts')).href)
         const { A432OS } = await import(pathToFileURL(join(root, 'src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts')).href)
         const os = new A432OS()
-        return evaluateOsCriterion({ start: () => os.start(), stop: () => os.stop(), isRunning: () => os.isRunning }).conditionsMet
+        // The full interface — probing only start/stop would pin this at 1 and
+        // silently disagree with the class the README is describing.
+        return evaluateOsCriterion({
+          spawn: (n, r) => os.spawn(n, r), tick: () => os.tick(), tasks: () => os.tasks(),
+          allocate: (o, a) => os.allocate(o, a), release: (o, a) => os.release(o, a), available: () => os.available(),
+          syscall: (n, ...a) => os.syscall(n, ...a),
+          start: () => os.start(), stop: () => os.stop(), isRunning: () => os.running(),
+          snapshot: () => os.snapshot(), restore: (x) => os.restore(x),
+        }).conditionsMet
       })(),
       where: 'src/verification/os-criterion.ts against A432OS',
       pattern: /\*\*`A432OS` meets (\d+) of the 7\.\*\*/g,

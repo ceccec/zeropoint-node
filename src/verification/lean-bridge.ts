@@ -542,26 +542,38 @@ export const SEALS: Record<string, Seal> = {
       return preimage.every((n) => TRIAD.includes(throughVoid(n)))
     },
   },
-  os_criterion_separates_the_claim_from_the_kernel: {
-    basis: "The README calls a432.os.ts 'not yet, and under construction', with a recognisable target and no measure of distance to it. src/verification/os-criterion.ts is the measure: seven conditions the textbooks agree an operating system satisfies — tasks, scheduling, resources, isolation, a syscall boundary, a lifecycle, persistence. Unlike the consciousness criterion this one can CONFIRM, because 'operating system' is not a contested term. This seal decides the two numbers that matter and keeps them apart. A432OS, the class the README names, meets ONE of the seven: it has a lifecycle. a432.os.kernel.ts, written against the criterion, meets all seven and is therefore a minimal operating system in the ordinary sense — minimal meaning it schedules closures on one thread with no preemption and no memory protection. The seal fails if the two are ever conflated: if A432OS is reported as meeting more than it does, or if the kernel stops meeting what it claims.",
+  os_criterion_is_met_by_a432os_and_still_discriminates: {
+    basis: "The README called a432.os.ts 'not yet, and under construction'. src/verification/os-criterion.ts made that measurable at 1 of 7 — A432OS had a lifecycle and nothing else, its work running on four independent setInterval timers where nothing decided what ran and a throw escaped into the event loop. It now meets all seven, by composing a432.os.kernel: one clock replaces the four timers and the kernel selects among the units and contains their failures. The cadences are unchanged — at a tick every A432/8 the units are due every 8, 4, 2 and 1 ticks, which is the 432, 216, 108 and 54 milliseconds the timers used. This seal decides two things, because the first is worthless without the second. A432OS meets the criterion. AND the criterion still discriminates: a candidate offering nothing scores 0 and a candidate offering only a lifecycle scores 1, so the seven are being earned rather than handed out. If the criterion ever passes a candidate that offers nothing, this fails.",
     decide: () => {
-      const legacyOs = new A432OS()
-      const legacy = evaluateOsCriterion({
-        start: () => legacyOs.start(),
-        stop: () => legacyOs.stop(),
-        isRunning: () => (legacyOs as unknown as { isRunning: boolean }).isRunning,
+      const os = new A432OS()
+      const full = evaluateOsCriterion({
+        spawn: (name, run) => os.spawn(name, run),
+        tick: () => os.tick(),
+        tasks: () => os.tasks(),
+        allocate: (owner, amount) => os.allocate(owner, amount),
+        release: (owner, amount) => os.release(owner, amount),
+        available: () => os.available(),
+        syscall: (name, ...args) => os.syscall(name, ...args),
+        start: () => os.start(),
+        stop: () => os.stop(),
+        isRunning: () => os.running(),
+        snapshot: () => os.snapshot(),
+        restore: (snap) => os.restore(snap as never),
       })
-      // The class the README names has a lifecycle and nothing else.
-      if (legacy.conditionsMet !== 1) return false
-      if (legacy.met) return false
-      if (!legacy.conditions.find((c) => c.id === 'lifecycle')?.met) return false
+      if (!full.met || full.conditionsMet !== full.conditionsTotal) return false
 
-      // The kernel written against it meets all seven.
-      const kernel = evaluateOsCriterion(kernelAsCandidate())
-      if (!kernel.met || kernel.conditionsMet !== kernel.conditionsTotal) return false
+      // A criterion everything passes measures nothing.
+      if (evaluateOsCriterion({}).conditionsMet !== 0) return false
+      const lifecycleOnly = new A432OS()
+      const bare = evaluateOsCriterion({
+        start: () => lifecycleOnly.start(),
+        stop: () => lifecycleOnly.stop(),
+        isRunning: () => lifecycleOnly.running(),
+      })
+      if (bare.conditionsMet !== 1 || bare.met) return false
 
-      // And the criterion says out loud what its scheduling probe does not check.
-      return kernel.interpretation.includes('progress and not fairness')
+      // And it still says which of its probes is weaker than it looks.
+      return full.interpretation.includes('progress and not fairness')
     },
   },
   consciousness_criterion_is_written_and_unmet: {

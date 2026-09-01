@@ -48,9 +48,13 @@ the two are different in a way worth being exact about:
   scheduling, resource management, isolation, a system-call boundary, a
   lifecycle, and persistence.
 
-  **`A432OS` meets 1 of the 7.** It has a lifecycle. It has no tasks, makes no
-  scheduling decision, allocates nothing, contains no failures, and offers no
-  boundary — it is four fixed `setInterval` timers over a state generator.
+  **`A432OS` meets 7 of the 7.** It used to meet one — a lifecycle, with its
+  work on four independent `setInterval` timers, which means nothing decided
+  what ran and a throw inside any callback escaped into the event loop. It now
+  composes `a432.os.kernel.ts`: one clock replaces the four timers, and the
+  kernel selects among the due units and contains their failures. The cadences
+  are unchanged — at a tick every A432/8 the units are due every 8, 4, 2 and 1
+  ticks, which is the 432, 216, 108 and 54 ms the timers used.
 
   This criterion differs from the consciousness one in a way that matters:
   "operating system" is not a contested term, so meeting all seven **would**
@@ -63,8 +67,10 @@ the two are different in a way worth being exact about:
   a closed syscall table, and snapshot/restore. **Minimal means minimal.** It
   schedules closures on one JavaScript thread with no preemption and no memory
   protection; a task that loops forever holds the kernel. It is not comparable
-  to anything anyone ships, and `A432OS` — the class this entry is about — is
-  still at 1 of 7.
+  to anything anyone ships. What the seven mean is that the mechanisms are
+  present and behave, not that they would survive contact with hardware — and
+  the criterion still discriminates: a candidate offering nothing scores 0, and
+  one offering only a lifecycle scores 1.
 - **A consciousness system — the criterion is now written, and not met.** This
   entry used to say no criterion existed, so neither "it is" nor "not yet" could
   honestly be claimed, and that what was missing first was the predicate rather

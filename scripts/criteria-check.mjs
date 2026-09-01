@@ -32,10 +32,21 @@ const { A432OS } = await load('src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts')
 const consciousness = evaluateConsciousnessCriterion()
 const os = (() => {
   const instance = new A432OS()
+  // The FULL interface. Probing only start/stop would report 1 of 7 forever
+  // and block every release on a number the class no longer deserves.
   return evaluateOsCriterion({
+    spawn: (name, run) => instance.spawn(name, run),
+    tick: () => instance.tick(),
+    tasks: () => instance.tasks(),
+    allocate: (owner, amount) => instance.allocate(owner, amount),
+    release: (owner, amount) => instance.release(owner, amount),
+    available: () => instance.available(),
+    syscall: (name, ...args) => instance.syscall(name, ...args),
     start: () => instance.start(),
     stop: () => instance.stop(),
-    isRunning: () => instance.isRunning,
+    isRunning: () => instance.running(),
+    snapshot: () => instance.snapshot(),
+    restore: (snap) => instance.restore(snap),
   })
 })()
 

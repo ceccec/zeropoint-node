@@ -15,23 +15,43 @@ const check = (label: string, ok: boolean, detail = '') => {
   if (ok) { console.log(`  ✓ ${label}`) } else { failures++; console.error(`  ✗ ${label}${detail ? ' — ' + detail : ''}`) }
 }
 
-const legacyOs = new A432OS()
-const legacy = evaluateOsCriterion({
-  start: () => legacyOs.start(),
-  stop: () => legacyOs.stop(),
-  isRunning: () => (legacyOs as unknown as { isRunning: boolean }).isRunning,
+const asCandidate = (os: A432OS) => ({
+  spawn: (name: string, run: () => void) => os.spawn(name, run),
+  tick: () => os.tick(),
+  tasks: () => os.tasks(),
+  allocate: (owner: string | number, amount: number) => os.allocate(owner, amount),
+  release: (owner: string | number, amount: number) => os.release(owner, amount),
+  available: () => os.available(),
+  syscall: (name: string, ...args: unknown[]) => os.syscall(name, ...args),
+  start: () => os.start(),
+  stop: () => os.stop(),
+  isRunning: () => os.running(),
+  snapshot: () => os.snapshot(),
+  restore: (snap: unknown) => os.restore(snap as never),
 })
 
-check('the criterion has seven conditions', legacy.conditionsTotal === 7)
-check('A432OS meets exactly one', legacy.conditionsMet === 1, `${legacy.conditionsMet}/7`)
-check('the one it meets is the lifecycle',
-  legacy.conditions.filter(c => c.met).map(c => c.id).join() === 'lifecycle')
-check('A432OS is not an operating system by this measure', legacy.met === false)
+const a432os = evaluateOsCriterion(asCandidate(new A432OS()))
+check('the criterion has seven conditions', a432os.conditionsTotal === 7)
+check('A432OS meets all seven', a432os.met && a432os.conditionsMet === 7, `${a432os.conditionsMet}/7`)
+
+// A criterion everything passes measures nothing, so the discrimination is
+// asserted alongside the pass rather than assumed from it.
+const lifecycleOnly = new A432OS()
+const bare = evaluateOsCriterion({
+  start: () => lifecycleOnly.start(),
+  stop: () => lifecycleOnly.stop(),
+  isRunning: () => lifecycleOnly.running(),
+})
+check('a candidate offering only a lifecycle still scores exactly one', bare.conditionsMet === 1 && !bare.met)
+check('the one it scores is the lifecycle',
+  bare.conditions.filter(c => c.met).map(c => c.id).join() === 'lifecycle')
 check('every unmet condition tells you what would change it',
   unmetOsConditions({}).every(c => c.whatWouldChange.length > 20))
 check('a candidate offering nothing meets nothing', evaluateOsCriterion({}).conditionsMet === 0)
 
 const kernel = evaluateOsCriterion(kernelAsCandidate())
+check('the OS and the kernel agree, because the OS composes it',
+  kernel.conditionsMet === a432os.conditionsMet)
 check('the kernel meets all seven', kernel.met && kernel.conditionsMet === 7, `${kernel.conditionsMet}/7`)
 check('the verdict says meeting them WOULD make it a minimal OS',
   kernel.interpretation.includes('WOULD make this a minimal operating system'))
@@ -67,5 +87,5 @@ check('the criterion is deterministic for a fresh candidate',
 
 console.log()
 if (failures > 0) { console.error(`os-criterion FAIL — ${failures}`); process.exit(1) }
-console.log('os-criterion ok — A432OS 1/7, the kernel 7/7')
+console.log('os-criterion ok — A432OS 7/7 through the kernel, and a lifecycle-only candidate still 1/7')
 process.exit(0)

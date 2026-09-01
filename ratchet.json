@@ -11,13 +11,13 @@
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 26238
+    "unguardedReadme": 26714
   },
   "raised": {
     "unguardedReadme": {
-      "from": 25034,
-      "to": 26238,
-      "reason": "the OS criterion section: 1204 bytes recording that A432OS meets 1 of 7 and what the other six require, with the A432OS score itself checked by readme:facts so it cannot be overstated"
+      "from": 26238,
+      "to": 26714,
+      "reason": "A432OS reaching 7 of 7: 476 bytes recording how the four timers became one clock the kernel schedules against, with the score itself checked by readme:facts"
     }
   }
 }

@@ -1,5 +1,41 @@
 # Changelog
 
+## 1.3.6
+
+A patch: 4 exports added, nothing removed. One change, and its second half is
+the part that matters.
+
+**The "HONEST SCOPE" label is gone** — three sites, two of them added earlier
+the same day. A paragraph that announces itself as honest implies the rest is
+not, and the label did no work the sentences underneath were not already doing.
+
+**And the scope computes now instead of asserting.** It was still a paragraph
+saying "six of the seven are open" — a count nothing recomputed, which is the
+same failure as a README stating a number: add a layer and the paragraph goes
+quietly wrong while still reading as authoritative.
+
+`millenniumScope()` derives it. The problems come from the layers,
+`openMillenniumProblems()` is the layers with no entry in a settled table, and
+the sentence is built from both. Adding a probe entry to that table moves the
+computed count from 6 to 5 and the sentence follows in the same breath — the
+difference between a statement and a claim.
+
+One hand-written fact remains, and it is about mathematics rather than about
+this repository: Perelman proved the Poincaré conjecture by Ricci flow with
+surgery, in preprints of 2002-03. Everything else is derived.
+
+The test checks the derivation rather than a phrase — one problem named per
+layer, none named twice, the scope stating the count it computes, every open
+problem named rather than summarised away, and exactly one settled and
+attributed. A false settled entry fails it by name.
+
+The layer status literals are untouched, because they are in the public types
+and the tests assert them, and the substance of every scope statement survived:
+verified against the built package rather than the source, the bridge still
+states that it solves none of the problems it names.
+
+New exports: `millenniumProblems`, `openMillenniumProblems`, `millenniumScope`,
+`recognizeMillenniumLayers`.
 ## 1.3.5
 
 A patch: 0 exports added, 0 removed. Three pieces of work, and two of them are

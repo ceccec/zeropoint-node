@@ -30,6 +30,13 @@ while read -r local_ref _local_sha _remote_ref _remote_sha; do
 done
 
 if [ -n "$tags" ]; then
+  echo "pre-push: release tag(s)$tags — npm run plan:check"
+  if ! npm run plan:check; then
+    echo ""
+    echo "  A release must do what the plan said that patch would do."
+    echo "  Hit the target, or amend that patch in release-plan.json with a reason."
+    exit 1
+  fi
   echo "pre-push: release tag(s)$tags — npm run criteria:check"
   if ! npm run criteria:check; then
     echo ""

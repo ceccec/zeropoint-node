@@ -1,0 +1,105 @@
+{
+  "run": "1.4",
+  "carriesTo": "1.5.0",
+  "note": "The nine patches of the 1.4 run, planned before the first is cut. Patch digits ascend 1..9 because semver ordering requires it; their POSITION in the vortex is what assigns the work. The axis {3,6,9} is structural \u2014 build the axis before the branches \u2014 and the gateways [8,3,9,0] are where the stroke reverses polarity, so they are where the KIND of work changes rather than its amount. Targets are ratchet ceilings, so a release that misses its target fails its own gate.",
+  "notTargets": {
+    "docFunctions": "4 and staying 4 \u2014 the remaining documented-but-absent functions are the crypto recipes this repository refuses to implement. A plan that promised 0 would be promising to build them."
+  },
+  "patches": {
+    "1": {
+      "set": "orbit",
+      "gateway": false,
+      "surface": "typecheck",
+      "from": 96,
+      "to": 0,
+      "why": "The smallest surface with a definite end: 96 parameters the compiler is guessing at. Annotating them cannot change behaviour, which makes it the right opener for a run whose later patches do."
+    },
+    "2": {
+      "set": "orbit",
+      "gateway": false,
+      "surface": "lint",
+      "from": 370,
+      "to": 200,
+      "why": "279 of the 370 are no-explicit-any. This patch takes the ones whose real type is already written down somewhere \u2014 a call site, a return, an adjacent annotation."
+    },
+    "3": {
+      "set": "axis",
+      "gateway": true,
+      "surface": "unreachable",
+      "from": 115,
+      "to": 60,
+      "why": "The first gateway: polarity reverses, so the work stops being annotation and becomes structure. 115 modules are reachable from no static entry. Each is either reached from a declared entry or stops shipping; both are decisions, not edits."
+    },
+    "4": {
+      "set": "orbit",
+      "gateway": false,
+      "surface": "lint",
+      "from": 200,
+      "to": 0,
+      "why": "The remainder, which are the any's whose type has to be derived rather than copied."
+    },
+    "5": {
+      "set": "orbit",
+      "gateway": false,
+      "surface": "decimals",
+      "from": 279,
+      "to": 180,
+      "why": "5 is the mirror's fixed point \u2014 throughVoid fixes only 5 \u2014 and the decimal work is the one that must not move a value: each float becomes the integer ratio it approximates, and the fingerprint of every exported value has to be identical either side."
+    },
+    "6": {
+      "set": "axis",
+      "gateway": false,
+      "surface": "decimals",
+      "from": 180,
+      "to": 90,
+      "why": "The second half of the same work, on the axis because the constants it reaches are the shared ones rather than the leaves."
+    },
+    "7": {
+      "set": "orbit",
+      "gateway": false,
+      "surface": "untestedExports",
+      "from": 297,
+      "to": 220,
+      "why": "Tests that assert a LAW, not that a function returns something. A generic determinism harness would collapse this number without adding coverage, and is refused for that reason."
+    },
+    "8": {
+      "set": "orbit",
+      "gateway": true,
+      "surface": "untestedExports",
+      "from": 220,
+      "to": 150,
+      "why": "The second gateway. Polarity reverses: the exports left by here are the ones with no law to assert, so each is a decision about whether it should be exported at all."
+    },
+    "9": {
+      "set": "axis",
+      "gateway": true,
+      "surface": "prose",
+      "from": 50,
+      "to": 38,
+      "why": "The last patch and the third gateway, leaving 9 -> 0. Unbounded effect claims are the surface that cannot be reduced mechanically: each one is either given a bound or deleted, and both need a person."
+    }
+  },
+  "sources": {
+    "typecheck": {
+      "from": "ratchet"
+    },
+    "lint": {
+      "from": "ratchet"
+    },
+    "unreachable": {
+      "from": "ratchet"
+    },
+    "decimals": {
+      "from": "ratchet"
+    },
+    "prose": {
+      "from": "ratchet"
+    },
+    "untestedExports": {
+      "from": "command",
+      "command": "npm run coverage:audit",
+      "pattern": "([0-9]+) never called",
+      "note": "not a ratchet surface: the ratchet carries twelve and that number is load-bearing, so this one is measured by its own tool rather than by adding a thirteenth"
+    }
+  }
+}

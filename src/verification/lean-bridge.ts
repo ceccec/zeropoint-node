@@ -31,6 +31,9 @@
 
 import { createHash } from 'node:crypto'
 import { evaluateConsciousnessCriterion } from './consciousness-criterion.ts'
+import { evaluateOsCriterion } from './os-criterion.ts'
+import { A432OS } from '../0/3/6/9/1/2/4/8/7/5/1/a432.os.ts'
+import { kernelAsCandidate } from '../0/3/6/9/1/2/4/8/7/5/1/a432.os.kernel.ts'
 import { digitalRoot, throughVoid, bearingForDigit, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
 import { angleForDigit } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 import { A432Sequence } from '../0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts'
@@ -537,6 +540,28 @@ export const SEALS: Record<string, Seal> = {
       // fact that throughVoid produced it.
       const TRIAD: readonly number[] = VORTEX_AXIS
       return preimage.every((n) => TRIAD.includes(throughVoid(n)))
+    },
+  },
+  os_criterion_separates_the_claim_from_the_kernel: {
+    basis: "The README calls a432.os.ts 'not yet, and under construction', with a recognisable target and no measure of distance to it. src/verification/os-criterion.ts is the measure: seven conditions the textbooks agree an operating system satisfies — tasks, scheduling, resources, isolation, a syscall boundary, a lifecycle, persistence. Unlike the consciousness criterion this one can CONFIRM, because 'operating system' is not a contested term. This seal decides the two numbers that matter and keeps them apart. A432OS, the class the README names, meets ONE of the seven: it has a lifecycle. a432.os.kernel.ts, written against the criterion, meets all seven and is therefore a minimal operating system in the ordinary sense — minimal meaning it schedules closures on one thread with no preemption and no memory protection. The seal fails if the two are ever conflated: if A432OS is reported as meeting more than it does, or if the kernel stops meeting what it claims.",
+    decide: () => {
+      const legacyOs = new A432OS()
+      const legacy = evaluateOsCriterion({
+        start: () => legacyOs.start(),
+        stop: () => legacyOs.stop(),
+        isRunning: () => (legacyOs as unknown as { isRunning: boolean }).isRunning,
+      })
+      // The class the README names has a lifecycle and nothing else.
+      if (legacy.conditionsMet !== 1) return false
+      if (legacy.met) return false
+      if (!legacy.conditions.find((c) => c.id === 'lifecycle')?.met) return false
+
+      // The kernel written against it meets all seven.
+      const kernel = evaluateOsCriterion(kernelAsCandidate())
+      if (!kernel.met || kernel.conditionsMet !== kernel.conditionsTotal) return false
+
+      // And the criterion says out loud what its scheduling probe does not check.
+      return kernel.interpretation.includes('progress and not fairness')
     },
   },
   consciousness_criterion_is_written_and_unmet: {
@@ -1152,3 +1177,4 @@ export function exportProofsForZenodo(): object {
 // The criterion travels with the seals: one of them decides its verdict, and
 // an outsider checking that seal needs to be able to run the thing it decides.
 export * from './consciousness-criterion.ts'
+export * from './os-criterion.ts'

@@ -8,4 +8,4 @@ FNV `toUuid` stays for cheap folds; SHA seals proofs.
 
 Verify on read — mismatch is tamper.
 
-Receipt: `b14d6e94-a846-82b8-90b1-669922beaac5` · set `7b8ab748-3b3f-8cf9-ae51-bde1dfbec52c`
+Receipt: `b14d6e94-a846-82b8-90b1-669922beaac5` · set `839a7f7a-82ec-8486-ad85-8c74ed637dcd`

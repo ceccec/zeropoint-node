@@ -11,13 +11,13 @@
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 25034
+    "unguardedReadme": 26238
   },
   "raised": {
     "unguardedReadme": {
-      "from": 23752,
-      "to": 25034,
-      "reason": "the consciousness criterion section: 1282 bytes documenting a predicate that did not exist, whose two load-bearing figures (five conditions, one met) are checked by readme:facts and cannot overstate the result"
+      "from": 25034,
+      "to": 26238,
+      "reason": "the OS criterion section: 1204 bytes recording that A432OS meets 1 of 7 and what the other six require, with the A432OS score itself checked by readme:facts so it cannot be overstated"
     }
   }
 }

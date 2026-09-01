@@ -62,6 +62,7 @@ const READS_SOURCE = {
   'version:check': 'has its own self-test: npm run version:test',
   'notes:check': 'has its own self-test: npm run notes:test',
   'ratchet:check': 'compares measured surfaces against ratchet.json',
+  'measure:check': 'fingerprints each ratchet measure and fails when one changed without ratchet.json declaring it; falsified by the four mutations in the commit that added it, one of which is a control that must NOT fail — rewording a comment inside a measure',
   'adjudicate:check': 'reads the seal set',
   'skills:check': 'reads the skills tree',
   'registry:check': 'reads the npm registry',

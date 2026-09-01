@@ -19,5 +19,19 @@
       "to": 28015,
       "reason": "the a432 consciousness system meeting the criterion: 389 bytes stating that the system built from the measures meets all five, that the measure functions still meet 1 and should, and why a pure function cannot be gated on"
     }
+  },
+  "measures": {
+    "prose": "61d559c3fcdede32",
+    "tautology": "3b4f75e64d4ca30a",
+    "unguardedReadme": "0b1bfa0358182d76",
+    "unreachable": "ddcce371bcc37ea9",
+    "cycles": "636d144bdae920d4",
+    "typecheck": "da1e2f6a54e74929",
+    "lint": "f0db0620ae3323b3",
+    "frameworkTests": "3cbac3689fa7ba56",
+    "decimals": "31419cd958b880bd",
+    "docFunctions": "9f29199ed938bff5",
+    "entryPoints": "63e40d6d6027d502",
+    "unloadable": "66f42f1909c4c5b9"
   }
 }

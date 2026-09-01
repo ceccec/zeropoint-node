@@ -3,8 +3,11 @@
  *
  * This file is a naming scheme. It solves none of the problems it names, it
  * verifies none of them, and nothing in it is evidence about any of them.
- * Six of the seven are open problems; the seventh, Poincaré, was settled by
- * Perelman in 2002-03 and this file did not contribute to that either. A layer
+ * How many are open is computed by `millenniumScope()` from the layers and
+ * `SETTLED_BY`, so this comment does not restate it: a count written twice is a
+ * count that can disagree with itself, and this file already retracts one
+ * paragraph for asserting it. Poincaré was settled by Perelman in 2002-03 and
+ * this file did not contribute to that either. A layer
  * whose `status` reads COMPLETE means the LAYER is implemented, never that the
  * problem it borrows its name from is settled.
  *
@@ -397,8 +400,8 @@ export function recognizeMillenniumBridge(): MillenniumBridge {
     // how the claim survives being withdrawn — the scope test caught exactly
     // that on this line, which is why it is a comment now.
     realization: `
-WHAT THIS MAPPING IS: seven implemented layers, each named after a Millennium
-Problem it does not address. Six of the seven are open. The naming is a
+WHAT THIS MAPPING IS: ${recognizeMillenniumLayers().length} implemented layers, each named after a Millennium
+Problem it does not address. ${openMillenniumProblems().length} of the ${millenniumProblems().length} are open. The naming is a
 mnemonic, not a result.
 
 Layer 1 (Riemann)       simulator implemented; the hypothesis is open

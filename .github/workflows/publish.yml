@@ -58,6 +58,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # The repository's own predicates gate the release. Not part of `npm run
+      # check`: ordinary commits must stay green while a criterion is unmet,
+      # which is the point of writing one that returns false. What must not
+      # happen is publishing a version while the repo's own measures say the
+      # thing it is named for has not arrived. Override deliberately with
+      # `node scripts/criteria-check.mjs --override="reason"` and put the
+      # reason in the release notes.
+      - name: Criteria — the repository's own predicates
+        run: npm run criteria:check
+
       - name: Fail-closed check
         run: npm run check
 

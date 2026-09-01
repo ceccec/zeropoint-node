@@ -7,6 +7,7 @@ import { PI, cos, exp, sin } from './a432.algebra.ts'
  * All Rodin sequence logic uses RODIN_SEQUENCE from a432.math.ts
  */
 import { RODIN_SEQUENCE, rodinAngle } from './a432.math.ts';
+import { VORTEX_AXIS } from '../../../../../../../../../../index.ts'
 
 /**
  * rodinVortexCycle: Returns n cycles of the Rodin sequence (forward or reverse)
@@ -148,7 +149,7 @@ export function renderRodinCoilStreamHtml(streamData: RodinCoilStreamData): stri
     return {
       x: cx + axisRadius * cos(theta),
       y: cy + axisRadius * sin(theta),
-      label: [3, 6, 9][i]
+      label: [...VORTEX_AXIS][i]
     };
   });
   const axisTriangle = `M${axisPoints[0].x},${axisPoints[0].y} L${axisPoints[1].x},${axisPoints[1].y} L${axisPoints[2].x},${axisPoints[2].y} Z`;

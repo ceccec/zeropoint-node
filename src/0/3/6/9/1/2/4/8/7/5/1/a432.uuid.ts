@@ -16,7 +16,7 @@ import {
   VORTEX_AXIS,
 } from '../../../../../../../../../../index.ts'
 
-const RODIN = [1, 2, 4, 8, 7, 5] as const
+const RODIN = [...VORTEX_ORBIT] as const
 
 /** Timestamp folded with label — deterministic for a given ms + label. */
 export function uuidV1(label = 'v1', at: number = 0): string {

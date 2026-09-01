@@ -6,6 +6,7 @@
 
 import { abs, round } from './a432.algebra.ts'
 import { GOLDEN_RATIO, TAU, calculateDigitalRoot, A432_BASE_FREQUENCY } from './a432.math.constants.ts';
+import { VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 
 // === MOBIUS CIRCUIT INTERFACES ===
 export interface MobiusState {
@@ -41,7 +42,7 @@ export interface MobiusCircuit {
 }
 
 // === MOBIUS CIRCUIT CONSTANTS ===
-export const MOBIUS_SEQUENCE = [1, 2, 4, 8, 7, 5];
+export const MOBIUS_SEQUENCE = [...VORTEX_ORBIT];
 export const MOBIUS_BINARY_STATES = {
   1: '001',
   2: '010', 

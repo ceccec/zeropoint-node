@@ -78,7 +78,7 @@ export class VortexMath {
         return {
             family1: [1, 4, 7],
             family2: [2, 5, 8],
-            family3: [3, 6, 9]
+            family3: [...VORTEX_AXIS]
         };
     }
 

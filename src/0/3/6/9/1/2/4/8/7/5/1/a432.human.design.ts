@@ -9,6 +9,7 @@
 
 import { round } from './a432.algebra.ts'
 import { humanConsciousnessEmitter, type HumanConsciousnessEvent } from './a432.human.consciousness.ts';
+import { VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 
 export interface HumanAttribute {
   name: string;
@@ -41,7 +42,7 @@ function toCMYK(value: number, channel: number): number {
   return round((value / 9) * 100);
 }
 function getFlow(seed: number): number[] {
-  const base = [1, 2, 4, 8, 7, 5];
+  const base = [...VORTEX_ORBIT];
   return base.map(n => ((n + seed) % 9) || 9);
 }
 

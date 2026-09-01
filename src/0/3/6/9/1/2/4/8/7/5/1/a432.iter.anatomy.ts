@@ -7,6 +7,7 @@
  */
 
 import { max, round } from './a432.algebra.ts'
+import { VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 export interface IterSystem {
   name: string;
   value: number; // 0-9, project status or completion
@@ -46,7 +47,7 @@ function toCMYK(value: number, channel: number): number {
   return round((value / 9) * 100);
 }
 function getFlow(seed: number): number[] {
-  const base = [1, 2, 4, 8, 7, 5];
+  const base = [...VORTEX_ORBIT];
   return base.map(n => ((n + seed) % 9) || 9);
 }
 

@@ -1,3 +1,4 @@
+import { VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 /**
  * a432.family.ts — Three Family Number Groups & Universal 3-9-6 Palindrome
  *
@@ -44,7 +45,7 @@ export function a432Palindrome396(cycles: number = 1): number[] {
  * steps: number of digits to generate
  */
 export function a432MobiusAperture(steps: number = 12): number[] {
-  const F1 = [1, 2, 4, 8, 7, 5];
+  const F1 = [...VORTEX_ORBIT];
   const F2 = [3, 6];
   const axis = 9;
   const result = [];

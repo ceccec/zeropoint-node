@@ -10,6 +10,7 @@
  */
 
 import { legacyDigitalRoot } from './a432.roots.ts'
+import { VORTEX_AXIS } from '../../../../../../../../../../index.ts'
 /**
  * a432MobiusCircuits: Returns the three Mobius circuits as arrays.
  * Left: [1,4,7], Right: [2,5,8], Gap: [3,6,9]
@@ -18,7 +19,7 @@ export function a432MobiusCircuits(): { left: number[]; right: number[]; gap: nu
   return {
     left: [1, 4, 7],
     right: [2, 5, 8],
-    gap: [3, 6, 9]
+    gap: [...VORTEX_AXIS]
   };
 }
 

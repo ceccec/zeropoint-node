@@ -26,6 +26,7 @@ export { A432_DIGIT_MEANINGS } from './a432.core.ts';
 
 // Rodin 6-orbit — kernel VORTEX_ORBIT; not VORTEX_SEQUENCE (9)
 import { A432_SEQUENCE_CONSTANTS } from './a432.sequence.ts';
+import { VORTEX_AXIS, VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 export const RODIN_VORTEX_SEQUENCE = A432_SEQUENCE_CONSTANTS.VORTEX_ORBIT;
 
 // Alias for legacy compatibility with encryption and other modules
@@ -40,8 +41,8 @@ export const A432_CONSTANTS = {
   
   // A432 Sequence Patterns (Zero Entropy)
   SEQUENCES: {
-    VORTEX: [1, 2, 4, 8, 7, 5], // Rodin Vortex Pattern
-    TRINITY: [3, 6, 9], // Trinity Gateway
+    VORTEX: [...VORTEX_ORBIT], // Rodin Vortex Pattern
+    TRINITY: [...VORTEX_AXIS], // Trinity Gateway
     BOOLEAN: [0, 7, 3, 1], // Boolean Trinity
     CONSCIOUSNESS: HARMONICS, // Complete A432 Cycle
     HARMONIC: HARMONICS // Harmonic Foundation

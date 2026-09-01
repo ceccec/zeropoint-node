@@ -51,6 +51,7 @@ import { startGateWay, type GateWayStep } from './a432.gate.way.ts';
 import { getLivingPiOverlayData } from './a432.pi.ts';
 import { getWaveParticleCMYKOverlayData, logWaveParticleEvent } from './a432.wave.particle.duality.ts';
 import type { HumanDesign } from './a432.human.design.ts';
+import { VORTEX_AXIS } from '../../../../../../../../../../index.ts'
 
 // Initialize blockchain for event logging
 const blockchain = new A432BlockChain();
@@ -607,7 +608,7 @@ function animateBlockchainStream() {
   function triggerSpecialEffect(block: any) {
     if (!block) return;
     // Trinity pulse: 3, 6, 9
-    if ([3,6,9].includes(block.trinity)) {
+    if ([...VORTEX_AXIS].includes(block.trinity)) {
       metaOverlay.classList.add('vibrate');
       metaOverlay.style.background = '#0ff';
       setTimeout(() => {

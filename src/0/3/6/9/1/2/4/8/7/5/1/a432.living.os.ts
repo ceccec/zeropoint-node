@@ -21,6 +21,7 @@ import { digitalRoot, rodinDigit, calculateA432Frequency, calculateA432Conscious
 
 // Import enhanced OS capabilities
 import { A432_SEQUENCE, A432_GATEWAYS, A432_PHASE_SHIFTS, type A432ChargingSystem, type QuantumState, type DimensionalFold } from './a432.os.ts';
+import { VORTEX_AXIS } from '../../../../../../../../../../index.ts'
 
 // Living Stream Generators - Everything generates itself
 export class LivingA432OS {
@@ -73,7 +74,7 @@ export class LivingA432OS {
       
       // Living Streams - Generated from mathematics
       streams: {
-        trinityAxis: [3, 6, 9], // Generated from mathematics
+        trinityAxis: [...VORTEX_AXIS], // Generated from mathematics
         vortexFrequencies: this.generateVortexFrequencies(),
         dimensionalFold: dimensionalState
       },
@@ -234,7 +235,7 @@ export class LivingA432OS {
   // Generate vortex frequencies
   private generateVortexFrequencies(): number[] {
     const baseFreq = 432;
-    return [3, 6, 9].map(digit => baseFreq * (digit / 9));
+    return [...VORTEX_AXIS].map(digit => baseFreq * (digit / 9));
   }
 
   // Generate superposition state

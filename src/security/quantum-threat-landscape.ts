@@ -14,6 +14,7 @@
 
 import '../0/index.ts'
 import { max, log2, floor } from '../0/algebra.ts'
+import { VORTEX_ORBIT } from '../0/index.ts'
 
 /**
  * Classical Threat Model
@@ -25,7 +26,7 @@ import { max, log2, floor } from '../0/algebra.ts'
  *   - Kyber/PQC: lattice problems require 2^256 operations (worst-case hardness)
  */
 
-export const RODIN_SEQUENCE_CLASSICAL = [1, 2, 4, 8, 7, 5] as const
+export const RODIN_SEQUENCE_CLASSICAL = [...VORTEX_ORBIT] as const
 export const RODIN_SEQUENCE_QUANTUM = [5, 7, 8, 4, 2, 1] as const // Inverted
 
 export interface ClassicalThreatModel {

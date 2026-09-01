@@ -11,14 +11,15 @@
 
 import { min } from './a432.algebra.ts'
 import { digitalRoot, a432Frequency, a432HSLFromRoot, a432RGBFromRoot } from './a432.core.ts';
+import { VORTEX_AXIS, VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 
 // === A432 SEQUENCE CONSTANTS ===
 export const A432_SEQUENCE_CONSTANTS = {
   // Rodin 6-orbit (1→2→4→8→7→5→1) — kernel name is VORTEX_ORBIT; not VORTEX_SEQUENCE (9)
-  VORTEX_ORBIT: [1, 2, 4, 8, 7, 5],
+  VORTEX_ORBIT: [...VORTEX_ORBIT],
   
   // Trinity Gateway (3→6→9)
-  TRINITY_SEQUENCE: [3, 6, 9],
+  TRINITY_SEQUENCE: [...VORTEX_AXIS],
   
   // Boolean Trinity (false→impossible→possible→true)
   BOOLEAN_SEQUENCE: [0, 7, 3, 1],

@@ -10,6 +10,7 @@
  */
 
 import { digitalRoot, a432HSLFromRoot, a432RGBFromRoot } from './a432.core.ts';
+import { VORTEX_AXIS, VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 
 // === A432 IMPERIAL CONSTANTS ===
 export const A432_IMPERIAL_CONSTANTS = {
@@ -25,8 +26,8 @@ export const A432_IMPERIAL_CONSTANTS = {
   
   // Imperial Sequences
   IMPERIAL_SEQUENCES: {
-    GOLDEN: [1, 2, 4, 8, 7, 5], // Rodin vortex
-    SILVER: [3, 6, 9], // Trinity gateway
+    GOLDEN: [...VORTEX_ORBIT], // Rodin vortex
+    SILVER: [...VORTEX_AXIS], // Trinity gateway
     BRONZE: [0, 7, 3, 1], // Boolean trinity
     PLATINUM: [0, 3, 6, 9, 1, 2, 4, 8, 7, 5], // Complete cycle
     DIAMOND: [1, 2, 3, 4, 5, 6, 7, 8, 9], // Harmonic foundation

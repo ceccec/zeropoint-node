@@ -13,6 +13,7 @@ import { abs, max, round } from './a432.algebra.ts'
 
 
 import { legacyDigitalRoot as digitalRoot } from './a432.roots.ts';
+import { VORTEX_AXIS } from '../../../../../../../../../../index.ts'
 
 const FILENAME = typeof import.meta.filename !== 'undefined'
   ? import.meta.filename
@@ -31,7 +32,7 @@ const CMYK_COLORS = {
 };
 
 // Trinity axis: always [3,6,9] if present, else empty
-const TRINITY_AXIS = [3, 6, 9].filter(function(d) { return DIGITS.indexOf(d) !== -1; });
+const TRINITY_AXIS = [...VORTEX_AXIS].filter(function(d) { return DIGITS.indexOf(d) !== -1; });
 
 // --- Living Sequence: Always extracted from filename ---
 function getCurrentFilename(): string {
@@ -167,7 +168,7 @@ function decodeA432Prefix() {
   const digits = prefix.replace('a', '0').split('').map(Number);
   // Trinities: [4,3,2] (generative), [3,6,9] (field/axis)
   const generative = [digits[1], digits[2], digits[3]];
-  const field = [3, 6, 9];
+  const field = [...VORTEX_AXIS];
   // Vortex completion: how many 0/+/- needed to complete trinity
   const missing = 3 - generative.filter(function(d) { return d !== 0; }).length;
   // Example relation: 60° = 1/6 of 360°

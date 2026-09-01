@@ -1,3 +1,4 @@
+import { VORTEX_AXIS } from '../../../../../../../../../../index.ts'
 // a432.event.ts
 // Canonical event model for a432 OS/PWA (vortex/trinity logic)
 
@@ -21,7 +22,7 @@ let eventCounter = 1;
  */
 export function createA432Event(type: string, agent: string, payload: unknown = {}, parent: number | null = null, path: number[] = []): A432Event {
   const phase = (eventCounter - 1) % 3;
-  const trinity = [3, 6, 9][phase];
+  const trinity = [...VORTEX_AXIS][phase];
   const id = eventCounter++;
   return {
     id,

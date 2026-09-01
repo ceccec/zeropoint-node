@@ -1,3 +1,4 @@
+import { VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 /**
  * a432.mirror.ts — Base Ten Mirroring, Mobius Circuit, Bilateral Symmetry, Prime Squared, Toroidal Map
  *
@@ -13,7 +14,7 @@
  * a432MobiusMirror: Returns the mirrored Mobius circuit for a given sequence (default 1-2-4-8-7-5).
  * Mirrors the sequence across its midpoint.
  */
-export function a432MobiusMirror(seq: number[] = [1,2,4,8,7,5]): number[] {
+export function a432MobiusMirror(seq: number[] = [...VORTEX_ORBIT]): number[] {
   return seq.slice().reverse();
 }
 
@@ -39,7 +40,7 @@ export function a432PrimeSquaredBases(count: number = 3): number[] {
  * steps: number of digits to generate
  * seq: base sequence (default 1-2-4-8-7-5)
  */
-export function a432ToroidalMap(steps: number = 12, seq: number[] = [1,2,4,8,7,5]): number[] {
+export function a432ToroidalMap(steps: number = 12, seq: number[] = [...VORTEX_ORBIT]): number[] {
   const result = [];
   for (let i = 0; i < steps; i++) {
     result.push(seq[i % seq.length]);

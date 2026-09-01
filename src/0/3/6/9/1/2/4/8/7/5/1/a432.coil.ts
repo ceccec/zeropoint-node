@@ -6,8 +6,9 @@ import { floor } from './a432.algebra.ts'
 import * as Rodin from './a432.rodin.coil.ts';
 import * as Mobius from './a432.mobius.circuit.ts';
 import * as Tesla from './a432.tesla.coil.ts';
+import { VORTEX_AXIS, VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 
-export const A432_SEQUENCE = [0, [3, 6, 9], [1, 2, 4], 8, [7, 5, 1]]; // Void 0 -> 9 -> 7 -> 8 -> 4
+export const A432_SEQUENCE = [0, [...VORTEX_AXIS], [1, 2, 4], 8, [7, 5, 1]]; // Void 0 -> 9 -> 7 -> 8 -> 4
 export const A432_TRINITY = [0, 9, 1];
 export const A432_ANGLE = 360 / 6; // 60 degrees dimensional gateways angle
 
@@ -68,14 +69,14 @@ export { Rodin, Mobius, Tesla };
  * a432RodinCoil: Returns the canonical Rodin coil sequence [1,2,4,8,7,5].
  */
 export function a432RodinCoil(): number[] {
-  return [1, 2, 4, 8, 7, 5];
+  return [...VORTEX_ORBIT];
 }
 
 /**
  * a432RodinCoilStream: Recursively generates the Rodin coil sequence for a given number of steps.
  */
 export function a432RodinCoilStream(steps: number = 12): number[] {
-  const seq = [1, 2, 4, 8, 7, 5];
+  const seq = [...VORTEX_ORBIT];
   const result = [];
   for (let i = 0; i < steps; i++) {
     result.push(seq[i % seq.length]);
@@ -89,7 +90,7 @@ export function a432RodinCoilStream(steps: number = 12): number[] {
  */
 export function a432VortexWell(steps: number = 12): number[] {
   const trinity = [3, 9, 6];
-  const coil = [1, 2, 4, 8, 7, 5];
+  const coil = [...VORTEX_ORBIT];
   const result = [];
   for (let i = 0; i < steps; i++) {
     result.push(i % 2 === 0 ? trinity[(i / 2) % 3] : coil[(floor(i / 2)) % 6]);
@@ -115,7 +116,7 @@ export function a432HeatDissipation(steps: number = 9): number[] {
  * steps: number of states to generate
  * base: base sequence (default 1-2-4-8-7-5)
  */
-export function a432ConsciousnessMap(steps: number = 12, base: number[] = [1,2,4,8,7,5]): number[] {
+export function a432ConsciousnessMap(steps: number = 12, base: number[] = [...VORTEX_ORBIT]): number[] {
   const result = [];
   for (let i = 0; i < steps; i++) {
     result.push(base[i % base.length]);

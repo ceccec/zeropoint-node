@@ -1,3 +1,4 @@
+import { VORTEX_AXIS } from '../../../../../../../../../../index.ts'
 // Canonical Tesla Coil Logic for A432 System
 // All Tesla coil logic must be imported from this file only.
 
@@ -12,7 +13,7 @@
  */
 
 // Tesla coil constants
-export const TESLA_GATEWAYS = [3, 6, 9] as const;
+export const TESLA_GATEWAYS = [...VORTEX_AXIS] as const;
 export const TESLA_BASE_VOLTAGE = 432; // Example base voltage (can be extended)
 export const TESLA_BASE_FREQUENCY = 432; // Example base frequency (can be extended)
 export const DEFAULT_TESLA_POLARITY: 1 | -1 = 1;

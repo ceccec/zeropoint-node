@@ -11,6 +11,7 @@
  */
 
 import './a432.roots.ts'
+import { VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 /**
  * a432BinaryTriplet: Returns the triangulated triplet for a given binary pair (a, b).
  * The third part is the invisible/hidden state (9 - (a + b) % 9).
@@ -45,7 +46,7 @@ export function a432OverlappingRegistration(seq: number[]): { visible: number[];
  * a432ClosedSystem: Returns a periodic, cyclic sequence of a given digit stream (default 1-2-4-8-7-5).
  * steps: number of digits to generate
  */
-export function a432ClosedSystem(steps: number = 12, stream: number[] = [1,2,4,8,7,5]): number[] {
+export function a432ClosedSystem(steps: number = 12, stream: number[] = [...VORTEX_ORBIT]): number[] {
   const result = [];
   for (let i = 0; i < steps; i++) {
     result.push(stream[i % stream.length]);

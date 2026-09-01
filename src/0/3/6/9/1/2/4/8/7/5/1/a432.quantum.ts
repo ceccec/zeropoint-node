@@ -2,6 +2,7 @@ import { linearStream, vortexStream } from './a432.matrix.ts';
 import { asDigit } from './a432.types.ts';
 import { digitAngleToCMYK } from './a432.cmyk.ts';
 import { TRINITY_POLARITY, asAngle } from './a432.math.ts';
+import { VORTEX_AXIS } from '../../../../../../../../../../index.ts'
 
 export interface QState { energy: number; spin: number; angle: number; color: ReturnType<typeof digitAngleToCMYK>; }
 
@@ -18,7 +19,7 @@ export function* quantumSolver() {
   for (const {ψ,σ} of it) {
     const energy = nextEnergy(ψ,σ);
     let spin = σ;
-    if (TRINITY_POLARITY[σ]===0) spin = [3,6,9][energy%3];
+    if (TRINITY_POLARITY[σ]===0) spin = [...VORTEX_AXIS][energy%3];
     const angle = asAngle(spin*60%360);
     const color = digitAngleToCMYK(spin, angle);
     const state:QState={energy:energy, spin, angle, color};

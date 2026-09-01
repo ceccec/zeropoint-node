@@ -19,6 +19,7 @@ import { digitAngleToCMYK, cmykToCss, type CMYK } from './a432.cmyk.ts';
 import { A432_FREQUENCY } from './a432.core.ts';
 import { TRINITY_AXIS, RODIN_SEQUENCE } from './a432.math.ts';
 import { throughVoid } from '../../../../../../../../../../index.ts';
+import { VORTEX_AXIS } from '../../../../../../../../../../index.ts'
 export { TRINITY_AXIS, RODIN_SEQUENCE };
 
 /**
@@ -26,7 +27,7 @@ export { TRINITY_AXIS, RODIN_SEQUENCE };
  */
 export function trinityFieldState(angle: number): number {
   const sector = floor((angle % 360) / 120);
-  return [3, 6, 9][sector];
+  return [...VORTEX_AXIS][sector];
 }
 
 export function trinityFieldFold(angleA: number, angleB: number): number {
@@ -316,7 +317,7 @@ export function subscribeTrinityHeartbeat(fn: TrinityHeartbeatListener) {
 export function trinityHeartbeat(interval: number = 1000) {
   setInterval(() => {
     trinityHeartbeatPhase = (trinityHeartbeatPhase + 1) % 3;
-    const trinity = [3, 6, 9][trinityHeartbeatPhase];
+    const trinity = [...VORTEX_AXIS][trinityHeartbeatPhase];
     const pulse = { time: Date.now(), phase: trinityHeartbeatPhase, trinity };
     trinityHeartbeatListeners.forEach(fn => fn(pulse));
   }, interval);
@@ -393,7 +394,7 @@ export function manifestRodinSequence(length: number): number[] {
 }
 
 export function manifestTrinityAxis(): number[] {
-  return [3, 6, 9];
+  return [...VORTEX_AXIS];
 }
 
 export function manifestPiStream(length: number): unknown[] {

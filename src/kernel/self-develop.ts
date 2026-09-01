@@ -1012,6 +1012,95 @@ export function selfBuild(): SelfBuildStatus {
 }
 
 /** Compact tip for CLI / MCP / docs. form · code · proof mapped; vague refused. */
+/**
+ * MEASURED DEBT — the gaps the wave engine could not see.
+ *
+ * planTrinity decides `stalled` from five sources: mathCount, forkCount,
+ * randomCount, harmonicAliasImporters and neitherDirect. All five are zero, so
+ * every run falls through to a `feed` tip that says "keep chatting waves" — a
+ * generic instruction naming no work.
+ *
+ * Meanwhile the ratchet measures 297 exported functions nothing calls, 370
+ * lint errors, 279 decimal-cracks and more. The law this file states is "if
+ * development stops, gaps in self-development exist", and it was reporting no
+ * gaps while the gate next to it counted thousands.
+ *
+ * So the engine now ranks what is actually measured and names the largest. It
+ * takes the counts as an ARGUMENT rather than reading ratchet.json: that file
+ * is not in package.files, and a kernel module that read it would work in this
+ * repository and throw for everyone who installed the package.
+ *
+ * `stalled` is deliberately unchanged. It means a hard gap — banned Math, a
+ * fork in the digital root, a broken invariant — and those are still zero.
+ * Measured debt is a different thing: real work, not a broken corpus, and
+ * conflating them would make --fail-on-stall fire forever and stop meaning
+ * anything.
+ */
+export interface MeasuredDebt {
+  surface: string
+  count: number
+  /** Counts and byte totals are not comparable; the ranking only orders counts. */
+  unit: 'count' | 'bytes'
+  action: string
+}
+
+/**
+ * The UNIT each surface is counted in, because they are not comparable.
+ *
+ * My first ranking sorted on raw magnitude and put unguardedReadme first at
+ * 28015 — which is BYTES, against 297 functions and 370 lint errors. Bytes win
+ * every comparison they are allowed into, and "28015 outstanding" as the single
+ * next action is not a work item, it is a category error. Only surfaces counted
+ * in the same unit are ranked against each other; the rest are reported.
+ */
+const DEBT_UNITS: Readonly<Record<string, 'count' | 'bytes'>> = {
+  unguardedReadme: 'bytes',
+}
+
+/** What to do about each surface, in the terms the surface is measured in. */
+const DEBT_ACTIONS: Readonly<Record<string, string>> = {
+  untestedExports: 'call it from a suite that asserts a law, not that it returns something: npm run coverage:audit -- --list',
+  lint: 'give a real type where an `any` stands, or delete the binding nothing reads: npx eslint src/',
+  decimals: 'carry the integer ratio the float approximates, bound to a named constant',
+  prose: 'state the bound, or delete the claim: npm run prose:check',
+  unreachable: 'reach it from a declared entry, or stop shipping it',
+  typecheck: 'annotate the parameter the compiler is guessing at',
+  docFunctions: 'implement what the document declares, or record why it is refused',
+  unguardedReadme: 'move the claim into a block something recomputes',
+  untestedA432: 'the a432 layer holds most of the untested surface; start with the densest module',
+}
+
+/**
+ * The largest measured surface, with what to do about it. Zero-count surfaces
+ * are not debt; a caller with nothing left gets null and can say so honestly.
+ */
+export function rankMeasuredDebt(surfaces: Readonly<Record<string, number>>): MeasuredDebt | null {
+  // Countable surfaces only. A byte total cannot be "larger" than a number of
+  // untested functions in any sense that tells someone what to do next.
+  const countable = rankAllMeasuredDebt(surfaces).filter((d) => d.unit === 'count')
+  return countable[0] ?? null
+}
+
+/** Every surface with work outstanding, largest first. */
+export function rankAllMeasuredDebt(surfaces: Readonly<Record<string, number>>): MeasuredDebt[] {
+  return Object.entries(surfaces)
+    .filter(([, n]) => Number.isFinite(n) && n > 0)
+    // Counts first, then bytes, each group by magnitude. A list that
+    // interleaves the two invites the comparison the ranking refuses to make.
+    .sort((a, b) => {
+      const ua = DEBT_UNITS[a[0]] ?? 'count'
+      const ub = DEBT_UNITS[b[0]] ?? 'count'
+      if (ua !== ub) return ua === 'count' ? -1 : 1
+      return b[1] - a[1] || a[0].localeCompare(b[0])
+    })
+    .map(([surface, count]) => ({
+      surface,
+      count,
+      unit: DEBT_UNITS[surface] ?? 'count',
+      action: DEBT_ACTIONS[surface] ?? `reduce ${surface}; it is measured and nothing is acting on it`,
+    }))
+}
+
 export function nextSelfDevelopTip() {
   const s = selfBuild()
   const tipForm = s.plan.tipForm

@@ -49,6 +49,7 @@ const UNLOADED_OK = {
 const EXERCISERS = [
   ['src/kernel/smoke.test.ts', null],
   ['src/kernel/core-exports.test.ts', null],
+  ['src/kernel/measured-debt.test.ts', null],
   ['src/security/quantum-fold-cipher.test.ts', null],
   ['src/security/quantum-state-tomography.test.ts', null],
   ['src/security/quantum-proofs.test.ts', null],

@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.3.7
+
+A patch: no code change, 0 exports added or removed. The licence record.
+
+**The licence named nobody, so nobody could comply with it.** CC BY-NC-ND makes
+attribution a *condition*. `LICENSE` shipped the bare Creative Commons text,
+which names no licensor, and `package.json` credited "A432 Consciousness
+System" — a project name rather than someone who can hold a right. A work
+licensed on attribution that identifies no one to attribute cannot be used
+lawfully by anyone who wants to.
+
+The holder is named now in the four places that state it, and they are compared
+rather than trusted: `LICENSE`, `package.json`, `CITATION.cff`, and
+`.zenodo.json` — the last being what a minted DOI records. The attribution the
+licence asks for is spelled out with name, years, source, ORCID and concept DOI,
+so complying is copying a block rather than guessing. Years are 2025-2026, taken
+from the first and latest commits.
+
+**This is not legal advice and not a claim about what any law grants.**
+Copyright in this work arises on creation under the Berne Convention; no notice
+creates it and none is required for it to exist. What a notice does is identify
+the holder, which is what was missing and what makes the licence operable. There
+is no patent claim, no trademark claim, and no NOTICE file asserting either —
+those are not things a repository can grant itself by adding a file.
+
+`rights:check` joins the gate and fails when the four disagree: a different
+author in `package.json`, a licence in `.zenodo.json` that does not match the
+one shipped — which would mint a DOI recording the wrong terms — or a `LICENSE`
+whose first line stops naming a holder. All three verified by mutation.
+
+The author's ORCID (`0009-0000-7312-9778`, checksum verified) now appears in
+`CITATION.cff` as a person entry, which is the only place the CFF schema permits
+it, and in `.zenodo.json` in the bare form Zenodo expects.
 ## 1.3.6
 
 A patch: 4 exports added, nothing removed. One change, and its second half is

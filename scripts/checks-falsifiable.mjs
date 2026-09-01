@@ -56,6 +56,7 @@ const READS_SOURCE = {
   'entries:check': 'reads package.json exports',
   'pages:check': 'reads the built docs tree',
   'zenodo:check': 'reads .zenodo.json',
+  'rights:check': 'compares the rights record across LICENSE, package.json, CITATION.cff and .zenodo.json; falsified by the three mutations in the commit that added it',
   'changelog:check': 'reads CHANGELOG.md against git',
   'version:check': 'has its own self-test: npm run version:test',
   'notes:check': 'has its own self-test: npm run notes:test',

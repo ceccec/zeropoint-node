@@ -38,6 +38,10 @@ const entries = [
   { name: 'security.tomography', input: 'src/security/quantum-state-tomography.ts' },
   { name: 'security.post-quantum', input: 'src/security/post-quantum-crypto.ts' },
   { name: 'integrity', input: 'src/integrity/content-uuid.ts' },
+  // The seals and the consciousness criterion. This repository's stated
+  // position is that claims should be recomputable by an outsider, and until
+  // now an outsider could not import the seals at all.
+  { name: 'verification', input: 'src/verification/lean-bridge.ts' },
   { name: 'quantum', input: 'src/quantum/index.ts' },
   { name: 'mcp', input: 'src/mcp/server.ts' }
 ];

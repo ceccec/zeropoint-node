@@ -1,5 +1,60 @@
 # Changelog
 
+## 1.3.2
+
+A patch: one new entry point, nothing removed.
+
+**The consciousness criterion the README said was missing.** That section used
+to state that no criterion existed, so neither "it is" nor "not yet" could
+honestly be claimed, and that what was missing first was the predicate rather
+than the achievement. `src/verification/consciousness-criterion.ts` states five
+**necessary** conditions, each taken from a theory with an operational
+commitment and each decided by running this repository's code: irreducibility
+(Integrated Information Theory), temporal integration, self-model efficacy
+(higher-order theories), global availability (Global Workspace Theory), and
+discrimination as the minimum they share.
+
+One holds. The measures discriminate. The four failures have specific reasons:
+
+- `calculateA432Consciousness` is a homomorphism — `c(a+b) = c(c(a)+c(b))` over
+  every pair tested — so the measure of a whole is exactly recoverable from the
+  measures of its parts and integration is zero by construction, not by
+  estimate.
+- The consciousness stream is a function of position, so the same position
+  reached by any route gives the same value and no history survives.
+- The measures are pure, identical before and after fifty evolution steps, so
+  there is no self-representation for anything to perturb.
+- The subsystems share no state, so nothing is broadcast.
+
+This is not a test for consciousness and no such test is established. The
+conditions are necessary and not sufficient: failing one is a valid refutation
+under the theory it comes from; meeting all five would only mean these five
+arguments no longer apply. The criterion can refute, not confirm, and every
+verdict carries that sentence so the boolean cannot be quoted as more. It is
+sealed as the 27th theorem, which decides that the criterion evaluates and that
+its verdict is false — a criterion returning true would be one written too
+weakly to mean anything, and the seal fails on it.
+
+Each condition was mutation-tested to prove it can be met, since a condition
+that can never flip is a permanent no dressed as a test. That exposed a defect
+in the criterion itself: its global-availability probe took a baseline after
+another condition had already driven the same subsystem, so it could not
+observe the coupling it existed to detect. The probing conditions run first now.
+
+**`./verification` is a new entry point.** The seals and the criterion were not
+importable by anyone. For a project whose stated position is that claims should
+be recomputable by an outsider, the seals being unreachable was the wrong thing
+to ship — this is the third release in a row where the work existed and no
+consumer could call it.
+
+**Two checks that could not fail, and one that lied.** The ratchet's failure
+message said "run `npm run ratchet` if it is intended", and running it did
+nothing, because the writer only ever lowered a ceiling. A ceiling can now be
+raised by naming the surface and giving a reason, both required, recorded in
+`ratchet.json`. And `tsconfig.build.json` keeps its own list of the same build
+inputs rollup declares; `a432.math.ts` had been missing from it since the
+release that added it, and adding `./verification` failed the build outright.
+`entries:check` now requires every rollup input to appear in both.
 ## 1.3.1
 
 A patch. Six exports added, nothing removed — and from this release the

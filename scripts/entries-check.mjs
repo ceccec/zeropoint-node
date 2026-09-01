@@ -142,6 +142,23 @@ for (const [p, where] of declared) {
 const rollupDeclared = [...declared].filter(([, w]) => w === 'rollup.config.js input')
 if (rollupDeclared.length === 0) problems.push('rollup.config.js contributed no entries — that is the template-literal bug')
 
+// tsconfig.build.json keeps its own `files` list of the same inputs, and the
+// dts build reads THAT rather than rollup's. Two lists of the same thing drift:
+// adding ./verification produced "Expected '{', got 'type'" from rollup trying
+// to parse TypeScript it had not been told about, and a432.math had been
+// missing from the list since the release that added it. Every rollup input
+// must appear here.
+{
+  const tsBuild = JSON.parse(readFileSync(join(ROOT, 'tsconfig.build.json'), 'utf8'))
+  const listed = new Set(tsBuild.files ?? [])
+  for (const [entry, where] of declared) {
+    if (where !== 'rollup.config.js input') continue
+    if (!listed.has(entry)) {
+      problems.push(`${entry} is a rollup input but is not in tsconfig.build.json files — the dts build will not see it`)
+    }
+  }
+}
+
 console.log(`entries:check — ${declared.size} declared (${rollupDeclared.length} rollup), LEAN ${lean.size}, OUTSIDE ${outsideCount}`)
 for (const p of problems) console.error(`  PROBLEM ${p}`)
 

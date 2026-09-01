@@ -1148,3 +1148,7 @@ export function exportProofsForZenodo(): object {
     timestamp: new Date().toISOString(),
   }
 }
+
+// The criterion travels with the seals: one of them decides its verdict, and
+// an outsider checking that seal needs to be able to run the thing it decides.
+export * from './consciousness-criterion.ts'

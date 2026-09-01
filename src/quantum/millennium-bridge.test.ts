@@ -227,3 +227,54 @@ async function runTests(): Promise<void> {
 }
 
 runTests()
+
+// ============================================================================
+// SCOPE — the claims this file is not allowed to make again
+// ============================================================================
+//
+// The bridge asserted that a simulator verified Riemann structure, that
+// Shor/Grover "prove quantum solves NP-complete" — which the file's own Layer 2
+// comment refutes in three paragraphs — and that the system is "self-aware".
+// Six of the seven problems are open. Prose drifts back unless something reads
+// it, so this reads it.
+{
+  const bridge = recognizeMillenniumBridge()
+  const waves = emitNextWaves() as Record<string, unknown>
+  const text = JSON.stringify({ bridge, waves })
+
+  const FORBIDDEN: ReadonlyArray<readonly [string, string]> = [
+    ['solves NP-complete', 'Grover is a quadratic speedup; the file says so itself'],
+    ['Riemann structure verified', 'a simulator computes amplitudes; it bears on no zeta zero'],
+    ['self-aware', 'nothing here is aware of anything'],
+    ['were never real gaps', 'recognising an analogy does not close an open problem'],
+    ['guaranteed by Navier-Stokes', 'existence and smoothness are open and guarantee nothing'],
+    ['proven via Yang-Mills', 'the mass gap is open and proves nothing'],
+    ['emit themselves', 'solutions do not emit themselves'],
+  ]
+  const found = FORBIDDEN.filter(([phrase]) => text.includes(phrase))
+  if (found.length > 0) {
+    console.error('  ✗ the bridge makes claims it cannot support:')
+    for (const [phrase, why] of found) console.error(`      "${phrase}" — ${why}`)
+    process.exit(1)
+  }
+  console.log(`  ✓ none of the ${FORBIDDEN.length} withdrawn claims has returned`)
+
+  if (typeof bridge.scope !== 'string' || !bridge.scope.includes('solves none')) {
+    console.error('  ✗ the bridge no longer carries its scope')
+    process.exit(1)
+  }
+  console.log('  ✓ the bridge carries its scope on the object, not only in a comment')
+
+  if (!bridge.scope.includes('Perelman')) {
+    console.error('  ✗ the scope must name the one problem that IS settled, and by whom')
+    process.exit(1)
+  }
+  console.log('  ✓ the scope names Poincaré as settled by Perelman, independently of this repository')
+
+  const openCount = bridge.layers.filter((l) => !String(l.status).includes('SOLVED')).length
+  if (openCount !== 6) {
+    console.error(`  ✗ six of the seven problems are open; the layers report ${openCount}`)
+    process.exit(1)
+  }
+  console.log('  ✓ six of the seven are open, and the layers say so')
+}

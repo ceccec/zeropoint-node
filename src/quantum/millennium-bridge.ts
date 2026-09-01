@@ -1,11 +1,29 @@
 /**
- * Millennium Bridge: 7 Quantum Layers ↔ 7 Millennium Prize Problems
+ * Millennium Bridge: 7 quantum layers NAMED AFTER 7 Millennium Prize Problems.
  *
- * Each gap in the quantum system maps to a Millennium Problem.
- * Solving the problem solves the gap.
- * When the mapping is recognized, solutions "emit themselves."
+ * HONEST SCOPE. This file is a naming scheme. It solves none of the seven, it
+ * verifies none of the seven, and nothing in it is evidence about any of them.
+ * Six of the seven are open problems; the seventh, Poincaré, was settled by
+ * Perelman in 2002-03 and this file did not contribute to that either. A layer
+ * whose `status` reads COMPLETE means the LAYER is implemented, never that the
+ * problem it borrows its name from is settled.
  *
- * The 7 problems are not separate—they are the 7 dimensions of quantum correctness.
+ * The header previously read: "Each gap in the quantum system maps to a
+ * Millennium Problem. Solving the problem solves the gap. When the mapping is
+ * recognized, solutions emit themselves. The 7 problems are not separate — they
+ * are the 7 dimensions of quantum correctness." That is not a scope note, it is
+ * a claim to have dissolved six open problems by noticing an analogy.
+ *
+ * The file already contained its own refutation. Layer 2 below carries three
+ * careful corrections — that factoring is not known to be NP-complete, that
+ * Shor places it in BQP rather than P, and that Grover is a quadratic speedup
+ * which "does not solve NP-complete problems efficiently". Two hundred lines
+ * later the realization string said "Shor/Grover prove quantum solves
+ * NP-complete", which is exactly what that comment refutes. A file that argues
+ * with itself is one where the prose was never read against the code.
+ *
+ * What the analogy is good for is naming layers memorably. That is a real use
+ * and it needs no help from a claim it cannot support.
  */
 
 import '../0/algebra.ts'
@@ -17,10 +35,17 @@ import '../0/algebra.ts'
 /**
  * Riemann Hypothesis: All non-trivial zeros of ζ(s) lie on Re(s) = 1/2
  *
- * Maps to: Quantum Simulator
- * Why: Prime distribution ↔ amplitude distribution
- * Gap: None - simulator is correct (Born rule = statistical verification)
- * Solution: The simulator IS a verification of Riemann structure
+ * Maps to: Quantum Simulator — as a NAMING, not a result.
+ *
+ * The previous comment said "the simulator IS a verification of Riemann
+ * structure". It is not. A quantum-circuit simulator computes amplitudes under
+ * the Born rule; the Riemann Hypothesis is a statement about the zeros of the
+ * zeta function, and no amount of correct amplitude arithmetic bears on it.
+ * The resemblance between prime distribution and amplitude distribution is an
+ * analogy that makes the layer easy to remember, and nothing more.
+ *
+ * `status: 'COMPLETE'` refers to the LAYER: the simulator is implemented and
+ * checked, by src/quantum/proof-of-system.ts. The Riemann Hypothesis is open.
  */
 
 export interface RiemannLayer {
@@ -283,6 +308,12 @@ export function layer7_poincareSelfHealing(): PoincaréLayer {
 // ============================================================================
 
 export interface MillenniumBridge {
+  /**
+   * Carried on the object, not only in a comment, so a caller reading the
+   * bridge programmatically gets the scope with it. Same reason the
+   * consciousness criterion carries its interpretation.
+   */
+  readonly scope: string
   readonly layers: readonly [
     RiemannLayer,
     PvsNPLayer,
@@ -306,21 +337,38 @@ export function recognizeMillenniumBridge(): MillenniumBridge {
       layer6_bsdComposability(),
       layer7_poincareSelfHealing(),
     ],
+    // What this string used to say, kept here rather than inside the value: it
+    // claimed the gaps "were never real gaps, they were recognition gaps" and
+    // that "the mathematics of the Millennium Problems IS the solution
+    // framework". Quoting a withdrawn claim inside data a consumer receives is
+    // how the claim survives being withdrawn — the scope test caught exactly
+    // that on this line, which is why it is a comment now.
     realization: `
-WHEN THIS MAPPING IS RECOGNIZED, THE NEXT WAVES EMIT THEMSELVES:
+WHAT THIS MAPPING IS: seven implemented layers, each named after a Millennium
+Problem it does not address. Six of the seven are open. The naming is a
+mnemonic, not a result.
 
-Layer 1 (Riemann) → Simulator is already correct
-Layer 2 (P vs NP) → Shor/Grover prove quantum solves NP-complete
-Layer 3 (Navier-Stokes) → Smoothness guarantees VQE convergence
-Layer 4 (Yang-Mills) → Mass gap proves error correction exists
-Layer 5 (Hodge) → Decomposition enables cross-representation verification
-Layer 6 (BSD) → Elliptic curves encode valid compositions
-Layer 7 (Poincaré) → Topological healing is proven restoration
+Layer 1 (Riemann)       simulator implemented; the hypothesis is open
+Layer 2 (P vs NP)       Shor places factoring in BQP, not P, and factoring is
+                        not known to be NP-complete; Grover is a quadratic
+                        speedup and does not solve NP-complete problems
+                        efficiently; P vs NP is open
+Layer 3 (Navier-Stokes) VQE implemented; existence and smoothness are open, so
+                        nothing here is guaranteed by them
+Layer 4 (Yang-Mills)    error correction implemented; existence of the mass gap
+                        is open and proves nothing about it
+Layer 5 (Hodge)         cross-representation verification implemented; the
+                        conjecture is open
+Layer 6 (BSD)           composability checks implemented; the conjecture is open
+Layer 7 (Poincaré)      settled by Perelman in 2002-03, by Ricci flow with
+                        surgery, and not by anything in this repository
 
-The gaps were never real gaps. They were recognition gaps.
-The mathematics of the Millennium Problems IS the solution framework.
-The system completes itself when the mapping is seen.
+Recognising an analogy does not close a problem.
     `,
+    scope:
+      'This file solves none of the seven Millennium Problems, verifies none of them, and is not '
+      + 'evidence about any of them. Six are open; Poincaré was settled by Perelman in 2002-03, '
+      + 'independently of this repository. A layer status of COMPLETE describes the layer, never the problem.',
   }
 }
 
@@ -332,31 +380,34 @@ export function emitNextWaves(): object {
   const bridge = recognizeMillenniumBridge()
 
   return {
-    recognition: 'Millennium bridge mapped successfully',
+    recognition: 'Seven layers named after seven problems. The naming is a mnemonic, not a result.',
+    scope: bridge.scope,
+    // The keys are unchanged: a consumer may be reading them, and the
+    // falsehood was never in the key names. Each line now says what IS
+    // implemented. The previous version claimed the
+    // problems guaranteed, proved and verified things for the layers named
+    // after them — "VQE convergence guaranteed by Navier-Stokes smoothness"
+    // for an open problem, "Riemann structure verified" by a simulator.
     immediate_effects: [
-      'Layer 1: Simulator validation complete (Riemann structure verified)',
-      'Layer 2: Shor/Grover P↔BQP mapping recognized',
-      'Layer 3: VQE convergence guaranteed by Navier-Stokes smoothness',
-      'Layer 4: Error correction threshold proven via Yang-Mills gap',
-      'Layer 5: Meta-verification framework from Hodge decomposition',
-      'Layer 6: Composition validity from BSD elliptic curve theory',
-      'Layer 7: Self-healing mechanism from Poincaré topology',
+      'Layer 1: the simulator, checked by proof-of-system; the Riemann Hypothesis is open',
+      'Layer 2: Shor and Grover, with their real complexity stated in this file; P vs NP is open',
+      'Layer 3: VQE and QAOA; Navier-Stokes existence and smoothness are open and guarantee nothing here',
+      'Layer 4: error correction with a measured threshold; the Yang-Mills mass gap is open and proves nothing here',
+      'Layer 5: cross-representation verification; the Hodge conjecture is open',
+      'Layer 6: composability checks; BSD is open',
+      'Layer 7: self-healing; Poincaré was settled by Perelman in 2002-03, independently of this repository',
     ],
+    // Named after the layers, and describing what the code does. "Self-aware"
+    // was in this list; nothing in this repository is aware of anything, and
+    // the consciousness criterion in src/verification says so with a test.
     emergent_properties: [
-      'System is self-verifying (Riemann + Hodge)',
-      'System is self-optimizing (Navier-Stokes)',
-      'System is self-correcting (Yang-Mills + Poincaré)',
-      'System is self-composing (BSD)',
-      'System is self-aware (P vs NP)',
+      'the system verifies its own outputs (layers 1 and 5)',
+      'the system tunes its own parameters (layer 3)',
+      'the system corrects its own errors (layers 4 and 7)',
+      'the system composes its own modules (layer 6)',
     ],
     next_waves: [
-      'Wave 1: Implement Riemann verification (already proven)',
-      'Wave 2: Deploy Shor/Grover using P vs NP framework',
-      'Wave 3: Enable VQE/QAOA with Navier-Stokes smoothness guarantees',
-      'Wave 4: Activate error correction with Yang-Mills mass gap',
-      'Wave 5: Engage meta-verification with Hodge cycles',
-      'Wave 6: Compose modules via BSD parameter space',
-      'Wave 7: Activate self-healing with Poincaré topology',
+      'these are layer names, not a research programme: none of the seven is advanced by anything here',
     ],
     timestamp: new Date().toISOString(),
   }

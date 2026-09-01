@@ -1,5 +1,48 @@
 # Changelog
 
+## 1.3.4
+
+A patch with no surface change at all: 0 exports added, 0 removed. Everything
+here is consolidation, and the useful part is the two consolidations that were
+measured and then **not** done.
+
+**Five workflows became four.** On a tag push, `publish.yml` and `release.yml`
+both fired — three checkouts, three Node setups, two `npm ci`, and a whole job
+whose only purpose was to poll the registry for up to ten minutes until the
+*other* workflow had finished publishing. That poll was a workaround for the two
+being separate; they are one workflow now and the ordering is `needs:
+[publish]`, so there is nothing to wait for. Creating a release needs
+`contents: write`, which was granted workflow-wide before and is a per-job
+permission now, so the job holding the npm OIDC identity keeps `contents: read`.
+
+**Twenty-five hand-rolled test harnesses became eight.** Each suite wrote out
+the same failure counter and `check()`; seventeen were identical character for
+character. They share `src/verification/harness.ts` now, with the counter owned
+by the checker so a file cannot read `failures` as a bare variable and drift
+from what increments it. All 24 suites were run before and after with identical
+exit codes, and three migrated suites had an assertion flipped to confirm they
+still exit non-zero — a shared harness that always passed would be worse than
+the duplication.
+
+**What was measured and left alone.** `docs.yml` is not merged into `ci.yml`,
+although both run on a push to main, both run `npm ci`, and `npm run check`
+already builds the docs site. Pages deployment needs `pages: write` and
+`id-token: write`, and `ci.yml` also runs on `pull_request` including from
+forks — folding it in would hand those permissions to a workflow that runs
+untrusted code, to save one `npm ci`.
+
+And the 26 `test:*` scripts in a 75-step `check` chain are not folded into one
+runner. Measured: it takes the pipeline derivation from **31 suites to 0**,
+because the paths would move inside a runner where expanding `check` cannot see
+them. That silently breaks the ratchet's reachability roots and coverage-audit's
+completeness guard at once. Those scripts are not duplication; they are the
+declaration the tooling reads, and the number is recorded where the next person
+tempted by it will look.
+
+Also: the author's ORCID is on `CITATION.cff` and `.zenodo.json`. It needed more
+than a field — the CFF schema permits `orcid` only on a person entry, and the
+author was an entity, so the two files now describe the same person. The
+checksum was verified before either file was edited.
 ## 1.3.3
 
 A patch: 23 exports added, nothing removed. The first release under the criteria

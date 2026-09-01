@@ -176,7 +176,7 @@
     "audit:outside": "node --experimental-strip-types scripts/audit-outside.mjs",
     "adjudicate": "node --experimental-strip-types scripts/adjudicate-seals.mjs",
     "adjudicate:check": "node --experimental-strip-types scripts/adjudicate-seals.mjs --check",
-    "readme": "node --experimental-strip-types scripts/readme-gen.mjs",
+    "readme": "node --experimental-strip-types scripts/readme-gen.mjs && node --experimental-strip-types scripts/readme-facts.mjs --fix",
     "readme:check": "node --experimental-strip-types scripts/readme-gen.mjs --check",
     "readme:facts": "node --experimental-strip-types scripts/readme-facts.mjs",
     "readme:names": "node --experimental-strip-types scripts/readme-names.mjs",

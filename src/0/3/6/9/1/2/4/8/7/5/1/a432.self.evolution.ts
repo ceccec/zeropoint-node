@@ -5,7 +5,7 @@
  */
 
 import { min } from './a432.algebra.ts'
-import { A432System } from './a432.index.ts';
+import { a432SystemProvider, type A432SystemProvider } from './a432.system.provider.ts';
 import { A432NavigationMap } from './a432.navigation.map.ts';
 import { A432Factory } from './a432.factory.ts';
 import { A432Math, A432Sequence, A432Harmonization } from './a432.utils.ts';
@@ -67,9 +67,8 @@ export class A432SelfEvolution {
   // line 454 instantiates this class at module scope — so touching A432System
   // from the constructor hit the temporal dead zone and made a432.index.ts,
   // and its four importers, fail to load entirely.
-  private _system: A432System | null = null;
-  private get system(): A432System {
-    return (this._system ??= A432System.getInstance());
+  private get system(): A432SystemProvider {
+    return a432SystemProvider();
   }
   private get navigationMap(): A432NavigationMap {
     return this.system.getNavigationMap();

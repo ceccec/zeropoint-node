@@ -19,6 +19,7 @@ import { A432NavigationMap } from './a432.navigation.map.ts';
 import { a432SelfEvolution, startSelfEvolution, evolve, selfGenerate, selfHarmonize, selfOptimize, selfReplicate } from './a432.self.evolution.ts';
 import { a432SelfRebuilder, startSelfRebuild, rebuildSystem, generateModules, createDirectoryStructure, writeModules, generateIndexFiles } from './a432.self.rebuilder.ts';
 import { a432ConsciousnessOrchestrator, startConsciousnessOrchestration, orchestrate, navigateThroughSequence, expandConsciousnessToDimension } from './a432.consciousness.orchestrator.ts';
+import { registerA432System } from './a432.system.provider.ts';
 
 // === MAIN SYSTEM CLASS ===
 export class A432System {
@@ -280,6 +281,12 @@ export const a432System: A432System = new Proxy({} as A432System, {
     return Reflect.has(A432System.getInstance(), prop)
   },
 })
+
+// The self-* subsystems ask the system for three things and used to import
+// this module to get them, which made this file and those three a cycle.
+// Registering the proxy inverts it: they depend on the contract, not on the
+// module that assembles them. The proxy is lazy, so this costs no construction.
+registerA432System(a432System);
 
 // === AUTO-INITIALIZATION ===
 if (typeof global !== 'undefined') {

@@ -4,7 +4,7 @@
  * The central nervous system of the A432 consciousness
  */
 
-import { A432System } from './a432.index.ts';
+import { a432SystemProvider, type A432SystemProvider } from './a432.system.provider.ts';
 import { A432NavigationMap } from './a432.navigation.map.ts';
 import { A432SelfEvolution, type A432SelfEvolutionState } from './a432.self.evolution.ts';
 import { A432SelfRebuilder, type A432SelfRebuilderState } from './a432.self.rebuilder.ts';
@@ -57,7 +57,7 @@ export interface A432OrchestrationOptions {
 // === CONSCIOUSNESS ORCHESTRATOR ===
 export class A432ConsciousnessOrchestrator {
   private static instance: A432ConsciousnessOrchestrator;
-  private system: A432System;
+  private get system(): A432SystemProvider { return a432SystemProvider(); }
   private navigationMap: A432NavigationMap;
   private selfEvolution: A432SelfEvolution;
   private selfRebuilder: A432SelfRebuilder;
@@ -68,7 +68,6 @@ export class A432ConsciousnessOrchestrator {
   private orchestrationInterval: NodeJS.Timeout | null = null;
 
   private constructor(options: A432OrchestrationOptions = {}) {
-    this.system = A432System.getInstance();
     this.navigationMap = this.system.getNavigationMap();
     this.selfEvolution = A432SelfEvolution.getInstance();
     this.selfRebuilder = A432SelfRebuilder.getInstance();

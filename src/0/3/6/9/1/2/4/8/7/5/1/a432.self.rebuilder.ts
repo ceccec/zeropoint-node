@@ -5,7 +5,7 @@
  */
 
 import { A432SelfEvolution, type A432SelfGeneratedModule } from './a432.self.evolution.ts';
-import { A432System } from './a432.index.ts';
+import { a432SystemProvider, type A432SystemProvider } from './a432.system.provider.ts';
 import { A432Math } from './a432.utils.ts';
 import { A432Registry } from './a432.registry.ts';
 
@@ -40,7 +40,7 @@ export interface A432RebuildOptions {
 // === SELF-REBUILDER SYSTEM ===
 export class A432SelfRebuilder {
   private static instance: A432SelfRebuilder;
-  private system: A432System;
+  private get system(): A432SystemProvider { return a432SystemProvider(); }
   private selfEvolution: A432SelfEvolution;
   private registry: A432Registry;
   private rebuildState: A432SelfRebuilderState;
@@ -48,7 +48,6 @@ export class A432SelfRebuilder {
   private rebuildInterval: NodeJS.Timeout | null = null;
 
   private constructor(options: A432RebuildOptions = {}) {
-    this.system = A432System.getInstance();
     this.selfEvolution = A432SelfEvolution.getInstance();
     this.registry = this.system.getRegistry().main;
     

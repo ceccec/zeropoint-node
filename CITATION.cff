@@ -16,8 +16,13 @@ abstract: >-
   is not permission to use it.
 type: software
 authors:
-  - name: ZeroPoint Node (ceccec)
+  # An ORCID identifies a person, and the CFF schema only permits the field on a
+  # person entry — family-names/given-names — not on an entity `name:`. The name
+  # here now matches the creator .zenodo.json already carried.
+  - family-names: Rouschev
+    given-names: Tsvetan
     email: node@zeropoint.bg
+    orcid: "https://orcid.org/0009-0000-7312-9778"
 # The CONCEPT doi, not the version doi. 10.5281/zenodo.22178675 always resolves
 # to the newest release; 10.5281/zenodo.22178676 is pinned to 1.0.15 and will be
 # wrong the moment there is a 1.0.16. Cite the one that stays true.

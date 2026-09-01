@@ -31,7 +31,7 @@
 
 import { readFileSync, writeFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { execFileSync } from 'node:child_process'
 
 // VERSION_SEAL_ROOT lets the self-test point the seal at a scratch tree, so
@@ -98,6 +98,61 @@ if (!SEMVER.test(version)) {
   console.error(`version-seal: package.json version "${version}" is not semver X.Y.Z[-pre]`)
   process.exit(1)
 }
+
+/**
+ * The patch field is one digit, and the digit space is the vortex.
+ *
+ * v1.**.0..9. This is a PROJECT DECISION rather than something the arithmetic
+ * forces — `toAddress` pads patch to four digits and accepts up to 9999, and
+ * version-address's own self-test uses 1.0.11 and 1.0.12. Nothing computed
+ * ruled out 1.3.10, and so it would have published.
+ *
+ * But the SET is not a decision, it is read from the kernel. The doubling orbit
+ * {1,2,4,8,7,5} and the axis {3,6,9} are disjoint and together cover 1..9
+ * exactly; with the void 0 they are ten values and no others. That is why one
+ * digit is the right width: the digit space and the vortex are the same set,
+ * and a two-digit patch is not a position in it.
+ *
+ * Deriving the set rather than writing 0..9 makes the check falsifiable in the
+ * direction that matters — if the orbit and the axis ever overlapped or left a
+ * gap, this would fail instead of silently accepting a number that is no longer
+ * a node.
+ *
+ * The consequence is a carry, not a stop. Patch 9 is the last patch, so the
+ * release after it moves to the next minor and patch returns to 0, which is
+ * what the tour does at 9 -> 0. Patch-first still decides what a change is
+ * worth; this decides only that the field has run out of room to say it.
+ *
+ * The kernel is resolved from THIS script's directory, not from `root`, because
+ * the self-test points root at temporary trees that have no src/.
+ */
+const KERNEL = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'src/0/index.ts')
+const { VORTEX_ORBIT, VORTEX_AXIS } = await import(pathToFileURL(KERNEL).href)
+const ORBIT = new Set(VORTEX_ORBIT)
+const AXIS = new Set(VORTEX_AXIS)
+const VOID = 0
+const DIGITS = new Set([...ORBIT, ...AXIS, VOID])
+
+if ([...ORBIT].some((d) => AXIS.has(d)) || DIGITS.size !== 10) {
+  console.error(
+    `version-seal: the kernel's orbit and axis no longer partition the digits `
+    + `(orbit ${[...ORBIT]}, axis ${[...AXIS]}, ${DIGITS.size} values with the void) — `
+    + 'the patch field is one digit because they do, so this rule cannot be applied',
+  )
+  process.exit(1)
+}
+
+const [, , , patchField] = SEMVER.exec(version)
+const patchDigit = Number(patchField)
+if (patchField.length > 1 || !DIGITS.has(patchDigit)) {
+  console.error(
+    `version-seal: patch "${patchField}" in ${version} is not a vortex digit — `
+    + `this project versions as v1.**.0..9, where the patch space is the orbit `
+    + `{${[...ORBIT]}}, the axis {${[...AXIS]}} and the void 0. Patch 9 carries to the next minor at .0`,
+  )
+  process.exit(1)
+}
+const patchWhere = ORBIT.has(patchDigit) ? 'orbit' : AXIS.has(patchDigit) ? 'axis' : 'void'
 
 // ---- surface 1: CITATION.cff -------------------------------------------------
 const cffPath = p('CITATION.cff')
@@ -267,7 +322,7 @@ if (CHECK) {
     for (const f of fail) console.error(`version:check FAIL — ${f}`)
     process.exit(1)
   }
-  console.log(`version:check ok ${name}@${version}`)
+  console.log(`version:check ok ${name}@${version} — patch ${patchDigit} is on the ${patchWhere}`)
   process.exit(0)
 }
 

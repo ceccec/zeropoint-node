@@ -19,6 +19,8 @@
  *
  * An override prints the reason prominently and exits 0. It does not hide it.
  */
+import { readFileSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
 import { join, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
@@ -86,6 +88,69 @@ for (const c of criteria) {
 }
 
 const unmet = criteria.filter((c) => c.gated && !c.verdict.met)
+/**
+ * A *.*.0 release is the equilibrium point, so it may not be the release that
+ * granted itself an exception.
+ *
+ * The ratchet has twelve surfaces, and a passing ratchet already means every
+ * one sits exactly at its ceiling — it fails on unrecorded SHRINK as well as on
+ * growth, so slack cannot survive a green run. Equilibrium in that sense is
+ * true of every release and is not worth restating here.
+ *
+ * What is not already true is this: a release can raise a ceiling, or declare a
+ * measure changed, and still be green — both are legitimate and both are
+ * recorded in ratchet.json. At patch 0 they are not. Patch runs 0..9 and 9
+ * carries, so a .0 is where the numbering says the previous run is closed; a
+ * release cannot both announce that and loosen one of its own dimensions in the
+ * same commit. Grant the exception in a patch, then carry.
+ *
+ * Compared against the previous tag rather than against nothing, so this reads
+ * what THIS release changed, not what the file has ever accumulated.
+ */
+const version = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).version
+const patchField = version.split('.')[2]?.split('-')[0] ?? ''
+if (patchField === '0') {
+  const exceptionsNow = (state) => ({
+    raised: Object.keys(state.raised ?? {}),
+    remeasured: Object.keys(state.remeasured ?? {}),
+  })
+  const now = exceptionsNow(JSON.parse(readFileSync(join(ROOT, 'ratchet.json'), 'utf8')))
+  let before = null
+  let prevTag = null
+  try {
+    const tags = execFileSync('git', ['tag', '--list', 'v*', '--sort=-v:refname'], { cwd: ROOT, encoding: 'utf8' })
+      .split('\n').map((t) => t.trim()).filter(Boolean)
+    if (tags.length > 0) {
+      prevTag = tags[0]
+      before = exceptionsNow(JSON.parse(
+        execFileSync('git', ['show', `${tags[0]}:ratchet.json`], { cwd: ROOT, encoding: 'utf8' }),
+      ))
+    }
+  } catch { before = null }
+
+  if (before === null) {
+    console.log('')
+    console.log('  note: no previous tag readable, so the .0 equilibrium rule could not be checked')
+  } else {
+    const added = {
+      raised: now.raised.filter((k) => !before.raised.includes(k)),
+      remeasured: now.remeasured.filter((k) => !before.remeasured.includes(k)),
+    }
+    const n = added.raised.length + added.remeasured.length
+    console.log('')
+    if (n === 0) {
+      console.log(`  MET      equilibrium        ${version} raises no ceiling and remeasures no surface since ${prevTag}`)
+    } else {
+      console.error(`criteria:check FAIL — ${version} is a *.*.0 and grants ${n} new exception(s):`)
+      for (const k of added.raised) console.error(`    raised ceiling: ${k}`)
+      for (const k of added.remeasured) console.error(`    remeasured: ${k}`)
+      console.error('  A .0 closes the previous run of patches; it cannot also loosen a dimension.')
+      console.error('  Cut the exception as a patch first, then carry to .0.')
+      process.exit(1)
+    }
+  }
+}
+
 if (unmet.length === 0) {
   console.log('criteria:check ok — every criterion is met')
   process.exit(0)

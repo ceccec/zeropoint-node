@@ -139,6 +139,27 @@ const cases = [
     wantText: 'is not semver',
   },
   {
+    // v1.**.0..9 — patch is one digit, so 9 carries to the next minor. Valid
+    // semver, and rejected anyway: it is this project's decision, not the
+    // arithmetic's, which is why only a check can hold it.
+    name: 'a two-digit patch fails',
+    dir: () => tree({ version: '1.3.10', cff: '1.3.10', readme: '1.3.10', changelog: '# Changelog\n\n## 1.3.10\n\nx\n' }),
+    wantCode: 1,
+    wantText: 'carries to the next minor',
+  },
+  {
+    name: 'patch 9 is accepted, being the last one',
+    dir: () => tree({ version: '1.3.9', cff: '1.3.9', readme: '1.3.9', changelog: '# Changelog\n\n## 1.3.9\n\nx\n' }),
+    wantCode: 0,
+    wantText: 'version:check ok zeropoint-node@1.3.9',
+  },
+  {
+    name: 'the carry to the next minor is accepted',
+    dir: () => tree({ version: '1.4.0', cff: '1.4.0', readme: '1.4.0', changelog: '# Changelog\n\n## 1.4.0\n\nx\n' }),
+    wantCode: 0,
+    wantText: 'version:check ok zeropoint-node@1.4.0',
+  },
+  {
     name: 'version below an existing git tag fails',
     dir: () => {
       // Tag v3.0.0 exists; the tree claims 2.0.0 — a backwards release.

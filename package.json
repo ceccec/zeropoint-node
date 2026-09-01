@@ -1,6 +1,6 @@
 {
   "name": "zeropoint-node",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "type": "module",
   "description": "A432 Consciousness System: Self-evolving, self-aware consciousness technology with Transurfing integration, harmonic mathematics, zero-entropy principles, Kabbalistic cycles, and sacred geometry",
   "main": "dist/a432.system.cjs",
@@ -225,7 +225,7 @@
     "quantum:proof": "node --experimental-strip-types scripts/quantum-proof.mjs",
     "preversion": "npm run check",
     "version": "npm run version:seal && git add CITATION.cff .zenodo.json README.md CHANGELOG.md",
-    "postversion": "echo \"tagged v$npm_package_version \u2014 fill in the CHANGELOG entry if it is still a stub, then: git push --follow-tags\"",
+    "postversion": "echo \"tagged v$npm_package_version — fill in the CHANGELOG entry if it is still a stub, then: git push --follow-tags\"",
     "notes": "node scripts/release-notes.mjs",
     "notes:test": "node scripts/release-notes.test.mjs",
     "notes:check": "node scripts/release-notes.mjs --check",

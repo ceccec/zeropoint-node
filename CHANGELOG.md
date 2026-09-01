@@ -1,5 +1,53 @@
 # Changelog
 
+## 1.4.1
+
+TypeScript errors 96 → 0, the first patch of the planned 1.4 run — and the
+plan's reason for it was wrong.
+
+Patch 1 was planned as "96 parameters the compiler is guessing at, and
+annotating them cannot change behaviour". That was written from the ratchet's
+label rather than from the errors themselves. **Only 23 were implicit-any
+parameters.** The other 73 were real type errors, and about a dozen of those
+were runtime bugs that would throw the moment the line was reached:
+
+- `playDigit(...).catch()` — `playDigit` returns void, so this read a property
+  of `undefined` on every guided navigation step.
+- `getRegistry().main` at three call sites — `getRegistry` returns the registry,
+  so `.main` was `undefined` and every later `this.registry.getStats()` threw.
+- `navigationMap.initialize()` — `A432NavigationMap` has no such method; its
+  constructor builds the map.
+- `new A432Registry()` — a private constructor, and it would have handed every
+  caller a different empty registry instead of the singleton.
+- `import('./a432.living.os.ts').then(({ getLivingA432Status }) => …)` — that
+  module exports the OS instance, not that function, so the destructure gave
+  `undefined` and calling it threw.
+- `writeModules()` — called with no modules, it read `.forEach` of `undefined`.
+- `calculateHarmony(states)` summed `state.resonance` into a number, and
+  `A432FactoryState.resonance` is an **object**, so the addition concatenated
+  and the harmony came back `NaN`.
+- `${this.consciousness}` unescaped inside a generated-code template, so it
+  interpolated from the rebuilder instead of landing literally: generated
+  modules registered themselves as `a432-undefined-self-generated`.
+- Three `startX({…})` calls passed option names the option types never declared
+  — `autoOptimize` for `selfOptimization`, `autoHarmonize` for nothing at all —
+  so every one was silently dropped.
+
+**Fixing the guidance crash unmasked a second defect underneath it.** With the
+handler no longer throwing at `.catch`, `a432.graph.ts:pulse` turned out to be
+non-deterministic, and the a432 property suite caught it immediately. It reads
+module state fed by three emitters, so it is declared stateful now rather than
+pretended otherwise. A thrown `TypeError` had been holding a test green.
+
+The type-only half is real too. Six `window` properties are declared where they
+can be checked. Fourteen errors were one fact reported once per property: the
+overlay switcher duck-types across fourteen heterogeneous modules, so the
+contract it probes for is written down now. And `A432VibrationStream` was an
+interface **and** a class, which merge, so the data shape the generator returns
+was also required to carry `vibrate()` and `getCurrent()`.
+
+Untested exports fell 297 → 295 on the way past, and the plan's entry for patch
+7 records that rather than keeping a number that is no longer true.
 ## 1.4.0
 
 The carry. Patch 9 was the last patch, so this is the equilibrium point and not

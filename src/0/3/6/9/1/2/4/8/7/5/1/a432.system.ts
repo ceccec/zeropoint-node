@@ -27,6 +27,7 @@ export * from './a432.os.terminal.ts';
 // The kernel, reachable from the start. Three releases running I shipped work
 // nothing could import; checking this before cutting is cheaper than after.
 export * from './a432.os.kernel.ts';
+export * from './a432.consciousness.field.ts';
 export * from './a432.os.consciousness.integration.ts';
 export * from './a432.living.os.ts';
 export { boot2432OS, shutdown2432OS } from './a432.os.terminal.ts';

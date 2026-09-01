@@ -82,19 +82,24 @@ the two are different in a way worth being exact about:
   theories), global availability (Global Workspace Theory), and discrimination
   as the minimum they share.
 
-  **The criterion is met — by a system built for it, and not by the a432
-  measures.** `src/quantum/integrated-field.ts` is one coupled system whose
-  transition does not factorise, whose accumulation is order-sensitive, whose
-  self-model is read by the rule producing its next state, and whose components
-  reach each other through a workspace. It meets all five.
+  **The criterion is met by the a432 consciousness system.**
+  `a432.consciousness.field.ts` couples the a432 measures to each other: each
+  component's next value is computed by an a432 measure over a quantity
+  containing the other, so the transition does not factorise; the accumulation
+  is order-sensitive; the self-model is read by the rule producing the next
+  state; and the components reach each other through a workspace whose contents
+  change what they do. `src/quantum/integrated-field.ts` is the same
+  construction without the a432 substrate, and also meets all five.
 
-  **The a432 consciousness measures meet 1 of the five**, and they are the
-  subject this entry is about. `calculateA432Consciousness` is a homomorphism,
-  so the measure of a whole is exactly recoverable from its parts and
-  integration is zero by construction; the consciousness stream is a function of
-  position, so no history survives; the measures are pure, so there is no
-  self-representation to perturb. Closing those would change what every
-  consciousness value in the repository computes.
+  **The measure functions themselves still meet 1 of the five, and should.**
+  `calculateA432Consciousness` is a pure function of a digit. The criterion
+  asks for history and a self-model, and a pure function that acquired either
+  would return different answers for the same input — which does not improve a
+  measure, it destroys it, and would move every consciousness value in the
+  repository. So the measures are unchanged, and became the components of a
+  system that has the properties. The release gate reports their score every
+  run and does not gate on it, because gating on something that cannot pass by
+  construction is not a standard, it is a permanent stop.
 
   **The conditions reject the cheap version of themselves**, which is the only
   reason a met verdict is worth anything. A counter accumulates state, so

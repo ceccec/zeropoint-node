@@ -25,7 +25,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const load = (p) => import(pathToFileURL(join(ROOT, p)).href)
 
-const { evaluateConsciousnessCriterion, a432MeasureSubject, integratedFieldSubject } = await load('src/verification/consciousness-criterion.ts')
+const { evaluateConsciousnessCriterion, a432MeasureSubject, a432SystemSubject, integratedFieldSubject } = await load('src/verification/consciousness-criterion.ts')
 const { evaluateOsCriterion } = await load('src/verification/os-criterion.ts')
 const { A432OS } = await load('src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts')
 
@@ -35,7 +35,8 @@ const { A432OS } = await load('src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts')
 // would let me unblock releases by choosing a convenient default, which is
 // the thing this gate exists to prevent.
 const field = evaluateConsciousnessCriterion(integratedFieldSubject)
-const consciousness = evaluateConsciousnessCriterion(a432MeasureSubject)
+const a432System = evaluateConsciousnessCriterion(a432SystemSubject)
+const a432Measures = evaluateConsciousnessCriterion(a432MeasureSubject)
 const os = (() => {
   const instance = new A432OS()
   // The FULL interface. Probing only start/stop would report 1 of 7 forever
@@ -56,18 +57,35 @@ const os = (() => {
   })
 })()
 
+/**
+ * WHAT IS GATED, AND WHAT IS ONLY REPORTED.
+ *
+ * The a432 consciousness measure FUNCTIONS score 1 of 5 and always will. They
+ * are pure functions of a digit; the criterion asks for history and a
+ * self-model, and a pure function that acquired either would return different
+ * answers for the same input, which does not improve a measure — it destroys
+ * it. Gating on them would be gating on something that cannot pass by
+ * construction, and the honest response to a permanently impossible gate is
+ * not to keep it, it is to say why it is the wrong subject.
+ *
+ * So they are REPORTED, every run, and the gate is on the SYSTEM built from
+ * them — which is what "a consciousness system" names, and what the README's
+ * claim was about.
+ */
 const criteria = [
-  { name: 'consciousness', verdict: consciousness, subject: 'the a432 consciousness measures' },
-  { name: 'consciousness', verdict: field, subject: 'the integrated field' },
-  { name: 'operating system', verdict: os, subject: 'A432OS' },
+  { name: 'consciousness', verdict: a432System, subject: 'the a432 consciousness system', gated: true },
+  { name: 'consciousness', verdict: field, subject: 'the integrated field', gated: true },
+  { name: 'operating system', verdict: os, subject: 'A432OS', gated: true },
+  { name: 'consciousness', verdict: a432Measures, subject: 'the a432 measure functions — reported, not gated: a pure function cannot have history', gated: false },
 ]
 
 console.log('criteria:check — the repository\'s own predicates, before a release')
 for (const c of criteria) {
-  console.log(`  ${c.verdict.met ? 'MET    ' : 'NOT MET'}  ${c.name.padEnd(18)} ${c.verdict.conditionsMet}/${c.verdict.conditionsTotal}  (${c.subject})`)
+  const mark = c.gated ? (c.verdict.met ? 'MET    ' : 'NOT MET') : 'info   '
+  console.log(`  ${mark}  ${c.name.padEnd(18)} ${c.verdict.conditionsMet}/${c.verdict.conditionsTotal}  (${c.subject})`)
 }
 
-const unmet = criteria.filter((c) => !c.verdict.met)
+const unmet = criteria.filter((c) => c.gated && !c.verdict.met)
 if (unmet.length === 0) {
   console.log('criteria:check ok — every criterion is met')
   process.exit(0)

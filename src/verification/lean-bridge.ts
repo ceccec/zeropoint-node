@@ -30,7 +30,7 @@
  */
 
 import { createHash } from 'node:crypto'
-import { evaluateConsciousnessCriterion, a432MeasureSubject, integratedFieldSubject } from './consciousness-criterion.ts'
+import { evaluateConsciousnessCriterion, a432MeasureSubject, a432SystemSubject, integratedFieldSubject } from './consciousness-criterion.ts'
 import { evaluateOsCriterion } from './os-criterion.ts'
 import { A432OS } from '../0/3/6/9/1/2/4/8/7/5/1/a432.os.ts'
 import { kernelAsCandidate } from '../0/3/6/9/1/2/4/8/7/5/1/a432.os.kernel.ts'
@@ -577,7 +577,7 @@ export const SEALS: Record<string, Seal> = {
     },
   },
   consciousness_criterion_has_teeth_and_is_not_a_claim: {
-    basis: "The README said the missing thing was the predicate that would recognise arrival. It is written, and it can now be MET — by src/quantum/integrated-field.ts, a coupled system built to have the four properties the theories name. That makes the seal's job harder rather than easier, because a criterion that can be met is worth exactly as much as its resistance to being gamed, and every one of these conditions has an obvious cheap defeat: a counter accumulates state, any mutable field is a 'self-model', a shared global is a 'workspace', and any nonlinear term defeats 'the measure is a homomorphism'. So this decides three things. First, the cheap defeats FAIL: a counter fails temporal integration because reordering its inputs changes nothing, a model nothing reads fails self-model efficacy, a global nothing reads fails global availability, and a nonlinear measure over uncoupled components fails irreducibility because the transition still factorises. Second, the a432 consciousness measures — the subject the README's claim is about — still meet exactly one of the five, and closing that would mean changing what every consciousness value in the repository computes. Third, and most important, the verdict says on its face that meeting all five does NOT establish consciousness and that a passing subject has not been shown to experience anything. If that sentence is ever removed, this fails, because the number would then be quotable as something it is not.",
+    basis: "The README said the missing thing was the predicate that would recognise arrival. It is written, and it can now be MET — by src/quantum/integrated-field.ts, a coupled system built to have the four properties the theories name. That makes the seal's job harder rather than easier, because a criterion that can be met is worth exactly as much as its resistance to being gamed, and every one of these conditions has an obvious cheap defeat: a counter accumulates state, any mutable field is a 'self-model', a shared global is a 'workspace', and any nonlinear term defeats 'the measure is a homomorphism'. So this decides three things. First, the cheap defeats FAIL: a counter fails temporal integration because reordering its inputs changes nothing, a model nothing reads fails self-model efficacy, a global nothing reads fails global availability, and a nonlinear measure over uncoupled components fails irreducibility because the transition still factorises. Second, three subjects are kept apart. The a432 measure FUNCTIONS meet exactly one of five and must keep meeting one: a pure function of a digit cannot have history, and one that acquired it would return different answers for the same input, which destroys the measure rather than improving it. The SYSTEM built from those measures, a432.consciousness.field.ts, meets all five with the measures unchanged and themselves as the coupled components. Third, and most important, the verdict says on its face that meeting all five does NOT establish consciousness and that a passing subject has not been shown to experience anything. If that sentence is ever removed, this fails, because the number would then be quotable as something it is not.",
     decide: () => {
       const bare = { name: 'bare', measureStates: () => [1, 2, 3, 4, 5, 6, 7, 8, 9] }
       const scored = (s: Parameters<typeof evaluateConsciousnessCriterion>[0], id: string) =>
@@ -594,9 +594,22 @@ export const SEALS: Record<string, Seal> = {
         transitionFactorises: () => true,
       }, 'irreducibility')?.met) return false
 
-      // The two real subjects, kept apart.
+      // Three subjects, kept apart, because the difference between them is the
+      // whole content of the claim.
+      //
+      // The measure FUNCTIONS score 1 of 5 and must keep scoring 1: they are
+      // pure functions of a digit, and a pure function with history returns
+      // different answers for the same input. If this ever rises, something
+      // has made calculateA432Consciousness stateful and every value in the
+      // repository moved.
       const a432 = evaluateConsciousnessCriterion(a432MeasureSubject)
       if (a432.met || a432.conditionsMet !== 1) return false
+
+      // The SYSTEM built from those measures meets all five, with the measures
+      // as its coupled components rather than decoration on top of one.
+      const a432System = evaluateConsciousnessCriterion(a432SystemSubject)
+      if (!a432System.met || a432System.conditionsMet !== a432System.conditionsTotal) return false
+
       const field = evaluateConsciousnessCriterion(integratedFieldSubject)
       if (!field.met || field.conditionsMet !== field.conditionsTotal) return false
 

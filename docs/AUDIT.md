@@ -4,7 +4,7 @@
 
 Computed by `foldA432AuditCensus`.
 
-- files scanned: **246** (.ts + .js + .html)
+- files scanned: **248** (.ts + .js + .html)
 - digitalRoot named forks: **0**
 - %9 root inlines: **0**
 - ambient Math.* hits: **0**
@@ -35,4 +35,4 @@ No ambient `Math.*` on computing surfaces (`src/`, `public/`, `deployment/`, roo
 
 _cleared_ — hard gaps idle; tip = feed (chat-wave learn→tune).
 
-Receipt content-uuid: `6c3a8419-74de-828a-ae2f-be22a6106f97`
+Receipt content-uuid: `20eef9ee-b4e8-8590-bd6e-9cbfe5820e80`

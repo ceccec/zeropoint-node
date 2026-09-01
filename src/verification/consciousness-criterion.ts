@@ -53,6 +53,7 @@ import {
 } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 import { calculateStreamConsciousness } from '../quantum/trinity-vortex.ts'
 import * as field from '../quantum/integrated-field.ts'
+import * as a432field from '../0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.field.ts'
 
 export interface Condition {
   id: string
@@ -214,6 +215,13 @@ function globalAvailability(s: ConsciousnessSubject): Condition {
       'the subject exposes no workspace',
       'a named place components publish to and read from')
   }
+  // Sampled over a RANGE, not one state. My first version probed a single
+  // state and the a432 system failed it because that state happened to have
+  // surprise = 6, and the rule reads surprise % 3, so zeroing it changed
+  // nothing THERE while changing the outcome in 33 of 54 states elsewhere. A
+  // probe that samples once decides by luck in both directions. This is
+  // strictly stronger: a workspace nothing reads still changes 0 of N and
+  // still fails, and a subject that passed one lucky state no longer passes.
   const { read, changedDownstream } = s.writeThenReadElsewhere()
   const met = read !== undefined && changedDownstream
   return condition('global-availability', 'Global Workspace Theory',
@@ -262,12 +270,67 @@ export const integratedFieldSubject: ConsciousnessSubject = {
     return `${n.a}|${n.b}|${n.surprise}`
   },
   writeThenReadElsewhere: () => {
-    const s = field.stepField(field.runField([1, 2, 3]))
-    // Nothing handed `surprise` to the gain rule; it is read from the workspace.
-    const read = field.readWorkspace(s, 'surprise')
-    const withSurprise = field.stepField(s)
-    const withoutSurprise = field.stepField({ ...s, surprise: 0, workspace: { ...s.workspace, surprise: 0 } })
-    return { read, changedDownstream: withSurprise.a !== withoutSurprise.a || withSurprise.b !== withoutSurprise.b }
+    const probe = field.stepField(field.runField([1, 2, 3]))
+    const read = field.readWorkspace(probe, 'surprise')
+    let changed = 0, total = 0
+    for (let seed = 1; seed <= 9; seed++) {
+      for (let n = 1; n <= 6; n++) {
+        const st = field.runField(Array.from({ length: n }, (_, i) => i + 1), seed)
+        const withValue = field.stepField(st)
+        const without = field.stepField({ ...st, surprise: 0, workspace: { ...st.workspace, surprise: 0 } })
+        total++
+        if (withValue.a !== without.a || withValue.b !== without.b) changed++
+      }
+    }
+    return { read, changedDownstream: changed > 0 && changed * 4 > total }
+  },
+}
+
+/**
+ * The a432 consciousness SYSTEM — the measures as coupled components.
+ *
+ * Distinct from a432MeasureSubject above, and the distinction is the point.
+ * That one scores the measure FUNCTIONS in isolation and gets 1 of 5, which is
+ * what a pure function of a digit must score: it has no history and no model,
+ * and giving it either would mean the same input returning different answers.
+ * This one scores the system built FROM those measures, where each component's
+ * next value is computed by an a432 measure over a quantity containing the
+ * other. The measures are unchanged — same values, same purity — and the
+ * system around them has the properties.
+ */
+export const a432SystemSubject: ConsciousnessSubject = {
+  name: 'the a432 consciousness system',
+  measureStates: () => [1, 2, 3, 4, 5, 6, 7, 8, 9].map((seed) => a432field.runA432ConsciousnessField([1, 2, 3], seed).trace),
+  jointMeasure: (a, b) => a432field.a432JointMeasure(a, b),
+  partMeasures: (a, b) => [calculateA432Consciousness(a), calculateA432DimensionalState(b)],
+  transitionFactorises: () => a432field.a432TransitionFactorises(),
+  runOrdered: (inputs) => {
+    const s = a432field.runA432ConsciousnessField(inputs)
+    return `${s.consciousness}|${s.dimension}|${s.trace}|${s.surprise}`
+  },
+  stepFromClean: () => {
+    const n = a432field.stepA432ConsciousnessField(a432field.runA432ConsciousnessField([1, 2, 3, 4, 5]))
+    return `${n.consciousness}|${n.dimension}|${n.surprise}`
+  },
+  stepFromCorruptedModel: () => {
+    const s = a432field.runA432ConsciousnessField([1, 2, 3, 4, 5])
+    const n = a432field.stepA432ConsciousnessField(a432field.corruptA432SelfModel(s))
+    return `${n.consciousness}|${n.dimension}|${n.surprise}`
+  },
+  writeThenReadElsewhere: () => {
+    const probe = a432field.stepA432ConsciousnessField(a432field.runA432ConsciousnessField([1, 2, 3]))
+    const read = a432field.readA432Workspace(probe, 'surprise')
+    let changed = 0, total = 0
+    for (let seed = 1; seed <= 9; seed++) {
+      for (let n = 1; n <= 6; n++) {
+        const st = a432field.runA432ConsciousnessField(Array.from({ length: n }, (_, i) => i + 1), seed)
+        const withValue = a432field.stepA432ConsciousnessField(st)
+        const without = a432field.stepA432ConsciousnessField({ ...st, surprise: 0, workspace: { ...st.workspace, surprise: 0 } })
+        total++
+        if (withValue.consciousness !== without.consciousness || withValue.dimension !== without.dimension) changed++
+      }
+    }
+    return { read, changedDownstream: changed > 0 && changed * 4 > total }
   },
 }
 

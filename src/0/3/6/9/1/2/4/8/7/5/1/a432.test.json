@@ -54,6 +54,7 @@
     "getTrinityAxis = getTrinityAxisFromRodin = manifestTrinityAxis = stringTheoryAxis": "[3,6,9]",
     "a432MetaVortex = a432UnifiedMatrix": "{\"trinity\":[3,6,9,3,6,9,3,6,9],\"family\":{\"F1\":[1,2,4,8,7,5,1],\"F2\":[3,9,6,3],\"F3\":[9]},\"nine\":[3,9,6,3,9,6,3,9,6],\"casca…",
     "a432ElectronShear = a432Shears": "[1,4,7]",
-    "getCurrentNavState = trinityPrev": "{\"step\":1,\"trinity\":3,\"family\":1,\"archetype\":\"Creation\",\"metaphysical\":\"Step 1: Trinity 3 (Creation), Family 1\"}"
+    "getCurrentNavState = trinityPrev": "{\"step\":1,\"trinity\":3,\"family\":1,\"archetype\":\"Creation\",\"metaphysical\":\"Step 1: Trinity 3 (Creation), Family 1\"}",
+    "a432TransitionFactorises = isAlive": "both return false, and they are unrelated: a432TransitionFactorises decides whether the consciousness field's transition factorises (it does not, which is the point), and isAlive reports liveness. Two nullary booleans agreeing is a coincidence of the codomain, not a duplicated implementation."
   }
 }

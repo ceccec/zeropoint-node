@@ -75,6 +75,7 @@ const EXERCISERS = [
   ['src/verification/lean-bridge.test.ts', null],
   ['src/verification/consciousness-criterion.test.ts', null],
   ['src/quantum/integrated-field.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.field.test.ts', null],
   ['src/verification/os-criterion.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.os.kernel.test.ts', null],
   ['src/multidimensional-vortex-framework.test.ts', 'scripts/jest-lite.mjs'],

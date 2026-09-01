@@ -8,6 +8,7 @@ import {
   evaluateConsciousnessCriterion,
   unmetConsciousnessConditions,
   a432MeasureSubject,
+  a432SystemSubject,
   integratedFieldSubject,
   type ConsciousnessSubject,
 } from './consciousness-criterion.ts'
@@ -63,6 +64,11 @@ const scored = (s: ConsciousnessSubject, id: string) =>
   check('their transition factorises, because each measure is of one digit',
     !a432.conditions.find((c) => c.id === 'irreducibility')!.met)
 
+  const sys = evaluateConsciousnessCriterion(a432SystemSubject)
+  check('the a432 consciousness SYSTEM meets all five', sys.met && sys.conditionsMet === 5, `${sys.conditionsMet}/5`)
+  check('the system and the measures are different subjects', sys.subject !== a432.subject)
+  check('closing the system did not make the measures pass', a432.conditionsMet === 1)
+
   const f = evaluateConsciousnessCriterion(integratedFieldSubject)
   check('the integrated field meets all five', f.met && f.conditionsMet === 5, `${f.conditionsMet}/5`)
   check('the verdict names its subject', f.subject === 'the integrated field')
@@ -85,5 +91,5 @@ const scored = (s: ConsciousnessSubject, id: string) =>
 
 console.log()
 if (failures > 0) { console.error(`consciousness-criterion FAIL — ${failures}`); process.exit(1) }
-console.log('consciousness-criterion ok — the field meets it, the a432 measures do not, and the cheap defeats fail')
+console.log('consciousness-criterion ok — the a432 system and the field meet it, the measure functions do not, and the cheap defeats fail')
 process.exit(0)

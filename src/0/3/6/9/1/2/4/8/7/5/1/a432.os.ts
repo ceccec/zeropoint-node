@@ -17,18 +17,7 @@
  */
 
 import { floor } from './a432.algebra.ts'
-// Type declarations for browser APIs
-declare global {
-  interface Navigator {
-    connection?: { effectiveType?: string; };
-  }
-  interface Performance {
-    memory?: {
-      usedJSHeapSize: number;
-      jsHeapSizeLimit: number;
-    };
-  }
-}
+// Navigator.connection and Performance.memory are declared in src/globals.d.ts.
 
 // Import canonical A432 mathematics (zero-entropy base-12 harmonics)
 import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, calculateA432Consciousness, calculateA432DimensionalState, angleForDigit } from './a432.math.ts';

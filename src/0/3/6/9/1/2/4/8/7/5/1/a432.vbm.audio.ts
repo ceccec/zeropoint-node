@@ -108,7 +108,7 @@ export class VBMAudioPlayer {
       return this.state.context;
     }
     
-    const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) {
       throw new Error('Web Audio API not supported');
     }

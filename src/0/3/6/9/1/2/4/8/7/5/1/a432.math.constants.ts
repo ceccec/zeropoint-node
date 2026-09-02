@@ -165,11 +165,11 @@ export const MATH_CONSTANTS = {
 
 // === GLOBAL EXPORTS ===
 if (typeof global !== 'undefined') {
-  (global as any).A432MathConstants = MATH_CONSTANTS;
+  globalThis.A432MathConstants = MATH_CONSTANTS;
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).A432MathConstants = MATH_CONSTANTS;
+  window.A432MathConstants = MATH_CONSTANTS;
 }
 
 // === DEFAULT EXPORT ===

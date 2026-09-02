@@ -407,12 +407,12 @@ export const a432SacredGeometry = A432SacredGeometrySystem.getInstance();
 
 // === AUTO-INITIALIZATION ===
 if (typeof global !== 'undefined') {
-  (global as any).a432SacredGeometry = a432SacredGeometry;
+  globalThis.a432SacredGeometry = a432SacredGeometry;
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).a432SacredGeometry = a432SacredGeometry;
-  (window as any).A432SacredGeometry = {
+  window.a432SacredGeometry = a432SacredGeometry;
+  window.A432SacredGeometry = {
     System: A432SacredGeometrySystem,
     VortexSequence: TESLA_VORTEX_SEQUENCE,
     Patterns: SACRED_GEOMETRY_PATTERNS,

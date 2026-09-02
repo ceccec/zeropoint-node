@@ -306,12 +306,12 @@ export const a432Kabbalistic = A432KabbalisticSystem.getInstance();
 
 // === AUTO-INITIALIZATION ===
 if (typeof global !== 'undefined') {
-  (global as any).a432Kabbalistic = a432Kabbalistic;
+  globalThis.a432Kabbalistic = a432Kabbalistic;
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).a432Kabbalistic = a432Kabbalistic;
-  (window as any).A432Kabbalah = {
+  window.a432Kabbalistic = a432Kabbalistic;
+  window.A432Kabbalah = {
     System: A432KabbalisticSystem,
     Sephirot: SEPHIROT,
     Cycles: DIGITAL_ROOT_CYCLES

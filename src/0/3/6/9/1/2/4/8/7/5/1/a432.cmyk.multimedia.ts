@@ -409,12 +409,12 @@ export const cmykMultimedia = CMYKMultimediaSystem.getInstance();
 
 // === AUTO-INITIALIZATION ===
 if (typeof global !== 'undefined') {
-  (global as any).cmykMultimedia = cmykMultimedia;
+  globalThis.cmykMultimedia = cmykMultimedia;
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).cmykMultimedia = cmykMultimedia;
-  (window as any).CMYKMultimedia = {
+  window.cmykMultimedia = cmykMultimedia;
+  window.CMYKMultimedia = {
     System: CMYKMultimediaSystem,
     FrequencyCalculator: CMYKFrequencyCalculator,
     VideoGenerator: CMYKVideoGenerator,

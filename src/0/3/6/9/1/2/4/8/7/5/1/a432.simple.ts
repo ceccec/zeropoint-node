@@ -309,7 +309,7 @@ export class A432SimpleSystem {
     return A432Sequence.generateVortexSequence(length);
   }
 
-  generateColorMatrix(polarity: 1 | -1 = 1): any[] {
+  generateColorMatrix(polarity: 1 | -1 = 1): ReturnType<typeof A432Color.generateMatrix> {
     return A432Color.generateMatrix(polarity);
   }
 
@@ -317,7 +317,7 @@ export class A432SimpleSystem {
     return A432Frequency.baseFrequency(base, multiplier);
   }
 
-  calculateHarmony(states: any[]): number {
+  calculateHarmony(states: Parameters<typeof A432Harmonization.calculateHarmony>[0]): number {
     return A432Harmonization.calculateHarmony(states);
   }
 
@@ -361,12 +361,12 @@ export const a432SimpleSystem = A432SimpleSystem.getInstance();
 
 // === AUTO-INITIALIZATION ===
 if (typeof global !== 'undefined') {
-  (global as any).a432SimpleSystem = a432SimpleSystem;
+  globalThis.a432SimpleSystem = a432SimpleSystem;
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).a432SimpleSystem = a432SimpleSystem;
-  (window as any).A432Simple = {
+  window.a432SimpleSystem = a432SimpleSystem;
+  window.A432Simple = {
     System: A432SimpleSystem,
     Math: A432Math,
     Sequence: A432Sequence,

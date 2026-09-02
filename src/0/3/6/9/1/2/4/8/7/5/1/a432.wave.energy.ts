@@ -282,11 +282,11 @@ export class A432WaveEnergySystem {
 export const a432WaveEnergy = A432WaveEnergySystem.getInstance();
 
 if (typeof global !== 'undefined') {
-  (global as any).A432WaveEnergy = a432WaveEnergy;
+  globalThis.A432WaveEnergy = a432WaveEnergy;
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).A432WaveEnergy = a432WaveEnergy;
+  window.A432WaveEnergy = a432WaveEnergy;
 }
 
 // === DEFAULT EXPORT ===

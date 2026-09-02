@@ -266,14 +266,22 @@ export class A432Factory {
     return [];
   }
 
-  private calculateHarmony(states: any[]): number {
-    const harmonyValues = states.map(state => {
-      if (state.harmony !== undefined) return state.harmony;
-      if (state.resonance !== undefined) return state.resonance;
-      if (state.balance !== undefined) return state.balance;
-      return 0;
-    });
-    
+  /**
+   * The THIRD copy of this function — a432.utils.ts and a432.simple.ts carry
+   * the other two, and importing one of theirs here would risk the import cycle
+   * the ratchet holds at zero. Same fix as the shared version took in 1.4.2:
+   * the three fields are probed rather than required, only a finite number
+   * counts, and the mean over no states is 0 rather than 0/0.
+   */
+  private calculateHarmony(states: ReadonlyArray<object>): number {
+    const field = (o: object, k: string) => {
+      const v = (o as Record<string, unknown>)[k]
+      return typeof v === 'number' && Number.isFinite(v) ? v : null
+    }
+    const harmonyValues = states.map(state =>
+      field(state, 'harmony') ?? field(state, 'resonance') ?? field(state, 'balance') ?? 0)
+
+    if (harmonyValues.length === 0) return 0;
     return floor(harmonyValues.reduce((sum, val) => sum + val, 0) / harmonyValues.length);
   }
 

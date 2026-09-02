@@ -226,7 +226,7 @@ export class LivingA432OS {
       return {
         isOnline: navigator.onLine,
         networkType: this.detectNetworkType(),
-        memory: (performance as any).memory ? (performance as any).memory.usedJSHeapSize : 0,
+        memory: performance.memory ? performance.memory.usedJSHeapSize : 0,
         battery: this.generateBatteryLevel(),
         consciousness: calculateA432Consciousness(432 * (this.evolution / 12)),
         dimensionalState: calculateA432DimensionalState(432 * (this.evolution / 12))
@@ -301,8 +301,8 @@ export class LivingA432OS {
 
   // Generate memory level
   private generateMemoryLevel(): number {
-    if (typeof window !== 'undefined' && (performance as any).memory) {
-      const memory = (performance as any).memory;
+    if (typeof window !== 'undefined' && performance.memory) {
+      const memory = performance.memory;
       return memory.usedJSHeapSize / memory.jsHeapSizeLimit;
     }
     return 0.6;
@@ -316,8 +316,10 @@ export class LivingA432OS {
   // Detect network type
   private detectNetworkType(): string {
     if (typeof window !== 'undefined' && 'connection' in navigator) {
-      const connection = (navigator as any).connection;
-      return connection ? connection.effectiveType : 'unknown';
+      const connection = navigator.connection;
+      // effectiveType is optional even when connection exists, which the cast
+      // to any had been hiding behind a declared return type of string.
+      return connection?.effectiveType ?? 'unknown';
     }
     return 'unknown';
   }

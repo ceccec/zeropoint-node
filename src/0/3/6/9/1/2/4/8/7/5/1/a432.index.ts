@@ -176,7 +176,9 @@ export class A432System {
     return A432Sequence.generateVortex(length);
   }
 
-  generateColorMatrix(polarity: 1 | -1 = 1): any[] {
+  // Each of these forwards to a function that already has a type. Restating
+  // it as any[] made the wrapper less precise than the thing it wraps.
+  generateColorMatrix(polarity: 1 | -1 = 1): ReturnType<typeof A432Color.generateMatrix> {
     return A432Color.generateMatrix(polarity);
   }
 
@@ -184,16 +186,19 @@ export class A432System {
     return A432Math.harmonicFrequency(base, multiplier);
   }
 
-  calculateHarmony(states: any[]): number {
+  calculateHarmony(states: Parameters<typeof A432Harmonization.calculateHarmony>[0]): number {
     return A432Harmonization.calculateHarmony(states);
   }
 
   // === FACTORY METHODS ===
-  createState(options?: any) {
+  createState(options?: Parameters<typeof createA432State>[0]) {
     return createA432State(options);
   }
 
-  createHarmonized(count: number = 9, options?: any): any[] {
+  createHarmonized(
+    count: number = 9,
+    options?: Parameters<typeof createA432Harmonized>[1],
+  ): ReturnType<typeof createA432Harmonized> {
     return createA432Harmonized(count, options);
   }
 

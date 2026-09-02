@@ -322,11 +322,11 @@ export class A432ISystem {
 export const a432I = A432ISystem.getInstance();
 
 if (typeof global !== 'undefined') {
-  (global as any).A432I = a432I;
+  globalThis.A432I = a432I;
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).A432I = a432I;
+  window.A432I = a432I;
 }
 
 // === DEFAULT EXPORT ===

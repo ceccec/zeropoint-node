@@ -123,7 +123,7 @@ export function calculateMobiusTransitions(): MobiusTransition[] {
 }
 
 // === DIGITAL LOGIC SIMULATION ===
-export function simulateMobiusFlipFlops(clockPulses: number = 12): any[] {
+export function simulateMobiusFlipFlops(clockPulses: number = 12) {
   const simulation = [];
   let currentState = 1;
   
@@ -324,11 +324,11 @@ export class A432MobiusCircuitSystem {
 export const a432MobiusCircuit = A432MobiusCircuitSystem.getInstance();
 
 if (typeof global !== 'undefined') {
-  (global as any).A432MobiusCircuit = a432MobiusCircuit;
+  globalThis.A432MobiusCircuit = a432MobiusCircuit;
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).A432MobiusCircuit = a432MobiusCircuit;
+  window.A432MobiusCircuit = a432MobiusCircuit;
 }
 
 // === DEFAULT EXPORT ===

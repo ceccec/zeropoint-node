@@ -448,12 +448,12 @@ export const a432ElectricFlow = A432ElectricFlowSystem.getInstance();
 
 // === AUTO-INITIALIZATION ===
 if (typeof global !== 'undefined') {
-  (global as any).a432ElectricFlow = a432ElectricFlow;
+  globalThis.a432ElectricFlow = a432ElectricFlow;
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).a432ElectricFlow = a432ElectricFlow;
-  (window as any).A432ElectricFlow = {
+  window.a432ElectricFlow = a432ElectricFlow;
+  window.A432ElectricFlow = {
     System: A432ElectricFlowSystem,
     LINEAR_PATTERN,
     SACRED_PATTERN

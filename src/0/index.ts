@@ -578,7 +578,7 @@ export function doubleTorusSurface(
   digit: number,
   lobe: number,
 ): { x: number; y: number; z: number } {
-  const tubeR = TORUS_TUBE_R_BASE + digit * 0.4
+  const tubeR = TORUS_TUBE_R_BASE + digit * (2 / 5)
   const ribbon = TORUS_RING_R + tubeR * cos(phi)
   return {
     x: lobe * TORUS_LOBE_OFFSET + ribbon * cos(theta),

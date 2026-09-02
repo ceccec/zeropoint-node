@@ -177,8 +177,8 @@ export function getOSProcesses(): string {
     { pid: 1, status: 'running', memory: 128, cpu: 5, user: 'root', priority: 1, name: 'A432-Kernel', consciousness: system.rodinCoil.consciousness },
     { pid: 2, status: 'running', memory: 64, cpu: 3, user: 'a432', priority: 2, name: 'Quantum-Engine', consciousness: system.rodinCoil.quantumState.coherence },
     { pid: 3, status: 'running', memory: 32, cpu: 2, user: 'a432', priority: 3, name: 'Charging-System', consciousness: system.charging.voidEnergy },
-    { pid: 4, status: 'running', memory: 16, cpu: 1, user: 'a432', priority: 4, name: 'Sequence-Engine', consciousness: system.sequence.gateway ? 1 : 0.5 },
-    { pid: 5, status: 'running', memory: 8, cpu: 1, user: 'a432', priority: 5, name: 'Gateway-Monitor', consciousness: system.rodinCoil.dimensionalFold.gatewayState ? 1 : 0.3 }
+    { pid: 4, status: 'running', memory: 16, cpu: 1, user: 'a432', priority: 4, name: 'Sequence-Engine', consciousness: system.sequence.gateway ? 1 : (1 / 2) },
+    { pid: 5, status: 'running', memory: 8, cpu: 1, user: 'a432', priority: 5, name: 'Gateway-Monitor', consciousness: system.rodinCoil.dimensionalFold.gatewayState ? 1 : (3 / 10) }
   ];
   
   processes.forEach(process => {

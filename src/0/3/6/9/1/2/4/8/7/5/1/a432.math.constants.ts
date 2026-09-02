@@ -99,15 +99,15 @@ export function calculateVortexFrequency(base: number): number {
 }
 
 // === RATIO VALIDATION ===
-export function isGoldenRatio(ratio: number, tolerance: number = 0.01): boolean {
+export function isGoldenRatio(ratio: number, tolerance: number = (1 / 100)): boolean {
   return abs(ratio - GOLDEN_RATIO) < tolerance;
 }
 
-export function isFibonacciRatio(ratio: number, tolerance: number = 0.01): boolean {
+export function isFibonacciRatio(ratio: number, tolerance: number = (1 / 100)): boolean {
   return FIBONACCI_RATIOS.some(fibRatio => abs(ratio - fibRatio) < tolerance);
 }
 
-export function isA432Harmonic(frequency: number, tolerance: number = 0.01): boolean {
+export function isA432Harmonic(frequency: number, tolerance: number = (1 / 100)): boolean {
   const octave = log2(frequency / A432_BASE_FREQUENCY);
   return abs(octave - round(octave)) < tolerance;
 }

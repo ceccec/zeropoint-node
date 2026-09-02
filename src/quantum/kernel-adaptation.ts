@@ -49,7 +49,7 @@ export function kernelHintFromQuantum(
     learning_rate,
     expected_convergence_steps: expected_steps,
     hardware_recommendation: hardware,
-    confidence: converged_fast ? 0.9 : 0.6,
+    confidence: converged_fast ? (9 / 10) : (3 / 5),
   }
 }
 
@@ -103,7 +103,7 @@ export function classicalKernelOptimize(
 
     // Adapt learning rate based on progress
     if (iter % 10 === 0 && iter > 0) {
-      learning_rate *= 0.9 // Decay
+      learning_rate *= (9 / 10) // Decay
     }
   }
 

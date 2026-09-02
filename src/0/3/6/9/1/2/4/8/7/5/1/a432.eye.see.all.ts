@@ -25,9 +25,9 @@ export const A432_EYE_SEE_ALL_CONSTANTS = {
   SEE_ALL_STATES: {
     OPEN: 1,
     CLOSED: 0,
-    FOCUSED: 0.8,
-    EXPANDED: 0.9,
-    UNIFIED: 1.0
+    FOCUSED: (4 / 5),
+    EXPANDED: (9 / 10),
+    UNIFIED: 1
   }
 };
 
@@ -221,7 +221,7 @@ export class A432EyeSeeAll {
    */
   private updateRealityAspectsVisibility(): void {
     this.realityAspects.forEach((aspect, index) => {
-      aspect.visible = this.quality.overall >= (index + 1) * 1.5;
+      aspect.visible = this.quality.overall >= (index + 1) * (3 / 2);
       aspect.quality = min(9, this.quality.overall - index);
     });
   }

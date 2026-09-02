@@ -38,5 +38,5 @@ function isMainModule(): boolean {
 
 if (isMainModule()) {
   tapEmitter.on('tap', e => console.log('tap event', e));
-  tap(120, 200, 0.8);
+  tap(120, 200, (4 / 5));
 } 

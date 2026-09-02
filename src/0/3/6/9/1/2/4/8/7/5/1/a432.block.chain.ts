@@ -66,15 +66,15 @@ export const BADGE_DOC = {
 };
 
 export const BADGES = [
-  { name: 'Apprentice', minKVT: 1, minHarmony: 0.5 },
-  { name: 'Adept', minKVT: 3, minHarmony: 0.6 },
-  { name: 'Master', minKVT: 6, minHarmony: 0.7 },
-  { name: 'Trinity', minKVT: 9, minHarmony: 0.75 },
-  { name: 'Vortex', minKVT: 8, minHarmony: 0.8 },
-  { name: 'Mobius', minKVT: 5, minHarmony: 0.85 },
-  { name: 'Observer', minKVT: 4, minHarmony: 0.9 },
-  { name: 'Meta', minKVT: 7, minHarmony: 0.95 },
-  { name: 'Infinite', minKVT: 2, minHarmony: 1.0 }
+  { name: 'Apprentice', minKVT: 1, minHarmony: (1 / 2) },
+  { name: 'Adept', minKVT: 3, minHarmony: (3 / 5) },
+  { name: 'Master', minKVT: 6, minHarmony: (7 / 10) },
+  { name: 'Trinity', minKVT: 9, minHarmony: (3 / 4) },
+  { name: 'Vortex', minKVT: 8, minHarmony: (4 / 5) },
+  { name: 'Mobius', minKVT: 5, minHarmony: (17 / 20) },
+  { name: 'Observer', minKVT: 4, minHarmony: (9 / 10) },
+  { name: 'Meta', minKVT: 7, minHarmony: (19 / 20) },
+  { name: 'Infinite', minKVT: 2, minHarmony: 1 }
 ];
 
 /**
@@ -132,13 +132,13 @@ export function validateBlock(block: A432Block): boolean {
  * Calculate harmony score for a block (1.0 = perfect harmony, <1.0 = disharmony)
  */
 export function calculateHarmonyScore(block: A432Block): number {
-  let score = 1.0;
+  let score = 1;
   // Penalize for non-vortex dimension
-  if (![1,2,4,8,7,5,3,6,9].includes(block.dimension)) score -= 0.3;
+  if (![1,2,4,8,7,5,3,6,9].includes(block.dimension)) score -= (3 / 10);
   // Penalize for missing/incorrect metaphysical mapping
-  if (!block.meta || !block.meta.includes('vortex')) score -= 0.2;
+  if (!block.meta || !block.meta.includes('vortex')) score -= (1 / 5);
   // Penalize for Mobius event
-  if (block.mobius) score -= 0.2;
+  if (block.mobius) score -= (1 / 5);
   // Clamp to [0,1]
   return max(0, min(1, score));
 }

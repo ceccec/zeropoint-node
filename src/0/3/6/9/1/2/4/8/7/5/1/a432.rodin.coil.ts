@@ -142,7 +142,7 @@ export function renderRodinCoilStreamHtml(streamData: RodinCoilStreamData): stri
   `).join('');
   // --- Trinity/Axis Overlay (3, 6, 9 and 0) ---
   // Place 3, 6, 9 as triangle vertices, 0 as center
-  const axisRadius = spiralA * 0.7;
+  const axisRadius = spiralA * (7 / 10);
   const axisPoints = [0, 1, 2].map(i => {
     const theta = i * (2 * PI / 3);
     return {

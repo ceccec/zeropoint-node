@@ -61,7 +61,7 @@ export function vqeAdaptive(
   convergenceTol: number = 1e-4,
 ): VQEResult {
   const theta = initialTheta.slice()
-  let learningRate = 0.1
+  let learningRate = (1 / 10)
   const history: OptimizationHistory[] = []
   let bestEnergy = Infinity
   let staleCount = 0

@@ -134,25 +134,25 @@ export function fractionToDecimal(fraction: { numerator: number; denominator: nu
 export function decimalToA432Fraction(decimal: number): { numerator: number; denominator: number } {
   // Common A432 fractions with integer reciprocals
   const a432Fractions = [
-    { decimal: 0.5, fraction: { numerator: 1, denominator: 2 } },
-    { decimal: 0.25, fraction: { numerator: 1, denominator: 4 } },
-    { decimal: 0.75, fraction: { numerator: 3, denominator: 4 } },
-    { decimal: 0.125, fraction: { numerator: 1, denominator: 8 } },
-    { decimal: 0.375, fraction: { numerator: 3, denominator: 8 } },
-    { decimal: 0.625, fraction: { numerator: 5, denominator: 8 } },
-    { decimal: 0.875, fraction: { numerator: 7, denominator: 8 } },
-    { decimal: 0.2, fraction: { numerator: 1, denominator: 5 } },
-    { decimal: 0.4, fraction: { numerator: 2, denominator: 5 } },
-    { decimal: 0.6, fraction: { numerator: 3, denominator: 5 } },
-    { decimal: 0.8, fraction: { numerator: 4, denominator: 5 } },
-    { decimal: 0.1, fraction: { numerator: 1, denominator: 10 } },
-    { decimal: 0.3, fraction: { numerator: 3, denominator: 10 } },
-    { decimal: 0.7, fraction: { numerator: 7, denominator: 10 } },
-    { decimal: 0.9, fraction: { numerator: 9, denominator: 10 } },
-    { decimal: 1.25, fraction: { numerator: 5, denominator: 4 } },
-    { decimal: 1.5, fraction: { numerator: 3, denominator: 2 } },
-    { decimal: 1.75, fraction: { numerator: 7, denominator: 4 } },
-    { decimal: 0.75, fraction: { numerator: 3, denominator: 4 } }
+    { decimal: (1 / 2), fraction: { numerator: 1, denominator: 2 } },
+    { decimal: (1 / 4), fraction: { numerator: 1, denominator: 4 } },
+    { decimal: (3 / 4), fraction: { numerator: 3, denominator: 4 } },
+    { decimal: (1 / 8), fraction: { numerator: 1, denominator: 8 } },
+    { decimal: (3 / 8), fraction: { numerator: 3, denominator: 8 } },
+    { decimal: (5 / 8), fraction: { numerator: 5, denominator: 8 } },
+    { decimal: (7 / 8), fraction: { numerator: 7, denominator: 8 } },
+    { decimal: (1 / 5), fraction: { numerator: 1, denominator: 5 } },
+    { decimal: (2 / 5), fraction: { numerator: 2, denominator: 5 } },
+    { decimal: (3 / 5), fraction: { numerator: 3, denominator: 5 } },
+    { decimal: (4 / 5), fraction: { numerator: 4, denominator: 5 } },
+    { decimal: (1 / 10), fraction: { numerator: 1, denominator: 10 } },
+    { decimal: (3 / 10), fraction: { numerator: 3, denominator: 10 } },
+    { decimal: (7 / 10), fraction: { numerator: 7, denominator: 10 } },
+    { decimal: (9 / 10), fraction: { numerator: 9, denominator: 10 } },
+    { decimal: (5 / 4), fraction: { numerator: 5, denominator: 4 } },
+    { decimal: (3 / 2), fraction: { numerator: 3, denominator: 2 } },
+    { decimal: (7 / 4), fraction: { numerator: 7, denominator: 4 } },
+    { decimal: (3 / 4), fraction: { numerator: 3, denominator: 4 } }
   ];
 
   // Find closest A432 fraction
@@ -403,7 +403,7 @@ export const a432ResolutionTests = {
    * Test decimal resolution
    */
   testDecimalResolution(): boolean {
-    const testDecimals = [0.5, 0.25, 0.75, 0.125, 0.375, 0.625, 0.875];
+    const testDecimals = [(1 / 2), (1 / 4), (3 / 4), (1 / 8), (3 / 8), (5 / 8), (7 / 8)];
     return testDecimals.every(decimal => {
       const fraction = decimalToA432Fraction(decimal);
       return validateA432Fraction(fraction);
@@ -434,7 +434,7 @@ export const a432ResolutionExamples = {
    * Example: Resolve audio timing
    */
   resolveAudioTimingExample(): { original: number; resolved: { numerator: number; denominator: number }; value: number } {
-    const original = 0.18;
+    const original = (9 / 50);
     const resolved = decimalToA432Fraction(original);
     const value = calculateA432FractionValue(resolved);
     
@@ -445,7 +445,7 @@ export const a432ResolutionExamples = {
    * Example: Resolve UI state
    */
   resolveUIStateExample(): { original: number; resolved: { numerator: number; denominator: number }; value: number } {
-    const original = 0.8;
+    const original = (4 / 5);
     const resolved = decimalToA432Fraction(original);
     const value = calculateA432FractionValue(resolved);
     
@@ -456,7 +456,7 @@ export const a432ResolutionExamples = {
    * Example: Resolve frequency multiplier
    */
   resolveFrequencyMultiplierExample(): { original: number; resolved: { numerator: number; denominator: number }; value: number } {
-    const original = 1.25;
+    const original = (5 / 4);
     const resolved = decimalToA432Fraction(original);
     const value = calculateA432FractionValue(resolved);
     

@@ -12,7 +12,7 @@ import { type Digit } from './a432.types.ts';
 export interface VitalEvent { vitality: number; digit: Digit; cmyk: ReturnType<typeof digitAngleToCMYK> }
 export const humanEmitter = new EventEmitter();
 
-let bpm = 72; let temp = 36.6; let motion = 0;
+let bpm = 72; let temp = 366 / 10; let motion = 0;
 
 pulseEmitter.on('pulse', e => { bpm = e.bpm; compute(); });
 heatEmitter.on('heat', e => { temp = e.temp; compute(); });

@@ -94,7 +94,7 @@ function generateConsciousnessNode(
   const color = cmykToCss(cmyk);
   
   // Scale based on consciousness level
-  const scale = (consciousness / 9) * (shift ? 1.5 : 1);
+  const scale = (consciousness / 9) * (shift ? (3 / 2) : 1);
   
   return {
     digit,
@@ -105,7 +105,7 @@ function generateConsciousnessNode(
     frequency,
     color,
     scale,
-    rotation: [angle, angle * 0.5, angle * 0.25]
+    rotation: [angle, angle * (1 / 2), angle * (1 / 4)]
   };
 }
 
@@ -170,16 +170,16 @@ export function updateA432ConsciousnessJourney(
     
     node.rotation = [
       rotationAngle,
-      rotationAngle * 0.5,
-      rotationAngle * 0.25
+      rotationAngle * (1 / 2),
+      rotationAngle * (1 / 4)
     ];
     
     // Pulse effect for current consciousness state
     if (index === newState.currentStep) {
-      const pulse = sin(newState.animationTime * 5) * 0.2 + 1;
-      node.scale = (node.consciousness / 9) * pulse * (node.shift ? 1.5 : 1);
+      const pulse = sin(newState.animationTime * 5) * (1 / 5) + 1;
+      node.scale = (node.consciousness / 9) * pulse * (node.shift ? (3 / 2) : 1);
     } else {
-      node.scale = (node.consciousness / 9) * (node.shift ? 1.5 : 1);
+      node.scale = (node.consciousness / 9) * (node.shift ? (3 / 2) : 1);
     }
   });
   

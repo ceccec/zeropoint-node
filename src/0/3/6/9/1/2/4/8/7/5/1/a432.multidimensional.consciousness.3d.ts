@@ -154,7 +154,7 @@ function generateMultidimensionalNode(
     consciousness,
     frequency,
     scale,
-    rotation: [angle, angle * 0.5, angle * 0.25],
+    rotation: [angle, angle * (1 / 2), angle * (1 / 4)],
     connections
   };
 }
@@ -169,7 +169,7 @@ export function initializeA432Multidimensional(): A432MultidimensionalState {
     const level = pathData.level;
     const radius = level * 2; // Radius increases with dimension level
     const angle = (index % 6) * 60; // 6 nodes per level, 60° apart
-    const z = level * 1.5; // Z increases with dimension level
+    const z = level * (3 / 2); // Z increases with dimension level
     
     const x = radius * cos(angle * PI / 180);
     const y = radius * sin(angle * PI / 180);
@@ -243,13 +243,13 @@ export function updateA432Multidimensional(
     
     node.rotation = [
       rotationAngle,
-      rotationAngle * 0.5,
-      rotationAngle * 0.25
+      rotationAngle * (1 / 2),
+      rotationAngle * (1 / 4)
     ];
     
     // Pulse effect for current consciousness state
     if (node.id === nodeId) {
-      const pulse = sin(newState.animationTime * 5) * 0.3 + 1;
+      const pulse = sin(newState.animationTime * 5) * (3 / 10) + 1;
       node.scale = (node.consciousness / 9) * (node.level / 7) * pulse;
     } else {
       node.scale = (node.consciousness / 9) * (node.level / 7);

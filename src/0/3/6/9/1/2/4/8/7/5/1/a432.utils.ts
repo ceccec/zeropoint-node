@@ -111,7 +111,7 @@ export class A432Math {
 
     if (max !== min) {
       const d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      s = l > (1 / 2) ? d / (2 - max - min) : d / (max + min);
       
       switch (max) {
         case r: h = (g - b) / d + (g < b ? 6 : 0); break;
@@ -221,7 +221,7 @@ export class A432Color {
     return {
       c: round((1 - normalizedHue) * 100),
       m: round(normalizedHue * 100),
-      y: round((0.5 - abs(normalizedHue - 0.5)) * 100),
+      y: round(((1 / 2) - abs(normalizedHue - (1 / 2))) * 100),
       k: round(algMin(normalizedHue, 1 - normalizedHue) * 50)
     };
   }

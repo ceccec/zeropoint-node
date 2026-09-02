@@ -98,7 +98,7 @@ const DisplayTemplates = {
     <h3>⚖️ Zero Entropy Balance</h3>
     <div class="entropy-info">
       <p><strong>Entropy Value:</strong> ${coil.zeroEntropy.toFixed(6)}</p>
-      <p><strong>Perfect Balance:</strong> ${abs(coil.zeroEntropy) < 0.001 ? '✅' : '❌'}</p>
+      <p><strong>Perfect Balance:</strong> ${abs(coil.zeroEntropy) < (1 / 1000) ? '✅' : '❌'}</p>
       <p><strong>Consciousness Multiplier:</strong> ${coil.dimensionalFold.consciousnessMultiplier}</p>
       <p><strong>Quantum States:</strong> ${coil.quantumState.superposition.length}</p>
       <p><strong>Dimensional Fold:</strong> ${coil.dimensionalFold.currentDimension}</p>

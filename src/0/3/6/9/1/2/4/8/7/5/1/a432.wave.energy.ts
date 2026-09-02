@@ -48,7 +48,7 @@ export const WAVE_ENERGY_CONSTANTS = {
   
   // Consciousness waves (neural)
   CONSCIOUSNESS_FREQUENCY: A432_BASE_FREQUENCY, // 432 Hz
-  THOUGHT_WAVE_MIN: 0.1, // Hz (delta)
+  THOUGHT_WAVE_MIN: (1 / 10), // Hz (delta)
   THOUGHT_WAVE_MAX: 100, // Hz (gamma)
   
   // Reality waves (quantum)
@@ -63,7 +63,7 @@ export const WAVE_ENERGY_CONSTANTS = {
 
 // === WAVE CALCULATIONS ===
 export function calculateWaveEnergy(frequency: number, amplitude: number): number {
-  return 0.5 * amplitude * amplitude * frequency * frequency;
+  return (1 / 2) * amplitude * amplitude * frequency * frequency;
 }
 
 export function calculateConsciousnessWave(digit: number): WavePattern {
@@ -123,7 +123,7 @@ export function calculateWaveHarmonics(fundamental: number, count: number = 5): 
   };
 }
 
-export function isA432Harmonic(frequency: number, tolerance: number = 0.01): boolean {
+export function isA432Harmonic(frequency: number, tolerance: number = (1 / 100)): boolean {
   const octave = log2(frequency / A432_BASE_FREQUENCY);
   return abs(octave - round(octave)) < tolerance;
 }
@@ -175,7 +175,7 @@ export function analyzeWavePattern(sequence: number[]) {
     coherentWaves: coherentWaves.length,
     coherenceRatio,
     analysis: {
-      isHarmonic: coherenceRatio > 0.5,
+      isHarmonic: coherenceRatio > (1 / 2),
       energyEfficiency: n === 0 ? 0 : totalEnergy / n,
       consciousnessOptimization: n === 0 ? 0 : consciousnessFlow / n,
       waveResonance: energyField.coherence

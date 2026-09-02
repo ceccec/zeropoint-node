@@ -165,7 +165,7 @@ export function tomatoSingleQubit(
 export function verifyTomography(
   expected: Register,
   tomographyResult: TomographyResult,
-  toleranceFidelity: number = 0.9,
+  toleranceFidelity: number = (9 / 10),
 ): boolean {
   // Compare expected state (via expected |ψ⟩ probabilities) vs measured density matrix
   // For a pure state, the density matrix should be ρ = |ψ⟩⟨ψ|
@@ -276,5 +276,5 @@ export function generateTomographyProof(
 // Verify a tomography proof is self-consistent (p0 + p1 ≈ 1)
 export function verifyTomographyProof(proof: TomographyProof): boolean {
   const total = proof.prob0 + proof.prob1
-  return total >= 0.8 && total <= 1.2 // Allow wider tolerance (probabilities should sum close to 1)
+  return total >= (4 / 5) && total <= (6 / 5) // Allow wider tolerance (probabilities should sum close to 1)
 }

@@ -16,7 +16,7 @@ import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, frequencyForDigit } from './
 // --- Canonical VBM Audio Constants ---
 const VBM_SEQUENCE = [0, ...TRINITY_AXIS, ...RODIN_SEQUENCE] as const;
 const VBM_BASE_FREQUENCY = 432; // Canonical A432 frequency
-const VBM_DURATION = 0.18; // Duration per tone (seconds)
+const VBM_DURATION = (9 / 50); // Duration per tone (seconds)
 const VBM_OSCILLATOR_TYPE = 'sine' as const;
 
 // --- VBM Audio State Interface ---
@@ -69,8 +69,8 @@ function createVBMAudioTone(
   
   // Create gain node for volume control
   const gainNode = context.createGain();
-  gainNode.gain.setValueAtTime(0.3, startTime); // Start at 30% volume
-  gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration); // Fade out
+  gainNode.gain.setValueAtTime((3 / 10), startTime); // Start at 30% volume
+  gainNode.gain.exponentialRampToValueAtTime((1 / 100), startTime + duration); // Fade out
   
   // Connect oscillator to gain to destination
   oscillator.connect(gainNode);
@@ -188,7 +188,7 @@ export class VBMAudioPlayer {
         tone.oscillator.stop();
         tone.gainNode.gain.cancelScheduledValues(0);
         tone.gainNode.gain.setValueAtTime(tone.gainNode.gain.value, 0);
-        tone.gainNode.gain.linearRampToValueAtTime(0, 0.1);
+        tone.gainNode.gain.linearRampToValueAtTime(0, (1 / 10));
       } catch {
         // Oscillator might already be stopped
       }

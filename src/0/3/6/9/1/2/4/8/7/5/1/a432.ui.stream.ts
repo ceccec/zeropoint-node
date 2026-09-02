@@ -34,7 +34,7 @@ export function renderBlockchainStream(container: HTMLElement, blocks: BlockLike
       svg.appendChild(circle);
       x += blockRadius * 2 + blockGap;
     }
-    requestAnimationFrame(() => render(offset + 1.2));
+    requestAnimationFrame(() => render(offset + (6 / 5)));
   }
   render();
   return svg;

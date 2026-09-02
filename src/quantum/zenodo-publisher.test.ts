@@ -147,7 +147,7 @@ function testReproducibilityVerification(): void {
   const deposit = prepareDeposit(artifacts, '1.0.0')
   const report = verifyReproducibility(deposit)
 
-  if (report.overallScore < 0.85) {
+  if (report.overallScore < (17 / 20)) {
     throw new Error(`Reproducibility score too low: ${report.overallScore}`)
   }
 

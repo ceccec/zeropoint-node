@@ -46,9 +46,9 @@ export function calculatePathResistance(pattern: number[]): number {
     
     // Sacred geometry transitions have lower resistance
     if (isSacredTransition(current, next)) {
-      totalResistance += difference * 0.5; // 50% less resistance
+      totalResistance += difference * (1 / 2); // 50% less resistance
     } else {
-      totalResistance += difference * 1.5; // 50% more resistance
+      totalResistance += difference * (3 / 2); // 50% more resistance
     }
   }
   
@@ -141,7 +141,7 @@ export function calculateNaturalAlignment(pattern: number[]): number {
   // Golden ratio alignment using centralized constant
   for (let i = 0; i < pattern.length - 1; i++) {
     const ratio = pattern[i + 1] / pattern[i];
-    if (abs(ratio - GOLDEN_RATIO) < 0.1) {
+    if (abs(ratio - GOLDEN_RATIO) < (1 / 10)) {
       alignment += 10;
     }
   }
@@ -258,7 +258,7 @@ export class A432ElectricFlowSystem {
       const from = pattern[i];
       const to = pattern[i + 1];
       const isSacred = isSacredTransition(from, to);
-      const resistance = isSacred ? abs(to - from) * 0.5 : abs(to - from) * 1.5;
+      const resistance = isSacred ? abs(to - from) * (1 / 2) : abs(to - from) * (3 / 2);
       
       transitions.push({
         from,
@@ -328,7 +328,7 @@ export class A432ElectricFlowSystem {
       const current = pattern[i];
       const next = pattern[i + 1];
       const resistance = isSacredTransition(current, next) ? 
-        abs(next - current) * 0.5 : abs(next - current) * 1.5;
+        abs(next - current) * (1 / 2) : abs(next - current) * (3 / 2);
       
       if (resistance > 3) {
         flow.bottlenecks.push({

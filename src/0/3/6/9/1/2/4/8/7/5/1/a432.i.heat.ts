@@ -54,4 +54,4 @@ function isMainModule(): boolean {
   return entry !== undefined && import.meta.url === pathToFileURL(entry).href
 }
 
-if(isMainModule()){heatEmitter.on('heat',e=>console.log(e));heat(36.6);} 
+if(isMainModule()){heatEmitter.on('heat',e=>console.log(e));heat(366 / 10);} 

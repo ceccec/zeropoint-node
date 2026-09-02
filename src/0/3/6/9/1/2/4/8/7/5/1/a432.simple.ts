@@ -70,7 +70,7 @@ export class A432Sequence {
   }
 
   static generateBoolean(length: number = 9): boolean[] {
-    return Array.from({ length }, () => unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.simple.ts:rnd:0") > 0.5);
+    return Array.from({ length }, () => unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.simple.ts:rnd:0") > (1 / 2));
   }
 }
 

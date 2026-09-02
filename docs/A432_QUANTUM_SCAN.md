@@ -9,9 +9,9 @@ regenerate with `npm run a432:scan`; drift fails `npm run a432:scan:check`.
 - files scanned: **289**
 - by extension: `ts=210 · html=41 · md=34 · json=3 · js=1`
 - byte-identical duplicate groups: **0**
-- corpus quantum root: `504d5c10-e908-8bee-bb18-a37a4d20178f`
-- import/export census: files=211 · edges=632 · exports=1613 · root=`0661cabb-4014-87ce-9d81-bf2acaf652fd`
-- scan receipt: `7c484a5d-00e8-8d15-99bb-835759fc9ec3`
+- corpus quantum root: `c51432e4-2b3a-87e6-8e51-8f90f41778d5`
+- import/export census: files=211 · edges=632 · exports=1613 · root=`59ea09ae-d539-8c09-a1e1-d41ddbda60d2`
+- scan receipt: `fefc3a5b-dd13-83ec-94cb-327c07891f49`
 
 ## Vortex-digit spectrum
 
@@ -20,15 +20,15 @@ always 1–9, so the void digit 0 is structurally empty.
 
 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
 | --: | --: | --: | --: | --: | --: | --: | --: | --: |
-| 30 | 33 | 38 | 29 | 27 | 43 | 25 | 26 | 38 |
+| 28 | 34 | 35 | 31 | 32 | 40 | 26 | 26 | 37 |
 
 ## Quantum register
 
 Each fingerprint is lifted to a qubit via `encodeQuantumState`: first-nibble
 parity picks the basis, nibble-sum parity the measured value.
 
-- basis: `Z=138 · X=151`
-- value: `0=154 · 1=135`
+- basis: `Z=142 · X=147`
+- value: `0=153 · 1=136`
 
 ## Boundary
 

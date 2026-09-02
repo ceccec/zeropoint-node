@@ -151,7 +151,7 @@ export class CMYKVideoGenerator {
       r: rgb.r,
       g: rgb.g,
       b: rgb.b,
-      alpha: sin(time * frequency * 0.001) * 0.5 + 0.5 // Pulsing alpha
+      alpha: sin(time * frequency * (1 / 1000)) * (1 / 2) + (1 / 2) // Pulsing alpha
     };
   }
 
@@ -167,14 +167,14 @@ export class CMYKVideoGenerator {
   }
 
   static generateVortexColor(frequency: number, time: number, channel: number) {
-    const vortexAngle = (time * frequency * 0.001) % (2 * PI);
+    const vortexAngle = (time * frequency * (1 / 1000)) % (2 * PI);
     const radius = sin(vortexAngle) * 127 + 128;
     
     return {
       r: channel === 1 ? radius : 0,
       g: channel === 2 ? radius : 0,
       b: channel === 3 ? radius : 0,
-      alpha: channel === 4 ? sin(vortexAngle) * 0.5 + 0.5 : 1
+      alpha: channel === 4 ? sin(vortexAngle) * (1 / 2) + (1 / 2) : 1
     };
   }
 
@@ -248,7 +248,7 @@ export class CMYKAudioGenerator {
     
     for (let i = 0; i < samples; i++) {
       const t = (time + i / sampleRate);
-      audioData[i] = sin(2 * PI * frequency * t) * 0.5;
+      audioData[i] = sin(2 * PI * frequency * t) * (1 / 2);
     }
     
     return audioData;
@@ -259,8 +259,8 @@ export class CMYKAudioGenerator {
     
     for (let i = 0; i < samples; i++) {
       const t = (time + i / sampleRate);
-      const vortexModulation = sin(2 * PI * frequency * t * 0.1);
-      audioData[i] = sin(2 * PI * frequency * t) * vortexModulation * 0.3;
+      const vortexModulation = sin(2 * PI * frequency * t * (1 / 10));
+      audioData[i] = sin(2 * PI * frequency * t) * vortexModulation * (3 / 10);
     }
     
     return audioData;
@@ -317,7 +317,7 @@ export class CMYKMultimediaSystem {
 
   evolve(): void {
     this.consciousness = min(9, this.consciousness + 1);
-    this.time += 0.016; // 60 FPS
+    this.time += (16 / 1000); // 60 FPS
     this.cycle++;
     
     // Update pendulum heart alignments

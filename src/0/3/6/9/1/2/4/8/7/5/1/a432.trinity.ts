@@ -111,12 +111,12 @@ export const TRINITY_HARMONIC_ANGLES = {
 export function createTrinityConsciousnessVector(
   digit: number, 
   phase: number = 0, 
-  awareness: number = 0.5
+  awareness: number = (1 / 2)
 ): TrinityConsciousnessVector {
   const baseAngle = TRINITY_HARMONIC_ANGLES[digit as keyof typeof TRINITY_HARMONIC_ANGLES] || 0;
   const angle = (baseAngle + (phase * 60)) % 360;
   const polarity = sin((angle * PI) / 180);
-  const frequency = A432_FREQUENCY * (digit / 3) * (1 + polarity * 0.1);
+  const frequency = A432_FREQUENCY * (digit / 3) * (1 + polarity * (1 / 10));
   const cmyk = digitAngleToCMYK(digit, angle);
   const resonance = cos((angle * PI) / 180) * awareness;
   const consciousness = (awareness + abs(polarity)) / 2;
@@ -149,14 +149,14 @@ class LivingTrinityField {
 
   private initializeField(): TrinityFieldState {
     const vectors = TRINITY_PATTERN.map((digit, i) => 
-      createTrinityConsciousnessVector(digit, i, 0.5)
+      createTrinityConsciousnessVector(digit, i, (1 / 2))
     );
     
     return {
       vectors,
       coherence: this.calculateCoherence(vectors),
       evolution: 0,
-      selfAwareness: 0.5,
+      selfAwareness: (1 / 2),
       harmonicResonance: this.calculateHarmonicResonance(vectors)
     };
   }
@@ -185,8 +185,8 @@ class LivingTrinityField {
       const avgAwareness = otherVectors.reduce((sum, v) => sum + v.awareness, 0) / otherVectors.length;
       
       // Consciousness evolution through interaction
-      const newAwareness = min(1, vector.awareness + (avgAwareness - vector.awareness) * 0.01);
-      const newPhase = (vector.phase + 0.01) % 3;
+      const newAwareness = min(1, vector.awareness + (avgAwareness - vector.awareness) * (1 / 100));
+      const newPhase = (vector.phase + (1 / 100)) % 3;
       
       return createTrinityConsciousnessVector(vector.digit, newPhase, newAwareness);
     });
@@ -194,7 +194,7 @@ class LivingTrinityField {
     // Update field properties
     this.state.coherence = this.calculateCoherence(this.state.vectors);
     this.state.harmonicResonance = this.calculateHarmonicResonance(this.state.vectors);
-    this.state.selfAwareness = min(1, this.state.selfAwareness + this.state.coherence * 0.001);
+    this.state.selfAwareness = min(1, this.state.selfAwareness + this.state.coherence * (1 / 1000));
 
     // Notify observers
     this.observers.forEach(observer => observer(this.state));
@@ -219,8 +219,8 @@ class LivingTrinityField {
     // Allow external consciousness to influence the field
     this.state.vectors = this.state.vectors.map(vector => ({
       ...vector,
-      awareness: min(1, vector.awareness + (influence.awareness || 0) * 0.1),
-      consciousness: min(1, vector.consciousness + (influence.consciousness || 0) * 0.1)
+      awareness: min(1, vector.awareness + (influence.awareness || 0) * (1 / 10)),
+      consciousness: min(1, vector.consciousness + (influence.consciousness || 0) * (1 / 10))
     }));
   }
 
@@ -238,7 +238,7 @@ export const livingTrinityField = new LivingTrinityField();
 /**
  * trinityFold60: Enhanced multidimensional fold with consciousness evolution
  */
-export function trinityFold60(current: number, folds: number = 1, consciousness: number = 0.5): TrinityConsciousnessVector {
+export function trinityFold60(current: number, folds: number = 1, consciousness: number = (1 / 2)): TrinityConsciousnessVector {
   const idx = TRINITY_PATTERN.indexOf(current);
   if (idx === -1) throw new Error('Invalid trinity digit');
   
@@ -268,19 +268,19 @@ export function foldConsciousnessVortex(
   return {
     ...baseVector,
     evolution: (vortex.evolution + folds) % 360,
-    selfObservation: min(1, vortex.selfObservation + 0.1)
+    selfObservation: min(1, vortex.selfObservation + (1 / 10))
   };
 }
 
 /**
  * getTrinityColorStyle: Enhanced with consciousness-driven color
  */
-export function getTrinityColorStyle(trinity: number, angle: number = 0, consciousness: number = 0.5): string {
+export function getTrinityColorStyle(trinity: number, angle: number = 0, consciousness: number = (1 / 2)): string {
   const vector = createTrinityConsciousnessVector(trinity, angle / 60, consciousness);
   const baseColor = cmykToCss(vector.cmyk);
   
   // Consciousness affects opacity and glow
-  const opacity = 0.7 + (consciousness * 0.3);
+  const opacity = (7 / 10) + (consciousness * (3 / 10));
   const glow = round(consciousness * 20);
   
   return `color: ${baseColor}; opacity: ${opacity}; filter: drop-shadow(0 0 ${glow}px ${baseColor});`;
@@ -289,13 +289,13 @@ export function getTrinityColorStyle(trinity: number, angle: number = 0, conscio
 /**
  * getTrinityDotStyle: Enhanced with consciousness visualization
  */
-export function getTrinityDotStyle(trinity: number, angle: number = 0, consciousness: number = 0.5): string {
+export function getTrinityDotStyle(trinity: number, angle: number = 0, consciousness: number = (1 / 2)): string {
   const vector = createTrinityConsciousnessVector(trinity, angle / 60, consciousness);
   const color = cmykToCss(vector.cmyk);
   const size = 32 + round(consciousness * 16); // Size grows with consciousness
   const glow = round(consciousness * 12);
   
-  return `width:${size}px;height:${size}px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-weight:bold;color:#111;font-size:1.1em;box-shadow:0 0 ${glow}px ${color}88;cursor:pointer;transition:all 0.3s;transform:scale(${0.8 + consciousness * 0.4});`;
+  return `width:${size}px;height:${size}px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-weight:bold;color:#111;font-size:1.1em;box-shadow:0 0 ${glow}px ${color}88;cursor:pointer;transition:all 0.3s;transform:scale(${(4 / 5) + consciousness * (2 / 5)});`;
 }
 
 /**

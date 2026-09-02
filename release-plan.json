@@ -43,17 +43,17 @@
       "set": "orbit",
       "gateway": false,
       "surface": "decimals",
-      "from": 279,
-      "to": 180,
-      "why": "5 is the mirror's fixed point \u2014 throughVoid fixes only 5 \u2014 and the decimal work is the one that must not move a value: each float becomes the integer ratio it approximates, and the fingerprint of every exported value has to be identical either side."
+      "from": 278,
+      "to": 9,
+      "why": "Planned 279 -> 180 in two halves. Measured 278 at the start and reached 9, which is the whole surface, so patch 6 has nothing left of it. 5 is the mirror's fixed point and the work is the one that must not move a value: 317 literals became integer ratios, each substituted ONLY where n/d is bit-identical to the literal, and 504 exported values were fingerprinted before and after with zero changed once run-to-run drift in three live timers was excluded."
     },
     "6": {
       "set": "axis",
       "gateway": false,
       "surface": "decimals",
-      "from": 180,
-      "to": 90,
-      "why": "The second half of the same work, on the axis because the constants it reaches are the shared ones rather than the leaves."
+      "from": 9,
+      "to": 9,
+      "why": "NEEDS RE-PLANNING. This was the second half of the decimal work and patch 5 took all of it. The 9 that remain have no integer ratio to carry \u2014 ln 2, root 2, the golden ratio, 3 root 3 over 2, Planck's constant \u2014 so a target below 9 would be asking for a ratio that does not exist. The slot is free and should be given work that does, rather than a number invented to fill it."
     },
     "7": {
       "set": "orbit",

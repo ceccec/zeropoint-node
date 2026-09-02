@@ -279,8 +279,11 @@ export class A432SacredGeometrySystem {
 
   spinMerkaba(): MerkabaState {
     this.currentPhase = MERKABA_PHASES.SPINNING;
-    this.tetrahedronRotation += 33.33; // 1/3 of 100 degrees
-    this.energyField *= 1.618; // Golden ratio
+    // The comment said 1/3 of 100 degrees and the value is not 100/3 — it is a
+    // two-place truncation of it. The VALUE is preserved here, because this
+    // patch may not move one; the claim is what was wrong.
+    this.tetrahedronRotation += 3333 / 100;
+    this.energyField *= (1618 / 1000); // Golden ratio
     this.consciousnessLevel = this.calculateDigitalRoot(floor(this.consciousnessLevel * 2));
     
     return this.getMerkabaState();
@@ -288,8 +291,8 @@ export class A432SacredGeometrySystem {
 
   materializeMerkaba(): MerkabaState {
     this.currentPhase = MERKABA_PHASES.MATERIALIZATION;
-    this.tetrahedronRotation += 66.66; // 2/3 of 100 degrees
-    this.energyField *= 2.718; // Euler's number
+    this.tetrahedronRotation += 6666 / 100; // a truncation of 200/3, not 200/3
+    this.energyField *= (2718 / 1000); // Euler's number
     this.consciousnessLevel = this.calculateDigitalRoot(floor(this.consciousnessLevel * 3));
     
     return this.getMerkabaState();

@@ -91,7 +91,7 @@ function generateA432Tetrahedron(
     edges,
     color,
     position,
-    rotation: [angle, angle * 0.5, angle * 0.25],
+    rotation: [angle, angle * (1 / 2), angle * (1 / 4)],
     scale: scale * (digitalRoot(digit) / 9)
   };
 }
@@ -123,10 +123,10 @@ function generateA432DigitalRootNodes(): A432Tetrahedron[] {
   
   return rodinSequence.map((digit, index) => {
     const angle = (index * 60) + 30; // Offset by 30° from trinity nodes
-    const radius = A432_3D_CONSTANTS.SCALE_FACTOR * 1.5;
+    const radius = A432_3D_CONSTANTS.SCALE_FACTOR * (3 / 2);
     const x = radius * cos(angle * PI / 180);
     const y = radius * sin(angle * PI / 180);
-    const z = A432_3D_CONSTANTS.SCALE_FACTOR * 0.5;
+    const z = A432_3D_CONSTANTS.SCALE_FACTOR * (1 / 2);
     
     return generateA432Tetrahedron(
       digit,
@@ -207,8 +207,8 @@ export function updateA432TripleMerkaba3D(
     
     tetrahedron.rotation = [
       rotationAngle,
-      rotationAngle * 0.5,
-      rotationAngle * 0.25
+      rotationAngle * (1 / 2),
+      rotationAngle * (1 / 4)
     ];
   });
   

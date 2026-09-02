@@ -217,9 +217,9 @@ assert(imul(0x7fffffff, 0x7fffffff) === ((() => {
   const bl = b & 0xffff
   return ((al * bl) + (((ah * bl + al * bh) << 16) >>> 0)) | 0
 })()), 'imul matches 32-bit')
-assert(abs(-4) === 4 && floor(3.9) === 3 && floor(-1.1) === -2, 'abs/floor')
+assert(abs(-4) === 4 && floor((39 / 10)) === 3 && floor(-(11 / 10)) === -2, 'abs/floor')
 assert(unitFromSeed('a') === unitFromSeed('a') && unitFromSeed('a') !== unitFromSeed('b'), 'unitFromSeed')
-assert(sin(0) === 0 && PI > 3.14 && PI < 3.15, 'sin/PI algebra')
+assert(sin(0) === 0 && PI > (157 / 50) && PI < (63 / 20), 'sin/PI algebra')
 
 console.log(
   JSON.stringify({

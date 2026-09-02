@@ -60,7 +60,7 @@ export function ceil(n: number): number {
 }
 
 export function round(n: number): number {
-  return floor(n + 0.5)
+  return floor(n + (1 / 2))
 }
 
 /**
@@ -141,7 +141,7 @@ export function sqrt(n: number): number {
   if (n === Infinity) return Infinity
   let x = n
   for (let i = 0; i < 24; i++) {
-    x = 0.5 * (x + n / x)
+    x = (1 / 2) * (x + n / x)
   }
   return x
 }
@@ -201,7 +201,6 @@ export function exp_(x: number): number {
   if (x >= 710) return Infinity
   if (x <= -746) return 0
   // reduce via e^x = 2^(x/ln2) approx using integer + fractional
-  const LN2 = 0.6931471805599453
   const n = floor(x / LN2)
   const r = x - n * LN2
   let term = 1
@@ -216,27 +215,34 @@ export function exp_(x: number): number {
   if (n < 0 && n > -31) return sum / (1 << -n)
   let p = sum
   if (n > 0) for (let i = 0; i < n; i++) p *= 2
-  else for (let i = 0; i < -n; i++) p *= 0.5
+  else for (let i = 0; i < -n; i++) p *= (1 / 2)
   return p
 }
 
 export { exp_ as exp }
 
 /** Natural log via artanh series on reduced argument. */
+/**
+ * ln 2, to the last bit a double carries. Irrational, so it has no integer
+ * ratio and stays a literal — but it was declared THREE times in this file,
+ * once inside each of exp, log and log2, which is three places for one of them
+ * to be typed differently.
+ */
+const LN2 = 0.6931471805599453
+
 export function log(n: number): number {
   // log(0) is -Infinity, not NaN: it is a limit, not a domain error. Only a
   // NEGATIVE argument is undefined over the reals. Collapsing both to NaN lost
   // that distinction, and log2(0) inherited it.
   if (n === 0) return -Infinity
   if (n < 0) return NaN
-  const LN2 = 0.6931471805599453
   let x = n
   let k = 0
-  while (x > 1.5) {
-    x *= 0.5
+  while (x > (3 / 2)) {
+    x *= (1 / 2)
     k++
   }
-  while (x < 0.75) {
+  while (x < (3 / 4)) {
     x *= 2
     k--
   }
@@ -254,7 +260,6 @@ export function log(n: number): number {
 
 /** Base-2 log — no Math.log2. */
 export function log2(n: number): number {
-  const LN2 = 0.6931471805599453
   return log(n) / LN2
 }
 

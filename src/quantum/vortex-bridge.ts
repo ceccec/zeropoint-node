@@ -206,7 +206,7 @@ export function vortexGuidanceForQuantum(cert: VortexCertificate): VortexGuidanc
     }
   }
 
-  if (cert.confidence > 0.9) {
+  if (cert.confidence > (9 / 10)) {
     // Learning is excellent; increase scale
     return {
       adjust_dimension: 1,

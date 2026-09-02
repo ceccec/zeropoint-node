@@ -42,8 +42,8 @@ interface VBMNode {
 // --- Canonical VBM Color Generation ---
 function generateVBMColor(digit: number): string {
   const hue = hueForDigit(digit);
-  const saturation = 0.8;
-  const value = 0.9;
+  const saturation = (4 / 5);
+  const value = (9 / 10);
   
   // Convert HSV to RGB
   const h = hue / 360;
@@ -141,7 +141,7 @@ export class VBMCanvasVisualization {
     const { width, height } = this.canvas;
     const centerX = width / 2;
     const centerY = height / 2;
-    const radius = min(width, height) * 0.35;
+    const radius = min(width, height) * (7 / 20);
     
     // Clear canvas
     this.ctx.clearRect(0, 0, width, height);
@@ -270,7 +270,7 @@ export class VBMSVGVisualization {
     const size = parseInt(this.svg.getAttribute('width') || '400');
     const centerX = size / 2;
     const centerY = size / 2;
-    const radius = size * 0.35;
+    const radius = size * (7 / 20);
     
     // Clear SVG
     this.svg.innerHTML = '';

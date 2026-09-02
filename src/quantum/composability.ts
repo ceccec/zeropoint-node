@@ -206,7 +206,7 @@ export function trackCompositionStrategy(
       },
       preferred_path: attempt.path,
       success_rate: attempt.is_success ? 1 : 0,
-      improvement_potential: 0.5,
+      improvement_potential: (1 / 2),
     }
   } else {
     // Update success rate

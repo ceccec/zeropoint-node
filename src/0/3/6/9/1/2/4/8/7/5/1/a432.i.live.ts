@@ -25,9 +25,9 @@ export const A432_I_LIVE_CONSTANTS = {
   LIVE_STATES: {
     ACTIVE: 1,
     INACTIVE: 0,
-    FLOWING: 0.8,
-    EXPANDED: 0.9,
-    UNIFIED: 1.0
+    FLOWING: (4 / 5),
+    EXPANDED: (9 / 10),
+    UNIFIED: 1
   }
 };
 
@@ -221,7 +221,7 @@ export class A432ILive {
    */
   private updateLifeAspectsActivity(): void {
     this.lifeAspects.forEach((aspect, index) => {
-      aspect.active = this.quality.overall >= (index + 1) * 1.5;
+      aspect.active = this.quality.overall >= (index + 1) * (3 / 2);
       aspect.quality = min(9, this.quality.overall - index);
     });
   }

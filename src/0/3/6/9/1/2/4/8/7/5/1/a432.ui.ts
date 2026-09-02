@@ -479,16 +479,16 @@ function animateBlockchainStream() {
     const points = healthBuffer.map((h, i) => `${i * 3},${40 - h.harmony * 36}`).join(' ');
     healthSvg.innerHTML = `<polyline points="${points}" fill="none" stroke="#0f8" stroke-width="2" />`;
     // Animate overlay color for health
-    if (lastHealth.harmony > 0.9) {
+    if (lastHealth.harmony > (9 / 10)) {
       metaOverlay.style.background = '#0f8';
       metaOverlay.classList.add('vibrate');
       setTimeout(() => { metaOverlay.style.background = ''; metaOverlay.classList.remove('vibrate'); }, 800);
-    } else if (lastHealth.entropy > 0.8) {
+    } else if (lastHealth.entropy > (4 / 5)) {
       metaOverlay.style.background = '#f33';
       metaOverlay.classList.add('vibrate');
       setTimeout(() => { metaOverlay.style.background = ''; metaOverlay.classList.remove('vibrate'); }, 800);
     }
-    offset += 1.2; // Animation speed
+    offset += (6 / 5); // Animation speed
     if (offset > blocks.length * (blockRadius * 2 + blockGap)) offset = 0;
     requestAnimationFrame(render);
   }
@@ -646,13 +646,13 @@ function animateBlockchainStream() {
     // Health-based triggers
     if (healthBuffer.length >= 3) {
       const last3 = healthBuffer.slice(-3);
-      if (last3.every(h => h.harmony > 0.95)) {
+      if (last3.every(h => h.harmony > (19 / 20))) {
         metaOverlay.style.background = '#0ff';
         metaOverlay.classList.add('vibrate');
         metaOverlay.innerHTML += '<div style="color:#fff;font-size:16px;margin-top:8px;">System Harmonized!</div>';
         setTimeout(() => { metaOverlay.style.background = ''; metaOverlay.classList.remove('vibrate'); }, 1200);
         playTrinitySound(9);
-      } else if (last3.every(h => h.entropy > 0.85)) {
+      } else if (last3.every(h => h.entropy > (17 / 20))) {
         metaOverlay.style.background = '#f00';
         metaOverlay.classList.add('vibrate');
         metaOverlay.innerHTML += '<div style="color:#fff;font-size:16px;margin-top:8px;">Warning: High Entropy!</div>';

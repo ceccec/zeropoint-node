@@ -71,17 +71,17 @@ export function initializeOrchestration(): OrchestrationState {
   return {
     iteration: 0,
     layer_states: {
-      simulator: { working: true, quality: 0.95 },
-      algorithms: { working: true, quality: 0.90 },
-      hybrid: { working: true, quality: 0.85 },
-      discovery: { working: true, quality: 0.80 },
-      meta_verification: { working: true, quality: 0.88 },
-      composability: { working: true, quality: 0.82 },
-      self_healing: { working: true, quality: 0.75 },
+      simulator: { working: true, quality: (19 / 20) },
+      algorithms: { working: true, quality: (9 / 10) },
+      hybrid: { working: true, quality: (17 / 20) },
+      discovery: { working: true, quality: (4 / 5) },
+      meta_verification: { working: true, quality: (22 / 25) },
+      composability: { working: true, quality: (41 / 50) },
+      self_healing: { working: true, quality: (3 / 4) },
     },
-    entanglement_strength: 0.7, // Layers are coupled
-    interference_pattern: [1, 0.9, 0.8, 0.75, 0.88, 0.82, 0.75], // Quality scores
-    system_health: 0.825, // Average of all layers
+    entanglement_strength: (7 / 10), // Layers are coupled
+    interference_pattern: [1, (9 / 10), (4 / 5), (3 / 4), (22 / 25), (41 / 50), (3 / 4)], // Quality scores
+    system_health: (825 / 1000), // Average of all layers
   }
 }
 
@@ -101,31 +101,31 @@ export function initializeOrchestration(): OrchestrationState {
 export function entangleLayerOutputs(state: OrchestrationState): OrchestrationState {
   // Simulator quality affects algorithm success
   const simulator_quality = state.layer_states.simulator.quality
-  const algorithm_quality = state.layer_states.algorithms.quality * (0.8 + 0.2 * simulator_quality)
+  const algorithm_quality = state.layer_states.algorithms.quality * ((4 / 5) + (1 / 5) * simulator_quality)
 
   // Algorithms feed hybrid performance
-  const hybrid_quality = state.layer_states.hybrid.quality * (0.7 + 0.3 * algorithm_quality)
+  const hybrid_quality = state.layer_states.hybrid.quality * ((7 / 10) + (3 / 10) * algorithm_quality)
 
   // Hybrid results drive discovery
-  const discovery_quality = state.layer_states.discovery.quality * (0.6 + 0.4 * hybrid_quality)
+  const discovery_quality = state.layer_states.discovery.quality * ((3 / 5) + (2 / 5) * hybrid_quality)
 
   // Discovery patterns get verified
-  const meta_quality = state.layer_states.meta_verification.quality * (0.8 + 0.2 * discovery_quality)
+  const meta_quality = state.layer_states.meta_verification.quality * ((4 / 5) + (1 / 5) * discovery_quality)
 
   // Verification guides composition
   const composability_quality = state.layer_states.composability.quality *
-    (0.7 + 0.3 * meta_quality)
+    ((7 / 10) + (3 / 10) * meta_quality)
 
   // Composition failures trigger healing
   const healing_quality = state.layer_states.self_healing.quality *
-    (0.6 + 0.4 * (1 - composability_quality)) // Healing kicks in when composition weak
+    ((3 / 5) + (2 / 5) * (1 - composability_quality)) // Healing kicks in when composition weak
 
   // Recompute entanglement strength: how much do layers affect each other?
   const entanglement = (simulator_quality + algorithm_quality + hybrid_quality +
     discovery_quality + meta_quality + composability_quality + healing_quality) / 7
 
   // Recompute system health as weighted average
-  const weights = [0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.1]
+  const weights = [(3 / 20), (3 / 20), (3 / 20), (3 / 20), (3 / 20), (3 / 20), (1 / 10)]
   const health = (
     simulator_quality * weights[0]! +
     algorithm_quality * weights[1]! +
@@ -186,10 +186,10 @@ export function interferencePattern(state: OrchestrationState): {
   ]
 
   // Constructive interference: quality > 80%
-  const amplify = layers.filter((l) => l.quality > 0.8).map((l) => l.name)
+  const amplify = layers.filter((l) => l.quality > (4 / 5)).map((l) => l.name)
 
   // Destructive interference: quality < 70%
-  const suppress = layers.filter((l) => l.quality < 0.7).map((l) => l.name)
+  const suppress = layers.filter((l) => l.quality < (7 / 10)).map((l) => l.name)
 
   // Focus on the weakest layer that needs healing
   const focus = layers.reduce((min, l) => (l.quality < min.quality ? l : min)).name
@@ -209,11 +209,11 @@ export function measureAndCollapse(state: OrchestrationState): OrchestratorResul
 
   let next_action = 'continue'
 
-  if (state.system_health > 0.9) {
+  if (state.system_health > (9 / 10)) {
     next_action = 'expand: add new algorithm or technique'
-  } else if (state.system_health > 0.8) {
+  } else if (state.system_health > (4 / 5)) {
     next_action = 'optimize: refine best-performing layers'
-  } else if (state.system_health > 0.7) {
+  } else if (state.system_health > (7 / 10)) {
     next_action = `repair: focus on healing ${interference.focus}`
   } else {
     next_action = `critical: restart ${interference.focus} with fresh initialization`
@@ -248,8 +248,8 @@ export function feedbackAndImprove(
   const interference = interferencePattern(state)
 
   // Improvement: weak layers get boosted slightly
-  const boost = 0.05 // 5% improvement per iteration
-  const decay = 0.98 // Strong layers maintain, don't overfit
+  const boost = (1 / 20) // 5% improvement per iteration
+  const decay = (49 / 50) // Strong layers maintain, don't overfit
 
   // `{ ...state }` copies the TOP LEVEL only, so the copy's `layer_states` was
   // the same object as the caller's. Both loops then assigned into it, and this
@@ -345,7 +345,7 @@ export function runOrchestration(iterations: number = 5): {
   // Check convergence: did system health stabilize?
   const converged = trajectory.length >= 2 &&
     abs(trajectory[trajectory.length - 1]!.system_health -
-      trajectory[trajectory.length - 2]!.system_health) < 0.01
+      trajectory[trajectory.length - 2]!.system_health) < (1 / 100)
 
   return { final_state: state, trajectory, converged }
 }

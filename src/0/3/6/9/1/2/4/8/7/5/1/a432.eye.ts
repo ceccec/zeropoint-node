@@ -25,9 +25,9 @@ export const A432_EYE_CONSTANTS = {
   EYE_STATES: {
     OPEN: 1,
     CLOSED: 0,
-    BLINKING: 0.5,
-    FOCUSED: 0.8,
-    RELAXED: 0.3
+    BLINKING: (1 / 2),
+    FOCUSED: (4 / 5),
+    RELAXED: (3 / 10)
   }
 };
 

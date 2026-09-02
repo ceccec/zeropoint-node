@@ -245,7 +245,7 @@ export function solveApplication(
     return {
       problem,
       solution: result,
-      verified: result.ratio > 0.5, // Greedy is ~0.5-approx for MaxCut
+      verified: result.ratio > (1 / 2), // Greedy is ~0.5-approx for MaxCut
       solver: result.method,
       effort: (problem.data as { vertices: number }).vertices,
     }

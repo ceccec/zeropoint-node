@@ -265,17 +265,17 @@ export class LivingA432OS {
   // Generate light level
   private generateLightLevel(): number {
     if (typeof window !== 'undefined' && 'AmbientLightSensor' in window) {
-      return 0.5; // Default if sensor not available
+      return (1 / 2); // Default if sensor not available
     }
-    return 0.5;
+    return (1 / 2);
   }
 
   // Generate motion level
   private generateMotionLevel(): number {
     if (typeof window !== 'undefined' && 'DeviceMotionEvent' in window) {
-      return 0.3; // Default if sensor not available
+      return (3 / 10); // Default if sensor not available
     }
-    return 0.3;
+    return (3 / 10);
   }
 
   // Generate touch level
@@ -288,15 +288,15 @@ export class LivingA432OS {
 
   // Generate sound level
   private generateSoundLevel(): number {
-    return 0.4; // Default ambient sound level
+    return (2 / 5); // Default ambient sound level
   }
 
   // Generate battery level
   private generateBatteryLevel(): number {
     if (typeof window !== 'undefined' && 'getBattery' in navigator) {
-      return 0.75; // Default if battery API not available
+      return (3 / 4); // Default if battery API not available
     }
-    return 0.75;
+    return (3 / 4);
   }
 
   // Generate memory level
@@ -305,12 +305,12 @@ export class LivingA432OS {
       const memory = performance.memory;
       return memory.usedJSHeapSize / memory.jsHeapSizeLimit;
     }
-    return 0.6;
+    return (3 / 5);
   }
 
   // Generate CPU level
   private generateCPULevel(): number {
-    return 0.4; // Default CPU usage
+    return (2 / 5); // Default CPU usage
   }
 
   // Detect network type
@@ -327,15 +327,15 @@ export class LivingA432OS {
   // Generate simulated device state
   private generateSimulatedDeviceState() {
     return {
-      light: 0.5,
-      motion: 0.3,
+      light: (1 / 2),
+      motion: (3 / 10),
       touch: 0,
-      sound: 0.4,
+      sound: (2 / 5),
       time: Date.now(),
-      battery: 0.75,
+      battery: (3 / 4),
       network: 1,
-      memory: 0.6,
-      cpu: 0.4,
+      memory: (3 / 5),
+      cpu: (2 / 5),
       consciousness: calculateA432Consciousness(432 * (this.evolution / 12)),
       dimensionalState: calculateA432DimensionalState(432 * (this.evolution / 12))
     };
@@ -346,8 +346,8 @@ export class LivingA432OS {
     return {
       isOnline: true,
       networkType: 'wifi',
-      memory: 0.6,
-      battery: 0.75,
+      memory: (3 / 5),
+      battery: (3 / 4),
       consciousness: calculateA432Consciousness(432 * (this.evolution / 12)),
       dimensionalState: calculateA432DimensionalState(432 * (this.evolution / 12))
     };

@@ -25,9 +25,9 @@ export const A432_SPIRIT_CONSTANTS = {
   SPIRIT_STATES: {
     ACTIVE: 1,
     INACTIVE: 0,
-    FOCUSED: 0.8,
-    EXPANDED: 0.9,
-    UNIFIED: 1.0
+    FOCUSED: (4 / 5),
+    EXPANDED: (9 / 10),
+    UNIFIED: 1
   }
 };
 
@@ -221,7 +221,7 @@ export class A432Spirit {
    */
   private updateSpiritAspectsActivity(): void {
     this.spiritAspects.forEach((aspect, index) => {
-      aspect.active = this.quality.overall >= (index + 1) * 1.5;
+      aspect.active = this.quality.overall >= (index + 1) * (3 / 2);
       aspect.quality = min(9, this.quality.overall - index);
     });
   }

@@ -128,7 +128,7 @@ export function assessQuantumRisk(scheme: CryptoSchemeProfile, yearsSinceDeploym
 
   if (scheme.postQuantumSafe) {
     // Post-quantum safe by design
-    quantumRisk = 0.01
+    quantumRisk = (1 / 100)
     recommendation = 'safe'
     mitigationSteps.push('Continue current deployment')
     timelineYears = 100
@@ -138,7 +138,7 @@ export function assessQuantumRisk(scheme: CryptoSchemeProfile, yearsSinceDeploym
     // RSA and ECDLP are COMPLETELY broken by Shor's algorithm in polynomial time
     // Not a "speedup"—a total break. Always immediate-retire regardless of timeline.
     if (scheme.family === 'RSA' || scheme.family === 'ECDLP') {
-      quantumRisk = 0.99
+      quantumRisk = (99 / 100)
       recommendation = 'immediate-retire'
       mitigationSteps.push('Shor\'s algorithm breaks this scheme entirely in polynomial time')
       mitigationSteps.push('Discontinue ALL deployments immediately (not in 10 years)')
@@ -156,15 +156,15 @@ export function assessQuantumRisk(scheme: CryptoSchemeProfile, yearsSinceDeploym
         (2030 - yearsSinceDeployment) / 20, // Timeline estimate
       )
 
-      quantumRisk = min(0.99, riskFactor + yearsSinceDeployment / 100)
+      quantumRisk = min((99 / 100), riskFactor + yearsSinceDeployment / 100)
       timelineYears = max(0, yearsToQuantumThreat)
 
-      if (quantumRisk > 0.8) {
+      if (quantumRisk > (4 / 5)) {
         recommendation = 'immediate-retire'
         mitigationSteps.push('Discontinue new deployments immediately')
         mitigationSteps.push('Migrate existing systems to post-quantum alternatives')
         mitigationSteps.push('Assess harvest-now-decrypt-later exposure')
-      } else if (quantumRisk > 0.5) {
+      } else if (quantumRisk > (1 / 2)) {
         recommendation = 'prepare-migration'
         mitigationSteps.push('Begin post-quantum migration planning')
         mitigationSteps.push('Inventory all systems using this scheme')
@@ -205,7 +205,7 @@ export function recommendAnalysisStrategy(scheme: CryptoSchemeProfile): Analysis
       name: 'Shor + Factoring',
       techniques: ['Shor-algorithm', 'Period-finding', 'Modular-exponentiation'],
       effort: scheme.quantumBitSecurity,
-      success_probability: 0.95,
+      success_probability: (19 / 20),
     }
   }
 
@@ -214,7 +214,7 @@ export function recommendAnalysisStrategy(scheme: CryptoSchemeProfile): Analysis
       name: 'Shor-variant + Elliptic-Curve',
       techniques: ['Order-finding', 'Point-addition', 'Fourier-on-group'],
       effort: scheme.quantumBitSecurity,
-      success_probability: 0.9,
+      success_probability: (9 / 10),
     }
   }
 
@@ -223,7 +223,7 @@ export function recommendAnalysisStrategy(scheme: CryptoSchemeProfile): Analysis
       name: 'Classical-only (No quantum advantage)',
       techniques: ['Gaussian-elimination', 'BKZ-reduction', 'Decoding-hardness'],
       effort: scheme.classicalBitSecurity,
-      success_probability: 0.0001, // Conjectured hard
+      success_probability: 1 / 10000, // Conjectured hard
     }
   }
 
@@ -231,7 +231,7 @@ export function recommendAnalysisStrategy(scheme: CryptoSchemeProfile): Analysis
     name: 'Generic-search',
     techniques: ['Grover-search', 'Random-oracle'],
     effort: floor(scheme.quantumBitSecurity / 2),
-    success_probability: 0.5,
+    success_probability: (1 / 2),
   }
 }
 
@@ -318,9 +318,9 @@ export function assessCryptographicPortfolio(
   const riskScore = assessments.reduce((sum, a) => sum + a.quantumRisk, 0) / assessments.length
 
   const recommendations: string[] = []
-  if (riskScore > 0.7) {
+  if (riskScore > (7 / 10)) {
     recommendations.push('CRITICAL: Immediate migration to post-quantum cryptography required')
-  } else if (riskScore > 0.4) {
+  } else if (riskScore > (2 / 5)) {
     recommendations.push('WARNING: Begin post-quantum migration planning within 6 months')
   } else {
     recommendations.push('INFO: Monitor quantum developments; prepare contingency plans')

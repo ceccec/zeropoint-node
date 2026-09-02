@@ -108,8 +108,8 @@ export class AdaptiveOptimizer {
  * fidelity on a given hardware, based on depth and gate count.
  */
 export function predictFidelity(compiled: CompiledCircuit, profile: HardwareProfile): number {
-  const oneQ_error = compiled.gateCount * 0.3 * profile.errorRate1Q // Rough 30% one-qubit gates
-  const twoQ_error = compiled.gateCount * 0.2 * profile.errorRate2Q // Rough 20% two-qubit gates
+  const oneQ_error = compiled.gateCount * (3 / 10) * profile.errorRate1Q // Rough 30% one-qubit gates
+  const twoQ_error = compiled.gateCount * (1 / 5) * profile.errorRate2Q // Rough 20% two-qubit gates
   const depth_error = compiled.depth * profile.depthPenalty
   return max(0, 1 - (oneQ_error + twoQ_error + depth_error))
 }

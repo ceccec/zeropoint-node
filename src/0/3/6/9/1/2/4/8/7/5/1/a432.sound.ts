@@ -12,7 +12,7 @@ function ensureCtx() {
   return ctx;
 }
 
-export function playFrequency(frequency: number, duration = 0.2, vol = 0.2) {
+export function playFrequency(frequency: number, duration = (1 / 5), vol = (1 / 5)) {
   const audio = ensureCtx();
   if (!audio) return;
   const osc = audio.createOscillator();
@@ -25,10 +25,10 @@ export function playFrequency(frequency: number, duration = 0.2, vol = 0.2) {
   osc.stop(audio.currentTime + duration);
 }
 
-export function playDigit(d: Digit, duration = 0.2, vol = 0.2) {
+export function playDigit(d: Digit, duration = (1 / 5), vol = (1 / 5)) {
   playFrequency(frequencyForDigit((d === 9 ? 3 : (d % 3 === 0 ? d : 3))), duration, vol);
 }
 
-export function playTrinitySound(trinity: number, duration = 0.18, vol = 0.2) {
+export function playTrinitySound(trinity: number, duration = (9 / 50), vol = (1 / 5)) {
   playFrequency(A432_FREQUENCY * trinity, duration, vol);
 } 

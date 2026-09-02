@@ -21,7 +21,7 @@
     return n - m - (n < 0 ? 1 : 0);
   }
   function round(n) {
-    return floor(n + 0.5);
+    return floor(n + 1 / 2);
   }
   function min(...values) {
     let m = Infinity;

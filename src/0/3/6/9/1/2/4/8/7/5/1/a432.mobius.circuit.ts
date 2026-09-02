@@ -68,7 +68,7 @@ export function calculateMobiusState(decimal: number): MobiusState {
   const frequency = A432_BASE_FREQUENCY * (decimal / 9);
   const amplitude = GOLDEN_RATIO * decimal;
   const phase = (decimal * TAU) / 6; // 6 states in Mobius cycle
-  const energy = 0.5 * amplitude * amplitude * frequency * frequency;
+  const energy = (1 / 2) * amplitude * amplitude * frequency * frequency;
   const consciousness = calculateDigitalRoot(round(energy));
   
   return {
@@ -195,7 +195,7 @@ export function analyzeMobiusCircuit() {
   
   // Check if sequence is harmonic with A432
   const harmonicStates = states.filter(state => 
-    abs(state.frequency - A432_BASE_FREQUENCY) < A432_BASE_FREQUENCY * 0.1
+    abs(state.frequency - A432_BASE_FREQUENCY) < A432_BASE_FREQUENCY * (1 / 10)
   );
   const isHarmonic = harmonicStates.length > 0;
   

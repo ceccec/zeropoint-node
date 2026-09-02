@@ -42,7 +42,7 @@ export function animateVoidTransformation(frames: number = 20, length: number = 
   for (let f = 0; f < frames; f++) {
     out.push(getVoidStreamOverlayData(length).map((d, i) => {
       // Animate color/opacity based on frame
-      const opacity = max(0.2, 1 - abs(f - i) / frames);
+      const opacity = max((1 / 5), 1 - abs(f - i) / frames);
       const html = `<div style="width:48px;height:48px;background:${cmykToCss(d.color)};opacity:${opacity};display:flex;align-items:center;justify-content:center;font-size:1.1em;color:#fff;border-radius:10px;">${d.dim}<br><span style='font-size:0.7em;'>${d.source}</span></div>`;
       return { ...d, html };
     }));

@@ -54,13 +54,13 @@ function toCMYK(fraction: number): number {
 }
 
 // Advanced Trimix Calculations
-function calcMOD(FO2: number, PPO2_limit = 1.4): number {
+function calcMOD(FO2: number, PPO2_limit = (7 / 5)): number {
   if (FO2 === 0) return 0;
   return round(((PPO2_limit / FO2) * 10 - 10) * 10) / 10;
 }
 function calcEND(FN2: number, FHe: number, depth: number): number {
   // He is 0.19 narcotic factor
-  return round(((FN2 + FHe * 0.19) * (depth + 10) / 10 - 10) * 10) / 10;
+  return round(((FN2 + FHe * (19 / 100)) * (depth + 10) / 10 - 10) * 10) / 10;
 }
 function calcPPO2(FO2: number, depth: number): number {
   return round((FO2 * ((depth + 10) / 10)) * 100) / 100;
@@ -68,17 +68,17 @@ function calcPPO2(FO2: number, depth: number): number {
 function calcCNS(PPO2: number, time: number): number {
   // Simple: CNS% per minute at given PPO2 (NOAA table, linearized)
   // At PPO2=1.6, 45 min = 100%; at 1.4, 150 min = 100%
-  if (PPO2 >= 1.6) return min(100, (time / 45) * 100);
-  if (PPO2 >= 1.4) return min(100, (time / 150) * 100);
+  if (PPO2 >= (8 / 5)) return min(100, (time / 45) * 100);
+  if (PPO2 >= (7 / 5)) return min(100, (time / 150) * 100);
   return min(100, (time / 200) * 100);
 }
 
 export const trimixPresets = [
-  { name: 'Air', O2: 0.21, N2: 0.79, He: 0, CO2: 0.01 },
-  { name: 'Nitrox 32', O2: 0.32, N2: 0.68, He: 0, CO2: 0.01 },
-  { name: 'Normoxic Trimix', O2: 0.21, N2: 0.35, He: 0.44, CO2: 0.01 },
-  { name: 'Hypoxic Trimix', O2: 0.18, N2: 0.32, He: 0.50, CO2: 0.01 },
-  { name: 'Heliox', O2: 0.21, N2: 0, He: 0.79, CO2: 0.01 }
+  { name: 'Air', O2: (21 / 100), N2: (79 / 100), He: 0, CO2: (1 / 100) },
+  { name: 'Nitrox 32', O2: (8 / 25), N2: (17 / 25), He: 0, CO2: (1 / 100) },
+  { name: 'Normoxic Trimix', O2: (21 / 100), N2: (7 / 20), He: (11 / 25), CO2: (1 / 100) },
+  { name: 'Hypoxic Trimix', O2: (9 / 50), N2: (8 / 25), He: (1 / 2), CO2: (1 / 100) },
+  { name: 'Heliox', O2: (21 / 100), N2: 0, He: (79 / 100), CO2: (1 / 100) }
 ];
 
 export function validateTrimix(O2: number, N2: number, He: number, CO2: number, depth: number, time: number): CaveDivingMetrics {
@@ -90,13 +90,13 @@ export function validateTrimix(O2: number, N2: number, He: number, CO2: number, 
   const PPO2 = calcPPO2(FO2, depth);
   const END = calcEND(FN2, FHe, depth);
   const CNS = calcCNS(PPO2, time);
-  if (FO2 < 0.16) warnings.push('Hypoxic—Not breathable at surface');
-  if (FO2 > 0.40) warnings.push('Oxygen toxicity risk');
-  if (PPO2 > 1.4) warnings.push('Exceeds working PPO₂ limit');
-  if (PPO2 > 1.6) warnings.push('Exceeds contingency PPO₂ limit');
+  if (FO2 < (4 / 25)) warnings.push('Hypoxic—Not breathable at surface');
+  if (FO2 > (2 / 5)) warnings.push('Oxygen toxicity risk');
+  if (PPO2 > (7 / 5)) warnings.push('Exceeds working PPO₂ limit');
+  if (PPO2 > (8 / 5)) warnings.push('Exceeds contingency PPO₂ limit');
   if (END > 30) warnings.push('High narcosis risk (END > 30m)');
   if (CNS > 100) warnings.push('CNS oxygen toxicity risk');
-  if (O2 + N2 + He + CO2 > 1.01 || O2 + N2 + He + CO2 < 0.99) warnings.push('Gas fractions do not sum to 1');
+  if (O2 + N2 + He + CO2 > (101 / 100) || O2 + N2 + He + CO2 < (99 / 100)) warnings.push('Gas fractions do not sum to 1');
   return { MOD, END, PPO2, CNS, warnings };
 }
 

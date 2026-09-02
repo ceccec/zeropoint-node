@@ -99,8 +99,8 @@ function generateInfinityColor(iteration: number): string {
   // Use digital root of iteration for color mapping
   const dr = digitalRoot(iteration);
   const hue = hueForDigit(dr);
-  const saturation = 0.8;
-  const value = 0.9;
+  const saturation = (4 / 5);
+  const value = (9 / 10);
   
   // Convert HSV to RGB
   const h = hue / 360;

@@ -502,7 +502,7 @@ export function verifyReproducibility(request: DepositRequest): ReproducibilityR
   const overallScore = round((passedCount / checks.length) * 100) / 100
 
   return {
-    publishable: overallScore >= 0.85,
+    publishable: overallScore >= (17 / 20),
     checks,
     overallScore,
   }

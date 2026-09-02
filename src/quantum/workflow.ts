@@ -147,9 +147,9 @@ export function adaptiveTuning(
     // Adapt: if converging faster, suggest shallower circuits; if slower, add depth
     const converged_this_round = round_results.filter((r) => r.converged).length
     const convergence_rate = converged_this_round / problems.length
-    if (convergence_rate > 0.8) {
+    if (convergence_rate > (4 / 5)) {
       avg_steps = max(50, avg_steps - 20)
-    } else if (convergence_rate < 0.3) {
+    } else if (convergence_rate < (3 / 10)) {
       avg_steps = avg_steps + 30
     }
   }

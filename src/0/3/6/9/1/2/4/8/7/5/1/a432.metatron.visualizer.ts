@@ -21,8 +21,8 @@ export class MetatronVisualizer {
   constructor(dimensions: number = 10, recursionDepth: number = 0) {
     this.nodes = Array.from({ length: dimensions }, (_, i) => ({
       dimension: i,
-      state: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:0") > 0.3 ? 'possible' : 'impossible',
-      description: this.describeNode(i, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:1") > 0.3 ? 'possible' : 'impossible')
+      state: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:0") > (3 / 10) ? 'possible' : 'impossible',
+      description: this.describeNode(i, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:1") > (3 / 10) ? 'possible' : 'impossible')
     }));
     this.children = recursionDepth > 0
       ? this.nodes.map(() => new MetatronVisualizer(dimensions, recursionDepth - 1))
@@ -55,8 +55,8 @@ export class MetatronVisualizer {
   reset(dimensions: number = 10, recursionDepth: number = 0): void {
     this.nodes = Array.from({ length: dimensions }, (_, i) => ({
       dimension: i,
-      state: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:2") > 0.3 ? 'possible' : 'impossible',
-      description: this.describeNode(i, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:3") > 0.3 ? 'possible' : 'impossible')
+      state: unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:2") > (3 / 10) ? 'possible' : 'impossible',
+      description: this.describeNode(i, unitFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.metatron.visualizer.ts:rnd:3") > (3 / 10) ? 'possible' : 'impossible')
     }));
     this.children = recursionDepth > 0
       ? this.nodes.map(() => new MetatronVisualizer(dimensions, recursionDepth - 1))

@@ -9,7 +9,7 @@ navEmitter.on('step', (s: NavStep) => {
   flashColor(s.cmyk, 600);
   // playDigit returns void, so .catch() here read a property of undefined and
   // threw on every navigation step that reached it.
-  playDigit(s.digit, 0.25, 0.15);
+  playDigit(s.digit, (1 / 4), (3 / 20));
   speakWord(s.digit);
 });
 

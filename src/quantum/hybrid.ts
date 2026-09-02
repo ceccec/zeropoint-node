@@ -272,7 +272,7 @@ export function recommendSolver(profile: ProblemProfile): SolverRecommendation {
   if (profile.dimension <= 4 && profile.noiseLevel < 1 / 10) {
     return {
       solver: 'quantum-vqe',
-      confidence: 0.9,
+      confidence: (9 / 10),
       estimatedSteps: 100,
     }
   }
@@ -280,14 +280,14 @@ export function recommendSolver(profile: ProblemProfile): SolverRecommendation {
   if (profile.dimension <= 10 && profile.noiseLevel < 1 / 2) {
     return {
       solver: 'quantum-ml',
-      confidence: 0.7,
+      confidence: (7 / 10),
       estimatedSteps: 200,
     }
   }
   // High-dimensional or very noisy → classical
   return {
     solver: profile.sparsity > 1 / 2 ? 'classical-local' : 'classical-random',
-    confidence: 0.6,
+    confidence: (3 / 5),
     estimatedSteps: 500,
   }
 }

@@ -43,7 +43,7 @@ export function diagnosisSystem(
   const issues: DetectedIssue[] = []
 
   // Issue 1: Low vortex soundness
-  if (vortex_soundness < 0.7) {
+  if (vortex_soundness < (7 / 10)) {
     issues.push({
       issue_type: 'verification_failure',
       severity: 1 - vortex_soundness,
@@ -54,7 +54,7 @@ export function diagnosisSystem(
   }
 
   // Issue 2: Low end-to-end soundness
-  if (e2e_soundness < 0.7) {
+  if (e2e_soundness < (7 / 10)) {
     issues.push({
       issue_type: 'verification_failure',
       severity: 1 - e2e_soundness,
@@ -65,10 +65,10 @@ export function diagnosisSystem(
   }
 
   // Issue 3: Low composability success
-  if (composability_success_rate < 0.5) {
+  if (composability_success_rate < (1 / 2)) {
     issues.push({
       issue_type: 'module_error',
-      severity: 0.5 + composability_success_rate / 2,
+      severity: (1 / 2) + composability_success_rate / 2,
       affected_component: 'composability',
       description: `Composition success rate ${(composability_success_rate * 100) / 100}% < 50%`,
       suggested_fix: 'Identify failing paths, replace problematic modules',
@@ -94,7 +94,7 @@ export function diagnosisSystem(
     timestamp: 0,
     health_score,
     detected_issues: issues,
-    requires_intervention: issues.some((i) => i.severity > 1 / 2) || health_score < 0.6,
+    requires_intervention: issues.some((i) => i.severity > 1 / 2) || health_score < (3 / 5),
   }
 }
 
@@ -186,10 +186,10 @@ export function correctSystemOnce(
     }))
 
     // Re-diagnose with reduced issues
-    let vortex = 0.8
-    let e2e = 0.8
-    let comp = 0.7
-    let disagree = 0.1
+    let vortex = (4 / 5)
+    let e2e = (4 / 5)
+    let comp = (7 / 10)
+    let disagree = (1 / 10)
 
     for (const issue of adjusted_issues) {
       if (issue.affected_component === 'vortex-bridge') {
@@ -289,7 +289,7 @@ export function assessProductionReadiness(profile: ResilienceProfile): {
 } {
   const avg_resilience = (profile.self_repair_capacity + profile.convergence_speed + profile.robustness) / 3
 
-  const ready = avg_resilience > 0.7
+  const ready = avg_resilience > (7 / 10)
   const recommendation = ready
     ? 'System is resilient and ready for production'
     : `System needs improvement: resilience ${(avg_resilience * 100) / 100}% < 70%`

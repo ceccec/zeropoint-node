@@ -44,7 +44,7 @@ export function startFlowerOfLife(callback: (f: FlowerOfLifeFrame) => void): () 
     points[0].color = digitAngleToCMYK((tick % 10), asAngle(tick * 36));
     // 6 surrounding
     for (let i = 1; i < 7; i++) {
-      const ang = ((i - 1) / 6) * 2 * PI + (tick * 0.03);
+      const ang = ((i - 1) / 6) * 2 * PI + (tick * (3 / 100));
       points[i].x = cx + cos(ang) * R;
       points[i].y = cy + sin(ang) * R;
       points[i].color = digitAngleToCMYK(((tick + i) % 10), asAngle(tick * 36 + i * 60));

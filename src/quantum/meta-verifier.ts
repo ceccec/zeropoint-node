@@ -115,7 +115,7 @@ export function auditEndToEndBenchmark(benchmarks: readonly EndToEndBenchmark[])
     evidence_sources: ['quantum_solver', 'classical_solver', 'hybrid_solver', 'objective_functions'],
     external_recompute,
     structural_guarantee: reasonable_improvements,
-    soundness_score: external_recompute && soundness > 0.5 ? soundness : soundness / 2,
+    soundness_score: external_recompute && soundness > (1 / 2) ? soundness : soundness / 2,
   }
 }
 
@@ -152,7 +152,7 @@ export function metaVerifySystem(
 
   // Ground truth: if both audits agree AND both are external-recomputable, we have high confidence
   const consensus_soundness = audits.reduce((s, a) => s + a.soundness_score, 0) / audits.length
-  const all_pass = audits.every((a) => a.soundness_score > 0.5)
+  const all_pass = audits.every((a) => a.soundness_score > (1 / 2))
 
   let integrity = 'questionable'
   if (all_external && sound_if_agreement && all_pass) {
@@ -200,10 +200,10 @@ export function identifyGaps(meta: MetaVerification): readonly SystemImprovement
   }
 
   // Gap 2: Low consensus soundness
-  if (meta.consensus_soundness < 0.7) {
+  if (meta.consensus_soundness < (7 / 10)) {
     gaps.push({
       gap: 'Verifications have low confidence (soundness < 0.7)',
-      priority: 0.5,
+      priority: (1 / 2),
       suggested_fix: 'Expand evidence sources, add more structural checks',
       verifiable: true,
     })
@@ -217,7 +217,7 @@ export function identifyGaps(meta: MetaVerification): readonly SystemImprovement
     if (max_score - min_score > 1 / 3) {
       gaps.push({
         gap: 'Verifiers disagree on soundness (range > 0.33)',
-        priority: 0.5,
+        priority: (1 / 2),
         suggested_fix: 'Reconcile different verification strategies, find common ground',
         verifiable: true,
       })

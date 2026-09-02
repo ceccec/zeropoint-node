@@ -49,6 +49,7 @@ const GUARDS = {
  * are falsified by the mutation tests that live with the code they read.
  */
 const READS_SOURCE = {
+  'collisions:check': 'reads every exported DECLARATION from the syntax tree and fails when a module starts declaring a name another module already declares; falsified by the four mutations in the commit that added it, one of which is a control that must NOT fail — a re-export, which is one definition on two paths and not a collision',
   'constants:check': 'reads src/ for retyped kernel constants',
   'finite:check': 'imports every module, inspects exported values, and calls every export it can construct arguments for; falsified by the three mutations in the commit that added the call pass',
   'silent:check': 'imports every module and watches stdout',

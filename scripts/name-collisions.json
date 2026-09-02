@@ -1,0 +1,381 @@
+{
+  "collisions": {
+    "A432_BASE_FREQUENCY": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts"
+      ]
+    },
+    "A432_CONSTANTS": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.ts"
+      ]
+    },
+    "A432_CYCLE": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.core.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts"
+      ]
+    },
+    "A432_FREQUENCY": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.core.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.sound.ts"
+      ]
+    },
+    "A432_SEQUENCE": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.coil.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.i.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts"
+      ]
+    },
+    "A432_TRINITY": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.coil.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts"
+      ]
+    },
+    "A432Block": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.block.chain.event.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.block.chain.ts"
+      ],
+      "reason": "HARMFUL. a432.block.chain.ts's block has state/dimension/meta/entropy; a432.block.chain.event.ts's has id/event/hash/trinity/summary. Different shapes, same name, sibling files. Reading one's fields while holding the other's value is how I concluded a UI was rendering undefined when it was not."
+    },
+    "A432Color": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.color.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.simple.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
+      ],
+      "reason": "Two of the three carry a generateMatrix that disagree \u2014 a432.utils.ts computes the matrix from harmonicFrequency and honours polarity, a432.simple.ts uses index arithmetic and ignored it until 1.4.2. Same name, same method, different answers."
+    },
+    "A432ConsciousnessOrchestrator": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.orchestrator.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.index.ts"
+      ]
+    },
+    "A432ExperienceUI": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.experience.ui.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.experience.ui.ts"
+      ]
+    },
+    "a432Frequency": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.core.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
+      ]
+    },
+    "A432Frequency": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.simple.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
+      ]
+    },
+    "a432Harmonization": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
+      ]
+    },
+    "A432Harmonization": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.simple.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
+      ]
+    },
+    "A432Math": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.simple.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
+      ]
+    },
+    "a432ModuleRegistry": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.modules.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.registry.ts"
+      ]
+    },
+    "A432SelfEvolution": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.index.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.self.evolution.ts"
+      ]
+    },
+    "A432SelfRebuilder": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.index.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.self.rebuilder.ts"
+      ]
+    },
+    "A432Sequence": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.sequence.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.simple.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
+      ],
+      "reason": "Three declarations of the sequence helper. The calculateHarmony triplication found in 1.4.4 lives in the same three modules, which is what a name declared three times usually means: the module was copied, not imported."
+    },
+    "A432Stream": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.stream.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.terminal.stream.ts"
+      ]
+    },
+    "a432System": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.index.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.system.ts"
+      ]
+    },
+    "A432System": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.index.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.system.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.ts"
+      ],
+      "reason": "HARMFUL, and the reason this check exists. Two of the three declare a class of this name AND export an instance `a432System`, and both assign window.a432System and globalThis.a432System \u2014 whichever module loads second wins and a consumer gets that one. Found only when the `as any` casts around those assignments were replaced by a declaration, because a cast asks no questions."
+    },
+    "analyzeRodinCoilPattern": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.rodin.coil.harmonic.ts"
+      ]
+    },
+    "boot2432OS": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.terminal.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts"
+      ]
+    },
+    "calculateA432Frequency": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts"
+      ]
+    },
+    "calculateConsciousnessFlow": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts",
+        "src/quantum/reality-streams.ts"
+      ]
+    },
+    "calculateDigitalRoot": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
+      ]
+    },
+    "calculateGoldenRatio": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
+      ]
+    },
+    "CMYKChannel": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.voice.ts"
+      ]
+    },
+    "cmykIdToPhrase": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.design.cmyk.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.mapping.ts"
+      ]
+    },
+    "Complex": {
+      "files": [
+        "src/quantum/simulator.ts",
+        "src/security/quantum-state-tomography.ts"
+      ]
+    },
+    "DeviceState": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts",
+        "src/quantum/a432-vortex-pi.ts"
+      ]
+    },
+    "E": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
+        "src/0/algebra.ts"
+      ]
+    },
+    "filenameTrinityInsight": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.extension.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.ts"
+      ]
+    },
+    "Fraction": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.sequence.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.yin.yang.ts",
+        "src/quantum/harmonic-solutions.ts"
+      ],
+      "reason": "Benign but wasteful: five modules declare the same two-field shape { numerator, denominator }, twice as a type alias and elsewhere as an interface. Structurally identical, so nothing misbehaves \u2014 five copies is simply five places for one of them to gain a field."
+    },
+    "fractionToDecimal": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.resolved.ts"
+      ]
+    },
+    "getA432ModulesByCategory": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.modules.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.registry.ts"
+      ]
+    },
+    "GOLDEN_RATIO": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts"
+      ]
+    },
+    "harmonizeAll": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.harmonized.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.human.design.ts"
+      ]
+    },
+    "isA432Harmonic": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.wave.energy.ts"
+      ]
+    },
+    "measureAndCollapse": {
+      "files": [
+        "src/quantum/orchestrator.ts",
+        "src/quantum/superposition-execution.ts"
+      ]
+    },
+    "metaphysicalSummary": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.block.chain.event.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.event.ts"
+      ]
+    },
+    "MetatronNode": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.metatron.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.metatron.vision.ts"
+      ]
+    },
+    "MOBIUS_SEQUENCE": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.mobius.circuit.ts"
+      ]
+    },
+    "PI": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
+        "src/0/algebra.ts"
+      ]
+    },
+    "PiAudioVideoStream": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.pi.audio.video.stream.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.stream.ts"
+      ]
+    },
+    "PiColorStream": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.pi.color.stream.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.stream.ts"
+      ]
+    },
+    "PiSongStream": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.pi.song.stream.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.stream.ts"
+      ]
+    },
+    "PiVideoStream": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.pi.video.stream.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.stream.ts"
+      ]
+    },
+    "pulse": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.graph.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.i.pulse.ts"
+      ]
+    },
+    "registerA432Module": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.modules.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.registry.ts"
+      ]
+    },
+    "selfTest": {
+      "files": [
+        "src/crypto/ml-kem.ts",
+        "src/quantum/advantage.ts",
+        "src/thermo/free-energy.ts",
+        "src/thermo/wastewater-energy.ts"
+      ],
+      "reason": "DELIBERATE. Each of these modules carries its own self-test and exports it under the same name on purpose; they are never imported together. This is the pattern the check must not punish, which is why a collision is recorded rather than forbidden."
+    },
+    "shutdown2432OS": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.terminal.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts"
+      ]
+    },
+    "sign": {
+      "files": [
+        "src/0/algebra.ts",
+        "src/security/post-quantum-crypto.ts"
+      ]
+    },
+    "startSelfEvolution": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.self.evolution.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.self.ts"
+      ]
+    },
+    "TAU": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
+        "src/0/algebra.ts"
+      ]
+    },
+    "TomographyResult": {
+      "files": [
+        "src/quantum/tomography.ts",
+        "src/security/quantum-state-tomography.ts"
+      ]
+    },
+    "TRINITY_AXIS": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.trinity.axis.ts"
+      ]
+    },
+    "VortexFlow": {
+      "files": [
+        "src/quantum/a432-frequency-flow.ts",
+        "src/quantum/trinity-vortex.ts"
+      ]
+    },
+    "VortexState": {
+      "files": [
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
+        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts",
+        "src/quantum/a432-vortex-pi.ts"
+      ]
+    }
+  }
+}

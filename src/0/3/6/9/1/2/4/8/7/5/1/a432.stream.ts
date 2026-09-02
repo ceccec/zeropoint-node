@@ -85,7 +85,7 @@ export function createVideoStream(frameCount: number = 12, gridSize: number = 9)
     return Array.from({length: gridSize*gridSize}, (_, i) => {
       const t = (i / (gridSize*gridSize-1) + offset) % 1;
       // Harmonic fractions
-      const HALF = 1/2, TWO_THIRDS = 2/3, FOUR_THIRDS = 4/3;
+      const HALF = 1/2;
       // Replace all decimals in color/geometry with these fractions
       return {
         r: HALF + HALF * sin(PI * t),

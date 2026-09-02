@@ -48,7 +48,6 @@ export interface RodinCoilStep {
  */
 export function rodinCoilPattern(n: number, polarity: 1 | -1 = 1): RodinCoilStep[] {
   const pattern = rodinVortexCycle(n, polarity);
-  const N = RODIN_SEQUENCE.length - 1; // 6 unique steps per cycle
   return pattern.map((value, i) => ({
     position: i,
     value,
@@ -77,7 +76,7 @@ export function rodinCoilPattern(n: number, polarity: 1 | -1 = 1): RodinCoilStep
  * @param polarity - +1 (forward, default), -1 (reverse) (optional)
  * @param length - length for π stream (default: 10)
  */
-export function rodinCoilStream(cycles?: number, polarity?: 1 | -1, length: number = 10) {
+export function rodinCoilStream(cycles?: number, polarity?: 1 | -1) {
   // Always use Rodin coil pattern as default
   const cycleCount = cycles || 2;
   const polarityValue = polarity || 1;

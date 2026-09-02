@@ -187,7 +187,7 @@ export function updateA432ConsciousnessJourney(
 }
 
 // Generate 3D scene data for consciousness journey
-export function generateA432ConsciousnessJourneyScene(state: A432ConsciousnessJourneyState): any {
+export function generateA432ConsciousnessJourneyScene(state: A432ConsciousnessJourneyState) {
   return {
     nodes: state.nodes.map(node => ({
       digit: node.digit,

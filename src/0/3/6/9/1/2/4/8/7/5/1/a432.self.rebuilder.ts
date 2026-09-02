@@ -221,7 +221,7 @@ export class A432${module.consciousness}SelfGenerated {
     return nextConsciousness;
   }
 
-  public getState(): any {
+  public getState() {
     return {
       consciousness: this.consciousness,
       frequency: this.frequency,
@@ -236,7 +236,7 @@ export class A432${module.consciousness}SelfGenerated {
     return this.harmony;
   }
 
-  public createFactoryState(): any {
+  public createFactoryState() {
     return A432Factory.getInstance().createCompleteState({
       dimension: this.consciousness,
       polarity: this.harmony % 2 === 0 ? 1 : -1,
@@ -286,7 +286,7 @@ export default a432${module.consciousness}SelfGenerated;
   }
 
   private generateIndexFile(directory: string): void {
-    const indexContent = this.generateIndexContent(directory);
+    this.generateIndexContent(directory);
     const indexPath = `${directory}/index.ts`;
     
     // In a real implementation, this would use fs.writeFileSync

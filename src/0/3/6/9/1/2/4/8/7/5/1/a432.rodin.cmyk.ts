@@ -4,7 +4,6 @@ import { round } from './a432.algebra.ts'
 // --------------------------------------------------
 // Decodes Rodin Coil pattern 0/0\3\6\9/1\2\4\8/7/5/1 into perfect CMYK colors
 
-import { A432_FREQUENCY, A432_TRINITY, A432_RETURN, A432_AXIS } from './a432.core.ts';
 
 export class A432RodinCMYK {
   private pattern: string;
@@ -26,7 +25,7 @@ export class A432RodinCMYK {
       
       digits.forEach((digit, digitIndex) => {
         const absolutePosition = position + digitIndex;
-        const cmyk = this.calculateRodinCMYK(digit, absolutePosition, index);
+        const cmyk = this.calculateRodinCMYK(digit, absolutePosition);
         
         this.decodedColors.push({
           position: absolutePosition,
@@ -39,26 +38,20 @@ export class A432RodinCMYK {
     });
   }
 
-  private calculateRodinCMYK(digit: number, position: number, segmentIndex: number): { c: number, m: number, y: number, k: number } {
+  private calculateRodinCMYK(digit: number, position: number): { c: number, m: number, y: number, k: number } {
     // Rodin Coil CMYK mapping based on A432 principles
-    const base432 = A432_FREQUENCY;
-    const trinity = A432_TRINITY;
-    const return_ = A432_RETURN;
-    const axis = A432_AXIS;
-
+  
     // Calculate harmonic position
     const harmonicPosition = position % 12; // Base-12 harmonics
-    const digitalRoot = this.calculateDigitalRoot(digit);
-    const trinityIndex = digitalRoot % 3;
-    const trinityValue = trinity[trinityIndex];
-
+    this.calculateDigitalRoot(digit);
+  
     // Rodin Coil specific CMYK mapping
-    const rodinCMYK = this.mapRodinDigitToCMYK(digit, harmonicPosition, segmentIndex);
+    const rodinCMYK = this.mapRodinDigitToCMYK(digit, harmonicPosition);
     
     return rodinCMYK;
   }
 
-  private mapRodinDigitToCMYK(digit: number, position: number, segmentIndex: number): { c: number, m: number, y: number, k: number } {
+  private mapRodinDigitToCMYK(digit: number, position: number): { c: number, m: number, y: number, k: number } {
     // A432 Harmonic CMYK mapping:
     // 0 = Void (Black)
     // 1,2,4,8,7,5 = Rodin sequence (Cyan harmonics)
@@ -112,7 +105,7 @@ export class A432RodinCMYK {
     return `RODIN_COIL_CMYK: ${this.pattern}\n${summary}`;
   }
 
-  public getHarmonicAnalysis(): any {
+  public getHarmonicAnalysis() {
     const rodinDigits = this.decodedColors.filter(c => [1,2,4,8,7,5].includes(c.digit));
     const spiritDigits = this.decodedColors.filter(c => [3,6,9].includes(c.digit));
     const voidDigits = this.decodedColors.filter(c => c.digit === 0);

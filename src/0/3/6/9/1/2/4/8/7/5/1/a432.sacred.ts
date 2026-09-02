@@ -230,7 +230,7 @@ export function createSacredGeometricField(
   geometric: string;
 }> {
   const field = [];
-  const center = a432Frequency(centerDimension);
+  a432Frequency(centerDimension);
 
   for (let x = -radius; x <= radius; x++) {
     for (let y = -radius; y <= radius; y++) {
@@ -399,14 +399,14 @@ export const sacredGeometricExamples = {
   /**
    * Example: Golden ratio harmony
    */
-  goldenRatioHarmonyExample(): any {
+  goldenRatioHarmonyExample() {
     return createSacredGeometricHarmony(4, 'GOLDEN_RATIO');
   },
 
   /**
    * Example: Sacred geometric sequence
    */
-  sacredSequenceExample(): any {
+  sacredSequenceExample() {
     const sequence: (keyof typeof SACRED_GEOMETRIC_CONSTANTS)[] = ['GOLDEN_RATIO', 'SILVER_RATIO', 'BRONZE_RATIO'];
     return generateSacredGeometricSequence(1, sequence, 6);
   },
@@ -414,21 +414,21 @@ export const sacredGeometricExamples = {
   /**
    * Example: Sacred geometric field
    */
-  sacredFieldExample(): any {
+  sacredFieldExample() {
     return createSacredGeometricField(4, 2);
   },
 
   /**
    * Example: Sacred geometric matrix
    */
-  sacredMatrixExample(): any {
+  sacredMatrixExample() {
     return createSacredGeometricMatrix(9);
   },
 
   /**
    * Example: Zero entropy validation
    */
-  zeroEntropyValidationExample(): any {
+  zeroEntropyValidationExample() {
     return validateSacredGeometricZeroEntropy();
   }
 };

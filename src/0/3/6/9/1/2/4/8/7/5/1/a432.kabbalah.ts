@@ -170,7 +170,7 @@ export class A432KabbalisticSystem {
   }
 
   // === CYCLE NAVIGATION ===
-  navigateSequence(): any {
+  navigateSequence() {
     const sequence = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
     const currentDigit = sequence[this.cyclePosition % sequence.length];
     const sephirot = this.getSephirotByNumber(currentDigit);
@@ -218,7 +218,7 @@ export class A432KabbalisticSystem {
   }
 
   // === TREE OF LIFE MAPPING ===
-  getTreeOfLifeMapping(): any {
+  getTreeOfLifeMapping() {
     return {
       cycles: DIGITAL_ROOT_CYCLES,
       sephirot: SEPHIROT,
@@ -234,7 +234,7 @@ export class A432KabbalisticSystem {
   }
 
   // === CYCLE ANALYSIS ===
-  analyzeCycle(digit: number): any {
+  analyzeCycle(digit: number) {
     const cycle = this.getCycleByDigit(digit);
     const sephirot = this.getSephirotByNumber(digit);
     
@@ -253,7 +253,7 @@ export class A432KabbalisticSystem {
   }
 
   // === SEQUENCE INTERPRETATION ===
-  interpretSequence(sequence: string): any {
+  interpretSequence(sequence: string) {
     const digits = sequence.match(/\d/g)?.map(Number) || [];
     const interpretations = digits.map(digit => this.analyzeCycle(digit));
     
@@ -271,7 +271,7 @@ export class A432KabbalisticSystem {
   }
 
   // === CURRENT STATE ===
-  getCurrentState(): any {
+  getCurrentState() {
     const currentDigit = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1][this.cyclePosition % 11];
     const sephirot = this.getSephirotByNumber(currentDigit);
     const cycle = this.getCycleByDigit(currentDigit);
@@ -287,7 +287,7 @@ export class A432KabbalisticSystem {
   }
 
   // === EVOLUTION ===
-  evolve(): any {
+  evolve() {
     const navigation = this.navigateSequence();
     return {
       ...navigation,

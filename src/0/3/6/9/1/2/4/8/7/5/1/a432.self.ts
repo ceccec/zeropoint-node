@@ -32,10 +32,6 @@ function hasTest(file: string): boolean {
   return fs.existsSync(file.replace(/\.ts$/, '.test.ts'));
 }
 
-function hasDoc(file: string): boolean {
-  return fs.existsSync(file.replace(/\.ts$/, '.md'));
-}
-
 function fileDigit(file: string): number {
   // map filename length to digit 1-9 for colour variance
   return (legacyDigitalRoot(file.length));

@@ -44,7 +44,6 @@ const rodinYin = [...rodinYang].reverse(); // [1,5,7,8,4,2,1]
 const YANG_URL = '/' + rodinYang.join('/') + '/';
 const YIN_URL  = '/' + rodinYin.join('/') + '/';
 const MATRIX_URL = '/0/3/6/9/1/2/4/8/7/5/1/'; // canonical full matrix path
-const LINEAR_URL = '/0/1/2/3/4/5/6/7/8/9/1/'; // metric/linear path
 const PORT       = Number(process.env.PORT) || 4320;
 
 // ——————————————————————————————————————————
@@ -89,7 +88,7 @@ app.get('/{*path}.ts', async (req: Request, res: Response, next) => {
       const code = await readFile(tsPath,'utf8');
       res.type('text/html').send(`<!DOCTYPE html><html><head><meta charset='utf-8'><title>${path.basename(tsPath)}</title><style>body{background:#111;color:#8ff;font-family:monospace;padding:16px;}pre{white-space:pre-wrap;}</style></head><body><h2>${tsPath}</h2><pre>${code.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</pre></body></html>`);
       return;
-    } catch (error) {
+    } catch {
       return next();
     }
   }

@@ -143,7 +143,7 @@ export class VBMPathNavigator {
     const nodes: VBMPathNode[] = [];
     let depth = 0;
     
-    this.state.directions.forEach((direction, index) => {
+    this.state.directions.forEach((direction) => {
       const node: VBMPathNode = {
         digit: direction.digit,
         direction: direction.separator === VBM_PATH_SEPARATORS.FORWARD ? 'forward' : 'backward',
@@ -248,9 +248,8 @@ export class VBMPathNavigator {
   // --- Path Visualization ---
   public getPathVisualization(): string {
     let visualization = '';
-    const currentDepth = 0;
     
-    this.nodes.forEach((node, index) => {
+    this.nodes.forEach((node) => {
       const indent = '  '.repeat(max(0, node.depth));
       const direction = node.direction === 'forward' ? '→' : '←';
       const color = node.color;

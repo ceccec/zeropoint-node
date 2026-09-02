@@ -49,7 +49,7 @@ function getSequenceFromFilename() {
   if (!match) return [];
   return match[1].split('.').map(Number);
 }
-const SEQUENCE = getSequenceFromFilename();
+getSequenceFromFilename();
 
 const BASE_FREQUENCY = 432; // Still canonical, but could be derived if needed
 // --- Canonical CMYK Color Formulas (no hardcoded values) ---
@@ -125,15 +125,7 @@ function digitAngleToCMYK(digit: number, angle: number) {
   };
 }
 
-// --- Emergence Logic ---
-const emergence = {
-  base: 0, // observer/seed
-  frequency: BASE_FREQUENCY,
-  trinity: TRINITY_AXIS,
-  fold: trinityFold(TRINITY_AXIS),
-  colors: TRINITY_AXIS.map((d, i) => digitAngleToCMYK(d, i * 120)),
-  field: CMYK_COLORS
-};
+// The emergence object was built here and read nowhere; every call in it was pure.
 
 // --- Filename Decoder ---
 /**
@@ -182,7 +174,7 @@ function decodeA432Prefix() {
     doc: 'a=0, generative trinity=[4,3,2], field trinity=[3,6,9], missing vortices to complete trinity, angle relation (60°=1/6 of 360°)'
   };
 }
-const A432_DECODED = decodeA432Prefix();
+decodeA432Prefix();
 
 // --- Extract all logic from filename digits (no hardcoded arrays) ---
 // Use first three digits as trinity, all digits as axis/stream
@@ -281,20 +273,17 @@ function* fieldTrinity() {
 
 // Example: generator for color channels from trinity
 function* colorChannelGenerator(trinityGen: () => Iterable<number>) {
-  let i = 0;
   for (const d of trinityGen()) {
     // Example: scale and yield as color channel
     yield d * 28 + 3;
-    i++;
   }
 }
 
 // Example: generator for sound frequency from trinity
 function soundFrequencyFromTrinityGen(trinityGen: () => Iterable<number>) {
-  let sum = 0, count = 0;
+  let sum = 0;
   for (const d of trinityGen()) {
     sum += d;
-    count++;
   }
   return 432 * (sum / 9);
 }

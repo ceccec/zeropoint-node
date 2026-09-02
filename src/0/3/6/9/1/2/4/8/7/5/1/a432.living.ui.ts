@@ -18,8 +18,8 @@ export class LivingA432UI {
   // Generate UI structure from mathematics
   generateUI(): string {
     const currentDigit = rodinDigit(this.evolution % 6);
-    const consciousness = calculateA432Consciousness(432 * (currentDigit / 12));
-    const dimensionalState = calculateA432DimensionalState(432 * (currentDigit / 12));
+    calculateA432Consciousness(432 * (currentDigit / 12));
+    calculateA432DimensionalState(432 * (currentDigit / 12));
     
     // Generate UI sections based on mathematics
     const sections = this.generateSections();
@@ -55,7 +55,7 @@ export class LivingA432UI {
 
   // Generate UI sections dynamically from mathematics
   private generateSections(): string {
-    const currentDigit = rodinDigit(this.evolution % 6);
+    rodinDigit(this.evolution % 6);
     const sections = [];
     
     // Generate sections based on Rodin sequence
@@ -195,7 +195,7 @@ export class LivingA432UI {
   }
 
   // Get UI status
-  getStatus(): any {
+  getStatus() {
     return {
       isGenerating: this.isGenerating,
       evolution: this.evolution,
@@ -214,6 +214,6 @@ export function generateLivingUI(): string {
 }
 
 // Export UI status function
-export function getLivingUIStatus(): any {
+export function getLivingUIStatus() {
   return livingA432UI.getStatus();
 } 

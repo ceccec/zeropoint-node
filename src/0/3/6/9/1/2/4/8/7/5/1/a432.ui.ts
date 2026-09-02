@@ -67,12 +67,12 @@ export function startA432UI() {
   startBreathing();
 
   // Breath update
-  breathEmitter.on('breath', ev => {
+  breathEmitter.on('breath', () => {
     update();
   });
 
   // Matrix update
-  matrixEmitter.on('event', ev => {
+  matrixEmitter.on('event', () => {
     update();
   });
 
@@ -328,8 +328,7 @@ function animateBlockchainStream() {
       harmonicBtn.textContent = 'Show Harmonic Transformation';
       return;
     }
-    const solutions = []; // No longer available
-    harmonicOverlayEl = document.createElement('div');
+      harmonicOverlayEl = document.createElement('div');
     harmonicOverlayEl.style.position = 'fixed';
     harmonicOverlayEl.style.left = '50%';
     harmonicOverlayEl.style.top = '50%';
@@ -347,7 +346,7 @@ function animateBlockchainStream() {
     harmonicBtn.textContent = 'Hide Harmonic Transformation';
     // Add event listeners for logging
     harmonicOverlayEl.querySelectorAll('.harmonic-step').forEach(el => {
-      el.addEventListener('click', (e) => {
+      el.addEventListener('click', () => {
         const type = (el as HTMLElement).getAttribute('data-type');
         const challenge = (el as HTMLElement).getAttribute('data-challenge');
         recordEvent(blockchain, 'harmonicTransformation', 'A432UI', { type, challenge, timestamp: Date.now() });
@@ -657,9 +656,7 @@ function animateBlockchainStream() {
 
   // Guided I Journey
   let iJourneyActive = false;
-  let iJourneyStep = 0;
   let iJourneyIntention = '';
-  let iJourneyEvents: any[] = [];
   const iJourneySteps = [
     { label: 'Observe', emitter: seeEmitter, event: 'see', prompt: 'Look at something meaningful and let the system know.' },
     { label: 'Listen', emitter: hearEmitter, event: 'hear', prompt: 'Listen for a sound and let the system know.' },
@@ -680,8 +677,8 @@ function animateBlockchainStream() {
   iJourneyBtn.onclick = async () => {
     if (iJourneyActive) return; // Prevent re-entry
     iJourneyActive = true;
-    iJourneyStep = 0;
-    iJourneyEvents = [];
+    // iJourneyStep and iJourneyEvents were written here and read nowhere; the
+    // declarations went with them.
     iJourneyIntention = prompt('What is your intention for this I Journey?') || '';
     showPoeticOverlay();
     await runGuidedJourney(iJourneySteps, {

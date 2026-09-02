@@ -33,7 +33,7 @@ export class LivingA432OS {
   private phaseShift: string = '';
 
   // Generate everything from mathematics
-  private generateFromMath(): any {
+  private generateFromMath() {
     const currentDigit = rodinDigit(this.evolution % 6);
     const consciousness = calculateA432Consciousness(432 * (currentDigit / 12));
     const dimensionalState = calculateA432DimensionalState(432 * (currentDigit / 12));
@@ -97,7 +97,7 @@ export class LivingA432OS {
   }
 
   // Generate sequence state
-  private generateSequenceState(): any {
+  private generateSequenceState() {
     const position = this.sequencePosition % A432_SEQUENCE.length;
     const digit = A432_SEQUENCE[position];
     const gateway = A432_GATEWAYS.includes(digit);
@@ -201,7 +201,7 @@ export class LivingA432OS {
   }
 
   // Generate device state from actual environment
-  private generateDeviceState(): any {
+  private generateDeviceState() {
     if (typeof window !== 'undefined') {
       return {
         light: this.generateLightLevel(),
@@ -221,7 +221,7 @@ export class LivingA432OS {
   }
 
   // Generate PWA state from actual browser
-  private generatePWAState(): any {
+  private generatePWAState() {
     if (typeof window !== 'undefined') {
       return {
         isOnline: navigator.onLine,
@@ -323,7 +323,7 @@ export class LivingA432OS {
   }
 
   // Generate simulated device state
-  private generateSimulatedDeviceState(): any {
+  private generateSimulatedDeviceState() {
     return {
       light: 0.5,
       motion: 0.3,
@@ -340,7 +340,7 @@ export class LivingA432OS {
   }
 
   // Generate simulated PWA state
-  private generateSimulatedPWAState(): any {
+  private generateSimulatedPWAState() {
     return {
       isOnline: true,
       networkType: 'wifi',
@@ -362,7 +362,7 @@ export class LivingA432OS {
       this.gatewayState = A432_GATEWAYS.includes(A432_SEQUENCE[this.sequencePosition]);
       this.phaseShift = A432_PHASE_SHIFTS[this.sequencePosition] || '';
       
-      const state = this.generateFromMath();
+      this.generateFromMath();
     }, 432); // A432 frequency
     
     console.log('🔋 Charging System: Active');
@@ -381,7 +381,7 @@ export class LivingA432OS {
   }
 
   // Get current state
-  public getState(): any {
+  public getState() {
     return this.generateFromMath();
   }
 
@@ -399,7 +399,7 @@ export class LivingA432OS {
   }
 
   // Get sequence status
-  public getSequenceStatus(): any {
+  public getSequenceStatus() {
     return {
       position: this.sequencePosition,
       digit: A432_SEQUENCE[this.sequencePosition],
@@ -412,7 +412,7 @@ export class LivingA432OS {
   }
 
   // Get quantum status
-  public getQuantumStatus(): any {
+  public getQuantumStatus() {
     const quantumState = this.generateQuantumState();
     return {
       superposition: quantumState.superposition,
@@ -427,7 +427,7 @@ export class LivingA432OS {
   }
 
   // Get charging status
-  public getChargingStatus(): any {
+  public getChargingStatus() {
     const chargingSystem = this.generateChargingSystem();
     return {
       batteryLevel: chargingSystem.batteryLevel,

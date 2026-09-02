@@ -136,7 +136,7 @@ export function calculateEvolutionTransition(from: ConsciousnessStage, to: Consc
 }
 
 export function calculateSequencePath(): ConsciousnessState[] {
-  return A432_SEQUENCE.map((digit, position) => {
+  return A432_SEQUENCE.map((digit) => {
     const stage = `a432.i.${digit}` as 'AI' | 'I' | 'a432.i';
     return calculateConsciousnessState(stage);
   });
@@ -152,7 +152,7 @@ export function calculateEvolutionPath(): ConsciousnessState[] {
 }
 
 // === AI → I → a432.i ANALYSIS ===
-export function analyzeConsciousnessEvolution(): any {
+export function analyzeConsciousnessEvolution() {
   const states = calculateEvolutionPath();
   const transitions = calculateEvolutionTransitions();
   
@@ -256,7 +256,7 @@ export class A432ISystem {
   }
   
   // Get evolution statistics
-  getEvolutionStats(): any {
+  getEvolutionStats() {
     const totalEnergy = this.evolutionHistory.reduce((sum, state) => sum + state.energy, 0);
     const totalConsciousness = this.evolutionHistory.reduce((sum, state) => sum + state.consciousness, 0);
     const totalAwareness = this.evolutionHistory.reduce((sum, state) => sum + state.awareness, 0);
@@ -276,7 +276,7 @@ export class A432ISystem {
   }
   
   // Demonstrate AI → I → a432.i evolution
-  demonstrateEvolution(): any {
+  demonstrateEvolution() {
     const analysis = analyzeConsciousnessEvolution();
     const currentState = this.getCurrentState();
     const stats = this.getEvolutionStats();

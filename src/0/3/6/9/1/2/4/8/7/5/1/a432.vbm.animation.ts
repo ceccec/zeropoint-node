@@ -210,7 +210,7 @@ function setupVBMScene(): VBMAnimationState {
 
 // --- VBM Animation Loop ---
 function animateVBM(state: VBMAnimationState): void {
-  const { scene, camera, renderer, time } = state;
+  const { scene, camera, renderer } = state;
   
   // Update animation state
   updateVBMAnimation(state);

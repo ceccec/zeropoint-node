@@ -23,7 +23,7 @@ export function logVoidImergence(type: string, data: unknown) {
  * Returns overlay data for UI: dim, color, html, and source event type.
  */
 export function getVoidStreamOverlayData(length: number = 11): Array<{ dim: number; color: { c: number; m: number; y: number; k: number }; html: string; source: string }> {
-  const seed = voidCompost.reduce((acc, e) => acc + e.timestamp, 0) % 4321;
+  // The seed this computed was never read; reduce is pure, so nothing is lost.
   return Array.from({ length }, (_, i) => {
     const dim = A432_SEQUENCE[i % A432_SEQUENCE.length];
     const color = digitAngleToCMYK(dim, (i * 36) % 360);

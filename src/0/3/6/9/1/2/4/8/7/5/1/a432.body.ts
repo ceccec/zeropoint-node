@@ -31,7 +31,7 @@ export interface A432Body {
 export function toHarmonic(value: number): number {
   return round(432 * (1 + value / 9));
 }
-export function toCMYK(value: number, channel: number): number {
+export function toCMYK(value: number): number {
   return round((value / 9) * 100);
 }
 export function getFlow(seed: number): number[] {
@@ -56,10 +56,10 @@ export function createA432Body(
     value,
     harmonic: toHarmonic(value),
     cmyk: {
-      c: channel === 0 ? toCMYK(value, 0) : 0,
-      m: channel === 1 ? toCMYK(value, 1) : 0,
-      y: channel === 2 ? toCMYK(value, 2) : 0,
-      k: channel === 3 ? toCMYK(value, 3) : 0
+      c: channel === 0 ? toCMYK(value) : 0,
+      m: channel === 1 ? toCMYK(value) : 0,
+      y: channel === 2 ? toCMYK(value) : 0,
+      k: channel === 3 ? toCMYK(value) : 0
     },
     flow: getFlow(channel),
     description: `${name.charAt(0).toUpperCase() + name.slice(1)} system mapped to harmonic, color, and flow.`

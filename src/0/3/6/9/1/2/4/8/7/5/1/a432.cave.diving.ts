@@ -49,7 +49,7 @@ export interface CaveDivingA432 {
 function toHarmonic(fraction: number): number {
   return round(432 * (1 + fraction));
 }
-function toCMYK(fraction: number, channel: number): number {
+function toCMYK(fraction: number): number {
   return round(fraction * 100);
 }
 
@@ -114,10 +114,10 @@ export function createCaveDivingA432(
   const He = gasFractions.He / total;
   const CO2 = gasFractions.CO2 / total;
   const gases: GasStream[] = [
-    { name: 'O2', fraction: O2, harmonic: toHarmonic(O2), cmyk: { c: toCMYK(O2, 0), m: 0, y: 0, k: 0 }, description: 'Oxygen as harmonic stream.' },
-    { name: 'N2', fraction: N2, harmonic: toHarmonic(N2), cmyk: { c: 0, m: toCMYK(N2, 1), y: 0, k: 0 }, description: 'Nitrogen as harmonic stream.' },
-    { name: 'He', fraction: He, harmonic: toHarmonic(He), cmyk: { c: 0, m: 0, y: toCMYK(He, 2), k: 0 }, description: 'Helium as harmonic stream.' },
-    { name: 'CO2', fraction: CO2, harmonic: toHarmonic(CO2), cmyk: { c: 0, m: 0, y: 0, k: toCMYK(CO2, 3) }, description: 'CO2 as harmonic stream.' }
+    { name: 'O2', fraction: O2, harmonic: toHarmonic(O2), cmyk: { c: toCMYK(O2), m: 0, y: 0, k: 0 }, description: 'Oxygen as harmonic stream.' },
+    { name: 'N2', fraction: N2, harmonic: toHarmonic(N2), cmyk: { c: 0, m: toCMYK(N2), y: 0, k: 0 }, description: 'Nitrogen as harmonic stream.' },
+    { name: 'He', fraction: He, harmonic: toHarmonic(He), cmyk: { c: 0, m: 0, y: toCMYK(He), k: 0 }, description: 'Helium as harmonic stream.' },
+    { name: 'CO2', fraction: CO2, harmonic: toHarmonic(CO2), cmyk: { c: 0, m: 0, y: 0, k: toCMYK(CO2) }, description: 'CO2 as harmonic stream.' }
   ];
   const metrics = validateTrimix(O2, N2, He, CO2, depth, time);
   const navigation: NavigationFlow = {

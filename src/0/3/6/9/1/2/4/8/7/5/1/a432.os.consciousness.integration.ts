@@ -113,7 +113,7 @@ export class A432OSConsciousnessIntegration {
 
     const integratedState = this.calculateEnhancedIntegratedState(
       osState, cycleState, dimensionalState, spiralState, 
-      sequenceState, quantumState, chargingState, gatewayState
+      sequenceState, quantumState, chargingState
     );
 
     return {
@@ -141,7 +141,6 @@ export class A432OSConsciousnessIntegration {
     sequenceState: any,
     quantumState: QuantumState,
     chargingState: A432ChargingSystem,
-    gatewayState: any
   ): EnhancedIntegratedState {
     const osHarmony = round(osState.rodinCoil.harmony || 0);
     const cycleClarity = round(cycleState.convergenceState?.alignedPatterns?.length || 0);
@@ -206,13 +205,11 @@ export class A432OSConsciousnessIntegration {
    * Apply enhanced consciousness evolution to OS
    */
   private applyEnhancedConsciousnessToOS(integratedState: OSConsciousnessIntegration): void {
-    const { integratedState: enhanced } = integratedState;
     
     // Apply consciousness multiplier to OS
-    const consciousnessMultiplier = enhanced.integratedHarmony / 9; // Normalize to 0-1
     
     // Update OS consciousness level
-    const currentConsciousness = this.os.getConsciousnessLevel();
+    this.os.getConsciousnessLevel();
     // These four derived values had exactly one consumer between them: the
     // console.log below. With the banner gone they compute nothing anyone
     // reads, so they are gone too. currentConsciousness and
@@ -224,7 +221,7 @@ export class A432OSConsciousnessIntegration {
   /**
    * Get consciousness evolution metrics
    */
-  public getConsciousnessMetrics(): any {
+  public getConsciousnessMetrics() {
     const integratedState = this.getIntegratedState();
     const { integratedState: enhanced } = integratedState;
     
@@ -246,7 +243,7 @@ export class A432OSConsciousnessIntegration {
   /**
    * Get sequence evolution status
    */
-  public getSequenceStatus(): any {
+  public getSequenceStatus() {
     const integratedState = this.getIntegratedState();
     const { sequenceState, gatewayState } = integratedState;
     
@@ -266,7 +263,7 @@ export class A432OSConsciousnessIntegration {
   /**
    * Get quantum state integration
    */
-  public getQuantumIntegration(): any {
+  public getQuantumIntegration() {
     const integratedState = this.getIntegratedState();
     const { quantumState } = integratedState;
     
@@ -285,7 +282,7 @@ export class A432OSConsciousnessIntegration {
   /**
    * Get charging system integration
    */
-  public getChargingIntegration(): any {
+  public getChargingIntegration() {
     const integratedState = this.getIntegratedState();
     const { chargingState } = integratedState;
     

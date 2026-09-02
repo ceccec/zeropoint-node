@@ -60,17 +60,8 @@ function generateA432Tetrahedron(
   const scale = A432_3D_CONSTANTS.SCALE_FACTOR;
   const angle = angleForDigit(digit);
   
-  // Calculate frequency based on digit type (same logic as Triple Merkaba module)
-  let frequency: number;
-  if (digit === 0) {
-    frequency = 0; // Null source has no frequency
-  } else if ([3, 6, 9].includes(digit)) {
-    frequency = frequencyForDigit(digit); // Use existing function for trinity digits
-  } else {
-    // For digital root circuit digits (1,2,4,8,7,5), calculate based on digital root
-    const digitalRootValue = digitalRoot(digit);
-    frequency = 432 * (digitalRootValue / 9);
-  }
+  // The frequency computed here was written in three branches and read in
+  // none of them.
   
   // Tetrahedron vertices (unit tetrahedron)
   const vertices = [
@@ -228,7 +219,7 @@ export function updateA432TripleMerkaba3D(
 }
 
 // Generate 3D scene data for Three.js
-export function generateA432TripleMerkaba3DScene(state: A432TripleMerkaba3DState): any {
+export function generateA432TripleMerkaba3DScene(state: A432TripleMerkaba3DState) {
   return {
     tetrahedra: state.tetrahedra.map(tetrahedron => ({
       vertices: tetrahedron.vertices,

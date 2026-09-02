@@ -1,5 +1,4 @@
 import { PI } from './a432.algebra.ts'
-import * as a432 from './a432.ts';
 import { colorPhotonDotParticleState } from './a432.ts';
 
 /**

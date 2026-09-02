@@ -127,7 +127,6 @@ export function harmonizeA432CMYKVoice(): A432CMYKVoiceState {
 export function generateCMYKTone(channel: CMYKChannel, duration: number = 1): string {
   const frequency = channel.frequency;
   const amplitude = channel.amplitude / 9;
-  const phase = channel.phase;
   
   return `
     // CMYK Tone Generation

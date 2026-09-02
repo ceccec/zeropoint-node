@@ -41,7 +41,7 @@ export function startFlowerOfLife(callback: (f: FlowerOfLifeFrame) => void): () 
   let rafId: any = 0;
   const R = 60; // radius
   const cx = 120, cy = 120;
-  const points = Array.from({ length: 7 }, (_, i) => ({ x: 0, y: 0, color: { c: 0, m: 0, y: 0, k: 0 } as CMYK }));
+  const points = Array.from({ length: 7 }, () => ({ x: 0, y: 0, color: { c: 0, m: 0, y: 0, k: 0 } as CMYK }));
   const metaphysical = 'The Flower of Life: 7 circles, infinite creation, unity of all streams.';
 
   const step = () => {

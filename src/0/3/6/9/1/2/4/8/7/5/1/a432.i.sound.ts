@@ -10,7 +10,6 @@ import { playTrinitySound } from './a432.sound.ts';
 
 export { playTrinitySound } from './a432.sound.ts';
 
-declare const window: unknown;
 
 export function handleSoundEvent(frequency: number, amplitude: number, timestamp: number = Date.now()) {
   const trinity = ['creation', 'return', 'axis'];

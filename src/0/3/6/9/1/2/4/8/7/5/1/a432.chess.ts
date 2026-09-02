@@ -4,11 +4,13 @@ import { type CMYK } from './a432.cmyk.ts';
 // Helper – cross-platform animation frame
 const _raf: (cb: (t: number) => void) => unknown =
   typeof (globalThis as { requestAnimationFrame?: unknown }).requestAnimationFrame === 'function'
-    ? (globalThis as { requestAnimationFrame: Function }).requestAnimationFrame.bind(globalThis)
+    ? (globalThis as { requestAnimationFrame: (cb: (t: number) => void) => unknown })
+        .requestAnimationFrame.bind(globalThis)
     : (cb: (t: number) => void) => setTimeout(() => cb(Date.now()), 16);
 const _craf: (id: unknown) => void =
   typeof (globalThis as { cancelAnimationFrame?: unknown }).cancelAnimationFrame === 'function'
-    ? (globalThis as { cancelAnimationFrame: Function }).cancelAnimationFrame.bind(globalThis)
+    ? (globalThis as { cancelAnimationFrame: (id: unknown) => void })
+        .cancelAnimationFrame.bind(globalThis)
     : (id: unknown) => clearTimeout(id as number);
 
 export interface ChessFrame {

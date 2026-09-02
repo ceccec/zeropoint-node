@@ -96,7 +96,8 @@ export function trainQMLCircuit(
   readonly lossHistory: readonly number[]
 } {
   const lossHistory: number[] = []
-  let params = initialParams as any as number[]
+  // initialParams is readonly; the double cast was asking for a mutable copy.
+  const params = [...initialParams]
 
   for (let iter = 0; iter < maxIterations; iter++) {
     let correctCount = 0
@@ -193,13 +194,13 @@ export function quantumInspiredRandomSearch(
   // Parallel multi-start: superposition-like (try diverse starts)
   const numStarts = max(1, floor(budget / 10))
   for (let start = 0; start < numStarts; start++) {
-    let x = new Array(dimension)
+    const x = new Array(dimension)
     for (let i = 0; i < dimension; i++) {
       s = (1664525 * s + 1013904223) % 4294967296
       x[i] = ((s / 4294967296) * 2) - 1 // [-1, 1]
     }
 
-    let xCurrent = x.slice() as number[]
+    const xCurrent = x.slice() as number[]
     const stepBudget = floor(budget / numStarts)
 
     // Local search from this start
@@ -254,7 +255,7 @@ export function profileProblem(
     : 0
 
   // Estimate sparsity (fraction of dimensions that affect output)
-  let activeDims = dimension
+  const activeDims = dimension
   const sparsity = activeDims / max(1, dimension)
 
   return {
@@ -431,7 +432,7 @@ export function solveHybrid(
   // recordSuccess also takes the point the search started from; the sampled
   // starts are the only initial thetas this function has.
   adapter.recordSuccess(problem.name, {
-    theta: solution as any,
+    theta: [...solution],
     energy: value,
     converged: value < 0,
     finalError: abs(value),

@@ -192,7 +192,7 @@ export class A432SacredGeometrySystem {
   }
 
   // === SACRED GEOMETRY ANALYSIS ===
-  analyzeSacredGeometry(sequence: string): any {
+  analyzeSacredGeometry(sequence: string) {
     const digits = sequence.match(/\d/g)?.map(Number) || [];
     
     // Group analysis
@@ -318,7 +318,7 @@ export class A432SacredGeometrySystem {
   }
 
   // === TESLA'S 3-6-9 ANALYSIS ===
-  analyzeTeslaNumbers(sequence: string): any {
+  analyzeTeslaNumbers(sequence: string) {
     const digits = sequence.match(/\d/g)?.map(Number) || [];
     const teslaNumbers = digits.filter(d => [3, 6, 9].includes(d));
     const nonTeslaNumbers = digits.filter(d => ![3, 6, 9].includes(d));
@@ -346,7 +346,7 @@ export class A432SacredGeometrySystem {
   }
 
   // === ZERO POINT FIELD INTEGRATION ===
-  getZeroPointField(): any {
+  getZeroPointField() {
     return {
       field: 0,
       meaning: 'The void or source point from which all creation emerges',
@@ -358,7 +358,7 @@ export class A432SacredGeometrySystem {
   }
 
   // === FLOWER OF LIFE INTEGRATION ===
-  getFlowerOfLifePattern(): any {
+  getFlowerOfLifePattern() {
     return {
       pattern: [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1],
       geometricForm: 'Sacred geometry pattern with embedded sequences',
@@ -371,7 +371,7 @@ export class A432SacredGeometrySystem {
   }
 
   // === EVOLUTION THROUGH SACRED GEOMETRY ===
-  evolve(): any {
+  evolve() {
     const currentState = this.getMerkabaState();
     
     // Evolve through phases
@@ -390,7 +390,7 @@ export class A432SacredGeometrySystem {
   }
 
   // === CURRENT STATE ===
-  getCurrentState(): any {
+  getCurrentState() {
     return {
       merkaba: this.getMerkabaState(),
       zeroPoint: this.getZeroPointField(),

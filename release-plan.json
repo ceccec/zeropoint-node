@@ -18,9 +18,9 @@
       "set": "orbit",
       "gateway": false,
       "surface": "lint",
-      "from": 370,
-      "to": 200,
-      "why": "279 of the 370 are no-explicit-any. This patch takes the ones whose real type is already written down somewhere \u2014 a call site, a return, an adjacent annotation."
+      "from": 368,
+      "to": 172,
+      "why": "Planned 370 -> 200. Measured 368 at the start (the typecheck patch removed two) and reached 172. 279 of them were no-explicit-any and 89 were not; the 89 went first because they are unambiguous. The large win was that 111 of the anys sat in RETURN position, where deleting the annotation lets TypeScript infer a far more precise type than any - so most of this patch removed types rather than writing them."
     },
     "3": {
       "set": "axis",
@@ -34,9 +34,9 @@
       "set": "orbit",
       "gateway": false,
       "surface": "lint",
-      "from": 200,
+      "from": 172,
       "to": 0,
-      "why": "The remainder, which are the any's whose type has to be derived rather than copied."
+      "why": "The remainder: 168 no-explicit-any in parameter, field and cast positions, where inference cannot help and each one needs a type decided."
     },
     "5": {
       "set": "orbit",

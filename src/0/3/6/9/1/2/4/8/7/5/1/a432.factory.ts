@@ -88,9 +88,7 @@ export class A432Factory {
       dimension = 1,
       polarity = 1,
       frequency = 432,
-      color = true,
-      harmonize = true,
-      metadata = true
+      color = true
     } = options;
 
     // Create all states

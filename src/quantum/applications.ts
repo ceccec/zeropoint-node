@@ -210,13 +210,15 @@ export function analyzeRSA(keyLength: number): CryptanalysisReport {
 
 export interface ApplicationProblem {
   readonly type: 'factorization' | 'maxcut' | 'simulation' | 'optimization'
-  readonly data: any // Type-specific problem data
+  // Each problem type carries its own payload, so this is genuinely open —
+  // but unknown says so and forces the reader to narrow, which any did not.
+  readonly data: unknown
   readonly seed: number
 }
 
 export interface ApplicationResult {
   readonly problem: ApplicationProblem
-  readonly solution: any
+  readonly solution: unknown
   readonly verified: boolean
   readonly solver: string
   readonly effort: number
@@ -245,7 +247,7 @@ export function solveApplication(
       solution: result,
       verified: result.ratio > 0.5, // Greedy is ~0.5-approx for MaxCut
       solver: result.method,
-      effort: problem.data.vertices,
+      effort: (problem.data as { vertices: number }).vertices,
     }
   }
 
@@ -327,7 +329,7 @@ export function runApplicationSuite(seed: number = 0): ApplicationSuite {
   )
 
   // Mesh-guided discovery: analyze solutions
-  const solutions = applications.map((a) => (a.solution as any).value || 0)
+  const solutions = applications.map((a) => (a.solution as { value?: number } | null)?.value ?? 0)
   let s = seed
   const meshData = solutions.map((v, i) => {
     const solution = new Array(3)

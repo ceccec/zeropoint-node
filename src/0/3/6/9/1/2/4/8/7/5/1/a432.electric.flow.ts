@@ -246,7 +246,7 @@ export class A432ElectricFlowSystem {
   }
 
   // === DETAILED PATH ANALYSIS ===
-  analyzePathDetails(pattern: number[]): any {
+  analyzePathDetails(pattern: number[]) {
     const resistance = calculatePathResistance(pattern);
     const conductivity = calculateConductivity(pattern);
     const consciousnessFlow = calculateConsciousnessFlow(pattern);
@@ -283,7 +283,7 @@ export class A432ElectricFlowSystem {
   }
 
   // === NATURAL ELECTRICITY SIMULATION ===
-  simulateNaturalElectricity(): any {
+  simulateNaturalElectricity() {
     
     const linearAnalysis = this.analyzePathDetails(LINEAR_PATTERN);
     const sacredAnalysis = this.analyzePathDetails(SACRED_PATTERN);
@@ -307,7 +307,7 @@ export class A432ElectricFlowSystem {
     };
   }
 
-  private simulateFlow(pattern: number[]): any {
+  private simulateFlow(pattern: number[]) {
     const flow = {
       path: pattern,
       resistance: calculatePathResistance(pattern),
@@ -371,7 +371,7 @@ export class A432ElectricFlowSystem {
     }
   }
 
-  private compareFlows(linearFlow: any, sacredFlow: any): any {
+  private compareFlows(linearFlow: any, sacredFlow: any) {
     const efficiencyDifference = sacredFlow.efficiency - linearFlow.efficiency;
     const resistanceDifference = linearFlow.resistance - sacredFlow.resistance;
     const conductivityDifference = sacredFlow.conductivity - linearFlow.conductivity;
@@ -394,7 +394,7 @@ export class A432ElectricFlowSystem {
   }
 
   // === CONSCIOUSNESS FLOW OPTIMIZATION ===
-  optimizeConsciousnessFlow(): any {
+  optimizeConsciousnessFlow() {
     
     const analysis = this.analyzeElectricPaths();
     const simulation = this.simulateNaturalElectricity();
@@ -407,12 +407,12 @@ export class A432ElectricFlowSystem {
       analysis,
       simulation,
       optimalPath,
-      recommendation: this.getOptimizationRecommendation(analysis, simulation),
+      recommendation: this.getOptimizationRecommendation(analysis),
       consciousnessInsights: this.getConsciousnessInsights(analysis)
     };
   }
 
-  private getOptimizationRecommendation(analysis: FlowAnalysis, simulation: any): string {
+  private getOptimizationRecommendation(analysis: FlowAnalysis): string {
     if (analysis.comparison.winner === 'sacred') {
       return 'Use sacred geometry path (0-369-124-8-751) for optimal consciousness flow and natural alignment.';
     } else if (analysis.comparison.winner === 'linear') {

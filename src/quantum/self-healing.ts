@@ -258,7 +258,7 @@ export function assessResilience(
   const repair_capacity = improved_count / cycles.length
 
   // Convergence speed: how fast does health increase?
-  let health_trajectory = cycles.map((c) => c.diagnosis_after.health_score)
+  const health_trajectory = cycles.map((c) => c.diagnosis_after.health_score)
   let convergence = 0
   if (health_trajectory.length > 1) {
     const deltas = []

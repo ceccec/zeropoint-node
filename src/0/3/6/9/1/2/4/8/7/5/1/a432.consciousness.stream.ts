@@ -113,7 +113,6 @@ export class A432ConsciousnessStream {
 
   private calculateIntegratedHarmony(osState: any): number {
     const osHarmony = round(osState.integratedState.osHarmony || 0);
-    const consciousnessPhase = osState.integratedState.consciousnessPhase || 'full-entropy';
     const consciousnessDimension = round(osState.integratedState.consciousnessDimension || 1);
     const integratedHarmony = round(osState.integratedState.integratedHarmony || 0);
     

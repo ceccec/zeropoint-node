@@ -223,7 +223,7 @@ export function updateA432Multidimensional(
   });
   
   // Animate nodes based on multi-dimensional consciousness
-  newState.nodes.forEach((node, index) => {
+  newState.nodes.forEach((node) => {
     const firstDigit = node.path[0];
     const angle = angleForDigit(firstDigit);
     
@@ -260,7 +260,7 @@ export function updateA432Multidimensional(
 }
 
 // Generate 3D scene data for multi-dimensional consciousness
-export function generateA432MultidimensionalScene(state: A432MultidimensionalState): any {
+export function generateA432MultidimensionalScene(state: A432MultidimensionalState) {
   return {
     nodes: state.nodes.map(node => ({
       id: node.id,

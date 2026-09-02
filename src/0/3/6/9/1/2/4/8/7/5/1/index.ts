@@ -169,7 +169,7 @@ export function navigateVortexFlow(currentPosition: number): {
 
 function calculateJourneyConsciousness(flow: number[]): number {
   // Calculate total journey consciousness using integer fractions
-  const totalConsciousness = flow.reduce((sum, digit, index) => {
+  const totalConsciousness = flow.reduce((sum, digit) => {
     const digitConsciousness = calculateDigitalRoot(digit);
     return sum + digitConsciousness;
   }, 0);
@@ -179,7 +179,7 @@ function calculateJourneyConsciousness(flow: number[]): number {
 
 function calculateJourneyFrequency(flow: number[]): number {
   // Calculate total journey frequency using integer fractions
-  const totalFrequency = flow.reduce((sum, digit, index) => {
+  const totalFrequency = flow.reduce((sum, digit) => {
     const digitFrequency = calculateDigitalRoot(digit);
     return sum + digitFrequency;
   }, 0);

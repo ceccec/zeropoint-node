@@ -60,7 +60,7 @@ export function vqeAdaptive(
   maxIterations: number = 200,
   convergenceTol: number = 1e-4,
 ): VQEResult {
-  let theta = initialTheta.slice()
+  const theta = initialTheta.slice()
   let learningRate = 0.1
   const history: OptimizationHistory[] = []
   let bestEnergy = Infinity

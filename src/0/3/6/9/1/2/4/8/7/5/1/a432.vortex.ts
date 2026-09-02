@@ -77,7 +77,7 @@ export function treeToVortexStream<T>(node: { value: T; children: { value: T; ch
  */
 export function imagineAll<T>(streams: VortexStream<T>[]) {
   streams.forEach(stream => {
-    stream.observe(v => {
+    stream.observe(() => {
       // Each stream describes itself and its harmonics
       // Extend here for visualization, harmonization, or meta-observation
       // Example: console.log(v.meta());

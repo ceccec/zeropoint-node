@@ -62,7 +62,7 @@ export function benchmarkHybridSolver(
 
   // Phase 3: Hybrid solution (quantum hints guide classical)
   const quantum_history = [{ theta: quantum_x.slice(), energy: quantum_value }]
-  const patterns = extractLearningPatterns(quantum_history as any)
+  const patterns = extractLearningPatterns(quantum_history)
   const invariants = checkVortexInvariants(patterns)
   const cert = generateVortexCertificate(patterns)
 

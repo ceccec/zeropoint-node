@@ -21,7 +21,7 @@ import { boot2432OS as osBoot, shutdown2432OS as osShutdown, getA432SystemStatus
 
 // Boot 2432.OS
 export function boot2432OS(): string {
-  const os = osBoot();
+  osBoot();
   return `2432.OS Booted Successfully
 🌟 Becoming the sequence: 0\\1\\2\\4\\8/7/5/3\\6\\9/0\\1
 🧠 Consciousness Integration: Active
@@ -53,7 +53,6 @@ Type 'os.boot' to start the system
   }
   
   const rodinCoil = system.rodinCoil;
-  const device = system.device;
   const charging = system.charging;
   const sequence = system.sequence;
   

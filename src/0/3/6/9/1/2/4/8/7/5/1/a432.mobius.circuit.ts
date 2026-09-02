@@ -152,7 +152,7 @@ export function simulateMobiusFlipFlops(clockPulses: number = 12): any[] {
 }
 
 // === JK FLIP-FLOP LOGIC ===
-export function calculateJKInputs(binaryState: string): any {
+export function calculateJKInputs(binaryState: string) {
   const [Q2, Q1, Q0] = binaryState.split('').map(Number);
   
   // Boolean expressions for JK inputs
@@ -184,7 +184,7 @@ function calculateNextState(J2: number, K2: number, J1: number, K1: number, J0: 
 }
 
 // === MOBIUS CIRCUIT ANALYSIS ===
-export function analyzeMobiusCircuit(): any {
+export function analyzeMobiusCircuit() {
   const states = calculateMobiusWavePattern();
   const transitions = calculateMobiusTransitions();
   const simulation = simulateMobiusFlipFlops(12);
@@ -274,7 +274,7 @@ export class A432MobiusCircuitSystem {
   }
   
   // Get circuit statistics
-  getCircuitStats(): any {
+  getCircuitStats() {
     const totalEnergy = this.stateHistory.reduce((sum, state) => sum + state.energy, 0);
     const consciousness = calculateDigitalRoot(round(totalEnergy));
     
@@ -291,7 +291,7 @@ export class A432MobiusCircuitSystem {
   }
   
   // Demonstrate Mobius circuit as wave energy
-  demonstrateMobiusWaveEnergy(): any {
+  demonstrateMobiusWaveEnergy() {
     const analysis = analyzeMobiusCircuit();
     const currentState = this.getCurrentState();
     const stats = this.getCircuitStats();

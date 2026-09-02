@@ -43,7 +43,7 @@ const SYSTEMS = [
 function toHarmonic(value: number): number {
   return round(432 * (1 + value / 9));
 }
-function toCMYK(value: number, channel: number): number {
+function toCMYK(value: number): number {
   return round((value / 9) * 100);
 }
 function getFlow(seed: number): number[] {
@@ -63,10 +63,10 @@ export function createIterAnatomy(
       value,
       harmonic: toHarmonic(value),
       cmyk: {
-        c: i % 4 === 0 ? toCMYK(value, 0) : 0,
-        m: i % 4 === 1 ? toCMYK(value, 1) : 0,
-        y: i % 4 === 2 ? toCMYK(value, 2) : 0,
-        k: i % 4 === 3 ? toCMYK(value, 3) : 0
+        c: i % 4 === 0 ? toCMYK(value) : 0,
+        m: i % 4 === 1 ? toCMYK(value) : 0,
+        y: i % 4 === 2 ? toCMYK(value) : 0,
+        k: i % 4 === 3 ? toCMYK(value) : 0
       },
       flow: getFlow(i),
       risk,

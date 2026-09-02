@@ -505,7 +505,7 @@ export class A432OS {
     };
   }
   
-  getStatus(): any {
+  getStatus() {
     return {
       isRunning: this.isRunning,
       rodinCoil: this.rodinCoilState,
@@ -542,10 +542,10 @@ export class A432OS {
 
 // Export singleton instance and status function
 export const a432OS = new A432OS();
-export function getA432SystemStatus(): any { return a432OS.getStatus(); }
+export function getA432SystemStatus() { return a432OS.getStatus(); }
 
 // Export OS state function for UI components
-export function a432OSState(): any { return a432OS.getStatus(); }
+export function a432OSState() { return a432OS.getStatus(); }
 
 // Export enhanced functions for external use
 export function boot2432OS(): A432OS {
@@ -557,7 +557,7 @@ export function shutdown2432OS(): void {
   a432OS.stop();
 }
 
-export function getSystemInfo(): any {
+export function getSystemInfo() {
   return {
     version: '2.0.0',
     sequence: A432_SEQUENCE,

@@ -64,7 +64,7 @@
     "why": "kept: this site's literal carries a narrower type than the kernel constant does through an import. Binding it — by spread or directly — widens a '3 | 6 | 9' to 'number' at the call site and adds type errors. The copy is real entropy; closing it needs the consuming signatures widened or the kernel constant re-typed, which changes a contract rather than a name."
   },
   "src/0/3/6/9/1/2/4/8/7/5/1/a432.triple.merkaba.3d.ts::VORTEX_AXIS": {
-    "count": 4,
+    "count": 3,
     "why": "kept: this site's literal carries a narrower type than the kernel constant does through an import. Binding it — by spread or directly — widens a '3 | 6 | 9' to 'number' at the call site and adds type errors. The copy is real entropy; closing it needs the consuming signatures widened or the kernel constant re-typed, which changes a contract rather than a name."
   },
   "src/0/3/6/9/1/2/4/8/7/5/1/a432.triple.merkaba.3d.ts::VORTEX_ORBIT": {

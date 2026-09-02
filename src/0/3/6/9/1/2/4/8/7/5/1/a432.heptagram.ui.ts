@@ -1,7 +1,7 @@
 import { PI, cos, sin } from './a432.algebra.ts'
 // a432.heptagram.ui.ts — 7-point star overlay synced with the uroboros
 //--------------------------------------------------------------------------
-import { uroborosEmitter, type UroborosEvent } from './a432.uroboros.ts';
+import { uroborosEmitter } from './a432.uroboros.ts';
 import { cmykToCss } from './a432.cmyk.ts';
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
 import { type Digit } from './a432.types.ts';
@@ -49,7 +49,7 @@ if (typeof document !== 'undefined') {
     }
   }
 
-  uroborosEmitter.on('uro', (e: UroborosEvent) => {
+  uroborosEmitter.on('uro', () => {
     // advance rotation each rebirth step (index increments at every event)
     rotation -= SEG; // rotate by one base segment
     drawHeptagram();

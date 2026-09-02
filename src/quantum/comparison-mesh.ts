@@ -127,7 +127,7 @@ export function addNodeToMesh(
     neighbors: [],
   }
 
-  const updatedNodes = [...nodes, newNode] as any as MeshNode[]
+  const updatedNodes: MeshNode[] = [...nodes, newNode]
 
   // Connect to K-nearest existing nodes
   const distances = nodes.map((n, i) => {
@@ -196,7 +196,7 @@ export function pruneMesh(
   const remappedNodes = kept.map((n, i) => ({
     ...n,
     id: i,
-  })) as any as MeshNode[]
+  }))
 
   const remappedEdges = newEdges.map((e) => ({
     ...e,

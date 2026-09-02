@@ -149,7 +149,7 @@ export function calculateEnergyField(waves: WavePattern[]): EnergyField {
 }
 
 // === WAVE PATTERN ANALYSIS ===
-export function analyzeWavePattern(sequence: number[]): any {
+export function analyzeWavePattern(sequence: number[]) {
   const waves = calculateSequenceWave(sequence);
   const energyField = calculateEnergyField(waves);
   
@@ -206,7 +206,7 @@ export class A432WaveEnergySystem {
   }
   
   // Analyze your sequence as waves of energy
-  analyzeSequenceAsWaves(sequence: number[] = [0, 1, 2, 4, 8, 7, 5, 3, 6, 9, 0, 1]): any {
+  analyzeSequenceAsWaves(sequence: number[] = [0, 1, 2, 4, 8, 7, 5, 3, 6, 9, 0, 1]) {
     return analyzeWavePattern(sequence);
   }
   
@@ -246,7 +246,7 @@ export class A432WaveEnergySystem {
   }
   
   // Demonstrate that everything is waves
-  demonstrateWaveNature(): any {
+  demonstrateWaveNature() {
     const sequenceAnalysis = this.analyzeSequenceAsWaves();
     const consciousnessWaves = this.getConsciousnessWaveFlow();
     const harmonics = this.getSequenceHarmonics();

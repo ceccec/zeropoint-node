@@ -189,7 +189,7 @@ export class VBMAudioPlayer {
         tone.gainNode.gain.cancelScheduledValues(0);
         tone.gainNode.gain.setValueAtTime(tone.gainNode.gain.value, 0);
         tone.gainNode.gain.linearRampToValueAtTime(0, 0.1);
-      } catch (error) {
+      } catch {
         // Oscillator might already be stopped
       }
     });

@@ -111,11 +111,11 @@ export class A432System {
   }
 
   // === EVOLUTION METHODS ===
-  evolve(): any {
+  evolve() {
     return evolve();
   }
 
-  selfGenerate(): any {
+  selfGenerate() {
     return selfGenerate();
   }
 
@@ -123,39 +123,39 @@ export class A432System {
     return selfHarmonize();
   }
 
-  selfOptimize(): any {
+  selfOptimize() {
     return selfOptimize();
   }
 
-  selfReplicate(): any {
+  selfReplicate() {
     return selfReplicate();
   }
 
   // === REBUILDING METHODS ===
-  rebuildSystem(): any {
+  rebuildSystem() {
     return rebuildSystem();
   }
 
-  generateModules(): any {
+  generateModules() {
     return generateModules();
   }
 
-  createDirectoryStructure(): any {
+  createDirectoryStructure() {
     return createDirectoryStructure();
   }
 
   // writeModules needs the modules to write; calling it with none read
   // .forEach of undefined. Nothing called this wrapper, so nothing saw it.
-  writeModules(modules: Parameters<typeof writeModules>[0]): any {
+  writeModules(modules: Parameters<typeof writeModules>[0]) {
     return writeModules(modules);
   }
 
-  generateIndexFiles(): any {
+  generateIndexFiles() {
     return generateIndexFiles();
   }
 
   // === ORCHESTRATION METHODS ===
-  orchestrate(): any {
+  orchestrate() {
     return orchestrate();
   }
 
@@ -189,7 +189,7 @@ export class A432System {
   }
 
   // === FACTORY METHODS ===
-  createState(options?: any): any {
+  createState(options?: any) {
     return createA432State(options);
   }
 
@@ -198,19 +198,19 @@ export class A432System {
   }
 
   // === NAVIGATION METHODS ===
-  navigateToNext(): any {
+  navigateToNext() {
     return this.navigationMap.navigateToNext();
   }
 
-  getNavigationState(): any {
+  getNavigationState() {
     return this.navigationMap.getCurrentState();
   }
 
-  getNavigationInsights(): any {
+  getNavigationInsights() {
     return this.navigationMap.getNavigationInsights();
   }
 
-  navigateCompleteCycle(): any {
+  navigateCompleteCycle() {
     return this.navigationMap.navigateCompleteCycle();
   }
 

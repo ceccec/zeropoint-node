@@ -5,12 +5,10 @@
  */
 
 import { abs, floor, log2 } from '../0/algebra.ts'
-import { type Register, applyGate1, H, measureQubit, probabilities, unitOf } from './simulator.ts'
+import { type Complex, type Gate1, type Register, applyGate1, H, measureQubit, probabilities, unitOf } from './simulator.ts'
 
-interface Complex {
-  readonly re: number
-  readonly im: number
-}
+// Complex was declared here as well as in simulator.ts, identically. One
+// definition, imported above — a second copy is a place for the two to drift.
 
 type DensityMatrix = readonly (readonly Complex[])[]
 
@@ -69,10 +67,13 @@ export function measureX(reg: Register, qubit: number, shots: number = 1000, see
 export function measureY(reg: Register, qubit: number, shots: number = 1000, seed: number = 0): TomographyMeasurement {
   // S† (adjoint S) = [[1, 0], [0, -i]]
   // In complex format: [1+0i, 0+0i, 0+0i, 0-1i]
-  const one = { re: 1, im: 0 } as any
-  const zero = { re: 0, im: 0 } as any
-  const negi = { re: 0, im: -1 } as any
-  const sAdjoint: any = [one, zero, zero, negi]
+  // S-dagger is a Gate1: four Complex amplitudes. It was four `as any` casts
+  // and an `any` array, which is the one place in this file where the types
+  // are exact and nothing was using them.
+  const one: Complex = { re: 1, im: 0 }
+  const zero: Complex = { re: 0, im: 0 }
+  const negi: Complex = { re: 0, im: -1 }
+  const sAdjoint: Gate1 = [one, zero, zero, negi]
   const s1 = applyGate1(reg, qubit, sAdjoint)
   // Apply H
   const s2 = applyGate1(s1, qubit, H)

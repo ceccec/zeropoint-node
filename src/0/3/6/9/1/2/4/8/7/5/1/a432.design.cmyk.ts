@@ -119,7 +119,7 @@ export function renderDesignMatrixSVG(elements: DesignElementCMYK[]): string {
     })
   ).join('');
   const nodes = points.map(p => {
-    const [c, m, y, k] = p.el.id;
+    const [c, m, y] = p.el.id;
     const color = `rgb(${c*28},${m*28},${y*28})`;
     const phrase = cmykIdToPhrase(p.el.id);
     return `<circle cx="${p.x}" cy="${p.y}" r="22" fill="${color}" stroke="#fff" stroke-width="2">

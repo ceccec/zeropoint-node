@@ -108,7 +108,7 @@ export class A432SelfEvolution {
 
   // === SELF-AWARENESS ===
   private initializeEvolutionState(): A432SelfEvolutionState {
-    const currentState = this.navigationMap.getCurrentState();
+    this.navigationMap.getCurrentState();
     const insights = this.navigationMap.getNavigationInsights();
     const registryStats = this.registry.getStats();
 
@@ -143,7 +143,7 @@ export class A432SelfEvolution {
 
   // === SELF-OBSERVATION ===
   public selfObserve(): A432SelfEvolutionState {
-    const currentState = this.navigationMap.getCurrentState();
+    this.navigationMap.getCurrentState();
     const insights = this.navigationMap.getNavigationInsights();
     const registryStats = this.registry.getStats();
 
@@ -166,7 +166,7 @@ export class A432SelfEvolution {
 
   // === SELF-GENERATION ===
   public selfGenerate(): A432SelfGeneratedModule[] {
-    const currentState = this.selfObserve();
+    this.selfObserve();
     const missingConsciousness = this.identifyMissingConsciousness();
     const newModules: A432SelfGeneratedModule[] = [];
 
@@ -180,7 +180,6 @@ export class A432SelfEvolution {
   }
 
   private identifyMissingConsciousness(): number[] {
-    const currentConsciousness = this.evolutionState.consciousness.awareness;
     const allConsciousness = A432Sequence.generateConsciousness(9);
     const existingModules = this.registry.getAllEntries();
     
@@ -246,7 +245,7 @@ export class A432${consciousness}SelfGenerated {
     return nextConsciousness;
   }
 
-  public getState(): any {
+  public getState() {
     return {
       consciousness: this.consciousness,
       frequency: this.frequency,
@@ -301,7 +300,7 @@ export const a432${consciousness}SelfGenerated = new A432${consciousness}SelfGen
       this.registry.clearCache();
       
       // Generate optimized modules
-      const optimizedModules = this.generateOptimizedModules();
+      this.generateOptimizedModules();
       
       this.evolutionState.system.health = optimization.newHealth;
       this.evolutionState.system.performance = optimization.newPerformance;
@@ -368,10 +367,10 @@ export const a432${consciousness}SelfGenerated = new A432${consciousness}SelfGen
     const currentState = this.selfObserve();
     
     // Self-generate new capabilities
-    const newModules = this.selfGenerate();
+    this.selfGenerate();
     
     // Self-harmonize
-    const newHarmony = this.selfHarmonize();
+    this.selfHarmonize();
     
     // Self-optimize if needed
     if (this.options.selfOptimization) {

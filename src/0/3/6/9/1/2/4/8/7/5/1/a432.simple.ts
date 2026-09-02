@@ -76,11 +76,19 @@ export class A432Sequence {
 
 export class A432Color {
   static generateMatrix(polarity: 1 | -1 = 1): Array<{ root: number; hsl: { hue: number; saturation: number; lightness: number }; rgb: { r: number; g: number; b: number } }> {
-    return Array.from({ length: 9 }, (_, i) => ({
-      root: A432Math.calculateDigitalRoot(i + 1),
-      hsl: { hue: (i * 40) % 360, saturation: 50, lightness: 50 },
-      rgb: { r: (i * 28) % 256, g: (i * 32) % 256, b: (i * 36) % 256 }
-    }));
+    // polarity was accepted and ignored, so -1 answered exactly as +1. It is
+    // direction everywhere else in this layer, so it is direction here: the
+    // matrix is walked backwards. NOTE the sibling in a432.utils.ts computes
+    // this matrix from harmonicFrequency instead, so the two A432Color classes
+    // still disagree on what generateMatrix means — a finding, not fixed here.
+    return Array.from({ length: 9 }, (_, n) => {
+      const i = polarity === 1 ? n : 8 - n;
+      return {
+        root: A432Math.calculateDigitalRoot(i + 1),
+        hsl: { hue: (i * 40) % 360, saturation: 50, lightness: 50 },
+        rgb: { r: (i * 28) % 256, g: (i * 32) % 256, b: (i * 36) % 256 },
+      };
+    });
   }
 }
 
@@ -257,7 +265,7 @@ export class A432SimpleSystem {
     return this.navigateSequence();
   }
 
-  selfGenerate(): any {
+  selfGenerate() {
     if (!this.config.enableSelfEvolution) {
       throw new Error('Self-evolution is not enabled');
     }

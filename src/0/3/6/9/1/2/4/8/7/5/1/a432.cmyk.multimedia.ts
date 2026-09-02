@@ -236,10 +236,10 @@ export class CMYKAudioGenerator {
     const samples = floor(sampleRate * duration);
     
     return {
-      cyan: this.generateVortexWave(frequencies.cyan, time, samples, sampleRate, 1),
-      magenta: this.generateVortexWave(frequencies.magenta, time, samples, sampleRate, 2),
-      yellow: this.generateVortexWave(frequencies.yellow, time, samples, sampleRate, 3),
-      key: this.generateVortexWave(frequencies.key, time, samples, sampleRate, 4)
+      cyan: this.generateVortexWave(frequencies.cyan, time, samples, sampleRate),
+      magenta: this.generateVortexWave(frequencies.magenta, time, samples, sampleRate),
+      yellow: this.generateVortexWave(frequencies.yellow, time, samples, sampleRate),
+      key: this.generateVortexWave(frequencies.key, time, samples, sampleRate)
     };
   }
 
@@ -254,7 +254,7 @@ export class CMYKAudioGenerator {
     return audioData;
   }
 
-  private static generateVortexWave(frequency: number, time: number, samples: number, sampleRate: number, channel: number): Float32Array {
+  private static generateVortexWave(frequency: number, time: number, samples: number, sampleRate: number): Float32Array {
     const audioData = new Float32Array(samples);
     
     for (let i = 0; i < samples; i++) {

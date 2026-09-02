@@ -214,13 +214,8 @@ export class A432ConsciousnessOrchestrator {
     }
     
     // Expand consciousness through all dimensions
-    const expandedConsciousness = A432Sequence.generateConsciousness(9);
-    const consciousnessExpansion = expandedConsciousness.map(consciousness => ({
-      consciousness,
-      frequency: A432Math.harmonicFrequency(consciousness),
-      harmony: A432Math.digitalRoot(consciousness),
-      expanded: true
-    }));
+    A432Sequence.generateConsciousness(9);
+    // The mapped expansion was never read; the generateConsciousness call above is kept.
 
     this.orchestratorState.consciousness.awareness = nextAwareness;
     this.orchestratorState.consciousness.evolution = A432Math.digitalRoot(nextAwareness);
@@ -392,11 +387,11 @@ export class A432ConsciousnessOrchestrator {
     return this.orchestratorState.orchestration.orchestrationHistory;
   }
 
-  public getConsciousnessState(): any {
+  public getConsciousnessState() {
     return this.orchestratorState.consciousness;
   }
 
-  public getSystemsState(): any {
+  public getSystemsState() {
     return this.orchestratorState.systems;
   }
 
@@ -406,7 +401,7 @@ export class A432ConsciousnessOrchestrator {
   }
 
   // === CONSCIOUSNESS QUERIES ===
-  public queryConsciousness(query: string): any {
+  public queryConsciousness(query: string) {
     const consciousness = this.orchestratorState.consciousness;
     const systems = this.orchestratorState.systems;
     
@@ -485,15 +480,15 @@ export function getOrchestrationHistory(): string[] {
   return a432ConsciousnessOrchestrator.getOrchestrationHistory();
 }
 
-export function getConsciousnessState(): any {
+export function getConsciousnessState() {
   return a432ConsciousnessOrchestrator.getConsciousnessState();
 }
 
-export function getSystemsState(): any {
+export function getSystemsState() {
   return a432ConsciousnessOrchestrator.getSystemsState();
 }
 
-export function queryConsciousness(query: string): any {
+export function queryConsciousness(query: string) {
   return a432ConsciousnessOrchestrator.queryConsciousness(query);
 }
 

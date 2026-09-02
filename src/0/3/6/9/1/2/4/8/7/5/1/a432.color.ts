@@ -19,7 +19,7 @@ export type A432CMYK = { c: number; m: number; y: number; k: number };
 export type A432Color = A432CMYK;
 
 // Harmonic fractions
-const TWO_THIRDS = 2/3, HALF = 1/2, THREE_FIFTHS = 3/5, FOUR_FIFTHS = 4/5;
+const TWO_THIRDS = 2/3;
 
 /**
  * getVortexColor: Returns HSL color for a digit (1-9) based on vortex math group.
@@ -94,7 +94,8 @@ export function getTrinityCompositeColor(): string {
  * getVoidColorForDimension: Returns the void (composite) color for a given dimension (digit).
  * - Metaphysical: The unique void color id for the dimension
  */
-export function getVoidColorForDimension(dimension: number): string {
+// The dimension argument was never read, and nothing calls this.
+export function getVoidColorForDimension(): string {
   // For now, all dimensions use the trinity composite color as the void color
   // (can be extended for dimension-specific logic)
   return getTrinityCompositeColor();

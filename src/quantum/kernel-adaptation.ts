@@ -78,12 +78,13 @@ export function classicalKernelOptimize(
   readonly iterations_used: number
 } {
   // Initialize from quantum hint or random
-  let x = hint ? hint.parameter_suggestion.slice() : new Array(dimension).fill(0)
+  const x = hint ? hint.parameter_suggestion.slice() : new Array(dimension).fill(0)
   const warm_started = hint !== null
   let learning_rate = hint?.learning_rate || 1 / 50
   let s = seed
 
-  let best_x = x.slice() as any as number[]
+  // slice() on a readonly array already returns number[].
+  let best_x = x.slice()
   let best_value = objective(x)
 
   for (let iter = 0; iter < max_iterations; iter++) {
@@ -97,7 +98,7 @@ export function classicalKernelOptimize(
     const fx = objective(x)
     if (fx < best_value) {
       best_value = fx
-      best_x = x.slice() as any as number[]
+      best_x = x.slice()
     }
 
     // Adapt learning rate based on progress

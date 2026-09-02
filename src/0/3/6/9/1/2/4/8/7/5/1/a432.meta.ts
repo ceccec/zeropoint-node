@@ -28,7 +28,7 @@ export function getA432FilesToCache(): string[] {
     files = readdirSync(import.meta.dirname)
       .filter(f => /^a432\..*\.(html|ts)$/.test(f))
       .map(f => './' + f);
-  } catch (e) {
+  } catch {
     // Fallback to essentials if fs fails (e.g., browser context)
     files = [];
   }
@@ -61,7 +61,7 @@ import * as electron from './a432.shear.electron.ts';
  * a432UnifiedMatrix: Combines and harmonizes outputs from all modules into a single recursive matrix.
  * steps: number of states to generate
  */
-export function a432UnifiedMatrix(steps: number = 9): any {
+export function a432UnifiedMatrix(steps: number = 9) {
   return {
     trinity: trinity.a432TrinityStream(steps),
     family: family.a432FamilyGroups(),
@@ -79,11 +79,14 @@ export function a432UnifiedMatrix(steps: number = 9): any {
  * a432MetaVortex: Recursively observes and transforms the unified matrix, enabling self-awareness and harmonization.
  * Applies a transformation function to each stream and returns the harmonized result.
  */
-export function a432MetaVortex(steps: number = 9, transform: (seq: number[]) => number[] = s => s): any {
+export function a432MetaVortex(steps: number = 9, transform: (seq: number[]) => number[] = s => s) {
   const matrix = a432UnifiedMatrix(steps);
-  const harmonized: any = {};
-  for (const key in matrix) {
-    harmonized[key] = transform(matrix[key]);
+  // The matrix is not uniformly number[] — `family` is an object of three
+  // arrays — and transform is declared over number[]. It used to be handed that
+  // object as well, typed away by `harmonized: any`.
+  const harmonized: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(matrix)) {
+    harmonized[key] = Array.isArray(value) ? transform(value) : value;
   }
   return harmonized;
 }

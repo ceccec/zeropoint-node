@@ -8,7 +8,6 @@
 
 import { pathToFileURL } from 'node:url'
 import { round } from './a432.algebra.ts'
-import I from './a432.i.ts';
 import { EventEmitter } from 'events';
 import { digitalRoot, digitAngleToCMYK, asAngle } from './a432.math.ts';
 import { type CMYK } from './a432.cmyk.ts';

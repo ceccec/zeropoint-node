@@ -1,7 +1,7 @@
 import { PI } from './a432.algebra.ts'
 // a432.solids.ui.ts — Platonic solids radial-face visualizer
 //-------------------------------------------------------------
-import { uroborosEmitter, type UroborosEvent } from './a432.uroboros.ts';
+import { uroborosEmitter } from './a432.uroboros.ts';
 import { cmykToCss } from './a432.cmyk.ts';
 import { digitAngleToCMYK, asAngle } from './a432.math.ts';
 import { type Digit } from './a432.types.ts';
@@ -32,7 +32,7 @@ if (typeof document !== 'undefined') {
     ctx.clearRect(0,0,canv.width,canv.height);
     const cx = canv.width/2;
     const cy = canv.height/2;
-    solids.forEach((s,si)=>{
+    solids.forEach((s)=>{
       const seg = (PI*2)/s.faces;
       for(let i=0;i<s.faces;i++){
         const angleStart= rotation + i*seg;
@@ -51,6 +51,6 @@ if (typeof document !== 'undefined') {
     });
   }
 
-  uroborosEmitter.on('uro', (_e: UroborosEvent)=>{ rotation -= PI/18; draw(); });
+  uroborosEmitter.on('uro', ()=>{ rotation -= PI/18; draw(); });
   draw();
 } 

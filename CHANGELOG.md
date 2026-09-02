@@ -1,5 +1,44 @@
 # Changelog
 
+## 1.4.2
+
+ESLint errors 368 → 172, mostly by deleting types rather than writing them.
+
+The plan said 370 → 200. It measured 368 at the start — the typecheck patch
+removed two on its way past — and ended at 172.
+
+279 were `no-explicit-any` and 89 were not, so the 89 went first because they
+are unambiguous: 35 unused locals, 27 parameters a body never read, three catch
+bindings, four unused imports, and a declared global nothing touched. Removing
+them cascaded, because deleting a value made whatever fed it unused too. That is
+what dead code looks like when it is a chain rather than a leaf.
+
+**Then the large one. 111 of the anys were in return position**, and there the
+right move is to delete the annotation rather than replace it: TypeScript infers
+the object shape the function actually returns, which is strictly more precise
+than `any`. Dropping all 111 produced exactly two type errors, and both were
+real defects:
+
+- `a432MetaVortex` applied a `(seq: number[]) => number[]` transform to every
+  value of a matrix that is **not** uniformly `number[]` — `family` is an object
+  of three arrays, and it was being handed to a function declared over arrays.
+  `harmonized: any` had typed that away.
+- `a432.rodin.cmyk` still passed a `segmentIndex` to a method that had stopped
+  taking one.
+
+**The quantum module's 14 anys are gone**, which is where the precise types
+already existed and were going unused. S-dagger is four `Complex` amplitudes and
+a `Gate1`, written as `as any` four times over. The `as any as number[]` casts
+were asking for a mutable copy and say so now. `ApplicationProblem.data` is
+`unknown` rather than `any`, so a reader has to narrow it. And `tomography.ts`
+declared its own `Complex` interface identical to the simulator's — one
+definition now, since two are a place to drift apart.
+
+Two removals were visible to the property suite rather than to the compiler.
+Dropping the argument `getVoidColorForDimension` never read made it nullary, and
+that revealed it returns the same value as `getTrinityCompositeColor` — which
+its own body says it does, deliberately. Declared as a shared value rather than
+papered over.
 ## 1.4.1
 
 TypeScript errors 96 → 0, the first patch of the planned 1.4 run — and the

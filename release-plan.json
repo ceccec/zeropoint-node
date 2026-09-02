@@ -27,8 +27,9 @@
       "gateway": true,
       "surface": "unreachable",
       "from": 115,
-      "to": 60,
-      "why": "The first gateway: polarity reverses, so the work stops being annotation and becomes structure. 115 modules are reachable from no static entry. Each is either reached from a declared entry or stops shipping; both are decisions, not edits."
+      "to": 115,
+      "why": "The first gateway: polarity reverses, so the work stops being annotation and becomes structure. What the structure turned out to need was not deletion. The ratchet's own correction to the misreading above pointed readers at scripts/exercised-check.mjs and its surface label named exercised:check, and NEITHER EXISTED \u2014 a correction that was itself a promise nothing kept. This patch makes the gate's references resolve, and adds refs:check so they keep resolving.",
+      "amended": "The target was written on a false premise and could not be met honestly. `unreachable` measures STATIC reachability, and the comment above the measure in scripts/ratchet.mjs says plainly that the number is easy to misread as dead weight, that it was misread that way for a whole session and in two published changelogs, and that almost every module it names executes on every gate run because the a432 property suite reaches them by dynamic import. Driving it to 60 would mean either deleting live code or adding a barrel file that reaches everything statically \u2014 the second is changing the input so the measure reads better while the property it measures is unchanged, which is the failure measure:check exists to catch. The real 'nothing loads this' number is coverage:audit's, and it is 4, all declared."
     },
     "4": {
       "set": "orbit",

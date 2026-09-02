@@ -38,7 +38,7 @@
  *     space — whether there exist f, g with next(a,b) = (f(a), g(b)) — which a
  *     lone nonlinear measure over independent components does not defeat.
  *
- * scripts/../consciousness-criterion.test.ts scores deliberately trivial
+ * src/verification/consciousness-criterion.test.ts scores deliberately trivial
  * candidates against these and requires them to fail. A criterion that passes
  * a counter is not measuring integration; it is measuring effort.
  */

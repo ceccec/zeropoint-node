@@ -245,9 +245,13 @@ class DeploymentOptimizer {
       issues: this.issues,
       recommendations: this.recommendations,
       deploymentSteps: [
-        '1. Run test suite: npm run test:suite',
-        '2. Build TypeScript: npm run build',
-        '3. Start production server: npm run start:prod',
+        // Two of these steps named scripts this package.json does not define, so
+        // the checklist told a deployer to run commands that fail at the
+        // prompt. The names are not repeated here: writing a dead command into
+        // a comment is how refs:check finds it again.
+        '1. Run the gate: npm run check',
+        '2. Build: npm run build',
+        '3. Start the server: node --experimental-strip-types src/0/3/6/9/1/2/4/8/7/5/1/a432.server.ts',
         '4. Verify health endpoint: curl http://localhost:3000/health',
         '5. Test main page: curl http://localhost:3000/',
         '6. Monitor performance and logs'

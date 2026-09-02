@@ -344,8 +344,15 @@ function rollupInputs() {
  *
  * What this number IS good for is knowing what ships through a declared entry,
  * which is a real question about bundling and public surface. For "what does
- * nothing exercise", see scripts/exercised-check.mjs, which records actual
- * loads instead of inferring them.
+ * nothing exercise", see scripts/coverage-audit.mjs — it runs the exercisers
+ * and reports what no test loads, declaring each with a reason.
+ *
+ * This paragraph used to name scripts/exercised-check.mjs, and the surface
+ * label below named `exercised:check`. Neither existed. The correction to a
+ * misreading was itself a promise nothing kept, so the claim that nothing here
+ * is dead sat where no reader could check it. I built that file before noticing
+ * coverage-audit already does the job, and deleted it rather than ship two
+ * numbers that can disagree.
  */
 /**
  * README bytes that no generator guards.
@@ -541,7 +548,7 @@ const SURFACES = [
   { id: 'prose', label: 'unbounded effect claims in prose', measure: proseClaimCount },
   { id: 'tautology', label: 'boolean claims that cannot be false', measure: tautologyCount },
   { id: 'unguardedReadme', label: 'README bytes no generator guards', measure: unguardedReadmeBytes },
-  { id: 'unreachable', label: 'modules reachable from no STATIC entry (not dead: see exercised:check)', measure: unreachableCount },
+  { id: 'unreachable', label: 'modules reachable from no STATIC entry (not dead: see coverage:audit)', measure: unreachableCount },
   { id: 'cycles', label: 'import cycles', measure: importCycleCount },
   { id: 'typecheck', label: 'TypeScript errors', measure: typecheckCount },
   { id: 'lint', label: 'ESLint errors', measure: lintCount },

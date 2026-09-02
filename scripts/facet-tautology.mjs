@@ -24,7 +24,7 @@
  * A loop guard (`i >= 0`) or an array index is not a claim and is not scanned.
  *
  *   npm run tautology         list every unfalsifiable claim with file:line
- *   npm run tautology:check   exit 1 if the count exceeds the ratchet ceiling
+ *   npm run tautology   exit 1 if the count exceeds the ratchet ceiling
  *
  * Like prose-claims, this flags a SHAPE and a human decides. False positives
  * are expected; the ratchet ceiling is what keeps it useful rather than noisy.

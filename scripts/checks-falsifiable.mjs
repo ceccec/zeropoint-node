@@ -69,6 +69,7 @@ const READS_SOURCE = {
   'registry:check': 'reads the npm registry',
   'semver:check': 'diffs against the published package',
   'prose:check': 'reads prose in docs/ and src/',
+  'refs:check': 'resolves every `npm run x` and every scripts//src//docs path a comment or a printed string names; falsified by the five mutations in the commit that added it, one of which is a control that must NOT fail — the same path inside a string literal rather than a comment',
   'retracted:check': 'reads every retraction marker in tracked prose and looks for the withdrawn claim elsewhere in the same file; falsified by the three mutations in the commit that added it — re-asserting a retracted sentence, restoring a hand-written count, and a mention in CHANGELOG.md which must NOT fail',
   'readme:examples': 'executes the README examples against dist/; its own falsifiability is the mutation in the commit that added it',
   'readme:names': 'checks that every file and identifier the README names exists, including bare-backtick paths and camelCase names; falsified by the mutation in the commit that added it and the three in the commit that widened it',

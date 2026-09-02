@@ -1,5 +1,66 @@
 # Changelog
 
+## 1.4.4
+
+ESLint errors **172 → 0**, the patch the 1.4 plan set — and nine commits' worth
+of what typing them turned up.
+
+**The types were not the point; what they uncovered was.** Every pass of this
+patch found defects rather than annotations, because an `any` is a place where
+nobody has had to be right.
+
+- **Five overlay loggers logged nothing.** Each called
+  `blockchain?.recordEvent?.(blockchain, …)`, but `recordEvent` is a free
+  function that takes the chain, not a method on it. The optional call
+  short-circuited on `undefined` every time, in all five modules. A chain now
+  goes from one block to two when one fires.
+- **`createBlock` had never once returned.** It takes its dimension from the
+  Rodin sequence — entirely orbit — and computed the frequency with
+  `frequencyForDigit`, which accepts only the trinity axis and throws otherwise.
+  Measured: 0 of 24 indices succeeded. The callers are a browser UI and a
+  factory path no test reaches, and a partial function called outside its domain
+  looks exactly like working code until it runs.
+- **Two modules were fighting over one global.** Five `as any` casts wrote
+  `window.a432System`; declared properly, they failed immediately, because two
+  different `A432System` classes both assign it and whichever loads second wins.
+- **A third copy of `calculateHarmony`** summing an object into a number, and
+  `A432Stream`'s seven anys which were one fact — the stream does not care what
+  it carries, and `any` says that by giving up where a type parameter says it.
+
+**A check for the shape those last two share.** `collisions:check` reads every
+exported declaration from the syntax tree and fails when a module starts
+declaring a name another module already declares: 60 such names across 2242
+declarations in 270 modules, recorded so no new one appears. A re-export is not
+a collision — one definition on two paths is how a barrel works — and the
+control mutation that must **not** fail is exactly that.
+
+**The quantum criterion.** `src/quantum` meets 8 of 8 conditions, and
+`criteria:check` gates on it beside the consciousness and OS criteria. Where a
+NIST-and-National-Academies overview names a capability, the criterion names the
+law behind it, because a capability can be faked by a function with the right
+name: entanglement is tested as the Bell distribution's **departure from its own
+marginals**, not as four numbers. Four cheap defeats are required to fail.
+Meeting all eight would make a candidate a quantum-circuit simulator in the
+ordinary sense — and not a quantum computer, since this is a classical program
+holding 2^n amplitudes in ordinary memory.
+
+**Every theorem now decides itself.** There was exactly one statement in
+`LEAN_PROOFS` containing a negation, and that is not a coincidence: a universal
+negative over all polynomial-time algorithms is not something a finite
+computation settles, so it could never have a seal. It is not deleted — that
+would upgrade "assumed" to "proved" — but moved to `ASSUMPTIONS`, stated
+verbatim, with what is decided instead. The three theorems that were decidable
+are decided. 32 seals, 32 held, and the seal set now decides a property of
+itself.
+
+**Two more gates.** `refs:check` resolves every `npm run` command and every
+`scripts/`, `src/` or `docs/` path a comment names — added after the ratchet's
+own label was found pointing at a gate that does not exist — and it took three
+passes to catch its own motivating case, then caught its own header.
+`description:check` binds each claim in the npm description to a module, an
+export and a criterion where one exists: seven claims, one with a criterion.
+
+Untested exports 297 → 293. Decimals 279 → 278. Import cycles remain 0.
 ## 1.4.3
 
 The first gateway of the 1.4 run, and the first plan entry that had to be

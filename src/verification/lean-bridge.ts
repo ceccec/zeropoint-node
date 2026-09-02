@@ -1353,3 +1353,7 @@ export function exportProofsForZenodo(): object {
 // an outsider checking that seal needs to be able to run the thing it decides.
 export * from './consciousness-criterion.ts'
 export * from './os-criterion.ts'
+// The quantum criterion is gated in criteria:check like the other two, and
+// was reachable from neither the bundle nor a consumer until this line: the
+// published ./verification entry carried two of the three.
+export * from './quantum-criterion.ts'

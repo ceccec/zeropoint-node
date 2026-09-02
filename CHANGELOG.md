@@ -1,5 +1,44 @@
 # Changelog
 
+## 1.4.5
+
+Decimal-crack lines **278 → 9**, and not one exported value moved.
+
+The plan set 279 → 180 across two patches. This one took the whole surface, so
+patch 6 has none of it left and is flagged for re-planning rather than given an
+invented number.
+
+**5 is the mirror's fixed point, and this is the work that must not move a
+value.** 317 literals became integer ratios — and each was substituted **only**
+where `n / d` is bit-identical to the literal. The candidate table was generated
+and every entry tested against the parsed double rather than assumed, so `0.1`
+becomes `1 / 10` because those are the same double, and anything that was not
+exact was left alone.
+
+**Proven rather than asserted.** 504 exported values were fingerprinted before
+and after. Three differed — and the same three differ between two runs of the
+*unchanged* code, because they are live timers and a stream carrying
+`Date.now()`. Excluding that drift, **zero values changed**. A patch that
+rewrites 317 numbers is worth exactly as much as its evidence that it rewrote
+none of them wrongly.
+
+The 9 that remain have no integer ratio to carry: ln 2, √2, the golden ratio,
+3√3/2, Planck's constant. Two that *did* have one were missed by the first
+table because their numerator exceeded its bound — 36.6 is 366/10 exactly.
+
+**Three findings on the way.**
+
+- `LN2` was declared **three times** in `src/0/algebra.ts`, once inside each of
+  `exp`, `log` and `log2` — three places for one of them to be typed
+  differently. One constant now.
+- `a432.sacred.geometry.ts` adds `33.33` under the comment "1/3 of 100 degrees",
+  and 33.33 is **not** 100/3; it is a two-place truncation of it. The value is
+  kept, because this patch may not move one — it reads `3333 / 100` now and the
+  comment says what it actually is. The claim was the wrong part, not the number.
+- The quantum criterion was gated by `criteria:check` and reachable by nobody:
+  `./verification` re-exported the consciousness and OS criteria and not the
+  quantum one. Found by loading the published 1.4.4 tarball rather than the local
+  build, which is the only place that gap is visible.
 ## 1.4.4
 
 ESLint errors **172 → 0**, the patch the 1.4 plan set — and nine commits' worth

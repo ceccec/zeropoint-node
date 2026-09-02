@@ -86,6 +86,7 @@ import {
   executeInSuperposition,
   computeInterferencePattern,
   describeQuantumExecution,
+  phaseEstimation,
 } from '../quantum/index.ts'
 import { ML_KEM_768 } from '../crypto/ml-kem.ts'
 import { sqrt } from '../0/algebra.ts'
@@ -223,9 +224,33 @@ export const LEAN_PROOFS = {
       rfl
   `,
 
-  lwe_hardness: `
-    axiom lwe_hardness : ¬ (polynomial_time_solves_lwe 768 3329)
-  `,
+} as const
+
+/**
+ * ASSUMPTIONS — what is relied on and cannot be decided here.
+ *
+ * lwe_hardness was in LEAN_PROOFS, and it is the only statement in this file
+ * containing a negation. That is not a coincidence: it says NO polynomial-time
+ * algorithm solves LWE at these parameters, and a universal negative over all
+ * algorithms is not something a finite computation can settle. It had no seal,
+ * correctly, and it never could have one.
+ *
+ * It is not deleted, because deleting it would quietly upgrade "assumed" to
+ * "proved" — ML-KEM's security really does rest on this and saying otherwise
+ * would be the exact dishonesty the seals exist to prevent. It is moved, so
+ * that LEAN_PROOFS contains only statements that decide themselves, and what is
+ * assumed is listed as an assumption where a reader cannot mistake it for a
+ * theorem.
+ *
+ * What IS decidable about ML-KEM-768 is its conformance, and the kyber_security
+ * seal decides that: the shipped parameter sizes are FIPS 203's.
+ */
+export const ASSUMPTIONS = {
+  lwe_hardness: {
+    statement: 'axiom lwe_hardness : ¬ (polynomial_time_solves_lwe 768 3329)',
+    why_unsealed: 'a universal negative over all polynomial-time algorithms; no finite computation decides it',
+    what_is_decided_instead: 'kyber_security seals the FIPS 203 parameter sizes of the shipped implementation',
+  },
 } as const
 // ============================================================================
 // SEALS - recomputable predicates, the only thing here that counts as checked
@@ -423,6 +448,92 @@ export const SEALS: Record<string, Seal> = {
       const below = estimateSurfaceCodeThreshold(3, 1 / 1000)
       const above = estimateSurfaceCodeThreshold(3, 1 / 10)
       return below.isBelowThreshold === true && above.isBelowThreshold === false
+    },
+  },
+
+  /**
+   * XY = -YX, decided exhaustively rather than on an instance: a 2x2 complex
+   * matrix product has four entries and all four are compared, so this seal
+   * covers the whole theorem and not a sample of it.
+   */
+  pauliX_anticommute_pauliY: {
+    basis: 'the four entries of XY and of -YX are equal, which is every entry there is',
+    decide: () => {
+      const mul = (a: [C, C, C, C], b: [C, C, C, C]): [C, C, C, C] => {
+        const at = (m: [C, C, C, C], r: number, k: number) => m[r * 2 + k]!
+        const out: C[] = []
+        for (let r = 0; r < 2; r++) {
+          for (let col = 0; col < 2; col++) {
+            let re = 0
+            let im = 0
+            for (let k = 0; k < 2; k++) {
+              const x = at(a, r, k)
+              const y = at(b, k, col)
+              re += x.re * y.re - x.im * y.im
+              im += x.re * y.im + x.im * y.re
+            }
+            out.push(c(re, im))
+          }
+        }
+        return out as [C, C, C, C]
+      }
+      const xy = mul(X, Y)
+      const yx = mul(Y, X)
+      for (let i = 0; i < 4; i++) {
+        if (!near(xy[i]!.re, -yx[i]!.re)) return false
+        if (!near(xy[i]!.im, -yx[i]!.im)) return false
+      }
+      return true
+    },
+  },
+
+  /**
+   * The tensor product of two normalised states is normalised. Decided on
+   * instances, as every seal here is: the theorem is universally quantified
+   * over all states and this checks four pairs built from H and X.
+   */
+  tensor_preserves_norm: {
+    basis: 'four pairs of normalised one- and two-qubit states, tensored, each with norm 1',
+    decide: () => {
+      const tensor = (a: { n: number; amps: C[] }, b: { n: number; amps: C[] }) => {
+        const amps: C[] = []
+        for (const x of a.amps) {
+          for (const y of b.amps) amps.push(c(x.re * y.re - x.im * y.im, x.re * y.im + x.im * y.re))
+        }
+        return { n: a.n + b.n, amps }
+      }
+      const one = () => zeroState(1)
+      const plus = () => applyGate1(zeroState(1), 0, H)
+      const flipped = () => applyGate1(zeroState(1), 0, X)
+      const two = () => applyGate1(zeroState(2), 0, H)
+      for (const [a, b] of [[one(), plus()], [plus(), plus()], [flipped(), one()], [two(), plus()]] as const) {
+        const t = tensor(a as never, b as never)
+        let norm = 0
+        for (const amp of t.amps) norm += amp.re * amp.re + amp.im * amp.im
+        if (!near(norm, 1)) return false
+      }
+      return true
+    },
+  },
+
+  /**
+   * Phase estimation lands within one part in 2^t. Decided on phases that are
+   * exactly representable in t bits, where the bound is tight and the answer is
+   * deterministic — a phase between two bins would make this a statement about
+   * sampling rather than about accuracy.
+   */
+  phase_estimation_accuracy: {
+    basis: 'for t = 4 and 5, every phase of the form k/2^t is recovered exactly, so the error is 0 and within the 1/2^t bound',
+    decide: () => {
+      for (const t of [4, 5]) {
+        const bins = 1 << t
+        for (let k = 0; k < bins; k++) {
+          const phi = k / bins
+          const est = phaseEstimation(t, phi) / bins
+          if (!near(est, phi)) return false
+        }
+      }
+      return true
     },
   },
 
@@ -992,6 +1103,31 @@ export const SEALS: Record<string, Seal> = {
       if (shor?.standing !== 'conditional') return false
       if (dozsa?.standing !== 'proven-against-exact-classical') return false
       return grover?.standing === 'proven'
+    },
+  },
+
+  /**
+   * The seal set decides a property of itself: every theorem carries a seal,
+   * and no theorem is stated as a negation.
+   *
+   * A universally quantified NEGATIVE — no algorithm does X, no state has Y —
+   * is not something a finite computation settles, so a theorem written that
+   * way can never have a seal and will sit in the list unproved forever. There
+   * was exactly one, the LWE hardness assumption, and it is in ASSUMPTIONS now
+   * where a reader cannot mistake it for something decided. This keeps the
+   * theorem list to statements that prove themselves.
+   *
+   * It cannot check itself away: SEALS may hold more entries than LEAN_PROOFS
+   * does, and the direction that matters is that no THEOREM lacks a seal.
+   */
+  every_theorem_decides_itself: {
+    basis: 'every LEAN_PROOFS entry has a seal, and no LEAN_PROOFS statement contains a negation — the one that did is in ASSUMPTIONS',
+    decide: () => {
+      for (const [name, script] of Object.entries(LEAN_PROOFS)) {
+        if (!(name in SEALS)) return false
+        if (/¬|\bNot\b|≠/.test(String(script))) return false
+      }
+      return Object.keys(ASSUMPTIONS).length > 0
     },
   },
 

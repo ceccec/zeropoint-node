@@ -24,7 +24,7 @@ Three things a reader can actually use, and one honest warning.
 - **`zeropoint-mcp`** — an MCP server exposing eight kernel tools to an agent.
   `npx zeropoint-mcp`.
 
-And the apparatus around them, which is arguably the point: 28 theorems
+And the apparatus around them, which is arguably the point: 32 theorems
 adjudicated by a decision procedure outside this repository, a gate that fails,
 and figures that recompute rather than being typed. `npm run coverage:audit`
 reports that 326 of 1136 exported functions have never been called by anything —
@@ -655,7 +655,7 @@ If this work is useful to you, you can support it at
 
 What sponsorship funds is the part that takes the longest and shows the least:
 the gates. ML-KEM-768 checked against NIST's own ACVP vectors and 10 000
-pq-crystals reference cases; 28 seals that each decide something finite and are
+pq-crystals reference cases; 32 seals that each decide something finite and are
 adjudicated from outside the repository; a ratchet on twelve surfaces that only
 ever moves down. None of that is visible in a feature list, and all of it is
 what makes the claims here worth reading.

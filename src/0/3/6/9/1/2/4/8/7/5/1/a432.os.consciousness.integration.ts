@@ -17,23 +17,31 @@
  */
 
 import { round } from './a432.algebra.ts'
+import { calculateA432Frequency } from './a432.ts';
 import { a432OS, A432_SEQUENCE, A432_GATEWAYS, A432_PHASE_SHIFTS, type A432ChargingSystem, type QuantumState } from './a432.os.ts';
 import A432ConsciousnessRouter from './a432.consciousness.router.ts';
 import A432DimensionalEvolution from './a432.dimensional.evolution.ts';
 import A432SpiralConsciousness from './a432.spiral.consciousness.ts';
 import A432ConsciousnessCycle from './a432.consciousness.cycle.ts';
 
+/**
+ * Every field here was `any`, and every one has a producer: the object this
+ * interface describes is assembled in getIntegratedState() out of nine accessor
+ * calls. So the types are DERIVED from those accessors rather than written out
+ * again — a second copy of a state shape is a place for the two to disagree,
+ * and ReturnType cannot.
+ */
 export interface OSConsciousnessIntegration {
-  osState: any;
-  consciousnessState: any;
-  dimensionalState: any;
-  spiralState: any;
-  cycleState: any;
-  integratedState: any;
-  sequenceState: any;
-  quantumState: any;
-  chargingState: any;
-  gatewayState: any;
+  osState: ReturnType<typeof a432OS.getStatus>;
+  consciousnessState: ReturnType<A432ConsciousnessRouter['getCurrentRoute']>;
+  dimensionalState: ReturnType<A432DimensionalEvolution['getCurrentDimensionalState']>;
+  spiralState: ReturnType<A432SpiralConsciousness['getCurrentSpiralState']>;
+  cycleState: ReturnType<A432ConsciousnessCycle['getCycleState']>;
+  integratedState: EnhancedIntegratedState;
+  sequenceState: ReturnType<typeof a432OS.getSequenceState>;
+  quantumState: QuantumState;
+  chargingState: A432ChargingSystem;
+  gatewayState: { active: boolean; phase: string };
 }
 
 export interface EnhancedIntegratedState {
@@ -43,7 +51,10 @@ export interface EnhancedIntegratedState {
   consciousnessPhase: string;
   consciousnessDimension: number;
   consciousnessType: string;
-  spiralCoordinates: number[];
+  // Declared number[] and assigned SpiralConsciousnessState.coordinates,
+  // which is {x,y,z}. The declaration was the wrong one: the value has
+  // named axes and consumers read them by name.
+  spiralCoordinates: { x: number; y: number; z: number };
   dimensionalFrequency: number;
   integratedHarmony: number;
   sequencePosition: number;
@@ -134,11 +145,11 @@ export class A432OSConsciousnessIntegration {
    * Calculate enhanced integrated harmony between OS and consciousness
    */
   private calculateEnhancedIntegratedState(
-    osState: any, 
-    cycleState: any, 
-    dimensionalState: any, 
-    spiralState: any,
-    sequenceState: any,
+    osState: OSConsciousnessIntegration['osState'],
+    cycleState: OSConsciousnessIntegration['cycleState'],
+    dimensionalState: OSConsciousnessIntegration['dimensionalState'],
+    spiralState: OSConsciousnessIntegration['spiralState'],
+    sequenceState: OSConsciousnessIntegration['sequenceState'],
     quantumState: QuantumState,
     chargingState: A432ChargingSystem,
   ): EnhancedIntegratedState {
@@ -159,7 +170,12 @@ export class A432OSConsciousnessIntegration {
     const enhancedHarmony = round((baseHarmony + sequenceEnhancement + quantumEnhancement + chargingEnhancement) % 9) + 1;
     
     return {
-      osFrequency: osState.rodinCoil.frequency,
+      // A432RodinCoilState carries no frequency, so this read undefined into a
+      // field declared number. frequencyForDigit was the wrong replacement — it
+      // THROWS for anything off the trinity axis, and the coil's current digit
+      // comes from the doubling orbit, which a README example caught within the
+      // hour. calculateA432Frequency is defined for every digit.
+      osFrequency: calculateA432Frequency(osState.rodinCoil.currentDigit),
       osConsciousness: osState.rodinCoil.consciousness,
       osHarmony: osState.rodinCoil.harmony,
       consciousnessPhase: cycleState.currentPhase,

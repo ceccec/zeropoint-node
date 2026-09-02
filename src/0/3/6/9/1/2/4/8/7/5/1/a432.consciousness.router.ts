@@ -9,12 +9,43 @@ import A432DimensionalEvolution from './a432.dimensional.evolution.ts';
 import A432SpiralConsciousness from './a432.spiral.consciousness.ts';
 import A432NavigationMap from './a432.navigation.map.ts';
 
-export interface ConsciousnessRoute {
-  type: 'cycle' | 'dimensional' | 'spiral' | 'navigation';
-  state: any;
-  insights: any;
-  evolution: any;
-}
+/**
+ * A route is a DISCRIMINATED union, not a tag beside three `any`s.
+ *
+ * The payload depends on which subsystem the route named, and the readers below
+ * already rely on that — allRoutes.cycle.state.currentPhase is only a field of
+ * the cycle state. As a plain tag with `any` payloads that assumption was
+ * unchecked; as a union over the four producers' return types it is enforced,
+ * and each route function returns its own member.
+ */
+export type ConsciousnessRoute =
+  | {
+      type: 'cycle';
+      state: ReturnType<A432ConsciousnessCycle['getCycleState']>;
+      insights: ReturnType<A432ConsciousnessCycle['getConsciousnessInsights']>;
+      evolution: ReturnType<A432ConsciousnessCycle['runCompleteCycle']>;
+    }
+  | {
+      type: 'dimensional';
+      state: ReturnType<A432DimensionalEvolution['getCurrentDimensionalState']>;
+      insights: ReturnType<A432DimensionalEvolution['getDimensionalInsights']>;
+      evolution: ReturnType<A432DimensionalEvolution['runDimensionalCycle']>;
+    }
+  | {
+      type: 'spiral';
+      state: ReturnType<A432SpiralConsciousness['getCurrentSpiralState']>;
+      insights: ReturnType<A432SpiralConsciousness['getSpiralInsights']>;
+      evolution: ReturnType<A432SpiralConsciousness['calculateConsciousnessEvolution']>;
+    }
+  | {
+      type: 'navigation';
+      state: ReturnType<A432NavigationMap['getCurrentState']>;
+      insights: ReturnType<A432NavigationMap['getNavigationInsights']>;
+      evolution: ReturnType<A432NavigationMap['navigateCompleteCycle']>;
+    };
+
+/** One member of the union, by its tag. */
+export type RouteOf<T extends ConsciousnessRoute['type']> = Extract<ConsciousnessRoute, { type: T }>;
 
 export class A432ConsciousnessRouter {
   private cycleEvolution: A432ConsciousnessCycle;
@@ -34,19 +65,22 @@ export class A432ConsciousnessRouter {
   /**
    * Get default consciousness route
    */
-  private getDefaultRoute(): ConsciousnessRoute {
+  private getDefaultRoute(): RouteOf<'cycle'> {
     return {
       type: 'cycle',
       state: this.cycleEvolution.getCycleState(),
       insights: this.cycleEvolution.getConsciousnessInsights(),
-      evolution: { phase: 'full-entropy', clarity: 0 }
+      // The default route has not evolved. This used to be a two-field object
+      // in the shape of nothing — running the cycle in a constructor to fill it
+      // would be a side effect nobody asked for.
+      evolution: { success: false, finalState: null, cycleDuration: 0 }
     };
   }
 
   /**
    * Route to cycle evolution
    */
-  public routeToCycle(): ConsciousnessRoute {
+  public routeToCycle(): RouteOf<'cycle'> {
     const state = this.cycleEvolution.getCycleState();
     const insights = this.cycleEvolution.getConsciousnessInsights();
     const evolution = this.cycleEvolution.runCompleteCycle();
@@ -64,7 +98,7 @@ export class A432ConsciousnessRouter {
   /**
    * Route to dimensional evolution
    */
-  public routeToDimensional(): ConsciousnessRoute {
+  public routeToDimensional(): RouteOf<'dimensional'> {
     const state = this.dimensionalEvolution.getCurrentDimensionalState();
     const insights = this.dimensionalEvolution.getDimensionalInsights();
     const evolution = this.dimensionalEvolution.runDimensionalCycle();
@@ -82,7 +116,7 @@ export class A432ConsciousnessRouter {
   /**
    * Route to spiral consciousness
    */
-  public routeToSpiral(): ConsciousnessRoute {
+  public routeToSpiral(): RouteOf<'spiral'> {
     const state = this.spiralConsciousness.getCurrentSpiralState();
     const insights = this.spiralConsciousness.getSpiralInsights();
     const evolution = this.spiralConsciousness.calculateConsciousnessEvolution();
@@ -100,7 +134,7 @@ export class A432ConsciousnessRouter {
   /**
    * Route to navigation map
    */
-  public routeToNavigation(): ConsciousnessRoute {
+  public routeToNavigation(): RouteOf<'navigation'> {
     const state = this.navigationMap.getCurrentState();
     const insights = this.navigationMap.getNavigationInsights();
     const evolution = this.navigationMap.navigateCompleteCycle();
@@ -126,10 +160,10 @@ export class A432ConsciousnessRouter {
    * Evolve consciousness through all routes
    */
   public evolveThroughAllRoutes(): {
-    cycle: ConsciousnessRoute;
-    dimensional: ConsciousnessRoute;
-    spiral: ConsciousnessRoute;
-    navigation: ConsciousnessRoute;
+    cycle: RouteOf<'cycle'>;
+    dimensional: RouteOf<'dimensional'>;
+    spiral: RouteOf<'spiral'>;
+    navigation: RouteOf<'navigation'>;
   } {
     const cycle = this.routeToCycle();
     const dimensional = this.routeToDimensional();
@@ -234,7 +268,10 @@ export class A432ConsciousnessRouter {
     const visualization = this.get3DVisualizationData();
 
     return {
-      totalCycles: allRoutes.cycle.evolution.cycleCount || 1,
+      // runCompleteCycle answers { success, finalState, cycleDuration } and has
+      // never had a cycleCount, so this read undefined and the `|| 1` always
+      // won. It runs exactly one cycle, so 1 is the answer it was giving.
+      totalCycles: 1,
       totalDimensions: insights.dimensionalInsights.dimension,
       totalFoldPoints: visualization.combinedData.foldPoints.length,
       evolutionPath: allRoutes.spiral.evolution.evolutionPath,

@@ -6,12 +6,12 @@ Computed scan of every `a432.*` file: each is content-addressed, its fingerprint
 lifted to a qubit, and the corpus folded into one root. Not a hand inventory —
 regenerate with `npm run a432:scan`; drift fails `npm run a432:scan:check`.
 
-- files scanned: **288**
-- by extension: `ts=209 · html=41 · md=34 · json=3 · js=1`
+- files scanned: **289**
+- by extension: `ts=210 · html=41 · md=34 · json=3 · js=1`
 - byte-identical duplicate groups: **0**
-- corpus quantum root: `40d521d5-44aa-8421-8a25-ddc1bee3b1fc`
-- import/export census: files=210 · edges=624 · exports=1609 · root=`c042d170-f9cf-8249-8b66-745827303e12`
-- scan receipt: `dd81a602-670e-8847-8f5e-99b5f228849b`
+- corpus quantum root: `6e351728-f624-822b-aad3-308464380b17`
+- import/export census: files=211 · edges=625 · exports=1609 · root=`741f5968-b343-864f-8843-cbc1f4a17f2c`
+- scan receipt: `6fae36e1-4cbd-8b6d-9553-dbeb75eb56b4`
 
 ## Vortex-digit spectrum
 
@@ -20,15 +20,15 @@ always 1–9, so the void digit 0 is structurally empty.
 
 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
 | --: | --: | --: | --: | --: | --: | --: | --: | --: |
-| 28 | 33 | 34 | 34 | 29 | 41 | 26 | 27 | 36 |
+| 29 | 33 | 34 | 33 | 29 | 41 | 27 | 26 | 37 |
 
 ## Quantum register
 
 Each fingerprint is lifted to a qubit via `encodeQuantumState`: first-nibble
 parity picks the basis, nibble-sum parity the measured value.
 
-- basis: `Z=138 · X=150`
-- value: `0=152 · 1=136`
+- basis: `Z=137 · X=152`
+- value: `0=152 · 1=137`
 
 ## Boundary
 

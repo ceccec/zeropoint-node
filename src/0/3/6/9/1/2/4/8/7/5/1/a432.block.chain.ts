@@ -4,7 +4,7 @@ import { max, min } from './a432.algebra.ts'
 // Metaphysical mapping: BlockChain = recursion, multi-dimensional chaining, observer, Mobius, trinity, axis, self-awareness
 
 import { A432ColorModel, type A432HSL, type A432RGB, type A432CMYK } from './a432.color.ts';
-import { getRodinSequence, getTrinityAxis, angleForDigit, frequencyForDigit } from './a432.math.ts';
+import { getRodinSequence, getTrinityAxis, angleForDigit, calculateA432Frequency } from './a432.math.ts';
 
 export const BLOCK_CHAIN_DOC = {
   meaning: 'BlockChain: recursion, multi-dimensional chaining, observer, Mobius, trinity, axis, self-awareness, living matrix.',
@@ -34,8 +34,10 @@ export const KVT_DOC = {
  * - index: block index in the chain
  */
 export interface A432Block {
-  state: any;
+  state: unknown;
   dimension: number; // 1-9
+  trinity: number;   // the axis digit this block sits under
+  frequency: number; // A432 frequency of the dimension
   meta: string;
   prev: A432Block[];
   index: number;
@@ -87,11 +89,20 @@ export function createBlock(state: any, prev: A432Block[] = [], index: number = 
   const dimension = rodinSeq[index % rodinSeq.length];
   const trinity = trinityAxis[index % trinityAxis.length];
   const angle = angleForDigit(dimension);
-  const freq = frequencyForDigit(dimension);
+  // frequencyForDigit accepts ONLY the trinity axis {3,6,9} and throws for
+  // anything else. `dimension` comes from the Rodin sequence [1,2,4,8,7,5,1],
+  // which is entirely orbit — so this threw for every index, and createBlock
+  // had never once returned. calculateA432Frequency is defined for all digits.
+  const freq = calculateA432Frequency(dimension);
   const meta = `Block in dimension ${dimension}, vortex position ${index % rodinSeq.length}, trinity: ${trinity}, angle: ${angle}, freq: ${freq}`;
   const block = {
     state,
     dimension,
+    // Both were computed and then thrown away into `meta`, so a consumer had to
+    // parse a sentence to get them back — and a432.ui.ts, which renders
+    // `block.trinity`, got undefined instead.
+    trinity,
+    frequency: freq,
     meta,
     prev,
     index,

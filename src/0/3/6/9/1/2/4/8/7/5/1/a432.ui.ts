@@ -433,7 +433,12 @@ function animateBlockchainStream() {
       circle.onclick = () => {
         highlightedIdx = i;
         overlay.style.display = 'block';
-        overlay.innerHTML = `<b>Block #${block.id}</b><br>Trinity: ${block.trinity}<br>Color: ${fill}<br>Entropy: ${(block as any).entropy ?? 0}<br>Summary: ${block.summary}`;
+        // These blocks are a432.block.chain.event.ts's A432Block, which is a
+        // DIFFERENT interface from the same-named one in a432.block.chain.ts —
+        // it has trinity and summary, and no entropy. Nothing sets entropy on
+        // an event block, so the cast that used to be here read undefined and
+        // the `?? 0` always won: it is 0 by construction, and says so.
+        overlay.innerHTML = `<b>Block #${block.id}</b><br>Trinity: ${block.trinity}<br>Color: ${fill}<br>Entropy: 0<br>Summary: ${block.summary}`;
         setTimeout(() => { overlay.style.display = 'none'; highlightedIdx = null; }, 4000);
       };
       svg.appendChild(circle);
@@ -449,7 +454,8 @@ function animateBlockchainStream() {
       // For metaphysical overlay, show the most recent block
       if (i === blocks.length - 1) {
         currentTrinity = block.trinity;
-        currentHarmony = 1 - ((block as any).entropy ?? 0);
+        // Event blocks carry no entropy, so this was always 1 - 0.
+      currentHarmony = 1;
       }
       x += blockRadius * 2 + blockGap;
     }

@@ -3,13 +3,18 @@
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.main.ts": "document is not defined"
   },
   "stateful": {
+    "a432.block.chain.ts:createChain": "returns a different value on a second call with no arguments",
     "a432.bus.ts:mergedDigit": "returns a different value on a second call with no arguments",
     "a432.consciousness.stream.ts:evolveConsciousnessStream": "returns a different value on a second call with no arguments",
     "a432.consciousness.stream.ts:getConsciousnessStream": "returns a different value on a second call with no arguments",
     "a432.documentation.ts:generateDocumentationIndex": "returns a different value on a second call with no arguments",
     "a432.experience.ui.ts:createA432ExperienceState": "returns a different value on a second call with no arguments",
     "a432.experience.ui.ts:harmonizeA432Experience": "returns a different value on a second call with no arguments",
+    "a432.factory.ts:createA432Harmonized": "returns a different value on a second call with no arguments",
+    "a432.factory.ts:createA432State": "returns a different value on a second call with no arguments",
     "a432.graph.ts:pulse": "returns a different value on a second call with no arguments",
+    "a432.index.ts:createA432Harmonized": "returns a different value on a second call with no arguments",
+    "a432.index.ts:createA432State": "returns a different value on a second call with no arguments",
     "a432.index.ts:exportA432Registry": "returns a different value on a second call with no arguments",
     "a432.index.ts:getA432RegistryStats": "returns a different value on a second call with no arguments",
     "a432.living.ui.ts:getLivingUIStatus": "returns a different value on a second call with no arguments",

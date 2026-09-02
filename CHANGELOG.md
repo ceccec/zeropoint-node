@@ -1,5 +1,58 @@
 # Changelog
 
+## 1.4.3
+
+The first gateway of the 1.4 run, and the first plan entry that had to be
+amended rather than met.
+
+**The target was written on a false premise.** Patch 3 aimed `unreachable` from
+115 to 60, on the reading that each of those modules is "either reached from a
+declared entry or stops shipping". That surface measures **static** reachability,
+and the comment above the measure says at length that the number is easy to
+misread as dead weight, that it was misread that way for a whole session and in
+two published changelogs, and that almost every module it names executes on
+every gate run — the a432 property suite reaches them by dynamic import.
+
+Driving it to 60 would mean deleting live code, or adding a barrel file that
+reaches everything statically. The second is changing the input so the measure
+reads better while the property it measures is unchanged, which is exactly what
+`measure:check` was added to catch one release ago. The entry is amended with
+that reason, and `plan:check` prints the amendment and reports the release as
+amended rather than met.
+
+**What the gateway actually needed was in the correction itself.** That comment
+tells the reader to see a companion script, and the ratchet's surface label
+names a companion gate. **Neither existed.** The functionality was real —
+`coverage:audit` does it, with an EXERCISERS map and four modules declared
+unloaded with reasons — but the pointers were not, so the claim that nothing
+here is dead sat where no reader could check it, and nothing in a gate of 27
+checkers noticed. I built the missing script before noticing `coverage:audit`
+already answers that question, and deleted it: two numbers that can disagree
+about one question are worse than one.
+
+**`refs:check`** keeps the references resolving. Every `npm run` command and
+every `scripts/`, `src/` or `docs/` path a comment names must exist.
+`readme:names` does this for README.md; comments had no equivalent, in a
+repository that explains itself in long comments naming commands constantly. It
+found four more: a usage line telling you to run a gate under the wrong name,
+a criterion pointing at its own test file by a path that resolves outside the
+tree, and a deployment checklist instructing a deployer to run two scripts that
+do not exist.
+
+It took three passes to catch its own motivating case. Reading comments alone
+missed it, because half the defect was the ratchet's **label** — a string, and
+the half a user sees printed. Requiring an `npm run` prefix missed it too,
+because the label refers to the gate by bare name. Then a bare-name pattern
+matched the last two parts of three-part gate names and reported seven scripts
+that exist as missing. The control that must **not** fail is the same path
+inside a string literal rather than a comment, since several scripts build paths
+at runtime.
+
+One finding was its own: the comment explaining the deployment fix named the two
+dead commands, and the check flagged them. Then its own header did. Then two of
+its inline comments did. A check that forbids naming things which do not exist
+cannot name the things it was built for — which is the same lesson
+`retracted:check` records, arrived at from the other side.
 ## 1.4.2
 
 ESLint errors 368 → 172, mostly by deleting types rather than writing them.

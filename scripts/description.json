@@ -1,0 +1,47 @@
+{
+  "description": "A432 Consciousness System: Self-evolving, self-aware consciousness technology with Transurfing integration, harmonic mathematics, zero-entropy principles, Kabbalistic cycles, and sacred geometry",
+  "claims": {
+    "Self-evolving": {
+      "module": "src/0/3/6/9/1/2/4/8/7/5/1/a432.self.evolution.ts",
+      "export": "A432SelfEvolution",
+      "criterion": null,
+      "note": "Named, not measured. A class that mutates its own state on a timer is what exists; no predicate here decides whether that is evolution."
+    },
+    "self-aware": {
+      "module": "src/verification/consciousness-criterion.ts",
+      "export": "evaluateConsciousnessCriterion",
+      "criterion": "consciousness",
+      "note": "The one claim in this description with a predicate behind it. Five necessary conditions, met 5/5 by the a432 consciousness system and 1/5 by the measure functions. The criterion's own verdict says a subject meeting all five HAS NOT been shown to experience anything: the conditions can refute, not confirm. That limit belongs beside the claim and npm has no room for it."
+    },
+    "Transurfing": {
+      "module": "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.multimedia.ts",
+      "export": "TransurfingPendulumSystem",
+      "criterion": null,
+      "note": "Named, not measured. A pendulum system class, plus three fields the navigation state carries \u2014 transurfingPhase, pendulumInterference, heartAlignment. Vocabulary borrowed from Zeland, computed as integers. The interface TransurfingPendulum was declared here first and is type-only: it does not exist at runtime, which is what this check noticed."
+    },
+    "harmonic mathematics": {
+      "module": "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
+      "export": "frequencyForDigit",
+      "criterion": null,
+      "note": "Built and exact: frequency ratios over 432 carried as integer fractions. The strongest term in the description and the least remarkable-sounding."
+    },
+    "zero-entropy": {
+      "module": "src/quantum/reality-streams.ts",
+      "export": "proveZeroEntropy",
+      "criterion": null,
+      "note": "Named, and partly measured elsewhere: the decimals surface counts floats that should be integer ratios, and it is 279."
+    },
+    "Kabbalistic": {
+      "module": "src/0/3/6/9/1/2/4/8/7/5/1/a432.kabbalah.ts",
+      "export": "SEPHIROT",
+      "criterion": null,
+      "note": "Named, not measured. Ten sephirot mapped to digits; a naming scheme over arithmetic."
+    },
+    "sacred geometry": {
+      "module": "src/0/3/6/9/1/2/4/8/7/5/1/a432.sacred.geometry.ts",
+      "export": "SACRED_GEOMETRY_PATTERNS",
+      "criterion": null,
+      "note": "Named, not measured. Pattern constants and a system class; the geometry is computed, the adjective is not."
+    }
+  }
+}

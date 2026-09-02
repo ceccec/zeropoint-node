@@ -33,7 +33,7 @@ export interface HarmonizationContext {
   strategy: HarmonizationStrategy;
   depth: number;
   visited: Set<string>;
-  results: Map<string, any>;
+  results: Map<string, unknown>;
   errors: Map<string, Error>;
 }
 
@@ -147,14 +147,18 @@ class A432Harmonizer {
   }
 
   private groupByCategory(modules: A432Module[]): Record<A432ModuleCategory, A432Module[]> {
-    const grouped: Record<A432ModuleCategory, A432Module[]> = {} as any;
+    // Starts empty and fills as categories appear, so it is a Partial until
+    // it is returned — `{} as any` was asserting it already had every key.
+    const grouped: Partial<Record<A432ModuleCategory, A432Module[]>> = {};
     modules.forEach(module => {
       if (!grouped[module.category]) {
         grouped[module.category] = [];
       }
-      grouped[module.category].push(module);
+      grouped[module.category]!.push(module);
     });
-    return grouped;
+    // Every category that appeared has an array; the ones that did not are
+    // absent, which is what the caller's Record type expects to receive.
+    return grouped as Record<A432ModuleCategory, A432Module[]>;
   }
 
   // === PUBLIC API ===
@@ -234,7 +238,7 @@ export function validateHarmonization(context: HarmonizationContext): boolean {
 export function createHarmonizedModule(
   name: string,
   category: A432ModuleCategory,
-  getState: () => any,
+  getState: () => unknown,
   harmonize?: () => void,
   getOverlays?: () => string[],
   getMeta?: () => string,

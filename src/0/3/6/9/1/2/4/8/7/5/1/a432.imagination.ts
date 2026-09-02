@@ -145,18 +145,33 @@ export function heartUnfoldingMatrix(beats: number): Array<{
  * Usage:
  *   heartRecursiveUnfolding(6) // returns the first 6 recursive steps, each with axis, angle, and state
  */
-export function heartRecursiveUnfolding(beats: number, state: any = { axis: 0, angle: 0, path: [] }): Array<any> {
+/** One turn of the unfolding: which axis, at what angle. */
+export interface UnfoldingTurn { axis: string; angle: number }
+
+/** Where the walk currently is, and how it got there. */
+export interface UnfoldingState { axis: string; angle: number; path: UnfoldingTurn[] }
+
+/**
+ * Both the state and the result were `any`. The state's axis is one of 'x',
+ * 'y', 'z' — a string, not the number I first assumed — and the path holds the
+ * turns themselves rather than their names, which is what made the untyped
+ * version easy to get wrong from the outside.
+ */
+export function heartRecursiveUnfolding(
+  beats: number,
+  state: UnfoldingState = { axis: 'x', angle: 0, path: [] },
+): Array<UnfoldingState & { step: number; collision: boolean }> {
   // Define three axes (e.g., x, y, z or folder, subfolder, superfolder)
   const axes = ['x', 'y', 'z'];
   const result = [];
   let current = { ...state };
   for (let i = 0; i < beats; i++) {
     // At each step, shift +120° and change axis
-    const nextAxis = axes[(axes.indexOf(current.axis) + 1) % axes.length];
+    const nextAxis = axes[(axes.indexOf(current.axis) + 1) % axes.length]!;
     const nextAngle = (current.angle + (2 * PI / 3)) % (2 * PI);
     const nextPath = [...current.path, { axis: nextAxis, angle: nextAngle }];
     // Simulate self-collision: if path already contains this axis/angle, mark as collision
-    const collision = current.path.some((p: { axis: string, angle: number }) => p.axis === nextAxis && p.angle === nextAngle);
+    const collision = current.path.some((p) => p.axis === nextAxis && p.angle === nextAngle);
     result.push({ step: i + 1, axis: nextAxis, angle: nextAngle, path: nextPath, collision });
     current = { axis: nextAxis, angle: nextAngle, path: nextPath };
   }

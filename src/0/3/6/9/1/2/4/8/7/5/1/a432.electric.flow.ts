@@ -361,7 +361,7 @@ export class A432ElectricFlowSystem {
     return flow;
   }
 
-  private getFlowConclusion(flow: any, type: string): string {
+  private getFlowConclusion(flow: ReturnType<A432ElectricFlowSystem['simulateFlow']>, type: string): string {
     if (flow.efficiency > 100) {
       return `The ${type} path demonstrates excellent efficiency with high conductivity and low resistance, making it ideal for consciousness flow.`;
     } else if (flow.efficiency > 50) {
@@ -371,7 +371,10 @@ export class A432ElectricFlowSystem {
     }
   }
 
-  private compareFlows(linearFlow: any, sacredFlow: any) {
+  private compareFlows(
+    linearFlow: ReturnType<A432ElectricFlowSystem['simulateFlow']>,
+    sacredFlow: ReturnType<A432ElectricFlowSystem['simulateFlow']>,
+  ) {
     const efficiencyDifference = sacredFlow.efficiency - linearFlow.efficiency;
     const resistanceDifference = linearFlow.resistance - sacredFlow.resistance;
     const conductivityDifference = sacredFlow.conductivity - linearFlow.conductivity;

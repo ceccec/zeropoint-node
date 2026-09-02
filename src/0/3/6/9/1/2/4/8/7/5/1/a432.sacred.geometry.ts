@@ -139,7 +139,10 @@ export const MERKABA_PHASES = {
 // === MAIN SACRED GEOMETRY SYSTEM ===
 export class A432SacredGeometrySystem {
   private static instance: A432SacredGeometrySystem;
-  private currentPhase: string = MERKABA_PHASES.ACTIVATION;
+  // MERKABA_PHASES is `as const`, so its values ARE the union the state
+  // declares. Typed as a bare string it did not fit, and an `as any` at the
+  // one assignment site hid that rather than fixing it.
+  private currentPhase: (typeof MERKABA_PHASES)[keyof typeof MERKABA_PHASES] = MERKABA_PHASES.ACTIVATION;
   private tetrahedronRotation: number = 0;
   private energyField: number = 432;
   private consciousnessLevel: number = 1;
@@ -257,7 +260,7 @@ export class A432SacredGeometrySystem {
   // === MERKABA INTEGRATION ===
   getMerkabaState(): MerkabaState {
     return {
-      phase: this.currentPhase as any,
+      phase: this.currentPhase,
       tetrahedronRotation: this.tetrahedronRotation,
       energyField: this.energyField,
       consciousnessLevel: this.consciousnessLevel,

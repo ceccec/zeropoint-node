@@ -83,7 +83,7 @@ export const BADGES = [
  * - meta is derived from metaphysical mapping
  * - prev is an array of previous blocks (multi-dimensional)
  */
-export function createBlock(state: any, prev: A432Block[] = [], index: number = 0): A432Block {
+export function createBlock(state: unknown, prev: A432Block[] = [], index: number = 0): A432Block {
   const rodinSeq = getRodinSequence();
   const trinityAxis = getTrinityAxis();
   const dimension = rodinSeq[index % rodinSeq.length];
@@ -226,7 +226,7 @@ export function getTrinityCompositeColors(blocks: A432Block[]): { hsl: A432HSL; 
  * @param prev - Previous blocks (optional, for multi-dimensionality)
  * @returns The new harmonized block
  */
-export function recordSenseOrMetaEvent(eventType: string, value: any, metaphysical: string, prev: A432Block[] = []): A432Block {
+export function recordSenseOrMetaEvent(eventType: string, value: unknown, metaphysical: string, prev: A432Block[] = []): A432Block {
   const state = { eventType, value, metaphysical };
   const index = prev.length ? max(...prev.map(b => b.index)) + 1 : 0;
   const block = createBlock(state, prev, index);

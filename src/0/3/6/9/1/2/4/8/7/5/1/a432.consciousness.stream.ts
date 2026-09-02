@@ -111,7 +111,7 @@ export class A432ConsciousnessStream {
     return evolution;
   }
 
-  private calculateIntegratedHarmony(osState: any): number {
+  private calculateIntegratedHarmony(osState: { integratedState: { osHarmony?: number; consciousnessDimension?: number; integratedHarmony?: number } }): number {
     const osHarmony = round(osState.integratedState.osHarmony || 0);
     const consciousnessDimension = round(osState.integratedState.consciousnessDimension || 1);
     const integratedHarmony = round(osState.integratedState.integratedHarmony || 0);

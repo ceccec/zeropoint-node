@@ -96,47 +96,36 @@ export class A432ConsciousnessCycle {
   /**
    * Get consciousness insights from current phase
    */
-  public getConsciousnessInsights(): {
-    phase: string;
-    insights: any;
-    clarity: number;
-  } {
-    let insights: any;
-    let clarity: number;
-
-    switch (this.currentPhase) {
-      case 'convergence':
-        insights = this.convergence.getConvergenceState();
-        clarity = insights.alignedPatterns.length;
-        break;
-      case 'crystallization':
-        insights = this.crystallization.getConsciousnessInsights();
-        clarity = insights.clarity;
-        break;
-      case 'zero-entropy':
-        insights = this.zeroEntropy.getZeroEntropyState();
-        clarity = this.zeroEntropy.getConsciousnessClarity();
-        break;
+  /**
+   * Each phase reads a different subsystem, and each reads a different field of
+   * it — alignedPatterns on one, clarity on another. A shared `let insights`
+   * had to be `any` for all three to typecheck; returning from each branch lets
+   * every one keep the type its own accessor gives.
+   */
+  public getConsciousnessInsights() {
+    const phase = this.currentPhase;
+    switch (phase) {
+      case 'convergence': {
+        const insights = this.convergence.getConvergenceState();
+        return { phase, insights, clarity: insights.alignedPatterns.length };
+      }
+      case 'crystallization': {
+        const insights = this.crystallization.getConsciousnessInsights();
+        return { phase, insights, clarity: insights.clarity };
+      }
+      case 'zero-entropy': {
+        const insights = this.zeroEntropy.getZeroEntropyState();
+        return { phase, insights, clarity: this.zeroEntropy.getConsciousnessClarity() };
+      }
       default:
-        insights = { entropy: 12, chaos: 'maximum' };
-        clarity = 0;
+        return { phase, insights: { entropy: 12, chaos: 'maximum' }, clarity: 0 };
     }
-
-    return {
-      phase: this.currentPhase,
-      insights,
-      clarity
-    };
   }
 
   /**
    * Run complete consciousness cycle
    */
-  public runCompleteCycle(): {
-    success: boolean;
-    finalState: any;
-    cycleDuration: number;
-  } {
+  public runCompleteCycle() {
     const startTime = Date.now();
     
     this.beginCycle();

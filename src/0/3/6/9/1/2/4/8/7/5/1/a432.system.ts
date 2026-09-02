@@ -37,11 +37,16 @@ export type { A432OS } from './a432.os.ts';
 // === MAIN SYSTEM CLASS ===
 export class A432System {
   private static instance: A432System;
-  private navigationMap: any;
-  private cmykSystem: any;
-  private simpleSystem: any;
-  private kabbalisticSystem: any;
-  private sacredGeometrySystem: any;
+  // Each is assigned from a known class a few lines below. `any` here meant
+  // every use of these five went unchecked for the whole file.
+  // Each is built from a DYNAMIC import inside a try, so the class is not in
+  // scope here and the field may stay unset when the module fails to load —
+  // which the `| undefined` says and the old `any` did not.
+  private navigationMap: InstanceType<typeof import('./a432.navigation.map.ts').A432NavigationMap> | undefined;
+  private cmykSystem: ReturnType<typeof import('./a432.cmyk.multimedia.ts').CMYKMultimediaSystem.getInstance> | undefined;
+  private simpleSystem: ReturnType<typeof import('./a432.simple.ts').A432SimpleSystem.getInstance> | undefined;
+  private kabbalisticSystem: ReturnType<typeof import('./a432.kabbalah.ts').A432KabbalisticSystem.getInstance> | undefined;
+  private sacredGeometrySystem: ReturnType<typeof import('./a432.sacred.geometry.ts').A432SacredGeometrySystem.getInstance> | undefined;
 
   private constructor() {
     // Import systems dynamically to avoid circular dependencies
@@ -354,7 +359,7 @@ export class A432System {
     }
     if (this.sacredGeometrySystem) {
       const vortexSequence = this.sacredGeometrySystem.calculateVortexSequence(1, length);
-      return vortexSequence.map((step: any) => step.digit);
+      return vortexSequence.map((step: { digit: number }) => step.digit);
     }
     // Third copy of the counting-sequence defect, latent in a fallback: this
     // returned (i % 9) + 1, which is 1..9, not a vortex. It stayed invisible

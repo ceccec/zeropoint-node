@@ -20,7 +20,7 @@ export class A432RodinCMYK {
     const segments = this.pattern.split('/');
     let position = 0;
 
-    segments.forEach((segment, index) => {
+    segments.forEach((segment) => {
       const digits = segment.split('').map(Number);
       
       digits.forEach((digit, digitIndex) => {

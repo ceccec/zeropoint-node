@@ -5,8 +5,10 @@ import './a432.roots.ts'
 
 export interface A432OSModule {
   name: string;
-  getState: () => any;
-  onEvent?: (event: any) => void;
+  // Same shape as A432Module in a432.modules.ts, which types these unknown:
+  // a module's state is whatever it holds, and an event is whatever arrives.
+  getState: () => unknown;
+  onEvent?: (event: unknown) => void;
   overlays?: (() => string)[];
   harmonize?: () => void;
   meta?: () => string;
@@ -38,7 +40,7 @@ export function getModuleByName(name: string): A432OSModule | undefined {
 /**
  * Route an event to all modules
  */
-export function routeEvent(event: any) {
+export function routeEvent(event: unknown) {
   modules.forEach(mod => mod.onEvent?.(event));
 }
 

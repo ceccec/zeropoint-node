@@ -42,7 +42,7 @@ function evaluateFile(fullPath: string): void {
   const digit = fileDigit(basename);
 
   if (!hasTest(fullPath)) {
-    const cmyk = impossibilityCMYK(digit as any);
+    const cmyk = impossibilityCMYK(digit as Digit);
     matrixEmitter.emit('event', {
       kind: 'impossibility',
       file: basename,

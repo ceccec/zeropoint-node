@@ -7,6 +7,7 @@
 
 import { PI, cos, min, sin } from './a432.algebra.ts'
 import { TESLA_SEQUENCE, digitAngleToCMYK, cmykToCss, teslaPolarity } from './a432.math.ts';
+import { recordEvent, type A432BlockChain } from './a432.block.chain.event.ts'
 
 /**
  * 2D overlay: Returns node positions (x, y), value, color, and HTML for a circle/spiral.
@@ -77,8 +78,11 @@ export const teslaCoilMetaphysics =
  * Blockchain event logger for Tesla coil overlay interactions.
  * Call this with the node index, view, and context to log to the blockchain.
  */
-export function logTeslaCoilEvent(blockchain: any, node: number, view: '2D' | '3D' | 'analytic', context: any) {
+export function logTeslaCoilEvent(blockchain: A432BlockChain, node: number, view: '2D' | '3D' | 'analytic', context: Record<string, unknown>) {
   const polarity = teslaPolarity(node);
   const spin = polarity;
-  blockchain?.recordEvent?.(blockchain, 'teslaCoilOverlay', 'A432UI', { node, view, polarity, spin, ...context, timestamp: Date.now() });
+  // recordEvent is a FREE function taking the chain, not a method on it, so
+// `blockchain?.recordEvent?.(...)` short-circuited on undefined and this
+// logged nothing — in all five overlay loggers, on every call.
+  recordEvent(blockchain, 'teslaCoilOverlay', 'A432UI', { node, view, polarity, spin, ...context, timestamp: Date.now() });
 } 

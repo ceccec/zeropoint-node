@@ -9,7 +9,7 @@ import { type A432FactoryState } from './a432.factory.ts';
 import './a432.utils.ts';
 
 // === REGISTRY INTERFACES ===
-export interface A432RegistryEntry<T = any> {
+export interface A432RegistryEntry<T = unknown> {
   id: string;
   name: string;
   type: string;
@@ -50,7 +50,9 @@ export interface A432RegistryStats {
 export class A432Registry {
   private static instance: A432Registry;
   private entries: Map<string, A432RegistryEntry> = new Map();
-  private cache: Map<string, any> = new Map();
+  // The cache holds whatever was registered; unknown says so and forces a
+  // reader to narrow, which any did not.
+  private cache: Map<string, unknown> = new Map();
   private options: A432RegistryOptions;
 
   // protected, not private: A432ModuleRegistry and the specialised registries
@@ -129,7 +131,7 @@ export class A432Registry {
 
     // Check cache
     if (this.options.cacheEnabled && this.cache.has(id)) {
-      return this.cache.get(id);
+      return this.cache.get(id) as T | undefined;
     }
 
     // Cache the component

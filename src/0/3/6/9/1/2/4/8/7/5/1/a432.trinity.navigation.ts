@@ -92,9 +92,11 @@ const trinityNavModule: A432OSModule = {
   name: 'TrinityNavigation',
   getState: getCurrentNavState,
   onEvent: (event) => {
-    if (event.type === 'navigate') {
-      if (event.step) trinityGoTo(event.step);
-      if (event.archetype) trinityGoToArchetype(event.archetype);
+    // A432OSModule types an event `unknown`, deliberately: anything may arrive.
+    const e = event as { type?: string; step?: number; archetype?: string } | null;
+    if (e?.type === 'navigate') {
+      if (e.step) trinityGoTo(e.step);
+      if (e.archetype) trinityGoToArchetype(e.archetype);
     }
   },
   overlays: [navOverlay, navHistoryOverlay, navMetaOverlay],

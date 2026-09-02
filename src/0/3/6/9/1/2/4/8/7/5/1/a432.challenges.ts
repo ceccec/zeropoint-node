@@ -105,7 +105,9 @@ const SOLUTION_MODULES = [
 ];
 
 // === CORE CHALLENGE FUNCTIONS ===
-export function createChallengeModule(data: any): ChallengeModule {
+// The input is the part of the module a caller supplies; the rest is derived
+// here. Pick says which, and cannot drift from the interface.
+export function createChallengeModule(data: Pick<ChallengeModule, 'id' | 'name' | 'description' | 'complexity'>): ChallengeModule {
   const resolution = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:0", 10);
   const harmonization = max(0, 9 - abs(resolution - 5));
   const color = `hsl(${data.complexity * 40}, 70%, ${50 + harmonization * 5}%)`;
@@ -123,7 +125,7 @@ export function createChallengeModule(data: any): ChallengeModule {
   };
 }
 
-export function createPossibilityModule(data: any): PossibilityModule {
+export function createPossibilityModule(data: Pick<PossibilityModule, 'id' | 'name' | 'description' | 'probability'>): PossibilityModule {
   const potential = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:1", 10);
   const harmonization = max(0, 9 - abs(potential - 5));
   const color = `hsl(${data.probability * 40}, 70%, ${50 + harmonization * 5}%)`;
@@ -141,7 +143,7 @@ export function createPossibilityModule(data: any): PossibilityModule {
   };
 }
 
-export function createSolutionModule(data: any): SolutionModule {
+export function createSolutionModule(data: Pick<SolutionModule, 'id' | 'name' | 'description' | 'effectiveness'>): SolutionModule {
   const implementation = indexFromSeed("0/3/6/9/1/2/4/8/7/5/1/a432.challenges.ts:fri:2", 10);
   const harmonization = max(0, 9 - abs(implementation - 5));
   const color = `hsl(${data.effectiveness * 40}, 70%, ${50 + harmonization * 5}%)`;

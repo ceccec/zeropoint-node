@@ -73,7 +73,10 @@ export class A432ConsciousnessRouter {
       // The default route has not evolved. This used to be a two-field object
       // in the shape of nothing — running the cycle in a constructor to fill it
       // would be a side effect nobody asked for.
-      evolution: { success: false, finalState: null, cycleDuration: 0 }
+      // runCompleteCycle's finalState is the cycle state; a default route has
+      // not run one, so it reports the current state rather than a null the
+      // type no longer allows.
+      evolution: { success: false, finalState: this.cycleEvolution.getCycleState(), cycleDuration: 0 }
     };
   }
 

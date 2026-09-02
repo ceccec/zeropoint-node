@@ -65,7 +65,14 @@ export function createVortexStream<T>(value: T, children: VortexStream<T>[] = []
  * treeToVortexStream: Convert a tree-like structure to a vortex stream
  * Accepts any object with 'value' and 'children' fields
  */
-export function treeToVortexStream<T>(node: { value: T; children: { value: T; children: any[]; dimension?: number }[]; dimension?: number }, parent?: VortexStream<T>): VortexStream<T> {
+/** A tree node, recursive in its own type rather than `any[]` one level down. */
+export interface VortexTreeNode<T> {
+  value: T
+  children: VortexTreeNode<T>[]
+  dimension?: number
+}
+
+export function treeToVortexStream<T>(node: VortexTreeNode<T>, parent?: VortexStream<T>): VortexStream<T> {
   const childrenStreams = (node.children || []).map(child => treeToVortexStream<T>(child));
   const stream = createVortexStream<T>(node.value, childrenStreams, parent, node.dimension);
   stream.children.forEach(child => (child.parent = stream));

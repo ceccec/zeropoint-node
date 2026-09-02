@@ -64,7 +64,7 @@ export interface A432FactoryState {
 // === HARMONIZED FACTORY ===
 export class A432Factory {
   private static instance: A432Factory;
-  private cache: Map<string, any> = new Map();
+  private cache: Map<string, unknown> = new Map();
 
   private constructor() {}
 
@@ -81,7 +81,9 @@ export class A432Factory {
   createCompleteState(options: A432FactoryOptions = {}): A432FactoryState {
     const cacheKey = JSON.stringify(options);
     if (this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey);
+      // The cache is keyed by string and holds unknown; the caller's type is
+      // applied here, at the one place that knows it.
+      return this.cache.get(cacheKey) as A432FactoryState;
     }
 
     const {
@@ -165,10 +167,12 @@ export class A432Factory {
   createComponent<T>(componentType: string, options: A432FactoryOptions = {}): T {
     const cacheKey = `${componentType}-${JSON.stringify(options)}`;
     if (this.cache.has(cacheKey)) {
-      return this.cache.get(cacheKey);
+      return this.cache.get(cacheKey) as T;
     }
 
-    let component: any;
+    // Every branch below assigns a different state type and the caller names
+    // the one it wants through T, so the union is what this actually holds.
+    let component: unknown;
 
     switch (componentType) {
       case 'core':
@@ -227,7 +231,8 @@ export class A432Factory {
     }
 
     this.cache.set(cacheKey, component);
-    return component;
+    // The caller named the type through T; this is the one place that knows it.
+    return component as T;
   }
 
   /**

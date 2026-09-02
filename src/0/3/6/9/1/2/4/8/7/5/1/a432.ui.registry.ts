@@ -5,6 +5,7 @@
  * Used by the main UI for view switching, orchestration, and harmonization.
  */
 
+import type { A432BlockChain } from './a432.block.chain.event.ts';
 import * as Rodin from './a432.rodin.coil.overlay.ts';
 import * as Tesla from './a432.tesla.coil.overlay.ts';
 import * as Mobius from './a432.mobius.circuit.overlay.ts';
@@ -37,11 +38,11 @@ export interface A432Overlay {
   getMobiusCircuit2DOverlayData?: (radius?: number, centerX?: number, centerY?: number) => unknown[]
   getVoidStreamOverlayData?: (length?: number) => unknown[]
   getStreamVortexOverlayData?: (length?: number) => unknown[]
-  logRodinCoilEvent?: (blockchain: unknown, node: number, view: '2D' | '3D' | 'analytic', context: unknown) => void
-  logTeslaCoilEvent?: (blockchain: unknown, node: number, view: '2D' | '3D' | 'analytic', context: unknown) => void
-  logMobiusCircuitEvent?: (blockchain: unknown, node: number, view: '2D' | '3D' | 'analytic', context: unknown) => void
+  logRodinCoilEvent?: (blockchain: A432BlockChain, node: number, view: '2D' | '3D' | 'analytic', context: Record<string, unknown>) => void
+  logTeslaCoilEvent?: (blockchain: A432BlockChain, node: number, view: '2D' | '3D' | 'analytic', context: Record<string, unknown>) => void
+  logMobiusCircuitEvent?: (blockchain: A432BlockChain, node: number, view: '2D' | '3D' | 'analytic', context: Record<string, unknown>) => void
   logVoidImergence?: (type: string, data: unknown) => void
-  logStreamVortexEvent?: (blockchain: unknown, dim: number, context: unknown) => void
+  logStreamVortexEvent?: (blockchain: A432BlockChain, dim: number, context: Record<string, unknown>) => void
   // Every member above is optional, which makes this a weak type: TypeScript
   // then rejects a module that happens to implement none of them, and several
   // of the fourteen implement none. They are still modules, and the switcher

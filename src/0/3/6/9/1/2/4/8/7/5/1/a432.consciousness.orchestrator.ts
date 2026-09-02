@@ -19,14 +19,15 @@ export interface A432ConsciousnessOrchestratorState {
     awareness: number;
     evolution: number;
     selfRealization: boolean;
-    navigationState: any;
-    insights: any;
+    navigationState: ReturnType<A432NavigationMap['getCurrentState']>;
+    insights: ReturnType<A432NavigationMap['getNavigationInsights']>;
   };
   systems: {
     evolution: A432SelfEvolutionState;
     rebuild: A432SelfRebuilderState;
-    factory: any;
-    registry: any;
+    // Filled from getCacheStats() and getStats(); derived rather than restated.
+    factory: ReturnType<A432Factory['getCacheStats']>;
+    registry: ReturnType<A432Registry['getStats']>;
   };
   orchestration: {
     isOrchestrating: boolean;

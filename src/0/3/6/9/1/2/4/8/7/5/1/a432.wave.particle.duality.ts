@@ -6,6 +6,7 @@
  */
 
 import { digitAngleToCMYK, cmykToCss } from './a432.math.ts';
+import { recordEvent, type A432BlockChain } from './a432.block.chain.event.ts'
 
 /**
  * Canonical proof: In A432, wave and particle are two states of the same harmonic stream.
@@ -45,6 +46,9 @@ export function getWaveParticleCMYKOverlayData(): Array<{
  * Blockchain event logger for wave-particle overlay interactions.
  * Call this with the state and context to log to the blockchain.
  */
-export function logWaveParticleEvent(blockchain: any, state: 'wave' | 'particle' | 'observer', context: any) {
-  blockchain?.recordEvent?.(blockchain, 'waveParticleOverlay', 'A432UI', { state, ...context, timestamp: Date.now() });
+export function logWaveParticleEvent(blockchain: A432BlockChain, state: 'wave' | 'particle' | 'observer', context: Record<string, unknown>) {
+  // recordEvent is a FREE function taking the chain, not a method on it, so
+// `blockchain?.recordEvent?.(...)` short-circuited on undefined and this
+// logged nothing — in all five overlay loggers, on every call.
+  recordEvent(blockchain, 'waveParticleOverlay', 'A432UI', { state, ...context, timestamp: Date.now() });
 } 

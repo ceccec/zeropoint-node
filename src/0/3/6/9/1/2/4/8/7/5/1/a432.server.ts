@@ -58,7 +58,7 @@ app.use((req: Request, res: Response, next) => {
   const S = resolveDivision(P, R).digit;
 
   const cmyk = digitAngleToCMYK(S, asAngle(S * 60));
-  (res.locals as any).trinity = { R, P, S, cmyk };
+  res.locals.trinity = { R, P, S, cmyk };
 
   res.setHeader('X-A432', `${R}-${P}-${S}`);
   res.setHeader('X-A432-CMYK', `${cmyk.c},${cmyk.m},${cmyk.y},${cmyk.k}`);

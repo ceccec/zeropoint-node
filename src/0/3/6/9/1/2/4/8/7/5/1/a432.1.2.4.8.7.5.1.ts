@@ -1,4 +1,4 @@
-import { abs, max, round } from './a432.algebra.ts'
+import { round } from './a432.algebra.ts'
 // a432.1.2.4.8.7.5.1.ts — Living A432 Trinity, Emergence, and Color Module
 //
 // This module encodes the full Rodin trinity, emergence, and color logic as a living, self-contained stream.
@@ -24,15 +24,9 @@ const FILENAME = typeof import.meta.filename !== 'undefined'
 const decoded = decodeA432Filename(FILENAME);
 const DIGITS = decoded.digits;
 
-const CMYK_COLORS = {
-  cyan: cmykColorForChannel(3),     // { rgb: [255, 31, 87], hex: '#FF1F57' }
-  magenta: cmykColorForChannel(6), // { rgb: [255, 255, 31], hex: '#FFFF1F' }
-  yellow: cmykColorForChannel(9),  // { rgb: [255, 255, 255], hex: '#FFFFFF' }
-  key: cmykColorForChannel(1)      // { rgb: [31, 87, 255], hex: '#1F57FF' }
-};
+// CMYK_COLORS went with the emergence object that was its only reader.
 
 // Trinity axis: always [3,6,9] if present, else empty
-const TRINITY_AXIS = [...VORTEX_AXIS].filter(function(d) { return DIGITS.indexOf(d) !== -1; });
 
 // --- Living Sequence: Always extracted from filename ---
 function getCurrentFilename(): string {
@@ -53,18 +47,6 @@ getSequenceFromFilename();
 
 const BASE_FREQUENCY = 432; // Still canonical, but could be derived if needed
 // --- Canonical CMYK Color Formulas (no hardcoded values) ---
-function cmykColorForChannel(channel: number) {
-  // Canonical: use vortexColor logic (see a432.cmyk)
-  // r = digitalRoot(channel * 3), g = digitalRoot(channel * 6), b = digitalRoot(channel * 9)
-  function scaleVortex(x: number) { return x * 28 + 3; } // 1→31, 9→255
-  const r = digitalRoot(channel * 3);
-  const g = digitalRoot(channel * 6);
-  const b = digitalRoot(channel * 9);
-  // Commented: show computed RGB and hex for canonical channels
-  const rgb = [scaleVortex(r), scaleVortex(g), scaleVortex(b)];
-  const hex = '#' + rgb.map(x => x.toString(16).padStart(2, '0').toUpperCase()).join('');
-  return { rgb, hex };
-}
 
 // --- Canonical Math — bridged to a432.roots (Wave 9) ---
 
@@ -88,42 +70,6 @@ function getDoublingSequence(start = 1, length = 7) {
 }
 
 // --- Color Mapping (CMYK, strictly integer/fractional) ---
-function digitAngleToCMYK(digit: number, angle: number) {
-  // Map digit to base hue (0–360)
-  const baseHue = (abs(digit) * 36) % 360;
-  const hue = (baseHue + angle) % 360;
-  // HSV to RGB
-  const s = 1, v = 1;
-  const c = v * s;
-  const x = c * (1 - abs((hue / 60) % 2 - 1));
-  const m = v - c;
-  let r: number, g: number, b: number;
-  if (hue < 60) [r, g, b] = [c, x, 0];
-  else if (hue < 120) [r, g, b] = [x, c, 0];
-  else if (hue < 180) [r, g, b] = [0, c, x];
-  else if (hue < 240) [r, g, b] = [0, x, c];
-  else if (hue < 300) [r, g, b] = [x, 0, c];
-  else [r, g, b] = [c, 0, x];
-  r = round((r + m) * 255);
-  g = round((g + m) * 255);
-  b = round((b + m) * 255);
-  // RGB to CMYK
-  const k = 1 - max(r / 255, g / 255, b / 255);
-  const cmyk = k === 1
-    ? { c: 0, m: 0, y: 0, k: 1 }
-    : {
-        c: (1 - r / 255 - k) / (1 - k),
-        m: (1 - g / 255 - k) / (1 - k),
-        y: (1 - b / 255 - k) / (1 - k),
-        k
-      };
-  return {
-    c: round(cmyk.c * 100),
-    m: round(cmyk.m * 100),
-    y: round(cmyk.y * 100),
-    k: round(cmyk.k * 100)
-  };
-}
 
 // The emergence object was built here and read nowhere; every call in it was pure.
 

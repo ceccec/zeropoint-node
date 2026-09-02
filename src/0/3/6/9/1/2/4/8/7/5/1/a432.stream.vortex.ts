@@ -7,6 +7,7 @@
 
 import { PI, abs, cos, sin } from './a432.algebra.ts'
 import { A432_SEQUENCE, digitAngleToCMYK, cmykToCss } from './a432.math.ts';
+import { recordEvent, type A432BlockChain } from './a432.block.chain.event.ts'
 
 /**
  * Generator: yields multidimensional points for the stream vortex.
@@ -66,6 +67,9 @@ export const streamVortexMetaphysics =
  * Blockchain event logger for stream vortex overlay interactions.
  * Call this with the dimension index and context to log to the blockchain.
  */
-export function logStreamVortexEvent(blockchain: any, dim: number, context: any) {
-  blockchain?.recordEvent?.(blockchain, 'streamVortexOverlay', 'A432UI', { dim, ...context, timestamp: Date.now() });
+export function logStreamVortexEvent(blockchain: A432BlockChain, dim: number, context: Record<string, unknown>) {
+  // recordEvent is a FREE function taking the chain, not a method on it, so
+// `blockchain?.recordEvent?.(...)` short-circuited on undefined and this
+// logged nothing — in all five overlay loggers, on every call.
+  recordEvent(blockchain, 'streamVortexOverlay', 'A432UI', { dim, ...context, timestamp: Date.now() });
 } 

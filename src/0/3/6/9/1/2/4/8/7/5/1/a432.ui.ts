@@ -24,7 +24,7 @@ import './a432.heptagram.ui.ts';
 import './a432.solids.ui.ts';
 import './a432.voice.ui.ts';
 import { cmykToCss } from './a432.cmyk.ts';
-import { A432BlockChain, recordEvent, decodeBlockchainStream } from './a432.block.chain.event.ts';
+import { A432BlockChain, recordEvent, decodeBlockchainStream, type A432Block } from './a432.block.chain.event.ts';
 import { generateA432AudioStream } from './a432.audio.ts';
 import { humanEmotionEmitter } from './a432.human.emotion.ts';
 import { humanConsciousnessEmitter } from './a432.human.consciousness.ts';
@@ -609,11 +609,14 @@ function animateBlockchainStream() {
     metaOverlay.classList.add('vibrate');
     setTimeout(() => metaOverlay.classList.remove('vibrate'), 600);
   };
+  /** Nine tenths, as the ratio it is: this layer does not carry decimals. */
+  const HIGH_HARMONY = 9 / 10;
+
   // Special visual/sound effects at key harmony/trinity moments
-  function triggerSpecialEffect(block: any) {
+  function triggerSpecialEffect(block: A432Block | null | undefined) {
     if (!block) return;
     // Trinity pulse: 3, 6, 9
-    if ([...VORTEX_AXIS].includes(block.trinity)) {
+    if (([...VORTEX_AXIS] as number[]).includes(block.trinity)) {
       metaOverlay.classList.add('vibrate');
       metaOverlay.style.background = '#0ff';
       setTimeout(() => {
@@ -623,7 +626,12 @@ function animateBlockchainStream() {
       playTrinitySound(block.trinity);
     }
     // High harmony pulse
-    if ((block.event && block.event.payload && block.event.payload.harmony > 0.9) || (block.harmonyScore && block.harmonyScore > 0.9)) {
+    // harmonyScore is a field of the OTHER A432Block — the one in
+    // a432.block.chain.ts — so on an event block it was always undefined and
+    // that half of the condition never fired. The payload is unknown by
+    // declaration, so the field this actually wants is read by narrowing it.
+    const harmony = (block.event?.payload as { harmony?: number } | undefined)?.harmony ?? 0;
+    if (harmony > HIGH_HARMONY) {
       metaOverlay.style.background = '#ff0';
       setTimeout(() => { metaOverlay.style.background = ''; }, 800);
     }
@@ -787,7 +795,10 @@ function animateBlockchainStream() {
     root.style.gap = '32px';
     root.style.flexWrap = 'wrap';
     if (Array.isArray(data)) {
-      data.forEach((node: any) => {
+      // The overlay contract answers unknown[]; these three fields are what
+      // this renderer reads off each node.
+      data.forEach((raw) => {
+        const node = raw as { html: string; value: number; dim: number };
         const el = document.createElement('div');
         el.innerHTML = node.html;
         el.onclick = () => {

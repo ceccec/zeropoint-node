@@ -675,7 +675,8 @@ export interface TrinitySwitch {
 export const DOT_TRINITY_SWITCH: TrinitySwitch = { kind: 'trinity', axisDigit: asDigit(3) };
 
 export function isTrinitySwitch(token: unknown): token is TrinitySwitch {
-  return typeof token === 'object' && token !== null && (token as any).kind === 'trinity';
+  // A guard that casts to any is checking nothing the compiler can see.
+  return typeof token === 'object' && token !== null && (token as { kind?: unknown }).kind === 'trinity';
 } 
 
 // ——————————————————————————————————————————

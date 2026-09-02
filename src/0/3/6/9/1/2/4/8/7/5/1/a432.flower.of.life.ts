@@ -24,21 +24,14 @@ export interface FlowerOfLifeFrame {
   metaphysical: string;
 }
 
-const _raf: (cb: (t: number) => void) => any =
-  typeof (globalThis as any).requestAnimationFrame === 'function'
-    ? (globalThis as any).requestAnimationFrame.bind(globalThis)
-    : (cb) => setTimeout(() => cb(Date.now()), 16);
-const _craf: (id: any) => void =
-  typeof (globalThis as any).cancelAnimationFrame === 'function'
-    ? (globalThis as any).cancelAnimationFrame.bind(globalThis)
-    : (id) => clearTimeout(id);
+import { raf as _raf, craf as _craf } from './a432.raf.ts'
 
 /**
  * Streams animated Flower of Life points (7 circles, color-coded by tick)
  */
 export function startFlowerOfLife(callback: (f: FlowerOfLifeFrame) => void): () => void {
   let tick = 0;
-  let rafId: any = 0;
+  let rafId: unknown = 0;
   const R = 60; // radius
   const cx = 120, cy = 120;
   const points = Array.from({ length: 7 }, () => ({ x: 0, y: 0, color: { c: 0, m: 0, y: 0, k: 0 } as CMYK }));

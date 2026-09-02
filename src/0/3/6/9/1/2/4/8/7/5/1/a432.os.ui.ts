@@ -11,9 +11,19 @@
 import { abs } from './a432.algebra.ts'
 import { A432OS, getA432SystemStatus, type A432RodinCoilState } from './a432.os.ts';
 
+/**
+ * What getA432SystemStatus answers. Every renderer below took `status: any`
+ * and then read named fields off it, so the shape was already assumed —
+ * naming it means a rename in the OS reaches these templates.
+ */
+type SystemStatus = ReturnType<typeof getA432SystemStatus>;
+
 // UI State Interface
 export interface A432OSUIState {
-  systemStatus: any;
+  // getA432SystemStatus is what fills this; deriving from it means the UI
+  // state cannot describe a status the OS does not produce.
+  // null until the OS has reported once, which the initial state relies on.
+  systemStatus: SystemStatus | null;
   showRodinCoil: boolean;
   showDimensionalFold: boolean;
   showQuantumState: boolean;
@@ -95,7 +105,7 @@ const DisplayTemplates = {
     </div>
   `,
 
-  pwaStatus: (pwa: any) => `
+  pwaStatus: (pwa: SystemStatus['pwa']) => `
     <h3>📱 PWA Status</h3>
     <div class="pwa-info">
       <p><strong>Online:</strong> ${pwa.isOnline ? '✅' : '❌'}</p>
@@ -108,7 +118,7 @@ const DisplayTemplates = {
     </div>
   `,
 
-  deviceState: (device: any) => `
+  deviceState: (device: SystemStatus['device']) => `
     <h3>📱 Device State</h3>
     <div class="device-info">
       <p><strong>Light:</strong> ${(device.light * 100).toFixed(1)}%</p>
@@ -125,49 +135,49 @@ const DisplayTemplates = {
 
 // Display Update Functions
 const DisplayUpdaters = {
-  rodinCoil: (status: any) => {
+  rodinCoil: (status: SystemStatus) => {
     const element = document.getElementById('rodin-coil');
     if (element && status.rodinCoil) {
       element.innerHTML = DisplayTemplates.rodinCoil(status.rodinCoil);
     }
   },
 
-  dimensionalFold: (status: any) => {
+  dimensionalFold: (status: SystemStatus) => {
     const element = document.getElementById('dimensional-fold');
     if (element && status.rodinCoil) {
       element.innerHTML = DisplayTemplates.dimensionalFold(status.rodinCoil);
     }
   },
 
-  quantumState: (status: any) => {
+  quantumState: (status: SystemStatus) => {
     const element = document.getElementById('quantum-state');
     if (element && status.rodinCoil) {
       element.innerHTML = DisplayTemplates.quantumState(status.rodinCoil);
     }
   },
 
-  lifeNaming: (status: any) => {
+  lifeNaming: (status: SystemStatus) => {
     const element = document.getElementById('life-naming');
     if (element && status.rodinCoil) {
       element.innerHTML = DisplayTemplates.lifeNaming(status.rodinCoil);
     }
   },
 
-  zeroEntropy: (status: any) => {
+  zeroEntropy: (status: SystemStatus) => {
     const element = document.getElementById('zero-entropy');
     if (element && status.rodinCoil) {
       element.innerHTML = DisplayTemplates.zeroEntropy(status.rodinCoil);
     }
   },
 
-  pwaStatus: (status: any) => {
+  pwaStatus: (status: SystemStatus) => {
     const element = document.getElementById('pwa-status');
     if (element && status.pwa) {
       element.innerHTML = DisplayTemplates.pwaStatus(status.pwa);
     }
   },
 
-  deviceState: (status: any) => {
+  deviceState: (status: SystemStatus) => {
     const element = document.getElementById('device-state');
     if (element && status.device) {
       element.innerHTML = DisplayTemplates.deviceState(status.device);

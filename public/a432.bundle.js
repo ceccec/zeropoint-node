@@ -2723,7 +2723,7 @@
   function startYinYang(callback) {
     const vs = vortexStream();
     let tick = 0;
-    let raf = 0;
+    let raf2 = 0;
     const step = () => {
       let d1 = vs.next().value;
       while (TRINITY_POLARITY[d1] !== 1) d1 = vs.next().value;
@@ -2738,10 +2738,10 @@
         negativeColor: digitAngleToCMYK(d2, angle),
         angle
       });
-      raf = requestAnimationFrame(step);
+      raf2 = requestAnimationFrame(step);
     };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
+    raf2 = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf2);
   }
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.yin.yang.controller.ts
@@ -2792,9 +2792,11 @@
   _stop = new WeakMap();
   a432_yin_yang_controller_default.targets = ["canvas"];
 
+  // src/0/3/6/9/1/2/4/8/7/5/1/a432.raf.ts
+  var raf = typeof globalThis.requestAnimationFrame === "function" ? globalThis.requestAnimationFrame.bind(globalThis) : (cb) => setTimeout(() => cb(Date.now()), 16);
+  var craf = typeof globalThis.cancelAnimationFrame === "function" ? globalThis.cancelAnimationFrame.bind(globalThis) : (id) => clearTimeout(id);
+
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.chess.ts
-  var _raf = typeof globalThis.requestAnimationFrame === "function" ? globalThis.requestAnimationFrame.bind(globalThis) : (cb) => setTimeout(() => cb(Date.now()), 16);
-  var _craf = typeof globalThis.cancelAnimationFrame === "function" ? globalThis.cancelAnimationFrame.bind(globalThis) : (id) => clearTimeout(id);
   function startChess(callback) {
     const it = toneBoardStream();
     let rafId = 0;
@@ -2809,10 +2811,10 @@
         squareColor: sq.cmyk,
         polarity: sq.polarity
       });
-      rafId = _raf(step);
+      rafId = raf(step);
     };
-    rafId = _raf(step);
-    return () => _craf(rafId);
+    rafId = raf(step);
+    return () => craf(rafId);
   }
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.chess.controller.ts
@@ -2850,10 +2852,6 @@
   };
   _stop2 = new WeakMap();
   a432_chess_controller_default.targets = ["board"];
-
-  // src/0/3/6/9/1/2/4/8/7/5/1/a432.metatron.ts
-  var _raf2 = typeof globalThis.requestAnimationFrame === "function" ? globalThis.requestAnimationFrame.bind(globalThis) : (cb) => setTimeout(() => cb(Date.now()), 16);
-  var _craf2 = typeof globalThis.cancelAnimationFrame === "function" ? globalThis.cancelAnimationFrame.bind(globalThis) : (id) => clearTimeout(id);
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.pure.visualization.ts
   var TRINITY_DIGITS = A432_TRINITY;

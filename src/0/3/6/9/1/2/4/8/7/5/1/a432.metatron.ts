@@ -6,14 +6,7 @@ import { type Digit, type AngleDeg } from './a432.types.ts';
 // ——————————————————————————————————————————
 // Cross-platform animation frame helpers
 // ---------------------------------------------------------
-const _raf: (cb: (t: number) => void) => any =
-  typeof (globalThis as any).requestAnimationFrame === 'function'
-    ? (globalThis as any).requestAnimationFrame.bind(globalThis)
-    : (cb) => setTimeout(() => cb(Date.now()), 16);
-const _craf: (id: any) => void =
-  typeof (globalThis as any).cancelAnimationFrame === 'function'
-    ? (globalThis as any).cancelAnimationFrame.bind(globalThis)
-    : (id) => clearTimeout(id);
+import { raf as _raf, craf as _craf } from './a432.raf.ts'
 
 // ——————————————————————————————————————————
 // Metatron frame definition
@@ -39,7 +32,7 @@ export interface MetatronFrame {
 export function startMetatron(callback: (f: MetatronFrame) => void): () => void {
   const seq = a432SequenceStream();
   let tick = 0;
-  let rafId: any = 0;
+  let rafId: unknown = 0;
   const nodes: MetatronNode[] = Array.from({ length: 12 }, (_, i) => ({
     index: i,
     digit: 0 as Digit,

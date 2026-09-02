@@ -408,12 +408,12 @@ export const a432System = A432System.getInstance();
 
 // === AUTO-INITIALIZATION ===
 if (typeof global !== 'undefined') {
-  (global as any).a432System = a432System;
+  globalThis.a432System = a432System;
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).a432System = a432System;
-  (window as any).A432 = {
+  window.a432System = a432System;
+  window.A432 = {
     System: A432System,
     // Re-export all classes for browser access
     SimpleSystem: A432System,

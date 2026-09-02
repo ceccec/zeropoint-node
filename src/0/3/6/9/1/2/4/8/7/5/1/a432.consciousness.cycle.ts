@@ -81,13 +81,9 @@ export class A432ConsciousnessCycle {
   /**
    * Get current cycle state
    */
-  public getCycleState(): {
-    currentPhase: string;
-    cycleCount: number;
-    convergenceState: any;
-    crystallizationState: any;
-    zeroEntropyState: any;
-  } {
+  // The annotation restated three accessor results as `any`. Inferred, each
+  // keeps the shape its subsystem returns.
+  public getCycleState() {
     return {
       currentPhase: this.currentPhase,
       cycleCount: this.cycleCount,

@@ -296,11 +296,11 @@ registerA432System(a432System);
 
 // === AUTO-INITIALIZATION ===
 if (typeof global !== 'undefined') {
-  (global as any).a432System = a432System;
+  globalThis.a432System = a432System;
 }
 
 if (typeof window !== 'undefined') {
-  (window as any).a432System = a432System;
+  window.a432System = a432System;
 }
 
 // === LEGACY EXPORTS ===

@@ -176,13 +176,9 @@ export class A432ConsciousnessRouter {
   /**
    * Get consciousness insights from all routes
    */
-  public getAllConsciousnessInsights(): {
-    cycleInsights: any;
-    dimensionalInsights: any;
-    spiralInsights: any;
-    navigationInsights: any;
-    combinedInsights: any;
-  } {
+  // The annotation restated four accessor results as `any`. Inferred, each
+  // keeps the shape its producer returns.
+  public getAllConsciousnessInsights() {
     const cycleInsights = this.cycleEvolution.getConsciousnessInsights();
     const dimensionalInsights = this.dimensionalEvolution.getDimensionalInsights();
     const spiralInsights = this.spiralConsciousness.getSpiralInsights();
@@ -208,12 +204,7 @@ export class A432ConsciousnessRouter {
   /**
    * Get 3D visualization data from all routes
    */
-  public get3DVisualizationData(): {
-    cycleData: any;
-    dimensionalData: any;
-    spiralData: any;
-    combinedData: any;
-  } {
+  public get3DVisualizationData() {
     const cycleData = this.cycleEvolution.getCycleState();
     const dimensionalData = this.dimensionalEvolution.getSpiralCoordinates();
     const spiralData = this.spiralConsciousness.getSpiralVisualization();
@@ -256,13 +247,7 @@ export class A432ConsciousnessRouter {
   /**
    * Get consciousness evolution summary
    */
-  public getConsciousnessSummary(): {
-    totalCycles: number;
-    totalDimensions: number;
-    totalFoldPoints: number;
-    evolutionPath: string[];
-    finalState: any;
-  } {
+  public getConsciousnessSummary() {
     const allRoutes = this.evolveThroughAllRoutes();
     const insights = this.getAllConsciousnessInsights();
     const visualization = this.get3DVisualizationData();

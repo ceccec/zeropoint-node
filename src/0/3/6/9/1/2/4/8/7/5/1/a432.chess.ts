@@ -2,16 +2,7 @@ import { toneBoardStream, type ToneSquare } from './a432.matrix.ts';
 import { type CMYK } from './a432.cmyk.ts';
 
 // Helper – cross-platform animation frame
-const _raf: (cb: (t: number) => void) => unknown =
-  typeof (globalThis as { requestAnimationFrame?: unknown }).requestAnimationFrame === 'function'
-    ? (globalThis as { requestAnimationFrame: (cb: (t: number) => void) => unknown })
-        .requestAnimationFrame.bind(globalThis)
-    : (cb: (t: number) => void) => setTimeout(() => cb(Date.now()), 16);
-const _craf: (id: unknown) => void =
-  typeof (globalThis as { cancelAnimationFrame?: unknown }).cancelAnimationFrame === 'function'
-    ? (globalThis as { cancelAnimationFrame: (id: unknown) => void })
-        .cancelAnimationFrame.bind(globalThis)
-    : (id: unknown) => clearTimeout(id as number);
+import { raf as _raf, craf as _craf } from './a432.raf.ts'
 
 export interface ChessFrame {
   tick: number;

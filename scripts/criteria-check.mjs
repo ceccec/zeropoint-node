@@ -29,7 +29,11 @@ const load = (p) => import(pathToFileURL(join(ROOT, p)).href)
 
 const { evaluateConsciousnessCriterion, a432MeasureSubject, a432SystemSubject, integratedFieldSubject } = await load('src/verification/consciousness-criterion.ts')
 const { evaluateOsCriterion } = await load('src/verification/os-criterion.ts')
+const { evaluateQuantumCriterion } = await load('src/verification/quantum-criterion.ts')
 const { A432OS } = await load('src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts')
+const sim = await load('src/quantum/simulator.ts')
+const den = await load('src/quantum/density.ts')
+const tom = await load('src/quantum/tomography.ts')
 
 // BOTH subjects, and the gate needs both. The integrated field was built to
 // meet the criterion and does; the a432 consciousness measures — the subject
@@ -59,6 +63,27 @@ const os = (() => {
   })
 })()
 
+// The simulator, presented through the criterion's own shape. Same reason as
+// the OS above: probing a subset would report a number the module does not
+// deserve, in either direction.
+const quantum = evaluateQuantumCriterion({
+  zero: (n) => sim.zeroState(n),
+  gates: { H: sim.H, X: sim.X, Z: sim.Z },
+  apply1: (s, q, g) => sim.applyGate1(s, q, g),
+  cnot: (s, c, t) => sim.cnot(s, c, t),
+  probabilities: (s) => sim.probabilities(s),
+  measure: (s, q, unit) => sim.measureQubit(s, q, unit).bit,
+  density: (s) => den.pure(s),
+  purity: (r) => den.purity(r),
+  noise: (r, q, p) => den.applyChannel(r, q, den.depolarizing(p)),
+  tomography: (s, q) => {
+    const shots = 2000
+    const z = tom.measureZ(s, q, shots, 1)
+    const x = tom.measureX(s, q, shots, 1)
+    return { z: (z.counts[0] - z.counts[1]) / shots, x: (x.counts[0] - x.counts[1]) / shots }
+  },
+})
+
 /**
  * WHAT IS GATED, AND WHAT IS ONLY REPORTED.
  *
@@ -78,6 +103,7 @@ const criteria = [
   { name: 'consciousness', verdict: a432System, subject: 'the a432 consciousness system', gated: true },
   { name: 'consciousness', verdict: field, subject: 'the integrated field', gated: true },
   { name: 'operating system', verdict: os, subject: 'A432OS', gated: true },
+  { name: 'quantum simulator', verdict: quantum, subject: 'src/quantum — the laws behind the Stage 1 list, not the hardware stages', gated: true },
   { name: 'consciousness', verdict: a432Measures, subject: 'the a432 measure functions — reported, not gated: a pure function cannot have history', gated: false },
 ]
 

@@ -263,10 +263,12 @@ doubles with every qubit, so this is the hardest case rather than the easiest.</
   <span class="eqno">(18)</span>
   <figcaption>The cost of a full step &#8212; a Hadamard layer, a CNOT ladder and a probability read &#8212; is linear in the number of amplitudes and so doubles with every qubit. The criterion reports the widest register that fits the frame on the machine it runs on; a deadline met at <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>q</mi></mrow></math> qubits is met for every narrower one, and that implication is the part which does not depend on the machine.</figcaption>
 </figure>
-<p>Real-time criterion: 8/8 conditions met. Validation criterion:
-5 of 5. Neither verdict
-prints a duration: run <code>npm run criteria:check</code> to take the
-measurement on your own hardware.</p>
+<p>This page does not print the criterion's verdict. The real-time criterion
+MEASURES, so its verdict is a property of the machine it ran on as much as of
+the code &#8212; and a page that stated 8 of 8 would be stating something about a
+laptop in September 2026. Run <code>npm run criteria:check</code> and take the
+verdict on your own hardware. What this page can state, and Appendix A does, is
+what each condition requires and what would refute it, which does not vary.</p>
 </section>
 
 <section>
@@ -291,94 +293,100 @@ anyone's word for it.</p>
 <h2>Appendix A&ensp;Every criterion, condition by condition</h2>
 <p>Six criteria gate a release and one is reported without gating. Each
 condition below states what it <em>requires</em> and what would change its
-verdict; a condition with no refuter is a slogan. The evidence each produces is
-measured when the criterion runs and is deliberately not printed here, because
-some of it is a property of the machine &#8212; take it with
+verdict; a condition with no refuter is a slogan.</p>
+<p><strong>No verdict appears on this page</strong>, and the omission is
+deliberate rather than modest. A criterion that measures returns a number about
+the machine it ran on, and this page was generated once: printing 8 of 8 here
+would be reporting a laptop. The generator learned this twice &#8212; first by
+embedding durations, so the artifact could never match itself on re-check, and
+then by embedding the SCORE, which flips with load about once in three runs.
+What does not vary is what each condition requires and what would refute it, so
+that is what is printed. Take the verdict with
 <code>npm run criteria:check</code>.</p>
 <div class="crit">
-<h3>consciousness <span class="score">5/5</span>
+<h3>consciousness <span class="score">5 conditions</span>
 <span class="gated">gates the release</span></h3>
 <p class="subj">the a432 consciousness system</p>
-<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
-<tr><td>&#10003;</td><td><code>discrimination</code></td><td>different states give different measures, and the same state gives the same one twice</td><td>a measure that separates its domain</td></tr>
-<tr><td>&#10003;</td><td><code>irreducibility</code></td><td>the transition does not factorise into independent components, and the joint measure is not recoverable from the parts</td><td>components whose next values depend on each other, and a joint measure that must be evaluated jointly</td></tr>
-<tr><td>&#10003;</td><td><code>temporal-integration</code></td><td>the present state depends on the ORDER of what came before, not just the multiset</td><td>accumulation that folds each step into the last, rather than summing or counting</td></tr>
-<tr><td>&#10003;</td><td><code>self-model-efficacy</code></td><td>corrupting ONLY the self-model changes what the system does next</td><td>the model must be read by the rule that produces the next state</td></tr>
-<tr><td>&#10003;</td><td><code>global-availability</code></td><td>a value written by one component is readable by another that was not handed it, and changes what it does</td><td>a workspace that is read, not merely written</td></tr>
+<table class="cond"><thead><tr><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td><code>discrimination</code></td><td>different states give different measures, and the same state gives the same one twice</td><td>a measure that separates its domain</td></tr>
+<tr><td><code>irreducibility</code></td><td>the transition does not factorise into independent components, and the joint measure is not recoverable from the parts</td><td>components whose next values depend on each other, and a joint measure that must be evaluated jointly</td></tr>
+<tr><td><code>temporal-integration</code></td><td>the present state depends on the ORDER of what came before, not just the multiset</td><td>accumulation that folds each step into the last, rather than summing or counting</td></tr>
+<tr><td><code>self-model-efficacy</code></td><td>corrupting ONLY the self-model changes what the system does next</td><td>the model must be read by the rule that produces the next state</td></tr>
+<tr><td><code>global-availability</code></td><td>a value written by one component is readable by another that was not handed it, and changes what it does</td><td>a workspace that is read, not merely written</td></tr>
 </tbody></table></div>
 <div class="crit">
-<h3>consciousness <span class="score">5/5</span>
+<h3>consciousness <span class="score">5 conditions</span>
 <span class="gated">gates the release</span></h3>
 <p class="subj">the integrated field</p>
-<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
-<tr><td>&#10003;</td><td><code>discrimination</code></td><td>different states give different measures, and the same state gives the same one twice</td><td>a measure that separates its domain</td></tr>
-<tr><td>&#10003;</td><td><code>irreducibility</code></td><td>the transition does not factorise into independent components, and the joint measure is not recoverable from the parts</td><td>components whose next values depend on each other, and a joint measure that must be evaluated jointly</td></tr>
-<tr><td>&#10003;</td><td><code>temporal-integration</code></td><td>the present state depends on the ORDER of what came before, not just the multiset</td><td>accumulation that folds each step into the last, rather than summing or counting</td></tr>
-<tr><td>&#10003;</td><td><code>self-model-efficacy</code></td><td>corrupting ONLY the self-model changes what the system does next</td><td>the model must be read by the rule that produces the next state</td></tr>
-<tr><td>&#10003;</td><td><code>global-availability</code></td><td>a value written by one component is readable by another that was not handed it, and changes what it does</td><td>a workspace that is read, not merely written</td></tr>
+<table class="cond"><thead><tr><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td><code>discrimination</code></td><td>different states give different measures, and the same state gives the same one twice</td><td>a measure that separates its domain</td></tr>
+<tr><td><code>irreducibility</code></td><td>the transition does not factorise into independent components, and the joint measure is not recoverable from the parts</td><td>components whose next values depend on each other, and a joint measure that must be evaluated jointly</td></tr>
+<tr><td><code>temporal-integration</code></td><td>the present state depends on the ORDER of what came before, not just the multiset</td><td>accumulation that folds each step into the last, rather than summing or counting</td></tr>
+<tr><td><code>self-model-efficacy</code></td><td>corrupting ONLY the self-model changes what the system does next</td><td>the model must be read by the rule that produces the next state</td></tr>
+<tr><td><code>global-availability</code></td><td>a value written by one component is readable by another that was not handed it, and changes what it does</td><td>a workspace that is read, not merely written</td></tr>
 </tbody></table></div>
 <div class="crit">
-<h3>operating system <span class="score">7/7</span>
+<h3>operating system <span class="score">7 conditions</span>
 <span class="gated">gates the release</span></h3>
 <p class="subj">A432OS</p>
-<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
-<tr><td>&#10003;</td><td><code>task-abstraction</code></td><td>work can be submitted that was not known at construction time</td><td>submitted work must appear in the task list</td></tr>
-<tr><td>&#10003;</td><td><code>scheduling</code></td><td>every submitted task is eventually selected, and the system says which it chose (progress, NOT fairness)</td><td>every runnable task must eventually be selected, and tick() must say which it chose</td></tr>
-<tr><td>&#10003;</td><td><code>resource-management</code></td><td>a finite resource is allocated, reclaimed, and refuses to over-allocate</td><td>over-allocation must fail rather than succeed, and release must restore the pool</td></tr>
-<tr><td>&#10003;</td><td><code>isolation</code></td><td>a task that throws does not stop the system or other tasks</td><td>the scheduler must catch a task throw, record it against that task, and continue</td></tr>
-<tr><td>&#10003;</td><td><code>syscall-boundary</code></td><td>tasks request services through a defined interface</td><td>the dispatcher must refuse names it does not implement</td></tr>
-<tr><td>&#10003;</td><td><code>lifecycle</code></td><td>the system starts, stops, and reports which it is</td><td>nothing — this one holds</td></tr>
-<tr><td>&#10003;</td><td><code>persistence</code></td><td>state can be serialised and restored, so it outlives one run</td><td>restore must accept what snapshot produced</td></tr>
+<table class="cond"><thead><tr><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td><code>task-abstraction</code></td><td>work can be submitted that was not known at construction time</td><td>submitted work must appear in the task list</td></tr>
+<tr><td><code>scheduling</code></td><td>every submitted task is eventually selected, and the system says which it chose (progress, NOT fairness)</td><td>every runnable task must eventually be selected, and tick() must say which it chose</td></tr>
+<tr><td><code>resource-management</code></td><td>a finite resource is allocated, reclaimed, and refuses to over-allocate</td><td>over-allocation must fail rather than succeed, and release must restore the pool</td></tr>
+<tr><td><code>isolation</code></td><td>a task that throws does not stop the system or other tasks</td><td>the scheduler must catch a task throw, record it against that task, and continue</td></tr>
+<tr><td><code>syscall-boundary</code></td><td>tasks request services through a defined interface</td><td>the dispatcher must refuse names it does not implement</td></tr>
+<tr><td><code>lifecycle</code></td><td>the system starts, stops, and reports which it is</td><td>nothing — this one holds</td></tr>
+<tr><td><code>persistence</code></td><td>state can be serialised and restored, so it outlives one run</td><td>restore must accept what snapshot produced</td></tr>
 </tbody></table></div>
 <div class="crit">
-<h3>quantum simulator <span class="score">8/8</span>
+<h3>quantum simulator <span class="score">8 conditions</span>
 <span class="gated">gates the release</span></h3>
 <p class="subj">src/quantum — the laws behind the Stage 1 list, not the hardware stages</p>
-<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
-<tr><td>&#10003;</td><td><code>superposition</code></td><td>a single gate can put one qubit into equal superposition</td><td>H|0&gt; must give equal probability to both outcomes; a classical bit register gives [1, 0]</td></tr>
-<tr><td>&#10003;</td><td><code>normalisation</code></td><td>probabilities sum to one after an arbitrary gate sequence</td><td>gates must preserve the norm; a simulator that renormalises only on read has not applied unitary gates</td></tr>
-<tr><td>&#10003;</td><td><code>reversibility</code></td><td>applying H twice returns the input state</td><td>H^2 = I; a simulator that samples into a classical bit between gates cannot return to |0&gt;</td></tr>
-<tr><td>&#10003;</td><td><code>entanglement</code></td><td>a two-qubit state whose distribution does not factorise into its marginals</td><td>independent qubits give the product of their marginals; entanglement is the departure from it</td></tr>
-<tr><td>&#10003;</td><td><code>interference</code></td><td>amplitudes cancel, producing an outcome of probability zero</td><td>the |0&gt; path must cancel exactly; a probability-only model can never reach zero from two non-zero paths</td></tr>
-<tr><td>&#10003;</td><td><code>measurement</code></td><td>sampling a qubit reproduces the probabilities the state reports</td><td>the sampled rate must track the stated probability; a measure that ignores the state will not</td></tr>
-<tr><td>&#10003;</td><td><code>mixed-states</code></td><td>a density matrix distinguishes pure from mixed, and a noise channel moves one to the other</td><td>a pure state has purity 1 and noise must strictly reduce it; a state-vector-only model cannot represent the result</td></tr>
-<tr><td>&#10003;</td><td><code>tomography</code></td><td>measuring in two bases recovers which state was prepared</td><td>the two states differ in no single basis alone: one basis cannot tell |0&gt; from H|0&gt; apart from noise</td></tr>
+<table class="cond"><thead><tr><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td><code>superposition</code></td><td>a single gate can put one qubit into equal superposition</td><td>H|0&gt; must give equal probability to both outcomes; a classical bit register gives [1, 0]</td></tr>
+<tr><td><code>normalisation</code></td><td>probabilities sum to one after an arbitrary gate sequence</td><td>gates must preserve the norm; a simulator that renormalises only on read has not applied unitary gates</td></tr>
+<tr><td><code>reversibility</code></td><td>applying H twice returns the input state</td><td>H^2 = I; a simulator that samples into a classical bit between gates cannot return to |0&gt;</td></tr>
+<tr><td><code>entanglement</code></td><td>a two-qubit state whose distribution does not factorise into its marginals</td><td>independent qubits give the product of their marginals; entanglement is the departure from it</td></tr>
+<tr><td><code>interference</code></td><td>amplitudes cancel, producing an outcome of probability zero</td><td>the |0&gt; path must cancel exactly; a probability-only model can never reach zero from two non-zero paths</td></tr>
+<tr><td><code>measurement</code></td><td>sampling a qubit reproduces the probabilities the state reports</td><td>the sampled rate must track the stated probability; a measure that ignores the state will not</td></tr>
+<tr><td><code>mixed-states</code></td><td>a density matrix distinguishes pure from mixed, and a noise channel moves one to the other</td><td>a pure state has purity 1 and noise must strictly reduce it; a state-vector-only model cannot represent the result</td></tr>
+<tr><td><code>tomography</code></td><td>measuring in two bases recovers which state was prepared</td><td>the two states differ in no single basis alone: one basis cannot tell |0&gt; from H|0&gt; apart from noise</td></tr>
 </tbody></table></div>
 <div class="crit">
-<h3>real-time <span class="score">8/8</span>
+<h3>real-time <span class="score">8 conditions</span>
 <span class="gated">gates the release</span></h3>
 <p class="subj">one frame at 60 Hz</p>
-<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
-<tr><td>&#10003;</td><td><code>deadline-stated</code></td><td>a period declared as a number rather than implied by an adjective</td><td>declaring a deadline; without one the remaining six conditions have nothing to decide against</td></tr>
-<tr><td>&#10003;</td><td><code>deterministic</code></td><td>the same input gives the same output, so a deadline is a property of the code</td><td>removing wall-clock time and randomness from the value the step computes</td></tr>
-<tr><td>&#10003;</td><td><code>work-bounded</code></td><td>a step does work that does not grow with the number of steps already taken, and produces a value that depends on its input</td><td>making the step compute something from its argument</td></tr>
-<tr><td>&#10003;</td><td><code>steady-state</code></td><td>later steps do not cost more than earlier ones, measured by the FLOOR of each half so that contention cannot decide it</td><td>removing whatever the step accumulates between calls; a mean here would be decided by the load average instead</td></tr>
-<tr><td>&#10003;</td><td><code>worst-case-met</code></td><td>the SLOWEST observed step is inside the deadline, not the average one</td><td>making the slowest path faster, or stating a deadline the slowest path meets</td></tr>
-<tr><td>&#10003;</td><td><code>jitter-bounded</code></td><td>the spread between fastest and slowest step is inside a stated fraction of the deadline</td><td>removing the slow path that only some steps take</td></tr>
-<tr><td>&#10003;</td><td><code>holds-at-quantum-scale</code></td><td>the deadline is met by a step whose cost doubles with every qubit, not only by scalar arithmetic</td><td>a faster simulator, or a deadline stated for the width that is actually needed</td></tr>
-<tr><td>&#10003;</td><td><code>misses-reported</code></td><td>the number of missed deadlines is returned rather than swallowed</td><td>nothing — this condition is met by reporting, and it is here so a failure cannot be silent</td></tr>
+<table class="cond"><thead><tr><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td><code>deadline-stated</code></td><td>a period declared as a number rather than implied by an adjective</td><td>declaring a deadline; without one the remaining six conditions have nothing to decide against</td></tr>
+<tr><td><code>deterministic</code></td><td>the same input gives the same output, so a deadline is a property of the code</td><td>removing wall-clock time and randomness from the value the step computes</td></tr>
+<tr><td><code>work-bounded</code></td><td>a step does work that does not grow with the number of steps already taken, and produces a value that depends on its input</td><td>making the step compute something from its argument</td></tr>
+<tr><td><code>steady-state</code></td><td>later steps do not cost more than earlier ones, measured by the FLOOR of each half so that contention cannot decide it</td><td>removing whatever the step accumulates between calls; a mean here would be decided by the load average instead</td></tr>
+<tr><td><code>worst-case-met</code></td><td>the SLOWEST observed step is inside the deadline, not the average one</td><td>making the slowest path faster, or stating a deadline the slowest path meets</td></tr>
+<tr><td><code>jitter-bounded</code></td><td>the spread between fastest and slowest step is inside a stated fraction of the deadline</td><td>removing the slow path that only some steps take</td></tr>
+<tr><td><code>holds-at-quantum-scale</code></td><td>the deadline is met by a step whose cost doubles with every qubit, not only by scalar arithmetic</td><td>a faster simulator, or a deadline stated for the width that is actually needed</td></tr>
+<tr><td><code>misses-reported</code></td><td>the number of missed deadlines is returned rather than swallowed</td><td>nothing — this condition is met by reporting, and it is here so a failure cannot be silent</td></tr>
 </tbody></table></div>
 <div class="crit">
-<h3>validation <span class="score">5/5</span>
+<h3>validation <span class="score">5 conditions</span>
 <span class="gated">gates the release</span></h3>
 <p class="subj">what is computed here — and NO physical experiment has been run</p>
-<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
-<tr><td>&#10003;</td><td><code>laws-sealed</code></td><td>every theorem stated here carries a predicate that runs and holds</td><td>a seal that stops holding, or a theorem stated without one</td></tr>
-<tr><td>&#10003;</td><td><code>simulator-sealed</code></td><td>the simulator's own laws each carry a seal that runs and holds, and there is at least one of them</td><td>a simulator law being removed or stopping to hold</td></tr>
-<tr><td>&#10003;</td><td><code>energy-arithmetic</code></td><td>the energy arithmetic computes finite bounds and its own self-tests report no failures</td><td>a thermo self-test failing, or a bound becoming non-finite</td></tr>
-<tr><td>&#10003;</td><td><code>figures-recompute</code></td><td>every quantity is derived at run time rather than transcribed</td><td>a figure being written down instead of computed</td></tr>
-<tr><td>&#10003;</td><td><code>refuter-stated</code></td><td>each condition names what would change its verdict and the command that recomputes it</td><td>a condition added without a refuter, which would make it a slogan</td></tr>
+<table class="cond"><thead><tr><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td><code>laws-sealed</code></td><td>every theorem stated here carries a predicate that runs and holds</td><td>a seal that stops holding, or a theorem stated without one</td></tr>
+<tr><td><code>simulator-sealed</code></td><td>the simulator's own laws each carry a seal that runs and holds, and there is at least one of them</td><td>a simulator law being removed or stopping to hold</td></tr>
+<tr><td><code>energy-arithmetic</code></td><td>the energy arithmetic computes finite bounds and its own self-tests report no failures</td><td>a thermo self-test failing, or a bound becoming non-finite</td></tr>
+<tr><td><code>figures-recompute</code></td><td>every quantity is derived at run time rather than transcribed</td><td>a figure being written down instead of computed</td></tr>
+<tr><td><code>refuter-stated</code></td><td>each condition names what would change its verdict and the command that recomputes it</td><td>a condition added without a refuter, which would make it a slogan</td></tr>
 </tbody></table></div>
 <div class="crit">
-<h3>consciousness <span class="score">1/5</span>
+<h3>consciousness <span class="score">5 conditions</span>
 <span class="gated">reported, not gated</span></h3>
 <p class="subj">the a432 measure functions — reported, not gated: a pure function cannot have history</p>
-<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
-<tr><td>&#10003;</td><td><code>discrimination</code></td><td>different states give different measures, and the same state gives the same one twice</td><td>a measure that separates its domain</td></tr>
-<tr><td>&#10007;</td><td><code>irreducibility</code></td><td>the transition does not factorise into independent components, and the joint measure is not recoverable from the parts</td><td>components whose next values depend on each other, and a joint measure that must be evaluated jointly</td></tr>
-<tr><td>&#10007;</td><td><code>temporal-integration</code></td><td>the present state depends on the ORDER of what came before, not just the multiset</td><td>accumulation that folds each step into the last, rather than summing or counting</td></tr>
-<tr><td>&#10007;</td><td><code>self-model-efficacy</code></td><td>the system models its own state and the model changes what it does</td><td>a model of the system inside the system, read by the step that follows</td></tr>
-<tr><td>&#10007;</td><td><code>global-availability</code></td><td>what one component writes is available to another that was not handed it</td><td>a named place components publish to and read from</td></tr>
+<table class="cond"><thead><tr><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td><code>discrimination</code></td><td>different states give different measures, and the same state gives the same one twice</td><td>a measure that separates its domain</td></tr>
+<tr><td><code>irreducibility</code></td><td>the transition does not factorise into independent components, and the joint measure is not recoverable from the parts</td><td>components whose next values depend on each other, and a joint measure that must be evaluated jointly</td></tr>
+<tr><td><code>temporal-integration</code></td><td>the present state depends on the ORDER of what came before, not just the multiset</td><td>accumulation that folds each step into the last, rather than summing or counting</td></tr>
+<tr><td><code>self-model-efficacy</code></td><td>the system models its own state and the model changes what it does</td><td>a model of the system inside the system, read by the step that follows</td></tr>
+<tr><td><code>global-availability</code></td><td>what one component writes is available to another that was not handed it</td><td>a named place components publish to and read from</td></tr>
 </tbody></table></div>
 </section>
 
@@ -484,10 +492,12 @@ unrecorded improvement is an unexamined one.</p>
 
 <section class="appendix">
 <h2>Appendix D&ensp;The release plan</h2>
-<p>1.4 was planned before its first patch was cut, and each
-release is measured against the target written for it. A patch that misses its
-target fails its own gate; a target amended for a false premise records the
-amendment.</p>
+<p>A run is planned in full before its first patch is cut, and each release is
+measured against the target written for it. A patch that misses its target fails
+its own gate; a target amended for a false premise records the amendment. Every
+run is kept, finished or not &#8212; a finished run's results are the record this
+appendix exists to hold.</p>
+<h3>1.4.x <span class="gated">carried out at 1.5.0</span></h3>
 <table class="plan"><thead><tr><th>patch</th><th>surface</th><th>from</th><th>to</th><th></th></tr></thead><tbody>
 <tr><td>1.4.1</td><td><code>typecheck</code></td><td>96</td><td>0</td><td></td></tr>
 <tr><td>1.4.2</td><td><code>lint</code></td><td>368</td><td>172</td><td></td></tr>
@@ -499,10 +509,26 @@ amendment.</p>
 <tr><td>1.4.8 &#9670;</td><td><code>untestedExports</code></td><td>220</td><td>150</td><td></td></tr>
 <tr><td>1.4.9 &#9670;</td><td><code>unboundClaims</code></td><td>50</td><td>0</td><td>amended</td></tr>
 </tbody></table>
+<p class="note">3 of
+9 targets amended, each for a premise that turned
+out to be false rather than for scope.</p>
+<h3>1.6.x <span class="gated">current</span></h3>
+<table class="plan"><thead><tr><th>patch</th><th>surface</th><th>from</th><th>to</th><th></th></tr></thead><tbody>
+<tr><td>1.6.1</td><td><code>leanUnchecked</code></td><td>24</td><td>24</td><td></td></tr>
+<tr><td>1.6.2</td><td><code>leanUnchecked</code></td><td>24</td><td>15</td><td></td></tr>
+<tr><td>1.6.3 &#9670;</td><td><code>leanUnchecked</code></td><td>15</td><td>15</td><td></td></tr>
+<tr><td>1.6.4</td><td><code>leanUnchecked</code></td><td>15</td><td>9</td><td></td></tr>
+<tr><td>1.6.5</td><td><code>leanUnchecked</code></td><td>9</td><td>9</td><td></td></tr>
+<tr><td>1.6.6</td><td><code>leanUnchecked</code></td><td>9</td><td>9</td><td></td></tr>
+<tr><td>1.6.7</td><td><code>leanUnchecked</code></td><td>9</td><td>4</td><td></td></tr>
+<tr><td>1.6.8 &#9670;</td><td><code>leanUnchecked</code></td><td>4</td><td>4</td><td></td></tr>
+<tr><td>1.6.9 &#9670;</td><td><code>leanUnchecked</code></td><td>4</td><td>0</td><td></td></tr>
+</tbody></table>
+<p class="note">0 of
+9 targets amended, each for a premise that turned
+out to be false rather than for scope.</p>
 <p class="note">&#9670; marks a gateway, where the kind of work changes rather
-than its amount. 3 of
-9 targets were amended, each for a premise that
-turned out to be false rather than for scope.</p>
+than its amount.</p>
 </section>
 
 <section class="appendix">
@@ -602,7 +628,7 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>505d21b12bcf5b78</code> over
+<p class="receipt">Generated from source. Model receipt <code>fe72448a56f735aa</code> over
 18 equations, 32 seals and 2 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>

@@ -1,158 +1,102 @@
 {
-  "run": "1.4",
-  "carriesTo": "1.5.0",
+  "run": "1.6",
+  "carriesTo": "1.7.0",
   "note": "The nine patches of the 1.4 run, planned before the first is cut. Patch digits ascend 1..9 because semver ordering requires it; their POSITION in the vortex is what assigns the work. The axis {3,6,9} is structural — build the axis before the branches — and the gateways [8,3,9,0] are where the stroke reverses polarity, so they are where the KIND of work changes rather than its amount. Targets are ratchet ceilings, so a release that misses its target fails its own gate.",
-  "notTargets": {
-    "docFunctions": "4 and staying 4 — the remaining documented-but-absent functions are the crypto recipes this repository refuses to implement. A plan that promised 0 would be promising to build them."
+  "supersedes": "release-plan.1.4.json — the 1.4 run, all nine targets met at the 1.5.0 carry-out",
+  "measuredBefore": {
+    "lean_theorems": 24,
+    "lean_sorry_free": 5,
+    "lean_with_sorry": 19,
+    "lean_checked_by_anything": 0,
+    "note": "Measured on 2026-09-04, before any of this run was planned. lean/Quantum.ts holds 14 theorems and lean/QuantumAlgorithms.lean 10. Nineteen carry `sorry`. NOTHING IN THE GATE BUILDS OR CHECKS ANY OF IT. lakefile.lean pins Lean v4.8.0 and mathlib v4.8.0, the installed toolchain is 4.33.1, and there is no lean-toolchain file, so the project as committed cannot build on this machine at all. Quantum.lean's header says 'All theorems are formally proven, not assumed' in a file containing nineteen sorries -- and prose:check never saw it, because that scanner reads .md and this is .lean."
+  },
+  "feasibility": {
+    "probe": "A mathlib-free decidable core was written and checked before the plan was, because the plan's central assumption was that this is possible at all.",
+    "result": "Nine theorems about the digit space -- digital-root idempotence, invariance under adding nine, the doubling step staying in the orbit, the orbit closing after six and never repeating a step, the through-void involution and its two fixed points, and the orbit/axis/void partition -- check in 0.45 SECONDS with plain `lean`, no lake, no mathlib and no cache.",
+    "cost_of_the_alternative": "`import Mathlib` in Quantum.lean means the existing files need the whole library. That is a large download and a long build, and it is the reason the decidable core is split out rather than the existing files being repaired first.",
+    "what_decide_did_to_the_author": "It refuted three statements while the probe was being written. The through-void involution as first written was false. `dr n = dr (n + 9)` is false at n = 0 because subtraction truncates in the naturals, so dr 0 is 1 there. And that exposed a third fact nobody had written down: digitalRoot(0) is 9 in the TypeScript, 1 in the naturals, and undefined in the paper's equation (1), which guards itself with n >= 1. Three representations, three values at zero."
   },
   "patches": {
     "1": {
       "set": "orbit",
       "gateway": false,
-      "surface": "typecheck",
-      "from": 96,
-      "to": 0,
-      "why": "Planned as \"96 parameters the compiler is guessing at, and annotating them cannot change behaviour\". That was written from the ratchet label rather than the data and was wrong: only 23 were implicit-any parameters. The other 73 were real type errors, and a dozen of them were runtime bugs — .catch() on a void return, getRegistry().main where getRegistry returns the registry, a call to an initialize() that does not exist, a dynamic import destructuring an export the module never had, and calculateHarmony summing an object into a number."
+      "surface": "leanUnchecked",
+      "from": 24,
+      "to": 24,
+      "why": "A toolchain that runs, and a checker that says what it checked. lean-toolchain pinned to the installed version, a lake target that builds, and lean:check -- which compiles every .lean file and reports, per theorem, whether the kernel accepted it sorry-free. The count does not move: this patch makes the number MEASURABLE, and a surface nothing measures is a surface nobody can be held to. Modelled on uuidna's axiom witness, where the audit must cover every theorem in the ledger and a new unaudited one trips it."
     },
     "2": {
       "set": "orbit",
       "gateway": false,
-      "surface": "lint",
-      "from": 368,
-      "to": 172,
-      "why": "Planned 370 -> 200. Measured 368 at the start (the typecheck patch removed two) and reached 172. 279 of them were no-explicit-any and 89 were not; the 89 went first because they are unambiguous. The large win was that 111 of the anys sat in RETURN position, where deleting the annotation lets TypeScript infer a far more precise type than any - so most of this patch removed types rather than writing them."
+      "surface": "leanUnchecked",
+      "from": 24,
+      "to": 15,
+      "why": "The decidable core, which the feasibility probe already proved takes half a second: the digit space. Digital root, the doubling step, the orbit closing after six, the through-void involution, the orbit/axis/void partition. These are statements about ten digits, so `decide` settles them exhaustively and no mathlib is required. Nine theorems, and the header of Quantum.lean stops being false because the file it describes stops containing what it denies."
     },
     "3": {
       "set": "axis",
       "gateway": true,
-      "surface": "unreachable",
-      "from": 115,
-      "to": 115,
-      "why": "The first gateway: polarity reverses, so the work stops being annotation and becomes structure. What the structure turned out to need was not deletion. The ratchet's own correction to the misreading above pointed readers at scripts/exercised-check.mjs and its surface label named exercised:check, and NEITHER EXISTED — a correction that was itself a promise nothing kept. This patch makes the gate's references resolve, and adds refs:check so they keep resolving.",
-      "amended": "The target was written on a false premise and could not be met honestly. `unreachable` measures STATIC reachability, and the comment above the measure in scripts/ratchet.mjs says plainly that the number is easy to misread as dead weight, that it was misread that way for a whole session and in two published changelogs, and that almost every module it names executes on every gate run because the a432 property suite reaches them by dynamic import. Driving it to 60 would mean either deleting live code or adding a barrel file that reaches everything statically — the second is changing the input so the measure reads better while the property it measures is unchanged, which is the failure measure:check exists to catch. The real 'nothing loads this' number is coverage:audit's, and it is 4, all declared."
+      "surface": "leanUnchecked",
+      "from": 15,
+      "to": 15,
+      "why": "THE FIRST GATEWAY: polarity reverses and the work stops being proof and becomes accounting. LEAN_PROOFS in TypeScript holds twelve theorem statements AS STRINGS, and nothing compares them to the .lean files that are supposed to contain them. That is a second copy of source, which is the defect 1.4.6 spent a release recording under the name collisions. One of the two must be generated from the other, and the checker must fail when they disagree. The count does not move because this patch moves no proof; it makes the ledger and the files the same thing."
     },
     "4": {
       "set": "orbit",
       "gateway": false,
-      "surface": "lint",
-      "from": 172,
-      "to": 0,
-      "why": "The remainder: 168 no-explicit-any in parameter, field and cast positions, where inference cannot help and each one needs a type decided."
+      "surface": "leanUnchecked",
+      "from": 15,
+      "to": 9,
+      "why": "The gate algebra: Hadamard squared, the Pauli anticommutation, Pauli unitarity, and the Born-rule sum over a finite basis. All four are finite checks over 2x2 or 4x4 complex matrices with entries from a small set, so they are decidable without the analysis mathlib is needed for. Five of the twenty-four are already sorry-free and must be shown to COMPILE, which is a different claim from containing no sorry."
     },
     "5": {
       "set": "orbit",
       "gateway": false,
-      "surface": "decimals",
-      "from": 278,
+      "surface": "leanUnchecked",
+      "from": 9,
       "to": 9,
-      "why": "Planned 279 -> 180 in two halves. Measured 278 at the start and reached 9, which is the whole surface, so patch 6 has nothing left of it. 5 is the mirror's fixed point and the work is the one that must not move a value: 317 literals became integer ratios, each substituted ONLY where n/d is bit-identical to the literal, and 504 exported values were fingerprinted before and after with zero changed once run-to-run drift in three live timers was excluded."
+      "why": "The mirror's fixed point, and the patch that must not move the number. Every theorem checked so far is verified AXIOM-FREE: `#print axioms` over each one, with the result committed as lean/axioms.json so an outsider can verify the receipt without a Lean toolchain -- derivation needs the toolchain, verification needs only the file. uuidna's arrangement exactly, and the reason its witness can say the trust base is the kernel alone."
     },
     "6": {
       "set": "axis",
       "gateway": false,
-      "surface": "collisions",
-      "from": 59,
-      "to": 45,
-      "why": "Re-planned. 6 is on the axis, so the work is structure rather than amount, and the structure this run had not yet touched is the one where a name resolves to two different things. collisions:check counted names declared by more than one module -- 60, then 59 once it stopped counting a module that declares a type and a value under one name as colliding with itself -- and never asked whether they MEAN the same thing. It does now: the modules are imported and the name is evaluated on both sides. The ones that agree can be merged to a single declaration; the ones that disagree must say why. calculateA432Frequency was 432 * 2**n in one module and 432 * (n % 12) / 12 in the other -- 27648 and 216 at n = 6, both exported, both reachable, and the count was identical before and after anyone noticed.",
-      "amended": "The planned target was decimals 9 -> 9, which is not a target: it was the second half of the decimal work and patch 5 took all of it. The nine that remain have no integer ratio to carry -- ln 2, root 2, the golden ratio, 3 root 3 over 2, Planck's constant -- so any number below 9 would have been asking for a ratio that does not exist. Amended for a false premise rather than for scope: the old target could not be met honestly at any effort, which is the only kind of amendment this plan should accept."
+      "surface": "leanUnchecked",
+      "from": 9,
+      "to": 9,
+      "why": "LaTeX. The paper is MathML for the browser; a submission wants .tex. Same generator, second backend, same figures read from the code at generation time, and paper:tex:check failing on a byte of drift the way paper:check already does. The Lean status appears in it as a column rather than a sentence: which theorems the kernel accepted, which carry sorry, and which are axioms. Nothing here proves a theorem, so the count stands still."
     },
     "7": {
       "set": "orbit",
       "gateway": false,
-      "surface": "untestedExports",
-      "from": 291,
-      "to": 220,
-      "why": "Tests that assert a LAW, not that a function returns something. Planned 295; measured 291 at the start, because patches 1, 4 and 6 each removed an export on their way past. 71 of the 291 must come under a law, and the laws are named in `lawsPlanned` below rather than left to the patch to invent -- a target on this surface is trivially gameable, since coverage:audit counts NEVER CALLED and a test that only calls collapses the number while asserting nothing. The 291 divide roughly into 165 with a plausible law, 39 that are effects (start, log, register, boot), 18 that write DOM, and 69 that are neither. Patch 7 takes only from the first group; the rest is patch 8's question, which is whether they should be exported at all.",
-      "lawsPlanned": {
-        "a432.yin.yang.ts": "Fraction arithmetic is a field, not a helper: add is commutative, subtractFractions(a, a) is zero, simplifyFraction is idempotent and preserves value, and add-then-subtract round-trips. This repository bans floats, so whether its fraction arithmetic is correct is load-bearing for the decimals work patch 5 did. 7 exports.",
-        "a432.uuid.ts": "NOT RFC 4122. The first draft of this plan said uuidV3 and uuidV5 were the RFC's name-based UUIDs and could be held to its test vectors; reading the module says otherwise. Both fold a single name through the kernel's FNV toUuid -- there is no namespace argument, no MD5, no SHA-1 -- and the header says so: 'Export names uuidV1-V5 kept as thin adapters for legacy callers'. The version nibble is 8 for v1, v3, v4 and v5 alike. The laws that DO hold are the module's own stated contract: same seed gives the same address, different names give different addresses across a sampled domain, the output matches the 8-4-4-4-12 grammar, and the variant bits are 10xx even though the version bits are not. That the names claim a standard the functions do not implement is a finding for the patch to settle, not a law for it to assert. 6 exports.",
-        "a432.math.constants.ts": "Producer and predicate must agree -- isGoldenRatio(goldenRatioPower(1)) and isFibonacciRatio(calculateFibonacciRatio(n)) -- which is two independent exports checking each other rather than a function checking itself. calculateOctaveFrequency carries the octave law f(n+1) = 2 f(n); calculateTrinityFrequency and calculateVortexFrequency carry their multipliers. 8 exports.",
-        "a432.rodin.coil.ts": "The law is that the orbit closes, and IT CURRENTLY DOES NOT. rodinPosition indexes RODIN_SEQUENCE modulo its length, and RODIN_SEQUENCE is [1,2,4,8,7,5,1] -- the six-element orbit with its return to 1 appended -- so the walk has period SEVEN and repeats 1 at every seam: rodinPosition(0..13) is 1 2 4 8 7 5 1 1 2 4 8 7 5 1. rodinVortexCycle(2) is the same doubled 1 in the middle of two turns. The doubling law next = digitalRoot(2 * current) holds at every step except the seam, where 1 follows 1. Patch 7 settles whether RODIN_SEQUENCE is a path that these two functions are wrong to cycle, or a cycle that is wrong to carry its endpoint twice, and then asserts the law that survives. A law that fails on the first run is worth more than one that passes. 4 exports, renderRodinCoilStreamHtml left for patch 8.",
-        "a432.block.chain.ts": "validateBlock(createBlock(i)) holds for every index, which closes the loop on the createBlock defect patch 4 fixed; calculateEntropy stays within its bounds; assignBadge is total over the harmony range; traverseChain visits each block once. 9 exports.",
-        "a432.registry.ts": "Round-trip and partition: what registerA432State stores is what getA432State returns, an unknown id returns nothing rather than throwing, and every registered component appears in exactly one getA432ComponentsByCategory listing. The registry split recorded in name-collisions.json means these laws must be asserted against THIS registry by name. 10 exports.",
-        "a432.vbm.path.ts + a432.vbm.decode.ts": "Round-trip: parseVBMPathString of a path string re-renders to the same string, and decodeVBMSequence inverts what produced the sequence. A round-trip is the one law that cannot be satisfied by a function that returns a plausible constant. 11 exports.",
-        "a432.sequence.ts": "generateA432Sequence produces digits and nothing else, and analyzeA432Sequence of a generated sequence agrees with the parameters that generated it. 4 exports.",
-        "a432.trinity.ts": "trinityFold60 is NOT periodic over the digits -- it throws 'Invalid trinity digit' for everything outside {3,6,9}, which the first draft of this plan did not know. The law is totality on the axis and refusal off it: defined for 3, 6 and 9, throwing for the other seven digits, and foldConsciousnessVortex landing on the axis. A function that throws for 70% of its domain is a stronger thing to pin down than one that returns something for all of it. 4 exports, the two style getters left for patch 8.",
-        "spare": "a432.electric.flow.ts (4), a432.imperial.ts (4), a432.shear.ts (3) and a432.double.ts (3) are held back as slack. The named modules total 63; the target needs 71; the slack is there so the patch is not tempted to reach for the DOM exports to make the number."
-      },
-      "acceptance": "EVERY suite this patch adds must be falsified the way the rest of the repository is: a mutation inside the module under test must make its suite fail, and the mutation is recorded in the commit. A suite that survives a corrupted implementation has not tested it, and would move the ratchet while leaving the code exactly as unexamined as before. This is the acceptance condition for the patch, not an aspiration: the count dropping to 220 is necessary and not sufficient.",
-      "refused": "A generic determinism harness -- call every export twice, assert the two results match -- would take this surface to near zero in an afternoon and would assert nothing about any of them. So would a harness that calls each export and asserts it does not throw. Both are refused. Neither would be caught by coverage:audit, which is exactly why the refusal has to be written down before the work rather than after.",
-      "leadsFound": {
-        "rodin_seam": "rodinPosition and rodinVortexCycle cycle a seven-element array whose first and last elements are both 1, so two turns of the coil read ...7,5,1,1,2,4... A doubling circuit does not repeat a digit. Settle before asserting.",
-        "uuid_names": "uuidV3, uuidV4 and uuidV5 are FNV content addresses in UUID shape, not RFC 4122 versions 3, 4 and 5. All three carry version nibble 8. The module's header admits the adapter; the export names do not.",
-        "frequencyForDigit_is_partial": "frequencyForDigit in a432.math.ts is defined ONLY on the trinity axis {3,6,9} and throws for every other digit, and it is called with arbitrary digits across the tree. 1.4.4 fixed the first instance in createBlock; this patch found two more, in a432.vbm.path.ts and a432.vbm.decode.ts, where it meant NEITHER module could parse its own canonical sequence. NINETEEN call sites remain across ten modules -- a432.pure.visualization (4), a432.infinity.loop (3), a432.vbm.audio (2), a432.vbm.animation (2), a432.multidimensional.consciousness.3d (2), a432.consciousness.journey.3d (2), a432.triple.merkaba, a432.triple.merkaba.3d, a432.sound and a432.rodin.coil.harmonic (1 each). a432.sound's is safe: it maps its input onto the axis first. The others are not audited. finite:check cannot see any of them, because it counts a throw as a pass. This is a sweep for a later patch, not a rename.",
-        "removing_a_throw_exposes_what_it_hid": "Every throw removed in this patch uncovered a defect underneath it. Making a432.vbm.decode.ts stop throwing let finite:check reach getVBMDecodeStatistics(''), which averaged over an empty list and returned NaN. Fixing that let the law reach getVBMDecodeStatistics('0'), and the digit 0 divides: biggerNumber / 0 is Infinity, biggerNumber % 0 is NaN, and the digital root of Infinity is NaN -- so every statistic over the module's own canonical sequence 003691248751, which begins with two zeroes, was NaN. Three defects stacked behind one throw."
-      },
-      "plannedBySource": "Every law above was checked against the running code before being written down, and three of the first draft's laws did not survive that: the RFC vectors for uuid, period 6 for rodinPosition, and periodicity for trinityFold60. A plan whose targets are read off function names is the same mistake patch 1 recorded -- it was planned from the ratchet label rather than the data, and 73 of its 96 were not what the label said."
+      "surface": "leanUnchecked",
+      "from": 9,
+      "to": 4,
+      "why": "What is left that a finite check can reach: the repetition code detecting a single error, and the tensor product preserving normalisation for the small cases the simulator actually runs. Both are quantified over finite domains once the dimensions are fixed, and fixing the dimension honestly is the work -- a theorem about all n is not what `decide` gives."
     },
     "8": {
       "set": "orbit",
       "gateway": true,
-      "surface": "untestedExports",
-      "from": 220,
-      "to": 150,
-      "why": "The second gateway, and the polarity really does reverse: patch 7's work was WRITING laws, and this patch's work is deciding what deserves to be exported at all. The chain hands over at 220 and the measured start is 218, because patch 7 beat its target by two. The measurement that makes the gateway question real rather than a slogan came out of verifying 1.4.7 against the published tarball. Of 1278 exported functions, only 696 names are reachable from the 23 entry points. Of the 218 that remain untested, FIFTEEN are reachable from a published entry point and 203 are not. Of those 203, 142 are named by no other file in src at all -- exported, imported by nobody, reachable by nobody. `export` on those is a claim of an interface that has no other end.",
-      "populations": {
-        "reachable_and_untested_15": "The only ones a consumer of the package can call. Nine are in src/quantum, which is the part of this repository held to the quantum criterion, so they are the highest-value fifteen in the list: calibrateReadout, trainQMLCircuit, describe, exportPublicationProof, tomatoTwoQubit, verifyTomographyProof, vqeWarmStart, adaptiveTuning, quantumWorkflowBatch, plus GOLDEN_RATIO, calculateJKInputs, executeOSCommand, analyzeRodinCoilPattern, asHz and analyzeWavePattern. EVERY ONE OF THESE MUST GET A LAW. None of them may be resolved by un-exporting: they are the published surface.",
-        "orphaned_142": "Exported and named by no other file in src. For each the question is the gateway's: should this be exported at all. Un-exporting removes it from the count without testing anything, which is legitimate for a true orphan and is also the cheap path, so it is bounded below.",
-        "internal_61": "Not reachable from an entry point but imported somewhere inside the tree. The export is justified by a real consumer; a law is still owed. These are law work, not deletion work."
-      },
-      "acceptance": "THE TWO KINDS OF PROGRESS MUST BE COUNTED SEPARATELY AND BOTH REPORTED. 'untestedExports 218 -> 150' is 68 exports, and 68 deletions would satisfy the number while testing nothing. So: (1) all 15 reachable exports get laws, and each new suite is added to scripts/law-mutations.mjs with a mutation that it catches -- the same acceptance condition patch 7 established, and it is already a gate; (2) an export may be un-exported ONLY if no other file in src names it, which is machine-checkable and must be checked rather than assumed; (3) the release states how many were given laws and how many were un-exported, as two numbers. A patch that reached 150 entirely by deletion would have hidden code rather than examined it, and the changelog must make that visible if it happens.",
-      "refused": "Deleting the `export` keyword from something another file imports, and calling the resulting compile error someone else's problem. Un-exporting anything on the published surface. And the patch-7 cheats, which remain refused and remain gated: a determinism harness, and a harness that asserts each export does not throw.",
-      "carriesFrom": "Patch 7's leads land here. Nineteen frequencyForDigit call sites remain across ten modules, where a function defined only on the trinity axis is called with arbitrary digits; finite:check cannot see any of them because it counts a throw as a pass. Every throw patch 7 removed had a defect behind it, three of them in one module, so this sweep is expected to find more than it fixes."
+      "surface": "leanUnchecked",
+      "from": 4,
+      "to": 4,
+      "why": "THE SECOND GATEWAY, and the honest one. What remains -- Grover's amplification, Shor's period finding, QFT unitarity, the surface-code threshold -- is not a patch. They need real analysis and mathlib, and claiming otherwise is how nineteen sorries came to sit under a header saying all theorems are proven. Each is moved OUT of the proven set and into a stated conjecture with what would settle it, the way ASSUMPTIONS already records what no finite computation decides. The count does not fall, because moving a claim is not proving it, and this plan will not let it look like one."
     },
     "9": {
       "set": "axis",
       "gateway": true,
-      "surface": "unboundClaims",
-      "from": 50,
+      "surface": "leanUnchecked",
+      "from": 4,
       "to": 0,
-      "why": "The last patch and the third gateway. Every effect claim in the corpus is bound to a predicate that runs, or to an axiom that says why no computation decides it. Two criteria were built because the claims needed them and neither existed: realtime-criterion, because the documentation said 'real-time' in several places and nothing stated a deadline or measured one; and validation-criterion, because six places promised experimental validation and a promise of an experiment reads exactly like a result. Both CAN CONFIRM, like the OS criterion and unlike the consciousness one, because neither 'real-time' nor 'validated' is contested. The witness over the ledger is modelled on uuidna's axiom witness: coverage is a condition (a new claim trips it, a stale entry fails it), every entry carries its demarcated form, and a binding that has stopped holding is named with its file and line.",
-      "findings": {
-        "a_retraction_is_not_read_as_a_bound": "README.md:215 is counted as making the claim 'consciousness multipliers: enhanced awareness at gateways' -- inside the sentence that WITHDRAWS it: the paragraph says the claim 'contradicted the criterion above, which declines to claim awareness at all'. retracted-check.mjs already knows the vocabulary of a retraction ('previously read', 'used to say') and prose-claims.mjs's boundedPattern contains none of it, so the two checks disagree about the same text and one of them is counting a withdrawal as an assertion. HOW MANY of the 50 are in this position is not yet known and finding out is part of the patch.",
-        "downloaded_file_md": "A 16KB research paper sits at the repository root under the placeholder name downloaded_file.md, claiming 'the first quantitative analysis' of its subject, 'p < 10^-12 probability of random correlation' and '98.7% encoding efficiency'. It contributes one prose hit. The question the gateway asks of it is larger than that line: whether a document making empirical claims of that strength belongs here unbounded, and whether it should carry a name that says what it is."
-      },
-      "acceptance": "THREE NUMBERS, REPORTED SEPARATELY: how many claims were given a bound, how many were deleted, and how much of the drop came from correcting the measure. A bound must govern text that STAYS -- adding the word 'speculative' to a sentence that then goes on to assert the effect is not a bound, and the claim itself must be qualified or removed. A whole file may be deleted only if nothing references it: docs:index:check and refs:check decide that, and they must be run rather than assumed.",
-      "measureCorrectionRule": "If the bounded pattern is corrected to recognise a retraction, that LOWERS the count by changing the measure, which is the direction that deserves suspicion and the thing measure:check exists to catch. So: it must be declared with npm run measure:record and a reason, and THE TARGET MUST BE MET WITHOUT IT -- the twelve have to come from claims actually bounded or deleted, with any reduction from the correction reported as its own number on top. It must also land in 1.4.9 and not in 1.5.0, because a *.*.0 may not be the release that declares a measure changed.",
-      "refused": "Deleting a document to remove its claims from the count without anyone deciding whether the claim was true. Hedging a sentence that continues to assert the effect. And meeting the target by widening the bounded pattern until the prose scores zero, which would leave every claim in place and the reader worse off than before.",
-      "carriesFrom": "Patch 8's verification found that REACHABILITY COMPUTED BY EXPORT NAME is unreliable. The fifteen 'reachable and untested' exports were found by matching names against the published surface, and analyzeRodinCoilPattern is one of the 38 recorded name collisions -- the published build resolves it to a432.math.ts, not to the a432.rodin.coil.harmonic.ts declaration that was broken and fixed. Fourteen of the fifteen stand; that one did not, and any future measurement of what a consumer can reach must resolve module identity rather than a name. The frequencyForDigit sweep is closed: eight unguarded call sites across three modules were fixed in patch 8, and the remaining call sites were each read and found to be guarded by an axis test.",
-      "amended": "The planned target was prose 50 -> 38: twelve unbounded effect claims given a bound or deleted. The premise was that a bound is a sentence. It is not. An honest boundary can only be defined by a THEOREM, and a sentence saying 'this is a boundary statement, not a claim' is an assertion about an assertion -- unfalsifiable, worth nothing to a reader, and twelve of them would have met the target with every claim left exactly as it stood. That approach was started, and reverted in full. The claims are not disclaimed; they are BOUND, each to a criterion, a seal or a declared axiom that resolves and holds, with a stated demarcation of what it does not establish. Amended for a false premise about what a boundary is, and the new target is stricter: not twelve of fifty, but ALL FIFTY, with none left bound to nothing.",
-      "sourceNote": "prose stays at its ceiling of 50 and is not the measure of this patch. The prose scanner counts claims whose SECTION carries bounding language; the ledger binds each claim to a predicate that runs. The second subsumes the first and the first is left where it is rather than being moved by writing the language the scanner looks for."
+      "why": "The last patch and the third gateway. Every remaining theorem is either checked or recorded as a conjecture with its refuter, so leanUnchecked reaches zero by the same rule 1.4.9 used for claims: bound to a proof, or named as an assumption -- never left implied. Then 1.7.0 carries the run out and every patch must still stand."
     }
   },
   "sources": {
-    "typecheck": {
-      "from": "ratchet"
-    },
-    "lint": {
-      "from": "ratchet"
-    },
-    "unreachable": {
-      "from": "ratchet"
-    },
-    "decimals": {
-      "from": "ratchet"
-    },
-    "prose": {
-      "from": "ratchet"
-    },
-    "untestedExports": {
+    "leanUnchecked": {
       "from": "command",
-      "command": "npm run coverage:audit",
-      "pattern": "([0-9]+) never called",
-      "note": "not a ratchet surface: the ratchet carries twelve and that number is load-bearing, so this one is measured by its own tool rather than by adding a thirteenth"
-    },
-    "collisions": {
-      "from": "command",
-      "command": "npm run collisions:check",
-      "pattern": "([0-9]+) name\\(s\\) declared by more than one",
-      "note": "not a ratchet surface: the ratchet carries twelve and that number is load-bearing, so this one is measured by its own tool -- the same arrangement untestedExports has"
-    },
-    "unboundClaims": {
-      "from": "command",
-      "command": "npm run claims:check",
-      "pattern": "([0-9]+) bound to nothing",
-      "note": "not a ratchet surface: the ratchet carries twelve and that number is load-bearing. The ledger is scripts/claims.json and the witness is scripts/claims-witness.mjs."
+      "command": "npm run lean:check",
+      "pattern": "([0-9]+) unchecked",
+      "note": "not a ratchet surface: the ratchet carries twelve and that number is load-bearing. Patch 1 builds the command this measures; until it exists the surface cannot be read, which is why patch 1 moves nothing."
     }
-  }
+  },
+  "refused": "Proving a theorem by weakening it until `decide` closes it. Deleting a sorry by deleting the theorem. And writing `axiom` where a proof was promised, without recording it as an axiom in the place ASSUMPTIONS already keeps them -- the difference between an assumption and a hidden one is whether anybody can find it."
 }

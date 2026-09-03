@@ -48,7 +48,16 @@ const { MUTATIONS } = await import(join(ROOT, 'scripts/law-mutations.mjs'))
 const criteriaAll = allCriteria()
 const ledger = JSON.parse(readFileSync(join(ROOT, 'scripts/claims.json'), 'utf8')).claims
 const ratchet = JSON.parse(readFileSync(join(ROOT, 'ratchet.json'), 'utf8'))
-const plan = JSON.parse(readFileSync(join(ROOT, 'release-plan.json'), 'utf8'))
+// EVERY run, not only the live one. Superseded plans are kept as
+// release-plan.<run>.json, and dropping them from the page would replace a
+// finished run's results with an unstarted plan's zeros — which is the record
+// this appendix exists to hold.
+const { readdirSync } = await import('node:fs')
+const plans = readdirSync(ROOT)
+  .filter((f) => /^release-plan(\.[0-9.]+)?\.json$/.test(f))
+  .map((f) => ({ file: f, plan: JSON.parse(readFileSync(join(ROOT, f), 'utf8')) }))
+  .sort((a, b) => a.plan.run.localeCompare(b.plan.run))
+const plan = plans.find((p) => p.file === 'release-plan.json').plan
 
 const DIGITS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 const ORBIT = [...k.VORTEX_ORBIT]
@@ -68,7 +77,6 @@ const axioms = Object.entries(lb.ASSUMPTIONS)
 // which is stable. The measurements are reported by the criterion at run time,
 // where the reader can take their own.
 const realtime = rt.evaluateRealtimeCriterion(500)
-const realtimeMet = `${realtime.conditionsMet}/${realtime.conditionsTotal}`
 const validation = va.evaluateValidationCriterion()
 
 // ---- MathML helpers -------------------------------------------------------
@@ -306,10 +314,12 @@ ${E_JITTER}
 gives the widest register whose full step fits inside one frame; the cost
 doubles with every qubit, so this is the hardest case rather than the easiest.</p>
 ${E_REACH}
-<p>Real-time criterion: ${realtimeMet} conditions met. Validation criterion:
-${validation.conditionsMet} of ${validation.conditionsTotal}. Neither verdict
-prints a duration: run <code>npm run criteria:check</code> to take the
-measurement on your own hardware.</p>
+<p>This page does not print the criterion's verdict. The real-time criterion
+MEASURES, so its verdict is a property of the machine it ran on as much as of
+the code &#8212; and a page that stated 8 of 8 would be stating something about a
+laptop in September 2026. Run <code>npm run criteria:check</code> and take the
+verdict on your own hardware. What this page can state, and Appendix A does, is
+what each condition requires and what would refute it, which does not vary.</p>
 </section>
 
 <section>
@@ -330,16 +340,22 @@ ${axioms.map(([name, a]) => `<dt><code>${name}</code></dt>
 <h2>Appendix A&ensp;Every criterion, condition by condition</h2>
 <p>Six criteria gate a release and one is reported without gating. Each
 condition below states what it <em>requires</em> and what would change its
-verdict; a condition with no refuter is a slogan. The evidence each produces is
-measured when the criterion runs and is deliberately not printed here, because
-some of it is a property of the machine &#8212; take it with
+verdict; a condition with no refuter is a slogan.</p>
+<p><strong>No verdict appears on this page</strong>, and the omission is
+deliberate rather than modest. A criterion that measures returns a number about
+the machine it ran on, and this page was generated once: printing 8 of 8 here
+would be reporting a laptop. The generator learned this twice &#8212; first by
+embedding durations, so the artifact could never match itself on re-check, and
+then by embedding the SCORE, which flips with load about once in three runs.
+What does not vary is what each condition requires and what would refute it, so
+that is what is printed. Take the verdict with
 <code>npm run criteria:check</code>.</p>
 ${criteriaAll.map((c) => `<div class="crit">
-<h3>${c.name} <span class="score">${c.verdict.conditionsMet}/${c.verdict.conditionsTotal}</span>
+<h3>${c.name} <span class="score">${c.verdict.conditionsTotal} conditions</span>
 <span class="gated">${c.gated ? 'gates the release' : 'reported, not gated'}</span></h3>
 <p class="subj">${escape(c.subject)}</p>
-<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
-${c.verdict.conditions.map((k) => `<tr><td>${k.met ? '&#10003;' : '&#10007;'}</td><td><code>${escape(k.id)}</code></td><td>${escape(k.requires)}</td><td>${escape(k.whatWouldChange)}</td></tr>`).join('\n')}
+<table class="cond"><thead><tr><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+${c.verdict.conditions.map((k) => `<tr><td><code>${escape(k.id)}</code></td><td>${escape(k.requires)}</td><td>${escape(k.whatWouldChange)}</td></tr>`).join('\n')}
 </tbody></table></div>`).join('\n')}
 </section>
 
@@ -382,17 +398,20 @@ ${Object.keys(ratchet.raised ?? {}).length ? `<p>Deliberate increases, each with
 
 <section class="appendix">
 <h2>Appendix D&ensp;The release plan</h2>
-<p>${escape(plan.run)} was planned before its first patch was cut, and each
-release is measured against the target written for it. A patch that misses its
-target fails its own gate; a target amended for a false premise records the
-amendment.</p>
+<p>A run is planned in full before its first patch is cut, and each release is
+measured against the target written for it. A patch that misses its target fails
+its own gate; a target amended for a false premise records the amendment. Every
+run is kept, finished or not &#8212; a finished run's results are the record this
+appendix exists to hold.</p>
+${plans.map(({ file, plan: pl }) => `<h3>${escape(pl.run)}.x ${file === 'release-plan.json' ? '<span class="gated">current</span>' : '<span class="gated">carried out at ' + escape(pl.carriesTo) + '</span>'}</h3>
 <table class="plan"><thead><tr><th>patch</th><th>surface</th><th>from</th><th>to</th><th></th></tr></thead><tbody>
-${Object.entries(plan.patches).map(([d, p]) => `<tr><td>${escape(plan.run)}.${d}${p.gateway ? ' &#9670;' : ''}</td><td><code>${escape(p.surface)}</code></td><td>${p.from}</td><td>${p.to}</td><td>${p.amended ? 'amended' : ''}</td></tr>`).join('\n')}
+${Object.entries(pl.patches).map(([d, p]) => `<tr><td>${escape(pl.run)}.${d}${p.gateway ? ' &#9670;' : ''}</td><td><code>${escape(p.surface)}</code></td><td>${p.from}</td><td>${p.to}</td><td>${p.amended ? 'amended' : ''}</td></tr>`).join('\n')}
 </tbody></table>
+<p class="note">${Object.values(pl.patches).filter((p) => p.amended).length} of
+${Object.keys(pl.patches).length} targets amended, each for a premise that turned
+out to be false rather than for scope.</p>`).join('\n')}
 <p class="note">&#9670; marks a gateway, where the kind of work changes rather
-than its amount. ${Object.values(plan.patches).filter((p) => p.amended).length} of
-${Object.keys(plan.patches).length} targets were amended, each for a premise that
-turned out to be false rather than for scope.</p>
+than its amount.</p>
 </section>
 
 <section class="appendix">
@@ -434,11 +453,13 @@ permission.</p>
 // on the page and must not be in the model, or the receipt would move on every
 // run and mean nothing.
 const model = JSON.stringify({
-  version, ORBIT, AXIS, freq, angle, seals: held.length, realtime: realtimeMet,
-  validation: validation.conditionsMet, eqns: eqn,
-  criteria: criteriaAll.map((c) => `${c.name}:${c.verdict.conditionsMet}/${c.verdict.conditionsTotal}`),
+  version, ORBIT, AXIS, freq, angle, seals: held.length,
+  eqns: eqn,
+  // The criteria appear as their SHAPE, never their verdict: a measured verdict
+  // in the receipt is a receipt that moves when the machine is busy.
+  criteria: criteriaAll.map((c) => `${c.name}:${c.verdict.conditionsTotal}`),
   claims: Object.keys(ledger).length, ceilings: ratchet.ceilings,
-  patches: Object.keys(plan.patches).length, mutations: MUTATIONS.length,
+  patches: plans.map((p) => `${p.plan.run}:${Object.keys(p.plan.patches).length}`), mutations: MUTATIONS.length,
 })
 const receipt = createHash('sha256').update(model).digest('hex').slice(0, 16)
 

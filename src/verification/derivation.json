@@ -1,0 +1,129 @@
+{
+  "what": "Each column below was corrupted on disk and the seal battery asked whether anything broke. derived = at least one seal falls when it is perturbed, so the arithmetic forces it. unforced = no seal objected to any mutation tried, which is a LOWER BOUND on derivation, not proof of conventionality: a mutation that respects a symmetry can leave every law standing.",
+  "arbiter": "the 32 seals in src/verification plus computeVortexInvariantsHold in src/0 — 33 predicates that state laws rather than conventions",
+  "control": "every mutation is required to move the column it targets; one that does not is an error, not a verdict",
+  "columns": {
+    "mirror": {
+      "column": "mirror `M(d)`",
+      "file": "src/0/index.ts",
+      "status": "derived",
+      "sealsFallen": [
+        "doubling_avoids_the_triad",
+        "a432_constants_do_not_drift_from_the_kernel",
+        "merkaba_is_two_mirrored_tetrahedra"
+      ],
+      "mutationsTried": [
+        {
+          "mutation": "return d === 0 ? 0 : digitalRoot(1 - d)  ->  return d === 0 ? 0 : digitalRoot(2 - d)",
+          "sealsFallen": [
+            "doubling_avoids_the_triad",
+            "a432_constants_do_not_drift_from_the_kernel",
+            "merkaba_is_two_mirrored_tetrahedra"
+          ]
+        }
+      ]
+    },
+    "dash": {
+      "column": "polarity, Δ°, bearing",
+      "file": "src/0/index.ts",
+      "status": "derived",
+      "sealsFallen": [
+        "computeVortexInvariantsHold"
+      ],
+      "mutationsTried": [
+        {
+          "mutation": "const sign = token.dash === '/' ? 1 : -1  ->  const sign = token.dash === '/' ? -1 : 1",
+          "sealsFallen": []
+        },
+        {
+          "mutation": "const angleDelta = sign * VORTEX_DASH_ANGLE_DEG  ->  const angleDelta = sign * VORTEX_DASH_ANGLE_DEG + 1",
+          "sealsFallen": []
+        },
+        {
+          "mutation": "const weightedAngle = sign * token.digit * VORTEX_DASH_ANGLE_DEG  ->  const weightedAngle = sign * token.digit * VORTEX_DASH_ANGLE_DEG + 1",
+          "sealsFallen": [
+            "computeVortexInvariantsHold"
+          ]
+        }
+      ]
+    },
+    "gateway": {
+      "column": "gateway",
+      "file": "src/0/index.ts",
+      "status": "derived",
+      "sealsFallen": [
+        "computeVortexInvariantsHold"
+      ],
+      "mutationsTried": [
+        {
+          "mutation": "stroke: (next > d ? '\\\\' : '/') as '/' | '\\\\'  ->  stroke: (next > 4 ? '\\\\' : '/') as '/' | '\\\\'",
+          "sealsFallen": [
+            "computeVortexInvariantsHold"
+          ]
+        },
+        {
+          "mutation": ".filter((v) => v.incoming !== v.outgoing)  ->  .filter((v) => v.incoming !== v.outgoing || v.digit === 1)",
+          "sealsFallen": [
+            "computeVortexInvariantsHold"
+          ]
+        }
+      ]
+    },
+    "hue": {
+      "column": "hue°",
+      "file": "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
+      "status": "unforced",
+      "sealsFallen": [],
+      "mutationsTried": [
+        {
+          "mutation": "return (abs(d) * 36) % 360;  ->  return (abs(d) * 40) % 360;",
+          "sealsFallen": []
+        },
+        {
+          "mutation": "return (abs(d) * 36) % 360;  ->  return (abs(d) * 36 + 1) % 360;",
+          "sealsFallen": []
+        }
+      ]
+    },
+    "cmyk": {
+      "column": "C/M/Y/K",
+      "file": "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.ts",
+      "status": "unforced",
+      "sealsFallen": [],
+      "mutationsTried": [
+        {
+          "mutation": "const baseHue = (abs(digit) * 36) % 360;  ->  const baseHue = (abs(digit) * 40) % 360;",
+          "sealsFallen": []
+        }
+      ]
+    },
+    "class": {
+      "column": "class",
+      "file": "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.ts",
+      "status": "unforced",
+      "sealsFallen": [],
+      "mutationsTried": [
+        {
+          "mutation": "const r = digitalRoot(channel * 3);  ->  const r = digitalRoot(channel * 4);",
+          "sealsFallen": []
+        }
+      ]
+    },
+    "hz": {
+      "column": "Hz",
+      "file": "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
+      "status": "unforced",
+      "sealsFallen": [],
+      "mutationsTried": [
+        {
+          "mutation": "return 432 * (d / 12);  ->  return 432 * (d / 11);",
+          "sealsFallen": []
+        },
+        {
+          "mutation": "return 432 * (d / 12);  ->  return 433 * (d / 12);",
+          "sealsFallen": []
+        }
+      ]
+    }
+  }
+}

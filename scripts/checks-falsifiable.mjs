@@ -39,6 +39,7 @@ const GUARDS = {
   'vortex:svg:check': 'docs/public/vortex.svg',
   'paper:check': 'docs/public/paper.html',
   'bundle:a432:check': 'public/a432.bundle.js',
+  'derivation:check': 'src/verification/derivation.json',
   // Block-scoped: these own a marked region of README.md and nothing else, so
   // the probe has to land inside the region or it proves nothing.
   'spectrum:check': ['README.md', 'SPECTRUM'],

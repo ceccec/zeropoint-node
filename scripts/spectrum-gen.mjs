@@ -105,19 +105,39 @@ const table = [
   ),
 ].join('\n')
 
+// The derived/defined flag is NOT typed here. It is the verdict of an
+// experiment: scripts/derivation.mjs corrupts the line that produces each
+// column and asks the law battery whether anything broke. A peer session asked
+// whether this table's promise was enforced or kept by hand; it was kept by
+// hand, and one flag was wrong — `class` claimed derived, and no law objects to
+// changing it. The prose below each flag is still written; the FLAG is measured.
+const derivationRecord = JSON.parse(readFileSync(resolve(root, 'src/verification/derivation.json'), 'utf8'))
+const derivation = derivationRecord.columns
+const derivationArbiter = derivationRecord.arbiter
+
+/** The measured flag, plus the evidence that produced it. */
+function flag(id) {
+  const r = derivation[id]
+  if (!r) throw new Error(`spectrum: no derivation verdict recorded for column "${id}" — run npm run derivation`)
+  if (r.status === 'derived') {
+    return `**derived** — perturbing it breaks ${r.sealsFallen.length} law(s) (\`${r.sealsFallen.join('\`, \`')}\`)`
+  }
+  return `**defined** — ${r.mutationsTried.length} perturbation(s) tried, no law objected`
+}
+
 const block = `${BEGIN}
 
-Every column below is **computed**, and each carries a different epistemic weight. Read the status ledger before the table, so a defined mapping is never mistaken for a derived law.
+Every column below is **computed**, and each carries a different epistemic weight. The status is not typed here: \`npm run derivation\` corrupts the line that produces each column and asks the ${derivationArbiter} whether anything broke. **derived** means a law fell; **defined** means none did. That is a lower bound — a perturbation respecting a symmetry can leave every law standing — so a defined column is one nothing has been shown to force, not one proven free.
 
 | column | source | status |
 | --- | --- | --- |
-| mirror \`M(d)\` | \`throughVoid\` | **derived** — \`1 − n mod 9\` on the nine digits \`1..9\`, reading 9 as the residue 0; the void is a tenth point outside that (ℤ/9ℤ) (Lean \`mirror_is_affine_only_off_the_void\`) |
-| polarity, Δ°, bearing | \`decodeVortexDashAngles()\` | **derived** — \`\\\` = −60°, \`/\` = +60°; weighted bearing closes at ${dash.weightedBearing} |
-| gateway | \`vortexStrokeGateways()\` | **derived** — polarity reversals \`[${stroke.gateways.join(', ')}]\` |
-| hue° | \`hueForDigit\` / \`digitAngleToCMYK\` | **defined** — \`hue = 36d\`, a chosen decagon partition |
-| C/M/Y/K | \`digitAngleToCMYK\` | **defined** — HSV→RGB→CMYK of that hue |
-| class | \`vortexColor\` | **derived, degenerate** — see note |
-| Hz | \`frequencyForDigit\` | **defined on the axis only** — \`432·d/12\`; throws off-axis |
+| mirror \`M(d)\` | \`throughVoid\` | ${flag('mirror')}; \`1 − n mod 9\` on the nine digits \`1..9\`, reading 9 as the residue 0 — the void is a tenth point outside that (ℤ/9ℤ) (Lean \`mirror_is_affine_only_off_the_void\`) |
+| polarity, Δ°, bearing | \`decodeVortexDashAngles()\` | ${flag('dash')}; \`\\\` = −60°, \`/\` = +60°, weighted bearing closes at ${dash.weightedBearing} |
+| gateway | \`vortexStrokeGateways()\` | ${flag('gateway')}; polarity reversals \`[${stroke.gateways.join(', ')}]\` |
+| hue° | \`hueForDigit\` / \`digitAngleToCMYK\` | ${flag('hue')}; \`hue = 36d\`, a chosen decagon partition |
+| C/M/Y/K | \`digitAngleToCMYK\` | ${flag('cmyk')}; HSV→RGB→CMYK of that hue |
+| class | \`vortexColor\` | ${flag('class')}; computed from the digital root but forced by nothing — see note |
+| Hz | \`frequencyForDigit\` | ${flag('hz')}; \`432·d/12\` on the axis, throws off-axis |
 
 ${table}
 

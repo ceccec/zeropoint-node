@@ -1,5 +1,100 @@
 # Changelog
 
+## 1.4.6
+
+Names declared by more than one module **59 → 38**, and a name that meant two
+different numbers.
+
+**Patch 6 was re-planned, and this is what it became.** The slot held "decimals
+9 → 9", which is not a target: it was the second half of the decimal work, patch
+5 took all of it, and the nine that remain have no integer ratio to carry. It is
+amended for a false premise rather than for scope — the old target could not be
+met honestly at any effort, which is the only kind of amendment this plan should
+accept.
+
+**6 is on the axis, so the work is structure.** `collisions:check` counted names
+declared by more than one module and never asked whether they *mean* the same
+thing. It does now: the modules are imported and the name is evaluated on both
+sides — **agree**, **differ**, **type-only** or **unprobed**. A disagreement
+must be recorded with a reason; an unrecorded one fails.
+
+What that found on the first run:
+
+- **`calculateA432Frequency` is two different functions.** `432 * 2**n` in
+  `a432.math.constants.ts`, `432 * (n % 12) / 12` in `a432.math.ts`. At n = 6
+  those are **27648** and **216**. Both exported, both reachable, and the
+  collision count was identical before and after anyone noticed. Renamed
+  `calculateOctaveFrequency` for what it computes.
+- **`calculateGoldenRatio` takes an exponent in one module and hertz in the
+  other.** `calculateGoldenRatio(432)` was 698.9 in `a432.utils.ts` and 10⁹⁰ in
+  `a432.math.constants.ts`, which is now `goldenRatioPower`.
+- **A constant that contradicted itself.** `a432.os.ts` exported
+  `GOLDEN_RATIO = { numerator: 5, denominator: 3, value: φ }` under the comment
+  "φ = 5/3 ratio (exact fraction)". 5/3 is 1.666…, φ is 1.618…; they part in the
+  second decimal. The object carried the real φ in `value` "for validation", and
+  nothing validated it — anything comparing the two would have failed on the day
+  it was written. It is `IMPERIAL_SIXTH` now, with the shape kept exactly,
+  because `getA432OSInfo()` returns it.
+- **π was described as the wrong rational.** `a432.math.constants.ts` called its
+  `PI` "the algebra rational (355/113)"; the algebra rational is
+  `245850922/78256779`, and the two disagree from the seventh decimal. `PI`,
+  `TAU` and `E` are re-exported rather than re-declared, so there is one name and
+  no second place for a wrong description of it to live.
+- **Four streams were exporting the module namespace.**
+  `export const PiColorStream = PiColor`, where `PiColor` came from
+  `import * as` — so the value was `{ PiColorStream: [] }` rather than the `[]`
+  the stub module declares, and `.length` was `undefined`. They are re-exports
+  now, which is what the comment above them always claimed. The usage note called
+  them "advanced π-based stream logic"; they are empty arrays, and it says so.
+- **Two constants nothing read, named for values they were not.**
+  `a432.coil.ts` declared an `A432_SEQUENCE` and an `A432_TRINITY` that no module
+  reads, both names owned by other modules with other values — and this
+  `A432_TRINITY` was `[0,9,1]` where `a432.math.ts`'s is `[4,3,2]` and the
+  trinity axis is `[3,6,9]`. Deleted rather than renamed: naming them would have
+  meant deciding what they meant.
+- **Identical source, opposite answers.** `getA432ModulesByCategory` is textually
+  the same function in `a432.modules.ts` and `a432.registry.ts` — both are
+  `return a432ModuleRegistry.getModulesByCategory(c)` — and each calls a
+  different registry, because `a432ModuleRegistry` is itself a collision.
+  `getA432ModulesByCategory('core')` returns the core module from one and the
+  empty list from the other. This is the pair that shows why counting was not
+  enough.
+
+Thirteen names that agree were merged to one declaration each; nine that disagree
+carry a reason. Fifteen of the remaining thirty-eight are reviewed.
+
+**Four corrections the checker made to itself.**
+
+- `a432.experience.ui.ts` declares `interface A432ExperienceUI` and
+  `const A432ExperienceUI` — the ordinary TypeScript idiom. Counting declarations
+  reported that as a module colliding with itself; it counts distinct modules now.
+- Four `selfTest()`s were reported as agreeing because each returned `undefined`.
+  A function that returns nothing has said nothing: that is unprobed, not
+  agreement.
+- Two `getA432ModulesByCategory` agreed on every digit because they take a
+  *category*. The probe domain carries strings and objects now, and `agree` is
+  documented as **agreed on this domain** — evidence, not proof. `differ` is the
+  direction that carries proof.
+- `git ls-files` cannot see a module that has not been staged, so a new file
+  declaring an existing name passed until someone ran `git add`. Untracked files
+  that git would let you add are read too.
+
+**Falsified by six mutations, three of them controls that must not fail:** a
+re-export, a type and a value sharing a name inside one module, and a recorded
+collision whose two sides agree, which needs no reason. The two that must fail
+act on a collision whose *file list is unchanged* — one side's value changed from
+7 to 8, and a recorded disagreement losing its reason — so the pre-existing "a
+new collision appeared" rule is satisfied in both, and only the agreement pass
+can decide.
+
+**No value moved.** 504 exported values were fingerprinted before and 502 after:
+the two missing are the deleted coil constants, `IMPERIAL_SIXTH` hashes
+identically to the `GOLDEN_RATIO` it renames, and the four π streams changed
+deliberately. Of the rest, five differ — and the same five differ between two
+runs of unchanged code.
+
+Untested exports 293 → 291.
+
 ## 1.4.5
 
 Decimal-crack lines **278 → 9**, and not one exported value moved.

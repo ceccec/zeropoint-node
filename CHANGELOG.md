@@ -1,5 +1,84 @@
 # Changelog
 
+## 1.4.8
+
+Exported functions nothing called **204 → 148**, and not one export hidden to
+get there.
+
+**The second gateway.** The question this patch was planned to answer is whether
+these exports should be exported at all, and its anti-gaming clause demanded the
+answer in two numbers — because 68 deletions would satisfy the target while
+testing nothing:
+
+```
+given a law:  55
+un-exported:   0
+deleted:       0
+```
+
+The target was reached entirely by finding out what the code does. Four suites,
+**154 laws**, and every one falsifiable: `npm run mutations:check` now carries
+**28 mutations across 24 modules and catches all 28**.
+
+**The measure was wrong, and correcting it made the target harder.**
+`coverage-audit` classified exports with two regexes over raw text.
+
+- It counted `export function register{ModuleName}()` from inside a **template
+  string** in `a432.documentation.ts` as two exports named `register` and `get`.
+- It counted `GOLDEN_RATIO = (1 + sqrt(5)) / 2` as an arrow function, because the
+  pattern for one looked for `= (` and found a parenthesised expression. A
+  **number** was being counted as a function that nothing calls — and a number
+  can never be called, so it could never leave the list.
+- It missed every `export function*`, because the pattern has no room for the
+  star.
+
+Reading the syntax tree instead moved the count **202 → 204** and the denominator
+1279 → 1288. Declared here rather than absorbed into the target: the correction
+costs two, and a measure correction that made the target *easier* would deserve
+far more suspicion than one that does not.
+
+**What the laws found.**
+
+- **A published-API function was broken for its own input.**
+  `analyzeRodinCoilPattern` — one of the fifteen exports a consumer can actually
+  reach — threw for the Rodin sequence, the one sequence it exists to analyse.
+  `frequencyForDigit` again. The sweep found **eight** unguarded call sites across
+  three modules, not the nineteen the plan claimed: the others are guarded by an
+  axis test, and the plan had counted call sites rather than unguarded ones.
+- **`mapMatrixToTorus` took `number[][]` and looped to the literal 7**, indexing
+  `matrix[row][col]`, so it threw for every matrix that was not exactly seven by
+  seven. It walks the matrix it is given now.
+- **There was no checked way to make a frequency.** `asHz`, `asDigit` and
+  `asAngle` are unchecked casts and the module says so above them — "no runtime
+  cost" — which is deliberate and is kept. What was missing is the other half:
+  `toDigit` validates and there was no `toHz`, so `asHz(NaN)` was the only way to
+  brand one. `toHz` is added beside `toDigit` rather than `asHz` being made to
+  throw, because imposing a check on a cast a module deliberately left unchecked
+  would be a suite deciding that module's design for it.
+
+**Pinned as they are**, because a test asserting these were correct would be
+worse than no test:
+
+- `createA432ByFrequency(1296).core.frequency` is **432**. The requested frequency
+  reaches the rest of the state and never the core.
+- `challengeColorCss("a432")` returns **`#NaNNaNNaN`** — a CSS colour made of NaN,
+  produced silently, which a browser ignores and no one sees fail.
+
+**Five of this patch's own assertions were wrong, and the code corrected them.**
+`asDigit` does not validate. `toCMYK` is not linear — rounding breaks it at 5.
+`handleImpossible` does not ignore its argument: it takes a *reason string*, and
+the suite had been handing it digits. `handleImpossibleById` is that composed
+with `getImpossibleDescription`. And `harmonizeByStrategy` returning nothing is
+not a bug, because a strategy is typed `() => void` and running it is the whole
+effect.
+
+**The 1.4.7 ratchet fix proved itself here.** Lowering the `unreachable` ceiling
+113 → 104 left the `measures` block intact, where a week ago it would have
+deleted every measure fingerprint and `measure:check` would have passed.
+
+502 exported values fingerprinted before and after: **none moved.** Five differ,
+and the same five differ between two runs of unchanged code.
+
 ## 1.4.7
 
 Exported functions nothing ever called **291 → 218**, and eight defects the laws

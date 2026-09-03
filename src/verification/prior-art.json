@@ -1,0 +1,244 @@
+{
+  "purpose": "Defensive publication. This ledger exists so that a dated, citable record of each contribution is public, which defeats a later claim of invention WITHOUT anyone having to prove a universal negative. It does not assert novelty: 'no prior art exists' quantifies over everything ever published and no finite search decides it, so novelty is bound to the axiom no_prior_art_is_undecidable and never to a seal.",
+  "notALegalInstrument": "This is a record, not advice and not a filing. Patent priority, jurisdiction and filing strategy are a solicitor's work. What a defensive publication does is make the art public and dated; what it does not do is grant anything.",
+  "concept_doi": "10.5281/zenodo.22178675",
+  "contributions": {
+    "ratchet": {
+      "what": "Twelve measured surfaces whose ceilings only move down, failing on unrecorded improvement as well as on growth, with each deliberate raise recorded with its reason.",
+      "files": [
+        "scripts/ratchet.mjs",
+        "ratchet.json"
+      ],
+      "priorArt": {
+        "status": "known-art-in-part",
+        "citations": [
+          {
+            "text": "Ratcheting quality gates on new code are established practice; the mechanism is widely deployed rather than published under one citation.",
+            "id": null,
+            "kind": "practice",
+            "resolved": false
+          }
+        ]
+      }
+    },
+    "measure-fingerprinting": {
+      "what": "Each measure's implementation is fingerprinted from its syntax tree printed WITHOUT comments, so rewording a measure is free and changing what it counts fails until declared.",
+      "files": [
+        "scripts/measure-check.mjs"
+      ],
+      "priorArt": {
+        "status": "not-searched",
+        "citations": []
+      }
+    },
+    "criterion-modules": {
+      "what": "Predicates that decide whether a subject meets a named standard, each condition drawn from a theory with an operational commitment, each written to reject its own cheap pass, and each stating what would refute it. Six gate a release.",
+      "files": [
+        "src/verification/consciousness-criterion.ts",
+        "src/verification/os-criterion.ts",
+        "src/verification/quantum-criterion.ts",
+        "src/verification/realtime-criterion.ts",
+        "src/verification/validation-criterion.ts",
+        "src/verification/subjects.ts"
+      ],
+      "priorArt": {
+        "status": "known-art-in-part",
+        "citations": [
+          {
+            "text": "Tononi, An information integration theory of consciousness, BMC Neuroscience 5:42 (2004) — the irreducibility condition",
+            "id": "10.1186/1471-2202-5-42",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "An information integration theory of consciousness",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          },
+          {
+            "text": "Dehaene & Naccache, Towards a cognitive neuroscience of consciousness, Cognition 79:1-37 (2001) — the global availability condition",
+            "id": "10.1016/S0010-0277(00)00123-2",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "Towards a cognitive neuroscience of consciousness: basic evidence and a workspace framework",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          },
+          {
+            "text": "Lau & Rosenthal, Empirical support for higher-order theories of conscious awareness, Trends in Cognitive Sciences 15:365-373 (2011) — the self-model condition",
+            "id": "10.1016/j.tics.2011.05.009",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "Empirical support for higher-order theories of conscious awareness",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          },
+          {
+            "text": "Liu & Layland, Scheduling Algorithms for Multiprogramming in a Hard-Real-Time Environment, JACM 20(1):46-61 (1973) — real-time as a stated deadline",
+            "id": "10.1145/321738.321743",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "Scheduling Algorithms for Multiprogramming in a Hard-Real-Time Environment",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          }
+        ]
+      }
+    },
+    "claim-ledger-and-witness": {
+      "what": "Every effect claim in the corpus bound to a predicate that runs or to a declared axiom, with a stated demarcation of what the binding does NOT establish; coverage checked both ways so a new claim fails for being unbound and a stale entry fails for having no claim.",
+      "files": [
+        "src/verification/claims.json",
+        "scripts/claims-witness.mjs"
+      ],
+      "priorArt": {
+        "status": "known-art-in-part",
+        "citations": [
+          {
+            "text": "uuidna's axiom witness — the shape this borrows, acknowledged in the source: audited must equal ledger, every claim carries its demarcated form, an unbacked appearance is an offender",
+            "id": null,
+            "kind": "software",
+            "resolved": false
+          },
+          {
+            "text": "Assurance/safety cases with explicit claim-to-evidence traceability (Goal Structuring Notation) are established practice in safety engineering",
+            "id": null,
+            "kind": "practice",
+            "resolved": false
+          }
+        ]
+      }
+    },
+    "law-mutation-harness": {
+      "what": "Each test suite is required to FAIL when one line of the module under it is corrupted; a non-unique anchor is itself a failure, because a mutation landing on the wrong copy reports a false survivor.",
+      "files": [
+        "scripts/law-mutations.mjs"
+      ],
+      "priorArt": {
+        "status": "known-art",
+        "citations": [
+          {
+            "text": "DeMillo, Lipton & Sayward, Hints on Test Data Selection: Help for the Practicing Programmer, IEEE Computer 11(4):34-41 (1978)",
+            "id": "10.1109/C-M.1978.218136",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "Hints on Test Data Selection: Help for the Practicing Programmer",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          },
+          {
+            "text": "Jia & Harman, An Analysis and Survey of the Development of Mutation Testing, IEEE TSE 37(5):649-678 (2011)",
+            "id": "10.1109/TSE.2010.62",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "An Analysis and Survey of the Development of Mutation Testing",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          }
+        ]
+      }
+    },
+    "side-effect-measurement": {
+      "what": "The package's sideEffects list is MEASURED by importing every published entry point in its own process and observing new globals and surviving handles, rather than declared.",
+      "files": [
+        "scripts/side-effects.mjs"
+      ],
+      "priorArt": {
+        "status": "not-searched",
+        "citations": []
+      }
+    },
+    "lean-arbiter": {
+      "what": "The .lean files are the source of truth; the kernel is run on the files that import nothing; TypeScript's ledger fails when it presents as proven anything the files close with sorry, and the generated status ships with the package.",
+      "files": [
+        "scripts/lean-check.mjs",
+        "lean/ledger.json",
+        "src/verification/lean-status.ts"
+      ],
+      "priorArt": {
+        "status": "known-art-in-part",
+        "citations": [
+          {
+            "text": "The mathlib Community, The Lean mathematical library, CPP 2020 — sorry-free and axiom-audited developments are standard practice there",
+            "id": "10.1145/3372885.3373824",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "The lean mathematical library",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          },
+          {
+            "text": "uuidna's axiom witness — derivation needs the toolchain, verification needs only the shipped receipt",
+            "id": null,
+            "kind": "software",
+            "resolved": false
+          }
+        ]
+      }
+    },
+    "digit-space-theorems": {
+      "what": "The doubling orbit closing after six, the through-void involution and its two fixed points, and the orbit/axis/void partition, machine-checked by the Lean kernel with no imports.",
+      "files": [
+        "lean/DigitSpace.lean"
+      ],
+      "priorArt": {
+        "status": "known-art",
+        "citations": [
+          {
+            "text": "Digital roots and the multiplicative order of 2 modulo 9 are elementary number theory; no novelty is claimed",
+            "id": null,
+            "kind": "common-knowledge",
+            "resolved": false
+          },
+          {
+            "text": "The 1-2-4-8-7-5 doubling cycle circulates as 'Rodin vortex mathematics'; the arithmetic is standard and the surrounding claims are not adopted here",
+            "id": null,
+            "kind": "common-knowledge",
+            "resolved": false
+          }
+        ]
+      }
+    },
+    "generated-paper": {
+      "what": "A publication artifact in MathML and LaTeX from one generator, every figure read from the source at generation time, refusing to print any verdict it measured, and failing on a byte of drift.",
+      "files": [
+        "scripts/paper-gen.mjs",
+        "docs/public/paper.html",
+        "docs/public/paper.tex"
+      ],
+      "priorArt": {
+        "status": "known-art-in-part",
+        "citations": [
+          {
+            "text": "Knuth, Literate Programming, The Computer Journal 27(2):97-111 (1984)",
+            "id": "10.1093/comjnl/27.2.97",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "Literate Programming",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          }
+        ]
+      }
+    },
+    "ml-kem-768": {
+      "what": "An ML-KEM-768 implementation checked against NIST ACVP vectors and pq-crystals KAT cases.",
+      "files": [
+        "src/crypto/ml-kem.ts"
+      ],
+      "priorArt": {
+        "status": "known-art",
+        "citations": [
+          {
+            "text": "NIST FIPS 203, Module-Lattice-Based Key-Encapsulation Mechanism Standard (2024)",
+            "id": "10.6028/NIST.FIPS.203",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "Module-lattice-based key-encapsulation mechanism standard",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          }
+        ]
+      }
+    }
+  },
+  "citationPolicy": "Every claim of known art carries a RESOLVABLE identifier where one exists, and says so when one does not. `resolved` records whether the identifier was actually fetched and confirmed to name the cited work — not whether the author believes it. An unresolved DOI is a DOI nobody has checked, and this ledger prints how many there are rather than letting a plausible-looking string pass for a citation. Identifiers written from memory are exactly the kind of claim this repository exists to refuse, so they start unresolved. All nine DOIs were resolved against Crossref on 2026-09-04 and each returned the title of the work cited; the returned title is recorded beside the identifier so a reader can see WHAT resolved, not merely that something did."
+}

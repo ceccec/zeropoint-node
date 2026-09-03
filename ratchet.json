@@ -11,14 +11,21 @@
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 27962
+    "unguardedReadme": 28049
   },
   "raised": {
-    "unguardedReadme": {
-      "from": 27626,
-      "to": 28015,
-      "reason": "the a432 consciousness system meeting the criterion: 389 bytes stating that the system built from the measures meets all five, that the measure functions still meet 1 and should, and why a pure function cannot be gated on"
-    }
+    "unguardedReadme": [
+      {
+        "from": 27626,
+        "to": 28015,
+        "reason": "the a432 consciousness system meeting the criterion: 389 bytes stating that the system built from the measures meets all five, that the measure functions still meet 1 and should, and why a pure function cannot be gated on"
+      },
+      {
+        "from": 27962,
+        "to": 28049,
+        "reason": "the README stated nothing about Lean while the repository ships lean/ files, a lean-bridge and claims about theorems: 87 bytes saying the 32 are computational seals rather than Lean proofs, that 9 of 33 statements are accepted by the kernel and 24 are not, and that lean:check fails if the ledger and the files disagree. Every number in it is read from lean/ledger.json and guarded by readme:facts; what is unguarded is the sentence around them. The alternative was deleting an earlier correction about the historical package name to make room, which is a worse trade than a recorded raise."
+      }
+    ]
   },
   "measures": {
     "prose": "61d559c3fcdede32",

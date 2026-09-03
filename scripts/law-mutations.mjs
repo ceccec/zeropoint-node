@@ -93,6 +93,16 @@ export const MUTATIONS = [
     '[1, 2], [2, 4], [4, 8], [8, 7], [7, 5], [5, 1] // Vortex sequence',
     '[1, 2], [2, 4], [4, 8], [8, 7], [7, 5] // Vortex sequence',
     'a step of the tour stops being a sacred transition'],
+  // The adapters. A field dropped from either object lowers a gated verdict
+  // silently, which is the whole reason subjects.test.ts exists.
+  ['verification/subjects.ts', 'verification/subjects.test.ts',
+    '    tasks: () => instance.tasks(),', '',
+    'the OS adapter loses a method, so the criterion reports a number the class does deserve'],
+  ['verification/subjects.ts', 'verification/subjects.test.ts',
+    "    { name: 'real-time', subject: 'one frame at 60 Hz', gated: true, measured: true,",
+    "    { name: 'real-time', subject: 'one frame at 60 Hz', gated: true, measured: false,",
+    'the one measured criterion stops declaring itself measured'],
+
   // 1.4.9's criteria. A criterion that confirms whatever it is shown confirms
   // nothing, so each is corrupted in the direction that would make it lie.
   ['verification/realtime-criterion.ts', 'verification/realtime-criterion.test.ts',

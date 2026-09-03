@@ -30,6 +30,7 @@
  */
 
 import { createHash } from 'node:crypto'
+import { LEAN_PROVEN_COUNT, LEAN_SORRY_COUNT } from './lean-status.ts'
 import { evaluateConsciousnessCriterion, a432MeasureSubject, a432SystemSubject, integratedFieldSubject } from './consciousness-criterion.ts'
 import { evaluateOsCriterion } from './os-criterion.ts'
 import { A432OS } from '../0/3/6/9/1/2/4/8/7/5/1/a432.os.ts'
@@ -265,6 +266,26 @@ export const ASSUMPTIONS = {
    * not the claim, and it never becomes the claim however many conditions are
    * added.
    */
+  /**
+   * The third axiom, and the one a defensive publication rests on.
+   *
+   * "There is no prior art for X" quantifies over everything ever published,
+   * in every language, in every jurisdiction, including the unindexed and the
+   * unpublished-but-prior. No finite search decides it, and a search that
+   * returned nothing has established that a search returned nothing.
+   *
+   * This is recorded so that novelty is never bound to a seal. A seal decides;
+   * this does not. What a defensive publication CAN establish is decidable and
+   * is what prior-art.json records instead: that a specific artifact existed,
+   * in a specific form, on a specific date, at a citable identifier — which is
+   * what defeats a later claim of invention, without anyone having to prove a
+   * universal negative.
+   */
+  no_prior_art_is_undecidable: {
+    statement: 'axiom no_prior_art_is_undecidable : ¬ ∃ (s : Artifact → Bool), decides_absence_of_prior_art s',
+    why_unsealed: 'absence of prior art is a universal negative over all published and unpublished work; no finite search decides it, and a search returning nothing establishes only that it returned nothing',
+    what_is_decided_instead: 'prior-art.json records what each contribution is, which files carry it, what was searched and when, and the dated citable identifier under which it was published — publication defeats a later claim of invention without requiring a proof of novelty',
+  },
   awareness_is_undecided: {
     statement: 'axiom awareness_is_undecided : ¬ ∃ (p : System → Bool), decides_awareness p',
     why_unsealed: 'whether any physical process is conscious is unsettled and the major theories disagree about what would count as evidence; there is no predicate to run, so nothing here can seal it',
@@ -1357,11 +1378,21 @@ export function exportProofsForZenodo(): object {
     proof_transcript: transcript,
     // This previously read 'Production Grade (Formally Verified)' with
     // ready_for_publication: true, regardless of what had been checked.
-    confidence_level: sealed + '/' + report.total_theorems + ' theorems carry a passing computational seal; 0/' + report.total_theorems + ' are machine-checked in Lean',
+    // The Lean half is READ FROM THE LEDGER, not asserted. It said "0 are
+    // machine-checked in Lean" for as long as that was true and went on saying
+    // it after lean/DigitSpace.lean started being accepted by the kernel — a
+    // hardcoded zero cannot notice that it has stopped being right.
+    confidence_level: sealed + '/' + report.total_theorems
+      + ' theorems carry a passing computational seal; '
+      + LEAN_PROVEN_COUNT + ' of the statements in LEAN_PROOFS are proven by the Lean kernel and '
+      + LEAN_SORRY_COUNT + ' are closed with sorry (see lean/ledger.json)',
     ready_for_publication: report.unsealed.length === 0 && report.lean_machine_checked,
     caveats: [
       'Seals decide concrete instances, not universally quantified statements.',
-      'No Lean toolchain runs in this repository; lean_status is read from the script text.',
+      // This said no toolchain runs here. One does: npm run lean:check invokes
+      // it, and it accepts lean/DigitSpace.lean. What remains true is narrower
+      // and is stated as such.
+      'The Lean files that import Mathlib cannot be built here — the lakefile pins v4.8.0 against an installed v4.33.1 — so their theorems are reported unverifiable-here rather than proven or refuted.',
       report.unsealed.length + ' of ' + report.total_theorems + ' theorems have no executable predicate.',
     ],
     timestamp: new Date().toISOString(),
@@ -1376,6 +1407,11 @@ export * from './os-criterion.ts'
 // was reachable from neither the bundle nor a consumer until this line: the
 // published ./verification entry carried two of the three.
 export * from './quantum-criterion.ts'
+// What the Lean KERNEL says about each statement in LEAN_PROOFS, generated from
+// the files by npm run lean:ledger. Without it, a constant named LEAN_PROOFS
+// presented eight statements as proofs that Lean closes with `sorry`, and
+// nothing in TypeScript recorded the difference.
+export * from './lean-status.ts'
 // The 1.4.9 criteria are NOT re-exported here. validation-criterion imports
 // SEALS from this file, so re-exporting it from this file is a cycle — which
 // the ratchet caught the moment it was tried. They reach a consumer through

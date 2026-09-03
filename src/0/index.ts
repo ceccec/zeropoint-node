@@ -107,13 +107,32 @@ export function seededIndex(seed: string, length: number): number {
   return indexFromSeed(seed, length)
 }
 
+/**
+ * Fold two seeds both ways round.
+ *
+ * `bidirectional` IS A MISNOMER AND HOLDS THE OPPOSITE OF WHAT IT SAYS. It is
+ * `forward !== reverse` — true when the two directions DIFFER, which is when
+ * the fold is *not* bidirectional. Reading the word rather than the expression
+ * inverts every conclusion drawn from it, and one such conclusion was written
+ * down: quantum-fold-cipher.ts documented the security property as "if
+ * bidirectional === false, then order matters", which is backwards. The code
+ * consuming it assigns the field to `orderMatters`, which is correct for what
+ * the field holds and contradicts the sentence three lines above it.
+ *
+ * `orderMatters` is the same value under the name it should always have had.
+ * `bidirectional` is kept because removing a field from a published return type
+ * is a breaking change and this is not the release for one; it is documented
+ * here rather than quietly left to be misread again, and it goes at the next
+ * major.
+ */
 export function foldPair(
   a: string,
   b: string,
-): { forward: string; reverse: string; bidirectional: boolean; merged: string } {
+): { forward: string; reverse: string; bidirectional: boolean; orderMatters: boolean; merged: string } {
   const forward = merge(a, b)
   const reverse = merge(b, a)
-  return { forward, reverse, bidirectional: forward !== reverse, merged: merge(forward, reverse) }
+  const differs = forward !== reverse
+  return { forward, reverse, bidirectional: differs, orderMatters: differs, merged: merge(forward, reverse) }
 }
 
 export function merkleFold(leaves: readonly string[]): string {
@@ -540,7 +559,10 @@ export interface Fold {
   readonly b: string
   readonly forward: string
   readonly reverse: string
+  /** @deprecated Misnomer — it is true when the two directions DIFFER. Use `orderMatters`. */
   readonly bidirectional: boolean
+  /** True when folding a then b differs from folding b then a. */
+  readonly orderMatters: boolean
   readonly merged: string
 }
 
@@ -552,6 +574,7 @@ export function fold(a: string, b: string = a): Fold {
     forward: pair.forward,
     reverse: pair.reverse,
     bidirectional: pair.bidirectional,
+    orderMatters: pair.orderMatters,
     merged: pair.merged,
   }
 }

@@ -1,0 +1,176 @@
+{
+  "toolchain": "Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
+  "files": 3,
+  "theorems": 33,
+  "proven": 9,
+  "sorry": 19,
+  "unverifiableHere": 5,
+  "rejected": 0,
+  "entries": [
+    {
+      "name": "dr_idempotent",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "dr_invariant_under_nine",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "doubling_stays_in_orbit",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "orbit_closes_after_six",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "orbit_never_repeats_a_step",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "through_void_is_an_involution",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "through_void_fixes_only_zero_and_five",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "orbit_and_axis_are_disjoint",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "orbit_and_axis_and_void_exhaust_the_digits",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "hadamard_squared",
+      "file": "Quantum.lean",
+      "status": "unverifiable-here"
+    },
+    {
+      "name": "hadamard_unitary",
+      "file": "Quantum.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "pauliX_unitary",
+      "file": "Quantum.lean",
+      "status": "unverifiable-here"
+    },
+    {
+      "name": "pauli_anticomm",
+      "file": "Quantum.lean",
+      "status": "unverifiable-here"
+    },
+    {
+      "name": "born_rule_sum",
+      "file": "Quantum.lean",
+      "status": "unverifiable-here"
+    },
+    {
+      "name": "grover_amplification",
+      "file": "Quantum.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "shor_period_finding",
+      "file": "Quantum.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "repetition_detects_single_error",
+      "file": "Quantum.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "surface_code_correctability",
+      "file": "Quantum.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "vqe_convergence",
+      "file": "Quantum.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "tensor_preserves_norm",
+      "file": "Quantum.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "surface_code_fault_tolerant",
+      "file": "Quantum.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "kyber_security",
+      "file": "Quantum.lean",
+      "status": "unverifiable-here"
+    },
+    {
+      "name": "quantum_system_correct",
+      "file": "Quantum.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "grover_amplification",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "grover_speedup",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "qft_unitary",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "qft_inverse",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "qft_correctness",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "phase_estimation_accuracy",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "shor_period_finding",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "shor_factorization",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "vqe_finds_ground_state",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry"
+    },
+    {
+      "name": "qaoa_approximation",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry"
+    }
+  ]
+}

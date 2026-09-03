@@ -58,7 +58,10 @@ import { fileURLToPath } from 'node:url'
 import { scanClaims } from './prose-claims.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const LEDGER = join(ROOT, 'scripts', 'claims.json')
+// The ledger lives in src so it SHIPS: the MCP server answers "what does this
+// package claim and what backs it", and a consumer cannot be told to look in a
+// scripts directory that is not in the tarball.
+const LEDGER = join(ROOT, 'src', 'verification', 'claims.json')
 const SEED = process.argv.includes('--seed')
 
 const { SEALS, runSeal, ASSUMPTIONS } = await import(join(ROOT, 'src/verification/lean-bridge.ts'))

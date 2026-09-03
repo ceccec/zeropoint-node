@@ -281,6 +281,10 @@ anyone's word for it.</p>
 <dd><p class="stmt"><code>axiom lwe_hardness : ¬ (polynomial_time_solves_lwe 768 3329)</code></p>
 <p><strong>Why it is not sealed.</strong> a universal negative over all polynomial-time algorithms; no finite computation decides it</p>
 <p><strong>What is decided instead.</strong> kyber_security seals the FIPS 203 parameter sizes of the shipped implementation</p></dd>
+<dt><code>no_prior_art_is_undecidable</code></dt>
+<dd><p class="stmt"><code>axiom no_prior_art_is_undecidable : ¬ ∃ (s : Artifact → Bool), decides_absence_of_prior_art s</code></p>
+<p><strong>Why it is not sealed.</strong> absence of prior art is a universal negative over all published and unpublished work; no finite search decides it, and a search returning nothing establishes only that it returned nothing</p>
+<p><strong>What is decided instead.</strong> prior-art.json records what each contribution is, which files carry it, what was searched and when, and the dated citable identifier under which it was published — publication defeats a later claim of invention without requiring a proof of novelty</p></dd>
 <dt><code>awareness_is_undecided</code></dt>
 <dd><p class="stmt"><code>axiom awareness_is_undecided : ¬ ∃ (p : System → Bool), decides_awareness p</code></p>
 <p><strong>Why it is not sealed.</strong> whether any physical process is conscious is unsettled and the major theories disagree about what would count as evidence; there is no predicate to run, so nothing here can seal it</p>
@@ -485,9 +489,9 @@ unrecorded improvement is an unexamined one.</p>
 <tr><td><code>frameworkTests</code></td><td>0</td></tr>
 <tr><td><code>docFunctions</code></td><td>4</td></tr>
 <tr><td><code>entryPoints</code></td><td>0</td></tr>
-<tr><td><code>unguardedReadme</code></td><td>27962</td></tr>
+<tr><td><code>unguardedReadme</code></td><td>28049</td></tr>
 </tbody></table>
-<p>Deliberate increases, each with a recorded reason: <code>unguardedReadme</code> 27626&#8594;28015.</p>
+<p>Deliberate increases, each with a recorded reason. A surface may be raised more than once and every reason is kept &#8212; the record used to hold only the latest, which lost one: <code>unguardedReadme</code> 27626&#8594;28015; <code>unguardedReadme</code> 27962&#8594;28049.</p>
 </section>
 
 <section class="appendix">
@@ -535,8 +539,8 @@ than its amount.</p>
 <h2>Appendix E&ensp;Mutations</h2>
 <p>A suite that survives a broken implementation has not tested it. Each row
 corrupts one line and requires the suite over it to fail; all
-33 are caught, across
-26 modules.</p>
+35 are caught, across
+27 modules.</p>
 <table class="muts"><thead><tr><th>module</th><th>what the mutation breaks</th></tr></thead><tbody>
 <tr><td><code>a432.yin.yang.ts</code></td><td>simplify stops being canonical</td></tr>
 <tr><td><code>a432.yin.yang.ts</code></td><td>a zero denominator makes NaN again</td></tr>
@@ -554,6 +558,8 @@ corrupts one line and requires the suite over it to fail; all
 <tr><td><code>a432.shear.ts</code></td><td>the shear cycle stops advancing</td></tr>
 <tr><td><code>a432.double.ts</code></td><td>the mirror stops being an involution</td></tr>
 <tr><td><code>a432.electric.flow.ts</code></td><td>a step of the tour stops being a sacred transition</td></tr>
+<tr><td><code>verification/subjects.ts</code></td><td>the OS adapter loses a method, so the criterion reports a number the class does deserve</td></tr>
+<tr><td><code>verification/subjects.ts</code></td><td>the one measured criterion stops declaring itself measured</td></tr>
 <tr><td><code>verification/realtime-criterion.ts</code></td><td>the quantum-scale reach stops reaching and the criterion should notice</td></tr>
 <tr><td><code>verification/realtime-criterion.ts</code></td><td>the worst step stops being the worst, which is the whole measure</td></tr>
 <tr><td><code>verification/realtime-criterion.ts</code></td><td>the step accumulates work with the step number, so the FLOOR of later steps rises — which is exactly what steady-state exists to catch</td></tr>
@@ -628,8 +634,8 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>fe72448a56f735aa</code> over
-18 equations, 32 seals and 2 axioms. Any change to
+<p class="receipt">Generated from source. Model receipt <code>494991d2cf068489</code> over
+18 equations, 32 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>
 </body>

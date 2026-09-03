@@ -97,14 +97,20 @@ export function quantumStateFromUuid(uuid: string): QuantumStateUUID | null {
  * TIER 2: Structural Proof
  *
  * Quantum gates and their application order is proven via foldPair().
- * If foldPair(alice, bob).bidirectional === false, then order matters (secure).
+ *
+ * The condition, stated correctly: order matters when the two folds DIFFER,
+ * i.e. when foldPair(a, b).orderMatters is true. This comment previously said
+ * "if bidirectional === false, then order matters", which is the inverse —
+ * bidirectional is false exactly when forward equals reverse, and that is the
+ * case where order does NOT matter. The code below was always right; the
+ * sentence describing it was not.
  */
 
 export interface QuantumGateProof {
   readonly fromState: QuantumStateUUID
   readonly toState: QuantumStateUUID
   readonly gate: string // 'H', 'X', 'Z', 'CNOT', etc.
-  readonly orderMatters: boolean // from foldPair().bidirectional
+  readonly orderMatters: boolean // from foldPair().orderMatters
   readonly receipt: string // merkle receipt
 }
 
@@ -116,7 +122,7 @@ export function applyQuantumGate(
   const toStateId = toUuid(`gate:${gate}:on:${state.id}`)
 
   // Prove that gate application order matters
-  const { forward, reverse, bidirectional } = foldPair(state.id, toStateId)
+  const { forward, reverse, orderMatters } = foldPair(state.id, toStateId)
 
   // Receipt is the merged fold (proves both forward and reverse were computed)
   const receipt = merge(forward, reverse)
@@ -134,9 +140,10 @@ export function applyQuantumGate(
     fromState: state,
     toState,
     gate,
-    // foldPair sets bidirectional when forward !== reverse — that IS
-    // order-sensitivity. Negating it reported every gate as commutative.
-    orderMatters: bidirectional,
+    // foldPair's `bidirectional` was this value under a name meaning its
+    // opposite, and negating it here once reported every gate as commutative.
+    // The field is now called what it is, so there is nothing left to negate.
+    orderMatters,
     receipt,
   }
 }

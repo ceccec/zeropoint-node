@@ -21,13 +21,19 @@ Three things a reader can actually use, and one honest warning.
   against NIST's own ACVP vectors and 10 000 pq-crystals KAT cases. **It is not
   constant time**, so it is for study and conformance work, not for guarding
   anything.
-- **`zeropoint-mcp`** — an MCP server exposing eight kernel tools to an agent.
-  `npx zeropoint-mcp`.
+- **`zeropoint-mcp`** — an MCP server exposing 11 kernel tools to an agent.
+  `npx zeropoint-mcp`. Three answer about verification rather than arithmetic:
+  `zeropoint.criteria`, `zeropoint.seals`, `zeropoint.claims`.
 
 And the apparatus around them, which is arguably the point: 32 theorems
 adjudicated by a decision procedure outside this repository, a gate that fails,
-and figures that recompute rather than being typed. `npm run coverage:audit`
-reports that 326 of 1136 exported functions have never been called by anything —
+and figures that recompute rather than being typed.
+
+**On Lean.** Those 32 are *computational seals*, not Lean proofs.
+The Lean files hold 33 statements. **9 are accepted by the Lean kernel** and 24 are not:
+19 are closed with `sorry`, 5 import Mathlib and cannot be built here.
+`npm run lean:check` fails if the ledger and the files disagree. `npm run coverage:audit`
+reports that 148 of 1294 exported functions have never been called by anything —
 published because a reader deserves to know which parts have never run.
 
 ### What is aimed at, and what is built

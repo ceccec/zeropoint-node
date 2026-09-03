@@ -5,6 +5,9 @@
  */
 
 import { createInterface } from 'node:readline'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
 import {
   asVortex,
   developmentVortex,
@@ -22,6 +25,31 @@ import {
 import { appendReceipt, GENESIS_PREV } from '../integrity/receipt.ts'
 import { importExportGraphTip } from '../kernel/import-graph.ts'
 import { nextSelfDevelopTip, selfBuild } from '../kernel/self-develop.ts'
+// The verification surface. It is the most distinctive thing this package has
+// and an agent could not see any of it: nine tools covered digit arithmetic and
+// folds, and none could answer "is the quantum criterion met", "which theorems
+// hold" or "what does this package claim and what backs it".
+import { SEALS, runSeal, ASSUMPTIONS } from '../verification/lean-bridge.ts'
+import { allCriteria } from '../verification/subjects.ts'
+/**
+ * Read, not imported. Bundling JSON needs a rollup plugin, and the ledger is
+ * data this server reads rather than code it inlines.
+ *
+ * BOTH LAYOUTS, because the file sits in a different place relative to the
+ * caller depending on which one is running: `src/mcp/server.ts` reaches it as
+ * `../verification/`, and the published `dist/mcp.cjs` reaches it as
+ * `../src/verification/`. The first version only handled the source layout, and
+ * the built server — the one npm actually ships as `zeropoint-mcp` — died on
+ * startup with ENOENT. It was invisible until the BUILT artifact was run
+ * instead of the source, which is why mcp:smoke now runs the build too.
+ */
+const LEDGER = ((): { claims: Record<string, { line: number; kind: string; backedBy: string | null; establishes: string | null; doesNotEstablish: string | null }> } => {
+  const here = typeof __dirname === 'string' ? pathToFileURL(join(__dirname, 'x')) : import.meta.url
+  for (const rel of ['../verification/claims.json', '../src/verification/claims.json']) {
+    try { return JSON.parse(readFileSync(new URL(rel, here), 'utf8')) } catch { /* try the other layout */ }
+  }
+  throw new Error('zeropoint-mcp: cannot find verification/claims.json in either the source or the published layout')
+})()
 
 type JsonRpc = {
   jsonrpc?: string
@@ -92,6 +120,39 @@ const TOOLS = [
     inputSchema: { type: 'object', properties: {} },
   },
   {
+    name: 'zeropoint.criteria',
+    description:
+      'The six predicates that gate a release, plus the one only reported: how many conditions each meets, '
+      + 'and what would refute each. The real-time one MEASURES, so its verdict is a property of this machine.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        samples: { type: 'number', description: 'timed steps for the real-time criterion; fewer is faster and rougher (default 300)' },
+        conditions: { type: 'boolean', description: 'include every condition with its refuter, not just the counts' },
+      },
+    },
+  },
+  {
+    name: 'zeropoint.seals',
+    description:
+      'Every theorem this repository states that carries a predicate which RUNS, and whether it holds right now. '
+      + 'A seal is recomputed on each call; nothing here is remembered.',
+    inputSchema: {
+      type: 'object',
+      properties: { name: { type: 'string', description: 'one seal by name; omit for all of them' } },
+    },
+  },
+  {
+    name: 'zeropoint.claims',
+    description:
+      'The claim ledger: every effect claim the corpus makes and the theorem or declared axiom it is bound to, '
+      + 'with what that binding establishes and what it does NOT. Answers "what does this package claim, and what backs it".',
+    inputSchema: {
+      type: 'object',
+      properties: { backedBy: { type: 'string', description: 'filter to claims resting on one predicate or axiom' } },
+    },
+  },
+  {
     name: 'zeropoint.selfNext',
     description:
       'Next self-develop tip from planTrinity/audit. If development stops, gaps in self-development exist.',
@@ -119,15 +180,33 @@ function callTool(name: string, args: Record<string, unknown>) {
   switch (name) {
     case 'zeropoint.fold': {
       const a = String(args.a ?? '')
-      const b = args.b !== undefined ? String(args.b) : a
+      // b defaults to a, and SAYS SO. It used to default silently, so a caller
+      // who omitted it got a self-fold reported as though two seeds had been
+      // given — and self-folds are the case where order cannot matter, which is
+      // exactly the property `orderMatters` is asked about.
+      const foldedWithItself = args.b === undefined
+      const b = foldedWithItself ? a : String(args.b)
       const f = fold(a, b)
       const receipt = appendReceipt(GENESIS_PREV, 'fold', { a, b, merged: f.merged })
-      return { fold: f, vortex: asVortex(f), receipt }
+      return {
+        summary: foldedWithItself
+          ? `folded "${a}" with itself (no second seed given), so order cannot matter`
+          : `folded "${a}" with "${b}"; order ${f.orderMatters ? 'MATTERS' : 'does not matter'}`,
+        foldedWithItself,
+        fold: f,
+        vortex: asVortex(f),
+        receipt,
+      }
     }
     case 'zeropoint.vortex': {
       const v = foldVortex()
       const stroke = vortexStrokeGateways()
-      return { foldVortex: v, stroke }
+      return {
+        summary: `fold ${v.valid ? 'valid' : 'INVALID'} — palindrome ${v.palindrome.join(' ')}, total ${v.total} root ${v.totalRoot}; `
+          + `tour ${stroke.written} with gateways ${stroke.gateways.join('·')}, ${stroke.ascents} ascents and ${stroke.descents} descents`,
+        foldVortex: v,
+        stroke,
+      }
     }
     case 'zeropoint.contentUuid': {
       const content = (args.content ?? {}) as Record<string, unknown>
@@ -141,7 +220,9 @@ function callTool(name: string, args: Record<string, unknown>) {
       return verifyContentUuid(content, projectId)
     }
     case 'zeropoint.digitalRoot': {
-      return { n: Number(args.n), digitalRoot: digitalRoot(Number(args.n)) }
+      const n = Number(args.n)
+      const d = digitalRoot(n)
+      return { summary: `digitalRoot(${n}) = ${d}`, n, digitalRoot: d }
     }
     case 'zeropoint.developmentVortex': {
       const wave = (typeof args.wave === 'string' ? args.wave : 'edit') as Parameters<
@@ -156,6 +237,68 @@ function callTool(name: string, args: Record<string, unknown>) {
         lobeR: dv.lobeR,
         throat: dv.throat.merged,
         gateways: dv.stroke.gateways,
+      }
+    }
+    case 'zeropoint.criteria': {
+      const samples = typeof args.samples === 'number' ? args.samples : 300
+      const list = allCriteria(samples)
+      const gated = list.filter((c) => c.gated)
+      const unmet = gated.filter((c) => !c.verdict.met)
+      return {
+        summary: unmet.length === 0
+          ? `all ${gated.length} gating criteria met (${list.filter((c) => !c.gated).length} reported, not gated)`
+          : `${unmet.length} of ${gated.length} gating criteria NOT met: ${unmet.map((c) => c.name).join(', ')}`,
+        measured: 'the real-time criterion times this machine; its verdict is not a property of the code alone',
+        criteria: list.map((c) => ({
+          name: c.name,
+          subject: c.subject,
+          gated: c.gated,
+          measured: c.measured,
+          met: `${c.verdict.conditionsMet}/${c.verdict.conditionsTotal}`,
+          ...(args.conditions === true ? { conditions: c.verdict.conditions } : {}),
+        })),
+      }
+    }
+    case 'zeropoint.seals': {
+      const names = Object.keys(SEALS)
+      const one = typeof args.name === 'string' ? args.name : null
+      if (one && !(one in SEALS)) {
+        return { summary: `no seal named ${one}`, known: names }
+      }
+      const chosen = one ? [one] : names
+      const rows = chosen.map((n) => ({ name: n, ...runSeal(n) }))
+      const held = rows.filter((r) => r.seal === 'held').length
+      return {
+        summary: `${held} of ${rows.length} seal(s) hold`,
+        axioms: Object.entries(ASSUMPTIONS).map(([name, a]) => ({
+          name, statement: a.statement, whyUnsealed: a.why_unsealed, decidedInstead: a.what_is_decided_instead,
+        })),
+        seals: rows,
+      }
+    }
+    case 'zeropoint.claims': {
+      const all = Object.entries(LEDGER.claims)
+      const filter = typeof args.backedBy === 'string' ? args.backedBy : null
+      const rows = all
+        .filter(([, e]) => !filter || e.backedBy === filter)
+        .map(([key, e]) => {
+          const at = key.indexOf('::')
+          return {
+            where: `${key.slice(0, at)}:${e.line}`,
+            claim: key.slice(at + 2),
+            backedBy: e.backedBy,
+            establishes: e.establishes,
+            doesNotEstablish: e.doesNotEstablish,
+          }
+        })
+      const unbound = all.filter(([, e]) => !e.backedBy).length
+      const byBinding: Record<string, number> = {}
+      for (const [, e] of all) if (e.backedBy) byBinding[e.backedBy] = (byBinding[e.backedBy] ?? 0) + 1
+      return {
+        summary: `${all.length} effect claim(s); ${all.length - unbound} bound to a theorem or declared axiom, ${unbound} bound to nothing`
+          + (filter ? ` — showing ${rows.length} bound to ${filter}` : ''),
+        byBinding,
+        claims: rows,
       }
     }
     case 'zeropoint.importGraph':

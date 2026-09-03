@@ -16,7 +16,7 @@ const check = (name: string, ok: boolean, detail = ''): void => {
 
 const v = evaluateRealtimeCriterion(500)
 
-// The load-bearing one. Claims in scripts/claims.json are bound to this
+// The load-bearing one. Claims in src/verification/claims.json are bound to this
 // criterion, so a suite that checks its SHAPE and not its VERDICT would let the
 // criterion stop holding while every claim went on citing it.
 check('every condition is met — claims are bound to this verdict',

@@ -637,7 +637,25 @@ if (isCheck) {
 
 const priorState = (() => { try { return JSON.parse(readFileSync(STATE, 'utf8')) } catch { return {} } })()
 const priorRaises = priorState.raised ?? {}
-const raised = raisedNow ? { ...priorRaises, [raisedNow.id]: { from: raisedNow.from, to: raisedNow.to, reason: raisedNow.reason } } : priorRaises
+
+/**
+ * A SURFACE MAY BE RAISED MORE THAN ONCE, AND EVERY REASON SURVIVES.
+ *
+ * This wrote `{ ...priorRaises, [id]: {...} }`, so raising a surface a second
+ * time silently replaced the first raise's reason — and the reason is the
+ * entire point of requiring one. unguardedReadme was raised for the
+ * consciousness criterion and then again for the Lean paragraph, and the first
+ * justification vanished from the record with nothing saying it had.
+ *
+ * Each surface now holds a LIST, oldest first. Existing single-object entries
+ * are read and carried forward, so nothing already recorded is lost by this
+ * change either.
+ */
+const asList = (v) => (Array.isArray(v) ? v : v ? [v] : [])
+const raised = { ...Object.fromEntries(Object.entries(priorRaises).map(([k, v]) => [k, asList(v)])) }
+if (raisedNow) {
+  raised[raisedNow.id] = [...asList(priorRaises[raisedNow.id]), { from: raisedNow.from, to: raisedNow.to, reason: raisedNow.reason }]
+}
 
 /**
  * THE MEASURE FINGERPRINTS SURVIVE A WRITE.

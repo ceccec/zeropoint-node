@@ -27,6 +27,7 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = join(ROOT, 'docs/public/paper.html')
+const TEX = join(ROOT, 'docs/public/paper.tex')
 const CHECK = process.argv.includes('--check')
 
 // ---- everything the paper states, read from the code ----------------------
@@ -46,8 +47,9 @@ const version = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).ver
 const { allCriteria } = await import(join(ROOT, 'scripts/lib/criteria-subjects.mjs'))
 const { MUTATIONS } = await import(join(ROOT, 'scripts/law-mutations.mjs'))
 const criteriaAll = allCriteria()
-const ledger = JSON.parse(readFileSync(join(ROOT, 'scripts/claims.json'), 'utf8')).claims
+const ledger = JSON.parse(readFileSync(join(ROOT, 'src/verification/claims.json'), 'utf8')).claims
 const ratchet = JSON.parse(readFileSync(join(ROOT, 'ratchet.json'), 'utf8'))
+const leanLedger = JSON.parse(readFileSync(join(ROOT, 'lean/ledger.json'), 'utf8'))
 // EVERY run, not only the live one. Superseded plans are kept as
 // release-plan.<run>.json, and dropping them from the page would replace a
 // finished run's results with an unstarted plan's zeros — which is the record
@@ -92,9 +94,20 @@ const fenced = (x, o = '(', c = ')') => `<mrow>${mo(o)}${x}${mo(c)}</mrow>`
 const set = (xs) => `<mrow>${mo('{')}${xs.map(mn).join(mo(','))}${mo('}')}</mrow>`
 
 let eqn = 0
+/**
+ * Every numbered equation, in both notations, in declaration order.
+ *
+ * LaTeX is a SECOND BACKEND over the same equations, not a second document. The
+ * page is MathML because that is what a browser prints natively; a journal wants
+ * .tex. Writing the formulas twice would be two copies of one claim that can
+ * disagree — the defect this repository spent two runs recording — so each
+ * equation carries both notations here and one generator emits both artifacts.
+ */
+const EQUATIONS = []
 /** A numbered display equation. Numbering is generated, never typed. */
-const eq = (mathml, note = '') => {
+const eq = (mathml, note = '', latex = '') => {
   eqn += 1
+  EQUATIONS.push({ n: eqn, latex, note })
   return `<figure class="eq" id="eq${eqn}">
   <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">${mathml}</math>
   <span class="eqno">(${eqn})</span>
@@ -108,56 +121,56 @@ const E_DR = eq(row(
   mi('dr'), fenced(mi('n')), mo('='), mn('1'), mo('+'),
   fenced(row(fenced(row(mi('n'), mo('&#8722;'), mn('1'))), mo('mod'), mn('9'))),
   mo(','), `<mspace width="1em"/>`, mi('n'), mo('&#8805;'), mn('1'),
-), 'The digital root, as a closed form rather than an iteration. It is idempotent, and invariant under adding nine.')
+), 'The digital root, as a closed form rather than an iteration. It is idempotent, and invariant under adding nine.', '\\mathrm{dr}(n) = 1 + \\bigl((n-1) \\bmod 9\\bigr), \\qquad n \\geq 1')
 
 const E_ORBIT = eq(row(
   sub(mi('d'), row(mi('k'), mo('+'), mn('1'))), mo('='),
   mi('dr'), fenced(row(mn('2'), sub(mi('d'), mi('k')))),
-), `Doubling inside the digital root. From <math xmlns="http://www.w3.org/1998/Math/MathML">${row(sub(mi('d'), mn('0')), mo('='), mn('1'))}</math> the walk is ${ORBIT.join(' &#8594; ')} and closes after six.`)
+), `Doubling inside the digital root. From <math xmlns="http://www.w3.org/1998/Math/MathML">${row(sub(mi('d'), mn('0')), mo('='), mn('1'))}</math> the walk is ${ORBIT.join(' &#8594; ')} and closes after six.`, 'd_{k+1} = \\mathrm{dr}(2 d_k)')
 
 const E_ORBITSET = eq(row(
   mi('O'), mo('='), set(ORBIT), mo(','), `<mspace width="1em"/>`,
   mi('A'), mo('='), set(AXIS), mo(','), `<mspace width="1em"/>`,
   mi('O'), mo('&#8745;'), mi('A'), mo('='), mo('&#8709;'),
-), 'The orbit and the axis partition the non-zero digits: six on the doubling ring, three on the axis, and the void makes ten.')
+), 'The orbit and the axis partition the non-zero digits: six on the doubling ring, three on the axis, and the void makes ten.', 'O = \\{1,2,4,8,7,5\\}, \\qquad A = \\{3,6,9\\}, \\qquad O \\cap A = \\varnothing')
 
 const E_VOID = eq(row(
   mi('v'), fenced(mi('n')), mo('='), mn('1'), mo('&#8722;'),
   fenced(row(mi('n'), mo('mod'), mn('9'))),
-), 'The through-void involution. It is its own inverse, and 5 is its only fixed point.')
+), 'The through-void involution. It is its own inverse, and 5 is its only fixed point.', 'v(n) = 1 - (n \\bmod 9)')
 
 const E_FREQ = eq(row(
   mi('f'), fenced(mi('d')), mo('='), frac(row(mn('432'), mi('d')), mn('12')), mo('='),
   mn('36'), mi('d'), mo(','), `<mspace width="1em"/>`, mi('d'), mo('&#8712;'),
   row(mo('{'), mn('0'), mo(','), mo('&#8230;'), mo(','), mn('9'), mo('}')),
-), `Frequency in hertz. The exact form is <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mn('36'), mi('d'))}</math>; the implementation evaluates <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mn('432'), mo('&#215;'), fenced(row(mi('d'), mo('/'), mn('12'))))}</math> and so returns ${freq[7]} at <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mi('d'), mo('='), mn('7'))}</math> where the exact value is 252. The discrepancy is binary floating point, not arithmetic, and it is stated here rather than rounded away.`)
+), `Frequency in hertz. The exact form is <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mn('36'), mi('d'))}</math>; the implementation evaluates <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mn('432'), mo('&#215;'), fenced(row(mi('d'), mo('/'), mn('12'))))}</math> and so returns ${freq[7]} at <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mi('d'), mo('='), mn('7'))}</math> where the exact value is 252. The discrepancy is binary floating point, not arithmetic, and it is stated here rather than rounded away.`, 'f(d) = \\frac{432\\,d}{12} = 36 d, \\qquad d \\in \\{0,\\dots,9\\}')
 
 const E_OCT = eq(row(
   sub(mi('f'), mi('oct')), fenced(mi('n')), mo('='), mn('432'), mo('&#183;'),
   sup(mn('2'), mi('n')),
-), `Octave scaling. <math xmlns="http://www.w3.org/1998/Math/MathML">${row(sub(mi('f'), mi('oct')), fenced(row(mi('n'), mo('+'), mn('1'))), mo('='), mn('2'), sub(mi('f'), mi('oct')), fenced(mi('n')))}</math> holds exactly, because the factor is two.`)
+), `Octave scaling. <math xmlns="http://www.w3.org/1998/Math/MathML">${row(sub(mi('f'), mi('oct')), fenced(row(mi('n'), mo('+'), mn('1'))), mo('='), mn('2'), sub(mi('f'), mi('oct')), fenced(mi('n')))}</math> holds exactly, because the factor is two.`, 'f_{\\mathrm{oct}}(n) = 432 \\cdot 2^{n}')
 
 const E_HUE = eq(row(
   mi('h'), fenced(mi('d')), mo('='), mn('36'), mi('d'), `<mspace width="0.5em"/>`,
   mo('mod'), `<mspace width="0.5em"/>`, mn('360'),
-), 'Hue in degrees. Colour and pitch carry the same integer: this is an identity of two definitions, not an empirical correspondence.')
+), 'Hue in degrees. Colour and pitch carry the same integer: this is an identity of two definitions, not an empirical correspondence.', 'h(d) = 36 d \\bmod 360')
 
 const E_PHI = eq(row(
   mi('&#966;'), mo('='), frac(row(mn('1'), mo('+'), sqrt(mn('5'))), mn('2')), mo(','),
   `<mspace width="1em"/>`, sup(mi('&#966;'), mn('2')), mo('='), mi('&#966;'), mo('+'), mn('1'),
-), `The golden ratio and its defining equation. Computed here as ${mc.GOLDEN_RATIO}.`)
+), `The golden ratio and its defining equation. Computed here as ${mc.GOLDEN_RATIO}.`, '\\varphi = \\frac{1+\\sqrt{5}}{2}, \\qquad \\varphi^{2} = \\varphi + 1')
 
 const E_CMYK = eq(row(
   sub(mi('f'), mi('c')), mo('='), frac(row(mn('432'), mo('&#183;'), mn('3')), mn('2')), mo(','), `<mspace width="0.8em"/>`,
   sub(mi('f'), mi('m')), mo('='), frac(row(mn('432'), mo('&#183;'), mn('6')), mn('5')), mo(','), `<mspace width="0.8em"/>`,
   sub(mi('f'), mi('y')), mo('='), frac(row(mn('432'), mo('&#183;'), mn('9')), mn('5')), mo(','), `<mspace width="0.8em"/>`,
   sub(mi('f'), mi('k')), mo('='), frac(row(mn('432'), mo('&#183;'), mn('1')), mn('3')),
-), `The four channel ratios, held as exact fractions rather than decimals: ${Object.entries(cm.CMYK_FREQUENCY_RATIOS).map(([n, f]) => `${n} ${f.numerator}/${f.denominator}`).join(', ')}. Two of them do not terminate in decimal, which is the reason the representation is a pair of integers.`)
+), `The four channel ratios, held as exact fractions rather than decimals: ${Object.entries(cm.CMYK_FREQUENCY_RATIOS).map(([n, f]) => `${n} ${f.numerator}/${f.denominator}`).join(', ')}. Two of them do not terminate in decimal, which is the reason the representation is a pair of integers.`, 'f_c = \\frac{432\\cdot 3}{2},\\quad f_m = \\frac{432\\cdot 6}{5},\\quad f_y = \\frac{432\\cdot 9}{5},\\quad f_k = \\frac{432\\cdot 1}{3}')
 
 const E_MEDIANT = eq(row(
   mi('med'), fenced(row(frac(sub(mi('a'), mn('1')), sub(mi('b'), mn('1'))), mo(','), frac(sub(mi('a'), mn('2')), sub(mi('b'), mn('2'))))),
   mo('='), frac(row(sub(mi('a'), mn('1')), mo('+'), sub(mi('a'), mn('2'))), row(sub(mi('b'), mn('1')), mo('+'), sub(mi('b'), mn('2')))),
-), `The mediant, which lies strictly between its arguments and is <em>not</em> their mean: <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mi('med'), fenced(row(frac(mn('1'), mn('2')), mo(','), frac(mn('1'), mn('3')))), mo('='), frac(mn('2'), mn('5')))}</math> while the mean is 5/12. Computed here as ${(() => { const m = yy.harmonizeYinYangFraction({ numerator: 1, denominator: 2 }, { numerator: 1, denominator: 3 }); return `${m.numerator}/${m.denominator}` })()}.`)
+), `The mediant, which lies strictly between its arguments and is <em>not</em> their mean: <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mi('med'), fenced(row(frac(mn('1'), mn('2')), mo(','), frac(mn('1'), mn('3')))), mo('='), frac(mn('2'), mn('5')))}</math> while the mean is 5/12. Computed here as ${(() => { const m = yy.harmonizeYinYangFraction({ numerator: 1, denominator: 2 }, { numerator: 1, denominator: 3 }); return `${m.numerator}/${m.denominator}` })()}.`, '\\mathrm{med}\\!\\left(\\frac{a_1}{b_1},\\frac{a_2}{b_2}\\right) = \\frac{a_1+a_2}{b_1+b_2}')
 
 const E_H = eq(row(
   mi('H'), mo('='), frac(mn('1'), sqrt(mn('2'))),
@@ -171,41 +184,41 @@ const E_H = eq(row(
   + `<mtr><mtd>${mn('1')}</mtd><mtd>${row(mo('&#8722;'), mn('1'))}</mtd></mtr>`
   + `</mtable><mstyle mathsize="230%"><mo>]</mo></mstyle></mrow>`,
   mo(','), `<mspace width="1em"/>`, sup(mi('H'), mn('2')), mo('='), mi('I'),
-), 'The Hadamard gate and its involution. The seal decides this by applying it twice to each basis state of one qubit; linearity makes two states exhaustive.')
+), 'The Hadamard gate and its involution. The seal decides this by applying it twice to each basis state of one qubit; linearity makes two states exhaustive.', 'H = \\frac{1}{\\sqrt{2}}\\begin{bmatrix} 1 & 1 \\\\ 1 & -1 \\end{bmatrix}, \\qquad H^{2} = I')
 
 const E_BORN = eq(row(
   `<munder><mo movablelimits="false">&#8721;</mo><mi>i</mi></munder>`,
   sup(`<mrow><mo>|</mo>${sub(mi('a'), mi('i'))}<mo>|</mo></mrow>`, mn('2')),
   mo('='), mn('1'),
-), 'The Born rule as a normalisation condition. Every unitary step in the simulator preserves it, and the tensor product of two normalised registers is normalised.')
+), 'The Born rule as a normalisation condition. Every unitary step in the simulator preserves it, and the tensor product of two normalised registers is normalised.', '\\sum_i |a_i|^{2} = 1')
 
 const E_EREV = eq(row(
   sup(mi('E'), mo('&#176;')), mo('='), frac(row(mo('&#916;'), mi('G')), row(mi('n'), mi('F'))),
-), `The reversible cell potential. With <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mi('n'), mo('='), mn(String(th.ELECTRONS)))}</math> and <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mi('F'), mo('='), mn(String(th.FARADAY)))}</math> C&#183;mol&#8315;&#185;, this is ${th.reversiblePotentialMicrovolts()} &#181;V, from &#916;G = ${th.toKilojoulesPerMole(th.GIBBS_SPLITTING)} kJ&#183;mol&#8315;&#185;.`)
+), `The reversible cell potential. With <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mi('n'), mo('='), mn(String(th.ELECTRONS)))}</math> and <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mi('F'), mo('='), mn(String(th.FARADAY)))}</math> C&#183;mol&#8315;&#185;, this is ${th.reversiblePotentialMicrovolts()} &#181;V, from &#916;G = ${th.toKilojoulesPerMole(th.GIBBS_SPLITTING)} kJ&#183;mol&#8315;&#185;.`, 'E^{\\circ} = \\frac{\\Delta G}{nF}')
 
 const E_ETN = eq(row(
   sub(mi('E'), mi('tn')), mo('='), frac(row(mo('&#916;'), mi('H')), row(mi('n'), mi('F'))),
-), `The thermoneutral potential, ${th.thermoneutralPotentialMicrovolts()} &#181;V. It exceeds the reversible potential because the entropy term is negative for this reaction; the difference is the heat the surroundings must supply.`)
+), `The thermoneutral potential, ${th.thermoneutralPotentialMicrovolts()} &#181;V. It exceeds the reversible potential because the entropy term is negative for this reaction; the difference is the heat the surroundings must supply.`, 'E_{\\mathrm{tn}} = \\frac{\\Delta H}{nF}')
 
 const E_COD = eq(row(
   sub(mi('C'), mi('be')), mo('='), mn(String(ww.breakEvenCod())), `<mspace width="0.4em"/>`,
   mi('mg'), mo('&#183;'), sup(mi('L'), row(mo('&#8722;'), mn('1'))),
-), 'The break-even organic load, computed rather than asserted. Below it the process consumes more energy than it recovers.')
+), 'The break-even organic load, computed rather than asserted. Below it the process consumes more energy than it recovers.', 'C_{\\mathrm{be}} = 4195\\ \\mathrm{mg}\\cdot\\mathrm{L}^{-1}')
 
 const E_DEADLINE = eq(row(
   mi('T'), mo('='), frac(mn('1'), mn(String(rt.FRAME_HZ))), `<mspace width="0.3em"/>`, mi('s'),
   mo('='), mn(String(Math.round(rt.DEADLINE_NS))), `<mspace width="0.3em"/>`, mi('ns'),
-), `The real-time deadline, stated before any measurement is taken rather than chosen after one. The criterion reports the worst observed step and the miss count when it is run; those are properties of the machine it runs on and are deliberately not printed here.`)
+), `The real-time deadline, stated before any measurement is taken rather than chosen after one. The criterion reports the worst observed step and the miss count when it is run; those are properties of the machine it runs on and are deliberately not printed here.`, 'T = \\frac{1}{60}\\ \\mathrm{s}')
 
 const E_JITTER = eq(row(
   sub(mi('t'), mi('max')), mo('&#8722;'), sub(mi('t'), mi('min')), mo('&#8804;'),
   frac(mi('T'), mn(String(rt.JITTER_FRACTION_DENOMINATOR))),
-), 'The jitter bound. The maximum is the measure and the mean is not: a system that misses one deadline in a thousand has missed a deadline.')
+), 'The jitter bound. The maximum is the measure and the mean is not: a system that misses one deadline in a thousand has missed a deadline.', 't_{\\max} - t_{\\min} \\leq \\frac{T}{2}')
 
 const E_REACH = eq(row(
   mi('C'), fenced(mi('q')), mo('&#8712;'), mo('&#920;'), fenced(sup(mn('2'), mi('q'))), mo(','), `<mspace width="1em"/>`,
   mi('C'), fenced(mi('q')), mo('&#8804;'), mi('T'),
-), `The cost of a full step &#8212; a Hadamard layer, a CNOT ladder and a probability read &#8212; is linear in the number of amplitudes and so doubles with every qubit. The criterion reports the widest register that fits the frame on the machine it runs on; a deadline met at <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mi('q'))}</math> qubits is met for every narrower one, and that implication is the part which does not depend on the machine.`)
+), `The cost of a full step &#8212; a Hadamard layer, a CNOT ladder and a probability read &#8212; is linear in the number of amplitudes and so doubles with every qubit. The criterion reports the widest register that fits the frame on the machine it runs on; a deadline met at <math xmlns="http://www.w3.org/1998/Math/MathML">${row(mi('q'))}</math> qubits is met for every narrower one, and that implication is the part which does not depend on the machine.`, 'C(q) \\in \\Theta(2^{q}), \\qquad C(q) \\leq T')
 
 // ---- the page -------------------------------------------------------------
 const sealRows = seals.map((n) => `<tr><td><code>${n}</code></td><td>${lb.runSeal(n).seal}</td><td>${escape(lb.runSeal(n).basis)}</td></tr>`).join('\n')
@@ -393,7 +406,7 @@ unrecorded improvement is an unexamined one.</p>
 <table><thead><tr><th>surface</th><th>ceiling</th></tr></thead><tbody>
 ${Object.entries(ratchet.ceilings).map(([k, v]) => `<tr><td><code>${escape(k)}</code></td><td>${v}</td></tr>`).join('\n')}
 </tbody></table>
-${Object.keys(ratchet.raised ?? {}).length ? `<p>Deliberate increases, each with a recorded reason: ${Object.entries(ratchet.raised).map(([k, r]) => `<code>${escape(k)}</code> ${r.from}&#8594;${r.to}`).join('; ')}.</p>` : ''}
+${Object.keys(ratchet.raised ?? {}).length ? `<p>Deliberate increases, each with a recorded reason. A surface may be raised more than once and every reason is kept &#8212; the record used to hold only the latest, which lost one: ${Object.entries(ratchet.raised).flatMap(([k, v]) => (Array.isArray(v) ? v : [v]).map((r) => `<code>${escape(k)}</code> ${r.from}&#8594;${r.to}`)).join('; ')}.</p>` : ''}
 </section>
 
 <section class="appendix">
@@ -555,16 +568,123 @@ fails until the page is regenerated.</p>
 </html>
 `
 
+/**
+ * The same paper as a LaTeX article: same figures, same numbering, one source.
+ *
+ * NOT COMPILE-TESTED. No TeX engine is installed here, so this generator can
+ * check that the environments balance, that no `%` is unescaped, that `$` pairs
+ * up and that no HTML entity or tag survived the conversion — and it does, in
+ * the structural pass below — but it CANNOT claim the document typesets. Saying
+ * "publication-ready" about a file nobody has run through LaTeX is the kind of
+ * claim this repository spends its releases removing.
+ */
+const texEscape = (t) => String(t)
+  .replace(/&#8212;/g, '---').replace(/&#8722;/g, '-').replace(/&#183;/g, '\\cdot ')
+  .replace(/&#215;/g, '\\times ').replace(/&#8804;/g, '$\\leq$').replace(/&#8805;/g, '$\\geq$')
+  .replace(/&#8709;/g, '$\\varnothing$').replace(/&#8745;/g, '$\\cap$').replace(/&#966;/g, '$\\varphi$')
+  .replace(/&#181;/g, '$\\mu$').replace(/&#916;/g, '$\\Delta$').replace(/&#176;/g, '$^\\circ$')
+  .replace(/&#8594;/g, '$\\to$').replace(/&#9670;/g, '$\\diamond$').replace(/&#8230;/g, '\\dots')
+  .replace(/&#10003;/g, 'yes').replace(/&#10007;/g, 'no').replace(/&#8721;/g, '$\\sum$')
+  .replace(/<math[^>]*>[\s\S]*?<\/math>/g, '')
+  .replace(/<[^>]+>/g, '')
+  .replace(/&amp;/g, '\\&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  .replace(/([%$#_{}])/g, '\\$1')
+  .replace(/\s+/g, ' ').trim()
+
+const texDoc = `% Generated by scripts/paper-gen.mjs — do not edit.
+% Every figure is read from the source at generation time; paper:check fails on
+% a byte of drift. The HTML at docs/public/paper.html is the same document in
+% MathML, from the same generator and the same numbers.
+\\documentclass[11pt,a4paper]{article}
+\\usepackage[margin=25mm]{geometry}
+\\usepackage{amsmath,amssymb,booktabs,microtype}
+\\title{Exact arithmetic over a ten-digit space}
+\\author{zeropoint-node ${version}}
+\\date{}
+\\begin{document}
+\\maketitle
+
+\\begin{abstract}
+This paper sets out the arithmetic that \\texttt{zeropoint-node} implements and the
+predicates that decide it. The digit space is partitioned by a doubling map into a
+six-element orbit and a three-element axis; frequency and hue are one integer read in
+two units; ratios are carried as pairs of integers rather than decimals. ${held.length} of
+${seals.length} theorems carry a predicate that runs and holds, and ${leanLedger.proven} of
+${leanLedger.theorems} statements in the Lean files are accepted by the Lean kernel.
+Two claims are recorded as axioms because no finite computation decides them.
+\\textbf{No physical experiment is reported here.}
+\\end{abstract}
+
+${EQUATIONS.map((e) => `\\begin{equation}\n${e.latex}\n\\end{equation}\n${e.note ? `\\noindent\\small ${texEscape(e.note)}\\normalsize\n` : ''}`).join('\n')}
+
+\\section*{What is not established}
+${axioms.map(([name, a]) => `\\paragraph{\\texttt{${name}}} ${texEscape(a.why_unsealed)} What is decided instead: ${texEscape(a.what_is_decided_instead)}`).join('\n\n')}
+
+\\paragraph{} ${texEscape(validation.doesNotEstablish)}
+
+\\section*{Reproduction}
+\\begin{verbatim}
+npm install
+npm run paper          # regenerate both artifacts
+npm run paper:check    # fail if either has drifted
+npm run lean:check     # what the Lean kernel accepts
+npm run criteria:check # the six predicates
+\\end{verbatim}
+\\end{document}
+`
+
 if (CHECK) {
   if (!existsSync(OUT)) { console.error('paper:check FAIL — docs/public/paper.html is missing; run npm run paper'); process.exit(1) }
+  const texProblems = texStructuralProblems(texDoc)
+  if (texProblems.length > 0) {
+    console.error(`paper:check FAIL — the LaTeX is malformed: ${texProblems.join('; ')}`)
+    process.exit(1)
+  }
+  const onTex = existsSync(TEX) ? readFileSync(TEX, 'utf8') : null
+  if (onTex !== texDoc) {
+    console.error('paper:check FAIL — docs/public/paper.tex has drifted from the source; run npm run paper')
+    process.exit(1)
+  }
   const on = readFileSync(OUT, 'utf8')
   if (on !== html) {
     console.error('paper:check FAIL — docs/public/paper.html has drifted from the source; run npm run paper')
     process.exit(1)
   }
-  console.log(`paper:check ok — ${eqn} equations, receipt ${receipt}`)
+  console.log(`paper:check ok — ${eqn} equations in MathML and LaTeX, receipt ${receipt} (the .tex is structurally checked, not compiled: no TeX engine here)`)
   process.exit(0)
 }
 
+/**
+ * What can be decided without a TeX engine. Each is a defect the conversion has
+ * actually produced at some point: an unbalanced environment, a raw `%` that
+ * comments out the rest of a line, an odd number of `$`, and HTML entities or
+ * tags surviving a strip that missed a case.
+ */
+function texStructuralProblems(doc) {
+  const out = []
+  const count = (re) => (doc.match(re) ?? []).length
+  const begins = [...doc.matchAll(/\\begin\{(\w+\*?)\}/g)].map((m) => m[1])
+  const ends = [...doc.matchAll(/\\end\{(\w+\*?)\}/g)].map((m) => m[1])
+  for (const env of new Set([...begins, ...ends])) {
+    const b = begins.filter((x) => x === env).length
+    const e = ends.filter((x) => x === env).length
+    if (b !== e) out.push(`environment ${env} opened ${b} time(s) and closed ${e}`)
+  }
+  const body = doc.split('\\begin{document}')[1] ?? ''
+  if (/(?<!\\)%/.test(body)) out.push('an unescaped % comments out the rest of its line')
+  if (doc.split('$').length % 2 === 0) out.push('an odd number of $ — math mode does not close')
+  if (count(/&#\d+;/g) > 0) out.push(`${count(/&#\d+;/g)} HTML entity/entities survived the conversion`)
+  if (count(/<[a-zA-Z/][^>]*>/g) > 0) out.push(`${count(/<[a-zA-Z/][^>]*>/g)} HTML tag(s) survived the conversion`)
+  return out
+}
+
+const texProblems = texStructuralProblems(texDoc)
+if (texProblems.length > 0) {
+  console.error('paper — the LaTeX is malformed and was not written:')
+  for (const p of texProblems) console.error(`  ✗ ${p}`)
+  process.exit(1)
+}
+
 writeFileSync(OUT, html)
-console.log(`paper — wrote docs/public/paper.html: ${eqn} numbered equations, ${held.length}/${seals.length} seals, ${axioms.length} axioms, receipt ${receipt}`)
+writeFileSync(TEX, texDoc)
+console.log(`paper — wrote docs/public/paper.html and paper.tex: ${eqn} numbered equations, ${held.length}/${seals.length} seals, ${axioms.length} axioms, receipt ${receipt}`)

@@ -216,7 +216,7 @@
     "vortex:svg:check": "node --experimental-strip-types scripts/vortex-svg.mjs --check",
     "bundle:a432": "node scripts/build-a432-bundle.mjs",
     "bundle:a432:check": "node scripts/build-a432-bundle.mjs --check",
-    "check": "npm run build && npm run version:test && npm run version:address:test && npm run version:cidr:test && npm run version:calendar:test && npm run calendar:drift:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run deps:check && npm run version:check && npm run zenodo:check && npm run rights:check && npm run changelog:check && npm run test:kernel && npm run test:core && npm run test:measured-debt && npm run test:security && npm run test:quantum && npm run test:hex-trinities && npm run test:frequency-flow && npm run test:error-resolvers && npm run test:vortex-pi && npm run test:validators && npm run test:gateways && npm run test:trinity && npm run test:reality-streams && npm run test:completions && npm run test:science-challenges && npm run test:harmonic-solutions && npm run test:phases-audit && npm run test:crypto && npm run test:a432 && npm run test:a432:math && npm run test:raf && npm run test:block-chain && npm run test:yin-yang && npm run test:rodin-coil && npm run test:math-constants && npm run test:registry && npm run test:vbm && npm run test:uuid && npm run test:vortex-arithmetic && npm run test:quantum-reachable && npm run test:a432-reachable && npm run test:resolution && npm run test:surface && npm run mutations:check && npm run constants:check && npm run collisions:check && npm run falsifiable:check && npm run finite:check && npm run coverage:audit && npm run standard:check && npm run adjudicate:check && npm run test:verification && npm run test:consciousness-criterion && npm run test:integrated-field && npm run test:a432-consciousness-field && npm run test:system-provider && npm run test:os-criterion && npm run test:quantum-criterion && npm run test:realtime-criterion && npm run test:validation-criterion && npm run test:os-kernel && npm run math:ban && npm run silent:check && npm run retracted:check && npm run claims:check && npm run refs:check && npm run description:check && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run readme:facts && npm run readme:names && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run api:reference && npm run api:reference:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run paper && npm run paper:check && npm run docs:commands && npm run entrypoints && npm run readme:examples && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run quantum:proof && npm run measure:check && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
+    "check": "npm run build && npm run version:test && npm run version:address:test && npm run version:cidr:test && npm run version:calendar:test && npm run calendar:drift:test && npm run notes:test && npm run notes:check && npm run registry:test && npm run entries:check && npm run sideeffects:check && npm run deps:check && npm run version:check && npm run zenodo:check && npm run rights:check && npm run changelog:check && npm run test:kernel && npm run test:core && npm run test:measured-debt && npm run test:security && npm run test:quantum && npm run test:hex-trinities && npm run test:frequency-flow && npm run test:error-resolvers && npm run test:vortex-pi && npm run test:validators && npm run test:gateways && npm run test:trinity && npm run test:reality-streams && npm run test:completions && npm run test:science-challenges && npm run test:harmonic-solutions && npm run test:phases-audit && npm run test:crypto && npm run test:a432 && npm run test:a432:math && npm run test:raf && npm run test:block-chain && npm run test:yin-yang && npm run test:rodin-coil && npm run test:math-constants && npm run test:registry && npm run test:vbm && npm run test:uuid && npm run test:vortex-arithmetic && npm run test:quantum-reachable && npm run test:a432-reachable && npm run test:resolution && npm run test:surface && npm run mutations:check && npm run constants:check && npm run collisions:check && npm run falsifiable:check && npm run finite:check && npm run coverage:audit && npm run standard:check && npm run adjudicate:check && npm run lean:check && npm run test:verification && npm run test:consciousness-criterion && npm run test:integrated-field && npm run test:a432-consciousness-field && npm run test:system-provider && npm run test:os-criterion && npm run test:quantum-criterion && npm run test:realtime-criterion && npm run test:validation-criterion && npm run test:subjects && npm run test:os-kernel && npm run math:ban && npm run silent:check && npm run retracted:check && npm run claims:check && npm run priorart:check && npm run refs:check && npm run description:check && npm run bundle:a432:check && npm run skills:seal && npm run skills:check && npm run readme && npm run readme:check && npm run readme:facts && npm run readme:names && npm run docs:pages && npm run docs:pages:check && npm run a432:scan && npm run a432:scan:check && npm run api:reference && npm run api:reference:check && npm run docs:index && npm run docs:index:check && npm run spectrum && npm run spectrum:check && npm run vortex:svg && npm run vortex:svg:check && npm run paper && npm run paper:check && npm run docs:commands && npm run entrypoints && npm run readme:examples && npm run pages:check && npm run docs:build && npm run quantum:sim && npm run quantum:proof && npm run measure:check && npm run ratchet:check && npm run mcp:smoke && npm run self:next",
     "criteria:check": "node --experimental-strip-types scripts/criteria-check.mjs",
     "plan:check": "node scripts/plan-check.mjs",
     "prepublishOnly": "npm run build",
@@ -286,7 +286,13 @@
     "test:realtime-criterion": "node --experimental-strip-types src/verification/realtime-criterion.test.ts",
     "test:validation-criterion": "node --experimental-strip-types src/verification/validation-criterion.test.ts",
     "paper": "node --experimental-strip-types scripts/paper-gen.mjs",
-    "paper:check": "node --experimental-strip-types scripts/paper-gen.mjs --check"
+    "paper:check": "node --experimental-strip-types scripts/paper-gen.mjs --check",
+    "sideeffects": "node scripts/side-effects.mjs",
+    "sideeffects:check": "node scripts/side-effects.mjs --check",
+    "test:subjects": "node --experimental-strip-types src/verification/subjects.test.ts",
+    "lean:check": "node --experimental-strip-types scripts/lean-check.mjs",
+    "lean:ledger": "node --experimental-strip-types scripts/lean-check.mjs --ledger",
+    "priorart:check": "node --experimental-strip-types scripts/prior-art-check.mjs"
   },
   "keywords": [
     "a432",
@@ -353,5 +359,22 @@
   "homepage": "https://node.zeropoint.bg",
   "bin": {
     "zeropoint-mcp": "./dist/mcp.cjs"
+  },
+  "sideEffects": [
+    "./dist/a432.cmyk.esm.js",
+    "./dist/a432.electric.flow.esm.js",
+    "./dist/a432.i.esm.js",
+    "./dist/a432.kabbalah.esm.js",
+    "./dist/a432.math.constants.esm.js",
+    "./dist/a432.mobius.circuit.esm.js",
+    "./dist/a432.sacred.geometry.esm.js",
+    "./dist/a432.simple.esm.js",
+    "./dist/a432.system.esm.js",
+    "./dist/a432.wave.energy.esm.js",
+    "./dist/mcp.esm.js",
+    "./dist/verification.esm.js"
+  ],
+  "engines": {
+    "node": ">=20.11"
   }
 }

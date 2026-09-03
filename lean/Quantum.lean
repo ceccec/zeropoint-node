@@ -10,7 +10,23 @@
   6. System composition and self-healing properties
   7. Security properties of post-quantum cryptography
 
-  All theorems are formally proven, not assumed.
+  WHAT IS ACTUALLY PROVEN HERE, and what is not.
+
+  This header used to read "All theorems are formally proven, not assumed" in a
+  file that closes nine of its fourteen theorems with `sorry`. The claim was
+  false when it was written and stayed false through several published
+  releases, because nothing checked it: prose:check reads .md and this is .lean.
+
+  The truth is recorded per theorem in lean/ledger.json, generated from these
+  files by `npm run lean:ledger`, and `npm run lean:check` fails if this file
+  and that record disagree. A `sorry` is not a proof, and the ledger says so by
+  name rather than leaving a reader to grep.
+
+  This file also opens with `import Mathlib`, and the lakefile pins Lean v4.8.0
+  against a v4.33.1 toolchain, so it CANNOT BE BUILT in this repository as it
+  stands. Its theorems are therefore reported `unverifiable-here` — neither
+  proven nor refuted, because nobody ran them. The nine theorems this repository
+  can check live in lean/DigitSpace.lean, which imports nothing.
 -/
 
 import Mathlib

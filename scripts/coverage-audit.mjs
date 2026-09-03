@@ -92,6 +92,7 @@ const EXERCISERS = [
   ['src/verification/quantum-criterion.test.ts', null],
   ['src/verification/realtime-criterion.test.ts', null],
   ['src/verification/validation-criterion.test.ts', null],
+  ['src/verification/subjects.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.block.chain.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.raf.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.yin.yang.test.ts', null],

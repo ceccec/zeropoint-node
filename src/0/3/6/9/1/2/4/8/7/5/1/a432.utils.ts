@@ -392,7 +392,7 @@ export const a432Harmonization = A432Harmonization;
 export const a432Validation = A432Validation;
 
 // Legacy compatibility
-export const calculateDigitalRoot = A432Math.digitalRoot;
+export { calculateDigitalRoot } from './a432.math.constants.ts';
 export const calculateHarmonicFrequency = A432Math.harmonicFrequency;
 export const calculateTrinityProduct = A432Math.trinityProduct;
 export const calculateVortexAngle = A432Math.vortexAngle;

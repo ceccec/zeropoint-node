@@ -4,8 +4,8 @@
  * Using harmonized mathematical constants to show wave patterns in consciousness
  */
 
-import { abs, log2, round } from './a432.algebra.ts'
-import { GOLDEN_RATIO, TAU, FIBONACCI_SEQUENCE, calculateDigitalRoot, A432_BASE_FREQUENCY, A432_VORTEX_MULTIPLIER } from './a432.math.constants.ts';
+import { round } from './a432.algebra.ts'
+import { GOLDEN_RATIO, TAU, FIBONACCI_SEQUENCE, calculateDigitalRoot, A432_BASE_FREQUENCY, A432_VORTEX_MULTIPLIER, isA432Harmonic } from './a432.math.constants.ts';
 
 // === WAVE ENERGY INTERFACES ===
 export interface WavePattern {
@@ -123,10 +123,7 @@ export function calculateWaveHarmonics(fundamental: number, count: number = 5): 
   };
 }
 
-export function isA432Harmonic(frequency: number, tolerance: number = (1 / 100)): boolean {
-  const octave = log2(frequency / A432_BASE_FREQUENCY);
-  return abs(octave - round(octave)) < tolerance;
-}
+export { isA432Harmonic };
 
 // === ENERGY FIELD CALCULATIONS ===
 export function calculateEnergyField(waves: WavePattern[]): EnergyField {

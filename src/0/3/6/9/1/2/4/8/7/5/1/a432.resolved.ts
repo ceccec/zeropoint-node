@@ -124,9 +124,8 @@ export const A432_RESOLVED_FRACTIONS = {
 /**
  * Convert fraction to decimal (for compatibility)
  */
-export function fractionToDecimal(fraction: { numerator: number; denominator: number }): number {
-  return fraction.numerator / fraction.denominator;
-}
+import { fractionToDecimal } from './a432.math.ts';
+export { fractionToDecimal };
 
 /**
  * Convert decimal to A432 fraction (zero entropy)

@@ -20,24 +20,38 @@ import { floor } from './a432.algebra.ts'
 // Navigator.connection and Performance.memory are declared in src/globals.d.ts.
 
 // Import canonical A432 mathematics (zero-entropy base-12 harmonics)
-import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, calculateA432Consciousness, calculateA432DimensionalState, angleForDigit } from './a432.math.ts';
+import { RODIN_SEQUENCE, TRINITY_AXIS, A432_SEQUENCE, digitalRoot, calculateA432Consciousness, calculateA432DimensionalState, angleForDigit } from './a432.math.ts';
 
-import { GOLDEN_RATIO as MATH_GOLDEN_RATIO } from './a432.math.constants.ts';
+import { GOLDEN_RATIO as MATH_GOLDEN_RATIO, A432_BASE_FREQUENCY } from './a432.math.constants.ts';
 import { A432Kernel, type KernelTask, type KernelSnapshot } from './a432.os.kernel.ts'
 
 // Zero-Entropy Harmonic Constants (Base-12 Imperial System)
 export const ZEROPOINT = 0;
-export const A432_BASE_FREQUENCY = 432; // 432 Hz fundamental
-export const GOLDEN_RATIO = { 
-  numerator: 5, 
+export { A432_BASE_FREQUENCY };
+/**
+ * The base-12 sixth, 5/3.
+ *
+ * This was exported as GOLDEN_RATIO, commented "φ = 5/3 ratio (exact fraction)"
+ * — and 5/3 is 1.666…, while φ is 1.618…. They part in the second decimal, so
+ * the fraction was not φ and was not an exact anything. The object also carried
+ * the real φ in `value` under the comment "for validation", which nothing
+ * validated: had anything compared value against numerator/denominator it would
+ * have failed on the day it was written.
+ *
+ * The shape is kept exactly, because getA432OSInfo() returns it and this patch
+ * moves names rather than values. What changed is that the name no longer
+ * claims to be the constant that a432.math.constants.ts exports under it.
+ */
+export const IMPERIAL_SIXTH = {
+  numerator: 5,
   denominator: 3,
-  value: MATH_GOLDEN_RATIO // Using centralized constant for validation
-}; // φ = 5/3 ratio (exact fraction)
+  value: MATH_GOLDEN_RATIO
+};
 export const IMPERIAL_ANGULAR_STEP = 60; // Base-12 harmonic angle
 
 // A432 SEQUENCE CONSTANTS
 /** Legacy consciousness folder path; living field is vortex `0\1\2\4\8/7/5/3\6\9/0\1`. */
-export const A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+export { A432_SEQUENCE };
 export const A432_GATEWAYS = [0, 9, 1, 8, 1]; // Gateway positions
 export const A432_PHASE_SHIFTS = ['/', '\\', '/', '\\', '\\']; // Dimensional shifts
 
@@ -553,7 +567,7 @@ export function getSystemInfo() {
     gateways: A432_GATEWAYS,
     phaseShifts: A432_PHASE_SHIFTS,
     baseFrequency: A432_BASE_FREQUENCY,
-    goldenRatio: GOLDEN_RATIO,
+    goldenRatio: IMPERIAL_SIXTH,
     status: a432OS.getStatus()
   };
 } 

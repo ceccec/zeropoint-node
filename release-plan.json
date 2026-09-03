@@ -1,9 +1,9 @@
 {
   "run": "1.4",
   "carriesTo": "1.5.0",
-  "note": "The nine patches of the 1.4 run, planned before the first is cut. Patch digits ascend 1..9 because semver ordering requires it; their POSITION in the vortex is what assigns the work. The axis {3,6,9} is structural \u2014 build the axis before the branches \u2014 and the gateways [8,3,9,0] are where the stroke reverses polarity, so they are where the KIND of work changes rather than its amount. Targets are ratchet ceilings, so a release that misses its target fails its own gate.",
+  "note": "The nine patches of the 1.4 run, planned before the first is cut. Patch digits ascend 1..9 because semver ordering requires it; their POSITION in the vortex is what assigns the work. The axis {3,6,9} is structural — build the axis before the branches — and the gateways [8,3,9,0] are where the stroke reverses polarity, so they are where the KIND of work changes rather than its amount. Targets are ratchet ceilings, so a release that misses its target fails its own gate.",
   "notTargets": {
-    "docFunctions": "4 and staying 4 \u2014 the remaining documented-but-absent functions are the crypto recipes this repository refuses to implement. A plan that promised 0 would be promising to build them."
+    "docFunctions": "4 and staying 4 — the remaining documented-but-absent functions are the crypto recipes this repository refuses to implement. A plan that promised 0 would be promising to build them."
   },
   "patches": {
     "1": {
@@ -12,7 +12,7 @@
       "surface": "typecheck",
       "from": 96,
       "to": 0,
-      "why": "Planned as \"96 parameters the compiler is guessing at, and annotating them cannot change behaviour\". That was written from the ratchet label rather than the data and was wrong: only 23 were implicit-any parameters. The other 73 were real type errors, and a dozen of them were runtime bugs \u2014 .catch() on a void return, getRegistry().main where getRegistry returns the registry, a call to an initialize() that does not exist, a dynamic import destructuring an export the module never had, and calculateHarmony summing an object into a number."
+      "why": "Planned as \"96 parameters the compiler is guessing at, and annotating them cannot change behaviour\". That was written from the ratchet label rather than the data and was wrong: only 23 were implicit-any parameters. The other 73 were real type errors, and a dozen of them were runtime bugs — .catch() on a void return, getRegistry().main where getRegistry returns the registry, a call to an initialize() that does not exist, a dynamic import destructuring an export the module never had, and calculateHarmony summing an object into a number."
     },
     "2": {
       "set": "orbit",
@@ -28,8 +28,8 @@
       "surface": "unreachable",
       "from": 115,
       "to": 115,
-      "why": "The first gateway: polarity reverses, so the work stops being annotation and becomes structure. What the structure turned out to need was not deletion. The ratchet's own correction to the misreading above pointed readers at scripts/exercised-check.mjs and its surface label named exercised:check, and NEITHER EXISTED \u2014 a correction that was itself a promise nothing kept. This patch makes the gate's references resolve, and adds refs:check so they keep resolving.",
-      "amended": "The target was written on a false premise and could not be met honestly. `unreachable` measures STATIC reachability, and the comment above the measure in scripts/ratchet.mjs says plainly that the number is easy to misread as dead weight, that it was misread that way for a whole session and in two published changelogs, and that almost every module it names executes on every gate run because the a432 property suite reaches them by dynamic import. Driving it to 60 would mean either deleting live code or adding a barrel file that reaches everything statically \u2014 the second is changing the input so the measure reads better while the property it measures is unchanged, which is the failure measure:check exists to catch. The real 'nothing loads this' number is coverage:audit's, and it is 4, all declared."
+      "why": "The first gateway: polarity reverses, so the work stops being annotation and becomes structure. What the structure turned out to need was not deletion. The ratchet's own correction to the misreading above pointed readers at scripts/exercised-check.mjs and its surface label named exercised:check, and NEITHER EXISTED — a correction that was itself a promise nothing kept. This patch makes the gate's references resolve, and adds refs:check so they keep resolving.",
+      "amended": "The target was written on a false premise and could not be met honestly. `unreachable` measures STATIC reachability, and the comment above the measure in scripts/ratchet.mjs says plainly that the number is easy to misread as dead weight, that it was misread that way for a whole session and in two published changelogs, and that almost every module it names executes on every gate run because the a432 property suite reaches them by dynamic import. Driving it to 60 would mean either deleting live code or adding a barrel file that reaches everything statically — the second is changing the input so the measure reads better while the property it measures is unchanged, which is the failure measure:check exists to catch. The real 'nothing loads this' number is coverage:audit's, and it is 4, all declared."
     },
     "4": {
       "set": "orbit",
@@ -50,10 +50,11 @@
     "6": {
       "set": "axis",
       "gateway": false,
-      "surface": "decimals",
-      "from": 9,
-      "to": 9,
-      "why": "NEEDS RE-PLANNING. This was the second half of the decimal work and patch 5 took all of it. The 9 that remain have no integer ratio to carry \u2014 ln 2, root 2, the golden ratio, 3 root 3 over 2, Planck's constant \u2014 so a target below 9 would be asking for a ratio that does not exist. The slot is free and should be given work that does, rather than a number invented to fill it."
+      "surface": "collisions",
+      "from": 59,
+      "to": 45,
+      "why": "Re-planned. 6 is on the axis, so the work is structure rather than amount, and the structure this run had not yet touched is the one where a name resolves to two different things. collisions:check counted 60 names declared by more than one module and never asked whether they MEAN the same thing. It does now: the modules are imported and the name is evaluated on both sides. Fourteen agree and can be merged to one declaration; fourteen disagree, and calculateA432Frequency is 432 * 2**n in one module and 432 * (n % 12) / 12 in the other -- 27648 and 216 at n = 6, both exported, both reachable, and the count was identical before and after anyone noticed.",
+      "amended": "The planned target was decimals 9 -> 9, which is not a target: it was the second half of the decimal work and patch 5 took all of it. The nine that remain have no integer ratio to carry -- ln 2, root 2, the golden ratio, 3 root 3 over 2, Planck's constant -- so any number below 9 would have been asking for a ratio that does not exist. Amended for a false premise rather than for scope: the old target could not be met honestly at any effort, which is the only kind of amendment this plan should accept."
     },
     "7": {
       "set": "orbit",
@@ -101,6 +102,12 @@
       "command": "npm run coverage:audit",
       "pattern": "([0-9]+) never called",
       "note": "not a ratchet surface: the ratchet carries twelve and that number is load-bearing, so this one is measured by its own tool rather than by adding a thirteenth"
+    },
+    "collisions": {
+      "from": "command",
+      "command": "npm run collisions:check",
+      "pattern": "([0-9]+) name\\(s\\) declared by more than one",
+      "note": "not a ratchet surface: the ratchet carries twelve and that number is load-bearing, so this one is measured by its own tool -- the same arrangement untestedExports has"
     }
   }
 }

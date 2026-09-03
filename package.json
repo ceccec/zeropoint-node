@@ -246,8 +246,8 @@
     "constants:check": "node scripts/constants-check.mjs",
     "falsifiable:check": "node scripts/checks-falsifiable.mjs",
     "constants:seed": "node scripts/constants-check.mjs --seed",
-    "collisions:check": "node scripts/name-collisions.mjs",
-    "collisions:seed": "node scripts/name-collisions.mjs --seed",
+    "collisions:check": "node --experimental-strip-types scripts/name-collisions.mjs",
+    "collisions:seed": "node --experimental-strip-types scripts/name-collisions.mjs --seed",
     "finite:check": "node scripts/finite-check.mjs",
     "standard:check": "node scripts/standard-functions.mjs",
     "coverage:audit": "node scripts/coverage-audit.mjs",
@@ -267,7 +267,8 @@
     "semver:check": "node scripts/semver-diff.mjs --check",
     "semver:next": "node scripts/semver-diff.mjs --apply && npm run version:seal",
     "version:cidr": "node scripts/version-cidr.mjs",
-    "version:cidr:test": "node scripts/version-cidr.mjs --test"
+    "version:cidr:test": "node scripts/version-cidr.mjs --test",
+    "collisions:list": "node --experimental-strip-types scripts/name-collisions.mjs --list"
   },
   "keywords": [
     "a432",

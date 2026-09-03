@@ -13,7 +13,7 @@
  */
 
 import { abs, round } from './a432.algebra.ts'
-import { digitalRoot, harmonicRoot12, A432_TRINITY, A432_RETURN, A432_AXIS, A432_SEQUENCE, getRodinSequence, A432_DIGIT_MEANINGS } from './a432.math.ts';
+import { digitalRoot, harmonicRoot12, A432_TRINITY, A432_RETURN, A432_AXIS, A432_SEQUENCE, A432_CYCLE, getRodinSequence, A432_DIGIT_MEANINGS } from './a432.math.ts';
 /** digitalRoot = legacyDigitalRoot (0→0). harmonicRoot12 = base-12 (1–12). */
 export { digitalRoot, harmonicRoot12, A432_DIGIT_MEANINGS };
 export {
@@ -35,7 +35,7 @@ export {
 // === CORE CONSTANTS ===
 export const A432_FREQUENCY = 432;
 export { A432_TRINITY, A432_RETURN, A432_AXIS };
-export const A432_CYCLE = A432_SEQUENCE;
+export { A432_CYCLE };
 // === CORE FUNCTIONS ===
 export function nextInteraction(n: number, cycle: readonly number[] = A432_SEQUENCE): number {
   const idx = cycle.indexOf(n);

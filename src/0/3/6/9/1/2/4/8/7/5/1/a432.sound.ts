@@ -2,8 +2,9 @@
 //----------------------------------------------------------
 import { type Digit } from './a432.types.ts';
 import { frequencyForDigit } from './a432.math.ts';
+import { A432_FREQUENCY } from './a432.core.ts';
 
-export const A432_FREQUENCY = 432;
+export { A432_FREQUENCY };
 
 let ctx: AudioContext | null = null;
 function ensureCtx() {

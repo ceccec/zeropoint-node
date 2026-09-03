@@ -49,7 +49,7 @@ const GUARDS = {
  * are falsified by the mutation tests that live with the code they read.
  */
 const READS_SOURCE = {
-  'collisions:check': 'reads every exported DECLARATION from the syntax tree and fails when a module starts declaring a name another module already declares; falsified by the four mutations in the commit that added it, one of which is a control that must NOT fail — a re-export, which is one definition on two paths and not a collision',
+  'collisions:check': 'reads every exported DECLARATION from the syntax tree and fails when a module starts declaring a name another module already declares, then IMPORTS the colliding modules and fails when a recorded collision resolves to different values with no reason recorded; falsified by the four mutations in the commit that added it and the six in the commit that added the agreement pass — three of the six are controls that must NOT fail: a re-export (one definition on two paths), a type and a value sharing a name inside one module (the ordinary TypeScript idiom), and a recorded collision whose two sides agree, which needs no reason',
   'constants:check': 'reads src/ for retyped kernel constants',
   'finite:check': 'imports every module, inspects exported values, and calls every export it can construct arguments for; falsified by the three mutations in the commit that added the call pass',
   'silent:check': 'imports every module and watches stdout',

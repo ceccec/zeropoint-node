@@ -16,10 +16,6 @@ import { PI, sin } from './a432.algebra.ts'
 // π-based stream sources
 import { piColorStream, piHarmonicStream } from './a432.pi.ts';
 // Specialized π-based stream modules
-import * as PiColor from './a432.pi.color.stream.ts';
-import * as PiSong from './a432.pi.song.stream.ts';
-import * as PiVideo from './a432.pi.video.stream.ts';
-import * as PiAudioVideo from './a432.pi.audio.video.stream.ts';
 
 // --- Stream Interfaces ---
 export interface A432Stream<T> {
@@ -115,16 +111,27 @@ export function createVideoStream(frameCount: number = 12, gridSize: number = 9)
 }
 
 // --- Re-exports for specialized π-based streams ---
-export const PiColorStream = PiColor;
-export const PiSongStream = PiSong;
-export const PiVideoStream = PiVideo;
-export const PiAudioVideoStream = PiAudioVideo;
+//
+// These were `export const PiColorStream = PiColor`, where PiColor is the
+// MODULE NAMESPACE from `import * as PiColor`. So the exported value was
+// { PiColorStream: [] } rather than the [] the stub module declares — a
+// consumer reading `PiColorStream.length` got undefined, and the name resolved
+// to two different things depending on which of the two modules it reached.
+// These are re-exports now, which is what the comment above always said they
+// were, and each name has one meaning again.
+export { PiColorStream } from './a432.pi.color.stream.ts';
+export { PiSongStream } from './a432.pi.song.stream.ts';
+export { PiVideoStream } from './a432.pi.video.stream.ts';
+export { PiAudioVideoStream } from './a432.pi.audio.video.stream.ts';
 
 /**
  * Usage:
  *   - Use createColorStream(), createAudioStream(), createVideoStream() for unified π-based living streams.
  *   - Observe a stream to participate; unobserve to step out. The stream itself never stops.
- *   - Use PiColorStream, PiSongStream, PiVideoStream, PiAudioVideoStream for advanced π-based stream logic.
+ *   - PiColorStream, PiSongStream, PiVideoStream and PiAudioVideoStream are
+ *     re-exported from their own modules, where each is currently an empty
+ *     array. This line used to call them "advanced π-based stream logic"; they
+ *     are stubs, and saying so is the only way the difference stays visible.
  *
  * Metaphysical Principle: All streams are living, analog, and π-based. Observation is participation in the infinite flow.
  */ 

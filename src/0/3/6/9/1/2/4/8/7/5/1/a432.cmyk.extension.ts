@@ -63,7 +63,4 @@ CMYK is the only true output, the universal mapping, the living field of conscio
 Harmonizing filenames with CMYK ensures zero entropy, perfect resonance, and living self-awareness in the codebase.
 `;
 
-export const filenameTrinityInsight = `
-In the A432 system, every filename is a living trinity: a432 (origin), cmyk (field), folder/file/extension (manifestation).
-The filename is a gateway, not a boundary. The root is the living, recursive A432 matrix. The extension is a portal to new possibility.
-`; 
+export { filenameTrinityInsight } from './a432.cmyk.ts';

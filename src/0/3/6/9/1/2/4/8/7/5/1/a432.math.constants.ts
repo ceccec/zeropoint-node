@@ -4,7 +4,7 @@
  * Ensures consistency and prevents mathematical errors
  */
 
-import { E as ALGEBRA_E, PI as ALGEBRA_PI, abs, log2, pow, round, sqrt } from './a432.algebra.ts'
+import { E as ALGEBRA_E, PI as ALGEBRA_PI, TAU as ALGEBRA_TAU, abs, log2, pow, round, sqrt } from './a432.algebra.ts'
 import { legacyDigitalRoot } from './a432.roots.ts'
 // === GOLDEN RATIO ===
 export const GOLDEN_RATIO = (1 + sqrt(5)) / 2; // φ = (1 + √5)/2 ≈ 1.618033988749895
@@ -18,14 +18,17 @@ export const FIBONACCI_SEQUENCE = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]
 export const FIBONACCI_RATIOS = FIBONACCI_SEQUENCE.slice(2).map((n, i) => n / FIBONACCI_SEQUENCE[i + 1]);
 
 // === PI AND CIRCULAR CONSTANTS ===
-export const PI = ALGEBRA_PI; // algebra rational π (355/113)
-export const TAU = 2 * PI; // τ = 2π
-export const PI_OVER_2 = PI / 2;
-export const PI_OVER_4 = PI / 4;
+// Re-exported, not re-declared. The comment here used to say the algebra π was
+// 355/113. It is 245850922/78256779, and the two disagree from the seventh
+// decimal — 355/113 is 3.14159292, this is 3.14159265358979. A second name for
+// a constant is where a wrong description of it can live unread, so there is
+// now one name.
+export { PI, TAU, E } from './a432.algebra.ts';
+export const PI_OVER_2 = ALGEBRA_PI / 2;
+export const PI_OVER_4 = ALGEBRA_PI / 4;
 
 // === EULER'S NUMBER ===
-export const E = ALGEBRA_E;
-export const E_SQUARED = E * E;
+export const E_SQUARED = ALGEBRA_E * ALGEBRA_E;
 
 // === SQUARE ROOTS ===
 export const SQRT_2 = sqrt(2); // √2 ≈ 1.4142135623730951
@@ -55,13 +58,13 @@ export const SACRED_GEOMETRY_RATIOS = {
   sqrt5: SQRT_5,
   
   // Pi family
-  pi: PI,
-  tau: TAU,
+  pi: ALGEBRA_PI,
+  tau: ALGEBRA_TAU,
   piOver2: PI_OVER_2,
   piOver4: PI_OVER_4,
   
   // Euler's number family
-  e: E,
+  e: ALGEBRA_E,
   eSquared: E_SQUARED,
   
   // A432 family
@@ -71,7 +74,13 @@ export const SACRED_GEOMETRY_RATIOS = {
 };
 
 // === MATHEMATICAL FUNCTIONS ===
-export function calculateGoldenRatio(n: number): number {
+/**
+ * The nth power of phi. a432.utils.ts's calculateGoldenRatio multiplies a
+ * frequency BY phi, so one takes an exponent and the other takes hertz:
+ * calculateGoldenRatio(432) was 698.9 in one module and 10**90 in the other.
+ * Renamed to what it computes.
+ */
+export function goldenRatioPower(n: number): number {
   return pow(GOLDEN_RATIO, n);
 }
 
@@ -86,7 +95,15 @@ export function calculateDigitalRoot(n: number): number {
   return legacyDigitalRoot(n)
 }
 
-export function calculateA432Frequency(octave: number): number {
+/**
+ * 432 Hz raised by whole octaves: 432 * 2**octave.
+ *
+ * This was called calculateA432Frequency, which is also the name a432.math.ts
+ * gives to 432 * (n % 12) / 12. At n = 6 those are 27648 and 216. Both were
+ * exported, both were reachable, and nothing in the repository could tell you
+ * which one an import had reached. Renamed to what it computes.
+ */
+export function calculateOctaveFrequency(octave: number): number {
   return A432_BASE_FREQUENCY * pow(A432_OCTAVE_RATIO, octave);
 }
 
@@ -124,13 +141,13 @@ export const MATH_CONSTANTS = {
   FIBONACCI_RATIOS,
   
   // Pi and circular
-  PI,
-  TAU,
+  PI: ALGEBRA_PI,
+  TAU: ALGEBRA_TAU,
   PI_OVER_2,
   PI_OVER_4,
   
   // Euler's number
-  E,
+  E: ALGEBRA_E,
   E_SQUARED,
   
   // Square roots
@@ -152,10 +169,10 @@ export const MATH_CONSTANTS = {
   SACRED_GEOMETRY_RATIOS,
   
   // Functions
-  calculateGoldenRatio,
+  goldenRatioPower,
   calculateFibonacciRatio,
   calculateDigitalRoot,
-  calculateA432Frequency,
+  calculateOctaveFrequency,
   calculateTrinityFrequency,
   calculateVortexFrequency,
   isGoldenRatio,

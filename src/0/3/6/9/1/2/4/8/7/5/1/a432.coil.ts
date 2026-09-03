@@ -6,10 +6,17 @@ import { floor } from './a432.algebra.ts'
 import * as Rodin from './a432.rodin.coil.ts';
 import * as Mobius from './a432.mobius.circuit.ts';
 import * as Tesla from './a432.tesla.coil.ts';
-import { VORTEX_AXIS, VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
+import { VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 
-export const A432_SEQUENCE = [0, [...VORTEX_AXIS], [1, 2, 4], 8, [7, 5, 1]]; // Void 0 -> 9 -> 7 -> 8 -> 4
-export const A432_TRINITY = [0, 9, 1];
+// A432_SEQUENCE and A432_TRINITY were declared here and read by nothing — not
+// by this module, not by a432.meta.ts which imports it whole. Both names are
+// declared by other modules with other values: A432_SEQUENCE is the flat digit
+// path [0,3,6,9,1,2,4,8,7,5,1] in a432.math.ts, a432.i.ts and a432.os.ts, and
+// this one was the same path grouped, under a comment ("Void 0 -> 9 -> 7 -> 8
+// -> 4") describing neither. A432_TRINITY is [4,3,2] in a432.math.ts, the
+// trinity axis is [3,6,9], and this one was [0,9,1] with nothing anywhere
+// saying why. An export nothing reads, named for a value it is not, is removed
+// rather than renamed: naming it would mean deciding what it meant.
 export const A432_ANGLE = 360 / 6; // 60 degrees dimensional gateways angle
 
 /**

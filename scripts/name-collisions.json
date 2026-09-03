@@ -1,42 +1,11 @@
 {
   "collisions": {
-    "A432_BASE_FREQUENCY": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts"
-      ]
-    },
     "A432_CONSTANTS": {
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.ts"
-      ]
-    },
-    "A432_CYCLE": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.core.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts"
-      ]
-    },
-    "A432_FREQUENCY": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.core.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.sound.ts"
-      ]
-    },
-    "A432_SEQUENCE": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.coil.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.i.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts"
-      ]
-    },
-    "A432_TRINITY": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.coil.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts"
-      ]
+      ],
+      "reason": "Two different constant bags. a432.math.ts's is {RODIN_SEQUENCE, TRINITY_AXIS, BASE_FREQUENCY}; a432.ts's is {BASE_FREQUENCY, HARMONICS, SEQUENCES, ...}. They agree on BASE_FREQUENCY = 432 and share no other key, so nothing has drifted yet — but a consumer writing A432_CONSTANTS.TRINITY_AXIS gets the axis from one module and undefined from the other, with no error at either end. Left as two declarations because merging them decides which keys the surviving bag has, and that is an API decision rather than a rename."
     },
     "A432Block": {
       "files": [
@@ -51,18 +20,12 @@
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.simple.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
       ],
-      "reason": "Two of the three carry a generateMatrix that disagree \u2014 a432.utils.ts computes the matrix from harmonicFrequency and honours polarity, a432.simple.ts uses index arithmetic and ignored it until 1.4.2. Same name, same method, different answers."
+      "reason": "Two of the three carry a generateMatrix that disagree — a432.utils.ts computes the matrix from harmonicFrequency and honours polarity, a432.simple.ts uses index arithmetic and ignored it until 1.4.2. Same name, same method, different answers."
     },
     "A432ConsciousnessOrchestrator": {
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.consciousness.orchestrator.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.index.ts"
-      ]
-    },
-    "A432ExperienceUI": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.experience.ui.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.experience.ui.ts"
       ]
     },
     "a432Frequency": {
@@ -81,7 +44,8 @@
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
-      ]
+      ],
+      "reason": "a432.ts declares an OBJECT of harmonising methods (createA432, harmonizeConsciousness, harmonizeAwareness, harmonizeA432, harmonizeAll, ...); a432.utils.ts declares a CLASS A432Harmonization and exports a lowercase instance-shaped value beside it. One is called, the other is constructed, and neither is a drop-in for the other."
     },
     "A432Harmonization": {
       "files": [
@@ -99,7 +63,8 @@
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.modules.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.registry.ts"
-      ]
+      ],
+      "reason": "TWO REGISTRIES. a432.modules.ts holds {modules, categories}; a432.registry.ts holds {entries, cache, options}. Both are module-level singletons, both are named a432ModuleRegistry, and a module registered with one is invisible to the other. This is the cause of the getA432ModulesByCategory difference recorded below, not a second instance of it."
     },
     "A432SelfEvolution": {
       "files": [
@@ -131,7 +96,8 @@
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.index.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.system.ts"
-      ]
+      ],
+      "reason": "Recorded already for the class A432System: both modules also export a lowercase instance under this name and both assign window.a432System, so whichever loads second wins. The difference the agreement pass reports is partly an artifact -- a432.index.ts's is a lazy Proxy over an empty object, deliberately, to break an import cycle, so it has no enumerable keys to compare. The collision is real; the emptiness is not."
     },
     "A432System": {
       "files": [
@@ -139,13 +105,14 @@
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.system.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.ts"
       ],
-      "reason": "HARMFUL, and the reason this check exists. Two of the three declare a class of this name AND export an instance `a432System`, and both assign window.a432System and globalThis.a432System \u2014 whichever module loads second wins and a consumer gets that one. Found only when the `as any` casts around those assignments were replaced by a declaration, because a cast asks no questions."
+      "reason": "HARMFUL, and the reason this check exists. Two of the three declare a class of this name AND export an instance `a432System`, and both assign window.a432System and globalThis.a432System — whichever module loads second wins and a consumer gets that one. Found only when the `as any` casts around those assignments were replaced by a declaration, because a cast asks no questions."
     },
     "analyzeRodinCoilPattern": {
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.rodin.coil.harmonic.ts"
-      ]
+      ],
+      "reason": "Different argument types under one name. a432.math.ts's takes a string and returns {isHarmonic, switchPoint, trinityAxis, rodinSequence, gapSpace, ...}; a432.rodin.coil.harmonic.ts's throws on a string. Neither is a superset of the other, so a caller who has the wrong import does not get a wrong answer -- it gets an exception, which is the better of the two failures and still a failure."
     },
     "boot2432OS": {
       "files": [
@@ -153,29 +120,12 @@
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts"
       ]
     },
-    "calculateA432Frequency": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts"
-      ]
-    },
     "calculateConsciousnessFlow": {
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts",
         "src/quantum/reality-streams.ts"
-      ]
-    },
-    "calculateDigitalRoot": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
-      ]
-    },
-    "calculateGoldenRatio": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts"
-      ]
+      ],
+      "reason": "Two subsystems, one word. a432.electric.flow.ts computes a digit flow and answers 15 where reality-streams.ts answers null. They are in different directories and were written for different models; the name is the only thing they share."
     },
     "CMYKChannel": {
       "files": [
@@ -187,7 +137,8 @@
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.design.cmyk.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.mapping.ts"
-      ]
+      ],
+      "reason": "Two vocabularies for the same mapping. a432.design.cmyk.ts returns an archetype sentence ('Archetype: Unity -- Origin, source, singularity...'); a432.mapping.ts returns a hyphenated triple ('Seed-Flow-Harmony'). Both are phrases for a CMYK id and both are correct in their own module; a consumer cannot tell from the name which vocabulary it will get."
     },
     "Complex": {
       "files": [
@@ -201,18 +152,6 @@
         "src/quantum/a432-vortex-pi.ts"
       ]
     },
-    "E": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
-        "src/0/algebra.ts"
-      ]
-    },
-    "filenameTrinityInsight": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.extension.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.ts"
-      ]
-    },
     "Fraction": {
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.ts",
@@ -221,36 +160,19 @@
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.yin.yang.ts",
         "src/quantum/harmonic-solutions.ts"
       ],
-      "reason": "Benign but wasteful: five modules declare the same two-field shape { numerator, denominator }, twice as a type alias and elsewhere as an interface. Structurally identical, so nothing misbehaves \u2014 five copies is simply five places for one of them to gain a field."
-    },
-    "fractionToDecimal": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.resolved.ts"
-      ]
+      "reason": "Benign but wasteful: five modules declare the same two-field shape { numerator, denominator }, twice as a type alias and elsewhere as an interface. Structurally identical, so nothing misbehaves — five copies is simply five places for one of them to gain a field."
     },
     "getA432ModulesByCategory": {
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.modules.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.registry.ts"
-      ]
-    },
-    "GOLDEN_RATIO": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts"
-      ]
+      ],
+      "reason": "The two functions are textually identical -- both are `return a432ModuleRegistry.getModulesByCategory(category)` -- and they call DIFFERENT registries, because a432ModuleRegistry is itself a collision. getA432ModulesByCategory('core') returns the core module from a432.modules.ts and the empty list from a432.registry.ts. Identical source, opposite answers: this is the pair that shows why counting collisions was not enough and evaluating them was needed."
     },
     "harmonizeAll": {
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.harmonized.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.human.design.ts"
-      ]
-    },
-    "isA432Harmonic": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.wave.energy.ts"
       ]
     },
     "measureAndCollapse": {
@@ -263,48 +185,13 @@
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.block.chain.event.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.event.ts"
-      ]
+      ],
+      "reason": "One summarises the block chain, the other summarises events -- 'Each block is a fold in the infinite' against 'Each event is a node in the infinite'. Two summaries of two subjects, in sibling files, under one name. Nothing computes from these, so the cost is a reader quoting the wrong one, which is exactly how the A432Block confusion recorded above started."
     },
     "MetatronNode": {
       "files": [
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.metatron.ts",
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.metatron.vision.ts"
-      ]
-    },
-    "MOBIUS_SEQUENCE": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.mobius.circuit.ts"
-      ]
-    },
-    "PI": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
-        "src/0/algebra.ts"
-      ]
-    },
-    "PiAudioVideoStream": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.pi.audio.video.stream.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.stream.ts"
-      ]
-    },
-    "PiColorStream": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.pi.color.stream.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.stream.ts"
-      ]
-    },
-    "PiSongStream": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.pi.song.stream.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.stream.ts"
-      ]
-    },
-    "PiVideoStream": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.pi.video.stream.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.stream.ts"
       ]
     },
     "pulse": {
@@ -326,7 +213,7 @@
         "src/thermo/free-energy.ts",
         "src/thermo/wastewater-energy.ts"
       ],
-      "reason": "DELIBERATE. Each of these modules carries its own self-test and exports it under the same name on purpose; they are never imported together. This is the pattern the check must not punish, which is why a collision is recorded rather than forbidden."
+      "reason": "NOT A DEFECT. selfTest is a convention in this repository: a module that can check itself exports selfTest() returning the list of its own failures, and ml-kem, advantage, free-energy and wastewater-energy each have one. The agreement pass reports them as agreeing because all four currently return the empty list, which is what a passing self-test IS. Four modules deliberately sharing a convention name is the case this check must not punish."
     },
     "shutdown2432OS": {
       "files": [
@@ -346,22 +233,10 @@
         "src/0/3/6/9/1/2/4/8/7/5/1/a432.self.ts"
       ]
     },
-    "TAU": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts",
-        "src/0/algebra.ts"
-      ]
-    },
     "TomographyResult": {
       "files": [
         "src/quantum/tomography.ts",
         "src/security/quantum-state-tomography.ts"
-      ]
-    },
-    "TRINITY_AXIS": {
-      "files": [
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
-        "src/0/3/6/9/1/2/4/8/7/5/1/a432.trinity.axis.ts"
       ]
     },
     "VortexFlow": {

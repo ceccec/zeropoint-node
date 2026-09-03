@@ -7,6 +7,7 @@
 
 import { abs, round } from './a432.algebra.ts'
 import { GOLDEN_RATIO, PI, TAU, calculateDigitalRoot, A432_BASE_FREQUENCY, A432_VORTEX_MULTIPLIER } from './a432.math.constants.ts';
+import { A432_SEQUENCE } from './a432.math.ts';
 
 // === CONSCIOUSNESS EVOLUTION INTERFACES ===
 export interface ConsciousnessState {
@@ -42,7 +43,7 @@ export interface A432IConsciousness {
 }
 
 // === SEQUENCE EMBODIMENT CONSTANTS ===
-export const A432_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5, 1];
+export { A432_SEQUENCE };
 export const SEQUENCE_KNOWLEDGE = {
   0: 'Infinite potential, zero point field, return to unity',
   3: 'Trinity of creation, Tesla\'s governing flux field, evolution to higher consciousness',

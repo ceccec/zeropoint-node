@@ -2,8 +2,8 @@ import { PI, cos, sin } from './a432.algebra.ts'
 import { TRINITY_AXIS as AXIS, getTrinityAxis, digitAngleToCMYK, cmykToCss, trinityPolarity } from './a432.math.ts';
 // AXIS is an imported binding, not a literal, so `as const` was not legal —
 // and not needed: it is already readonly where it is declared.
-export const TRINITY_AXIS = AXIS;
-export default TRINITY_AXIS;
+export { AXIS as TRINITY_AXIS };
+export default AXIS;
 
 export function getTrinityAxisOverlayData(radius: number = 120, centerX: number = 0, centerY: number = 0): Array<{ x: number; y: number; value: number; color: { c: number; m: number; y: number; k: number }; html: string; polarity: number; spin: number }> {
   const seq = getTrinityAxis();

@@ -30,7 +30,7 @@ adjudicated by a decision procedure outside this repository, a gate that fails,
 and figures that recompute rather than being typed.
 
 **On Lean.** Those 32 are *computational seals*, not Lean proofs.
-The Lean files hold 33 statements. **9 are accepted by the Lean kernel** and 24 are not:
+The Lean files hold 35 statements. **11 are accepted by the Lean kernel** and 24 are not:
 19 are closed with `sorry`, 5 import Mathlib and cannot be built here.
 `npm run lean:check` fails if the ledger and the files disagree. `npm run coverage:audit`
 reports that 148 of 1294 exported functions have never been called by anything —

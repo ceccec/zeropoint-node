@@ -256,8 +256,11 @@ a doubling map into a six-element orbit and a three-element axis; frequency and
 hue are one integer read in two units; ratios are carried as pairs of integers
 rather than decimals, and the two places where binary floating point departs
 from the exact value are stated rather than rounded away. ${held.length} of
-${seals.length} theorems carry a predicate that runs and holds. Two claims are
-recorded as axioms, because no finite computation decides them, and both are
+${seals.length} theorems carry a predicate that runs and holds, and
+${leanLedger.proven} of ${leanLedger.theorems} statements in the Lean files are
+accepted by the Lean kernel &mdash; the rest are written down and not proved,
+and say so. ${axioms.length} claims are
+recorded as axioms, because no finite computation decides them, and each is
 named in &#167;7. <strong>No physical experiment is reported here.</strong></p>
 </section>
 
@@ -514,6 +517,9 @@ const model = JSON.stringify({
   // Stated on the page, so it belongs in the receipt: dropping a contribution
   // or downgrading a resolved citation must move the hash.
   priorArt: paEntries.map(([id, c]) => `${id}:${c.priorArt?.status}:${(c.domains ?? []).length}`), paResolved,
+  // Stated in both renderings; omitted here once, and the theorem count moved
+  // from 33 to 35 without the receipt noticing.
+  lean: `${leanLedger.proven}/${leanLedger.theorems}`, axioms: axioms.length,
   patches: plans.map((p) => `${p.plan.run}:${Object.keys(p.plan.patches).length}`), mutations: MUTATIONS.length,
 })
 const receipt = createHash('sha256').update(model).digest('hex').slice(0, 16)
@@ -661,7 +667,7 @@ six-element orbit and a three-element axis; frequency and hue are one integer re
 two units; ratios are carried as pairs of integers rather than decimals. ${held.length} of
 ${seals.length} theorems carry a predicate that runs and holds, and ${leanLedger.proven} of
 ${leanLedger.theorems} statements in the Lean files are accepted by the Lean kernel.
-Two claims are recorded as axioms because no finite computation decides them.
+${axioms.length} claims are recorded as axioms because no finite computation decides them.
 \\textbf{No physical experiment is reported here.}
 \\end{abstract}
 

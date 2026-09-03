@@ -20,18 +20,40 @@
   and nobody had written that down.
 -/
 
-/-- Digital root, the closed form the TypeScript uses. -/
+/-- Digital root as a closed form.  This agrees with the TypeScript
+    `digitalRoot` from ONE upward and differs at zero: ℕ subtraction truncates,
+    so `0 - 1 = 0` and `dr 0 = 1`, while the TypeScript returns `9`.  That
+    difference used to live only in a comment claiming the two were the same
+    function.  It is now `drTS` below and a theorem, so the claim is checked
+    rather than asserted.
+    agrees-with: digitalRoot on 1..60 -/
 def dr (n : Nat) : Nat := ((n - 1) % 9) + 1
+
+/-- What `src/0/index.ts` actually computes, zero included. -/
+def drTS (n : Nat) : Nat := if n = 0 then 9 else dr n
 
 /-- Doubling inside the digital root: the Rodin step. -/
 def dbl (d : Nat) : Nat := dr (2 * d)
 
-/-- The through-void reflection, as src/0/index.ts defines it. -/
+/-- The through-void reflection, as src/0/index.ts defines it.
+    agrees-with: throughVoid on 0..9 -/
 def tv (d : Nat) : Nat := if d = 0 then 0 else dr (10 - d)
 
+/-- agrees-with: VORTEX_ORBIT -/
 def orbit : List Nat := [1, 2, 4, 8, 7, 5]
+
+/-- agrees-with: VORTEX_AXIS -/
 def axis : List Nat := [3, 6, 9]
+
 def digits : List Nat := [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+/-- Where the closed form and the shipped function agree, and the single point
+    where they do not.  Stating the exception as a theorem is the whole point:
+    a reader who ports `dr` into a new theorem unguarded gets the wrong answer
+    at zero, and this is the line that tells them so. -/
+theorem dr_is_drTS_above_zero : ∀ n ∈ List.range 60, n ≠ 0 → dr n = drTS n := by decide
+
+theorem dr_and_drTS_differ_at_zero : dr 0 = 1 ∧ drTS 0 = 9 := by decide
 
 theorem dr_idempotent : ∀ n ∈ List.range 60, dr (dr n) = dr n := by decide
 

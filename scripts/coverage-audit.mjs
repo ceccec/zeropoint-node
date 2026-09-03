@@ -28,6 +28,7 @@
  *   npm run coverage:record     write the current count as the new ceiling
  */
 
+import ts from 'typescript'
 import { readdirSync, statSync, readFileSync, writeFileSync, rmSync, mkdirSync } from 'node:fs'
 import { execFile } from 'node:child_process'
 import { pipelineSrcSuites } from './lib/pipeline.mjs'
@@ -90,6 +91,10 @@ const EXERCISERS = [
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.vbm.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.uuid.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.vortex.arithmetic.test.ts', null],
+  ['src/quantum/reachable-exports.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.reachable.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.resolution.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.surface.test.ts', null],
   ['src/multidimensional-vortex-framework.test.ts', 'scripts/jest-lite.mjs'],
   ['scripts/quantum-sim.mjs', null],
   // Forgotten the first time, and it exercises the nine prove* functions that
@@ -179,12 +184,41 @@ if (unreadable > 0) {
 }
 
 const allModules = walk(join(ROOT, 'src')).map((f) => relative(ROOT, f).replace(/\\/g, '/')).sort()
+
+/**
+ * ASK THE COMPILER. This was two regexes over the raw text and it counted three
+ * things that are not exported functions:
+ *
+ *   a432.documentation.ts holds a TEMPLATE STRING containing the text
+ *   "export function register{ModuleName}()", and the identifier pattern stopped
+ *   at the brace — so `register` and `get` were counted as exports of a module
+ *   that declares neither. Code inside a string is not code, and this is the
+ *   same defect the dependency scan had when a regex over a bundle reported `u`
+ *   and a closing-brace fragment as packages.
+ *
+ *   GOLDEN_RATIO is `(1 + sqrt(5)) / 2`. The pattern for an arrow function
+ *   looked for `= (` and found a parenthesised expression, so a NUMBER was
+ *   counted as an exported function that nothing calls — and a number can never
+ *   be called, so it could never leave the list.
+ *
+ * The syntax tree distinguishes all of these without being asked twice.
+ */
 const exported = new Set()
 for (const file of allModules) {
-  if (file.endsWith('.test.ts')) continue
-  const src = readFileSync(join(ROOT, file), 'utf8')
-  for (const m of src.matchAll(/^export\s+(?:async\s+)?function\s+([A-Za-z0-9_$]+)/gm)) exported.add(`${file}::${m[1]}`)
-  for (const m of src.matchAll(/^export\s+const\s+([A-Za-z0-9_$]+)\s*[:=]\s*(?:async\s*)?\(/gm)) exported.add(`${file}::${m[1]}`)
+  if (file.endsWith('.test.ts') || file.endsWith('.d.ts')) continue
+  const sf = ts.createSourceFile(file, readFileSync(join(ROOT, file), 'utf8'), ts.ScriptTarget.Latest, true)
+  const isExported = (n) => n.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
+  sf.forEachChild((n) => {
+    if (!isExported(n)) return
+    if (ts.isFunctionDeclaration(n) && n.name) exported.add(`${file}::${n.name.text}`)
+    else if (ts.isVariableStatement(n)) {
+      for (const d of n.declarationList.declarations) {
+        if (!ts.isIdentifier(d.name)) continue
+        const init = d.initializer
+        if (init && (ts.isArrowFunction(init) || ts.isFunctionExpression(init))) exported.add(`${file}::${d.name.text}`)
+      }
+    }
+  })
 }
 
 const neverLoaded = allModules.filter((m) => !loaded.has(m))

@@ -13,7 +13,7 @@
  */
 
 import { abs, round } from './a432.algebra.ts'
-import { digitalRoot, angleForDigit, frequencyForDigit, hueForDigit } from './a432.math.ts';
+import { digitalRoot, angleForDigit, calculateA432Frequency, hueForDigit } from './a432.math.ts';
 
 // --- Canonical Infinity Loop Constants ---
 const INFINITY_LOOP_SEQUENCE = [0, 0]; // 0 interacting with itself
@@ -151,7 +151,12 @@ function mapInfinityConsciousness(iteration: number): InfinityConsciousness {
     message = 'Transcending mathematical boundary into pure consciousness';
   }
   
-  const frequency = frequencyForDigit(level);
+  // calculateA432Frequency, not frequencyForDigit. The latter is defined ONLY on
+  // the trinity axis {3,6,9} and throws for every other digit; the call sites
+  // below are not guarded by an axis test and the digits reaching them are not
+  // on the axis, so each threw for its own ordinary input. Fourth, fifth and
+  // sixth appearance of the defect createBlock had in 1.4.4.
+  const frequency = calculateA432Frequency(level);
   const color = generateInfinityColor(iteration);
   
   return {
@@ -167,7 +172,7 @@ function mapInfinityConsciousness(iteration: number): InfinityConsciousness {
 function generateInfinityHarmonics(interactions: InfinityInteraction[]): InfinityHarmonic[] {
   return interactions.map(interaction => {
     const harmonic = digitalRoot(interaction.iteration);
-    const frequency = frequencyForDigit(harmonic);
+    const frequency = calculateA432Frequency(harmonic);
     const angle = angleForDigit(harmonic);
     const color = interaction.color;
     
@@ -238,7 +243,7 @@ export class InfinityLoopProcessor {
       // Add harmonic
       const harmonic = {
         iteration,
-        frequency: frequencyForDigit(digitalRoot(iteration)),
+        frequency: calculateA432Frequency(digitalRoot(iteration)),
         angle: angleForDigit(digitalRoot(iteration)),
         color: interaction.color,
         harmonic: digitalRoot(iteration),

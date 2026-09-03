@@ -2660,6 +2660,10 @@
     { name: "Infinity", description: "Power, expansion, infinite flow, recursion; the endless, the self-similar, the principle of recursion and the infinite loop." },
     { name: "Completion", description: "Fulfillment, wholeness, return, zero entropy; the end and the beginning, the return to source, and the closure of the cycle." }
   ];
+  function calculateA432Frequency(dimensionalState) {
+    const base12State = dimensionalState % 12;
+    return 432 * (base12State / 12);
+  }
   var A432_CONSTANTS = {
     RODIN_SEQUENCE: [1, 2, 4, 8, 7, 5, 1],
     TRINITY_AXIS: [...VORTEX_AXIS],
@@ -2668,10 +2672,6 @@
   var FULL_PATTERN = [0, ...TRINITY_AXIS, 1, 2, 4, 8, 7, 5, 1];
   function angleForDigit(d) {
     return ((-90 + 40 * (d % 9)) % 360 + 360) % 360;
-  }
-  function frequencyForDigit(d) {
-    if (!TRINITY_AXIS.includes(d)) throw new Error("frequency only defined for trinity digits");
-    return 432 * (d / 12);
   }
   function hueForDigit(d) {
     return abs(d) * 36 % 360;
@@ -2875,10 +2875,10 @@
     const returnHue = hueForDigit(returnDigit);
     const axisHue = hueForDigit(axisDigit);
     const sequenceHue = hueForDigit(sequenceDigit);
-    const trinityFrequency = frequencyForDigit(trinityDigit);
-    const returnFrequency = frequencyForDigit(returnDigit);
-    const axisFrequency = frequencyForDigit(axisDigit);
-    const sequenceFrequency = frequencyForDigit(sequenceDigit);
+    const trinityFrequency = calculateA432Frequency(trinityDigit);
+    const returnFrequency = calculateA432Frequency(returnDigit);
+    const axisFrequency = calculateA432Frequency(axisDigit);
+    const sequenceFrequency = calculateA432Frequency(sequenceDigit);
     return {
       tick,
       trinityIndex,

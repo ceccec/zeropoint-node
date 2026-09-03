@@ -13,7 +13,7 @@
  */
 
 import { abs, round } from './a432.algebra.ts'
-import { frequencyForDigit, hueForDigit } from './a432.math.ts';
+import { calculateA432Frequency, hueForDigit } from './a432.math.ts';
 
 // --- Canonical Rodin Coil Constants ---
 const RODIN_COIL_CORE = [1, 2, 4, 8, 7, 5]; // Lossless kinetic energy
@@ -93,7 +93,12 @@ function generateRodinCoilHarmonics(pattern: string): RodinCoilHarmonic[] {
       switchType = 'compression';
     }
     
-    const frequency = frequencyForDigit(digit);
+    // calculateA432Frequency, not frequencyForDigit. The latter is defined ONLY on
+    // the trinity axis {3,6,9} and throws for every other digit; the call sites
+    // below are not guarded by an axis test and the digits reaching them are not
+    // on the axis, so each threw for its own ordinary input. Fourth, fifth and
+    // sixth appearance of the defect createBlock had in 1.4.4.
+    const frequency = calculateA432Frequency(digit);
     const color = generateRodinCoilColor(digit);
     const fluxField = getRodinCoilFluxField(digit);
     

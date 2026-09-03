@@ -34,6 +34,10 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const A432 = join(ROOT, 'src/0/3/6/9/1/2/4/8/7/5/1')
+// A module or suite named with a slash is resolved from src/ instead of from
+// the a432 directory, so this harness can reach src/quantum too. The published
+// surface lives in both places and both must be falsifiable.
+const at = (name) => (name.includes('/') ? join(ROOT, 'src', name) : join(A432, name))
 const sha = (b) => createHash('sha256').update(b).digest('hex')
 
 /** [module, suite, anchor, replacement, what the mutation breaks] */
@@ -89,6 +93,46 @@ const MUTATIONS = [
     '[1, 2], [2, 4], [4, 8], [8, 7], [7, 5], [5, 1] // Vortex sequence',
     '[1, 2], [2, 4], [4, 8], [8, 7], [7, 5] // Vortex sequence',
     'a step of the tour stops being a sacred transition'],
+  // Patch 8's quantum suite: nine of the fifteen reachable-and-untested exports
+  // are in src/quantum, the part of this repository held to the quantum
+  // criterion, so these are the mutations that matter most.
+  ['quantum/variational-optimizer.ts', 'quantum/reachable-exports.test.ts',
+    'return vqeAdaptive(ansatz, hamiltonian, exactGroundEnergy, perturbed, maxIterations)',
+    'return { ...vqeAdaptive(ansatz, hamiltonian, exactGroundEnergy, perturbed, maxIterations), energy: exactGroundEnergy - 1 }',
+    'the optimiser reports an energy BELOW the ground state, which the variational principle forbids'],
+  ['quantum/tomography.ts', 'quantum/reachable-exports.test.ts',
+    'return total >= (4 / 5) && total <= (6 / 5)', 'return true',
+    'the tomography verifier can no longer say no'],
+  ['quantum/advanced.ts', 'quantum/reachable-exports.test.ts',
+    'if (shots < 1) throw new RangeError(`calibrateReadout: shots must be at least 1, got ${shots}`)', 'if (false) throw new RangeError()',
+    'zero shots is estimated from nothing again'],
+  ['quantum/workflow.ts', 'quantum/reachable-exports.test.ts',
+    'for (const p of problems) {', 'for (const p of problems.slice(1)) {',
+    'a batch silently drops the first problem'],
+
+  // Patch 8's suites. The two reachable-export suites cover the published
+  // surface, so a mutation there is a mutation to something a consumer can call.
+  ['a432.rodin.coil.harmonic.ts', 'a432.reachable.test.ts',
+    'const frequency = calculateA432Frequency(digit);', 'const frequency = (() => { if (![3,6,9].includes(digit)) throw new Error("trinity only"); return 0 })();',
+    'the coil analyser throws on the Rodin sequence again'],
+  ['a432.types.ts', 'a432.reachable.test.ts',
+    "if (!Number.isFinite(n) || n < 0) throw new Error('Not a frequency: ' + n);", 'if (false) throw new Error();',
+    'toHz stops refusing a negative or NaN frequency'],
+  ['a432.matrix.ts', 'a432.resolution.test.ts',
+    'const rows = matrix.length;', 'const rows = 7;',
+    'the torus map assumes a seven by seven matrix again'],
+  ['a432.tesla.coil.ts', 'a432.resolution.test.ts',
+    'return TESLA_BASE_FREQUENCY * gateway * polarity;', 'return TESLA_BASE_FREQUENCY * gateway * polarity + 1;',
+    'a coil stops carrying the frequency of its own gateway'],
+  ['a432.resolved.ts', 'a432.resolution.test.ts',
+    'if (difference < minDifference) {', 'if (difference > minDifference) {',
+    'the resolver returns the FURTHEST table entry instead of the closest'],
+  ['a432.body.ts', 'a432.surface.test.ts',
+    'return round(432 * (1 + value / 9));', 'return round(432 * (1 + value / 8));',
+    'nine stops being the full scale of the harmonic'],
+  ['a432.harmonized.ts', 'a432.surface.test.ts',
+    'harmonizationStrategies[name] = fn;', 'harmonizationStrategies[name] ??= fn;',
+    'registering a name twice stops replacing the strategy'],
   ['a432.sequence.ts', 'a432.vortex.arithmetic.test.ts',
     'const sequence = pattern;\n  const consciousness = sequence.reduce((sum, digit) => sum + digit, 0);',
     'const sequence = pattern;\n  const consciousness = sequence.length;',
@@ -101,7 +145,7 @@ const problems = []
 const suites = [...new Set(MUTATIONS.map(([, s]) => s))]
 for (const suite of suites) {
   try {
-    execFileSync('node', ['--experimental-strip-types', join(A432, suite)], { stdio: 'pipe' })
+    execFileSync('node', ['--experimental-strip-types', at(suite)], { stdio: 'pipe' })
   } catch {
     problems.push(`${suite} FAILS with no mutation applied — every result below it would be meaningless`)
   }
@@ -109,7 +153,7 @@ for (const suite of suites) {
 
 let caught = 0
 for (const [mod, suite, from, to, what] of MUTATIONS) {
-  const path = join(A432, mod)
+  const path = at(mod)
   const before = readFileSync(path, 'utf8')
   const hash = sha(before)
   const hits = before.split(from).length - 1
@@ -118,7 +162,7 @@ for (const [mod, suite, from, to, what] of MUTATIONS) {
 
   writeFileSync(path, before.replace(from, to))
   let failed = false
-  try { execFileSync('node', ['--experimental-strip-types', join(A432, suite)], { stdio: 'pipe' }) } catch { failed = true }
+  try { execFileSync('node', ['--experimental-strip-types', at(suite)], { stdio: 'pipe' }) } catch { failed = true }
   writeFileSync(path, before)
   if (sha(readFileSync(path, 'utf8')) !== hash) {
     console.error(`law-mutations FATAL — ${mod} was not restored`)

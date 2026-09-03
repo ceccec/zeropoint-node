@@ -47,10 +47,16 @@ export function getTrinityIndices(): Array<{row: number, col: number, value: num
  */
 export function mapMatrixToTorus(matrix: number[][], R: number, r: number): Array<{x: number, y: number, z: number, value: number, row: number, col: number}> {
   const coords = [];
-  for (let row = 0; row < 7; row++) {
-    for (let col = 0; col < 7; col++) {
-      const theta = (row / 7) * 2 * PI;
-      const phi = (col / 7) * 2 * PI;
+  // The loop bounds were the literal 7, and the body indexes matrix[row][col],
+  // so this took `number[][]` and threw for every matrix that was not exactly
+  // seven by seven. It now walks the matrix it was given: a torus wraps at the
+  // edge of the grid it is made from, whatever size that grid is.
+  const rows = matrix.length;
+  const cols = rows > 0 ? matrix[0]!.length : 0;
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const theta = (row / rows) * 2 * PI;
+      const phi = (col / cols) * 2 * PI;
       const x = (R + r * cos(phi)) * cos(theta);
       const y = (R + r * cos(phi)) * sin(theta);
       const z = r * sin(phi);

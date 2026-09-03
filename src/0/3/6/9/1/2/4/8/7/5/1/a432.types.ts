@@ -39,4 +39,20 @@ export function toDigit(n: number): Digit {
   return d as Digit;
 }
 export const asHz = (n: number) => n as Hz;
-export const asAngle = (n: number) => n as AngleDeg; 
+export const asAngle = (n: number) => n as AngleDeg;
+
+/**
+ * Safely convert a number to Hz, throws if it is not a frequency.
+ *
+ * asHz, asDigit and asAngle are UNCHECKED casts, and the comment above them says
+ * so — "no runtime cost". That is a deliberate design and it is kept. What was
+ * missing is the other half: toDigit exists and validates, and there was no
+ * matching converter for Hz, so asHz(NaN) was the only way to make a frequency
+ * and it branded anything at all. A negative frequency and a NaN frequency are
+ * both meaningless; the type system was being asked to believe something nobody
+ * had checked.
+ */
+export function toHz(n: number): Hz {
+  if (!Number.isFinite(n) || n < 0) throw new Error('Not a frequency: ' + n);
+  return n as Hz;
+} 

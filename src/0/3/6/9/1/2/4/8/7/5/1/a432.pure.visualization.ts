@@ -7,7 +7,7 @@ import { raf, craf } from './a432.raf.ts'
 // Pure A432 visualization using only a432.* modules
 // Everything is math to the digit - no exceptions
 
-import { A432_TRINITY, A432_RETURN, A432_AXIS, A432_SEQUENCE, digitalRoot, angleForDigit, frequencyForDigit, hueForDigit } from './a432.math.ts';
+import { A432_TRINITY, A432_RETURN, A432_AXIS, A432_SEQUENCE, digitalRoot, angleForDigit, calculateA432Frequency, hueForDigit } from './a432.math.ts';
 import { digitAngleToCMYK, cmykToCss } from './a432.cmyk.ts';
 import { A432_DIGIT_MEANINGS } from './a432.core.ts';
 
@@ -68,10 +68,15 @@ export function generateA432VisualData(tick: number): A432VisualState {
   const sequenceHue = hueForDigit(sequenceDigit);
   
   // All frequencies derived from digits
-  const trinityFrequency = frequencyForDigit(trinityDigit);
-  const returnFrequency = frequencyForDigit(returnDigit);
-  const axisFrequency = frequencyForDigit(axisDigit);
-  const sequenceFrequency = frequencyForDigit(sequenceDigit);
+  // calculateA432Frequency, not frequencyForDigit. The latter is defined ONLY on
+  // the trinity axis {3,6,9} and throws for every other digit; the call sites
+  // below are not guarded by an axis test and the digits reaching them are not
+  // on the axis, so each threw for its own ordinary input. Fourth, fifth and
+  // sixth appearance of the defect createBlock had in 1.4.4.
+  const trinityFrequency = calculateA432Frequency(trinityDigit);
+  const returnFrequency = calculateA432Frequency(returnDigit);
+  const axisFrequency = calculateA432Frequency(axisDigit);
+  const sequenceFrequency = calculateA432Frequency(sequenceDigit);
   
   return {
     tick,

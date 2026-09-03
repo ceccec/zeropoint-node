@@ -42,6 +42,14 @@ const va = await import(join(ROOT, 'src/verification/validation-criterion.ts'))
 const yy = await import(join(ROOT, 'src/0/3/6/9/1/2/4/8/7/5/1/a432.yin.yang.ts'))
 const version = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8')).version
 
+// Everything the repository knows about itself, surfaced rather than summarised.
+const { allCriteria } = await import(join(ROOT, 'scripts/lib/criteria-subjects.mjs'))
+const { MUTATIONS } = await import(join(ROOT, 'scripts/law-mutations.mjs'))
+const criteriaAll = allCriteria()
+const ledger = JSON.parse(readFileSync(join(ROOT, 'scripts/claims.json'), 'utf8')).claims
+const ratchet = JSON.parse(readFileSync(join(ROOT, 'ratchet.json'), 'utf8'))
+const plan = JSON.parse(readFileSync(join(ROOT, 'release-plan.json'), 'utf8'))
+
 const DIGITS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 const ORBIT = [...k.VORTEX_ORBIT]
 const AXIS = [...k.VORTEX_AXIS]
@@ -319,7 +327,87 @@ ${axioms.map(([name, a]) => `<dt><code>${name}</code></dt>
 </section>
 
 <section class="appendix">
-<h2>Appendix A&ensp;Seals</h2>
+<h2>Appendix A&ensp;Every criterion, condition by condition</h2>
+<p>Six criteria gate a release and one is reported without gating. Each
+condition below states what it <em>requires</em> and what would change its
+verdict; a condition with no refuter is a slogan. The evidence each produces is
+measured when the criterion runs and is deliberately not printed here, because
+some of it is a property of the machine &#8212; take it with
+<code>npm run criteria:check</code>.</p>
+${criteriaAll.map((c) => `<div class="crit">
+<h3>${c.name} <span class="score">${c.verdict.conditionsMet}/${c.verdict.conditionsTotal}</span>
+<span class="gated">${c.gated ? 'gates the release' : 'reported, not gated'}</span></h3>
+<p class="subj">${escape(c.subject)}</p>
+<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+${c.verdict.conditions.map((k) => `<tr><td>${k.met ? '&#10003;' : '&#10007;'}</td><td><code>${escape(k.id)}</code></td><td>${escape(k.requires)}</td><td>${escape(k.whatWouldChange)}</td></tr>`).join('\n')}
+</tbody></table></div>`).join('\n')}
+</section>
+
+<section class="appendix">
+<h2>Appendix B&ensp;The claim ledger</h2>
+<p>Every effect claim this corpus makes, and the predicate it is bound to. A
+claim bound to nothing fails <code>npm run claims:check</code>; so does a
+binding that has stopped holding, and so does a ledger entry whose claim no
+longer exists. ${Object.values(ledger).filter((e) => e.backedBy && !(e.backedBy in lb.ASSUMPTIONS)).length}
+rest on theorems and ${Object.values(ledger).filter((e) => e.backedBy in lb.ASSUMPTIONS).length}
+on axioms.</p>
+<table class="ledger"><thead><tr><th>where</th><th>claim</th><th>bound to</th></tr></thead><tbody>
+${Object.entries(ledger).map(([key, e]) => {
+  const [file, text] = key.split('::')
+  return `<tr><td class="where">${escape(file)}:${e.line}</td><td>${escape(text)}</td><td><code>${escape(e.backedBy ?? '&#8212;')}</code></td></tr>`
+}).join('\n')}
+</tbody></table>
+<p>Each binding also records what it establishes and what it does not. The two
+demarcations that carry the most weight:</p>
+<dl class="demarc">
+${[...new Set(Object.values(ledger).map((e) => e.backedBy))].map((b) => {
+  const one = Object.values(ledger).find((e) => e.backedBy === b)
+  return `<dt><code>${escape(b)}</code> <span class="count">&#215;${Object.values(ledger).filter((e) => e.backedBy === b).length}</span></dt>
+<dd><p><strong>Establishes.</strong> ${escape(one.establishes)}</p>
+<p><strong>Does not establish.</strong> ${escape(one.doesNotEstablish)}</p></dd>`
+}).join('\n')}
+</dl>
+</section>
+
+<section class="appendix">
+<h2>Appendix C&ensp;The ratchet</h2>
+<p>Twelve surfaces whose ceilings only ever move down. A run that grows one
+fails; so does a run that shrinks one without recording it, because an
+unrecorded improvement is an unexamined one.</p>
+<table><thead><tr><th>surface</th><th>ceiling</th></tr></thead><tbody>
+${Object.entries(ratchet.ceilings).map(([k, v]) => `<tr><td><code>${escape(k)}</code></td><td>${v}</td></tr>`).join('\n')}
+</tbody></table>
+${Object.keys(ratchet.raised ?? {}).length ? `<p>Deliberate increases, each with a recorded reason: ${Object.entries(ratchet.raised).map(([k, r]) => `<code>${escape(k)}</code> ${r.from}&#8594;${r.to}`).join('; ')}.</p>` : ''}
+</section>
+
+<section class="appendix">
+<h2>Appendix D&ensp;The release plan</h2>
+<p>${escape(plan.run)} was planned before its first patch was cut, and each
+release is measured against the target written for it. A patch that misses its
+target fails its own gate; a target amended for a false premise records the
+amendment.</p>
+<table class="plan"><thead><tr><th>patch</th><th>surface</th><th>from</th><th>to</th><th></th></tr></thead><tbody>
+${Object.entries(plan.patches).map(([d, p]) => `<tr><td>${escape(plan.run)}.${d}${p.gateway ? ' &#9670;' : ''}</td><td><code>${escape(p.surface)}</code></td><td>${p.from}</td><td>${p.to}</td><td>${p.amended ? 'amended' : ''}</td></tr>`).join('\n')}
+</tbody></table>
+<p class="note">&#9670; marks a gateway, where the kind of work changes rather
+than its amount. ${Object.values(plan.patches).filter((p) => p.amended).length} of
+${Object.keys(plan.patches).length} targets were amended, each for a premise that
+turned out to be false rather than for scope.</p>
+</section>
+
+<section class="appendix">
+<h2>Appendix E&ensp;Mutations</h2>
+<p>A suite that survives a broken implementation has not tested it. Each row
+corrupts one line and requires the suite over it to fail; all
+${MUTATIONS.length} are caught, across
+${new Set(MUTATIONS.map((m) => m[0])).size} modules.</p>
+<table class="muts"><thead><tr><th>module</th><th>what the mutation breaks</th></tr></thead><tbody>
+${MUTATIONS.map((m) => `<tr><td><code>${escape(m[0])}</code></td><td>${escape(m[4])}</td></tr>`).join('\n')}
+</tbody></table>
+</section>
+
+<section class="appendix">
+<h2>Appendix F&ensp;Seals</h2>
 <p>Each row is a predicate that runs. ${held.length} of ${seals.length} hold at
 generation time; a seal that stopped holding would fail
 <code>npm run test:verification</code> before this page could be regenerated.</p>
@@ -330,7 +418,7 @@ generation time; a seal that stopped holding would fail
 </section>
 
 <section class="appendix">
-<h2>Appendix B&ensp;Reproduction</h2>
+<h2>Appendix G&ensp;Reproduction</h2>
 <p>This page is generated. To rebuild it from the source and confirm that no
 figure on it has drifted:</p>
 <pre><code>npm install
@@ -345,7 +433,13 @@ permission.</p>
 // The receipt covers what the page STATES. A timing measurement is not stated
 // on the page and must not be in the model, or the receipt would move on every
 // run and mean nothing.
-const model = JSON.stringify({ version, ORBIT, AXIS, freq, angle, seals: held.length, realtime: realtimeMet, validation: validation.conditionsMet, eqns: eqn })
+const model = JSON.stringify({
+  version, ORBIT, AXIS, freq, angle, seals: held.length, realtime: realtimeMet,
+  validation: validation.conditionsMet, eqns: eqn,
+  criteria: criteriaAll.map((c) => `${c.name}:${c.verdict.conditionsMet}/${c.verdict.conditionsTotal}`),
+  claims: Object.keys(ledger).length, ceilings: ratchet.ceilings,
+  patches: Object.keys(plan.patches).length, mutations: MUTATIONS.length,
+})
 const receipt = createHash('sha256').update(model).digest('hex').slice(0, 16)
 
 const html = `<!doctype html>
@@ -393,6 +487,25 @@ dl.axioms .stmt { font-size: .88em; }
 .warn { border-left: 3px solid var(--accent); padding-left: 1em; font-size: .95em; color: var(--ink); }
 .appendix h2 { font-size: 1em; font-variant: small-caps; letter-spacing: .04em; }
 .receipt { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--rule); color: var(--muted); font-size: .82em; }
+h3 { font-size: .98em; margin: 1.6em 0 .2em; font-weight: 600; }
+.crit { margin-bottom: 1.4em; page-break-inside: avoid; break-inside: avoid; }
+.crit .score { color: var(--muted); font-weight: 400; }
+.crit .gated { float: right; font-size: .78em; font-weight: 400; color: var(--muted); font-variant: small-caps; letter-spacing: .04em; }
+.crit .subj { color: var(--muted); font-size: .86em; margin: 0 0 .4em; text-align: left; }
+table.cond { font-size: .78em; }
+table.cond td:first-child { width: 1.4em; text-align: center; }
+table.cond td:nth-child(2) { white-space: nowrap; }
+table.ledger { font-size: .74em; table-layout: fixed; }
+table.ledger td { vertical-align: top; word-break: break-word; }
+table.ledger .where { width: 12em; color: var(--muted); font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: .92em; }
+table.ledger td:last-child { width: 12em; }
+table.muts { font-size: .78em; }
+table.muts td:first-child { width: 16em; }
+table.plan { font-size: .84em; }
+dl.demarc dt { font-weight: 600; margin-top: 1em; }
+dl.demarc dd { margin: .25em 0 0 0; padding-left: 1.1em; border-left: 2px solid var(--rule); font-size: .88em; }
+dl.demarc .count { color: var(--muted); font-weight: 400; }
+.note { color: var(--muted); font-size: .87em; }
 
 @page {
   size: A4;

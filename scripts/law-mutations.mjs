@@ -41,7 +41,7 @@ const at = (name) => (name.includes('/') ? join(ROOT, 'src', name) : join(A432, 
 const sha = (b) => createHash('sha256').update(b).digest('hex')
 
 /** [module, suite, anchor, replacement, what the mutation breaks] */
-const MUTATIONS = [
+export const MUTATIONS = [
   ['a432.yin.yang.ts', 'a432.yin.yang.test.ts',
     'const sign = f.denominator < 0 ? -1 : 1;', 'const sign = 1;',
     'simplify stops being canonical'],
@@ -163,6 +163,10 @@ const MUTATIONS = [
     'consciousness stops being the sum of the pattern'],
 ]
 
+if (!(process.argv[1] && process.argv[1].endsWith('law-mutations.mjs'))) {
+  // Imported for the list, not run. The paper surfaces MUTATIONS; running the
+  // harness as a side effect of reading it would corrupt files during a build.
+} else {
 const problems = []
 // The controls run first: an UNMUTATED suite must pass, or a suite that fails
 // for its own reasons would be read here as a mutation being caught.
@@ -204,3 +208,4 @@ if (problems.length > 0) {
   process.exit(1)
 }
 console.log('law-mutations ok — every suite fails when the code beneath it is corrupted')
+}

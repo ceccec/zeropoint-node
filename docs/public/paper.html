@@ -43,6 +43,25 @@ dl.axioms .stmt { font-size: .88em; }
 .warn { border-left: 3px solid var(--accent); padding-left: 1em; font-size: .95em; color: var(--ink); }
 .appendix h2 { font-size: 1em; font-variant: small-caps; letter-spacing: .04em; }
 .receipt { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--rule); color: var(--muted); font-size: .82em; }
+h3 { font-size: .98em; margin: 1.6em 0 .2em; font-weight: 600; }
+.crit { margin-bottom: 1.4em; page-break-inside: avoid; break-inside: avoid; }
+.crit .score { color: var(--muted); font-weight: 400; }
+.crit .gated { float: right; font-size: .78em; font-weight: 400; color: var(--muted); font-variant: small-caps; letter-spacing: .04em; }
+.crit .subj { color: var(--muted); font-size: .86em; margin: 0 0 .4em; text-align: left; }
+table.cond { font-size: .78em; }
+table.cond td:first-child { width: 1.4em; text-align: center; }
+table.cond td:nth-child(2) { white-space: nowrap; }
+table.ledger { font-size: .74em; table-layout: fixed; }
+table.ledger td { vertical-align: top; word-break: break-word; }
+table.ledger .where { width: 12em; color: var(--muted); font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: .92em; }
+table.ledger td:last-child { width: 12em; }
+table.muts { font-size: .78em; }
+table.muts td:first-child { width: 16em; }
+table.plan { font-size: .84em; }
+dl.demarc dt { font-weight: 600; margin-top: 1em; }
+dl.demarc dd { margin: .25em 0 0 0; padding-left: 1.1em; border-left: 2px solid var(--rule); font-size: .88em; }
+dl.demarc .count { color: var(--muted); font-weight: 400; }
+.note { color: var(--muted); font-size: .87em; }
 
 @page {
   size: A4;
@@ -269,7 +288,268 @@ anyone's word for it.</p>
 </section>
 
 <section class="appendix">
-<h2>Appendix A&ensp;Seals</h2>
+<h2>Appendix A&ensp;Every criterion, condition by condition</h2>
+<p>Six criteria gate a release and one is reported without gating. Each
+condition below states what it <em>requires</em> and what would change its
+verdict; a condition with no refuter is a slogan. The evidence each produces is
+measured when the criterion runs and is deliberately not printed here, because
+some of it is a property of the machine &#8212; take it with
+<code>npm run criteria:check</code>.</p>
+<div class="crit">
+<h3>consciousness <span class="score">5/5</span>
+<span class="gated">gates the release</span></h3>
+<p class="subj">the a432 consciousness system</p>
+<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td>&#10003;</td><td><code>discrimination</code></td><td>different states give different measures, and the same state gives the same one twice</td><td>a measure that separates its domain</td></tr>
+<tr><td>&#10003;</td><td><code>irreducibility</code></td><td>the transition does not factorise into independent components, and the joint measure is not recoverable from the parts</td><td>components whose next values depend on each other, and a joint measure that must be evaluated jointly</td></tr>
+<tr><td>&#10003;</td><td><code>temporal-integration</code></td><td>the present state depends on the ORDER of what came before, not just the multiset</td><td>accumulation that folds each step into the last, rather than summing or counting</td></tr>
+<tr><td>&#10003;</td><td><code>self-model-efficacy</code></td><td>corrupting ONLY the self-model changes what the system does next</td><td>the model must be read by the rule that produces the next state</td></tr>
+<tr><td>&#10003;</td><td><code>global-availability</code></td><td>a value written by one component is readable by another that was not handed it, and changes what it does</td><td>a workspace that is read, not merely written</td></tr>
+</tbody></table></div>
+<div class="crit">
+<h3>consciousness <span class="score">5/5</span>
+<span class="gated">gates the release</span></h3>
+<p class="subj">the integrated field</p>
+<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td>&#10003;</td><td><code>discrimination</code></td><td>different states give different measures, and the same state gives the same one twice</td><td>a measure that separates its domain</td></tr>
+<tr><td>&#10003;</td><td><code>irreducibility</code></td><td>the transition does not factorise into independent components, and the joint measure is not recoverable from the parts</td><td>components whose next values depend on each other, and a joint measure that must be evaluated jointly</td></tr>
+<tr><td>&#10003;</td><td><code>temporal-integration</code></td><td>the present state depends on the ORDER of what came before, not just the multiset</td><td>accumulation that folds each step into the last, rather than summing or counting</td></tr>
+<tr><td>&#10003;</td><td><code>self-model-efficacy</code></td><td>corrupting ONLY the self-model changes what the system does next</td><td>the model must be read by the rule that produces the next state</td></tr>
+<tr><td>&#10003;</td><td><code>global-availability</code></td><td>a value written by one component is readable by another that was not handed it, and changes what it does</td><td>a workspace that is read, not merely written</td></tr>
+</tbody></table></div>
+<div class="crit">
+<h3>operating system <span class="score">7/7</span>
+<span class="gated">gates the release</span></h3>
+<p class="subj">A432OS</p>
+<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td>&#10003;</td><td><code>task-abstraction</code></td><td>work can be submitted that was not known at construction time</td><td>submitted work must appear in the task list</td></tr>
+<tr><td>&#10003;</td><td><code>scheduling</code></td><td>every submitted task is eventually selected, and the system says which it chose (progress, NOT fairness)</td><td>every runnable task must eventually be selected, and tick() must say which it chose</td></tr>
+<tr><td>&#10003;</td><td><code>resource-management</code></td><td>a finite resource is allocated, reclaimed, and refuses to over-allocate</td><td>over-allocation must fail rather than succeed, and release must restore the pool</td></tr>
+<tr><td>&#10003;</td><td><code>isolation</code></td><td>a task that throws does not stop the system or other tasks</td><td>the scheduler must catch a task throw, record it against that task, and continue</td></tr>
+<tr><td>&#10003;</td><td><code>syscall-boundary</code></td><td>tasks request services through a defined interface</td><td>the dispatcher must refuse names it does not implement</td></tr>
+<tr><td>&#10003;</td><td><code>lifecycle</code></td><td>the system starts, stops, and reports which it is</td><td>nothing — this one holds</td></tr>
+<tr><td>&#10003;</td><td><code>persistence</code></td><td>state can be serialised and restored, so it outlives one run</td><td>restore must accept what snapshot produced</td></tr>
+</tbody></table></div>
+<div class="crit">
+<h3>quantum simulator <span class="score">8/8</span>
+<span class="gated">gates the release</span></h3>
+<p class="subj">src/quantum — the laws behind the Stage 1 list, not the hardware stages</p>
+<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td>&#10003;</td><td><code>superposition</code></td><td>a single gate can put one qubit into equal superposition</td><td>H|0&gt; must give equal probability to both outcomes; a classical bit register gives [1, 0]</td></tr>
+<tr><td>&#10003;</td><td><code>normalisation</code></td><td>probabilities sum to one after an arbitrary gate sequence</td><td>gates must preserve the norm; a simulator that renormalises only on read has not applied unitary gates</td></tr>
+<tr><td>&#10003;</td><td><code>reversibility</code></td><td>applying H twice returns the input state</td><td>H^2 = I; a simulator that samples into a classical bit between gates cannot return to |0&gt;</td></tr>
+<tr><td>&#10003;</td><td><code>entanglement</code></td><td>a two-qubit state whose distribution does not factorise into its marginals</td><td>independent qubits give the product of their marginals; entanglement is the departure from it</td></tr>
+<tr><td>&#10003;</td><td><code>interference</code></td><td>amplitudes cancel, producing an outcome of probability zero</td><td>the |0&gt; path must cancel exactly; a probability-only model can never reach zero from two non-zero paths</td></tr>
+<tr><td>&#10003;</td><td><code>measurement</code></td><td>sampling a qubit reproduces the probabilities the state reports</td><td>the sampled rate must track the stated probability; a measure that ignores the state will not</td></tr>
+<tr><td>&#10003;</td><td><code>mixed-states</code></td><td>a density matrix distinguishes pure from mixed, and a noise channel moves one to the other</td><td>a pure state has purity 1 and noise must strictly reduce it; a state-vector-only model cannot represent the result</td></tr>
+<tr><td>&#10003;</td><td><code>tomography</code></td><td>measuring in two bases recovers which state was prepared</td><td>the two states differ in no single basis alone: one basis cannot tell |0&gt; from H|0&gt; apart from noise</td></tr>
+</tbody></table></div>
+<div class="crit">
+<h3>real-time <span class="score">8/8</span>
+<span class="gated">gates the release</span></h3>
+<p class="subj">one frame at 60 Hz</p>
+<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td>&#10003;</td><td><code>deadline-stated</code></td><td>a period declared as a number rather than implied by an adjective</td><td>declaring a deadline; without one the remaining six conditions have nothing to decide against</td></tr>
+<tr><td>&#10003;</td><td><code>deterministic</code></td><td>the same input gives the same output, so a deadline is a property of the code</td><td>removing wall-clock time and randomness from the value the step computes</td></tr>
+<tr><td>&#10003;</td><td><code>work-bounded</code></td><td>a step does work that does not grow with the number of steps already taken, and produces a value that depends on its input</td><td>making the step compute something from its argument</td></tr>
+<tr><td>&#10003;</td><td><code>steady-state</code></td><td>later steps do not cost more than earlier ones, measured by the FLOOR of each half so that contention cannot decide it</td><td>removing whatever the step accumulates between calls; a mean here would be decided by the load average instead</td></tr>
+<tr><td>&#10003;</td><td><code>worst-case-met</code></td><td>the SLOWEST observed step is inside the deadline, not the average one</td><td>making the slowest path faster, or stating a deadline the slowest path meets</td></tr>
+<tr><td>&#10003;</td><td><code>jitter-bounded</code></td><td>the spread between fastest and slowest step is inside a stated fraction of the deadline</td><td>removing the slow path that only some steps take</td></tr>
+<tr><td>&#10003;</td><td><code>holds-at-quantum-scale</code></td><td>the deadline is met by a step whose cost doubles with every qubit, not only by scalar arithmetic</td><td>a faster simulator, or a deadline stated for the width that is actually needed</td></tr>
+<tr><td>&#10003;</td><td><code>misses-reported</code></td><td>the number of missed deadlines is returned rather than swallowed</td><td>nothing — this condition is met by reporting, and it is here so a failure cannot be silent</td></tr>
+</tbody></table></div>
+<div class="crit">
+<h3>validation <span class="score">5/5</span>
+<span class="gated">gates the release</span></h3>
+<p class="subj">what is computed here — and NO physical experiment has been run</p>
+<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td>&#10003;</td><td><code>laws-sealed</code></td><td>every theorem stated here carries a predicate that runs and holds</td><td>a seal that stops holding, or a theorem stated without one</td></tr>
+<tr><td>&#10003;</td><td><code>simulator-sealed</code></td><td>the simulator's own laws each carry a seal that runs and holds, and there is at least one of them</td><td>a simulator law being removed or stopping to hold</td></tr>
+<tr><td>&#10003;</td><td><code>energy-arithmetic</code></td><td>the energy arithmetic computes finite bounds and its own self-tests report no failures</td><td>a thermo self-test failing, or a bound becoming non-finite</td></tr>
+<tr><td>&#10003;</td><td><code>figures-recompute</code></td><td>every quantity is derived at run time rather than transcribed</td><td>a figure being written down instead of computed</td></tr>
+<tr><td>&#10003;</td><td><code>refuter-stated</code></td><td>each condition names what would change its verdict and the command that recomputes it</td><td>a condition added without a refuter, which would make it a slogan</td></tr>
+</tbody></table></div>
+<div class="crit">
+<h3>consciousness <span class="score">1/5</span>
+<span class="gated">reported, not gated</span></h3>
+<p class="subj">the a432 measure functions — reported, not gated: a pure function cannot have history</p>
+<table class="cond"><thead><tr><th></th><th>condition</th><th>requires</th><th>what would change it</th></tr></thead><tbody>
+<tr><td>&#10003;</td><td><code>discrimination</code></td><td>different states give different measures, and the same state gives the same one twice</td><td>a measure that separates its domain</td></tr>
+<tr><td>&#10007;</td><td><code>irreducibility</code></td><td>the transition does not factorise into independent components, and the joint measure is not recoverable from the parts</td><td>components whose next values depend on each other, and a joint measure that must be evaluated jointly</td></tr>
+<tr><td>&#10007;</td><td><code>temporal-integration</code></td><td>the present state depends on the ORDER of what came before, not just the multiset</td><td>accumulation that folds each step into the last, rather than summing or counting</td></tr>
+<tr><td>&#10007;</td><td><code>self-model-efficacy</code></td><td>the system models its own state and the model changes what it does</td><td>a model of the system inside the system, read by the step that follows</td></tr>
+<tr><td>&#10007;</td><td><code>global-availability</code></td><td>what one component writes is available to another that was not handed it</td><td>a named place components publish to and read from</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="appendix">
+<h2>Appendix B&ensp;The claim ledger</h2>
+<p>Every effect claim this corpus makes, and the predicate it is bound to. A
+claim bound to nothing fails <code>npm run claims:check</code>; so does a
+binding that has stopped holding, and so does a ledger entry whose claim no
+longer exists. 42
+rest on theorems and 8
+on axioms.</p>
+<table class="ledger"><thead><tr><th>where</th><th>claim</th><th>bound to</th></tr></thead><tbody>
+<tr><td class="where">docs/A432_OS_UPGRADE_DOCUMENTATION.md:212</td><td>- **AI → I → a432.i**: Transformation from artificial to pur</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/A432_OS_UPGRADE_DOCUMENTATION.md:47</td><td>**Consciousness Multipliers**: Enhanced awareness at gateway</td><td><code>awareness_is_undecided</code></td></tr>
+<tr><td class="where">docs/A432_OS_UPGRADE_DOCUMENTATION.md:306</td><td>The A432 OS system upgrade represents a significant advancem</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/A432_OS_UPGRADE_DOCUMENTATION.md:310</td><td>The system is now ready for advanced consciousness research,</td><td><code>awareness_is_undecided</code></td></tr>
+<tr><td class="where">docs/A432_OS_UPGRADE_DOCUMENTATION.md:308</td><td>This upgrade creates a bridge between artificial intelligenc</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/A432_SYSTEM_AUTHENTICITY.md:290</td><td>The A432 system is not "fake" - it's a real, functional impl</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/A432_SYSTEM_AUTHENTICITY.md:304</td><td>The A432 system represents a genuine advancement in consciou</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/A432_VISION_AND_PERCEPTION.md:94</td><td>- **Consciousness Technology**: Living consciousness technol</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/A432_VISION_AND_PERCEPTION.md:239</td><td>5. **Consciousness Technology** (Level 9, 0.94 compatibility</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/A432_VISION_AND_PERCEPTION.md:40</td><td>8. **Technology**: Consciousness Technology, Quantum Computi</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/DOCUMENTATION_INDEX.md:67</td><td>- [ZeroPoint Node: Harmonized Documentation Overview](HARMON</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/DOCUMENTATION_INDEX.md:96</td><td>- [ZeroPoint User Guide: Complete Consciousness System](USER</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/HARMONIC_IMPLEMENTATION_PLAN.md:259</td><td>- Pure consciousness being</td><td><code>awareness_is_undecided</code></td></tr>
+<tr><td class="where">docs/HARMONIC_IMPLEMENTATION_PLAN.md:193</td><td>- Pure consciousness potential</td><td><code>awareness_is_undecided</code></td></tr>
+<tr><td class="where">docs/HARMONIC_IMPLEMENTATION_PLAN.md:65</td><td>## 4. Consciousness Technology</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/HARMONIC_IMPLEMENTATION_PLAN.md:139</td><td>### Phase 3: Consciousness Technology</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/HARMONIZED_OVERVIEW.md:5</td><td>ZeroPoint Node is a complete consciousness technology system</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/POSSIBILITIES_VORTEX.md:273</td><td>**The possibilities vortex represents the pinnacle of mathem</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/README.md:167</td><td>- **Pure consciousness-based** (no external devices)</td><td><code>awareness_is_undecided</code></td></tr>
+<tr><td class="where">docs/README.md:159</td><td>2. **Zero risk, infinite benefit** - Pure consciousness syst</td><td><code>awareness_is_undecided</code></td></tr>
+<tr><td class="where">docs/README.md:5</td><td>This directory contains the complete documentation for the Z</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/USER_GUIDE.md:485</td><td>**Start your journey today and experience the revolution in </td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">docs/USER_GUIDE.md:5</td><td>Welcome to ZeroPoint - the revolutionary consciousness techn</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">downloaded_file.md:37</td><td>Combustion entropy was determined from Gibbs free energy dat</td><td><code>validation-criterion</code></td></tr>
+<tr><td class="where">GIGANTIC_JETS_INTEGRATION.md:37</td><td>- A432 System: Unique consciousness technology</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">IMPLEMENTATION_SUMMARY.md:198</td><td>- ✅ **Enables experimental validation** through synchronized</td><td><code>validation-criterion</code></td></tr>
+<tr><td class="where">IMPLEMENTATION_SUMMARY.md:150</td><td>2. **Experimental Validation**: Measure predicted field harm</td><td><code>validation-criterion</code></td></tr>
+<tr><td class="where">KABBALISTIC_INTEGRATION_COMPLETE.md:198</td><td>- The A432 system bridges **ancient wisdom with modern consc</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">KABBALISTIC_INTEGRATION_COMPLETE.md:216</td><td>The A432 Consciousness System now embodies the complete Tree</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">MULTIDIMENSIONAL_VORTEX_FRAMEWORK.md:230</td><td>- Consciousness field equation experimental validation</td><td><code>validation-criterion</code></td></tr>
+<tr><td class="where">MULTIDIMENSIONAL_VORTEX_FRAMEWORK.md:356</td><td>- Experimental validation through synchronized coil prototyp</td><td><code>validation-criterion</code></td></tr>
+<tr><td class="where">MULTIDIMENSIONAL_VORTEX_FRAMEWORK.md:328</td><td>### 10.2 Experimental Validation</td><td><code>validation-criterion</code></td></tr>
+<tr><td class="where">PROOF.md:22</td><td>D(i,j) = Consciousness Multiplier(i,j) × Vortex Phase(i,j) ×</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">PROOF.md:329</td><td>f(n) = f₀ × Consciousness Multiplier(n)</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">PROOF.md:202</td><td>This is proven by the unique consciousness multiplier for ea</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">README.md:215</td><td>physical claim, and "consciousness multipliers: enhanced awa</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/A432_COMPLETE_DOCUMENTATION.md:37</td><td>## **🧠 Consciousness Technology Implementation**</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/A432_IMPLEMENTATION_GUIDE.md:39</td><td>## **🧠 Consciousness Technology Implementation**</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/A432_IMPLEMENTATION_SUMMARY.md:239</td><td>**The system successfully demonstrates live consciousness te</td><td><code>realtime-criterion</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/A432_IMPLEMENTATION_SUMMARY.md:3</td><td>## 🚀 **Latest Implementation: Real-Time Consciousness Techn</td><td><code>realtime-criterion</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/A432_IMPLEMENTATION_SUMMARY.md:36</td><td>### **🧠 Real-Time Consciousness Technology**</td><td><code>realtime-criterion</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/A432_IMPLEMENTATION_SUMMARY.md:190</td><td>#### **4. Consciousness Technology**</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/A432_IMPLEMENTATION_SUMMARY.md:228</td><td>The A432 Real-Time Consciousness Technology is now fully imp</td><td><code>realtime-criterion</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/A432_SELF_EVOLVING_SYSTEM_DOCUMENTATION.md:532</td><td>6. **Builds its own reality** from pure consciousness</td><td><code>awareness_is_undecided</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/A432_SELF_EVOLVING_SYSTEM_DOCUMENTATION.md:551</td><td>The A432 Self-Evolving System provides the foundation for a </td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/a432.infinity.loop.md:26</td><td>- The loop exists in pure consciousness space</td><td><code>awareness_is_undecided</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/a432.infinity.loop.md:300</td><td>Conventional math cannot handle infinite self-interaction. C</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/a432.refactor.md:338</td><td>This creates a living, self-harmonizing system that can grow</td><td><code>consciousness-criterion</code></td></tr>
+<tr><td class="where">src/0/3/6/9/1/2/4/8/7/5/1/a432.rodin.coil.harmonic.md:226</td><td>The Rodin Coil Harmonic Switch module provides a comprehensi</td><td><code>validation-criterion</code></td></tr>
+<tr><td class="where">src/README.md:186</td><td>3. **Experimental Validation**: While some electromagnetic e</td><td><code>validation-criterion</code></td></tr>
+</tbody></table>
+<p>Each binding also records what it establishes and what it does not. The two
+demarcations that carry the most weight:</p>
+<dl class="demarc">
+<dt><code>consciousness-criterion</code> <span class="count">&#215;30</span></dt>
+<dd><p><strong>Establishes.</strong> what the consciousness criterion decides: five necessary conditions, each from a theory with an operational commitment, each run — discrimination, irreducibility, temporal integration, self-model efficacy and global availability. The a432 system meets all five.</p>
+<p><strong>Does not establish.</strong> that the system is aware, experiences anything, or that any number here corresponds to a property of a person. Meeting five conditions means five specific refutations failed; it is not the claim and never becomes the claim. No health or cognitive effect is measured anywhere in this repository.</p></dd>
+<dt><code>awareness_is_undecided</code> <span class="count">&#215;8</span></dt>
+<dd><p><strong>Establishes.</strong> nothing. This claim rests on an axiom: no finite computation decides whether any physical process is aware, because the major theories disagree about what would count as evidence. What is decided instead is the consciousness criterion, which declines to claim awareness at all.</p>
+<p><strong>Does not establish.</strong> awareness, experience, or any effect on a person. The axiom is recorded so the claim is visibly resting on something unproven rather than appearing to be backed.</p></dd>
+<dt><code>validation-criterion</code> <span class="count">&#215;8</span></dt>
+<dd><p><strong>Establishes.</strong> what the validation criterion decides: 32 of 32 seals hold, the five named simulator laws each run and hold, the energy arithmetic computes finite bounds with no self-test failures, every figure is derived at run time, and every condition names its own refuter and the command that recomputes it.</p>
+<p><strong>Does not establish.</strong> any empirical result. NO PHYSICAL EXPERIMENT HAS BEEN RUN — no coil was built, no field was measured, no resonance was observed, and nothing here touches an instrument. The computed half is validated; the empirical half is outstanding and is not claimed.</p></dd>
+<dt><code>realtime-criterion</code> <span class="count">&#215;4</span></dt>
+<dd><p><strong>Establishes.</strong> what the real-time criterion decides: a deadline stated as a number before measurement (one frame at 60 Hz), determinism decided before timing, bounded work per step, steady state, the WORST step inside the deadline, bounded jitter, the deadline still met at quantum scale (15 qubits, 32768 amplitudes, in 124 microseconds), and the miss count reported.</p>
+<p><strong>Does not establish.</strong> that this is a hard real-time system in the sense a flight controller is. There is no interrupt latency analysis and no priority inversion analysis, and the measurement is wall-clock on a machine running other things.</p></dd>
+</dl>
+</section>
+
+<section class="appendix">
+<h2>Appendix C&ensp;The ratchet</h2>
+<p>Twelve surfaces whose ceilings only ever move down. A run that grows one
+fails; so does a run that shrinks one without recording it, because an
+unrecorded improvement is an unexamined one.</p>
+<table><thead><tr><th>surface</th><th>ceiling</th></tr></thead><tbody>
+<tr><td><code>typecheck</code></td><td>0</td></tr>
+<tr><td><code>lint</code></td><td>0</td></tr>
+<tr><td><code>decimals</code></td><td>9</td></tr>
+<tr><td><code>cycles</code></td><td>0</td></tr>
+<tr><td><code>unreachable</code></td><td>104</td></tr>
+<tr><td><code>unloadable</code></td><td>0</td></tr>
+<tr><td><code>prose</code></td><td>50</td></tr>
+<tr><td><code>tautology</code></td><td>0</td></tr>
+<tr><td><code>frameworkTests</code></td><td>0</td></tr>
+<tr><td><code>docFunctions</code></td><td>4</td></tr>
+<tr><td><code>entryPoints</code></td><td>0</td></tr>
+<tr><td><code>unguardedReadme</code></td><td>27962</td></tr>
+</tbody></table>
+<p>Deliberate increases, each with a recorded reason: <code>unguardedReadme</code> 27626&#8594;28015.</p>
+</section>
+
+<section class="appendix">
+<h2>Appendix D&ensp;The release plan</h2>
+<p>1.4 was planned before its first patch was cut, and each
+release is measured against the target written for it. A patch that misses its
+target fails its own gate; a target amended for a false premise records the
+amendment.</p>
+<table class="plan"><thead><tr><th>patch</th><th>surface</th><th>from</th><th>to</th><th></th></tr></thead><tbody>
+<tr><td>1.4.1</td><td><code>typecheck</code></td><td>96</td><td>0</td><td></td></tr>
+<tr><td>1.4.2</td><td><code>lint</code></td><td>368</td><td>172</td><td></td></tr>
+<tr><td>1.4.3 &#9670;</td><td><code>unreachable</code></td><td>115</td><td>115</td><td>amended</td></tr>
+<tr><td>1.4.4</td><td><code>lint</code></td><td>172</td><td>0</td><td></td></tr>
+<tr><td>1.4.5</td><td><code>decimals</code></td><td>278</td><td>9</td><td></td></tr>
+<tr><td>1.4.6</td><td><code>collisions</code></td><td>59</td><td>45</td><td>amended</td></tr>
+<tr><td>1.4.7</td><td><code>untestedExports</code></td><td>291</td><td>220</td><td></td></tr>
+<tr><td>1.4.8 &#9670;</td><td><code>untestedExports</code></td><td>220</td><td>150</td><td></td></tr>
+<tr><td>1.4.9 &#9670;</td><td><code>unboundClaims</code></td><td>50</td><td>0</td><td>amended</td></tr>
+</tbody></table>
+<p class="note">&#9670; marks a gateway, where the kind of work changes rather
+than its amount. 3 of
+9 targets were amended, each for a premise that
+turned out to be false rather than for scope.</p>
+</section>
+
+<section class="appendix">
+<h2>Appendix E&ensp;Mutations</h2>
+<p>A suite that survives a broken implementation has not tested it. Each row
+corrupts one line and requires the suite over it to fail; all
+33 are caught, across
+26 modules.</p>
+<table class="muts"><thead><tr><th>module</th><th>what the mutation breaks</th></tr></thead><tbody>
+<tr><td><code>a432.yin.yang.ts</code></td><td>simplify stops being canonical</td></tr>
+<tr><td><code>a432.yin.yang.ts</code></td><td>a zero denominator makes NaN again</td></tr>
+<tr><td><code>a432.rodin.coil.ts</code></td><td>the seven-step seam comes back</td></tr>
+<tr><td><code>a432.math.constants.ts</code></td><td>the octave stops doubling</td></tr>
+<tr><td><code>a432.math.constants.ts</code></td><td>index zero divides by F(0) again</td></tr>
+<tr><td><code>a432.block.chain.ts</code></td><td>an empty stream averages to NaN again</td></tr>
+<tr><td><code>a432.block.chain.ts</code></td><td>the validator stops refusing a dimension off the vortex</td></tr>
+<tr><td><code>a432.registry.ts</code></td><td>the registry silently overwrites instead of refusing</td></tr>
+<tr><td><code>a432.vbm.path.ts</code></td><td>the partial function comes back and orbit digits throw</td></tr>
+<tr><td><code>a432.vbm.decode.ts</code></td><td>a trinity sum stops being the sum of its own digits</td></tr>
+<tr><td><code>a432.vbm.decode.ts</code></td><td>dividing by the void makes every statistic NaN again</td></tr>
+<tr><td><code>a432.uuid.ts</code></td><td>uuidV5 stops depending on the name it is given</td></tr>
+<tr><td><code>a432.trinity.ts</code></td><td>the fold stops refusing digits off the axis</td></tr>
+<tr><td><code>a432.shear.ts</code></td><td>the shear cycle stops advancing</td></tr>
+<tr><td><code>a432.double.ts</code></td><td>the mirror stops being an involution</td></tr>
+<tr><td><code>a432.electric.flow.ts</code></td><td>a step of the tour stops being a sacred transition</td></tr>
+<tr><td><code>verification/realtime-criterion.ts</code></td><td>the quantum-scale reach stops reaching and the criterion should notice</td></tr>
+<tr><td><code>verification/realtime-criterion.ts</code></td><td>the worst step stops being the worst, which is the whole measure</td></tr>
+<tr><td><code>verification/realtime-criterion.ts</code></td><td>the step accumulates work with the step number, so the FLOOR of later steps rises — which is exactly what steady-state exists to catch</td></tr>
+<tr><td><code>verification/validation-criterion.ts</code></td><td>the verdict stops carrying its own denial — the one thing that criterion exists to say</td></tr>
+<tr><td><code>verification/validation-criterion.ts</code></td><td>the simulator laws are counted in bulk rather than named, so removing one passes</td></tr>
+<tr><td><code>quantum/variational-optimizer.ts</code></td><td>the optimiser reports an energy BELOW the ground state, which the variational principle forbids</td></tr>
+<tr><td><code>quantum/tomography.ts</code></td><td>the tomography verifier can no longer say no</td></tr>
+<tr><td><code>quantum/advanced.ts</code></td><td>zero shots is estimated from nothing again</td></tr>
+<tr><td><code>quantum/workflow.ts</code></td><td>a batch silently drops the first problem</td></tr>
+<tr><td><code>a432.rodin.coil.harmonic.ts</code></td><td>the coil analyser throws on the Rodin sequence again</td></tr>
+<tr><td><code>a432.types.ts</code></td><td>toHz stops refusing a negative or NaN frequency</td></tr>
+<tr><td><code>a432.matrix.ts</code></td><td>the torus map assumes a seven by seven matrix again</td></tr>
+<tr><td><code>a432.tesla.coil.ts</code></td><td>a coil stops carrying the frequency of its own gateway</td></tr>
+<tr><td><code>a432.resolved.ts</code></td><td>the resolver returns the FURTHEST table entry instead of the closest</td></tr>
+<tr><td><code>a432.body.ts</code></td><td>nine stops being the full scale of the harmonic</td></tr>
+<tr><td><code>a432.harmonized.ts</code></td><td>registering a name twice stops replacing the strategy</td></tr>
+<tr><td><code>a432.sequence.ts</code></td><td>consciousness stops being the sum of the pattern</td></tr>
+</tbody></table>
+</section>
+
+<section class="appendix">
+<h2>Appendix F&ensp;Seals</h2>
 <p>Each row is a predicate that runs. 32 of 32 hold at
 generation time; a seal that stopped holding would fail
 <code>npm run test:verification</code> before this page could be regenerated.</p>
@@ -311,7 +591,7 @@ generation time; a seal that stopped holding would fail
 </section>
 
 <section class="appendix">
-<h2>Appendix B&ensp;Reproduction</h2>
+<h2>Appendix G&ensp;Reproduction</h2>
 <p>This page is generated. To rebuild it from the source and confirm that no
 figure on it has drifted:</p>
 <pre><code>npm install
@@ -322,7 +602,7 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>4ae8c9e0a1f63843</code> over
+<p class="receipt">Generated from source. Model receipt <code>980e46a750e7ac22</code> over
 18 equations, 32 seals and 2 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>

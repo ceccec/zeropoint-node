@@ -23,69 +23,17 @@ import { readFileSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { join, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { evaluateRealtimeCriterion } from '../src/verification/realtime-criterion.ts'
-import { evaluateValidationCriterion } from '../src/verification/validation-criterion.ts'
+import { allCriteria } from './lib/criteria-subjects.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const load = (p) => import(pathToFileURL(join(ROOT, p)).href)
 
-const { evaluateConsciousnessCriterion, a432MeasureSubject, a432SystemSubject, integratedFieldSubject } = await load('src/verification/consciousness-criterion.ts')
-const { evaluateOsCriterion } = await load('src/verification/os-criterion.ts')
-const { evaluateQuantumCriterion } = await load('src/verification/quantum-criterion.ts')
-const { A432OS } = await load('src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts')
-const sim = await load('src/quantum/simulator.ts')
-const den = await load('src/quantum/density.ts')
-const tom = await load('src/quantum/tomography.ts')
 
 // BOTH subjects, and the gate needs both. The integrated field was built to
 // meet the criterion and does; the a432 consciousness measures — the subject
 // the README's claim is about — meet one of five. Gating only on the field
 // would let me unblock releases by choosing a convenient default, which is
 // the thing this gate exists to prevent.
-const field = evaluateConsciousnessCriterion(integratedFieldSubject)
-const a432System = evaluateConsciousnessCriterion(a432SystemSubject)
-const a432Measures = evaluateConsciousnessCriterion(a432MeasureSubject)
-const os = (() => {
-  const instance = new A432OS()
-  // The FULL interface. Probing only start/stop would report 1 of 7 forever
-  // and block every release on a number the class no longer deserves.
-  return evaluateOsCriterion({
-    spawn: (name, run) => instance.spawn(name, run),
-    tick: () => instance.tick(),
-    tasks: () => instance.tasks(),
-    allocate: (owner, amount) => instance.allocate(owner, amount),
-    release: (owner, amount) => instance.release(owner, amount),
-    available: () => instance.available(),
-    syscall: (name, ...args) => instance.syscall(name, ...args),
-    start: () => instance.start(),
-    stop: () => instance.stop(),
-    isRunning: () => instance.running(),
-    snapshot: () => instance.snapshot(),
-    restore: (snap) => instance.restore(snap),
-  })
-})()
-
-// The simulator, presented through the criterion's own shape. Same reason as
-// the OS above: probing a subset would report a number the module does not
-// deserve, in either direction.
-const quantum = evaluateQuantumCriterion({
-  zero: (n) => sim.zeroState(n),
-  gates: { H: sim.H, X: sim.X, Z: sim.Z },
-  apply1: (s, q, g) => sim.applyGate1(s, q, g),
-  cnot: (s, c, t) => sim.cnot(s, c, t),
-  probabilities: (s) => sim.probabilities(s),
-  measure: (s, q, unit) => sim.measureQubit(s, q, unit).bit,
-  density: (s) => den.pure(s),
-  purity: (r) => den.purity(r),
-  noise: (r, q, p) => den.applyChannel(r, q, den.depolarizing(p)),
-  tomography: (s, q) => {
-    const shots = 2000
-    const z = tom.measureZ(s, q, shots, 1)
-    const x = tom.measureX(s, q, shots, 1)
-    return { z: (z.counts[0] - z.counts[1]) / shots, x: (x.counts[0] - x.counts[1]) / shots }
-  },
-})
-
 /**
  * WHAT IS GATED, AND WHAT IS ONLY REPORTED.
  *
@@ -101,11 +49,18 @@ const quantum = evaluateQuantumCriterion({
  * them — which is what "a consciousness system" names, and what the README's
  * claim was about.
  */
-// The two criteria 1.4.9 added. Neither takes a candidate adapter, so both are
-// evaluated here directly: they measure this repository rather than a subject
-// presented to them.
-const realtime = evaluateRealtimeCriterion()
-const validation = evaluateValidationCriterion()
+// The subjects live in scripts/lib/criteria-subjects.mjs and both this gate and
+// the paper import them. They used to be built here, and a second copy of an
+// adapter is a second thing that can drift from the first.
+const criteriaList = allCriteria()
+const byName = (n, subjMatch) => criteriaList.find((c) => c.name === n && c.subject.includes(subjMatch)).verdict
+const a432System = byName('consciousness', 'a432 consciousness system')
+const field = byName('consciousness', 'integrated field')
+const os = byName('operating system', 'A432OS')
+const quantum = byName('quantum simulator', 'src/quantum')
+const realtime = byName('real-time', '60 Hz')
+const validation = byName('validation', 'physical experiment')
+const a432Measures = byName('consciousness', 'measure functions')
 
 const criteria = [
   { name: 'consciousness', verdict: a432System, subject: 'the a432 consciousness system', gated: true },

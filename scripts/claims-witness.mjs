@@ -63,15 +63,22 @@ const SEED = process.argv.includes('--seed')
 
 const { SEALS, runSeal, ASSUMPTIONS } = await import(join(ROOT, 'src/verification/lean-bridge.ts'))
 const { evaluateConsciousnessCriterion } = await import(join(ROOT, 'src/verification/consciousness-criterion.ts'))
-const { evaluateOsCriterion } = await import(join(ROOT, 'src/verification/os-criterion.ts'))
-const { evaluateQuantumCriterion } = await import(join(ROOT, 'src/verification/quantum-criterion.ts'))
 const { evaluateRealtimeCriterion } = await import(join(ROOT, 'src/verification/realtime-criterion.ts'))
+const { evaluateValidationCriterion } = await import(join(ROOT, 'src/verification/validation-criterion.ts'))
 
+/**
+ * quantum-criterion and os-criterion are deliberately absent. Both take a
+ * CANDIDATE adapter — the simulator and the kernel presented through the
+ * criterion's own shape — and criteria:check owns those adapters. Building a
+ * second copy here is a second thing that can drift from the first, which is
+ * the defect 1.4.6 spent a release recording. A claim about the simulator binds
+ * to validation-criterion, whose simulator-sealed condition asks the seals by
+ * name instead.
+ */
 const CRITERIA = {
   'consciousness-criterion': evaluateConsciousnessCriterion,
-  'os-criterion': evaluateOsCriterion,
-  'quantum-criterion': evaluateQuantumCriterion,
   'realtime-criterion': evaluateRealtimeCriterion,
+  'validation-criterion': evaluateValidationCriterion,
 }
 
 /** A claim's identity: its file and enough of its own words to find it again. */

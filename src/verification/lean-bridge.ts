@@ -251,6 +251,25 @@ export const ASSUMPTIONS = {
     why_unsealed: 'a universal negative over all polynomial-time algorithms; no finite computation decides it',
     what_is_decided_instead: 'kyber_security seals the FIPS 203 parameter sizes of the shipped implementation',
   },
+  /**
+   * The second axiom, and the one this repository's documentation leans on most
+   * often without saying so. Wherever the corpus says a system is aware, has
+   * experience, or that awareness is "enhanced" somewhere, it is resting here.
+   *
+   * It is recorded as an axiom rather than sealed because no finite computation
+   * decides it, and not for want of trying: the major theories of consciousness
+   * disagree about what would even count as evidence, so there is no predicate
+   * to write. The consciousness criterion is what IS decided instead — five
+   * necessary conditions, each from a theory with an operational commitment,
+   * each run. Meeting all five means five specific refutations failed. It is
+   * not the claim, and it never becomes the claim however many conditions are
+   * added.
+   */
+  awareness_is_undecided: {
+    statement: 'axiom awareness_is_undecided : ¬ ∃ (p : System → Bool), decides_awareness p',
+    why_unsealed: 'whether any physical process is conscious is unsettled and the major theories disagree about what would count as evidence; there is no predicate to run, so nothing here can seal it',
+    what_is_decided_instead: 'consciousness-criterion runs five necessary conditions and reports how many a subject fails to be refuted by; it declines to claim awareness at all',
+  },
 } as const
 // ============================================================================
 // SEALS - recomputable predicates, the only thing here that counts as checked

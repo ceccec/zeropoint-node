@@ -93,6 +93,25 @@ const MUTATIONS = [
     '[1, 2], [2, 4], [4, 8], [8, 7], [7, 5], [5, 1] // Vortex sequence',
     '[1, 2], [2, 4], [4, 8], [8, 7], [7, 5] // Vortex sequence',
     'a step of the tour stops being a sacred transition'],
+  // 1.4.9's criteria. A criterion that confirms whatever it is shown confirms
+  // nothing, so each is corrupted in the direction that would make it lie.
+  ['verification/realtime-criterion.ts', 'verification/realtime-criterion.test.ts',
+    'if (p.length !== 1 << n) break', 'if (p.length !== 1 << n) break; if (n > 2) return { qubits: 0, ns: 0, deadlineNs: DEADLINE_NS, wall: "stopped" }',
+    'the quantum-scale reach stops reaching and the criterion should notice'],
+  ['verification/realtime-criterion.ts', 'verification/realtime-criterion.test.ts',
+    'if (dt > worst) worst = dt', 'if (dt < worst) worst = dt',
+    'the worst step stops being the worst, which is the whole measure'],
+  ['verification/realtime-criterion.ts', 'verification/realtime-criterion.test.ts',
+    'const d = digitalRoot(i)', 'let waste = 0; for (let k = 0; k < i / 1000; k += 1) waste += k; const d = digitalRoot(i + (waste > 1e12 ? 1 : 0))',
+    'the step starts accumulating work with the step number, so the floor of later steps rises — which is exactly what steady-state exists to catch'],
+  ['verification/validation-criterion.ts', 'verification/validation-criterion.test.ts',
+    "'NO PHYSICAL EXPERIMENT HAS BEEN RUN. No coil was built, no field was measured, no resonance was '",
+    "'Validated. '",
+    'the verdict stops carrying its own denial — the one thing that criterion exists to say'],
+  ['verification/validation-criterion.ts', 'verification/validation-criterion.test.ts',
+    'const SIMULATOR_LAWS = ', 'const SIMULATOR_LAWS: string[] = []; const UNUSED_SIMULATOR_LAWS = ',
+    'the simulator laws are counted in bulk rather than named, so removing one passes'],
+
   // Patch 8's quantum suite: nine of the fifteen reachable-and-untested exports
   // are in src/quantum, the part of this repository held to the quantum
   // criterion, so these are the mutations that matter most.

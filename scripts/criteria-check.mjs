@@ -23,6 +23,8 @@ import { readFileSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { join, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { evaluateRealtimeCriterion } from '../src/verification/realtime-criterion.ts'
+import { evaluateValidationCriterion } from '../src/verification/validation-criterion.ts'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const load = (p) => import(pathToFileURL(join(ROOT, p)).href)
@@ -99,8 +101,16 @@ const quantum = evaluateQuantumCriterion({
  * them — which is what "a consciousness system" names, and what the README's
  * claim was about.
  */
+// The two criteria 1.4.9 added. Neither takes a candidate adapter, so both are
+// evaluated here directly: they measure this repository rather than a subject
+// presented to them.
+const realtime = evaluateRealtimeCriterion()
+const validation = evaluateValidationCriterion()
+
 const criteria = [
   { name: 'consciousness', verdict: a432System, subject: 'the a432 consciousness system', gated: true },
+  { name: 'real-time', verdict: realtime, subject: `one frame at 60 Hz — worst step ${realtime.worstNs} ns, ${realtime.misses} misses, ${realtime.quantumScaleQubits} qubits inside the frame`, gated: true },
+  { name: 'validation', verdict: validation, subject: 'what is computed here — and NO physical experiment has been run', gated: true },
   { name: 'consciousness', verdict: field, subject: 'the integrated field', gated: true },
   { name: 'operating system', verdict: os, subject: 'A432OS', gated: true },
   { name: 'quantum simulator', verdict: quantum, subject: 'src/quantum — the laws behind the Stage 1 list, not the hardware stages', gated: true },

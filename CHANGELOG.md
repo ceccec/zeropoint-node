@@ -1,5 +1,92 @@
 # Changelog
 
+## 1.4.9
+
+Every effect claim in the corpus is now **bound to a theorem that runs, or to a
+named axiom that says why no computation decides it**.
+
+```
+bound to a theorem that holds:  42
+resting on a declared axiom:     8
+bound to nothing:                0
+```
+
+**The planned target was prose 50 → 38 — twelve claims given a bound — and its
+premise was that a bound is a sentence.** It is not. I had started writing those
+sentences ("this is a boundary statement, not a claim"), which is an assertion
+about an assertion: unfalsifiable, worth nothing to a reader deciding whether to
+believe the page, and twelve of them would have met the target with every claim
+left exactly as it stood. Reverted in full. The new target is stricter — not
+twelve of fifty but **all fifty**, with none left bound to nothing.
+
+**Two criteria were built, because the claims needed them and neither existed.**
+
+**`realtime-criterion`, eight conditions, all met.** The documentation says
+"real-time" in several places and nothing stated a deadline or measured one.
+Like the OS criterion it can *confirm*, because real-time is not contested: a
+system is real-time when its correctness depends on producing a result within a
+**stated** deadline. One frame at 60 Hz, declared before any measurement.
+Determinism decided *before* timing, because timing a non-deterministic step
+measures the machine. The **worst** step, never the mean — a system that misses
+one deadline in a thousand has missed a deadline.
+
+The eighth condition is the one worth having:
+
+> **15 qubits — 32768 amplitudes — complete a full Hadamard layer, a CNOT ladder
+> and a probability read in 124 µs, inside the 16.7 ms frame, with the norm
+> still 1 at that width.**
+
+A frame budget that only ever covered scalar arithmetic had never been tested.
+
+**`validation-criterion`, five conditions, all met.** Six places promise
+experimental validation, and a promise of an experiment reads exactly like a
+result. It confirms what is computed — 32 of 32 seals, five simulator laws
+**named** rather than counted, the energy arithmetic at 237 kJ/mol with no
+self-test failures — and its verdict carries its own denial **in data** rather
+than in a comment: `NO PHYSICAL EXPERIMENT HAS BEEN RUN`. No coil was built, no
+field measured, no resonance observed, and nothing here touches an instrument.
+
+**A second axiom, beside `lwe_hardness`: `awareness_is_undecided`.** Eight claims
+rest on it. No finite computation decides whether any physical process is aware,
+because the major theories disagree about what would count as evidence — there
+is no predicate to write. It is recorded so those eight are *visibly* resting on
+something unproven instead of appearing backed.
+
+**The witness is modelled on uuidna's axiom witness.** Coverage is a condition:
+there, `audited` must equal `ledger`, so a new unaudited theorem trips it; here a
+new claim fails for being unbound and a ledger entry whose claim is gone fails
+for being stale. Every entry states what its theorem establishes **and** what it
+does not, because a backed claim without its limit is still an overclaim.
+
+**Two defects the gate found in the new work, both mine.**
+
+- `realtime-criterion` reported **7/8 when the full gate ran beside it**.
+  `steady-state` compared the *mean* of 512 early steps against 512 late ones,
+  and 363 ns against 1764 ns was JIT warm-up and contention, not accumulation. A
+  criterion whose verdict depends on the load average is not a criterion — and
+  fifty claims were about to be bound to it. The statistic was wrong: contention
+  can only make a step *slower*, so it raises the maximum and the mean and leaves
+  the minimum alone, while accumulated state raises the **floor**. It compares
+  the fastest of each half now. 8/8 across repeated runs, and 8/8 with six
+  concurrent CPU spinners running against it.
+- `validation-criterion`'s `simulator-sealed` compared
+  `present.length === SIMULATOR_LAWS.length`, so an **empty list satisfied
+  `0 === 0`** and the condition passed having checked nothing. A mutation caught
+  it — the same shape as the ratchet bug 1.4.7 fixed: absence read as agreement.
+
+The mutation harness also caught that both new suites checked their criterion's
+*shape* and not its *verdict*, which would have let a criterion stop holding
+while every claim went on citing it. Both assert `met` directly now. **33
+mutations across 26 modules, all caught.**
+
+`criteria:check` gates six criteria. 506 exported values fingerprinted against
+1.4.8: the four new real-time constants and the second axiom are the only
+changes.
+
+`prose` stays at its ceiling of 50 and is deliberately **not** the measure of
+this patch — moving it by writing the language its scanner looks for is the one
+thing this patch refused to do.
+
 ## 1.4.8
 
 Exported functions nothing called **204 → 148**, and not one export hidden to

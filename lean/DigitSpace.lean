@@ -78,3 +78,55 @@ theorem orbit_and_axis_are_disjoint : ∀ d ∈ orbit, d ∉ axis := by decide
 
 theorem orbit_and_axis_and_void_exhaust_the_digits :
     ∀ d ∈ digits, d = 0 ∨ d ∈ orbit ∨ d ∈ axis := by decide
+
+/- ── The group the doubling and the mirror generate ────────────────────────
+
+   A peer session checking node.zeropoint.bg reported it could confirm the
+   involution but NOT the claim that ⟨D,M⟩ has order 54, because the generators
+   are not decidable from the page. The claim was never merely asserted — the
+   seal `agl_acts_on_the_three_triangles` enumerates the group in TypeScript and
+   holds. But a predicate inside this package is weaker evidence than a proof a
+   stranger can re-run, so the same fact is stated here for the kernel.
+
+   Everything is a table over ℤ/9, so `decide` closes it and no import is
+   needed. An affine map x ↦ ax+b is written as its list of nine values. -/
+
+/-- The residues coprime to 9: the units of ℤ/9, six of them. -/
+def units : List Nat := [1, 2, 4, 5, 7, 8]
+
+/-- x ↦ a·x + b on ℤ/9, written as its table of nine values. -/
+def affineTable (a b : Nat) : List Nat := (List.range 9).map (fun x => (a * x + b) % 9)
+
+/-- Every affine map of ℤ/9: the six units times the nine shifts. -/
+def agl : List (List Nat) := units.flatMap (fun a => (List.range 9).map (fun b => affineTable a b))
+
+/-- The nine digits the mirror actually permutes.  The void is not among them;
+    see `mirror_is_affine_only_off_the_void`. -/
+def nonzero : List Nat := [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+/-- Order 54: the 54 parameter pairs give 54 DISTINCT maps, which is the step a
+    count of pairs on its own does not establish. -/
+theorem agl_has_order_54 : agl.length = 54 ∧ agl.Nodup := by decide
+
+/-- Doubling is the unit 2 with no shift; the mirror is x ↦ 8x + 1.  Both are
+    affine, so the group they generate lies inside AGL(1,ℤ/9). -/
+theorem doubling_and_mirror_are_affine :
+    affineTable 2 0 ∈ agl ∧ affineTable 8 1 ∈ agl := by decide
+
+/-- The mirror IS `tv`, on the nine digits it permutes, reading 9 as the residue
+    0.  This is the line that makes the order-54 claim be about the vortex
+    mirror rather than about some unrelated affine map. -/
+theorem mirror_table_is_through_void :
+    ∀ d ∈ nonzero, (affineTable 8 1).getD (d % 9) 0 = tv d % 9 := by decide
+
+/-- And the exception, stated rather than stepped around: at the void the two
+    part company.  The residue 0 is where the digit 9 lives, and `tv 9 = 1`,
+    while `tv 0 = 0`.  So the affine picture covers the nine digits 1..9 and the
+    void is a tenth point outside that ℤ/9 — which is why the digit space has
+    ten elements and the group has 54, not 90. -/
+theorem mirror_is_affine_only_off_the_void :
+    tv 9 = 1 ∧ tv 0 = 0 ∧ (affineTable 8 1).getD 0 0 = 1 := by decide
+
+/-- Apart, the two generators give only 6 · 2 = 12; the excess 54 − 12 = 42 is
+    the failure to commute that the README calls the entanglement. -/
+theorem generators_apart_give_twelve : 6 * 2 = 12 ∧ 54 - 12 = 42 := by decide

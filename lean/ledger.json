@@ -1,8 +1,8 @@
 {
   "toolchain": "Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
   "files": 3,
-  "theorems": 35,
-  "proven": 11,
+  "theorems": 40,
+  "proven": 16,
   "sorry": 19,
   "unverifiableHere": 5,
   "rejected": 0,
@@ -59,6 +59,31 @@
     },
     {
       "name": "orbit_and_axis_and_void_exhaust_the_digits",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "agl_has_order_54",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "doubling_and_mirror_are_affine",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "mirror_table_is_through_void",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "mirror_is_affine_only_off_the_void",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "generators_apart_give_twelve",
       "file": "DigitSpace.lean",
       "status": "proven"
     },

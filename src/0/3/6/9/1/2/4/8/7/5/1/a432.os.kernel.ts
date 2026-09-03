@@ -104,10 +104,27 @@ export class A432Kernel {
    * a kernel runs tasks instead of the tasks running themselves.
    */
   tick(): number | null {
-    const ready = this.order.filter((id) => this.tasksById.get(id)?.state === 'ready')
-    if (ready.length === 0) return null
-    const chosen = ready[this.cursor % ready.length]
-    this.cursor = (this.cursor + 1) % (ready.length || 1)
+    // `order` IS the ready queue, and a finished task leaves it.
+    //
+    // This used to filter the whole of `order` on every tick — every task ever
+    // spawned, scanned and copied into a new array to find the ready ones. A
+    // task runs once and is then done, so `order` only ever grew, and the scan
+    // grew with it: the real-time criterion measured the floor of a step rising
+    // from 38 to 368 microseconds over twenty thousand frames. A scheduler
+    // whose cost grows with the number of tasks it has already finished is not
+    // a scheduler anyone can keep running.
+    //
+    // The finished task stays in `tasksById`, so tasks(), snapshot() and the OS
+    // criterion still see the full history. What leaves is its place in the
+    // queue.
+    while (this.order.length > 0) {
+      const head = this.order[this.cursor % this.order.length]!
+      if (this.tasksById.get(head)?.state === 'ready') break
+      this.order.splice(this.cursor % this.order.length, 1)
+    }
+    if (this.order.length === 0) return null
+    const chosen = this.order[this.cursor % this.order.length]!
+    this.cursor = (this.cursor + 1) % this.order.length
     const task = this.tasksById.get(chosen)!
     task.state = 'running'
     try {
@@ -119,6 +136,12 @@ export class A432Kernel {
       task.state = 'failed'
       task.error = e instanceof Error ? e.message : String(e)
     }
+    // It is finished either way, so it leaves the queue rather than being
+    // filtered out of every future tick.
+    const at = this.order.indexOf(chosen)
+    if (at >= 0) this.order.splice(at, 1)
+    if (this.order.length > 0) this.cursor = this.cursor % this.order.length
+    else this.cursor = 0
     return chosen
   }
 

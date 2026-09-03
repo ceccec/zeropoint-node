@@ -1376,3 +1376,8 @@ export * from './os-criterion.ts'
 // was reachable from neither the bundle nor a consumer until this line: the
 // published ./verification entry carried two of the three.
 export * from './quantum-criterion.ts'
+// The 1.4.9 criteria are NOT re-exported here. validation-criterion imports
+// SEALS from this file, so re-exporting it from this file is a cycle — which
+// the ratchet caught the moment it was tried. They reach a consumer through
+// src/verification/index.ts, which is the entry point ./verification now
+// builds from: a barrel imports both and is imported by neither.

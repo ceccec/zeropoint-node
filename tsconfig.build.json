@@ -37,7 +37,7 @@
     "src/quantum/index.ts",
     "src/mcp/server.ts",
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts",
-    "src/verification/lean-bridge.ts"
+    "src/verification/index.ts"
   ],
   "include": [],
   "exclude": [

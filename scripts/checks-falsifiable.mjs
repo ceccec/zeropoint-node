@@ -37,6 +37,7 @@ const GUARDS = {
   'api:reference:check': 'docs/API_REFERENCE.md',
   'docs:pages:check': 'docs/pages/index.md',
   'vortex:svg:check': 'docs/public/vortex.svg',
+  'paper:check': 'docs/public/paper.html',
   'bundle:a432:check': 'public/a432.bundle.js',
   // Block-scoped: these own a marked region of README.md and nothing else, so
   // the probe has to land inside the region or it proves nothing.

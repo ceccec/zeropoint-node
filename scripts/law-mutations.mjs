@@ -101,9 +101,14 @@ const MUTATIONS = [
   ['verification/realtime-criterion.ts', 'verification/realtime-criterion.test.ts',
     'if (dt > worst) worst = dt', 'if (dt < worst) worst = dt',
     'the worst step stops being the worst, which is the whole measure'],
+  // The accumulated work must reach the RETURNED value, or V8 eliminates the
+  // loop as dead and the mutation measures nothing. The first version of this
+  // mutation summed into a variable nobody read, survived, and looked like a
+  // weak condition when it was a weak probe.
   ['verification/realtime-criterion.ts', 'verification/realtime-criterion.test.ts',
-    'const d = digitalRoot(i)', 'let waste = 0; for (let k = 0; k < i / 1000; k += 1) waste += k; const d = digitalRoot(i + (waste > 1e12 ? 1 : 0))',
-    'the step starts accumulating work with the step number, so the floor of later steps rises — which is exactly what steady-state exists to catch'],
+    "    kernel.spawn('frame', () => { acc += 1 })\n    kernel.tick()",
+    "    kernel.spawn('frame', () => { for (let k = 0; k < i / 200; k += 1) acc += 1 })\n    kernel.tick()",
+    'the step accumulates work with the step number, so the FLOOR of later steps rises — which is exactly what steady-state exists to catch'],
   ['verification/validation-criterion.ts', 'verification/validation-criterion.test.ts',
     "'NO PHYSICAL EXPERIMENT HAS BEEN RUN. No coil was built, no field was measured, no resonance was '",
     "'Validated. '",

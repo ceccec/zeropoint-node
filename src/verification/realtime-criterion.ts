@@ -101,13 +101,28 @@ export const JITTER_FRACTION_DENOMINATOR = 2
 const condition = (id: string, requires: string, met: boolean, evidence: string, whatWouldChange: string): RealtimeCondition =>
   ({ id, requires, met, evidence, whatWouldChange })
 
-/** The step under test: one kernel tick plus the arithmetic a frame carries. */
+/**
+ * The step under test: one frame's work SUBMITTED and RUN, plus the arithmetic
+ * a frame carries.
+ *
+ * The first version spawned one task and then ticked. A kernel task runs once
+ * and is then `done`, so every tick after the first returned null and did
+ * nothing — the step was arithmetic alone, while the subject line claimed "one
+ * kernel tick". A mutation that made the task accumulate work refused to move
+ * the measurement, which is how that came out: the mutation was landing on code
+ * the step had stopped reaching.
+ *
+ * A frame submits that frame's work, so the step spawns and drains one task.
+ * That also makes the kernel's own accumulation visible to steady-state, which
+ * is the honest arrangement: if the kernel never reclaims finished tasks, this
+ * criterion should say so rather than sidestep it.
+ */
 function makeStep(): { step: (i: number) => number; kernel: A432Kernel } {
   const kernel = new A432Kernel()
   let acc = 0
-  kernel.spawn('frame', () => { acc += 1 })
   kernel.start()
   const step = (i: number): number => {
+    kernel.spawn('frame', () => { acc += 1 })
     kernel.tick()
     const d = digitalRoot(i)
     return calculateA432Frequency(d) + acc
@@ -229,6 +244,14 @@ export function evaluateRealtimeCriterion(samples: number = 2000): RealtimeVerdi
   // The path is warmed first, because the very first executions of a function
   // are interpreted and the condition is about the steady state, which is what
   // it is called.
+  //
+  // THE TWO WINDOWS MUST BE FAR APART IN CALL COUNT, not merely adjacent. The
+  // first version measured 512 steps and then the next 512, so a step whose
+  // cost grows linearly with the number of calls looked flat: between call 2560
+  // and call 3072 a linear growth is a twenty per cent difference and the floor
+  // barely moves. A mutation that made the step accumulate survived because of
+  // it. Twenty thousand steps now separate the windows, so linear growth shows
+  // up as a factor rather than a fraction.
   const { step: step5 } = makeStep()
   for (let i = 0; i < 2048; i += 1) step5(i)
   const floorOf = (from: number, n: number): number => {
@@ -242,6 +265,7 @@ export function evaluateRealtimeCriterion(samples: number = 2000): RealtimeVerdi
     return Number(best < 0n ? 0n : best)
   }
   const firstFloor = floorOf(0, 512)
+  for (let i = 0; i < 20_000; i += 1) step5(i)
   const secondFloor = floorOf(1_000_000, 512)
   // Twice the floor is generous and still catches accumulation, which grows
   // without bound rather than by a constant factor.
@@ -249,7 +273,7 @@ export function evaluateRealtimeCriterion(samples: number = 2000): RealtimeVerdi
   conditions.push(condition('steady-state',
     'later steps do not cost more than earlier ones, measured by the FLOOR of each half so that contention cannot decide it',
     steady,
-    `the fastest of 512 early steps was ${firstFloor} ns and the fastest of 512 late steps was ${secondFloor} ns`,
+    `the fastest of 512 early steps was ${firstFloor} ns and the fastest of 512 steps taken 20000 calls later was ${secondFloor} ns`,
     'removing whatever the step accumulates between calls; a mean here would be decided by the load average instead'))
 
   conditions.push(condition('worst-case-met',

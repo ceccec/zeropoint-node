@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exact arithmetic over a ten-digit space &#183; zeropoint-node 1.4.9</title>
+<meta name="description" content="The formulas zeropoint-node implements, in standard notation, with every figure computed from the source.">
+<style>
+:root { --ink:#111; --rule:#bbb; --muted:#555; --bg:#fff; --accent:#7a1f1f; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --ink:#e8e6e3; --rule:#444; --muted:#a8a29e; --bg:#111; --accent:#e0a0a0; }
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); margin: 0 auto; max-width: 46em; padding: 3em 1.5em 6em;
+  font: 400 11.5pt/1.55 "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  text-rendering: optimizeLegibility; hyphens: auto;
+}
+h1 { font-size: 1.9em; line-height: 1.15; margin: 0 0 .3em; font-weight: 600; letter-spacing: -0.01em; }
+h2 { font-size: 1.15em; margin: 2.4em 0 .7em; font-weight: 600; }
+.byline { color: var(--muted); font-size: .92em; margin: 0 0 2.5em; font-variant: small-caps; letter-spacing: .02em; }
+.abstract { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 1em 0 .3em; margin-bottom: 2em; }
+.abstract h2 { margin-top: 0; font-size: 1em; font-variant: small-caps; letter-spacing: .05em; }
+.abstract p { font-size: .97em; }
+p { margin: 0 0 .85em; text-align: justify; }
+section { margin-bottom: .5em; }
+figure.eq { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0 1em; margin: 1.3em 0; page-break-inside: avoid; break-inside: avoid; }
+figure.eq math { font-size: 1.08em; }
+.eqno { color: var(--muted); font-size: .95em; }
+figcaption { grid-column: 1 / -1; color: var(--muted); font-size: .87em; margin-top: .45em; text-align: left; }
+a.eqref { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--rule); }
+table { border-collapse: collapse; width: 100%; margin: 1.2em 0; font-size: .9em; page-break-inside: avoid; break-inside: avoid; }
+caption { caption-side: bottom; color: var(--muted); font-size: .87em; text-align: left; padding-top: .6em; }
+th, td { border-bottom: 1px solid var(--rule); padding: .35em .6em; text-align: left; }
+thead th { border-bottom: 1.5px solid var(--ink); font-weight: 600; }
+table.seals { font-size: .8em; }
+table.seals td:nth-child(3) { color: var(--muted); }
+code { font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; font-size: .88em; }
+pre { background: color-mix(in srgb, var(--ink) 5%, transparent); padding: .9em 1.1em; overflow-x: auto; font-size: .85em; border-left: 2px solid var(--rule); }
+dl.axioms dt { font-weight: 600; margin-top: 1.1em; }
+dl.axioms dd { margin: .3em 0 0 0; padding-left: 1.2em; border-left: 2px solid var(--rule); }
+dl.axioms .stmt { font-size: .88em; }
+.warn { border-left: 3px solid var(--accent); padding-left: 1em; font-size: .95em; color: var(--ink); }
+.appendix h2 { font-size: 1em; font-variant: small-caps; letter-spacing: .04em; }
+.receipt { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--rule); color: var(--muted); font-size: .82em; }
+
+@page {
+  size: A4;
+  margin: 22mm 20mm 24mm;
+}
+@media print {
+  :root { --ink:#000; --rule:#999; --muted:#444; --bg:#fff; --accent:#000; }
+  body { max-width: none; padding: 0; font-size: 10.5pt; color: #000; background: #fff; }
+  h1 { font-size: 17pt; }
+  h2 { font-size: 12pt; page-break-after: avoid; break-after: avoid; }
+  section { page-break-inside: auto; }
+  .abstract { page-break-inside: avoid; }
+  pre { border-left: 1px solid #999; background: none; }
+  a.eqref { border-bottom: none; }
+  .receipt { page-break-before: avoid; }
+}
+</style>
+</head>
+<body>
+<h1>Exact arithmetic over a ten-digit space</h1>
+<p class="byline">zeropoint-node 1.4.9 &#183; every figure on this page is computed from the source at generation time</p>
+
+<section class="abstract">
+<h2>Abstract</h2>
+<p>This page sets out, in standard notation, the arithmetic that <code>zeropoint-node</code>
+implements and the predicates that decide it. The digit space is partitioned by
+a doubling map into a six-element orbit and a three-element axis; frequency and
+hue are one integer read in two units; ratios are carried as pairs of integers
+rather than decimals, and the two places where binary floating point departs
+from the exact value are stated rather than rounded away. 32 of
+32 theorems carry a predicate that runs and holds. Two claims are
+recorded as axioms, because no finite computation decides them, and both are
+named in &#167;7. <strong>No physical experiment is reported here.</strong></p>
+</section>
+
+<section>
+<h2>1&ensp;The digit space</h2>
+<p>Arithmetic is carried out on the residues of nine, with zero adjoined. The
+digital root <a class="eqref" href="#eq1">(1)</a> is the representative of the residue class, written in
+closed form so that it is one operation rather than a loop.</p>
+<figure class="eq" id="eq1">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>dr</mi><mrow><mo>(</mo><mi>n</mi><mo>)</mo></mrow><mo>=</mo><mn>1</mn><mo>+</mo><mrow><mo>(</mo><mrow><mrow><mo>(</mo><mrow><mi>n</mi><mo>&#8722;</mo><mn>1</mn></mrow><mo>)</mo></mrow><mo>mod</mo><mn>9</mn></mrow><mo>)</mo></mrow><mo>,</mo><mspace width="1em"/><mi>n</mi><mo>&#8805;</mo><mn>1</mn></mrow></math>
+  <span class="eqno">(1)</span>
+  <figcaption>The digital root, as a closed form rather than an iteration. It is idempotent, and invariant under adding nine.</figcaption>
+</figure>
+<p>Doubling inside the digital root <a class="eqref" href="#eq2">(2)</a> generates the orbit. Starting from
+one, the walk visits six digits and returns; it never repeats a digit within a
+turn, and it never leaves the orbit.</p>
+<figure class="eq" id="eq2">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>d</mi><mrow><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>=</mo><mi>dr</mi><mrow><mo>(</mo><mrow><mn>2</mn><msub><mi>d</mi><mi>k</mi></msub></mrow><mo>)</mo></mrow></mrow></math>
+  <span class="eqno">(2)</span>
+  <figcaption>Doubling inside the digital root. From <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>d</mi><mn>0</mn></msub><mo>=</mo><mn>1</mn></mrow></math> the walk is 1 &#8594; 2 &#8594; 4 &#8594; 8 &#8594; 7 &#8594; 5 and closes after six.</figcaption>
+</figure>
+<p>The remaining non-zero digits form the axis. The two sets are disjoint and
+together with the void they exhaust the space <a class="eqref" href="#eq3">(3)</a>, which is why the digit
+space is exactly ten and not an arbitrary base.</p>
+<figure class="eq" id="eq3">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>O</mi><mo>=</mo><mrow><mo>{</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>8</mn><mo>,</mo><mn>7</mn><mo>,</mo><mn>5</mn><mo>}</mo></mrow><mo>,</mo><mspace width="1em"/><mi>A</mi><mo>=</mo><mrow><mo>{</mo><mn>3</mn><mo>,</mo><mn>6</mn><mo>,</mo><mn>9</mn><mo>}</mo></mrow><mo>,</mo><mspace width="1em"/><mi>O</mi><mo>&#8745;</mo><mi>A</mi><mo>=</mo><mo>&#8709;</mo></mrow></math>
+  <span class="eqno">(3)</span>
+  <figcaption>The orbit and the axis partition the non-zero digits: six on the doubling ring, three on the axis, and the void makes ten.</figcaption>
+</figure>
+<p>The through-void map <a class="eqref" href="#eq4">(4)</a> reflects the space. It is an involution, and
+its only fixed point is five &#8212; the midpoint of the digit range.</p>
+<figure class="eq" id="eq4">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>v</mi><mrow><mo>(</mo><mi>n</mi><mo>)</mo></mrow><mo>=</mo><mn>1</mn><mo>&#8722;</mo><mrow><mo>(</mo><mrow><mi>n</mi><mo>mod</mo><mn>9</mn></mrow><mo>)</mo></mrow></mrow></math>
+  <span class="eqno">(4)</span>
+  <figcaption>The through-void involution. It is its own inverse, and 5 is its only fixed point.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>2&ensp;Frequency, angle and colour</h2>
+<p>A digit is read as a frequency by <a class="eqref" href="#eq5">(5)</a> and as a hue by <a class="eqref" href="#eq7">(7)</a>. Both
+reduce to <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>36</mn><mi>d</mi></mrow></math>,
+so the two columns of Table 1 hold the same integer. This is an identity of the
+two definitions and not a discovered correspondence; it is stated plainly here
+because it is the kind of coincidence that invites overclaiming.</p>
+<figure class="eq" id="eq5">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>f</mi><mrow><mo>(</mo><mi>d</mi><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mn>432</mn><mi>d</mi></mrow><mn>12</mn></mfrac><mo>=</mo><mn>36</mn><mi>d</mi><mo>,</mo><mspace width="1em"/><mi>d</mi><mo>&#8712;</mo><mrow><mo>{</mo><mn>0</mn><mo>,</mo><mo>&#8230;</mo><mo>,</mo><mn>9</mn><mo>}</mo></mrow></mrow></math>
+  <span class="eqno">(5)</span>
+  <figcaption>Frequency in hertz. The exact form is <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>36</mn><mi>d</mi></mrow></math>; the implementation evaluates <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>432</mn><mo>&#215;</mo><mrow><mo>(</mo><mrow><mi>d</mi><mo>/</mo><mn>12</mn></mrow><mo>)</mo></mrow></mrow></math> and so returns 252.00000000000003 at <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>d</mi><mo>=</mo><mn>7</mn></mrow></math> where the exact value is 252. The discrepancy is binary floating point, not arithmetic, and it is stated here rather than rounded away.</figcaption>
+</figure>
+<figure class="eq" id="eq6">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>f</mi><mi>oct</mi></msub><mrow><mo>(</mo><mi>n</mi><mo>)</mo></mrow><mo>=</mo><mn>432</mn><mo>&#183;</mo><msup><mn>2</mn><mi>n</mi></msup></mrow></math>
+  <span class="eqno">(6)</span>
+  <figcaption>Octave scaling. <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>f</mi><mi>oct</mi></msub><mrow><mo>(</mo><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow><mo>=</mo><mn>2</mn><msub><mi>f</mi><mi>oct</mi></msub><mrow><mo>(</mo><mi>n</mi><mo>)</mo></mrow></mrow></math> holds exactly, because the factor is two.</figcaption>
+</figure>
+<figure class="eq" id="eq7">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>h</mi><mrow><mo>(</mo><mi>d</mi><mo>)</mo></mrow><mo>=</mo><mn>36</mn><mi>d</mi><mspace width="0.5em"/><mo>mod</mo><mspace width="0.5em"/><mn>360</mn></mrow></math>
+  <span class="eqno">(7)</span>
+  <figcaption>Hue in degrees. Colour and pitch carry the same integer: this is an identity of two definitions, not an empirical correspondence.</figcaption>
+</figure>
+<table>
+<caption>Table 1. Frequency, its exact value, and angle, for every digit. The
+implementation and the closed form disagree at <em>d</em>&#8202;=&#8202;7 by one
+unit in the last place.</caption>
+<thead><tr><th><em>d</em></th><th>computed <em>f</em>(<em>d</em>) / Hz</th><th>exact 36<em>d</em></th><th>angle / &#176;</th></tr></thead>
+<tbody><tr><td>0</td><td>0</td><td>0</td><td>270</td></tr>
+<tr><td>1</td><td>36</td><td>36</td><td>310</td></tr>
+<tr><td>2</td><td>72</td><td>72</td><td>350</td></tr>
+<tr><td>3</td><td>108</td><td>108</td><td>30</td></tr>
+<tr><td>4</td><td>144</td><td>144</td><td>70</td></tr>
+<tr><td>5</td><td>180</td><td>180</td><td>110</td></tr>
+<tr><td>6</td><td>216</td><td>216</td><td>150</td></tr>
+<tr><td>7</td><td>252.00000000000003</td><td>252</td><td>190</td></tr>
+<tr><td>8</td><td>288</td><td>288</td><td>230</td></tr>
+<tr><td>9</td><td>324</td><td>324</td><td>270</td></tr></tbody>
+</table>
+</section>
+
+<section>
+<h2>3&ensp;Ratios held as integers</h2>
+<p>A ratio is represented as a pair of integers throughout. Two of the four
+channel ratios <a class="eqref" href="#eq9">(9)</a> do not terminate in decimal, so a decimal
+representation of them is an approximation adopted silently; the pair is not.</p>
+<figure class="eq" id="eq8">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>&#966;</mi><mo>=</mo><mfrac><mrow><mn>1</mn><mo>+</mo><msqrt><mn>5</mn></msqrt></mrow><mn>2</mn></mfrac><mo>,</mo><mspace width="1em"/><msup><mi>&#966;</mi><mn>2</mn></msup><mo>=</mo><mi>&#966;</mi><mo>+</mo><mn>1</mn></mrow></math>
+  <span class="eqno">(8)</span>
+  <figcaption>The golden ratio and its defining equation. Computed here as 1.618033988749895.</figcaption>
+</figure>
+<figure class="eq" id="eq9">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>f</mi><mi>c</mi></msub><mo>=</mo><mfrac><mrow><mn>432</mn><mo>&#183;</mo><mn>3</mn></mrow><mn>2</mn></mfrac><mo>,</mo><mspace width="0.8em"/><msub><mi>f</mi><mi>m</mi></msub><mo>=</mo><mfrac><mrow><mn>432</mn><mo>&#183;</mo><mn>6</mn></mrow><mn>5</mn></mfrac><mo>,</mo><mspace width="0.8em"/><msub><mi>f</mi><mi>y</mi></msub><mo>=</mo><mfrac><mrow><mn>432</mn><mo>&#183;</mo><mn>9</mn></mrow><mn>5</mn></mfrac><mo>,</mo><mspace width="0.8em"/><msub><mi>f</mi><mi>k</mi></msub><mo>=</mo><mfrac><mrow><mn>432</mn><mo>&#183;</mo><mn>1</mn></mrow><mn>3</mn></mfrac></mrow></math>
+  <span class="eqno">(9)</span>
+  <figcaption>The four channel ratios, held as exact fractions rather than decimals: cyan 1296/2, magenta 2592/5, yellow 3888/5, key 432/3. Two of them do not terminate in decimal, which is the reason the representation is a pair of integers.</figcaption>
+</figure>
+<p>Combination of two ratios uses the mediant <a class="eqref" href="#eq10">(10)</a>, which lies strictly
+between its arguments. It is not the arithmetic mean, and the two are
+distinguished here because the implementation was documented as the mean until
+a law was written for it.</p>
+<figure class="eq" id="eq10">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>med</mi><mrow><mo>(</mo><mrow><mfrac><msub><mi>a</mi><mn>1</mn></msub><msub><mi>b</mi><mn>1</mn></msub></mfrac><mo>,</mo><mfrac><msub><mi>a</mi><mn>2</mn></msub><msub><mi>b</mi><mn>2</mn></msub></mfrac></mrow><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><msub><mi>a</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mn>2</mn></msub></mrow><mrow><msub><mi>b</mi><mn>1</mn></msub><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub></mrow></mfrac></mrow></math>
+  <span class="eqno">(10)</span>
+  <figcaption>The mediant, which lies strictly between its arguments and is <em>not</em> their mean: <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>med</mi><mrow><mo>(</mo><mrow><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>,</mo><mfrac><mn>1</mn><mn>3</mn></mfrac></mrow><mo>)</mo></mrow><mo>=</mo><mfrac><mn>2</mn><mn>5</mn></mfrac></mrow></math> while the mean is 5/12. Computed here as 2/5.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>4&ensp;The state-vector simulator</h2>
+<p>Amplitudes are complex and the register is dense. The gates are the standard
+ones; <a class="eqref" href="#eq11">(11)</a> gives the Hadamard, whose involution is decided exhaustively
+over the basis of one qubit.</p>
+<figure class="eq" id="eq11">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>H</mi><mo>=</mo><mfrac><mn>1</mn><msqrt><mn>2</mn></msqrt></mfrac><mrow><mstyle mathsize="230%"><mo>[</mo></mstyle><mtable columnspacing="1em" rowspacing="0.3em"><mtr><mtd><mn>1</mn></mtd><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mrow><mo>&#8722;</mo><mn>1</mn></mrow></mtd></mtr></mtable><mstyle mathsize="230%"><mo>]</mo></mstyle></mrow><mo>,</mo><mspace width="1em"/><msup><mi>H</mi><mn>2</mn></msup><mo>=</mo><mi>I</mi></mrow></math>
+  <span class="eqno">(11)</span>
+  <figcaption>The Hadamard gate and its involution. The seal decides this by applying it twice to each basis state of one qubit; linearity makes two states exhaustive.</figcaption>
+</figure>
+<p>Normalisation <a class="eqref" href="#eq12">(12)</a> is preserved by every unitary step and by the tensor
+product, and both facts carry seals rather than assertions.</p>
+<figure class="eq" id="eq12">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><munder><mo movablelimits="false">&#8721;</mo><mi>i</mi></munder><msup><mrow><mo>|</mo><msub><mi>a</mi><mi>i</mi></msub><mo>|</mo></mrow><mn>2</mn></msup><mo>=</mo><mn>1</mn></mrow></math>
+  <span class="eqno">(12)</span>
+  <figcaption>The Born rule as a normalisation condition. Every unitary step in the simulator preserves it, and the tensor product of two normalised registers is normalised.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>5&ensp;Thermodynamic bounds</h2>
+<p>The potentials below are computed from tabulated formation data as exact
+rationals and reported in microvolts, an integer unit chosen so that no decimal
+appears. They bound the energy claims made elsewhere in this repository; they do
+not support them.</p>
+<figure class="eq" id="eq13">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msup><mi>E</mi><mo>&#176;</mo></msup><mo>=</mo><mfrac><mrow><mo>&#916;</mo><mi>G</mi></mrow><mrow><mi>n</mi><mi>F</mi></mrow></mfrac></mrow></math>
+  <span class="eqno">(13)</span>
+  <figcaption>The reversible cell potential. With <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>F</mi><mo>=</mo><mn>96485</mn></mrow></math> C&#183;mol&#8315;&#185;, this is 1228899 &#181;V, from &#916;G = 237 kJ&#183;mol&#8315;&#185;.</figcaption>
+</figure>
+<figure class="eq" id="eq14">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>E</mi><mi>tn</mi></msub><mo>=</mo><mfrac><mrow><mo>&#916;</mo><mi>H</mi></mrow><mrow><mi>n</mi><mi>F</mi></mrow></mfrac></mrow></math>
+  <span class="eqno">(14)</span>
+  <figcaption>The thermoneutral potential, 1481215 &#181;V. It exceeds the reversible potential because the entropy term is negative for this reaction; the difference is the heat the surroundings must supply.</figcaption>
+</figure>
+<figure class="eq" id="eq15">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>C</mi><mi>be</mi></msub><mo>=</mo><mn>4195</mn><mspace width="0.4em"/><mi>mg</mi><mo>&#183;</mo><msup><mi>L</mi><mrow><mo>&#8722;</mo><mn>1</mn></mrow></msup></mrow></math>
+  <span class="eqno">(15)</span>
+  <figcaption>The break-even organic load, computed rather than asserted. Below it the process consumes more energy than it recovers.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>6&ensp;The real-time bound</h2>
+<p>A system is real-time when its correctness depends on producing a result
+within a stated deadline. The deadline <a class="eqref" href="#eq16">(16)</a> is declared before any
+measurement, and the criterion reports the worst step rather than the mean.</p>
+<figure class="eq" id="eq16">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>T</mi><mo>=</mo><mfrac><mn>1</mn><mn>60</mn></mfrac><mspace width="0.3em"/><mi>s</mi><mo>=</mo><mn>16666667</mn><mspace width="0.3em"/><mi>ns</mi></mrow></math>
+  <span class="eqno">(16)</span>
+  <figcaption>The real-time deadline, stated before any measurement is taken rather than chosen after one. The criterion reports the worst observed step and the miss count when it is run; those are properties of the machine it runs on and are deliberately not printed here.</figcaption>
+</figure>
+<figure class="eq" id="eq17">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><msub><mi>t</mi><mi>max</mi></msub><mo>&#8722;</mo><msub><mi>t</mi><mi>min</mi></msub><mo>&#8804;</mo><mfrac><mi>T</mi><mn>2</mn></mfrac></mrow></math>
+  <span class="eqno">(17)</span>
+  <figcaption>The jitter bound. The maximum is the measure and the mean is not: a system that misses one deadline in a thousand has missed a deadline.</figcaption>
+</figure>
+<p>The bound is only interesting where the work is expensive. Equation <a class="eqref" href="#eq18">(18)</a>
+gives the widest register whose full step fits inside one frame; the cost
+doubles with every qubit, so this is the hardest case rather than the easiest.</p>
+<figure class="eq" id="eq18">
+  <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>C</mi><mrow><mo>(</mo><mi>q</mi><mo>)</mo></mrow><mo>&#8712;</mo><mo>&#920;</mo><mrow><mo>(</mo><msup><mn>2</mn><mi>q</mi></msup><mo>)</mo></mrow><mo>,</mo><mspace width="1em"/><mi>C</mi><mrow><mo>(</mo><mi>q</mi><mo>)</mo></mrow><mo>&#8804;</mo><mi>T</mi></mrow></math>
+  <span class="eqno">(18)</span>
+  <figcaption>The cost of a full step &#8212; a Hadamard layer, a CNOT ladder and a probability read &#8212; is linear in the number of amplitudes and so doubles with every qubit. The criterion reports the widest register that fits the frame on the machine it runs on; a deadline met at <math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mi>q</mi></mrow></math> qubits is met for every narrower one, and that implication is the part which does not depend on the machine.</figcaption>
+</figure>
+<p>Real-time criterion: 8/8 conditions met. Validation criterion:
+5 of 5. Neither verdict
+prints a duration: run <code>npm run criteria:check</code> to take the
+measurement on your own hardware.</p>
+</section>
+
+<section>
+<h2>7&ensp;What is not established</h2>
+<p>Two claims in this corpus rest on axioms rather than on theorems. They are
+recorded so that a reader can see the difference without being asked to take
+anyone's word for it.</p>
+<dl class="axioms">
+<dt><code>lwe_hardness</code></dt>
+<dd><p class="stmt"><code>axiom lwe_hardness : ¬ (polynomial_time_solves_lwe 768 3329)</code></p>
+<p><strong>Why it is not sealed.</strong> a universal negative over all polynomial-time algorithms; no finite computation decides it</p>
+<p><strong>What is decided instead.</strong> kyber_security seals the FIPS 203 parameter sizes of the shipped implementation</p></dd>
+<dt><code>awareness_is_undecided</code></dt>
+<dd><p class="stmt"><code>axiom awareness_is_undecided : ¬ ∃ (p : System → Bool), decides_awareness p</code></p>
+<p><strong>Why it is not sealed.</strong> whether any physical process is conscious is unsettled and the major theories disagree about what would count as evidence; there is no predicate to run, so nothing here can seal it</p>
+<p><strong>What is decided instead.</strong> consciousness-criterion runs five necessary conditions and reports how many a subject fails to be refuted by; it declines to claim awareness at all</p></dd>
+</dl>
+<p class="warn">NO PHYSICAL EXPERIMENT HAS BEEN RUN. No coil was built, no field was measured, no resonance was observed, and nothing in this repository touches an instrument. Every condition here is about arithmetic and about code that checks arithmetic. The empirical claim is not made.</p>
+</section>
+
+<section class="appendix">
+<h2>Appendix A&ensp;Seals</h2>
+<p>Each row is a predicate that runs. 32 of 32 hold at
+generation time; a seal that stopped holding would fail
+<code>npm run test:verification</code> before this page could be regenerated.</p>
+<table class="seals">
+<thead><tr><th>seal</th><th>status</th><th>basis</th></tr></thead>
+<tbody><tr><td><code>hadamard_squared</code></td><td>held</td><td>H applied twice to each basis state of one qubit returns the input amplitudes (linearity makes 2 states exhaustive)</td></tr>
+<tr><td><code>hadamard_unitary</code></td><td>held</td><td>H preserves the norm of a 3-qubit register (unitary maps are exactly the norm-preserving ones)</td></tr>
+<tr><td><code>pauliX_unitary</code></td><td>held</td><td>X applied twice is the identity, and X preserves the norm</td></tr>
+<tr><td><code>pauli_anticomm</code></td><td>held</td><td>XY and YX differ by an overall sign on both basis states of one qubit</td></tr>
+<tr><td><code>born_rule_sum</code></td><td>held</td><td>squared amplitudes sum to 1 after a Hadamard layer on 4 qubits</td></tr>
+<tr><td><code>qft_unitary</code></td><td>held</td><td>inverse QFT undoes QFT on a 3-qubit register, amplitude by amplitude</td></tr>
+<tr><td><code>grover_amplification</code></td><td>held</td><td>Grover leaves the marked state with probability above the 1/N a random guess gets (n=4, N=16)</td></tr>
+<tr><td><code>grover_speedup</code></td><td>held</td><td>INSTANCE ONLY, not the asymptotic bound: round((pi/4)*sqrt(N)) iterations reach probability above 0.9 at N=16</td></tr>
+<tr><td><code>shor_period_finding</code></td><td>held</td><td>INSTANCE ONLY: shor(15, 7) returns non-trivial factors whose product is 15</td></tr>
+<tr><td><code>repetition_detects_error</code></td><td>held</td><td>a clean 3-qubit codeword gives the zero syndrome and a single X error gives a non-zero one, so the syndrome distinguishes them</td></tr>
+<tr><td><code>steane_corrects_error</code></td><td>held</td><td>Steane [[7,1,3]] is a stabiliser group: exactly n-k = 6 generators, symplectically independent (rank 6), pairwise commuting, and distance 3 corrects floor((d-1)/2) = 1 arbitrary error</td></tr>
+<tr><td><code>surface_code_threshold</code></td><td>held</td><td>estimateSurfaceCodeThreshold separates the two sides of the 1% threshold: below it reports below, above it does not</td></tr>
+<tr><td><code>pauliX_anticommute_pauliY</code></td><td>held</td><td>the four entries of XY and of -YX are equal, which is every entry there is</td></tr>
+<tr><td><code>tensor_preserves_norm</code></td><td>held</td><td>four pairs of normalised one- and two-qubit states, tensored, each with norm 1</td></tr>
+<tr><td><code>phase_estimation_accuracy</code></td><td>held</td><td>for t = 4 and 5, every phase of the form k/2^t is recovered exactly, so the error is 0 and within the 1/2^t bound</td></tr>
+<tr><td><code>kyber_security</code></td><td>held</td><td>the shipped ML-KEM parameters are ML-KEM-768 (ek 1184, dk 2400, ct 1088). NIST puts that at category 3, NOT the 128 the Lean script states.</td></tr>
+<tr><td><code>doubling_avoids_the_triad</code></td><td>held</td><td>VORTEX_ORBIT and VORTEX_AXIS are pinned to computation, not trusted. gcd(2,9) = 1, so every power of 2 is a unit mod 9 and can never be a multiple of 3; 2 is a primitive root, so its orbit is all six units {1,2,4,5,7,8}; 2^6 = 64 = 1 mod 9 gives period 6, which makes six cases exhaustive rather than sampled. Reflection through the void carries {1,4,7} onto {9,6,3}, so the triad is reachable only by reflecting.</td></tr>
+<tr><td><code>a432_vortex_is_the_doubling_orbit</code></td><td>held</td><td>A432Sequence.generateVortex returned digitalRoot(i + 1) — the counting sequence 1..9 — under the name 'vortex'. Two things gave it away: it was byte-identical to generateConsciousness(9), and it contained 3, 6 and 9, which doubling_avoids_the_triad proves the doubling circuit can never reach. Nothing caught it because no test in the repository names it and the a432 surface has no tests at all. This binds the a432 layer's vortex to the kernel's VORTEX_ORBIT so the two cannot drift apart again.</td></tr>
+<tr><td><code>a432_constants_do_not_drift_from_the_kernel</code></td><td>held</td><td>An isolated collision trial over all 198 a432 modules found the kernel's constants RETYPED as literals in module after module: [1,2,4,8,7,5] in a432.coil, [3,6,9] in a432.trinity, [1,4,7] in both a432.shear and a432.shear.electron. Each retyped copy is a place that can drift with nothing noticing, which is exactly how generateVortex became the counting sequence. Some modules already bind to the kernel — a432.string.theory returns VORTEX_ORBIT itself and cannot drift — so this seal holds the literal copies to the same standard by recomputing the agreement instead of trusting it.</td></tr>
+<tr><td><code>os_criterion_is_met_by_a432os_and_still_discriminates</code></td><td>held</td><td>The README called a432.os.ts 'not yet, and under construction'. src/verification/os-criterion.ts made that measurable at 1 of 7 — A432OS had a lifecycle and nothing else, its work running on four independent setInterval timers where nothing decided what ran and a throw escaped into the event loop. It now meets all seven, by composing a432.os.kernel: one clock replaces the four timers and the kernel selects among the units and contains their failures. The cadences are unchanged — at a tick every A432/8 the units are due every 8, 4, 2 and 1 ticks, which is the 432, 216, 108 and 54 milliseconds the timers used. This seal decides two things, because the first is worthless without the second. A432OS meets the criterion. AND the criterion still discriminates: a candidate offering nothing scores 0 and a candidate offering only a lifecycle scores 1, so the seven are being earned rather than handed out. If the criterion ever passes a candidate that offers nothing, this fails.</td></tr>
+<tr><td><code>consciousness_criterion_has_teeth_and_is_not_a_claim</code></td><td>held</td><td>The README said the missing thing was the predicate that would recognise arrival. It is written, and it can now be MET — by src/quantum/integrated-field.ts, a coupled system built to have the four properties the theories name. That makes the seal's job harder rather than easier, because a criterion that can be met is worth exactly as much as its resistance to being gamed, and every one of these conditions has an obvious cheap defeat: a counter accumulates state, any mutable field is a 'self-model', a shared global is a 'workspace', and any nonlinear term defeats 'the measure is a homomorphism'. So this decides three things. First, the cheap defeats FAIL: a counter fails temporal integration because reordering its inputs changes nothing, a model nothing reads fails self-model efficacy, a global nothing reads fails global availability, and a nonlinear measure over uncoupled components fails irreducibility because the transition still factorises. Second, three subjects are kept apart. The a432 measure FUNCTIONS meet exactly one of five and must keep meeting one: a pure function of a digit cannot have history, and one that acquired it would return different answers for the same input, which destroys the measure rather than improving it. The SYSTEM built from those measures, a432.consciousness.field.ts, meets all five with the measures unchanged and themselves as the coupled components. Third, and most important, the verdict says on its face that meeting all five does NOT establish consciousness and that a passing subject has not been shown to experience anything. If that sentence is ever removed, this fails, because the number would then be quotable as something it is not.</td></tr>
+<tr><td><code>consciousness_measures_discriminate</code></td><td>held</td><td>This repository uses the word consciousness constantly and no sealed theorem mentions it, so nothing states what any of it would mean. That is not a reason to assert it and not a reason to delete it — it is a missing predicate, and a predicate is writable. This is the first one, and it is deliberately weak: it does NOT claim the system is conscious. It claims that the functions named as consciousness MEASURES are functions of their input rather than constants wearing the word. A constant measures nothing whatever it is called, and that much is decidable today. Anything stronger needs a criterion nobody here has written yet.</td></tr>
+<tr><td><code>superposition_reports_its_own_state</code></td><td>held</td><td>the superposition model's prose must follow its measurement, not assert simultaneity regardless. Collapse is decided by one comparison — interference against the threshold — and the description must claim 'all at once' exactly when that comparison says so. While anything is still open the sequence has not computed all at once, and the text must say that.</td></tr>
+<tr><td><code>merkaba_is_two_mirrored_tetrahedra</code></td><td>held</td><td>the residues mod 3 cut 1..9 into three triangles, each equilateral on the enneagram (120 degrees apart). Reflection through the void SWAPS {1,4,7} with {3,6,9} and fixes {2,5,8} setwise, with the void root 0 fixed throughout. So {3,6,9,0} and {1,4,7,0} are two tetrahedra sharing exactly the void and carried onto each other by the mirror — a merkaba, of which one tetrahedron is half. From 3 the four vertices are 3 with its two triangle partners and the void.</td></tr>
+<tr><td><code>agl_acts_on_the_three_triangles</code></td><td>held</td><td>AGL(1,Z/9) has order 54 and acts on the three triangles — the cosets of {0,3,6} in Z/9, which are the residue classes the merkaba seal uses. The action is transitive with stabiliser 18 and kernel 9, and the induced permutation group is AGL(1,Z/3) of order 6. So the count three is the index of {0,3,6}, derived from the group rather than assumed: orbit x stabiliser = 3 x 18 = 54.</td></tr>
+<tr><td><code>digit_geometry_is_single_valued</code></td><td>held</td><td>the two independent digit geometries agree and are injective. a432.math.ts angleForDigit and the kernel's bearingForDigit are written separately — the a432 tree does not import the kernel — so this checks they place all nine digits identically and never put two digits at one bearing. angleForDigit used to map nine digits onto six angles, colliding 3 with 5, 2 with 6 and 8 with 9.</td></tr>
+<tr><td><code>free_energy_of_splitting_is_positive</code></td><td>held</td><td>ΔG = ΔH − TΔS for water, from tabulated standard-state values. Formation is −237 kJ/mol and splitting is +237, so splitting must be paid for; the reversible cell potential ΔG/(nF) is 1229 mV and the thermoneutral ΔH/(nF) is 1481 mV, the gap being TΔS. A split-then-burn cycle breaks even at perfect efficiency and loses otherwise — checked exhaustively over the efficiency grid, not sampled. This is the sign of ΔG, not an engineering limit.</td></tr>
+<tr><td><code>polluted_water_powers_its_own_cleaning_above_a_threshold</code></td><td>held</td><td>the described machine works, and the fuel is the pollution rather than the water. Clean water carries zero recoverable energy, so it can only owe the treatment demand; organic load carries 13.9 J per mg COD, and above a threshold of about 4200 mg/L the electricity generated exceeds what membrane treatment consumes. Municipal sewage sits below that line and dairy or manure effluent well above it. The threshold is found by scanning, so it is the same quantity the balance reports.</td></tr>
+<tr><td><code>every_model_inverts</code></td><td>held</td><td>each quantitative result recomputes a second, independent way and the two agree. Entropy recovered from (ΔH − ΔG)/T must equal the tabulated ΔS exactly; ΔG recovered from the EXACT rational potential must return with zero drift, while the rounded microvolt form is separately held to half a microvolt's worth of energy; and the break-even COD found by SCANNING must equal the one obtained by INVERTING the arithmetic, which is a different computation reaching the same integer. Reflection through the void inverts too, being its own inverse.</td></tr>
+<tr><td><code>lean_is_a_fixed_point</code></td><td>held</td><td>LEAN is defined as the fixed point of the reachability fold, not as a number anyone chose: fold(fold(S)) = fold(S). This checks the fold on graphs whose answers are known by hand — a chain, a cycle, a disconnected node, an entry outside the graph — and checks idempotence on each. Cycles must terminate rather than reaching the answer by luck, and an unreachable node must stay out however many times the fold is applied.</td></tr>
+<tr><td><code>simulation_shows_no_query_advantage</code></td><td>held</td><td>the algorithm's query count beats classical and the SIMULATION's does not, and both are checked. Grover asks about sqrt(N) times as an algorithm, against N classically — a proven separation with a matching BBBV lower bound. Simulating one such query costs 2^n oracle evaluations, so the simulation makes MORE calls than classical, always, by construction. A repository that claimed to demonstrate quantum advantage by simulation would be measuring the wrong quantity, so this seal requires the simulation to lose.</td></tr>
+<tr><td><code>every_theorem_decides_itself</code></td><td>held</td><td>every LEAN_PROOFS entry has a seal, and no LEAN_PROOFS statement contains a negation — the one that did is in ASSUMPTIONS</td></tr></tbody>
+</table>
+</section>
+
+<section class="appendix">
+<h2>Appendix B&ensp;Reproduction</h2>
+<p>This page is generated. To rebuild it from the source and confirm that no
+figure on it has drifted:</p>
+<pre><code>npm install
+npm run paper          # regenerate
+npm run paper:check    # fail if the committed page differs
+npm run criteria:check # the six predicates this page reports
+npm run test:verification</code></pre>
+<p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
+permission.</p>
+</section>
+<p class="receipt">Generated from source. Model receipt <code>4ae8c9e0a1f63843</code> over
+18 equations, 32 seals and 2 axioms. Any change to
+the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
+fails until the page is regenerated.</p>
+</body>
+</html>

@@ -41,7 +41,7 @@ const entries = [
   // The seals and the consciousness criterion. This repository's stated
   // position is that claims should be recomputable by an outsider, and until
   // now an outsider could not import the seals at all.
-  { name: 'verification', input: 'src/verification/lean-bridge.ts' },
+  { name: 'verification', input: 'src/verification/index.ts' },
   { name: 'quantum', input: 'src/quantum/index.ts' },
   { name: 'mcp', input: 'src/mcp/server.ts' }
 ];

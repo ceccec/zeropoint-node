@@ -44,6 +44,14 @@ const UNLOADED_OK = {
   'src/vbm-demo.ts': 'a demo, printed for humans; nothing asserts on it',
   'src/advanced-vbm.ts': 'genuinely untested — the honest entry in this list',
   'src/mcp/server.ts': 'IS exercised, by mcp:smoke, which spawns it as a child and kills it — a killed process never flushes coverage, so this is a limit of the measurement rather than a gap in the testing',
+  // A BARREL IS SUPPOSED TO BE LOADED BY NOTHING. src/verification/index.ts is
+  // the input rollup builds ./verification from, and it exists precisely so that
+  // no module in src imports it: lean-bridge was both the entry and a source
+  // module, so re-exporting anything that imports SEALS closed a cycle. Every
+  // name it re-exports is exercised through the module it comes from; what is
+  // unexercised here is one line of re-exports, and entries:check and
+  // entrypoints-usable already fail if the built entry stops resolving.
+  'src/verification/index.ts': 'the ./verification build entry — a barrel is imported by nothing on purpose, and everything it re-exports is exercised through its own module',
 }
 
 /** Everything that actually runs src/ code. Not the same as everything named "test". */

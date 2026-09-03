@@ -1,5 +1,64 @@
 # Changelog
 
+## 1.5.0
+
+The carry-out of the 1.4 run. **Nine patches planned before the first was cut,
+and every one of their targets still standing** — which is what a `*.*.0` is for
+in this scheme: not new work, but the release where everything holds at once.
+
+```
+1.4.1  typecheck        96 → 0
+1.4.2  lint            368 → 172
+1.4.3  unreachable     115 → 115   amended
+1.4.4  lint            172 → 0
+1.4.5  decimals        278 → 9
+1.4.6  collisions       59 → 38    amended
+1.4.7  untestedExports 291 → 218
+1.4.8  untestedExports 204 → 148
+1.4.9  unboundClaims    50 → 0     amended
+```
+
+Three targets were amended, each for a **premise that turned out false** rather
+than for scope: `unreachable` measured static reachability and driving it down
+would have meant deleting live code or adding a barrel to make the number read
+better; `decimals` had no second half left because patch 5 took the whole
+surface; and `prose 50 → 38` rested on the idea that a boundary is a sentence.
+
+**Six criteria gate a release now, where there were three.** `realtime` and
+`validation` were built in 1.4.9 because claims needed them and neither existed.
+All six are met.
+
+**Every effect claim in the corpus is bound to a predicate that runs** — 42 to
+theorems, 8 to the two declared axioms, none to nothing. The witness checks
+coverage in both directions, so a new claim fails for being unbound and a stale
+entry fails for having no claim.
+
+**The formulas are published.** `docs/public/paper.html` sets 18 numbered
+equations in MathML on a page with real `@page` rules, and carries seven
+appendices: every criterion condition by condition with its refuter, the full
+claim ledger with each binding's demarcation, the twelve ratchet ceilings, the
+nine planned patches, all 33 mutations, the 32 seals, and reproduction steps.
+Every figure is read from the code at generation time and `paper:check` fails on
+a byte of drift.
+
+**What the run found, by looking rather than by asserting.** A frequency
+function that meant two different numbers under one name. A coil that closed a
+step late and put every digit at the previous digit's angle from index 7. Two
+modules that could not parse their own canonical sequence. A `simplifyFraction`
+that was not canonical. Averages that were NaN. A brand with no checked
+constructor. A scheduler that filtered every task it had ever finished, on every
+tick, so its step cost rose from 38 µs to 368 µs over twenty thousand frames.
+And, twice, a gate that read absence as agreement — the ratchet silently
+deleting the fingerprints `measure:check` compares against, and a condition that
+passed on an empty list.
+
+Several of those were found because a **mutation refused to move**, which is the
+argument for keeping the mutation harness honest: 33 mutations across 26
+modules, every one caught.
+
+Nothing here is an empirical claim. The validation criterion states it in data
+rather than in a comment: **no physical experiment has been run.**
+
 ## 1.4.9
 
 Every effect claim in the corpus is now **bound to a theorem that runs, or to a

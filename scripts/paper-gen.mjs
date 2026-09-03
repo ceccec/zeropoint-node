@@ -50,6 +50,25 @@ const criteriaAll = allCriteria()
 const ledger = JSON.parse(readFileSync(join(ROOT, 'src/verification/claims.json'), 'utf8')).claims
 const ratchet = JSON.parse(readFileSync(join(ROOT, 'ratchet.json'), 'utf8'))
 const leanLedger = JSON.parse(readFileSync(join(ROOT, 'lean/ledger.json'), 'utf8'))
+const priorArt = JSON.parse(readFileSync(join(ROOT, 'src/verification/prior-art.json'), 'utf8'))
+
+// Prior art, straight from the ledger: status, the domains where the art would
+// live, and each citation with whatever identifier it actually has. A citation
+// with no DOI is shown as having none rather than omitted, so the gaps count.
+const paEntries = Object.entries(priorArt.contributions)
+const paCitesAll = paEntries.flatMap(([, c]) => c.priorArt?.citations ?? [])
+const paCites = paCitesAll.length
+const paResolved = paCitesAll.filter((c) => c.resolved === true).length
+const priorArtRows = paEntries.map(([id, c]) => {
+  const cites = (c.priorArt?.citations ?? []).map((x) =>
+    x.kind === 'doi' && x.id
+      ? `<li><a href="https://doi.org/${escape(x.id)}"><code>${escape(x.id)}</code></a> &mdash; ${escape(x.resolvedTitle ?? x.text)}</li>`
+      : `<li>${escape(x.text)} <span class="nodoi">(no DOI: ${escape(x.kind ?? 'unstated')})</span></li>`).join('')
+  return `<tr><td><code>${escape(id)}</code></td><td>${escape(c.priorArt?.status ?? '')}</td>` +
+    `<td>${(c.domains ?? []).map((d) => escape(d)).join('<br>')}</td>` +
+    `<td><ul>${cites || '<li>none cited</li>'}</ul></td></tr>`
+})
+
 // EVERY run, not only the live one. Superseded plans are kept as
 // release-plan.<run>.json, and dropping them from the page would replace a
 // finished run's results with an unstarted plan's zeros — which is the record
@@ -450,13 +469,33 @@ generation time; a seal that stopped holding would fail
 </section>
 
 <section class="appendix">
-<h2>Appendix G&ensp;Reproduction</h2>
+<h2>Appendix G&ensp;Prior art</h2>
+<p>Every contribution below names the <em>domains</em> where its prior art would
+live. That is the part a reader can act on: a domain is a direction to look, so
+an entry nobody has searched is a lead rather than a shrug. No entry is recorded
+as <em>novel</em> &mdash; that status does not exist in the ledger, because
+novelty is a universal negative and no finite search decides it. It rests on the
+axiom <code>no_prior_art_is_undecidable</code> and nowhere else.</p>
+<p>${priorArtRows.length} contribution(s); ${paResolved} of ${paCites} citations
+carry a DOI that returned, on the recorded date, the title written beside it.
+<code>npm run priorart:resolve</code> asks the registry again and fails on any
+difference &mdash; including a recorded title that is merely a prefix of the real
+one, since a shortened title is a transcription.</p>
+<table class="priorart">
+<thead><tr><th>contribution</th><th>status</th><th>domains</th><th>cited art</th></tr></thead>
+<tbody>${priorArtRows.join('\n')}</tbody>
+</table>
+</section>
+
+<section class="appendix">
+<h2>Appendix H&ensp;Reproduction</h2>
 <p>This page is generated. To rebuild it from the source and confirm that no
 figure on it has drifted:</p>
 <pre><code>npm install
 npm run paper          # regenerate
 npm run paper:check    # fail if the committed page differs
 npm run criteria:check # the six predicates this page reports
+npm run priorart:resolve # ask the registry whether each DOI is what is written
 npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
@@ -472,6 +511,9 @@ const model = JSON.stringify({
   // in the receipt is a receipt that moves when the machine is busy.
   criteria: criteriaAll.map((c) => `${c.name}:${c.verdict.conditionsTotal}`),
   claims: Object.keys(ledger).length, ceilings: ratchet.ceilings,
+  // Stated on the page, so it belongs in the receipt: dropping a contribution
+  // or downgrading a resolved citation must move the hash.
+  priorArt: paEntries.map(([id, c]) => `${id}:${c.priorArt?.status}:${(c.domains ?? []).length}`), paResolved,
   patches: plans.map((p) => `${p.plan.run}:${Object.keys(p.plan.patches).length}`), mutations: MUTATIONS.length,
 })
 const receipt = createHash('sha256').update(model).digest('hex').slice(0, 16)
@@ -532,6 +574,14 @@ table.cond td:nth-child(2) { white-space: nowrap; }
 table.ledger { font-size: .74em; table-layout: fixed; }
 table.ledger td { vertical-align: top; word-break: break-word; }
 table.ledger .where { width: 12em; color: var(--muted); font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: .92em; }
+table.priorart { font-size: .76em; table-layout: fixed; }
+table.priorart td { vertical-align: top; word-break: break-word; }
+table.priorart td:first-child { width: 11em; }
+table.priorart td:nth-child(2) { width: 8em; color: var(--muted); }
+table.priorart td:nth-child(3) { width: 13em; color: var(--muted); }
+table.priorart ul { margin: 0; padding-left: 1.1em; }
+table.priorart li { margin: .2em 0; }
+.nodoi { color: var(--muted); font-style: italic; }
 table.ledger td:last-child { width: 12em; }
 table.muts { font-size: .78em; }
 table.muts td:first-child { width: 16em; }
@@ -622,6 +672,18 @@ ${axioms.map(([name, a]) => `\\paragraph{\\texttt{${name}}} ${texEscape(a.why_un
 
 \\paragraph{} ${texEscape(validation.doesNotEstablish)}
 
+\\section*{Prior art}
+Every contribution names the domains where its prior art would live; no entry is recorded as novel,
+because novelty is a universal negative that no finite search decides. It rests on the axiom
+\\texttt{no\\_prior\\_art\\_is\\_undecidable}.
+\\begin{itemize}
+${paEntries.map(([id, c]) => `\\item \\texttt{${texEscape(id)}} --- ${texEscape(c.priorArt?.status ?? '')}. `
+ + `Domains: ${texEscape((c.domains ?? []).join('; '))}. `
+ + ((c.priorArt?.citations ?? []).filter((x) => x.kind === 'doi' && x.id).length
+     ? `Cited: ${(c.priorArt.citations).filter((x) => x.kind === 'doi' && x.id).map((x) => `\\texttt{${texEscape(x.id)}}`).join(', ')}.`
+     : 'No cited work carries a DOI.')).join('\n')}
+\\end{itemize}
+
 \\section*{Reproduction}
 \\begin{verbatim}
 npm install
@@ -629,6 +691,7 @@ npm run paper          # regenerate both artifacts
 npm run paper:check    # fail if either has drifted
 npm run lean:check     # what the Lean kernel accepts
 npm run criteria:check # the six predicates
+npm run priorart:resolve # re-resolve every DOI (network)
 \\end{verbatim}
 \\end{document}
 `

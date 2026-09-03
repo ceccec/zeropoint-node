@@ -78,13 +78,13 @@ if (!CHECK) {
 }
 
 if (declared === null && measured.length > 0) {
-  console.error(`side-effects:check FAIL — ${measured.length} entry point(s) have import side effects and package.json declares none`)
+  console.error(`sideeffects:check FAIL — ${measured.length} entry point(s) have import side effects and package.json declares none`)
   process.exit(1)
 }
 if (declared !== null && (declared.length !== measured.length || declared.some((d, i) => d !== measured[i]))) {
-  console.error('side-effects:check FAIL — package.json\'s sideEffects list is not what importing the entry points shows')
+  console.error('sideeffects:check FAIL — package.json\'s sideEffects list is not what importing the entry points shows')
   console.error(`  declared: ${declared.join(', ') || '(none)'}`)
   console.error(`  measured: ${measured.join(', ') || '(none)'}`)
   process.exit(1)
 }
-console.log('side-effects:check ok — the declared list is the measured one')
+console.log('sideeffects:check ok — the declared list is the measured one')

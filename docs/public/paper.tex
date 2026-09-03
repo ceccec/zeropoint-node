@@ -122,6 +122,23 @@ C(q) \in \Theta(2^{q}), \qquad C(q) \leq T
 
 \paragraph{} NO PHYSICAL EXPERIMENT HAS BEEN RUN. No coil was built, no field was measured, no resonance was observed, and nothing in this repository touches an instrument. Every condition here is about arithmetic and about code that checks arithmetic. The empirical claim is not made.
 
+\section*{Prior art}
+Every contribution names the domains where its prior art would live; no entry is recorded as novel,
+because novelty is a universal negative that no finite search decides. It rests on the axiom
+\texttt{no\_prior\_art\_is\_undecidable}.
+\begin{itemize}
+\item \texttt{ratchet} --- known-art-in-part. Domains: continuous integration quality gates; technical debt management; software process metrics. Cited: \texttt{10.1145/3493244.3493271}.
+\item \texttt{measure-fingerprinting} --- known-art-in-part. Domains: software measurement theory; construct validity of metrics; build reproducibility. Cited: \texttt{10.1145/3210459.3210461}.
+\item \texttt{criterion-modules} --- known-art-in-part. Domains: consciousness science (IIT, GWT, higher-order theories); real-time systems; operating system design; release engineering. Cited: \texttt{10.1186/1471-2202-5-42}, \texttt{10.1016/S0010-0277(00)00123-2}, \texttt{10.1016/j.tics.2011.05.009}, \texttt{10.1145/321738.321743}.
+\item \texttt{claim-ledger-and-witness} --- known-art-in-part. Domains: assurance and safety cases; claim-to-evidence traceability; documentation testing. Cited: \texttt{10.1016/j.ress.2022.108933}.
+\item \texttt{law-mutation-harness} --- known-art. Domains: mutation testing; test adequacy criteria. Cited: \texttt{10.1109/C-M.1978.218136}, \texttt{10.1109/TSE.2010.62}.
+\item \texttt{side-effect-measurement} --- known-art-in-part. Domains: JavaScript module semantics; dead code elimination and tree shaking; bundler design; dynamic program analysis. Cited: \texttt{10.1109/saner.2018.8330226}, \texttt{10.1145/3517745.3561427}.
+\item \texttt{lean-arbiter} --- known-art-in-part. Domains: interactive theorem proving; proof auditing and trusted computing base; proof-carrying artifacts. Cited: \texttt{10.1145/3372885.3373824}.
+\item \texttt{digit-space-theorems} --- known-art. Domains: elementary number theory; formalisation of arithmetic in proof assistants. No cited work carries a DOI.
+\item \texttt{generated-paper} --- known-art-in-part. Domains: reproducible research; literate programming; executable publications; MathML and technical typesetting. Cited: \texttt{10.1093/comjnl/27.2.97}, \texttt{10.1016/j.procs.2012.04.047}.
+\item \texttt{ml-kem-768} --- known-art. Domains: post-quantum cryptography; cryptographic standards conformance; side-channel resistance. Cited: \texttt{10.6028/NIST.FIPS.203}.
+\end{itemize}
+
 \section*{Reproduction}
 \begin{verbatim}
 npm install
@@ -129,5 +146,6 @@ npm run paper          # regenerate both artifacts
 npm run paper:check    # fail if either has drifted
 npm run lean:check     # what the Lean kernel accepts
 npm run criteria:check # the six predicates
+npm run priorart:resolve # re-resolve every DOI (network)
 \end{verbatim}
 \end{document}

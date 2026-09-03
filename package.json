@@ -292,7 +292,8 @@
     "test:subjects": "node --experimental-strip-types src/verification/subjects.test.ts",
     "lean:check": "node --experimental-strip-types scripts/lean-check.mjs",
     "lean:ledger": "node --experimental-strip-types scripts/lean-check.mjs --ledger",
-    "priorart:check": "node --experimental-strip-types scripts/prior-art-check.mjs"
+    "priorart:check": "node --experimental-strip-types scripts/prior-art-check.mjs",
+    "priorart:resolve": "node --experimental-strip-types scripts/prior-art-resolve.mjs"
   },
   "keywords": [
     "a432",

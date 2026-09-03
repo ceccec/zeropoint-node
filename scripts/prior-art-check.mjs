@@ -22,6 +22,8 @@
  *   an entry that says `searched` must say what was searched and when
  *   an entry that says `not-searched` says so plainly and is counted in the
  *     summary, so the gaps are visible rather than implied to be absences
+ *   every contribution names the DOMAINS where its prior art would live, so an
+ *     unsearched entry is a direction to look rather than a shrug
  *
  * The dated citable record is the thing that actually does the defensive work:
  * publication defeats a later claim of invention without anyone proving a
@@ -52,6 +54,7 @@ if (!('no_prior_art_is_undecidable' in ASSUMPTIONS)) {
 
 const tally = {}
 const unresolved = []
+const unsearched = []
 for (const [id, c] of entries) {
   if (!c.what || c.what.length < 20) problems.push(`${id}: says nothing about what the contribution is`)
   for (const f of c.files ?? []) {
@@ -82,11 +85,33 @@ for (const [id, c] of entries) {
     }
     if (cite.resolved !== true) unresolved.push(`${id}: ${cite.id ?? cite.text.slice(0, 40)}`)
   }
-  if (st === 'searched-not-found') {
-    const s = c.priorArt.searched
-    if (!s?.when || !(s.where ?? []).length || !(s.queries ?? []).length) {
-      problems.push(`${id}: says a search found nothing and does not record when, where, or what was asked — an unrecorded search is not evidence`)
+  // A search block is evidence wherever it appears, not only under
+  // `searched-not-found` — so it is checked wherever it appears, and it is
+  // REQUIRED there, because "nothing was found" without a record of looking is
+  // the one claim in this file that a reader cannot repeat.
+  const s = c.priorArt.searched
+  if (st === 'searched-not-found' && !s) {
+    problems.push(`${id}: says a search found nothing and records no search at all`)
+  }
+  if (s && (!s.when || !(s.where ?? []).length || !(s.queries ?? []).length)) {
+    problems.push(`${id}: records a search without when, where, or what was asked — an unrecorded search is not evidence`)
+  }
+
+  // Domains turn a gap into a direction. Without them `not-searched` reads as
+  // "we did not look", which tells a reader nothing about WHERE to look; with
+  // them it reads as "here are the fields this would collide with, unsearched",
+  // which is a lead someone can follow to refute the entry.
+  const domains = c.domains ?? []
+  if (!domains.length) {
+    problems.push(`${id}: names no domains — prior art has to live somewhere, and an entry that will not say where cannot be checked or refuted`)
+  }
+  for (const [i, dom] of domains.entries()) {
+    if (typeof dom !== 'string' || dom.trim().length < 8) {
+      problems.push(`${id}: domain ${i} is too short to name a field of study`)
     }
+  }
+  if (st === 'not-searched' && domains.length) {
+    unsearched.push(`${id}: ${domains.join('; ')}`)
   }
   // The condition that protects the reader.
   const bound = c.novelty?.backedBy
@@ -106,6 +131,7 @@ console.log(`                 novelty rests on the axiom no_prior_art_is_undecid
 const allCites = entries.flatMap(([, c]) => c.priorArt?.citations ?? [])
 console.log(`                 ${allCites.filter((c) => c.resolved === true).length} of ${allCites.length} citation(s) resolved against a registry, with the returned title recorded`)
 if (unresolved.length) console.log(`                 unresolved, and named rather than implied absent: ${unresolved.length}`)
+for (const u of unsearched) console.log(`                 unsearched, with the fields to search named: ${u}`)
 console.log(`                 concept DOI ${led.concept_doi} · receipt ${receipt}`)
 for (const p of problems) console.error(`  ✗ ${p}`)
 if (problems.length > 0) {

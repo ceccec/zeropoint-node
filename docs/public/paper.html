@@ -54,6 +54,14 @@ table.cond td:nth-child(2) { white-space: nowrap; }
 table.ledger { font-size: .74em; table-layout: fixed; }
 table.ledger td { vertical-align: top; word-break: break-word; }
 table.ledger .where { width: 12em; color: var(--muted); font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: .92em; }
+table.priorart { font-size: .76em; table-layout: fixed; }
+table.priorart td { vertical-align: top; word-break: break-word; }
+table.priorart td:first-child { width: 11em; }
+table.priorart td:nth-child(2) { width: 8em; color: var(--muted); }
+table.priorart td:nth-child(3) { width: 13em; color: var(--muted); }
+table.priorart ul { margin: 0; padding-left: 1.1em; }
+table.priorart li { margin: .2em 0; }
+.nodoi { color: var(--muted); font-style: italic; }
 table.ledger td:last-child { width: 12em; }
 table.muts { font-size: .78em; }
 table.muts td:first-child { width: 16em; }
@@ -623,18 +631,47 @@ generation time; a seal that stopped holding would fail
 </section>
 
 <section class="appendix">
-<h2>Appendix G&ensp;Reproduction</h2>
+<h2>Appendix G&ensp;Prior art</h2>
+<p>Every contribution below names the <em>domains</em> where its prior art would
+live. That is the part a reader can act on: a domain is a direction to look, so
+an entry nobody has searched is a lead rather than a shrug. No entry is recorded
+as <em>novel</em> &mdash; that status does not exist in the ledger, because
+novelty is a universal negative and no finite search decides it. It rests on the
+axiom <code>no_prior_art_is_undecidable</code> and nowhere else.</p>
+<p>10 contribution(s); 15 of 21 citations
+carry a DOI that returned, on the recorded date, the title written beside it.
+<code>npm run priorart:resolve</code> asks the registry again and fails on any
+difference &mdash; including a recorded title that is merely a prefix of the real
+one, since a shortened title is a transcription.</p>
+<table class="priorart">
+<thead><tr><th>contribution</th><th>status</th><th>domains</th><th>cited art</th></tr></thead>
+<tbody><tr><td><code>ratchet</code></td><td>known-art-in-part</td><td>continuous integration quality gates<br>technical debt management<br>software process metrics</td><td><ul><li>Ratcheting quality gates on new code are established practice; the mechanism is widely deployed rather than published under one citation. <span class="nodoi">(no DOI: practice)</span></li><li><a href="https://doi.org/10.1145/3493244.3493271"><code>10.1145/3493244.3493271</code></a> &mdash; Technical Debt Guild</li></ul></td></tr>
+<tr><td><code>measure-fingerprinting</code></td><td>known-art-in-part</td><td>software measurement theory<br>construct validity of metrics<br>build reproducibility</td><td><ul><li><a href="https://doi.org/10.1145/3210459.3210461"><code>10.1145/3210459.3210461</code></a> &mdash; Construct Validity in Software Engineering Research and Software Metrics</li></ul></td></tr>
+<tr><td><code>criterion-modules</code></td><td>known-art-in-part</td><td>consciousness science (IIT, GWT, higher-order theories)<br>real-time systems<br>operating system design<br>release engineering</td><td><ul><li><a href="https://doi.org/10.1186/1471-2202-5-42"><code>10.1186/1471-2202-5-42</code></a> &mdash; An information integration theory of consciousness</li><li><a href="https://doi.org/10.1016/S0010-0277(00)00123-2"><code>10.1016/S0010-0277(00)00123-2</code></a> &mdash; Towards a cognitive neuroscience of consciousness: basic evidence and a workspace framework</li><li><a href="https://doi.org/10.1016/j.tics.2011.05.009"><code>10.1016/j.tics.2011.05.009</code></a> &mdash; Empirical support for higher-order theories of conscious awareness</li><li><a href="https://doi.org/10.1145/321738.321743"><code>10.1145/321738.321743</code></a> &mdash; Scheduling Algorithms for Multiprogramming in a Hard-Real-Time Environment</li></ul></td></tr>
+<tr><td><code>claim-ledger-and-witness</code></td><td>known-art-in-part</td><td>assurance and safety cases<br>claim-to-evidence traceability<br>documentation testing</td><td><ul><li>uuidna's axiom witness — the shape this borrows, acknowledged in the source: audited must equal ledger, every claim carries its demarcated form, an unbacked appearance is an offender <span class="nodoi">(no DOI: software)</span></li><li>Assurance/safety cases with explicit claim-to-evidence traceability (Goal Structuring Notation) are established practice in safety engineering <span class="nodoi">(no DOI: practice)</span></li><li><a href="https://doi.org/10.1016/j.ress.2022.108933"><code>10.1016/j.ress.2022.108933</code></a> &mdash; Graphical safety assurance case using Goal Structuring Notation (GSN) — challenges, opportunities and a framework for autonomous trains</li></ul></td></tr>
+<tr><td><code>law-mutation-harness</code></td><td>known-art</td><td>mutation testing<br>test adequacy criteria</td><td><ul><li><a href="https://doi.org/10.1109/C-M.1978.218136"><code>10.1109/C-M.1978.218136</code></a> &mdash; Hints on Test Data Selection: Help for the Practicing Programmer</li><li><a href="https://doi.org/10.1109/TSE.2010.62"><code>10.1109/TSE.2010.62</code></a> &mdash; An Analysis and Survey of the Development of Mutation Testing</li></ul></td></tr>
+<tr><td><code>side-effect-measurement</code></td><td>known-art-in-part</td><td>JavaScript module semantics<br>dead code elimination and tree shaking<br>bundler design<br>dynamic program analysis</td><td><ul><li><a href="https://doi.org/10.1109/saner.2018.8330226"><code>10.1109/saner.2018.8330226</code></a> &mdash; An extensible approach for taming the challenges of JavaScript dead code elimination</li><li><a href="https://doi.org/10.1145/3517745.3561427"><code>10.1145/3517745.3561427</code></a> &mdash; Muzeel</li></ul></td></tr>
+<tr><td><code>lean-arbiter</code></td><td>known-art-in-part</td><td>interactive theorem proving<br>proof auditing and trusted computing base<br>proof-carrying artifacts</td><td><ul><li><a href="https://doi.org/10.1145/3372885.3373824"><code>10.1145/3372885.3373824</code></a> &mdash; The lean mathematical library</li><li>uuidna's axiom witness — derivation needs the toolchain, verification needs only the shipped receipt <span class="nodoi">(no DOI: software)</span></li></ul></td></tr>
+<tr><td><code>digit-space-theorems</code></td><td>known-art</td><td>elementary number theory<br>formalisation of arithmetic in proof assistants</td><td><ul><li>Digital roots and the multiplicative order of 2 modulo 9 are elementary number theory; no novelty is claimed <span class="nodoi">(no DOI: common-knowledge)</span></li><li>The 1-2-4-8-7-5 doubling cycle circulates as 'Rodin vortex mathematics'; the arithmetic is standard and the surrounding claims are not adopted here <span class="nodoi">(no DOI: common-knowledge)</span></li></ul></td></tr>
+<tr><td><code>generated-paper</code></td><td>known-art-in-part</td><td>reproducible research<br>literate programming<br>executable publications<br>MathML and technical typesetting</td><td><ul><li><a href="https://doi.org/10.1093/comjnl/27.2.97"><code>10.1093/comjnl/27.2.97</code></a> &mdash; Literate Programming</li><li><a href="https://doi.org/10.1016/j.procs.2012.04.047"><code>10.1016/j.procs.2012.04.047</code></a> &mdash; Literate Program Execution for Reproducible Research and Executable Papers</li></ul></td></tr>
+<tr><td><code>ml-kem-768</code></td><td>known-art</td><td>post-quantum cryptography<br>cryptographic standards conformance<br>side-channel resistance</td><td><ul><li><a href="https://doi.org/10.6028/NIST.FIPS.203"><code>10.6028/NIST.FIPS.203</code></a> &mdash; Module-lattice-based key-encapsulation mechanism standard</li></ul></td></tr></tbody>
+</table>
+</section>
+
+<section class="appendix">
+<h2>Appendix H&ensp;Reproduction</h2>
 <p>This page is generated. To rebuild it from the source and confirm that no
 figure on it has drifted:</p>
 <pre><code>npm install
 npm run paper          # regenerate
 npm run paper:check    # fail if the committed page differs
 npm run criteria:check # the six predicates this page reports
+npm run priorart:resolve # ask the registry whether each DOI is what is written
 npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>494991d2cf068489</code> over
+<p class="receipt">Generated from source. Model receipt <code>1aea4a3597d7dd6e</code> over
 18 equations, 32 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>

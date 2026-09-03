@@ -1,5 +1,98 @@
 # Changelog
 
+## 1.4.7
+
+Exported functions nothing ever called **291 → 218**, and eight defects the laws
+found on their first run.
+
+**The target was gameable, so the plan said in advance how it would not be
+gamed.** `coverage:audit` counts exports that are *never called* — a suite that
+calls every export and asserts nothing moves that number exactly as far as one
+that asserts a law. Two cheats were refused in writing before the work: a
+determinism harness that calls each export twice, and one that asserts each
+export does not throw. Both would have reached 220 in an afternoon.
+
+That refusal is now **checkable rather than a promise**. `npm run mutations:check`
+corrupts one line of each of the 13 modules under test and requires that
+module's suite to exit non-zero — **17 mutations, 17 caught**. A suite that
+survives a broken implementation has not tested it. Reaching 218 is necessary
+and not sufficient.
+
+**Eight defects, each found by a law rather than by reading.**
+
+- **The coil did not close.** `rodinPosition` and `rodinVortexCycle` cycled
+  `RODIN_SEQUENCE` — the six-step orbit with its return to 1 appended, which is a
+  *path*. Taken modulo its own length that walk has period **seven** and repeats
+  1 at the seam: `1 2 4 8 7 5 1 1 2 4 8 7 5 1`. The doubling law found it,
+  because the digital root of 2×1 is 2. It was not cosmetic: `rodinCoilPattern`
+  pairs each value with `rodinAngle`, which is six-periodic, so from index 7
+  every digit carried the **previous digit's angle** and never resynchronised.
+  `a432.math.ts` had already settled this — `rodinDigit` cycles the orbit and its
+  comment says "excluding final 1" — and these two disagreed with the canonical
+  module.
+- **`startYinYang` threw everywhere outside a browser.** It called bare
+  `requestAnimationFrame`, which is undefined under Node. `a432.raf.ts` exists for
+  exactly this and four more modules had never been converted — eight call sites
+  across five modules.
+- **`simplifyFraction` was not a canonical form.** A zero denominator gave
+  `{ NaN, NaN }`, and the sign stayed wherever it was found: `2/-4` simplified to
+  `1/-2` while `-2/4` gave `-1/2`, so two fractions of the same value simplified
+  to different fields and comparing them by field gave the wrong answer.
+- **A "harmonize" documented as the average computes the mediant.** The mediant
+  of 1/2 and 1/3 is 2/5; the average is 5/12. The value is kept and the comment
+  corrected — the mediant does lie between its inputs, which is what "move toward
+  balance" means.
+- **`getStreamEntropy` returned NaN for an empty chain**, and that NaN then
+  poisoned every average it was folded into.
+- **Two modules could not parse their own canonical sequence.**
+  `a432.vbm.path.ts` and `a432.vbm.decode.ts` both used `frequencyForDigit`, which
+  is defined **only** on {3,6,9} and throws for every other digit. Third
+  appearance of this defect after `createBlock` in 1.4.4; **nineteen call sites
+  remain** across ten modules and are recorded as a lead.
+- **Removing that throw exposed two more underneath it.** `finite:check`
+  immediately reached `getVBMDecodeStatistics("")`, which averaged over an empty
+  list and returned NaN. Fixing that let the law reach `"0"` — and the digit zero
+  *divides*. `biggerNumber / 0` is Infinity, `% 0` is NaN, and the digital root of
+  Infinity is NaN, so every statistic over the module's own canonical sequence
+  `003691248751`, which begins with two zeroes, was NaN. Three defects stacked
+  behind one throw.
+
+**And one in the gate itself, which is the one that matters.** `npm run ratchet`
+wrote only `{ ceilings, raised }` and **deleted the `measures` block** — the
+fingerprints `measure:check` compares against — and `measure:check` reads a
+missing block as a first run and adopts whatever the measures compute today. So
+lowering a ceiling after a surface shrank, which is the correct thing to do,
+silently disarmed the gate whose entire job is to stop a measure being redefined
+to read better. Two legitimate commands, and the fingerprints were gone with
+nothing saying so. The same shape as the `readme:facts` bug already recorded
+here: **absence read as agreement**. The ratchet carries the block through now,
+and `measure:check` refuses a tree that has twelve ceilings and no fingerprints,
+because that is not a first run.
+
+**Three of the plan's own laws did not survive contact with the code**, and were
+corrected before the work rather than after:
+
+- `uuidV3` and `uuidV5` are **not** RFC 4122 name-based UUIDs — no namespace
+  argument, no MD5, no SHA-1, and every generator here carries version nibble
+  **8**. The suite pins that deliberately, so that making them conformant later
+  cannot pass silently.
+- `rodinPosition`'s period was seven, not six.
+- `trinityFold60` is not periodic; it throws off the axis. The law is totality on
+  the axis and refusal beside it, which is a stronger thing to pin down.
+
+The mutation harness corrected itself once too: it replaced the **first** match
+of its anchor, and `a432.sequence.ts` carries the same consciousness-sum line in
+two functions, so the mutation landed where the suite does not reach and reported
+a survivor that was really a mis-aimed probe. A non-unique anchor is a failure
+there now, not a warning.
+
+**502 exported values fingerprinted before and after: none moved.** That covers
+values and not behaviour — the deliberate changes above are to exported
+*functions*, which the fingerprint does not walk. Those are covered by the 17
+mutations and by the suites.
+
+Unreachable modules 115 → 113. Eight suites over 13 modules, 197 laws.
+
 ## 1.4.6
 
 Names declared by more than one module **59 → 38**, and a name that meant two

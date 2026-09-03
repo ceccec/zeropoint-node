@@ -83,6 +83,13 @@ const EXERCISERS = [
   ['src/verification/quantum-criterion.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.block.chain.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.raf.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.yin.yang.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.rodin.coil.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.registry.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.vbm.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.uuid.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.vortex.arithmetic.test.ts', null],
   ['src/multidimensional-vortex-framework.test.ts', 'scripts/jest-lite.mjs'],
   ['scripts/quantum-sim.mjs', null],
   // Forgotten the first time, and it exercises the nine prove* functions that

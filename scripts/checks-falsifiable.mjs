@@ -49,6 +49,12 @@ const GUARDS = {
  * are falsified by the mutation tests that live with the code they read.
  */
 const READS_SOURCE = {
+  // This one is itself a falsification harness: it corrupts a module and
+  // requires the suite over it to notice. It is declared here because the
+  // pipeline's rule is that every source-reading checker is declared, and
+  // because a mutation harness that could not fail would be the worst of the
+  // lot — it certifies the suites that certify the code.
+  'mutations:check': 'corrupts one line of each module a law-asserting suite covers and requires that suite to exit non-zero; it fails if a suite survives, if an anchor is missing, if an anchor matches more than one place (a mutation landing on the wrong copy reports a false survivor, which is how a432.sequence.ts first reported one), or if a file is not restored byte for byte',
   'collisions:check': 'reads every exported DECLARATION from the syntax tree and fails when a module starts declaring a name another module already declares, then IMPORTS the colliding modules and fails when a recorded collision resolves to different values with no reason recorded; falsified by the four mutations in the commit that added it and the six in the commit that added the agreement pass — three of the six are controls that must NOT fail: a re-export (one definition on two paths), a type and a value sharing a name inside one module (the ordinary TypeScript idiom), and a recorded collision whose two sides agree, which needs no reason',
   'constants:check': 'reads src/ for retyped kernel constants',
   'finite:check': 'imports every module, inspects exported values, and calls every export it can construct arguments for; falsified by the three mutations in the commit that added the call pass',

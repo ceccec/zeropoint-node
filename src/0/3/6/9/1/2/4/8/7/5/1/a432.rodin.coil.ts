@@ -6,29 +6,51 @@ import { PI, cos, exp, sin } from './a432.algebra.ts'
  * a432.rodin.coil.ts — harmonized with canonical A432 math
  * All Rodin sequence logic uses RODIN_SEQUENCE from a432.math.ts
  */
-import { RODIN_SEQUENCE, rodinAngle } from './a432.math.ts';
-import { VORTEX_AXIS } from '../../../../../../../../../../index.ts'
+import { rodinAngle } from './a432.math.ts';
+import { VORTEX_AXIS, VORTEX_ORBIT } from '../../../../../../../../../../index.ts'
 
 /**
- * rodinVortexCycle: Returns n cycles of the Rodin sequence (forward or reverse)
+ * THE CYCLE IS THE ORBIT, AND IT HAS SIX ELEMENTS.
+ *
+ * These two functions cycled RODIN_SEQUENCE, which is `[...VORTEX_ORBIT, 1]` —
+ * the orbit with its return to 1 appended, a PATH rather than a cycle. Taken
+ * modulo its own length that path has period seven and repeats 1 at every seam:
+ * rodinPosition(0..13) was 1 2 4 8 7 5 1 1 2 4 8 7 5 1. A doubling circuit does
+ * not repeat a digit, and digitalRoot(2 * 1) is 2, not 1.
+ *
+ * The repository had already decided this once. rodinDigit in a432.math.ts
+ * cycles VORTEX_ORBIT and its comment says so in as many words — "the canonical
+ * 1-2-4-8-7-5 sequence (excluding final 1)". These functions disagreed with it
+ * from index 6 onward.
+ *
+ * That disagreement was not cosmetic. rodinCoilPattern pairs each value with
+ * rodinAngle(i), and rodinAngle goes through rodinDigit, which is six-periodic.
+ * So from index 7 the pattern carried value 1 at 350 degrees — 2's angle — and
+ * never resynchronised. Two turns of the coil were wrong for the whole of the
+ * second turn.
+ */
+const ORBIT: readonly number[] = VORTEX_ORBIT
+
+/**
+ * rodinVortexCycle: Returns n cycles of the Rodin orbit (forward or reverse)
  * @param n - number of cycles
  * @param polarity - +1 (forward, default), -1 (reverse)
  */
 export function rodinVortexCycle(n: number, polarity: 1 | -1 = 1): number[] {
-  const seq = polarity === 1 ? RODIN_SEQUENCE : [...RODIN_SEQUENCE].reverse();
+  const seq = polarity === 1 ? ORBIT : [...ORBIT].reverse();
   const result = [];
   for (let i = 0; i < n; i++) result.push(...seq);
   return result;
 }
 
 /**
- * rodinPosition: Returns the value at a given index in the Rodin sequence (with polarity)
+ * rodinPosition: Returns the value at a given index in the Rodin orbit (with polarity)
  * @param index - position in the cycle
  * @param polarity - +1 (forward, default), -1 (reverse)
  */
 export function rodinPosition(index: number, polarity: 1 | -1 = 1): number {
-  const seq = polarity === 1 ? RODIN_SEQUENCE : [...RODIN_SEQUENCE].reverse();
-  return seq[index % seq.length];
+  const seq = polarity === 1 ? ORBIT : [...ORBIT].reverse();
+  return seq[((index % seq.length) + seq.length) % seq.length];
 }
 
 /**
@@ -85,7 +107,7 @@ export function rodinCoilStream(cycles?: number, polarity?: 1 | -1) {
     source: 'a432.rodin.coil.ts',
     cycles: cycleCount,
     polarity: polarityValue,
-    sequence: RODIN_SEQUENCE,
+    sequence: ORBIT,
     pattern: pattern
   };
 }

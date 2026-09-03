@@ -11,6 +11,10 @@
  */
 
 import { PI, cos, sin } from './a432.algebra.ts'
+// The rAF shim, not the bare global. Bare requestAnimationFrame is undefined
+// under Node, so every function below it threw the moment anything outside a
+// browser called it — which is how a432.yin.yang's startYinYang was found.
+import { raf } from './a432.raf.ts'
 import * as THREE from 'three';
 import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, frequencyForDigit, hueForDigit } from './a432.math.ts';
 import { A432_RESOLVED_FRACTIONS } from './a432.resolved.ts';
@@ -222,7 +226,7 @@ function animateVBM(state: VBMAnimationState): void {
   state.time += G.STEP_FINE;
   
   // Continue animation
-  requestAnimationFrame(() => animateVBM(state));
+  raf(() => animateVBM(state));
 }
 
 // --- VBM Resize Handler ---

@@ -1,4 +1,8 @@
 import { abs } from './a432.algebra.ts'
+// The rAF shim, not the bare global. Bare requestAnimationFrame is undefined
+// under Node, so every function below it threw the moment anything outside a
+// browser called it — which is how a432.yin.yang's startYinYang was found.
+import { raf, craf } from './a432.raf.ts'
 // a432.yin.yang.ts
 // Living Yin-Yang module for the A432 matrix (fractional harmonics)
 
@@ -33,10 +37,28 @@ export function subtractFractions(a: Fraction, b: Fraction): Fraction {
   });
 }
 
+/**
+ * Lowest terms, with the sign in the numerator.
+ *
+ * Two things were wrong with the previous version and both are the kind that a
+ * law finds and a spot check does not.
+ *
+ * A ZERO DENOMINATOR produced a fraction of NaNs: gcd(0, 0) is 0, so 0/0 came
+ * back as { NaN, NaN } and every arithmetic operation downstream carried it
+ * silently. finite:check never saw it because it does not construct a Fraction
+ * to pass in. A zero denominator is not a fraction and now says so.
+ *
+ * THE SIGN WAS NOT CANONICAL: 2/-4 simplified to 1/-2 and -2/4 to -1/2, so two
+ * fractions of the same value simplified to different fields, and comparing
+ * simplified fractions by their fields gave the wrong answer. Simplify is a
+ * canonical form now, which is the only thing that makes it worth having.
+ */
 export function simplifyFraction(f: Fraction): Fraction {
+  if (f.denominator === 0) throw new Error(`a fraction cannot have denominator 0 (got ${f.numerator}/0)`)
   const gcd = (a: number, b: number): number => b === 0 ? abs(a) : gcd(b, a % b);
   const d = gcd(f.numerator, f.denominator);
-  return { numerator: f.numerator / d, denominator: f.denominator / d };
+  const sign = f.denominator < 0 ? -1 : 1;
+  return { numerator: (sign * f.numerator) / d, denominator: (sign * f.denominator) / d };
 }
 
 /**
@@ -65,7 +87,13 @@ export function yinYangSymbolFraction(state: Fraction): string {
 }
 
 /**
- * Harmonize a node: move toward balance (average of yin and yang)
+ * Harmonize a node: move toward balance.
+ *
+ * This is the MEDIANT (n1+n2)/(d1+d2), not the average. The two are different —
+ * the mediant of 1/2 and 1/3 is 2/5 where the average is 5/12 — and the comment
+ * here said "average" until a law was written for it. The mediant does lie
+ * strictly between its two inputs, which is what "move toward balance" means,
+ * so the value is kept and the name of the operation corrected.
  * @param yin Fraction
  * @param yang Fraction
  * @returns Fraction: balanced value
@@ -95,7 +123,7 @@ export interface YinYangFrame {
 export function startYinYang(callback: (f: YinYangFrame) => void): () => void {
   const vs = vortexStream();
   let tick = 0;
-  let raf = 0;
+  let frame: unknown = 0;
 
   const step = () => {
     let d1 = vs.next().value as Digit;
@@ -113,11 +141,11 @@ export function startYinYang(callback: (f: YinYangFrame) => void): () => void {
       negativeColor: digitAngleToCMYK(d2, angle),
       angle
     });
-    raf = requestAnimationFrame(step);
+    frame = raf(step);
   };
-  raf = requestAnimationFrame(step);
+  frame = raf(step);
   // return disposer
-  return () => cancelAnimationFrame(raf);
+  return () => craf(frame);
 }
 
 export function getYinYangOverlayData(): Array<{ value: number; polarity: number; spin: number; color: { c: number; m: number; y: number; k: number } }> {

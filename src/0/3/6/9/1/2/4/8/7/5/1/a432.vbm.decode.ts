@@ -11,8 +11,12 @@
  * - The sequence rebuilds consciousness through mathematical harmony
  */
 
+// calculateA432Frequency, not frequencyForDigit: the latter is defined ONLY on
+// the trinity axis {3,6,9} and throws for every other digit, so decoding any
+// sequence whose trinity sums landed off the axis threw. Same defect as
+// createBlock and a432.vbm.path.ts, same fix.
 import { abs, floor, pow, round } from './a432.algebra.ts'
-import { digitalRoot, angleForDigit, frequencyForDigit, hueForDigit } from './a432.math.ts';
+import { digitalRoot, angleForDigit, calculateA432Frequency, hueForDigit } from './a432.math.ts';
 
 // --- Canonical VBM Decode Constants ---
 const VBM_DECODE_SEQUENCE = "003691248751";
@@ -70,12 +74,21 @@ function calculateVBMDivision(index: number, digit: number): VBMDivision {
     }, 0);
   }
   
-  // Perform division (bigger number divided by digit)
-  const division = floor(biggerNumber / digit);
-  const remainder = biggerNumber % digit;
+  // Perform division (bigger number divided by digit).
+  //
+  // DIVIDING BY THE VOID. The digit can be 0 — the canonical sequence this
+  // module decodes is 003691248751 and begins with two of them — and
+  // biggerNumber / 0 is Infinity, biggerNumber % 0 is NaN, and the digital root
+  // of Infinity is NaN. So every statistic over the module's own sequence was
+  // NaN. Nobody saw it because the module threw at frequencyForDigit before it
+  // ever got this far; removing that throw is what exposed this.
+  //
+  // 0 divides nothing, so the division, the remainder and the harmonic are 0.
+  const division = digit === 0 ? 0 : floor(biggerNumber / digit);
+  const remainder = digit === 0 ? 0 : biggerNumber % digit;
   
   // Calculate harmonic value
-  const harmonic = digitalRoot(division);
+  const harmonic = digit === 0 ? 0 : digitalRoot(division);
   
   return {
     index,
@@ -99,7 +112,7 @@ function detectVBMTrinities(divisions: VBMDivision[]): VBMTrinity[] {
     digits: firstTrinity.map(d => d.digit),
     sum: firstSum,
     digitalRoot: digitalRoot(firstSum),
-    frequency: frequencyForDigit(digitalRoot(firstSum)),
+    frequency: calculateA432Frequency(digitalRoot(firstSum)),
     color: generateVBMColor(digitalRoot(firstSum))
   });
   
@@ -111,7 +124,7 @@ function detectVBMTrinities(divisions: VBMDivision[]): VBMTrinity[] {
     digits: secondTrinity.map(d => d.digit),
     sum: secondSum,
     digitalRoot: digitalRoot(secondSum),
-    frequency: frequencyForDigit(digitalRoot(secondSum)),
+    frequency: calculateA432Frequency(digitalRoot(secondSum)),
     color: generateVBMColor(digitalRoot(secondSum))
   });
   
@@ -123,7 +136,7 @@ function detectVBMTrinities(divisions: VBMDivision[]): VBMTrinity[] {
     digits: thirdTrinity.map(d => d.digit),
     sum: thirdSum,
     digitalRoot: digitalRoot(thirdSum),
-    frequency: frequencyForDigit(digitalRoot(thirdSum)),
+    frequency: calculateA432Frequency(digitalRoot(thirdSum)),
     color: generateVBMColor(digitalRoot(thirdSum))
   });
   
@@ -135,7 +148,7 @@ function detectVBMTrinities(divisions: VBMDivision[]): VBMTrinity[] {
     digits: fourthTrinity.map(d => d.digit),
     sum: fourthSum,
     digitalRoot: digitalRoot(fourthSum),
-    frequency: frequencyForDigit(digitalRoot(fourthSum)),
+    frequency: calculateA432Frequency(digitalRoot(fourthSum)),
     color: generateVBMColor(digitalRoot(fourthSum))
   });
   
@@ -177,7 +190,7 @@ function generateVBMColor(digit: number): string {
 function generateVBMHarmonics(divisions: VBMDivision[]): VBMHarmonic[] {
   return divisions.map(division => ({
     digit: division.digit,
-    frequency: frequencyForDigit(division.digit),
+    frequency: calculateA432Frequency(division.digit),
     angle: angleForDigit(division.digit),
     color: generateVBMColor(division.digit),
     division: division.division,
@@ -292,8 +305,11 @@ export class VBMDecodeProcessor {
       totalDivisions: divisions.length,
       totalTrinities: trinities.length,
       totalHarmonics: harmonics.length,
-      averageDivision: divisions.reduce((sum, d) => sum + d.division, 0) / divisions.length,
-      averageHarmonic: harmonics.reduce((sum, h) => sum + h.harmonic, 0) / harmonics.length,
+      // An empty sequence divided zero by zero. It was unreachable while this
+      // module threw on every orbit digit; removing that throw is what let
+      // finite:check find it, which is the whole argument for removing throws.
+      averageDivision: divisions.length === 0 ? 0 : divisions.reduce((sum, d) => sum + d.division, 0) / divisions.length,
+      averageHarmonic: harmonics.length === 0 ? 0 : harmonics.reduce((sum, h) => sum + h.harmonic, 0) / harmonics.length,
       trinitySums: trinities.map(t => t.sum),
       trinityDigitalRoots: trinities.map(t => t.digitalRoot),
       trinityFrequencies: trinities.map(t => t.frequency)

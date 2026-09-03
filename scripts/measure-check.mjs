@@ -118,7 +118,29 @@ if (record) {
 const problems = [...missing]
 
 // First run: nothing recorded yet, so adopt rather than fail.
+//
+// "Nothing recorded" and "the recordings were deleted" look identical from
+// here, and they are not the same thing. npm run ratchet used to write only
+// { ceilings, raised } and DROP the measures block, so lowering a ceiling after
+// a surface shrank — an ordinary, correct act — deleted every fingerprint, and
+// the next run of this check adopted the new ones and said "for the first
+// time". The gate that exists to stop a measure being redefined was disarmed by
+// the ordinary use of the gate above it, and nothing said so.
+//
+// A tree that already carries ceilings is not a first run. If the ceilings are
+// there and the fingerprints are not, something removed them, and adopting
+// whatever the measures happen to compute today is the one thing this check
+// must not do.
 if (Object.keys(recorded).length === 0) {
+  const ceilings = Object.keys(state.ceilings ?? {})
+  if (ceilings.length > 0) {
+    console.error(
+      `measure:check FAIL — ratchet.json records ${ceilings.length} ceiling(s) and NO measure fingerprints. `
+      + 'That is not a first run: something deleted them. Adopting today\'s fingerprints here would silently '
+      + 'accept whatever the measures now compute, which is exactly what this check exists to prevent. '
+      + 'Restore ratchet.json from git.')
+    process.exit(1)
+  }
   state.measures = Object.fromEntries(live)
   writeFileSync(STATE, JSON.stringify(state, null, 2) + '\n')
   console.log(`measure:check — ${live.size} measure(s) fingerprinted for the first time`)

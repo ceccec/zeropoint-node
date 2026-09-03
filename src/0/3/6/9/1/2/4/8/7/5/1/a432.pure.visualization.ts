@@ -1,4 +1,8 @@
 import { PI, cos, sin } from './a432.algebra.ts'
+// The rAF shim, not the bare global. Bare requestAnimationFrame is undefined
+// under Node, so every function below it threw the moment anything outside a
+// browser called it — which is how a432.yin.yang's startYinYang was found.
+import { raf, craf } from './a432.raf.ts'
 // a432.pure.visualization.ts
 // Pure A432 visualization using only a432.* modules
 // Everything is math to the digit - no exceptions
@@ -229,21 +233,21 @@ export function* a432VisualStream(): IterableIterator<A432VisualState> {
 // Start pure A432 visualization
 export function startA432Visualization(container: HTMLElement): () => void {
   const stream = a432VisualStream();
-  let animationId: number;
+  let animationId: unknown;
   
   const animate = () => {
     const state = stream.next().value;
     if (state) {
       container.innerHTML = generateA432HTML(state);
     }
-    animationId = requestAnimationFrame(animate);
+    animationId = raf(animate);
   };
   
   animate();
   
   return () => {
     if (animationId) {
-      cancelAnimationFrame(animationId);
+      craf(animationId);
     }
   };
 } 

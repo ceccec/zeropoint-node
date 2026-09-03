@@ -2510,6 +2510,10 @@
   Controller.outlets = [];
   Controller.values = {};
 
+  // src/0/3/6/9/1/2/4/8/7/5/1/a432.raf.ts
+  var raf = typeof globalThis.requestAnimationFrame === "function" ? globalThis.requestAnimationFrame.bind(globalThis) : (cb) => setTimeout(() => cb(Date.now()), 16);
+  var craf = typeof globalThis.cancelAnimationFrame === "function" ? globalThis.cancelAnimationFrame.bind(globalThis) : (id) => clearTimeout(id);
+
   // src/0/index.ts
   function digitalRoot(n) {
     const r = (n % 9 + 9) % 9;
@@ -2723,7 +2727,7 @@
   function startYinYang(callback) {
     const vs = vortexStream();
     let tick = 0;
-    let raf2 = 0;
+    let frame = 0;
     const step = () => {
       let d1 = vs.next().value;
       while (TRINITY_POLARITY[d1] !== 1) d1 = vs.next().value;
@@ -2738,10 +2742,10 @@
         negativeColor: digitAngleToCMYK(d2, angle),
         angle
       });
-      raf2 = requestAnimationFrame(step);
+      frame = raf(step);
     };
-    raf2 = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf2);
+    frame = raf(step);
+    return () => craf(frame);
   }
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.yin.yang.controller.ts
@@ -2791,10 +2795,6 @@
   };
   _stop = new WeakMap();
   a432_yin_yang_controller_default.targets = ["canvas"];
-
-  // src/0/3/6/9/1/2/4/8/7/5/1/a432.raf.ts
-  var raf = typeof globalThis.requestAnimationFrame === "function" ? globalThis.requestAnimationFrame.bind(globalThis) : (cb) => setTimeout(() => cb(Date.now()), 16);
-  var craf = typeof globalThis.cancelAnimationFrame === "function" ? globalThis.cancelAnimationFrame.bind(globalThis) : (id) => clearTimeout(id);
 
   // src/0/3/6/9/1/2/4/8/7/5/1/a432.chess.ts
   function startChess(callback) {
@@ -3029,12 +3029,12 @@
       if (state) {
         container.innerHTML = generateA432HTML(state);
       }
-      animationId = requestAnimationFrame(animate);
+      animationId = raf(animate);
     };
     animate();
     return () => {
       if (animationId) {
-        cancelAnimationFrame(animationId);
+        craf(animationId);
       }
     };
   }

@@ -154,6 +154,10 @@ export function calculateEntropy(block: A432Block): number {
  * Calculate average entropy for a stream/chain
  */
 export function getStreamEntropy(blocks: A432Block[]): number {
+  // An empty stream divided zero by zero and returned NaN, which then poisoned
+  // every average it was folded into. A stream with no blocks carries no
+  // entropy; it does not carry an unknown amount.
+  if (blocks.length === 0) return 0;
   return blocks.reduce((sum, b) => sum + (b.entropy ?? 0), 0) / blocks.length;
 }
 

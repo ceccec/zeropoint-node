@@ -635,7 +635,26 @@ if (isCheck) {
   process.exit(0)
 }
 
-const priorRaises = (() => { try { return JSON.parse(readFileSync(STATE, 'utf8')).raised ?? {} } catch { return {} } })()
+const priorState = (() => { try { return JSON.parse(readFileSync(STATE, 'utf8')) } catch { return {} } })()
+const priorRaises = priorState.raised ?? {}
 const raised = raisedNow ? { ...priorRaises, [raisedNow.id]: { from: raisedNow.from, to: raisedNow.to, reason: raisedNow.reason } } : priorRaises
-writeFileSync(STATE, `${JSON.stringify(Object.keys(raised).length ? { ceilings, raised } : { ceilings }, null, 2)}\n`)
+
+/**
+ * THE MEASURE FINGERPRINTS SURVIVE A WRITE.
+ *
+ * This used to write only { ceilings, raised }, which DELETED the `measures`
+ * block that measure:check keeps here — and measure:check reads a missing block
+ * as a first run and passes. So the ordinary, correct act of lowering a ceiling
+ * after a surface shrank silently disarmed the gate whose entire job is to stop
+ * a measure being redefined to read better. Two commands, both legitimate, and
+ * the fingerprints were gone with nothing saying so.
+ *
+ * Same shape as the readme:facts bug this repository already recorded: absence
+ * read as agreement. The fingerprints are carried through untouched now, and
+ * measure:check refuses a block that used to exist and no longer does.
+ */
+const next = { ceilings }
+if (Object.keys(raised).length) next.raised = raised
+if (priorState.measures) next.measures = priorState.measures
+writeFileSync(STATE, `${JSON.stringify(next, null, 2)}\n`)
 console.log('wrote ratchet.json')

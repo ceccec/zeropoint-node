@@ -1,4 +1,7 @@
 import { indexFromSeed, round, unitFromSeed } from './a432.algebra.ts'
+// The rAF shim, not the bare global: bare requestAnimationFrame is undefined
+// under Node and throws for every caller outside a browser.
+import { raf } from './a432.raf.ts'
 // a432.ui.ts — Umbrella UI controller for the living matrix
 // ---------------------------------------------------------
 // Listens to breathing and self-evolution streams, fuses them into final
@@ -490,7 +493,7 @@ function animateBlockchainStream() {
     }
     offset += (6 / 5); // Animation speed
     if (offset > blocks.length * (blockRadius * 2 + blockGap)) offset = 0;
-    requestAnimationFrame(render);
+    raf(render);
   }
   render();
   // Add vibration effect CSS

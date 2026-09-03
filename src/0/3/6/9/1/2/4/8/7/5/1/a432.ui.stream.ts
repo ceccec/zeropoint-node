@@ -1,4 +1,8 @@
 import { round } from './a432.algebra.ts'
+// The rAF shim, not the bare global. Bare requestAnimationFrame is undefined
+// under Node, so every function below it threw the moment anything outside a
+// browser called it — which is how a432.yin.yang's startYinYang was found.
+import { raf } from './a432.raf.ts'
 // a432.ui.stream.ts — Animated blockchain stream visualization for A432 UI
 import { getBlockCMYK } from './a432.block.chain.event.ts';
 
@@ -34,7 +38,7 @@ export function renderBlockchainStream(container: HTMLElement, blocks: BlockLike
       svg.appendChild(circle);
       x += blockRadius * 2 + blockGap;
     }
-    requestAnimationFrame(() => render(offset + (6 / 5)));
+    raf(() => render(offset + (6 / 5)));
   }
   render();
   return svg;

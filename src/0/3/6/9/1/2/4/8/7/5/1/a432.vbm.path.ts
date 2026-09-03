@@ -12,7 +12,7 @@
  */
 
 import { abs, max, min, round } from './a432.algebra.ts'
-import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, angleForDigit, frequencyForDigit, hueForDigit } from './a432.math.ts';
+import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, angleForDigit, calculateA432Frequency, hueForDigit } from './a432.math.ts';
 
 // --- Canonical VBM Path Constants ---
 const VBM_PATH_SEPARATORS = {
@@ -72,7 +72,13 @@ function parseVBMPath(path: string): VBMPathState {
           separator: char,
           index: currentIndex,
           angle: angleForDigit(nextDigit),
-          frequency: frequencyForDigit(nextDigit),
+          // frequencyForDigit is defined ONLY on the trinity axis {3,6,9} and
+          // throws for everything else, so parsing any path containing an orbit
+          // digit threw — including this module's own VBM_PATH_SEQUENCE, which
+          // is [0,0,3,6,9,1,2,4,8,7,5,1]. The module could not parse its own
+          // canonical sequence. Same defect as createBlock, same fix:
+          // calculateA432Frequency is defined for every digit.
+          frequency: calculateA432Frequency(nextDigit),
           color: generateVBMColor(nextDigit)
         };
         

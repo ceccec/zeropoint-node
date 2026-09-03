@@ -111,7 +111,7 @@ Every column below is **computed**, and each carries a different epistemic weigh
 
 | column | source | status |
 | --- | --- | --- |
-| mirror \`M(d)\` | \`throughVoid\` | **derived** — \`1 − n mod 9\` over (ℤ/9ℤ) |
+| mirror \`M(d)\` | \`throughVoid\` | **derived** — \`1 − n mod 9\` on the nine digits \`1..9\`, reading 9 as the residue 0; the void is a tenth point outside that (ℤ/9ℤ) (Lean \`mirror_is_affine_only_off_the_void\`) |
 | polarity, Δ°, bearing | \`decodeVortexDashAngles()\` | **derived** — \`\\\` = −60°, \`/\` = +60°; weighted bearing closes at ${dash.weightedBearing} |
 | gateway | \`vortexStrokeGateways()\` | **derived** — polarity reversals \`[${stroke.gateways.join(', ')}]\` |
 | hue° | \`hueForDigit\` / \`digitAngleToCMYK\` | **defined** — \`hue = 36d\`, a chosen decagon partition |

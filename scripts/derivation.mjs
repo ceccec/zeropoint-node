@@ -116,6 +116,40 @@ console.log(JSON.stringify({ fell, probe, seals: Object.keys(v.SEALS).length + 1
   return JSON.parse(out.trim().split('\n').pop())
 }
 
+/**
+ * A predicate that falls is not automatically evidence. If it works by holding
+ * the expected value as a literal — `gateways.join(',') === '8,3,9,0'` — then
+ * perturbing the column falsifies it BY CONSTRUCTION, and it would fall for a
+ * convention exactly as readily as for a law. That is a pinned expectation, not
+ * a derivation, and counting it as one is how a harness reports all-green while
+ * meaning nothing.
+ *
+ * So each fallen predicate is read: if its source carries the column's baseline
+ * value as a literal run of numbers, it PINS. Otherwise it reaches the column
+ * through other quantities and is STRUCTURAL.
+ *
+ * The rule is mechanical and therefore blunt. A predicate can pin a value
+ * without spelling it out — `VORTEX_DASH_ANGLE_DEG === 60` pins the constant
+ * without naming the angles it produces — so `structural` here means "not
+ * pinned in the obvious way", and the column verdict says so.
+ */
+const SOURCES = {}
+function predicateSource(name) {
+  for (const rel of ['src/verification/lean-bridge.ts', 'src/0/index.ts']) {
+    const src = SOURCES[rel] ??= readFileSync(join(ROOT, rel), 'utf8')
+    const i = src.indexOf(`${name}:`) >= 0 ? src.indexOf(`${name}:`) : src.indexOf(`function ${name}(`)
+    if (i < 0) continue
+    return src.slice(i, i + 4000)
+  }
+  return ''
+}
+function pins(name, baselineProbe) {
+  const nums = String(baselineProbe).match(/-?\d+/g)
+  if (!nums || nums.length < 2) return false
+  const run = new RegExp(nums.map((n) => n.replace('-', '\\-')).join('\\D{1,3}'))
+  return run.test(predicateSource(name))
+}
+
 const base = measure('D')
 if (base.fell.length) {
   console.error(`derivation FAIL — ${base.fell.length} seal(s) already fall before any mutation, so nothing can be attributed to one: ${base.fell.join(', ')}`)
@@ -158,28 +192,33 @@ for (const [id, label, rel, probe, mutations] of COLUMNS) {
   }
 
   const fell = [...new Set(tried.flatMap((t) => t.sealsFallen))]
+  const structural = fell.filter((n) => !pins(n, baseline.probe))
+  const pinned = fell.filter((n) => pins(n, baseline.probe))
+  const status = structural.length ? 'forced' : fell.length ? 'pinned' : 'unforced'
   results[id] = {
-    column: label, file: rel,
-    status: fell.length ? 'derived' : 'unforced',
-    sealsFallen: fell,
+    column: label, file: rel, status,
+    lawsFallen: fell, structural, pinned,
     mutationsTried: tried,
   }
-  const mark = fell.length
-    ? `derived   ${fell.length} seal(s) fall: ${fell.slice(0, 3).join(', ')}${fell.length > 3 ? ', …' : ''}`
-    : `unforced  ${tried.length} mutation(s), no seal objected`
+  const mark = status === 'forced'
+    ? `forced    ${structural.length} law(s) reach it structurally: ${structural.slice(0, 2).join(', ')}${structural.length > 2 ? ', …' : ''}`
+    : status === 'pinned'
+      ? `pinned    only ${pinned.join(', ')} falls, and that predicate holds the expected value as a literal`
+      : `unforced  ${tried.length} mutation(s), no law objected`
   console.log(`  ${id.padEnd(8)} ${mark}`)
 }
 
 const record = {
-  what: 'Each column below was corrupted on disk and the seal battery asked whether anything broke. derived = at least one seal falls when it is perturbed, so the arithmetic forces it. unforced = no seal objected to any mutation tried, which is a LOWER BOUND on derivation, not proof of conventionality: a mutation that respects a symmetry can leave every law standing.',
+  what: 'Each column below was corrupted on disk and the seal battery asked whether anything broke. forced = a law with independent content falls. pinned = the only thing that falls holds the expected value as a literal, which falls for a convention just as readily and is therefore not evidence of derivation. unforced = no seal objected to any mutation tried, which is a LOWER BOUND on derivation, not proof of conventionality: a mutation that respects a symmetry can leave every law standing.',
   arbiter: `the ${base.seals - 1} seals in src/verification plus computeVortexInvariantsHold in src/0 — ${base.seals} predicates that state laws rather than conventions`,
   control: 'every mutation is required to move the column it targets; one that does not is an error, not a verdict',
   columns: results,
 }
 const next = JSON.stringify(record, null, 2) + '\n'
 
-const derived = Object.values(results).filter((r) => r.status === 'derived').length
-console.log(`derivation — ${COLUMNS.length} column(s) measured against ${base.seals} seals: ${derived} derived, ${COLUMNS.length - derived} unforced`)
+const forced = Object.values(results).filter((r) => r.status === 'forced').length
+const pinnedOnly = Object.values(results).filter((r) => r.status === 'pinned').length
+console.log(`derivation — ${COLUMNS.length} column(s) measured against ${base.seals} seals: ${forced} forced, ${pinnedOnly} pinned-only, ${COLUMNS.length - forced - pinnedOnly} unforced`)
 
 if (CHECK) {
   const have = readFileSync(OUT, 'utf8')

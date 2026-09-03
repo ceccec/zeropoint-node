@@ -119,15 +119,18 @@ const derivationArbiter = derivationRecord.arbiter
 function flag(id) {
   const r = derivation[id]
   if (!r) throw new Error(`spectrum: no derivation verdict recorded for column "${id}" — run npm run derivation`)
-  if (r.status === 'derived') {
-    return `**derived** — perturbing it breaks ${r.sealsFallen.length} law(s) (\`${r.sealsFallen.join('\`, \`')}\`)`
+  if (r.status === 'forced') {
+    return `**derived** — perturbing it breaks ${r.structural.length} law(s) that reach it structurally (\`${r.structural.join('\`, \`')}\`)`
+  }
+  if (r.status === 'pinned') {
+    return `**pinned, not derived** — only \`${r.pinned.join('\`, \`')}\` falls, and that predicate holds the expected value as a literal, so it would fall for a convention just as readily`
   }
   return `**defined** — ${r.mutationsTried.length} perturbation(s) tried, no law objected`
 }
 
 const block = `${BEGIN}
 
-Every column below is **computed**, and each carries a different epistemic weight. The status is not typed here: \`npm run derivation\` corrupts the line that produces each column and asks the ${derivationArbiter} whether anything broke. **derived** means a law fell; **defined** means none did. That is a lower bound — a perturbation respecting a symmetry can leave every law standing — so a defined column is one nothing has been shown to force, not one proven free.
+Every column below is **computed**, and each carries a different epistemic weight. The status is not typed here: \`npm run derivation\` corrupts the line that produces each column and asks the ${derivationArbiter} whether anything broke. **derived** means a law with independent content fell; **pinned** means the only thing that fell holds the expected value as a literal, which falls for a convention just as readily; **defined** means nothing fell. That is a lower bound — a perturbation respecting a symmetry can leave every law standing — so a defined column is one nothing has been shown to force, not one proven free.
 
 | column | source | status |
 | --- | --- | --- |

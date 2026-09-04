@@ -186,6 +186,32 @@ for (const t of theorems) {
   if (!inLedger.has(t.name)) problems.push(`${t.file} declares "${t.name}" and lean/ledger.json does not record it — run npm run lean:ledger`)
 }
 
+/**
+ * AN ABSENT INSTRUMENT VOIDS; IT DOES NOT VERDICT.
+ *
+ * Without the toolchain this reported every theorem `unverifiable-here` and
+ * announced "0 proven by the kernel, 43 unchecked" — a corpus-level finding
+ * manufactured out of a missing binary. It then failed, because the committed
+ * ledger was written on a machine that HAD lean and says 19. The release was
+ * blocked by a machine's configuration wearing the costume of a contradiction.
+ *
+ * Worse, the remedy it printed was `run npm run lean:ledger`, which on that
+ * machine would have overwritten the evidence with zeros. A gate whose error
+ * message destroys the record if followed is not a gate.
+ *
+ * So kernel-dependent conditions are VOID here, named as void, and the ledger
+ * comparison is not attempted: a reading that could not be taken cannot
+ * disagree with one that was. The toolchain-independent conditions still run —
+ * every theorem exists, every sorry is recorded, the ledger covers them all —
+ * because those need no kernel and are the ones that catch prose drift.
+ */
+const KERNEL_VOID = !leanAvailable
+if (KERNEL_VOID) {
+  console.log('lean:check — VOID on the kernel conditions: no lean on PATH.')
+  console.log('             Not evaluated: which theorems the kernel accepts, and what their proofs rest on.')
+  console.log('             The committed ledger is left alone; a reading that was never taken cannot contradict one that was.')
+}
+
 const ledger = {
   toolchain: leanAvailable ? execFileSync('lean', ['--version'], { encoding: 'utf8' }).trim() : 'absent',
   files: files.length,
@@ -201,6 +227,11 @@ const ledger = {
   entries: theorems.map(({ name, file, status, axioms }) => ({ name, file, status, ...(axioms === undefined ? {} : { axioms }) })),
 }
 
+if (WRITE && KERNEL_VOID) {
+  console.error('lean:ledger REFUSED — no lean on PATH. Writing now would record 0 proven and erase the dependency sets,')
+  console.error('                     which is the evidence, not the summary. Run this where the toolchain is.')
+  process.exit(1)
+}
 if (WRITE) {
   writeFileSync(LEDGER, JSON.stringify(ledger, null, 2) + '\n')
   // And a TypeScript module, because ./verification ships and lean/ does not.
@@ -239,13 +270,23 @@ export const LEAN_SORRY_COUNT = ${Object.values(statuses).filter((x) => x === 's
 }
 
 console.log(`lean:check — ${theorems.length} theorem(s) across ${files.length} file(s); toolchain ${ledger.toolchain}`)
-console.log(`             ${proven.length} proven by the kernel, ${ledger.sorry} closed with sorry, ${ledger.unverifiableHere} unverifiable here`)
-console.log(`             ${unchecked.length} unchecked`)
+// The void has to reach the SUMMARY, not only the header. The first version of
+// this fix voided the ledger comparison and then printed "0 proven by the
+// kernel, 43 unchecked" underneath — the manufactured corpus-level finding
+// surviving in the sentence a reader ends on. The rule gets stated at the level
+// of the item and broken at the level of the summary.
+if (KERNEL_VOID) {
+  console.log(`             not evaluated here; the committed ledger records ${JSON.parse(readFileSync(LEDGER, 'utf8')).proven ?? '?'} proven, taken where the toolchain is`)
+  console.log(`             ${byStatus('sorry').length} closed with sorry — decidable without a kernel, and checked`)
+} else {
+  console.log(`             ${proven.length} proven by the kernel, ${ledger.sorry} closed with sorry, ${ledger.unverifiableHere} unverifiable here`)
+  console.log(`             ${unchecked.length} unchecked`)
+}
 
 if (existsSync(LEDGER)) {
   const on = JSON.parse(readFileSync(LEDGER, 'utf8'))
   if (JSON.stringify(on.entries) !== JSON.stringify(ledger.entries)) {
-    problems.push('lean/ledger.json is not what the files say — run npm run lean:ledger')
+    if (!KERNEL_VOID) problems.push('lean/ledger.json is not what the files say — run npm run lean:ledger')
   }
 } else {
   problems.push('lean/ledger.json is missing — run npm run lean:ledger')
@@ -256,7 +297,9 @@ if (problems.length > 0) {
   console.error(`lean:check FAIL — ${problems.length} contradiction(s) between what TypeScript states and what the .lean files contain`)
   process.exit(1)
 }
-console.log(
-  `lean:check ok — every stated theorem exists in a file, every sorry is recorded as one, `
-  + `and the ledger covers all ${theorems.length}. ${proven.length} are proven by the kernel; `
-  + `the other ${unchecked.length} are written down and not proved, and say so.`)
+console.log(KERNEL_VOID
+  ? `lean:check ok — every stated theorem exists in a file, every sorry is recorded as one, and the ledger covers all ${theorems.length}. `
+    + `WHAT THE KERNEL ACCEPTS WAS NOT EVALUATED: no toolchain here. This says nothing about how much of the corpus is proved.`
+  : `lean:check ok — every stated theorem exists in a file, every sorry is recorded as one, `
+    + `and the ledger covers all ${theorems.length}. ${proven.length} are proven by the kernel; `
+    + `the other ${unchecked.length} are written down and not proved, and say so.`)

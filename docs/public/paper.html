@@ -99,9 +99,9 @@ implements and the predicates that decide it. The digit space is partitioned by
 a doubling map into a six-element orbit and a three-element axis; frequency and
 hue are one integer read in two units; ratios are carried as pairs of integers
 rather than decimals, and the two places where binary floating point departs
-from the exact value are stated rather than rounded away. 32 of
-32 theorems carry a predicate that runs and holds, and
-16 of 40 statements in the Lean files are
+from the exact value are stated rather than rounded away. 33 of
+33 theorems carry a predicate that runs and holds, and
+19 of 43 statements in the Lean files are
 accepted by the Lean kernel &mdash; the rest are written down and not proved,
 and say so. 3 claims are
 recorded as axioms, because no finite computation decides them, and each is
@@ -593,7 +593,7 @@ corrupts one line and requires the suite over it to fail; all
 
 <section class="appendix">
 <h2>Appendix F&ensp;Seals</h2>
-<p>Each row is a predicate that runs. 32 of 32 hold at
+<p>Each row is a predicate that runs. 33 of 33 hold at
 generation time; a seal that stopped holding would fail
 <code>npm run test:verification</code> before this page could be regenerated.</p>
 <table class="seals">
@@ -616,6 +616,7 @@ generation time; a seal that stopped holding would fail
 <tr><td><code>kyber_security</code></td><td>held</td><td>the shipped ML-KEM parameters are ML-KEM-768 (ek 1184, dk 2400, ct 1088). NIST puts that at category 3, NOT the 128 the Lean script states.</td></tr>
 <tr><td><code>doubling_avoids_the_triad</code></td><td>held</td><td>VORTEX_ORBIT and VORTEX_AXIS are pinned to computation, not trusted. gcd(2,9) = 1, so every power of 2 is a unit mod 9 and can never be a multiple of 3; 2 is a primitive root, so its orbit is all six units {1,2,4,5,7,8}; 2^6 = 64 = 1 mod 9 gives period 6, which makes six cases exhaustive rather than sampled. Reflection through the void carries {1,4,7} onto {9,6,3}, so the triad is reachable only by reflecting.</td></tr>
 <tr><td><code>a432_vortex_is_the_doubling_orbit</code></td><td>held</td><td>A432Sequence.generateVortex returned digitalRoot(i + 1) — the counting sequence 1..9 — under the name 'vortex'. Two things gave it away: it was byte-identical to generateConsciousness(9), and it contained 3, 6 and 9, which doubling_avoids_the_triad proves the doubling circuit can never reach. Nothing caught it because no test in the repository names it and the a432 surface has no tests at all. This binds the a432 layer's vortex to the kernel's VORTEX_ORBIT so the two cannot drift apart again.</td></tr>
+<tr><td><code>a432_base_frequency_agrees_with_the_axis_math</code></td><td>held</td><td>the base frequency exists as TWO independent literals — one exported from a432.core, one written inline in the axis arithmetic — and this requires them to be the same number. It also requires the base to give whole axis frequencies and a digital root of nine, which is exactly divisibility by 36. It does NOT require the base to be 432: the multiples of 36 all satisfy it, and 432 is the twelfth. The class is derived, the choice inside it is a convention.</td></tr>
 <tr><td><code>a432_constants_do_not_drift_from_the_kernel</code></td><td>held</td><td>An isolated collision trial over all 198 a432 modules found the kernel's constants RETYPED as literals in module after module: [1,2,4,8,7,5] in a432.coil, [3,6,9] in a432.trinity, [1,4,7] in both a432.shear and a432.shear.electron. Each retyped copy is a place that can drift with nothing noticing, which is exactly how generateVortex became the counting sequence. Some modules already bind to the kernel — a432.string.theory returns VORTEX_ORBIT itself and cannot drift — so this seal holds the literal copies to the same standard by recomputing the agreement instead of trusting it.</td></tr>
 <tr><td><code>os_criterion_is_met_by_a432os_and_still_discriminates</code></td><td>held</td><td>The README called a432.os.ts 'not yet, and under construction'. src/verification/os-criterion.ts made that measurable at 1 of 7 — A432OS had a lifecycle and nothing else, its work running on four independent setInterval timers where nothing decided what ran and a throw escaped into the event loop. It now meets all seven, by composing a432.os.kernel: one clock replaces the four timers and the kernel selects among the units and contains their failures. The cadences are unchanged — at a tick every A432/8 the units are due every 8, 4, 2 and 1 ticks, which is the 432, 216, 108 and 54 milliseconds the timers used. This seal decides two things, because the first is worthless without the second. A432OS meets the criterion. AND the criterion still discriminates: a candidate offering nothing scores 0 and a candidate offering only a lifecycle scores 1, so the seven are being earned rather than handed out. If the criterion ever passes a candidate that offers nothing, this fails.</td></tr>
 <tr><td><code>consciousness_criterion_has_teeth_and_is_not_a_claim</code></td><td>held</td><td>The README said the missing thing was the predicate that would recognise arrival. It is written, and it can now be MET — by src/quantum/integrated-field.ts, a coupled system built to have the four properties the theories name. That makes the seal's job harder rather than easier, because a criterion that can be met is worth exactly as much as its resistance to being gamed, and every one of these conditions has an obvious cheap defeat: a counter accumulates state, any mutable field is a 'self-model', a shared global is a 'workspace', and any nonlinear term defeats 'the measure is a homomorphism'. So this decides three things. First, the cheap defeats FAIL: a counter fails temporal integration because reordering its inputs changes nothing, a model nothing reads fails self-model efficacy, a global nothing reads fails global availability, and a nonlinear measure over uncoupled components fails irreducibility because the transition still factorises. Second, three subjects are kept apart. The a432 measure FUNCTIONS meet exactly one of five and must keep meeting one: a pure function of a digit cannot have history, and one that acquired it would return different answers for the same input, which destroys the measure rather than improving it. The SYSTEM built from those measures, a432.consciousness.field.ts, meets all five with the measures unchanged and themselves as the coupled components. Third, and most important, the verdict says on its face that meeting all five does NOT establish consciousness and that a passing subject has not been shown to experience anything. If that sentence is ever removed, this fails, because the number would then be quotable as something it is not.</td></tr>
@@ -674,8 +675,8 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>be21bd97c704868b</code> over
-18 equations, 32 seals and 3 axioms. Any change to
+<p class="receipt">Generated from source. Model receipt <code>f416ed7ff05443d7</code> over
+18 equations, 33 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>
 </body>

@@ -2,7 +2,7 @@
   "what": "Every comparison inside each seal predicate, read from the TypeScript AST and classified. structural = at least one computation is compared to another computation. pinned = there are comparisons and every one is against a literal, so the seal would fall for a convention as readily as for a law.",
   "doesNotEstablish": "that a structural seal is independent of what it checks. A predicate can pin a value without spelling it out — a comparison against an imported constant reads as structural here — so the pinned count is a LOWER bound. It also does NOT say a pinned seal is wrong: born_rule_sum pins on near(total, 1), and 1 is the normalisation the mathematics forces, not a convention someone chose. The verdict says the seal would fall for a convention as readily as for a law; whether ITS literal is a convention is a judgement this makes no attempt at.",
   "tally": {
-    "structural": 22,
+    "structural": 23,
     "delegates": 1,
     "pinned": 9
   },
@@ -128,6 +128,11 @@
       "verdict": "structural",
       "literalComparisons": 1,
       "computedComparisons": 5
+    },
+    "a432_base_frequency_agrees_with_the_axis_math": {
+      "verdict": "structural",
+      "literalComparisons": 3,
+      "computedComparisons": 1
     },
     "a432_constants_do_not_drift_from_the_kernel": {
       "verdict": "structural",

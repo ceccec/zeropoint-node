@@ -43,10 +43,19 @@ const CHECK = process.argv.includes('--check')
 const WIDEN = 4 // multiply every numeric bound by this
 
 const source = readFileSync(SRC, 'utf8')
+// Theorem statements wrap. Reading line by line missed a bound written on a
+// continuation line — the theorem was in the file, its bound was never widened,
+// and the summary still said every bound had been checked.
+//
+// The scan stops at `:=`, which is where the statement ends. A first attempt
+// ran to the next `theorem` instead and swept up a `List.range` belonging to an
+// intervening `def`, attributing a definition's table size to a theorem and
+// then declaring the bound an artifact. Widening something the theorem does not
+// range over proves nothing about the theorem.
 const bounded = []
-for (const line of source.split('\n')) {
-  const m = line.match(/^theorem (\w+)[\s\S]*?List\.range (\d+)/)
-  if (m) bounded.push({ name: m[1], bound: Number(m[2]) })
+for (const m of source.matchAll(/\btheorem\s+(\w+)([\s\S]*?):=/g)) {
+  const r = m[2].match(/List\.range (\d+)/)
+  if (r) bounded.push({ name: m[1], bound: Number(r[1]) })
 }
 
 try { execFileSync('lean', ['--version'], { stdio: 'pipe' }) } catch {

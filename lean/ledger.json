@@ -1,8 +1,8 @@
 {
   "toolchain": "Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
   "files": 3,
-  "theorems": 40,
-  "proven": 16,
+  "theorems": 43,
+  "proven": 19,
   "sorry": 19,
   "unverifiableHere": 5,
   "rejected": 0,
@@ -84,6 +84,21 @@
     },
     {
       "name": "generators_apart_give_twelve",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "whole_axis_and_root_nine_is_exactly_thirty_six",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "four_three_two_is_a_multiple_of_thirty_six_but_not_the_only_one",
+      "file": "DigitSpace.lean",
+      "status": "proven"
+    },
+    {
+      "name": "base_frequency_has_digital_root_nine",
       "file": "DigitSpace.lean",
       "status": "proven"
     },

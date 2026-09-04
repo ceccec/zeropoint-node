@@ -36,7 +36,8 @@ import { evaluateOsCriterion } from './os-criterion.ts'
 import { A432OS } from '../0/3/6/9/1/2/4/8/7/5/1/a432.os.ts'
 import { kernelAsCandidate } from '../0/3/6/9/1/2/4/8/7/5/1/a432.os.kernel.ts'
 import { digitalRoot, throughVoid, bearingForDigit, VORTEX_SEQUENCE, VORTEX_ORBIT, VORTEX_AXIS } from '../0/index.ts'
-import { angleForDigit } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
+import { angleForDigit, frequencyForDigit } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
+import { A432_FREQUENCY } from '../0/3/6/9/1/2/4/8/7/5/1/a432.core.ts'
 import { A432Sequence } from '../0/3/6/9/1/2/4/8/7/5/1/a432.utils.ts'
 import { getTrinityAxis, calculateA432Consciousness } from '../0/3/6/9/1/2/4/8/7/5/1/a432.math.ts'
 import { calculateConsciousnessFlow } from '../0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts'
@@ -666,6 +667,26 @@ export const SEALS: Record<string, Seal> = {
 
       // And it must no longer be the counting sequence wearing the name.
       return A432Sequence.generateVortex(9).join() !== A432Sequence.generateConsciousness(9).join()
+    },
+  },
+  a432_base_frequency_agrees_with_the_axis_math: {
+    basis: 'the base frequency exists as TWO independent literals — one exported from a432.core, one written inline in the axis arithmetic — and this requires them to be the same number. It also requires the base to give whole axis frequencies and a digital root of nine, which is exactly divisibility by 36. It does NOT require the base to be 432: the multiples of 36 all satisfy it, and 432 is the twelfth. The class is derived, the choice inside it is a convention.',
+    decide: () => {
+      // Recover the base the axis arithmetic uses, without naming it here.
+      // On the axis, frequency = base * d / 12, so base = frequency(9) * 12 / 9.
+      // The two literals are in different files and nothing else compares them;
+      // a census found they drift apart silently, which is what this catches.
+      const impliedByTheMath = (frequencyForDigit(9) * 12) / 9
+      if (impliedByTheMath !== A432_FREQUENCY) return false
+
+      // Whole axis frequencies. b * d / 12 is whole for every axis digit
+      // exactly when 4 divides b — see whole_axis_and_root_nine_is_exactly_36.
+      if (VORTEX_AXIS.some((d) => (A432_FREQUENCY * d) % 12 !== 0)) return false
+
+      // Digital root nine is 9 dividing the base; with the above that is
+      // divisibility by 36, the two conditions being coprime.
+      if (A432_FREQUENCY % 9 !== 0) return false
+      return digitalRoot(A432_FREQUENCY) === 9
     },
   },
   a432_constants_do_not_drift_from_the_kernel: {

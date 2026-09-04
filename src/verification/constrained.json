@@ -9,8 +9,8 @@
   },
   "literalCensus": {
     "perturbable": 55,
-    "forced": 7,
-    "free": 48,
+    "forced": 8,
+    "free": 47,
     "skipped": 0
   },
   "literals": {
@@ -19,8 +19,11 @@
       "kind": "number[]"
     },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.core.ts::A432_FREQUENCY": {
-      "verdict": "free",
-      "kind": "number"
+      "verdict": "forced",
+      "kind": "number",
+      "lawsFallen": [
+        "a432_base_frequency_agrees_with_the_axis_math"
+      ]
     },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts::LINEAR_PATTERN": {
       "verdict": "free",

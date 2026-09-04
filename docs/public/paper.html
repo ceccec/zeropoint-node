@@ -169,6 +169,30 @@
       "name": "Module-lattice-based key-encapsulation mechanism standard",
       "identifier": "https://doi.org/10.6028/NIST.FIPS.203",
       "url": "https://doi.org/10.6028/NIST.FIPS.203"
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Extensionality and quotient types",
+      "identifier": "https://doi.org/10.1007/978-1-4471-0963-1_5",
+      "url": "https://doi.org/10.1007/978-1-4471-0963-1_5"
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Type theory in type theory using quotient inductive types",
+      "identifier": "https://doi.org/10.1145/2914770.2837638",
+      "url": "https://doi.org/10.1145/2914770.2837638"
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "Using Reflection to Explain and Enhance Type Theory",
+      "identifier": "https://doi.org/10.1007/978-3-642-79361-5_3",
+      "url": "https://doi.org/10.1007/978-3-642-79361-5_3"
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "A Formal Proof in Coq of Cantor-Bernstein-Schroeder’s Theorem without axiom of choice",
+      "identifier": "https://doi.org/10.1109/cac48633.2019.8996365",
+      "url": "https://doi.org/10.1109/cac48633.2019.8996365"
     }
   ],
   "sameAs": [
@@ -362,6 +386,10 @@ Where its prior art would live: reproducible research; literate programming; exe
 <div class="standing"><span class="tag known-art">known art</span>
 Related work is cited: <a href="https://doi.org/10.6028/NIST.FIPS.203" rel="noopener">doi:10.6028/NIST.FIPS.203</a>.
 Where its prior art would live: post-quantum cryptography; cryptographic standards conformance; side-channel resistance.</div></li>
+<li><strong>An index that separates two things usually reported as one: assumptions about the SUBJECT, which no finite computation decides and which this repository declares in ASSUMPTIONS, from axioms of the PROOF SYSTEM, which a theorem inherits through the tactics that close it and which say nothing about the subject. Each kernel-proven theorem records its own dependency set as the evidence for the word proven, and the corpus reports how many rest on nothing at all.</strong>
+<div class="standing"><span class="tag known-art-in-part">known art in part</span>
+Related work is cited: <a href="https://doi.org/10.1007/978-1-4471-0963-1_5" rel="noopener">doi:10.1007/978-1-4471-0963-1_5</a>, <a href="https://doi.org/10.1145/2914770.2837638" rel="noopener">doi:10.1145/2914770.2837638</a>, <a href="https://doi.org/10.1007/978-3-642-79361-5_3" rel="noopener">doi:10.1007/978-3-642-79361-5_3</a>, <a href="https://doi.org/10.1109/cac48633.2019.8996365" rel="noopener">doi:10.1109/cac48633.2019.8996365</a>.
+Where its prior art would live: interactive theorem proving; trusted computing base and proof checking; extensionality and quotient types in type theory; proof by reflection and decision procedures; axiom minimisation in formal developments.</div></li>
 </ol>
 <p class="warn"><strong>None of these is claimed to be novel, and the ledger has
 no status that would let it be.</strong> Novelty is a universal negative: it
@@ -907,7 +935,7 @@ an entry nobody has searched is a lead rather than a shrug. No entry is recorded
 as <em>novel</em> &mdash; that status does not exist in the ledger, because
 novelty is a universal negative and no finite search decides it. It rests on the
 axiom <code>no_prior_art_is_undecidable</code> and nowhere else.</p>
-<p>10 contribution(s); 15 of 21 citations
+<p>11 contribution(s); 19 of 25 citations
 carry a DOI that returned, on the recorded date, the title written beside it.
 <code>npm run priorart:resolve</code> asks the registry again and fails on any
 difference &mdash; including a recorded title that is merely a prefix of the real
@@ -923,7 +951,8 @@ one, since a shortened title is a transcription.</p>
 <tr><td><code>lean-arbiter</code></td><td>known-art-in-part</td><td>interactive theorem proving<br>proof auditing and trusted computing base<br>proof-carrying artifacts</td><td><ul><li><a href="https://doi.org/10.1145/3372885.3373824"><code>10.1145/3372885.3373824</code></a> &mdash; The lean mathematical library</li><li>uuidna's axiom witness — derivation needs the toolchain, verification needs only the shipped receipt <span class="nodoi">(no DOI: software)</span></li></ul></td></tr>
 <tr><td><code>digit-space-theorems</code></td><td>known-art</td><td>elementary number theory<br>formalisation of arithmetic in proof assistants</td><td><ul><li>Digital roots and the multiplicative order of 2 modulo 9 are elementary number theory; no novelty is claimed <span class="nodoi">(no DOI: common-knowledge)</span></li><li>The 1-2-4-8-7-5 doubling cycle circulates as 'Rodin vortex mathematics'; the arithmetic is standard and the surrounding claims are not adopted here <span class="nodoi">(no DOI: common-knowledge)</span></li></ul></td></tr>
 <tr><td><code>generated-paper</code></td><td>known-art-in-part</td><td>reproducible research<br>literate programming<br>executable publications<br>MathML and technical typesetting</td><td><ul><li><a href="https://doi.org/10.1093/comjnl/27.2.97"><code>10.1093/comjnl/27.2.97</code></a> &mdash; Literate Programming</li><li><a href="https://doi.org/10.1016/j.procs.2012.04.047"><code>10.1016/j.procs.2012.04.047</code></a> &mdash; Literate Program Execution for Reproducible Research and Executable Papers</li></ul></td></tr>
-<tr><td><code>ml-kem-768</code></td><td>known-art</td><td>post-quantum cryptography<br>cryptographic standards conformance<br>side-channel resistance</td><td><ul><li><a href="https://doi.org/10.6028/NIST.FIPS.203"><code>10.6028/NIST.FIPS.203</code></a> &mdash; Module-lattice-based key-encapsulation mechanism standard</li></ul></td></tr></tbody>
+<tr><td><code>ml-kem-768</code></td><td>known-art</td><td>post-quantum cryptography<br>cryptographic standards conformance<br>side-channel resistance</td><td><ul><li><a href="https://doi.org/10.6028/NIST.FIPS.203"><code>10.6028/NIST.FIPS.203</code></a> &mdash; Module-lattice-based key-encapsulation mechanism standard</li></ul></td></tr>
+<tr><td><code>axiom-index</code></td><td>known-art-in-part</td><td>interactive theorem proving<br>trusted computing base and proof checking<br>extensionality and quotient types in type theory<br>proof by reflection and decision procedures<br>axiom minimisation in formal developments</td><td><ul><li><a href="https://doi.org/10.1007/978-1-4471-0963-1_5"><code>10.1007/978-1-4471-0963-1_5</code></a> &mdash; Extensionality and quotient types</li><li><a href="https://doi.org/10.1145/2914770.2837638"><code>10.1145/2914770.2837638</code></a> &mdash; Type theory in type theory using quotient inductive types</li><li><a href="https://doi.org/10.1007/978-3-642-79361-5_3"><code>10.1007/978-3-642-79361-5_3</code></a> &mdash; Using Reflection to Explain and Enhance Type Theory</li><li><a href="https://doi.org/10.1109/cac48633.2019.8996365"><code>10.1109/cac48633.2019.8996365</code></a> &mdash; A Formal Proof in Coq of Cantor-Bernstein-Schroeder’s Theorem without axiom of choice</li></ul></td></tr></tbody>
 </table>
 </section>
 
@@ -1031,6 +1060,10 @@ DOI and are listed there as unresolved rather than dropped.</p>
 <li>Literate Programming. <a href="https://doi.org/10.1093/comjnl/27.2.97" rel="noopener">doi:10.1093/comjnl/27.2.97</a> <span class="muted">&mdash; cited by <code>generated-paper</code></span></li>
 <li>Literate Program Execution for Reproducible Research and Executable Papers. <a href="https://doi.org/10.1016/j.procs.2012.04.047" rel="noopener">doi:10.1016/j.procs.2012.04.047</a> <span class="muted">&mdash; cited by <code>generated-paper</code></span></li>
 <li>Module-lattice-based key-encapsulation mechanism standard. <a href="https://doi.org/10.6028/NIST.FIPS.203" rel="noopener">doi:10.6028/NIST.FIPS.203</a> <span class="muted">&mdash; cited by <code>ml-kem-768</code></span></li>
+<li>Extensionality and quotient types. <a href="https://doi.org/10.1007/978-1-4471-0963-1_5" rel="noopener">doi:10.1007/978-1-4471-0963-1_5</a> <span class="muted">&mdash; cited by <code>axiom-index</code></span></li>
+<li>Type theory in type theory using quotient inductive types. <a href="https://doi.org/10.1145/2914770.2837638" rel="noopener">doi:10.1145/2914770.2837638</a> <span class="muted">&mdash; cited by <code>axiom-index</code></span></li>
+<li>Using Reflection to Explain and Enhance Type Theory. <a href="https://doi.org/10.1007/978-3-642-79361-5_3" rel="noopener">doi:10.1007/978-3-642-79361-5_3</a> <span class="muted">&mdash; cited by <code>axiom-index</code></span></li>
+<li>A Formal Proof in Coq of Cantor-Bernstein-Schroeder’s Theorem without axiom of choice. <a href="https://doi.org/10.1109/cac48633.2019.8996365" rel="noopener">doi:10.1109/cac48633.2019.8996365</a> <span class="muted">&mdash; cited by <code>axiom-index</code></span></li>
 </ol>
 <h3>This work</h3>
 <dl class="where">
@@ -1056,7 +1089,7 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>458eed35c5151d95</code> over
+<p class="receipt">Generated from source. Model receipt <code>ed4ee0a9c5ba5b30</code> over
 18 equations, 33 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>

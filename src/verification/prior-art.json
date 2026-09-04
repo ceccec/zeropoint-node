@@ -364,6 +364,79 @@
         "cryptographic standards conformance",
         "side-channel resistance"
       ]
+    },
+    "axiom-index": {
+      "what": "An index that separates two things usually reported as one: assumptions about the SUBJECT, which no finite computation decides and which this repository declares in ASSUMPTIONS, from axioms of the PROOF SYSTEM, which a theorem inherits through the tactics that close it and which say nothing about the subject. Each kernel-proven theorem records its own dependency set as the evidence for the word proven, and the corpus reports how many rest on nothing at all.",
+      "files": [
+        "scripts/axiom-index.mjs",
+        "src/verification/axiom-index.json",
+        "lean/ledger.json"
+      ],
+      "domains": [
+        "interactive theorem proving",
+        "trusted computing base and proof checking",
+        "extensionality and quotient types in type theory",
+        "proof by reflection and decision procedures",
+        "axiom minimisation in formal developments"
+      ],
+      "priorArt": {
+        "status": "known-art-in-part",
+        "searched": {
+          "when": "2026-09-04",
+          "where": [
+            "Crossref REST API"
+          ],
+          "queries": [
+            "trusted computing base of a proof assistant kernel",
+            "auditing axiom dependencies formal proof developments",
+            "propositional extensionality type theory consistency",
+            "quotient types in dependent type theory soundness",
+            "proof by reflection decision procedures dependent type theory",
+            "de Bruijn criterion small kernel proof checking"
+          ]
+        },
+        "citations": [
+          {
+            "text": "The two axioms this corpus actually depends on are extensionality and quotient soundness, and this is the work on exactly that pair. It explains why quotients force extensionality, which is the mechanism by which `forall d in list` acquires both.",
+            "id": "10.1007/978-1-4471-0963-1_5",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "Extensionality and quotient types",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          },
+          {
+            "text": "Quotient inductive types, the modern treatment of the construction Quot.sound axiomatises.",
+            "id": "10.1145/2914770.2837638",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "Type theory in type theory using quotient inductive types",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          },
+          {
+            "text": "Proof by reflection: closing a goal by computation rather than by deduction, which is what Lean's `decide` does and why 31 of these theorems depend on nothing.",
+            "id": "10.1007/978-3-642-79361-5_3",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "Using Reflection to Explain and Enhance Type Theory",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          },
+          {
+            "text": "Deliberately reproving a theorem without an axiom it is normally taken to need — the same move as the axiom-free counterparts here, in Coq and for choice rather than extensionality.",
+            "id": "10.1109/cac48633.2019.8996365",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "A Formal Proof in Coq of Cantor-Bernstein-Schroeder’s Theorem without axiom of choice",
+            "resolvedOn": "2026-09-04",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          }
+        ]
+      },
+      "novelty": {
+        "backedBy": "no_prior_art_is_undecidable"
+      }
     }
   },
   "citationPolicy": "Every claim of known art carries a RESOLVABLE identifier where one exists, and says so when one does not. `resolved` records whether the identifier was actually fetched and confirmed to name the cited work — not whether the author believes it. An unresolved DOI is a DOI nobody has checked, and this ledger prints how many there are rather than letting a plausible-looking string pass for a citation. Identifiers written from memory are exactly the kind of claim this repository exists to refuse, so they start unresolved. All nine DOIs were resolved against Crossref on 2026-09-04 and each returned the title of the work cited; the returned title is recorded beside the identifier so a reader can see WHAT resolved, not merely that something did.",

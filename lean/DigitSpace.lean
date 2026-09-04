@@ -309,3 +309,43 @@ theorem doubling_and_mirror_are_affine_axiom_free :
 
 theorem every_mirror_orbit_sums_to_ten_axiom_free :
     nonzero.all (fun d => d + tv d == 10) = true := by decide
+
+/- ── The axiom claim, enforced by the kernel rather than reported ─────────
+
+   millennium-solutions-5b: `#guard_msgs` around `#print axioms` makes axiom
+   hygiene a compile-time regression test. axiom:index REPORTS what each proof
+   rests on; these REFUSE the file if it changes. Verified before adopting:
+   claiming a theorem is axiom-free when it depends on [propext, Quot.sound]
+   fails the build with a diff naming both sides.
+
+   Applied to the theorems whose NAME asserts the property. A statement called
+   _axiom_free that quietly acquires an axiom is the exact shape of a label
+   drifting from its check, and this is the one place the kernel can hold it. -/
+
+/-- info: 'doubling_and_mirror_are_affine_axiom_free' does not depend on any axioms -/
+#guard_msgs in
+#print axioms doubling_and_mirror_are_affine_axiom_free
+
+/-- info: 'doubling_stays_in_orbit_axiom_free' does not depend on any axioms -/
+#guard_msgs in
+#print axioms doubling_stays_in_orbit_axiom_free
+
+/-- info: 'every_axis_digit_mirrors_an_orbit_digit_axiom_free' does not depend on any axioms -/
+#guard_msgs in
+#print axioms every_axis_digit_mirrors_an_orbit_digit_axiom_free
+
+/-- info: 'every_mirror_orbit_sums_to_ten_axiom_free' does not depend on any axioms -/
+#guard_msgs in
+#print axioms every_mirror_orbit_sums_to_ten_axiom_free
+
+/-- info: 'mirror_table_is_through_void_axiom_free' depends on axioms: [propext] -/
+#guard_msgs in
+#print axioms mirror_table_is_through_void_axiom_free
+
+/-- info: 'orbit_and_axis_are_disjoint_axiom_free' does not depend on any axioms -/
+#guard_msgs in
+#print axioms orbit_and_axis_are_disjoint_axiom_free
+
+/-- info: 'orbit_axis_void_exhaust_the_digits_axiom_free' does not depend on any axioms -/
+#guard_msgs in
+#print axioms orbit_axis_void_exhaust_the_digits_axiom_free

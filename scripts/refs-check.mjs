@@ -56,8 +56,39 @@ const ALLOWED = new Set([
   'npm run test:suites', // pipeline: the runner it warns against creating
 ])
 
-const files = execSync('git ls-files "*.ts" "*.mjs" "*.js"', { cwd: ROOT, encoding: 'utf8' })
+const files = execSync('git ls-files "*.ts" "*.mjs" "*.js" "*.lean"', { cwd: ROOT, encoding: 'utf8' })
   .trim().split('\n').filter(Boolean).filter((f) => !f.includes('node_modules'))
+
+/**
+ * Lean opens a comment with two dashes, or with a slash-dash pair for blocks.
+ *
+ * millennium-solutions-5b's pattern 1: widening a sweep's file list without an
+ * extractor that understands the new language goes green for exactly the reason
+ * an empty result does. They widened to .lean, nothing changed, and the reason
+ * was that their extractor knew the C-style forms only. Verified here by
+ * PLANTING a broken reference in a .lean comment before trusting the pass.
+ */
+function leanCommentsOf(text) {
+  const out = []
+  const lines = text.split('\n')
+  let inBlock = false
+  for (const [i, line] of lines.entries()) {
+    if (inBlock) {
+      out.push([line, i + 1])
+      if (line.includes('-/')) inBlock = false
+      continue
+    }
+    const block = line.indexOf('/-')
+    if (block >= 0) {
+      out.push([line.slice(block), i + 1])
+      if (!line.includes('-/', block + 2)) inBlock = true
+      continue
+    }
+    const dash = line.indexOf('--')
+    if (dash >= 0) out.push([line.slice(dash), i + 1])
+  }
+  return out
+}
 
 /** Every comment in a file, from the scanner. */
 function commentsOf(text) {
@@ -111,9 +142,10 @@ const ELIDED = /(^|\/)\.\.?(\.|\/)/
 const problems = []
 let refs = 0
 for (const f of files) {
+  const isLean = f.endsWith('.lean')
   let text
   try { text = readFileSync(join(ROOT, f), 'utf8') } catch { continue }
-  for (const [comment, line] of commentsOf(text)) {
+  for (const [comment, line] of (isLean ? leanCommentsOf(text) : commentsOf(text))) {
     for (const m of comment.matchAll(SCRIPT_REF)) {
       const name = m[1]
       refs++
@@ -134,7 +166,7 @@ for (const f of files) {
       problems.push(`${f}:${line} names ${p}, which does not exist`)
     }
   }
-  for (const [str, line] of stringsOf(f, text)) {
+  for (const [str, line] of (isLean ? [] : stringsOf(f, text))) {
     for (const m of str.matchAll(SCRIPT_REF)) {
       const name = m[1]
       refs++

@@ -16,8 +16,8 @@ This paper sets out the arithmetic that \texttt{zeropoint-node} implements and t
 predicates that decide it. The digit space is partitioned by a doubling map into a
 six-element orbit and a three-element axis; frequency and hue are one integer read in
 two units; ratios are carried as pairs of integers rather than decimals. 33 of
-33 theorems carry a predicate that runs and holds, and 39 of
-63 statements in the Lean files are accepted by the Lean kernel.
+33 theorems carry a predicate that runs and holds, and 50 of
+74 statements in the Lean files are accepted by the Lean kernel.
 3 claims are recorded as axioms because no finite computation decides them.
 \textbf{How much of the package those predicates hold:} 1411 of
 1751 exported values are reachable from no law at all (a floor, not a total);
@@ -146,9 +146,9 @@ because novelty is a universal negative that no finite search decides. It rests 
 \end{itemize}
 
 \section*{Every Lean statement}
-All 63 statements in the \texttt{lean/} sources. \emph{Proven} means the kernel accepted the file,
+All 74 statements in the \texttt{lean/} sources. \emph{Proven} means the kernel accepted the file,
 the proof contains no \texttt{sorry}, and \texttt{\#print axioms} reports a dependency set within
-$\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 39 of them meet it.
+$\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 50 of them meet it.
 \begin{itemize}\small
 \item \texttt{dr\_is\_drTS\_above\_zero} (DigitSpace.lean) --- $\forall$ n $\in$ List.range 60, n $\neq$ 0 $\to$ dr n = drTS n\\
 \textbf{proven by the kernel}, resting on no axioms
@@ -227,6 +227,28 @@ $\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 39 of them meet it.
 \item \texttt{doubling\_and\_mirror\_are\_affine\_axiom\_free} (DigitSpace.lean) --- (agl.contains (affineTable 2 0) && agl.contains (affineTable 8 1)) = true\\
 \textbf{proven by the kernel}, resting on no axioms
 \item \texttt{every\_mirror\_orbit\_sums\_to\_ten\_axiom\_free} (DigitSpace.lean) --- nonzero.all (fun d => d + tv d == 10) = true\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{speed\_of\_light\_has\_digital\_root\_one} (DigitSpace.lean) --- dr 299792458 = 1\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{light\_year\_is\_c\_times\_a\_julian\_year} (DigitSpace.lean) --- 299792458 * 31557600 = 9460730472580800\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{light\_year\_has\_digital\_root\_nine} (DigitSpace.lean) --- dr 9460730472580800 = 9\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{astronomical\_unit\_has\_digital\_root\_three} (DigitSpace.lean) --- dr 149597870700 = 3\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_digital\_root\_of\_c\_is\_not\_robust} (DigitSpace.lean) --- dr 299792457 = 9 $\land$ dr 299792458 = 1 $\land$ dr 299792459 = 2\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{light\_leaves\_a\_null\_interval} (DigitSpace.lean) --- $\forall$ t $\in$ List.range 40, 299792458 * 299792458 * (t * t) = (299792458 * t) * (299792458 * t)\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{c\_squared\_is\_exact} (DigitSpace.lean) --- 299792458 * 299792458 = 89875517873681764\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{c\_squared\_exceeds\_the\_exact\_range\_of\_a\_double} (DigitSpace.lean) --- 89875517873681764 > 9007199254740992\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_light\_year\_exceeds\_it\_as\_well} (DigitSpace.lean) --- 9460730472580800 > 9007199254740992\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_astronomical\_unit\_stays\_inside\_it} (DigitSpace.lean) --- 149597870700 < 9007199254740992\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{exceeding\_the\_range\_is\_the\_hazard\_not\_the\_error} (DigitSpace.lean) --- 9460730472580800 > 9007199254740992 $\land$ 89875517873681764 > 9007199254740992\\
 \textbf{proven by the kernel}, resting on no axioms
 \item \texttt{hadamard\_squared} (Quantum.lean) --- hadamard * hadamard = 1\\
 \textbf{needs a library this repository cannot build here}

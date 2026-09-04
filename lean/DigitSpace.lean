@@ -349,3 +349,94 @@ theorem every_mirror_orbit_sums_to_ten_axiom_free :
 /-- info: 'orbit_axis_void_exhaust_the_digits_axiom_free' does not depend on any axioms -/
 #guard_msgs in
 #print axioms orbit_axis_void_exhaust_the_digits_axiom_free
+
+/- ── Light speed and space: what is arithmetic, and what is not ────────────
+
+   The speed of light, the light-year and the astronomical unit are EXACT. Not
+   measured to many places — exact by definition. Since 1983 the metre is
+   defined as the distance light travels in 1/299792458 of a second, so c is a
+   defined integer and the measurement uncertainty moved into the metre. The
+   IAU fixes the light-year and the SI fixes the astronomical unit the same way.
+
+   That is what makes digital-root arithmetic on them exact rather than
+   provisional, and it is the only reason any of the statements below are
+   theorems. They are facts about NUMERALS that definitions fix. They say
+   nothing whatever about light, space or physics, and the last theorem in this
+   section exists to make that impossible to forget. -/
+
+/-- c = 299792458 m/s has digital root 1 — which is also where the doubling
+    orbit begins. That coincidence is the subject of the final theorem. -/
+theorem speed_of_light_has_digital_root_one : dr 299792458 = 1 := by decide
+
+/-- The light-year is exactly c metres per second times a Julian year of
+    31557600 seconds. Both factors are defined, so the product is too. -/
+theorem light_year_is_c_times_a_julian_year :
+    299792458 * 31557600 = 9460730472580800 := by decide
+
+/-- And its digital root is 9, the axis. -/
+theorem light_year_has_digital_root_nine : dr 9460730472580800 = 9 := by decide
+
+/-- The astronomical unit, 149597870700 m by SI definition, has digital root 3
+    — also on the axis. -/
+theorem astronomical_unit_has_digital_root_three : dr 149597870700 = 3 := by decide
+
+/-- THE DEMARCATION, AND IT IS THE POINT OF THE SECTION.
+
+    One metre per second in either direction changes the digital root of c
+    completely: 299792457 gives 9 and 299792459 gives 2. The value 299792458
+    was chosen by committee in 1983 to agree with the best measurement of the
+    day, in a unit of length fixed by a prototype bar and then by a krypton
+    lamp. Its digital root is therefore a fact about a numeral in base ten in
+    the SI system, and about nothing else.
+
+    A digital root that survives no perturbation is not a property of light. It
+    is a property of the number someone wrote down, and this theorem is what
+    keeps the three above from being read as anything more. -/
+theorem the_digital_root_of_c_is_not_robust :
+    dr 299792457 = 9 ∧ dr 299792458 = 1 ∧ dr 299792459 = 2 := by decide
+
+/- ── Spacetime, and why the arithmetic here is integer ─────────────────────
+
+   The flat interval is s² = c²t² − x², and for light x = ct, so it vanishes.
+   With c a defined integer that identity is exact integer arithmetic — no
+   rounding enters, at any magnitude, which is the whole reason this repository
+   carries integers and fractions rather than decimals.
+
+   That is not an abstract preference, and the numbers say so. -/
+
+/-- For a light ray: distance ct in time t leaves a null interval, exactly, for
+    every second in the range checked. No approximation appears at any point. -/
+theorem light_leaves_a_null_interval :
+    ∀ t ∈ List.range 40,
+      299792458 * 299792458 * (t * t) = (299792458 * t) * (299792458 * t) := by decide
+
+/-- c² in metres squared per second squared, exactly. -/
+theorem c_squared_is_exact : 299792458 * 299792458 = 89875517873681764 := by decide
+
+/-- And it is past the point where a 64-bit float still counts in whole
+    numbers. 2^53 = 9007199254740992 is the largest integer beyond which
+    doubles skip values; c² is roughly ten times it. Measured: the round trip
+    through a double returns 89875517873681760, four square metres short. -/
+theorem c_squared_exceeds_the_exact_range_of_a_double :
+    89875517873681764 > 9007199254740992 := by decide
+
+/-- The light-year in metres is past it too. -/
+theorem the_light_year_exceeds_it_as_well :
+    9460730472580800 > 9007199254740992 := by decide
+
+/-- The astronomical unit is not, and is representable exactly. The three
+    together are the argument: whether a quantity survives depends on its
+    magnitude, and two of the three most ordinary lengths in astronomy do not
+    clear the bar. -/
+theorem the_astronomical_unit_stays_inside_it :
+    149597870700 < 9007199254740992 := by decide
+
+/-- THE CAREFUL PART. Exceeding 2^53 does not mean a value is misrepresented —
+    it means exactness is no longer GUARANTEED. Measured: the light-year round
+    trips through a double unchanged while c², which is larger, loses four.
+    "It happened to work" is not a property anyone can rely on, and a repository
+    that computed in doubles would be relying on it without knowing which of the
+    two cases it was in. That is why the arithmetic here is integer, and this
+    theorem is the reason stated as arithmetic rather than as preference. -/
+theorem exceeding_the_range_is_the_hazard_not_the_error :
+    9460730472580800 > 9007199254740992 ∧ 89875517873681764 > 9007199254740992 := by decide

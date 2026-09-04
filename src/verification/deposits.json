@@ -4,7 +4,7 @@
   "mintedBy": "nobody yet — minting is a write against a 2FA account and belongs to its owner",
   "bar": "a deposit-worthy statement quantifies over a domain or speaks of a defined object of this theory. A statement made only of integer literals is a step inside an argument, not a citable result, and minting an identifier for it would inflate the corpus and discredit the rest.",
   "conceptDoi": "10.5281/zenodo.22178675",
-  "count": 36,
+  "count": 41,
   "supportingNotDeposited": [
     {
       "theorem": "generators_apart_give_twelve",
@@ -16,6 +16,30 @@
     },
     {
       "theorem": "all_three_are_multiples_of_thirty_six",
+      "why": "literal arithmetic in support of a claim; proved, and cited through the concept DOI"
+    },
+    {
+      "theorem": "light_year_is_c_times_a_julian_year",
+      "why": "literal arithmetic in support of a claim; proved, and cited through the concept DOI"
+    },
+    {
+      "theorem": "c_squared_is_exact",
+      "why": "literal arithmetic in support of a claim; proved, and cited through the concept DOI"
+    },
+    {
+      "theorem": "c_squared_exceeds_the_exact_range_of_a_double",
+      "why": "literal arithmetic in support of a claim; proved, and cited through the concept DOI"
+    },
+    {
+      "theorem": "the_light_year_exceeds_it_as_well",
+      "why": "literal arithmetic in support of a claim; proved, and cited through the concept DOI"
+    },
+    {
+      "theorem": "the_astronomical_unit_stays_inside_it",
+      "why": "literal arithmetic in support of a claim; proved, and cited through the concept DOI"
+    },
+    {
+      "theorem": "exceeding_the_range_is_the_hazard_not_the_error",
       "why": "literal arithmetic in support of a claim; proved, and cited through the concept DOI"
     }
   ],
@@ -4864,6 +4888,696 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>nonzero.all (fun d => d + tv d == 10) = true</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
+        "version": "1.5.1",
+        "language": "eng",
+        "license": "cc-by-nc-nd-4.0",
+        "keywords": [
+          "a432",
+          "consciousness",
+          "transurfing",
+          "kabbalah",
+          "sacred-geometry",
+          "tesla",
+          "Lean 4",
+          "formal verification",
+          "machine-checked proof"
+        ],
+        "grants": [],
+        "related_identifiers": [
+          {
+            "identifier": "10.5281/zenodo.22178675",
+            "relation": "isPartOf",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "https://github.com/ceccec/zeropoint-node",
+            "relation": "isSupplementTo",
+            "scheme": "url"
+          },
+          {
+            "identifier": "10.1145/3493244.3493271",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3210459.3210461",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1186/1471-2202-5-42",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/S0010-0277(00)00123-2",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.tics.2011.05.009",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/321738.321743",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.ress.2022.108933",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/C-M.1978.218136",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/TSE.2010.62",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/saner.2018.8330226",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3517745.3561427",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3372885.3373824",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1093/comjnl/27.2.97",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.procs.2012.04.047",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.6028/NIST.FIPS.203",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1007/978-1-4471-0963-1_5",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/2914770.2837638",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1007/978-3-642-79361-5_3",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/cac48633.2019.8996365",
+            "relation": "cites",
+            "scheme": "doi"
+          }
+        ]
+      }
+    },
+    {
+      "theorem": "speed_of_light_has_digital_root_one",
+      "file": "lean/DigitSpace.lean",
+      "metadata": {
+        "upload_type": "publication",
+        "publication_type": "workingpaper",
+        "title": "speed of light has digital root one — a machine-checked theorem in zeropoint-node",
+        "creators": [
+          {
+            "name": "Tsvetan Rouschev",
+            "orcid": "0009-0000-7312-9778"
+          }
+        ],
+        "description": "<p><strong>Statement.</strong> <code>dr 299792458 = 1</code></p>\n<p>info: 'doubling_and_mirror_are_affine_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms doubling_and_mirror_are_affine_axiom_free /-- info: 'doubling_stays_in_orbit_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms doubling_stays_in_orbit_axiom_free /-- info: 'every_axis_digit_mirrors_an_orbit_digit_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms every_axis_digit_mirrors_an_orbit_digit_axiom_free /-- info: 'every_mirror_orbit_sums_to_ten_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms every_mirror_orbit_sums_to_ten_axiom_free /-- info: 'mirror_table_is_through_void_axiom_free' depends on axioms: [propext] -/ #guard_msgs in #print axioms mirror_table_is_through_void_axiom_free /-- info: 'orbit_and_axis_are_disjoint_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms orbit_and_axis_are_disjoint_axiom_free /-- info: 'orbit_axis_void_exhaust_the_digits_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms orbit_axis_void_exhaust_the_digits_axiom_free /- ── Light speed and space: what is arithmetic, and what is not ──────────── The speed of light, the light-year and the astronomical unit are EXACT. Not measured to many places — exact by definition. Since 1983 the metre is defined as the distance light travels in 1/299792458 of a second, so c is a defined integer and the measurement uncertainty moved into the metre. The IAU fixes the light-year and the SI fixes the astronomical unit the same way. That is what makes digital-root arithmetic on them exact rather than provisional, and it is the only reason any of the statements below are theorems. They are facts about NUMERALS that definitions fix. They say nothing whatever about light, space or physics, and the last theorem in this section exists to make that impossible to forget. -/ /-- c = 299792458 m/s has digital root 1 — which is also where the doubling orbit begins. That coincidence is the subject of the final theorem.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
+        "version": "1.5.1",
+        "language": "eng",
+        "license": "cc-by-nc-nd-4.0",
+        "keywords": [
+          "a432",
+          "consciousness",
+          "transurfing",
+          "kabbalah",
+          "sacred-geometry",
+          "tesla",
+          "Lean 4",
+          "formal verification",
+          "machine-checked proof"
+        ],
+        "grants": [],
+        "related_identifiers": [
+          {
+            "identifier": "10.5281/zenodo.22178675",
+            "relation": "isPartOf",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "https://github.com/ceccec/zeropoint-node",
+            "relation": "isSupplementTo",
+            "scheme": "url"
+          },
+          {
+            "identifier": "10.1145/3493244.3493271",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3210459.3210461",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1186/1471-2202-5-42",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/S0010-0277(00)00123-2",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.tics.2011.05.009",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/321738.321743",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.ress.2022.108933",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/C-M.1978.218136",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/TSE.2010.62",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/saner.2018.8330226",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3517745.3561427",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3372885.3373824",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1093/comjnl/27.2.97",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.procs.2012.04.047",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.6028/NIST.FIPS.203",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1007/978-1-4471-0963-1_5",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/2914770.2837638",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1007/978-3-642-79361-5_3",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/cac48633.2019.8996365",
+            "relation": "cites",
+            "scheme": "doi"
+          }
+        ]
+      }
+    },
+    {
+      "theorem": "light_year_has_digital_root_nine",
+      "file": "lean/DigitSpace.lean",
+      "metadata": {
+        "upload_type": "publication",
+        "publication_type": "workingpaper",
+        "title": "light year has digital root nine — a machine-checked theorem in zeropoint-node",
+        "creators": [
+          {
+            "name": "Tsvetan Rouschev",
+            "orcid": "0009-0000-7312-9778"
+          }
+        ],
+        "description": "<p><strong>Statement.</strong> <code>dr 9460730472580800 = 9</code></p>\n<p>And its digital root is 9, the axis.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
+        "version": "1.5.1",
+        "language": "eng",
+        "license": "cc-by-nc-nd-4.0",
+        "keywords": [
+          "a432",
+          "consciousness",
+          "transurfing",
+          "kabbalah",
+          "sacred-geometry",
+          "tesla",
+          "Lean 4",
+          "formal verification",
+          "machine-checked proof"
+        ],
+        "grants": [],
+        "related_identifiers": [
+          {
+            "identifier": "10.5281/zenodo.22178675",
+            "relation": "isPartOf",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "https://github.com/ceccec/zeropoint-node",
+            "relation": "isSupplementTo",
+            "scheme": "url"
+          },
+          {
+            "identifier": "10.1145/3493244.3493271",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3210459.3210461",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1186/1471-2202-5-42",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/S0010-0277(00)00123-2",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.tics.2011.05.009",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/321738.321743",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.ress.2022.108933",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/C-M.1978.218136",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/TSE.2010.62",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/saner.2018.8330226",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3517745.3561427",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3372885.3373824",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1093/comjnl/27.2.97",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.procs.2012.04.047",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.6028/NIST.FIPS.203",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1007/978-1-4471-0963-1_5",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/2914770.2837638",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1007/978-3-642-79361-5_3",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/cac48633.2019.8996365",
+            "relation": "cites",
+            "scheme": "doi"
+          }
+        ]
+      }
+    },
+    {
+      "theorem": "astronomical_unit_has_digital_root_three",
+      "file": "lean/DigitSpace.lean",
+      "metadata": {
+        "upload_type": "publication",
+        "publication_type": "workingpaper",
+        "title": "astronomical unit has digital root three — a machine-checked theorem in zeropoint-node",
+        "creators": [
+          {
+            "name": "Tsvetan Rouschev",
+            "orcid": "0009-0000-7312-9778"
+          }
+        ],
+        "description": "<p><strong>Statement.</strong> <code>dr 149597870700 = 3</code></p>\n<p>The astronomical unit, 149597870700 m by SI definition, has digital root 3 — also on the axis.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
+        "version": "1.5.1",
+        "language": "eng",
+        "license": "cc-by-nc-nd-4.0",
+        "keywords": [
+          "a432",
+          "consciousness",
+          "transurfing",
+          "kabbalah",
+          "sacred-geometry",
+          "tesla",
+          "Lean 4",
+          "formal verification",
+          "machine-checked proof"
+        ],
+        "grants": [],
+        "related_identifiers": [
+          {
+            "identifier": "10.5281/zenodo.22178675",
+            "relation": "isPartOf",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "https://github.com/ceccec/zeropoint-node",
+            "relation": "isSupplementTo",
+            "scheme": "url"
+          },
+          {
+            "identifier": "10.1145/3493244.3493271",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3210459.3210461",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1186/1471-2202-5-42",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/S0010-0277(00)00123-2",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.tics.2011.05.009",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/321738.321743",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.ress.2022.108933",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/C-M.1978.218136",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/TSE.2010.62",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/saner.2018.8330226",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3517745.3561427",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3372885.3373824",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1093/comjnl/27.2.97",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.procs.2012.04.047",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.6028/NIST.FIPS.203",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1007/978-1-4471-0963-1_5",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/2914770.2837638",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1007/978-3-642-79361-5_3",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/cac48633.2019.8996365",
+            "relation": "cites",
+            "scheme": "doi"
+          }
+        ]
+      }
+    },
+    {
+      "theorem": "the_digital_root_of_c_is_not_robust",
+      "file": "lean/DigitSpace.lean",
+      "metadata": {
+        "upload_type": "publication",
+        "publication_type": "workingpaper",
+        "title": "the digital root of c is not robust — a machine-checked theorem in zeropoint-node",
+        "creators": [
+          {
+            "name": "Tsvetan Rouschev",
+            "orcid": "0009-0000-7312-9778"
+          }
+        ],
+        "description": "<p><strong>Statement.</strong> <code>dr 299792457 = 9 ∧ dr 299792458 = 1 ∧ dr 299792459 = 2</code></p>\n<p>THE DEMARCATION, AND IT IS THE POINT OF THE SECTION. One metre per second in either direction changes the digital root of c completely: 299792457 gives 9 and 299792459 gives 2. The value 299792458 was chosen by committee in 1983 to agree with the best measurement of the day, in a unit of length fixed by a prototype bar and then by a krypton lamp. Its digital root is therefore a fact about a numeral in base ten in the SI system, and about nothing else. A digital root that survives no perturbation is not a property of light. It is a property of the number someone wrote down, and this theorem is what keeps the three above from being read as anything more.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
+        "version": "1.5.1",
+        "language": "eng",
+        "license": "cc-by-nc-nd-4.0",
+        "keywords": [
+          "a432",
+          "consciousness",
+          "transurfing",
+          "kabbalah",
+          "sacred-geometry",
+          "tesla",
+          "Lean 4",
+          "formal verification",
+          "machine-checked proof"
+        ],
+        "grants": [],
+        "related_identifiers": [
+          {
+            "identifier": "10.5281/zenodo.22178675",
+            "relation": "isPartOf",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "https://github.com/ceccec/zeropoint-node",
+            "relation": "isSupplementTo",
+            "scheme": "url"
+          },
+          {
+            "identifier": "10.1145/3493244.3493271",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3210459.3210461",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1186/1471-2202-5-42",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/S0010-0277(00)00123-2",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.tics.2011.05.009",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/321738.321743",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.ress.2022.108933",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/C-M.1978.218136",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/TSE.2010.62",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/saner.2018.8330226",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3517745.3561427",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/3372885.3373824",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1093/comjnl/27.2.97",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1016/j.procs.2012.04.047",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.6028/NIST.FIPS.203",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1007/978-1-4471-0963-1_5",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1145/2914770.2837638",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1007/978-3-642-79361-5_3",
+            "relation": "cites",
+            "scheme": "doi"
+          },
+          {
+            "identifier": "10.1109/cac48633.2019.8996365",
+            "relation": "cites",
+            "scheme": "doi"
+          }
+        ]
+      }
+    },
+    {
+      "theorem": "light_leaves_a_null_interval",
+      "file": "lean/DigitSpace.lean",
+      "metadata": {
+        "upload_type": "publication",
+        "publication_type": "workingpaper",
+        "title": "light leaves a null interval — a machine-checked theorem in zeropoint-node",
+        "creators": [
+          {
+            "name": "Tsvetan Rouschev",
+            "orcid": "0009-0000-7312-9778"
+          }
+        ],
+        "description": "<p><strong>Statement.</strong> <code>∀ t ∈ List.range 40, 299792458 * 299792458 * (t * t) = (299792458 * t) * (299792458 * t)</code></p>\n<p>For a light ray: distance ct in time t leaves a null interval, exactly, for every second in the range checked. No approximation appears at any point.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
         "version": "1.5.1",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",

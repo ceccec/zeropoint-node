@@ -169,9 +169,9 @@
     }
   ],
   "formalResults": {
-    "statements": 63,
-    "acceptedByTheKernel": 39,
-    "restingOnNoAxiomsAtAll": 31,
+    "statements": 74,
+    "acceptedByTheKernel": 50,
+    "restingOnNoAxiomsAtAll": 42,
     "declaredAssumptions": [
       "lwe_hardness",
       "no_prior_art_is_undecidable",

@@ -50,12 +50,18 @@ const files = readdirSync(LEAN_DIR).filter((f) => f.endsWith('.lean') && f !== '
 /** Split a Lean file into its theorems, with the body that follows each. */
 function theoremsOf(src) {
   const out = []
-  const parts = src.split(/(?=^\s*theorem )/m)
+  // ANCHORED AT COLUMN 0. Allowing leading whitespace matched the WORD in a
+  // doc comment — "stating the exception as a theorem is the whole point"
+  // produced a theorem called `is`, `#print axioms is` failed on an unknown
+  // constant, the probe exited non-zero, and every theorem in the file was
+  // reported unproven. A corpus of 50 read as 0 because a scanner read its own
+  // explanation. Third time today, third scanner.
+  const parts = src.split(/(?=^theorem )/m)
   for (const p of parts) {
-    const m = /^\s*theorem\s+([A-Za-z0-9_']+)/.exec(p)
+    const m = /^theorem\s+([A-Za-z0-9_']+)/.exec(p)
     if (!m) continue
     // The body ends at the next top-level declaration.
-    const body = p.split(/(?=^\s*(?:theorem|def|axiom|\/--) )/m)[0]
+    const body = p.split(/(?=^(?:theorem|def|axiom|\/--) )/m)[0]
     out.push({ name: m[1], sorry: /\bsorry\b/.test(body) })
   }
   return out
@@ -121,7 +127,27 @@ for (const f of files) {
         if (some) axiomsOf.set(some[1], some[2].split(',').map((a) => a.trim()).filter(Boolean))
       }
     } catch (e) {
+      // Output first, exit code second. Lean can print every axiom stanza and
+      // still exit non-zero, and the first version threw that away and reported
+      // 0 proven for the whole corpus — a catastrophic misreport from a
+      // perfectly good measurement. Same shape as the constrained harness.
+      const said = `${e.stdout ?? ''}`
+      let recovered = 0
+      for (const line of said.split('\n')) {
+        const none = /^'([^']+)' does not depend on any axioms/.exec(line)
+        if (none) { axiomsOf.set(none[1], []); recovered++; continue }
+        const some = /^'([^']+)' depends on axioms: \[([^\]]*)\]/.exec(line)
+        if (some) { axiomsOf.set(some[1], some[2].split(',').map((a) => a.trim()).filter(Boolean)); recovered++ }
+      }
+      // Every clean theorem must have an answer — a COUNT comparison was
+      // off by the theorems whose #guard_msgs already consumed their message,
+      // so the recovery worked and the complaint was filed anyway.
+      const unanswered = clean.filter((t) => !axiomsOf.has(t.name))
+      if (unanswered.length === 0) {
+        console.log(`lean:check — #print axioms exited non-zero but answered for all ${axiomsOf.size} theorem(s); using the answers`)
+      } else {
       axiomProblems.push(`${f}: the kernel accepted the file but #print axioms could not be run, so no theorem in it can be called proven — ${String(e.stdout ?? e.message).slice(0, 120)}`)
+      }
     } finally { rmSync(probe, { force: true }) }
   }
 

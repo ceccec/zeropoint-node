@@ -319,7 +319,7 @@ hue are one integer read in two units; ratios are carried as pairs of integers
 rather than decimals, and the two places where binary floating point departs
 from the exact value are stated rather than rounded away. 33 of
 33 theorems carry a predicate that runs and holds, and
-39 of 63 statements in the Lean files are
+50 of 74 statements in the Lean files are
 accepted by the Lean kernel &mdash; the rest are written down and not proved,
 and say so.</p>
 
@@ -960,14 +960,14 @@ one, since a shortened title is a transcription.</p>
 
 <section class="appendix">
 <h2>Appendix H&ensp;Every Lean statement</h2>
-<p>All 63 statements in the <code>lean/</code> sources, as
+<p>All 74 statements in the <code>lean/</code> sources, as
 they are written there. <strong>Proven</strong> means three things together: the
 kernel accepted the file, the proof contains no <code>sorry</code>, and
 <code>#print axioms</code> reports a dependency set within
 <code>{propext, Quot.sound}</code>. The first two alone are not enough — a proof
 can invoke a lemma closed with <code>sorry</code> and inherit the vacuity with
 the word appearing nowhere near it.</p>
-<p>39 are proven on that reading. The rest are statements
+<p>50 are proven on that reading. The rest are statements
 rather than theorems, and are listed here so the difference is legible rather
 than summarised away.</p>
 <table class="lean">
@@ -1011,6 +1011,17 @@ than summarised away.</p>
 <tr class="proven"><td><code>mirror_table_is_through_void_axiom_free</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">nonzero.all (fun d =&gt; (affineTable 8 1).getD (d % 9) 0 == tv d % 9) = true</td><td>proven by the kernel <span class="ax">rests on <code>propext</code></span></td></tr>
 <tr class="proven"><td><code>doubling_and_mirror_are_affine_axiom_free</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">(agl.contains (affineTable 2 0) &amp;&amp; agl.contains (affineTable 8 1)) = true</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
 <tr class="proven"><td><code>every_mirror_orbit_sums_to_ten_axiom_free</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">nonzero.all (fun d =&gt; d + tv d == 10) = true</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>speed_of_light_has_digital_root_one</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">dr 299792458 = 1</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>light_year_is_c_times_a_julian_year</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">299792458 * 31557600 = 9460730472580800</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>light_year_has_digital_root_nine</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">dr 9460730472580800 = 9</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>astronomical_unit_has_digital_root_three</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">dr 149597870700 = 3</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>the_digital_root_of_c_is_not_robust</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">dr 299792457 = 9 ∧ dr 299792458 = 1 ∧ dr 299792459 = 2</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>light_leaves_a_null_interval</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ t ∈ List.range 40, 299792458 * 299792458 * (t * t) = (299792458 * t) * (299792458 * t)</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>c_squared_is_exact</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">299792458 * 299792458 = 89875517873681764</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>c_squared_exceeds_the_exact_range_of_a_double</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">89875517873681764 &gt; 9007199254740992</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>the_light_year_exceeds_it_as_well</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">9460730472580800 &gt; 9007199254740992</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>the_astronomical_unit_stays_inside_it</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">149597870700 &lt; 9007199254740992</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>exceeding_the_range_is_the_hazard_not_the_error</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">9460730472580800 &gt; 9007199254740992 ∧ 89875517873681764 &gt; 9007199254740992</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
 <tr class="unverifiable-here"><td><code>hadamard_squared</code><br><span class="where">Quantum.lean</span></td><td class="stmt">hadamard * hadamard = 1</td><td>needs a library this repository cannot build here</td></tr>
 <tr class="sorry"><td><code>hadamard_unitary</code><br><span class="where">Quantum.lean</span></td><td class="stmt">IsUnitary hadamard</td><td>written down, closed with sorry</td></tr>
 <tr class="unverifiable-here"><td><code>pauliX_unitary</code><br><span class="where">Quantum.lean</span></td><td class="stmt">IsUnitary pauliX</td><td>needs a library this repository cannot build here</td></tr>
@@ -1091,7 +1102,7 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>98a1e836dc4fc83f</code> over
+<p class="receipt">Generated from source. Model receipt <code>5f9e112ca65632b6</code> over
 18 equations, 33 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>

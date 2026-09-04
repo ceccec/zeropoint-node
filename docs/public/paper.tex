@@ -16,8 +16,8 @@ This paper sets out the arithmetic that \texttt{zeropoint-node} implements and t
 predicates that decide it. The digit space is partitioned by a doubling map into a
 six-element orbit and a three-element axis; frequency and hue are one integer read in
 two units; ratios are carried as pairs of integers rather than decimals. 33 of
-33 theorems carry a predicate that runs and holds, and 50 of
-74 statements in the Lean files are accepted by the Lean kernel.
+33 theorems carry a predicate that runs and holds, and 55 of
+79 statements in the Lean files are accepted by the Lean kernel.
 3 claims are recorded as axioms because no finite computation decides them.
 \textbf{How much of the package those predicates hold:} 1411 of
 1751 exported values are reachable from no law at all (a floor, not a total);
@@ -146,9 +146,9 @@ because novelty is a universal negative that no finite search decides. It rests 
 \end{itemize}
 
 \section*{Every Lean statement}
-All 74 statements in the \texttt{lean/} sources. \emph{Proven} means the kernel accepted the file,
+All 79 statements in the \texttt{lean/} sources. \emph{Proven} means the kernel accepted the file,
 the proof contains no \texttt{sorry}, and \texttt{\#print axioms} reports a dependency set within
-$\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 50 of them meet it.
+$\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 55 of them meet it.
 \begin{itemize}\small
 \item \texttt{dr\_is\_drTS\_above\_zero} (DigitSpace.lean) --- $\forall$ n $\in$ List.range 60, n $\neq$ 0 $\to$ dr n = drTS n\\
 \textbf{proven by the kernel}, resting on no axioms
@@ -249,6 +249,16 @@ $\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 50 of them meet it.
 \item \texttt{the\_astronomical\_unit\_stays\_inside\_it} (DigitSpace.lean) --- 149597870700 < 9007199254740992\\
 \textbf{proven by the kernel}, resting on no axioms
 \item \texttt{exceeding\_the\_range\_is\_the\_hazard\_not\_the\_error} (DigitSpace.lean) --- 9460730472580800 > 9007199254740992 $\land$ 89875517873681764 > 9007199254740992\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{there\_are\_eighty\_four\_triples} (DigitSpace.lean) --- triples.length = 84\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_axis\_is\_the\_only\_triple\_closed\_under\_doubling} (DigitSpace.lean) --- triples.filter closedUnderDoubling = [[3, 6, 9]]\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{four\_triples\_are\_closed\_under\_the\_mirror} (DigitSpace.lean) --- triples.filter closedUnderMirror = [[1, 5, 9], [2, 5, 8], [3, 5, 7], [4, 5, 6]]\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{no\_triple\_is\_closed\_under\_both\_maps} (DigitSpace.lean) --- triples.filter (fun t => closedUnderDoubling t && closedUnderMirror t) = []\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_digit\_root\_nine\_sum\_does\_not\_single\_out\_the\_axis} (DigitSpace.lean) --- (triples.filter (fun t => dr (t.foldl ($\cdot$ + $\cdot$) 0) == 9)).length = 10\\
 \textbf{proven by the kernel}, resting on no axioms
 \item \texttt{hadamard\_squared} (Quantum.lean) --- hadamard * hadamard = 1\\
 \textbf{needs a library this repository cannot build here}

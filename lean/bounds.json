@@ -2,7 +2,7 @@
   "what": "Each numeric bound was widened and the kernel re-asked. survived-one-widening = the bound held when widened once, which is EVIDENCE that it is scaffolding and not proof: one widening is one sample, and a statement can survive because the property is universal or because the new elements happen to satisfy it. load-bearing = the bound is the theorem. inconclusive = the evaluator could not read the widened form, which refutes nothing.",
   "doesNotEstablish": "whether any prose over-claims. That happens only when a sentence ranges wider than the real domain, and nothing here reads a sentence.",
   "widenFactor": 4,
-  "theoremsOverNamedDomains": 47,
+  "theoremsOverNamedDomains": 52,
   "notWidenedBecause": "a named domain IS the object; adding an element makes it a different claim, not a wider one",
   "bounds": {
     "dr_is_drTS_above_zero": {

@@ -7,10 +7,10 @@
     "minorRadius": 1
   },
   "counts": {
-    "nodes": 74,
-    "edges": 265,
-    "proven": 50,
-    "restingOnNothing": 42
+    "nodes": 79,
+    "edges": 284,
+    "proven": 55,
+    "restingOnNothing": 47
   },
   "nodes": [
     {
@@ -44,9 +44,9 @@
         "drTS"
       ],
       "position": {
-        "x": 4.158612562287422,
+        "x": 4.160454603881304,
         "y": 0.984807753012208,
-        "z": 0.3539500921425683
+        "z": 0.331597044596829
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -62,9 +62,9 @@
         "dr"
       ],
       "position": {
-        "x": 3.0162876435079067,
+        "x": 3.021672044981798,
         "y": 0.3420201433256689,
-        "z": 0.5171944575241896
+        "z": 0.4847466429463337
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -80,9 +80,9 @@
         "dr"
       ],
       "position": {
-        "x": 4.612258234155555,
+        "x": 4.631019258648681,
         "y": -0.6427876096865396,
-        "z": 1.2009386392524686
+        "z": 1.1264280979318262
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -102,9 +102,9 @@
         "orbit"
       ],
       "position": {
-        "x": 3.9352387320119044,
+        "x": 3.9642150618970238,
         "y": -0.9848077530122081,
-        "z": 1.3904082972335237
+        "z": 1.305502988878717
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -121,9 +121,9 @@
         "orbit"
       ],
       "position": {
-        "x": 2.7886392732849288,
+        "x": 2.821498908608158,
         "y": -0.34202014332566866,
-        "z": 1.2605444295085861
+        "z": 1.185168833540266
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -140,9 +140,9 @@
         "orbit"
       ],
       "position": {
-        "x": 3.0555493960641584,
+        "x": 3.1089891446219617,
         "y": 0.8660254037844387,
-        "z": 1.706932303347721
+        "z": 1.6075405122804227
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -159,9 +159,9 @@
         "digits"
       ],
       "position": {
-        "x": 2.899783772353447,
+        "x": 2.9714417673197735,
         "y": -0.8660254037844385,
-        "z": 1.9599117514815834
+        "z": 1.8494685245841678
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -178,9 +178,9 @@
         "digits"
       ],
       "position": {
-        "x": 3.890178771592198,
+        "x": 4.021582826353825,
         "y": -2.4492935982947064e-16,
-        "z": 3.1410999864782116
+        "z": 2.971005144858552
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -200,9 +200,9 @@
         "axis"
       ],
       "position": {
-        "x": 3.4408748297678438,
+        "x": 3.596288514879315,
         "y": 0.6427876096865393,
-        "z": 3.2978114014684645
+        "z": 3.127601085741661
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -223,9 +223,9 @@
         "digits"
       ],
       "position": {
-        "x": 2.757423855307617,
+        "x": 2.921729328816859,
         "y": 0.984807753012208,
-        "z": 3.1330420988430663
+        "z": 2.98040883773919
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -241,9 +241,9 @@
         "agl"
       ],
       "position": {
-        "x": 1.8197602973695224,
+        "x": 1.9619435898906759,
         "y": 0.3420201433256689,
-        "z": 2.460478350928902
+        "z": 2.3486716682753057
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -263,9 +263,9 @@
         "agl"
       ],
       "position": {
-        "x": 2.49887181528475,
+        "x": 2.7552121652831736,
         "y": -0.6427876096865396,
-        "z": 4.058425715047743
+        "z": 3.888956872743756
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -285,9 +285,9 @@
         "nonzero"
       ],
       "position": {
-        "x": 1.8789920391371098,
+        "x": 2.1345517553542117,
         "y": -0.9848077530122081,
-        "z": 3.726758380657626
+        "z": 3.586506366180986
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -306,9 +306,9 @@
         "affineTable"
       ],
       "position": {
-        "x": 1.1410554303388534,
+        "x": 1.3512649464489177,
         "y": -0.34202014332566866,
-        "z": 2.839625637327293
+        "z": 2.745826706070619
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -322,9 +322,9 @@
       "digit": 3,
       "speaksOf": [],
       "position": {
-        "x": 1.0248796994679266,
+        "x": 1.2910237358340275,
         "y": 0.8660254037844387,
-        "z": 3.346583571587378
+        "z": 3.2531919269408545
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -338,9 +338,9 @@
       "digit": 6,
       "speaksOf": [],
       "position": {
-        "x": 0.7373774449850417,
+        "x": 1.0284759601827236,
         "y": -0.8660254037844385,
-        "z": 3.4214433363169015
+        "z": 3.345480114920162
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -354,9 +354,9 @@
       "digit": 9,
       "speaksOf": [],
       "position": {
-        "x": 0.6350890987343932,
+        "x": 1.0848940405315899,
         "y": -2.4492935982947064e-16,
-        "z": 4.959502176294385
+        "z": 4.880881572095254
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -372,9 +372,9 @@
         "dr"
       ],
       "position": {
-        "x": 0.20227666065228572,
+        "x": 0.6612197112996543,
         "y": 0.6427876096865393,
-        "z": 4.761750076005738
+        "z": 4.719954250538249
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -395,9 +395,9 @@
         "axis"
       ],
       "position": {
-        "x": -0.17713465037759546,
+        "x": 0.24881255852640488,
         "y": 0.984807753012208,
-        "z": 4.169887579609083
+        "z": 4.166225080532979
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -414,9 +414,9 @@
         "axis"
       ],
       "position": {
-        "x": -0.3887135710630584,
+        "x": -0.06084560562633365,
         "y": 0.3420201433256689,
-        "z": 3.0355202214684103
+        "z": 3.059702447550772
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -433,9 +433,9 @@
         "digits"
       ],
       "position": {
-        "x": -1.004106764043493,
+        "x": -0.4730480167442146,
         "y": -0.6427876096865396,
-        "z": 4.659071714428465
+        "z": 4.742510433055435
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -452,9 +452,9 @@
         "digits"
       ],
       "position": {
-        "x": -1.2221392257177546,
+        "x": -0.7429005929231554,
         "y": -0.9848077530122081,
-        "z": 3.9907035499902137
+        "z": 4.106998638906143
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -470,9 +470,9 @@
         "tv"
       ],
       "position": {
-        "x": -1.1410554303388531,
+        "x": -0.7822654665074406,
         "y": -0.34202014332566866,
-        "z": 2.839625637327293
+        "z": 2.9586385374327357
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -488,9 +488,9 @@
         "divisorCount"
       ],
       "position": {
-        "x": -1.5757131068618568,
+        "x": -1.1606674749322372,
         "y": 0.8660254037844387,
-        "z": 3.12524050352349
+        "z": 3.301946549027471
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -504,9 +504,9 @@
       "digit": 6,
       "speaksOf": [],
       "position": {
-        "x": -1.83507549245031,
+        "x": -1.4193386228454785,
         "y": -0.8660254037844385,
-        "z": 2.9803519820665896
+        "z": 3.199293339739121
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -523,9 +523,9 @@
         "nonzero"
       ],
       "position": {
-        "x": -2.973165881521433,
+        "x": -2.3843375071425292,
         "y": -2.4492935982947064e-16,
-        "z": 4.019985651834703
+        "z": 4.394875954112169
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -541,9 +541,9 @@
         "tv"
       ],
       "position": {
-        "x": -3.148805094122465,
+        "x": -2.598422514283398,
         "y": 0.6427876096865393,
-        "z": 3.5777375690530606
+        "z": 3.9954198867015758
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -560,9 +560,9 @@
         "swap12"
       ],
       "position": {
-        "x": -3.013190735888836,
+        "x": -2.5462390213867114,
         "y": 0.984807753012208,
-        "z": 2.887909399565052
+        "z": 3.3069632530329285
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -578,9 +578,9 @@
         "swap12"
       ],
       "position": {
-        "x": -2.381028560233122,
+        "x": -2.05376747248614,
         "y": 0.3420201433256689,
-        "z": 1.9225462934937116
+        "z": 2.2688147619914045
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -598,9 +598,9 @@
         "swap12"
       ],
       "position": {
-        "x": -3.948713809849067,
+        "x": -3.4691027594255797,
         "y": -0.6427876096865396,
-        "z": 2.668864717757825
+        "z": 3.26810429428608
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -618,9 +618,9 @@
         "swap12"
       ],
       "position": {
-        "x": -3.643653762472704,
+        "x": -3.255684762782981,
         "y": -0.9848077530122081,
-        "z": 2.0354671135051516
+        "z": 2.6114853697321783
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -637,9 +637,9 @@
         "orbit"
       ],
       "position": {
-        "x": -2.7886392732849288,
+        "x": -2.5318046356450923,
         "y": -0.34202014332566866,
-        "z": 1.2605444295085855
+        "z": 1.7191412222962494
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -656,9 +656,9 @@
         "axis"
       ],
       "position": {
-        "x": -3.3000710591137947,
+        "x": -3.042620960538539,
         "y": 0.8660254037844387,
-        "z": 1.1659892815972015
+        "z": 1.7298721601585303
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -676,9 +676,9 @@
         "digits"
       ],
       "position": {
-        "x": -3.3870653142672458,
+        "x": -3.170441377829331,
         "y": -0.8660254037844385,
-        "z": 0.8819232148479375
+        "z": 1.4826670124298473
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -696,9 +696,9 @@
         "axis"
       ],
       "position": {
-        "x": -4.928079551738542,
+        "x": -4.683167491343639,
         "y": -2.4492935982947064e-16,
-        "z": 0.8450041016092457
+        "z": 1.7515542378191236
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -718,9 +718,9 @@
         "nonzero"
       ],
       "position": {
-        "x": -4.748874713405814,
+        "x": -4.582575106301347,
         "y": 0.6427876096865393,
-        "z": 0.40418880509006766
+        "z": 1.3096507278249767
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -737,9 +737,9 @@
         "agl"
       ],
       "position": {
-        "x": -4.17364817766693,
+        "x": -4.09141631853586,
         "y": 0.984807753012208,
-        "z": 5.111244881546989e-16
+        "z": 0.8244098612710554
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -756,9 +756,9 @@
         "nonzero"
       ],
       "position": {
-        "x": -3.0492825868170823,
+        "x": -3.0385549399133307,
         "y": 0.3420201433256689,
-        "z": -0.2595321964734726
+        "z": 0.36423225063208753
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -774,9 +774,9 @@
         "dr"
       ],
       "position": {
-        "x": -4.697489232562349,
+        "x": -4.762276395167445,
         "y": -0.6427876096865396,
-        "z": -0.8054654205774947
+        "z": 0.18948131785547725
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -790,9 +790,9 @@
       "digit": 7,
       "speaksOf": [],
       "position": {
-        "x": -4.038976850437246,
+        "x": -4.1703484798454,
         "y": -0.9848077530122081,
-        "z": -1.0516677767120737
+        "z": -0.1659297067846715
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -808,9 +808,9 @@
         "dr"
       ],
       "position": {
-        "x": -2.885494804039088,
+        "x": -3.0385549399133307,
         "y": -0.34202014332566866,
-        "z": -1.0195101721589859
+        "z": -0.36423225063208675
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -826,9 +826,9 @@
         "dr"
       ],
       "position": {
-        "x": -3.1892997163584758,
+        "x": -3.4310407838162265,
         "y": 0.8660254037844387,
-        "z": -1.4416543688539727
+        "z": -0.6913458901228332
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -844,9 +844,9 @@
         "dr"
       ],
       "position": {
-        "x": -3.0555493960641584,
+        "x": -3.365267165145971,
         "y": -0.8660254037844385,
-        "z": -1.7069323033477197
+        "z": -0.9617571976285881
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -860,9 +860,9 @@
       "digit": 9,
       "speaksOf": [],
       "position": {
-        "x": -4.142548246219211,
+        "x": -4.68316749134364,
         "y": -2.4492935982947064e-16,
-        "z": -2.7998739306879767
+        "z": -1.75155423781912
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -876,9 +876,9 @@
       "digit": 1,
       "speaksOf": [],
       "position": {
-        "x": -3.708152983417281,
+        "x": -4.317275574582274,
         "y": 0.6427876096865393,
-        "z": -2.9941244271671157
+        "z": -2.0189876787391703
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -892,9 +892,9 @@
       "digit": 2,
       "speaksOf": [],
       "position": {
-        "x": -3.013190735888837,
+        "x": -3.6282369792236793,
         "y": 0.984807753012208,
-        "z": -2.8879093995650518
+        "z": -2.0628222253835435
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -908,9 +908,9 @@
       "digit": 4,
       "speaksOf": [],
       "position": {
-        "x": -2.021867731250896,
+        "x": -2.5318046356450936,
         "y": 0.3420201433256689,
-        "z": -2.297287995136564
+        "z": -1.7191412222962477
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -924,9 +924,9 @@
       "digit": 8,
       "speaksOf": [],
       "position": {
-        "x": -2.834048145619232,
+        "x": -3.7177877989904786,
         "y": -0.6427876096865396,
-        "z": -3.8318860554689618
+        "z": -2.9821524970166804
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -940,9 +940,104 @@
       "digit": 7,
       "speaksOf": [],
       "position": {
-        "x": -2.18827413855614,
+        "x": -3.0379100704610122,
         "y": -0.9848077530122081,
-        "z": -3.553983033930926
+        "z": -2.8618947420780607
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "there_are_eighty_four_triples",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 5,
+      "speaksOf": [
+        "triples"
+      ],
+      "position": {
+        "x": -2.0537674724861397,
+        "y": -0.34202014332566866,
+        "z": -2.268814761991405
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "the_axis_is_the_only_triple_closed_under_doubling",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 3,
+      "speaksOf": [
+        "triples",
+        "closedUnderDoubling"
+      ],
+      "position": {
+        "x": -2.1352630110368374,
+        "y": 0.8660254037844387,
+        "z": -2.773202458115509
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "four_triples_are_closed_under_the_mirror",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 6,
+      "speaksOf": [
+        "triples",
+        "closedUnderMirror"
+      ],
+      "position": {
+        "x": -1.9081817025693373,
+        "y": -0.8660254037844385,
+        "z": -2.934082921455967
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "no_triple_is_closed_under_both_maps",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 9,
+      "speaksOf": [
+        "triples",
+        "closedUnderDoubling",
+        "closedUnderMirror"
+      ],
+      "position": {
+        "x": -2.3843375071425306,
+        "y": -2.4492935982947064e-16,
+        "z": -4.394875954112169
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 1,
+      "speaksOf": [
+        "dr",
+        "triples"
+      ],
+      "position": {
+        "x": -1.9327517018048133,
+        "y": 0.6427876096865393,
+        "z": -4.356564069648912
       },
       "hue": 120,
       "standing": "accepted by the kernel"
@@ -953,14 +1048,14 @@
       "status": "unverifiable-here",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 5,
+      "digit": 2,
       "speaksOf": [
         "hadamard"
       ],
       "position": {
-        "x": -1.3777618424153444,
-        "y": -0.34202014332566866,
-        "z": -2.732627592786199
+        "x": -1.384062197608058,
+        "y": 0.984807753012208,
+        "z": -3.9374751991720327
       },
       "hue": 210,
       "standing": "needs a library this repository cannot build here"
@@ -971,15 +1066,15 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 3,
+      "digit": 4,
       "speaksOf": [
         "IsUnitary",
         "hadamard"
       ],
       "position": {
-        "x": -1.3049976722310805,
-        "y": 0.8660254037844387,
-        "z": -3.2476115955377822
+        "x": -0.7822654665074413,
+        "y": 0.3420201433256689,
+        "z": -2.9586385374327353
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -990,15 +1085,15 @@
       "status": "unverifiable-here",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 6,
+      "digit": 8,
       "speaksOf": [
         "IsUnitary",
         "pauliX"
       ],
       "position": {
-        "x": -1.024879699467926,
-        "y": -0.8660254037844385,
-        "z": -3.3465835715873777
+        "x": -0.8483458815808637,
+        "y": -0.6427876096865396,
+        "z": -4.689934850186096
       },
       "hue": 210,
       "standing": "needs a library this repository cannot build here"
@@ -1009,15 +1104,15 @@
       "status": "unverifiable-here",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 9,
+      "digit": 7,
       "speaksOf": [
         "pauliX",
         "pauliY"
       ],
       "position": {
-        "x": -1.0533963499786305,
-        "y": -2.4492935982947064e-16,
-        "z": -4.887776194738431
+        "x": -0.4142504369391497,
+        "y": -0.9848077530122081,
+        "z": -4.153039331193266
       },
       "hue": 210,
       "standing": "needs a library this repository cannot build here"
@@ -1028,16 +1123,16 @@
       "status": "unverifiable-here",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 1,
+      "digit": 5,
       "speaksOf": [
         "QuantumState",
         "IsNormalized",
         "measurementProb"
       ],
       "position": {
-        "x": -0.6053725739817016,
-        "y": 0.6427876096865393,
-        "z": -4.727441557592865
+        "x": -0.06084560562633439,
+        "y": -0.34202014332566866,
+        "z": -3.059702447550772
       },
       "hue": 210,
       "standing": "needs a library this repository cannot build here"
@@ -1048,12 +1143,12 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 2,
+      "digit": 3,
       "speaksOf": [],
       "position": {
-        "x": -0.1771346503775974,
-        "y": 0.984807753012208,
-        "z": -4.169887579609083
+        "x": 0.20865293809436966,
+        "y": 0.8660254037844387,
+        "z": -3.4937750287367653
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1064,14 +1159,14 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 4,
+      "digit": 6,
       "speaksOf": [
         "modularExpSuperposition"
       ],
       "position": {
-        "x": 0.1298831273238971,
-        "y": 0.3420201433256689,
-        "z": -3.057549938841357
+        "x": 0.48557436196173975,
+        "y": -0.8660254037844385,
+        "z": -3.4661531326537562
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1082,14 +1177,14 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 8,
+      "digit": 9,
       "speaksOf": [
         "QuantumState"
       ],
       "position": {
-        "x": 0.6053725739816999,
-        "y": -0.6427876096865396,
-        "z": -4.727441557592865
+        "x": 1.0848940405315886,
+        "y": -2.4492935982947064e-16,
+        "z": -4.880881572095255
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1100,14 +1195,14 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 7,
+      "digit": 1,
       "speaksOf": [
         "surfaceCodeThreshold"
       ],
       "position": {
-        "x": 0.8793011512898599,
-        "y": -0.9848077530122081,
-        "z": -4.079971641602771
+        "x": 1.4005034671172347,
+        "y": 0.6427876096865393,
+        "z": -4.555630546080081
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1118,14 +1213,14 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 5,
+      "digit": 2,
       "speaksOf": [
         "vqeObjective"
       ],
       "position": {
-        "x": 0.8961276877395461,
-        "y": -0.34202014332566866,
-        "z": -2.926164114081573
+        "x": 1.5395082463966947,
+        "y": 0.984807753012208,
+        "z": -3.879336730707849
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1136,16 +1231,16 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 3,
+      "digit": 4,
       "speaksOf": [
         "QuantumState",
         "IsNormalized",
         "tensorProduct"
       ],
       "position": {
-        "x": 1.3049976722310794,
-        "y": 0.8660254037844387,
-        "z": -3.247611595537783
+        "x": 1.3512649464489188,
+        "y": 0.3420201433256689,
+        "z": -2.7458267060706185
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1156,14 +1251,14 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 6,
+      "digit": 8,
       "speaksOf": [
         "IsFaultTolerant"
       ],
       "position": {
-        "x": 1.5757131068618562,
-        "y": -0.8660254037844385,
-        "z": -3.1252405035234894
+        "x": 2.4375242231947567,
+        "y": -0.6427876096865396,
+        "z": -4.095565320578355
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1174,12 +1269,12 @@
       "status": "unverifiable-here",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 9,
+      "digit": 7,
       "speaksOf": [],
       "position": {
-        "x": 2.621536417786159,
-        "y": -2.4492935982947064e-16,
-        "z": -4.257645688666556
+        "x": 2.4127526232622665,
+        "y": -0.9848077530122081,
+        "z": -3.405578348810014
       },
       "hue": 210,
       "standing": "needs a library this repository cannot build here"
@@ -1190,7 +1285,7 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 1,
+      "digit": 5,
       "speaksOf": [
         "QuantumState",
         "IsNormalized",
@@ -1202,9 +1297,9 @@
         "tensorProduct"
       ],
       "position": {
-        "x": 2.8340481456192306,
-        "y": 0.6427876096865393,
-        "z": -3.831886055468963
+        "x": 1.9619435898906765,
+        "y": -0.34202014332566866,
+        "z": -2.3486716682753053
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1215,12 +1310,12 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 2,
+      "digit": 3,
       "speaksOf": [],
       "position": {
-        "x": 2.7574238553076182,
-        "y": 0.984807753012208,
-        "z": -3.133042098843065
+        "x": 2.4501472609929884,
+        "y": 0.8660254037844387,
+        "z": -2.4993555968386243
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1231,12 +1326,12 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 4,
+      "digit": 6,
       "speaksOf": [],
       "position": {
-        "x": 2.2094075617976126,
-        "y": 0.3420201433256689,
-        "z": -2.1175456266970376
+        "x": 2.6409761705538033,
+        "y": -0.8660254037844385,
+        "z": -2.2967901224463168
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1247,15 +1342,15 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 8,
+      "digit": 9,
       "speaksOf": [
         "IsUnitary",
         "qftMatrix"
       ],
       "position": {
-        "x": 3.708152983417281,
-        "y": -0.6427876096865396,
-        "z": -2.9941244271671152
+        "x": 4.021582826353825,
+        "y": -2.4492935982947064e-16,
+        "z": -2.9710051448585513
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1266,14 +1361,14 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 7,
+      "digit": 1,
       "speaksOf": [
         "qftMatrix"
       ],
       "position": {
-        "x": 3.4579077877460276,
-        "y": -0.9848077530122081,
-        "z": -2.3371377457026066
+        "x": 4.046292435196011,
+        "y": 0.6427876096865393,
+        "z": -2.5184711955193815
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1284,14 +1379,14 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 5,
+      "digit": 2,
       "speaksOf": [
         "QuantumState"
       ],
       "position": {
-        "x": 2.6716915326652306,
-        "y": -0.34202014332566866,
-        "z": -1.4924964353582666
+        "x": 3.7073791079536336,
+        "y": 0.984807753012208,
+        "z": -1.9169452941728429
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1302,15 +1397,15 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 3,
+      "digit": 4,
       "speaksOf": [
         "QuantumState",
         "IsUnitary"
       ],
       "position": {
-        "x": 3.1892997163584744,
-        "y": 0.8660254037844387,
-        "z": -1.4416543688539754
+        "x": 2.821498908608157,
+        "y": 0.3420201433256689,
+        "z": -1.185168833540268
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1321,14 +1416,14 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 6,
+      "digit": 8,
       "speaksOf": [
         "modularExpSuperposition"
       ],
       "position": {
-        "x": 3.300071059113794,
-        "y": -0.8660254037844385,
-        "z": -1.1659892815972017
+        "x": 4.526884960783733,
+        "y": -0.6427876096865396,
+        "z": -1.4908025307247583
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1339,12 +1434,12 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 9,
+      "digit": 7,
       "speaksOf": [],
       "position": {
-        "x": 4.838664734667494,
-        "y": -2.4492935982947064e-16,
-        "z": -1.2598903069256298
+        "x": 4.055405970354486,
+        "y": -0.9848077530122081,
+        "z": -0.9864185351845729
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1355,14 +1450,14 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 1,
+      "digit": 5,
       "speaksOf": [
         "vqeObjective"
       ],
       "position": {
-        "x": 4.697489232562349,
-        "y": 0.6427876096865393,
-        "z": -0.8054654205774964
+        "x": 3.0216720449817975,
+        "y": -0.34202014332566866,
+        "z": -0.48474664294633607
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1373,12 +1468,12 @@
       "status": "sorry",
       "axioms": null,
       "restsOnNothing": false,
-      "digit": 2,
+      "digit": 3,
       "speaksOf": [],
       "position": {
-        "x": 4.158612562287421,
-        "y": 0.984807753012208,
-        "z": -0.35395009214257006
+        "x": 3.488935936551435,
+        "y": 0.8660254037844387,
+        "z": -0.27807558440099894
       },
       "hue": 40,
       "standing": "written down, closed with sorry"
@@ -1443,6 +1538,13 @@
       ]
     },
     {
+      "from": "dr_is_drTS_above_zero",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
       "from": "dr_and_drTS_differ_at_zero",
       "to": "dr_idempotent",
       "shared": [
@@ -1492,6 +1594,13 @@
       ]
     },
     {
+      "from": "dr_and_drTS_differ_at_zero",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
       "from": "dr_idempotent",
       "to": "dr_invariant_under_nine",
       "shared": [
@@ -1534,6 +1643,13 @@
       ]
     },
     {
+      "from": "dr_idempotent",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
       "from": "dr_invariant_under_nine",
       "to": "base_frequency_has_digital_root_nine",
       "shared": [
@@ -1564,6 +1680,13 @@
     {
       "from": "dr_invariant_under_nine",
       "to": "the_digital_root_of_c_is_not_robust",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_invariant_under_nine",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
       "shared": [
         "dr"
       ]
@@ -2391,6 +2514,13 @@
       ]
     },
     {
+      "from": "base_frequency_has_digital_root_nine",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
       "from": "every_axis_digit_mirrors_an_orbit_digit",
       "to": "the_axis_is_mirrored_onto_exactly_seven_four_one",
       "shared": [
@@ -3055,6 +3185,13 @@
       ]
     },
     {
+      "from": "speed_of_light_has_digital_root_one",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
       "from": "light_year_has_digital_root_nine",
       "to": "astronomical_unit_has_digital_root_three",
       "shared": [
@@ -3069,10 +3206,103 @@
       ]
     },
     {
+      "from": "light_year_has_digital_root_nine",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
       "from": "astronomical_unit_has_digital_root_three",
       "to": "the_digital_root_of_c_is_not_robust",
       "shared": [
         "dr"
+      ]
+    },
+    {
+      "from": "astronomical_unit_has_digital_root_three",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "the_digital_root_of_c_is_not_robust",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "there_are_eighty_four_triples",
+      "to": "the_axis_is_the_only_triple_closed_under_doubling",
+      "shared": [
+        "triples"
+      ]
+    },
+    {
+      "from": "there_are_eighty_four_triples",
+      "to": "four_triples_are_closed_under_the_mirror",
+      "shared": [
+        "triples"
+      ]
+    },
+    {
+      "from": "there_are_eighty_four_triples",
+      "to": "no_triple_is_closed_under_both_maps",
+      "shared": [
+        "triples"
+      ]
+    },
+    {
+      "from": "there_are_eighty_four_triples",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "triples"
+      ]
+    },
+    {
+      "from": "the_axis_is_the_only_triple_closed_under_doubling",
+      "to": "four_triples_are_closed_under_the_mirror",
+      "shared": [
+        "triples"
+      ]
+    },
+    {
+      "from": "the_axis_is_the_only_triple_closed_under_doubling",
+      "to": "no_triple_is_closed_under_both_maps",
+      "shared": [
+        "triples",
+        "closedUnderDoubling"
+      ]
+    },
+    {
+      "from": "the_axis_is_the_only_triple_closed_under_doubling",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "triples"
+      ]
+    },
+    {
+      "from": "four_triples_are_closed_under_the_mirror",
+      "to": "no_triple_is_closed_under_both_maps",
+      "shared": [
+        "triples",
+        "closedUnderMirror"
+      ]
+    },
+    {
+      "from": "four_triples_are_closed_under_the_mirror",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "triples"
+      ]
+    },
+    {
+      "from": "no_triple_is_closed_under_both_maps",
+      "to": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "shared": [
+        "triples"
       ]
     },
     {

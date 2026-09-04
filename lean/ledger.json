@@ -1,8 +1,8 @@
 {
   "toolchain": "Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
   "files": 3,
-  "theorems": 74,
-  "proven": 50,
+  "theorems": 79,
+  "proven": 55,
   "sorry": 19,
   "unverifiableHere": 5,
   "rejected": 0,
@@ -324,6 +324,36 @@
     },
     {
       "name": "exceeding_the_range_is_the_hazard_not_the_error",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "there_are_eighty_four_triples",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "the_axis_is_the_only_triple_closed_under_doubling",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "four_triples_are_closed_under_the_mirror",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "no_triple_is_closed_under_both_maps",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "the_digit_root_nine_sum_does_not_single_out_the_axis",
       "file": "DigitSpace.lean",
       "status": "proven",
       "axioms": []

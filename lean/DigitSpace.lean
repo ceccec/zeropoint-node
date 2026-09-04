@@ -440,3 +440,46 @@ theorem the_astronomical_unit_stays_inside_it :
     theorem is the reason stated as arithmetic rather than as preference. -/
 theorem exceeding_the_range_is_the_hazard_not_the_error :
     9460730472580800 > 9007199254740992 ∧ 89875517873681764 > 9007199254740992 := by decide
+
+/- ── Every three-combination, enumerated ───────────────────────────────────
+
+   There are 84 three-element subsets of the nine non-void digits. Rather than
+   assert that the axis is special, all 84 are built and filtered, and the
+   filter's result is the theorem. Exhaustion is what makes these decidable and
+   it is also what makes them worth stating: no subset was chosen in advance. -/
+
+/-- All 84 three-element subsets of 1..9, as ascending lists. -/
+def triples : List (List Nat) :=
+  nonzero.flatMap (fun a =>
+    nonzero.flatMap (fun b =>
+      nonzero.filterMap (fun c => if a < b && b < c then some [a, b, c] else none)))
+
+def closedUnderDoubling (t : List Nat) : Bool := t.all (fun d => t.contains (dbl d))
+def closedUnderMirror (t : List Nat) : Bool := t.all (fun d => t.contains (tv d))
+
+theorem there_are_eighty_four_triples : triples.length = 84 := by decide
+
+/-- THE AXIS IS THE ONLY ONE. Of all 84, exactly one three-element subset is
+    closed under doubling, and it is {3,6,9}. The axis is not chosen here; it
+    falls out of the filter. -/
+theorem the_axis_is_the_only_triple_closed_under_doubling :
+    triples.filter closedUnderDoubling = [[3, 6, 9]] := by decide
+
+/-- The mirror closes on four triples, not one, and every one of them contains
+    5 — which is the mirror's only non-void fixed point, so it could not be
+    otherwise for a set of odd size. -/
+theorem four_triples_are_closed_under_the_mirror :
+    triples.filter closedUnderMirror = [[1, 5, 9], [2, 5, 8], [3, 5, 7], [4, 5, 6]] := by decide
+
+/-- And no triple is closed under both. The doubling and the mirror share no
+    three-element invariant subset at all, which is the sharper form of the
+    orbit-and-axis split: they do not merely differ, they cannot agree on a set
+    this size. -/
+theorem no_triple_is_closed_under_both_maps :
+    triples.filter (fun t => closedUnderDoubling t && closedUnderMirror t) = [] := by decide
+
+/-- The axis sums to 18 and its digital root is 9 — true, and NOT distinguishing:
+    ten of the 84 triples have a digital-root-9 sum. Stated so the sum is not
+    mistaken for the reason the axis is special. The closure above is. -/
+theorem the_digit_root_nine_sum_does_not_single_out_the_axis :
+    (triples.filter (fun t => dr (t.foldl (· + ·) 0) == 9)).length = 10 := by decide

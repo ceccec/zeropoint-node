@@ -119,6 +119,11 @@ const deposits = proven.map((e) => ({
     related_identifiers: [
       { identifier: CONCEPT, relation: 'isPartOf', scheme: 'doi' },
       { identifier: REPO, relation: 'isSupplementTo', scheme: 'url' },
+      // The page on the site, so a reader arriving from the DOI lands somewhere
+      // that shows the statement, what it rests on, and its neighbours — and a
+      // reader on the page can reach the archive. Cross-linked both ways or the
+      // deposit is a dead end with a number on it.
+      { identifier: `${pkg.homepage.replace(/\/$/, '')}/pages/theorems/${e.name.replace(/_/g, '-')}`, relation: 'isDocumentedBy', scheme: 'url' },
       ...cited.map((d) => ({ identifier: d, relation: 'cites', scheme: 'doi' })),
     ],
   },

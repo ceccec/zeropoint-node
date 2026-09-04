@@ -320,7 +320,8 @@
     "dossier": "node --experimental-strip-types scripts/dossier.mjs",
     "theorem:scene": "node --experimental-strip-types scripts/theorem-scene.mjs",
     "test:theorem-scene": "node --experimental-strip-types --test src/0/3/6/9/1/2/4/8/7/5/1/a432.theorem.scene.test.ts",
-    "zenodo:verify": "node --experimental-strip-types scripts/zenodo-verify.mjs"
+    "zenodo:verify": "node --experimental-strip-types scripts/zenodo-verify.mjs",
+    "theorem:pages": "node --experimental-strip-types scripts/theorem-pages.mjs"
   },
   "keywords": [
     "a432",

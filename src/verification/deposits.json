@@ -3,6 +3,7 @@
   "doesNotEstablish": "novelty. A DOI is a dated citable record and decides PRIORITY only; novelty is a universal negative no finite search decides.",
   "mintedBy": "nobody yet — minting is a write against a 2FA account and belongs to its owner",
   "bar": "a deposit-worthy statement quantifies over a domain or speaks of a defined object of this theory. A statement made only of integer literals is a step inside an argument, not a citable result, and minting an identifier for it would inflate the corpus and discredit the rest.",
+  "identity": "claim = a content address over the normalised statement, identical across repositories that state the same fact. record = repository + file + name, distinct even when the claim is shared. A merge joins on claim and keeps every record.",
   "conceptDoi": "10.5281/zenodo.22178675",
   "count": 50,
   "supportingNotDeposited": [
@@ -46,6 +47,8 @@
   "deposits": [
     {
       "theorem": "dr_is_drTS_above_zero",
+      "claim": "claim:f6a6ec82bf82c5b73cf487b3",
+      "record": "record:aae3201ab5761e33ce8b92d9",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -189,6 +192,8 @@
     },
     {
       "theorem": "dr_and_drTS_differ_at_zero",
+      "claim": "claim:2de88568702e32f7059b1a4d",
+      "record": "record:39739babd0686b41e243d65e",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -332,6 +337,8 @@
     },
     {
       "theorem": "dr_idempotent",
+      "claim": "claim:4876e178cd6b7aba866b2b55",
+      "record": "record:55bd90405a25407774133da3",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -475,6 +482,8 @@
     },
     {
       "theorem": "dr_invariant_under_nine",
+      "claim": "claim:c022cb416b86b0fdb3453bbc",
+      "record": "record:08b4f152e526994d8fda8f5b",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -618,6 +627,8 @@
     },
     {
       "theorem": "doubling_stays_in_orbit",
+      "claim": "claim:1b1c0800342e38d6ffd06a77",
+      "record": "record:31530c4db3a16a922b142038",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -761,6 +772,8 @@
     },
     {
       "theorem": "orbit_closes_after_six",
+      "claim": "claim:0902a7293027b2d1b05e3e3b",
+      "record": "record:cb825e711e908e4a7c6c69f2",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -904,6 +917,8 @@
     },
     {
       "theorem": "orbit_never_repeats_a_step",
+      "claim": "claim:d535e213a788cb083fa2e92b",
+      "record": "record:6088856fc93b6939ef0e5157",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -1047,6 +1062,8 @@
     },
     {
       "theorem": "through_void_is_an_involution",
+      "claim": "claim:8aed790e3ca7a96002eae3e9",
+      "record": "record:adbd44c40d0261a5488dc907",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -1190,6 +1207,8 @@
     },
     {
       "theorem": "through_void_fixes_only_zero_and_five",
+      "claim": "claim:fe5915c002da20f9445ad1c4",
+      "record": "record:bf2c7c1fb1d536378a1c53df",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -1333,6 +1352,8 @@
     },
     {
       "theorem": "orbit_and_axis_are_disjoint",
+      "claim": "claim:a90638b2c2cac92f138c98de",
+      "record": "record:3d42b70c2eeb736b7ead06d0",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -1476,6 +1497,8 @@
     },
     {
       "theorem": "orbit_and_axis_and_void_exhaust_the_digits",
+      "claim": "claim:d47a610dd3dd231d5ee368a7",
+      "record": "record:c8a2bc5f3e8605bc70776597",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -1619,6 +1642,8 @@
     },
     {
       "theorem": "agl_has_order_54",
+      "claim": "claim:1230c3a2c29cafe5598069a0",
+      "record": "record:849ccab6ea5b61af58ee5aff",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -1762,6 +1787,8 @@
     },
     {
       "theorem": "doubling_and_mirror_are_affine",
+      "claim": "claim:38eeb4bd250a3e2a50c13bba",
+      "record": "record:043159686a5ddc06f3eced78",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -1905,6 +1932,8 @@
     },
     {
       "theorem": "mirror_table_is_through_void",
+      "claim": "claim:d2f688b27dcfdbf297022914",
+      "record": "record:e75c3fbca8a17d9f183c4310",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -2048,6 +2077,8 @@
     },
     {
       "theorem": "mirror_is_affine_only_off_the_void",
+      "claim": "claim:5bdedc558162e4d897390936",
+      "record": "record:542d521a7d8daabba5d54377",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -2191,6 +2222,8 @@
     },
     {
       "theorem": "whole_axis_and_root_nine_is_exactly_thirty_six",
+      "claim": "claim:572a1fecddab7ba8b37c0503",
+      "record": "record:8e6722ec339c9e7939e1de1a",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -2334,6 +2367,8 @@
     },
     {
       "theorem": "base_frequency_has_digital_root_nine",
+      "claim": "claim:91d7e62d7445c15b7740eb32",
+      "record": "record:99e20af3dfdbe7829dcce19f",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -2477,6 +2512,8 @@
     },
     {
       "theorem": "every_axis_digit_mirrors_an_orbit_digit",
+      "claim": "claim:8cb13b94494cd802318c6f15",
+      "record": "record:76c25cf26a84a518e7167ad4",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -2620,6 +2657,8 @@
     },
     {
       "theorem": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "claim": "claim:8a053de5480c825fb6d26f98",
+      "record": "record:c5c2a1701cee3538c07ad58e",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -2763,6 +2802,8 @@
     },
     {
       "theorem": "exactly_two_digits_are_their_own_mirror",
+      "claim": "claim:afcb9a2b87f58464f6c5e11f",
+      "record": "record:981bc0dd3237a175834e7952",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -2906,6 +2947,8 @@
     },
     {
       "theorem": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "claim": "claim:fabf903480c0627ca6c1f6d5",
+      "record": "record:beb2286b20b680375a26c544",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -3049,6 +3092,8 @@
     },
     {
       "theorem": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "claim": "claim:eee6b43975d74bd60b06c5fe",
+      "record": "record:a643b04b7d94d4ac32854df2",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -3192,6 +3237,8 @@
     },
     {
       "theorem": "four_three_two_has_twenty_divisors_its_neighbours_eighteen",
+      "claim": "claim:c2056f4399351610d7d1884e",
+      "record": "record:1aa452eb50aff017bfef30e8",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -3335,6 +3382,8 @@
     },
     {
       "theorem": "every_mirror_orbit_sums_to_ten",
+      "claim": "claim:114081000c331d016e056caa",
+      "record": "record:afc2a92d663601ace448898d",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -3478,6 +3527,8 @@
     },
     {
       "theorem": "the_void_is_the_one_orbit_that_does_not",
+      "claim": "claim:27057d999f3bb936196caaad",
+      "record": "record:6f23da48512c936bd28ce211",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -3621,6 +3672,8 @@
     },
     {
       "theorem": "swap12_is_an_involution",
+      "claim": "claim:d586b25940d33ae6dca6fc79",
+      "record": "record:437ca2685022fb864a315a4c",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -3764,6 +3817,8 @@
     },
     {
       "theorem": "being_an_involution_is_not_enough_for_harmony",
+      "claim": "claim:f034429472d753b95d163b04",
+      "record": "record:7f4d6baf1920748a5983c37f",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -3907,6 +3962,8 @@
     },
     {
       "theorem": "non_fixed_points_come_in_pairs",
+      "claim": "claim:dd3d0414cc4f21522969ed93",
+      "record": "record:ebebf80abd40c5d4217b98ca",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -4050,6 +4107,8 @@
     },
     {
       "theorem": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "claim": "claim:31e350d58dfbdd094972e18f",
+      "record": "record:8717eb093ad2dface802fccb",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -4193,6 +4252,8 @@
     },
     {
       "theorem": "doubling_stays_in_orbit_axiom_free",
+      "claim": "claim:1f6ad02203246e3777b91c7e",
+      "record": "record:abaf512bdb5483d62e6dbf6a",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -4336,6 +4397,8 @@
     },
     {
       "theorem": "orbit_and_axis_are_disjoint_axiom_free",
+      "claim": "claim:df4db95da7e89e5e9f3a13c8",
+      "record": "record:02f9e5684007ed70ef35083e",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -4479,6 +4542,8 @@
     },
     {
       "theorem": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "claim": "claim:552381e599679f1115a9f7da",
+      "record": "record:e2d871174ec57068d522908c",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -4622,6 +4687,8 @@
     },
     {
       "theorem": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "claim": "claim:c9e4636bb5fdb8467b964a18",
+      "record": "record:91e8be193247fd4231103595",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -4765,6 +4832,8 @@
     },
     {
       "theorem": "mirror_table_is_through_void_axiom_free",
+      "claim": "claim:acddc1ba911033c6d72cfbbf",
+      "record": "record:4874f0ddd6a7e6411bd01a5c",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -4908,6 +4977,8 @@
     },
     {
       "theorem": "doubling_and_mirror_are_affine_axiom_free",
+      "claim": "claim:af1e703fed376282ff4d7ca4",
+      "record": "record:95ebef07d7e9e32bcfeee18b",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -5051,6 +5122,8 @@
     },
     {
       "theorem": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "claim": "claim:97143a280e6fbc5a965b5bfa",
+      "record": "record:9c61211edb463dcc2be572a8",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -5194,6 +5267,8 @@
     },
     {
       "theorem": "speed_of_light_has_digital_root_one",
+      "claim": "claim:45e9312393c192172698f7c5",
+      "record": "record:2695a001f023e9d8cc1347ff",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -5337,6 +5412,8 @@
     },
     {
       "theorem": "light_year_has_digital_root_nine",
+      "claim": "claim:94b392db613e80180ba11e70",
+      "record": "record:6ddac5083dc4863ccf1bf1ce",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -5480,6 +5557,8 @@
     },
     {
       "theorem": "astronomical_unit_has_digital_root_three",
+      "claim": "claim:caebc7eccdc8ddef9d93d5e5",
+      "record": "record:b701aea8cb0c6b6b5af84c95",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -5623,6 +5702,8 @@
     },
     {
       "theorem": "the_digital_root_of_c_is_not_robust",
+      "claim": "claim:8cd8d14b346f0782f5f7d99a",
+      "record": "record:456e083f5d755cdd40173a72",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -5766,6 +5847,8 @@
     },
     {
       "theorem": "light_leaves_a_null_interval",
+      "claim": "claim:a5bbb4feae660033f1189376",
+      "record": "record:21d216963c11dbe8dd3fae17",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -5909,6 +5992,8 @@
     },
     {
       "theorem": "there_are_eighty_four_triples",
+      "claim": "claim:7da76fd33c453b7cfca29900",
+      "record": "record:bffd52c6a8e80e1211b1a566",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -6052,6 +6137,8 @@
     },
     {
       "theorem": "the_axis_is_the_only_triple_closed_under_doubling",
+      "claim": "claim:03e0fd5c4b6b5e7af39fbc46",
+      "record": "record:2832e9177965497ae2155870",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -6195,6 +6282,8 @@
     },
     {
       "theorem": "four_triples_are_closed_under_the_mirror",
+      "claim": "claim:524c7146a6270284082aa4ff",
+      "record": "record:1733ec04a15465ffd47ab7f3",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -6338,6 +6427,8 @@
     },
     {
       "theorem": "no_triple_is_closed_under_both_maps",
+      "claim": "claim:fcdc68a80944e76662254a96",
+      "record": "record:8a344bc18d8cc66211cee873",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -6481,6 +6572,8 @@
     },
     {
       "theorem": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "claim": "claim:55f2cb294936395962f19168",
+      "record": "record:edad586dd33f23a9dfc69885",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -6624,6 +6717,8 @@
     },
     {
       "theorem": "the_triangles_are_the_residues_mod_three",
+      "claim": "claim:ff0acccc996fef5eb1d74ba8",
+      "record": "record:bf40323a9999d8d658b2f13a",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -6767,6 +6862,8 @@
     },
     {
       "theorem": "the_mirror_swaps_the_first_triangle_with_the_axis",
+      "claim": "claim:b08aed32c8c11e877a00b203",
+      "record": "record:eca04828bded462140a33a74",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -6910,6 +7007,8 @@
     },
     {
       "theorem": "the_mirror_fixes_the_middle_triangle_setwise",
+      "claim": "claim:eeadf382c16280e95945c2a5",
+      "record": "record:3badeb652454ebc11fd4bd23",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",
@@ -7053,6 +7152,8 @@
     },
     {
       "theorem": "the_three_triangles_partition_the_nonzero_digits",
+      "claim": "claim:917d5eb30959d38e38f0bb4a",
+      "record": "record:730f368387c90d69068e92d9",
       "file": "lean/DigitSpace.lean",
       "metadata": {
         "upload_type": "publication",

@@ -23,6 +23,7 @@
  *   npm run zenodo:deposits:check  fail if it is not what the sources produce
  */
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import { join } from 'node:path'
 
 const ROOT = join(import.meta.dirname, '..')
@@ -85,6 +86,31 @@ function standsAlone(name) {
 }
 
 const provenAll = ledger.entries.filter((e) => e.status === 'proven')
+/**
+ * IDENTITY BY CONTENT, NOT BY NAME — because repos merge.
+ *
+ * A deposit keyed by theorem name collides the moment another repository names
+ * a theorem the same thing, and misses the case that matters: the SAME fact
+ * stated under two different names. Names are local; statements are not.
+ *
+ * `claim` is a content address over the normalised statement — whitespace
+ * collapsed, `==` and `!=` written as `=` and `≠`. Two repositories proving the
+ * same thing produce the SAME claim id, which is exactly what a merge needs:
+ * one publication with both repositories listed, rather than two DOIs neither
+ * aware of the other. ceccec-github-io-5b found a theorem proved twice in their
+ * own corpus this way, and a second pair under different names that no
+ * name-keyed scan could see.
+ *
+ * `record` is the other question — which FILE in which repository — and stays
+ * distinct even when two repos share a claim.
+ */
+function normaliseStatement(text) {
+  return String(text).replace(/\s+/g, ' ').trim().toLowerCase()
+    .replace(/==/g, '=').replace(/!=/g, '≠')
+}
+const claimId = (st) => 'claim:' + createHash('sha256').update(normaliseStatement(st)).digest('hex').slice(0, 24)
+const recordId = (name, file) => 'record:' + createHash('sha256').update(`${REPO}\u0000${file}\u0000${name}`).digest('hex').slice(0, 24)
+
 const proven = provenAll.filter((e) => standsAlone(e.name))
 const supporting = provenAll.filter((e) => !standsAlone(e.name))
 const cited = Object.values(priorArt.contributions)
@@ -94,6 +120,8 @@ const cited = Object.values(priorArt.contributions)
 
 const deposits = proven.map((e) => ({
   theorem: e.name,
+  claim: claimId(statements.get(e.name) ?? e.name),
+  record: recordId(e.name, `lean/${e.file}`),
   file: `lean/${e.file}`,
   metadata: {
     upload_type: 'publication',
@@ -134,6 +162,7 @@ const record = {
   doesNotEstablish: 'novelty. A DOI is a dated citable record and decides PRIORITY only; novelty is a universal negative no finite search decides.',
   mintedBy: 'nobody yet — minting is a write against a 2FA account and belongs to its owner',
   bar: 'a deposit-worthy statement quantifies over a domain or speaks of a defined object of this theory. A statement made only of integer literals is a step inside an argument, not a citable result, and minting an identifier for it would inflate the corpus and discredit the rest.',
+  identity: 'claim = a content address over the normalised statement, identical across repositories that state the same fact. record = repository + file + name, distinct even when the claim is shared. A merge joins on claim and keeps every record.',
   conceptDoi: CONCEPT,
   count: deposits.length,
   supportingNotDeposited: supporting.map((e) => ({ theorem: e.name, why: 'literal arithmetic in support of a claim; proved, and cited through the concept DOI' })),

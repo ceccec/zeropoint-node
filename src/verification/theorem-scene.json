@@ -1,0 +1,3304 @@
+{
+  "what": "The theorem corpus laid out on the vortex torus: one node per statement, positioned by its index through the digit sequence and the digital root of that digit, coloured by standing, linked where two theorems speak of the same defined object.",
+  "doesNotEstablish": "anything. A layout is a way of looking at a ledger, not evidence about it. Position carries the index and the digital root; it does not carry truth, importance or difficulty.",
+  "renderer": "none shipped. a432.vbm.animation takes a ThreeLike as a parameter; this emits the numbers that feed it. The engine is the caller’s.",
+  "torus": {
+    "majorRadius": 4,
+    "minorRadius": 1
+  },
+  "counts": {
+    "nodes": 74,
+    "edges": 265,
+    "proven": 50,
+    "restingOnNothing": 42
+  },
+  "nodes": [
+    {
+      "name": "dr_is_drTS_above_zero",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 1,
+      "speaksOf": [
+        "dr",
+        "drTS"
+      ],
+      "position": {
+        "x": 4.766044443118978,
+        "y": 0.6427876096865393,
+        "z": 0
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "dr_and_drTS_differ_at_zero",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 2,
+      "speaksOf": [
+        "dr",
+        "drTS"
+      ],
+      "position": {
+        "x": 4.158612562287422,
+        "y": 0.984807753012208,
+        "z": 0.3539500921425683
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "dr_idempotent",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 4,
+      "speaksOf": [
+        "dr"
+      ],
+      "position": {
+        "x": 3.0162876435079067,
+        "y": 0.3420201433256689,
+        "z": 0.5171944575241896
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "dr_invariant_under_nine",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 8,
+      "speaksOf": [
+        "dr"
+      ],
+      "position": {
+        "x": 4.612258234155555,
+        "y": -0.6427876096865396,
+        "z": 1.2009386392524686
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "doubling_stays_in_orbit",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "restsOnNothing": false,
+      "digit": 7,
+      "speaksOf": [
+        "dbl",
+        "orbit"
+      ],
+      "position": {
+        "x": 3.9352387320119044,
+        "y": -0.9848077530122081,
+        "z": 1.3904082972335237
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "orbit_closes_after_six",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 5,
+      "speaksOf": [
+        "dbl",
+        "orbit"
+      ],
+      "position": {
+        "x": 2.7886392732849288,
+        "y": -0.34202014332566866,
+        "z": 1.2605444295085861
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "orbit_never_repeats_a_step",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 3,
+      "speaksOf": [
+        "dbl",
+        "orbit"
+      ],
+      "position": {
+        "x": 3.0555493960641584,
+        "y": 0.8660254037844387,
+        "z": 1.706932303347721
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "through_void_is_an_involution",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 6,
+      "speaksOf": [
+        "tv",
+        "digits"
+      ],
+      "position": {
+        "x": 2.899783772353447,
+        "y": -0.8660254037844385,
+        "z": 1.9599117514815834
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "through_void_fixes_only_zero_and_five",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 9,
+      "speaksOf": [
+        "tv",
+        "digits"
+      ],
+      "position": {
+        "x": 3.890178771592198,
+        "y": -2.4492935982947064e-16,
+        "z": 3.1410999864782116
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "orbit_and_axis_are_disjoint",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "restsOnNothing": false,
+      "digit": 1,
+      "speaksOf": [
+        "orbit",
+        "axis"
+      ],
+      "position": {
+        "x": 3.4408748297678438,
+        "y": 0.6427876096865393,
+        "z": 3.2978114014684645
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "orbit_and_axis_and_void_exhaust_the_digits",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "restsOnNothing": false,
+      "digit": 2,
+      "speaksOf": [
+        "orbit",
+        "axis",
+        "digits"
+      ],
+      "position": {
+        "x": 2.757423855307617,
+        "y": 0.984807753012208,
+        "z": 3.1330420988430663
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "agl_has_order_54",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 4,
+      "speaksOf": [
+        "agl"
+      ],
+      "position": {
+        "x": 1.8197602973695224,
+        "y": 0.3420201433256689,
+        "z": 2.460478350928902
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "doubling_and_mirror_are_affine",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "restsOnNothing": false,
+      "digit": 8,
+      "speaksOf": [
+        "affineTable",
+        "agl"
+      ],
+      "position": {
+        "x": 2.49887181528475,
+        "y": -0.6427876096865396,
+        "z": 4.058425715047743
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "mirror_table_is_through_void",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [
+        "propext"
+      ],
+      "restsOnNothing": false,
+      "digit": 7,
+      "speaksOf": [
+        "tv",
+        "affineTable",
+        "nonzero"
+      ],
+      "position": {
+        "x": 1.8789920391371098,
+        "y": -0.9848077530122081,
+        "z": 3.726758380657626
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "mirror_is_affine_only_off_the_void",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [
+        "propext"
+      ],
+      "restsOnNothing": false,
+      "digit": 5,
+      "speaksOf": [
+        "tv",
+        "affineTable"
+      ],
+      "position": {
+        "x": 1.1410554303388534,
+        "y": -0.34202014332566866,
+        "z": 2.839625637327293
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "generators_apart_give_twelve",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 3,
+      "speaksOf": [],
+      "position": {
+        "x": 1.0248796994679266,
+        "y": 0.8660254037844387,
+        "z": 3.346583571587378
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "whole_axis_and_root_nine_is_exactly_thirty_six",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 6,
+      "speaksOf": [],
+      "position": {
+        "x": 0.7373774449850417,
+        "y": -0.8660254037844385,
+        "z": 3.4214433363169015
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "four_three_two_is_a_multiple_of_thirty_six_but_not_the_only_one",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 9,
+      "speaksOf": [],
+      "position": {
+        "x": 0.6350890987343932,
+        "y": -2.4492935982947064e-16,
+        "z": 4.959502176294385
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "base_frequency_has_digital_root_nine",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 1,
+      "speaksOf": [
+        "dr"
+      ],
+      "position": {
+        "x": 0.20227666065228572,
+        "y": 0.6427876096865393,
+        "z": 4.761750076005738
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "every_axis_digit_mirrors_an_orbit_digit",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ],
+      "restsOnNothing": false,
+      "digit": 2,
+      "speaksOf": [
+        "tv",
+        "orbit",
+        "axis"
+      ],
+      "position": {
+        "x": -0.17713465037759546,
+        "y": 0.984807753012208,
+        "z": 4.169887579609083
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 4,
+      "speaksOf": [
+        "tv",
+        "axis"
+      ],
+      "position": {
+        "x": -0.3887135710630584,
+        "y": 0.3420201433256689,
+        "z": 3.0355202214684103
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "exactly_two_digits_are_their_own_mirror",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 8,
+      "speaksOf": [
+        "tv",
+        "digits"
+      ],
+      "position": {
+        "x": -1.004106764043493,
+        "y": -0.6427876096865396,
+        "z": 4.659071714428465
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 7,
+      "speaksOf": [
+        "tv",
+        "digits"
+      ],
+      "position": {
+        "x": -1.2221392257177546,
+        "y": -0.9848077530122081,
+        "z": 3.9907035499902137
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 5,
+      "speaksOf": [
+        "tv"
+      ],
+      "position": {
+        "x": -1.1410554303388531,
+        "y": -0.34202014332566866,
+        "z": 2.839625637327293
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "four_three_two_has_twenty_divisors_its_neighbours_eighteen",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 3,
+      "speaksOf": [
+        "divisorCount"
+      ],
+      "position": {
+        "x": -1.5757131068618568,
+        "y": 0.8660254037844387,
+        "z": 3.12524050352349
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "all_three_are_multiples_of_thirty_six",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 6,
+      "speaksOf": [],
+      "position": {
+        "x": -1.83507549245031,
+        "y": -0.8660254037844385,
+        "z": 2.9803519820665896
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "every_mirror_orbit_sums_to_ten",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 9,
+      "speaksOf": [
+        "tv",
+        "nonzero"
+      ],
+      "position": {
+        "x": -2.973165881521433,
+        "y": -2.4492935982947064e-16,
+        "z": 4.019985651834703
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "the_void_is_the_one_orbit_that_does_not",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 1,
+      "speaksOf": [
+        "tv"
+      ],
+      "position": {
+        "x": -3.148805094122465,
+        "y": 0.6427876096865393,
+        "z": 3.5777375690530606
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "swap12_is_an_involution",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 2,
+      "speaksOf": [
+        "digits",
+        "swap12"
+      ],
+      "position": {
+        "x": -3.013190735888836,
+        "y": 0.984807753012208,
+        "z": 2.887909399565052
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "being_an_involution_is_not_enough_for_harmony",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 4,
+      "speaksOf": [
+        "swap12"
+      ],
+      "position": {
+        "x": -2.381028560233122,
+        "y": 0.3420201433256689,
+        "z": 1.9225462934937116
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "non_fixed_points_come_in_pairs",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 8,
+      "speaksOf": [
+        "tv",
+        "digits",
+        "swap12"
+      ],
+      "position": {
+        "x": -3.948713809849067,
+        "y": -0.6427876096865396,
+        "z": 2.668864717757825
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 7,
+      "speaksOf": [
+        "tv",
+        "nonzero",
+        "swap12"
+      ],
+      "position": {
+        "x": -3.643653762472704,
+        "y": -0.9848077530122081,
+        "z": 2.0354671135051516
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "doubling_stays_in_orbit_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 5,
+      "speaksOf": [
+        "dbl",
+        "orbit"
+      ],
+      "position": {
+        "x": -2.7886392732849288,
+        "y": -0.34202014332566866,
+        "z": 1.2605444295085855
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "orbit_and_axis_are_disjoint_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 3,
+      "speaksOf": [
+        "orbit",
+        "axis"
+      ],
+      "position": {
+        "x": -3.3000710591137947,
+        "y": 0.8660254037844387,
+        "z": 1.1659892815972015
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 6,
+      "speaksOf": [
+        "orbit",
+        "axis",
+        "digits"
+      ],
+      "position": {
+        "x": -3.3870653142672458,
+        "y": -0.8660254037844385,
+        "z": 0.8819232148479375
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 9,
+      "speaksOf": [
+        "tv",
+        "orbit",
+        "axis"
+      ],
+      "position": {
+        "x": -4.928079551738542,
+        "y": -2.4492935982947064e-16,
+        "z": 0.8450041016092457
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "mirror_table_is_through_void_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [
+        "propext"
+      ],
+      "restsOnNothing": false,
+      "digit": 1,
+      "speaksOf": [
+        "tv",
+        "affineTable",
+        "nonzero"
+      ],
+      "position": {
+        "x": -4.748874713405814,
+        "y": 0.6427876096865393,
+        "z": 0.40418880509006766
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "doubling_and_mirror_are_affine_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 2,
+      "speaksOf": [
+        "affineTable",
+        "agl"
+      ],
+      "position": {
+        "x": -4.17364817766693,
+        "y": 0.984807753012208,
+        "z": 5.111244881546989e-16
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 4,
+      "speaksOf": [
+        "tv",
+        "nonzero"
+      ],
+      "position": {
+        "x": -3.0492825868170823,
+        "y": 0.3420201433256689,
+        "z": -0.2595321964734726
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "speed_of_light_has_digital_root_one",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 8,
+      "speaksOf": [
+        "dr"
+      ],
+      "position": {
+        "x": -4.697489232562349,
+        "y": -0.6427876096865396,
+        "z": -0.8054654205774947
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "light_year_is_c_times_a_julian_year",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 7,
+      "speaksOf": [],
+      "position": {
+        "x": -4.038976850437246,
+        "y": -0.9848077530122081,
+        "z": -1.0516677767120737
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "light_year_has_digital_root_nine",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 5,
+      "speaksOf": [
+        "dr"
+      ],
+      "position": {
+        "x": -2.885494804039088,
+        "y": -0.34202014332566866,
+        "z": -1.0195101721589859
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "astronomical_unit_has_digital_root_three",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 3,
+      "speaksOf": [
+        "dr"
+      ],
+      "position": {
+        "x": -3.1892997163584758,
+        "y": 0.8660254037844387,
+        "z": -1.4416543688539727
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "the_digital_root_of_c_is_not_robust",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 6,
+      "speaksOf": [
+        "dr"
+      ],
+      "position": {
+        "x": -3.0555493960641584,
+        "y": -0.8660254037844385,
+        "z": -1.7069323033477197
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "light_leaves_a_null_interval",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 9,
+      "speaksOf": [],
+      "position": {
+        "x": -4.142548246219211,
+        "y": -2.4492935982947064e-16,
+        "z": -2.7998739306879767
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "c_squared_is_exact",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 1,
+      "speaksOf": [],
+      "position": {
+        "x": -3.708152983417281,
+        "y": 0.6427876096865393,
+        "z": -2.9941244271671157
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "c_squared_exceeds_the_exact_range_of_a_double",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 2,
+      "speaksOf": [],
+      "position": {
+        "x": -3.013190735888837,
+        "y": 0.984807753012208,
+        "z": -2.8879093995650518
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "the_light_year_exceeds_it_as_well",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 4,
+      "speaksOf": [],
+      "position": {
+        "x": -2.021867731250896,
+        "y": 0.3420201433256689,
+        "z": -2.297287995136564
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "the_astronomical_unit_stays_inside_it",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 8,
+      "speaksOf": [],
+      "position": {
+        "x": -2.834048145619232,
+        "y": -0.6427876096865396,
+        "z": -3.8318860554689618
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "exceeding_the_range_is_the_hazard_not_the_error",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [],
+      "restsOnNothing": true,
+      "digit": 7,
+      "speaksOf": [],
+      "position": {
+        "x": -2.18827413855614,
+        "y": -0.9848077530122081,
+        "z": -3.553983033930926
+      },
+      "hue": 120,
+      "standing": "accepted by the kernel"
+    },
+    {
+      "name": "hadamard_squared",
+      "file": "Quantum.lean",
+      "status": "unverifiable-here",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 5,
+      "speaksOf": [
+        "hadamard"
+      ],
+      "position": {
+        "x": -1.3777618424153444,
+        "y": -0.34202014332566866,
+        "z": -2.732627592786199
+      },
+      "hue": 210,
+      "standing": "needs a library this repository cannot build here"
+    },
+    {
+      "name": "hadamard_unitary",
+      "file": "Quantum.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 3,
+      "speaksOf": [
+        "IsUnitary",
+        "hadamard"
+      ],
+      "position": {
+        "x": -1.3049976722310805,
+        "y": 0.8660254037844387,
+        "z": -3.2476115955377822
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "pauliX_unitary",
+      "file": "Quantum.lean",
+      "status": "unverifiable-here",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 6,
+      "speaksOf": [
+        "IsUnitary",
+        "pauliX"
+      ],
+      "position": {
+        "x": -1.024879699467926,
+        "y": -0.8660254037844385,
+        "z": -3.3465835715873777
+      },
+      "hue": 210,
+      "standing": "needs a library this repository cannot build here"
+    },
+    {
+      "name": "pauli_anticomm",
+      "file": "Quantum.lean",
+      "status": "unverifiable-here",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 9,
+      "speaksOf": [
+        "pauliX",
+        "pauliY"
+      ],
+      "position": {
+        "x": -1.0533963499786305,
+        "y": -2.4492935982947064e-16,
+        "z": -4.887776194738431
+      },
+      "hue": 210,
+      "standing": "needs a library this repository cannot build here"
+    },
+    {
+      "name": "born_rule_sum",
+      "file": "Quantum.lean",
+      "status": "unverifiable-here",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 1,
+      "speaksOf": [
+        "QuantumState",
+        "IsNormalized",
+        "measurementProb"
+      ],
+      "position": {
+        "x": -0.6053725739817016,
+        "y": 0.6427876096865393,
+        "z": -4.727441557592865
+      },
+      "hue": 210,
+      "standing": "needs a library this repository cannot build here"
+    },
+    {
+      "name": "grover_amplification",
+      "file": "Quantum.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 2,
+      "speaksOf": [],
+      "position": {
+        "x": -0.1771346503775974,
+        "y": 0.984807753012208,
+        "z": -4.169887579609083
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "shor_period_finding",
+      "file": "Quantum.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 4,
+      "speaksOf": [
+        "modularExpSuperposition"
+      ],
+      "position": {
+        "x": 0.1298831273238971,
+        "y": 0.3420201433256689,
+        "z": -3.057549938841357
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "repetition_detects_single_error",
+      "file": "Quantum.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 8,
+      "speaksOf": [
+        "QuantumState"
+      ],
+      "position": {
+        "x": 0.6053725739816999,
+        "y": -0.6427876096865396,
+        "z": -4.727441557592865
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "surface_code_correctability",
+      "file": "Quantum.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 7,
+      "speaksOf": [
+        "surfaceCodeThreshold"
+      ],
+      "position": {
+        "x": 0.8793011512898599,
+        "y": -0.9848077530122081,
+        "z": -4.079971641602771
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "vqe_convergence",
+      "file": "Quantum.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 5,
+      "speaksOf": [
+        "vqeObjective"
+      ],
+      "position": {
+        "x": 0.8961276877395461,
+        "y": -0.34202014332566866,
+        "z": -2.926164114081573
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "tensor_preserves_norm",
+      "file": "Quantum.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 3,
+      "speaksOf": [
+        "QuantumState",
+        "IsNormalized",
+        "tensorProduct"
+      ],
+      "position": {
+        "x": 1.3049976722310794,
+        "y": 0.8660254037844387,
+        "z": -3.247611595537783
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "surface_code_fault_tolerant",
+      "file": "Quantum.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 6,
+      "speaksOf": [
+        "IsFaultTolerant"
+      ],
+      "position": {
+        "x": 1.5757131068618562,
+        "y": -0.8660254037844385,
+        "z": -3.1252405035234894
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "kyber_security",
+      "file": "Quantum.lean",
+      "status": "unverifiable-here",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 9,
+      "speaksOf": [],
+      "position": {
+        "x": 2.621536417786159,
+        "y": -2.4492935982947064e-16,
+        "z": -4.257645688666556
+      },
+      "hue": 210,
+      "standing": "needs a library this repository cannot build here"
+    },
+    {
+      "name": "quantum_system_correct",
+      "file": "Quantum.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 1,
+      "speaksOf": [
+        "QuantumState",
+        "IsNormalized",
+        "IsUnitary",
+        "hadamard",
+        "pauliX",
+        "pauliY",
+        "pauliZ",
+        "tensorProduct"
+      ],
+      "position": {
+        "x": 2.8340481456192306,
+        "y": 0.6427876096865393,
+        "z": -3.831886055468963
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "grover_amplification",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 2,
+      "speaksOf": [],
+      "position": {
+        "x": 2.7574238553076182,
+        "y": 0.984807753012208,
+        "z": -3.133042098843065
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "grover_speedup",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 4,
+      "speaksOf": [],
+      "position": {
+        "x": 2.2094075617976126,
+        "y": 0.3420201433256689,
+        "z": -2.1175456266970376
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "qft_unitary",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 8,
+      "speaksOf": [
+        "IsUnitary",
+        "qftMatrix"
+      ],
+      "position": {
+        "x": 3.708152983417281,
+        "y": -0.6427876096865396,
+        "z": -2.9941244271671152
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "qft_inverse",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 7,
+      "speaksOf": [
+        "qftMatrix"
+      ],
+      "position": {
+        "x": 3.4579077877460276,
+        "y": -0.9848077530122081,
+        "z": -2.3371377457026066
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "qft_correctness",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 5,
+      "speaksOf": [
+        "QuantumState"
+      ],
+      "position": {
+        "x": 2.6716915326652306,
+        "y": -0.34202014332566866,
+        "z": -1.4924964353582666
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "phase_estimation_accuracy",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 3,
+      "speaksOf": [
+        "QuantumState",
+        "IsUnitary"
+      ],
+      "position": {
+        "x": 3.1892997163584744,
+        "y": 0.8660254037844387,
+        "z": -1.4416543688539754
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "shor_period_finding",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 6,
+      "speaksOf": [
+        "modularExpSuperposition"
+      ],
+      "position": {
+        "x": 3.300071059113794,
+        "y": -0.8660254037844385,
+        "z": -1.1659892815972017
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "shor_factorization",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 9,
+      "speaksOf": [],
+      "position": {
+        "x": 4.838664734667494,
+        "y": -2.4492935982947064e-16,
+        "z": -1.2598903069256298
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "vqe_finds_ground_state",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 1,
+      "speaksOf": [
+        "vqeObjective"
+      ],
+      "position": {
+        "x": 4.697489232562349,
+        "y": 0.6427876096865393,
+        "z": -0.8054654205774964
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    },
+    {
+      "name": "qaoa_approximation",
+      "file": "QuantumAlgorithms.lean",
+      "status": "sorry",
+      "axioms": null,
+      "restsOnNothing": false,
+      "digit": 2,
+      "speaksOf": [],
+      "position": {
+        "x": 4.158612562287421,
+        "y": 0.984807753012208,
+        "z": -0.35395009214257006
+      },
+      "hue": 40,
+      "standing": "written down, closed with sorry"
+    }
+  ],
+  "edges": [
+    {
+      "from": "dr_is_drTS_above_zero",
+      "to": "dr_and_drTS_differ_at_zero",
+      "shared": [
+        "dr",
+        "drTS"
+      ]
+    },
+    {
+      "from": "dr_is_drTS_above_zero",
+      "to": "dr_idempotent",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_is_drTS_above_zero",
+      "to": "dr_invariant_under_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_is_drTS_above_zero",
+      "to": "base_frequency_has_digital_root_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_is_drTS_above_zero",
+      "to": "speed_of_light_has_digital_root_one",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_is_drTS_above_zero",
+      "to": "light_year_has_digital_root_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_is_drTS_above_zero",
+      "to": "astronomical_unit_has_digital_root_three",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_is_drTS_above_zero",
+      "to": "the_digital_root_of_c_is_not_robust",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_and_drTS_differ_at_zero",
+      "to": "dr_idempotent",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_and_drTS_differ_at_zero",
+      "to": "dr_invariant_under_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_and_drTS_differ_at_zero",
+      "to": "base_frequency_has_digital_root_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_and_drTS_differ_at_zero",
+      "to": "speed_of_light_has_digital_root_one",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_and_drTS_differ_at_zero",
+      "to": "light_year_has_digital_root_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_and_drTS_differ_at_zero",
+      "to": "astronomical_unit_has_digital_root_three",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_and_drTS_differ_at_zero",
+      "to": "the_digital_root_of_c_is_not_robust",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_idempotent",
+      "to": "dr_invariant_under_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_idempotent",
+      "to": "base_frequency_has_digital_root_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_idempotent",
+      "to": "speed_of_light_has_digital_root_one",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_idempotent",
+      "to": "light_year_has_digital_root_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_idempotent",
+      "to": "astronomical_unit_has_digital_root_three",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_idempotent",
+      "to": "the_digital_root_of_c_is_not_robust",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_invariant_under_nine",
+      "to": "base_frequency_has_digital_root_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_invariant_under_nine",
+      "to": "speed_of_light_has_digital_root_one",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_invariant_under_nine",
+      "to": "light_year_has_digital_root_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_invariant_under_nine",
+      "to": "astronomical_unit_has_digital_root_three",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "dr_invariant_under_nine",
+      "to": "the_digital_root_of_c_is_not_robust",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit",
+      "to": "orbit_closes_after_six",
+      "shared": [
+        "dbl",
+        "orbit"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit",
+      "to": "orbit_never_repeats_a_step",
+      "shared": [
+        "dbl",
+        "orbit"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit",
+      "to": "orbit_and_axis_are_disjoint",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit",
+      "to": "orbit_and_axis_and_void_exhaust_the_digits",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit",
+      "to": "every_axis_digit_mirrors_an_orbit_digit",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit",
+      "to": "doubling_stays_in_orbit_axiom_free",
+      "shared": [
+        "dbl",
+        "orbit"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit",
+      "to": "orbit_and_axis_are_disjoint_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_closes_after_six",
+      "to": "orbit_never_repeats_a_step",
+      "shared": [
+        "dbl",
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_closes_after_six",
+      "to": "orbit_and_axis_are_disjoint",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_closes_after_six",
+      "to": "orbit_and_axis_and_void_exhaust_the_digits",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_closes_after_six",
+      "to": "every_axis_digit_mirrors_an_orbit_digit",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_closes_after_six",
+      "to": "doubling_stays_in_orbit_axiom_free",
+      "shared": [
+        "dbl",
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_closes_after_six",
+      "to": "orbit_and_axis_are_disjoint_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_closes_after_six",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_closes_after_six",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_never_repeats_a_step",
+      "to": "orbit_and_axis_are_disjoint",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_never_repeats_a_step",
+      "to": "orbit_and_axis_and_void_exhaust_the_digits",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_never_repeats_a_step",
+      "to": "every_axis_digit_mirrors_an_orbit_digit",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_never_repeats_a_step",
+      "to": "doubling_stays_in_orbit_axiom_free",
+      "shared": [
+        "dbl",
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_never_repeats_a_step",
+      "to": "orbit_and_axis_are_disjoint_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_never_repeats_a_step",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_never_repeats_a_step",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "through_void_fixes_only_zero_and_five",
+      "shared": [
+        "tv",
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "orbit_and_axis_and_void_exhaust_the_digits",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "mirror_table_is_through_void",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "mirror_is_affine_only_off_the_void",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "every_axis_digit_mirrors_an_orbit_digit",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "exactly_two_digits_are_their_own_mirror",
+      "shared": [
+        "tv",
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "shared": [
+        "tv",
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "every_mirror_orbit_sums_to_ten",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "the_void_is_the_one_orbit_that_does_not",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "swap12_is_an_involution",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "tv",
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_is_an_involution",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "orbit_and_axis_and_void_exhaust_the_digits",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "mirror_table_is_through_void",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "mirror_is_affine_only_off_the_void",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "every_axis_digit_mirrors_an_orbit_digit",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "exactly_two_digits_are_their_own_mirror",
+      "shared": [
+        "tv",
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "shared": [
+        "tv",
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "every_mirror_orbit_sums_to_ten",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "the_void_is_the_one_orbit_that_does_not",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "swap12_is_an_involution",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "tv",
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "through_void_fixes_only_zero_and_five",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_are_disjoint",
+      "to": "orbit_and_axis_and_void_exhaust_the_digits",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_are_disjoint",
+      "to": "every_axis_digit_mirrors_an_orbit_digit",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_are_disjoint",
+      "to": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "shared": [
+        "axis"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_are_disjoint",
+      "to": "doubling_stays_in_orbit_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_are_disjoint",
+      "to": "orbit_and_axis_are_disjoint_axiom_free",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_are_disjoint",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_are_disjoint",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_and_void_exhaust_the_digits",
+      "to": "every_axis_digit_mirrors_an_orbit_digit",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_and_void_exhaust_the_digits",
+      "to": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "shared": [
+        "axis"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_and_void_exhaust_the_digits",
+      "to": "exactly_two_digits_are_their_own_mirror",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_and_void_exhaust_the_digits",
+      "to": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_and_void_exhaust_the_digits",
+      "to": "swap12_is_an_involution",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_and_void_exhaust_the_digits",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_and_void_exhaust_the_digits",
+      "to": "doubling_stays_in_orbit_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_and_void_exhaust_the_digits",
+      "to": "orbit_and_axis_are_disjoint_axiom_free",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_and_void_exhaust_the_digits",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "orbit",
+        "axis",
+        "digits"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_and_void_exhaust_the_digits",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "agl_has_order_54",
+      "to": "doubling_and_mirror_are_affine",
+      "shared": [
+        "agl"
+      ]
+    },
+    {
+      "from": "agl_has_order_54",
+      "to": "doubling_and_mirror_are_affine_axiom_free",
+      "shared": [
+        "agl"
+      ]
+    },
+    {
+      "from": "doubling_and_mirror_are_affine",
+      "to": "mirror_table_is_through_void",
+      "shared": [
+        "affineTable"
+      ]
+    },
+    {
+      "from": "doubling_and_mirror_are_affine",
+      "to": "mirror_is_affine_only_off_the_void",
+      "shared": [
+        "affineTable"
+      ]
+    },
+    {
+      "from": "doubling_and_mirror_are_affine",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "affineTable"
+      ]
+    },
+    {
+      "from": "doubling_and_mirror_are_affine",
+      "to": "doubling_and_mirror_are_affine_axiom_free",
+      "shared": [
+        "affineTable",
+        "agl"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "mirror_is_affine_only_off_the_void",
+      "shared": [
+        "tv",
+        "affineTable"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "every_axis_digit_mirrors_an_orbit_digit",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "exactly_two_digits_are_their_own_mirror",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "every_mirror_orbit_sums_to_ten",
+      "shared": [
+        "tv",
+        "nonzero"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "the_void_is_the_one_orbit_that_does_not",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv",
+        "nonzero"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv",
+        "affineTable",
+        "nonzero"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "doubling_and_mirror_are_affine_axiom_free",
+      "shared": [
+        "affineTable"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv",
+        "nonzero"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "every_axis_digit_mirrors_an_orbit_digit",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "exactly_two_digits_are_their_own_mirror",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "every_mirror_orbit_sums_to_ten",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "the_void_is_the_one_orbit_that_does_not",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv",
+        "affineTable"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "doubling_and_mirror_are_affine_axiom_free",
+      "shared": [
+        "affineTable"
+      ]
+    },
+    {
+      "from": "mirror_is_affine_only_off_the_void",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "base_frequency_has_digital_root_nine",
+      "to": "speed_of_light_has_digital_root_one",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "base_frequency_has_digital_root_nine",
+      "to": "light_year_has_digital_root_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "base_frequency_has_digital_root_nine",
+      "to": "astronomical_unit_has_digital_root_three",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "base_frequency_has_digital_root_nine",
+      "to": "the_digital_root_of_c_is_not_robust",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "shared": [
+        "tv",
+        "axis"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "exactly_two_digits_are_their_own_mirror",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "every_mirror_orbit_sums_to_ten",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "the_void_is_the_one_orbit_that_does_not",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "doubling_stays_in_orbit_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "orbit_and_axis_are_disjoint_axiom_free",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv",
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "exactly_two_digits_are_their_own_mirror",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "every_mirror_orbit_sums_to_ten",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "the_void_is_the_one_orbit_that_does_not",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "orbit_and_axis_are_disjoint_axiom_free",
+      "shared": [
+        "axis"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "axis"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv",
+        "axis"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_axis_is_mirrored_onto_exactly_seven_four_one",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "exactly_two_digits_are_their_own_mirror",
+      "to": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "shared": [
+        "tv",
+        "digits"
+      ]
+    },
+    {
+      "from": "exactly_two_digits_are_their_own_mirror",
+      "to": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "exactly_two_digits_are_their_own_mirror",
+      "to": "every_mirror_orbit_sums_to_ten",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "exactly_two_digits_are_their_own_mirror",
+      "to": "the_void_is_the_one_orbit_that_does_not",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "exactly_two_digits_are_their_own_mirror",
+      "to": "swap12_is_an_involution",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "exactly_two_digits_are_their_own_mirror",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "tv",
+        "digits"
+      ]
+    },
+    {
+      "from": "exactly_two_digits_are_their_own_mirror",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "exactly_two_digits_are_their_own_mirror",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "exactly_two_digits_are_their_own_mirror",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "exactly_two_digits_are_their_own_mirror",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "exactly_two_digits_are_their_own_mirror",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "to": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "to": "every_mirror_orbit_sums_to_ten",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "to": "the_void_is_the_one_orbit_that_does_not",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "to": "swap12_is_an_involution",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "tv",
+        "digits"
+      ]
+    },
+    {
+      "from": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_ten_digits_are_two_fixed_points_and_four_pairs",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "to": "every_mirror_orbit_sums_to_ten",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "to": "the_void_is_the_one_orbit_that_does_not",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_mirror_orbit_sums_to_ten",
+      "to": "the_void_is_the_one_orbit_that_does_not",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_mirror_orbit_sums_to_ten",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_mirror_orbit_sums_to_ten",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv",
+        "nonzero"
+      ]
+    },
+    {
+      "from": "every_mirror_orbit_sums_to_ten",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_mirror_orbit_sums_to_ten",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv",
+        "nonzero"
+      ]
+    },
+    {
+      "from": "every_mirror_orbit_sums_to_ten",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv",
+        "nonzero"
+      ]
+    },
+    {
+      "from": "the_void_is_the_one_orbit_that_does_not",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_void_is_the_one_orbit_that_does_not",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_void_is_the_one_orbit_that_does_not",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_void_is_the_one_orbit_that_does_not",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_void_is_the_one_orbit_that_does_not",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "swap12_is_an_involution",
+      "to": "being_an_involution_is_not_enough_for_harmony",
+      "shared": [
+        "swap12"
+      ]
+    },
+    {
+      "from": "swap12_is_an_involution",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "digits",
+        "swap12"
+      ]
+    },
+    {
+      "from": "swap12_is_an_involution",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "swap12"
+      ]
+    },
+    {
+      "from": "swap12_is_an_involution",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "being_an_involution_is_not_enough_for_harmony",
+      "to": "non_fixed_points_come_in_pairs",
+      "shared": [
+        "swap12"
+      ]
+    },
+    {
+      "from": "being_an_involution_is_not_enough_for_harmony",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "swap12"
+      ]
+    },
+    {
+      "from": "non_fixed_points_come_in_pairs",
+      "to": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "shared": [
+        "tv",
+        "swap12"
+      ]
+    },
+    {
+      "from": "non_fixed_points_come_in_pairs",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "digits"
+      ]
+    },
+    {
+      "from": "non_fixed_points_come_in_pairs",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "non_fixed_points_come_in_pairs",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "non_fixed_points_come_in_pairs",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv",
+        "nonzero"
+      ]
+    },
+    {
+      "from": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv",
+        "nonzero"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit_axiom_free",
+      "to": "orbit_and_axis_are_disjoint_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit_axiom_free",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "doubling_stays_in_orbit_axiom_free",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "orbit"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_are_disjoint_axiom_free",
+      "to": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "orbit_and_axis_are_disjoint_axiom_free",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "to": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "shared": [
+        "orbit",
+        "axis"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "to": "mirror_table_is_through_void_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void_axiom_free",
+      "to": "doubling_and_mirror_are_affine_axiom_free",
+      "shared": [
+        "affineTable"
+      ]
+    },
+    {
+      "from": "mirror_table_is_through_void_axiom_free",
+      "to": "every_mirror_orbit_sums_to_ten_axiom_free",
+      "shared": [
+        "tv",
+        "nonzero"
+      ]
+    },
+    {
+      "from": "speed_of_light_has_digital_root_one",
+      "to": "light_year_has_digital_root_nine",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "speed_of_light_has_digital_root_one",
+      "to": "astronomical_unit_has_digital_root_three",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "speed_of_light_has_digital_root_one",
+      "to": "the_digital_root_of_c_is_not_robust",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "light_year_has_digital_root_nine",
+      "to": "astronomical_unit_has_digital_root_three",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "light_year_has_digital_root_nine",
+      "to": "the_digital_root_of_c_is_not_robust",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "astronomical_unit_has_digital_root_three",
+      "to": "the_digital_root_of_c_is_not_robust",
+      "shared": [
+        "dr"
+      ]
+    },
+    {
+      "from": "hadamard_squared",
+      "to": "hadamard_unitary",
+      "shared": [
+        "hadamard"
+      ]
+    },
+    {
+      "from": "hadamard_squared",
+      "to": "quantum_system_correct",
+      "shared": [
+        "hadamard"
+      ]
+    },
+    {
+      "from": "hadamard_unitary",
+      "to": "pauliX_unitary",
+      "shared": [
+        "IsUnitary"
+      ]
+    },
+    {
+      "from": "hadamard_unitary",
+      "to": "quantum_system_correct",
+      "shared": [
+        "IsUnitary",
+        "hadamard"
+      ]
+    },
+    {
+      "from": "hadamard_unitary",
+      "to": "qft_unitary",
+      "shared": [
+        "IsUnitary"
+      ]
+    },
+    {
+      "from": "hadamard_unitary",
+      "to": "phase_estimation_accuracy",
+      "shared": [
+        "IsUnitary"
+      ]
+    },
+    {
+      "from": "pauliX_unitary",
+      "to": "pauli_anticomm",
+      "shared": [
+        "pauliX"
+      ]
+    },
+    {
+      "from": "pauliX_unitary",
+      "to": "quantum_system_correct",
+      "shared": [
+        "IsUnitary",
+        "pauliX"
+      ]
+    },
+    {
+      "from": "pauliX_unitary",
+      "to": "qft_unitary",
+      "shared": [
+        "IsUnitary"
+      ]
+    },
+    {
+      "from": "pauliX_unitary",
+      "to": "phase_estimation_accuracy",
+      "shared": [
+        "IsUnitary"
+      ]
+    },
+    {
+      "from": "pauli_anticomm",
+      "to": "quantum_system_correct",
+      "shared": [
+        "pauliX",
+        "pauliY"
+      ]
+    },
+    {
+      "from": "born_rule_sum",
+      "to": "repetition_detects_single_error",
+      "shared": [
+        "QuantumState"
+      ]
+    },
+    {
+      "from": "born_rule_sum",
+      "to": "tensor_preserves_norm",
+      "shared": [
+        "QuantumState",
+        "IsNormalized"
+      ]
+    },
+    {
+      "from": "born_rule_sum",
+      "to": "quantum_system_correct",
+      "shared": [
+        "QuantumState",
+        "IsNormalized"
+      ]
+    },
+    {
+      "from": "born_rule_sum",
+      "to": "qft_correctness",
+      "shared": [
+        "QuantumState"
+      ]
+    },
+    {
+      "from": "born_rule_sum",
+      "to": "phase_estimation_accuracy",
+      "shared": [
+        "QuantumState"
+      ]
+    },
+    {
+      "from": "shor_period_finding",
+      "to": "shor_period_finding",
+      "shared": [
+        "modularExpSuperposition"
+      ]
+    },
+    {
+      "from": "repetition_detects_single_error",
+      "to": "tensor_preserves_norm",
+      "shared": [
+        "QuantumState"
+      ]
+    },
+    {
+      "from": "repetition_detects_single_error",
+      "to": "quantum_system_correct",
+      "shared": [
+        "QuantumState"
+      ]
+    },
+    {
+      "from": "repetition_detects_single_error",
+      "to": "qft_correctness",
+      "shared": [
+        "QuantumState"
+      ]
+    },
+    {
+      "from": "repetition_detects_single_error",
+      "to": "phase_estimation_accuracy",
+      "shared": [
+        "QuantumState"
+      ]
+    },
+    {
+      "from": "vqe_convergence",
+      "to": "vqe_finds_ground_state",
+      "shared": [
+        "vqeObjective"
+      ]
+    },
+    {
+      "from": "tensor_preserves_norm",
+      "to": "quantum_system_correct",
+      "shared": [
+        "QuantumState",
+        "IsNormalized",
+        "tensorProduct"
+      ]
+    },
+    {
+      "from": "tensor_preserves_norm",
+      "to": "qft_correctness",
+      "shared": [
+        "QuantumState"
+      ]
+    },
+    {
+      "from": "tensor_preserves_norm",
+      "to": "phase_estimation_accuracy",
+      "shared": [
+        "QuantumState"
+      ]
+    },
+    {
+      "from": "quantum_system_correct",
+      "to": "qft_unitary",
+      "shared": [
+        "IsUnitary"
+      ]
+    },
+    {
+      "from": "quantum_system_correct",
+      "to": "qft_correctness",
+      "shared": [
+        "QuantumState"
+      ]
+    },
+    {
+      "from": "quantum_system_correct",
+      "to": "phase_estimation_accuracy",
+      "shared": [
+        "QuantumState",
+        "IsUnitary"
+      ]
+    },
+    {
+      "from": "qft_unitary",
+      "to": "qft_inverse",
+      "shared": [
+        "qftMatrix"
+      ]
+    },
+    {
+      "from": "qft_unitary",
+      "to": "phase_estimation_accuracy",
+      "shared": [
+        "IsUnitary"
+      ]
+    },
+    {
+      "from": "qft_correctness",
+      "to": "phase_estimation_accuracy",
+      "shared": [
+        "QuantumState"
+      ]
+    }
+  ]
+}

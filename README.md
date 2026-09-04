@@ -62,7 +62,7 @@ and figures that recompute rather than being typed.
 The Lean files hold 74 statements. **50 are accepted by the Lean kernel** and 24 are not:
 19 are closed with `sorry`, 5 import Mathlib and cannot be built here.
 `npm run lean:check` fails if the ledger and the files disagree. `npm run coverage:audit`
-reports that 149 of 1294 exported functions have never been called by anything —
+reports that 149 of 1295 exported functions have never been called by anything —
 published because a reader deserves to know which parts have never run.
 
 ### What is aimed at, and what is built

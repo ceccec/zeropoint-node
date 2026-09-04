@@ -57,6 +57,7 @@ const UNLOADED_OK = {
 /** Everything that actually runs src/ code. Not the same as everything named "test". */
 const EXERCISERS = [
   ['src/kernel/smoke.test.ts', null],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.theorem.scene.test.ts', null],
   ['src/kernel/core-exports.test.ts', null],
   ['src/kernel/measured-debt.test.ts', null],
   ['src/security/quantum-fold-cipher.test.ts', null],

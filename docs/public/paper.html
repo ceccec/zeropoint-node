@@ -54,6 +54,14 @@ table.cond td:nth-child(2) { white-space: nowrap; }
 table.ledger { font-size: .74em; table-layout: fixed; }
 table.ledger td { vertical-align: top; word-break: break-word; }
 table.ledger .where { width: 12em; color: var(--muted); font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: .92em; }
+table.lean { font-size: .72em; table-layout: fixed; }
+table.lean td { vertical-align: top; word-break: break-word; }
+table.lean td:first-child { width: 13em; }
+table.lean td:last-child { width: 13em; color: var(--muted); }
+table.lean .stmt { font-family: "SF Mono", ui-monospace, Menlo, monospace; }
+table.lean .where { color: var(--muted); font-size: .88em; }
+table.lean .ax { display: block; }
+table.lean tr.sorry .stmt, table.lean tr\.unverifiable-here .stmt { color: var(--muted); }
 table.priorart { font-size: .76em; table-layout: fixed; }
 table.priorart td { vertical-align: top; word-break: break-word; }
 table.priorart td:first-child { width: 11em; }
@@ -663,7 +671,67 @@ one, since a shortened title is a transcription.</p>
 </section>
 
 <section class="appendix">
-<h2>Appendix H&ensp;Reproduction</h2>
+<h2>Appendix H&ensp;Every Lean statement</h2>
+<p>All 43 statements in the <code>lean/</code> sources, as
+they are written there. <strong>Proven</strong> means three things together: the
+kernel accepted the file, the proof contains no <code>sorry</code>, and
+<code>#print axioms</code> reports a dependency set within
+<code>{propext, Quot.sound}</code>. The first two alone are not enough — a proof
+can invoke a lemma closed with <code>sorry</code> and inherit the vacuity with
+the word appearing nowhere near it.</p>
+<p>19 are proven on that reading. The rest are statements
+rather than theorems, and are listed here so the difference is legible rather
+than summarised away.</p>
+<table class="lean">
+<thead><tr><th>name</th><th>statement</th><th>standing</th></tr></thead>
+<tbody><tr class="proven"><td><code>dr_is_drTS_above_zero</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ n ∈ List.range 60, n ≠ 0 → dr n = drTS n</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>dr_and_drTS_differ_at_zero</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">dr 0 = 1 ∧ drTS 0 = 9</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>dr_idempotent</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ n ∈ List.range 60, dr (dr n) = dr n</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>dr_invariant_under_nine</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ n ∈ List.range 50, dr (n + 1) = dr (n + 10)</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>doubling_stays_in_orbit</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ d ∈ orbit, dbl d ∈ orbit</td><td>proven by the kernel <span class="ax">rests on <code>propext</code>, <code>Quot.sound</code></span></td></tr>
+<tr class="proven"><td><code>orbit_closes_after_six</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ d ∈ orbit, dbl (dbl (dbl (dbl (dbl (dbl d))))) = d</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>orbit_never_repeats_a_step</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ d ∈ orbit, dbl d ≠ d</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>through_void_is_an_involution</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ d ∈ digits, tv (tv d) = d</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>through_void_fixes_only_zero_and_five</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ d ∈ digits, tv d = d ↔ (d = 0 ∨ d = 5)</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>orbit_and_axis_are_disjoint</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ d ∈ orbit, d ∉ axis</td><td>proven by the kernel <span class="ax">rests on <code>propext</code>, <code>Quot.sound</code></span></td></tr>
+<tr class="proven"><td><code>orbit_and_axis_and_void_exhaust_the_digits</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ d ∈ digits, d = 0 ∨ d ∈ orbit ∨ d ∈ axis</td><td>proven by the kernel <span class="ax">rests on <code>propext</code>, <code>Quot.sound</code></span></td></tr>
+<tr class="proven"><td><code>agl_has_order_54</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">agl.length = 54 ∧ agl.Nodup</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>doubling_and_mirror_are_affine</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">affineTable 2 0 ∈ agl ∧ affineTable 8 1 ∈ agl</td><td>proven by the kernel <span class="ax">rests on <code>propext</code>, <code>Quot.sound</code></span></td></tr>
+<tr class="proven"><td><code>mirror_table_is_through_void</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ d ∈ nonzero, (affineTable 8 1).getD (d % 9) 0 = tv d % 9</td><td>proven by the kernel <span class="ax">rests on <code>propext</code></span></td></tr>
+<tr class="proven"><td><code>mirror_is_affine_only_off_the_void</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">tv 9 = 1 ∧ tv 0 = 0 ∧ (affineTable 8 1).getD 0 0 = 1</td><td>proven by the kernel <span class="ax">rests on <code>propext</code></span></td></tr>
+<tr class="proven"><td><code>generators_apart_give_twelve</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">6 * 2 = 12 ∧ 54 - 12 = 42</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>whole_axis_and_root_nine_is_exactly_thirty_six</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ b ∈ List.range 100, (((b * 3) % 12 = 0 ∧ (b * 6) % 12 = 0 ∧ (b * 9) % 12 = 0) ∧ b % 9 = 0) ↔ b % 36 = 0</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>four_three_two_is_a_multiple_of_thirty_six_but_not_the_only_one</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">432 % 36 = 0 ∧ 396 % 36 = 0 ∧ 468 % 36 = 0 ∧ 432 = 36 * 12</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>base_frequency_has_digital_root_nine</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">dr 432 = 9</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="unverifiable-here"><td><code>hadamard_squared</code><br><span class="where">Quantum.lean</span></td><td class="stmt">hadamard * hadamard = 1</td><td>needs a library this repository cannot build here</td></tr>
+<tr class="sorry"><td><code>hadamard_unitary</code><br><span class="where">Quantum.lean</span></td><td class="stmt">IsUnitary hadamard</td><td>written down, closed with sorry</td></tr>
+<tr class="unverifiable-here"><td><code>pauliX_unitary</code><br><span class="where">Quantum.lean</span></td><td class="stmt">IsUnitary pauliX</td><td>needs a library this repository cannot build here</td></tr>
+<tr class="unverifiable-here"><td><code>pauli_anticomm</code><br><span class="where">Quantum.lean</span></td><td class="stmt">pauliX * pauliY = -pauliY * pauliX</td><td>needs a library this repository cannot build here</td></tr>
+<tr class="unverifiable-here"><td><code>born_rule_sum</code><br><span class="where">Quantum.lean</span></td><td class="stmt">(ψ : QuantumState n) (h : IsNormalized ψ) : ∑ i, measurementProb ψ i = 1</td><td>needs a library this repository cannot build here</td></tr>
+<tr class="sorry"><td><code>grover_amplification</code><br><span class="where">Quantum.lean</span></td><td class="stmt">(ψ : QuantumState n) (marked : Fin n → Prop) (h : IsNormalized ψ) : ∃ ψ_final, IsNormalized ψ_final ∧ ∀ i, marked i → measurementProb ψ_final i ≥ 1 / n</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>shor_period_finding</code><br><span class="where">Quantum.lean</span></td><td class="stmt">(N n : ℕ) (hN : N &gt; 1) (hn : n &gt; 0) : ∃ r : ℕ, r &gt; 0 ∧ Nat.ModEq (a ^ r) 1 N</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>repetition_detects_single_error</code><br><span class="where">Quantum.lean</span></td><td class="stmt">(ψ : QuantumState 2) : ∃ syndrome : Fin 2 → Fin 2, syndrome uniquely_identifies_error_location</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>surface_code_correctability</code><br><span class="where">Quantum.lean</span></td><td class="stmt">(error_rate : ℝ) (h : error_rate &lt; surfaceCodeThreshold) : logical_error_rate ≤ O (error_rate ^ 2)</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>vqe_convergence</code><br><span class="where">Quantum.lean</span></td><td class="stmt">(H : Matrix (Fin n) (Fin n) ℂ) (E_0 : ℝ) (h_ground : is_ground_state_energy H E_0) : ∃ θ_opt, vqeObjective θ_opt H ψ ≤ E_0 + ε</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>tensor_preserves_norm</code><br><span class="where">Quantum.lean</span></td><td class="stmt">(ψ₁ : QuantumState n) (ψ₂ : QuantumState m) (h₁ : IsNormalized ψ₁) (h₂ : IsNormalized ψ₂) : IsNormalized (tensorProduct ψ₁ ψ₂)</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>surface_code_fault_tolerant</code><br><span class="where">Quantum.lean</span></td><td class="stmt">IsFaultTolerant (fun n =&gt; 2 * n * Nat.log 2 n)</td><td>written down, closed with sorry</td></tr>
+<tr class="unverifiable-here"><td><code>kyber_security</code><br><span class="where">Quantum.lean</span></td><td class="stmt">∃ (k : ℕ), 128 ≤ k ∧ kyber_security_level = k</td><td>needs a library this repository cannot build here</td></tr>
+<tr class="sorry"><td><code>quantum_system_correct</code><br><span class="where">Quantum.lean</span></td><td class="stmt">(∀ U ∈ [hadamard, pauliX, pauliY, pauliZ], IsUnitary U) ∧ (∀ ψ : QuantumState n, IsNormalized ψ → ∀ U ∈ gate_set, IsNormalized (apply_gate U ψ)) ∧ (∀ ψ : QuantumState (2^k), ∃ ψ_corrected, detects_and_corrects_errors ψ ψ_corrected) ∧ (∀ ψ₁ ψ₂, IsNormalized ψ₁ → IsNormalized ψ₂ → IsNormalized (tensorProduct ψ₁ ψ₂)) ∧ (∀ scheme ∈ [kyber, sphincs_plus], is_post_quantum_secure scheme)</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>grover_amplification</code><br><span class="where">QuantumAlgorithms.lean</span></td><td class="stmt">(n : ℕ) (k : ℕ) (marked : Fin n → Prop) (h_marked : Finset.card (Finset.filter marked Finset.univ) = 1) : let m</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>grover_speedup</code><br><span class="where">QuantumAlgorithms.lean</span></td><td class="stmt">(n : ℕ) (marked : Fin n → Prop) (h_marked : Finset.card (Finset.filter marked Finset.univ) = 1) : let classical_queries</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>qft_unitary</code><br><span class="where">QuantumAlgorithms.lean</span></td><td class="stmt">(n : ℕ) : IsUnitary (qftMatrix n)</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>qft_inverse</code><br><span class="where">QuantumAlgorithms.lean</span></td><td class="stmt">(n : ℕ) : qftMatrix n * (qftMatrix n)ᴴ = 1</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>qft_correctness</code><br><span class="where">QuantumAlgorithms.lean</span></td><td class="stmt">(n : ℕ) (x : Fin (2^n)) : let input : QuantumState (2^n)</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>phase_estimation_accuracy</code><br><span class="where">QuantumAlgorithms.lean</span></td><td class="stmt">(U : Matrix (Fin n) (Fin n) ℂ) (ψ : QuantumState n) (h_unitary : IsUnitary U) (precision : ℕ) (h_prec : precision ≥ 4) : ∃ (θ : ℝ), U.eigenvalue ψ = Complex.exp (2 * π * I * θ) ∧ let θ_est</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>shor_period_finding</code><br><span class="where">QuantumAlgorithms.lean</span></td><td class="stmt">(a N n : ℕ) (ha : 1 &lt; a ∧ a &lt; N) (hN : ¬Nat.Prime N) (hn : n ≥ 2 * Nat.log 2 N) : ∃ (r : ℕ), r &gt; 0 ∧ r &lt; N ∧ a ^ r ≡ 1 [MOD N] ∧ period_findable_via_qft r (modularExpSuperposition a N n)</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>shor_factorization</code><br><span class="where">QuantumAlgorithms.lean</span></td><td class="stmt">(N : ℕ) (h_composite : ¬Nat.Prime N) : ∃ (p q : ℕ), N = p * q ∧ p &gt; 1 ∧ q &gt; 1</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>vqe_finds_ground_state</code><br><span class="where">QuantumAlgorithms.lean</span></td><td class="stmt">(H : Matrix (Fin n) (Fin n) ℂ) (E_0 : ℝ) (h_ground : is_ground_state_energy H E_0) (h_expressibility : ground_state_in_ansatz_space) : ∃ θ_opt : ℝ → ℝ, vqeObjective H θ_opt = E_0</td><td>written down, closed with sorry</td></tr>
+<tr class="sorry"><td><code>qaoa_approximation</code><br><span class="where">QuantumAlgorithms.lean</span></td><td class="stmt">(graph : SimpleGraph α) (C : ℝ) (h_maxcut : C = maximum_cut_value graph) (p : ℕ) (h_p : p ≥ 1) : ∃ (θ : ℝ → ℝ), qaoa_expectation graph p θ ≥ 0.924 * C</td><td>written down, closed with sorry</td></tr></tbody>
+</table>
+</section>
+
+<section class="appendix">
+<h2>Appendix I&ensp;Reproduction</h2>
 <p>This page is generated. To rebuild it from the source and confirm that no
 figure on it has drifted:</p>
 <pre><code>npm install
@@ -675,7 +743,7 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>ede2ca841991a7f5</code> over
+<p class="receipt">Generated from source. Model receipt <code>70169ece6c7b86cc</code> over
 18 equations, 33 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>

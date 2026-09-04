@@ -139,6 +139,99 @@ because novelty is a universal negative that no finite search decides. It rests 
 \item \texttt{ml-kem-768} --- known-art. Domains: post-quantum cryptography; cryptographic standards conformance; side-channel resistance. Cited: \texttt{10.6028/NIST.FIPS.203}.
 \end{itemize}
 
+\section*{Every Lean statement}
+All 43 statements in the \texttt{lean/} sources. \emph{Proven} means the kernel accepted the file,
+the proof contains no \texttt{sorry}, and \texttt{\#print axioms} reports a dependency set within
+$\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 19 of them meet it.
+\begin{itemize}\small
+\item \texttt{dr\_is\_drTS\_above\_zero} (DigitSpace.lean) --- $\forall$ n $\in$ List.range 60, n $\neq$ 0 $\to$ dr n = drTS n\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{dr\_and\_drTS\_differ\_at\_zero} (DigitSpace.lean) --- dr 0 = 1 $\land$ drTS 0 = 9\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{dr\_idempotent} (DigitSpace.lean) --- $\forall$ n $\in$ List.range 60, dr (dr n) = dr n\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{dr\_invariant\_under\_nine} (DigitSpace.lean) --- $\forall$ n $\in$ List.range 50, dr (n + 1) = dr (n + 10)\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{doubling\_stays\_in\_orbit} (DigitSpace.lean) --- $\forall$ d $\in$ orbit, dbl d $\in$ orbit\\
+\textbf{proven by the kernel}, resting on \texttt{propext}, \texttt{Quot.sound}
+\item \texttt{orbit\_closes\_after\_six} (DigitSpace.lean) --- $\forall$ d $\in$ orbit, dbl (dbl (dbl (dbl (dbl (dbl d))))) = d\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{orbit\_never\_repeats\_a\_step} (DigitSpace.lean) --- $\forall$ d $\in$ orbit, dbl d $\neq$ d\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{through\_void\_is\_an\_involution} (DigitSpace.lean) --- $\forall$ d $\in$ digits, tv (tv d) = d\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{through\_void\_fixes\_only\_zero\_and\_five} (DigitSpace.lean) --- $\forall$ d $\in$ digits, tv d = d $\leftrightarrow$ (d = 0 $\lor$ d = 5)\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{orbit\_and\_axis\_are\_disjoint} (DigitSpace.lean) --- $\forall$ d $\in$ orbit, d $\notin$ axis\\
+\textbf{proven by the kernel}, resting on \texttt{propext}, \texttt{Quot.sound}
+\item \texttt{orbit\_and\_axis\_and\_void\_exhaust\_the\_digits} (DigitSpace.lean) --- $\forall$ d $\in$ digits, d = 0 $\lor$ d $\in$ orbit $\lor$ d $\in$ axis\\
+\textbf{proven by the kernel}, resting on \texttt{propext}, \texttt{Quot.sound}
+\item \texttt{agl\_has\_order\_54} (DigitSpace.lean) --- agl.length = 54 $\land$ agl.Nodup\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{doubling\_and\_mirror\_are\_affine} (DigitSpace.lean) --- affineTable 2 0 $\in$ agl $\land$ affineTable 8 1 $\in$ agl\\
+\textbf{proven by the kernel}, resting on \texttt{propext}, \texttt{Quot.sound}
+\item \texttt{mirror\_table\_is\_through\_void} (DigitSpace.lean) --- $\forall$ d $\in$ nonzero, (affineTable 8 1).getD (d \% 9) 0 = tv d \% 9\\
+\textbf{proven by the kernel}, resting on \texttt{propext}
+\item \texttt{mirror\_is\_affine\_only\_off\_the\_void} (DigitSpace.lean) --- tv 9 = 1 $\land$ tv 0 = 0 $\land$ (affineTable 8 1).getD 0 0 = 1\\
+\textbf{proven by the kernel}, resting on \texttt{propext}
+\item \texttt{generators\_apart\_give\_twelve} (DigitSpace.lean) --- 6 * 2 = 12 $\land$ 54 - 12 = 42\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{whole\_axis\_and\_root\_nine\_is\_exactly\_thirty\_six} (DigitSpace.lean) --- $\forall$ b $\in$ List.range 100, (((b * 3) \% 12 = 0 $\land$ (b * 6) \% 12 = 0 $\land$ (b * 9) \% 12 = 0) $\land$ b \% 9 = 0) $\leftrightarrow$ b \% 36 = 0\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{four\_three\_two\_is\_a\_multiple\_of\_thirty\_six\_but\_not\_the\_only\_one} (DigitSpace.lean) --- 432 \% 36 = 0 $\land$ 396 \% 36 = 0 $\land$ 468 \% 36 = 0 $\land$ 432 = 36 * 12\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{base\_frequency\_has\_digital\_root\_nine} (DigitSpace.lean) --- dr 432 = 9\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{hadamard\_squared} (Quantum.lean) --- hadamard * hadamard = 1\\
+\textbf{needs a library this repository cannot build here}
+\item \texttt{hadamard\_unitary} (Quantum.lean) --- IsUnitary hadamard\\
+\textbf{written down, closed with sorry}
+\item \texttt{pauliX\_unitary} (Quantum.lean) --- IsUnitary pauliX\\
+\textbf{needs a library this repository cannot build here}
+\item \texttt{pauli\_anticomm} (Quantum.lean) --- pauliX * pauliY = -pauliY * pauliX\\
+\textbf{needs a library this repository cannot build here}
+\item \texttt{born\_rule\_sum} (Quantum.lean) --- ($\psi$ : QuantumState n) (h : IsNormalized $\psi$) : $\sum$ i, measurementProb $\psi$ i = 1\\
+\textbf{needs a library this repository cannot build here}
+\item \texttt{grover\_amplification} (Quantum.lean) --- ($\psi$ : QuantumState n) (marked : Fin n $\to$ Prop) (h : IsNormalized $\psi$) : $\exists$ $\psi$\_final, IsNormalized $\psi$\_final $\land$ $\forall$ i, marked i $\to$ measurementProb $\psi$\_final i $\geq$ 1 / n\\
+\textbf{written down, closed with sorry}
+\item \texttt{shor\_period\_finding} (Quantum.lean) --- (N n : $\mathbb{N}$) (hN : N > 1) (hn : n > 0) : $\exists$ r : $\mathbb{N}$, r > 0 $\land$ Nat.ModEq (a ^ r) 1 N\\
+\textbf{written down, closed with sorry}
+\item \texttt{repetition\_detects\_single\_error} (Quantum.lean) --- ($\psi$ : QuantumState 2) : $\exists$ syndrome : Fin 2 $\to$ Fin 2, syndrome uniquely\_identifies\_error\_location\\
+\textbf{written down, closed with sorry}
+\item \texttt{surface\_code\_correctability} (Quantum.lean) --- (error\_rate : $\mathbb{R}$) (h : error\_rate < surfaceCodeThreshold) : logical\_error\_rate $\leq$ O (error\_rate ^ 2)\\
+\textbf{written down, closed with sorry}
+\item \texttt{vqe\_convergence} (Quantum.lean) --- (H : Matrix (Fin n) (Fin n) $\mathbb{C}$) (E\_0 : $\mathbb{R}$) (h\_ground : is\_ground\_state\_energy H E\_0) : $\exists$ $\theta$\_opt, vqeObjective $\theta$\_opt H $\psi$ $\leq$ E\_0 + $\varepsilon$\\
+\textbf{written down, closed with sorry}
+\item \texttt{tensor\_preserves\_norm} (Quantum.lean) --- ($\psi$$_1$ : QuantumState n) ($\psi$$_2$ : QuantumState m) (h$_1$ : IsNormalized $\psi$$_1$) (h$_2$ : IsNormalized $\psi$$_2$) : IsNormalized (tensorProduct $\psi$$_1$ $\psi$$_2$)\\
+\textbf{written down, closed with sorry}
+\item \texttt{surface\_code\_fault\_tolerant} (Quantum.lean) --- IsFaultTolerant (fun n => 2 * n * Nat.log 2 n)\\
+\textbf{written down, closed with sorry}
+\item \texttt{kyber\_security} (Quantum.lean) --- $\exists$ (k : $\mathbb{N}$), 128 $\leq$ k $\land$ kyber\_security\_level = k\\
+\textbf{needs a library this repository cannot build here}
+\item \texttt{quantum\_system\_correct} (Quantum.lean) --- ($\forall$ U $\in$ [hadamard, pauliX, pauliY, pauliZ], IsUnitary U) $\land$ ($\forall$ $\psi$ : QuantumState n, IsNormalized $\psi$ $\to$ $\forall$ U $\in$ gate\_set, IsNormalized (apply\_gate U $\psi$)) $\land$ ($\forall$ $\psi$ : QuantumState (2^k), $\exists$ $\psi$\_corrected, detects\_and\_corrects\_errors $\psi$ $\psi$\_corrected) $\land$ ($\forall$ $\psi$$_1$ $\psi$$_2$, IsNormalized $\psi$$_1$ $\to$ IsNormalized $\psi$$_2$ $\to$ IsNormalized (tensorProduct $\psi$$_1$ $\psi$$_2$)) $\land$ ($\forall$ scheme $\in$ [kyber, sphincs\_plus], is\_post\_quantum\_secure scheme)\\
+\textbf{written down, closed with sorry}
+\item \texttt{grover\_amplification} (QuantumAlgorithms.lean) --- (n : $\mathbb{N}$) (k : $\mathbb{N}$) (marked : Fin n $\to$ Prop) (h\_marked : Finset.card (Finset.filter marked Finset.univ) = 1) : let m\\
+\textbf{written down, closed with sorry}
+\item \texttt{grover\_speedup} (QuantumAlgorithms.lean) --- (n : $\mathbb{N}$) (marked : Fin n $\to$ Prop) (h\_marked : Finset.card (Finset.filter marked Finset.univ) = 1) : let classical\_queries\\
+\textbf{written down, closed with sorry}
+\item \texttt{qft\_unitary} (QuantumAlgorithms.lean) --- (n : $\mathbb{N}$) : IsUnitary (qftMatrix n)\\
+\textbf{written down, closed with sorry}
+\item \texttt{qft\_inverse} (QuantumAlgorithms.lean) --- (n : $\mathbb{N}$) : qftMatrix n * (qftMatrix n)$^{H}$ = 1\\
+\textbf{written down, closed with sorry}
+\item \texttt{qft\_correctness} (QuantumAlgorithms.lean) --- (n : $\mathbb{N}$) (x : Fin (2^n)) : let input : QuantumState (2^n)\\
+\textbf{written down, closed with sorry}
+\item \texttt{phase\_estimation\_accuracy} (QuantumAlgorithms.lean) --- (U : Matrix (Fin n) (Fin n) $\mathbb{C}$) ($\psi$ : QuantumState n) (h\_unitary : IsUnitary U) (precision : $\mathbb{N}$) (h\_prec : precision $\geq$ 4) : $\exists$ ($\theta$ : $\mathbb{R}$), U.eigenvalue $\psi$ = Complex.exp (2 * $\pi$ * I * $\theta$) $\land$ let $\theta$\_est\\
+\textbf{written down, closed with sorry}
+\item \texttt{shor\_period\_finding} (QuantumAlgorithms.lean) --- (a N n : $\mathbb{N}$) (ha : 1 0 $\land$ r < N $\land$ a ^ r $\equiv$ 1 [MOD N] $\land$ period\_findable\_via\_qft r (modularExpSuperposition a N n)\\
+\textbf{written down, closed with sorry}
+\item \texttt{shor\_factorization} (QuantumAlgorithms.lean) --- (N : $\mathbb{N}$) (h\_composite : $\lnot$Nat.Prime N) : $\exists$ (p q : $\mathbb{N}$), N = p * q $\land$ p > 1 $\land$ q > 1\\
+\textbf{written down, closed with sorry}
+\item \texttt{vqe\_finds\_ground\_state} (QuantumAlgorithms.lean) --- (H : Matrix (Fin n) (Fin n) $\mathbb{C}$) (E\_0 : $\mathbb{R}$) (h\_ground : is\_ground\_state\_energy H E\_0) (h\_expressibility : ground\_state\_in\_ansatz\_space) : $\exists$ $\theta$\_opt : $\mathbb{R}$ $\to$ $\mathbb{R}$, vqeObjective H $\theta$\_opt = E\_0\\
+\textbf{written down, closed with sorry}
+\item \texttt{qaoa\_approximation} (QuantumAlgorithms.lean) --- (graph : SimpleGraph $\alpha$) (C : $\mathbb{R}$) (h\_maxcut : C = maximum\_cut\_value graph) (p : $\mathbb{N}$) (h\_p : p $\geq$ 1) : $\exists$ ($\theta$ : $\mathbb{R}$ $\to$ $\mathbb{R}$), qaoa\_expectation graph p $\theta$ $\geq$ 0.924 * C\\
+\textbf{written down, closed with sorry}
+\end{itemize}
+
 \section*{Reproduction}
 \begin{verbatim}
 npm install

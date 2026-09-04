@@ -52,6 +52,53 @@ const ratchet = JSON.parse(readFileSync(join(ROOT, 'ratchet.json'), 'utf8'))
 const leanLedger = JSON.parse(readFileSync(join(ROOT, 'lean/ledger.json'), 'utf8'))
 const priorArt = JSON.parse(readFileSync(join(ROOT, 'src/verification/prior-art.json'), 'utf8'))
 
+/**
+ * Every Lean statement in the repository, read from the .lean sources and
+ * married to the ledger's verdict on it. The statement is the theorem's TYPE —
+ * the part between the name and `:=` — because that is the claim; the proof
+ * term is how it was closed and belongs to the kernel, not to a reader.
+ */
+const { readdirSync: readDir } = await import('node:fs')
+const leanStatements = []
+for (const file of readDir(join(ROOT, 'lean')).filter((f) => f.endsWith('.lean') && f !== 'lakefile.lean').sort()) {
+  const src = readFileSync(join(ROOT, 'lean', file), 'utf8')
+  for (const m of src.matchAll(/^theorem\s+([A-Za-z0-9_']+)\s*([\s\S]*?):=/gm)) {
+    const entry = (leanLedger.entries ?? []).find((e) => e.name === m[1] && e.file === file)
+    leanStatements.push({
+      name: m[1], file,
+      statement: m[2].replace(/^\s*:/, '').replace(/\s+/g, ' ').trim(),
+      status: entry?.status ?? 'unrecorded',
+      axioms: entry?.axioms,
+    })
+  }
+}
+
+/**
+ * Lean's notation is Unicode; LaTeX without unicode-math is not. Each symbol
+ * becomes its own inline math, so the surrounding identifiers stay upright text
+ * and nothing depends on a package this document does not load.
+ */
+const LEAN_TEX = [
+  ['∀', '$\\forall$'], ['∃', '$\\exists$'], ['∈', '$\\in$'], ['∉', '$\\notin$'],
+  ['≠', '$\\neq$'], ['≤', '$\\leq$'], ['≥', '$\\geq$'], ['∧', '$\\land$'],
+  ['∨', '$\\lor$'], ['¬', '$\\lnot$'], ['↔', '$\\leftrightarrow$'], ['→', '$\\to$'],
+  ['ℕ', '$\\mathbb{N}$'], ['ℝ', '$\\mathbb{R}$'], ['ℂ', '$\\mathbb{C}$'], ['ℤ', '$\\mathbb{Z}$'],
+  ['×', '$\\times$'], ['∘', '$\\circ$'], ['∑', '$\\sum$'], ['√', '$\\sqrt{\;}$'],
+  ['α', '$\\alpha$'], ['β', '$\\beta$'], ['ψ', '$\\psi$'], ['θ', '$\\theta$'],
+  ['φ', '$\\varphi$'], ['ε', '$\\varepsilon$'], ['π', '$\\pi$'], ['σ', '$\\sigma$'],
+  ['₀', '$_0$'], ['₁', '$_1$'], ['₂', '$_2$'], ['ⁿ', '$^n$'], ['†', '$\\dagger$'],
+  ['⟨', '$\\langle$'], ['⟩', '$\\rangle$'], ['∣', '$\\mid$'], ['≡', '$\\equiv$'],
+  ['ᴴ', '$^{H}$'], ['⁻', '$^{-}$'], ['∗', '$^{*}$'], ['⬝', '$\\cdot$'], ['∀', '$\\forall$'],
+]
+function leanToTex(text) {
+  let out = texEscape(text)
+  for (const [u, t] of LEAN_TEX) out = out.split(u).join(t)
+  // Anything still outside ASCII would break a plain LaTeX run; name it rather
+  // than emit it, so a missing mapping is visible instead of silently broken.
+  return out.replace(/[^\x00-\x7F]/g, (ch) => `\\textbf{[U+${ch.codePointAt(0).toString(16).toUpperCase()}]}`)
+}
+
+
 // Prior art, straight from the ledger: status, the domains where the art would
 // live, and each citation with whatever identifier it actually has. A citation
 // with no DOI is shown as having none rather than omitted, so the gaps count.
@@ -59,6 +106,22 @@ const paEntries = Object.entries(priorArt.contributions)
 const paCitesAll = paEntries.flatMap(([, c]) => c.priorArt?.citations ?? [])
 const paCites = paCitesAll.length
 const paResolved = paCitesAll.filter((c) => c.resolved === true).length
+const STATUS_WORD = {
+  proven: 'proven by the kernel',
+  sorry: 'written down, closed with sorry',
+  'rests-on-more': 'kernel-accepted, but rests on an axiom outside the allowed set',
+  'unverifiable-here': 'needs a library this repository cannot build here',
+  rejected: 'the kernel rejected it',
+}
+const leanRows = leanStatements.map((t) => {
+  const ax = t.axioms === undefined ? '' : t.axioms.length
+    ? ` <span class="ax">rests on ${t.axioms.map((a) => `<code>${escape(a)}</code>`).join(', ')}</span>`
+    : ' <span class="ax">rests on no axioms</span>'
+  return `<tr class="${escape(t.status)}"><td><code>${escape(t.name)}</code><br><span class="where">${escape(t.file)}</span></td>` +
+    `<td class="stmt">${escape(t.statement)}</td>` +
+    `<td>${escape(STATUS_WORD[t.status] ?? t.status)}${ax}</td></tr>`
+})
+
 const priorArtRows = paEntries.map(([id, c]) => {
   const cites = (c.priorArt?.citations ?? []).map((x) =>
     x.kind === 'doi' && x.id
@@ -491,7 +554,25 @@ one, since a shortened title is a transcription.</p>
 </section>
 
 <section class="appendix">
-<h2>Appendix H&ensp;Reproduction</h2>
+<h2>Appendix H&ensp;Every Lean statement</h2>
+<p>All ${leanStatements.length} statements in the <code>lean/</code> sources, as
+they are written there. <strong>Proven</strong> means three things together: the
+kernel accepted the file, the proof contains no <code>sorry</code>, and
+<code>#print axioms</code> reports a dependency set within
+<code>{propext, Quot.sound}</code>. The first two alone are not enough — a proof
+can invoke a lemma closed with <code>sorry</code> and inherit the vacuity with
+the word appearing nowhere near it.</p>
+<p>${leanLedger.proven} are proven on that reading. The rest are statements
+rather than theorems, and are listed here so the difference is legible rather
+than summarised away.</p>
+<table class="lean">
+<thead><tr><th>name</th><th>statement</th><th>standing</th></tr></thead>
+<tbody>${leanRows.join('\n')}</tbody>
+</table>
+</section>
+
+<section class="appendix">
+<h2>Appendix I&ensp;Reproduction</h2>
 <p>This page is generated. To rebuild it from the source and confirm that no
 figure on it has drifted:</p>
 <pre><code>npm install
@@ -520,6 +601,7 @@ const model = JSON.stringify({
   // Stated in both renderings; omitted here once, and the theorem count moved
   // from 33 to 35 without the receipt noticing.
   lean: `${leanLedger.proven}/${leanLedger.theorems}`, axioms: axioms.length,
+  leanStatements: leanStatements.map((t) => `${t.name}:${t.status}:${(t.axioms ?? []).join('+')}`),
   patches: plans.map((p) => `${p.plan.run}:${Object.keys(p.plan.patches).length}`), mutations: MUTATIONS.length,
 })
 const receipt = createHash('sha256').update(model).digest('hex').slice(0, 16)
@@ -580,6 +662,14 @@ table.cond td:nth-child(2) { white-space: nowrap; }
 table.ledger { font-size: .74em; table-layout: fixed; }
 table.ledger td { vertical-align: top; word-break: break-word; }
 table.ledger .where { width: 12em; color: var(--muted); font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: .92em; }
+table.lean { font-size: .72em; table-layout: fixed; }
+table.lean td { vertical-align: top; word-break: break-word; }
+table.lean td:first-child { width: 13em; }
+table.lean td:last-child { width: 13em; color: var(--muted); }
+table.lean .stmt { font-family: "SF Mono", ui-monospace, Menlo, monospace; }
+table.lean .where { color: var(--muted); font-size: .88em; }
+table.lean .ax { display: block; }
+table.lean tr.sorry .stmt, table.lean tr\\.unverifiable-here .stmt { color: var(--muted); }
 table.priorart { font-size: .76em; table-layout: fixed; }
 table.priorart td { vertical-align: top; word-break: break-word; }
 table.priorart td:first-child { width: 11em; }
@@ -690,6 +780,16 @@ ${paEntries.map(([id, c]) => `\\item \\texttt{${texEscape(id)}} --- ${texEscape(
      : 'No cited work carries a DOI.')).join('\n')}
 \\end{itemize}
 
+\\section*{Every Lean statement}
+All ${leanStatements.length} statements in the \\texttt{lean/} sources. \\emph{Proven} means the kernel accepted the file,
+the proof contains no \\texttt{sorry}, and \\texttt{\\#print axioms} reports a dependency set within
+$\\{$\\texttt{propext}, \\texttt{Quot.sound}$\\}$. ${leanLedger.proven} of them meet it.
+\\begin{itemize}\\small
+${leanStatements.map((t) => `\\item \\texttt{${texEscape(t.name)}} (${texEscape(t.file)}) --- ${leanToTex(t.statement)}\\\\\n`
+ + `\\textbf{${texEscape(STATUS_WORD[t.status] ?? t.status)}}`
+ + (t.axioms === undefined ? '' : t.axioms.length ? `, resting on ${t.axioms.map((a) => `\\texttt{${texEscape(a)}}`).join(', ')}` : ', resting on no axioms')).join('\n')}
+\\end{itemize}
+
 \\section*{Reproduction}
 \\begin{verbatim}
 npm install
@@ -731,6 +831,11 @@ if (CHECK) {
  */
 function texStructuralProblems(doc) {
   const out = []
+  // A Lean symbol with no LaTeX mapping is emitted as [U+XXXX] rather than
+  // silently dropped, and that marker must never reach the committed document:
+  // it means the .tex shows a placeholder where the .lean states a claim.
+  const unmapped = [...String(doc).matchAll(/\[U\+([0-9A-F]+)\]/g)].map((u) => `U+${u[1]}`)
+  if (unmapped.length) out.push(`${unmapped.length} Lean symbol(s) have no LaTeX mapping: ${[...new Set(unmapped)].join(', ')} — add them to LEAN_TEX`)
   const count = (re) => (doc.match(re) ?? []).length
   const begins = [...doc.matchAll(/\\begin\{(\w+\*?)\}/g)].map((m) => m[1])
   const ends = [...doc.matchAll(/\\end\{(\w+\*?)\}/g)].map((m) => m[1])

@@ -53,3 +53,34 @@ test('the picture says in its own module what it does not establish', () => {
   assert.match(THEOREM_SCENE_DOES_NOT_ESTABLISH, /not evidence about it/)
   assert.match(THEOREM_SCENE_DOES_NOT_ESTABLISH, /kernel does that/)
 })
+
+// ── the frame survives a throwing renderer ──────────────────────────────────
+// ceccec-github-io-5b's shape: a self-rescheduling loop with no isolation dies
+// on the first throw and cannot be restarted, and a frozen animation looks like
+// a static design. Perturbed against the real controller, not a description of
+// it: a renderer that throws must leave the loop STOPPED and RESTARTABLE, and
+// must be counted rather than swallowed.
+import { createVBMAnimation } from './a432.vbm.animation.ts'
+
+test('a throwing frame stops the loop, is counted, and leaves it restartable', () => {
+  const { three } = stubEngine()
+  const throwing = {
+    ...(three as unknown as Record<string, unknown>),
+    WebGLRenderer: function () {
+      return { render() { throw new Error('renderer fault') }, setSize() {} }
+    },
+  } as unknown as ThreeLike
+  ;(globalThis as { window?: unknown }).window ??= { innerWidth: 800, innerHeight: 600, addEventListener() {} }
+
+  const controller = createVBMAnimation(throwing)
+  assert.equal(controller.faults().count, 0, 'no fault before the first frame')
+  controller.start()
+
+  assert.equal(controller.isTurning(), false, 'the loop stopped rather than freezing mid-flight')
+  assert.equal(controller.faults().count, 1, 'the fault was counted, not swallowed')
+  assert.match(controller.faults().last ?? '', /renderer fault/)
+
+  controller.stop()
+  controller.start()
+  assert.equal(controller.faults().count, 2, 'and it is restartable — the second attempt ran and faulted too')
+})

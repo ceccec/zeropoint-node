@@ -90,6 +90,11 @@ const VBM_BASE_FREQUENCY = 432; // Canonical A432 frequency
 // --- VBM Animation State Interface ---
 interface VBMAnimationState {
   time: number;
+  /** false once a frame has thrown, so the loop stops and start() can retry */
+  running: boolean;
+  /** how many frames threw; a silent zero here is the point of counting */
+  faults: number;
+  lastFault: string | null;
   points: VBMAnimationPoint[];
   torus: VBMTorusGeometry;
   scene: ThreeScene;
@@ -261,6 +266,9 @@ function setupVBMScene(three: ThreeLike): VBMAnimationState {
   
   return {
     time: 0,
+    running: false,
+    faults: 0,
+    lastFault: null,
     points,
     torus,
     scene,
@@ -270,20 +278,38 @@ function setupVBMScene(three: ThreeLike): VBMAnimationState {
 }
 
 // --- VBM Animation Loop ---
+/**
+ * ONE FRAME, ISOLATED.
+ *
+ * This used to update, render, and reschedule with nothing between. A throw
+ * anywhere in the frame propagated out of the rAF callback, the next frame was
+ * never scheduled, and `isRunning` stayed true — so `start()` became a no-op and
+ * the animation was permanently frozen AND unrestartable.
+ *
+ * ceccec-github-io-5b found the same shape in a shared clock on their site and
+ * named the reason nobody notices: a frozen animation looks like a static
+ * design. Theirs took down every animation at once; this one takes down its own,
+ * which is why it survived unseen here too.
+ *
+ * The frame now reports the fault and stops cleanly, leaving the controller
+ * restartable. It does not swallow: a caller that never looks at `lastFault`
+ * still gets a loop that ended rather than a loop that lies about running.
+ */
 function animateVBM(three: ThreeLike, state: VBMAnimationState): void {
   const { scene, camera, renderer } = state;
-  
-  // Update animation state
-  updateVBMAnimation(three, state);
-  
-  // Render
-  renderer.render(scene, camera);
-  
-  // Update time
+
+  try {
+    updateVBMAnimation(three, state);
+    renderer.render(scene, camera);
+  } catch (error) {
+    state.faults += 1;
+    state.lastFault = error instanceof Error ? error.message : String(error);
+    state.running = false;
+    return;
+  }
+
   state.time += G.STEP_FINE;
-  
-  // Continue animation
-  raf(() => animateVBM(three, state));
+  raf(() => { if (state.running) animateVBM(three, state); });
 }
 
 // --- VBM Resize Handler ---
@@ -321,12 +347,26 @@ export class VBMAnimationController {
   public start(): void {
     if (!this.isRunning) {
       this.isRunning = true;
+      this.state.running = true;
       animateVBM(this.three, this.state);
     }
+  }
+
+  /** Whether the loop is still turning — false after a frame threw, which is
+   *  the difference between a stopped animation and a frozen one. */
+  public isTurning(): boolean {
+    return this.state.running;
+  }
+
+  /** How many frames threw, and the last message. A frozen animation looks like
+   *  a static design; this is how a caller tells them apart. */
+  public faults(): { readonly count: number; readonly last: string | null } {
+    return { count: this.state.faults, last: this.state.lastFault };
   }
   
   public stop(): void {
     this.isRunning = false;
+    this.state.running = false;
   }
   
   public getRenderer(): ThreeRenderer {

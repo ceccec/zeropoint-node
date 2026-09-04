@@ -76,6 +76,7 @@ const READS_SOURCE = {
   'silent:check': 'imports every module and watches stdout',
   'standard:check': 'compares digitalRoot implementations across src/',
   'entries:check': 'reads package.json exports',
+  'shadowed:check': 'scans for a const under src/verification/ whose name is also exported elsewhere in src. It exists because lean-bridge.ts declared its own H, X and Y beside an import of the rest of the simulator: the copies agreed, every seal held, and perturbing the shipped gates moved NOTHING — seven seals were reading private copies, and scaling the shipped H by 1.3 to destroy unitarity changed no verdict. The check is deliberately by name and not by value, because agreement between the copy and the original is exactly the state that hid the bug. Falsified by reintroducing the local X, which it reports; it also fails closed when it reads zero shipped exports, so "found none" cannot be confused with "never looked".',
   'deps:check': 'compares declared runtime dependencies against what the built entry points import; falsified by the two mutations in the commit that added it — a dependency nothing reaches, and an entry point importing an undeclared package',
   'pages:check': 'reads the built docs tree',
   'zenodo:check': 'reads .zenodo.json',

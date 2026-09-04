@@ -93,8 +93,47 @@ Kernel-proven theorems 19 to 26, of 50, including the mirror as a two-sided coin
 — every axis digit pairs with an orbit digit, `[0, 5]` are the only fixed points,
 and 2 + 4·2 = 10 leaves nothing over.
 
-Nothing here changes published behaviour: 33 seals, 35 mutations, and the
-criteria are unchanged in what they decide.
+**Seven seals were reading private copies of the gates they claimed to
+constrain.** `lean-bridge.ts` declared its own `H`, `X` and `Y` beside an import
+of the rest of the simulator; the copies agreed, so every seal held — and
+perturbing the shipped gates in `src/quantum/simulator.ts` moved nothing at all.
+Scaling the shipped `H` by 1.3, destroying unitarity, changed no verdict. The
+local declarations are gone, the gates are imported, and `shadowed:check` now
+fails the build when any constant under `src/verification/` shadows an export.
+With the gates actually reached, breaking `X` fells four seals and breaking `H`
+fells four.
+
+Three seals that held an expected value as a literal now check a relation
+instead. `tensor_preserves_norm` asked whether the norm was 1, which is true of
+normalised inputs whatever the tensor product does; it now checks that the norm
+is multiplicative, against unnormalised inputs where 1 would say nothing.
+`pauliX_unitary` ran `X` twice on `|0>` and asked whether amplitude 0 was 1 —
+an answer handed over by the starting point, true of any gate whose square fixes
+`|0>`; it now checks `X² = I` on an arbitrary complex state, amplitude by
+amplitude. `born_rule_sum` now checks that a Hadamard layer *preserves* the
+total, not that the total is 1.
+
+Seal 34, `pauliY_sign_is_forced_by_x_and_z`, exists because flipping the shipped
+sign of `Y` still moved nothing: `-Y` is unitary, squares to `I`, and
+anticommutes with `X` exactly as `Y` does, so every relation on offer was
+satisfied. `Y = i(XZ)` forces it, and brings `Z` under a law for the first time.
+Flipping *both* signs still moves nothing, which is a symmetry the law cannot
+see and is recorded rather than papered over.
+
+**`InversionProof.isInvolution` was a published proof field that could not be
+false.** It computed `reverse(reverse(x)) === x`, which holds for every array
+that has ever existed — it tested `Array.prototype.reverse`, not the Rodin
+sequence. The same unfalsifiable shape is called out by name three lines below
+it in the same function, and it survived that audit by sitting one line above.
+The field now checks the involution actually being claimed: that halving undoes
+doubling, since 5 is the multiplicative inverse of 2 mod 9, and that R' is R
+traversed backwards rather than a separately asserted list of digits. Swapping
+two digits of R' fells it; so does changing the inverse generator from 5 to 4.
+The old expression returns true under both.
+
+34 seals, 35 mutations. Of the 34, 27 are structural and 6 pinned, down from 9
+pinned — the rest pin conventions correctly (FIPS-203 parameter sizes, booleans,
+and a factored input compared against itself).
 
 ## 1.5.0
 

@@ -317,8 +317,8 @@ implements and the predicates that decide it. The digit space is partitioned by
 a doubling map into a six-element orbit and a three-element axis; frequency and
 hue are one integer read in two units; ratios are carried as pairs of integers
 rather than decimals, and the two places where binary floating point departs
-from the exact value are stated rather than rounded away. 33 of
-33 theorems carry a predicate that runs and holds, and
+from the exact value are stated rather than rounded away. 34 of
+34 theorems carry a predicate that runs and holds, and
 59 of 83 statements in the Lean files are
 accepted by the Lean kernel &mdash; the rest are written down and not proved,
 and say so.</p>
@@ -331,7 +331,7 @@ the reachability closure over-approximates. Of the
 57 exported literal constants,
 8 are forced by at least one law and
 49 are held by nothing. And of the
-33 predicates, 9 are
+34 predicates, 6 are
 <em>pinned</em> rather than forced &mdash; they hold an expected value as a
 literal, which falls for a convention as readily as for a law. These are
 measured by experiment, not asserted, and the experiments are Appendix G and
@@ -888,16 +888,17 @@ corrupts one line and requires the suite over it to fail; all
 
 <section class="appendix">
 <h2>Appendix F&ensp;Seals</h2>
-<p>Each row is a predicate that runs. 33 of 33 hold at
+<p>Each row is a predicate that runs. 34 of 34 hold at
 generation time; a seal that stopped holding would fail
 <code>npm run test:verification</code> before this page could be regenerated.</p>
 <table class="seals">
 <thead><tr><th>seal</th><th>status</th><th>basis</th></tr></thead>
 <tbody><tr><td><code>hadamard_squared</code></td><td>held</td><td>H applied twice to each basis state of one qubit returns the input amplitudes (linearity makes 2 states exhaustive)</td></tr>
 <tr><td><code>hadamard_unitary</code></td><td>held</td><td>H preserves the norm of a 3-qubit register (unitary maps are exactly the norm-preserving ones)</td></tr>
-<tr><td><code>pauliX_unitary</code></td><td>held</td><td>X applied twice is the identity, and X preserves the norm</td></tr>
+<tr><td><code>pauliY_sign_is_forced_by_x_and_z</code></td><td>held</td><td>Y = i(XZ) as 2x2 matrices. Every other seal here checks relations that -Y satisfies exactly as Y does (it is unitary, squares to I, and anticommutes with X), so flipping the shipped sign of Y moved nothing. This one forces it: Y is computed from the shipped X and Z and compared entry by entry to the shipped Y, with no matrix written down.</td></tr>
+<tr><td><code>pauliX_unitary</code></td><td>held</td><td>X is an involution on EVERY state and preserves the norm of every state, normalised or not. Checked as a relation between two computed states, not against the literal 1 -- which the old form got for free by starting from |0&gt;.</td></tr>
 <tr><td><code>pauli_anticomm</code></td><td>held</td><td>XY and YX differ by an overall sign on both basis states of one qubit</td></tr>
-<tr><td><code>born_rule_sum</code></td><td>held</td><td>squared amplitudes sum to 1 after a Hadamard layer on 4 qubits</td></tr>
+<tr><td><code>born_rule_sum</code></td><td>held</td><td>a Hadamard layer PRESERVES the total squared amplitude -- the total after equals the total before, for an unnormalised input as much as a normalised one. The literal 1 of the old form was the normalisation of |0&gt;, not anything the layer did.</td></tr>
 <tr><td><code>qft_unitary</code></td><td>held</td><td>inverse QFT undoes QFT on a 3-qubit register, amplitude by amplitude</td></tr>
 <tr><td><code>grover_amplification</code></td><td>held</td><td>Grover leaves the marked state with probability above the 1/N a random guess gets (n=4, N=16)</td></tr>
 <tr><td><code>grover_speedup</code></td><td>held</td><td>INSTANCE ONLY, not the asymptotic bound: round((pi/4)*sqrt(N)) iterations reach probability above 0.9 at N=16</td></tr>
@@ -906,7 +907,7 @@ generation time; a seal that stopped holding would fail
 <tr><td><code>steane_corrects_error</code></td><td>held</td><td>Steane [[7,1,3]] is a stabiliser group: exactly n-k = 6 generators, symplectically independent (rank 6), pairwise commuting, and distance 3 corrects floor((d-1)/2) = 1 arbitrary error</td></tr>
 <tr><td><code>surface_code_threshold</code></td><td>held</td><td>estimateSurfaceCodeThreshold separates the two sides of the 1% threshold: below it reports below, above it does not</td></tr>
 <tr><td><code>pauliX_anticommute_pauliY</code></td><td>held</td><td>the four entries of XY and of -YX are equal, which is every entry there is</td></tr>
-<tr><td><code>tensor_preserves_norm</code></td><td>held</td><td>four pairs of normalised one- and two-qubit states, tensored, each with norm 1</td></tr>
+<tr><td><code>tensor_preserves_norm</code></td><td>held</td><td>the norm is MULTIPLICATIVE under the tensor product: for any two states, normalised or not, the squared norm of a tensor b equals the product of theirs. Checked against unnormalised inputs too, where a check against the literal 1 says nothing.</td></tr>
 <tr><td><code>phase_estimation_accuracy</code></td><td>held</td><td>for t = 4 and 5, every phase of the form k/2^t is recovered exactly, so the error is 0 and within the 1/2^t bound</td></tr>
 <tr><td><code>kyber_security</code></td><td>held</td><td>the shipped ML-KEM parameters are ML-KEM-768 (ek 1184, dk 2400, ct 1088). NIST puts that at category 3, NOT the 128 the Lean script states.</td></tr>
 <tr><td><code>doubling_avoids_the_triad</code></td><td>held</td><td>VORTEX_ORBIT and VORTEX_AXIS are pinned to computation, not trusted. gcd(2,9) = 1, so every power of 2 is a unit mod 9 and can never be a multiple of 3; 2 is a primitive root, so its orbit is all six units {1,2,4,5,7,8}; 2^6 = 64 = 1 mod 9 gives period 6, which makes six cases exhaustive rather than sampled. Reflection through the void carries {1,4,7} onto {9,6,3}, so the triad is reachable only by reflecting.</td></tr>
@@ -1111,8 +1112,8 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>9cca6a01f7f5bda6</code> over
-18 equations, 33 seals and 3 axioms. Any change to
+<p class="receipt">Generated from source. Model receipt <code>ed7936f584baa0e3</code> over
+18 equations, 34 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>
 </body>

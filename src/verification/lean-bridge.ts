@@ -69,6 +69,10 @@ import {
   selfTest as wastewaterSelfTest,
 } from '../thermo/wastewater-energy.ts'
 import {
+  H,
+  X,
+  Y,
+  Z,
   zeroState,
   applyGate1,
   isNormalized,
@@ -302,9 +306,13 @@ const SQRT1_2 = 1 / sqrt(2)
 type C = { re: number; im: number }
 const c = (re: number, im = 0): C => ({ re, im })
 
-const H: [C, C, C, C] = [c(SQRT1_2), c(SQRT1_2), c(SQRT1_2), c(-SQRT1_2)]
-const X: [C, C, C, C] = [c(0), c(1), c(1), c(0)]
-const Y: [C, C, C, C] = [c(0), c(0, -1), c(0, 1), c(0)]
+// H, X and Y are NOT redeclared here. They used to be, and that made these
+// seals unfalsifiable with respect to the package: perturbing the shipped gates
+// in src/quantum/simulator.ts moved nothing, because the seals were reading
+// private copies that happened to agree. A seal that cannot fall when the
+// shipped value is wrong is not evidence about the shipped value. They are
+// imported from the simulator with the rest of the machinery above, and
+// scripts/shadowed-constants.mjs now fails the build if they come back.
 
 const CLOSE = 1e-9
 const near = (a: number, b: number): boolean => a - b < CLOSE && b - a < CLOSE
@@ -349,12 +357,47 @@ export const SEALS: Record<string, Seal> = {
     },
   },
 
-  pauliX_unitary: {
-    basis: 'X applied twice is the identity, and X preserves the norm',
+  pauliY_sign_is_forced_by_x_and_z: {
+    basis: 'Y = i(XZ) as 2x2 matrices. Every other seal here checks relations that -Y satisfies exactly as Y does (it is unitary, squares to I, and anticommutes with X), so flipping the shipped sign of Y moved nothing. This one forces it: Y is computed from the shipped X and Z and compared entry by entry to the shipped Y, with no matrix written down.',
     decide: () => {
-      const reg = zeroState(2)
-      const twice = applyGate1(applyGate1(reg, 0, X), 0, X)
-      return isNormalized(twice) && near(twice.amps[0]!.re, 1)
+      type M = readonly [C, C, C, C]
+      const mul = (a: C, b: C): C => c(a.re * b.re - a.im * b.im, a.re * b.im + a.im * b.re)
+      const add = (a: C, b: C): C => c(a.re + b.re, a.im + b.im)
+      const times = (a: M, b: M): M => [
+        add(mul(a[0], b[0]), mul(a[1], b[2])), add(mul(a[0], b[1]), mul(a[1], b[3])),
+        add(mul(a[2], b[0]), mul(a[3], b[2])), add(mul(a[2], b[1]), mul(a[3], b[3])),
+      ]
+      const i = c(0, 1)
+      const xz = times(X as unknown as M, Z as unknown as M)
+      const derived = xz.map((e) => mul(i, e))
+      const shipped = Y as unknown as M
+      for (let k = 0; k < 4; k += 1) {
+        if (!near(derived[k]!.re, shipped[k]!.re)) return false
+        if (!near(derived[k]!.im, shipped[k]!.im)) return false
+      }
+      return true
+    },
+  },
+  pauliX_unitary: {
+    basis: 'X is an involution on EVERY state and preserves the norm of every state, normalised or not. Checked as a relation between two computed states, not against the literal 1 -- which the old form got for free by starting from |0>.',
+    decide: () => {
+      // The old body ran X twice on |0> and asked whether amplitude 0 was 1.
+      // Starting from |0>, that answer is handed over by the starting point: it
+      // holds for any gate whose square fixes |0>, so it was not evidence about
+      // X. The law is X^2 = I on an ARBITRARY state, checked amplitude by
+      // amplitude against the state we began with.
+      const sq = (st: { amps: C[] }) => st.amps.reduce((t, a) => t + a.re * a.re + a.im * a.im, 0)
+      const arbitrary = { n: 2, amps: [c(3, -1), c(0, 2), c(-4, 5), c(1, 1)] }
+      for (const q of [0, 1]) {
+        const once = applyGate1(arbitrary as never, q, X)
+        const twice = applyGate1(once, q, X)
+        for (let i = 0; i < arbitrary.amps.length; i += 1) {
+          if (!near(twice.amps[i]!.re, arbitrary.amps[i]!.re)) return false
+          if (!near(twice.amps[i]!.im, arbitrary.amps[i]!.im)) return false
+        }
+        if (!near(sq(once), sq(arbitrary as never))) return false
+      }
+      return isNormalized(applyGate1(applyGate1(zeroState(2), 0, X), 0, X))
     },
   },
 
@@ -376,12 +419,21 @@ export const SEALS: Record<string, Seal> = {
   },
 
   born_rule_sum: {
-    basis: 'squared amplitudes sum to 1 after a Hadamard layer on 4 qubits',
+    basis: 'a Hadamard layer PRESERVES the total squared amplitude -- the total after equals the total before, for an unnormalised input as much as a normalised one. The literal 1 of the old form was the normalisation of |0>, not anything the layer did.',
     decide: () => {
-      let reg = zeroState(4)
-      for (const q of [0, 1, 2, 3]) reg = applyGate1(reg, q, H)
-      const total = reg.amps.reduce((s, a) => s + a.re * a.re + a.im * a.im, 0)
-      return near(total, 1)
+      const sq = (st: { amps: C[] }) => st.amps.reduce((t, a) => t + a.re * a.re + a.im * a.im, 0)
+      // Unnormalised and complex: its total is nowhere near 1, so a check
+      // against the literal 1 could say nothing at all here.
+      const start = { n: 2, amps: [c(2, 0), c(0, -3), c(1, 1), c(-5, 2)] } as ReturnType<typeof zeroState>
+      let reg = start
+      for (const q of [0, 1]) reg = applyGate1(reg, q, H)
+      if (!near(sq(reg), sq(start))) return false
+
+      // The Born normalisation still holds where it is meant to: from |0>,
+      // where 1 is what the state was normalised to before the layer ran.
+      let born = zeroState(4)
+      for (const q of [0, 1, 2, 3]) born = applyGate1(born, q, H)
+      return near(sq(born), sq(zeroState(4)))
     },
   },
 
@@ -500,8 +552,8 @@ export const SEALS: Record<string, Seal> = {
   pauliX_anticommute_pauliY: {
     basis: 'the four entries of XY and of -YX are equal, which is every entry there is',
     decide: () => {
-      const mul = (a: [C, C, C, C], b: [C, C, C, C]): [C, C, C, C] => {
-        const at = (m: [C, C, C, C], r: number, k: number) => m[r * 2 + k]!
+      const mul = (a: readonly [C, C, C, C], b: readonly [C, C, C, C]): [C, C, C, C] => {
+        const at = (m: readonly [C, C, C, C], r: number, k: number) => m[r * 2 + k]!
         const out: C[] = []
         for (let r = 0; r < 2; r++) {
           for (let col = 0; col < 2; col++) {
@@ -534,7 +586,7 @@ export const SEALS: Record<string, Seal> = {
    * over all states and this checks four pairs built from H and X.
    */
   tensor_preserves_norm: {
-    basis: 'four pairs of normalised one- and two-qubit states, tensored, each with norm 1',
+    basis: 'the norm is MULTIPLICATIVE under the tensor product: for any two states, normalised or not, the squared norm of a tensor b equals the product of theirs. Checked against unnormalised inputs too, where a check against the literal 1 says nothing.',
     decide: () => {
       const tensor = (a: { n: number; amps: C[] }, b: { n: number; amps: C[] }) => {
         const amps: C[] = []
@@ -543,15 +595,26 @@ export const SEALS: Record<string, Seal> = {
         }
         return { n: a.n + b.n, amps }
       }
+      // The law is multiplicativity, not normalisation. `near(norm, 1)` held the
+      // expected answer as a literal, so it fell for a convention as readily as
+      // for a law -- and it could only ever be run on normalised inputs, where 1
+      // is true for a reason that has nothing to do with the tensor product.
+      const sq = (st: { amps: C[] }) => st.amps.reduce((t, a) => t + a.re * a.re + a.im * a.im, 0)
+      const scaled = (st: { n: number; amps: C[] }, k: number) =>
+        ({ n: st.n, amps: st.amps.map((a) => c(a.re * k, a.im * k)) })
+
       const one = () => zeroState(1)
       const plus = () => applyGate1(zeroState(1), 0, H)
       const flipped = () => applyGate1(zeroState(1), 0, X)
       const two = () => applyGate1(zeroState(2), 0, H)
-      for (const [a, b] of [[one(), plus()], [plus(), plus()], [flipped(), one()], [two(), plus()]] as const) {
+      const pairs = [
+        [one(), plus()], [plus(), plus()], [flipped(), one()], [two(), plus()],
+        [scaled(one(), 3), plus()], [scaled(plus(), 2), scaled(two(), 5)],
+      ] as const
+      for (const [a, b] of pairs) {
         const t = tensor(a as never, b as never)
-        let norm = 0
-        for (const amp of t.amps) norm += amp.re * amp.re + amp.im * amp.im
-        if (!near(norm, 1)) return false
+        // computation against computation: neither side is written down here
+        if (!near(sq(t), sq(a as never) * sq(b as never))) return false
       }
       return true
     },

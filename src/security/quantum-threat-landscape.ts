@@ -147,7 +147,7 @@ export function quantumThreatModel(
 export interface InversionProof {
   readonly classical: typeof RODIN_SEQUENCE_CLASSICAL
   readonly quantum: typeof RODIN_SEQUENCE_QUANTUM
-  readonly isInvolution: boolean // reverse(reverse(x)) === x
+  readonly isInvolution: boolean // halving undoes doubling, and R' is R reversed
   readonly periodPreserved: boolean // period([1,2,4,8,7,5]) === period([5,7,8,4,2,1])
   readonly groupOrderPreserved: boolean // group order is same both ways
   /**
@@ -166,9 +166,25 @@ export function proveInversion(): InversionProof {
   const classical = RODIN_SEQUENCE_CLASSICAL
   const quantum = RODIN_SEQUENCE_QUANTUM
 
-  // Check involution: reverse(reverse(x)) === x
+  // This read `[...classical].reverse().reverse().join('') === classical.join('')`,
+  // which is true of EVERY array that has ever existed: it tested that
+  // Array.prototype.reverse is its own inverse, a fact about JavaScript, and
+  // said nothing whatever about the Rodin sequence. A published proof field
+  // that cannot be false is the same unfalsifiable shape called out three lines
+  // below, and it survived that audit by sitting one line above it.
+  //
+  // The involution that is actually claimed relates R to R': halving undoes
+  // doubling, because 5 is the multiplicative inverse of 2 mod 9. Both halves
+  // below are computed, and both can fail.
+  const dbl = (x: number) => (x * 2) % 9 || 9
+  const half = (x: number) => (x * 5) % 9 || 9
   const isInvolution =
-    [...classical].reverse().reverse().join('') === classical.join('')
+    // doubling then halving returns every digit of the sequence unchanged
+    classical.every((d) => half(dbl(d)) === d)
+    // and the quantum sequence is the classical one traversed backwards, which
+    // is what makes it the orbit of the inverse generator rather than a
+    // separately asserted list of digits
+    && [...classical].reverse().join('') === quantum.join('')
 
   // Check period: count cycles until sequence repeats
   const period = (seq: readonly number[]) => {

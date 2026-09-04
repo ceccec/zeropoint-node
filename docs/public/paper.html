@@ -293,18 +293,18 @@ hue are one integer read in two units; ratios are carried as pairs of integers
 rather than decimals, and the two places where binary floating point departs
 from the exact value are stated rather than rounded away. 33 of
 33 theorems carry a predicate that runs and holds, and
-26 of 50 statements in the Lean files are
+39 of 63 statements in the Lean files are
 accepted by the Lean kernel &mdash; the rest are written down and not proved,
 and say so.</p>
 
 <p><strong>How much of this package those predicates actually hold.</strong>
-1409 of
-1749 exported values are not reachable
+1411 of
+1751 exported values are not reachable
 from any law, so nothing here constrains them; that count is a floor, because
 the reachability closure over-approximates. Of the
-55 exported literal constants,
+57 exported literal constants,
 8 are forced by at least one law and
-47 are held by nothing. And of the
+49 are held by nothing. And of the
 33 predicates, 9 are
 <em>pinned</em> rather than forced &mdash; they hold an expected value as a
 literal, which falls for a convention as readily as for a law. These are
@@ -929,14 +929,14 @@ one, since a shortened title is a transcription.</p>
 
 <section class="appendix">
 <h2>Appendix H&ensp;Every Lean statement</h2>
-<p>All 50 statements in the <code>lean/</code> sources, as
+<p>All 63 statements in the <code>lean/</code> sources, as
 they are written there. <strong>Proven</strong> means three things together: the
 kernel accepted the file, the proof contains no <code>sorry</code>, and
 <code>#print axioms</code> reports a dependency set within
 <code>{propext, Quot.sound}</code>. The first two alone are not enough — a proof
 can invoke a lemma closed with <code>sorry</code> and inherit the vacuity with
 the word appearing nowhere near it.</p>
-<p>26 are proven on that reading. The rest are statements
+<p>39 are proven on that reading. The rest are statements
 rather than theorems, and are listed here so the difference is legible rather
 than summarised away.</p>
 <table class="lean">
@@ -967,6 +967,19 @@ than summarised away.</p>
 <tr class="proven"><td><code>the_four_pairs_are_one_nine_two_eight_three_seven_four_six</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">tv 1 = 9 ∧ tv 2 = 8 ∧ tv 3 = 7 ∧ tv 4 = 6</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
 <tr class="proven"><td><code>four_three_two_has_twenty_divisors_its_neighbours_eighteen</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">divisorCount 432 = 20 ∧ divisorCount 396 = 18 ∧ divisorCount 468 = 18</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
 <tr class="proven"><td><code>all_three_are_multiples_of_thirty_six</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">432 % 36 = 0 ∧ 396 % 36 = 0 ∧ 468 % 36 = 0</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>every_mirror_orbit_sums_to_ten</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ d ∈ nonzero, d + tv d = 10</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>the_void_is_the_one_orbit_that_does_not</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">0 + tv 0 = 0</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>swap12_is_an_involution</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">∀ d ∈ digits, swap12 (swap12 d) = d</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>being_an_involution_is_not_enough_for_harmony</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">swap12 1 + 1 ≠ swap12 3 + 3</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>non_fixed_points_come_in_pairs</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">(digits.filter (fun d =&gt; tv d != d)).length % 2 = 0 ∧ (digits.filter (fun d =&gt; swap12 d != d)).length % 2 = 0</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>the_mirror_is_the_involution_with_a_constant_orbit_sum</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">(nonzero.map (fun d =&gt; d + tv d)) = [10, 10, 10, 10, 10, 10, 10, 10, 10] ∧ (nonzero.map (fun d =&gt; d + swap12 d)) ≠ [10, 10, 10, 10, 10, 10, 10, 10, 10]</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>doubling_stays_in_orbit_axiom_free</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">orbit.all (fun d =&gt; orbit.contains (dbl d)) = true</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>orbit_and_axis_are_disjoint_axiom_free</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">orbit.all (fun d =&gt; !axis.contains d) = true</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>orbit_axis_void_exhaust_the_digits_axiom_free</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">digits.all (fun d =&gt; d == 0 || orbit.contains d || axis.contains d) = true</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>every_axis_digit_mirrors_an_orbit_digit_axiom_free</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">axis.all (fun d =&gt; orbit.contains (tv d)) = true</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>mirror_table_is_through_void_axiom_free</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">nonzero.all (fun d =&gt; (affineTable 8 1).getD (d % 9) 0 == tv d % 9) = true</td><td>proven by the kernel <span class="ax">rests on <code>propext</code></span></td></tr>
+<tr class="proven"><td><code>doubling_and_mirror_are_affine_axiom_free</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">(agl.contains (affineTable 2 0) &amp;&amp; agl.contains (affineTable 8 1)) = true</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>every_mirror_orbit_sums_to_ten_axiom_free</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">nonzero.all (fun d =&gt; d + tv d == 10) = true</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
 <tr class="unverifiable-here"><td><code>hadamard_squared</code><br><span class="where">Quantum.lean</span></td><td class="stmt">hadamard * hadamard = 1</td><td>needs a library this repository cannot build here</td></tr>
 <tr class="sorry"><td><code>hadamard_unitary</code><br><span class="where">Quantum.lean</span></td><td class="stmt">IsUnitary hadamard</td><td>written down, closed with sorry</td></tr>
 <tr class="unverifiable-here"><td><code>pauliX_unitary</code><br><span class="where">Quantum.lean</span></td><td class="stmt">IsUnitary pauliX</td><td>needs a library this repository cannot build here</td></tr>
@@ -1043,7 +1056,7 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>d7b100de9da8dbb5</code> over
+<p class="receipt">Generated from source. Model receipt <code>458eed35c5151d95</code> over
 18 equations, 33 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>

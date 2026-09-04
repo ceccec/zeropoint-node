@@ -16,13 +16,13 @@ This paper sets out the arithmetic that \texttt{zeropoint-node} implements and t
 predicates that decide it. The digit space is partitioned by a doubling map into a
 six-element orbit and a three-element axis; frequency and hue are one integer read in
 two units; ratios are carried as pairs of integers rather than decimals. 33 of
-33 theorems carry a predicate that runs and holds, and 26 of
-50 statements in the Lean files are accepted by the Lean kernel.
+33 theorems carry a predicate that runs and holds, and 39 of
+63 statements in the Lean files are accepted by the Lean kernel.
 3 claims are recorded as axioms because no finite computation decides them.
-\textbf{How much of the package those predicates hold:} 1409 of
-1749 exported values are reachable from no law at all (a floor, not a total);
-of 55 exported literal constants 8 are forced and
-47 are held by nothing; and 9 of the 33 predicates are
+\textbf{How much of the package those predicates hold:} 1411 of
+1751 exported values are reachable from no law at all (a floor, not a total);
+of 57 exported literal constants 8 are forced and
+49 are held by nothing; and 9 of the 33 predicates are
 pinned rather than forced. Measured, not asserted.
 \textbf{No physical experiment is reported here.}
 \end{abstract}
@@ -145,9 +145,9 @@ because novelty is a universal negative that no finite search decides. It rests 
 \end{itemize}
 
 \section*{Every Lean statement}
-All 50 statements in the \texttt{lean/} sources. \emph{Proven} means the kernel accepted the file,
+All 63 statements in the \texttt{lean/} sources. \emph{Proven} means the kernel accepted the file,
 the proof contains no \texttt{sorry}, and \texttt{\#print axioms} reports a dependency set within
-$\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 26 of them meet it.
+$\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 39 of them meet it.
 \begin{itemize}\small
 \item \texttt{dr\_is\_drTS\_above\_zero} (DigitSpace.lean) --- $\forall$ n $\in$ List.range 60, n $\neq$ 0 $\to$ dr n = drTS n\\
 \textbf{proven by the kernel}, resting on no axioms
@@ -200,6 +200,32 @@ $\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 26 of them meet it.
 \item \texttt{four\_three\_two\_has\_twenty\_divisors\_its\_neighbours\_eighteen} (DigitSpace.lean) --- divisorCount 432 = 20 $\land$ divisorCount 396 = 18 $\land$ divisorCount 468 = 18\\
 \textbf{proven by the kernel}, resting on no axioms
 \item \texttt{all\_three\_are\_multiples\_of\_thirty\_six} (DigitSpace.lean) --- 432 \% 36 = 0 $\land$ 396 \% 36 = 0 $\land$ 468 \% 36 = 0\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{every\_mirror\_orbit\_sums\_to\_ten} (DigitSpace.lean) --- $\forall$ d $\in$ nonzero, d + tv d = 10\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_void\_is\_the\_one\_orbit\_that\_does\_not} (DigitSpace.lean) --- 0 + tv 0 = 0\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{swap12\_is\_an\_involution} (DigitSpace.lean) --- $\forall$ d $\in$ digits, swap12 (swap12 d) = d\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{being\_an\_involution\_is\_not\_enough\_for\_harmony} (DigitSpace.lean) --- swap12 1 + 1 $\neq$ swap12 3 + 3\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{non\_fixed\_points\_come\_in\_pairs} (DigitSpace.lean) --- (digits.filter (fun d => tv d != d)).length \% 2 = 0 $\land$ (digits.filter (fun d => swap12 d != d)).length \% 2 = 0\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_mirror\_is\_the\_involution\_with\_a\_constant\_orbit\_sum} (DigitSpace.lean) --- (nonzero.map (fun d => d + tv d)) = [10, 10, 10, 10, 10, 10, 10, 10, 10] $\land$ (nonzero.map (fun d => d + swap12 d)) $\neq$ [10, 10, 10, 10, 10, 10, 10, 10, 10]\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{doubling\_stays\_in\_orbit\_axiom\_free} (DigitSpace.lean) --- orbit.all (fun d => orbit.contains (dbl d)) = true\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{orbit\_and\_axis\_are\_disjoint\_axiom\_free} (DigitSpace.lean) --- orbit.all (fun d => !axis.contains d) = true\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{orbit\_axis\_void\_exhaust\_the\_digits\_axiom\_free} (DigitSpace.lean) --- digits.all (fun d => d == 0 || orbit.contains d || axis.contains d) = true\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{every\_axis\_digit\_mirrors\_an\_orbit\_digit\_axiom\_free} (DigitSpace.lean) --- axis.all (fun d => orbit.contains (tv d)) = true\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{mirror\_table\_is\_through\_void\_axiom\_free} (DigitSpace.lean) --- nonzero.all (fun d => (affineTable 8 1).getD (d \% 9) 0 == tv d \% 9) = true\\
+\textbf{proven by the kernel}, resting on \texttt{propext}
+\item \texttt{doubling\_and\_mirror\_are\_affine\_axiom\_free} (DigitSpace.lean) --- (agl.contains (affineTable 2 0) && agl.contains (affineTable 8 1)) = true\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{every\_mirror\_orbit\_sums\_to\_ten\_axiom\_free} (DigitSpace.lean) --- nonzero.all (fun d => d + tv d == 10) = true\\
 \textbf{proven by the kernel}, resting on no axioms
 \item \texttt{hadamard\_squared} (Quantum.lean) --- hadamard * hadamard = 1\\
 \textbf{needs a library this repository cannot build here}

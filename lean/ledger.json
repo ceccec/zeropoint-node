@@ -1,8 +1,8 @@
 {
   "toolchain": "Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
   "files": 3,
-  "theorems": 50,
-  "proven": 26,
+  "theorems": 63,
+  "proven": 39,
   "sorry": 19,
   "unverifiableHere": 5,
   "rejected": 0,
@@ -178,6 +178,86 @@
     },
     {
       "name": "all_three_are_multiples_of_thirty_six",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "every_mirror_orbit_sums_to_ten",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "the_void_is_the_one_orbit_that_does_not",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "swap12_is_an_involution",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "being_an_involution_is_not_enough_for_harmony",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "non_fixed_points_come_in_pairs",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "the_mirror_is_the_involution_with_a_constant_orbit_sum",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "doubling_stays_in_orbit_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "orbit_and_axis_are_disjoint_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "orbit_axis_void_exhaust_the_digits_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "every_axis_digit_mirrors_an_orbit_digit_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "mirror_table_is_through_void_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": [
+        "propext"
+      ]
+    },
+    {
+      "name": "doubling_and_mirror_are_affine_axiom_free",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "every_mirror_orbit_sums_to_ten_axiom_free",
       "file": "DigitSpace.lean",
       "status": "proven",
       "axioms": []

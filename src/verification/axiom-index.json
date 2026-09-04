@@ -1,0 +1,75 @@
+{
+  "what": "Everything this corpus asks a reader to take on trust, separated into assumptions about the SUBJECT and axioms of the PROOF SYSTEM.",
+  "declaredAssumptions": [
+    {
+      "name": "lwe_hardness",
+      "statement": "axiom lwe_hardness : ¬ (polynomial_time_solves_lwe 768 3329)",
+      "whyUnsealed": "a universal negative over all polynomial-time algorithms; no finite computation decides it",
+      "whatIsDecidedInstead": "kyber_security seals the FIPS 203 parameter sizes of the shipped implementation",
+      "kind": "about the subject — no finite computation decides it"
+    },
+    {
+      "name": "no_prior_art_is_undecidable",
+      "statement": "axiom no_prior_art_is_undecidable : ¬ ∃ (s : Artifact → Bool), decides_absence_of_prior_art s",
+      "whyUnsealed": "absence of prior art is a universal negative over all published and unpublished work; no finite search decides it, and a search returning nothing establishes only that it returned nothing",
+      "whatIsDecidedInstead": "prior-art.json records what each contribution is, which files carry it, what was searched and when, and the dated citable identifier under which it was published — publication defeats a later claim of invention without requiring a proof of novelty",
+      "kind": "about the subject — no finite computation decides it"
+    },
+    {
+      "name": "awareness_is_undecided",
+      "statement": "axiom awareness_is_undecided : ¬ ∃ (p : System → Bool), decides_awareness p",
+      "whyUnsealed": "whether any physical process is conscious is unsettled and the major theories disagree about what would count as evidence; there is no predicate to run, so nothing here can seal it",
+      "whatIsDecidedInstead": "consciousness-criterion runs five necessary conditions and reports how many a subject fails to be refuted by; it declines to claim awareness at all",
+      "kind": "about the subject — no finite computation decides it"
+    }
+  ],
+  "kernelAxioms": [
+    {
+      "name": "Quot.sound",
+      "note": "quotient soundness: elements related by the quotienting relation are equal in the quotient. Lean 4 core. It arrives here through list membership, not through any statement about digits.",
+      "kind": "about the proof system, not about the subject",
+      "theoremCount": 5,
+      "theorems": [
+        "doubling_and_mirror_are_affine",
+        "doubling_stays_in_orbit",
+        "every_axis_digit_mirrors_an_orbit_digit",
+        "orbit_and_axis_and_void_exhaust_the_digits",
+        "orbit_and_axis_are_disjoint"
+      ]
+    },
+    {
+      "name": "propext",
+      "note": "propositional extensionality: propositions with the same truth value are equal. Part of Lean 4 core, assumed by essentially all of mathlib, and says nothing about arithmetic.",
+      "kind": "about the proof system, not about the subject",
+      "theoremCount": 8,
+      "theorems": [
+        "doubling_and_mirror_are_affine",
+        "doubling_stays_in_orbit",
+        "every_axis_digit_mirrors_an_orbit_digit",
+        "mirror_is_affine_only_off_the_void",
+        "mirror_table_is_through_void",
+        "mirror_table_is_through_void_axiom_free",
+        "orbit_and_axis_and_void_exhaust_the_digits",
+        "orbit_and_axis_are_disjoint"
+      ]
+    }
+  ],
+  "neverUsed": [
+    {
+      "name": "Classical.choice",
+      "note": "the axiom of choice. NOT USED anywhere in this corpus, and its absence is the reason the allowed set is {propext, Quot.sound} rather than all three."
+    },
+    {
+      "name": "sorryAx",
+      "note": "the axiom a `sorry` introduces. It can never appear: a theorem depending on it is not proven, and lean:check gives it the status rests-on-more."
+    }
+  ],
+  "totals": {
+    "kernelProven": 39,
+    "withMeasuredAxioms": 39,
+    "restingOnNothingAtAll": 31,
+    "restingOnKernelAxiomsOnly": 8
+  },
+  "provenForm": "A theorem counts as proven when the kernel accepted its file, its body contains no sorry, and #print axioms reports a dependency set inside {propext, Quot.sound}. The dependency set is recorded per theorem in lean/ledger.json as the evidence for the word.",
+  "measuredCause": "The kernel-axiom dependencies are an artefact of proof FORM, not of the mathematics. `∀ d ∈ orbit, …` decides list membership and records [propext, Quot.sound]; the identical fact as a Bool equation over List.all records nothing. Seven axiom-free counterparts are in DigitSpace.lean, and six of the seven rest on nothing at all."
+}

@@ -40,13 +40,52 @@ const statements = new Map()
 const docs = new Map()
 for (const f of readdirSync(join(ROOT, 'lean')).filter((n) => n.endsWith('.lean'))) {
   const src = readFileSync(join(ROOT, 'lean', f), 'utf8')
-  for (const m of src.matchAll(/(?:\/-- ([\s\S]*?)-\/\s*)?^theorem\s+(\w+)\s*([\s\S]*?):=/gm)) {
-    statements.set(m[2], m[3].replace(/^\s*:/, '').replace(/\s+/g, ' ').trim())
-    if (m[1]) docs.set(m[2], m[1].replace(/\s+/g, ' ').trim())
+  // Two simple anchored passes, not one compound regex. The compound version
+  // had an optional doc-comment group in front of the theorem, and it
+  // over-consumed: swap12_is_an_involution was never captured at all, so it
+  // scored as having no statement and was withheld as "literal arithmetic".
+  // A correct verdict for the wrong reason is indistinguishable from a wrong
+  // one, and this one was wrong.
+  for (const m of src.matchAll(/^theorem\s+(\w+)\s*([\s\S]*?):=/gm)) {
+    statements.set(m[1], m[2].replace(/^\s*:/, '').replace(/\s+/g, ' ').trim())
+  }
+  for (const m of src.matchAll(/\/--([\s\S]*?)-\/\s*\ntheorem\s+(\w+)/g)) {
+    docs.set(m[2], m[1].replace(/\s+/g, ' ').trim())
   }
 }
 
-const proven = ledger.entries.filter((e) => e.status === 'proven')
+/**
+ * NOT EVERY PROVEN THEOREM EARNS A DOI.
+ *
+ * A DOI is for a citable output. `6 * 2 = 12 ∧ 54 - 12 = 42` is true,
+ * kernel-checked, and a STEP INSIDE an argument — it is not a result anyone
+ * would cite, and minting an identifier for it inflates the corpus. The cost is
+ * not the wasted DOI: it is that a reader who meets one discounts the other
+ * twenty-three, and they are the ones that matter.
+ *
+ * The bar, applied mechanically: a deposit-worthy statement either quantifies
+ * over a domain or says something about a DEFINED object of this theory. A
+ * statement made only of integer literals is arithmetic in support of a claim,
+ * not the claim. Those stay in the ledger, proved and citable through the
+ * repository's own DOI, which is what a concept DOI is for.
+ */
+// The defined objects are READ from the Lean sources, never listed here. A
+// hardcoded list is pinned to what its author remembered: adding `swap12` and
+// forgetting the list silently demoted a theorem about it to "literal
+// arithmetic" and withheld its deposit. The sources know their own definitions.
+const DEFINED_NAMES = new Set()
+for (const f of readdirSync(join(ROOT, 'lean')).filter((n) => n.endsWith('.lean'))) {
+  for (const m of readFileSync(join(ROOT, 'lean', f), 'utf8').matchAll(/^def\s+(\w+)/gm)) DEFINED_NAMES.add(m[1])
+}
+const DEFINED = new RegExp(`\\b(${[...DEFINED_NAMES].join('|')})\\b`)
+function standsAlone(name) {
+  const st = statements.get(name) ?? ''
+  return /∀|∃/.test(st) || DEFINED.test(st)
+}
+
+const provenAll = ledger.entries.filter((e) => e.status === 'proven')
+const proven = provenAll.filter((e) => standsAlone(e.name))
+const supporting = provenAll.filter((e) => !standsAlone(e.name))
 const cited = Object.values(priorArt.contributions)
   .flatMap((c) => c.priorArt?.citations ?? [])
   .filter((x) => x.resolved && x.kind === 'doi')
@@ -86,13 +125,15 @@ const record = {
   what: 'One Zenodo deposit per kernel-proven theorem, ready to mint. Generated from lean/ledger.json and the .lean sources.',
   doesNotEstablish: 'novelty. A DOI is a dated citable record and decides PRIORITY only; novelty is a universal negative no finite search decides.',
   mintedBy: 'nobody yet — minting is a write against a 2FA account and belongs to its owner',
+  bar: 'a deposit-worthy statement quantifies over a domain or speaks of a defined object of this theory. A statement made only of integer literals is a step inside an argument, not a citable result, and minting an identifier for it would inflate the corpus and discredit the rest.',
   conceptDoi: CONCEPT,
   count: deposits.length,
+  supportingNotDeposited: supporting.map((e) => ({ theorem: e.name, why: 'literal arithmetic in support of a claim; proved, and cited through the concept DOI' })),
   deposits,
 }
 const next = JSON.stringify(record, null, 2) + '\n'
 
-console.log(`zenodo:deposits — ${deposits.length} kernel-proven theorem(s), each with a deposit record citing ${cited.length} resolved DOI(s) and the concept DOI as isPartOf`)
+console.log(`zenodo:deposits — ${provenAll.length} kernel-proven; ${deposits.length} earn a deposit, ${supporting.length} are supporting arithmetic and do not.\n                  Each deposit cites citing ${cited.length} resolved DOI(s) and the concept DOI as isPartOf`)
 if (CHECK) {
   if (readFileSync(OUT, 'utf8') !== next) { console.error('zenodo:deposits FAIL — the record is not what the sources produce; run npm run zenodo:deposits'); process.exit(1) }
   console.log('zenodo:deposits ok — every proven theorem has a deposit, and every deposit names a theorem the kernel accepted')

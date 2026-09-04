@@ -227,3 +227,85 @@ theorem four_three_two_has_twenty_divisors_its_neighbours_eighteen :
     class does not distinguish them and the lattice does. -/
 theorem all_three_are_multiples_of_thirty_six :
     432 % 36 = 0 ∧ 396 % 36 = 0 ∧ 468 % 36 = 0 := by decide
+
+/- ── Do involutions always give a harmonic result? ─────────────────────────
+
+   Asked directly, and the general claim is FALSE — so the honest thing is to
+   prove both halves rather than only the flattering one.
+
+   Being an involution is a statement about a map returning to itself. It says
+   nothing about arithmetic, because an involution can be defined on a set with
+   no arithmetic at all. What makes THIS mirror harmonic is not that it is an
+   involution; it is that its orbits all sum to the same number. A second
+   involution on the same ten digits is exhibited below whose orbits do not, and
+   that settles the general claim by counterexample. -/
+
+/-- Every orbit of the mirror sums to ten — the pairs 1+9, 2+8, 3+7, 4+6, and
+    the fixed point 5+5. That is the harmonic content, and it is a fact about
+    THIS involution. -/
+theorem every_mirror_orbit_sums_to_ten : ∀ d ∈ nonzero, d + tv d = 10 := by decide
+
+/-- The void is the single exception, and it is why the digit space has ten
+    elements rather than nine: 0 is its own orbit and sums to nothing. -/
+theorem the_void_is_the_one_orbit_that_does_not : 0 + tv 0 = 0 := by decide
+
+/-- A second involution on the same ten digits: swap one and two, fix the rest. -/
+def swap12 (d : Nat) : Nat := if d = 1 then 2 else if d = 2 then 1 else d
+
+theorem swap12_is_an_involution : ∀ d ∈ digits, swap12 (swap12 d) = d := by decide
+
+/-- And its orbits do NOT share a sum: 1 + 2 = 3 while 3 + 3 = 6. So being an
+    involution is not sufficient for a harmonic result, and any claim that it is
+    has this as a counterexample. -/
+theorem being_an_involution_is_not_enough_for_harmony :
+    swap12 1 + 1 ≠ swap12 3 + 3 := by decide
+
+/-- What IS general to an involution is the counting: every element is fixed or
+    paired, so the non-fixed elements are even in number. Checked here for both
+    involutions this file defines, which is evidence and not a proof for all. -/
+theorem non_fixed_points_come_in_pairs :
+    (digits.filter (fun d => tv d != d)).length % 2 = 0 ∧
+    (digits.filter (fun d => swap12 d != d)).length % 2 = 0 := by decide
+
+/-- The mirror's harmony stated as the thing that actually distinguishes it: a
+    constant orbit sum, off the void. `swap12` fails exactly this. -/
+theorem the_mirror_is_the_involution_with_a_constant_orbit_sum :
+    (nonzero.map (fun d => d + tv d)) = [10, 10, 10, 10, 10, 10, 10, 10, 10] ∧
+    (nonzero.map (fun d => d + swap12 d)) ≠ [10, 10, 10, 10, 10, 10, 10, 10, 10] := by decide
+
+/- ── The same facts, axiom-free ────────────────────────────────────────────
+
+   Seven theorems above rest on [propext, Quot.sound]. Measured, the cause is
+   not the mathematics: it is the FORM. `∀ d ∈ orbit, …` decides membership in a
+   list, and list membership is a quotient-flavoured predicate, so the kernel
+   records those two. The identical fact written as a Bool equation over
+   `List.all` rests on nothing:
+
+     via_membership   depends on axioms: [propext, Quot.sound]
+     via_all          does not depend on any axioms
+
+   Both forms are kept. The membership form is the statement a reader wants; the
+   Bool form is the one with the smallest trusted base. Keeping only the first
+   would overstate what must be assumed, and keeping only the second would make
+   the corpus less readable to save two axioms of Lean's own core. -/
+
+theorem doubling_stays_in_orbit_axiom_free :
+    orbit.all (fun d => orbit.contains (dbl d)) = true := by decide
+
+theorem orbit_and_axis_are_disjoint_axiom_free :
+    orbit.all (fun d => !axis.contains d) = true := by decide
+
+theorem orbit_axis_void_exhaust_the_digits_axiom_free :
+    digits.all (fun d => d == 0 || orbit.contains d || axis.contains d) = true := by decide
+
+theorem every_axis_digit_mirrors_an_orbit_digit_axiom_free :
+    axis.all (fun d => orbit.contains (tv d)) = true := by decide
+
+theorem mirror_table_is_through_void_axiom_free :
+    nonzero.all (fun d => (affineTable 8 1).getD (d % 9) 0 == tv d % 9) = true := by decide
+
+theorem doubling_and_mirror_are_affine_axiom_free :
+    (agl.contains (affineTable 2 0) && agl.contains (affineTable 8 1)) = true := by decide
+
+theorem every_mirror_orbit_sums_to_ten_axiom_free :
+    nonzero.all (fun d => d + tv d == 10) = true := by decide

@@ -41,6 +41,6 @@ export const LEAN_PROVEN_COUNT = 0
 export const LEAN_SORRY_COUNT = 8
 
 /** Every theorem in lean/, across all files. */
-export const LEAN_CORPUS_THEOREM_COUNT = 50
+export const LEAN_CORPUS_THEOREM_COUNT = 63
 /** Of those: accepted by the kernel, with axiom dependencies inside the allowed set. */
-export const LEAN_CORPUS_PROVEN_COUNT = 26
+export const LEAN_CORPUS_PROVEN_COUNT = 39

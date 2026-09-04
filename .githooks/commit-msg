@@ -1,0 +1,28 @@
+#!/bin/sh
+# uuidna-49's commit-message court, adopted.
+#
+# The message is the only part of a commit nothing else checks. Everything else
+# here is gated: the code, the generated documents, the ledgers, the plan. The
+# reason a change was made is written once, by hand, and read by whoever comes
+# after — and a great many of this repository's messages are long, because a
+# reason recorded badly is a reason lost.
+#
+# One predicate to start, because it is decidable and unarguable: an odd number
+# of backtick fences means one is unclosed, or the shell ate it. A damaged
+# record should not be signed.
+msg="$1"
+# grep -c prints 0 AND exits 1 when it matches nothing, so `|| echo 0` appended
+# a second zero and the arithmetic below saw "0\n0". The first version of this
+# gate was itself a damaged record.
+fences=$(grep -c '^```' "$msg" 2>/dev/null); fences=${fences:-0}
+if [ $((fences % 2)) -ne 0 ]; then
+  echo "commit-msg REFUSED — $fences fence line(s): an odd count means one is unclosed or the shell ate it."
+  echo "                     The message is the only part of a commit nothing else checks."
+  exit 1
+fi
+ticks=$(tr -cd '`' < "$msg" | wc -c | tr -d ' ')
+if [ $((ticks % 2)) -ne 0 ]; then
+  echo "commit-msg REFUSED — $ticks backticks, an odd number: one span is unclosed."
+  exit 1
+fi
+exit 0

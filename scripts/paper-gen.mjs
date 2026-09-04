@@ -51,6 +51,8 @@ const ledger = JSON.parse(readFileSync(join(ROOT, 'src/verification/claims.json'
 const ratchet = JSON.parse(readFileSync(join(ROOT, 'ratchet.json'), 'utf8'))
 const leanLedger = JSON.parse(readFileSync(join(ROOT, 'lean/ledger.json'), 'utf8'))
 const priorArt = JSON.parse(readFileSync(join(ROOT, 'src/verification/prior-art.json'), 'utf8'))
+const constrained = JSON.parse(readFileSync(join(ROOT, 'src/verification/constrained.json'), 'utf8'))
+const pinning = JSON.parse(readFileSync(join(ROOT, 'src/verification/seal-pinning.json'), 'utf8'))
 
 /**
  * Every Lean statement in the repository, read from the .lean sources and
@@ -322,7 +324,22 @@ from the exact value are stated rather than rounded away. ${held.length} of
 ${seals.length} theorems carry a predicate that runs and holds, and
 ${leanLedger.proven} of ${leanLedger.theorems} statements in the Lean files are
 accepted by the Lean kernel &mdash; the rest are written down and not proved,
-and say so. ${axioms.length} claims are
+and say so.</p>
+
+<p><strong>How much of this package those predicates actually hold.</strong>
+${constrained.reachability.unreachable} of
+${constrained.reachability.exportedValues} exported values are not reachable
+from any law, so nothing here constrains them; that count is a floor, because
+the reachability closure over-approximates. Of the
+${constrained.literalCensus.perturbable} exported literal constants,
+${constrained.literalCensus.forced} are forced by at least one law and
+${constrained.literalCensus.free} are held by nothing. And of the
+${seals.length} predicates, ${pinning.tally.pinned ?? 0} are
+<em>pinned</em> rather than forced &mdash; they hold an expected value as a
+literal, which falls for a convention as readily as for a law. These are
+measured by experiment, not asserted, and the experiments are Appendix G and
+this page's own gates. A reader meeting only the sentence above would take this
+package to be far better constrained than it is. ${axioms.length} claims are
 recorded as axioms, because no finite computation decides them, and each is
 named in &#167;7. <strong>No physical experiment is reported here.</strong></p>
 </section>
@@ -601,6 +618,7 @@ const model = JSON.stringify({
   // Stated in both renderings; omitted here once, and the theorem count moved
   // from 33 to 35 without the receipt noticing.
   lean: `${leanLedger.proven}/${leanLedger.theorems}`, axioms: axioms.length,
+  census: `${constrained.reachability.unreachable}/${constrained.reachability.exportedValues}:${constrained.literalCensus.forced}/${constrained.literalCensus.perturbable}:${pinning.tally.pinned ?? 0}`,
   leanStatements: leanStatements.map((t) => `${t.name}:${t.status}:${(t.axioms ?? []).join('+')}`),
   patches: plans.map((p) => `${p.plan.run}:${Object.keys(p.plan.patches).length}`), mutations: MUTATIONS.length,
 })
@@ -758,6 +776,11 @@ two units; ratios are carried as pairs of integers rather than decimals. ${held.
 ${seals.length} theorems carry a predicate that runs and holds, and ${leanLedger.proven} of
 ${leanLedger.theorems} statements in the Lean files are accepted by the Lean kernel.
 ${axioms.length} claims are recorded as axioms because no finite computation decides them.
+\\textbf{How much of the package those predicates hold:} ${constrained.reachability.unreachable} of
+${constrained.reachability.exportedValues} exported values are reachable from no law at all (a floor, not a total);
+of ${constrained.literalCensus.perturbable} exported literal constants ${constrained.literalCensus.forced} are forced and
+${constrained.literalCensus.free} are held by nothing; and ${pinning.tally.pinned ?? 0} of the ${seals.length} predicates are
+pinned rather than forced. Measured, not asserted.
 \\textbf{No physical experiment is reported here.}
 \\end{abstract}
 

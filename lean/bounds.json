@@ -1,5 +1,5 @@
 {
-  "what": "Each numeric bound was widened and the kernel re-asked. artifact = the bound was scaffolding for `decide` and a universal beside it is honest. load-bearing = the bound is the theorem. inconclusive = the evaluator could not read the widened form, which refutes nothing.",
+  "what": "Each numeric bound was widened and the kernel re-asked. survived-one-widening = the bound held when widened once, which is EVIDENCE that it is scaffolding and not proof: one widening is one sample, and a statement can survive because the property is universal or because the new elements happen to satisfy it. load-bearing = the bound is the theorem. inconclusive = the evaluator could not read the widened form, which refutes nothing.",
   "doesNotEstablish": "whether any prose over-claims. That happens only when a sentence ranges wider than the real domain, and nothing here reads a sentence.",
   "widenFactor": 4,
   "theoremsOverNamedDomains": 21,
@@ -8,22 +8,22 @@
     "dr_is_drTS_above_zero": {
       "bound": 60,
       "widenedTo": 240,
-      "verdict": "artifact"
+      "verdict": "survived-one-widening"
     },
     "dr_idempotent": {
       "bound": 60,
       "widenedTo": 240,
-      "verdict": "artifact"
+      "verdict": "survived-one-widening"
     },
     "dr_invariant_under_nine": {
       "bound": 50,
       "widenedTo": 200,
-      "verdict": "artifact"
+      "verdict": "survived-one-widening"
     },
     "whole_axis_and_root_nine_is_exactly_thirty_six": {
       "bound": 100,
       "widenedTo": 400,
-      "verdict": "artifact"
+      "verdict": "survived-one-widening"
     }
   }
 }

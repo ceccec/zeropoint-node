@@ -111,7 +111,22 @@ from the exact value are stated rather than rounded away. 33 of
 33 theorems carry a predicate that runs and holds, and
 24 of 48 statements in the Lean files are
 accepted by the Lean kernel &mdash; the rest are written down and not proved,
-and say so. 3 claims are
+and say so.</p>
+
+<p><strong>How much of this package those predicates actually hold.</strong>
+1409 of
+1749 exported values are not reachable
+from any law, so nothing here constrains them; that count is a floor, because
+the reachability closure over-approximates. Of the
+55 exported literal constants,
+8 are forced by at least one law and
+47 are held by nothing. And of the
+33 predicates, 9 are
+<em>pinned</em> rather than forced &mdash; they hold an expected value as a
+literal, which falls for a convention as readily as for a law. These are
+measured by experiment, not asserted, and the experiments are Appendix G and
+this page's own gates. A reader meeting only the sentence above would take this
+package to be far better constrained than it is. 3 claims are
 recorded as axioms, because no finite computation decides them, and each is
 named in &#167;7. <strong>No physical experiment is reported here.</strong></p>
 </section>
@@ -748,7 +763,7 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>583196e6c5dc6e81</code> over
+<p class="receipt">Generated from source. Model receipt <code>6ee4b2846319c9d9</code> over
 18 equations, 33 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>

@@ -71,7 +71,7 @@ function widen(name, bound) {
   try {
     writeFileSync(TMP, `set_option maxRecDepth 1000000\n${widened}\n`)
     execFileSync('lean', [TMP], { stdio: 'pipe', timeout: 300_000 })
-    return { verdict: 'artifact' }
+    return { verdict: 'survived-one-widening' }
   } catch (e) {
     const said = `${e.stdout ?? ''}${e.stderr ?? ''}`
     // A resource limit refutes nothing. Saying otherwise would mark honest
@@ -93,7 +93,7 @@ for (const { name, bound } of bounded) {
 
 const named = source.split('\n').filter((l) => /^theorem/.test(l) && !/List\.range/.test(l)).length
 const record = {
-  what: 'Each numeric bound was widened and the kernel re-asked. artifact = the bound was scaffolding for `decide` and a universal beside it is honest. load-bearing = the bound is the theorem. inconclusive = the evaluator could not read the widened form, which refutes nothing.',
+  what: 'Each numeric bound was widened and the kernel re-asked. survived-one-widening = the bound held when widened once, which is EVIDENCE that it is scaffolding and not proof: one widening is one sample, and a statement can survive because the property is universal or because the new elements happen to satisfy it. load-bearing = the bound is the theorem. inconclusive = the evaluator could not read the widened form, which refutes nothing.',
   doesNotEstablish: 'whether any prose over-claims. That happens only when a sentence ranges wider than the real domain, and nothing here reads a sentence.',
   widenFactor: WIDEN,
   theoremsOverNamedDomains: named,
@@ -102,7 +102,7 @@ const record = {
 }
 const next = JSON.stringify(record, null, 2) + '\n'
 const tally = Object.values(results).reduce((a, r) => ({ ...a, [r.verdict]: (a[r.verdict] ?? 0) + 1 }), {})
-console.log(`lean:bounds — ${bounded.length} numeric bound(s) widened x${WIDEN}: ${Object.entries(tally).map(([k, v]) => `${v} ${k}`).join(', ')}; ${named} theorem(s) over named domains were not widened`)
+console.log(`lean:bounds — ${bounded.length} numeric bound(s) widened x${WIDEN}: ${Object.entries(tally).map(([k, v]) => `at least ${v} ${k}`).join(', ')}; ${named} theorem(s) over named domains were not widened`)
 
 if (Object.values(results).some((r) => r.verdict === 'inconclusive')) {
   console.error('lean:bounds FAIL — a bound could not be decided when widened. Inconclusive is not a pass.')

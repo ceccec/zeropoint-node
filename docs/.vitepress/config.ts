@@ -3,6 +3,16 @@ import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig, type HeadConfig } from 'vitepress'
 
+/** Credit and citation values, read rather than typed, so they cannot drift. */
+const PKG = JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '../../package.json'), 'utf8'))
+const PRIOR_ART = JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '../../src/verification/prior-art.json'), 'utf8'))
+const CONCEPT_DOI: string = PRIOR_ART.concept_doi
+const REPO_URL: string = PKG.repository.url.replace(/^git\+/, '').replace(/\.git$/, '')
+const AUTHOR_NAME: string = PKG.author.name
+const AUTHOR_ORCID: string = PKG.author.url
+const PKG_LICENSE: string = PKG.license
+const PKG_VERSION: string = PKG.version
+
 /**
  * VitePress replaces the previous Jekyll pipeline.
  *
@@ -369,12 +379,27 @@ export default defineConfig({
 
     search: { provider: 'local' },
 
+    // CREDIT AND CITATION ON EVERY PAGE, READ FROM THE MANIFEST.
+    //
+    // 71 pages carried no DOI at all and one carried any citation cue. A site
+    // whose whole argument is that claims should be checkable was not telling a
+    // reader how to cite it, or who wrote it, on any page but one.
+    //
+    // The footer renders site-wide, so this is one place rather than 71 edits —
+    // and every value comes from package.json and the prior-art ledger, so a
+    // version bump or a new concept DOI reaches every page without anyone
+    // remembering to.
     footer: {
       message:
         'Facts on this site are computed by the kernel — drift fails npm run check. ' +
+        `Cite the concept DOI <a href="https://doi.org/${CONCEPT_DOI}" rel="noopener">${CONCEPT_DOI}</a>, ` +
+        'which resolves to the newest release; a per-version DOI goes stale. ' +
+        `<a href="${REPO_URL}" rel="noopener">Source</a> · ` +
         `<a href="${SPONSOR_URL}" rel="noopener">Sponsor this work</a> · ` +
         'Contact <a href="mailto:node@zeropoint.bg">node@zeropoint.bg</a>.',
-      copyright: 'ZeroPoint Node · node.zeropoint.bg',
+      copyright:
+        `${AUTHOR_NAME} · ORCID <a href="${AUTHOR_ORCID}" rel="noopener">${AUTHOR_ORCID.replace('https://orcid.org/', '')}</a>`
+        + ` · ${PKG_LICENSE} · v${PKG_VERSION}`,
     },
   },
 })

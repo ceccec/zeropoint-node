@@ -53,7 +53,7 @@ const source = readFileSync(SRC, 'utf8')
 // then declaring the bound an artifact. Widening something the theorem does not
 // range over proves nothing about the theorem.
 const bounded = []
-for (const m of source.matchAll(/\btheorem\s+(\w+)([\s\S]*?):=/g)) {
+for (const m of source.matchAll(/^theorem\s+(\w+)([\s\S]*?):=/gm)) {
   const r = m[2].match(/List\.range (\d+)/)
   if (r) bounded.push({ name: m[1], bound: Number(r[1]) })
 }

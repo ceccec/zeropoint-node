@@ -130,7 +130,7 @@ function flag(id) {
 
 const block = `${BEGIN}
 
-Every column below is **computed**, and each carries a different epistemic weight. The status is not typed here: \`npm run derivation\` corrupts the line that produces each column and asks the ${derivationArbiter} whether anything broke. **derived** means a law with independent content fell; **pinned** means the only thing that fell holds the expected value as a literal, which falls for a convention just as readily; **defined** means nothing fell. That is a lower bound — a perturbation respecting a symmetry can leave every law standing — so a defined column is one nothing has been shown to force, not one proven free.
+Every column below is **computed**, and each carries a different epistemic weight. The status is not typed here: \`npm run derivation\` corrupts the line that produces each column and asks the law battery — ${derivationArbiter} — whether anything broke. **derived** means a law with independent content fell; **pinned** means the only thing that fell holds the expected value as a literal, which falls for a convention just as readily; **defined** means nothing fell. That is a lower bound — a perturbation respecting a symmetry can leave every law standing — so a defined column is one nothing has been shown to force, not one proven free.
 
 | column | source | status |
 | --- | --- | --- |

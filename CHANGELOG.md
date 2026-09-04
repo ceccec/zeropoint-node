@@ -1,5 +1,72 @@
 # Changelog
 
+## 1.5.1
+
+Gates that re-run their own experiment instead of trusting a number.
+
+The 1.5 line had gates that compared a stored figure with a regenerated one.
+This adds four that perform a measurement each time they run, and one that
+asks the Lean kernel rather than a copy of what the kernel said.
+
+**Everything a law holds, and everything it does not.** `constrained` asks the
+whole surface, not a sample. Reachability is exact and decidable: a value no law
+mentions, through any chain of helpers, cannot be constrained by one. 1749
+exported values, 340 reachable from a law, 1409 not. The closure runs over bare
+names, so same-named exports in different files are conflated and MORE things
+look reachable than are — 1409 is a lower bound. Then the experiment, over every
+exported numeric constant and numeric array, a census rather than a sample: 55
+perturbable, 8 forced by at least one law, 47 held by nothing.
+
+**432 was one of the 47.** The base frequency existed as two independent
+literals, one exported from `a432.core` and one written inline in the axis
+arithmetic, and nothing compared them. It also turns out not to be unique: whole
+axis frequencies need 4 to divide the base, a digital root of nine needs 9, and
+the two are coprime, so the arithmetic forces exactly the multiples of 36 and no
+more. The new seal requires the two literals to agree and the base to lie in
+that class. It does not require 432, because nothing does — the class is
+derived, the choice inside it is a convention.
+
+**Derived, or merely defined.** `derivation` decides the spectrum table's
+epistemic flag by corrupting the line that produces each column and asking the
+law battery whether anything broke. Hand-typed, the table claimed 4 derived and
+3 defined. Measured: 3 forced, 1 pinned, 3 unforced. `class` claimed derived and
+no law objects to changing it; `gateway` claimed derived and the only predicate
+that falls holds the expected value as a literal, which falls for a convention
+as readily as for a law. `Hz` was unforced until the base-frequency seal below
+existed — constraining 432 constrained the column computed from it, which is
+what a law doing real work looks like from the outside.
+
+**What a seal is doing when it holds.** `seal:pinning` reads every comparison in
+every predicate from the syntax tree: 23 structural, 9 pinned, 1 delegating.
+Pinned is not wrong — `born_rule_sum` pins on a normalisation the mathematics
+forces — but a pinned seal is not evidence that anything derives the value.
+
+**Bounds, and what they carry.** `lean:bounds` widens each theorem's finite
+domain and re-asks the kernel, never reading the prose beside it. 4 numeric
+bounds, all artifacts of `decide` needing something finite; 16 theorems range
+over named domains and are not widened at all, because a named domain is the
+object and adding an element makes it a different claim.
+
+**The kernel as arbiter, not as quotation.** `lean:agrees` binds the TypeScript
+to Lean by running Lean — the pairing is declared in the Lean source, so the
+label and the check cannot move apart. It found that `dr` was documented as the
+closed form the TypeScript uses and is not, at zero. 19 of 43 statements are now
+accepted by the kernel.
+
+**Prior art as directions, not a shrug.** Every contribution names the domains
+where its art would live, and `priorart:resolve` re-resolves each DOI against
+the registry, failing on any difference including a recorded title that is only
+a prefix of the real one. It caught a truncated citation on its first run.
+
+**No harness writes to the working tree.** `derivation`, `law-mutations` and
+`checks-falsifiable` corrupted checked-out files and restored them. Other
+sessions commit this repository automatically, so that window was a real
+exposure. All three now mutate a copy-on-write clone, verified by sampling
+`git status` throughout a live run rather than comparing before with after.
+
+Nothing here changes published behaviour: 33 seals, 35 mutations, and the
+criteria are unchanged in what they decide.
+
 ## 1.5.0
 
 The carry-out of the 1.4 run. **Nine patches planned before the first was cut,

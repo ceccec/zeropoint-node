@@ -5,7 +5,7 @@
   "theoremsOverNamedDomains": 16,
   "notWidenedBecause": "a named domain IS the object; adding an element makes it a different claim, not a wider one",
   "bounds": {
-    "is": {
+    "dr_is_drTS_above_zero": {
       "bound": 60,
       "widenedTo": 240,
       "verdict": "artifact"

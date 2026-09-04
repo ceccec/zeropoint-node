@@ -30,64 +30,67 @@
       "gateway": false,
       "surface": "leanUnchecked",
       "from": 24,
-      "to": 15,
-      "why": "The decidable core, which the feasibility probe already proved takes half a second: the digit space. Digital root, the doubling step, the orbit closing after six, the through-void involution, the orbit/axis/void partition. These are statements about ten digits, so `decide` settles them exhaustively and no mathlib is required. Nine theorems, and the header of Quantum.lean stops being false because the file it describes stops containing what it denies."
+      "to": 24,
+      "why": "The decidable core, which the feasibility probe already proved takes half a second: the digit space. Digital root, the doubling step, the orbit closing after six, the through-void involution, the orbit/axis/void partition. These are statements about ten digits, so `decide` settles them exhaustively and no mathlib is required. Nine theorems, and the header of Quantum.lean stops being false because the file it describes stops containing what it denies.",
+      "amended": "Target was 24 -> 15. Corrected to 24 -> 24 on 2026-09-04, after the work landed. The premise was an arithmetic error, not a missed target: the decidable digit space is NEW material, so proving it ADDS proven theorems and converts none of the 24. It did exactly what the patch described — DigitSpace.lean now holds 19 kernel-proven theorems, up from 9 — and leanUnchecked did not move, because every one of the 24 lives in Quantum.lean or QuantumAlgorithms.lean and both import Mathlib. A surface counting what is UNCHECKED cannot be reduced by checking something that was never in it. The nine this patch claimed are re-assigned to patch 9."
     },
     "3": {
       "set": "axis",
       "gateway": true,
       "surface": "leanUnchecked",
-      "from": 15,
-      "to": 15,
+      "from": 24,
+      "to": 24,
       "why": "THE FIRST GATEWAY: polarity reverses and the work stops being proof and becomes accounting. LEAN_PROOFS in TypeScript holds twelve theorem statements AS STRINGS, and nothing compares them to the .lean files that are supposed to contain them. That is a second copy of source, which is the defect 1.4.6 spent a release recording under the name collisions. One of the two must be generated from the other, and the checker must fail when they disagree. The count does not move because this patch moves no proof; it makes the ledger and the files the same thing."
     },
     "4": {
       "set": "orbit",
       "gateway": false,
       "surface": "leanUnchecked",
-      "from": 15,
-      "to": 9,
+      "from": 24,
+      "to": 18,
       "why": "The gate algebra: Hadamard squared, the Pauli anticommutation, Pauli unitarity, and the Born-rule sum over a finite basis. All four are finite checks over 2x2 or 4x4 complex matrices with entries from a small set, so they are decidable without the analysis mathlib is needed for. Five of the twenty-four are already sorry-free and must be shown to COMPILE, which is a different claim from containing no sorry."
     },
     "5": {
       "set": "orbit",
       "gateway": false,
       "surface": "leanUnchecked",
-      "from": 9,
-      "to": 9,
-      "why": "The mirror's fixed point, and the patch that must not move the number. Every theorem checked so far is verified AXIOM-FREE: `#print axioms` over each one, with the result committed as lean/axioms.json so an outsider can verify the receipt without a Lean toolchain -- derivation needs the toolchain, verification needs only the file. uuidna's arrangement exactly, and the reason its witness can say the trust base is the kernel alone."
+      "from": 18,
+      "to": 18,
+      "why": "The mirror's fixed point, and the patch that must not move the number. Every theorem checked so far is verified AXIOM-FREE: `#print axioms` over each one, with the result committed as lean/axioms.json so an outsider can verify the receipt without a Lean toolchain -- derivation needs the toolchain, verification needs only the file. uuidna's arrangement exactly, and the reason its witness can say the trust base is the kernel alone.",
+      "amended": "The patch says every theorem checked so far is verified AXIOM-FREE. Measured on 2026-09-04, that is false as a blanket claim: of the 19 proven, 13 rest on no axioms, 4 on [propext, Quot.sound] and 2 on [propext], all through list-membership decidability. None touch Classical.choice or sorryAx. So the condition landed as a DECLARED ALLOWED SET rather than as axiom-freeness: lean:check now requires each proven theorem's #print axioms to be within {propext, Quot.sound}, records the dependency set as evidence, and gives anything outside it the status rests-on-more. The target is unchanged; what it enforces is stated correctly."
     },
     "6": {
       "set": "axis",
       "gateway": false,
       "surface": "leanUnchecked",
-      "from": 9,
-      "to": 9,
+      "from": 18,
+      "to": 18,
       "why": "LaTeX. The paper is MathML for the browser; a submission wants .tex. Same generator, second backend, same figures read from the code at generation time, and paper:tex:check failing on a byte of drift the way paper:check already does. The Lean status appears in it as a column rather than a sentence: which theorems the kernel accepted, which carry sorry, and which are axioms. Nothing here proves a theorem, so the count stands still."
     },
     "7": {
       "set": "orbit",
       "gateway": false,
       "surface": "leanUnchecked",
-      "from": 9,
-      "to": 4,
+      "from": 18,
+      "to": 13,
       "why": "What is left that a finite check can reach: the repetition code detecting a single error, and the tensor product preserving normalisation for the small cases the simulator actually runs. Both are quantified over finite domains once the dimensions are fixed, and fixing the dimension honestly is the work -- a theorem about all n is not what `decide` gives."
     },
     "8": {
       "set": "orbit",
       "gateway": true,
       "surface": "leanUnchecked",
-      "from": 4,
-      "to": 4,
+      "from": 13,
+      "to": 13,
       "why": "THE SECOND GATEWAY, and the honest one. What remains -- Grover's amplification, Shor's period finding, QFT unitarity, the surface-code threshold -- is not a patch. They need real analysis and mathlib, and claiming otherwise is how nineteen sorries came to sit under a header saying all theorems are proven. Each is moved OUT of the proven set and into a stated conjecture with what would settle it, the way ASSUMPTIONS already records what no finite computation decides. The count does not fall, because moving a claim is not proving it, and this plan will not let it look like one."
     },
     "9": {
       "set": "axis",
       "gateway": true,
       "surface": "leanUnchecked",
-      "from": 4,
+      "from": 13,
       "to": 0,
-      "why": "The last patch and the third gateway. Every remaining theorem is either checked or recorded as a conjecture with its refuter, so leanUnchecked reaches zero by the same rule 1.4.9 used for claims: bound to a proof, or named as an assumption -- never left implied. Then 1.7.0 carries the run out and every patch must still stand."
+      "why": "The last patch and the third gateway. Every remaining theorem is either checked or recorded as a conjecture with its refuter, so leanUnchecked reaches zero by the same rule 1.4.9 used for claims: bound to a proof, or named as an assumption -- never left implied. Then 1.7.0 carries the run out and every patch must still stand.",
+      "amended": "Was 4 -> 0; now 13 -> 0, absorbing the nine that patch 2 could not convert. This patch already says every remaining theorem is either checked or recorded as a conjecture with its refuter, so the larger remainder does not change what it must do — only how much of it there is."
     }
   },
   "sources": {
@@ -95,8 +98,19 @@
       "from": "command",
       "command": "npm run lean:check",
       "pattern": "([0-9]+) unchecked",
-      "note": "not a ratchet surface: the ratchet carries twelve and that number is load-bearing. Patch 1 builds the command this measures; until it exists the surface cannot be read, which is why patch 1 moves nothing."
+      "note": "not a ratchet surface: the ratchet carries twelve and that number is load-bearing. The command exists as of 2026-09-04 and the surface reads 24 — unchanged since it was first measured, because everything proved since was added rather than converted. All 24 are in Mathlib-importing files, which is the whole difficulty of the run and is why patch 8 is the honest gateway."
     }
   },
-  "refused": "Proving a theorem by weakening it until `decide` closes it. Deleting a sorry by deleting the theorem. And writing `axiom` where a proof was promised, without recording it as an axiom in the place ASSUMPTIONS already keeps them -- the difference between an assumption and a hidden one is whether anybody can find it."
+  "refused": "Proving a theorem by weakening it until `decide` closes it. Deleting a sorry by deleting the theorem. And writing `axiom` where a proof was promised, without recording it as an axiom in the place ASSUMPTIONS already keeps them -- the difference between an assumption and a hidden one is whether anybody can find it.",
+  "landedBeforeTheRunWasCut": {
+    "when": "2026-09-04, during the 1.5 line",
+    "patches": [
+      "1",
+      "2",
+      "5",
+      "6"
+    ],
+    "what": "lean:check and the ledger (1); DigitSpace.lean's decidable core, now 19 proven theorems (2); the axiom-dependency condition, as an allowed set rather than axiom-freeness (5); LaTeX beside MathML, and every Lean statement rendered in both (6).",
+    "why_it_is_recorded": "A plan whose patches have already happened reads as a forecast that came true. It is not: the work was done first and the plan is being reconciled to it. Patches 1, 5 and 6 hit their targets. Patch 2 did its described work and its target was arithmetically impossible, which is a different thing and is amended as such."
+  }
 }

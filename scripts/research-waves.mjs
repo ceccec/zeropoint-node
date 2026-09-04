@@ -30,6 +30,32 @@ const known = new Set(Object.values(led.contributions)
 const jobs = Object.entries(led.contributions)
   .flatMap(([id, c]) => (c.domains ?? []).map((domain) => ({ id, domain })))
 
+/**
+ * Funders, from the Crossref Funder Registry — a real registry of real
+ * organisations with DOIs of their own, not a guess at who might pay.
+ *
+ * MEASURED, AND IT DOES NOT ANSWER THE QUESTION I ASKED IT. The registry
+ * indexes organisation NAMES, not research topics: "mathematics" returns 95
+ * funders because organisations are named that, and "formal verification"
+ * returns zero because none is. Pointing it at a declared domain therefore
+ * yields nothing, and a zero here would read as "no funder works in this area"
+ * when it means "no organisation is called this".
+ *
+ * Kept, with the finding recorded in the output, because a lookup that reports
+ * its own unsuitability is worth more than one silently returning empty lists —
+ * and because the same query works when the domain happens to name an
+ * institution. It does not tell anyone whether a call is open, whether the work
+ * is eligible, or whether to apply. Those are judgements.
+ */
+async function funders(domain) {
+  try {
+    const res = await fetch(`https://api.crossref.org/funders?rows=3&query=${encodeURIComponent(domain)}`,
+      { signal: AbortSignal.timeout(30_000), headers: { 'User-Agent': 'zeropoint-node funder wave' } })
+    if (!res.ok) return { error: `funder registry answered ${res.status}` }
+    return { list: ((await res.json())?.message?.items ?? []).map((f) => ({ name: f.name, id: f.id, uri: f.uri, location: f.location })) }
+  } catch (e) { return { error: e.name } }
+}
+
 async function ask({ id, domain }) {
   const url = `https://api.crossref.org/works?rows=4&select=DOI,title,issued`
     + `&query.bibliographic=${encodeURIComponent(domain)}`
@@ -52,6 +78,7 @@ async function ask({ id, domain }) {
       candidates: items
         .filter((x) => !known.has(String(x.DOI).toLowerCase()))
         .map((x) => ({ doi: x.DOI, title: (x.title ?? ['?'])[0], year: x.issued?.['date-parts']?.[0]?.[0] ?? null })),
+      funders: await funders(domain),
     }
   } catch (e) { return { id, domain, error: e.name } }
 }
@@ -65,7 +92,7 @@ async function ask({ id, domain }) {
 const results = []
 for (const job of jobs) {
   results.push(await ask(job))
-  await new Promise((r) => setTimeout(r, 400))
+  await new Promise((r) => setTimeout(r, 700))
 }
 
 const errored = results.filter((r) => r.error)
@@ -79,9 +106,10 @@ const out = {
   alreadyKnown: known.size,
   guidance: 'Queries naming the MECHANISM (quotient types, extensionality, reflection) returned relevant work; queries naming the ACTIVITY (auditing, trusted base) returned noise. Rephrase a barren domain toward its mechanism before concluding there is nothing.',
   errors: errored.map((r) => ({ contribution: r.id, domain: r.domain, error: r.error })),
+  fundersNote: 'MEASURED LIMIT: the Crossref Funder Registry indexes organisation NAMES, not research topics. "mathematics" returns 95 funders because organisations are named that; "formal verification" returns 0 because none is. An empty funder list below means no organisation carries that name — it does NOT mean nobody funds the area. Finding funders for a topic needs a different instrument than this one, and this file will not pretend otherwise.',
   byContribution: Object.fromEntries(
     [...new Set(withHits.map((r) => r.id))].map((id) => [id,
-      withHits.filter((r) => r.id === id).map((r) => ({ domain: r.domain, candidates: r.candidates }))]),
+      withHits.filter((r) => r.id === id).map((r) => ({ domain: r.domain, candidates: r.candidates, funders: r.funders?.list ?? [], funderError: r.funders?.error }))]),
   ),
 }
 writeFileSync(join(ROOT, 'src/verification/research-candidates.json'), JSON.stringify(out, null, 2) + '\n')

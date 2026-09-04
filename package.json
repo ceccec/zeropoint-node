@@ -316,7 +316,8 @@
     "readme:census": "node --experimental-strip-types scripts/readme-census.mjs",
     "readme:census:check": "node --experimental-strip-types scripts/readme-census.mjs --check",
     "citations": "node --experimental-strip-types scripts/citations.mjs",
-    "citations:check": "node --experimental-strip-types scripts/citations.mjs --check"
+    "citations:check": "node --experimental-strip-types scripts/citations.mjs --check",
+    "dossier": "node --experimental-strip-types scripts/dossier.mjs"
   },
   "keywords": [
     "a432",

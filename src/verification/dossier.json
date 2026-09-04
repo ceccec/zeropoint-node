@@ -1,0 +1,245 @@
+{
+  "work": {
+    "title": "ZeroPoint Node",
+    "version": "1.5.1",
+    "doi": "10.5281/zenodo.22178675",
+    "repository": "https://github.com/ceccec/zeropoint-node",
+    "author": "Tsvetan Rouschev",
+    "orcid": "https://orcid.org/0009-0000-7312-9778",
+    "licence": "CC-BY-NC-ND-4.0"
+  },
+  "funding": {
+    "status": "none-declared",
+    "statement": "No grant, institutional or commercial funding supports this work. It is unfunded independent research.",
+    "grants": []
+  },
+  "contributions": [
+    {
+      "id": "ratchet",
+      "what": "Twelve measured surfaces whose ceilings only move down, failing on unrecorded improvement as well as on growth, with each deliberate raise recorded with its reason.",
+      "priorArtStatus": "known-art-in-part",
+      "citedWorkWithDoi": [
+        "10.1145/3493244.3493271"
+      ],
+      "domainsWhereItsPriorArtWouldLive": [
+        "continuous integration quality gates",
+        "technical debt management",
+        "software process metrics"
+      ]
+    },
+    {
+      "id": "measure-fingerprinting",
+      "what": "Each measure's implementation is fingerprinted from its syntax tree printed WITHOUT comments, so rewording a measure is free and changing what it counts fails until declared.",
+      "priorArtStatus": "known-art-in-part",
+      "citedWorkWithDoi": [
+        "10.1145/3210459.3210461"
+      ],
+      "domainsWhereItsPriorArtWouldLive": [
+        "software measurement theory",
+        "construct validity of metrics",
+        "build reproducibility"
+      ]
+    },
+    {
+      "id": "criterion-modules",
+      "what": "Predicates that decide whether a subject meets a named standard, each condition drawn from a theory with an operational commitment, each written to reject its own cheap pass, and each stating what would refute it. Six gate a release.",
+      "priorArtStatus": "known-art-in-part",
+      "citedWorkWithDoi": [
+        "10.1186/1471-2202-5-42",
+        "10.1016/S0010-0277(00)00123-2",
+        "10.1016/j.tics.2011.05.009",
+        "10.1145/321738.321743"
+      ],
+      "domainsWhereItsPriorArtWouldLive": [
+        "consciousness science (IIT, GWT, higher-order theories)",
+        "real-time systems",
+        "operating system design",
+        "release engineering"
+      ]
+    },
+    {
+      "id": "claim-ledger-and-witness",
+      "what": "Every effect claim in the corpus bound to a predicate that runs or to a declared axiom, with a stated demarcation of what the binding does NOT establish; coverage checked both ways so a new claim fails for being unbound and a stale entry fails for having no claim.",
+      "priorArtStatus": "known-art-in-part",
+      "citedWorkWithDoi": [
+        "10.1016/j.ress.2022.108933"
+      ],
+      "domainsWhereItsPriorArtWouldLive": [
+        "assurance and safety cases",
+        "claim-to-evidence traceability",
+        "documentation testing"
+      ]
+    },
+    {
+      "id": "law-mutation-harness",
+      "what": "Each test suite is required to FAIL when one line of the module under it is corrupted; a non-unique anchor is itself a failure, because a mutation landing on the wrong copy reports a false survivor.",
+      "priorArtStatus": "known-art",
+      "citedWorkWithDoi": [
+        "10.1109/C-M.1978.218136",
+        "10.1109/TSE.2010.62"
+      ],
+      "domainsWhereItsPriorArtWouldLive": [
+        "mutation testing",
+        "test adequacy criteria"
+      ]
+    },
+    {
+      "id": "side-effect-measurement",
+      "what": "The package's sideEffects list is MEASURED by importing every published entry point in its own process and observing new globals and surviving handles, rather than declared.",
+      "priorArtStatus": "known-art-in-part",
+      "citedWorkWithDoi": [
+        "10.1109/saner.2018.8330226",
+        "10.1145/3517745.3561427"
+      ],
+      "domainsWhereItsPriorArtWouldLive": [
+        "JavaScript module semantics",
+        "dead code elimination and tree shaking",
+        "bundler design",
+        "dynamic program analysis"
+      ]
+    },
+    {
+      "id": "lean-arbiter",
+      "what": "The .lean files are the source of truth; the kernel is run on the files that import nothing; TypeScript's ledger fails when it presents as proven anything the files close with sorry, and the generated status ships with the package.",
+      "priorArtStatus": "known-art-in-part",
+      "citedWorkWithDoi": [
+        "10.1145/3372885.3373824"
+      ],
+      "domainsWhereItsPriorArtWouldLive": [
+        "interactive theorem proving",
+        "proof auditing and trusted computing base",
+        "proof-carrying artifacts"
+      ]
+    },
+    {
+      "id": "digit-space-theorems",
+      "what": "The doubling orbit closing after six, the through-void involution and its two fixed points, and the orbit/axis/void partition, machine-checked by the Lean kernel with no imports.",
+      "priorArtStatus": "known-art",
+      "citedWorkWithDoi": [],
+      "domainsWhereItsPriorArtWouldLive": [
+        "elementary number theory",
+        "formalisation of arithmetic in proof assistants"
+      ]
+    },
+    {
+      "id": "generated-paper",
+      "what": "A publication artifact in MathML and LaTeX from one generator, every figure read from the source at generation time, refusing to print any verdict it measured, and failing on a byte of drift.",
+      "priorArtStatus": "known-art-in-part",
+      "citedWorkWithDoi": [
+        "10.1093/comjnl/27.2.97",
+        "10.1016/j.procs.2012.04.047"
+      ],
+      "domainsWhereItsPriorArtWouldLive": [
+        "reproducible research",
+        "literate programming",
+        "executable publications",
+        "MathML and technical typesetting"
+      ]
+    },
+    {
+      "id": "ml-kem-768",
+      "what": "An ML-KEM-768 implementation checked against NIST ACVP vectors and pq-crystals KAT cases.",
+      "priorArtStatus": "known-art",
+      "citedWorkWithDoi": [
+        "10.6028/NIST.FIPS.203"
+      ],
+      "domainsWhereItsPriorArtWouldLive": [
+        "post-quantum cryptography",
+        "cryptographic standards conformance",
+        "side-channel resistance"
+      ]
+    },
+    {
+      "id": "axiom-index",
+      "what": "An index that separates two things usually reported as one: assumptions about the SUBJECT, which no finite computation decides and which this repository declares in ASSUMPTIONS, from axioms of the PROOF SYSTEM, which a theorem inherits through the tactics that close it and which say nothing about the subject. Each kernel-proven theorem records its own dependency set as the evidence for the word proven, and the corpus reports how many rest on nothing at all.",
+      "priorArtStatus": "known-art-in-part",
+      "citedWorkWithDoi": [
+        "10.1007/978-1-4471-0963-1_5",
+        "10.1145/2914770.2837638",
+        "10.1007/978-3-642-79361-5_3",
+        "10.1109/cac48633.2019.8996365"
+      ],
+      "domainsWhereItsPriorArtWouldLive": [
+        "interactive theorem proving",
+        "trusted computing base and proof checking",
+        "extensionality and quotient types in type theory",
+        "proof by reflection and decision procedures",
+        "axiom minimisation in formal developments"
+      ]
+    }
+  ],
+  "formalResults": {
+    "statements": 63,
+    "acceptedByTheKernel": 39,
+    "restingOnNoAxiomsAtAll": 31,
+    "declaredAssumptions": [
+      "lwe_hardness",
+      "no_prior_art_is_undecidable",
+      "awareness_is_undecided"
+    ]
+  },
+  "criteria": [
+    {
+      "name": "consciousness",
+      "gated": true,
+      "met": true,
+      "conditions": 5,
+      "doesNotEstablish": null
+    },
+    {
+      "name": "consciousness",
+      "gated": true,
+      "met": true,
+      "conditions": 5,
+      "doesNotEstablish": null
+    },
+    {
+      "name": "operating system",
+      "gated": true,
+      "met": true,
+      "conditions": 7,
+      "doesNotEstablish": null
+    },
+    {
+      "name": "quantum simulator",
+      "gated": true,
+      "met": true,
+      "conditions": 8,
+      "doesNotEstablish": null
+    },
+    {
+      "name": "real-time",
+      "gated": true,
+      "met": true,
+      "conditions": 8,
+      "doesNotEstablish": null
+    },
+    {
+      "name": "validation",
+      "gated": true,
+      "met": true,
+      "conditions": 5,
+      "doesNotEstablish": "NO PHYSICAL EXPERIMENT HAS BEEN RUN. No coil was built, no field was measured, no resonance was observed, and nothing in this repository touches an instrument. Every condition here is about arithmetic and about code that checks arithmetic. The empirical claim is not made."
+    },
+    {
+      "name": "consciousness",
+      "gated": false,
+      "met": false,
+      "conditions": 5,
+      "doesNotEstablish": null
+    }
+  ],
+  "howMuchAnyLawHolds": {
+    "exportedValues": 1751,
+    "reachableFromNoLaw": 1411,
+    "note": "closure over bare names over-approximates reachability, so unreachable is a LOWER bound",
+    "constantsForced": 8,
+    "constantsHeldByNothing": 49
+  },
+  "boundaries": {
+    "novelty": "NOT CLAIMED. Novelty is a universal negative that no finite search decides; the ledger has no status permitting it. A dated deposit establishes PRIORITY, which is the defensible claim.",
+    "openProblems": "NONE CLAIMED. No contribution names a Millennium Problem, a prize question, or a resolved conjecture. An application asserting one would state something this source denies.",
+    "physicalExperiment": "NO PHYSICAL EXPERIMENT HAS BEEN RUN. No coil was built, no field was measured, no resonance was observed, and nothing in this repository touches an instrument. Every condition here is about arithmetic and about code that checks arithmetic. The empirical claim is not made.",
+    "constraint": "1411 of 1751 exported values are reachable from no law at all — a floor, not a total."
+  }
+}

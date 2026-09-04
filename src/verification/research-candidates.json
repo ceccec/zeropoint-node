@@ -5,6 +5,7 @@
   "alreadyKnown": 19,
   "guidance": "Queries naming the MECHANISM (quotient types, extensionality, reflection) returned relevant work; queries naming the ACTIVITY (auditing, trusted base) returned noise. Rephrase a barren domain toward its mechanism before concluding there is nothing.",
   "errors": [],
+  "fundersNote": "MEASURED LIMIT: the Crossref Funder Registry indexes organisation NAMES, not research topics. \"mathematics\" returns 95 funders because organisations are named that; \"formal verification\" returns 0 because none is. An empty funder list below means no organisation carries that name — it does NOT mean nobody funds the area. Finding funders for a topic needs a different instrument than this one, and this file will not pretend otherwise.",
   "byContribution": {
     "ratchet": [
       {
@@ -30,7 +31,8 @@
             "title": "Quality assurance",
             "year": 2014
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "technical debt management",
@@ -55,7 +57,8 @@
             "title": "Technical Debt Triage in Backlog Management",
             "year": 2019
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "software process metrics",
@@ -80,7 +83,8 @@
             "title": "Using a Personal Software Process/sup SM/ to improve performance",
             "year": null
           }
-        ]
+        ],
+        "funders": []
       }
     ],
     "measure-fingerprinting": [
@@ -107,7 +111,8 @@
             "title": "Applications of information theory to software engineering measurement",
             "year": 1994
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "construct validity of metrics",
@@ -123,11 +128,12 @@
             "year": 2013
           },
           {
-            "doi": "10.7717/peerj.18743/table-6",
-            "title": "Table 6: Discriminant validity of construct.",
+            "doi": "10.31390/gradschool_disstheses.6938",
+            "title": "On Biodata Construct Validity, Criterion-Related Validity, and Adverse Impact.",
             "year": null
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "build reproducibility",
@@ -152,7 +158,8 @@
             "title": "LILA: Decentralized Build Reproducibility Monitoring for the Functional Package Management Model",
             "year": 2026
           }
-        ]
+        ],
+        "funders": []
       }
     ],
     "criterion-modules": [
@@ -179,7 +186,8 @@
             "title": "higher-order theories of consciousness",
             "year": 2025
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "real-time systems",
@@ -204,7 +212,8 @@
             "title": "Introduction to Real-Time Systems",
             "year": 2016
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "operating system design",
@@ -229,7 +238,8 @@
             "title": "Operating System’s Design Guidelines",
             "year": 2014
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "release engineering",
@@ -254,7 +264,8 @@
             "title": "Modelling the release of nitrogen from controlled release fertiliser: Constant and decay release",
             "year": 2015
           }
-        ]
+        ],
+        "funders": []
       }
     ],
     "claim-ledger-and-witness": [
@@ -281,7 +292,8 @@
             "title": "Health software and health IT systems safety, effectiveness and security",
             "year": null
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "claim-to-evidence traceability",
@@ -306,7 +318,8 @@
             "title": "Interesting analysis, but claim is too strong given the evidence.",
             "year": 2019
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "documentation testing",
@@ -331,7 +344,8 @@
             "title": "Environmental testing",
             "year": null
           }
-        ]
+        ],
+        "funders": []
       }
     ],
     "law-mutation-harness": [
@@ -358,7 +372,8 @@
             "title": "Lightweight State Based Mutation Testing for Security",
             "year": 2007
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "test adequacy criteria",
@@ -383,7 +398,8 @@
             "title": "Social coverage for customized test adequacy and selection criteria",
             "year": 2014
           }
-        ]
+        ],
+        "funders": []
       }
     ],
     "side-effect-measurement": [
@@ -410,7 +426,8 @@
             "title": "Module Loader",
             "year": 2022
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "dead code elimination and tree shaking",
@@ -435,7 +452,8 @@
             "title": "Partial dead code elimination",
             "year": 1994
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "bundler design",
@@ -460,7 +478,8 @@
             "title": "Heparin as a Bundler in a Self-Assembled Fibrous Network of Functionalized Protein-Based Polymers",
             "year": null
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "dynamic program analysis",
@@ -485,7 +504,8 @@
             "title": "Program analysis for code maintenance in dynamic programming languages",
             "year": null
           }
-        ]
+        ],
+        "funders": []
       }
     ],
     "lean-arbiter": [
@@ -512,7 +532,8 @@
             "title": "The Interactive Proof Editor An Experiment in Interactive Theorem Proving",
             "year": 1989
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "proof auditing and trusted computing base",
@@ -537,7 +558,8 @@
             "title": "TRUSTED ILLIAC: A Configurable Hardware Framework for a Trusted Computing Base",
             "year": 2007
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "proof-carrying artifacts",
@@ -562,7 +584,8 @@
             "title": "Proof-Carrying Machine Learning for Safety-Critical Autonomy",
             "year": 2025
           }
-        ]
+        ],
+        "funders": []
       }
     ],
     "digit-space-theorems": [
@@ -589,7 +612,8 @@
             "title": "Elementary Number Theory",
             "year": 2000
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "formalisation of arithmetic in proof assistants",
@@ -614,7 +638,8 @@
             "title": "Aspects of category theory in proof assistants",
             "year": null
           }
-        ]
+        ],
+        "funders": []
       }
     ],
     "generated-paper": [
@@ -641,7 +666,8 @@
             "title": "Getting Started with Reproducible Research",
             "year": 2020
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "literate programming",
@@ -666,7 +692,8 @@
             "title": "Increasing Assurance with Literate Programming Techniques",
             "year": 1996
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "executable publications",
@@ -691,7 +718,8 @@
             "title": "Executable Knowledge",
             "year": null
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "MathML and technical typesetting",
@@ -716,7 +744,8 @@
             "title": "What’s Next",
             "year": 2026
           }
-        ]
+        ],
+        "funders": []
       }
     ],
     "ml-kem-768": [
@@ -743,7 +772,8 @@
             "title": "A Note on Quantum Security for Post-Quantum Cryptography",
             "year": 2014
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "cryptographic standards conformance",
@@ -768,7 +798,8 @@
             "title": "Guideline for Using Cryptographic Standards in the Federal Government:",
             "year": 2019
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "side-channel resistance",
@@ -793,7 +824,8 @@
             "title": "Negative Differential Interlayer Resistance in WSe2 Multilayers via Conducting Channel Migration with Vertical Double-Side Contacts",
             "year": null
           }
-        ]
+        ],
+        "funders": []
       }
     ],
     "axiom-index": [
@@ -820,7 +852,8 @@
             "title": "The Interactive Proof Editor An Experiment in Interactive Theorem Proving",
             "year": 1989
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "trusted computing base and proof checking",
@@ -845,7 +878,8 @@
             "title": "Formal Specification of Trusted Execution Environment APIs and Model Checking of Trusted Applications",
             "year": 2026
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "extensionality and quotient types in type theory",
@@ -860,7 +894,8 @@
             "title": "Type theory in type theory using quotient inductive types",
             "year": 2016
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "proof by reflection and decision procedures",
@@ -885,7 +920,8 @@
             "title": "Intuitionistic Decision Procedures Since Gentzen",
             "year": 2016
           }
-        ]
+        ],
+        "funders": []
       },
       {
         "domain": "axiom minimisation in formal developments",
@@ -910,7 +946,8 @@
             "title": "The Connection Axiom",
             "year": 1997
           }
-        ]
+        ],
+        "funders": []
       }
     ]
   }

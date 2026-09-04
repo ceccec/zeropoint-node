@@ -310,7 +310,8 @@
     "zenodo:deposits": "node --experimental-strip-types scripts/zenodo-deposits.mjs",
     "zenodo:deposits:check": "node --experimental-strip-types scripts/zenodo-deposits.mjs --check",
     "axiom:index": "node --experimental-strip-types scripts/axiom-index.mjs",
-    "axiom:index:check": "node --experimental-strip-types scripts/axiom-index.mjs --check"
+    "axiom:index:check": "node --experimental-strip-types scripts/axiom-index.mjs --check",
+    "research:waves": "node --experimental-strip-types scripts/research-waves.mjs"
   },
   "keywords": [
     "a432",

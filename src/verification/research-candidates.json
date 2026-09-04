@@ -1,0 +1,917 @@
+{
+  "what": "Candidate prior art per declared domain, from Crossref. CANDIDATES ONLY: relevance is a judgement and nothing here is a citation until someone reads it.",
+  "ranOn": "2026-09-04",
+  "domainsSearched": 36,
+  "alreadyKnown": 19,
+  "guidance": "Queries naming the MECHANISM (quotient types, extensionality, reflection) returned relevant work; queries naming the ACTIVITY (auditing, trusted base) returned noise. Rephrase a barren domain toward its mechanism before concluding there is nothing.",
+  "errors": [],
+  "byContribution": {
+    "ratchet": [
+      {
+        "domain": "continuous integration quality gates",
+        "candidates": [
+          {
+            "doi": "10.1007/978-3-319-46155-7_13",
+            "title": "Quality Gates",
+            "year": 2016
+          },
+          {
+            "doi": "10.1201/9781032702049-9",
+            "title": "Continuous Integration and Continuous Testing",
+            "year": 2024
+          },
+          {
+            "doi": "10.21275/sr231021114758",
+            "title": "Challenges and Solutions in Implementing Continuous Integration and Continuous Testing for Agile Quality Assurance",
+            "year": 2023
+          },
+          {
+            "doi": "10.1007/978-1-4842-0124-4_10",
+            "title": "Quality assurance",
+            "year": 2014
+          }
+        ]
+      },
+      {
+        "domain": "technical debt management",
+        "candidates": [
+          {
+            "doi": "10.1109/techdebt52882.2021.00018",
+            "title": "Preventing Technical Debt by Technical Debt Aware Project Management",
+            "year": 2021
+          },
+          {
+            "doi": "10.33612/diss.157426352",
+            "title": "Economics-driven Technical Debt Management",
+            "year": null
+          },
+          {
+            "doi": "10.1145/1985362.1985370",
+            "title": "A portfolio approach to technical debt management",
+            "year": 2011
+          },
+          {
+            "doi": "10.1109/techdebt.2019.00010",
+            "title": "Technical Debt Triage in Backlog Management",
+            "year": 2019
+          }
+        ]
+      },
+      {
+        "domain": "software process metrics",
+        "candidates": [
+          {
+            "doi": "10.1109/metric.1999.809720",
+            "title": "OO software process improvement with metrics",
+            "year": null
+          },
+          {
+            "doi": "10.1109/metric.1993.263802",
+            "title": "Metrics to improve the US Army software development process",
+            "year": null
+          },
+          {
+            "doi": "10.1142/9781860946066_0008",
+            "title": "METRICS FOR SOFTWARE PROCESS MODELS",
+            "year": 2005
+          },
+          {
+            "doi": "10.1109/metric.1998.731227",
+            "title": "Using a Personal Software Process/sup SM/ to improve performance",
+            "year": null
+          }
+        ]
+      }
+    ],
+    "measure-fingerprinting": [
+      {
+        "domain": "software measurement theory",
+        "candidates": [
+          {
+            "doi": "10.1515/9783110807301.273",
+            "title": "6 Measurement Theory and Object-Oriented Software Measures",
+            "year": 1998
+          },
+          {
+            "doi": "10.1016/b978-0-7506-0813-8.50018-6",
+            "title": "Measurement theory",
+            "year": 1991
+          },
+          {
+            "doi": "10.1515/9783110652505-006",
+            "title": "6. Validation of software used in metrology",
+            "year": 2019
+          },
+          {
+            "doi": "10.1007/bf00213632",
+            "title": "Applications of information theory to software engineering measurement",
+            "year": 1994
+          }
+        ]
+      },
+      {
+        "domain": "construct validity of metrics",
+        "candidates": [
+          {
+            "doi": "10.1093/oso/9780190661557.003.0008",
+            "title": "Construct Validity",
+            "year": 2017
+          },
+          {
+            "doi": "10.4324/9780203056905-15",
+            "title": "Construct Validity of Computer-Based Tests",
+            "year": 2013
+          },
+          {
+            "doi": "10.7717/peerj.18743/table-6",
+            "title": "Table 6: Discriminant validity of construct.",
+            "year": null
+          }
+        ]
+      },
+      {
+        "domain": "build reproducibility",
+        "candidates": [
+          {
+            "doi": "10.1038/s44319-026-00909-y",
+            "title": "How to build reproducibility into scientific publishing",
+            "year": 2026
+          },
+          {
+            "doi": "10.58875/sowd6997",
+            "title": "Build Confidence in Science by Embracing Uncertainty Rather Than Chasing Reproducibility",
+            "year": 2025
+          },
+          {
+            "doi": "10.4155/bio-2018-0275",
+            "title": "Incurred Sample Reproducibility: What have We Learned and How Can We Build on Our Learnings?",
+            "year": 2018
+          },
+          {
+            "doi": "10.1145/3793302.3793328",
+            "title": "LILA: Decentralized Build Reproducibility Monitoring for the Functional Package Management Model",
+            "year": 2026
+          }
+        ]
+      }
+    ],
+    "criterion-modules": [
+      {
+        "domain": "consciousness science (IIT, GWT, higher-order theories)",
+        "candidates": [
+          {
+            "doi": "10.21428/e2759450.417ea271",
+            "title": "Higher-Order Theories of Consciousness",
+            "year": 2026
+          },
+          {
+            "doi": "10.1093/oxfordhb/9780198749677.013.20",
+            "title": "Higher-Order Theories of Consciousness",
+            "year": 2020
+          },
+          {
+            "doi": "10.1075/aicr.56.02gen",
+            "title": "1. Higher-order theories of consciousness",
+            "year": 2004
+          },
+          {
+            "doi": "10.31234/osf.io/8txh3_v1",
+            "title": "higher-order theories of consciousness",
+            "year": 2025
+          }
+        ]
+      },
+      {
+        "domain": "real-time systems",
+        "candidates": [
+          {
+            "doi": "10.1201/b21425-7",
+            "title": "Designing Real-Time and Distributed Real-Time Systems",
+            "year": 2016
+          },
+          {
+            "doi": "10.1201/b21425-5",
+            "title": "Distributed Real-Time Systems",
+            "year": 2016
+          },
+          {
+            "doi": "10.5772/63278",
+            "title": "Real-Time Systems",
+            "year": 2016
+          },
+          {
+            "doi": "10.1201/b21425-4",
+            "title": "Introduction to Real-Time Systems",
+            "year": 2016
+          }
+        ]
+      },
+      {
+        "domain": "operating system design",
+        "candidates": [
+          {
+            "doi": "10.1201/9781003597667-2",
+            "title": "Concurrent Execution And Operating System Services",
+            "year": 2025
+          },
+          {
+            "doi": "10.1201/9781439881118-6",
+            "title": "Concurrent Execution and Operating System Services",
+            "year": 2011
+          },
+          {
+            "doi": "10.1201/9781439881118",
+            "title": "Operating System Design",
+            "year": 2011
+          },
+          {
+            "doi": "10.1201/b16785-10",
+            "title": "Operating System’s Design Guidelines",
+            "year": 2014
+          }
+        ]
+      },
+      {
+        "domain": "release engineering",
+        "candidates": [
+          {
+            "doi": "10.1109/releng.2015.8",
+            "title": "Release Engineering as a Force Multiplier",
+            "year": 2015
+          },
+          {
+            "doi": "10.1109/releng.2013.6607689",
+            "title": "Kanbanize the release engineering process",
+            "year": 2013
+          },
+          {
+            "doi": "10.1109/releng.2015.10",
+            "title": "Towards Definitions for Release Engineering and DevOps",
+            "year": 2015
+          },
+          {
+            "doi": "10.1016/j.biosystemseng.2014.12.004",
+            "title": "Modelling the release of nitrogen from controlled release fertiliser: Constant and decay release",
+            "year": 2015
+          }
+        ]
+      }
+    ],
+    "claim-ledger-and-witness": [
+      {
+        "domain": "assurance and safety cases",
+        "candidates": [
+          {
+            "doi": "10.1109/assure.2013.6614270",
+            "title": "Constructing safety assurance cases for medical devices",
+            "year": 2013
+          },
+          {
+            "doi": "10.1109/hase.2015.44",
+            "title": "Applying Safety Case Pattern to Generate Assurance Cases for Safety-Critical Systems",
+            "year": 2015
+          },
+          {
+            "doi": "10.1109/assure.2013.6614269",
+            "title": "Creating safety assurance cases for rebreather systems",
+            "year": 2013
+          },
+          {
+            "doi": "10.3403/30437329",
+            "title": "Health software and health IT systems safety, effectiveness and security",
+            "year": null
+          }
+        ]
+      },
+      {
+        "domain": "claim-to-evidence traceability",
+        "candidates": [
+          {
+            "doi": "10.2139/ssrn.7030983",
+            "title": "From Traceability to Reviewability: Intent-Anchored Claim Review for Agentic AI Design Handoffs",
+            "year": 2026
+          },
+          {
+            "doi": "10.2139/ssrn.1412243",
+            "title": "Claim Severities, Claim Relativities, and Age: Evidence from SOA Group Health Data",
+            "year": 2009
+          },
+          {
+            "doi": "10.3389/fbloc.2025.1474434",
+            "title": "Enhancing privacy and traceability of public health insurance claim system using blockchain technology",
+            "year": 2025
+          },
+          {
+            "doi": "10.5194/hess-2019-157-rc1",
+            "title": "Interesting analysis, but claim is too strong given the evidence.",
+            "year": 2019
+          }
+        ]
+      },
+      {
+        "domain": "documentation testing",
+        "candidates": [
+          {
+            "doi": "10.1061/9780784416044.err",
+            "title": "Errata for Geotechnical Testing, Observation, and Documentation",
+            "year": 2022
+          },
+          {
+            "doi": "10.1145/74311.74332",
+            "title": "Executable documentation: testing the documentation, documenting the testing",
+            "year": 1989
+          },
+          {
+            "doi": "10.1061/9780784416044.in",
+            "title": "Index for Geotechnical Testing, Observation, and Documentation",
+            "year": 2022
+          },
+          {
+            "doi": "10.3403/30110126",
+            "title": "Environmental testing",
+            "year": null
+          }
+        ]
+      }
+    ],
+    "law-mutation-harness": [
+      {
+        "domain": "mutation testing",
+        "candidates": [
+          {
+            "doi": "10.1109/mutation.2006.11",
+            "title": "Mutation Testing implements Grammar-Based Testing",
+            "year": 2006
+          },
+          {
+            "doi": "10.1109/taicpart.2007.4344099",
+            "title": "State-based Testing is Functional Testing",
+            "year": 2007
+          },
+          {
+            "doi": "10.1109/taicpart.2007.4344118",
+            "title": "Mutation Testing from Probabilistic Finite State Machines",
+            "year": 2007
+          },
+          {
+            "doi": "10.1109/taicpart.2007.4344127",
+            "title": "Lightweight State Based Mutation Testing for Security",
+            "year": 2007
+          }
+        ]
+      },
+      {
+        "domain": "test adequacy criteria",
+        "candidates": [
+          {
+            "doi": "10.1109/hase.2004.1281742",
+            "title": "Specification test coverage adequacy criteria = specification test generation in adequacy criteria?",
+            "year": null
+          },
+          {
+            "doi": "10.1109/cmpsac.1990.139305",
+            "title": "Methods of comparing test data adequacy criteria",
+            "year": null
+          },
+          {
+            "doi": "10.1631/jzus.2002.0037",
+            "title": "Block-based test data adequacy measurement criteria and test complexity metrics",
+            "year": 2002
+          },
+          {
+            "doi": "10.1145/2593501.2593505",
+            "title": "Social coverage for customized test adequacy and selection criteria",
+            "year": 2014
+          }
+        ]
+      }
+    ],
+    "side-effect-measurement": [
+      {
+        "domain": "JavaScript module semantics",
+        "candidates": [
+          {
+            "doi": "10.70675/34990107zaff5z47efzbaf0zd15dde65fa8f",
+            "title": "Certified semantics and analysis of JavaScript",
+            "year": null
+          },
+          {
+            "doi": "10.1093/oso/9780190464783.003.0006",
+            "title": "Semantics for a Module",
+            "year": 2017
+          },
+          {
+            "doi": "10.1201/9781003317807-17",
+            "title": "Module Bundler",
+            "year": 2022
+          },
+          {
+            "doi": "10.1201/9781003317807-13",
+            "title": "Module Loader",
+            "year": 2022
+          }
+        ]
+      },
+      {
+        "domain": "dead code elimination and tree shaking",
+        "candidates": [
+          {
+            "doi": "10.2197/ipsjtrans.5.79",
+            "title": "Demand-driven Partial Dead Code Elimination",
+            "year": 2012
+          },
+          {
+            "doi": "10.1002/spe.739",
+            "title": "Partial dead code elimination on predicated code regions",
+            "year": 2006
+          },
+          {
+            "doi": "10.1007/978-3-540-24723-4_11",
+            "title": "Region-Based Partial Dead Code Elimination on Predicated Code",
+            "year": 2004
+          },
+          {
+            "doi": "10.1145/773473.178256",
+            "title": "Partial dead code elimination",
+            "year": 1994
+          }
+        ]
+      },
+      {
+        "domain": "bundler design",
+        "candidates": [
+          {
+            "doi": "10.1201/9781003317807-17",
+            "title": "Module Bundler",
+            "year": 2022
+          },
+          {
+            "doi": "10.1093/oed/6829888188",
+            "title": "bundler, n.",
+            "year": 2023
+          },
+          {
+            "doi": "10.1007/978-1-4842-3489-1_6",
+            "title": "Bundler and Gems",
+            "year": 2018
+          },
+          {
+            "doi": "10.1021/acs.biomac.6b00276.s001",
+            "title": "Heparin as a Bundler in a Self-Assembled Fibrous Network of Functionalized Protein-Based Polymers",
+            "year": null
+          }
+        ]
+      },
+      {
+        "domain": "dynamic program analysis",
+        "candidates": [
+          {
+            "doi": "10.17760/d20653000",
+            "title": "Dynamic program analysis of embedded systems",
+            "year": null
+          },
+          {
+            "doi": "10.5353/th_b4414032",
+            "title": "Software debugging through dynamic analysis of program structures",
+            "year": null
+          },
+          {
+            "doi": "10.31274/etd-180810-4664",
+            "title": "Cross-language program analysis for dynamic web applications",
+            "year": null
+          },
+          {
+            "doi": "10.12681/eadd/62356",
+            "title": "Program analysis for code maintenance in dynamic programming languages",
+            "year": null
+          }
+        ]
+      }
+    ],
+    "lean-arbiter": [
+      {
+        "domain": "interactive theorem proving",
+        "candidates": [
+          {
+            "doi": "10.1007/978-3-319-08970-6_30",
+            "title": "Collaborative Interactive Theorem Proving with Clide",
+            "year": 2014
+          },
+          {
+            "doi": "10.1007/978-3-642-22863-6_28",
+            "title": "Composable Discovery Engines for Interactive Theorem Proving",
+            "year": 2011
+          },
+          {
+            "doi": "10.1016/b978-0-444-89880-7.50010-3",
+            "title": "A Note on Interactive Theorem Proving with Theorem Continuation Functions",
+            "year": 1993
+          },
+          {
+            "doi": "10.1007/978-1-4612-3658-0_7",
+            "title": "The Interactive Proof Editor An Experiment in Interactive Theorem Proving",
+            "year": 1989
+          }
+        ]
+      },
+      {
+        "domain": "proof auditing and trusted computing base",
+        "candidates": [
+          {
+            "doi": "10.1145/1867635.1867648",
+            "title": "Separating hypervisor trusted computing base supported by hardware",
+            "year": 2010
+          },
+          {
+            "doi": "10.1007/978-3-8348-9324-6_6",
+            "title": "Trusted ← Trustworthy ← Proof Position Paper",
+            "year": 2009
+          },
+          {
+            "doi": "10.2514/6.1989-3136",
+            "title": "Extending the trusted computing base",
+            "year": 1989
+          },
+          {
+            "doi": "10.1109/hase.2007.79",
+            "title": "TRUSTED ILLIAC: A Configurable Hardware Framework for a Trusted Computing Base",
+            "year": 2007
+          }
+        ]
+      },
+      {
+        "domain": "proof-carrying artifacts",
+        "candidates": [
+          {
+            "doi": "10.21236/ada582166",
+            "title": "Proof-Carrying Survivability",
+            "year": 2013
+          },
+          {
+            "doi": "10.21236/ada507095",
+            "title": "A Proof-Carrying File System",
+            "year": 2009
+          },
+          {
+            "doi": "10.1007/978-94-010-0413-8_8",
+            "title": "Proof-Carrying Code. Design and Implementation",
+            "year": 2002
+          },
+          {
+            "doi": "10.62311/nesx/rb-978-81-997219-2-0",
+            "title": "Proof-Carrying Machine Learning for Safety-Critical Autonomy",
+            "year": 2025
+          }
+        ]
+      }
+    ],
+    "digit-space-theorems": [
+      {
+        "domain": "elementary number theory",
+        "candidates": [
+          {
+            "doi": "10.1017/cbo9780511615825.004",
+            "title": "Number Theory",
+            "year": 2001
+          },
+          {
+            "doi": "10.1007/0-387-26998-3_12",
+            "title": "Elementary Number Theory",
+            "year": null
+          },
+          {
+            "doi": "10.1007/0-387-26998-3_1",
+            "title": "Elementary Number Theory",
+            "year": null
+          },
+          {
+            "doi": "10.1007/978-3-662-04053-9_1",
+            "title": "Elementary Number Theory",
+            "year": 2000
+          }
+        ]
+      },
+      {
+        "domain": "formalisation of arithmetic in proof assistants",
+        "candidates": [
+          {
+            "doi": "10.15476/elte.2025.413",
+            "title": "Proof Assistant-Based Formalisation of Core Erlang",
+            "year": null
+          },
+          {
+            "doi": "10.70675/4446f947z8cefz4e3cz9f25z37a60df3f4b4",
+            "title": "Formalisation of the Bigraph Theory in the Rocq proof assistant",
+            "year": null
+          },
+          {
+            "doi": "10.1017/cbo9781139168717.011",
+            "title": "Proof theory of arithmetic",
+            "year": 2000
+          },
+          {
+            "doi": "10.70675/7cb71c11zb3f6z46b3za54az197c9329ed14",
+            "title": "Aspects of category theory in proof assistants",
+            "year": null
+          }
+        ]
+      }
+    ],
+    "generated-paper": [
+      {
+        "domain": "reproducible research",
+        "candidates": [
+          {
+            "doi": "10.1201/9781315382548-1",
+            "title": "Introducing Reproducible Research",
+            "year": 2018
+          },
+          {
+            "doi": "10.1201/9780429031854-2",
+            "title": "Introducing Reproducible Research",
+            "year": 2020
+          },
+          {
+            "doi": "10.1201/9781315382548-2",
+            "title": "Getting Started with Reproducible Research",
+            "year": 2018
+          },
+          {
+            "doi": "10.1201/9780429031854-3",
+            "title": "Getting Started with Reproducible Research",
+            "year": 2020
+          }
+        ]
+      },
+      {
+        "domain": "literate programming",
+        "candidates": [
+          {
+            "doi": "10.1093/9780198976578.003.0001",
+            "title": "Introduction",
+            "year": 2025
+          },
+          {
+            "doi": "10.31979/etd.8js5-pqht",
+            "title": "Object-Oriented Design and Literate Programming",
+            "year": null
+          },
+          {
+            "doi": "10.1007/978-1-4471-5079-4_20",
+            "title": "Literate Programming",
+            "year": 2013
+          },
+          {
+            "doi": "10.21236/ada462931",
+            "title": "Increasing Assurance with Literate Programming Techniques",
+            "year": 1996
+          }
+        ]
+      },
+      {
+        "domain": "executable publications",
+        "candidates": [
+          {
+            "doi": "10.5194/egusphere-egu23-7417",
+            "title": "Data-integrated executable publications for reproducible geohazards research",
+            "year": 2023
+          },
+          {
+            "doi": "10.1016/j.procs.2011.04.074",
+            "title": "Toward Executable Scientiﬁc Publications",
+            "year": 2011
+          },
+          {
+            "doi": "10.1007/springerreference_13925",
+            "title": "executable program",
+            "year": null
+          },
+          {
+            "doi": "10.1007/springerreference_64249",
+            "title": "Executable Knowledge",
+            "year": null
+          }
+        ]
+      },
+      {
+        "domain": "MathML and technical typesetting",
+        "candidates": [
+          {
+            "doi": "10.1007/979-8-8688-2931-4",
+            "title": "From Markup to Markdown",
+            "year": 2026
+          },
+          {
+            "doi": "10.1007/979-8-8688-2931-4_7",
+            "title": "Desktop Printing",
+            "year": 2026
+          },
+          {
+            "doi": "10.3233/978-1-58603-148-0-191",
+            "title": "Developments in Technical Typesetting: TeX at the End of the 20th Century",
+            "year": 2001
+          },
+          {
+            "doi": "10.1007/979-8-8688-2931-4_9",
+            "title": "What’s Next",
+            "year": 2026
+          }
+        ]
+      }
+    ],
+    "ml-kem-768": [
+      {
+        "domain": "post-quantum cryptography",
+        "candidates": [
+          {
+            "doi": "10.1007/978-3-540-88702-7_1",
+            "title": "Introduction to post-quantum cryptography",
+            "year": null
+          },
+          {
+            "doi": "10.70675/d440e0bdz9bbdz4c23z9dabze28ab9ee3d97",
+            "title": "Multivariate Cryptography and Post-quantum Cryptography",
+            "year": null
+          },
+          {
+            "doi": "10.1007/978-3-031-88372-9_12",
+            "title": "Post-Quantum Cryptography",
+            "year": 2025
+          },
+          {
+            "doi": "10.1007/978-3-319-11659-4_15",
+            "title": "A Note on Quantum Security for Post-Quantum Cryptography",
+            "year": 2014
+          }
+        ]
+      },
+      {
+        "domain": "cryptographic standards conformance",
+        "candidates": [
+          {
+            "doi": "10.3403/30279583",
+            "title": "Information technology. Security techniques. Cryptographic algorithms and security mechanisms conformance testing",
+            "year": null
+          },
+          {
+            "doi": "10.3403/30279583u",
+            "title": "Information technology. Security techniques. Cryptographic algorithms and security mechanisms conformance testing",
+            "year": null
+          },
+          {
+            "doi": "10.3403/30322568",
+            "title": "Information technology. Conformance test methods for security service crypto suites",
+            "year": null
+          },
+          {
+            "doi": "10.6028/nist.sp.800-175br1-draft",
+            "title": "Guideline for Using Cryptographic Standards in the Federal Government:",
+            "year": 2019
+          }
+        ]
+      },
+      {
+        "domain": "side-channel resistance",
+        "candidates": [
+          {
+            "doi": "10.7717/peerj-cs.3370/table-9",
+            "title": "Table 9: Analysis of entropy and resistance to side-channel attacks.",
+            "year": null
+          },
+          {
+            "doi": "10.70675/a4fc8606zf6f9z4ed2z9547z984ebe459ec2",
+            "title": "Side-channel resistance of cryptographic primitives based on error-correcting codes",
+            "year": null
+          },
+          {
+            "doi": "10.4271/j3101-4_202606",
+            "title": "Side Channel and Fault Injection Attack Resistance",
+            "year": null
+          },
+          {
+            "doi": "10.1021/acsami.3c13699.s001",
+            "title": "Negative Differential Interlayer Resistance in WSe2 Multilayers via Conducting Channel Migration with Vertical Double-Side Contacts",
+            "year": null
+          }
+        ]
+      }
+    ],
+    "axiom-index": [
+      {
+        "domain": "interactive theorem proving",
+        "candidates": [
+          {
+            "doi": "10.1007/978-3-319-08970-6_30",
+            "title": "Collaborative Interactive Theorem Proving with Clide",
+            "year": 2014
+          },
+          {
+            "doi": "10.1007/978-3-642-22863-6_28",
+            "title": "Composable Discovery Engines for Interactive Theorem Proving",
+            "year": 2011
+          },
+          {
+            "doi": "10.1016/b978-0-444-89880-7.50010-3",
+            "title": "A Note on Interactive Theorem Proving with Theorem Continuation Functions",
+            "year": 1993
+          },
+          {
+            "doi": "10.1007/978-1-4612-3658-0_7",
+            "title": "The Interactive Proof Editor An Experiment in Interactive Theorem Proving",
+            "year": 1989
+          }
+        ]
+      },
+      {
+        "domain": "trusted computing base and proof checking",
+        "candidates": [
+          {
+            "doi": "10.1145/1867635.1867648",
+            "title": "Separating hypervisor trusted computing base supported by hardware",
+            "year": 2010
+          },
+          {
+            "doi": "10.1007/978-3-8348-9324-6_6",
+            "title": "Trusted ← Trustworthy ← Proof Position Paper",
+            "year": 2009
+          },
+          {
+            "doi": "10.2514/6.1989-3136",
+            "title": "Extending the trusted computing base",
+            "year": 1989
+          },
+          {
+            "doi": "10.1145/3837076",
+            "title": "Formal Specification of Trusted Execution Environment APIs and Model Checking of Trusted Applications",
+            "year": 2026
+          }
+        ]
+      },
+      {
+        "domain": "extensionality and quotient types in type theory",
+        "candidates": [
+          {
+            "doi": "10.1017/9781108933568.016",
+            "title": "Function Extensionality",
+            "year": 2025
+          },
+          {
+            "doi": "10.1145/2837614.2837638",
+            "title": "Type theory in type theory using quotient inductive types",
+            "year": 2016
+          }
+        ]
+      },
+      {
+        "domain": "proof by reflection and decision procedures",
+        "candidates": [
+          {
+            "doi": "10.1007/978-94-007-0002-4_3",
+            "title": "Tableaus and Decision Procedures for Hybrid Logic",
+            "year": 2010
+          },
+          {
+            "doi": "10.1613/jair.1.15710",
+            "title": "Proof Theory and Decision Procedures for Deontic STIT Logics",
+            "year": 2024
+          },
+          {
+            "doi": "10.1017/cbo9780511676277.011",
+            "title": "PROOF SYSTEMS AND THE REFLECTION PRINCIPLE",
+            "year": 2010
+          },
+          {
+            "doi": "10.1007/978-3-319-29198-7_6",
+            "title": "Intuitionistic Decision Procedures Since Gentzen",
+            "year": 2016
+          }
+        ]
+      },
+      {
+        "domain": "axiom minimisation in formal developments",
+        "candidates": [
+          {
+            "doi": "10.1305/ndjfl/1093635501",
+            "title": "An equivalent of the axiom of choice in finite models of the powerset axiom.",
+            "year": 1990
+          },
+          {
+            "doi": "10.1305/ndjfl/1093888329",
+            "title": "Awkward axiom-systems.",
+            "year": 1978
+          },
+          {
+            "doi": "10.1007/978-94-015-8867-6_7",
+            "title": "The Exhaustion Axiom",
+            "year": 1997
+          },
+          {
+            "doi": "10.1007/978-94-015-8867-6_8",
+            "title": "The Connection Axiom",
+            "year": 1997
+          }
+        ]
+      }
+    ]
+  }
+}

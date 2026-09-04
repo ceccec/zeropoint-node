@@ -18,7 +18,7 @@ gate that re-performs the measurement and fails if this block disagrees with it.
 
 | | |
 | --- | --- |
-| exported values reachable from no law at all | **1411 of 1751** |
+| exported values reachable from no law at all | **1413 of 1753** |
 | exported literal constants held by nothing | **49 of 57** |
 | constants forced by at least one law | 8 |
 | seal predicates that are *pinned* rather than forced | 9 of 33 |

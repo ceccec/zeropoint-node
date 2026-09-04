@@ -35,12 +35,35 @@
 import { readFileSync, writeFileSync, rmSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { join } from 'node:path'
+import { fingerprintOf, answerFromRecord, sealRecord } from './lib/fingerprint.mjs'
 
 const ROOT = join(import.meta.dirname, '..')
 const SRC = join(ROOT, 'lean/DigitSpace.lean')
 const LEDGER = join(ROOT, 'lean/bounds.json')
 const CHECK = process.argv.includes('--check')
 const WIDEN = 4 // multiply every numeric bound by this
+
+// The kernel is the cost here, and it only has anything new to say when a
+// .lean file has moved.
+//
+// ONLY THE .lean FILES. The record itself is lean/bounds.json, inside the same
+// directory — fingerprinting the directory made writing the record change the
+// fingerprint, so the fast path could never fire and every run recomputed. A
+// fingerprint that includes its own output is a fingerprint that never matches.
+const FINGERPRINT = fingerprintOf([join(ROOT, 'lean')], (f) => f.endsWith('.lean'))
+
+if (CHECK) {
+  let corrupt = null
+  const recorded = answerFromRecord(LEDGER, FINGERPRINT, { onCorrupt: (m) => { corrupt = m } })
+  if (corrupt) { console.error(`lean:bounds FAIL — ${corrupt}`); process.exit(1) }
+  if (recorded) {
+    const tally = {}
+    for (const r of Object.values(recorded.bounds)) tally[r.verdict] = (tally[r.verdict] ?? 0) + 1
+    console.log(`lean:bounds ok — no .lean file has moved (fingerprint ${FINGERPRINT.slice(0, 12)}); ${Object.entries(tally).map(([k, v]) => `at least ${v} ${k}`).join(', ')}`)
+    console.log('               the kernel is re-asked in full the moment one does')
+    process.exit(0)
+  }
+}
 
 const source = readFileSync(SRC, 'utf8')
 // Theorem statements wrap. Reading line by line missed a bound written on a
@@ -95,12 +118,13 @@ const named = source.split('\n').filter((l) => /^theorem/.test(l) && !/List\.ran
 const record = {
   what: 'Each numeric bound was widened and the kernel re-asked. survived-one-widening = the bound held when widened once, which is EVIDENCE that it is scaffolding and not proof: one widening is one sample, and a statement can survive because the property is universal or because the new elements happen to satisfy it. load-bearing = the bound is the theorem. inconclusive = the evaluator could not read the widened form, which refutes nothing.',
   doesNotEstablish: 'whether any prose over-claims. That happens only when a sentence ranges wider than the real domain, and nothing here reads a sentence.',
+  inputsFingerprint: FINGERPRINT,
   widenFactor: WIDEN,
   theoremsOverNamedDomains: named,
   notWidenedBecause: 'a named domain IS the object; adding an element makes it a different claim, not a wider one',
   bounds: results,
 }
-const next = JSON.stringify(record, null, 2) + '\n'
+const next = JSON.stringify(sealRecord(record), null, 2) + '\n'
 const tally = Object.values(results).reduce((a, r) => ({ ...a, [r.verdict]: (a[r.verdict] ?? 0) + 1 }), {})
 console.log(`lean:bounds — ${bounded.length} numeric bound(s) widened x${WIDEN}: ${Object.entries(tally).map(([k, v]) => `at least ${v} ${k}`).join(', ')}; ${named} theorem(s) over named domains were not widened`)
 

@@ -32,6 +32,7 @@ import { createHash } from 'node:crypto'
 import { join, relative } from 'node:path'
 import { tmpdir } from 'node:os'
 import ts from 'typescript'
+import { contentHashOf, sealRecord } from './lib/fingerprint.mjs'
 
 const ROOT = join(import.meta.dirname, '..')
 
@@ -147,6 +148,14 @@ if (CHECK) {
       console.error('constrained FAIL — src/verification/constrained.json does not round-trip: its bytes have been altered since it was written')
       process.exit(1)
     }
+    // A round trip catches formatting damage and nothing else. Forty corrupting
+    // bytes landing INSIDE a string value leave the file valid JSON that
+    // re-serialises to itself, byte for byte — this check passed for exactly
+    // that reason until the same hole was found in lean:bounds.
+    if (typeof recorded.contentHash !== 'string' || contentHashOf(recorded) !== recorded.contentHash) {
+      console.error('constrained FAIL — src/verification/constrained.json does not match its own contentHash: its content has been altered')
+      process.exit(1)
+    }
     console.log(`constrained ok — no source the experiment reads has changed (fingerprint ${fp.slice(0, 12)}), and the record is byte-intact`)
     console.log(`                 ${recorded.reachability.unreachable} of ${recorded.reachability.exportedValues} exported values reachable from no law; ${recorded.literalCensus.free} of ${recorded.literalCensus.perturbable} constants held by nothing`)
     console.log('                 the experiment is re-run in full the moment any source moves')
@@ -250,7 +259,7 @@ const record = {
   literalCensus: { perturbable: literals.length, forced, free, skipped },
   literals: results,
 }
-const next = JSON.stringify(record, null, 2) + '\n'
+const next = JSON.stringify(sealRecord(record), null, 2) + '\n'
 if (CHECK) {
   if (readFileSync(OUT, 'utf8') !== next) { console.error('constrained FAIL — the recorded measurement is not what the experiment produces; run npm run constrained'); process.exit(1) }
   console.log('constrained ok — the recorded measurement is what the experiment produces today')

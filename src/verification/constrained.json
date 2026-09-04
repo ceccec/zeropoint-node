@@ -1,0 +1,266 @@
+{
+  "what": "Two measurements of the same question. Reachability is exact and decides what a law COULD constrain. The literal census is an experiment and decides what one DOES.",
+  "doesNotEstablish": "that a reachable value is constrained, or that a forced value is forced for a good reason. A law may read a value without asserting anything about it, and a law that pins a literal falls for a convention as readily as for a law — see seal-pinning.json.",
+  "reachability": {
+    "exportedValues": 1749,
+    "reachable": 340,
+    "unreachable": 1409,
+    "note": "closure over bare names over-approximates reachability, so unreachable is a LOWER bound"
+  },
+  "literalCensus": {
+    "perturbable": 55,
+    "forced": 7,
+    "free": 48,
+    "skipped": 0
+  },
+  "literals": {
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.cmyk.ts::CMYK_SEQUENCE": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.core.ts::A432_FREQUENCY": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts::LINEAR_PATTERN": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts::SACRED_PATTERN": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.mapping.ts::digitFrequencies": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::FIBONACCI_SEQUENCE": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::A432_BASE_FREQUENCY": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::A432_OCTAVE_RATIO": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::A432_TRINITY_MULTIPLIER": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::A432_VORTEX_MULTIPLIER": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::DIGITAL_ROOT_BASE": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::DIGITAL_ROOT_MODULO": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::A432_TRINITY": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::A432_RETURN": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::A432_AXIS": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::RODIN_COIL_DIPOLES": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::RODIN_COIL_MONOPOLE": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::RODIN_COIL_GAP_SPACE": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::A432_SEQUENCE": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.kernel.ts::SCHEDULING_QUANTUM": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts::ZEROPOINT": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts::IMPERIAL_ANGULAR_STEP": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts::A432_GATEWAYS": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.tesla.coil.ts::TESLA_BASE_VOLTAGE": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.tesla.coil.ts::TESLA_BASE_FREQUENCY": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.tesla.coil.ts::DEFAULT_TESLA_POLARITY": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.trinity.ts::VOID_PATTERN": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.ts::HARMONICS": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/index.ts::VORTEX_FLOW": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/index.ts::VORTEX_SEQUENCE": {
+      "verdict": "forced",
+      "kind": "number[]",
+      "lawsFallen": [
+        "doubling_avoids_the_triad",
+        "computeVortexInvariantsHold"
+      ]
+    },
+    "src/0/index.ts::VORTEX_REVERSE": {
+      "verdict": "forced",
+      "kind": "number[]",
+      "lawsFallen": [
+        "computeVortexInvariantsHold"
+      ]
+    },
+    "src/0/index.ts::VORTEX_ORBIT": {
+      "verdict": "forced",
+      "kind": "number[]",
+      "lawsFallen": [
+        "doubling_avoids_the_triad",
+        "a432_vortex_is_the_doubling_orbit",
+        "consciousness_criterion_has_teeth_and_is_not_a_claim"
+      ]
+    },
+    "src/0/index.ts::VORTEX_AXIS": {
+      "verdict": "forced",
+      "kind": "number[]",
+      "lawsFallen": [
+        "doubling_avoids_the_triad",
+        "a432_vortex_is_the_doubling_orbit",
+        "a432_constants_do_not_drift_from_the_kernel",
+        "merkaba_is_two_mirrored_tetrahedra",
+        "agl_acts_on_the_three_triangles"
+      ]
+    },
+    "src/0/index.ts::LEGACY_CONSCIOUSNESS_SEQUENCE": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/0/index.ts::VORTEX_DASH_ANGLE_DEG": {
+      "verdict": "forced",
+      "kind": "number",
+      "lawsFallen": [
+        "computeVortexInvariantsHold"
+      ]
+    },
+    "src/0/index.ts::TORUS_LOBE_OFFSET": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/index.ts::TORUS_RING_R": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/0/index.ts::TORUS_TUBE_R_BASE": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/quantum/a432-error-resolvers.ts::PERFECT_BALANCE": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/quantum/a432-error-resolvers.ts::FOUNDATION_DIMENSION": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/quantum/a432-error-resolvers.ts::PRESENT_DIMENSION": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/quantum/a432-frequency-flow.ts::ZEROPOINT_FLOW_SEQUENCE": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/quantum/simulator.ts::RNG_MODULUS": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/security/quantum-fold-cipher.ts::DEFAULT_KEY_BITS": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/security/quantum-fold-cipher.ts::SCRYPT_SALT_BYTES": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/security/quantum-threat-landscape.ts::RODIN_SEQUENCE_QUANTUM": {
+      "verdict": "free",
+      "kind": "number[]"
+    },
+    "src/thermo/free-energy.ts::SCALE": {
+      "verdict": "forced",
+      "kind": "number",
+      "lawsFallen": [
+        "every_model_inverts"
+      ]
+    },
+    "src/thermo/free-energy.ts::FARADAY": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/thermo/free-energy.ts::ELECTRONS": {
+      "verdict": "forced",
+      "kind": "number",
+      "lawsFallen": [
+        "free_energy_of_splitting_is_positive"
+      ]
+    },
+    "src/thermo/wastewater-energy.ts::TREATMENT_DEMAND_DECIJOULES_PER_LITRE": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/verification/lean-status.ts::LEAN_PROVEN_COUNT": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/verification/lean-status.ts::LEAN_SORRY_COUNT": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/verification/realtime-criterion.ts::FRAME_HZ": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/verification/realtime-criterion.ts::JITTER_FRACTION_NUMERATOR": {
+      "verdict": "free",
+      "kind": "number"
+    },
+    "src/verification/realtime-criterion.ts::JITTER_FRACTION_DENOMINATOR": {
+      "verdict": "free",
+      "kind": "number"
+    }
+  }
+}

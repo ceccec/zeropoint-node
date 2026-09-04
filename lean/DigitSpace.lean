@@ -130,3 +130,33 @@ theorem mirror_is_affine_only_off_the_void :
 /-- Apart, the two generators give only 6 · 2 = 12; the excess 54 − 12 = 42 is
     the failure to commute that the README calls the entanglement. -/
 theorem generators_apart_give_twelve : 6 * 2 = 12 ∧ 54 - 12 = 42 := by decide
+
+/- ── What the base frequency must satisfy ──────────────────────────────────
+
+   A census of every exported literal constant found that A432_FREQUENCY — the
+   number this package is named after — was held by nothing: setting it to 433
+   left all 32 seals holding. Two things turned out to be true and neither was
+   checked.
+
+   First, the base appears as TWO independent literals, one exported from
+   a432.core and one written inline in the axis arithmetic, so they could drift
+   apart silently. They did, the moment the census perturbed one of them.
+
+   Second, the base is not arbitrary, but neither is it unique. Whole axis
+   frequencies and a digital root of 9 pin it exactly to the multiples of 36 —
+   no more than that. Which multiple is a convention, and 432 is the twelfth. -/
+
+/-- Whole axis frequencies plus digital root 9 is exactly divisibility by 36.
+    `b * d / 12` is whole for every axis digit precisely when 4 divides b, and
+    the digital root condition is 9 dividing b; the two are coprime. -/
+theorem whole_axis_and_root_nine_is_exactly_thirty_six :
+    ∀ b ∈ List.range 100,
+      (((b * 3) % 12 = 0 ∧ (b * 6) % 12 = 0 ∧ (b * 9) % 12 = 0) ∧ b % 9 = 0) ↔ b % 36 = 0 := by decide
+
+/-- 432 is in that class, and it is not alone there: 396 is the multiple below
+    it and 468 the one above. The class is derived; the choice inside it is not. -/
+theorem four_three_two_is_a_multiple_of_thirty_six_but_not_the_only_one :
+    432 % 36 = 0 ∧ 396 % 36 = 0 ∧ 468 % 36 = 0 ∧ 432 = 36 * 12 := by decide
+
+/-- The digital root of the base is 9, which follows from 9 dividing it. -/
+theorem base_frequency_has_digital_root_nine : dr 432 = 9 := by decide

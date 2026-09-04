@@ -29,7 +29,18 @@ export const LEAN_STATUS: Readonly<Record<string, LeanKernelStatus>> = {
   "kyber_security": "unverifiable-here"
 } as const
 
-/** How many of the stated theorems the kernel has actually accepted. */
+/**
+ * Of the 12 theorems LEAN_PROOFS states in TypeScript, how many the kernel
+ * has accepted. NOT the whole corpus: these twelve all live in files that import
+ * Mathlib, so none of them is checkable here and the count is honestly zero.
+ * A reader who takes this for the corpus concludes nothing is proved, which is
+ * why the corpus totals are named separately below.
+ */
 export const LEAN_PROVEN_COUNT = 0
-/** Theorems written down and not proved. A sorry is not a proof. */
+/** Of those same 12: written down and not proved. A sorry is not a proof. */
 export const LEAN_SORRY_COUNT = 8
+
+/** Every theorem in lean/, across all files. */
+export const LEAN_CORPUS_THEOREM_COUNT = 50
+/** Of those: accepted by the kernel, with axiom dependencies inside the allowed set. */
+export const LEAN_CORPUS_PROVEN_COUNT = 26

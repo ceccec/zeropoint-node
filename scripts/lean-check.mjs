@@ -259,10 +259,21 @@ export type LeanKernelStatus = 'proven' | 'sorry' | 'unverifiable-here' | 'rejec
 
 export const LEAN_STATUS: Readonly<Record<string, LeanKernelStatus>> = ${JSON.stringify(statuses, null, 2)} as const
 
-/** How many of the stated theorems the kernel has actually accepted. */
+/**
+ * Of the ${Object.keys(statuses).length} theorems LEAN_PROOFS states in TypeScript, how many the kernel
+ * has accepted. NOT the whole corpus: these twelve all live in files that import
+ * Mathlib, so none of them is checkable here and the count is honestly zero.
+ * A reader who takes this for the corpus concludes nothing is proved, which is
+ * why the corpus totals are named separately below.
+ */
 export const LEAN_PROVEN_COUNT = ${Object.values(statuses).filter((x) => x === 'proven').length}
-/** Theorems written down and not proved. A sorry is not a proof. */
+/** Of those same ${Object.keys(statuses).length}: written down and not proved. A sorry is not a proof. */
 export const LEAN_SORRY_COUNT = ${Object.values(statuses).filter((x) => x === 'sorry').length}
+
+/** Every theorem in lean/, across all files. */
+export const LEAN_CORPUS_THEOREM_COUNT = ${theorems.length}
+/** Of those: accepted by the kernel, with axiom dependencies inside the allowed set. */
+export const LEAN_CORPUS_PROVEN_COUNT = ${proven.length}
 `
   writeFileSync(join(ROOT, 'src/verification/lean-status.ts'), ts)
   console.log(`lean:ledger — wrote lean/ledger.json: ${proven.length} proven, ${ledger.sorry} sorry, ${ledger.unverifiableHere} unverifiable here`)

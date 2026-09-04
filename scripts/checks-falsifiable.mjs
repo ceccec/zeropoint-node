@@ -50,6 +50,7 @@ const GUARDS = {
   // the probe has to land inside the region or it proves nothing.
   'spectrum:check': ['README.md', 'SPECTRUM'],
   'readme:census:check': ['README.md', 'CENSUS'],
+  'citations:check': 'CITATION.bib',
 }
 
 /**

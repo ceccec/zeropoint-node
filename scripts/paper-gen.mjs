@@ -84,6 +84,7 @@ const references = Object.entries(priorArt.contributions)
 const seenDoi = new Set()
 const uniqueReferences = references.filter((r) => (seenDoi.has(r.id) ? false : seenDoi.add(r.id)))
 const pinning = JSON.parse(readFileSync(join(ROOT, 'src/verification/seal-pinning.json'), 'utf8'))
+const funding = JSON.parse(readFileSync(join(ROOT, 'src/verification/funding.json'), 'utf8'))
 
 /**
  * Every Lean statement in the repository, read from the .lean sources and
@@ -774,6 +775,11 @@ ${JSON.stringify({
     url: `https://doi.org/${r.id}`,
   })),
   sameAs: [REPO, NPM, `https://doi.org/${CONCEPT_DOI}`],
+  // Declared, not omitted. A blank funder field reads as "not stated"; this
+  // says "none", which is a different and checkable claim.
+  ...(funding.grants.length
+    ? { funding: funding.grants.map((g) => ({ '@type': 'Grant', funder: { '@type': 'Organization', name: g.funder }, name: g.name, identifier: g.identifier })) }
+    : { funding: [], disambiguatingDescription: funding.statement }),
 }, null, 2)}
 </script>
 <style>

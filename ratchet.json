@@ -11,7 +11,7 @@
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 27310
+    "unguardedReadme": 27322
   },
   "raised": {
     "unguardedReadme": [
@@ -34,6 +34,11 @@
         "from": 27304,
         "to": 27310,
         "reason": "six bytes: the blank lines separating the CENSUS block from the prose around it. The block itself is now counted as guarded, which took the surface from a 1296-byte growth to six."
+      },
+      {
+        "from": 27310,
+        "to": 27322,
+        "reason": "twelve bytes: the blank lines around the generated CITE block. The block itself is guarded and counted as such."
       }
     ]
   },

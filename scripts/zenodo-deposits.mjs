@@ -32,6 +32,7 @@ const CHECK = process.argv.includes('--check')
 const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
 const priorArt = JSON.parse(readFileSync(join(ROOT, 'src/verification/prior-art.json'), 'utf8'))
 const ledger = JSON.parse(readFileSync(join(ROOT, 'lean/ledger.json'), 'utf8'))
+const funding = JSON.parse(readFileSync(join(ROOT, 'src/verification/funding.json'), 'utf8'))
 const CONCEPT = priorArt.concept_doi
 const REPO = pkg.repository.url.replace(/^git\+/, '').replace(/\.git$/, '')
 
@@ -107,12 +108,14 @@ const deposits = proven.map((e) => ({
       `<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. `
         + `It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. `
         + `The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>`,
+      `<p><strong>Funding.</strong> ${funding.statement}</p>`,
       `<p><strong>Reproduce.</strong> <code>git clone ${REPO} &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/${e.file}</code>, which ships in the package.</p>`,
     ].filter(Boolean).join('\n'),
     version: pkg.version,
     language: 'eng',
     license: 'cc-by-nc-nd-4.0',
     keywords: [...(pkg.keywords ?? []).slice(0, 6), 'Lean 4', 'formal verification', 'machine-checked proof'],
+    grants: funding.grants,
     related_identifiers: [
       { identifier: CONCEPT, relation: 'isPartOf', scheme: 'doi' },
       { identifier: REPO, relation: 'isSupplementTo', scheme: 'url' },

@@ -1,0 +1,8 @@
+{
+  "what": "Funding disclosure for every publication this repository generates. Research metadata standards expect funders to be declared; they do not distinguish 'unfunded' from 'not stated', and a blank field reads as the second. This states the first.",
+  "status": "none-declared",
+  "statement": "No grant, institutional or commercial funding supports this work. It is unfunded independent research.",
+  "grants": [],
+  "howToDeclare": "Add entries to grants[] as { funder, name, identifier, award }. The Zenodo deposits and the paper's JSON-LD read this file, so declaring a grant once reaches every publication without editing any of them.",
+  "reachedBy": ["scripts/zenodo-deposits.mjs", "scripts/paper-gen.mjs"]
+}

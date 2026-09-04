@@ -160,3 +160,41 @@ theorem four_three_two_is_a_multiple_of_thirty_six_but_not_the_only_one :
 
 /-- The digital root of the base is 9, which follows from 9 dividing it. -/
 theorem base_frequency_has_digital_root_nine : dr 432 = 9 := by decide
+
+/- ── The mirror as a two-sided coin ────────────────────────────────────────
+
+   Asked whether a statement about a black hole pulling everything unharmonic
+   in on one side of a coin and a white hole reflecting it from the other could
+   be computed. Most of it cannot: fusion, pressure, temperature, speed, and
+   the holes themselves have no referent here and are not formalised below.
+
+   What IS decidable is the shape the sentence describes. The mirror is an
+   involution, so the ten digits fall into pairs and fixed points — coins and
+   their two faces. And the pairing is not arbitrary: EVERY digit off the flow
+   ring is paired with one on it, and nothing is left over. -/
+
+/-- Every axis digit — the three that the doubling walk never reaches — is the
+    mirror of a digit that IS on the flow ring. Nothing off the ring is
+    unpaired. -/
+theorem every_axis_digit_mirrors_an_orbit_digit : ∀ d ∈ axis, tv d ∈ orbit := by decide
+
+/-- And in the other direction, so the pairing is a bijection between the axis
+    and exactly three of the six orbit digits. -/
+theorem the_axis_is_mirrored_onto_exactly_seven_four_one :
+    axis.map tv = [7, 4, 1] ∧ [7, 4, 1].map tv = axis := by decide
+
+/-- The two digits that are their own reflection: the void, and the midpoint of
+    the flow ring. One from each side. -/
+theorem exactly_two_digits_are_their_own_mirror :
+    (digits.filter (fun d => tv d == d)) = [0, 5] := by decide
+
+/-- Nothing is left over. Ten digits: two fixed, and four pairs that the mirror
+    exchanges — 2 + 4·2 = 10, with every pair accounted for. -/
+theorem the_ten_digits_are_two_fixed_points_and_four_pairs :
+    (digits.filter (fun d => tv d == d)).length = 2 ∧
+    (digits.filter (fun d => tv d != d)).length = 8 ∧
+    2 + 4 * 2 = 10 := by decide
+
+/-- The pairs, written out, so the claim is the list and not a summary of it. -/
+theorem the_four_pairs_are_one_nine_two_eight_three_seven_four_six :
+    tv 1 = 9 ∧ tv 2 = 8 ∧ tv 3 = 7 ∧ tv 4 = 6 := by decide

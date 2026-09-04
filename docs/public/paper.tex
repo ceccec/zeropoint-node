@@ -16,8 +16,8 @@ This paper sets out the arithmetic that \texttt{zeropoint-node} implements and t
 predicates that decide it. The digit space is partitioned by a doubling map into a
 six-element orbit and a three-element axis; frequency and hue are one integer read in
 two units; ratios are carried as pairs of integers rather than decimals. 33 of
-33 theorems carry a predicate that runs and holds, and 19 of
-43 statements in the Lean files are accepted by the Lean kernel.
+33 theorems carry a predicate that runs and holds, and 24 of
+48 statements in the Lean files are accepted by the Lean kernel.
 3 claims are recorded as axioms because no finite computation decides them.
 \textbf{No physical experiment is reported here.}
 \end{abstract}
@@ -140,9 +140,9 @@ because novelty is a universal negative that no finite search decides. It rests 
 \end{itemize}
 
 \section*{Every Lean statement}
-All 43 statements in the \texttt{lean/} sources. \emph{Proven} means the kernel accepted the file,
+All 48 statements in the \texttt{lean/} sources. \emph{Proven} means the kernel accepted the file,
 the proof contains no \texttt{sorry}, and \texttt{\#print axioms} reports a dependency set within
-$\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 19 of them meet it.
+$\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 24 of them meet it.
 \begin{itemize}\small
 \item \texttt{dr\_is\_drTS\_above\_zero} (DigitSpace.lean) --- $\forall$ n $\in$ List.range 60, n $\neq$ 0 $\to$ dr n = drTS n\\
 \textbf{proven by the kernel}, resting on no axioms
@@ -181,6 +181,16 @@ $\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 19 of them meet it.
 \item \texttt{four\_three\_two\_is\_a\_multiple\_of\_thirty\_six\_but\_not\_the\_only\_one} (DigitSpace.lean) --- 432 \% 36 = 0 $\land$ 396 \% 36 = 0 $\land$ 468 \% 36 = 0 $\land$ 432 = 36 * 12\\
 \textbf{proven by the kernel}, resting on no axioms
 \item \texttt{base\_frequency\_has\_digital\_root\_nine} (DigitSpace.lean) --- dr 432 = 9\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{every\_axis\_digit\_mirrors\_an\_orbit\_digit} (DigitSpace.lean) --- $\forall$ d $\in$ axis, tv d $\in$ orbit\\
+\textbf{proven by the kernel}, resting on \texttt{propext}, \texttt{Quot.sound}
+\item \texttt{the\_axis\_is\_mirrored\_onto\_exactly\_seven\_four\_one} (DigitSpace.lean) --- axis.map tv = [7, 4, 1] $\land$ [7, 4, 1].map tv = axis\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{exactly\_two\_digits\_are\_their\_own\_mirror} (DigitSpace.lean) --- (digits.filter (fun d => tv d == d)) = [0, 5]\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_ten\_digits\_are\_two\_fixed\_points\_and\_four\_pairs} (DigitSpace.lean) --- (digits.filter (fun d => tv d == d)).length = 2 $\land$ (digits.filter (fun d => tv d != d)).length = 8 $\land$ 2 + 4 * 2 = 10\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_four\_pairs\_are\_one\_nine\_two\_eight\_three\_seven\_four\_six} (DigitSpace.lean) --- tv 1 = 9 $\land$ tv 2 = 8 $\land$ tv 3 = 7 $\land$ tv 4 = 6\\
 \textbf{proven by the kernel}, resting on no axioms
 \item \texttt{hadamard\_squared} (Quantum.lean) --- hadamard * hadamard = 1\\
 \textbf{needs a library this repository cannot build here}

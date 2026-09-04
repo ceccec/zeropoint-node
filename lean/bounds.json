@@ -2,7 +2,7 @@
   "what": "Each numeric bound was widened and the kernel re-asked. artifact = the bound was scaffolding for `decide` and a universal beside it is honest. load-bearing = the bound is the theorem. inconclusive = the evaluator could not read the widened form, which refutes nothing.",
   "doesNotEstablish": "whether any prose over-claims. That happens only when a sentence ranges wider than the real domain, and nothing here reads a sentence.",
   "widenFactor": 4,
-  "theoremsOverNamedDomains": 16,
+  "theoremsOverNamedDomains": 21,
   "notWidenedBecause": "a named domain IS the object; adding an element makes it a different claim, not a wider one",
   "bounds": {
     "dr_is_drTS_above_zero": {

@@ -11,7 +11,7 @@
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 27304
+    "unguardedReadme": 27310
   },
   "raised": {
     "unguardedReadme": [
@@ -29,13 +29,18 @@
         "from": 27304,
         "to": 29000,
         "reason": "the abstract now states the census a reader was previously only shown in an appendix -- 1409 of 1749 exported values outside every law, 47 of 55 constants held by nothing, 9 of 33 predicates pinned -- and the Lean appendix grew with the theorems landed this session. Disclosure of unflattering measurement is the reason these bytes exist."
+      },
+      {
+        "from": 27304,
+        "to": 27310,
+        "reason": "six bytes: the blank lines separating the CENSUS block from the prose around it. The block itself is now counted as guarded, which took the surface from a 1296-byte growth to six."
       }
     ]
   },
   "measures": {
     "prose": "61d559c3fcdede32",
     "tautology": "3b4f75e64d4ca30a",
-    "unguardedReadme": "0b1bfa0358182d76",
+    "unguardedReadme": "29af50288641bce1",
     "unreachable": "ddcce371bcc37ea9",
     "cycles": "636d144bdae920d4",
     "typecheck": "da1e2f6a54e74929",

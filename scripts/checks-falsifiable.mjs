@@ -49,6 +49,7 @@ const GUARDS = {
   // Block-scoped: these own a marked region of README.md and nothing else, so
   // the probe has to land inside the region or it proves nothing.
   'spectrum:check': ['README.md', 'SPECTRUM'],
+  'readme:census:check': ['README.md', 'CENSUS'],
 }
 
 /**

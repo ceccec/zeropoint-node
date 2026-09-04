@@ -59,6 +59,7 @@ const GUARDS = {
  * are falsified by the mutation tests that live with the code they read.
  */
 const READS_SOURCE = {
+  'criteria:check': 'evaluates the criteria against live code — it reads the subject, not a generated artifact, so there is nothing to corrupt; its own falsifiability is the criterion test suites, which assert the verdict and not the shape',
   // This one is itself a falsification harness: it corrupts a module and
   // requires the suite over it to notice. It is declared here because the
   // pipeline's rule is that every source-reading checker is declared, and

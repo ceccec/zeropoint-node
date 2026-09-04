@@ -52,6 +52,37 @@ const ratchet = JSON.parse(readFileSync(join(ROOT, 'ratchet.json'), 'utf8'))
 const leanLedger = JSON.parse(readFileSync(join(ROOT, 'lean/ledger.json'), 'utf8'))
 const priorArt = JSON.parse(readFileSync(join(ROOT, 'src/verification/prior-art.json'), 'utf8'))
 const constrained = JSON.parse(readFileSync(join(ROOT, 'src/verification/constrained.json'), 'utf8'))
+
+/**
+ * PUBLICATION METADATA, READ FROM THE MANIFEST — NEVER TYPED HERE.
+ *
+ * A page whose author, DOI or repository is written into the generator is a
+ * second copy that drifts from package.json and CITATION.cff. Every value below
+ * is read, so there is one source and the page follows it.
+ *
+ * The point of the markup is that a search engine, Google Scholar and a
+ * citation manager can each read what this page IS: a dated technical report,
+ * by an identified author, about a package with a DOI, citing work that
+ * resolves. That is the whole of it — the references are real, the identifiers
+ * are real, and nothing here describes the page as something it is not.
+ */
+const manifest = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
+const SITE = manifest.homepage.replace(/\/$/, '')
+const REPO = manifest.repository.url.replace(/^git\+/, '').replace(/\.git$/, '')
+const NPM = `https://www.npmjs.com/package/${manifest.name}`
+const CONCEPT_DOI = priorArt.concept_doi
+const AUTHOR = manifest.author.name
+const ORCID = manifest.author.url
+const PAPER_URL = `${SITE}/paper.html`
+const PAPER_TITLE = `Exact arithmetic over a ten-digit space`
+const PAPER_ABSTRACT = 'The arithmetic zeropoint-node implements and the predicates that decide it, with every figure computed from the source, and a census of how much of the package any law actually constrains.'
+
+/** Every citation in the ledger that RESOLVED, so nothing unverified is cited. */
+const references = Object.entries(priorArt.contributions)
+  .flatMap(([id, c]) => (c.priorArt?.citations ?? []).map((x) => ({ ...x, contribution: id })))
+  .filter((x) => x.resolved === true && x.kind === 'doi' && x.id)
+const seenDoi = new Set()
+const uniqueReferences = references.filter((r) => (seenDoi.has(r.id) ? false : seenDoi.add(r.id)))
 const pinning = JSON.parse(readFileSync(join(ROOT, 'src/verification/seal-pinning.json'), 'utf8'))
 
 /**
@@ -344,6 +375,30 @@ recorded as axioms, because no finite computation decides them, and each is
 named in &#167;7. <strong>No physical experiment is reported here.</strong></p>
 </section>
 
+<section class="claims">
+<h2>What this work claims</h2>
+<p>Ten contributions, each stated as a claim, each with the thing that decides
+it and the thing it does not settle. They are listed here rather than left to
+be assembled from appendices &mdash; a reader should not have to reconstruct
+what is being asserted.</p>
+<ol class="claimlist">
+${paEntries.map(([id, c]) => `<li><strong>${escape(c.what.replace(/\s+/g, ' ').trim())}</strong>
+<div class="standing"><span class="tag ${escape(c.priorArt?.status ?? '')}">${escape((c.priorArt?.status ?? '').replace(/-/g, ' '))}</span>
+${(c.priorArt?.citations ?? []).filter((x) => x.resolved).length > 0
+  ? `Related work is cited: ${(c.priorArt.citations).filter((x) => x.resolved).map((x) => `<a href="https://doi.org/${escape(x.id)}" rel="noopener">doi:${escape(x.id)}</a>`).join(', ')}.`
+  : 'No cited work carries a DOI.'}
+Where its prior art would live: ${(c.domains ?? []).map((d) => escape(d)).join('; ')}.</div></li>`).join('\n')}
+</ol>
+<p class="warn"><strong>None of these is claimed to be novel, and the ledger has
+no status that would let it be.</strong> Novelty is a universal negative: it
+asserts that nobody, anywhere, published this first, and no finite search
+decides that. What IS decided is priority &mdash; a dated, citable deposit at
+<a href="https://doi.org/${CONCEPT_DOI}" rel="noopener">doi:${CONCEPT_DOI}</a>,
+which defeats a later claim of invention without anyone proving the negative.
+That is the strongest defensible position and it is the one taken here. The
+axiom <code>no_prior_art_is_undecidable</code> records the rest.</p>
+</section>
+
 <section>
 <h2>1&ensp;The digit space</h2>
 <p>Arithmetic is carried out on the residues of nine, with zero adjoined. The
@@ -589,7 +644,29 @@ than summarised away.</p>
 </section>
 
 <section class="appendix">
-<h2>Appendix I&ensp;Reproduction</h2>
+<h2>Appendix I&ensp;References</h2>
+<p>Every work below is cited by a contribution in
+<code>src/verification/prior-art.json</code>, and every DOI resolved against
+Crossref to the title printed beside it. <code>npm run priorart:resolve</code>
+asks again and fails on any difference, including a recorded title that is
+merely a prefix of the real one. Six further citations in that ledger carry no
+DOI and are listed there as unresolved rather than dropped.</p>
+<ol class="refs">
+${uniqueReferences.map((r) => `<li>${escape(r.resolvedTitle)}. <a href="https://doi.org/${escape(r.id)}" rel="noopener">doi:${escape(r.id)}</a> <span class="muted">&mdash; cited by <code>${escape(r.contribution)}</code></span></li>`).join('\n')}
+</ol>
+<h3>This work</h3>
+<dl class="where">
+<dt>Archive</dt><dd><a href="https://doi.org/${CONCEPT_DOI}" rel="noopener">doi:${CONCEPT_DOI}</a> &mdash; the concept DOI, resolving to the newest deposited version</dd>
+<dt>Source</dt><dd><a href="${REPO}" rel="noopener">${escape(REPO)}</a></dd>
+<dt>Package</dt><dd><a href="${NPM}" rel="noopener">${escape(NPM)}</a> &mdash; version ${version}</dd>
+<dt>Site</dt><dd><a href="${SITE}" rel="noopener">${escape(SITE)}</a></dd>
+<dt>Author</dt><dd>${escape(AUTHOR)}, <a href="${ORCID}" rel="noopener">${escape(ORCID)}</a></dd>
+<dt>Licence</dt><dd>${escape(manifest.license)}</dd>
+</dl>
+</section>
+
+<section class="appendix">
+<h2>Appendix J&ensp;Reproduction</h2>
 <p>This page is generated. To rebuild it from the source and confirm that no
 figure on it has drifted:</p>
 <pre><code>npm install
@@ -630,7 +707,75 @@ const html = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Exact arithmetic over a ten-digit space &#183; zeropoint-node ${version}</title>
-<meta name="description" content="The formulas zeropoint-node implements, in standard notation, with every figure computed from the source.">
+<meta name="description" content="${escape(PAPER_ABSTRACT)}">
+<link rel="canonical" href="${PAPER_URL}">
+
+<!-- Google Scholar reads these; they are the reason a technical report is findable as one. -->
+<meta name="citation_title" content="${escape(PAPER_TITLE)}">
+<meta name="citation_author" content="${escape(AUTHOR)}">
+<meta name="citation_author_institution" content="zeropoint-node">
+<meta name="citation_publication_date" content="${new Date(manifest.releaseDate ?? Date.now()).getFullYear()}">
+<meta name="citation_doi" content="${CONCEPT_DOI}">
+<meta name="citation_abstract_html_url" content="${PAPER_URL}">
+<meta name="citation_public_url" content="${PAPER_URL}">
+<meta name="citation_technical_report_number" content="${escape(manifest.name)} ${version}">
+<meta name="citation_language" content="en">
+<meta name="citation_keywords" content="${escape((manifest.keywords ?? []).join('; '))}">
+
+<!-- Dublin Core, for citation managers and repository harvesters. -->
+<meta name="DC.title" content="${escape(PAPER_TITLE)}">
+<meta name="DC.creator" content="${escape(AUTHOR)}">
+<meta name="DC.identifier" content="https://doi.org/${CONCEPT_DOI}">
+<meta name="DC.type" content="Text.Technical Report">
+<meta name="DC.language" content="en">
+<meta name="DC.rights" content="${escape(manifest.license)}">
+<meta name="DC.relation" content="${REPO}">
+
+<!-- Link previews. -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="${escape(PAPER_TITLE)}">
+<meta property="og:description" content="${escape(PAPER_ABSTRACT)}">
+<meta property="og:url" content="${PAPER_URL}">
+<meta property="og:site_name" content="${escape(manifest.name)}">
+<meta property="article:author" content="${escape(AUTHOR)}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="${escape(PAPER_TITLE)}">
+<meta name="twitter:description" content="${escape(PAPER_ABSTRACT)}">
+
+<script type="application/ld+json">
+${JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'ScholarlyArticle',
+  headline: PAPER_TITLE,
+  name: PAPER_TITLE,
+  abstract: PAPER_ABSTRACT,
+  url: PAPER_URL,
+  identifier: `https://doi.org/${CONCEPT_DOI}`,
+  version,
+  inLanguage: 'en',
+  license: `https://spdx.org/licenses/${manifest.license}`,
+  author: { '@type': 'Person', name: AUTHOR, '@id': ORCID, url: ORCID, identifier: ORCID },
+  publisher: { '@type': 'Organization', name: manifest.name, url: SITE },
+  isBasedOn: {
+    '@type': 'SoftwareSourceCode',
+    name: manifest.name,
+    version,
+    codeRepository: REPO,
+    programmingLanguage: 'TypeScript',
+    license: `https://spdx.org/licenses/${manifest.license}`,
+    url: NPM,
+    identifier: `https://doi.org/${CONCEPT_DOI}`,
+    sameAs: [REPO, NPM, `https://doi.org/${CONCEPT_DOI}`, SITE],
+  },
+  citation: uniqueReferences.map((r) => ({
+    '@type': 'CreativeWork',
+    name: r.resolvedTitle,
+    identifier: `https://doi.org/${r.id}`,
+    url: `https://doi.org/${r.id}`,
+  })),
+  sameAs: [REPO, NPM, `https://doi.org/${CONCEPT_DOI}`],
+}, null, 2)}
+</script>
 <style>
 :root { --ink:#111; --rule:#bbb; --muted:#555; --bg:#fff; --accent:#7a1f1f; }
 @media (prefers-color-scheme: dark) {
@@ -688,6 +833,17 @@ table.lean .stmt { font-family: "SF Mono", ui-monospace, Menlo, monospace; }
 table.lean .where { color: var(--muted); font-size: .88em; }
 table.lean .ax { display: block; }
 table.lean tr.sorry .stmt, table.lean tr\\.unverifiable-here .stmt { color: var(--muted); }
+section.claims { margin: 2em 0; }
+ol.claimlist { padding-left: 1.3em; }
+ol.claimlist li { margin: .9em 0; }
+ol.claimlist strong { display: block; }
+.standing { font-size: .84em; color: var(--muted); margin-top: .25em; }
+.tag { display: inline-block; border: 1px solid var(--rule); border-radius: 3px; padding: 0 .35em; margin-right: .4em; font-size: .92em; }
+ol.refs { font-size: .86em; }
+ol.refs li { margin: .45em 0; }
+dl.where dt { font-weight: 600; margin-top: .5em; }
+dl.where dd { margin: 0 0 .2em 1.2em; }
+.muted { color: var(--muted); }
 table.priorart { font-size: .76em; table-layout: fixed; }
 table.priorart td { vertical-align: top; word-break: break-word; }
 table.priorart td:first-child { width: 11em; }
@@ -812,6 +968,20 @@ ${leanStatements.map((t) => `\\item \\texttt{${texEscape(t.name)}} (${texEscape(
  + `\\textbf{${texEscape(STATUS_WORD[t.status] ?? t.status)}}`
  + (t.axioms === undefined ? '' : t.axioms.length ? `, resting on ${t.axioms.map((a) => `\\texttt{${texEscape(a)}}`).join(', ')}` : ', resting on no axioms')).join('\n')}
 \\end{itemize}
+
+\\section*{What this work claims}
+\\begin{enumerate}\\small
+${paEntries.map(([id, c]) => `\\item \\textbf{${texEscape(c.what.replace(/\s+/g, ' ').trim())}} --- ${texEscape(c.priorArt?.status ?? '')}.`).join('\n')}
+\\end{enumerate}
+\\noindent\\textbf{None of these is claimed to be novel.} Novelty is a universal negative and no finite search decides it.
+What is decided is priority: a dated deposit at \\texttt{doi:${CONCEPT_DOI}}, which defeats a later claim of invention.
+
+\\section*{References}
+\\begin{enumerate}\\small
+${uniqueReferences.map((r) => `\\item ${texEscape(r.resolvedTitle)}. \\texttt{doi:${texEscape(r.id)}}`).join('\n')}
+\\end{enumerate}
+\\noindent Archive: \\texttt{doi:${CONCEPT_DOI}}. Source: \\texttt{${texEscape(REPO)}}.
+Package: \\texttt{${texEscape(NPM)}}. Author: ${texEscape(AUTHOR)}, \\texttt{${texEscape(ORCID)}}.
 
 \\section*{Reproduction}
 \\begin{verbatim}

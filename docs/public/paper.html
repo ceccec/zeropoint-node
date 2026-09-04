@@ -319,7 +319,7 @@ hue are one integer read in two units; ratios are carried as pairs of integers
 rather than decimals, and the two places where binary floating point departs
 from the exact value are stated rather than rounded away. 33 of
 33 theorems carry a predicate that runs and holds, and
-55 of 79 statements in the Lean files are
+59 of 83 statements in the Lean files are
 accepted by the Lean kernel &mdash; the rest are written down and not proved,
 and say so.</p>
 
@@ -960,14 +960,14 @@ one, since a shortened title is a transcription.</p>
 
 <section class="appendix">
 <h2>Appendix H&ensp;Every Lean statement</h2>
-<p>All 79 statements in the <code>lean/</code> sources, as
+<p>All 83 statements in the <code>lean/</code> sources, as
 they are written there. <strong>Proven</strong> means three things together: the
 kernel accepted the file, the proof contains no <code>sorry</code>, and
 <code>#print axioms</code> reports a dependency set within
 <code>{propext, Quot.sound}</code>. The first two alone are not enough — a proof
 can invoke a lemma closed with <code>sorry</code> and inherit the vacuity with
 the word appearing nowhere near it.</p>
-<p>55 are proven on that reading. The rest are statements
+<p>59 are proven on that reading. The rest are statements
 rather than theorems, and are listed here so the difference is legible rather
 than summarised away.</p>
 <table class="lean">
@@ -1027,6 +1027,10 @@ than summarised away.</p>
 <tr class="proven"><td><code>four_triples_are_closed_under_the_mirror</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">triples.filter closedUnderMirror = [[1, 5, 9], [2, 5, 8], [3, 5, 7], [4, 5, 6]]</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
 <tr class="proven"><td><code>no_triple_is_closed_under_both_maps</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">triples.filter (fun t =&gt; closedUnderDoubling t &amp;&amp; closedUnderMirror t) = []</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
 <tr class="proven"><td><code>the_digit_root_nine_sum_does_not_single_out_the_axis</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">(triples.filter (fun t =&gt; dr (t.foldl (· + ·) 0) == 9)).length = 10</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>the_triangles_are_the_residues_mod_three</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">nonzero.filter (fun d =&gt; d % 3 == 1) = triangleOne ∧ nonzero.filter (fun d =&gt; d % 3 == 2) = triangleTwo ∧ nonzero.filter (fun d =&gt; d % 3 == 0) = axis</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>the_mirror_swaps_the_first_triangle_with_the_axis</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">triangleOne.map tv = [9, 6, 3] ∧ axis.map tv = [7, 4, 1]</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>the_mirror_fixes_the_middle_triangle_setwise</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">triangleTwo.all (fun d =&gt; triangleTwo.contains (tv d)) = true</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>the_three_triangles_partition_the_nonzero_digits</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">triangleOne.length + triangleTwo.length + axis.length = 9 ∧ nonzero.all (fun d =&gt; triangleOne.contains d || triangleTwo.contains d || axis.contains d) = true</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
 <tr class="unverifiable-here"><td><code>hadamard_squared</code><br><span class="where">Quantum.lean</span></td><td class="stmt">hadamard * hadamard = 1</td><td>needs a library this repository cannot build here</td></tr>
 <tr class="sorry"><td><code>hadamard_unitary</code><br><span class="where">Quantum.lean</span></td><td class="stmt">IsUnitary hadamard</td><td>written down, closed with sorry</td></tr>
 <tr class="unverifiable-here"><td><code>pauliX_unitary</code><br><span class="where">Quantum.lean</span></td><td class="stmt">IsUnitary pauliX</td><td>needs a library this repository cannot build here</td></tr>
@@ -1107,7 +1111,7 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>ebb370fb09caf510</code> over
+<p class="receipt">Generated from source. Model receipt <code>9cca6a01f7f5bda6</code> over
 18 equations, 33 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>

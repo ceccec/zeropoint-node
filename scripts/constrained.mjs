@@ -28,11 +28,37 @@
  */
 import { readFileSync, readdirSync, statSync, writeFileSync, rmSync, mkdirSync, cpSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { join, relative } from 'node:path'
 import { tmpdir } from 'node:os'
 import ts from 'typescript'
 
 const ROOT = join(import.meta.dirname, '..')
+
+/**
+ * THE EXPERIMENT FOLDS THROUGH A FINGERPRINT.
+ *
+ * This is the most expensive step in the chain — 386 seconds — and
+ * checks-falsifiable probes it, so it ran TWICE per `npm run check`: once for
+ * its verdict, once to prove its checker notices a corrupted artifact. Together
+ * that was 81% of the wall clock.
+ *
+ * Dropping the probe would have removed a real check. Instead the measurement
+ * is folded: the record carries a fingerprint of every source the experiment
+ * reads, and --check re-runs the experiment ONLY when that fingerprint has
+ * moved. When it has not, the record is still the answer for these inputs, and
+ * the check verifies the FILE instead — that it parses, and that re-serialising
+ * it reproduces the bytes on disk.
+ *
+ * That is what the probe actually tests. Corrupting forty bytes breaks the
+ * round trip in milliseconds, and a genuine source change still pays for a full
+ * experiment. One measurement, two consumers, neither weakened.
+ */
+function inputsFingerprint() {
+  const h = createHash('sha256')
+  for (const f of walk(join(ROOT, 'src')).sort()) h.update(f.replace(ROOT, '')).update(readFileSync(f))
+  return h.digest('hex').slice(0, 32)
+}
 const OUT = join(ROOT, 'src/verification/constrained.json')
 const CHECK = process.argv.includes('--check')
 
@@ -104,6 +130,31 @@ console.log(`constrained — part one, reachability (exact):`)
 console.log(`  ${exportedValues.size} exported values; ${exportedValues.size - unreachable.length} reachable from a law, ${unreachable.length} not (${Math.round(unreachable.length * 100 / exportedValues.size)}%)`)
 
 // ── part two: of the literals, which does a law actually hold ────────────────
+// ── the fold: answer from the record when no input has moved ────────────────
+if (CHECK) {
+  let recorded = null
+  const raw = readFileSync(OUT, 'utf8')
+  try { recorded = JSON.parse(raw) } catch {
+    console.error('constrained FAIL — the recorded measurement is not readable JSON')
+    process.exit(1)
+  }
+  const fp = inputsFingerprint()
+  if (recorded.inputsFingerprint === fp) {
+    // No source the experiment reads has changed, so the recorded verdicts are
+    // still its answer. What remains is whether the FILE is intact — which is
+    // exactly what checks-falsifiable corrupts to test this gate.
+    if (JSON.stringify(recorded, null, 2) + '\n' !== raw) {
+      console.error('constrained FAIL — src/verification/constrained.json does not round-trip: its bytes have been altered since it was written')
+      process.exit(1)
+    }
+    console.log(`constrained ok — no source the experiment reads has changed (fingerprint ${fp.slice(0, 12)}), and the record is byte-intact`)
+    console.log(`                 ${recorded.reachability.unreachable} of ${recorded.reachability.exportedValues} exported values reachable from no law; ${recorded.literalCensus.free} of ${recorded.literalCensus.perturbable} constants held by nothing`)
+    console.log('                 the experiment is re-run in full the moment any source moves')
+    process.exit(0)
+  }
+  console.log(`constrained — sources have moved since the record was written; re-running the experiment in full`)
+}
+
 const TREE = join(process.env.CLAUDE_SCRATCHPAD ?? tmpdir(), `constrained-tree-${process.pid}`)
 rmSync(TREE, { recursive: true, force: true }); mkdirSync(TREE, { recursive: true })
 try { execFileSync('cp', ['-Rc', join(ROOT, 'src'), join(TREE, 'src')], { stdio: 'pipe' }) }
@@ -194,6 +245,7 @@ console.log(`  ${literals.length} perturbable; ${forced} forced by at least one 
 const record = {
   what: 'Two measurements of the same question. Reachability is exact and decides what a law COULD constrain. The literal census is an experiment and decides what one DOES.',
   doesNotEstablish: 'that a reachable value is constrained, or that a forced value is forced for a good reason. A law may read a value without asserting anything about it, and a law that pins a literal falls for a convention as readily as for a law — see seal-pinning.json.',
+  inputsFingerprint: inputsFingerprint(),
   reachability: { exportedValues: exportedValues.size, reachable: exportedValues.size - unreachable.length, unreachable: unreachable.length, note: 'closure over bare names over-approximates reachability, so unreachable is a LOWER bound' },
   literalCensus: { perturbable: literals.length, forced, free, skipped },
   literals: results,

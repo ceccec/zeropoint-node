@@ -169,9 +169,9 @@
     }
   ],
   "formalResults": {
-    "statements": 79,
-    "acceptedByTheKernel": 55,
-    "restingOnNoAxiomsAtAll": 47,
+    "statements": 83,
+    "acceptedByTheKernel": 59,
+    "restingOnNoAxiomsAtAll": 51,
     "declaredAssumptions": [
       "lwe_hardness",
       "no_prior_art_is_undecidable",
@@ -230,8 +230,8 @@
     }
   ],
   "howMuchAnyLawHolds": {
-    "exportedValues": 1751,
-    "reachableFromNoLaw": 1411,
+    "exportedValues": 1753,
+    "reachableFromNoLaw": 1413,
     "note": "closure over bare names over-approximates reachability, so unreachable is a LOWER bound",
     "constantsForced": 8,
     "constantsHeldByNothing": 49
@@ -240,6 +240,6 @@
     "novelty": "NOT CLAIMED. Novelty is a universal negative that no finite search decides; the ledger has no status permitting it. A dated deposit establishes PRIORITY, which is the defensible claim.",
     "openProblems": "NONE CLAIMED. No contribution names a Millennium Problem, a prize question, or a resolved conjecture. An application asserting one would state something this source denies.",
     "physicalExperiment": "NO PHYSICAL EXPERIMENT HAS BEEN RUN. No coil was built, no field was measured, no resonance was observed, and nothing in this repository touches an instrument. Every condition here is about arithmetic and about code that checks arithmetic. The empirical claim is not made.",
-    "constraint": "1411 of 1751 exported values are reachable from no law at all — a floor, not a total."
+    "constraint": "1413 of 1753 exported values are reachable from no law at all — a floor, not a total."
   }
 }

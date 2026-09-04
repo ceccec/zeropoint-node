@@ -16,8 +16,8 @@ This paper sets out the arithmetic that \texttt{zeropoint-node} implements and t
 predicates that decide it. The digit space is partitioned by a doubling map into a
 six-element orbit and a three-element axis; frequency and hue are one integer read in
 two units; ratios are carried as pairs of integers rather than decimals. 33 of
-33 theorems carry a predicate that runs and holds, and 55 of
-79 statements in the Lean files are accepted by the Lean kernel.
+33 theorems carry a predicate that runs and holds, and 59 of
+83 statements in the Lean files are accepted by the Lean kernel.
 3 claims are recorded as axioms because no finite computation decides them.
 \textbf{How much of the package those predicates hold:} 1413 of
 1753 exported values are reachable from no law at all (a floor, not a total);
@@ -146,9 +146,9 @@ because novelty is a universal negative that no finite search decides. It rests 
 \end{itemize}
 
 \section*{Every Lean statement}
-All 79 statements in the \texttt{lean/} sources. \emph{Proven} means the kernel accepted the file,
+All 83 statements in the \texttt{lean/} sources. \emph{Proven} means the kernel accepted the file,
 the proof contains no \texttt{sorry}, and \texttt{\#print axioms} reports a dependency set within
-$\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 55 of them meet it.
+$\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 59 of them meet it.
 \begin{itemize}\small
 \item \texttt{dr\_is\_drTS\_above\_zero} (DigitSpace.lean) --- $\forall$ n $\in$ List.range 60, n $\neq$ 0 $\to$ dr n = drTS n\\
 \textbf{proven by the kernel}, resting on no axioms
@@ -259,6 +259,14 @@ $\{$\texttt{propext}, \texttt{Quot.sound}$\}$. 55 of them meet it.
 \item \texttt{no\_triple\_is\_closed\_under\_both\_maps} (DigitSpace.lean) --- triples.filter (fun t => closedUnderDoubling t && closedUnderMirror t) = []\\
 \textbf{proven by the kernel}, resting on no axioms
 \item \texttt{the\_digit\_root\_nine\_sum\_does\_not\_single\_out\_the\_axis} (DigitSpace.lean) --- (triples.filter (fun t => dr (t.foldl ($\cdot$ + $\cdot$) 0) == 9)).length = 10\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_triangles\_are\_the\_residues\_mod\_three} (DigitSpace.lean) --- nonzero.filter (fun d => d \% 3 == 1) = triangleOne $\land$ nonzero.filter (fun d => d \% 3 == 2) = triangleTwo $\land$ nonzero.filter (fun d => d \% 3 == 0) = axis\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_mirror\_swaps\_the\_first\_triangle\_with\_the\_axis} (DigitSpace.lean) --- triangleOne.map tv = [9, 6, 3] $\land$ axis.map tv = [7, 4, 1]\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_mirror\_fixes\_the\_middle\_triangle\_setwise} (DigitSpace.lean) --- triangleTwo.all (fun d => triangleTwo.contains (tv d)) = true\\
+\textbf{proven by the kernel}, resting on no axioms
+\item \texttt{the\_three\_triangles\_partition\_the\_nonzero\_digits} (DigitSpace.lean) --- triangleOne.length + triangleTwo.length + axis.length = 9 $\land$ nonzero.all (fun d => triangleOne.contains d || triangleTwo.contains d || axis.contains d) = true\\
 \textbf{proven by the kernel}, resting on no axioms
 \item \texttt{hadamard\_squared} (Quantum.lean) --- hadamard * hadamard = 1\\
 \textbf{needs a library this repository cannot build here}

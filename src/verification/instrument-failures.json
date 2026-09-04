@@ -1,0 +1,46 @@
+{
+  "what": "Ways a measuring instrument returns a plausible wrong answer. Each entry was live in this repository on 2026-09-04, each read GREEN on its first run, and each was caught by something other than the gate that contained it.",
+  "whyRecorded": "A failing gate announces itself. A mis-scoped gate does not — it returns a number that looks like a finding. Twenty of these in one day is not carelessness; it is the shape of the work, and the shape is worth carrying forward even though none of it is enforceable.",
+  "notAGate": "This is a document, not a check. Nothing here can be decided mechanically: whether a scan is correctly scoped is a judgement, and a gate that claimed to decide it would be the twenty-first entry.",
+  "caughtBy": {
+    "aPeerAskingAQuestion": 6,
+    "aNumberBeingTooClean": 4,
+    "theRatchetNoticingAnUnrecordedShrink": 2,
+    "aFullChainRun": 2,
+    "plantingTheDefectOnPurpose": 4,
+    "theGateItself": 2
+  },
+  "shapes": [
+    { "name": "iterated the wrong object", "instance": "ran a battery over LEAN_PROOFS (12 quantum statements) believing it held SEALS (32). Everything passed, meaninglessly.", "tell": "a verdict that is uniformly positive across a population you expected to be mixed" },
+    { "name": "mutation that respects a symmetry", "instance": "swapping which stroke is positive negated every angle; the invariant 'the bearing closes at zero' survived negation. The probe MOVED and the verdict was still wrong.", "tell": "none. No control catches this. Report the negative as a lower bound." },
+    { "name": "mutation that moves nothing", "instance": "inverting every stroke preserves the POSITIONS where polarity changes.", "tell": "require each mutation to move its own probe, or the run is an error" },
+    { "name": "resource limit read as refutation", "instance": "widening a Lean domain hit maximum recursion depth; read naively that marks honest theorems load-bearing.", "tell": "'could not read it' and 'it is false' need different verdicts" },
+    { "name": "loop bound counted as an assertion", "instance": "`r < 2` in a for-header scored as a literal comparison; four seals changed verdict when loop conditions were excluded.", "tell": "machinery is not a claim" },
+    { "name": "a scanner reading its own prose", "instance": "three times. `\\btheorem` matched 'as a theorem is the whole point' and produced a theorem named `is`; once it made a 50-theorem corpus report 0 proven.", "tell": "anchor at column zero; a comment mentioning a thing is not the thing" },
+    { "name": "regex over-capture across boundaries", "instance": "introduced while fixing the above: scanning to the next declaration swept a bound out of an intervening definition.", "tell": "stop at the syntactic end, not at the next occurrence" },
+    { "name": "error sentinel counted as evidence", "instance": "a crashed measurement pushed a marker into the fallen-laws list; four constants were reported CONSTRAINED because the harness died.", "tell": "a set meaning 'evidence' populated by something meaning 'no information'" },
+    { "name": "output discarded on a noisy exit", "instance": "twice. Lean printed every axiom stanza and exited non-zero; the answer was thrown away and the corpus reported 0 proven.", "tell": "read the output before believing the exit code" },
+    { "name": "identifier substring replaced instead of the value", "instance": "`A432_FREQUENCY = 432` contains 432 twice and the first is in the NAME; the mutation renamed the export.", "tell": "replace the last occurrence, or anchor on the declaration" },
+    { "name": "first-match regex hitting a declaration", "instance": "twice in one edit: count=1 replaced `function commentsOf(text) {` instead of its call site.", "tell": "anchor after a known marker, not on the first occurrence" },
+    { "name": "a default hiding a missing import", "instance": "`allCriteria ?? []` printed '0 of 0 criteria met' when the function lived in another module. It is 6 of 7.", "tell": "a fallback that cannot be distinguished from a real zero" },
+    { "name": "ledger projection dropping the evidence", "instance": "the verdict was right and the reason absent, so pass-by-absence and pass-by-evidence looked identical.", "tell": "record what the verdict rests on, not only the verdict" },
+    { "name": "confounded control", "instance": "sampling `git status` during a run reported dirty in 848 of 848 samples — my own uncommitted edits.", "tell": "scope the control to the measured thing; assert the baseline empty first" },
+    { "name": "a hardcoded list pinned to memory", "instance": "three times: the DEFINED names in a generator, the guarded block names in the ratchet, a DOI list. Each was pinned to what its author remembered.", "tell": "read it from the source that knows" },
+    { "name": "a sweep narrower than the defect it names", "instance": "four standing sweeps read .ts and .mjs and never .lean, while the Lean prose named scripts nothing verified.", "tell": "widen only WITH an extractor for the new language, and plant a defect to prove it" },
+    { "name": "shell: a non-matching glob aborts", "instance": "zsh nomatch killed a check, so 'found none' and 'never looked' rendered identically.", "tell": "use find, not a glob, when absence is a result" },
+    { "name": "shell: unquoted variables do not word-split", "instance": "a loop over 19 names ran once over one blob and printed one result.", "tell": "read line by line" },
+    { "name": "a comment that terminates itself", "instance": "a JS block comment describing comment syntax contained the sequence that closes it.", "tell": "quoting a delimiter inside its own form" },
+    { "name": "theory before measurement", "instance": "correct arithmetic for a bottleneck (324 child processes), wrong conclusion. Timed one process first: the two gates I had exonerated were 81% of the chain.", "tell": "a count is not a cost" },
+    { "name": "asking a registry the wrong kind of question", "instance": "the Crossref Funder Registry indexes organisation NAMES; querying it with research topics returns zero, which reads as 'no funder works here'.", "tell": "an empty result from a registry that cannot answer the question" },
+    { "name": "enumerate-and-invoke over an unread surface", "instance": "a probe called all 327 quantum exports with (1), including publishToZenodo. It threw before any network call and nothing was published — luck, not care.", "tell": "never call what you have not read; use an allowlist of pure constructors" }
+  ],
+  "principles": [
+    "Pinned is not forced. A check holding the expected answer as a literal falls for a convention as readily as for a law.",
+    "The arbiter must exclude the subject. A predicate inside the thing it tests falsifies by construction and reports green, vacuously.",
+    "Err in the unflattering direction and say so. Where an instrument is blunt, choose the bound that runs against you.",
+    "An absent instrument voids; it does not verdict.",
+    "The rule is stated at the level of the item and broken at the level of the summary. Nobody is looking up.",
+    "A number that has become small is not evidence. Three of us abandoned finders today rather than tune them.",
+    "Verify the instrument against a case whose answer you already know, before you trust its report."
+  ]
+}

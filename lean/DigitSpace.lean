@@ -483,3 +483,44 @@ theorem no_triple_is_closed_under_both_maps :
     mistaken for the reason the axis is special. The closure above is. -/
 theorem the_digit_root_nine_sum_does_not_single_out_the_axis :
     (triples.filter (fun t => dr (t.foldl (· + ·) 0) == 9)).length = 10 := by decide
+
+/- ── The merkaba, moved from a predicate into the kernel ───────────────────
+
+   `merkaba_is_two_mirrored_tetrahedra` asserted in JavaScript that the residues
+   mod 3 cut 1..9 into three triangles and that reflection through the void
+   swaps two of them and fixes the third. That is exact finite arithmetic and
+   belonged here, not in a predicate.
+
+   Of the 33 seals, ten touch the digit space and nine already had a Lean
+   counterpart. This was the tenth. The other two candidates are NOT replaceable
+   and are left alone: digit_geometry_is_single_valued asserts that two
+   independently written TypeScript functions agree, which no theorem about one
+   of them can check; and every_model_inverts is thermodynamic arithmetic whose
+   tabulated values would have to enter as assumptions, trading a computed check
+   for an assumed one. -/
+
+def triangleOne : List Nat := [1, 4, 7]
+def triangleTwo : List Nat := [2, 5, 8]
+
+/-- The three triangles ARE the residue classes mod 3 — not a labelling, a
+    consequence. -/
+theorem the_triangles_are_the_residues_mod_three :
+    nonzero.filter (fun d => d % 3 == 1) = triangleOne ∧
+    nonzero.filter (fun d => d % 3 == 2) = triangleTwo ∧
+    nonzero.filter (fun d => d % 3 == 0) = axis := by decide
+
+/-- The mirror carries the first triangle onto the axis and the axis back onto
+    it: a swap, not merely a map into. -/
+theorem the_mirror_swaps_the_first_triangle_with_the_axis :
+    triangleOne.map tv = [9, 6, 3] ∧ axis.map tv = [7, 4, 1] := by decide
+
+/-- And fixes the middle triangle setwise — 2 and 8 exchange, 5 is its own
+    mirror. This is the tetrahedral equator. -/
+theorem the_mirror_fixes_the_middle_triangle_setwise :
+    triangleTwo.all (fun d => triangleTwo.contains (tv d)) = true := by decide
+
+/-- Together: every non-void digit is in exactly one triangle, and the mirror
+    permutes the three by swapping two and fixing one. Nothing is left over. -/
+theorem the_three_triangles_partition_the_nonzero_digits :
+    triangleOne.length + triangleTwo.length + axis.length = 9 ∧
+    nonzero.all (fun d => triangleOne.contains d || triangleTwo.contains d || axis.contains d) = true := by decide

@@ -1,8 +1,8 @@
 {
   "toolchain": "Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
   "files": 3,
-  "theorems": 79,
-  "proven": 55,
+  "theorems": 83,
+  "proven": 59,
   "sorry": 19,
   "unverifiableHere": 5,
   "rejected": 0,
@@ -354,6 +354,30 @@
     },
     {
       "name": "the_digit_root_nine_sum_does_not_single_out_the_axis",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "the_triangles_are_the_residues_mod_three",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "the_mirror_swaps_the_first_triangle_with_the_axis",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "the_mirror_fixes_the_middle_triangle_setwise",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "the_three_triangles_partition_the_nonzero_digits",
       "file": "DigitSpace.lean",
       "status": "proven",
       "axioms": []

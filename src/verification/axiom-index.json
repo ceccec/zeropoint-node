@@ -65,9 +65,9 @@
     }
   ],
   "totals": {
-    "kernelProven": 55,
-    "withMeasuredAxioms": 55,
-    "restingOnNothingAtAll": 47,
+    "kernelProven": 59,
+    "withMeasuredAxioms": 59,
+    "restingOnNothingAtAll": 51,
     "restingOnKernelAxiomsOnly": 8
   },
   "provenForm": "A theorem counts as proven when the kernel accepted its file, its body contains no sorry, and #print axioms reports a dependency set inside {propext, Quot.sound}. The dependency set is recorded per theorem in lean/ledger.json as the evidence for the word.",

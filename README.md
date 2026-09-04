@@ -22,8 +22,8 @@ gate that re-performs the measurement and fails if this block disagrees with it.
 | exported literal constants held by nothing | **49 of 57** |
 | constants forced by at least one law | 8 |
 | seal predicates that are *pinned* rather than forced | 9 of 33 |
-| Lean statements the kernel accepts | 55 of 79 |
-| of those, resting on **no axioms at all** | 47 |
+| Lean statements the kernel accepts | 59 of 83 |
+| of those, resting on **no axioms at all** | 51 |
 
 The first row is the one that matters and it is a **floor**: the reachability
 closure over-approximates, so at least that many are outside everything this
@@ -59,7 +59,7 @@ adjudicated by a decision procedure outside this repository, a gate that fails,
 and figures that recompute rather than being typed.
 
 **On Lean.** Those 32 are *computational seals*, not Lean proofs.
-The Lean files hold 79 statements. **55 are accepted by the Lean kernel** and 24 are not:
+The Lean files hold 83 statements. **59 are accepted by the Lean kernel** and 24 are not:
 19 are closed with `sorry`, 5 import Mathlib and cannot be built here.
 `npm run lean:check` fails if the ledger and the files disagree. `npm run coverage:audit`
 reports that 149 of 1295 exported functions have never been called by anything —
@@ -726,7 +726,7 @@ Rouschev, T. (2026). *ZeroPoint Node* (Version 1.5.1) [Computer software]. https
 
 | | |
 | --- | --- |
-| proof kernel | Lean 4 — 55 of 79 statements accepted, dependency sets recorded per theorem |
+| proof kernel | Lean 4 — 59 of 83 statements accepted, dependency sets recorded per theorem |
 | reference resolution | Crossref REST API — 19 DOIs, each re-resolved to the title recorded beside it |
 | archive | Zenodo — concept DOI [10.5281/zenodo.22178675](https://doi.org/10.5281/zenodo.22178675) |
 | licence | CC-BY-NC-ND-4.0 |

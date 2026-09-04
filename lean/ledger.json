@@ -10,97 +10,132 @@
     {
       "name": "dr_is_drTS_above_zero",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "dr_and_drTS_differ_at_zero",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "dr_idempotent",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "dr_invariant_under_nine",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "doubling_stays_in_orbit",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
     },
     {
       "name": "orbit_closes_after_six",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "orbit_never_repeats_a_step",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "through_void_is_an_involution",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "through_void_fixes_only_zero_and_five",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "orbit_and_axis_are_disjoint",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
     },
     {
       "name": "orbit_and_axis_and_void_exhaust_the_digits",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
     },
     {
       "name": "agl_has_order_54",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "doubling_and_mirror_are_affine",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": [
+        "propext",
+        "Quot.sound"
+      ]
     },
     {
       "name": "mirror_table_is_through_void",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": [
+        "propext"
+      ]
     },
     {
       "name": "mirror_is_affine_only_off_the_void",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": [
+        "propext"
+      ]
     },
     {
       "name": "generators_apart_give_twelve",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "whole_axis_and_root_nine_is_exactly_thirty_six",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "four_three_two_is_a_multiple_of_thirty_six_but_not_the_only_one",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "base_frequency_has_digital_root_nine",
       "file": "DigitSpace.lean",
-      "status": "proven"
+      "status": "proven",
+      "axioms": []
     },
     {
       "name": "hadamard_squared",

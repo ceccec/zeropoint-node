@@ -35,7 +35,7 @@
  *   npm run lean:check    the witness
  *   npm run lean:ledger   rewrite lean/ledger.json from the files
  */
-import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs'
+import { readFileSync, writeFileSync, readdirSync, existsSync, rmSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { join, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -61,6 +61,27 @@ function theoremsOf(src) {
   return out
 }
 
+/**
+ * WHAT A PROOF IS ALLOWED TO REST ON.
+ *
+ * "No `sorry` in the body" is the weak reading of proven, and it was the only
+ * one this checked. A theorem can invoke a lemma that was closed with `sorry`
+ * and inherit the vacuity without the word appearing anywhere near it — the
+ * kernel accepts the file, the body is clean, and nothing is established. The
+ * strong reading asks the kernel what the proof term actually depends on.
+ *
+ * `propext` and `Quot.sound` arrive through list-membership decidability and
+ * are part of Lean's trusted core. `Classical.choice` is deliberately NOT here:
+ * it is a legitimate axiom and nothing in this repository uses it, so a proof
+ * that starts to would be a change worth making on purpose rather than by
+ * accident. Adding it is a decision to record, not a failure to route around.
+ *
+ * `sorryAx` can never be added. A theorem depending on it is not proven, and
+ * that is what the word means.
+ */
+const ALLOWED_AXIOMS = new Set(['propext', 'Quot.sound'])
+const axiomProblems = []
+
 const leanAvailable = (() => {
   try { execFileSync('lean', ['--version'], { stdio: 'pipe' }); return true } catch { return false }
 })()
@@ -83,15 +104,45 @@ for (const f of files) {
   } else if (selfContained && !leanAvailable) {
     detail = 'no lean on PATH; install the toolchain to verify'
   }
+  // Ask the kernel what each clean theorem rests on. One probe file per source
+  // file: the #print axioms lines are appended to a copy, so the source is
+  // never written to.
+  const axiomsOf = new Map()
+  const clean = theoremsOf(src).filter((t) => !t.sorry)
+  if (kernel === 'accepted' && clean.length) {
+    const probe = join(LEAN_DIR, `.axioms-probe-${process.pid}.lean`)
+    try {
+      writeFileSync(probe, `${src}\n\n${clean.map((t) => `#print axioms ${t.name}`).join('\n')}\n`)
+      const said = execFileSync('lean', [probe], { encoding: 'utf8', timeout: 180_000 })
+      for (const line of said.split('\n')) {
+        const none = /^'([^']+)' does not depend on any axioms/.exec(line)
+        if (none) { axiomsOf.set(none[1], []); continue }
+        const some = /^'([^']+)' depends on axioms: \[([^\]]*)\]/.exec(line)
+        if (some) axiomsOf.set(some[1], some[2].split(',').map((a) => a.trim()).filter(Boolean))
+      }
+    } catch (e) {
+      axiomProblems.push(`${f}: the kernel accepted the file but #print axioms could not be run, so no theorem in it can be called proven — ${String(e.stdout ?? e.message).slice(0, 120)}`)
+    } finally { rmSync(probe, { force: true }) }
+  }
+
   for (const t of theoremsOf(src)) {
+    const axioms = axiomsOf.get(t.name)
+    // A clean body in an accepted file is not enough: the proof must also rest
+    // on nothing outside the declared set. An unanswered probe is not a pass.
+    const restsWell = !t.sorry && kernel === 'accepted' && axioms !== undefined && axioms.every((a) => ALLOWED_AXIOMS.has(a))
     theorems.push({
       name: t.name,
       file: f,
+      ...(axioms === undefined ? {} : { axioms }),
       // A theorem is PROVEN only when the kernel accepted the file AND the
       // proof contains no sorry. Either alone is not enough, and treating them
       // as interchangeable is how a file full of sorries came to be headed
       // "All theorems are formally proven".
-      status: t.sorry ? 'sorry' : kernel === 'accepted' ? 'proven' : kernel === 'rejected' ? 'rejected' : 'unverifiable-here',
+      status: t.sorry ? 'sorry'
+        : kernel === 'rejected' ? 'rejected'
+        : kernel !== 'accepted' ? 'unverifiable-here'
+        : restsWell ? 'proven'
+        : 'rests-on-more',
       detail,
     })
   }
@@ -114,7 +165,7 @@ const declaredIn = (src) => (/theorem\s+([A-Za-z0-9_']+)/.exec(String(src)) ?? [
 const stated = Object.entries(v.LEAN_PROOFS).map(([key, src]) => ({ key, name: declaredIn(src) }))
 const known = new Map(theorems.map((t) => [t.name, t]))
 
-const problems = []
+const problems = [...axiomProblems]
 for (const { key, name } of stated) {
   if (!name) { problems.push(`LEAN_PROOFS.${key} holds a string that declares no theorem`); continue }
   const t = known.get(name)
@@ -143,7 +194,11 @@ const ledger = {
   sorry: byStatus('sorry').length,
   unverifiableHere: byStatus('unverifiable-here').length,
   rejected: byStatus('rejected').length,
-  entries: theorems.map(({ name, file, status }) => ({ name, file, status })),
+  // The axiom dependencies are the EVIDENCE for the word "proven", so they are
+  // recorded. Without them the ledger says a theorem is proven and gives a
+  // reader no way to see what that rests on — which is the shape of claim this
+  // whole file exists to refuse.
+  entries: theorems.map(({ name, file, status, axioms }) => ({ name, file, status, ...(axioms === undefined ? {} : { axioms }) })),
 }
 
 if (WRITE) {

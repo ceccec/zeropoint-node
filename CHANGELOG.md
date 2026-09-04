@@ -64,6 +64,35 @@ sessions commit this repository automatically, so that window was a real
 exposure. All three now mutate a copy-on-write clone, verified by sampling
 `git status` throughout a live run rather than comparing before with after.
 
+**The renderer is the caller's.** `a432.vbm.animation.ts` imported `three`, a
+devDependency, from a file that ships — so a consumer reaching it got source
+importing something they were never given. Porting the engine was never the
+option; porting the dependency out of the *surface* was. The module declares the
+eleven constructors it calls and takes them as a parameter, and
+`three:conformance` checks the declaration against the real namespace.
+`shipped:imports` is the general form: every bare import in shipped source must
+be a package a consumer actually receives. It found eight, not the two known —
+`@hotwired/stimulus` in six more files — and both are now optional peers, which
+changes nothing a consumer installs and stops the silence.
+
+**Claims where a reader lands, and metadata that says what the page is.** Ten
+contributions in bold straight after the abstract, each with its prior-art
+standing and the DOIs of related work, assembled from the ledger. Ten
+`citation_*` tags, seven Dublin Core, a JSON-LD `ScholarlyArticle` carrying the
+author's ORCID and all fifteen resolved citations, and thirty-five outbound DOI
+links that each resolved to the title printed beside them. **None of it claims
+novelty**: novelty is a universal negative no finite search decides. A dated
+deposit decides priority, which is the defensible claim and the one made.
+
+**An absent toolchain voids rather than verdicts.** CI has no Lean, so
+`lean:check` announced "0 proven, 43 unchecked" — a corpus-level finding made
+out of a missing binary — and then failed against a ledger written where the
+toolchain is. Its printed remedy would have overwritten the evidence with zeros.
+
+Kernel-proven theorems 19 to 26, of 50, including the mirror as a two-sided coin
+— every axis digit pairs with an orbit digit, `[0, 5]` are the only fixed points,
+and 2 + 4·2 = 10 leaves nothing over.
+
 Nothing here changes published behaviour: 33 seals, 35 mutations, and the
 criteria are unchanged in what they decide.
 

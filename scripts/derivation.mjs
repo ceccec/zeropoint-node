@@ -31,13 +31,26 @@
  * is evaluated before and after, and a mutation that does not move it is an
  * ERROR, never a result.
  *
+ * IT DOES NOT MUTATE THE WORKING TREE. An earlier version corrupted files in
+ * place and restored them, hash-verified. That is safe alone and unsafe here:
+ * other sessions commit this repository automatically, the experiment holds a
+ * mutation for as long as a full seal battery takes, and the corruption is
+ * deliberately subtle — `* 36` becoming `* 40` would survive review. A window
+ * of minutes across fourteen measurements is an invitation.
+ *
+ * So the tree is CLONED into the scratchpad first and every mutation happens
+ * there. On APFS `cp -Rc` is copy-on-write: 92 MB in 0.17s and no extra disk.
+ * The checked-out files are never written to, so there is no window at all
+ * rather than a small one.
+ *
  *   npm run derivation        rewrite src/verification/derivation.json
  *   npm run derivation:check  re-run the experiment and fail if a flag moved
  */
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync, rmSync, mkdirSync, cpSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { join } from 'node:path'
+import { tmpdir } from 'node:os'
 
 const ROOT = join(import.meta.dirname, '..')
 const CHECK = process.argv.includes('--check')
@@ -90,10 +103,10 @@ const COLUMNS = [
 // cannot be re-read.
 function measure(probe) {
   const src = `
-import * as m from ${JSON.stringify(join(ROOT, 'src/0/index.ts'))}
-import * as a from ${JSON.stringify(join(ROOT, A432, 'a432.math.ts'))}
-import * as c from ${JSON.stringify(join(ROOT, A432, 'a432.cmyk.ts'))}
-import * as v from ${JSON.stringify(join(ROOT, 'src/verification/index.ts'))}
+import * as m from ${JSON.stringify(join(TREE, 'src/0/index.ts'))}
+import * as a from ${JSON.stringify(join(TREE, A432, 'a432.math.ts'))}
+import * as c from ${JSON.stringify(join(TREE, A432, 'a432.cmyk.ts'))}
+import * as v from ${JSON.stringify(join(TREE, 'src/verification/index.ts'))}
 const D = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 const fell = []
 for (const name of Object.keys(v.SEALS)) {
@@ -112,7 +125,7 @@ try { probe = JSON.stringify(${probe}) } catch (e) { probe = 'threw: ' + e.messa
 console.log(JSON.stringify({ fell, probe, seals: Object.keys(v.SEALS).length + 1 }))
 `
   const out = execFileSync(process.execPath, ['--experimental-strip-types', '--input-type=module', '--eval', src],
-    { encoding: 'utf8', cwd: ROOT, timeout: 300_000, stdio: ['ignore', 'pipe', 'pipe'] })
+    { encoding: 'utf8', cwd: TREE, timeout: 300_000, stdio: ['ignore', 'pipe', 'pipe'] })
   return JSON.parse(out.trim().split('\n').pop())
 }
 
@@ -150,6 +163,28 @@ function pins(name, baselineProbe) {
   return run.test(predicateSource(name))
 }
 
+/**
+ * A clone of the sources, outside the working tree. Every mutation lands here.
+ * `cp -Rc` asks APFS for a copy-on-write clone; where that is unsupported the
+ * fallback is a real copy, which costs disk but keeps the guarantee.
+ */
+const TREE = join(process.env.CLAUDE_SCRATCHPAD ?? tmpdir(), `derivation-tree-${process.pid}`)
+function buildTree() {
+  rmSync(TREE, { recursive: true, force: true })
+  mkdirSync(TREE, { recursive: true })
+  try {
+    execFileSync('cp', ['-Rc', join(ROOT, 'src'), join(TREE, 'src')], { stdio: 'pipe' })
+  } catch {
+    cpSync(join(ROOT, 'src'), join(TREE, 'src'), { recursive: true })
+  }
+  // package.json carries "type": "module"; without it the .ts files resolve as
+  // CommonJS and every measurement fails identically, which would look like a
+  // finding rather than a setup error.
+  cpSync(join(ROOT, 'package.json'), join(TREE, 'package.json'))
+}
+buildTree()
+process.on('exit', () => rmSync(TREE, { recursive: true, force: true }))
+
 const base = measure('D')
 if (base.fell.length) {
   console.error(`derivation FAIL — ${base.fell.length} seal(s) already fall before any mutation, so nothing can be attributed to one: ${base.fell.join(', ')}`)
@@ -158,7 +193,7 @@ if (base.fell.length) {
 
 const results = {}
 for (const [id, label, rel, probe, mutations] of COLUMNS) {
-  const path = join(ROOT, rel)
+  const path = join(TREE, rel)
   const before = readFileSync(path, 'utf8')
   const baseline = measure(probe)
   const tried = []
@@ -176,7 +211,7 @@ for (const [id, label, rel, probe, mutations] of COLUMNS) {
     } finally {
       writeFileSync(path, before)
       if (sha(readFileSync(path)) !== sha(Buffer.from(before))) {
-        console.error(`derivation FAIL — could not restore ${rel}. Restore it by hand before running anything else.`)
+        console.error(`derivation FAIL — could not restore ${rel} inside the clone at ${TREE}. The working tree was never written to, so nothing there needs fixing.`)
         process.exit(1)
       }
     }

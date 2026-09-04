@@ -26,14 +26,14 @@ function testRiemannLayer(): void {
   if (layer.problem !== 'Riemann Hypothesis') {
     throw new Error('Layer 1 problem mismatch')
   }
-  if (layer.status !== 'COMPLETE') {
+  if (layer.layerStatus !== 'COMPLETE') {
     throw new Error('Layer 1 not complete')
   }
 
   console.log(`  ✓ ${layer.name}`)
   console.log(`  ✓ Problem: ${layer.problem}`)
   console.log(`  ✓ Property: ${layer.property}`)
-  console.log(`  ✓ Status: ${layer.status}`)
+  console.log(`  ✓ Status: ${layer.layerStatus}`)
 }
 
 function testPvsNPLayer(): void {
@@ -134,13 +134,13 @@ function testPoincaréLayer(): void {
   if (layer.problem !== 'Poincaré Conjecture') {
     throw new Error('Layer 7 problem mismatch')
   }
-  if (!layer.status.includes('SOLVED')) {
+  if (!layer.layerStatus.includes('SOLVED')) {
     throw new Error('Layer 7 not solved')
   }
 
   console.log(`  ✓ ${layer.name}`)
   console.log(`  ✓ Problem: ${layer.problem}`)
-  console.log(`  ✓ Status: ${layer.status}`)
+  console.log(`  ✓ Status: ${layer.layerStatus}`)
   console.log(`  ✓ Guarantee: ${layer.guarantee}`)
 }
 

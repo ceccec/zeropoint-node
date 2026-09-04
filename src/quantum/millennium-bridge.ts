@@ -1,6 +1,20 @@
 /**
  * Millennium Bridge: 7 quantum layers NAMED AFTER 7 Millennium Prize Problems.
  *
+ * THE FIELD IS CALLED layerStatus BECAUSE THE DATA MUST SAY SO ITSELF.
+ *
+ * It was `status`, sitting beside `problem`, and a consumer reading the object
+ * — a harvester, another repository's merge, a person, a model — saw
+ * `{ problem: 'Riemann Hypothesis', status: 'COMPLETE' }` and had nothing in
+ * the data to tell them which noun the status described. The disambiguation
+ * existed only in this comment, and comments are not parsed by anything that
+ * consumes the export.
+ *
+ * That is this repository's own standing complaint — a label whose meaning
+ * lives somewhere the check cannot see — committed in the one file most able to
+ * do damage with it. The file ships. Renaming the field moves the meaning into
+ * the data, where a reader cannot miss it and a merge cannot mistake it.
+ *
  * This file is a naming scheme. It solves none of the problems it names, it
  * verifies none of them, and nothing in it is evidence about any of them.
  * How many are open is computed by `millenniumScope()` from the layers and
@@ -56,7 +70,7 @@ export interface RiemannLayer {
   readonly name: 'Quantum Simulator'
   readonly problem: 'Riemann Hypothesis'
   readonly property: 'Born rule matches prime distribution statistics'
-  readonly status: 'COMPLETE' // Simulator verifies this
+  readonly layerStatus: 'COMPLETE' // Simulator verifies this
 }
 
 export function layer1_riemannSimulator(): RiemannLayer {
@@ -64,7 +78,7 @@ export function layer1_riemannSimulator(): RiemannLayer {
     name: 'Quantum Simulator',
     problem: 'Riemann Hypothesis',
     property: 'Born rule matches prime distribution statistics',
-    status: 'COMPLETE',
+    layerStatus: 'COMPLETE',
   }
 }
 
@@ -105,7 +119,7 @@ export interface PvsNPLayer {
   readonly problem: 'P vs NP'
   readonly evidence: 'Shor: NP-complete → Quantum Polynomial'
   readonly leverage: "Grover's algorithm = universal NP solver (O(√N))"
-  readonly status: 'LEVERAGEABLE'
+  readonly layerStatus: 'LEVERAGEABLE'
 }
 
 export function layer2_pvsNPAlgorithms(): PvsNPLayer {
@@ -114,7 +128,7 @@ export function layer2_pvsNPAlgorithms(): PvsNPLayer {
     problem: 'P vs NP',
     evidence: 'Shor: NP-complete → Quantum Polynomial',
     leverage: "Grover's algorithm = universal NP solver (O(√N))",
-    status: 'LEVERAGEABLE',
+    layerStatus: 'LEVERAGEABLE',
   }
 }
 
@@ -141,7 +155,7 @@ export interface NavierStokesLayer {
   readonly mapping: 'VQE parameter flow = incompressible fluid flow'
   readonly guarantee: 'Smooth solution exists → convergence guaranteed'
   readonly implication: 'Gradient descent will find ground state'
-  readonly status: 'SOLUTION_APPLIES'
+  readonly layerStatus: 'SOLUTION_APPLIES'
 }
 
 export function layer3_navierStokesHybrid(): NavierStokesLayer {
@@ -151,7 +165,7 @@ export function layer3_navierStokesHybrid(): NavierStokesLayer {
     mapping: 'VQE parameter flow = incompressible fluid flow',
     guarantee: 'Smooth solution exists → convergence guaranteed',
     implication: 'Gradient descent will find ground state',
-    status: 'SOLUTION_APPLIES',
+    layerStatus: 'SOLUTION_APPLIES',
   }
 }
 
@@ -178,7 +192,7 @@ export interface YangMillsLayer {
   readonly correspondence: 'Logical encoding = gauge field structure'
   readonly gap: 'Minimum error weight = mass gap energy'
   readonly threshold: 'Existence of gap → threshold for fault tolerance'
-  readonly status: 'FRAMEWORK_MATCHES'
+  readonly layerStatus: 'FRAMEWORK_MATCHES'
 }
 
 export function layer4_yangMillsEC(): YangMillsLayer {
@@ -188,7 +202,7 @@ export function layer4_yangMillsEC(): YangMillsLayer {
     correspondence: 'Logical encoding = gauge field structure',
     gap: 'Minimum error weight = mass gap energy',
     threshold: 'Existence of gap → threshold for fault tolerance',
-    status: 'FRAMEWORK_MATCHES',
+    layerStatus: 'FRAMEWORK_MATCHES',
   }
 }
 
@@ -215,7 +229,7 @@ export interface HodgeLayer {
   readonly structure: 'Cohomology of quantum operations = algebraic verification'
   readonly bridge: 'Quantum representation ↔ Classical verification'
   readonly mechanism: 'Hodge decomposition gives canonical verification form'
-  readonly status: 'STRUCTURAL_ISOMORPHISM'
+  readonly layerStatus: 'STRUCTURAL_ISOMORPHISM'
 }
 
 export function layer5_hodgeVerification(): HodgeLayer {
@@ -225,7 +239,7 @@ export function layer5_hodgeVerification(): HodgeLayer {
     structure: 'Cohomology of quantum operations = algebraic verification',
     bridge: 'Quantum representation ↔ Classical verification',
     mechanism: 'Hodge decomposition gives canonical verification form',
-    status: 'STRUCTURAL_ISOMORPHISM',
+    layerStatus: 'STRUCTURAL_ISOMORPHISM',
   }
 }
 
@@ -255,7 +269,7 @@ export interface BSDLayer {
   readonly composition: 'Valid tensor products = rational points'
   readonly constraint: 'Module constraints = L-function zeros'
   readonly rank_dimension: 'Number of independent compositions'
-  readonly status: 'PARAMETER_SPACE_MAPPED'
+  readonly layerStatus: 'PARAMETER_SPACE_MAPPED'
 }
 
 export function layer6_bsdComposability(): BSDLayer {
@@ -266,7 +280,7 @@ export function layer6_bsdComposability(): BSDLayer {
     composition: 'Valid tensor products = rational points',
     constraint: 'Module constraints = L-function zeros',
     rank_dimension: 'Number of independent compositions',
-    status: 'PARAMETER_SPACE_MAPPED',
+    layerStatus: 'PARAMETER_SPACE_MAPPED',
   }
 }
 
@@ -290,7 +304,7 @@ export function layer6_bsdComposability(): BSDLayer {
 export interface PoincaréLayer {
   readonly name: 'Self-Healing'
   readonly problem: 'Poincaré Conjecture'
-  readonly status: 'SOLVED ✓ (Perelman 2003)'
+  readonly layerStatus: 'SOLVED ✓ (Perelman 2003)'
   readonly application: 'Error states deform to pristine state via Ricci flow'
   readonly healing_mechanism: 'Topological restoration to canonical form'
   readonly guarantee: 'Any error-corrupted state returns to valid manifold'
@@ -300,7 +314,7 @@ export function layer7_poincareSelfHealing(): PoincaréLayer {
   return {
     name: 'Self-Healing',
     problem: 'Poincaré Conjecture',
-    status: 'SOLVED ✓ (Perelman 2003)',
+    layerStatus: 'SOLVED ✓ (Perelman 2003)',
     application: 'Error states deform to pristine state via Ricci flow',
     healing_mechanism: 'Topological restoration to canonical form',
     guarantee: 'Any error-corrupted state returns to valid manifold',

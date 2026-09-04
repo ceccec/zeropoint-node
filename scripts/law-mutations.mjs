@@ -26,18 +26,43 @@
  *
  *   npm run mutations:check
  */
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync, rmSync, mkdirSync, cpSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { tmpdir } from 'node:os'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const A432 = join(ROOT, 'src/0/3/6/9/1/2/4/8/7/5/1')
+
+/**
+ * THE MUTATIONS DO NOT TOUCH THE WORKING TREE.
+ *
+ * This corrupted checked-out files and restored them, hash-verified, aborting
+ * if a restore failed. Safe when nothing else is running — and other sessions
+ * commit this repository automatically. Thirty-five mutations, each held for as
+ * long as a suite takes, is a long time to be holding a deliberately subtle
+ * corruption in tracked files; `const sign = 1` reads as ordinary code.
+ *
+ * So the sources are cloned once and every mutation lands in the clone. On APFS
+ * `cp -Rc` is copy-on-write, so this costs no disk and a fraction of a second.
+ * The suites run out of the clone too, which is what makes it work at all: they
+ * import only relative paths and node builtins, so a clone of src/ plus
+ * package.json — which carries "type": "module" — is a complete tree.
+ */
+const TREE = join(process.env.CLAUDE_SCRATCHPAD ?? tmpdir(), `law-mutations-${process.pid}`)
+rmSync(TREE, { recursive: true, force: true })
+mkdirSync(TREE, { recursive: true })
+try { execFileSync('cp', ['-Rc', join(ROOT, 'src'), join(TREE, 'src')], { stdio: 'pipe' }) }
+catch { cpSync(join(ROOT, 'src'), join(TREE, 'src'), { recursive: true }) }
+cpSync(join(ROOT, 'package.json'), join(TREE, 'package.json'))
+process.on('exit', () => rmSync(TREE, { recursive: true, force: true }))
+
+const A432 = join(TREE, 'src/0/3/6/9/1/2/4/8/7/5/1')
 // A module or suite named with a slash is resolved from src/ instead of from
 // the a432 directory, so this harness can reach src/quantum too. The published
 // surface lives in both places and both must be falsifiable.
-const at = (name) => (name.includes('/') ? join(ROOT, 'src', name) : join(A432, name))
+const at = (name) => (name.includes('/') ? join(TREE, 'src', name) : join(A432, name))
 const sha = (b) => createHash('sha256').update(b).digest('hex')
 
 /** [module, suite, anchor, replacement, what the mutation breaks] */
@@ -203,7 +228,7 @@ for (const [mod, suite, from, to, what] of MUTATIONS) {
   try { execFileSync('node', ['--experimental-strip-types', at(suite)], { stdio: 'pipe' }) } catch { failed = true }
   writeFileSync(path, before)
   if (sha(readFileSync(path, 'utf8')) !== hash) {
-    console.error(`law-mutations FATAL — ${mod} was not restored`)
+    console.error(`law-mutations FATAL — ${mod} was not restored inside the clone at ${TREE}. The working tree was never written to.`)
     process.exit(1)
   }
   if (failed) caught += 1

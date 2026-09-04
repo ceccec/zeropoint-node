@@ -16,11 +16,12 @@
  * start on an artifact it cannot read, because the failure mode of a tool that
  * corrupts files is worse than the gap it closes.
  */
-import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { readFileSync, writeFileSync, existsSync, rmSync, mkdirSync, cpSync, readdirSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { tmpdir } from 'node:os'
 import { pipelineFiles } from './lib/pipeline.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -115,12 +116,37 @@ if (undeclared.length) {
   process.exit(1)
 }
 
+/**
+ * THE CORRUPTION HAPPENS IN A CLONE, NOT IN THE WORKING TREE.
+ *
+ * This wrote 40 bytes of 'X' into checked-out artifacts — README.md among them
+ * — and restored them, hash-verified. Other sessions commit this repository
+ * automatically, so that window is a real exposure, and I widened it myself by
+ * adding derivation:check to the table above: probing it holds a corrupted
+ * artifact for as long as a full derivation run, which is minutes rather than
+ * the seconds every other entry costs.
+ *
+ * The checker has to READ the corrupted artifact, so the corruption cannot move
+ * somewhere else — the whole repository moves instead. `cp -Rc` clones it
+ * copy-on-write in about five seconds and no disk, .git excluded because no
+ * checker here needs it, and every probe runs with the clone as its cwd.
+ */
+const TREE = join(process.env.CLAUDE_SCRATCHPAD ?? tmpdir(), `falsifiable-tree-${process.pid}`)
+rmSync(TREE, { recursive: true, force: true })
+mkdirSync(TREE, { recursive: true })
+for (const entry of readdirSync(ROOT)) {
+  if (entry === '.git') continue
+  try { execFileSync('cp', ['-Rc', join(ROOT, entry), join(TREE, entry)], { stdio: 'pipe' }) }
+  catch { cpSync(join(ROOT, entry), join(TREE, entry), { recursive: true }) }
+}
+process.on('exit', () => rmSync(TREE, { recursive: true, force: true }))
+
 const problems = []
 let probed = 0
 
 for (const [script, entry] of Object.entries(GUARDS)) {
   const [rel, block] = Array.isArray(entry) ? entry : [entry, null]
-  const path = join(ROOT, rel)
+  const path = join(TREE, rel)
   if (!existsSync(path)) {
     problems.push(`${script}: artifact ${rel} does not exist`)
     continue
@@ -146,7 +172,7 @@ for (const [script, entry] of Object.entries(GUARDS)) {
   try {
     writeFileSync(path, bytes)
     try {
-      execFileSync('npm', ['run', script, '--silent'], { cwd: ROOT, stdio: 'pipe' })
+      execFileSync('npm', ['run', script, '--silent'], { cwd: TREE, stdio: 'pipe' })
     } catch {
       noticed = true // non-zero exit is the checker doing its job
     }
@@ -154,7 +180,7 @@ for (const [script, entry] of Object.entries(GUARDS)) {
     writeFileSync(path, original)
     const after = sha(readFileSync(path))
     if (after !== before) {
-      console.error(`checks-falsifiable ABORT — failed to restore ${rel}`)
+      console.error(`checks-falsifiable ABORT — failed to restore ${rel} inside the clone at ${TREE}. The working tree was never written to.`)
       console.error(`  expected ${before}`)
       console.error(`  found    ${after}`)
       process.exit(2)

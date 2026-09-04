@@ -133,3 +133,8 @@ docs/.vitepress/cache
 scratch/
 untested-exports.txt
 .readme-examples/
+
+# Probe files written by lean:agrees and lean:bounds. They are removed in a
+# finally block, but an untracked file is stageable by any concurrent `git add
+# -A`, and a half-written probe is not something to commit.
+lean/.*-probe.lean

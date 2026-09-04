@@ -71,7 +71,7 @@
     import { createVBMAnimation, VBM_ANIMATION_CONSTANTS, VBM_ANIMATION_DOC } from './a432.vbm.animation.ts';
     
     // Create the animation controller
-    let vbmController = createVBMAnimation();
+    let vbmController = createVBMAnimation(THREE);
     
     // Get the renderer and append to DOM
     const renderer = vbmController.getRenderer();
@@ -98,7 +98,7 @@
     resetBtn.addEventListener('click', () => {
       vbmController.stop();
       // Recreate the controller for a fresh start
-      const newController = createVBMAnimation();
+      const newController = createVBMAnimation(THREE);
       document.body.replaceChild(newController.getRenderer().domElement, renderer.domElement);
       vbmController = newController;
       console.log('VBM Animation reset');

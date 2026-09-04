@@ -1,8 +1,8 @@
 {
   "toolchain": "Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)",
   "files": 3,
-  "theorems": 48,
-  "proven": 24,
+  "theorems": 50,
+  "proven": 26,
   "sorry": 19,
   "unverifiableHere": 5,
   "rejected": 0,
@@ -166,6 +166,18 @@
     },
     {
       "name": "the_four_pairs_are_one_nine_two_eight_three_seven_four_six",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "four_three_two_has_twenty_divisors_its_neighbours_eighteen",
+      "file": "DigitSpace.lean",
+      "status": "proven",
+      "axioms": []
+    },
+    {
+      "name": "all_three_are_multiples_of_thirty_six",
       "file": "DigitSpace.lean",
       "status": "proven",
       "axioms": []

@@ -15,7 +15,62 @@ import { PI, cos, sin } from './a432.algebra.ts'
 // under Node, so every function below it threw the moment anything outside a
 // browser called it — which is how a432.yin.yang's startYinYang was found.
 import { raf } from './a432.raf.ts'
-import * as THREE from 'three';
+
+/**
+ * THE RENDERER IS THE CALLER'S, NOT THIS PACKAGE'S.
+ *
+ * This module used to import the three namespace. three was a devDependency,
+ * this file ships in the tarball, and the package declares no runtime
+ * dependencies — so a consumer reaching this module got source importing
+ * something they were never given. Nothing exposed it through `exports`, so it
+ * was unreachable rather than broken, which is a reason to fix it quietly
+ * rather than a reason not to.
+ *
+ * Porting the engine was never the option: the surface below is a WebGL
+ * renderer, and reimplementing one to lower a dependency count would be
+ * vocabulary, not mechanism. What IS portable is the dependency out of the
+ * SURFACE. The geometry here is computed from the vortex arithmetic and owes
+ * the engine nothing; only the drawing does. So the surface is DECLARED and
+ * passed in, the engine stays the caller's choice, and this package needs
+ * nothing.
+ *
+ * Structural types, so any renderer answering this shape works — the real one
+ * does, unmodified.
+ */
+export interface ThreeVector3 { readonly x: number; readonly y: number; readonly z: number }
+export interface ThreeColor {
+  /** returns the colour itself, as the real one does, so calls chain */
+  setHSL(h: number, s: number, l: number): ThreeColor
+  getHSL(target: { h: number; s: number; l: number }): { h: number; s: number; l: number }
+}
+export interface ThreePlaced {
+  position: { copy(v: ThreeVector3): void; set(x: number, y: number, z: number): void }
+}
+export interface ThreeMaterial { color: ThreeColor }
+export interface ThreeMesh extends ThreePlaced {
+  scale: { set(x: number, y: number, z: number): void }
+  material: ThreeMaterial | unknown
+}
+export interface ThreeScene { add(object: unknown): void }
+export interface ThreeCamera extends ThreePlaced { aspect: number; updateProjectionMatrix(): void }
+export interface ThreeRenderer {
+  render(scene: ThreeScene, camera: ThreeCamera): void
+  setSize(width: number, height: number): void
+}
+/** Exactly the constructors this module calls, and nothing else. */
+export interface ThreeLike {
+  Color: new () => ThreeColor
+  Vector3: new (x: number, y: number, z: number) => ThreeVector3
+  Scene: new () => ThreeScene
+  PerspectiveCamera: new (fov: number, aspect: number, near: number, far: number) => ThreeCamera
+  WebGLRenderer: new (options?: { antialias?: boolean }) => ThreeRenderer
+  Mesh: new (geometry: unknown, material: unknown) => ThreeMesh
+  SphereGeometry: new (radius: number, widthSegments: number, heightSegments: number) => unknown
+  TorusGeometry: new (radius: number, tube: number, radialSegments: number, tubularSegments: number) => unknown
+  MeshPhongMaterial: new (parameters: Record<string, unknown>) => ThreeMaterial
+  AmbientLight: new (colour: number) => unknown
+  PointLight: new (colour: number, intensity: number) => ThreePlaced
+}
 import { RODIN_SEQUENCE, TRINITY_AXIS, digitalRoot, frequencyForDigit, hueForDigit } from './a432.math.ts';
 import { A432_RESOLVED_FRACTIONS } from './a432.resolved.ts';
 import { fractionToDecimal } from './a432.math.ts';
@@ -37,31 +92,31 @@ interface VBMAnimationState {
   time: number;
   points: VBMAnimationPoint[];
   torus: VBMTorusGeometry;
-  scene: THREE.Scene;
-  camera: THREE.PerspectiveCamera;
-  renderer: THREE.WebGLRenderer;
+  scene: ThreeScene;
+  camera: ThreeCamera;
+  renderer: ThreeRenderer;
 }
 
 interface VBMAnimationPoint {
-  mesh: THREE.Mesh;
+  mesh: ThreeMesh;
   digit: number;
   index: number;
-  color: THREE.Color;
+  color: ThreeColor;
   frequency: number;
 }
 
 interface VBMTorusGeometry {
-  geometry: THREE.TorusGeometry;
-  material: THREE.MeshPhongMaterial;
-  mesh: THREE.Mesh;
+  geometry: unknown;
+  material: ThreeMaterial;
+  mesh: ThreeMesh;
 }
 
 // --- Canonical VBM Color Generation ---
-function generateVBMColor(digit: number): THREE.Color {
+function generateVBMColor(three: ThreeLike, digit: number): ThreeColor {
   const hue = hueForDigit(digit);
   const saturation = G.OPACITY_SEVEN;
   const lightness = G.HALF;
-  return new THREE.Color().setHSL(hue / 360, saturation, lightness);
+  return new three.Color().setHSL(hue / 360, saturation, lightness);
 }
 
 // --- Canonical VBM Frequency Generation ---
@@ -76,14 +131,15 @@ function generateVBMFrequency(digit: number): number {
 
 // --- VBM Animation Point Creation ---
 function createVBMAnimationPoint(
-  digit: number, 
-  index: number, 
-  scene: THREE.Scene
+  three: ThreeLike,
+  digit: number,
+  index: number,
+  scene: ThreeScene
 ): VBMAnimationPoint {
-  const geometry = new THREE.SphereGeometry(G.DAMP_LOW, 16, 16);
-  const color = generateVBMColor(digit);
-  const material = new THREE.MeshPhongMaterial({ color });
-  const mesh = new THREE.Mesh(geometry, material);
+  const geometry = new three.SphereGeometry(G.DAMP_LOW, 16, 16);
+  const color = generateVBMColor(three, digit);
+  const material = new three.MeshPhongMaterial({ color });
+  const mesh = new three.Mesh(geometry, material);
   
   scene.add(mesh);
   
@@ -97,20 +153,20 @@ function createVBMAnimationPoint(
 }
 
 // --- VBM Torus Creation ---
-function createVBMTorus(scene: THREE.Scene): VBMTorusGeometry {
-  const geometry = new THREE.TorusGeometry(
+function createVBMTorus(three: ThreeLike, scene: ThreeScene): VBMTorusGeometry {
+  const geometry = new three.TorusGeometry(
     VBM_TORUS_RADIUS, 
     VBM_TUBE_RADIUS, 
     48, 
     128
   );
-  const material = new THREE.MeshPhongMaterial({
+  const material = new three.MeshPhongMaterial({
     color: 0x222244,
     wireframe: true,
     opacity: G.UNIT_THIRD_TEN,
     transparent: true
   });
-  const mesh = new THREE.Mesh(geometry, material);
+  const mesh = new three.Mesh(geometry, material);
   
   scene.add(mesh);
   
@@ -119,9 +175,10 @@ function createVBMTorus(scene: THREE.Scene): VBMTorusGeometry {
 
 // --- VBM Position Calculation (Canonical Math) ---
 function calculateVBMPosition(
-  point: VBMAnimationPoint, 
+  three: ThreeLike,
+  point: VBMAnimationPoint,
   time: number
-): THREE.Vector3 {
+): ThreeVector3 {
   const { digit, index } = point;
   
   // Phase around torus main circle (60° per step)
@@ -136,7 +193,7 @@ function calculateVBMPosition(
   const y = VBM_TUBE_RADIUS * sin(phi) * G.OPACITY_SEVEN; // Squeeze factor
   const z = (VBM_TORUS_RADIUS + VBM_TUBE_RADIUS * cos(phi)) * sin(theta);
   
-  return new THREE.Vector3(x, y, z);
+  return new three.Vector3(x, y, z);
 }
 
 // --- VBM Scale Calculation (Parity-based) ---
@@ -147,12 +204,12 @@ function calculateVBMScale(point: VBMAnimationPoint, time: number): number {
 }
 
 // --- VBM Animation Update ---
-function updateVBMAnimation(state: VBMAnimationState): void {
+function updateVBMAnimation(three: ThreeLike, state: VBMAnimationState): void {
   const { points, time } = state;
   
   points.forEach(point => {
     // Update position
-    const position = calculateVBMPosition(point, time);
+    const position = calculateVBMPosition(three, point, time);
     point.mesh.position.copy(position);
     
     // Update scale (pulsation)
@@ -161,7 +218,7 @@ function updateVBMAnimation(state: VBMAnimationState): void {
     
     // Update color intensity based on frequency
     const intensity = G.HALF + G.UNIT_THIRD_TEN * sin(time * point.frequency / 100);
-    (point.mesh.material as THREE.MeshPhongMaterial).color.setHSL(
+    (point.mesh.material as ThreeMaterial).color.setHSL(
       point.color.getHSL({ h: 0, s: 0, l: 0 }).h,
       G.OPACITY_SEVEN,
       intensity
@@ -170,11 +227,11 @@ function updateVBMAnimation(state: VBMAnimationState): void {
 }
 
 // --- VBM Scene Setup ---
-function setupVBMScene(): VBMAnimationState {
-  const scene = new THREE.Scene();
+function setupVBMScene(three: ThreeLike): VBMAnimationState {
+  const scene = new three.Scene();
   
   // Camera setup
-  const camera = new THREE.PerspectiveCamera(
+  const camera = new three.PerspectiveCamera(
     45, 
     window.innerWidth / window.innerHeight, 
     G.UNIT_TENTH, 
@@ -183,22 +240,22 @@ function setupVBMScene(): VBMAnimationState {
   camera.position.set(0, 5, 12);
   
   // Renderer setup
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  const renderer = new three.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   
   // Lighting
-  scene.add(new THREE.AmbientLight(0x888888));
-  const light = new THREE.PointLight(0xffffff, G.OPACITY_FOUR_FIFTH);
+  scene.add(new three.AmbientLight(0x888888));
+  const light = new three.PointLight(0xffffff, G.OPACITY_FOUR_FIFTH);
   light.position.set(10, 10, 10);
   scene.add(light);
   
   // Create torus
-  const torus = createVBMTorus(scene);
+  const torus = createVBMTorus(three, scene);
   
   // Create animation points
   const points: VBMAnimationPoint[] = [];
   VBM_SEQUENCE.forEach((digit, index) => {
-    const point = createVBMAnimationPoint(digit, index, scene);
+    const point = createVBMAnimationPoint(three, digit, index, scene);
     points.push(point);
   });
   
@@ -213,11 +270,11 @@ function setupVBMScene(): VBMAnimationState {
 }
 
 // --- VBM Animation Loop ---
-function animateVBM(state: VBMAnimationState): void {
+function animateVBM(three: ThreeLike, state: VBMAnimationState): void {
   const { scene, camera, renderer } = state;
   
   // Update animation state
-  updateVBMAnimation(state);
+  updateVBMAnimation(three, state);
   
   // Render
   renderer.render(scene, camera);
@@ -226,7 +283,7 @@ function animateVBM(state: VBMAnimationState): void {
   state.time += G.STEP_FINE;
   
   // Continue animation
-  raf(() => animateVBM(state));
+  raf(() => animateVBM(three, state));
 }
 
 // --- VBM Resize Handler ---
@@ -243,8 +300,15 @@ export class VBMAnimationController {
   private state: VBMAnimationState;
   private isRunning: boolean = false;
   
-  constructor() {
-    this.state = setupVBMScene();
+  // An explicit field, not a parameter property: this package is imported
+  // under --experimental-strip-types, which erases types and generates nothing,
+  // so `constructor(private x)` makes the module unloadable. The ratchet caught
+  // it as a module that fails to import, which is exactly the surface for it.
+  private readonly three: ThreeLike;
+
+  constructor(three: ThreeLike) {
+    this.three = three;
+    this.state = setupVBMScene(three);
     this.setupEventListeners();
   }
   
@@ -257,7 +321,7 @@ export class VBMAnimationController {
   public start(): void {
     if (!this.isRunning) {
       this.isRunning = true;
-      animateVBM(this.state);
+      animateVBM(this.three, this.state);
     }
   }
   
@@ -265,15 +329,15 @@ export class VBMAnimationController {
     this.isRunning = false;
   }
   
-  public getRenderer(): THREE.WebGLRenderer {
+  public getRenderer(): ThreeRenderer {
     return this.state.renderer;
   }
   
-  public getScene(): THREE.Scene {
+  public getScene(): ThreeScene {
     return this.state.scene;
   }
   
-  public getCamera(): THREE.PerspectiveCamera {
+  public getCamera(): ThreeCamera {
     return this.state.camera;
   }
   
@@ -299,8 +363,8 @@ export class VBMAnimationController {
 }
 
 // --- VBM Animation Factory ---
-export function createVBMAnimation(): VBMAnimationController {
-  return new VBMAnimationController();
+export function createVBMAnimation(three: ThreeLike): VBMAnimationController {
+  return new VBMAnimationController(three);
 }
 
 // --- VBM Animation Constants Export ---

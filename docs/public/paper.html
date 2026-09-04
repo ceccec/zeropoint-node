@@ -109,7 +109,7 @@ hue are one integer read in two units; ratios are carried as pairs of integers
 rather than decimals, and the two places where binary floating point departs
 from the exact value are stated rather than rounded away. 33 of
 33 theorems carry a predicate that runs and holds, and
-24 of 48 statements in the Lean files are
+26 of 50 statements in the Lean files are
 accepted by the Lean kernel &mdash; the rest are written down and not proved,
 and say so.</p>
 
@@ -525,7 +525,7 @@ unrecorded improvement is an unexamined one.</p>
 <tr><td><code>entryPoints</code></td><td>0</td></tr>
 <tr><td><code>unguardedReadme</code></td><td>27304</td></tr>
 </tbody></table>
-<p>Deliberate increases, each with a recorded reason. A surface may be raised more than once and every reason is kept &#8212; the record used to hold only the latest, which lost one: <code>unguardedReadme</code> 27626&#8594;28015; <code>unguardedReadme</code> 27962&#8594;28049.</p>
+<p>Deliberate increases, each with a recorded reason. A surface may be raised more than once and every reason is kept &#8212; the record used to hold only the latest, which lost one: <code>unguardedReadme</code> 27626&#8594;28015; <code>unguardedReadme</code> 27962&#8594;28049; <code>unguardedReadme</code> 27304&#8594;29000.</p>
 </section>
 
 <section class="appendix">
@@ -687,14 +687,14 @@ one, since a shortened title is a transcription.</p>
 
 <section class="appendix">
 <h2>Appendix H&ensp;Every Lean statement</h2>
-<p>All 48 statements in the <code>lean/</code> sources, as
+<p>All 50 statements in the <code>lean/</code> sources, as
 they are written there. <strong>Proven</strong> means three things together: the
 kernel accepted the file, the proof contains no <code>sorry</code>, and
 <code>#print axioms</code> reports a dependency set within
 <code>{propext, Quot.sound}</code>. The first two alone are not enough — a proof
 can invoke a lemma closed with <code>sorry</code> and inherit the vacuity with
 the word appearing nowhere near it.</p>
-<p>24 are proven on that reading. The rest are statements
+<p>26 are proven on that reading. The rest are statements
 rather than theorems, and are listed here so the difference is legible rather
 than summarised away.</p>
 <table class="lean">
@@ -723,6 +723,8 @@ than summarised away.</p>
 <tr class="proven"><td><code>exactly_two_digits_are_their_own_mirror</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">(digits.filter (fun d =&gt; tv d == d)) = [0, 5]</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
 <tr class="proven"><td><code>the_ten_digits_are_two_fixed_points_and_four_pairs</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">(digits.filter (fun d =&gt; tv d == d)).length = 2 ∧ (digits.filter (fun d =&gt; tv d != d)).length = 8 ∧ 2 + 4 * 2 = 10</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
 <tr class="proven"><td><code>the_four_pairs_are_one_nine_two_eight_three_seven_four_six</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">tv 1 = 9 ∧ tv 2 = 8 ∧ tv 3 = 7 ∧ tv 4 = 6</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>four_three_two_has_twenty_divisors_its_neighbours_eighteen</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">divisorCount 432 = 20 ∧ divisorCount 396 = 18 ∧ divisorCount 468 = 18</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
+<tr class="proven"><td><code>all_three_are_multiples_of_thirty_six</code><br><span class="where">DigitSpace.lean</span></td><td class="stmt">432 % 36 = 0 ∧ 396 % 36 = 0 ∧ 468 % 36 = 0</td><td>proven by the kernel <span class="ax">rests on no axioms</span></td></tr>
 <tr class="unverifiable-here"><td><code>hadamard_squared</code><br><span class="where">Quantum.lean</span></td><td class="stmt">hadamard * hadamard = 1</td><td>needs a library this repository cannot build here</td></tr>
 <tr class="sorry"><td><code>hadamard_unitary</code><br><span class="where">Quantum.lean</span></td><td class="stmt">IsUnitary hadamard</td><td>written down, closed with sorry</td></tr>
 <tr class="unverifiable-here"><td><code>pauliX_unitary</code><br><span class="where">Quantum.lean</span></td><td class="stmt">IsUnitary pauliX</td><td>needs a library this repository cannot build here</td></tr>
@@ -763,7 +765,7 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>6ee4b2846319c9d9</code> over
+<p class="receipt">Generated from source. Model receipt <code>d7b100de9da8dbb5</code> over
 18 equations, 33 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>

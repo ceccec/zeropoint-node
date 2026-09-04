@@ -24,6 +24,11 @@
         "from": 27962,
         "to": 28049,
         "reason": "the README stated nothing about Lean while the repository ships lean/ files, a lean-bridge and claims about theorems: 87 bytes saying the 32 are computational seals rather than Lean proofs, that 9 of 33 statements are accepted by the kernel and 24 are not, and that lean:check fails if the ledger and the files disagree. Every number in it is read from lean/ledger.json and guarded by readme:facts; what is unguarded is the sentence around them. The alternative was deleting an earlier correction about the historical package name to make room, which is a worse trade than a recorded raise."
+      },
+      {
+        "from": 27304,
+        "to": 29000,
+        "reason": "the abstract now states the census a reader was previously only shown in an appendix -- 1409 of 1749 exported values outside every law, 47 of 55 constants held by nothing, 9 of 33 predicates pinned -- and the Lean appendix grew with the theorems landed this session. Disclosure of unflattering measurement is the reason these bytes exist."
       }
     ]
   },

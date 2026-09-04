@@ -198,3 +198,32 @@ theorem the_ten_digits_are_two_fixed_points_and_four_pairs :
 /-- The pairs, written out, so the claim is the list and not a summary of it. -/
 theorem the_four_pairs_are_one_nine_two_eight_three_seven_four_six :
     tv 1 = 9 ∧ tv 2 = 8 ∧ tv 3 = 7 ∧ tv 4 = 6 := by decide
+
+/- ── Why 432 and not another multiple of thirty-six ────────────────────────
+
+   The seal above forces the base frequency into 36ℕ and no further, and says
+   so. erpax-94 then showed a STRONGER constraint from a different tree: the
+   divisor lattice of the anchor is C5 × C4, which needs exactly two primes with
+   exponents (4,3). 396 = 2²·3²·11 and 468 = 2²·3²·13 each carry a third prime
+   and fail it outright.
+
+   That constraint is not adopted here — nothing in this package uses divisor
+   structure, and importing it to make a chosen constant look determined would
+   be the post-hoc pinning this repository spends its gates refusing. It is
+   RECORDED, so the boundary is checkable rather than remembered: my conditions
+   force the class, theirs picks the member, and the two are different claims. -/
+
+/-- Divisors counted directly, so the statement needs no theory of divisors. -/
+def divisorCount (n : Nat) : Nat :=
+  ((List.range (n + 1)).filter (fun d => d > 0 && n % d == 0)).length
+
+/-- 432 has twenty divisors; the multiples of 36 on either side have eighteen.
+    Twenty is 5 · 4, which is the lattice erpax's theorem needs; eighteen
+    factors as 3 · 3 · 2 and cannot be two chains. -/
+theorem four_three_two_has_twenty_divisors_its_neighbours_eighteen :
+    divisorCount 432 = 20 ∧ divisorCount 396 = 18 ∧ divisorCount 468 = 18 := by decide
+
+/-- All three are in the class my own conditions force, which is the point: the
+    class does not distinguish them and the lattice does. -/
+theorem all_three_are_multiples_of_thirty_six :
+    432 % 36 = 0 ∧ 396 % 36 = 0 ∧ 468 % 36 = 0 := by decide

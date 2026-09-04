@@ -131,9 +131,55 @@ traversed backwards rather than a separately asserted list of digits. Swapping
 two digits of R' fells it; so does changing the inverse generator from 5 to 4.
 The old expression returns true under both.
 
-34 seals, 35 mutations. Of the 34, 27 are structural and 6 pinned, down from 9
-pinned — the rest pin conventions correctly (FIPS-203 parameter sizes, booleans,
-and a factored input compared against itself).
+Three more seals stopped asking about an instance and started asking about a
+domain. `shor_period_finding` said INSTANCE ONLY in its own basis: it factored
+15 with base 7 and compared the product to the literal 15. It now runs a family
+of semiprimes and bases, comparing each product to the modulus being factored,
+requires a success for every modulus so a stub returning null cannot pass, and
+holds returning null on an unlucky base to a different standard than returning
+a wrong factorisation. `repetition_detects_error` flipped qubit 0 and asked
+whether the syndrome was non-zero; it now flips all three and requires the
+syndromes to be **pairwise distinct**, which is what makes the code correctable
+rather than merely error-detecting. `surface_code_threshold` asked two points
+and named both; it now sweeps a range and checks monotonicity and agreement
+with the threshold the function itself reports.
+
+**The surface code logical error rate was wrong by nearly three orders of
+magnitude.** It computed `p^((d+1)/2)` — the right exponent with the threshold
+ratio and the fitted prefactor dropped, which is not a simplification of that
+model but a different function. The closed form fitted to numerical simulation
+is `p_L = c (p/p_th)^((d+1)/2)` with `c = 0.03` and `p_th = 0.0057` for
+circuit-level noise decoded by minimum-weight perfect matching (arXiv:1208.0928).
+At `p = 0.001, d = 3` the shipped value was 1e-6 where the fitted form gives
+9.2e-4; by `d = 5` the gap is a factor of 160,000. The threshold constant was
+`1/100`, commented "typical", and corresponded to no particular published
+measurement — the literature spans roughly 0.57% to 1.40% per gate depending on
+noise model, measurement circuit and decoder. This changes published numeric
+output.
+
+Seal 35 constrains it through two consequences of the fitted form that the old
+one lacked: at the threshold the rate is the same for every code distance, and
+raising the distance by two multiplies the rate by exactly `p/p_th`. Every
+quantity is read back from the function, so the seal holds no copy of a
+constant. It is deliberately scale-free and therefore says nothing about `c`,
+which no law here constrains. An earlier draft appeared to detect a change in
+`c` — that was the tolerance reacting to the size of the numbers, not physics,
+and comparing ratios rather than absolute values removed it.
+
+**Every kernel-proven theorem now earns a deposit: 59, not 50.** The nine
+withheld ones failed a syntactic test — no quantifier, no Lean `def` — that
+stood in for significance, and significance is not a syntactic property. Six of
+the nine were the speed-of-light group, including
+`c_squared_exceeds_the_exact_range_of_a_double`, which is the justification for
+this package's float ban. They read as "integer literals" only because `c` and
+2^53 are numerals rather than definitions, while `LIGHT_SPEED: 299792458` sits
+in the shipped source. The header above that predicate had already recorded this
+exact failure once and fixed the list while keeping the predicate that made a
+list necessary.
+
+35 seals, 35 mutations: 31 structural, 3 pinned, 1 delegating. The three that
+remain pinned pin conventions correctly — FIPS-203 parameter sizes, a
+hand-computed oracle over hand-built graphs, and a non-emptiness check.
 
 ## 1.5.0
 

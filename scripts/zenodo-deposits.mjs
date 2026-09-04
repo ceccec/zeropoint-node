@@ -57,32 +57,33 @@ for (const f of readdirSync(join(ROOT, 'lean')).filter((n) => n.endsWith('.lean'
 }
 
 /**
- * NOT EVERY PROVEN THEOREM EARNS A DOI.
+ * EVERY KERNEL-PROVEN THEOREM EARNS A DEPOSIT.
  *
- * A DOI is for a citable output. `6 * 2 = 12 ∧ 54 - 12 = 42` is true,
- * kernel-checked, and a STEP INSIDE an argument — it is not a result anyone
- * would cite, and minting an identifier for it inflates the corpus. The cost is
- * not the wasted DOI: it is that a reader who meets one discounts the other
- * twenty-three, and they are the ones that matter.
+ * This file used to withhold deposits from statements made only of integer
+ * literals, on the reasoning that `6 * 2 = 12 ∧ 54 - 12 = 42` is a step inside
+ * an argument rather than a result. The bar was applied mechanically: quantify
+ * over a domain, or name a DEFINED object, or you are supporting arithmetic.
  *
- * The bar, applied mechanically: a deposit-worthy statement either quantifies
- * over a domain or says something about a DEFINED object of this theory. A
- * statement made only of integer literals is arithmetic in support of a claim,
- * not the claim. Those stay in the ledger, proved and citable through the
- * repository's own DOI, which is what a concept DOI is for.
+ * That test was a SYNTACTIC PROXY FOR SIGNIFICANCE, and significance is not a
+ * syntactic property. It withheld nine deposits, and six of them were the
+ * speed-of-light group — including `c_squared_exceeds_the_exact_range_of_a_double`,
+ * which is the justification for this package's float ban and one of the few
+ * results here with a direct engineering consequence. It read as "integer
+ * literals" only because `c` and 2^53 are numerals rather than Lean `def`s,
+ * while `LIGHT_SPEED: 299792458` sits in the shipped source. A theorem about a
+ * shipped physical constant is not a lemma about numbers.
+ *
+ * The header below already recorded this exact failure once — a name missing
+ * from a list silently demoting a theorem — and fixed the list while keeping
+ * the predicate that made the list necessary. So the predicate is gone. The
+ * kernel decides what is proven; nothing downstream re-decides what is worth
+ * saying.
  */
-// The defined objects are READ from the Lean sources, never listed here. A
-// hardcoded list is pinned to what its author remembered: adding `swap12` and
-// forgetting the list silently demoted a theorem about it to "literal
-// arithmetic" and withheld its deposit. The sources know their own definitions.
-const DEFINED_NAMES = new Set()
-for (const f of readdirSync(join(ROOT, 'lean')).filter((n) => n.endsWith('.lean'))) {
-  for (const m of readFileSync(join(ROOT, 'lean', f), 'utf8').matchAll(/^def\s+(\w+)/gm)) DEFINED_NAMES.add(m[1])
-}
-const DEFINED = new RegExp(`\\b(${[...DEFINED_NAMES].join('|')})\\b`)
-function standsAlone(name) {
-  const st = statements.get(name) ?? ''
-  return /∀|∃/.test(st) || DEFINED.test(st)
+// Kernel-accepted is the whole bar. `standsAlone` is kept as a constant true so
+// the shape of the pipeline stays legible and any future attempt to filter has
+// to argue for itself here rather than appear as a quiet regex.
+function standsAlone(_name) {
+  return true
 }
 
 const provenAll = ledger.entries.filter((e) => e.status === 'proven')
@@ -165,12 +166,12 @@ const record = {
   identity: 'claim = a content address over the normalised statement, identical across repositories that state the same fact. record = repository + file + name, distinct even when the claim is shared. A merge joins on claim and keeps every record.',
   conceptDoi: CONCEPT,
   count: deposits.length,
-  supportingNotDeposited: supporting.map((e) => ({ theorem: e.name, why: 'literal arithmetic in support of a claim; proved, and cited through the concept DOI' })),
+  supportingNotDeposited: supporting.map((e) => ({ theorem: e.name, why: 'unreachable: every kernel-proven theorem now earns a deposit' })),
   deposits,
 }
 const next = JSON.stringify(record, null, 2) + '\n'
 
-console.log(`zenodo:deposits — ${provenAll.length} kernel-proven; ${deposits.length} earn a deposit, ${supporting.length} are supporting arithmetic and do not.\n                  Each deposit cites citing ${cited.length} resolved DOI(s) and the concept DOI as isPartOf`)
+console.log(`zenodo:deposits — ${provenAll.length} kernel-proven, ${deposits.length} earn a deposit and ${supporting.length} do not.\n                  Each deposit cites citing ${cited.length} resolved DOI(s) and the concept DOI as isPartOf`)
 if (CHECK) {
   if (readFileSync(OUT, 'utf8') !== next) { console.error('zenodo:deposits FAIL — the record is not what the sources produce; run npm run zenodo:deposits'); process.exit(1) }
   console.log('zenodo:deposits ok — every proven theorem has a deposit, and every deposit names a theorem the kernel accepted')

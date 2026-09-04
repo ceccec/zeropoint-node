@@ -97,14 +97,14 @@
             "year": 1998
           },
           {
-            "doi": "10.1016/b978-0-7506-0813-8.50018-6",
-            "title": "Measurement theory",
-            "year": 1991
-          },
-          {
             "doi": "10.1515/9783110652505-006",
             "title": "6. Validation of software used in metrology",
             "year": 2019
+          },
+          {
+            "doi": "10.1016/b978-0-7506-0813-8.50018-6",
+            "title": "Measurement theory",
+            "year": 1991
           },
           {
             "doi": "10.1007/bf00213632",
@@ -128,8 +128,8 @@
             "year": 2013
           },
           {
-            "doi": "10.31390/gradschool_disstheses.6938",
-            "title": "On Biodata Construct Validity, Criterion-Related Validity, and Adverse Impact.",
+            "doi": "10.7717/peerj.18743/table-6",
+            "title": "Table 6: Discriminant validity of construct.",
             "year": null
           }
         ],
@@ -911,14 +911,14 @@
             "year": 2024
           },
           {
-            "doi": "10.1017/cbo9780511676277.011",
-            "title": "PROOF SYSTEMS AND THE REFLECTION PRINCIPLE",
-            "year": 2010
-          },
-          {
             "doi": "10.1007/978-3-319-29198-7_6",
             "title": "Intuitionistic Decision Procedures Since Gentzen",
             "year": 2016
+          },
+          {
+            "doi": "10.1017/cbo9780511676277.011",
+            "title": "PROOF SYSTEMS AND THE REFLECTION PRINCIPLE",
+            "year": 2010
           }
         ],
         "funders": []

@@ -82,11 +82,24 @@ const bench = (label, variants) => {
   }
   console.log(`\n  ${label}`)
   if (sinks.size !== 1) { console.log('    VARIANTS DISAGREE:', [...sinks]); process.exitCode = 1; return }
-  console.log(`    all variants agree (sink ${[...sinks][0]})`)
-  const base = med(out.get(variants[variants.length - 1][0]))
-  for (const [n] of variants) {
-    const m = med(out.get(n))
-    console.log(`    ${n}  ${m.toFixed(2).padStart(7)}ms   ${(m / base).toFixed(2)}x hexbit`)
+  console.log(`    all variants agree (checksum ${[...sinks][0]})`)
+
+  // A WINNER IS ONLY A WINNER IF THE RANGES DO NOT OVERLAP. Reporting a median
+  // ratio alone crowns 1.04x as a win, and on a loaded machine that verdict
+  // flips between runs. The spread is printed and any variant whose range
+  // overlaps the fastest one's is reported as a TIE rather than beaten.
+  // (From ceccec.github.io, which watched its own verdicts flip on 1.0x margins.)
+  const stats = variants.map(([n]) => {
+    const xs = out.get(n)
+    return { n, med: med(xs), lo: Math.min(...xs), hi: Math.max(...xs) }
+  })
+  const best = stats.reduce((a, b) => (a.med <= b.med ? a : b))
+  for (const st of stats) {
+    const overlaps = st.lo <= best.hi && best.lo <= st.hi
+    const verdict = st === best ? 'fastest'
+      : overlaps ? 'TIE with fastest — ranges overlap'
+      : `${(st.med / best.med).toFixed(2)}x slower`
+    console.log(`    ${st.n}  ${st.med.toFixed(2).padStart(7)}ms  [${st.lo.toFixed(2)}–${st.hi.toFixed(2)}]   ${verdict}`)
   }
 }
 

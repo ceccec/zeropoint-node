@@ -5,7 +5,7 @@
  * The narrative in CHANGELOG.md is written by hand, and should be: deciding
  * what mattered in a release is judgement, and no generator has it. But the
  * figures inside that narrative are not judgement. Every one of them —
- * 4195 mg/L, +237 kJ/mol, 1228.9 mV, 21 seals — is computed somewhere in this
+ * 4195 mg/L, +237 kJ/mol, 1228.9 mV, 35 seals — is computed somewhere in this
  * repository, and typing it a second time into prose creates a copy that can
  * drift while nothing notices. That is the same defect as a hardcoded test
  * expectation, wearing prose.

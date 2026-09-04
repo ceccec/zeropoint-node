@@ -13,7 +13,7 @@
  * instance is not a pattern, but the prior here is HIGH rather than low, because
  * fixing a value is what a seal is FOR. A peer session measured the same
  * property across 473 cross-checks in a corpus built the other way and found one
- * — the architectures differ, not the care. So the 32 seals are asked directly.
+ * — the architectures differ, not the care. So the 35 seals are asked directly.
  *
  * HOW IT ASKS. The TypeScript AST, not a regex: every comparison inside each
  * `decide` is read, and each side classified as a literal or a computation.

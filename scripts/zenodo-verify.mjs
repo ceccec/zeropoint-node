@@ -3,7 +3,7 @@
  * repository claims about itself.
  *
  * The concept DOI appears in CITATION.cff, package metadata, the paper's
- * JSON-LD, 50 deposit records and every citation this project emits. Until now
+ * JSON-LD, 59 deposit records and every citation this project emits. Until now
  * its only warrant was that someone had written it in a file. A DOI written in
  * a file is a string; a DOI that resolves to a record whose creator, licence and
  * relations match is evidence.

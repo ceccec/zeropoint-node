@@ -317,21 +317,21 @@ implements and the predicates that decide it. The digit space is partitioned by
 a doubling map into a six-element orbit and a three-element axis; frequency and
 hue are one integer read in two units; ratios are carried as pairs of integers
 rather than decimals, and the two places where binary floating point departs
-from the exact value are stated rather than rounded away. 34 of
-34 theorems carry a predicate that runs and holds, and
+from the exact value are stated rather than rounded away. 35 of
+35 theorems carry a predicate that runs and holds, and
 59 of 83 statements in the Lean files are
 accepted by the Lean kernel &mdash; the rest are written down and not proved,
 and say so.</p>
 
 <p><strong>How much of this package those predicates actually hold.</strong>
 1413 of
-1753 exported values are not reachable
+1754 exported values are not reachable
 from any law, so nothing here constrains them; that count is a floor, because
 the reachability closure over-approximates. Of the
 57 exported literal constants,
 8 are forced by at least one law and
 49 are held by nothing. And of the
-34 predicates, 6 are
+35 predicates, 3 are
 <em>pinned</em> rather than forced &mdash; they hold an expected value as a
 literal, which falls for a convention as readily as for a law. These are
 measured by experiment, not asserted, and the experiments are Appendix G and
@@ -888,7 +888,7 @@ corrupts one line and requires the suite over it to fail; all
 
 <section class="appendix">
 <h2>Appendix F&ensp;Seals</h2>
-<p>Each row is a predicate that runs. 34 of 34 hold at
+<p>Each row is a predicate that runs. 35 of 35 hold at
 generation time; a seal that stopped holding would fail
 <code>npm run test:verification</code> before this page could be regenerated.</p>
 <table class="seals">
@@ -902,10 +902,11 @@ generation time; a seal that stopped holding would fail
 <tr><td><code>qft_unitary</code></td><td>held</td><td>inverse QFT undoes QFT on a 3-qubit register, amplitude by amplitude</td></tr>
 <tr><td><code>grover_amplification</code></td><td>held</td><td>Grover leaves the marked state with probability above the 1/N a random guess gets (n=4, N=16)</td></tr>
 <tr><td><code>grover_speedup</code></td><td>held</td><td>INSTANCE ONLY, not the asymptotic bound: round((pi/4)*sqrt(N)) iterations reach probability above 0.9 at N=16</td></tr>
-<tr><td><code>shor_period_finding</code></td><td>held</td><td>INSTANCE ONLY: shor(15, 7) returns non-trivial factors whose product is 15</td></tr>
-<tr><td><code>repetition_detects_error</code></td><td>held</td><td>a clean 3-qubit codeword gives the zero syndrome and a single X error gives a non-zero one, so the syndrome distinguishes them</td></tr>
+<tr><td><code>shor_period_finding</code></td><td>held</td><td>over a family of semiprimes and bases, shor never returns a WRONG factorisation and succeeds on every modulus in the family. The product is compared to the modulus being factored, which varies across the family, so no expected answer is written down. The old form ran shor(15, 7) alone and compared against the literal 15 — its own basis said INSTANCE ONLY.</td></tr>
+<tr><td><code>repetition_detects_error</code></td><td>held</td><td>the syndrome IDENTIFIES the flipped qubit, not merely that something flipped: over all three single-qubit X errors the syndromes are pairwise distinct and each differs from the clean one. Distinctness is a comparison between computed syndromes with nothing written down, and it is what makes the code correctable rather than only error-detecting. The old form flipped qubit 0 alone.</td></tr>
 <tr><td><code>steane_corrects_error</code></td><td>held</td><td>Steane [[7,1,3]] is a stabiliser group: exactly n-k = 6 generators, symplectically independent (rank 6), pairwise commuting, and distance 3 corrects floor((d-1)/2) = 1 arbitrary error</td></tr>
-<tr><td><code>surface_code_threshold</code></td><td>held</td><td>estimateSurfaceCodeThreshold separates the two sides of the 1% threshold: below it reports below, above it does not</td></tr>
+<tr><td><code>surface_code_rate_follows_the_fitted_form</code></td><td>held</td><td>the logical error rate obeys p_L = c (p/p_th)^((d+1)/2), checked through two consequences that hold for that form and fail for the one this package shipped before. FIRST, at the threshold the rate is the prefactor and is therefore the SAME for every code distance — under the old p^((d+1)/2) it was p_th^((d+1)/2) and moved with d. SECOND, raising the distance by two multiplies the rate by exactly p/p_th — under the old form it multiplied by p. Every quantity is read back from the function, including the threshold, so nothing is written down here and the seal cannot agree with a private copy of a constant. It is deliberately SCALE-FREE and therefore says nothing about the prefactor c, which no law here constrains. DOES NOT ESTABLISH that 0.57% is the right threshold: that is fitted to circuit-level noise decoded by MWPM and no computation here decides it.</td></tr>
+<tr><td><code>surface_code_threshold</code></td><td>held</td><td>across a swept range of physical error rates the verdict is monotone — once it says not-below it never says below again — and it agrees with the threshold the function itself reports. DOES NOT ESTABLISH that 1% is the right threshold: that is an empirical figure from the literature and no computation here decides it. Nor is the agreement half independent while the implementation derives isBelowThreshold from the same variable it reports; what it catches is DIVERGENCE, a verdict applying one threshold while reporting another, and it falls when they are pulled apart. Monotonicity is the load-bearing half. The old form asked two points and named both.</td></tr>
 <tr><td><code>pauliX_anticommute_pauliY</code></td><td>held</td><td>the four entries of XY and of -YX are equal, which is every entry there is</td></tr>
 <tr><td><code>tensor_preserves_norm</code></td><td>held</td><td>the norm is MULTIPLICATIVE under the tensor product: for any two states, normalised or not, the squared norm of a tensor b equals the product of theirs. Checked against unnormalised inputs too, where a check against the literal 1 says nothing.</td></tr>
 <tr><td><code>phase_estimation_accuracy</code></td><td>held</td><td>for t = 4 and 5, every phase of the form k/2^t is recovered exactly, so the error is 0 and within the 1/2^t bound</td></tr>
@@ -1112,8 +1113,8 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>ed7936f584baa0e3</code> over
-18 equations, 34 seals and 3 axioms. Any change to
+<p class="receipt">Generated from source. Model receipt <code>502c323b629adbe9</code> over
+18 equations, 35 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>
 </body>

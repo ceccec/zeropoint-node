@@ -475,25 +475,48 @@ export const SEALS: Record<string, Seal> = {
   },
 
   shor_period_finding: {
-    basis: 'INSTANCE ONLY: shor(15, 7) returns non-trivial factors whose product is 15',
+    basis: 'over a family of semiprimes and bases, shor never returns a WRONG factorisation and succeeds on every modulus in the family. The product is compared to the modulus being factored, which varies across the family, so no expected answer is written down. The old form ran shor(15, 7) alone and compared against the literal 15 — its own basis said INSTANCE ONLY.',
     decide: () => {
-      const factors = shor(15, 7)
-      if (!Array.isArray(factors) || factors.length !== 2) return false
-      const [p, q] = factors as [number, number]
-      if (p <= 1 || q <= 1 || p >= 15 || q >= 15) return false
-      return p * q === 15
+      // Returning null on an unlucky base is a legitimate outcome of the
+      // algorithm, not a wrong answer; returning a bad factorisation is not.
+      // The two are held to different standards below.
+      const trials: readonly (readonly [number, number])[] = [
+        [15, 7], [15, 2], [15, 4], [15, 11], [21, 2], [21, 5], [33, 5], [35, 3],
+      ]
+      const solved = new Set<number>()
+      for (const [nn, a] of trials) {
+        const factors = shor(nn, a)
+        if (factors === null || factors === undefined) continue
+        if (!Array.isArray(factors) || factors.length !== 2) return false
+        const [x, y] = factors as [number, number]
+        if (x <= 1 || y <= 1 || x >= nn || y >= nn) return false
+        if (x * y !== nn) return false          // against the modulus, not a literal
+        solved.add(nn)
+      }
+      // and it must actually factor something: a stub returning null for
+      // everything satisfies every condition above.
+      const moduli = new Set(trials.map(([nn]) => nn))
+      return solved.size === moduli.size
     },
   },
 
   repetition_detects_error: {
-    basis: 'a clean 3-qubit codeword gives the zero syndrome and a single X error gives a non-zero one, so the syndrome distinguishes them',
+    basis: 'the syndrome IDENTIFIES the flipped qubit, not merely that something flipped: over all three single-qubit X errors the syndromes are pairwise distinct and each differs from the clean one. Distinctness is a comparison between computed syndromes with nothing written down, and it is what makes the code correctable rather than only error-detecting. The old form flipped qubit 0 alone.',
     decide: () => {
-      // |000> is the logical zero of the repetition code: no error, so the
-      // syndrome must be all zero. One X on qubit 0 must show up.
+      // |000> is the logical zero of the repetition code: no error at all.
       const clean = measureSyndromeRepetition(zeroState(3))
       if (clean.detected || clean.syndrome.some((b) => b !== 0)) return false
-      const flipped = measureSyndromeRepetition(applyGate1(zeroState(3), 0, X))
-      return flipped.detected && flipped.syndrome.some((b) => b !== 0)
+
+      const seen: string[] = []
+      for (const q of [0, 1, 2]) {
+        const r = measureSyndromeRepetition(applyGate1(zeroState(3), q, X))
+        if (!r.detected) return false
+        if (r.syndrome.every((b) => b === 0)) return false   // must differ from clean
+        seen.push(r.syndrome.join(','))
+      }
+      // pairwise distinct: three errors, three different syndromes, so the
+      // syndrome says WHICH qubit. Nothing here names an expected syndrome.
+      return new Set(seen).size === seen.length
     },
   },
 
@@ -535,12 +558,51 @@ export const SEALS: Record<string, Seal> = {
     },
   },
 
-  surface_code_threshold: {
-    basis: 'estimateSurfaceCodeThreshold separates the two sides of the 1% threshold: below it reports below, above it does not',
+  surface_code_rate_follows_the_fitted_form: {
+    basis: 'the logical error rate obeys p_L = c (p/p_th)^((d+1)/2), checked through two consequences that hold for that form and fail for the one this package shipped before. FIRST, at the threshold the rate is the prefactor and is therefore the SAME for every code distance — under the old p^((d+1)/2) it was p_th^((d+1)/2) and moved with d. SECOND, raising the distance by two multiplies the rate by exactly p/p_th — under the old form it multiplied by p. Every quantity is read back from the function, including the threshold, so nothing is written down here and the seal cannot agree with a private copy of a constant. It is deliberately SCALE-FREE and therefore says nothing about the prefactor c, which no law here constrains. DOES NOT ESTABLISH that 0.57% is the right threshold: that is fitted to circuit-level noise decoded by MWPM and no computation here decides it.',
     decide: () => {
-      const below = estimateSurfaceCodeThreshold(3, 1 / 1000)
-      const above = estimateSurfaceCodeThreshold(3, 1 / 10)
-      return below.isBelowThreshold === true && above.isBelowThreshold === false
+      const pth = estimateSurfaceCodeThreshold(3, 1 / 1000).threshold
+      if (!(pth > 0)) return false
+      const rate = (d: number, p: number) => estimateSurfaceCodeThreshold(d, p).logicalErrorRate
+
+      // 1. just below the threshold the ratio p/p_th is one, so the rate is the
+      //    prefactor for every distance alike. Compared as RATIOS to the first,
+      //    not as absolute values: an absolute comparison here made the seal
+      //    sensitive to the size of the prefactor through the tolerance rather
+      //    than through any physics, which is not what it is measuring.
+      const justBelow = pth * (1 - 1e-12)
+      const atThreshold = [3, 5, 7, 9].map((d) => rate(d, justBelow))
+      if (!(atThreshold[0]! > 0)) return false     // else all-zero passes
+      for (const r of atThreshold) if (!near(r / atThreshold[0]!, 1)) return false
+
+      // 2. two more of distance multiplies the rate by exactly p/p_th.
+      for (const p of [1 / 10000, 1 / 1000, 1 / 2000]) {
+        const expected = p / pth
+        for (const d of [3, 5, 7]) {
+          const lo = rate(d, p)
+          if (!(lo > 0)) return false
+          if (!near(rate(d + 2, p) / lo, expected)) return false
+        }
+      }
+      return true
+    },
+  },
+  surface_code_threshold: {
+    basis: 'across a swept range of physical error rates the verdict is monotone — once it says not-below it never says below again — and it agrees with the threshold the function itself reports. DOES NOT ESTABLISH that 1% is the right threshold: that is an empirical figure from the literature and no computation here decides it. Nor is the agreement half independent while the implementation derives isBelowThreshold from the same variable it reports; what it catches is DIVERGENCE, a verdict applying one threshold while reporting another, and it falls when they are pulled apart. Monotonicity is the load-bearing half. The old form asked two points and named both.',
+    decide: () => {
+      const sweep = [1 / 10000, 1 / 1000, 1 / 500, 1 / 200, 1 / 120, 1 / 101,
+                     1 / 99, 1 / 80, 1 / 50, 1 / 20, 1 / 10, 1 / 5]
+      let wasAbove = false
+      for (const rate of sweep) {
+        const r = estimateSurfaceCodeThreshold(3, rate)
+        // the verdict must agree with the threshold the function reports
+        if (r.isBelowThreshold !== (rate < r.threshold)) return false
+        // and it must be monotone in the rate: no flapping back below
+        if (wasAbove && r.isBelowThreshold) return false
+        if (!r.isBelowThreshold) wasAbove = true
+      }
+      // the sweep has to straddle the threshold, or agreement is vacuous
+      return wasAbove && estimateSurfaceCodeThreshold(3, sweep[0]!).isBelowThreshold
     },
   },
 

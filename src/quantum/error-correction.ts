@@ -253,6 +253,31 @@ export function createSurfaceCodeLattice(distance: number): {
 }
 
 // Estimate threshold error rate: below threshold, QEC improves fidelity
+/**
+ * Fitted constants for the surface code under the PARALLEL CIRCUIT-LEVEL noise
+ * model decoded by minimum-weight perfect matching, from Fowler, Mariantoni,
+ * Martinis and Cleland, "Surface codes: towards practical large-scale quantum
+ * computation", arXiv:1208.0928. They belong together: the prefactor is fitted
+ * against this threshold and means nothing beside another one.
+ *
+ * DOES NOT ESTABLISH a threshold for any other noise model or decoder.
+ * Published figures span roughly 0.57% to 1.40% per gate depending on noise
+ * model, measurement circuit and decoder, and the code-capacity threshold under
+ * independent noise with perfect measurement is an order of magnitude higher
+ * again. 0.57% is the circuit-level MWPM value and the one these constants are
+ * fitted to. The previous 1% here was commented "typical" and corresponded to
+ * no particular published measurement.
+ */
+export const SURFACE_CODE_MWPM = {
+  /** p_th, per gate, circuit-level noise decoded by MWPM. Written as a
+   *  fraction of integers because this package does not spell constants as
+   *  decimals; 57 / 10000 is the same double as 0.0057, bit for bit. */
+  threshold: 57 / 10000,
+  /** c, the fitted prefactor that accompanies that threshold. */
+  prefactor: 3 / 100,
+  source: 'arXiv:1208.0928',
+} as const
+
 export function estimateSurfaceCodeThreshold(
   distance: number,
   physicalErrorRate: number,
@@ -261,15 +286,20 @@ export function estimateSurfaceCodeThreshold(
   readonly threshold: number
   readonly isBelowThreshold: boolean
 } {
-  const threshold = 1 / 100 // ~1% for surface codes (typical)
+  const threshold = SURFACE_CODE_MWPM.threshold
   const isBelowThreshold = physicalErrorRate < threshold
 
-  // Simplified model: logical error rate ∝ (physical error)^((distance+1)/2)
-  // Below threshold: exponential suppression; above: errors accumulate
+  // p_L = c (p / p_th)^((d+1)/2), the closed form fitted to numerical
+  // simulation. This computed `p ** ((d+1)/2)` — the same exponent with the
+  // threshold ratio and the prefactor dropped, which is not a simplification of
+  // this model but a different function: at p = 0.001, d = 3 it returned 1e-6
+  // where the fitted form gives 9.2e-4, optimistic by nearly three orders of
+  // magnitude, and by d = 5 the gap is a factor of 160,000. It also left
+  // `threshold` decorative in the one branch that carries the physics.
   const exponent = (distance + 1) / 2
   let logicalErrorRate: number
   if (isBelowThreshold) {
-    logicalErrorRate = physicalErrorRate ** exponent
+    logicalErrorRate = SURFACE_CODE_MWPM.prefactor * (physicalErrorRate / threshold) ** exponent
   } else {
     // Above threshold, errors accumulate quickly
     logicalErrorRate = 1 - (1 - physicalErrorRate) ** distance

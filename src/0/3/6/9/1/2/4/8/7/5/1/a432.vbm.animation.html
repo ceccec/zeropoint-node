@@ -69,9 +69,31 @@
   <script type="module">
     // Import the harmonized VBM animation module
     import { createVBMAnimation, VBM_ANIMATION_CONSTANTS, VBM_ANIMATION_DOC } from './a432.vbm.animation.ts';
-    
+
+    // THE ENGINE IS THE CALLER'S, AND THIS PAGE IS THE CALLER.
+    //
+    // a432.vbm.animation used to import three. It no longer does: it declares
+    // the surface it needs and takes it as a parameter, so the package ships no
+    // renderer. This page therefore has to supply one, and the vendor CDN was
+    // deliberately dissolved here in an earlier wave.
+    //
+    // So it asks, and says what it found. Referencing a bare THREE would throw
+    // ReferenceError on load and read as a broken page rather than as a missing
+    // dependency, which are different problems with different fixes.
+    const engine = globalThis.THREE ?? null;
+    if (!engine) {
+      document.body.insertAdjacentHTML('afterbegin',
+        '<p style="padding:1rem;font:14px system-ui;border:1px solid #999;margin:1rem">'
+        + '<strong>No WebGL engine supplied.</strong> This package ships none by design &mdash; '
+        + '<code>createVBMAnimation</code> takes the renderer as a parameter. Provide one on '
+        + '<code>globalThis.THREE</code> (an import map, a bundler, or a script tag) and reload. '
+        + 'The geometry is computed from the vortex arithmetic either way; only the drawing needs an engine.'
+        + '</p>');
+      throw new Error('a432.vbm.animation: no engine on globalThis.THREE — see the note above');
+    }
+
     // Create the animation controller
-    let vbmController = createVBMAnimation(THREE);
+    let vbmController = createVBMAnimation(engine);
     
     // Get the renderer and append to DOM
     const renderer = vbmController.getRenderer();
@@ -98,7 +120,7 @@
     resetBtn.addEventListener('click', () => {
       vbmController.stop();
       // Recreate the controller for a fresh start
-      const newController = createVBMAnimation(THREE);
+      const newController = createVBMAnimation(engine);
       document.body.replaceChild(newController.getRenderer().domElement, renderer.domElement);
       vbmController = newController;
       console.log('VBM Animation reset');

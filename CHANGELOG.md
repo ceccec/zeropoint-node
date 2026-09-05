@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.5.1
+## 1.5.2
 
 Gates that re-run their own experiment instead of trusting a number.
 

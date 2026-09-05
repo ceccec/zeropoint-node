@@ -11,13 +11,21 @@
  * nobody in this repository chose.
  *
  * WHAT IS AND IS NOT DONE HERE. The portal holds 82,385 records, 66,042 of them
- * datasets, and a 25-dataset sample averages 646 GB each — about 43 PB of ROOT
- * files. That is not downloaded, and no collision is re-simulated: reconstructing
- * LHC events needs CMSSW and the experiments' conditions data, and claiming
+ * datasets, stratified over the partition below at roughly 6.6 PB of ROOT files.
+ * That is not downloaded, and no collision is re-simulated: reconstructing LHC
+ * events needs CMSSW and the experiments' conditions data, and claiming
  * otherwise would be the largest unfalsifiable claim in this repository. What IS
  * computed locally is every one of the 64 quantum cases, exactly, on the real
- * metadata of a real record — and the arithmetic hazard below is real physics
- * data meeting this package's own theorem.
+ * metadata of a real record.
+ *
+ * THIS HEADER SAID 43 PB UNTIL THE ESTIMATE WAS REDONE, and the figure survived
+ * here for a while after the body of the file had corrected it — a stale count
+ * in prose, in the file whose whole subject is stale counts. 43 PB came from 25
+ * records off page 1 under an ordering later found to serve sub-gigabyte
+ * records first: a slice from one end, with an error that had a sign. The
+ * correction reverses a conclusion rather than trimming one, because 6.6 PB is
+ * BELOW 2^53 bytes where 43 PB was above it, so the arithmetic hazard this
+ * package's own theorem names does not bite at corpus scale after all.
  *
  * THE GATES COME FROM THE PACKAGE. src/quantum is imported, never reimplemented,
  * because a benchmark or a proof that carries its own copy of the thing it
@@ -62,6 +70,18 @@ const { zeroState, applyGate1, isNormalized, X, H } = await import(join(ROOT, 's
  * which is retried rather than treated as a verdict.
  */
 const PAGE_BYTES = 25e6
+
+/**
+ * A percentage that ROUNDS UP TO 100 asserts a completeness it does not have.
+ *
+ * This is the third place the same slip appeared: the partition coverage line
+ * printed 100.0% above a line saying INCOMPLETE, and the facet table printed
+ * availability at 100.0% while ten records sat outside its buckets. Fixing it
+ * twice by hand was fixing the instance and leaving the generator, so it is one
+ * function now and every percentage in this file goes through it. Only an exact
+ * equality may print 100.
+ */
+const pct = (part, whole) => (part === whole ? '100' : (Math.floor(part / whole * 1000) / 10).toFixed(1))
 
 /** Thrown when the portal refuses to paginate deeper. Not a transient failure. */
 class PaginationCap extends Error {}
@@ -223,7 +243,21 @@ async function planPartitions(ceiling, budget = { probes: 0, max: 400 }) {
         const sum = buckets.reduce((t, b) => t + b.doc_count, 0)
         return { f, buckets, sum }
       })
-      .filter((c) => c.buckets.length >= 2 && c.sum > 0 && c.sum <= total)
+      // A FACET MUST ACTUALLY DIVIDE THE SCOPE, NOT MERELY MENTION IT.
+      //
+      // `sum <= total` alone accepts a facet covering nothing. The keywords
+      // facet reports ten buckets of one record each — ten of 66,042, or 0.0% —
+      // because the field is sparse AND the aggregation is a top-N truncation,
+      // and 10 <= 66042 passes the overlap test cleanly. Splitting on it would
+      // have produced ten tiny leaves and a remainder of 99.98% of the scope,
+      // which is not a split. Only the max-sum ranking below was preventing
+      // that, and ranking is a preference, not a guard.
+      //
+      // Half is the line: a facet leaving most of its scope in the remainder has
+      // not divided it. Measured coverage for reference — experiment 100%,
+      // number_events 99.9%, collision_energy 95.3%, category 57.9%,
+      // file_type OVERLAPS at 178%, keywords 0.0%.
+      .filter((c) => c.buckets.length >= 2 && c.sum > total / 2 && c.sum <= total)
       .sort((a, b) => b.sum - a.sum)          // largest coverage first; exact wins
     if (scored.length === 0) {
       unsplittable.push({ scope, total, reason: 'every facet here overlaps or does not divide' })
@@ -558,14 +592,31 @@ if (data.partial) {
       // A percentage that ROUNDS UP TO 100 while records are missing asserts the
       // completeness the next line denies. Incomplete coverage is floored, so
       // only an exact partition may print 100%.
-      const ratio = plan.reached / plan.corpus * 100
-      const pct = plan.reached === plan.corpus ? '100' : (Math.floor(ratio * 1000) / 1000).toFixed(3)
+      const coverage = pct(plan.reached, plan.corpus)
+      // WHAT EACH FACET ACTUALLY COVERS, printed because a facet name says
+      // nothing about whether it partitions. Three distinct failures are
+      // visible here and none is guessable from the name: file_type OVERLAPS
+      // because a dataset holds files of several types, keywords covers
+      // essentially nothing because the field is sparse and the aggregation
+      // truncates to a top ten, and category simply omits 42% of the corpus.
+      const rootAgg = (await scopedTotal({}))?.aggregations ?? {}
+      console.log(`\n  facet coverage of the corpus, measured:`)
+      for (const f of [...SPLIT_FACETS, 'keywords']) {
+        const b = rootAgg[f]?.buckets ?? []
+        if (b.length === 0) continue
+        const sum = b.reduce((t, x) => t + x.doc_count, 0)
+        const verdict = sum > data.fetchedTotal ? 'OVERLAPS — multi-valued, cannot partition'
+          : sum === data.fetchedTotal ? 'exhaustive'
+          : `covers ${pct(sum, data.fetchedTotal)}%${sum <= data.fetchedTotal / 2 ? ' — too little to divide' : ''}`
+        console.log(`    ${f.padEnd(18)} ${String(b.length).padStart(3)} buckets  ${String(sum).padStart(7)}  ${verdict}`)
+      }
+
       const twoWay = plan.leaves.filter((l) => l.directions === 2).length
       console.log(`\n  scoped-query partition, planned in ${plan.probes} probes of one record each:`)
       console.log(`    ${plan.leaves.length} leaves — ${plan.leaves.length - twoWay} paginable in one direction, ${twoWay} needing both`)
       console.log(`    (a scope up to ${(2 * reachable).toLocaleString()} is enumerable ascending then descending; the halves meet)`)
       console.log(`    largest leaf ${Math.max(...plan.leaves.map((l) => l.total)).toLocaleString()} records`)
-      console.log(`    leaves sum to ${plan.reached.toLocaleString()} of ${plan.corpus.toLocaleString()} (${pct}%)`)
+      console.log(`    leaves sum to ${plan.reached.toLocaleString()} of ${plan.corpus.toLocaleString()} (${coverage}%)`)
       if (plan.unsplittable.length > 0) {
         console.log(`    ${plan.unsplittable.length} scope(s) still over the ceiling or unaccounted:`)
         for (const u of plan.unsplittable.slice(0, 5)) {

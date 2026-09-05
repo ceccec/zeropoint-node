@@ -131,7 +131,7 @@ export const MUTATIONS = [
   // 1.4.9's criteria. A criterion that confirms whatever it is shown confirms
   // nothing, so each is corrupted in the direction that would make it lie.
   ['verification/realtime-criterion.ts', 'verification/realtime-criterion.test.ts',
-    'if (p.length !== 1 << n) break', 'if (p.length !== 1 << n) break; if (n > 2) return { qubits: 0, ns: 0, deadlineNs: DEADLINE_NS, wall: "stopped" }',
+    'if (width !== 1 << n) break', 'if (width !== 1 << n) break; if (n > 2) return { qubits: 0, ns: 0, deadlineNs: DEADLINE_NS, wall: "stopped" }',
     'the quantum-scale reach stops reaching and the criterion should notice'],
   ['verification/realtime-criterion.ts', 'verification/realtime-criterion.test.ts',
     'if (dt > worst) worst = dt', 'if (dt < worst) worst = dt',

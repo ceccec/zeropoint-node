@@ -148,20 +148,45 @@ const nowNs = (): bigint =>
  * inside one frame. That number is a property of the code and the machine
  * together, and it is recomputed rather than remembered.
  */
+/**
+ * TAKE THE FLOOR OF SEVERAL TRIALS, NOT ONE SAMPLE.
+ *
+ * This took a single timing per width and stopped at the first overrun, which
+ * made the criterion fail under machine load and pass again moments later —
+ * it blocked a push, then met every condition three times running with nothing
+ * changed. A gate that fails on load is not measuring the property it names,
+ * and a peer session hit the identical shape in a wall-clock ratchet that fired
+ * at 146 against a floor of 134 having caught nothing but a busy machine.
+ *
+ * Contention can only ever make a step look SLOWER, never faster, so an
+ * observation is the true cost plus non-negative noise and the minimum over
+ * trials is the least biased estimate available. Three trials, floor taken.
+ * This does not weaken what is checked: a width that genuinely cannot fit will
+ * miss the deadline in all three.
+ */
+const REACH_TRIALS = 3
+
 export function quantumScaleReach(maxQubits: number = 20): { qubits: number; ns: number; deadlineNs: number; wall: string } {
   let best = 0
   let bestNs = 0
   for (let n = 1; n <= maxQubits; n += 1) {
-    const t0 = nowNs()
-    let reg: Register = zeroState(n)
-    for (let q = 0; q < n; q += 1) reg = applyGate1(reg, q, H)
-    for (let q = 0; q + 1 < n; q += 1) reg = cnot(reg, q, q + 1)
-    const p = probabilities(reg)
-    const dt = Number(nowNs() - t0)
-    // Touch the result so the step cannot be optimised away, and check the one
-    // law that must hold at every width: a unitary evolution keeps the norm.
-    if (p.length !== 1 << n) break
-    if (dt <= DEADLINE_NS) { best = n; bestNs = dt } else { return { qubits: best, ns: bestNs, deadlineNs: DEADLINE_NS, wall: `${n} qubits took ${dt} ns, past the frame` } }
+    let floorNs = Number.POSITIVE_INFINITY
+    let width = 0
+    for (let trial = 0; trial < REACH_TRIALS; trial += 1) {
+      const t0 = nowNs()
+      let reg: Register = zeroState(n)
+      for (let q = 0; q < n; q += 1) reg = applyGate1(reg, q, H)
+      for (let q = 0; q + 1 < n; q += 1) reg = cnot(reg, q, q + 1)
+      const p = probabilities(reg)
+      const dt = Number(nowNs() - t0)
+      // Touch the result so the step cannot be optimised away.
+      width = p.length
+      if (dt < floorNs) floorNs = dt
+    }
+    if (width !== 1 << n) break
+    if (floorNs <= DEADLINE_NS) { best = n; bestNs = floorNs } else {
+      return { qubits: best, ns: bestNs, deadlineNs: DEADLINE_NS, wall: `${n} qubits took ${floorNs} ns at best of ${REACH_TRIALS}, past the frame` }
+    }
   }
   return { qubits: best, ns: bestNs, deadlineNs: DEADLINE_NS, wall: `${maxQubits} qubits still fit` }
 }

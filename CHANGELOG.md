@@ -1,6 +1,25 @@
 # Changelog
 
-## 1.5.2
+## 1.5.3
+
+**The MCP surface was documented on no page of a 190-page site.** Eleven tools,
+the thing an agent reaches first, named nowhere. `docs/mcp-tools.md` is now
+generated from the `TOOLS` array in `src/mcp/server.ts` and `parity:check`
+fails if it drifts — a hand-written list of eleven tools is a copy, and this
+release is largely a record of what copies do. It does NOT claim the four
+surfaces are equivalent: 23 entry points against 11 tools is a choice about
+what an agent should reach for, stated on the page rather than hidden, and
+there is still no general CLI.
+
+**Two gates reported a refutation when they had asked nothing.** `lean:agrees`
+and `lean:bounds` exited 1 with no toolchain on PATH — the same exit a real
+disagreement produces — so every CI run reported that the TypeScript and the
+Lean DISAGREE and that the bounds do not survive widening. In the log the two
+were indistinguishable. `lean:check` already voided on the identical
+condition. Both now void loudly and list what they did not evaluate. CI has
+been green since.
+
+
 
 Gates that re-run their own experiment instead of trusting a number.
 

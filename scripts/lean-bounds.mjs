@@ -82,8 +82,19 @@ for (const m of source.matchAll(/^theorem\s+(\w+)([\s\S]*?):=/gm)) {
 }
 
 try { execFileSync('lean', ['--version'], { stdio: 'pipe' }) } catch {
-  console.error('lean:bounds FAIL — no lean on PATH; this check has no offline fallback, because the kernel is the thing being asked')
-  process.exit(1)
+  // AN ABSENT INSTRUMENT VOIDS, IT DOES NOT VERDICT — the third gate in this
+  // family to need saying so. lean:check already voids on exactly this
+  // condition; lean:agrees and this one exited 1, which is the same exit a real
+  // refutation produces, so a machine without the toolchain reported that the
+  // bounds do NOT survive widening. Nothing had been asked.
+  //
+  // The note it carried is still true: there is no offline fallback, because
+  // the kernel is the thing being asked. That is an argument for evaluating
+  // nothing, not for reporting a failure.
+  console.log('lean:bounds — VOID: no lean on PATH. No bound was widened and no kernel was asked.')
+  console.log('              Whether any bound is load-bearing is unknown here, not refuted.')
+  console.log('              The committed record is left alone; run where the toolchain is.')
+  process.exit(0)
 }
 
 const TMP = join(ROOT, 'lean/.bounds-probe.lean')

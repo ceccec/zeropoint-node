@@ -225,6 +225,7 @@
     "under:claims": "node scripts/under-claims.mjs",
     "stale:figures": "node scripts/stale-figures.mjs",
     "bench:hexbit": "node scripts/hexbit-bench.mjs",
+    "hexbit:advantage": "node --experimental-strip-types scripts/hexbit-advantage.mjs",
     "cern:cases": "node --experimental-strip-types scripts/cern-quantum-cases.mjs",
     "criteria:check": "node --experimental-strip-types scripts/criteria-check.mjs",
     "plan:check": "node scripts/plan-check.mjs",

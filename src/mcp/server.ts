@@ -327,7 +327,15 @@ async function handle(msg: JsonRpc): Promise<string> {
     return result(msg.id, {
       protocolVersion: '2024-11-05',
       capabilities: { tools: {} },
-      serverInfo: { name: 'zeropoint-node', version: '1.0.0' },
+      // Kept as a literal because this file is bundled to both ESM and CJS and
+      // a runtime read of package.json resolves differently in each. It said
+      // 1.0.0 while the package was 1.5.1 — the version an MCP client is told,
+      // wrong by five minors, in the one surface that identifies this package
+      // to other tools. mcp:smoke asserted only that serverInfo.name EXISTED,
+      // so nothing compared it to anything. It now requires this string to
+      // equal the version in package.json, which makes the copy held rather
+      // than merely present.
+      serverInfo: { name: 'zeropoint-node', version: '1.5.1' },
     })
   }
   if (method === 'notifications/initialized') {

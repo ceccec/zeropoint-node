@@ -1,10 +1,10 @@
 {
   "what": "Which modules print to stdout merely on being imported. One node process per module, so it is folded behind a fingerprint of the .ts files under src/ and of the ALLOWED list in scripts/silent-import.mjs.",
   "doesNotEstablish": "that a module is silent when USED. This imports and nothing more; a function that prints when called is invisible here.",
-  "inputsFingerprint": "b66dc1cb87bc37ccaffaebc0ae2ad41b",
+  "inputsFingerprint": "437c5737c5c82bf1bd609e41cd731d01",
   "modules": 281,
   "noisy": 0,
   "lines": 0,
   "problems": [],
-  "contentHash": "172ff7a0bb41db39cf00d8c4d1dece95"
+  "contentHash": "3a88526fef73e5cbf6c6b567764c4ad6"
 }

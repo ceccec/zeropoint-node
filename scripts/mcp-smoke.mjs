@@ -12,7 +12,7 @@
  */
 
 import { spawn } from 'node:child_process'
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -63,6 +63,20 @@ async function main() {
   send({ jsonrpc: '2.0', id: 1, method: 'initialize', params: {} })
   const init = await waitReply(1)
   if (!init.result?.serverInfo?.name) throw new Error('initialize failed')
+
+  // THE VERSION A CLIENT IS TOLD MUST BE THE VERSION IT INSTALLED.
+  //
+  // This checked only that serverInfo.name existed — a presence test, comparing
+  // nothing to anything — while the server reported 1.0.0 for a package at
+  // 1.5.1. Found by installing the published tarball into an empty directory
+  // and asking the server who it was, which is the one question every MCP
+  // client asks first and no gate here had ever asked.
+  const pkgVersion = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8')).version
+  const said = init.result.serverInfo.version
+  if (said !== pkgVersion) {
+    throw new Error(`serverInfo.version is ${said} but package.json says ${pkgVersion}`
+      + ' — src/mcp/server.ts carries a literal that has drifted')
+  }
 
   send({ jsonrpc: '2.0', id: 2, method: 'tools/list', params: {} })
   const list = await waitReply(2)

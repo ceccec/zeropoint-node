@@ -2,7 +2,7 @@
   "what": "Every comparison inside each seal predicate, read from the TypeScript AST and classified. structural = at least one computation is compared to another computation. pinned = there are comparisons and every one is against a literal, so the seal would fall for a convention as readily as for a law.",
   "doesNotEstablish": "that a structural seal is independent of what it checks. A predicate can pin a value without spelling it out — a comparison against an imported constant reads as structural here — so the pinned count is a LOWER bound. It also does NOT say a pinned seal is wrong: born_rule_sum pins on near(total, 1), and 1 is the normalisation the mathematics forces, not a convention someone chose. The verdict says the seal would fall for a convention as readily as for a law; whether ITS literal is a convention is a judgement this makes no attempt at.",
   "tally": {
-    "structural": 32,
+    "structural": 37,
     "delegates": 1,
     "pinned": 3
   },
@@ -21,6 +21,31 @@
         "applyGate1",
         "isNormalized"
       ]
+    },
+    "complex_arithmetic_is_a_field": {
+      "verdict": "structural",
+      "literalComparisons": 1,
+      "computedComparisons": 3
+    },
+    "rotations_compose_by_adding_their_angles": {
+      "verdict": "structural",
+      "literalComparisons": 0,
+      "computedComparisons": 2
+    },
+    "cz_is_symmetric_in_its_qubits_and_cnot_is_not": {
+      "verdict": "structural",
+      "literalComparisons": 0,
+      "computedComparisons": 2
+    },
+    "probabilities_agree_with_the_amplitudes_they_come_from": {
+      "verdict": "structural",
+      "literalComparisons": 1,
+      "computedComparisons": 3
+    },
+    "the_identity_gate_moves_nothing": {
+      "verdict": "structural",
+      "literalComparisons": 0,
+      "computedComparisons": 2
     },
     "every_identification_reference_resolves": {
       "verdict": "structural",

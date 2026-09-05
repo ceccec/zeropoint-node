@@ -177,7 +177,35 @@ in the shipped source. The header above that predicate had already recorded this
 exact failure once and fixed the list while keeping the predicate that made a
 list necessary.
 
-36 seals, 35 mutations: 32 structural, 3 pinned, 1 delegating. The three that
+**Five laws over the arithmetic the simulator is built from.** 48 quantum
+exports are now named by a seal, up from 35. `complex_arithmetic_is_a_field`
+checks that subtraction inverts addition, that multiplication commutes,
+associates and DISTRIBUTES over addition, that conjugation is an involution and
+that `cabs2(z)` is the real part of `z` times its conjugate — tying three
+exports to one another over a spread of operands, with no expected value
+written down. `rotations_compose_by_adding_their_angles` checks that `rx`, `ry`
+and `rz` each form a one-parameter group, comparing a composed rotation against
+a separately computed single one, and that a full turn is the NEGATION of the
+identity rather than the identity, which is what separates a real spinor
+rotation from an angle bookkeeping error.
+`cz_is_symmetric_in_its_qubits_and_cnot_is_not` checks the two gates against
+each other: swapping the qubit arguments must leave CZ identical and must
+change CNOT, because a seal asserting only the CZ half would pass for CNOT too.
+
+Every one was perturbed at its source. Flipping the sign of `cmul`'s cross term
+fells four seals; removing the negation from `cconj`, dropping the imaginary
+term from `cabs2`, and making `I1` non-identity each fell theirs.
+
+`probabilities_agree_with_the_amplitudes_they_come_from` is the honest
+exception. `probabilities` is defined as `amps.map(cabs2)`, so comparing it to
+`cabs2` compares a function against its own definition — mutating `cabs2` moves
+both sides and the seal holds, which was checked rather than assumed. It
+constrains the WIRING, since replacing the body with zeros fells it, and it
+names `complex_arithmetic_is_a_field` in `identifiedBy` for the half it cannot
+see. That is the reference mechanism from earlier in this release being used
+for the reason it was built.
+
+41 seals, 35 mutations: 37 structural, 3 pinned, 1 delegating. The three that
 remain pinned pin conventions correctly — FIPS-203 parameter sizes, a
 hand-computed oracle over hand-built graphs, and a non-emptiness check.
 

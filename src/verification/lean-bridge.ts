@@ -93,9 +93,24 @@ import {
   computeInterferencePattern,
   describeQuantumExecution,
   phaseEstimation,
+  // The arithmetic and gate surface, brought under law below. Imported, never
+  // copied — a checker holding its own version of these would agree with itself.
+  cx,
+  cadd,
+  csub,
+  cmul,
+  cconj,
+  cabs2,
+  I1,
+  rx,
+  ry,
+  rz,
+  cnot,
+  cz,
+  probabilities,
 } from '../quantum/index.ts'
 import { ML_KEM_768 } from '../crypto/ml-kem.ts'
-import { sqrt } from '../0/algebra.ts'
+import { sqrt, TAU } from '../0/algebra.ts'
 
 // ============================================================================
 // PROOF CERTIFICATE TYPES
@@ -374,6 +389,105 @@ export const SEALS: Record<string, Seal> = {
     },
   },
 
+  complex_arithmetic_is_a_field: {
+    basis: 'the shipped complex arithmetic obeys the field laws it must: subtraction undoes addition, multiplication is commutative and associative and DISTRIBUTES over addition, conjugation is an involution, and cabs2(z) is the real part of z times its conjugate — which ties three separate exports to one another. Every equation compares two computed complex numbers over a spread of operands including zero and purely imaginary values; nothing is written down as an expected result.',
+    decide: () => {
+      const zs = [cx(0), cx(1), cx(0, 1), cx(3, -1), cx(-4, 5), cx(2, 2), cx(-1, -7)]
+      const same = (p: C, q: C) => near(p.re, q.re) && near(p.im, q.im)
+      for (const a of zs) {
+        // conjugation undoes itself, and squaring the modulus agrees with z*conj(z)
+        if (!same(cconj(cconj(a)), a)) return false
+        if (!near(cabs2(a), cmul(a, cconj(a)).re)) return false
+        if (!near(cmul(a, cconj(a)).im, 0)) return false
+        for (const b of zs) {
+          if (!same(csub(cadd(a, b), b), a)) return false          // subtraction inverts addition
+          if (!same(cmul(a, b), cmul(b, a))) return false          // commutative
+          for (const c of zs) {
+            if (!same(cadd(cadd(a, b), c), cadd(a, cadd(b, c)))) return false
+            if (!same(cmul(cmul(a, b), c), cmul(a, cmul(b, c)))) return false
+            // distributivity is the law that fails first when a product is
+            // written with a sign or a cross-term wrong
+            if (!same(cmul(a, cadd(b, c)), cadd(cmul(a, b), cmul(a, c)))) return false
+          }
+        }
+      }
+      return true
+    },
+  },
+  rotations_compose_by_adding_their_angles: {
+    basis: 'rx, ry and rz each form a one-parameter group: turning by a then by b is turning by a+b, checked amplitude by amplitude on an arbitrary complex state. The composed state is compared against a SEPARATELY COMPUTED single rotation, so both sides are computations and no matrix is named. Also checks the spinor fact that a full 2pi turn is NOT the identity but its negation, which is what distinguishes a genuine half-integer-spin rotation from an angle bookkeeping error.',
+    decide: () => {
+      const same = (p: { amps: C[] }, q: { amps: C[] }) =>
+        p.amps.every((a, i) => near(a.re, q.amps[i]!.re) && near(a.im, q.amps[i]!.im))
+      const start = { n: 1, amps: [c(3, -1), c(-2, 4)] } as ReturnType<typeof zeroState>
+      const angles = [0, 1 / 4, 1 / 2, 1, 2]
+      for (const gate of [rx, ry, rz]) {
+        for (const a of angles) {
+          for (const b of angles) {
+            const twice = applyGate1(applyGate1(start, 0, gate(a)), 0, gate(b))
+            const once = applyGate1(start, 0, gate(a + b))
+            if (!same(twice, once)) return false
+          }
+        }
+        // A full turn is minus the identity, not the identity — the spinor sign.
+        // TAU comes from the repository's own algebra, where PI is the rational
+        // 245850922/78256779; ambient Math is banned here and the approximation
+        // is far inside the tolerance this comparison uses.
+        const full = applyGate1(start, 0, gate(TAU))
+        const negated = { n: 1, amps: start.amps.map((a) => c(-a.re, -a.im)) }
+        if (!same(full, negated as ReturnType<typeof zeroState>)) return false
+      }
+      return true
+    },
+  },
+  cz_is_symmetric_in_its_qubits_and_cnot_is_not: {
+    basis: 'CZ does not distinguish control from target and CNOT does — the two are checked against EACH OTHER rather than against a written-down matrix. Swapping the two qubit arguments leaves CZ identical amplitude by amplitude and must change CNOT on a state that can tell them apart. A seal asserting only the CZ half would pass for CNOT too, so the asymmetry is half the law.',
+    decide: () => {
+      const same = (p: { amps: C[] }, q: { amps: C[] }) =>
+        p.amps.every((a, i) => near(a.re, q.amps[i]!.re) && near(a.im, q.amps[i]!.im))
+      const start = { n: 2, amps: [c(1, 0), c(0, 2), c(-3, 1), c(2, -2)] } as ReturnType<typeof zeroState>
+      if (!same(cz(start, 0, 1), cz(start, 1, 0))) return false
+      if (same(cnot(start, 0, 1), cnot(start, 1, 0))) return false
+      // and both are involutions: applied twice, nothing moved
+      if (!same(cz(cz(start, 0, 1), 0, 1), start)) return false
+      if (!same(cnot(cnot(start, 0, 1), 0, 1), start)) return false
+      return true
+    },
+  },
+  probabilities_agree_with_the_amplitudes_they_come_from: {
+    basis: 'probabilities(reg) returns cabs2 of each amplitude in order and nothing else, and every entry is non-negative. The total is NOT compared to the literal 1, so this holds on unnormalised states where 1 would say nothing. DOES NOT ESTABLISH THAT cabs2 IS CORRECT: probabilities is defined as amps.map(cabs2), so this compares a function against its own definition and a change to cabs2 moves both sides equally — verified, by mutating cabs2 and watching this seal hold. What it does constrain is the WIRING: replacing probabilities with zeros fells it. cabs2 itself is identified by complex_arithmetic_is_a_field, which that same mutation does fell.',
+    identifiedBy: ['complex_arithmetic_is_a_field'],
+    decide: () => {
+      const regs = [
+        zeroState(3),
+        applyGate1(zeroState(2), 0, H),
+        { n: 2, amps: [c(2, 0), c(0, -3), c(1, 1), c(-5, 2)] } as ReturnType<typeof zeroState>,
+      ]
+      for (const reg of regs) {
+        const ps = probabilities(reg)
+        if (ps.length !== reg.amps.length) return false
+        let total = 0
+        for (let i = 0; i < ps.length; i += 1) {
+          if (ps[i]! < 0) return false
+          if (!near(ps[i]!, cabs2(reg.amps[i]!))) return false
+          total += cabs2(reg.amps[i]!)
+        }
+        if (!near(ps.reduce((t, p) => t + p, 0), total)) return false
+      }
+      return true
+    },
+  },
+  the_identity_gate_moves_nothing: {
+    basis: 'I1 applied to any qubit of an arbitrary complex state returns that state amplitude for amplitude. Trivial to state and worth sealing because I1 is what every other gate is compared against: if it were not the identity, the involution and composition seals above would be measuring the wrong reference.',
+    decide: () => {
+      const start = { n: 2, amps: [c(3, -1), c(0, 2), c(-4, 5), c(1, 1)] } as ReturnType<typeof zeroState>
+      for (const q of [0, 1]) {
+        const after = applyGate1(start, q, I1)
+        if (!after.amps.every((a, i) => near(a.re, start.amps[i]!.re) && near(a.im, start.amps[i]!.im))) return false
+      }
+      return true
+    },
+  },
   every_identification_reference_resolves: {
     basis: 'every name in an identifiedBy list resolves to a live seal, and no seal names itself. A seal that admits it does not identify its own subject points at the ones that do; without this the pointer is prose, and prose does not fail when the seal it names is renamed, weakened past identifying anything, or deleted. Falsified by renaming any referenced seal, and by a seal naming itself. DOES NOT ESTABLISH THAT A LIST IS COMPLETE: dropping a name shortens the identification silently, and only emptying every list is caught. Requiring a minimum count would pin a number nobody derived, so what is enforced is that each name still points at something, not how many names there are.',
     decide: () => {

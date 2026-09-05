@@ -287,6 +287,48 @@ async function checkLeavesDisjoint(leaves, limitPairs = 200) {
 }
 
 /**
+ * A SLICE IS UNREPRESENTATIVE IN A DIRECTION YOU CANNOT SEE FROM INSIDE IT.
+ *
+ * The ~43 PB corpus figure quoted earlier in this file's history came from 25
+ * records taken off page 1 under the default ordering — and the default
+ * ordering was LATER found to return sub-gigabyte records first, while
+ * sort=-size surfaces multi-terabyte ones. So the sample was drawn from one end
+ * of a distribution already known to be skewed, and its error had a sign.
+ *
+ * With a partition in hand there is no excuse for that. Each leaf is sampled,
+ * the leaf mean is weighted by the leaf's own record count, and the estimate is
+ * the sum over strata. This is not exact — an exact total needs every record,
+ * which is 16.5 GB — but it is an estimate whose bias is bounded by the
+ * sampling within each stratum rather than by which end of the corpus the first
+ * page happened to serve.
+ *
+ * The per-leaf spread is reported alongside, because a stratified estimate over
+ * strata that are internally wild is still a guess and should look like one.
+ */
+async function estimateCorpusBytes(leaves, perLeaf = 20) {
+  const strata = []
+  for (const leaf of leaves) {
+    const q = Object.entries(leaf.scope).map(([k, v]) => `&${k}=${encodeURIComponent(v)}`).join('')
+    const res = await fetch(`https://opendata.cern.ch/api/records/?size=${perLeaf}&page=1&type=Dataset${q}`,
+      { headers: { Accept: 'application/json' } })
+    if (!res.ok) continue
+    const body = await res.json()
+    const sizes = body.hits.hits.map((h) => h.metadata?.distribution?.size).filter((s) => typeof s === 'number')
+    if (sizes.length === 0) continue
+    const mean = sizes.reduce((t, s) => t + s, 0) / sizes.length
+    strata.push({
+      scope: leaf.scope, total: leaf.total, sampled: sizes.length, mean,
+      min: Math.min(...sizes), max: Math.max(...sizes),
+      contribution: mean * leaf.total,
+    })
+  }
+  const estimate = strata.reduce((t, s) => t + s.contribution, 0)
+  const sampled = strata.reduce((t, s) => t + s.sampled, 0)
+  const covered = strata.reduce((t, s) => t + s.total, 0)
+  return { estimate, strata, sampled, covered }
+}
+
+/**
  * INVOLUTION INSTEAD OF COLLISION.
  *
  * Every file CERN publishes carries an adler32, and adler32 COMBINES: given the
@@ -539,6 +581,37 @@ if (data.partial) {
       }
       console.log(`    (planning is cheap; harvesting these leaves still costs ~16.5 GB, since`)
       console.log(`     the API will not return sizes without the rest of each record)`)
+
+      // The corpus size, estimated from the PARTITION rather than from a slice.
+      const est = await estimateCorpusBytes(plan.leaves)
+      const pb = est.estimate / 1e15
+      console.log(`\n  corpus bytes, stratified over the partition:`)
+      console.log(`    ${est.sampled} records sampled across ${est.strata.length} strata covering ${est.covered.toLocaleString()} of ${plan.corpus.toLocaleString()}`)
+      console.log(`    estimate ${pb.toFixed(1)} PB   (a slice off page 1 gave 43 PB, from an ordering`)
+      console.log(`    later found to serve sub-gigabyte records first — an error with a sign)`)
+      const wild = est.strata.filter((s) => s.max > s.min * 100).length
+      console.log(`    ${wild} of ${est.strata.length} strata span more than two orders of magnitude internally,`)
+      console.log(`    so this is an estimate and not a total; the exact sum needs every record.`)
+      const top = [...est.strata].sort((a, b) => b.contribution - a.contribution).slice(0, 3)
+      for (const s of top) {
+        console.log(`      ${(s.contribution / 1e15).toFixed(2)} PB  ${s.total.toLocaleString().padStart(6)} records  ${JSON.stringify(s.scope)}`)
+      }
+
+      // AND THE CORRECTION REVERSES THE ANSWER, which is the point of making it.
+      // The whole 2^53 line of enquiry rested on a corpus of ~43 PB against a
+      // threshold of ~9.007 PB. At the stratified estimate the corpus is BELOW
+      // the threshold, so the hazard this package's own theorem names does not
+      // bite here at all — and it was the inflated slice that made it look as
+      // though it did.
+      const ratio = est.estimate / Number(THRESHOLD)
+      console.log(`\n    against 2^53 = ${(Number(THRESHOLD) / 1e15).toFixed(3)} PB, the corpus is ${ratio >= 1 ? 'ABOVE' : 'BELOW'} it at ${ratio.toFixed(2)}x.`)
+      console.log(ratio >= 1
+        ? `    Summing these byte counts in double precision would lose exactness.`
+        : `    So summing every byte count in double precision stays exact, and the`)
+      if (ratio < 1) {
+        console.log(`    earlier framing — that real physics data meets this package's float ban`)
+        console.log(`    at corpus scale — was an artefact of the 43 PB slice, not a finding.`)
+      }
 
       // The sum above is a check that COUNTS. This one COMPARES.
       const disjoint = await checkLeavesDisjoint(plan.leaves)

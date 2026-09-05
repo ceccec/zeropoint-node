@@ -2,6 +2,15 @@
 
 ## 🚀 **Latest Implementation: Real-Time Consciousness Technology**
 
+> **Real-time is a property of the machine, not of the code.** Every claim in
+> this document bound to the real-time criterion holds only where the criterion
+> holds. It reports 8/8 and 12 qubits inside a 60 Hz frame on an M1 Max, and
+> 7/8 on the shared runner that builds this repository — the same code, a
+> slower box. A release was blocked by exactly that difference, which is the
+> gate working: an unqualified "fully implemented" is false on any machine
+> that misses the deadline. Run `npm run test:realtime-criterion` on yours.
+
+
 ### **📊 Implementation Status**
 
 #### **✅ Completed Features**

@@ -24,7 +24,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ n ∈ List.range 60, n ≠ 0 → dr n = drTS n</code></p>\n<p>Digital root as a closed form. This agrees with the TypeScript `digitalRoot` from ONE upward and differs at zero: ℕ subtraction truncates, so `0 - 1 = 0` and `dr 0 = 1`, while the TypeScript returns `9`. That difference used to live only in a comment claiming the two were the same function. It is now `drTS` below and a theorem, so the claim is checked rather than asserted. agrees-with: digitalRoot on 1..60 -/ def dr (n : Nat) : Nat := ((n - 1) % 9) + 1 /-- What `src/0/index.ts` actually computes, zero included. -/ def drTS (n : Nat) : Nat := if n = 0 then 9 else dr n /-- Doubling inside the digital root: the Rodin step. -/ def dbl (d : Nat) : Nat := dr (2 * d) /-- The through-void reflection, as src/0/index.ts defines it. agrees-with: throughVoid on 0..9 -/ def tv (d : Nat) : Nat := if d = 0 then 0 else dr (10 - d) /-- agrees-with: VORTEX_ORBIT -/ def orbit : List Nat := [1, 2, 4, 8, 7, 5] /-- agrees-with: VORTEX_AXIS -/ def axis : List Nat := [3, 6, 9] def digits : List Nat := [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] /-- Where the closed form and the shipped function agree, and the single point where they do not. Stating the exception as a theorem is the whole point: a reader who ports `dr` into a new theorem unguarded gets the wrong answer at zero, and this is the line that tells them so.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -169,7 +169,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>dr 0 = 1 ∧ drTS 0 = 9</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -314,7 +314,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ n ∈ List.range 60, dr (dr n) = dr n</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -459,7 +459,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ n ∈ List.range 50, dr (n + 1) = dr (n + 10)</code></p>\n<p>Adding nine does not move the digital root — FOR n ≥ 1. In ℕ subtraction truncates, so `dr 0 = 1` and the closed form is only the digital root from one upward. `decide` refused the unguarded statement, which is the guard equation (1) of the paper already carries.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -604,7 +604,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ d ∈ orbit, dbl d ∈ orbit</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: propext, Quot.sound. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -749,7 +749,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ d ∈ orbit, dbl (dbl (dbl (dbl (dbl (dbl d))))) = d</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -894,7 +894,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ d ∈ orbit, dbl d ≠ d</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -1039,7 +1039,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ d ∈ digits, tv (tv d) = d</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -1184,7 +1184,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ d ∈ digits, tv d = d ↔ (d = 0 ∨ d = 5)</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -1329,7 +1329,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ d ∈ orbit, d ∉ axis</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: propext, Quot.sound. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -1474,7 +1474,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ d ∈ digits, d = 0 ∨ d ∈ orbit ∨ d ∈ axis</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: propext, Quot.sound. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -1619,7 +1619,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>agl.length = 54 ∧ agl.Nodup</code></p>\n<p>The residues coprime to 9: the units of ℤ/9, six of them. -/ def units : List Nat := [1, 2, 4, 5, 7, 8] /-- x ↦ a·x + b on ℤ/9, written as its table of nine values. -/ def affineTable (a b : Nat) : List Nat := (List.range 9).map (fun x => (a * x + b) % 9) /-- Every affine map of ℤ/9: the six units times the nine shifts. -/ def agl : List (List Nat) := units.flatMap (fun a => (List.range 9).map (fun b => affineTable a b)) /-- The nine digits the mirror actually permutes. The void is not among them; see `mirror_is_affine_only_off_the_void`. -/ def nonzero : List Nat := [1, 2, 3, 4, 5, 6, 7, 8, 9] /-- Order 54: the 54 parameter pairs give 54 DISTINCT maps, which is the step a count of pairs on its own does not establish.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -1764,7 +1764,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>affineTable 2 0 ∈ agl ∧ affineTable 8 1 ∈ agl</code></p>\n<p>Doubling is the unit 2 with no shift; the mirror is x ↦ 8x + 1. Both are affine, so the group they generate lies inside AGL(1,ℤ/9).</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: propext, Quot.sound. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -1909,7 +1909,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ d ∈ nonzero, (affineTable 8 1).getD (d % 9) 0 = tv d % 9</code></p>\n<p>The mirror IS `tv`, on the nine digits it permutes, reading 9 as the residue 0. This is the line that makes the order-54 claim be about the vortex mirror rather than about some unrelated affine map.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: propext. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -2054,7 +2054,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>tv 9 = 1 ∧ tv 0 = 0 ∧ (affineTable 8 1).getD 0 0 = 1</code></p>\n<p>And the exception, stated rather than stepped around: at the void the two part company. The residue 0 is where the digit 9 lives, and `tv 9 = 1`, while `tv 0 = 0`. So the affine picture covers the nine digits 1..9 and the void is a tenth point outside that ℤ/9 — which is why the digit space has ten elements and the group has 54, not 90.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: propext. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -2199,7 +2199,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>6 * 2 = 12 ∧ 54 - 12 = 42</code></p>\n<p>Apart, the two generators give only 6 · 2 = 12; the excess 54 − 12 = 42 is the failure to commute that the README calls the entanglement.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -2344,7 +2344,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ b ∈ List.range 100, (((b * 3) % 12 = 0 ∧ (b * 6) % 12 = 0 ∧ (b * 9) % 12 = 0) ∧ b % 9 = 0) ↔ b % 36 = 0</code></p>\n<p>Whole axis frequencies plus digital root 9 is exactly divisibility by 36. `b * d / 12` is whole for every axis digit precisely when 4 divides b, and the digital root condition is 9 dividing b; the two are coprime.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -2489,7 +2489,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>432 % 36 = 0 ∧ 396 % 36 = 0 ∧ 468 % 36 = 0 ∧ 432 = 36 * 12</code></p>\n<p>432 is in that class, and it is not alone there: 396 is the multiple below it and 468 the one above. The class is derived; the choice inside it is not.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -2634,7 +2634,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>dr 432 = 9</code></p>\n<p>The digital root of the base is 9, which follows from 9 dividing it.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -2779,7 +2779,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ d ∈ axis, tv d ∈ orbit</code></p>\n<p>Every axis digit — the three that the doubling walk never reaches — is the mirror of a digit that IS on the flow ring. Nothing off the ring is unpaired.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: propext, Quot.sound. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -2924,7 +2924,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>axis.map tv = [7, 4, 1] ∧ [7, 4, 1].map tv = axis</code></p>\n<p>And in the other direction, so the pairing is a bijection between the axis and exactly three of the six orbit digits.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -3069,7 +3069,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>(digits.filter (fun d => tv d == d)) = [0, 5]</code></p>\n<p>The two digits that are their own reflection: the void, and the midpoint of the flow ring. One from each side.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -3214,7 +3214,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>(digits.filter (fun d => tv d == d)).length = 2 ∧ (digits.filter (fun d => tv d != d)).length = 8 ∧ 2 + 4 * 2 = 10</code></p>\n<p>Nothing is left over. Ten digits: two fixed, and four pairs that the mirror exchanges — 2 + 4·2 = 10, with every pair accounted for.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -3359,7 +3359,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>tv 1 = 9 ∧ tv 2 = 8 ∧ tv 3 = 7 ∧ tv 4 = 6</code></p>\n<p>The pairs, written out, so the claim is the list and not a summary of it.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -3504,7 +3504,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>divisorCount 432 = 20 ∧ divisorCount 396 = 18 ∧ divisorCount 468 = 18</code></p>\n<p>Divisors counted directly, so the statement needs no theory of divisors. -/ def divisorCount (n : Nat) : Nat := ((List.range (n + 1)).filter (fun d => d > 0 && n % d == 0)).length /-- 432 has twenty divisors; the multiples of 36 on either side have eighteen. Twenty is 5 · 4, which is the lattice erpax's theorem needs; eighteen factors as 3 · 3 · 2 and cannot be two chains.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -3649,7 +3649,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>432 % 36 = 0 ∧ 396 % 36 = 0 ∧ 468 % 36 = 0</code></p>\n<p>All three are in the class my own conditions force, which is the point: the class does not distinguish them and the lattice does.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -3794,7 +3794,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ d ∈ nonzero, d + tv d = 10</code></p>\n<p>Every orbit of the mirror sums to ten — the pairs 1+9, 2+8, 3+7, 4+6, and the fixed point 5+5. That is the harmonic content, and it is a fact about THIS involution.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -3939,7 +3939,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>0 + tv 0 = 0</code></p>\n<p>The void is the single exception, and it is why the digit space has ten elements rather than nine: 0 is its own orbit and sums to nothing.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -4084,7 +4084,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ d ∈ digits, swap12 (swap12 d) = d</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -4229,7 +4229,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>swap12 1 + 1 ≠ swap12 3 + 3</code></p>\n<p>A second involution on the same ten digits: swap one and two, fix the rest. -/ def swap12 (d : Nat) : Nat := if d = 1 then 2 else if d = 2 then 1 else d theorem swap12_is_an_involution : ∀ d ∈ digits, swap12 (swap12 d) = d := by decide /-- And its orbits do NOT share a sum: 1 + 2 = 3 while 3 + 3 = 6. So being an involution is not sufficient for a harmonic result, and any claim that it is has this as a counterexample.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -4374,7 +4374,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>(digits.filter (fun d => tv d != d)).length % 2 = 0 ∧ (digits.filter (fun d => swap12 d != d)).length % 2 = 0</code></p>\n<p>What IS general to an involution is the counting: every element is fixed or paired, so the non-fixed elements are even in number. Checked here for both involutions this file defines, which is evidence and not a proof for all.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -4519,7 +4519,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>(nonzero.map (fun d => d + tv d)) = [10, 10, 10, 10, 10, 10, 10, 10, 10] ∧ (nonzero.map (fun d => d + swap12 d)) ≠ [10, 10, 10, 10, 10, 10, 10, 10, 10]</code></p>\n<p>The mirror's harmony stated as the thing that actually distinguishes it: a constant orbit sum, off the void. `swap12` fails exactly this.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -4664,7 +4664,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>orbit.all (fun d => orbit.contains (dbl d)) = true</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -4809,7 +4809,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>orbit.all (fun d => !axis.contains d) = true</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -4954,7 +4954,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>digits.all (fun d => d == 0 || orbit.contains d || axis.contains d) = true</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -5099,7 +5099,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>axis.all (fun d => orbit.contains (tv d)) = true</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -5244,7 +5244,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>nonzero.all (fun d => (affineTable 8 1).getD (d % 9) 0 == tv d % 9) = true</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: propext. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -5389,7 +5389,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>(agl.contains (affineTable 2 0) && agl.contains (affineTable 8 1)) = true</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -5534,7 +5534,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>nonzero.all (fun d => d + tv d == 10) = true</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -5679,7 +5679,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>dr 299792458 = 1</code></p>\n<p>info: 'doubling_and_mirror_are_affine_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms doubling_and_mirror_are_affine_axiom_free /-- info: 'doubling_stays_in_orbit_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms doubling_stays_in_orbit_axiom_free /-- info: 'every_axis_digit_mirrors_an_orbit_digit_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms every_axis_digit_mirrors_an_orbit_digit_axiom_free /-- info: 'every_mirror_orbit_sums_to_ten_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms every_mirror_orbit_sums_to_ten_axiom_free /-- info: 'mirror_table_is_through_void_axiom_free' depends on axioms: [propext] -/ #guard_msgs in #print axioms mirror_table_is_through_void_axiom_free /-- info: 'orbit_and_axis_are_disjoint_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms orbit_and_axis_are_disjoint_axiom_free /-- info: 'orbit_axis_void_exhaust_the_digits_axiom_free' does not depend on any axioms -/ #guard_msgs in #print axioms orbit_axis_void_exhaust_the_digits_axiom_free /- ── Light speed and space: what is arithmetic, and what is not ──────────── The speed of light, the light-year and the astronomical unit are EXACT. Not measured to many places — exact by definition. Since 1983 the metre is defined as the distance light travels in 1/299792458 of a second, so c is a defined integer and the measurement uncertainty moved into the metre. The IAU fixes the light-year and the SI fixes the astronomical unit the same way. That is what makes digital-root arithmetic on them exact rather than provisional, and it is the only reason any of the statements below are theorems. They are facts about NUMERALS that definitions fix. They say nothing whatever about light, space or physics, and the last theorem in this section exists to make that impossible to forget. -/ /-- c = 299792458 m/s has digital root 1 — which is also where the doubling orbit begins. That coincidence is the subject of the final theorem.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -5824,7 +5824,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>299792458 * 31557600 = 9460730472580800</code></p>\n<p>The light-year is exactly c metres per second times a Julian year of 31557600 seconds. Both factors are defined, so the product is too.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -5969,7 +5969,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>dr 9460730472580800 = 9</code></p>\n<p>And its digital root is 9, the axis.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -6114,7 +6114,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>dr 149597870700 = 3</code></p>\n<p>The astronomical unit, 149597870700 m by SI definition, has digital root 3 — also on the axis.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -6259,7 +6259,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>dr 299792457 = 9 ∧ dr 299792458 = 1 ∧ dr 299792459 = 2</code></p>\n<p>THE DEMARCATION, AND IT IS THE POINT OF THE SECTION. One metre per second in either direction changes the digital root of c completely: 299792457 gives 9 and 299792459 gives 2. The value 299792458 was chosen by committee in 1983 to agree with the best measurement of the day, in a unit of length fixed by a prototype bar and then by a krypton lamp. Its digital root is therefore a fact about a numeral in base ten in the SI system, and about nothing else. A digital root that survives no perturbation is not a property of light. It is a property of the number someone wrote down, and this theorem is what keeps the three above from being read as anything more.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -6404,7 +6404,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>∀ t ∈ List.range 40, 299792458 * 299792458 * (t * t) = (299792458 * t) * (299792458 * t)</code></p>\n<p>For a light ray: distance ct in time t leaves a null interval, exactly, for every second in the range checked. No approximation appears at any point.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -6549,7 +6549,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>299792458 * 299792458 = 89875517873681764</code></p>\n<p>c² in metres squared per second squared, exactly.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -6694,7 +6694,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>89875517873681764 > 9007199254740992</code></p>\n<p>And it is past the point where a 64-bit float still counts in whole numbers. 2^53 = 9007199254740992 is the largest integer beyond which doubles skip values; c² is roughly ten times it. Measured: the round trip through a double returns 89875517873681760, four square metres short.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -6839,7 +6839,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>9460730472580800 > 9007199254740992</code></p>\n<p>The light-year in metres is past it too.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -6984,7 +6984,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>149597870700 < 9007199254740992</code></p>\n<p>The astronomical unit is not, and is representable exactly. The three together are the argument: whether a quantity survives depends on its magnitude, and two of the three most ordinary lengths in astronomy do not clear the bar.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -7129,7 +7129,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>9460730472580800 > 9007199254740992 ∧ 89875517873681764 > 9007199254740992</code></p>\n<p>THE CAREFUL PART. Exceeding 2^53 does not mean a value is misrepresented — it means exactness is no longer GUARANTEED. Measured: the light-year round trips through a double unchanged while c², which is larger, loses four. \"It happened to work\" is not a property anyone can rely on, and a repository that computed in doubles would be relying on it without knowing which of the two cases it was in. That is why the arithmetic here is integer, and this theorem is the reason stated as arithmetic rather than as preference.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -7274,7 +7274,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>triples.length = 84</code></p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -7419,7 +7419,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>triples.filter closedUnderDoubling = [[3, 6, 9]]</code></p>\n<p>All 84 three-element subsets of 1..9, as ascending lists. -/ def triples : List (List Nat) := nonzero.flatMap (fun a => nonzero.flatMap (fun b => nonzero.filterMap (fun c => if a < b && b < c then some [a, b, c] else none))) def closedUnderDoubling (t : List Nat) : Bool := t.all (fun d => t.contains (dbl d)) def closedUnderMirror (t : List Nat) : Bool := t.all (fun d => t.contains (tv d)) theorem there_are_eighty_four_triples : triples.length = 84 := by decide /-- THE AXIS IS THE ONLY ONE. Of all 84, exactly one three-element subset is closed under doubling, and it is {3,6,9}. The axis is not chosen here; it falls out of the filter.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -7564,7 +7564,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>triples.filter closedUnderMirror = [[1, 5, 9], [2, 5, 8], [3, 5, 7], [4, 5, 6]]</code></p>\n<p>The mirror closes on four triples, not one, and every one of them contains 5 — which is the mirror's only non-void fixed point, so it could not be otherwise for a set of odd size.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -7709,7 +7709,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>triples.filter (fun t => closedUnderDoubling t && closedUnderMirror t) = []</code></p>\n<p>And no triple is closed under both. The doubling and the mirror share no three-element invariant subset at all, which is the sharper form of the orbit-and-axis split: they do not merely differ, they cannot agree on a set this size.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -7854,7 +7854,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>(triples.filter (fun t => dr (t.foldl (· + ·) 0) == 9)).length = 10</code></p>\n<p>The axis sums to 18 and its digital root is 9 — true, and NOT distinguishing: ten of the 84 triples have a digital-root-9 sum. Stated so the sum is not mistaken for the reason the axis is special. The closure above is.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -7999,7 +7999,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>nonzero.filter (fun d => d % 3 == 1) = triangleOne ∧ nonzero.filter (fun d => d % 3 == 2) = triangleTwo ∧ nonzero.filter (fun d => d % 3 == 0) = axis</code></p>\n<p>The three triangles ARE the residue classes mod 3 — not a labelling, a consequence.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -8144,7 +8144,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>triangleOne.map tv = [9, 6, 3] ∧ axis.map tv = [7, 4, 1]</code></p>\n<p>The mirror carries the first triangle onto the axis and the axis back onto it: a swap, not merely a map into.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -8289,7 +8289,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>triangleTwo.all (fun d => triangleTwo.contains (tv d)) = true</code></p>\n<p>And fixes the middle triangle setwise — 2 and 8 exchange, 5 is its own mirror. This is the tetrahedral equator.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [
@@ -8434,7 +8434,7 @@
           }
         ],
         "description": "<p><strong>Statement.</strong> <code>triangleOne.length + triangleTwo.length + axis.length = 9 ∧ nonzero.all (fun d => triangleOne.contains d || triangleTwo.contains d || axis.contains d) = true</code></p>\n<p>Together: every non-void digit is in exactly one triangle, and the mirror permutes the three by swapping two and fixing one. Nothing is left over.</p>\n<p><strong>Standing.</strong> Accepted by the Lean 4 kernel. Axiom dependencies: none. A proof is counted here only when the kernel accepted the file, the body contains no <code>sorry</code>, and <code>#print axioms</code> reports a dependency set inside {propext, Quot.sound}.</p>\n<p><strong>What this deposit establishes.</strong> Priority: a dated, citable record of this statement and its proof. It does <em>not</em> establish novelty. Novelty is a universal negative — that nobody, anywhere, published this first — and no finite search decides it. The repository records that as the axiom <code>no_prior_art_is_undecidable</code> and has no status that would let a claim be marked novel.</p>\n<p><strong>Funding.</strong> No grant, institutional or commercial funding supports this work. It is unfunded independent research.</p>\n<p><strong>Reproduce.</strong> <code>git clone https://github.com/ceccec/zeropoint-node &amp;&amp; npm run lean:check</code> — the statement is in <code>lean/DigitSpace.lean</code>, which ships in the package.</p>",
-        "version": "1.5.4",
+        "version": "1.5.5",
         "language": "eng",
         "license": "cc-by-nc-nd-4.0",
         "keywords": [

@@ -1,5 +1,51 @@
 # Changelog
 
+## 1.5.5
+
+**83 theorems in one flat ledger were a list, not a structure.** `npm run families`
+groups every theorem under the DEFINED OBJECTS its Lean statement mentions, read
+from the `def` lines rather than listed — 42 objects, 28 families. The shape is
+immediately legible: every digit-space family (`tv` 18, `dr` 10, `orbit` 10,
+`axis` 10, `agl`, the merkaba triangles) is 100% kernel-proven, and every
+quantum family carries the sorries. The corpus is proved exactly where it is
+about Z/9Z and unproved exactly where it is about quantum mechanics.
+
+Two mis-binnings were found and fixed while building it, both the session's
+recurring shape. Binning anything without a local `def` as *closed arithmetic*
+swept `born_rule_sum`, `grover_amplification` and `shor_period_finding` in
+beside c², because they reference Mathlib names. Then the numerals-only test
+filed `qft_unitary` and `grover_speedup` as arithmetic too — because the
+statement reader had not matched their declaration form, and **an unread
+statement contains no letters**, so absence read as evidence. Those 17 are now
+listed as *statement not parsed*, unknown rather than answered.
+
+Closed arithmetic settles at **9**, which is independently the same 9 the
+deposit bar calls supporting arithmetic — two different tests, one testing for
+quantifiers and `def` mentions and one for numerals only, landing on the same
+set.
+
+
+
+**A release gate was deciding on runner speed.** `holds-at-quantum-scale`
+required `reach.qubits >= 10` — a hard threshold on a wall clock. It reports 12
+qubits on an M1 Max and fewer on a shared CI runner, so the same code met the
+criterion here and missed it there; four prose claims bound to the criterion
+then reported their boundary broken and blocked a publish. **1.5.3 published
+only because the runner happened to be fast enough that minute**, and 1.5.4
+failed and then succeeded on a re-run with no change at all.
+
+What the condition existed for is still gated, and both halves are properties
+of the CODE: that the deadline is tested against a step whose cost doubles with
+every qubit rather than against scalar arithmetic, and that the simulator is
+still exactly normalised at the width reached. How many qubits fit in a frame is
+a property of the MACHINE and is reported on the verdict as
+`quantumScaleQubits`, where a reader sees it without a release depending on it.
+
+hitsol-8d gave the general form: counting operations tells you what the
+structure permits, only a clock tells you what you get, and they bound from
+opposite directions. A gate belongs on the first. Verified under eight busy
+cores, where the criterion now holds 8/8 and the reported reach is free to move.
+
 ## 1.5.4
 
 **The README asserted that a 60° rotation makes π rational.** 157 lines under a

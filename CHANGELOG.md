@@ -205,7 +205,22 @@ names `complex_arithmetic_is_a_field` in `identifiedBy` for the half it cannot
 see. That is the reference mechanism from earlier in this release being used
 for the reason it was built.
 
-41 seals, 35 mutations: 37 structural, 3 pinned, 1 delegating. The three that
+**The quantum simulator computes in binary floating point, and this package bans
+that everywhere else.** uuidna's exact simulator returns GHZ outcomes as the
+rationals 1/2 and 1/2; this one returns 5.00000000000000111e-1 with the
+distribution summing to 1 + 2.2e-16. The cause is structural: H carries 1/√2,
+which is irrational and has no exact binary float, so squaring the stored
+approximation cannot land on one half.  carries the
+Clifford fragment with no float in it — amplitudes are (x + yi)/√2^k with x and
+y integers and k one shared exponent, H is (a,b) → (a+b, a−b) with k+1, and
+probabilities are reduced rationals. Non-Clifford gates leave that form and are
+ABSENT rather than approximated, because a partial simulator that looks total is
+worse than none. Seal 42 checks GHZ at 2, 4 and 10 qubits with NO TOLERANCE: the
+sum is a rational and it either is one or it is not. It does not establish that
+any shipped claim was affected — 1.1e-16 sits far inside the 1e-9 every other
+seal uses — only that the exactness was assumed and was not there.
+
+42 seals, 35 mutations: 38 structural, 3 pinned, 1 delegating. The three that
 remain pinned pin conventions correctly — FIPS-203 parameter sizes, a
 hand-computed oracle over hand-built graphs, and a non-emptiness check.
 

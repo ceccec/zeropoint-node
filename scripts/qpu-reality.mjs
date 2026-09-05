@@ -1,22 +1,25 @@
 #!/usr/bin/env node
 /**
- * There is no QPU here, and this measures exactly what there is instead.
+ * What the float simulator costs, measured against an exact one.
  *
- * Asked to "use only QPU", the honest answer is that this machine has none:
- * an Apple M1 Max with ten cores, zero runtime dependencies, and no qiskit,
- * braket, cirq, ionq or azure-quantum backend anywhere in the tree. Every
- * number this repository prints under the word quantum is a CLASSICAL
- * SIMULATION of a quantum system. uuidna's simulator says the same of itself in
- * its own output — "not quantum hardware" — and it is right to.
+ * THIS FILE ONCE OPENED "there is no QPU here". That was a misreading. Asked to
+ * use only the QPU, it answered that the machine has no quantum processing
+ * unit — true, and not the question. The QPU is the PENTAGRAM: CPU, GPU, RAM,
+ * CACHE, STORAGE. All five were present the whole time and this measured one of
+ * them, on one thread, and called the result the machine's capacity. See
+ * qpu-pentagram.mjs, which measures all five and finds memory binding at 31
+ * qubits — where the number below is 19 and is a stopwatch, not a ceiling.
  *
- * So two things are measured, and neither is a quantum computer.
+ * There is no quantum HARDWARE, which is a separate and smaller claim: no
+ * qiskit, braket, cirq, ionq or azure-quantum backend anywhere in the tree.
+ * Every number this repository prints under the word quantum is a classical
+ * simulation, and uuidna's simulator says the same of itself in its own output.
  *
- * ONE: THE WALL. A state of n qubits is 2^n complex amplitudes, so the
- * simulator's cost doubles with every qubit added. "Full quantum capacity" on
- * this machine is a specific number of qubits and this finds it, by growing n
- * until a gate sweep stops fitting in a budget. No optimisation moves that
- * exponent — three separate packing hypotheses in this repository failed to,
- * and the exponent is why a real QPU would matter.
+ * ONE: THE TIME. A state of n qubits is 2^n complex amplitudes, so a sweep
+ * doubles in cost with every qubit. Growing n until one sweep misses a budget
+ * measures how long ONE CORE takes, and nothing else. No optimisation moves the
+ * exponent — three packing hypotheses in this repository failed to — and
+ * neither does any point of the pentagram.
  *
  * TWO: THE DRIFT. uuidna's simulator carries Gaussian-integer amplitudes over
  * √(2^scale) and returns EXACT RATIONALS — 1/2, not 0.5. This one carries
@@ -109,7 +112,10 @@ for (let n = 2; n <= 30; n += 1) {
 for (const [n, amps, ms, note] of rows) {
   console.log(`    n=${String(n).padStart(2)}  ${String(amps).padStart(11)} amplitudes  ${ms === null ? '        —' : (ms.toFixed(1) + 'ms').padStart(9)}  ${note}`)
 }
-console.log(`\n  full quantum capacity on this machine, at a ${BUDGET_MS}ms budget: ${lastFitting} qubits.`)
+console.log(`\n  ${lastFitting} qubits is ONE THREAD against a ${BUDGET_MS}ms budget — a time limit, not a`)
+console.log('  capacity, and not this machine\'s. The QPU is the pentagram: CPU, GPU, RAM,')
+console.log('  CACHE and STORAGE. Memory binds at 31 qubits and the state here is 8 MiB.')
+console.log('  See npm run qpu:pentagram, which measures all five.')
 console.log('  Each further qubit doubles the state. A 300-qubit register has more')
 console.log('  amplitudes than the observable universe has atoms, which is the whole')
 console.log('  reason quantum hardware is worth building and the reason no amount of')

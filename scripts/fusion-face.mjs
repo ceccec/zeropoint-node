@@ -190,6 +190,29 @@ console.log(`              written to ${join(dir, `${REPO}.jsonl`)} — content-
 
 // Recomputed, never remembered: does this repo's cross-repo rule still agree
 // with the peer whose addresses it claims to be comparable with?
+// A FIXTURE MUST ASSERT ITS OWN DISCRIMINATING POWER.
+//
+// millennium-solutions' rule, and it closes the hole their published pin had:
+// that pin reproduces EXACTLY under an ASCII character class, so a fixture
+// consisting only of it would pass while blind to the very corruption the \p{L}
+// clause exists to prevent — 211 of 832 statements in a peer corpus. Asserting
+// that at least one case CHANGES under the defect means trimming the set to
+// Latin-only cannot leave a green gate that checks nothing.
+{
+  const asciiClass = (t) => String(t)
+    .replace(/\s+/g, ' ')
+    .replace(/\s(?![A-Za-z0-9_])|(?<![A-Za-z0-9_.])\s/g, '')
+    .replace(/==/g, '=').replace(/!=/g, '≠')
+  const discriminating = CROSS_REPO_FIXTURES.filter(
+    (fx) => asciiClass(fx.statement) !== normaliseCrossRepo(fx.statement))
+  console.log(`              ${discriminating.length} of ${CROSS_REPO_FIXTURES.length} fixture(s) separate \\p{L} from an ASCII class`)
+  if (discriminating.length === 0) {
+    console.error('              FIXTURE IS BLIND — every case survives the ASCII substitution it')
+    console.error('              exists to catch, so it would pass with the defect present')
+    process.exitCode = 1
+  }
+}
+
 for (const fx of CROSS_REPO_FIXTURES) {
   const n = normaliseCrossRepo(fx.statement)
   const got = uuidOf(n)

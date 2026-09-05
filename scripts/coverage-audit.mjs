@@ -43,7 +43,6 @@ const UNLOADED_OK = {
   'src/multidimensional-vortex-demo.ts': 'a demo, printed for humans; nothing asserts on it',
   'src/vbm-demo.ts': 'a demo, printed for humans; nothing asserts on it',
   'src/advanced-vbm.ts': 'genuinely untested — the honest entry in this list',
-  'src/0/3/6/9/1/2/4/8/7/5/1/a432.http.test.ts': 'IS exercised, by test:http, which the chain runs directly. It binds real sockets and fetches them, so its own coverage is recorded in the child that serves rather than in the process that asserts — a limit of the measurement, not a gap in the testing',
   'src/mcp/server.ts': 'IS exercised, by mcp:smoke, which spawns it as a child and kills it — a killed process never flushes coverage, so this is a limit of the measurement rather than a gap in the testing',
   // A BARREL IS SUPPOSED TO BE LOADED BY NOTHING. src/verification/index.ts is
   // the input rollup builds ./verification from, and it exists precisely so that
@@ -110,7 +109,8 @@ const EXERCISERS = [
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.surface.test.ts', null],
   // The node:http router that replaced express. Its subject is a432.http.ts;
   // the server it serves is exercised by starting it, not by this suite.
-  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.http.test.ts', 'src/0/3/6/9/1/2/4/8/7/5/1/a432.http.ts'],
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.http.test.ts', null],
+  ['src/quantum/exact.test.ts', null],
   ['src/multidimensional-vortex-framework.test.ts', 'scripts/jest-lite.mjs'],
   ['scripts/quantum-sim.mjs', null],
   // Forgotten the first time, and it exercises the nine prove* functions that

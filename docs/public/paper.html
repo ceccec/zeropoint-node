@@ -317,21 +317,21 @@ implements and the predicates that decide it. The digit space is partitioned by
 a doubling map into a six-element orbit and a three-element axis; frequency and
 hue are one integer read in two units; ratios are carried as pairs of integers
 rather than decimals, and the two places where binary floating point departs
-from the exact value are stated rather than rounded away. 41 of
-41 theorems carry a predicate that runs and holds, and
+from the exact value are stated rather than rounded away. 42 of
+42 theorems carry a predicate that runs and holds, and
 59 of 83 statements in the Lean files are
 accepted by the Lean kernel &mdash; the rest are written down and not proved,
 and say so.</p>
 
 <p><strong>How much of this package those predicates actually hold.</strong>
-1410 of
-1758 exported values are not reachable
+1415 of
+1770 exported values are not reachable
 from any law, so nothing here constrains them; that count is a floor, because
 the reachability closure over-approximates. Of the
 57 exported literal constants,
 8 are forced by at least one law and
 49 are held by nothing. And of the
-41 predicates, 3 are
+42 predicates, 3 are
 <em>pinned</em> rather than forced &mdash; they hold an expected value as a
 literal, which falls for a convention as readily as for a law. These are
 measured by experiment, not asserted, and the experiments are Appendix G and
@@ -888,7 +888,7 @@ corrupts one line and requires the suite over it to fail; all
 
 <section class="appendix">
 <h2>Appendix F&ensp;Seals</h2>
-<p>Each row is a predicate that runs. 41 of 41 hold at
+<p>Each row is a predicate that runs. 42 of 42 hold at
 generation time; a seal that stopped holding would fail
 <code>npm run test:verification</code> before this page could be regenerated.</p>
 <table class="seals">
@@ -900,6 +900,7 @@ generation time; a seal that stopped holding would fail
 <tr><td><code>cz_is_symmetric_in_its_qubits_and_cnot_is_not</code></td><td>held</td><td>CZ does not distinguish control from target and CNOT does — the two are checked against EACH OTHER rather than against a written-down matrix. Swapping the two qubit arguments leaves CZ identical amplitude by amplitude and must change CNOT on a state that can tell them apart. A seal asserting only the CZ half would pass for CNOT too, so the asymmetry is half the law.</td></tr>
 <tr><td><code>probabilities_agree_with_the_amplitudes_they_come_from</code></td><td>held</td><td>probabilities(reg) returns cabs2 of each amplitude in order and nothing else, and every entry is non-negative. The total is NOT compared to the literal 1, so this holds on unnormalised states where 1 would say nothing. DOES NOT ESTABLISH THAT cabs2 IS CORRECT: probabilities is defined as amps.map(cabs2), so this compares a function against its own definition and a change to cabs2 moves both sides equally — verified, by mutating cabs2 and watching this seal hold. What it does constrain is the WIRING: replacing probabilities with zeros fells it. cabs2 itself is identified by complex_arithmetic_is_a_field, which that same mutation does fell.</td></tr>
 <tr><td><code>the_identity_gate_moves_nothing</code></td><td>held</td><td>I1 applied to any qubit of an arbitrary complex state returns that state amplitude for amplitude. Trivial to state and worth sealing because I1 is what every other gate is compared against: if it were not the identity, the involution and composition seals above would be measuring the wrong reference.</td></tr>
+<tr><td><code>entanglement_is_exact_with_no_tolerance</code></td><td>held</td><td>GHZ on 2, 4 and 10 qubits gives probabilities of exactly 1/2 and 1/2 as REDUCED RATIONALS, and the distribution sums to exactly one. Every other seal here compares floats within 1e-9; this one compares integers and admits no tolerance at all. It exists because the float simulator cannot reach these values: H carries 1/√2, which is irrational and has no exact binary float, so squaring it gives 5.00000000000000111e-1 and the distribution sums to 1 + 2.2e-16. uuidna's simulator returns exact rationals for the same circuits, which is how the gap was found.</td></tr>
 <tr><td><code>every_identification_reference_resolves</code></td><td>held</td><td>every name in an identifiedBy list resolves to a live seal, and no seal names itself. A seal that admits it does not identify its own subject points at the ones that do; without this the pointer is prose, and prose does not fail when the seal it names is renamed, weakened past identifying anything, or deleted. Falsified by renaming any referenced seal, and by a seal naming itself. DOES NOT ESTABLISH THAT A LIST IS COMPLETE: dropping a name shortens the identification silently, and only emptying every list is caught. Requiring a minimum count would pin a number nobody derived, so what is enforced is that each name still points at something, not how many names there are.</td></tr>
 <tr><td><code>pauliY_sign_is_forced_by_x_and_z</code></td><td>held</td><td>Y = i(XZ) as 2x2 matrices. Every other seal here checks relations that -Y satisfies exactly as Y does (it is unitary, squares to I, and anticommutes with X), so flipping the shipped sign of Y moved nothing. This one forces it: Y is computed from the shipped X and Z and compared entry by entry to the shipped Y, with no matrix written down.</td></tr>
 <tr><td><code>pauliX_unitary</code></td><td>held</td><td>X is an involution on EVERY state and preserves the norm of every state, normalised or not. Checked as a relation between two computed states, not against the literal 1 -- which the old form got for free by starting from |0&gt;. DOES NOT IDENTIFY X: being self-inverse and norm-preserving is a property MANY matrices have, the identity among them, so replacing X with I leaves this seal holding. It tests the property, not the subject. X is pinned elsewhere -- pauliY_sign_is_forced_by_x_and_z computes Y from it, pauli_anticomm and pauliX_anticommute_pauliY need it to anticommute, and repetition_detects_error needs it to actually flip a qubit; MEASURED 2026-09-05: replacing the shipped X with the identity felled exactly five seals — pauliY_sign_is_forced_by_x_and_z, pauli_anticomm, pauliX_anticommute_pauliY, repetition_detects_error and phase_estimation_accuracy — and NOT this one. That is a dated fact about the tree, not a property anything enforces: weakening a named seal in place would contradict it silently, and only rerunning the substitution would show it. ceccec.github.io found the identical shape in a reflection facet where reflect(reflect(h)) = h holds for xor with ANY mask.</td></tr>
@@ -1119,8 +1120,8 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>cf004e0d8ae75b93</code> over
-18 equations, 41 seals and 3 axioms. Any change to
+<p class="receipt">Generated from source. Model receipt <code>d47822a954d62fd8</code> over
+18 equations, 42 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>
 </body>

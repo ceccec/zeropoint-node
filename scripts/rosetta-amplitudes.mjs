@@ -161,15 +161,39 @@ for (let t = 0; t < 9; t += 1) for (const [k, f] of Object.entries(runs)) out[k]
 // with a wild spread behind it is worth seeing.
 const stats = Object.entries(out).map(([k, xs]) => ({ k, med: med(xs), lo: Math.min(...xs), hi: Math.max(...xs) }))
 const best = stats.reduce((a, b) => (a.lo <= b.lo ? a : b))
+
+/**
+ * A RATIO OF TWO FLOORS IS NOT THE FLOOR OF THE RATIO.
+ *
+ * hitsol-8d published a 4,682x speedup, then 2,105x on identical data — one
+ * sample firing on the machine. Applying the floor to each side and dividing
+ * made it WORSE, rising to ~7,000x, because min(A)/min(B) is the ratio of two
+ * INDEPENDENT best cases and compounds two optimisms unless the two are
+ * perfectly correlated. Paired — both measured inside one trial, floor taken of
+ * the per-trial RATIO — their answer was 391x to 995x, so the published figure
+ * was inflated by about an order of magnitude by exactly this move.
+ *
+ * The trials here are already paired: every representation is timed once per
+ * round in the same loop. So the ratio is computed per round and floored, and
+ * the floor-of-floors is printed beside it to show the gap the correction
+ * closes rather than silently replacing one number with another.
+ */
+const pairedRatio = (k) => {
+  const mine = out[k]
+  const ref = out[best.k]
+  return Math.min(...mine.map((v, i) => v / ref[i]))
+}
 console.log(`\n  ${REPS} sweeps each, ${N} gates over ${SIZE} amplitudes:`)
 for (const s of stats.sort((a, b) => a.lo - b.lo)) {
-  const ratio = s.lo / best.lo
-  const verdict = s === best ? 'fastest' : ratio < 1.05 ? `TIE — within 5% on the floor` : `${ratio.toFixed(2)}x slower`
-  console.log(`    ${s.k.padEnd(12)} floor ${s.lo.toFixed(1).padStart(6)}ms   median ${s.med.toFixed(1).padStart(6)}ms  [${s.lo.toFixed(1)}–${s.hi.toFixed(1)}]   ${verdict}`)
+  const ratio = pairedRatio(s.k)
+  const naive = s.lo / best.lo
+  const verdict = s === best ? 'fastest' : ratio < 1.05 ? `TIE — within 5% paired` : `${ratio.toFixed(2)}x slower`
+  const gap = s === best ? '' : `  (floor-of-floors would say ${naive.toFixed(2)}x)`
+  console.log(`    ${s.k.padEnd(12)} floor ${s.lo.toFixed(1).padStart(6)}ms   median ${s.med.toFixed(1).padStart(6)}ms   ${verdict}${gap}`)
 }
 
 const shippedStat = stats.find((s) => s.k === 'shipped')
-const gain = shippedStat.lo / best.lo
+const gain = pairedRatio('shipped')
 console.log(`\n  the shipped layout is ${gain.toFixed(2)}x the fastest translation — it IS the fastest.`)
 console.log('  THE HYPOTHESIS IS REFUTED. The premise was that allocating four {re,im}')
 console.log('  objects per amplitude pair is the cost and a typed array would remove it.')

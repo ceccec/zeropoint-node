@@ -55,12 +55,5 @@
     "docFunctions": "9f29199ed938bff5",
     "entryPoints": "63e40d6d6027d502",
     "unloadable": "66f42f1909c4c5b9"
-  },
-  "remeasured": {
-    "unguardedReadme": {
-      "ceilingUnderOldMeasure": 27322,
-      "fingerprintWas": "29af50288641bce1",
-      "reason": "mechanical, not a redefinition: checkedReadmeLines was a top-level await costing 20.8 of ratchet:check's 22 seconds, so it is now lazy and memoised and unguardedReadmeBytes became async to await it. What is counted is unchanged — same README bytes, same guarded-block logic — and the measured value is still 27322, at its existing ceiling."
-    }
   }
 }

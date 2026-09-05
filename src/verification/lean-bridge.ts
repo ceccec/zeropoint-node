@@ -109,6 +109,7 @@ import {
   cz,
   probabilities,
 } from '../quantum/index.ts'
+import { exactZeroState, exactH, exactCnot, exactProbabilities, exactlyNormalised } from '../quantum/exact.ts'
 import { ML_KEM_768 } from '../crypto/ml-kem.ts'
 import { sqrt, TAU } from '../0/algebra.ts'
 
@@ -484,6 +485,30 @@ export const SEALS: Record<string, Seal> = {
       for (const q of [0, 1]) {
         const after = applyGate1(start, q, I1)
         if (!after.amps.every((a, i) => near(a.re, start.amps[i]!.re) && near(a.im, start.amps[i]!.im))) return false
+      }
+      return true
+    },
+  },
+  entanglement_is_exact_with_no_tolerance: {
+    basis: 'GHZ on 2, 4 and 10 qubits gives probabilities of exactly 1/2 and 1/2 as REDUCED RATIONALS, and the distribution sums to exactly one. Every other seal here compares floats within 1e-9; this one compares integers and admits no tolerance at all. It exists because the float simulator cannot reach these values: H carries 1/√2, which is irrational and has no exact binary float, so squaring it gives 5.00000000000000111e-1 and the distribution sums to 1 + 2.2e-16. uuidna\'s simulator returns exact rationals for the same circuits, which is how the gap was found.',
+    identifiedBy: ['born_rule_sum'],
+    decide: () => {
+      const ghz = (n: number) => {
+        let r = exactH(exactZeroState(n), 0)
+        for (let q = 0; q + 1 < n; q += 1) r = exactCnot(r, q, q + 1)
+        return r
+      }
+      for (const n of [2, 4, 10]) {
+        const reg = ghz(n)
+        // No tolerance: the sum is a rational and it either is one or it is not.
+        if (!exactlyNormalised(reg)) return false
+        const ps = exactProbabilities(reg)
+        const first = ps[0]!
+        const last = ps[ps.length - 1]!
+        if (first.numerator !== 1n || first.denominator !== 2n) return false
+        if (last.numerator !== 1n || last.denominator !== 2n) return false
+        // and nothing anywhere between the two poles
+        for (const p of ps.slice(1, -1)) if (p.numerator !== 0n) return false
       }
       return true
     },

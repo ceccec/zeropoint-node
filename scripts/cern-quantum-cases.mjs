@@ -603,12 +603,12 @@ if (data.partial) {
       // the threshold, so the hazard this package's own theorem names does not
       // bite here at all — and it was the inflated slice that made it look as
       // though it did.
-      const ratio = est.estimate / Number(THRESHOLD)
-      console.log(`\n    against 2^53 = ${(Number(THRESHOLD) / 1e15).toFixed(3)} PB, the corpus is ${ratio >= 1 ? 'ABOVE' : 'BELOW'} it at ${ratio.toFixed(2)}x.`)
-      console.log(ratio >= 1
+      const thresholdRatio = est.estimate / Number(THRESHOLD)
+      console.log(`\n    against 2^53 = ${(Number(THRESHOLD) / 1e15).toFixed(3)} PB, the corpus is ${thresholdRatio >= 1 ? 'ABOVE' : 'BELOW'} it at ${thresholdRatio.toFixed(2)}x.`)
+      console.log(thresholdRatio >= 1
         ? `    Summing these byte counts in double precision would lose exactness.`
         : `    So summing every byte count in double precision stays exact, and the`)
-      if (ratio < 1) {
+      if (thresholdRatio < 1) {
         console.log(`    earlier framing — that real physics data meets this package's float ban`)
         console.log(`    at corpus scale — was an artefact of the 43 PB slice, not a finding.`)
       }

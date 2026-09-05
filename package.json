@@ -227,6 +227,7 @@
     "bench:hexbit": "node scripts/hexbit-bench.mjs",
     "hexbit:advantage": "node --experimental-strip-types scripts/hexbit-advantage.mjs",
     "rosetta:amplitudes": "node --experimental-strip-types scripts/rosetta-amplitudes.mjs",
+    "qpu:reality": "node --experimental-strip-types scripts/qpu-reality.mjs",
     "cern:cases": "node --experimental-strip-types scripts/cern-quantum-cases.mjs",
     "criteria:check": "node --experimental-strip-types scripts/criteria-check.mjs",
     "plan:check": "node scripts/plan-check.mjs",

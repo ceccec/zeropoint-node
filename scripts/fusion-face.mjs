@@ -33,6 +33,110 @@ const REPO = 'zeropoint-node'
 const normalise = (t) => String(t).replace(/\s+/g, ' ').trim().toLowerCase().replace(/==/g, '=').replace(/!=/g, '≠')
 const claimId = (t) => 'claim:' + createHash('sha256').update(normalise(t)).digest('hex').slice(0, 24)
 
+/**
+ * The same statement under millennium-solutions' address, so the two sets are
+ * directly comparable: sha256 of the normalised string, first 16 octets, with
+ * RFC 9562 section 5.8 nibbles written into bytes 6 and 8.
+ *
+ * EVERY FIELD BELOW COMES OUT OF THIS FUNCTION IN ONE PASS. A test vector we
+ * exchanged failed twice in a row because the VALUE was computed and the
+ * STRING beside it was typed into a message — first a reconstruction of a
+ * truncated console line, then a retranscription of the corrected one. A pair
+ * with one half computed and one half typed is not half-verified; the typed
+ * half is what says which object the computed half addresses.
+ *
+ * So each line carries the byte length and the full pre-truncation digest of
+ * exactly the bytes that were hashed. A peer who cannot reproduce an address
+ * compares one number and knows immediately whether we are hashing the same
+ * string or hashing it differently — which is the question that cost two
+ * rounds to ask.
+ */
+const uuidOf = (normalised) => {
+  const b = createHash('sha256').update(normalised, 'utf8').digest().subarray(0, 16)
+  b[6] = (b[6] & 0x0f) | 0x80
+  b[8] = (b[8] & 0x3f) | 0x80
+  const h = b.toString('hex')
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`
+}
+
+/**
+ * The cross-repo normaliser, GIVEN AS CODE because prose could not carry it.
+ *
+ * millennium-solutions first described this as "drop a space only where it does
+ * no lexical work", which is an intent and not a rule; implementing the half
+ * that was concrete produced a different address on every statement with a
+ * punctuation-adjacent space. The byte count found it — 163 raw against 162
+ * normalised, one space after a semicolon — and their published pin now
+ * reproduces here exactly, verified before this was adopted rather than after.
+ *
+ * A space survives only between two word characters, because in Lean that space
+ * is the application operator. The `u` flag and \p{L} are load-bearing: an ASCII
+ * class corrupts Greek identifiers, which erpax measured at 211 of 832
+ * statements in a peer corpus.
+ *
+ * IT DOES NOT LOWERCASE, and this repository's own normaliser does. That is a
+ * real divergence and not an oversight to paper over: `Nat` and `nat` are
+ * different identifiers in a Lean corpus, so folding case merges statements
+ * that are not the same statement. Both addresses are emitted for every line —
+ * the local one under the local rule, the cross-repo one under theirs — so the
+ * difference between the two collision counts measures what the clause buys
+ * instead of either of us adopting the other's rule untested.
+ */
+const normaliseCrossRepo = (t) => String(t)
+  .replace(/\s+/gu, ' ')
+  .replace(/\s(?![\p{L}\p{N}_])|(?<![\p{L}\p{N}_.])\s/gu, '')
+  .replace(/==/g, '=')
+  .replace(/!=/g, '≠')
+
+/**
+ * The cross-repo rule checks itself against a peer's published pin on every
+ * run, so "compatible with millennium-solutions" is recomputed rather than
+ * remembered. If they change their normaliser, or this one drifts, the build
+ * says so instead of quietly emitting addresses nobody else can join on.
+ *
+ * The fixture is the pair they published AFTER the byte count located the
+ * disagreement — one space after a semicolon, 163 raw against 162 normalised.
+ */
+const CROSS_REPO_FIXTURES = [
+  {
+    // Theirs. Locates the punctuation-adjacent space clause.
+    from: "millennium-solutions' published pin",
+    statement: "an API operation carries at least the access its collection's strictest standard demands;"
+      + ' an endpoint below its legal floor is a gap named before it can be called.',
+    uuid: '9b7cc563-1d97-8dc2-b439-32322d3b9987',
+    normalisedBytes: 162,
+  },
+  {
+    // Ours, and it exists because THEIR PIN CANNOT SEE THE BUG THEY WARN ABOUT.
+    // Swapping \p{L} for an ASCII class reproduces their fixture exactly — 162
+    // bytes, same UUID — while corrupting every Greek identifier, which is the
+    // failure they measured at 211 of 832 statements in a peer corpus. A
+    // fixture that passes under the defect it is meant to catch is not a
+    // fixture. This one separates them: the ASCII class eats the application
+    // spaces in "for all α β" and yields "for allαβ".
+    from: 'this repository, for the Greek case their pin does not cover',
+    statement: 'for all α β : Real, α + β = β + α',
+    uuid: '9540a8cf-1b28-8068-8fc1-dc95e68f4518',
+    normalisedBytes: 30,
+  },
+]
+
+const addressesOf = (t) => {
+  const local = normalise(t)
+  const cross = normaliseCrossRepo(t)
+  return {
+    claimId: claimId(t),
+    statementUuidLocal: uuidOf(local),
+    statementUuidCrossRepo: uuidOf(cross),
+    // Carried so a peer who cannot reproduce an address compares ONE NUMBER and
+    // learns whether we hashed different bytes or hashed the same bytes
+    // differently. That question cost this exchange three rounds.
+    localBytes: Buffer.byteLength(local, 'utf8'),
+    crossRepoBytes: Buffer.byteLength(cross, 'utf8'),
+    crossRepoSha256: createHash('sha256').update(cross, 'utf8').digest('hex'),
+  }
+}
+
 /** A heading is not a claim. Nor is a bare fragment with no verb-like content. */
 function kindOf(text) {
   const t = String(text).trim()
@@ -47,7 +151,7 @@ const add = (path, claim, extra = {}) => {
   if (text.length <= 15) return
   const kind = extra.kind === 'lean-theorem' || extra.kind === 'seal' || extra.kind === 'axiom'
     ? 'proposition' : kindOf(text)
-  out.push({ repo: REPO, path, claim: text, claimId: claimId(text), extractedKind: kind, ...extra })
+  out.push({ repo: REPO, path, claim: text, ...addressesOf(text), extractedKind: kind, ...extra })
 }
 
 for (const [n, s] of Object.entries(v.SEALS)) add('src/verification/lean-bridge.ts', s.basis, { kind: 'seal', id: n, enforcedBy: 'npm run test:verification' })
@@ -83,3 +187,18 @@ if (dupes.length) {
   }
 }
 console.log(`              written to ${join(dir, `${REPO}.jsonl`)} — content-addressed, so a merge joins on claimId`)
+
+// Recomputed, never remembered: does this repo's cross-repo rule still agree
+// with the peer whose addresses it claims to be comparable with?
+for (const fx of CROSS_REPO_FIXTURES) {
+  const n = normaliseCrossRepo(fx.statement)
+  const got = uuidOf(n)
+  const bytes = Buffer.byteLength(n, 'utf8')
+  const ok = got === fx.uuid && bytes === fx.normalisedBytes
+  console.log(`              cross-repo rule ${ok ? 'AGREES' : 'DISAGREES'} with ${fx.from} (${bytes} bytes)`)
+  if (!ok) {
+    console.error(`              expected ${fx.uuid} at ${fx.normalisedBytes} bytes, got ${got} at ${bytes}`)
+    console.error('              statementUuidCrossRepo is NOT joinable until this agrees')
+    process.exitCode = 1
+  }
+}

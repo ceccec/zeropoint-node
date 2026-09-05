@@ -47,8 +47,23 @@ for (const m of source.matchAll(/agrees-with:\s*(\w+)(?:\s+on\s+(\d+)\.\.(\d+))?
 let hasLean = true
 try { execFileSync('lean', ['--version'], { stdio: 'pipe' }) } catch { hasLean = false }
 if (!hasLean) {
-  console.error('lean:agrees FAIL — no lean on PATH. This check has no offline fallback by design: a paraphrase of the arbiter is not the arbiter.')
-  process.exit(1)
+  // AN ABSENT INSTRUMENT VOIDS, IT DOES NOT VERDICT.
+  //
+  // This exited 1 — the same exit a genuine disagreement produces — so a
+  // machine without the toolchain reported that the pairings DISAGREE, which
+  // nothing had observed. It failed every CI run and the publish workflow with
+  // it, and the two failures were indistinguishable in the log.
+  //
+  // The design note it carried is still right: there is no offline fallback,
+  // because a paraphrase of the arbiter is not the arbiter. That argues for
+  // evaluating NOTHING here, not for reporting a refutation. lean:check meets
+  // the identical condition in the identical file and voids; this now matches
+  // it, loudly, and says precisely what was not evaluated.
+  console.log(`lean:agrees — VOID: no lean on PATH. ${pairs.length} declared pairing(s) NOT evaluated.`)
+  console.log('              Whether the TypeScript and the Lean agree is unknown here, not confirmed')
+  console.log('              and not refuted. Run where the toolchain is; absence is not a reading.')
+  for (const p of pairs) console.log(`                ${p.ts} ~ ${p.lean}${p.lo === null ? '' : ` on ${p.lo}..${p.hi}`}`)
+  process.exit(0)
 }
 
 // Ask Lean for each value. The file is import-free, so a copy plus #eval lines

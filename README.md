@@ -18,7 +18,7 @@ gate that re-performs the measurement and fails if this block disagrees with it.
 
 | | |
 | --- | --- |
-| exported values reachable from no law at all | **1406 of 1754** |
+| exported values reachable from no law at all | **1410 of 1758** |
 | exported literal constants held by nothing | **49 of 57** |
 | constants forced by at least one law | 8 |
 | seal predicates that are *pinned* rather than forced | 3 of 41 |
@@ -62,7 +62,7 @@ and figures that recompute rather than being typed.
 The Lean files hold 83 statements. **59 are accepted by the Lean kernel** and 24 are not:
 19 are closed with `sorry`, 5 import Mathlib and cannot be built here.
 `npm run lean:check` fails if the ledger and the files disagree. `npm run coverage:audit`
-reports that 148 of 1295 exported functions have never been called by anything —
+reports that 148 of 1299 exported functions have never been called by anything —
 published because a reader deserves to know which parts have never run.
 
 ### What is aimed at, and what is built

@@ -13,8 +13,12 @@
 //   POST /rodin/process                → Process custom pattern
 //   any other → 404 JSON with digit 8 colour
 
-import express from 'express';
-import type { Request, Response } from 'express';
+// express was the last third-party runtime dependency here, and it was declared
+// an OPTIONAL peer — so this server silently did not exist for anyone who had
+// not installed it separately. a432.http.ts implements the bounded surface this
+// file actually used, over node:http, and is covered by a432.http.test.ts.
+import { createApp, jsonBody, staticDir } from './a432.http.ts';
+import type { A432Request as Request, A432Response as Response } from './a432.http.ts';
 import path from 'path';
 import { resolveDivision, digitAngleToCMYK, asAngle, possibilityPath, getRodinSequence, analyzeRodinCoilPattern, getRodinCoilHarmonicAnalysis, RODIN_COIL_CORE, RODIN_COIL_DIPOLES, RODIN_COIL_MONOPOLE, RODIN_COIL_GAP_SPACE } from './a432.math.ts';
 import { analyzeTripleMerkabaGeometry, getTripleMerkabaFrequencyMapping, getTripleMerkabaVisualization, TRIPLE_MERKABA_CONSTANTS, FREQUENCY_MAPPING } from './a432.triple.merkaba.ts';
@@ -35,8 +39,8 @@ const readFile = util.promisify(fs.readFile);
 // ——————————————————————————————————————————
 // Setup
 // ---------------------------------------------------------
-const app = express();
-app.use(express.json());
+const app = createApp();
+app.use(jsonBody());
 const CANON_DIR  = import.meta.dirname;
 // Canonical vortex URLs (YANG = forward Rodin, YIN = reverse Rodin)
 const rodinYang = getRodinSequence(); // [1,2,4,8,7,5,1]
@@ -128,7 +132,7 @@ app.get('/living/ui', (req: Request, res: Response) => {
   app.get(url, (_req: Request, res: Response) => {
     res.sendFile(path.join(CANON_DIR, 'a432.index.html'));
   });
-  app.use(url, express.static(CANON_DIR, {
+  app.use(url, staticDir(CANON_DIR, {
     setHeaders: (res, path) => {
       if (path.endsWith('.ts')) {
         res.setHeader('Content-Type', 'application/javascript');
@@ -145,7 +149,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // Serve public directory at root for manifest and bundle
-app.use(express.static(path.join(process.cwd(), 'public')));
+app.use(staticDir(path.join(process.cwd(), 'public')));
 
 // ——————————————————————————————————————————
 // In-memory stores (single-digit ids only) -------------------------------

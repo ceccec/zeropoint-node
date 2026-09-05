@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.5.4
+
+**The README asserted that a 60° rotation makes π rational.** 157 lines under a
+heading that says *computed*, stating `π → 3 + 0i (exact)`, entropy driven to
+zero by `S = k · 0 · ln(0) = 0`, spacetime rendered Euclidean, the
+proton-electron mass ratio made an integer, and the wave function of
+mathematics collapsed — closing with a quotation attributed to Plato that Plato
+did not write.
+
+π is irrational, proved by Lambert in 1761. `0 · ln(0)` is undefined as
+written. mₚ/mₑ is 1836.152673… by measurement. Two of the six subsections had
+been given honest boundary notes at some point; the other four had none, and no
+boundary note rescues a false equation.
+
+It survived because it was phrased as revelation rather than as an effect
+claim, and the prose scanner looks for effect claims. `claims:check` passed over
+it 50 times. The section is replaced by what 60° actually is here — an angle in
+a finite construction over ℤ/9ℤ, computed by `vortexStrokeGateways()` — and by
+a record of exactly what was removed, because deleting a false claim quietly is
+how it comes back.
+
+Unguarded README bytes 27,322 → 23,907.
+
 ## 1.5.3
 
 **The MCP surface was documented on no page of a 190-page site.** Eleven tools,

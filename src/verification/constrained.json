@@ -1,7 +1,7 @@
 {
   "what": "Two measurements of the same question. Reachability is exact and decides what a law COULD constrain. The literal census is an experiment and decides what one DOES.",
   "doesNotEstablish": "that a reachable value is constrained, or that a forced value is forced for a good reason. A law may read a value without asserting anything about it, and a law that pins a literal falls for a convention as readily as for a law — see seal-pinning.json.",
-  "inputsFingerprint": "89ca788983a3433c5effa7316d72778a",
+  "inputsFingerprint": "3cba68fd114e483b934be95273ef2dad",
   "reachability": {
     "exportedValues": 1770,
     "reachable": 355,
@@ -275,5 +275,5 @@
       "kind": "number"
     }
   },
-  "contentHash": "98caa9d52d354468df2ec9ef514de118"
+  "contentHash": "76357c24ae30d0633da00b4c8fb0f85e"
 }

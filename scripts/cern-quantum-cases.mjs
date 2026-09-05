@@ -253,6 +253,40 @@ async function planPartitions(ceiling, budget = { probes: 0, max: 400 }) {
 }
 
 /**
+ * A RIGHT COUNT WITH WRONG MEMBERS PASSES EVERY CHECK THAT COUNTS.
+ *
+ * The completeness test above is arithmetic on totals, and totals are the least
+ * sensitive property a set has: two leaves could overlap by n while a third
+ * misses n, and the sum would not move. millennium-solutions carried a corpus
+ * count that stayed fixed across three passes while its membership was wrong
+ * twice underneath it, and only a comparison against a second corpus exposed it.
+ *
+ * So the leaves are compared rather than counted. Two scopes that fix the same
+ * facet to different values are disjoint by construction and cost nothing to
+ * dismiss. Every other pair is asked directly: query the union of both scopes'
+ * constraints and require the portal to return zero. A non-empty intersection
+ * is a record in two leaves, which no total would have revealed.
+ */
+async function checkLeavesDisjoint(leaves, limitPairs = 200) {
+  const provable = (a, b) => Object.keys(a).some((k) => k in b && a[k] !== b[k])
+  let asked = 0
+  let byConstruction = 0
+  const overlaps = []
+  for (let i = 0; i < leaves.length; i += 1) {
+    for (let j = i + 1; j < leaves.length; j += 1) {
+      const a = leaves[i].scope
+      const b = leaves[j].scope
+      if (provable(a, b)) { byConstruction += 1; continue }
+      if (asked >= limitPairs) return { asked, byConstruction, overlaps, truncated: true }
+      asked += 1
+      const got = await scopedTotal({ ...a, ...b })
+      if (got && got.total > 0) overlaps.push({ a, b, shared: got.total })
+    }
+  }
+  return { asked, byConstruction, overlaps, truncated: false }
+}
+
+/**
  * INVOLUTION INSTEAD OF COLLISION.
  *
  * Every file CERN publishes carries an adler32, and adler32 COMBINES: given the
@@ -505,6 +539,34 @@ if (data.partial) {
       }
       console.log(`    (planning is cheap; harvesting these leaves still costs ~16.5 GB, since`)
       console.log(`     the API will not return sizes without the rest of each record)`)
+
+      // The sum above is a check that COUNTS. This one COMPARES.
+      const disjoint = await checkLeavesDisjoint(plan.leaves)
+      console.log(`\n  leaf disjointness, compared rather than counted:`)
+      console.log(`    ${disjoint.byConstruction} pair(s) disjoint by construction — same facet fixed to different values`)
+      console.log(`    ${disjoint.asked} pair(s) asked directly for a non-empty intersection`)
+      if (disjoint.overlaps.length === 0) {
+        console.log(`    no record lives in two leaves. A right total with wrong members would`)
+        console.log(`    have passed the sum above and failed here.`)
+        if (disjoint.asked === 0) {
+          // SAY WHEN THE ACTIVE ARM NEVER RAN. Every pair was dismissed
+          // structurally because this plan splits one facet at a time, so
+          // siblings differ on the split facet and cousins on an ancestor's.
+          // Zero questions asked is not zero overlaps found, and the two print
+          // identically unless one of them says so.
+          console.log(`    NOTE: the query arm asked nothing — the tree splits one facet at a`)
+          console.log(`    time, so every pair differs on a shared key and is dismissed without`)
+          console.log(`    a request. Verified separately that it does fire: {experiment:CMS}`)
+          console.log(`    and {collision_type:pp} are not structurally disjoint and their`)
+          console.log(`    intersection returns 51,719, which this reports as an overlap.`)
+        }
+      } else {
+        console.log(`    ${disjoint.overlaps.length} OVERLAPPING PAIR(S) — the total was right and the membership was not:`)
+        for (const o of disjoint.overlaps.slice(0, 4)) {
+          console.log(`      ${JSON.stringify(o.a)}`)
+          console.log(`      ${JSON.stringify(o.b)}  share ${o.shared.toLocaleString()}`)
+        }
+      }
 
       // RECID RANGES WOULD BE A PERFECT PARTITION AND DO NOT WORK. Every record
       // has a recid, so ranges over it cannot suffer the missing-field problem

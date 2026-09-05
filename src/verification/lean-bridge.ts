@@ -322,6 +322,23 @@ interface Seal {
   readonly basis: string
   /** Decides a concrete instance. Must be able to return false. */
   readonly decide: () => boolean
+  /**
+   * Seals that identify this one's SUBJECT, when this predicate does not.
+   *
+   * pauliX_unitary checks that X is self-inverse and norm-preserving, which the
+   * identity matrix also is -- so it never identified X. X IS identified, but by
+   * seals written for other reasons, and one of them acquired that power by
+   * accident an hour before this field existed. Weaken it later and X silently
+   * stops being pinned while the seal named after X goes on passing, because it
+   * never checked.
+   *
+   * A comment recording that does not fail. A NAME does: every entry here must
+   * resolve to a live seal, so deleting or renaming one breaks the reference
+   * instead of quietly unpinning the subject. The identification is REFERENCED,
+   * never copied -- a copy would drift and then agree with nothing while
+   * looking authoritative.
+   */
+  readonly identifiedBy?: readonly string[]
 }
 
 /**
@@ -357,6 +374,24 @@ export const SEALS: Record<string, Seal> = {
     },
   },
 
+  every_identification_reference_resolves: {
+    basis: 'every name in an identifiedBy list resolves to a live seal, and no seal names itself. A seal that admits it does not identify its own subject points at the ones that do; without this the pointer is prose, and prose does not fail when the seal it names is renamed, weakened past identifying anything, or deleted. Falsified by renaming any referenced seal, and by a seal naming itself. DOES NOT ESTABLISH THAT A LIST IS COMPLETE: dropping a name shortens the identification silently, and only emptying every list is caught. Requiring a minimum count would pin a number nobody derived, so what is enforced is that each name still points at something, not how many names there are.',
+    decide: () => {
+      let referenced = 0
+      for (const [name, entry] of Object.entries(SEALS)) {
+        const refs = (entry as Seal).identifiedBy
+        if (!refs) continue
+        for (const ref of refs) {
+          if (ref === name) return false        // pointing at itself identifies nothing
+          if (!(ref in SEALS)) return false
+          referenced += 1
+        }
+      }
+      // If nothing declares an identifiedBy this is checking an empty set, and
+      // would pass however broken the mechanism was.
+      return referenced > 0
+    },
+  },
   pauliY_sign_is_forced_by_x_and_z: {
     basis: 'Y = i(XZ) as 2x2 matrices. Every other seal here checks relations that -Y satisfies exactly as Y does (it is unitary, squares to I, and anticommutes with X), so flipping the shipped sign of Y moved nothing. This one forces it: Y is computed from the shipped X and Z and compared entry by entry to the shipped Y, with no matrix written down.',
     decide: () => {
@@ -379,7 +414,13 @@ export const SEALS: Record<string, Seal> = {
     },
   },
   pauliX_unitary: {
-    basis: 'X is an involution on EVERY state and preserves the norm of every state, normalised or not. Checked as a relation between two computed states, not against the literal 1 -- which the old form got for free by starting from |0>.',
+    basis: 'X is an involution on EVERY state and preserves the norm of every state, normalised or not. Checked as a relation between two computed states, not against the literal 1 -- which the old form got for free by starting from |0>. DOES NOT IDENTIFY X: being self-inverse and norm-preserving is a property MANY matrices have, the identity among them, so replacing X with I leaves this seal holding. It tests the property, not the subject. X is pinned elsewhere -- pauliY_sign_is_forced_by_x_and_z computes Y from it, pauli_anticomm and pauliX_anticommute_pauliY need it to anticommute, and repetition_detects_error needs it to actually flip a qubit; MEASURED 2026-09-05: replacing the shipped X with the identity felled exactly five seals — pauliY_sign_is_forced_by_x_and_z, pauli_anticomm, pauliX_anticommute_pauliY, repetition_detects_error and phase_estimation_accuracy — and NOT this one. That is a dated fact about the tree, not a property anything enforces: weakening a named seal in place would contradict it silently, and only rerunning the substitution would show it. ceccec.github.io found the identical shape in a reflection facet where reflect(reflect(h)) = h holds for xor with ANY mask.',
+    identifiedBy: [
+      'pauliY_sign_is_forced_by_x_and_z',
+      'pauli_anticomm',
+      'pauliX_anticommute_pauliY',
+      'repetition_detects_error',
+    ],
     decide: () => {
       // The old body ran X twice on |0> and asked whether amplitude 0 was 1.
       // Starting from |0>, that answer is handed over by the starting point: it

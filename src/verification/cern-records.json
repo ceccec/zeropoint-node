@@ -1,0 +1,1044 @@
+{
+  "fetchedTotal": 66042,
+  "pagesAvailable": 661,
+  "pagesRead": 1,
+  "records": [
+    {
+      "recid": "1120",
+      "title": "LHC2010h_PbPb_VSD_139036",
+      "doi": "10.7483/OPENDATA.ALICE.Y62S.E7UR",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 772862267,
+      "files": 11,
+      "events": 342,
+      "address": "78e6705a",
+      "addressChunks": 12,
+      "addressBytes": "816338666"
+    },
+    {
+      "recid": "203",
+      "title": "Data sample from the CMS HEP Tutorial",
+      "doi": null,
+      "experiment": [
+        "CMS"
+      ],
+      "size": 17033333,
+      "files": 1,
+      "events": 469384,
+      "address": "54119ef5",
+      "addressChunks": 1,
+      "addressBytes": "17033333"
+    },
+    {
+      "recid": "204",
+      "title": "MC: TTbar sample from the CMS HEP Tutorial",
+      "doi": null,
+      "experiment": [
+        "CMS"
+      ],
+      "size": 5492946,
+      "files": 1,
+      "events": 36941,
+      "address": "7adb596e",
+      "addressChunks": 1,
+      "addressBytes": "5492946"
+    },
+    {
+      "recid": "205",
+      "title": "MC: W+jets sample from the CMS HEP Tutorial",
+      "doi": null,
+      "experiment": [
+        "CMS"
+      ],
+      "size": 5019104,
+      "files": 1,
+      "events": 109737,
+      "address": "ccf731d1",
+      "addressChunks": 1,
+      "addressBytes": "5019104"
+    },
+    {
+      "recid": "206",
+      "title": "MC: Drell Yan sample from the CMS HEP Tutorial",
+      "doi": null,
+      "experiment": [
+        "CMS"
+      ],
+      "size": 4776709,
+      "files": 1,
+      "events": 77729,
+      "address": "3e96fc27",
+      "addressChunks": 1,
+      "addressBytes": "4776709"
+    },
+    {
+      "recid": "207",
+      "title": "MC: WW sample from the CMS HEP Tutorial",
+      "doi": null,
+      "experiment": [
+        "CMS"
+      ],
+      "size": 338200,
+      "files": 1,
+      "events": 4580,
+      "address": "d25cc09f",
+      "addressChunks": 1,
+      "addressBytes": "338200"
+    },
+    {
+      "recid": "208",
+      "title": "MC: WZ sample from the CMS HEP Tutorial",
+      "doi": null,
+      "experiment": [
+        "CMS"
+      ],
+      "size": 264045,
+      "files": 1,
+      "events": 3367,
+      "address": "c1195001",
+      "addressChunks": 1,
+      "addressBytes": "264045"
+    },
+    {
+      "recid": "209",
+      "title": "MC: ZZ sample from the CMS HEP Tutorial",
+      "doi": null,
+      "experiment": [
+        "CMS"
+      ],
+      "size": 217945,
+      "files": 1,
+      "events": 2421,
+      "address": "8f4a25d2",
+      "addressChunks": 1,
+      "addressBytes": "217945"
+    },
+    {
+      "recid": "210",
+      "title": "MC: single top sample from the CMS HEP Tutorial",
+      "doi": null,
+      "experiment": [
+        "CMS"
+      ],
+      "size": 501641,
+      "files": 1,
+      "events": 5684,
+      "address": "8ba0c6ac",
+      "addressChunks": 1,
+      "addressBytes": "501641"
+    },
+    {
+      "recid": "211",
+      "title": "MC: QCD sample from the CMS HEP Tutorial",
+      "doi": null,
+      "experiment": [
+        "CMS"
+      ],
+      "size": 24651,
+      "files": 1,
+      "events": 142,
+      "address": "104aa944",
+      "addressChunks": 1,
+      "addressBytes": "24651"
+    },
+    {
+      "recid": "1",
+      "title": "/BTau/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.A342.9982",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 2678962237287,
+      "files": 2916,
+      "events": 25423849,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "10",
+      "title": "/MuOnia/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.TME9.7FP2",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 2584334570979,
+      "files": 2917,
+      "events": 26685576,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "11",
+      "title": "/MultiJet/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.QAJC.TR8V",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 2568199693967,
+      "files": 2142,
+      "events": 21955999,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "12",
+      "title": "/Photon/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.QKAX.PSW6",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 2571301628300,
+      "files": 2814,
+      "events": 25465895,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "13",
+      "title": "/ZeroBias/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.ACV6.SYP3",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 366011126145,
+      "files": 138,
+      "events": 17192479,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "14",
+      "title": "/Mu/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.B8MR.C4A2",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 3208262517610,
+      "files": 2979,
+      "events": 32376291,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "2",
+      "title": "/Commissioning/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.VTD5.V7Y3",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 881301807086,
+      "files": 581,
+      "events": 11907244,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "201",
+      "title": "Muons and electrons in PAT candidate format derived from /Mu/Run2010B-Apr21ReReco-v1/AOD p",
+      "doi": "10.7483/OPENDATA.CMS.RJW2.QP44",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 134939836155,
+      "files": 6,
+      "events": 26718043,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "202",
+      "title": "Muons and electrons in PAT candidate format derived from /Electron/Run2010B-Apr21ReReco-v1",
+      "doi": "10.7483/OPENDATA.CMS.HHTK.9FS2",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 82230947475,
+      "files": 6,
+      "events": 24668844,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "3",
+      "title": "/EGMonitor/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.93E7.64SK",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 1080888315297,
+      "files": 780,
+      "events": 11826859,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "320",
+      "title": "ATLAS WPath 2014 Masterclass dataset 1",
+      "doi": null,
+      "experiment": [
+        "ATLAS"
+      ],
+      "size": 173190255,
+      "files": 20,
+      "events": 1000,
+      "address": "02b69442",
+      "addressChunks": 20,
+      "addressBytes": "173190255"
+    },
+    {
+      "recid": "321",
+      "title": "ATLAS WPath 2014 Masterclass dataset 2",
+      "doi": null,
+      "experiment": [
+        "ATLAS"
+      ],
+      "size": 177887787,
+      "files": 20,
+      "events": 1000,
+      "address": "0649c0d6",
+      "addressChunks": 20,
+      "addressBytes": "177887787"
+    },
+    {
+      "recid": "322",
+      "title": "ATLAS WPath 2014 Masterclass dataset 3",
+      "doi": null,
+      "experiment": [
+        "ATLAS"
+      ],
+      "size": 177998253,
+      "files": 20,
+      "events": 1000,
+      "address": "f704f432",
+      "addressChunks": 20,
+      "addressBytes": "177998253"
+    },
+    {
+      "recid": "323",
+      "title": "ATLAS WPath 2014 Masterclass dataset 4",
+      "doi": null,
+      "experiment": [
+        "ATLAS"
+      ],
+      "size": 165833517,
+      "files": 20,
+      "events": 1000,
+      "address": "cc159754",
+      "addressChunks": 20,
+      "addressBytes": "165833517"
+    },
+    {
+      "recid": "324",
+      "title": "ATLAS WPath 2014 Masterclass dataset 5",
+      "doi": null,
+      "experiment": [
+        "ATLAS"
+      ],
+      "size": 166967575,
+      "files": 20,
+      "events": 1000,
+      "address": "2a971f20",
+      "addressChunks": 20,
+      "addressBytes": "166967575"
+    },
+    {
+      "recid": "325",
+      "title": "ATLAS WPath 2014 Masterclass dataset 6",
+      "doi": null,
+      "experiment": [
+        "ATLAS"
+      ],
+      "size": 165745269,
+      "files": 20,
+      "events": 1000,
+      "address": "f4213934",
+      "addressChunks": 20,
+      "addressBytes": "165745269"
+    },
+    {
+      "recid": "328",
+      "title": "Dataset from the ATLAS Higgs Boson Machine Learning Challenge 2014",
+      "doi": "10.7483/OPENDATA.ATLAS.ZBP2.M5T8",
+      "experiment": [
+        "ATLAS"
+      ],
+      "size": 195543089,
+      "files": 1,
+      "events": 818238,
+      "address": "e4717bbe",
+      "addressChunks": 1,
+      "addressBytes": "65630848"
+    },
+    {
+      "recid": "4",
+      "title": "/Electron/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.PDY4.7H2H",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 3436075195909,
+      "files": 3211,
+      "events": 32772061,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "400",
+      "title": "LHCb masterclass event files for the event display",
+      "doi": "10.7483/OPENDATA.LHCb.6BDP.9K6B",
+      "experiment": [
+        "LHCb"
+      ],
+      "size": 99152972,
+      "files": 175,
+      "events": 5250,
+      "address": "766c993a",
+      "addressChunks": 175,
+      "addressBytes": "99152972"
+    },
+    {
+      "recid": "401",
+      "title": "LHCb event file for real measurement",
+      "doi": "10.7483/OPENDATA.LHCb.E7EJ.JUWR",
+      "experiment": [
+        "LHCb"
+      ],
+      "size": 1289541,
+      "files": 1,
+      "events": 53948,
+      "address": "2ebf133a",
+      "addressChunks": 1,
+      "addressBytes": "1289541"
+    },
+    {
+      "recid": "5",
+      "title": "/Jet/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.3S7F.2E9W",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 2029445136008,
+      "files": 1664,
+      "events": 20022826,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "6",
+      "title": "/JetMETTauMonitor/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.WV7H.T2B8",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 1082770295615,
+      "files": 668,
+      "events": 10178530,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "7",
+      "title": "/METFwd/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.GSK4.32RS",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 1698483289736,
+      "files": 1829,
+      "events": 21127729,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "8",
+      "title": "/MinimumBias/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.6BPY.XFRQ",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 2035984293081,
+      "files": 1564,
+      "events": 40785403,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "9",
+      "title": "/MuMonitor/Run2010B-Apr21ReReco-v1/AOD",
+      "doi": "10.7483/OPENDATA.CMS.KYMN.CR5R",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 1085577921084,
+      "files": 325,
+      "events": 12728741,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "554",
+      "title": "Example CSV output file for SUSYBSMAnalysis-RazorFilter",
+      "doi": "10.7483/OPENDATA.CMS.GACK.GEJA",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 2725994,
+      "files": 1,
+      "events": 21726,
+      "address": "9412cf10",
+      "addressChunks": 1,
+      "addressBytes": "1130837"
+    },
+    {
+      "recid": "1100",
+      "title": "LHC2010b_pp_ESD_117222",
+      "doi": "10.7483/OPENDATA.ALICE.LP3F.G4KR",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 484934275,
+      "files": 2,
+      "events": 8968,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1101",
+      "title": "LHC2010h_PbPb_ESD_138275",
+      "doi": "10.7483/OPENDATA.ALICE.M8X9.EA2V",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 649070529,
+      "files": 3,
+      "events": 404,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1102",
+      "title": "LHC10h_PbPb_ESD_139038",
+      "doi": "10.7483/OPENDATA.ALICE.Y4KJ.8HZC",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 1321375420141,
+      "files": 3466,
+      "events": 744551,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1103",
+      "title": "LHC10h_PbPb_ESD_139173",
+      "doi": "10.7483/OPENDATA.ALICE.47PQ.F9NC",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 1043787368611,
+      "files": 2639,
+      "events": 559371,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1104",
+      "title": "LHC10h_PbPb_ESD_139437",
+      "doi": "10.7483/OPENDATA.ALICE.AHZ4.8SR7",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 1635650164495,
+      "files": 4093,
+      "events": 882159,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1105",
+      "title": "LHC10h_PbPb_ESD_139438",
+      "doi": "10.7483/OPENDATA.ALICE.PFU6.7SUX",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 497253400369,
+      "files": 1263,
+      "events": 281139,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1106",
+      "title": "LHC10h_PbPb_ESD_139465",
+      "doi": "10.7483/OPENDATA.ALICE.QBG8.J7GZ",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 1462055383399,
+      "files": 5062,
+      "events": 1076914,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1107",
+      "title": "LHC10c_pp_ESD_120076",
+      "doi": "10.7483/OPENDATA.ALICE.MZSU.48R5",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 167531827140,
+      "files": 799,
+      "events": 3732298,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1108",
+      "title": "LHC10c_pp_ESD_120244",
+      "doi": "10.7483/OPENDATA.ALICE.WZFH.7S5Q",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 114586268133,
+      "files": 520,
+      "events": 2444747,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1109",
+      "title": "LHC10c_pp_ESD_120505",
+      "doi": "10.7483/OPENDATA.ALICE.N4TX.JMR4",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 213426409721,
+      "files": 1098,
+      "events": 4562205,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1110",
+      "title": "LHC10c_pp_ESD_120616",
+      "doi": "10.7483/OPENDATA.ALICE.CGQJ.JUZF",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 288846157300,
+      "files": 1384,
+      "events": 6013407,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1111",
+      "title": "LHC10c_pp_ESD_120822",
+      "doi": "10.7483/OPENDATA.ALICE.2WGH.VZJS",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 387059407642,
+      "files": 2368,
+      "events": 7051925,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1112",
+      "title": "LHC10c_pp_ESD_120824",
+      "doi": "10.7483/OPENDATA.ALICE.P9MP.4EZJ",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 214284349419,
+      "files": 1321,
+      "events": 4161939,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1113",
+      "title": "LHC10c_pp_ESD_120829",
+      "doi": "10.7483/OPENDATA.ALICE.PJK4.RQD2",
+      "experiment": [
+        "ALICE"
+      ],
+      "size": 206856056164,
+      "files": 1200,
+      "events": 4113427,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1300",
+      "title": "/GluGluToHToZZTo4L_M-550_7TeV-minloHJJ-pythia6-tauola/Summer11LegDR-PU_S13_START53_LV6-v1/",
+      "doi": "10.7483/OPENDATA.CMS.VPJH.JZHB",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 62976598891,
+      "files": 27,
+      "events": 297672,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1301",
+      "title": "/GluGluToHToZZTo4L_M-550_7TeV-powheg15-pythia6/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.V6AN.FXJJ",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 63516540024,
+      "files": 25,
+      "events": 299981,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1302",
+      "title": "/VBFToHToZZTo2L2Nu_M-300_7TeV-powheg15-pythia6/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.GA4B.CKA7",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 56739320082,
+      "files": 237,
+      "events": 298429,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1303",
+      "title": "/VBFToHToZZTo2L2Nu_M-350_7TeV-powheg15-pythia6/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.9MHK.R9U4",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 56341744883,
+      "files": 236,
+      "events": 296022,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1304",
+      "title": "/VBFToHToZZTo2L2Nu_M-225_7TeV-powheg15-pythia6/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.D72N.TR5C",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 56353780177,
+      "files": 21,
+      "events": 299050,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1305",
+      "title": "/GluGluToHToZZTo4L_M-600_7TeV-minloHJJ-pythia6-tauola/Summer11LegDR-PU_S13_START53_LV6-v1/",
+      "doi": "10.7483/OPENDATA.CMS.5YJP.R4GT",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 81293987166,
+      "files": 34,
+      "events": 383530,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1306",
+      "title": "/GluGluToHToZZTo4L_M-600_7TeV-powheg15-pythia6/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.FMNR.TQP3",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 63684672251,
+      "files": 25,
+      "events": 299576,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1307",
+      "title": "/VBFToHToZZTo2L2Nu_M-400_7TeV-powheg15-pythia6/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.ZPH2.MXP5",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 56512402394,
+      "files": 226,
+      "events": 297194,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1308",
+      "title": "/ZZJetsTo2L2Q_TuneZ2_7TeV-madgraph-tauola/Summer11LegDR-PU_S13_START53_LV6-v2/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.HJYH.UMWG",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 195049642186,
+      "files": 66,
+      "events": 994616,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1309",
+      "title": "/ZZJetsTo2L2Nu_TuneZ2_7TeV-madgraph-tauola/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.MQ7E.J9NE",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 196291925679,
+      "files": 497,
+      "events": 1097642,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1310",
+      "title": "/GluGluToHToZZTo4L_M-650_7TeV-minloHJJ-pythia6-tauola/Summer11LegDR-PU_S13_START53_LV6-v1/",
+      "doi": "10.7483/OPENDATA.CMS.KUMT.WEYE",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 61526246967,
+      "files": 16,
+      "events": 289770,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1311",
+      "title": "/GluGluToHToZZTo4L_M-650_7TeV-powheg15-pythia6/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.UB82.2FZU",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 63640091640,
+      "files": 27,
+      "events": 298379,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1312",
+      "title": "/GluGluToHToZZTo4L_M-700_7TeV-minloHJJ-pythia6-tauola/Summer11LegDR-PU_S13_START53_LV6-v2/",
+      "doi": "10.7483/OPENDATA.CMS.M5CN.BTGB",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 63169202172,
+      "files": 20,
+      "events": 297332,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1313",
+      "title": "/GluGluToHToZZTo4L_M-700_7TeV-powheg15-pythia6/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.2JTU.TNBJ",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 63807546095,
+      "files": 28,
+      "events": 298176,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1314",
+      "title": "/GluGluToHToZZTo4L_M-750_7TeV-minloHJJ-pythia6-tauola/Summer11LegDR-PU_S13_START53_LV6-v1/",
+      "doi": "10.7483/OPENDATA.CMS.EPE5.ZUXC",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 62457089322,
+      "files": 26,
+      "events": 293156,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1315",
+      "title": "/GluGluToHToZZTo4L_M-800_7TeV-minloHJJ-pythia6-tauola/Summer11LegDR-PU_S13_START53_LV6-v1/",
+      "doi": "10.7483/OPENDATA.CMS.9RHV.X49V",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 63285091094,
+      "files": 27,
+      "events": 297461,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1316",
+      "title": "/GluGluToHToZZTo4L_M-800_7TeV-powheg15-pythia6/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.HKCE.U6EM",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 64106962738,
+      "files": 27,
+      "events": 298174,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1317",
+      "title": "/GluGluToHToZZTo4L_M-850_7TeV-minloHJJ-pythia6-tauola/Summer11LegDR-PU_S13_START53_LV6-v1/",
+      "doi": "10.7483/OPENDATA.CMS.FCES.39BQ",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 62670199074,
+      "files": 16,
+      "events": 294704,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1318",
+      "title": "/GluGluToHToZZTo4L_M-900_7TeV-minloHJJ-pythia6-tauola/Summer11LegDR-PU_S13_START53_LV6-v1/",
+      "doi": "10.7483/OPENDATA.CMS.QKZU.PZQ6",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 63531070414,
+      "files": 26,
+      "events": 299005,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1319",
+      "title": "/GluGluToHToZZTo4L_M-900_7TeV-powheg15-pythia6/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.4W5F.MMUP",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 64642599439,
+      "files": 27,
+      "events": 299784,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1320",
+      "title": "/GluGluToHToZZTo4L_M-950_7TeV-minloHJJ-pythia6-tauola/Summer11LegDR-PU_S13_START53_LV6-v1/",
+      "doi": "10.7483/OPENDATA.CMS.JG6J.FHZY",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 62473232338,
+      "files": 27,
+      "events": 294295,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1321",
+      "title": "/Graviton2PH6ToZZTo4L_M-125p6_7TeV-JHUGenV3-pythia6/Summer11LegDR-PU_S13_START53_LV6-v1/AO",
+      "doi": "10.7483/OPENDATA.CMS.UYU2.WCAG",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 59210983282,
+      "files": 24,
+      "events": 299681,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1322",
+      "title": "/Higgs0MToGGTo4L_M-125p6_7TeV-powheg15-JHUgenV4/Summer11LegDR-PU_S13_START53_LV6-v1/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.5KC9.YA5J",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 97922474014,
+      "files": 36,
+      "events": 496654,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    },
+    {
+      "recid": "1323",
+      "title": "/Higgs0MToZGTo4L_M-125p6_7TeV-powheg15-JHUgenV4/Summer11LegDR-PU_S13_START53_LV6-v2/AODSIM",
+      "doi": "10.7483/OPENDATA.CMS.PK4V.5EUK",
+      "experiment": [
+        "CMS"
+      ],
+      "size": 97881054379,
+      "files": 31,
+      "events": 494758,
+      "address": null,
+      "addressChunks": 0,
+      "addressBytes": null
+    }
+  ],
+  "partial": true
+}

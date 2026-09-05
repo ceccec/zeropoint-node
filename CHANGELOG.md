@@ -177,7 +177,7 @@ in the shipped source. The header above that predicate had already recorded this
 exact failure once and fixed the list while keeping the predicate that made a
 list necessary.
 
-35 seals, 35 mutations: 31 structural, 3 pinned, 1 delegating. The three that
+36 seals, 35 mutations: 32 structural, 3 pinned, 1 delegating. The three that
 remain pinned pin conventions correctly — FIPS-203 parameter sizes, a
 hand-computed oracle over hand-built graphs, and a non-emptiness check.
 

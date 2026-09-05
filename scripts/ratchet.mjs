@@ -22,6 +22,8 @@ import { checkedReadmeLines } from './lib/readme-figures.mjs'
 import { scanTautologies, selfTest as tautologySelfTest } from './facet-tautology.mjs'
 import { ts, config, walk as scanWalk, sourceFiles, parseTs, importTargets, readCapped } from './lib/scan.mjs'
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, unlinkSync } from 'node:fs'
+import { contentHashOf, sealRecord } from './lib/fingerprint.mjs'
+import { createHash } from 'node:crypto'
 import { tmpdir } from 'node:os'
 import { pathToFileURL } from 'node:url'
 import { execFileSync, execFile } from 'node:child_process'
@@ -380,20 +382,35 @@ function rollupInputs() {
  * page that no machine can contradict shrinks as claims move into blocks
  * something recomputes.
  */
-const checkedReadmeLinesSync = await (async () => {
+/**
+ * LAZY, BECAUSE IT IS THE WHOLE COST OF THIS FILE.
+ *
+ * This was a top-level await, and it is 20.8 of the 22 seconds ratchet:check
+ * takes — it re-derives the README's generated figures to learn which lines a
+ * generator vouches for. Being top-level meant it ran before anything could
+ * decide it was not needed, so the fingerprint fast path added below sat behind
+ * it and saved nothing: the run reported "nothing has changed" after paying the
+ * entire bill to find out.
+ *
+ * Memoised so the cold path still computes it exactly once.
+ */
+let checkedReadmeLinesMemo = null
+async function checkedReadmeLinesOnce() {
+  if (checkedReadmeLinesMemo) return checkedReadmeLinesMemo
   try {
-    return await checkedReadmeLines(ROOT, readFileSync(join(ROOT, 'README.md'), 'utf8'))
+    checkedReadmeLinesMemo = await checkedReadmeLines(ROOT, readFileSync(join(ROOT, 'README.md'), 'utf8'))
   } catch {
-    return new Set() // README missing: nothing to credit
+    checkedReadmeLinesMemo = new Set() // README missing: nothing to credit
   }
-})()
+  return checkedReadmeLinesMemo
+}
 
-function unguardedReadmeBytes() {
+async function unguardedReadmeBytes() {
   const readme = join(ROOT, 'README.md')
   if (!existsSync(readme)) return 0
   const text = readFileSync(readme, 'utf8')
   const allLines = text.split('\n')
-  const checkedLines = [...checkedReadmeLinesSync].map((n) => allLines[n - 1] ?? '')
+  const checkedLines = [...(await checkedReadmeLinesOnce())].map((n) => allLines[n - 1] ?? '')
   let guarded = 0
   // The guarded block names are READ from the README, not listed here. The
   // hardcoded list was pinned to the blocks that existed when it was written:
@@ -577,6 +594,76 @@ if (raise && !reason) {
 }
 let raisedNow = null
 
+/**
+ * A GATE THAT REMEMBERS WHAT IT READ.
+ *
+ * Twelve surfaces, two of which shell out to tsc and eslint over the whole
+ * tree: 22 seconds, the single most expensive step in the chain, and almost
+ * always to learn that nothing moved. Every surface is a pure function of the
+ * tree — the .ts sources, the README, the rollup config — and the verdict also
+ * depends on ratchet.json, since a ceiling is half of every comparison.
+ *
+ * ONLY --check MAY ANSWER FROM A RECORD. `npm run ratchet` writes ceilings and
+ * must always measure; folding the writer would let a ceiling be lowered
+ * against a stale measurement, which is the one thing this file exists to
+ * prevent. The record is keyed on ratchet.json too, so raising or lowering a
+ * ceiling re-measures everything.
+ *
+ * A moved SOURCE re-runs the work. A damaged RECORD fails rather than quietly
+ * regenerating, because checks-falsifiable corrupts artifacts to prove their
+ * checkers notice.
+ */
+const RECORD = join(ROOT, 'src/verification/ratchet-check.json')
+
+function ratchetFingerprint() {
+  const h = createHash('sha256')
+  for (const f of walk(join(ROOT, 'src'), (n) => n.endsWith('.ts')).sort()) {
+    h.update(f.replace(ROOT, '')).update(readFileSync(f))
+  }
+  // Fingerprint MORE than is read, never less: too wide costs a recompute
+  // nobody needed, too narrow is a stale pass.
+  for (const extra of ['README.md', 'rollup.config.js', 'ratchet.json', 'package.json',
+    'tsconfig.json', 'tsconfig.typecheck.json', 'eslint.config.js', 'scripts/ratchet.mjs']) {
+    const f = join(ROOT, extra)
+    if (existsSync(f)) h.update(extra).update(readFileSync(f))
+  }
+  return h.digest('hex').slice(0, 32)
+}
+
+const fingerprint = isCheck ? ratchetFingerprint() : null
+if (isCheck && existsSync(RECORD)) {
+  const raw = readFileSync(RECORD, 'utf8')
+  let recorded = null
+  try { recorded = JSON.parse(raw) } catch {
+    console.error('ratchet:check FAIL — src/verification/ratchet-check.json is not readable JSON')
+    process.exit(1)
+  }
+  if (JSON.stringify(recorded, null, 2) + '\n' !== raw) {
+    console.error('ratchet:check FAIL — the record does not round-trip: its bytes have been altered')
+    process.exit(1)
+  }
+  if (typeof recorded.contentHash !== 'string' || contentHashOf(recorded) !== recorded.contentHash) {
+    console.error('ratchet:check FAIL — the record does not match its own contentHash: its content has been altered')
+    process.exit(1)
+  }
+  if (recorded.inputsFingerprint === fingerprint) {
+    console.log('ratchet:check')
+    for (const r of recorded.rows) console.log(r)
+    if (recorded.grew) {
+      console.error('ratchet: a surface grew — fix the regression, or raise that one ceiling deliberately:\n'
+        + '  npm run ratchet -- --raise=<surface> --reason="why this increase is correct"')
+      process.exit(1)
+    }
+    if (recorded.fell) {
+      console.error('ratchet: a surface shrank — run npm run ratchet to lower the ceiling')
+      process.exit(1)
+    }
+    console.log(`ratchet:check ok — nothing the surfaces read has changed (fingerprint ${fingerprint.slice(0, 12)}), and the record is byte-intact`)
+    process.exit(0)
+  }
+  console.log('ratchet:check — the tree has moved since the record was written; measuring every surface again')
+}
+
 let grew = false
 let fell = false
 const rows = []
@@ -624,6 +711,19 @@ console.log(isCheck ? 'ratchet:check' : 'ratchet')
 for (const r of rows) console.log(r)
 
 if (isCheck) {
+  // Record the verdict WITH the fingerprint that produced it, so the next
+  // --check answers from it. Written for a failing verdict too: a recorded
+  // regression is as much the answer for these inputs as a recorded pass, and
+  // re-deriving it costs the same 22 seconds.
+  writeFileSync(RECORD, JSON.stringify(sealRecord({
+    what: 'The twelve ratchet surfaces measured against their ceilings. Folded behind a fingerprint of the .ts sources, the README, the rollup and tsconfig and eslint configs, package.json, ratchet.json and this script.',
+    doesNotEstablish: 'that the ceilings are right. It compares a measurement to a number someone chose, and only refuses to let that number rise silently.',
+    inputsFingerprint: fingerprint,
+    rows,
+    grew,
+    fell,
+  }), null, 2) + '\n')
+
   if (grew) {
     // The old message said "run npm run ratchet if it is intended". It did
     // nothing: the writer only ever lowered. I followed my own advice and

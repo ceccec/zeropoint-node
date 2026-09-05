@@ -24,10 +24,12 @@
  *   npm run silent:check
  */
 
-import { readdirSync, statSync } from 'node:fs'
+import { readdirSync, statSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { execFile } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { resolve, dirname, join, relative } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { contentHashOf, sealRecord } from './lib/fingerprint.mjs'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -45,6 +47,64 @@ function walk(dir, out = []) {
 }
 
 const files = walk(join(ROOT, 'src')).sort()
+
+/**
+ * A GATE THAT REMEMBERS WHAT IT READ.
+ *
+ * This spawns one node process per module — 7.2 seconds to learn that nothing
+ * has changed, on every run of a chain that runs it every time. The answer is a
+ * pure function of the .ts files under src/ and of this file's own ALLOWED
+ * list, so when neither has moved the recorded verdict IS the answer.
+ *
+ * The record lives beside the other verification records and is excluded from
+ * its own fingerprint for free: the walk collects .ts files and the record is
+ * .json. That is not a coincidence to rely on silently — a fingerprint that
+ * included its own output could never match twice, which this repository has
+ * already hit once in lean/bounds.json.
+ *
+ * CORRUPTION IS A FAILURE, NOT A REASON TO RECOMPUTE. checks-falsifiable
+ * damages generated artifacts to prove their checkers notice; a fast path that
+ * responded to damage by quietly regenerating would pass the probe while
+ * disarming it. A moved SOURCE re-runs the work; a damaged RECORD fails.
+ */
+const RECORD = join(ROOT, 'src/verification/silent-import.json')
+
+function inputsFingerprint() {
+  const h = createHash('sha256')
+  for (const f of files) h.update(f.replace(ROOT, '')).update(readFileSync(f))
+  h.update(readFileSync(fileURLToPath(import.meta.url)))   // the ALLOWED list is an input
+  return h.digest('hex').slice(0, 32)
+}
+
+const fingerprint = inputsFingerprint()
+if (existsSync(RECORD)) {
+  const raw = readFileSync(RECORD, 'utf8')
+  let recorded = null
+  try { recorded = JSON.parse(raw) } catch {
+    console.error('silent:check FAIL — src/verification/silent-import.json is not readable JSON')
+    process.exit(1)
+  }
+  if (JSON.stringify(recorded, null, 2) + '\n' !== raw) {
+    console.error('silent:check FAIL — the record does not round-trip: its bytes have been altered')
+    process.exit(1)
+  }
+  if (typeof recorded.contentHash !== 'string' || contentHashOf(recorded) !== recorded.contentHash) {
+    console.error('silent:check FAIL — the record does not match its own contentHash: its content has been altered')
+    process.exit(1)
+  }
+  if (recorded.inputsFingerprint === fingerprint) {
+    if (recorded.problems.length > 0) {
+      for (const p of recorded.problems) console.error(`  ✗ ${p}`)
+      console.error(`silent:check FAIL — ${recorded.problems.length} problem(s), recorded`)
+      process.exit(1)
+    }
+    console.log(`silent:check — ${recorded.modules} modules, ${recorded.noisy} print on import (recorded)`)
+    console.log(`silent:check ok — no module under src/ has changed (fingerprint ${fingerprint.slice(0, 12)}), and the record is byte-intact`)
+    process.exit(0)
+  }
+  console.log('silent:check — modules have moved since the record was written; importing all of them again')
+}
+
 const LIMIT = 24 // keep the process count bounded
 const noisy = []
 let cursor = 0
@@ -82,6 +142,21 @@ for (const k of Object.keys(ALLOWED)) {
 }
 
 const total = noisy.reduce((s, n) => s + n.count, 0)
+
+// The verdict is recorded with the fingerprint of what produced it, so the next
+// run answers from it if nothing under src/ has moved. Written whether or not
+// there were problems: a recorded FAILURE is as much the answer for these
+// inputs as a recorded pass, and re-deriving it costs the same 7.2 seconds.
+writeFileSync(RECORD, JSON.stringify(sealRecord({
+  what: 'Which modules print to stdout merely on being imported. One node process per module, so it is folded behind a fingerprint of the .ts files under src/ and of the ALLOWED list in scripts/silent-import.mjs.',
+  doesNotEstablish: 'that a module is silent when USED. This imports and nothing more; a function that prints when called is invisible here.',
+  inputsFingerprint: fingerprint,
+  modules: files.length,
+  noisy: noisy.length,
+  lines: total,
+  problems,
+}), null, 2) + '\n')
+
 console.log(`silent:check — ${files.length} modules, ${noisy.length} print on import (${total} line(s))`)
 for (const p of problems) console.error(`  ✗ ${p}`)
 if (problems.length > 0) {

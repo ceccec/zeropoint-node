@@ -26,7 +26,8 @@
  *
  *   npm run mutations:check
  */
-import { readFileSync, writeFileSync, rmSync, mkdirSync, cpSync } from 'node:fs'
+import { readFileSync, writeFileSync, rmSync, mkdirSync, cpSync, existsSync, readdirSync, statSync } from 'node:fs'
+import { contentHashOf, sealRecord } from './lib/fingerprint.mjs'
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { join, dirname } from 'node:path'
@@ -202,6 +203,71 @@ if (!(process.argv[1] && process.argv[1].endsWith('law-mutations.mjs'))) {
   // Imported for the list, not run. The paper surfaces MUTATIONS; running the
   // harness as a side effect of reading it would corrupt files during a build.
 } else {
+/**
+ * A GATE THAT REMEMBERS WHAT IT READ.
+ *
+ * 35 mutations plus 27 control suites, each its own process, to learn that
+ * nothing has changed — 8.2 seconds on every run of a chain that runs it every
+ * time. The verdict is a pure function of the .ts sources under src/ and of the
+ * MUTATIONS table in this file, so when neither has moved the recorded answer
+ * IS the answer.
+ *
+ * The table is part of the fingerprint, not an afterthought: a stale ANCHOR is
+ * the failure this harness caught in its own table today, when a rename left a
+ * substitution pointing at a line that no longer existed. Changing the table
+ * must re-run everything, and it does.
+ *
+ * A moved SOURCE re-runs the work. A damaged RECORD fails, and does not quietly
+ * regenerate — checks-falsifiable corrupts artifacts to prove their checkers
+ * notice, and a fast path that healed damage would pass the probe while
+ * disarming it.
+ */
+const RECORD = join(ROOT, 'src/verification/law-mutations.json')
+
+const inputsFingerprint = () => {
+  const h = createHash('sha256')
+  const walk = (d) => {
+    for (const n of readdirSync(d).sort()) {
+      if (n === 'node_modules' || n.startsWith('.')) continue
+      const f = join(d, n)
+      if (statSync(f).isDirectory()) walk(f)
+      else if (n.endsWith('.ts') && !n.endsWith('.d.ts')) { h.update(f.replace(ROOT, '')); h.update(readFileSync(f)) }
+    }
+  }
+  walk(join(ROOT, 'src'))
+  h.update(readFileSync(fileURLToPath(import.meta.url)))   // the MUTATIONS table
+  return h.digest('hex').slice(0, 32)
+}
+
+const fingerprint = inputsFingerprint()
+if (existsSync(RECORD)) {
+  const raw = readFileSync(RECORD, 'utf8')
+  let recorded = null
+  try { recorded = JSON.parse(raw) } catch {
+    console.error('law-mutations FAIL — src/verification/law-mutations.json is not readable JSON')
+    process.exit(1)
+  }
+  if (JSON.stringify(recorded, null, 2) + '\n' !== raw) {
+    console.error('law-mutations FAIL — the record does not round-trip: its bytes have been altered')
+    process.exit(1)
+  }
+  if (typeof recorded.contentHash !== 'string' || contentHashOf(recorded) !== recorded.contentHash) {
+    console.error('law-mutations FAIL — the record does not match its own contentHash: its content has been altered')
+    process.exit(1)
+  }
+  if (recorded.inputsFingerprint === fingerprint) {
+    if (recorded.problems.length > 0) {
+      for (const p of recorded.problems) console.error(`  ✗ ${p}`)
+      console.error(`law-mutations FAIL — ${recorded.problems.length} problem(s), recorded`)
+      process.exit(1)
+    }
+    console.log(`law-mutations — ${recorded.mutations} mutation(s) across ${recorded.modules} module(s), ${recorded.caught} caught (recorded)`)
+    console.log(`law-mutations ok — no source and no mutation has changed (fingerprint ${fingerprint.slice(0, 12)}), and the record is byte-intact`)
+    process.exit(0)
+  }
+  console.log('law-mutations — sources or the mutation table have moved; re-running every mutation')
+}
+
 const problems = []
 /**
  * A WALL-CLOCK SUITE CANNOT BE A CONTROL HERE.
@@ -260,6 +326,19 @@ for (const [mod, suite, from, to, what] of MUTATIONS) {
   else problems.push(`${suite} SURVIVED a mutation to ${mod}: ${what}`)
   console.log(`  ${failed ? '✓' : '✗'} ${mod.padEnd(24)} ${what}`)
 }
+
+// Recorded with the fingerprint of what produced it, so the next run answers
+// from it when neither a source nor the mutation table has moved. A recorded
+// FAILURE is as much the answer for these inputs as a recorded pass.
+writeFileSync(RECORD, JSON.stringify(sealRecord({
+  what: 'Every declared mutation applied to a copy of the tree, with the suite that must fail because of it. Folded behind a fingerprint of the .ts sources under src/ and of the MUTATIONS table in scripts/law-mutations.mjs.',
+  doesNotEstablish: 'that the suites are adequate. A mutation nobody wrote is a mutation nobody catches, and this measures only the ones in the table.',
+  inputsFingerprint: fingerprint,
+  mutations: MUTATIONS.length,
+  modules: new Set(MUTATIONS.map(([m]) => m)).size,
+  caught,
+  problems,
+}), null, 2) + '\n')
 
 console.log(`law-mutations — ${MUTATIONS.length} mutation(s) across ${new Set(MUTATIONS.map(([m]) => m)).size} module(s), ${caught} caught`)
 for (const p of problems) console.error(`  ✗ ${p}`)

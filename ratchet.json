@@ -45,7 +45,7 @@
   "measures": {
     "prose": "61d559c3fcdede32",
     "tautology": "3b4f75e64d4ca30a",
-    "unguardedReadme": "29af50288641bce1",
+    "unguardedReadme": "1f0ffd954a949519",
     "unreachable": "ddcce371bcc37ea9",
     "cycles": "636d144bdae920d4",
     "typecheck": "da1e2f6a54e74929",
@@ -55,5 +55,12 @@
     "docFunctions": "9f29199ed938bff5",
     "entryPoints": "63e40d6d6027d502",
     "unloadable": "66f42f1909c4c5b9"
+  },
+  "remeasured": {
+    "unguardedReadme": {
+      "ceilingUnderOldMeasure": 27322,
+      "fingerprintWas": "29af50288641bce1",
+      "reason": "mechanical, not a redefinition: checkedReadmeLines was a top-level await costing 20.8 of ratchet:check's 22 seconds, so it is now lazy and memoised and unguardedReadmeBytes became async to await it. What is counted is unchanged — same README bytes, same guarded-block logic — and the measured value is still 27322, at its existing ceiling."
+    }
   }
 }

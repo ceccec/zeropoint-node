@@ -59,6 +59,18 @@ const CLAIMS = [
     'npm run hexbit:advantage',
     'a representation that changes the query count — the simulation makes 64 evaluations for a 1-query algorithm'],
 
+  ['Not one algorithm here demonstrates a query advantage. The SINGLE-query algorithm evaluates its oracle 2^n times, and groverSearch calls its predicate N*(k+1) times — 1.94x and 5x WORSE than the classical bounds they are measured against.',
+    'npm run query:cost',
+    'an oracle-taking function whose counted calls come in under the classical worst case'],
+
+  ['Five of seven quantum algorithms cannot be told apart from a classical routine returning the same answer. For bernsteinVazirani and simon that routine is `return hidden`, because they are handed the value they are said to recover.',
+    'npm run impostors',
+    'a check that catches an answer-equivalent classical stand-in for any of the five'],
+
+  ['Classical trial division passed the exhaustive Shor check — 358 correct, 0 wrong, 0 unexplained — until the converse arm was added. Both directions now run, and the stand-in is caught in 93 of 434 inputs.',
+    'npm run shor:exhaustive',
+    'a classical factoriser that survives both arms, or a Shor run that succeeds where period-finding must refuse'],
+
   ['Packing the state layout would make this simulator SLOWER, not faster: 1.32x and 1.82x against the shipped form.',
     'npm run rosetta:amplitudes',
     'a typed-array layout that beats the object array on paired trials'],

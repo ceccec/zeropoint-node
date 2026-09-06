@@ -1,6 +1,6 @@
 {
   "what": "Oracle calls actually made by every oracle-taking algorithm, against the classical worst case for the same problem. Written because impostors found that no check counted them.",
-  "inputsFingerprint": "68ad1c7de59636770577976c184fc0e0",
+  "inputsFingerprint": "356c555f4654e37dd6250707068504a9",
   "queryAdvantagesFound": 0,
   "measurements": [
     {
@@ -53,5 +53,5 @@
       "ratio": 5
     }
   ],
-  "contentHash": "b889dc5f5e07f42af14bfa616d116195"
+  "contentHash": "4bf818f209216061e785d33f1c7c99f7"
 }

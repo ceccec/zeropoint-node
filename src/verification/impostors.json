@@ -2,7 +2,7 @@
   "what": "Each quantum algorithm replaced by a classical impostor returning the same answers, and whether the checks over it notice. Written because shor:check passed classical trial division cleanly.",
   "answerOnly": 5,
   "identifiedByMethod": 2,
-  "inputsFingerprint": "7feb5ad104daaa20b24af03d5d5e2598",
+  "inputsFingerprint": "e34b59c8ac54d2298c9f229879c07a1c",
   "results": [
     {
       "algorithm": "bernsteinVazirani",
@@ -54,5 +54,5 @@
       "agrees": true
     }
   ],
-  "contentHash": "05cd586e6a793c21e79d297f09190cc2"
+  "contentHash": "0a84b854531c1dae16547b50477f1cdd"
 }

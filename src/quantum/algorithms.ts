@@ -155,7 +155,9 @@ export function groverSearch(n: number, isMarked: (x: number) => boolean, marked
  */
 /**
  * Bernstein–Vazirani: recover a hidden n-bit string s from the oracle
- * f(x) = s·x (mod 2), in a SINGLE query. Sandwich a phase oracle
+ * f(x) = s·x (mod 2), in a SINGLE query OF THE ALGORITHM. This function makes
+ * no query at all: `hidden` is an argument, not an oracle, so `return hidden`
+ * satisfies every check over it. See `npm run impostors`. Sandwich a phase oracle
  * (|x⟩ → (−1)^{s·x}|x⟩) between two layers of Hadamards; the state collapses
  * onto |s⟩ deterministically. Returns the recovered integer (= hidden).
  */
@@ -171,7 +173,10 @@ export function bernsteinVazirani(n: number, hidden: number): number {
 
 /**
  * Deutsch–Jozsa: decide whether f:{0,1}ⁿ→{0,1} (promised constant or balanced)
- * is constant or balanced, in a SINGLE query. After the H·oracle·H sandwich the
+ * is constant or balanced, in a SINGLE query OF THE ALGORITHM — this function
+ * evaluates `f` 2^n times, because a state-vector simulator applies a phase
+ * oracle to every basis state. Measured by `npm run query:cost`.
+ * After the H·oracle·H sandwich the
  * all-zeros outcome has probability 1 iff f is constant, 0 iff balanced.
  */
 export function deutschJozsa(n: number, f: (x: number) => 0 | 1): 'constant' | 'balanced' {

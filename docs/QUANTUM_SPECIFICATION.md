@@ -127,14 +127,57 @@ qft(reg: Register, qubits?: number[]): Register
 **Deutsch–Jozsa:** `deutschJozsa(n, f) → 'constant' | 'balanced'`
 - Determines whether f:{0,1}ⁿ→{0,1} is constant or balanced (promised).
 - Uses H·oracle·H sandwich over a phase oracle.
-- One query (classically: up to 2^(n-1)+1 queries).
+- One query *of the algorithm*; **this implementation evaluates `f` 2^n times** — see *What the query counts actually are* below.
 
 **Bernstein–Vazirani:** `bernsteinVazirani(n, hidden) → number`
 - Recovers the hidden n-bit string s from the oracle phase `(−1)^{s·x}`.
 - Returns the integer s exactly.
-- One query (classically: n queries).
+- One query *of the algorithm*. This implementation makes none: `hidden` is an argument, not an oracle.
 
 **Verification (self-checks #16, #17):** DJ classifies constant (f≡0, f≡1) and balanced (x&1, parity) functions correctly; BV recovers every 4-bit string.
+
+### What the query counts actually are
+
+The claims above are properties of the algorithms and are correct as such. They
+are not properties of this module, and the difference is measured rather than
+argued — `npm run query:cost` hands each oracle-taking function an oracle that
+counts:
+
+| function | oracle calls | classical worst case | |
+| --- | --- | --- | --- |
+| `deutschJozsa` | 2^n | 2^(n-1)+1 | 1.60x – 1.94x **worse** |
+| `groverSearch` | N·(k+1) | N | 3x – 5x **worse** |
+
+Zero of seven measurements show a query advantage. This is not a defect and no
+care would remove it: a state-vector simulator applies a phase oracle by
+evaluating `f` on every basis state, so one quantum query costs 2^n classical
+evaluations by construction. The advantage is a property of hardware holding a
+superposition, and is structurally absent here.
+
+`bernsteinVazirani`, `simon` and `deutsch` make no queries at all, because they
+take no oracle: the first two receive the hidden value they are said to recover,
+and `deutsch` receives both function values and opens with
+`if (f0 === f1) return 'constant'`.
+
+### What the self-checks establish, and what they do not
+
+`npm run impostors` replaces each algorithm with a classical stand-in that
+returns the same answers and runs the check that should notice. Six algorithms,
+and the result is recorded rather than asserted:
+
+- **`grover`** and **`shor`** are identified by their method. Grover's check
+  reads the exact residue two iterations leave — 121/128 on the marked state and
+  1/128 on each of the other seven, which nothing but that rotation produces.
+  Shor's sweeps both directions: no refusal outside the three known failure
+  modes, and no success on any input where period-finding must refuse.
+- **`bernsteinVazirani`**, **`simon`**, **`deutschJozsa`**, **`phaseEstimation`**
+  and **`deutsch`** are verified by their answer alone. Every check over them is
+  passed by a classical routine returning the same value — for the first two,
+  by `return hidden`.
+
+An answer-only algorithm is not wrong. It is unidentified, and that count is a
+ceiling that only moves down.
+
 
 ### Simon's Algorithm
 
@@ -142,7 +185,7 @@ qft(reg: Register, qubits?: number[]): Register
 - Recovers the hidden mask s of a 2-to-1 function f(x) = f(x⊕s).
 - Enumerates the {y : y·s = 0 mod 2} support (available in one statevector pass).
 - Solves the GF(2) null-space to extract s exactly.
-- Exponentially faster than classical (O(2^(n/2)) queries classically, 1 quantum).
+- Exponentially faster than classical *as an algorithm* (O(2^(n/2)) queries classically, 1 quantum). As implemented, `hidden` is an argument rather than an oracle, so no query is made.
 
 **Verification (self-check #22):** Simon recovers masks {3, 5, 6, 11} for n={2, 3, 4}.
 

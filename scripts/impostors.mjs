@@ -113,7 +113,7 @@ export const IMPOSTORS = [
     check: 'quantum:sim',
     samples: [[3, 5], [3, 0], [4, 11]],
     answerOf: (r) => { const p = r.amps.map((a) => a.re * a.re + a.im * a.im); let k = 0; for (let i = 1; i < p.length; i += 1) if (p[i] > p[k]) k = i; return k },
-    answerOnly: 'I declared this identifiedBy, reasoning that quantum:sim asserts the amplitude STRUCTURE and that a delta at the target is a distribution no rotation produces. The harness refuted me on its first run: the assertions are p[target] > 0.9 and that the target is the most probable, and a register holding exactly 1 at the target satisfies both more comfortably than Grover does. The residue on the unmarked states — the thing that would identify a rotation — is never read.',
+    identifiedBy: 'quantum:sim now asserts the RESIDUE, not the peak. I first declared this identifiedBy on the assumption it already did, and the harness refuted me on its first run: the assertions were p[target] > 0.9 and target-is-most-probable, which a register holding exactly 1 at the target satisfies more comfortably than Grover does. Two iterations over N=8 are exact rationals — 121/128 on the marked state and 1/128 on each of the other seven — and nothing but that rotation lands there. A delta gives 1 and 0; one iteration gives 25/32 and 1/32.',
   },
   {
     algorithm: 'phaseEstimation',

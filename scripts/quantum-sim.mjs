@@ -281,6 +281,25 @@ const HALF = 1 / 2
     p.every((x, i) => i === target || x <= p[target]),
     'Grover: the marked state is the most probable',
   )
+
+  // THE RESIDUE IS WHAT IDENTIFIES A ROTATION, and the two assertions above do
+  // not read it. `impostors` replaced grover's body with a register holding 1
+  // at the target and 0 everywhere else — an answer-equivalent stand-in that
+  // does no amplification at all — and it passed both, more comfortably than
+  // Grover does: 1 is greater than 0.9, and everything else is 0.
+  //
+  // Two Grover iterations over N=8 are exact rationals. Each step is
+  // x -> 2*mean - x after a sign flip on the target, so from 1/sqrt(8) the
+  // amplitudes go to 5/(2*sqrt(8)) and 1/(2*sqrt(8)), then to 11/(4*sqrt(8))
+  // and -1/(4*sqrt(8)): probabilities 121/128 on the target and 1/128 on each
+  // of the other seven. Nothing but that rotation lands there — a delta gives
+  // 1 and 0, and one iteration gives 25/32 and 1/32.
+  assert(near(p[target], 121 / 128, 1 / 1000000000000),
+    `Grover leaves exactly 121/128 on the marked state after 2 iterations (got ${p[target]})`)
+  assert(
+    p.every((x, i) => i === target || near(x, 1 / 128, 1 / 1000000000000)),
+    'Grover leaves exactly 1/128 on each unmarked state — the residue a rotation must leave',
+  )
 }
 
 // 15. Measurement statistics converge to the Born-rule probabilities.

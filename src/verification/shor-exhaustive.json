@@ -1,0 +1,82 @@
+{
+  "what": "Shor's algorithm over every modulus 4..31 and every base 2..N-1. Two questions a family of inputs cannot answer: is any returned pair NOT a true factorisation, and is any refusal outside the three ways Shor's is known to fail.",
+  "doesNotEstablish": "any speedup, and it cannot be run where Shor matters. The refusal analysis calls a CLASSICAL brute-force order finder — the very problem Shor solves — so \"every refusal is one of the three known failure modes\" is answerable only in the regime where the period is already computable classically, which is the regime where nobody needs Shor. Correctness scales because multiplying p by q is cheap; the failure characterisation does not scale at all. Being able to run this check is itself evidence that the advantage is absent here. The method is genuine and the execution is a classical simulation costing 2^(3m) amplitudes for m = bits(N), which is measured below and runs 583,108 : 1 against trial division over the same inputs. Correctness is total; the advantage is inverted.",
+  "inputsFingerprint": "c24fbc2f0ee602d7e7529ae3fe2ff3a4",
+  "maxN": 31,
+  "budgetMs": 60000,
+  "capacityBands": [
+    {
+      "m": 3,
+      "lo": 5,
+      "hi": 7,
+      "perRun": 1,
+      "runs": 12,
+      "bandMs": 12,
+      "measured": true,
+      "admitted": true
+    },
+    {
+      "m": 4,
+      "lo": 9,
+      "hi": 15,
+      "perRun": 3,
+      "runs": 70,
+      "bandMs": 210,
+      "measured": true,
+      "admitted": true
+    },
+    {
+      "m": 5,
+      "lo": 17,
+      "hi": 31,
+      "perRun": 71,
+      "runs": 330,
+      "bandMs": 23430,
+      "measured": true,
+      "admitted": true
+    },
+    {
+      "m": 6,
+      "lo": 33,
+      "hi": 63,
+      "perRun": 568,
+      "runs": 1426,
+      "bandMs": 809968,
+      "measured": false,
+      "admitted": false
+    }
+  ],
+  "notSwept": [
+    {
+      "range": "33..63",
+      "qubits": 18,
+      "runs": 1426,
+      "estimateMs": 809968,
+      "measured": false,
+      "admittedBy": "SHOR_BUDGET_MS=810000"
+    }
+  ],
+  "runs": 434,
+  "correct": 204,
+  "nulls": 230,
+  "refusal": {
+    "prime": 137,
+    "oddPeriod": 28,
+    "negativeOne": 65
+  },
+  "wrong": [],
+  "unexplained": [],
+  "succeededWhereShorMustRefuse": [],
+  "classicalStandInCaught": 93,
+  "classicalStandInWrong": 0,
+  "classicalStandInUnexplained": 0,
+  "coins": {
+    "amplitudesAllocated": "11166848",
+    "amplitudeGateOperations": "829205760",
+    "approxPowerOfTwo": 29,
+    "trialDivisionsForSameInputs": 2604,
+    "ratioAgainst": 318435,
+    "elapsedMs": 13545
+  },
+  "contentHash": "969cf3576a7e596e84eb12caf03327f0"
+}

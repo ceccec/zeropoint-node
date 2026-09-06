@@ -1,0 +1,56 @@
+{
+  "what": "Every withdrawn claim in this repository, and what was true in it. A claim is false relative to a frame, and deleting the sentence instead of naming the frame loses whatever was true. Written after a README passage was removed whole for one false claim, taking four true ones with it.",
+  "extracted": 11,
+  "ledgered": 12,
+  "byVerdict": {
+    "unfalsifiable": 4,
+    "false-in-every-frame": 2,
+    "true-in-a-named-frame": 3,
+    "superseded": 3
+  },
+  "restored": [
+    {
+      "key": "r′ is the multiplicative inverse of",
+      "carriedBy": "docs/QUANTUM_MATHEMATICAL_PROOFS.md",
+      "command": "npm run test:vortex-arithmetic"
+    },
+    {
+      "key": "only integer fractions whose reciprocals are",
+      "carriedBy": "src/0/3/6/9/1/2/4/8/7/5/1/a432.resolved.ts",
+      "command": "npm run test:a432:math"
+    },
+    {
+      "key": "π becomes rational: π → 3 + 0i",
+      "carriedBy": "src/quantum/eisenstein.ts",
+      "command": "npm run test:eisenstein"
+    }
+  ],
+  "negations": [
+    {
+      "negation": "π does not become rational under any rotation",
+      "status": "discharged",
+      "by": "src/quantum/eisenstein.ts"
+    },
+    {
+      "negation": "non-Clifford gates are ABSENT from the exact simulator, not approximated",
+      "status": "open",
+      "by": null
+    },
+    {
+      "negation": "no algorithm here demonstrates a query advantage",
+      "status": "discharged",
+      "by": "scripts/query-cost.mjs and scripts/impostors.mjs"
+    },
+    {
+      "negation": "deutsch cannot be identified by any check",
+      "status": "discharged",
+      "by": "scripts/impostors.mjs"
+    },
+    {
+      "negation": "a decimal literal may not appear in src/",
+      "status": "discharged",
+      "by": "src/quantum/exact.ts"
+    }
+  ],
+  "contentHash": "645c3d6767e77fd5826350e08cae3a40"
+}

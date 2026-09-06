@@ -11,7 +11,7 @@
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 23907
+    "unguardedReadme": 25627
   },
   "raised": {
     "unguardedReadme": [
@@ -39,6 +39,11 @@
         "from": 27310,
         "to": 27322,
         "reason": "twelve bytes: the blank lines around the generated CITE block. The block itself is guarded and counted as such."
+      },
+      {
+        "from": 23907,
+        "to": 25627,
+        "reason": "Restored content, not new prose. A 157-line passage was deleted in 1.5.4 for asserting that a 60 degree rotation makes pi rational; that claim is false and stays withdrawn, but the deletion took three true statements with it, because a claim is false relative to a frame and cutting the sentence instead of naming the frame loses whatever was true. The three are now arithmetic in src/quantum/eisenstein.ts and the README states them with the frame each holds in: a 60 degree rotation is (a,b) -> (-b, a+b) with no decimal because omega squared is omega minus one; pi is exactly 3 in units of 60 degrees, a count and not a rounding; and 60 degrees is the eigenangle because the doubling orbit is a six-cycle whose eigenvalues are the sixth roots of unity. 1720 bytes against 3333 removed, so the section is smaller than what it replaces and every line of it computes. npm run withdrawn audits all 12 withdrawals and runs the command behind each restoration."
       }
     ]
   },
@@ -55,12 +60,5 @@
     "docFunctions": "9f29199ed938bff5",
     "entryPoints": "63e40d6d6027d502",
     "unloadable": "66f42f1909c4c5b9"
-  },
-  "remeasured": {
-    "unguardedReadme": {
-      "ceilingUnderOldMeasure": 23907,
-      "fingerprintWas": "1f0ffd954a949519",
-      "reason": "The measurement is unchanged whenever it succeeds: 23907, the same value and the same ceiling. What changed is the failure path. It caught every error from the README credit instrument and returned an empty set, so a transient failure of that instrument counted all 1778 bytes of credited lines as unguarded prose and reported a 1778-byte regression that had not happened — observed once here, at 25685 against a ceiling of 23907, with the identical tree measuring 23907 on the next run. The surface now returns null on instrument failure, which the ratchet already refuses to pass quietly. An absent instrument voids, it does not verdict."
-    }
   }
 }

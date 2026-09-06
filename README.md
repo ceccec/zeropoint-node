@@ -317,6 +317,37 @@ arithmetic this package does state — digital roots, exact fractions, a group o
 order 54 — is checked by 42 seals and `npm run refute` lists every claim beside
 the command that refutes it.
 
+**And the deletion was too wide, which is the second correction.** A claim is
+false relative to a frame; cutting the sentence instead of naming the frame
+throws away whatever was true in it. Three things in that passage were true, and
+they are now arithmetic in `src/quantum/eisenstein.ts` rather than prose:
+
+- **A 60° rotation needs no decimals.** ω = e^{iπ/3} satisfies ω² = ω − 1, an
+  identity with integer coefficients, so rotating by 60° is `(a, b) → (−b, a+b)`
+  — two integer operations, exactly, with no tolerance anywhere in the module.
+  These are the Eisenstein integers, and the ring is closed under multiplication.
+- **π is exactly 3, in units of 60°.** Not as a real number: π is irrational and
+  no rotation changes that. But a sixth-turn is the unit here and π radians is
+  three of them with no remainder. `piInSixthTurns()` returns the integer `3`
+  and is a count, not a rounding of 3.14159….
+- **60° is the eigenangle, and not by choice.** The doubling orbit
+  1 → 2 → 4 → 8 → 7 → 5 mod 9 is a six-cycle, and the eigenvalues of a six-cycle
+  are the sixth roots of unity. ω is the primitive one. That is why the angle is
+  60° and not any other angle.
+
+What stays withdrawn: π does not become rational, `S = k · 0 · ln(0) = 0` is an
+indeterminate form and not a derivation, and the entropy of π's digits was never
+a measured quantity. Those had no frame.
+
+Every withdrawal in this repository is now audited the same way — false in every
+frame, unfalsifiable, superseded by a computation, or true in a frame the
+deletion failed to name, in which case it must name the module that carries it
+and the command that recomputes it:
+
+```bash
+npm run withdrawn
+```
+
 ## 📦 Installation
 
 ```bash

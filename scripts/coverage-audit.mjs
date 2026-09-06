@@ -111,6 +111,7 @@ const EXERCISERS = [
   // the server it serves is exercised by starting it, not by this suite.
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.http.test.ts', null],
   ['src/quantum/exact.test.ts', null],
+  ['src/quantum/eisenstein.test.ts', null],
   ['src/multidimensional-vortex-framework.test.ts', 'scripts/jest-lite.mjs'],
   ['scripts/quantum-sim.mjs', null],
   // Forgotten the first time, and it exercises the nine prove* functions that

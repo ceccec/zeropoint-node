@@ -90,11 +90,11 @@ export const IMPOSTORS = [
   {
     algorithm: 'simon',
     module: 'src/quantum/algorithms.ts',
-    anchor: 'export function simon(n: number, hidden: number): number {',
-    impostor: '  return hidden // IMPOSTOR: no oracle, no linear system, no sampling',
+    anchor: 'export function simon(n: number, hidden: number | ((x: number) => number)): number {',
+    impostor: '  { if (typeof hidden !== "function") return hidden; const size = 1 << n; const seen = new Map(); for (let x = 0; x < size; x += 1) { const v = hidden(x); if (seen.has(v)) return x ^ seen.get(v); seen.set(v, x) } return 0 } // IMPOSTOR: return the argument, or classical collision search',
     check: 'quantum:sim',
-    samples: [[3, 0b101], [4, 0b1001]],
-    answerOnly: 'same shape as bernsteinVazirani — the hidden mask is passed in and asserted to come back out.',
+    samples: [[3, 0b101], [4, 0b1001], [3, (x) => { const y = x ^ 0b101; return x < y ? x : y }], [4, (x) => { const y = x ^ 0b1001; return x < y ? x : y }]],
+    identifiedBy: 'not through the integer form, which is handed the mask. `hidden` may now be the ORACLE, and the oracle is applied to a state vector, so every x in the domain is evaluated exactly once. A classical recovery searches for a collision and stops at the first one, visiting a few inputs and never reaching the rest — it returns the correct mask and is caught by the pattern, not the answer. Fewer queries than the simulation makes, which is the point: this identifies the method and says nothing good about its cost.',
   },
   {
     algorithm: 'deutschJozsa',
@@ -157,7 +157,7 @@ export const IMPOSTORS = [
     impostor: "  return f0 === f1 ? 'constant' : 'balanced' // IMPOSTOR: the implementation's own first line",
     check: 'quantum:sim',
     samples: [[0, 0], [0, 1], [1, 0], [1, 1]],
-    answerOnly: 'the impostor is line 484 of the implementation. `deutsch` takes the two function VALUES rather than an oracle, and opens with `if (f0 === f1) return \'constant\'` — half of all inputs are answered classically before a gate is applied, and the remaining half are the balanced case, where returning \'balanced\' is the only other option. There is no query to count and no residue to read: with four possible inputs and two possible answers, no check over the return value can distinguish a circuit from a comparison.',
+    answerOnly: 'ANSWER-ONLY BY CONSTRUCTION, NOT BY OMISSION, and it is the one entry here where nothing could be done about it. One bit of output over a two-element domain leaves no residue to read, and no query pattern to compare either: 2^n and the classical worst case are both 2, so an oracle-taking form would not separate them. Both routes that identified the other six are closed. Its impostor was once the implementation\'s own first line — `if (f0 === f1) return \'constant\'` — and that line has since been removed, because the phase it guarded was built from f0 alone and never read f1: run on all four inputs the circuit answered balanced every time, so every correct answer the function gave came from the comparison. The oracle is now (-1)^f(i) for both i and the four existing assertions pin it, which they could not do while the shortcut stood in front of them.',
   },
 ]
 

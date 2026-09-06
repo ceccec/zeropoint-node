@@ -45,7 +45,7 @@
   "measures": {
     "prose": "61d559c3fcdede32",
     "tautology": "3b4f75e64d4ca30a",
-    "unguardedReadme": "1f0ffd954a949519",
+    "unguardedReadme": "1a3ef41fa6f1298f",
     "unreachable": "ddcce371bcc37ea9",
     "cycles": "636d144bdae920d4",
     "typecheck": "da1e2f6a54e74929",
@@ -55,5 +55,12 @@
     "docFunctions": "9f29199ed938bff5",
     "entryPoints": "63e40d6d6027d502",
     "unloadable": "66f42f1909c4c5b9"
+  },
+  "remeasured": {
+    "unguardedReadme": {
+      "ceilingUnderOldMeasure": 23907,
+      "fingerprintWas": "1f0ffd954a949519",
+      "reason": "The measurement is unchanged whenever it succeeds: 23907, the same value and the same ceiling. What changed is the failure path. It caught every error from the README credit instrument and returned an empty set, so a transient failure of that instrument counted all 1778 bytes of credited lines as unguarded prose and reported a 1778-byte regression that had not happened — observed once here, at 25685 against a ceiling of 23907, with the identical tree measuring 23907 on the next run. The surface now returns null on instrument failure, which the ratchet already refuses to pass quietly. An absent instrument voids, it does not verdict."
+    }
   }
 }

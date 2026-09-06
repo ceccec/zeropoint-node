@@ -428,6 +428,23 @@ const HALF = 1 / 2
 {
   for (const [n, hidden] of [[2, 3], [3, 5], [3, 6], [4, 11]]) {
     assert(simon(n, hidden) === hidden, `Simon recovers hidden mask ${hidden} (n=${n})`)
+
+  // The integer form is handed the mask, so the assertion above is passed by
+  // `return hidden`. Through an ORACLE the method is observable: the oracle is
+  // applied to a state vector, so every x in the domain is evaluated exactly
+  // once, where a classical recovery searches for a collision and stops at the
+  // first one — visiting some inputs and never reaching the rest.
+  {
+    const n = 3
+    const mask = 0b101
+    const seen = new Array(1 << n).fill(0)
+    const got = simon(n, (x) => { seen[x] += 1; const y = x ^ mask; return x < y ? x : y })
+    assert(got === mask, `Simon recovers ${mask} through an oracle as well as an integer (got ${got})`)
+    assert(
+      seen.every((c) => c === 1),
+      `Simon evaluates the oracle exactly once on every one of the 2^${n} inputs (got ${seen.filter((c) => c !== 1).length} exceptions)`,
+    )
+  }
   }
 }
 

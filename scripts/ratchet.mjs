@@ -395,12 +395,34 @@ function rollupInputs() {
  * Memoised so the cold path still computes it exactly once.
  */
 let checkedReadmeLinesMemo = null
+let checkedReadmeLinesFailed = null
 async function checkedReadmeLinesOnce() {
   if (checkedReadmeLinesMemo) return checkedReadmeLinesMemo
   try {
     checkedReadmeLinesMemo = await checkedReadmeLines(ROOT, readFileSync(join(ROOT, 'README.md'), 'utf8'))
-  } catch {
-    checkedReadmeLinesMemo = new Set() // README missing: nothing to credit
+  } catch (err) {
+    /**
+     * AN ABSENT INSTRUMENT VOIDS, IT DOES NOT VERDICT.
+     *
+     * This caught everything and returned an empty set, commented "README
+     * missing: nothing to credit". Those are two different situations and only
+     * one of them is nothing to credit. When the credit instrument itself
+     * fails — it shells out, and this machine has swapped under parallel
+     * builds before — every line it would have credited is counted as
+     * unguarded prose instead, and the surface reports a regression that never
+     * happened.
+     *
+     * It happened here: one run measured 25685 against a ceiling of 23907 and
+     * demanded a --raise with a reason, and the next run of the identical tree
+     * measured 23907 and passed. The 1778-byte difference is exactly the
+     * credited lines. On CI that is a release blocked by a flake, which this
+     * repository has already paid for once in realtime-criterion.
+     *
+     * So the failure is recorded and the surface returns null, which the loop
+     * below already treats as unmeasurable and refuses to pass quietly.
+     */
+    checkedReadmeLinesFailed = err
+    checkedReadmeLinesMemo = new Set()
   }
   return checkedReadmeLinesMemo
 }
@@ -411,6 +433,12 @@ async function unguardedReadmeBytes() {
   const text = readFileSync(readme, 'utf8')
   const allLines = text.split('\n')
   const checkedLines = [...(await checkedReadmeLinesOnce())].map((n) => allLines[n - 1] ?? '')
+  if (checkedReadmeLinesFailed !== null) {
+    console.error(`ratchet: the README credit instrument failed — ${String(checkedReadmeLinesFailed).split('\n')[0]}`)
+    console.error('  Every line it would have credited would be counted as unguarded prose, so this')
+    console.error('  surface reports a regression that did not happen. Voiding instead of guessing.')
+    return null
+  }
   let guarded = 0
   // The guarded block names are READ from the README, not listed here. The
   // hardcoded list was pinned to the blocks that existed when it was written:
@@ -632,6 +660,17 @@ function ratchetFingerprint() {
   // does not cover can be arbitrarily stale, and only luck decides whether it
   // shows.
   for (const f of walk(ROOT, (n) => n.endsWith('.md')).sort()) {
+    h.update(f.replace(ROOT, '')).update(readFileSync(f))
+  }
+  // AND THE SCRIPTS THE MEASUREMENTS THEMSELVES RUN. Listing ratchet.mjs alone
+  // covered the caller and none of the callees: docFunctions shells out to
+  // docs-functions.mjs, and unguardedReadme imports lib/readme-figures.mjs.
+  // Breaking readme-figures.mjs outright — a deliberate throw at the top of
+  // checkedReadmeLines — changed no fingerprint, so ratchet:check took its fast
+  // path and reported the surface at ceiling without measuring it. The test
+  // written to prove the void path fires was itself voided by this, which is
+  // how it was found.
+  for (const f of walk(join(ROOT, 'scripts'), (n) => n.endsWith('.mjs')).sort()) {
     h.update(f.replace(ROOT, '')).update(readFileSync(f))
   }
   for (const extra of ['README.md', 'rollup.config.js', 'ratchet.json', 'package.json',

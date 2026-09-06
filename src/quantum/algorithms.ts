@@ -347,13 +347,27 @@ function gf2Nullspace(n: number, rows: readonly number[]): number {
  * y·s = 0 (mod 2); on the statevector the whole support {y : y·s = 0} appears
  * at once, so one pass plus a GF(2) null-space solve recovers s exactly.
  */
-export function simon(n: number, hidden: number): number {
+export function simon(n: number, hidden: number | ((x: number) => number)): number {
   const size = 1 << n
   const total = 2 * n
-  const f = (x: number): number => {
-    const y = x ^ hidden
-    return x < y ? x : y
-  }
+  /**
+   * `hidden` MAY BE THE ORACLE ITSELF, for the same reason as in
+   * bernsteinVazirani above: given the mask as an integer this function is
+   * handed the answer it is said to recover, and `return hidden` satisfies
+   * every check over it. Given f, the method becomes observable — the oracle is
+   * applied to a state vector, so every x in the domain is evaluated exactly
+   * once, where a classical recovery searches for a collision and stops at the
+   * first one it finds. quantum:sim asserts that pattern.
+   *
+   * The integer form builds the canonical 2-to-1 function x -> min(x, x^s) and
+   * is otherwise unchanged.
+   */
+  const f: (x: number) => number = typeof hidden === 'function'
+    ? hidden
+    : (x: number): number => {
+      const y = x ^ hidden
+      return x < y ? x : y
+    }
   let s = zeroState(total)
   for (let q = 0; q < n; q += 1) s = applyGate1(s, q, H)
   const out = new Array<Complex>(1 << total).fill(cx(0)) // oracle: |x⟩|y⟩ → |x⟩|y⊕f(x)⟩
@@ -503,9 +517,32 @@ export function shor(N: number, a: number): [number, number] | null {
  * qubit 0 after H·oracle·H reveals the answer.
  */
 export function deutsch(f0: 0 | 1, f1: 0 | 1): 'constant' | 'balanced' {
-  if (f0 === f1) return 'constant'
+  /**
+   * THE ORACLE NEVER READ f1, AND THE CLASSICAL LINE WAS DOING ALL THE WORK.
+   *
+   * This opened with `if (f0 === f1) return 'constant'` and then applied a
+   * phase built from f0 alone: `f0 === (i & 1) ? a : -a`. In the balanced
+   * branch that coincides with (-1)^f(i), because f1 = 1 - f0 there — so it
+   * looked right for the only inputs that reached it. Run on all four inputs
+   * with the shortcut removed, the circuit answers 'balanced' every time,
+   * including for f0 = f1 where the truth is 'constant'.
+   *
+   * So every correct answer this function gave came from the comparison on the
+   * first line, and the circuit was not an optimisation of it but a wrong
+   * computation kept off the inputs that would have exposed it. The phase is
+   * now (-1)^f(i) for both i, which is what a phase oracle is, and the shortcut
+   * is gone because the circuit no longer needs protecting from half its
+   * domain.
+   *
+   * This does not make `deutsch` identifiable and nothing could: one bit of
+   * output over a two-element domain leaves no residue to read and no query
+   * pattern to compare, since 2^n and the classical worst case are both 2. It
+   * is answer-only by construction rather than by omission — see
+   * `npm run impostors`.
+   */
   let s = applyGate1(zeroState(1), 0, H)
-  s = { n: 1, amps: s.amps.map((a, i) => (f0 === (i & 1) ? a : cx(-a.re, -a.im))) }
+  const f = (i: number): 0 | 1 => (i === 0 ? f0 : f1)
+  s = { n: 1, amps: s.amps.map((a, i) => (f(i) ? cx(-a.re, -a.im) : a)) }
   s = applyGate1(s, 0, H)
   return cabs2(s.amps[0]!) > 1 / 2 ? 'constant' : 'balanced'
 }

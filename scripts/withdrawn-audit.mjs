@@ -141,8 +141,10 @@ export const NEGATIONS = [
   },
   {
     negation: 'non-Clifford gates are ABSENT from the exact simulator, not approximated',
-    pointsTo: 'the ring where they stop being inexact. Clifford amplitudes are (x + yi)/√2^k, which is ℤ[i] scaled; T = diag(1, e^{iπ/4}) leaves it. But ζ₈ = e^{iπ/4} satisfies ζ⁴ = −1 and √2 = ζ − ζ³, so Clifford+T lives exactly in ℤ[ζ₈] with a power-of-√2 scale — the same construction as eisenstein.ts one root of unity further out. If that holds, "absent" is a statement about ℤ[i] and not about exactness.',
-    status: 'open',
+    pointsTo: 'the ring where they stop being inexact. Clifford amplitudes are (x + yi)/√2^k and T = diag(1, e^{iπ/4}) leaves ℤ[i], so within that ring absence or approximation are the only honest options. One root of unity out the choice disappears: ζ₈ satisfies ζ⁴ = −1, multiplying by ζ is the signed shift (a,b,c,d) → (−d,a,b,c), and √2 = ζ − ζ³ makes dividing by √2 a change of scale rather than of kind. The sentence was true and it was about ℤ[i], not about exactness.',
+    status: 'discharged',
+    by: 'src/quantum/clifford-t.ts',
+    found: 'The boundary moved and did not vanish, and the move costs something that had to be stated: Clifford probabilities are RATIONAL, and these are not. z·z̄ is P + Q√2 for every element, so a probability is (P + Q√2)/2^scale — H·T·H on |0⟩ gives exactly (2 + √2)/4, which is exact and irrational. Arbitrary rotations remain absent, since Clifford+T only APPROXIMATES them and approximation is the thing being refused.',
   },
   {
     negation: 'no algorithm here demonstrates a query advantage',

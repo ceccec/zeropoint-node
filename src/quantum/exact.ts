@@ -22,6 +22,19 @@
  * is worse than none. rx, ry, rz and T leave the Clifford group: their
  * amplitudes are not of this form and no integer representation holds them.
  * They are ABSENT here rather than approximated, and asking for one throws.
+ *
+ * THAT SENTENCE IS ABOUT THIS RING, NOT ABOUT EXACTNESS, and the difference is
+ * now a file. Amplitudes here are (x + yi)/√2^k, so T = diag(1, e^{iπ/4})
+ * leaves ℤ[i] and within ℤ[i] absence or approximation are the only honest
+ * options. One root of unity further out the choice disappears: ζ₈ satisfies
+ * ζ⁴ = −1 and √2 = ζ − ζ³, so `src/quantum/clifford-t.ts` carries the whole
+ * Clifford+T fragment exactly, T included.
+ *
+ * It costs something, which is why that is a separate file and not this one.
+ * Probabilities here are RATIONAL — 1/2, returned as a fraction. There they are
+ * not: z·z̄ is P + Q√2, so H·T·H on |0⟩ gives exactly (2 + √2)/4, which is exact
+ * and irrational. Arbitrary rotations stay absent in both, since Clifford+T
+ * only APPROXIMATES them.
  * For those, the float simulator is the right tool and its drift is the price.
  */
 

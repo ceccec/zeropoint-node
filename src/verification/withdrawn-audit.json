@@ -33,8 +33,8 @@
     },
     {
       "negation": "non-Clifford gates are ABSENT from the exact simulator, not approximated",
-      "status": "open",
-      "by": null
+      "status": "discharged",
+      "by": "src/quantum/clifford-t.ts"
     },
     {
       "negation": "no algorithm here demonstrates a query advantage",
@@ -52,5 +52,5 @@
       "by": "src/quantum/exact.ts"
     }
   ],
-  "contentHash": "645c3d6767e77fd5826350e08cae3a40"
+  "contentHash": "a32c18ca8be3abcb1243d2a93434d714"
 }

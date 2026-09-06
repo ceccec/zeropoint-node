@@ -1,5 +1,96 @@
 # Changelog
 
+## 1.5.6
+
+**Classical trial division passed the exhaustive Shor check.** It swept every
+modulus and base, found no wrong factorisation and no unexplained refusal, and
+reported clean — for a routine that is no more Shor's algorithm than long
+division is. The check verified that every REFUSAL was one of the three known
+failure modes, which catches an implementation refusing too much and cannot
+catch one refusing too little, and trial division never refuses a composite. The
+arm was vacuous against the only substitution that mattered, and the sentence
+above the code claimed the discrimination the code did not perform.
+
+The converse arm is the one that identifies the method: Shor's yields a factor
+from a period r only when r is even and a^(r/2) != -1 mod N, so a period-finder
+MUST refuse where those fail, and succeeding there is proof the answer came from
+somewhere else. Over 434 inputs to N=31, the stand-in is caught 93 times and the
+real implementation none.
+
+**So every algorithm was asked the same question, and none of them could answer
+it.** `npm run impostors` replaces each one with a classical stand-in that
+returns identical answers and runs the check that should notice. On its first
+run, 0 of 5 were identified by their method. `bernsteinVazirani` and `simon`
+were handed the value they are said to recover, so `return hidden` passed;
+`deutsch`'s stand-in was the implementation's own first line; `grover` was
+passed by a register holding 1 at the target and 0 elsewhere, which satisfies
+`p[target] > 0.9` more comfortably than Grover does.
+
+7 of 8 are identified now, by one of two routes. By RESIDUE: two Grover
+iterations over N=8 leave exactly 121/128 on the marked state and 1/128 on each
+of the other seven, which nothing but that rotation produces. By QUERY PATTERN:
+a phase oracle applied to a state vector reads every basis state exactly once,
+where classical routines stop early. Three functions only became checkable at
+all once the value they were handed could be passed as an oracle instead.
+
+The floor is 1, not 0, and it is stated so nobody chases it. `deutsch` has one
+bit of output over a two-element domain: no residue to read, and no query
+pattern either, since 2^n and the classical worst case are both 2.
+
+**None of it is an advantage claim.** `npm run query:cost` hands each
+oracle-taking function an oracle that counts: `deutschJozsa` calls f 2^n times
+against a classical worst case of 2^(n-1)+1, and `groverSearch` calls its
+predicate N*(k+1) times against a classical scan of N. 0 of 7 measurements show
+a query advantage. A state-vector simulator applies a phase oracle by evaluating
+f on every basis state, so one quantum query costs 2^n classical evaluations by
+construction. Recognising a method and profiting from it are different things,
+and only the first is available here.
+
+**`deutsch`'s circuit never read f1.** It opened with a classical comparison and
+then applied a phase built from f0 alone, which coincides with (-1)^f(i) only in
+the balanced branch — the one case that reached it. Run on all four inputs with
+the shortcut removed, the circuit answered 'balanced' every time. Every correct
+answer the function gave came from the comparison. The suite asserted all four
+inputs and passed, because the shortcut answered the two the circuit got wrong:
+full input coverage with a shortcut in front never exercises the thing under
+test. The oracle now reads both values and the shortcut is gone.
+
+**A claim is false relative to a frame, and 1.5.4 deleted the frame.** 157
+README lines went for asserting that a 60 degree rotation makes pi rational.
+That claim is false and stays withdrawn; three true statements went with it, and
+they are arithmetic now in `src/quantum/eisenstein.ts`. omega = e^{i pi/3}
+satisfies omega^2 = omega - 1, so a 60 degree rotation is (a, b) -> (-b, a + b)
+— two integer operations with no decimal and no tolerance anywhere in the
+module. pi is exactly 3 in units of 60 degrees, a count rather than a rounding.
+And 60 degrees is the eigenangle because the doubling orbit 1,2,4,8,7,5 mod 9 is
+a six-cycle whose eigenvalues are the sixth roots of unity.
+
+`npm run withdrawn` audits all 12 withdrawals in the tree, and cannot omit one:
+the retraction markers are re-extracted by the same rule `retracted:check` uses,
+and a claim not in the ledger fails. Each is unfalsifiable, false in every
+frame, superseded by a computation, or true in a frame the deletion failed to
+name — 3 are the last, and each names the module that carries it and the
+command that recomputes it, which the tool runs.
+
+Every negation is ledgered the same way, because noticing one should not be the
+same as losing it. One is open: the exact simulator says non-Clifford gates are
+ABSENT rather than approximated, which is a statement about Z[i] and not about
+exactness.
+
+**Two gates were reading nothing.** `api:reference` kept only export subpaths
+ending in `.ts`; all 24 resolve to `./dist/*.esm.js`, so it dropped every one,
+documented 0 exports across 0 entry points, and its check compared an empty page
+against an empty generation and passed. It reads the built ESM now and refuses
+both zeros: 873 exports across 23 entry points.
+
+The ratchet fingerprinted `src/**/*.ts` and the configs while its surfaces run
+over every `.md` in the tree and shell out to other scripts. Changing
+`API_REFERENCE.md` by 873 names, and later breaking a measurement outright,
+changed no fingerprint. Every `.md` and every `.mjs` under `scripts/` is in it
+now. And `unguardedReadme` reported a 1720-byte regression that never happened,
+because its credit instrument caught every error and returned an empty set; it
+voids now, which the ratchet already refuses to pass quietly.
+
 ## 1.5.5
 
 **83 theorems in one flat ledger were a list, not a structure.** `npm run families`

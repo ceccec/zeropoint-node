@@ -29,7 +29,7 @@
  *   npm run version:check   fail closed on drift
  */
 
-import { readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { execFileSync } from 'node:child_process'
@@ -262,7 +262,52 @@ if (CHECK && readmeNext !== readme && blockRe.test(readme)) {
   fail.push('README.md VERSION block is stale — run npm run version:seal')
 }
 
-// ---- surface 3: CHANGELOG heading -------------------------------------------
+/**
+ * ---- surface 3: the MCP server's serverInfo.version -------------------------
+ *
+ * This is a LITERAL on purpose. src/mcp/server.ts is bundled to both ESM and
+ * CJS and a runtime read of package.json resolves differently in each, so the
+ * version an MCP client is told has to be written into the source. It once said
+ * 1.0.0 while the package was 1.5.1 — wrong by five minors, in the one surface
+ * that identifies this package to other tools — because mcp:smoke asserted only
+ * that serverInfo.name EXISTED and compared the version to nothing.
+ *
+ * mcp:smoke compares it now, and that is what caught this on the 1.5.6 release:
+ * the literal still said 1.5.5 and the gate chain stopped at its last step. The
+ * check is right and it was the wrong place to leave the work. A literal that
+ * nothing UPDATES drifts at every release, and catching it by hand each time is
+ * the ritual this seal exists to remove. So the seal owns it, beside
+ * CITATION.cff and the README block.
+ */
+const serverPath = p('src/mcp/server.ts')
+/**
+ * PRESENT-OR-ABSENT, BECAUSE THE SELF-TEST TREE IS PARTIAL BY DESIGN. This read
+ * the file unconditionally and the seal's own self-test — which seals a scratch
+ * tree holding only package.json, CITATION.cff, README and CHANGELOG — died on
+ * ENOENT, taking 11 of its 13 cases with it. A surface that assumes the whole
+ * repository cannot run against a fixture.
+ *
+ * Absence is not silent: the seal says which surfaces it found. And the version
+ * cannot drift through the gap either way, because mcp:smoke compares the same
+ * literal against package.json after the bundle is built.
+ */
+const hasServer = existsSync(serverPath)
+const server = hasServer ? readFileSync(serverPath, 'utf8') : ''
+const SERVER_RE = /(serverInfo: \{ name: '[^']+', version: ')([^']+)(' \})/
+const serverMatch = server.match(SERVER_RE)
+let serverNext = server
+if (!hasServer) {
+  // nothing to seal in this tree
+} else if (!serverMatch) {
+  if (CHECK) fail.push('src/mcp/server.ts has no serverInfo version literal for the seal to own')
+} else {
+  serverNext = server.replace(SERVER_RE, `$1${version}$3`)
+  if (CHECK && serverMatch[2] !== version) {
+    fail.push(`src/mcp/server.ts reports version ${serverMatch[2]} but the package is ${version} — run npm run version:seal`)
+  }
+}
+
+// ---- surface 4: CHANGELOG heading -------------------------------------------
 const changelogPath = p('CHANGELOG.md')
 const changelog = readFileSync(changelogPath, 'utf8')
 const headings = [...changelog.matchAll(/^## (\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)/gm)].map((m) => m[1])
@@ -329,6 +374,7 @@ if (CHECK) {
 if (cffNext !== cff) writeFileSync(cffPath, cffNext)
 if (zenodoNext !== null && zenodoNext !== zenodoRaw) writeFileSync(zenodoPath, zenodoNext)
 if (readmeNext !== readme) writeFileSync(readmePath, readmeNext)
+if (serverNext !== server) writeFileSync(serverPath, serverNext)
 if (changelogNext !== changelog) writeFileSync(changelogPath, changelogNext)
 
 for (const n of note) console.log(`version:seal note — ${n}`)

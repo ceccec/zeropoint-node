@@ -335,7 +335,7 @@ async function handle(msg: JsonRpc): Promise<string> {
       // so nothing compared it to anything. It now requires this string to
       // equal the version in package.json, which makes the copy held rather
       // than merely present.
-      serverInfo: { name: 'zeropoint-node', version: '1.5.5' },
+      serverInfo: { name: 'zeropoint-node', version: '1.5.6' },
     })
   }
   if (method === 'notifications/initialized') {

@@ -118,11 +118,11 @@ export const IMPOSTORS = [
   {
     algorithm: 'phaseEstimation',
     module: 'src/quantum/algorithms.ts',
-    anchor: 'export function phaseEstimation(t: number, phi: number): number {',
-    impostor: '  return Math.round(phi * (1 << t)) & ((1 << t) - 1) // IMPOSTOR: rounds the answer it was given',
+    anchor: 'export function phaseEstimation(t: number, phi: number | ((power: number) => number)): number {',
+    impostor: '  { const at = typeof phi === "function" ? phi : (power) => phi * power; return Math.round(at(1) * (1 << t)) & ((1 << t) - 1) } // IMPOSTOR: one query at power 1, then rounding',
     check: 'quantum:sim',
-    samples: [[3, 1 / 8], [3, 1 / 4], [3, 3 / 8], [3, 1 / 2]],
-    answerOnly: 'phi is an argument and the assertion is that the estimate is near it, so rounding the argument to t bits passes. The algorithm is exactly a rounding-to-t-bits, which is what makes this the hardest of the five to distinguish by result.',
+    samples: [[3, 1 / 8], [3, 1 / 4], [3, 3 / 8], [3, 1 / 2], [4, (power) => (3 / 16) * power], [3, (power) => (1 / 8) * power]],
+    identifiedBy: 'not through the number form, which is handed the eigenphase it estimates — rounding the argument to t bits passes every assertion, and the algorithm IS a rounding to t bits, which made this the hardest of the eight to separate by result. `phi` may now be the unitary, given as the phase it accumulates at a power, and then the ladder is visible: QPE queries the t powers 2^0..2^(t-1), each exactly once, because that is what carries the phase into the counting register. The impostor needs only the phase at power 1. The ladder is the algorithm and it is the part a t-bit return value cannot carry.',
   },
   {
     algorithm: 'shor',
@@ -347,6 +347,11 @@ if (previous) {
 console.log(`\n  ${identified} algorithm(s) identified by method, ${declared} verified by answer alone`)
 console.log('  An answer-only algorithm is not wrong. It is unidentified: any classical routine')
 console.log('  returning the same value is indistinguishable from it through every check here.')
+console.log('')
+console.log('  THE FLOOR IS 1, NOT 0. `deutsch` is answer-only by construction: one bit of output')
+console.log('  over a two-element domain leaves no residue to read, and no query pattern to')
+console.log('  compare either, since 2^n and the classical worst case are both 2. Both routes')
+console.log('  that identified the other seven are closed to it. Nobody should chase this to 0.')
 
 if (failures > 0) {
   console.error(`\nimpostors FAIL — ${failures} declaration(s) do not match what the checks actually do`)

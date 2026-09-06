@@ -63,9 +63,10 @@ const CLAIMS = [
     'npm run query:cost',
     'an oracle-taking function whose counted calls come in under the classical worst case'],
 
-  ['Five of seven quantum algorithms cannot be told apart from a classical routine returning the same answer. For bernsteinVazirani and simon that routine is `return hidden`, because they are handed the value they are said to recover.',
+  ['Seven of eight quantum algorithms are identified by their METHOD: a classical stand-in returning identical answers is caught by the checks over them. The eighth cannot be, and the floor is 1 rather than 0 — deutsch has one bit of output over a two-element domain, so there is no residue to read and no query pattern to compare.',
     'npm run impostors',
-    'a check that catches an answer-equivalent classical stand-in for any of the five'],
+    'an answer-equivalent classical stand-in that survives every check for any of the seven'],
+
 
   ['Classical trial division passed the exhaustive Shor check — 358 correct, 0 wrong, 0 unexplained — until the converse arm was added. Both directions now run, and the stand-in is caught in 93 of 434 inputs.',
     'npm run shor:exhaustive',

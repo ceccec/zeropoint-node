@@ -409,6 +409,24 @@ const HALF = 1 / 2
   assert(phaseEstimation(3, 1 / 4) === 2, 'QPE(φ=1/4, t=3) = 2')
   assert(phaseEstimation(3, 3 / 8) === 3, 'QPE(φ=3/8, t=3) = 3')
   assert(phaseEstimation(3, 1 / 2) === 4, 'QPE(φ=1/2, t=3) = 4')
+
+  // Handed the eigenphase as a number, QPE is given the answer it estimates and
+  // rounding the argument to t bits passes every assertion above. Given the
+  // unitary as a function of its power, the method is observable: the t powers
+  // 2^0..2^(t-1) are queried, each exactly once, because that binary ladder is
+  // what carries the phase into the counting register. Anything that rounds
+  // needs the phase at power 1 and nothing else.
+  {
+    const t = 4
+    const num = 3
+    const powers = []
+    const got = phaseEstimation(t, (power) => { powers.push(power); return (num / (1 << t)) * power })
+    assert(got === num, `QPE through a unitary recovers k=${num} as it does through a number (got ${got})`)
+    assert(
+      powers.length === t && powers.every((power, i) => power === (1 << i)),
+      `QPE queries the unitary at 2^0..2^${t - 1}, each exactly once (got ${JSON.stringify(powers)})`,
+    )
+  }
 }
 
 // 21. Bit-flip error correction: a single X error on any data qubit is detected and undone.

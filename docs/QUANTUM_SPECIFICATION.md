@@ -162,21 +162,35 @@ and `deutsch` receives both function values and opens with
 ### What the self-checks establish, and what they do not
 
 `npm run impostors` replaces each algorithm with a classical stand-in that
-returns the same answers and runs the check that should notice. Six algorithms,
-and the result is recorded rather than asserted:
+returns the same answers and runs the check that should notice. Eight
+algorithms, and the result is recorded rather than asserted: **seven are
+identified by their method, one cannot be.**
 
-- **`grover`** and **`shor`** are identified by their method. Grover's check
-  reads the exact residue two iterations leave — 121/128 on the marked state and
-  1/128 on each of the other seven, which nothing but that rotation produces.
-  Shor's sweeps both directions: no refusal outside the three known failure
-  modes, and no success on any input where period-finding must refuse.
-- **`bernsteinVazirani`**, **`simon`**, **`deutschJozsa`**, **`phaseEstimation`**
-  and **`deutsch`** are verified by their answer alone. Every check over them is
-  passed by a classical routine returning the same value — for the first two,
-  by `return hidden`.
+An algorithm is identifiable only where its output carries more than the answer,
+or where the way it consults an oracle can be observed. Two routes, and every
+one of the seven is caught by one of them:
 
-An answer-only algorithm is not wrong. It is unidentified, and that count is a
-ceiling that only moves down.
+- **By residue.** `grover` leaves exactly 121/128 on the marked state after two
+  iterations and 1/128 on each of the other seven — a distribution no other
+  procedure produces. `shor` refuses precisely where period-finding must, and
+  succeeding there is proof the answer came from elsewhere.
+- **By query pattern.** A phase oracle applied to a state vector reads every
+  basis state exactly once; classical routines stop early.
+  `deutschJozsa`, `groverSearch`, `bernsteinVazirani` and `simon` are caught
+  this way, and the last two only became checkable when their hidden value could
+  be passed as an oracle instead of as the answer. `phaseEstimation` queries the
+  unitary at the t powers 2^0..2^(t-1), each exactly once; a rounding stand-in
+  needs the phase at power 1 and nothing else.
+
+**`deutsch` is answer-only by construction.** One bit of output over a
+two-element domain leaves no residue, and no query pattern either — 2^n and the
+classical worst case are both 2. Both routes are closed to it. This is a floor,
+not a backlog item.
+
+None of this is an advantage claim. Every pattern above costs MORE oracle
+evaluations than the classical bound, as the table above records. Recognising a
+method and profiting from it are different things, and only the first is
+available in a simulator.
 
 
 ### Simon's Algorithm

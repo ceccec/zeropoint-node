@@ -255,14 +255,36 @@ export function superdenseCoding(b0: 0 | 1, b1: 0 | 1): [number, number] {
  * (index t) prepared in |1⟩. Returns the counting-register integer, which
  * equals φ·2ᵗ exactly when φ is a dyadic k/2ᵗ.
  */
-export function phaseEstimation(t: number, phi: number): number {
+export function phaseEstimation(t: number, phi: number | ((power: number) => number)): number {
+  /**
+   * `phi` MAY BE THE UNITARY, given as the phase it accumulates at a power.
+   *
+   * Handed the eigenphase as a number this function is given the answer it
+   * estimates, and the assertion over it is that the estimate is near the
+   * argument — so rounding the argument to t bits passes, and the algorithm is
+   * indistinguishable from `Math.round`. That was the last of the three shapes
+   * this module kept: an answer passed in as an argument.
+   *
+   * Given a function, the method becomes observable. Phase estimation queries
+   * the unitary at the t powers 2^0 .. 2^(t-1), each exactly once, because that
+   * binary ladder is what puts the phase into the counting register in the
+   * first place. Anything that rounds needs only the phase at power 1. The
+   * ladder is the algorithm, and it is the only part of it a return value of t
+   * bits cannot carry.
+   *
+   * The number form is unchanged: a phase accumulating linearly in the power is
+   * exactly what U^power means for a one-qubit phase gate.
+   */
+  const phaseOf: (power: number) => number = typeof phi === 'function'
+    ? phi
+    : (power: number) => phi * power
   let s = zeroState(t + 1)
   s = applyGate1(s, t, X) // eigenstate |1⟩
   for (let q = 0; q < t; q += 1) s = applyGate1(s, q, H)
   const twoPi = 2 * PI
   for (let j = 0; j < t; j += 1) {
     // controlled-U^{2^j} = controlled-phase(2π·φ·2^j), control j → eigenstate t
-    s = applyControlled(s, j, t, phase(twoPi * phi * (1 << j)))
+    s = applyControlled(s, j, t, phase(twoPi * phaseOf(1 << j)))
   }
   s = iqft(s, allQubits(t)) // inverse QFT on the counting register only
   const p = probabilities(s)

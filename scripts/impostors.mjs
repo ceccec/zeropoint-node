@@ -140,6 +140,15 @@ export const IMPOSTORS = [
     answerOf: (out) => (out === null ? null : [...out].sort((x, y) => x - y)),
     identifiedBy: 'shor:check runs both directions. Verifying that every refusal is one of the three known failure modes does NOT catch this — trial division never refuses a composite, so that arm is vacuous against it, and it passed with 358 correct, 0 wrong, 0 unexplained. The converse arm does: Shor\'s yields a factor from a period r only when r is even and a^(r/2) != -1 mod N, so a period-finder MUST refuse where those fail, and trial division succeeds there in 93 of 434 inputs.',
   },
+  {
+    algorithm: 'deutsch',
+    module: 'src/quantum/algorithms.ts',
+    anchor: "export function deutsch(f0: 0 | 1, f1: 0 | 1): 'constant' | 'balanced' {",
+    impostor: "  return f0 === f1 ? 'constant' : 'balanced' // IMPOSTOR: the implementation's own first line",
+    check: 'quantum:sim',
+    samples: [[0, 0], [0, 1], [1, 0], [1, 1]],
+    answerOnly: 'the impostor is line 484 of the implementation. `deutsch` takes the two function VALUES rather than an oracle, and opens with `if (f0 === f1) return \'constant\'` — half of all inputs are answered classically before a gate is applied, and the remaining half are the balanced case, where returning \'balanced\' is the only other option. There is no query to count and no residue to read: with four possible inputs and two possible answers, no check over the return value can distinguish a circuit from a comparison.',
+  },
 ]
 
 const declared = IMPOSTORS.filter((i) => i.answerOnly).length
@@ -302,10 +311,27 @@ for (const entry of IMPOSTORS) {
   if (out.caught) console.log(`       ${out.why}`)
 }
 
+/**
+ * THE RATCHET IS PER-ALGORITHM, BECAUSE A COUNT PUNISHES COVERAGE.
+ *
+ * This compared totals: if the answer-only count rose, fail. That is wrong in
+ * the one direction that matters. Adding `deutsch` to the table — an algorithm
+ * whose own first line is `if (f0 === f1) return 'constant'`, answering half
+ * its inputs before a gate is applied — raises the count, and a gate that
+ * fails when you document a weakness teaches you to stop documenting.
+ *
+ * What must never happen is REGRESSION: an algorithm recorded as identified by
+ * its method must not quietly become answer-only again, which is what happens
+ * when someone loosens an assertion. New entries may arrive answer-only.
+ */
 const previous = existsSync(RECORD) ? JSON.parse(readFileSync(RECORD, 'utf8')) : null
-if (previous && declared > previous.answerOnly) {
-  console.error(`\nimpostors FAIL — answer-only algorithms rose from ${previous.answerOnly} to ${declared}; that ceiling only moves down`)
-  process.exit(1)
+if (previous) {
+  const wasIdentified = new Set((previous.results ?? []).filter((r) => r.expectedCaught).map((r) => r.algorithm))
+  const regressed = IMPOSTORS.filter((i) => i.answerOnly && wasIdentified.has(i.algorithm)).map((i) => i.algorithm)
+  if (regressed.length > 0) {
+    console.error(`\nimpostors FAIL — ${regressed.join(', ')} was identified by method and is now answer-only; that never moves backwards`)
+    process.exit(1)
+  }
 }
 
 console.log(`\n  ${identified} algorithm(s) identified by method, ${declared} verified by answer alone`)

@@ -1,0 +1,57 @@
+{
+  "what": "Oracle calls actually made by every oracle-taking algorithm, against the classical worst case for the same problem. Written because impostors found that no check counted them.",
+  "inputsFingerprint": "68ad1c7de59636770577976c184fc0e0",
+  "queryAdvantagesFound": 0,
+  "measurements": [
+    {
+      "algorithm": "deutschJozsa",
+      "n": 3,
+      "calls": 8,
+      "classical": 5,
+      "ratio": 1.6
+    },
+    {
+      "algorithm": "deutschJozsa",
+      "n": 4,
+      "calls": 16,
+      "classical": 9,
+      "ratio": 1.7777777777777777
+    },
+    {
+      "algorithm": "deutschJozsa",
+      "n": 5,
+      "calls": 32,
+      "classical": 17,
+      "ratio": 1.8823529411764706
+    },
+    {
+      "algorithm": "deutschJozsa",
+      "n": 6,
+      "calls": 64,
+      "classical": 33,
+      "ratio": 1.9393939393939394
+    },
+    {
+      "algorithm": "groverSearch",
+      "n": 3,
+      "calls": 24,
+      "classical": 8,
+      "ratio": 3
+    },
+    {
+      "algorithm": "groverSearch",
+      "n": 4,
+      "calls": 64,
+      "classical": 16,
+      "ratio": 4
+    },
+    {
+      "algorithm": "groverSearch",
+      "n": 5,
+      "calls": 160,
+      "classical": 32,
+      "ratio": 5
+    }
+  ],
+  "contentHash": "b889dc5f5e07f42af14bfa616d116195"
+}

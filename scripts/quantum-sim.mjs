@@ -326,6 +326,34 @@ const HALF = 1 / 2
   assert(deutschJozsa(3, () => 1) === 'constant', 'DJ: f≡1 is constant')
   assert(deutschJozsa(3, (x) => (x & 1)) === 'balanced', 'DJ: f(x)=x&1 is balanced')
   assert(deutschJozsa(4, (x) => ((x >> 2) & 1)) === 'balanced', 'DJ: parity-of-a-bit is balanced')
+
+  /**
+   * THE VERDICT CANNOT IDENTIFY THE METHOD, SO THE QUERY PATTERN MUST.
+   *
+   * deutschJozsa returns one bit. A classical routine that scans until it sees
+   * two different values returns the same bit on every input satisfying the
+   * promise, so no assertion over the return value can tell them apart — that
+   * is a property of the interface and no amount of checking fixes it. Grover
+   * escapes this only because its return value is a whole register and the
+   * rotation leaves a residue in it.
+   *
+   * What is left is HOW the oracle was consulted. Applying a phase oracle to a
+   * state vector means evaluating f on every basis state exactly once; the
+   * classical shortcut stops as soon as it finds a disagreement, which for
+   * f(x)=x&1 is after two calls. Asserting the pattern is not an advantage
+   * claim — query:cost records that this costs 2^n where classical needs
+   * 2^(n-1)+1 — it is a signature claim, and it is the only thing here that
+   * distinguishes the two.
+   */
+  {
+    const n = 4
+    const seen = new Array(1 << n).fill(0)
+    deutschJozsa(n, (x) => { seen[x] += 1; return (x & 1) })
+    assert(
+      seen.every((c) => c === 1),
+      `DJ evaluates f exactly once on every one of the 2^${n} basis states (got ${seen.filter((c) => c !== 1).length} exceptions)`,
+    )
+  }
 }
 
 // 18. Teleportation moves an arbitrary qubit state to qubit 2 — for every measurement branch.
@@ -457,6 +485,23 @@ const HALF = 1 / 2
   assert(marked.has(mostProbable(s)), 'generalized Grover: top outcome is a marked item')
   assert(pm > 1 / 2, 'generalized Grover: marked states carry the majority of the probability')
   assert(mostProbable(groverSearch(4, (x) => x === 11)) === 11, 'generalized Grover: M=1 case works')
+
+  // Same reasoning as Deutsch-Jozsa above. groverSearch returns a register, but
+  // its assertions read only the peak, and a delta at the marked item passes
+  // them. Amplification consults the predicate on every element of the space
+  // once per round plus once to count; a classical scan stops at the first
+  // marked element. The counts are asserted as a law of n by query:cost.
+  {
+    const n = 4
+    const seen = new Array(1 << n).fill(0)
+    groverSearch(n, (x) => { seen[x] += 1; return x === 11 })
+    const rounds = seen[0]
+    assert(rounds > 1, `groverSearch amplifies rather than scanning: the predicate is consulted ${rounds} times per element, not once`)
+    assert(
+      seen.every((c) => c === rounds),
+      'groverSearch consults the predicate the same number of times on every element — a scan would stop early',
+    )
+  }
 }
 
 // 30. Deutsch problem: constant vs balanced in one query.

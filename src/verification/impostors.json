@@ -1,8 +1,8 @@
 {
   "what": "Each quantum algorithm replaced by a classical impostor returning the same answers, and whether the checks over it notice. Written because shor:check passed classical trial division cleanly.",
-  "answerOnly": 5,
-  "identifiedByMethod": 2,
-  "inputsFingerprint": "e34b59c8ac54d2298c9f229879c07a1c",
+  "answerOnly": 4,
+  "identifiedByMethod": 4,
+  "inputsFingerprint": "7c160d696faae7517e70f3bb26728e78",
   "results": [
     {
       "algorithm": "bernsteinVazirani",
@@ -21,8 +21,8 @@
     {
       "algorithm": "deutschJozsa",
       "check": "quantum:sim",
-      "caught": false,
-      "expectedCaught": false,
+      "caught": true,
+      "expectedCaught": true,
       "agrees": true
     },
     {
@@ -47,6 +47,13 @@
       "agrees": true
     },
     {
+      "algorithm": "groverSearch",
+      "check": "quantum:sim",
+      "caught": true,
+      "expectedCaught": true,
+      "agrees": true
+    },
+    {
       "algorithm": "deutsch",
       "check": "quantum:sim",
       "caught": false,
@@ -54,5 +61,5 @@
       "agrees": true
     }
   ],
-  "contentHash": "0a84b854531c1dae16547b50477f1cdd"
+  "contentHash": "779610a9b97a352f9c4700c54880b0a0"
 }

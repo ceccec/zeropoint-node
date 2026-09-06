@@ -103,7 +103,7 @@ export const IMPOSTORS = [
     impostor: "  { const size = 1 << n; const first = f(0); for (let x = 1; x <= size / 2; x += 1) if (f(x) !== first) return 'balanced'; return 'constant' } // IMPOSTOR: 2^(n-1)+1 classical queries",
     check: 'quantum:sim',
     samples: [[3, (x) => 0], [3, (x) => 1], [3, (x) => x & 1], [4, (x) => (x >> 2) & 1]],
-    answerOnly: 'this one takes a real oracle, so the impostor must actually query it — but nothing counts the queries. The quantum claim is ONE query against 2^(n-1)+1; both return the same verdict and only the cost separates them.',
+    identifiedBy: 'not by the verdict — it returns one bit, and a classical scan returns the same bit on every input satisfying the promise, so no assertion over the return value could ever separate them. That is a property of the interface. What separates them is HOW the oracle is consulted: applying a phase oracle to a state vector evaluates f on every basis state exactly once, and the classical shortcut stops at the first disagreement, which for f(x)=x&1 is after two calls. quantum:sim now asserts the pattern. This is a signature claim and not an advantage claim — query:cost records that the pattern costs 2^n where classical needs 2^(n-1)+1, which is worse.',
   },
   {
     algorithm: 'grover',
@@ -139,6 +139,16 @@ export const IMPOSTORS = [
     samples: [[15, 7], [21, 2], [15, 2], [33, 5], [35, 3]],
     answerOf: (out) => (out === null ? null : [...out].sort((x, y) => x - y)),
     identifiedBy: 'shor:check runs both directions. Verifying that every refusal is one of the three known failure modes does NOT catch this — trial division never refuses a composite, so that arm is vacuous against it, and it passed with 358 correct, 0 wrong, 0 unexplained. The converse arm does: Shor\'s yields a factor from a period r only when r is even and a^(r/2) != -1 mod N, so a period-finder MUST refuse where those fail, and trial division succeeds there in 93 of 434 inputs.',
+  },
+  {
+    algorithm: 'groverSearch',
+    module: 'src/quantum/algorithms.ts',
+    anchor: 'export function groverSearch(n: number, isMarked: (x: number) => boolean, markedCount?: number): Register | null {',
+    impostor: '  { const size = 1 << n; for (let x = 0; x < size; x += 1) if (isMarked(x)) return { n, amps: Array.from({ length: size }, (_, i) => (i === x ? { re: 1, im: 0 } : { re: 0, im: 0 })) }; return null } // IMPOSTOR: classical scan, writing a delta at what it finds',
+    check: 'quantum:sim',
+    samples: [[4, (x) => x === 11], [3, (x) => x === 3], [5, (x) => x === 20]],
+    answerOf: (r) => { if (r === null) return null; const p = r.amps.map((a) => a.re * a.re + a.im * a.im); let k = 0; for (let i = 1; i < p.length; i += 1) if (p[i] > p[k]) k = i; return k },
+    identifiedBy: 'the assertions over groverSearch read only the peak, and a delta at the marked item passes them exactly as it did for grover. The separating property is the query pattern: amplification consults the predicate once per element per round, plus once to count, so every element is visited the same number of times. A scan stops at the first marked element and visits the rest zero times.',
   },
   {
     algorithm: 'deutsch',

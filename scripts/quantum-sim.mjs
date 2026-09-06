@@ -317,6 +317,26 @@ const HALF = 1 / 2
 {
   for (const hidden of [0, 1, 5, 10, 13, 15]) {
     assert(bernsteinVazirani(4, hidden) === hidden, `Bernstein–Vazirani recovers ${hidden} in one query`)
+
+  // The integer form is handed the answer, so the assertion above is passed by
+  // `return hidden` and identifies nothing. Passed an ORACLE the method becomes
+  // observable: a phase oracle applied to a state vector reads every basis
+  // state exactly once, where classical extraction queries the n basis vectors
+  // e_i and nothing else. Signature, not advantage — 2^n against n is worse.
+  {
+    const n = 4
+    const hidden = 0b1011
+    const seen = new Array(1 << n).fill(0)
+    // Named parityOf, not popcount: a local copy carrying a shipped export's
+    // name is the defect shadowed:check exists to catch.
+    const parityOf = (v) => { let c = 0; let w = v; while (w) { c ^= w & 1; w >>>= 1 } return c }
+    const got = bernsteinVazirani(n, (x) => { seen[x] += 1; return parityOf(x & hidden) })
+    assert(got === hidden, `BV recovers ${hidden} through an oracle as well as an integer (got ${got})`)
+    assert(
+      seen.every((c) => c === 1),
+      `BV evaluates the oracle exactly once on every one of the 2^${n} basis states (got ${seen.filter((c) => c !== 1).length} exceptions)`,
+    )
+  }
   }
 }
 

@@ -155,15 +155,32 @@ export function groverSearch(n: number, isMarked: (x: number) => boolean, marked
  */
 /**
  * Bernstein–Vazirani: recover a hidden n-bit string s from the oracle
- * f(x) = s·x (mod 2), in a SINGLE query OF THE ALGORITHM. This function makes
- * no query at all: `hidden` is an argument, not an oracle, so `return hidden`
- * satisfies every check over it. See `npm run impostors`. Sandwich a phase oracle
- * (|x⟩ → (−1)^{s·x}|x⟩) between two layers of Hadamards; the state collapses
- * onto |s⟩ deterministically. Returns the recovered integer (= hidden).
+ * f(x) = s·x (mod 2), in a SINGLE query OF THE ALGORITHM. Sandwich a phase
+ * oracle (|x⟩ → (−1)^{s·x}|x⟩) between two layers of Hadamards; the state
+ * collapses onto |s⟩ deterministically. Returns the recovered integer.
+ *
+ * `hidden` MAY BE AN ORACLE, and until it could be, nothing here was testable.
+ * Passed an integer, this function is handed the very value it is said to
+ * recover, and the only check over it asserted that the return equalled the
+ * argument — so `return hidden` passed, and the algorithm was indistinguishable
+ * from a comparison. That is not a defect in the implementation; it is an
+ * interface with no observable surface. See `npm run impostors`.
+ *
+ * Passed a function, the phase is read from it, and the ONE property that
+ * separates this from a classical recovery becomes visible: the phase oracle is
+ * applied to a state vector, so f is evaluated on every basis state exactly
+ * once, where classical extraction queries the n basis vectors e_i and no
+ * others. quantum:sim asserts that pattern. It is a signature, not an
+ * advantage — 2^n evaluations against n is worse, and query:cost says so.
+ *
+ * The integer form is unchanged and delegates to the oracle form.
  */
-export function bernsteinVazirani(n: number, hidden: number): number {
+export function bernsteinVazirani(n: number, hidden: number | ((x: number) => 0 | 1)): number {
+  const phase: (x: number) => 0 | 1 = typeof hidden === 'function'
+    ? hidden
+    : (x: number) => ((popcount(x & hidden) & 1) as 0 | 1)
   let s = uniform(n)
-  s = { n, amps: s.amps.map((a, i) => (popcount(i & hidden) & 1 ? cx(-a.re, -a.im) : a)) }
+  s = { n, amps: s.amps.map((a, i) => (phase(i) ? cx(-a.re, -a.im) : a)) }
   for (let q = 0; q < n; q += 1) s = applyGate1(s, q, H)
   const p = probabilities(s)
   let arg = 0

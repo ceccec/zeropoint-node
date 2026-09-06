@@ -81,11 +81,11 @@ export const IMPOSTORS = [
   {
     algorithm: 'bernsteinVazirani',
     module: 'src/quantum/algorithms.ts',
-    anchor: 'export function bernsteinVazirani(n: number, hidden: number): number {',
-    impostor: '  return hidden // IMPOSTOR: no query, no circuit, no superposition',
+    anchor: 'export function bernsteinVazirani(n: number, hidden: number | ((x: number) => 0 | 1)): number {',
+    impostor: '  { if (typeof hidden !== "function") return hidden; let acc = 0; for (let i = 0; i < n; i += 1) if (hidden(1 << i)) acc |= 1 << i; return acc } // IMPOSTOR: return the argument, or n classical queries on the basis vectors',
     check: 'quantum:sim',
-    samples: [[4, 0b1011], [3, 0b101], [5, 0b11010]],
-    answerOnly: 'the function receives `hidden` as an argument and the only assertion is that it returns it, so returning the argument passes. A one-query claim cannot be tested through an interface that is given the answer; it needs an ORACLE parameter whose call count can be observed.',
+    samples: [[4, 0b1011], [3, 0b101], [5, 0b11010], [4, (x) => { let c = 0; let w = x & 0b1011; while (w) { c ^= w & 1; w >>>= 1 } return c }], [3, (x) => { let c = 0; let w = x & 0b110; while (w) { c ^= w & 1; w >>>= 1 } return c }]],
+    identifiedBy: 'not through the integer form, which is handed the answer and passed by `return hidden`. `hidden` may now be an ORACLE, and that is what made the method observable at all: a phase oracle applied to a state vector reads every basis state exactly once, where classical extraction queries the n basis vectors e_i and nothing else. The impostor does exactly that and is caught by the pattern, not by the answer — it recovers the right string. Signature, not advantage: 2^n evaluations against n is worse, which query:cost records.',
   },
   {
     algorithm: 'simon',

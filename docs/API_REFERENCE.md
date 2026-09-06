@@ -11,6 +11,1039 @@ The previous version of this file was hand-written and documented 32 functions,
 reader more than no reference at all, because it looks authoritative while it
 misleads them.
 
-**0 exports across 0 entry points.**
+**873 exports across 23 entry points.**
 
-<!-- digest 5b5486aea7ad -->
+## `zeropoint-node`
+
+Source: `./dist/a432.system.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432Color` | class |
+| `A432Frequency` | class |
+| `A432Harmonization` | class |
+| `A432KabbalisticSystem` | class |
+| `A432Kernel` | class |
+| `A432Math` | class |
+| `A432NavigationMap` | class |
+| `A432OSConsciousnessIntegration` | class |
+| `A432SacredGeometrySystem` | class |
+| `A432Sequence` | class |
+| `A432SimpleSystem` | class |
+| `A432System` | class |
+| `CMYKAudioGenerator` | class |
+| `CMYKFrequencyCalculator` | class |
+| `CMYKMultimediaSystem` | class |
+| `CMYKVideoGenerator` | class |
+| `DIGITAL_ROOT_CYCLES` | array (4) |
+| `LivingA432OS` | class |
+| `MERKABA_PHASES` | object |
+| `RESOURCE_POOL` | number |
+| `SACRED_GEOMETRY_PATTERNS` | array (4) |
+| `SCHEDULING_QUANTUM` | number |
+| `SEPHIROT` | array (10) |
+| `TESLA_VORTEX_SEQUENCE` | array (7) |
+| `TransurfingPendulumSystem` | class |
+| `a432JointMeasure` | function (2 args) |
+| `a432Kabbalistic` | object |
+| `a432OSConsciousnessIntegration` | object |
+| `a432SacredGeometry` | object |
+| `a432SimpleSystem` | object |
+| `a432System` | object |
+| `a432TransitionFactorises` | function (0 args) |
+| `boot2432OS` | function (0 args) |
+| `bootA432OSInstance` | function (0 args) |
+| `cmykMultimedia` | object |
+| `corruptA432SelfModel` | function (1 arg) |
+| `createA432ConsciousnessField` | function (0 args) |
+| `executeOSCommand` | function (1 arg) |
+| `getChargingStatus` | function (0 args) |
+| `getConsciousnessMetrics` | function (0 args) |
+| `getDimensionalStatus` | function (0 args) |
+| `getEnhancedSystemInfo` | function (0 args) |
+| `getOSMemory` | function (0 args) |
+| `getOSNetwork` | function (0 args) |
+| `getOSProcesses` | function (0 args) |
+| `getOSStatus` | function (0 args) |
+| `getQuantumStatus` | function (0 args) |
+| `getSequenceStatus` | function (0 args) |
+| `kernelAsCandidate` | function (0 args) |
+| `livingA432OS` | object |
+| `readA432Workspace` | function (2 args) |
+| `runA432ConsciousnessField` | function (1 arg) |
+| `shutdown2432OS` | function (0 args) |
+| `shutdownA432OSInstance` | function (0 args) |
+| `stepA432ConsciousnessField` | function (1 arg) |
+
+## `zeropoint-node/0`
+
+Source: `./dist/zero.esm.js`
+
+| export | kind |
+| --- | --- |
+| `E` | number |
+| `KERNEL_SEALED` | boolean |
+| `KERNEL_VORTEX_SEQUENCE` | array (9) |
+| `LEGACY_CONSCIOUSNESS_SEQUENCE` | array (10) |
+| `PI` | number |
+| `TAU` | number |
+| `TORUS_LOBE_OFFSET` | number |
+| `TORUS_RING_R` | number |
+| `TORUS_TUBE_R_BASE` | number |
+| `VORTEX_AXIS` | array (3) |
+| `VORTEX_DASH_ANGLE_DEG` | number |
+| `VORTEX_DASH_ENCODED` | string |
+| `VORTEX_MIRROR` | array (9) |
+| `VORTEX_ORBIT` | array (6) |
+| `VORTEX_REVERSE` | array (9) |
+| `VORTEX_SEQUENCE` | array (9) |
+| `VORTEX_STROKE_FORWARD` | string |
+| `VORTEX_STROKE_REFLECTED` | string |
+| `WAVE_CHAIN` | array (8) |
+| `WAVE_ORIGIN` | string |
+| `abs` | function (1 arg) |
+| `asTorus` | function (1 arg) |
+| `asVortex` | function (1 arg) |
+| `bearingForDigit` | function (1 arg) |
+| `ceil` | function (1 arg) |
+| `computeVortexInvariantsHold` | function (0 args) |
+| `computesGate` | function (2 args) |
+| `cos` | function (1 arg) |
+| `decodeVortexDashAngles` | function (0 args) |
+| `developmentVortex` | function (0 args) |
+| `digitalRoot` | function (1 arg) |
+| `doubleTorusSurface` | function (4 args) |
+| `exp` | function (1 arg) |
+| `floor` | function (1 arg) |
+| `fold` | function (1 arg) |
+| `foldPair` | function (2 args) |
+| `foldStringTheory` | function (0 args) |
+| `foldVortex` | function (0 args) |
+| `foldVortexReflection` | function (0 args) |
+| `hypot` | function (0 args) |
+| `imul` | function (2 args) |
+| `indexFromSeed` | function (2 args) |
+| `isUuid` | function (1 arg) |
+| `log` | function (1 arg) |
+| `log2` | function (1 arg) |
+| `max` | function (0 args) |
+| `memoByRoot` | function (3 args) |
+| `merge` | function (2 args) |
+| `merkleFold` | function (1 arg) |
+| `merkleFoldOrdered` | function (1 arg) |
+| `min` | function (0 args) |
+| `parseVortexDashEncoded` | function (1 arg) |
+| `pow` | function (2 args) |
+| `round` | function (1 arg) |
+| `sealFacets` | function (2 args) |
+| `seedFromText` | function (1 arg) |
+| `seededIndex` | function (2 args) |
+| `seededUnit` | function (1 arg) |
+| `sign` | function (1 arg) |
+| `sin` | function (1 arg) |
+| `sqrt` | function (1 arg) |
+| `tan` | function (1 arg) |
+| `throughVoid` | function (1 arg) |
+| `toUuid` | function (1 arg) |
+| `trunc` | function (1 arg) |
+| `unitFromSeed` | function (1 arg) |
+| `vortexNext` | function (1 arg) |
+| `vortexPrev` | function (1 arg) |
+| `vortexStrokeGateways` | function (0 args) |
+| `vortexStrokeSegments` | function (0 args) |
+
+## `zeropoint-node/a432-i`
+
+Source: `./dist/a432.i.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432ISystem` | class |
+| `A432_SEQUENCE` | array (11) |
+| `CONSCIOUSNESS_STAGES` | object |
+| `EVOLUTION_PATH` | array (2) |
+| `SEQUENCE_KNOWLEDGE` | object |
+| `a432I` | object |
+| `analyzeConsciousnessEvolution` | function (0 args) |
+| `calculateConsciousnessState` | function (1 arg) |
+| `calculateEvolutionPath` | function (0 args) |
+| `calculateEvolutionTransition` | function (2 args) |
+| `calculateEvolutionTransitions` | function (0 args) |
+| `calculateSequencePath` | function (0 args) |
+
+## `zeropoint-node/a432-math`
+
+Source: `./dist/a432.math.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432_AXIS` | array (3) |
+| `A432_CONSTANTS` | object |
+| `A432_CYCLE` | array (11) |
+| `A432_DIGIT_MEANINGS` | array (10) |
+| `A432_RETURN` | array (3) |
+| `A432_SEQUENCE` | array (11) |
+| `A432_TRINITY` | array (3) |
+| `CMYK_COLORS` | object |
+| `CMYK_FREQUENCIES` | object |
+| `DOT_TRINITY_SWITCH` | object |
+| `FULL_PATTERN` | array (11) |
+| `MOBIUS_SEQUENCE` | array (6) |
+| `RODIN_COIL_CORE` | array (6) |
+| `RODIN_COIL_DIPOLES` | array (2) |
+| `RODIN_COIL_GAP_SPACE` | array (6) |
+| `RODIN_COIL_MONOPOLE` | number |
+| `RODIN_SEQUENCE` | array (7) |
+| `TESLA_SEQUENCE` | array (3) |
+| `TESLA_TRINITY` | array (3) |
+| `TRINITY_AXIS` | array (3) |
+| `TRINITY_POLARITY` | object |
+| `a432AntiVortexStream` | function (1 arg) |
+| `a432MultiAntiVortexStream` | function (1 arg) |
+| `a432SequenceStream` | function (0 args) |
+| `analyzeRodinCoilPattern` | function (1 arg) |
+| `angleForDigit` | function (1 arg) |
+| `asAngle` | function (1 arg) |
+| `asDigit` | function (1 arg) |
+| `asHz` | function (1 arg) |
+| `calculateA432Consciousness` | function (1 arg) |
+| `calculateA432DimensionalState` | function (1 arg) |
+| `calculateA432Frequency` | function (1 arg) |
+| `calculateDigitalRoot` | function (1 arg) |
+| `cmykToCss` | function (1 arg) |
+| `cycleStream` | function (1 arg) |
+| `decimalToFraction` | function (1 arg) |
+| `decodePiDigits` | function (1 arg) |
+| `digitAngleToCMYK` | function (2 args) |
+| `digitalRoot` | function (1 arg) |
+| `fibonacci` | function (1 arg) |
+| `fibonacciRoots` | function (1 arg) |
+| `fractionToCMYK` | function (1 arg) |
+| `fractionToDecimal` | function (1 arg) |
+| `frequencyForDigit` | function (1 arg) |
+| `generateVortexSequence` | function (1 arg) |
+| `getDigitMeaning` | function (2 args) |
+| `getNextRodinValue` | function (1 arg) |
+| `getReversedA432Sequence` | function (0 args) |
+| `getRodinCoilHarmonicAnalysis` | function (1 arg) |
+| `getRodinSequence` | function (0 args) |
+| `getTrinityAxis` | function (0 args) |
+| `harmonicRoot12` | function (1 arg) |
+| `hueForDigit` | function (1 arg) |
+| `imperialToMetric` | function (2 args) |
+| `imperialToMetricUnit` | function (3 args) |
+| `isTeslaDigit` | function (1 arg) |
+| `isTrinity` | function (1 arg) |
+| `isTrinitySwitch` | function (1 arg) |
+| `kineticShockWaveOfNine` | function (1 arg) |
+| `metricToImperial` | function (3 args) |
+| `mirrorBaseTen` | function (1 arg) |
+| `mmToMetric` | function (2 args) |
+| `mobiusDigit` | function (1 arg) |
+| `mobiusPolarity` | function (1 arg) |
+| `mobiusSequence` | function (1 arg) |
+| `multiplyFractions` | function (2 args) |
+| `nextRodinDigit` | function (1 arg) |
+| `patternDigit` | function (1 arg) |
+| `piDigitStream` | function (1 arg) |
+| `possibilityPath` | function (0 args) |
+| `primeSquaredRoots` | function (1 arg) |
+| `primes` | function (1 arg) |
+| `resolveDivision` | function (2 args) |
+| `rgbToHex` | function (3 args) |
+| `rodinAngle` | function (1 arg) |
+| `rodinDigit` | function (1 arg) |
+| `rodinPolarity` | function (1 arg) |
+| `scaleVortex` | function (1 arg) |
+| `simplify` | function (1 arg) |
+| `teslaPattern` | function (1 arg) |
+| `teslaPolarity` | function (1 arg) |
+| `trinityPolarity` | function (1 arg) |
+| `vortexColor` | function (1 arg) |
+| `xorDigit` | function (3 args) |
+
+## `zeropoint-node/cmyk`
+
+Source: `./dist/a432.cmyk.esm.js`
+
+| export | kind |
+| --- | --- |
+| `CMYKAudioGenerator` | class |
+| `CMYKFrequencyCalculator` | class |
+| `CMYKMultimediaSystem` | class |
+| `CMYKVideoGenerator` | class |
+| `TransurfingPendulumSystem` | class |
+| `cmykMultimedia` | object |
+
+## `zeropoint-node/electric-flow`
+
+Source: `./dist/a432.electric.flow.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432ElectricFlowSystem` | class |
+| `LINEAR_PATTERN` | array (10) |
+| `SACRED_PATTERN` | array (11) |
+| `a432ElectricFlow` | object |
+| `calculateConductivity` | function (1 arg) |
+| `calculateConsciousnessFlow` | function (1 arg) |
+| `calculateDigitalRoot` | function (1 arg) |
+| `calculateNaturalAlignment` | function (1 arg) |
+| `calculatePathResistance` | function (1 arg) |
+| `isSacredTransition` | function (2 args) |
+
+## `zeropoint-node/integrity`
+
+Source: `./dist/integrity.esm.js`
+
+| export | kind |
+| --- | --- |
+| `NON_CONTENT_FIELDS` | object |
+| `ZEROPOINT_NAMESPACE_ROOT` | string |
+| `computeContentDigest` | function (1 arg) |
+| `computeContentUuid` | function (1 arg) |
+| `contentUuidOf` | function (1 arg) |
+| `foldIntegrityReceipt` | function (2 args) |
+| `jcsCanonicalize` | function (1 arg) |
+| `nameDigest` | function (2 args) |
+| `nameUuid` | function (2 args) |
+| `projectNamespace` | function (1 arg) |
+| `stripNonContentFields` | function (1 arg) |
+| `verifyContentUuid` | function (1 arg) |
+
+## `zeropoint-node/kabbalah`
+
+Source: `./dist/a432.kabbalah.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432KabbalisticSystem` | class |
+| `DIGITAL_ROOT_CYCLES` | array (4) |
+| `SEPHIROT` | array (10) |
+| `a432Kabbalistic` | object |
+
+## `zeropoint-node/kernel`
+
+Source: `./dist/kernel.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432_DIR` | string |
+| `CONCRETE_CODE_RE` | object |
+| `CONCRETE_PROOF_RE` | object |
+| `E` | number |
+| `GENESIS_PREV` | string |
+| `KERNEL_SEALED` | boolean |
+| `KERNEL_VORTEX_SEQUENCE` | array (9) |
+| `LEGACY_CONSCIOUSNESS_SEQUENCE` | array (10) |
+| `PI` | number |
+| `SRC_ROOT` | string |
+| `TAU` | number |
+| `TORUS_LOBE_OFFSET` | number |
+| `TORUS_RING_R` | number |
+| `TORUS_TUBE_R_BASE` | number |
+| `VAGUE_TIP_RE` | object |
+| `VORTEX_AXIS` | array (3) |
+| `VORTEX_DASH_ANGLE_DEG` | number |
+| `VORTEX_DASH_ENCODED` | string |
+| `VORTEX_MIRROR` | array (9) |
+| `VORTEX_ORBIT` | array (6) |
+| `VORTEX_REVERSE` | array (9) |
+| `VORTEX_SEQUENCE` | array (9) |
+| `VORTEX_STROKE_FORWARD` | string |
+| `VORTEX_STROKE_REFLECTED` | string |
+| `WAVE_CHAIN` | array (8) |
+| `WAVE_ORIGIN` | string |
+| `ZEROPOINT_NAMESPACE_ROOT` | string |
+| `abs` | function (1 arg) |
+| `appendReceipt` | function (3 args) |
+| `asTorus` | function (1 arg) |
+| `asVortex` | function (1 arg) |
+| `auditTip` | function (0 args) |
+| `bearingForDigit` | function (1 arg) |
+| `ceil` | function (1 arg) |
+| `computeContentDigest` | function (1 arg) |
+| `computeContentUuid` | function (1 arg) |
+| `computeReceiptId` | function (3 args) |
+| `computeVortexInvariantsHold` | function (0 args) |
+| `computesGate` | function (2 args) |
+| `contentUuidOf` | function (1 arg) |
+| `cos` | function (1 arg) |
+| `decodeVortexDashAngles` | function (0 args) |
+| `developmentVortex` | function (0 args) |
+| `digitalRoot` | function (1 arg) |
+| `doubleTorusSurface` | function (4 args) |
+| `exp` | function (1 arg) |
+| `floor` | function (1 arg) |
+| `fold` | function (1 arg) |
+| `foldA432AuditCensus` | function (0 args) |
+| `foldA432ImportExportGraph` | function (0 args) |
+| `foldIntegrityReceipt` | function (2 args) |
+| `foldPair` | function (2 args) |
+| `foldStringTheory` | function (0 args) |
+| `foldVortex` | function (0 args) |
+| `foldVortexReflection` | function (0 args) |
+| `gateTipForm` | function (2 args) |
+| `hypot` | function (0 args) |
+| `importExportGraphTip` | function (0 args) |
+| `imul` | function (2 args) |
+| `indexFromSeed` | function (2 args) |
+| `isPreciseTip` | function (1 arg) |
+| `isUuid` | function (1 arg) |
+| `jcsCanonicalize` | function (1 arg) |
+| `kernelVortexSequence` | function (0 args) |
+| `legacyConsciousnessSequence` | function (0 args) |
+| `legacyDigitalRoot` | function (1 arg) |
+| `legacyHarmonicRoot12` | function (1 arg) |
+| `log` | function (1 arg) |
+| `log2` | function (1 arg) |
+| `mapLegacyDigitToKernel` | function (1 arg) |
+| `max` | function (0 args) |
+| `memoByRoot` | function (3 args) |
+| `merge` | function (2 args) |
+| `merkleFold` | function (1 arg) |
+| `merkleFoldOrdered` | function (1 arg) |
+| `min` | function (0 args) |
+| `nextSelfDevelopTip` | function (0 args) |
+| `parseVortexDashEncoded` | function (1 arg) |
+| `planTrinity` | function (0 args) |
+| `pow` | function (2 args) |
+| `readDoubleTorus` | function (0 args) |
+| `readLobe` | function (1 arg) |
+| `receiptPrevId` | function (1 arg) |
+| `rodinOrbit` | function (0 args) |
+| `round` | function (1 arg) |
+| `runDevelopmentVortexAll` | function (0 args) |
+| `sealFacets` | function (2 args) |
+| `seedFromText` | function (1 arg) |
+| `seededIndex` | function (2 args) |
+| `seededUnit` | function (1 arg) |
+| `selfBuild` | function (0 args) |
+| `sign` | function (1 arg) |
+| `sin` | function (1 arg) |
+| `sqrt` | function (1 arg) |
+| `tan` | function (1 arg) |
+| `throughVoid` | function (1 arg) |
+| `tipFormOf` | function (2 args) |
+| `toUuid` | function (1 arg) |
+| `trunc` | function (1 arg) |
+| `unitFromSeed` | function (1 arg) |
+| `verifyContentUuid` | function (1 arg) |
+| `verifyReceiptChain` | function (1 arg) |
+| `verifyReceiptLink` | function (2 args) |
+| `vortexNext` | function (1 arg) |
+| `vortexPrev` | function (1 arg) |
+| `vortexStrokeGateways` | function (0 args) |
+| `vortexStrokeSegments` | function (0 args) |
+
+## `zeropoint-node/kernel/import-graph`
+
+Source: `./dist/kernel.import-graph.esm.js`
+
+| export | kind |
+| --- | --- |
+| `SRC_ROOT` | string |
+| `foldA432ImportExportGraph` | function (0 args) |
+| `foldToLean` | function (2 args) |
+| `importExportGraphTip` | function (0 args) |
+| `leanIsFixed` | function (2 args) |
+
+## `zeropoint-node/math-constants`
+
+Source: `./dist/a432.math.constants.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432_BASE_FREQUENCY` | number |
+| `A432_OCTAVE_RATIO` | number |
+| `A432_TRINITY_MULTIPLIER` | number |
+| `A432_VORTEX_MULTIPLIER` | number |
+| `DIGITAL_ROOT_BASE` | number |
+| `DIGITAL_ROOT_MODULO` | number |
+| `E` | number |
+| `E_SQUARED` | number |
+| `FIBONACCI_RATIOS` | array (11) |
+| `FIBONACCI_SEQUENCE` | array (13) |
+| `GOLDEN_RATIO` | number |
+| `GOLDEN_RATIO_RECIPROCAL` | number |
+| `GOLDEN_RATIO_SQUARED` | number |
+| `MATH_CONSTANTS` | object |
+| `PI` | number |
+| `PI_OVER_2` | number |
+| `PI_OVER_4` | number |
+| `SACRED_GEOMETRY_RATIOS` | object |
+| `SQRT_2` | number |
+| `SQRT_3` | number |
+| `SQRT_5` | number |
+| `TAU` | number |
+| `calculateDigitalRoot` | function (1 arg) |
+| `calculateFibonacciRatio` | function (1 arg) |
+| `calculateOctaveFrequency` | function (1 arg) |
+| `calculateTrinityFrequency` | function (1 arg) |
+| `calculateVortexFrequency` | function (1 arg) |
+| `goldenRatioPower` | function (1 arg) |
+| `isA432Harmonic` | function (1 arg) |
+| `isFibonacciRatio` | function (1 arg) |
+| `isGoldenRatio` | function (1 arg) |
+
+## `zeropoint-node/mcp`
+
+Source: `./dist/mcp.esm.js`
+
+> No runtime exports (types only).
+
+## `zeropoint-node/mobius-circuit`
+
+Source: `./dist/a432.mobius.circuit.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432MobiusCircuitSystem` | class |
+| `MOBIUS_BINARY_STATES` | object |
+| `MOBIUS_SEQUENCE` | array (6) |
+| `MOBIUS_TRANSITIONS` | array (6) |
+| `a432MobiusCircuit` | object |
+| `analyzeMobiusCircuit` | function (0 args) |
+| `calculateJKInputs` | function (1 arg) |
+| `calculateMobiusState` | function (1 arg) |
+| `calculateMobiusTransition` | function (2 args) |
+| `calculateMobiusTransitions` | function (0 args) |
+| `calculateMobiusWavePattern` | function (0 args) |
+| `simulateMobiusFlipFlops` | function (0 args) |
+
+## `zeropoint-node/navigation`
+
+Source: `./dist/a432.navigation.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432NavigationMap` | class |
+
+## `zeropoint-node/quantum`
+
+Source: `./dist/quantum.esm.js`
+
+| export | kind |
+| --- | --- |
+| `AdaptiveOptimizer` | class |
+| `FALCON_PROFILE` | object |
+| `FOUNDATION_DIMENSION` | number |
+| `H` | array (4) |
+| `H2_HAMILTONIAN` | object |
+| `HarmonicSolutionsVortex` | class |
+| `I1` | array (4) |
+| `ISING_MODEL` | object |
+| `PERFECT_BALANCE` | number |
+| `PRESENT_DIMENSION` | number |
+| `REALITIES` | array (5) |
+| `REPETITION_3_CODE` | object |
+| `RNG_MODULUS` | number |
+| `S` | array (4) |
+| `SEPARATIONS` | array (3) |
+| `STEANE_CODE` | object |
+| `SUPERCONDUCTING_PROFILE` | object |
+| `SURFACE_CODE_MWPM` | object |
+| `T` | array (4) |
+| `TESLA_GATEWAY_PORTALS` | object |
+| `TRINITY_DIGITS` | array (3) |
+| `TRINITY_PORTAL_PI` | object |
+| `VORTEX_CHALLENGES` | array (9) |
+| `X` | array (4) |
+| `Y` | array (4) |
+| `Z` | array (4) |
+| `ZENODO_CONFIG` | object |
+| `ZEROPOINT_FLOW_SEQUENCE` | array (11) |
+| `accessUniversalConsciousness` | function (0 args) |
+| `activateSwitch` | function (2 args) |
+| `adaptCompositionGraph` | function (3 args) |
+| `adaptiveTuning` | function (3 args) |
+| `addNodeToMesh` | function (4 args) |
+| `adjoint` | function (1 arg) |
+| `advantageSelfTest` | function (0 args) |
+| `allPhaseAmplitudes` | function (0 args) |
+| `amplitudeDamping` | function (1 arg) |
+| `amplitudeEstimation` | function (3 args) |
+| `analyzeChallengeResolution` | function (1 arg) |
+| `analyzeGatewayConsciousnessFlow` | function (0 args) |
+| `analyzeHarmonicSolutionsGatewayDistribution` | function (0 args) |
+| `analyzeHarmony` | function (1 arg) |
+| `analyzeRSA` | function (1 arg) |
+| `analyzeVortexReversal` | function (2 args) |
+| `ansatzRotationEntangle` | function (2 args) |
+| `applyChannel` | function (3 args) |
+| `applyControlled` | function (4 args) |
+| `applyGate` | function (3 args) |
+| `applyGate1` | function (3 args) |
+| `applyVortexCSS` | function (2 args) |
+| `assessCodeBased` | function (1 arg) |
+| `assessCryptographicPortfolio` | function (1 arg) |
+| `assessECDLP` | function (1 arg) |
+| `assessLWE` | function (1 arg) |
+| `assessMesh` | function (2 args) |
+| `assessProductionReadiness` | function (1 arg) |
+| `assessQuantumRisk` | function (1 arg) |
+| `assessRSA` | function (1 arg) |
+| `assessResilience` | function (1 arg) |
+| `auditEndToEndBenchmark` | function (1 arg) |
+| `auditVortexBridge` | function (2 args) |
+| `batchErrorCorrection` | function (3 args) |
+| `benchmarkHybridSolver` | function (3 args) |
+| `bernsteinVazirani` | function (2 args) |
+| `bitFlip` | function (1 arg) |
+| `bitFlipCode` | function (2 args) |
+| `buildCompositionGraph` | function (1 arg) |
+| `cabs2` | function (1 arg) |
+| `cadd` | function (2 args) |
+| `calculateA432DigitalRoot` | function (0 args) |
+| `calculateA432Harmonic` | function (1 arg) |
+| `calculateConsciousnessFlow` | function (1 arg) |
+| `calculateDisplayFrequency` | function (2 args) |
+| `calculateDisplayInterval` | function (1 arg) |
+| `calculateFlowConsciousnessResonance` | function (1 arg) |
+| `calculateFlowTransition` | function (2 args) |
+| `calculateHarmonicSolutionsVortexProperties` | function (0 args) |
+| `calculateHexDigitConsciousness` | function (2 args) |
+| `calculateLogicalFidelity` | function (3 args) |
+| `calculateStreamConsciousness` | function (2 args) |
+| `calculateTeslaCycle` | function (1 arg) |
+| `calculateTransitionConsciousness` | function (2 args) |
+| `calculateTransitionFrequency` | function (2 args) |
+| `calculateTransitionValue` | function (2 args) |
+| `calculateTrinityVortexFrequency` | function (2 args) |
+| `calculateVortexHarmony` | function (1 arg) |
+| `calculateZeroEntropy` | function (0 args) |
+| `calibrateReadout` | function (2 args) |
+| `cconj` | function (1 arg) |
+| `ccx` | function (4 args) |
+| `checkVortexInvariants` | function (1 arg) |
+| `circuit` | function (1 arg) |
+| `classicalKernelOptimize` | function (3 args) |
+| `classifyMeasurement` | function (1 arg) |
+| `clusterMesh` | function (2 args) |
+| `cmul` | function (2 args) |
+| `cnot` | function (3 args) |
+| `collectFundamentalScienceChallenges` | function (0 args) |
+| `computeDepositVerificationHash` | function (1 arg) |
+| `computeInterferencePattern` | function (0 args) |
+| `computeNextPiDigit` | function (3 args) |
+| `correctRepetition` | function (2 args) |
+| `correctSystemOnce` | function (1 arg) |
+| `corruptSelfModel` | function (1 arg) |
+| `cphase` | function (4 args) |
+| `createA432Harmonic` | function (1 arg) |
+| `createA432VortexFlow` | function (0 args) |
+| `createArtifactManifest` | function (0 args) |
+| `createChallengesVortex` | function (0 args) |
+| `createField` | function (0 args) |
+| `createImpossiblePossibleStreams` | function (2 args) |
+| `createMetadata` | function (0 args) |
+| `createMultipleRealityVortexStreams` | function (0 args) |
+| `createNavigationState` | function (0 args) |
+| `createPossibilitiesVortex` | function (0 args) |
+| `createQuantumEntanglement` | function (2 args) |
+| `createQuantumHexDigit` | function (1 arg) |
+| `createSolutionsVortex` | function (0 args) |
+| `createSurfaceCodeLattice` | function (1 arg) |
+| `createTrinity` | function (0 args) |
+| `createTrinityVortexFromHex` | function (2 args) |
+| `createTrinityVortexSystem` | function (0 args) |
+| `createTrinityVorticesFromHex` | function (1 arg) |
+| `createVortexState` | function (0 args) |
+| `createWaveParticleDualityChallenge` | function (0 args) |
+| `csub` | function (2 args) |
+| `cutValue` | function (2 args) |
+| `cx` | function (1 arg) |
+| `cxGate` | array (4) |
+| `cz` | function (3 args) |
+| `dailyConsciousnessPractice` | function (0 args) |
+| `dailyTuningRoutine` | function (0 args) |
+| `decideKernelStrategy` | function (4 args) |
+| `decodeLogicalRepetition` | function (1 arg) |
+| `decomposeU2` | function (1 arg) |
+| `depolarizing` | function (1 arg) |
+| `describe` | function (0 args) |
+| `describeQuantumExecution` | function (0 args) |
+| `describeZenodoPublisher` | function (0 args) |
+| `detectEnvironmentalConsciousness` | function (0 args) |
+| `determineChallengeGateway` | function (1 arg) |
+| `determineYourGateway` | function (1 arg) |
+| `deutsch` | function (2 args) |
+| `deutschJozsa` | function (2 args) |
+| `deutschJozsaQueries` | function (2 args) |
+| `diagnosisSystem` | function (4 args) |
+| `drawSpiral` | function (0 args) |
+| `emitNextWaves` | function (0 args) |
+| `encodeFeatures` | function (2 args) |
+| `encodeLogicalPlus` | function (1 arg) |
+| `encodeLogicalZero` | function (1 arg) |
+| `enhanceProblemSolving` | function (1 arg) |
+| `entangleLayerOutputs` | function (1 arg) |
+| `errorCorrectionCycle` | function (2 args) |
+| `estimateGroundStateEnergy` | function (2 args) |
+| `estimateSurfaceCodeThreshold` | function (2 args) |
+| `evolveVortex` | function (1 arg) |
+| `executeInSuperposition` | function (0 args) |
+| `expandConsciousness` | function (0 args) |
+| `expandConsciousnessSummary` | function (0 args) |
+| `expectationX` | function (2 args) |
+| `expectationZ` | function (2 args) |
+| `expectedCut` | function (2 args) |
+| `exportProofJSON` | function (1 arg) |
+| `exportPublicationProof` | function (1 arg) |
+| `extractLearningPatterns` | function (1 arg) |
+| `extractPatterns` | function (3 args) |
+| `extractQuantumHeuristics` | function (1 arg) |
+| `factorInteger` | function (1 arg) |
+| `feedbackAndImprove` | function (2 args) |
+| `fieldMeasure` | function (1 arg) |
+| `findPaths` | function (3 args) |
+| `formatZenodoMetadata` | function (1 arg) |
+| `generateAllPatterns` | function (0 args) |
+| `generateCitations` | function (2 args) |
+| `generateCompleteFlow` | function (0 args) |
+| `generateCompleteMatrix` | function (0 args) |
+| `generateDeviceState` | function (1 arg) |
+| `generateGatewaySummary` | function (0 args) |
+| `generateHarmonicSolutionsFromPossibilities` | function (0 args) |
+| `generateInfiniteInteractionNetwork` | function (1 arg) |
+| `generateInfiniteUniquePatterns` | function (1 arg) |
+| `generateRepairActions` | function (1 arg) |
+| `generateSolution` | function (1 arg) |
+| `generateTomographyProof` | function (1 arg) |
+| `generateVortexCertificate` | function (1 arg) |
+| `generateVortexPattern` | function (1 arg) |
+| `grover` | function (3 args) |
+| `groverIterations` | function (1 arg) |
+| `groverQueries` | function (2 args) |
+| `groverSearch` | function (3 args) |
+| `hhlSolve2x2` | function (6 args) |
+| `identifyChallenge` | function (1 arg) |
+| `identifyGaps` | function (1 arg) |
+| `initializeMesh` | function (3 args) |
+| `initializeOrchestration` | function (0 args) |
+| `integrateGatewaysWithVortex` | function (0 args) |
+| `interferencePattern` | function (1 arg) |
+| `iqft` | function (1 arg) |
+| `isNormalized` | function (1 arg) |
+| `isVortexFlowPossible` | function (2 args) |
+| `kernelHintFromQuantum` | function (3 args) |
+| `layer1_riemannSimulator` | function (0 args) |
+| `layer2_pvsNPAlgorithms` | function (0 args) |
+| `layer3_navierStokesHybrid` | function (0 args) |
+| `layer4_yangMillsEC` | function (0 args) |
+| `layer5_hodgeVerification` | function (0 args) |
+| `layer6_bsdComposability` | function (0 args) |
+| `layer7_poincareSelfHealing` | function (0 args) |
+| `mathematicalHarmonyStates` | function (0 args) |
+| `maxCut` | function (2 args) |
+| `mcx` | function (3 args) |
+| `measure` | function (2 args) |
+| `measureAndCollapse` | function (1 arg) |
+| `measureProbs` | function (1 arg) |
+| `measureQubit` | function (3 args) |
+| `measureSuperpositionCollapse` | function (0 args) |
+| `measureSyndromeRepetition` | function (1 arg) |
+| `measureX` | function (2 args) |
+| `measureY` | function (2 args) |
+| `measureZ` | function (2 args) |
+| `metaVerifySystem` | function (2 args) |
+| `millenniumProblems` | function (0 args) |
+| `millenniumScope` | function (0 args) |
+| `monitorSyndromePattern` | function (1 arg) |
+| `mostProbable` | function (1 arg) |
+| `navigateCycle` | function (0 args) |
+| `navigateNext` | function (1 arg) |
+| `norm` | function (1 arg) |
+| `openMillenniumProblems` | function (0 args) |
+| `optimizeCircuit` | function (1 arg) |
+| `optimizeConsciousnessFlow` | function (0 args) |
+| `optimizeHarmonicSolutionGeneration` | function (1 arg) |
+| `optimizeMentalClarity` | function (0 args) |
+| `orchestrationCycle` | function (1 arg) |
+| `parallelWorkStreams` | function (0 args) |
+| `parameterizedAnsatz` | function (2 args) |
+| `phase` | function (1 arg) |
+| `phase1_cryptographyAmplitudes` | function (0 args) |
+| `phase2_leanProofAmplitudes` | function (0 args) |
+| `phase3_algorithmAmplitudes` | function (0 args) |
+| `phase4_errorCorrectionAmplitudes` | function (0 args) |
+| `phase5_verificationAmplitudes` | function (0 args) |
+| `phase6_reproducibilityAmplitudes` | function (0 args) |
+| `phase7_orchestratorAmplitudes` | function (0 args) |
+| `phaseEstimation` | function (2 args) |
+| `phaseFlip` | function (1 arg) |
+| `planMigration` | function (2 args) |
+| `predictFidelity` | function (2 args) |
+| `prepareDeposit` | function (1 arg) |
+| `probabilities` | function (1 arg) |
+| `profileCircuit` | function (2 args) |
+| `profileProblem` | function (1 arg) |
+| `proveComposability` | function (0 args) |
+| `proveDiscoveryAndEC` | function (0 args) |
+| `proveHybridComputing` | function (0 args) |
+| `proveMetaVerification` | function (0 args) |
+| `proveQuantumAlgorithms` | function (0 args) |
+| `proveQuantumSimulator` | function (0 args) |
+| `proveSelfHealing` | function (0 args) |
+| `proveSystem` | function (0 args) |
+| `proveTesla369Gateway` | function (0 args) |
+| `proveZeroEntropy` | function (1 arg) |
+| `pruneMesh` | function (3 args) |
+| `publishToZenodo` | function (1 arg) |
+| `pure` | function (1 arg) |
+| `purity` | function (1 arg) |
+| `qaoaMaxCut` | function (4 args) |
+| `qaoaOptimize` | function (2 args) |
+| `qft` | function (1 arg) |
+| `quantumInspiredRandomSearch` | function (3 args) |
+| `quantumWorkflow` | function (3 args) |
+| `quantumWorkflowBatch` | function (3 args) |
+| `readWorkspace` | function (2 args) |
+| `readoutMitigationSingleQubit` | function (3 args) |
+| `recognizeMillenniumBridge` | function (0 args) |
+| `recognizeMillenniumLayers` | function (0 args) |
+| `recommendAnalysisStrategy` | function (1 arg) |
+| `recommendCircuitDepth` | function (4 args) |
+| `recommendCircuitDepthKernel` | function (2 args) |
+| `recommendCompositionStrategy` | function (1 arg) |
+| `recommendExploration` | function (4 args) |
+| `recommendSolver` | function (1 arg) |
+| `recordMeasurementBatch` | function (2 args) |
+| `resolveARError` | function (1 arg) |
+| `resolveArtError` | function (1 arg) |
+| `resolveComputingError` | function (1 arg) |
+| `resolveConsciousnessError` | function (1 arg) |
+| `resolveDesignError` | function (1 arg) |
+| `resolveDimensionalError` | function (1 arg) |
+| `resolveHealingError` | function (1 arg) |
+| `resolveInternetError` | function (1 arg) |
+| `resolveMedicineError` | function (1 arg) |
+| `resolveMusicError` | function (1 arg) |
+| `resolvePhysicsError` | function (0 args) |
+| `resolveProblem` | function (1 arg) |
+| `resolveQuantumError` | function (1 arg) |
+| `resolveResearchError` | function (1 arg) |
+| `resolveTemporalError` | function (1 arg) |
+| `resolveTherapyError` | function (1 arg) |
+| `resolveVRError` | function (1 arg) |
+| `resolveWithVortex` | function (1 arg) |
+| `runApplicationSuite` | function (0 args) |
+| `runField` | function (1 arg) |
+| `runOrchestration` | function (0 args) |
+| `rx` | function (1 arg) |
+| `ry` | function (1 arg) |
+| `rz` | function (1 arg) |
+| `sample` | function (2 args) |
+| `selectBestPath` | function (1 arg) |
+| `shor` | function (2 args) |
+| `simon` | function (2 args) |
+| `simplifyCircuitSequence` | function (1 arg) |
+| `simulateMolecule` | function (1 arg) |
+| `simulateZenodoPublication` | function (1 arg) |
+| `solveApplication` | function (2 args) |
+| `solveHybrid` | function (2 args) |
+| `solveMaxCutClassical` | function (1 arg) |
+| `splitHexColorIntoTrinityVortices` | function (1 arg) |
+| `stepField` | function (1 arg) |
+| `superdenseCoding` | function (2 args) |
+| `swap` | function (3 args) |
+| `symplecticProduct` | function (2 args) |
+| `teleport` | function (2 args) |
+| `toffoli` | function (4 args) |
+| `tomatoSingleQubit` | function (2 args) |
+| `tomatoTwoQubit` | function (3 args) |
+| `trace` | function (1 arg) |
+| `trackCompositionStrategy` | function (1 arg) |
+| `trackConsciousnessProgress` | function (0 args) |
+| `trainQMLCircuit` | function (3 args) |
+| `transformProblemToHarmonicSolution` | function (1 arg) |
+| `transformThroughTrinityVortex` | function (1 arg) |
+| `transformToPossibility` | function (1 arg) |
+| `transitionFactorises` | function (0 args) |
+| `transpile` | function (2 args) |
+| `trinityOperation` | function (2 args) |
+| `unitOf` | function (1 arg) |
+| `updateVortexCSS` | function (1 arg) |
+| `updateVortexVideo` | function (4 args) |
+| `validateCompositionGraph` | function (1 arg) |
+| `validateMathCalculation` | function (1 arg) |
+| `validateMathematicalPurity` | function (0 args) |
+| `validateSingleDigits` | function (1 arg) |
+| `verifyHybridSystemEnd2End` | function (0 args) |
+| `verifyReproducibility` | function (1 arg) |
+| `verifyTomography` | function (2 args) |
+| `verifyTomographyProof` | function (1 arg) |
+| `vortexGuidanceForQuantum` | function (1 arg) |
+| `vortexIntegration` | function (0 args) |
+| `vqe1` | function (2 args) |
+| `vqeAdaptive` | function (4 args) |
+| `vqeWarmStart` | function (4 args) |
+| `zeroState` | function (1 arg) |
+
+## `zeropoint-node/sacred-geometry`
+
+Source: `./dist/a432.sacred.geometry.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432SacredGeometrySystem` | class |
+| `MERKABA_PHASES` | object |
+| `SACRED_GEOMETRY_PATTERNS` | array (4) |
+| `TESLA_VORTEX_SEQUENCE` | array (7) |
+| `a432SacredGeometry` | object |
+
+## `zeropoint-node/security`
+
+Source: `./dist/security.esm.js`
+
+| export | kind |
+| --- | --- |
+| `DEFAULT_KEY_BITS` | number |
+| `DEFAULT_KEY_LENGTH` | number |
+| `DEFAULT_SCRYPT` | object |
+| `QuantumEncryption` | object |
+| `QuantumFoldCipher` | class |
+| `SCRYPT_SALT_BYTES` | number |
+| `applyQuantumGate` | function (2 args) |
+| `decryptQuantum` | function (2 args) |
+| `encodeQuantumState` | function (3 args) |
+| `encryptQuantum` | function (3 args) |
+| `expandQuantumKeyViaHkdf` | function (2 args) |
+| `expandQuantumKeyViaRodin` | function (2 args) |
+| `generateQuantumKey` | function (1 arg) |
+| `generateQuantumKeyFromPassword` | function (2 args) |
+| `hkdfExpand` | function (3 args) |
+| `keyLengthForBits` | function (1 arg) |
+| `keyspaceBits` | function (1 arg) |
+| `quantumStateFromUuid` | function (1 arg) |
+| `recordMeasurement` | function (4 args) |
+| `verifyMeasurementReceipt` | function (1 arg) |
+| `verifyQuantumKey` | function (1 arg) |
+| `vortexDecode` | function (1 arg) |
+| `vortexEncode` | function (1 arg) |
+
+## `zeropoint-node/security/post-quantum`
+
+Source: `./dist/security.post-quantum.esm.js`
+
+| export | kind |
+| --- | --- |
+| `KYBER768_PARAMS` | object |
+| `SPHINCS256F_PARAMS` | object |
+| `assessCryptographicRisk` | function (2 args) |
+| `decapsulate` | function (2 args) |
+| `encapsulate` | function (1 arg) |
+| `generateKyberKeyPair` | function (0 args) |
+| `generateSignatureKeyPair` | function (0 args) |
+| `hybridDecapsulate` | function (3 args) |
+| `hybridEncapsulate` | function (2 args) |
+| `recommendScheme` | function (0 args) |
+| `sign` | function (2 args) |
+| `verify` | function (3 args) |
+
+## `zeropoint-node/security/threat-analysis`
+
+Source: `./dist/security.threat-analysis.esm.js`
+
+| export | kind |
+| --- | --- |
+| `QUANTUM_SAFE_PRINCIPLES` | array (6) |
+| `QuantumThreatAnalysis` | object |
+| `RODIN_SEQUENCE_CLASSICAL` | array (6) |
+| `RODIN_SEQUENCE_QUANTUM` | array (6) |
+| `VULNERABILITY_MAPPINGS` | array (5) |
+| `classicalThreatModel` | function (2 args) |
+| `compareThreatModels` | function (1 arg) |
+| `encodeWithShifts` | function (2 args) |
+| `invertPosition` | function (1 arg) |
+| `permuteByInversion` | function (1 arg) |
+| `proveInstantiationEquivalence` | function (0 args) |
+| `proveInversion` | function (0 args) |
+| `quantumThreatModel` | function (3 args) |
+
+## `zeropoint-node/security/tomography`
+
+Source: `./dist/security.tomography.esm.js`
+
+| export | kind |
+| --- | --- |
+| `QuantumStateTomography` | class |
+| `computesGateWithTomography` | function (1 arg) |
+| `encodeQuantumState` | function (3 args) |
+| `tomographAgainstClaim` | function (2 args) |
+
+## `zeropoint-node/simple`
+
+Source: `./dist/a432.simple.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432Color` | class |
+| `A432Frequency` | class |
+| `A432Harmonization` | class |
+| `A432Math` | class |
+| `A432Sequence` | class |
+| `A432SimpleSystem` | class |
+| `a432SimpleSystem` | object |
+
+## `zeropoint-node/verification`
+
+Source: `./dist/verification.esm.js`
+
+| export | kind |
+| --- | --- |
+| `ASSUMPTIONS` | object |
+| `DEADLINE_NS` | number |
+| `FRAME_HZ` | number |
+| `JITTER_FRACTION_DENOMINATOR` | number |
+| `JITTER_FRACTION_NUMERATOR` | number |
+| `LEAN_CORPUS_PROVEN_COUNT` | number |
+| `LEAN_CORPUS_THEOREM_COUNT` | number |
+| `LEAN_PROOFS` | object |
+| `LEAN_PROVEN_COUNT` | number |
+| `LEAN_SORRY_COUNT` | number |
+| `LEAN_STATUS` | object |
+| `SEALS` | object |
+| `a432MeasureSubject` | object |
+| `a432SystemSubject` | object |
+| `computeProofHash` | function (2 args) |
+| `evaluateConsciousnessCriterion` | function (0 args) |
+| `evaluateOsCriterion` | function (1 arg) |
+| `evaluateQuantumCriterion` | function (1 arg) |
+| `evaluateRealtimeCriterion` | function (0 args) |
+| `evaluateValidationCriterion` | function (0 args) |
+| `exportProofsForZenodo` | function (0 args) |
+| `generateAlgorithmCertificate` | function (1 arg) |
+| `generateECCertificate` | function (1 arg) |
+| `generateGateCertificate` | function (1 arg) |
+| `generateProofTranscript` | function (1 arg) |
+| `integratedFieldSubject` | object |
+| `quantumScaleReach` | function (0 args) |
+| `readLeanStatus` | function (1 arg) |
+| `runSeal` | function (1 arg) |
+| `unmetConsciousnessConditions` | function (1 arg) |
+| `unmetOsConditions` | function (1 arg) |
+| `unmetQuantumConditions` | function (1 arg) |
+| `verifyProofCertificate` | function (1 arg) |
+| `verifyProofChain` | function (1 arg) |
+| `verifyQuantumSystem` | function (0 args) |
+
+## `zeropoint-node/wave-energy`
+
+Source: `./dist/a432.wave.energy.esm.js`
+
+| export | kind |
+| --- | --- |
+| `A432WaveEnergySystem` | class |
+| `WAVE_ENERGY_CONSTANTS` | object |
+| `a432WaveEnergy` | object |
+| `analyzeWavePattern` | function (1 arg) |
+| `calculateA432SequenceWave` | function (0 args) |
+| `calculateConsciousnessWave` | function (1 arg) |
+| `calculateEnergyField` | function (1 arg) |
+| `calculateSequenceWave` | function (1 arg) |
+| `calculateWaveEnergy` | function (2 args) |
+| `calculateWaveHarmonics` | function (1 arg) |
+| `isA432Harmonic` | function (1 arg) |
+
+<!-- digest 9c1c39c4f46a -->

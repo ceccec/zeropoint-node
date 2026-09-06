@@ -33,10 +33,30 @@ const CHECK = process.argv.includes('--check')
 
 const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
 
-/** Subpaths whose target is TypeScript source we can actually read. */
+/**
+ * THE FILTER HAD EMPTIED THIS FILE, AND THE CHECK AGREED WITH IT.
+ *
+ * This kept only subpaths whose target ends in `.ts`. Every one of the 24
+ * entry points resolves to `./dist/*.esm.js`, so the filter dropped all of
+ * them, the reference documented 0 exports across 0 entry points, and
+ * api:reference:check compared an empty page against an empty generation and
+ * reported ok. A generator that reads nothing produces a page that contradicts
+ * nothing — the same failure this repository already refuses in parity (0
+ * tools), shadowed (0 shipped exports) and families (0 definitions), which is
+ * why the guard below is not optional.
+ *
+ * The built ESM is also the more honest thing to read: it is what a consumer
+ * imports. The chain builds before it documents.
+ */
 const entries = Object.entries(pkg.exports ?? {})
-  .map(([subpath, spec]) => [subpath, typeof spec === 'string' ? spec : spec.import])
-  .filter(([, target]) => typeof target === 'string' && target.endsWith('.ts'))
+  .map(([subpath, spec]) => [subpath, typeof spec === 'string' ? spec : spec?.import])
+  .filter(([subpath, target]) => typeof target === 'string' && subpath !== './package.json')
+
+if (entries.length === 0) {
+  console.error('api:reference FAIL — read 0 entry points from package.json exports, so this page would')
+  console.error('  document nothing and its check would pass against nothing.')
+  process.exit(1)
+}
 
 const sections = []
 for (const [subpath, target] of entries.sort()) {
@@ -59,6 +79,12 @@ for (const [subpath, target] of entries.sort()) {
 }
 
 const total = sections.reduce((s, x) => s + x.items.length, 0)
+if (total === 0) {
+  console.error(`api:reference FAIL — ${entries.length} entry point(s) yielded 0 exports between them.`)
+  for (const x of sections.filter((y) => y.error)) console.error(`  ${x.subpath} -> ${x.target}: ${x.error}`)
+  console.error('  A reference of nothing agrees with every page, including a wrong one. Run npm run build first.')
+  process.exit(1)
+}
 const lines = []
 lines.push('# API reference')
 lines.push('')

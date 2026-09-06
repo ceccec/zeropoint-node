@@ -622,6 +622,18 @@ function ratchetFingerprint() {
   }
   // Fingerprint MORE than is read, never less: too wide costs a recompute
   // nobody needed, too narrow is a stale pass.
+  //
+  // AND IT WAS A STALE PASS. This hashed src/**/*.ts and the configs, while the
+  // docFunctions surface runs docs-functions.mjs over EVERY .md in the tree.
+  // docs/API_REFERENCE.md went from documenting nothing to documenting 873
+  // exports and ratchet:check reported "nothing the surfaces read has changed".
+  // The count happened not to move, so nothing was mismeasured this time; the
+  // guarantee was gone either way. A surface that reads a file the fingerprint
+  // does not cover can be arbitrarily stale, and only luck decides whether it
+  // shows.
+  for (const f of walk(ROOT, (n) => n.endsWith('.md')).sort()) {
+    h.update(f.replace(ROOT, '')).update(readFileSync(f))
+  }
   for (const extra of ['README.md', 'rollup.config.js', 'ratchet.json', 'package.json',
     'tsconfig.json', 'tsconfig.typecheck.json', 'eslint.config.js', 'scripts/ratchet.mjs']) {
     const f = join(ROOT, extra)

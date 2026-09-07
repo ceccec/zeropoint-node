@@ -39,6 +39,13 @@
  */
 
 import ts from 'typescript'
+// UNREADABLE IS NOT CLEAN. A file this walk cannot open makes no claims, so it must
+// not count as a file with nothing wrong: that is "could not measure" collapsing into
+// "clean", the one shape a checker cannot recover from by being careful. In a shared
+// tree it is not hypothetical — a peer's unstaged deletion leaves a path in git
+// ls-files that readFileSync refuses. Every unreadable path is reported and fails
+// the check, by name. (uuidna found the same defect in its own finder, lead 234.)
+const unreadable = []
 import { readFileSync } from 'node:fs'
 import { resolve, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -83,7 +90,7 @@ function packagesReachedFrom(file, seen = new Set(), found = new Set()) {
   if (seen.has(abs)) return found
   seen.add(abs)
   let src
-  try { src = readFileSync(abs, 'utf8') } catch { return found }
+  try { src = readFileSync(abs, 'utf8') } catch { unreadable.push(file); return found }
   for (const spec of specifiersOf(abs, src)) {
     const name = packageOf(spec)
     if (name) { found.add(name); continue }
@@ -126,6 +133,7 @@ console.log(
   `deps:check — ${entryFiles.length} published entry file(s), ` +
   `${declared.length} runtime dependency(ies), ${reached.size} package(s) reached`
 )
+for (const f of unreadable) problems.push(`${f}: could not be read — UNMEASURED, not clean; a file the check cannot open makes no claims and must not count as clean`)
 for (const p of problems) console.error(`  ✗ ${p}`)
 if (problems.length > 0) {
   console.error(`deps:check FAIL — ${problems.length} dependency(ies) declared and reachable disagree`)

@@ -32,6 +32,13 @@
  *   npm run withdrawn
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+// UNREADABLE IS NOT CLEAN. A file this walk cannot open makes no claims, so it must
+// not count as a file with nothing wrong: that is "could not measure" collapsing into
+// "clean", the one shape a checker cannot recover from by being careful. In a shared
+// tree it is not hypothetical — a peer's unstaged deletion leaves a path in git
+// ls-files that readFileSync refuses. Every unreadable path is reported and fails
+// the check, by name. (uuidna found the same defect in its own finder, lead 234.)
+const unreadable = []
 import { execSync, execFileSync } from 'node:child_process'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -198,7 +205,7 @@ const files = execSync('git ls-files "*.md" "*.ts"', { cwd: ROOT, encoding: 'utf
 const found = new Map()
 for (const f of files) {
   let text
-  try { text = readFileSync(join(ROOT, f), 'utf8') } catch { continue }
+  try { text = readFileSync(join(ROOT, f), 'utf8') } catch { unreadable.push(f); continue }
   for (const m of text.matchAll(new RegExp(MARKER.source, 'gi'))) {
     for (const q of text.slice(m.index, m.index + 400).matchAll(QUOTED)) {
       const claim = norm(q[1])
@@ -288,6 +295,11 @@ writeFileSync(RECORD, JSON.stringify(sealRecord({
   restored: restored.map((w) => ({ key: w.key, carriedBy: w.carriedBy, command: w.command })),
   negations: NEGATIONS.map((n) => ({ negation: n.negation, status: n.status, by: n.by ?? null })),
 }), null, 2) + '\n')
+
+if (unreadable.length > 0) {
+  console.error(`withdrawn FAIL — ${unreadable.length} file(s) could not be read, so the corpus is UNMEASURED, not clean: ${unreadable.slice(0, 5).join(', ')}`)
+  process.exit(1)
+}
 
 console.log(`\nwithdrawn ok — ${WITHDRAWALS.length} withdrawal(s) audited, ${restored.length} were true in a frame the deletion did not name`)
 console.log('               and each of those now computes rather than being remembered')

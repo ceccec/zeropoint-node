@@ -60,6 +60,13 @@
  */
 
 import ts from 'typescript'
+// UNREADABLE IS NOT CLEAN. A file this walk cannot open makes no claims, so it must
+// not count as a file with nothing wrong: that is "could not measure" collapsing into
+// "clean", the one shape a checker cannot recover from by being careful. In a shared
+// tree it is not hypothetical — a peer's unstaged deletion leaves a path in git
+// ls-files that readFileSync refuses. Every unreadable path is reported and fails
+// the check, by name. (uuidna found the same defect in its own finder, lead 234.)
+const unreadable = []
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { resolve, dirname, join, relative } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -170,7 +177,7 @@ const sawNonFinite = new Set()
 for (const file of files) {
   const rel = relative(ROOT, file).replace(/\\/g, '/')
   let source
-  try { source = readFileSync(file, 'utf8') } catch { continue }
+  try { source = readFileSync(file, 'utf8') } catch { unreadable.push(rel); continue }
   if (!source.includes('export function ')) continue
 
   // Ask the compiler which exports there are and what their parameters are
@@ -241,6 +248,7 @@ for (const [key, why] of EXPECTED) {
 
 console.log(`finite:check — ${modules} modules imported, ${values} exported number(s) walked`)
 console.log(`finite:check — ${calls} call(s) across exported functions, ${uncallable} export(s) with a parameter type this check cannot construct`)
+for (const f of unreadable) problems.push(`${f}: could not be read — UNMEASURED, not clean; a file the check cannot open makes no claims and must not count as clean`)
 for (const p of problems) console.error(`  ✗ ${p}`)
 if (problems.length > 0) {
   console.error(`finite:check FAIL — ${problems.length} non-finite exported value(s)`)

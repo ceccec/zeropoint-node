@@ -26,6 +26,13 @@
  */
 
 import { readFileSync, existsSync, rmSync } from 'node:fs'
+// UNREADABLE IS NOT CLEAN. A file this walk cannot open makes no claims, so it must
+// not count as a file with nothing wrong: that is "could not measure" collapsing into
+// "clean", the one shape a checker cannot recover from by being careful. In a shared
+// tree it is not hypothetical — a peer's unstaged deletion leaves a path in git
+// ls-files that readFileSync refuses. Every unreadable path is reported and fails
+// the check, by name. (uuidna found the same defect in its own finder, lead 234.)
+const unreadable = []
 import { resolve, dirname, join, relative, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execFileSync } from 'node:child_process'
@@ -77,7 +84,7 @@ for (const f of tracked) {
   const p = join(ROOT, f)
   if (!existsSync(p)) continue
   let text
-  try { text = readFileSync(p, 'utf8') } catch { continue }
+  try { text = readFileSync(p, 'utf8') } catch { unreadable.push(f); continue }
   corpus.push({ file: f, text })
 }
 
@@ -202,6 +209,11 @@ for (const f of survivors) {
 }
 console.log(`  TRIAL    ${survivors.length} survivors checked, ${broken.length} would import something deleted`)
 for (const b of broken.slice(0, 5)) console.log(`    BREAKS ${b}`)
+
+if (unreadable.length > 0) {
+  console.error(`\naudit REFUSES — ${unreadable.length} file(s) could not be read, so the corpus is UNMEASURED, not clean: ${unreadable.slice(0, 5).join(', ')}`)
+  process.exit(1)
+}
 
 if (broken.length > 0) {
   console.error('\naudit REFUSES to delete — the trial found surviving imports of removed modules')

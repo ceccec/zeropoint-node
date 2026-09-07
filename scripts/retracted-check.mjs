@@ -53,6 +53,13 @@
  */
 
 import { readFileSync } from 'node:fs'
+// UNREADABLE IS NOT CLEAN. A file this walk cannot open makes no claims, so it must
+// not count as a file with nothing wrong: that is "could not measure" collapsing into
+// "clean", the one shape a checker cannot recover from by being careful. In a shared
+// tree it is not hypothetical — a peer's unstaged deletion leaves a path in git
+// ls-files that readFileSync refuses. Every unreadable path is reported and fails
+// the check, by name. (uuidna found the same defect in its own finder, lead 234.)
+const unreadable = []
 import { resolve, dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execSync } from 'node:child_process'
@@ -74,7 +81,7 @@ const norm = (s) => s.replace(/\s+/g, ' ').trim().toLowerCase()
 
 const corpus = new Map()
 for (const f of files) {
-  try { corpus.set(f, readFileSync(join(ROOT, f), 'utf8')) } catch { /* unreadable */ }
+  try { corpus.set(f, readFileSync(join(ROOT, f), 'utf8')) } catch { unreadable.push(f) }
 }
 
 /** Every retracted claim, and the sites that retract it. */
@@ -119,6 +126,7 @@ for (const [claim, { text, marks }] of retracted) {
 }
 
 console.log(`retracted:check — ${retracted.size} retracted claim(s) across ${files.length} tracked file(s)`)
+for (const f of unreadable) problems.push(`${f}: could not be read — UNMEASURED, not clean; a file the check cannot open makes no claims and must not count as clean`)
 for (const p of problems) console.error(`  ✗ ${p}`)
 if (problems.length > 0) {
   console.error(`retracted:check FAIL — ${problems.length} retracted claim(s) still asserted somewhere`)

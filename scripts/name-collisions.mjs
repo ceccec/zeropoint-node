@@ -36,6 +36,13 @@
  */
 
 import ts from 'typescript'
+// UNREADABLE IS NOT CLEAN. A file this walk cannot open makes no claims, so it must
+// not count as a file with nothing wrong: that is "could not measure" collapsing into
+// "clean", the one shape a checker cannot recover from by being careful. In a shared
+// tree it is not hypothetical — a peer's unstaged deletion leaves a path in git
+// ls-files that readFileSync refuses. Every unreadable path is reported and fails
+// the check, by name. (uuidna found the same defect in its own finder, lead 234.)
+const unreadable = []
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { execSync } from 'node:child_process'
 import { resolve, dirname, join } from 'node:path'
@@ -59,7 +66,7 @@ const files = [...new Set([...listed(''), ...listed('--others --exclude-standard
 /** The names a file DECLARES and exports. Re-exports are not declarations. */
 function declaredExports(file) {
   let src
-  try { src = readFileSync(join(ROOT, file), 'utf8') } catch { return [] }
+  try { src = readFileSync(join(ROOT, file), 'utf8') } catch { unreadable.push(file); return [] }
   const sf = ts.createSourceFile(file, src, ts.ScriptTarget.Latest, true)
   const out = []
   const exported = (n) => n.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword)
@@ -344,6 +351,7 @@ console.log(
 console.log(
   `collisions:check — agreement: ${tally.agree} agree, ${tally.differ} differ, `
   + `${tally['type-only']} type-only, ${tally.unprobed} unprobed`)
+for (const f of unreadable) problems.push(`${f}: could not be read — UNMEASURED, not clean; a file the check cannot open makes no claims and must not count as clean`)
 for (const p of problems) console.error(`  ✗ ${p}`)
 if (problems.length > 0) {
   console.error(`collisions:check FAIL — ${problems.length} problem(s); if the new name is deliberate, npm run collisions:seed and give it a reason`)

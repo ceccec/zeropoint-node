@@ -36,6 +36,13 @@
  */
 
 import ts from 'typescript'
+// UNREADABLE IS NOT CLEAN. A file this walk cannot open makes no claims, so it must
+// not count as a file with nothing wrong: that is "could not measure" collapsing into
+// "clean", the one shape a checker cannot recover from by being careful. In a shared
+// tree it is not hypothetical — a peer's unstaged deletion leaves a path in git
+// ls-files that readFileSync refuses. Every unreadable path is reported and fails
+// the check, by name. (uuidna found the same defect in its own finder, lead 234.)
+const unreadable = []
 import { readFileSync, existsSync } from 'node:fs'
 import { execSync } from 'node:child_process'
 import { resolve, dirname, join } from 'node:path'
@@ -144,7 +151,7 @@ let refs = 0
 for (const f of files) {
   const isLean = f.endsWith('.lean')
   let text
-  try { text = readFileSync(join(ROOT, f), 'utf8') } catch { continue }
+  try { text = readFileSync(join(ROOT, f), 'utf8') } catch { unreadable.push(f); continue }
   for (const [comment, line] of (isLean ? leanCommentsOf(text) : commentsOf(text))) {
     for (const m of comment.matchAll(SCRIPT_REF)) {
       const name = m[1]
@@ -183,6 +190,7 @@ for (const f of files) {
 }
 
 console.log(`refs:check — ${refs} reference(s) in comments across ${files.length} file(s)`)
+for (const f of unreadable) problems.push(`${f}: could not be read — UNMEASURED, not clean; a file the check cannot open makes no claims and must not count as clean`)
 for (const p of problems) console.error(`  ✗ ${p}`)
 if (problems.length > 0) {
   console.error(`refs:check FAIL — ${problems.length} comment(s) name something that is not there`)

@@ -10,6 +10,8 @@ export * from './a432.registry.ts';
 // all declare the same names. a432.orbit.ts is the map from an address to the
 // module that holds it.
 export * from './a432.orbit.ts';
+// The full vortex past the orbit — the axis, and the return to the seed.
+export * from './a432.vortex.addresses.ts';
 export * from './a432.navigation.map.ts';
 export * from './a432.self.evolution.ts';
 export * from './a432.self.rebuilder.ts';

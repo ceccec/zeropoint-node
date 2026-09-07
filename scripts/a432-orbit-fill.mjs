@@ -28,7 +28,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const A432 = join(ROOT, 'src/0/3/6/9/1/2/4/8/7/5/1')
 const CHECK = process.argv.includes('--check')
 
-const { VORTEX_ORBIT } = await import(join(ROOT, 'src/kernel/index.ts'))
+const kernel = await import(join(ROOT, 'src/kernel/index.ts'))
+const { VORTEX_ORBIT } = kernel
 const orbit = [...VORTEX_ORBIT]
 if (orbit.length === 0) {
   console.error('a432:orbit FAIL — the kernel exports an empty orbit, so there are no addresses to fill')
@@ -92,6 +93,39 @@ function moduleFor(n) {
  * never exist without a way to load it.
  */
 const LOADER = join(A432, 'a432.orbit.ts')
+const VORTEX_LOADER = join(A432, 'a432.vortex.addresses.ts')
+function vortexLoaderModule() {
+  const rows = vortexRange.map((n) => `  '${vortexAddress(n)}': () => import('./a432.${vortexAddress(n)}.ts'),`)
+  const list = vortexRange.map((n) => `  '${vortexAddress(n)}',`)
+  return `// a432.vortex.addresses.ts — every address on the full vortex past the orbit, loadable by name
+${STAMP}//
+// The orbit's own addresses live in a432.orbit.ts. These are the ones the
+// doubling map does not reach: the axis, and the return to the seed.
+
+/** The full-vortex addresses beyond the orbit, shortest first. */
+export const VORTEX_ADDRESSES = [
+${list.join('\n')}
+] as const
+
+export type VortexAddress = typeof VORTEX_ADDRESSES[number]
+
+/** Address to module, with literal paths so a static reader can follow them. */
+export const VORTEX_HANDLES: Record<string, () => Promise<unknown>> = {
+${rows.join('\n')}
+}
+
+/** Load an address and return the sequence it holds. */
+export async function loadVortexAddress(address: string): Promise<readonly number[]> {
+  const handle = VORTEX_HANDLES[address]
+  if (handle === undefined) throw new Error(\`a432.vortex: no handle at address \${address}\`)
+  const mod = await handle() as { getVortexSequence?: () => readonly number[] }
+  const seq = mod.getVortexSequence?.()
+  if (seq === undefined) throw new Error(\`a432.vortex: the module at \${address} holds no sequence\`)
+  return seq
+}
+`
+}
+
 function loaderModule() {
   const rows = []
   for (let n = 1; n <= orbit.length; n += 1) {
@@ -131,8 +165,122 @@ export async function loadOrbitAddress(address: string): Promise<readonly number
 `
 }
 
+/**
+ * ── the full vortex, which doubling does NOT generate ──────────────────────
+ *
+ * a432:names found four more addresses with nothing at them, all on
+ * 1-2-4-8-7-5-3-6-9: the orbit, then the axis. The doubling template above
+ * cannot fill them and must not be used to. From 1 the doubling map closes on
+ * the six-cycle and returns to 1 — the seventh digit is 1, not 3 — and it never
+ * reaches the axis at all. 3 and 6 exchange under doubling and 9 is fixed, so
+ * the axis is a SEPARATE orbit of the same map, and the full vortex is the two
+ * concatenated rather than one rule iterated.
+ *
+ * A module generated from the doubling template at address 1.2.4.8.7.5.3 would
+ * hold 1,2,4,8,7,5,1 and fail the law that an address loads itself, which is
+ * what that law is for. So these are loaded from the kernel's VORTEX_SEQUENCE,
+ * which is a literal array and states the concatenation rather than deriving it.
+ */
+const KERNEL_REL = '../../../../../../../../../../../kernel/index.ts'
+const vortex = [...(kernel.VORTEX_SEQUENCE ?? [])]
+const vortexCycle = vortex.length > 0 ? [...vortex, vortex[0]] : []
+const vortexAddress = (n) => vortexCycle.slice(0, n).join('.')
+const vortexFile = (n) => join(A432, `a432.${vortexAddress(n)}.ts`)
+/** Only the addresses past the orbit: the shorter ones are the orbit's own. */
+const vortexRange = []
+for (let n = orbit.length + 1; n <= vortexCycle.length; n += 1) vortexRange.push(n)
+
+function vortexModule(n) {
+  const seq = vortexCycle.slice(0, n)
+  const address = vortexAddress(n)
+  const tail = seq.slice(orbit.length)
+  return `// a432.${address}.ts — Full Vortex Address Module
+${STAMP}//
+// This module holds the first ${n} digits of the full vortex sequence
+// ${vortex.join('-')}: the doubling orbit ${orbit.join('-')} followed by the axis${
+    n > vortex.length ? ', and then the return to the seed' : ''}.
+//
+// DOUBLING ALONE DOES NOT PRODUCE THIS TAIL, which is why this family has its
+// own module rather than reusing the open-doubling one. From 1 the doubling map
+// closes on the six-cycle and returns to 1 — the seventh digit is 1, not 3 — so
+// iterating it never reaches the axis.
+//
+// BUT THE TAIL IS DERIVED, NOT MERELY DECLARED, and an earlier version of this
+// comment said otherwise. The axis is the REFLECTION of the orbit through the
+// void: throughVoid is 1<->9, 2<->8, 3<->7, 4<->6 with 5 fixed, and
+//
+//     throughVoid(orbit[4]) = throughVoid(7) = 3
+//     throughVoid(orbit[2]) = throughVoid(4) = 6
+//     throughVoid(orbit[0]) = throughVoid(1) = 9
+//
+// so 3-6-9 is exactly the reflection of every second orbit element, read
+// backwards. Every digit carries its reflection; the axis is where the orbit's
+// reflections land. The suite asserts that relation against the kernel's own
+// arrays rather than leaving it as prose here.
+//
+// The sequence is read from VORTEX_SEQUENCE because that constant states the
+// concatenation once, not because there is no rule behind it.
+//
+// The tail past the orbit here is ${tail.join('-') || '(none)'}.
+
+import { VORTEX_SEQUENCE } from '${KERNEL_REL}'
+
+/** The full vortex, closed back onto its seed. */
+const CYCLE: readonly number[] = [...VORTEX_SEQUENCE, VORTEX_SEQUENCE[0]!]
+
+/** The sequence this address holds. */
+export function getVortexSequence(length = ${n}): readonly number[] {
+  return CYCLE.slice(0, length)
+}
+
+/** The digit at a position, without materialising the prefix. */
+export function getVortexNth(index = 0): number {
+  const d = CYCLE[index]
+  if (d === undefined) throw new Error(\`a432.${address}: no digit at position \${index}\`)
+  return d
+}
+
+/** Where the orbit ends and the axis begins in this address. */
+export const VORTEX_ORBIT_LENGTH = ${orbit.length}
+
+export const a432VortexAddress = {
+  address: '${address}',
+  sequence: getVortexSequence,
+  nth: getVortexNth,
+  orbitLength: VORTEX_ORBIT_LENGTH,
+  doc: \`The first ${n} digits of the full vortex ${vortex.join('-')}: the doubling orbit, then the axis. Doubling alone does not reach the axis.\`,
+}
+`
+}
+
+/**
+ * NEVER OVERWRITE A FILE THIS TOOL DID NOT WRITE.
+ *
+ * The vortex loader was first called a432.vortex.ts, and a432.vortex.ts already
+ * existed — 4231 bytes of createVortexStream, imagineAll and treeToVortexStream
+ * that a432.surface.test.ts imports. The generator wrote straight over it. The
+ * suite then failed to load, coverage:audit reported it "loaded by nothing",
+ * and the untested-export count jumped from 148 to 183 because everything that
+ * suite covered stopped being covered. I read all of that as a peer's in-flight
+ * breakage for several minutes.
+ *
+ * A generator that can silently replace a module it did not create is the same
+ * defect as a block generator that replaces 28,000 bytes between orphaned
+ * markers, which this repository fixed a day ago in readme-census and
+ * citations. The stamp is the evidence of authorship: no stamp, no write.
+ */
+const claim = (path, what) => {
+  if (!existsSync(path)) return
+  const existing = readFileSync(path, 'utf8')
+  if (existing.includes('GENERATED by scripts/a432-orbit-fill.mjs')) return
+  console.error(`a432:orbit FAIL — ${path.split('/').pop()} already exists and this tool did not write it.`)
+  console.error(`  Refusing to overwrite ${existing.length} bytes with ${what}. Choose another name.`)
+  process.exit(1)
+}
+
 const missing = []
 for (let n = 1; n <= orbit.length; n += 1) if (!existsSync(fileOf(n))) missing.push(n)
+const vortexMissing = vortexRange.filter((n) => !existsSync(vortexFile(n)))
 
 if (CHECK) {
   const wrong = []
@@ -172,23 +320,45 @@ if (CHECK) {
     console.error('  run npm run a432:orbit')
     process.exit(1)
   }
+  for (const n of vortexRange) {
+    const address = vortexAddress(n)
+    if (!existsSync(vortexFile(n))) { wrong.push(`${address} — no file at this address`); continue }
+    if (readFileSync(vortexFile(n), 'utf8') !== vortexModule(n)) { wrong.push(`${address} — has drifted from the template`); continue }
+    let loaded = null
+    try {
+      const mod = await import(vortexFile(n))
+      loaded = mod.getVortexSequence?.() ?? null
+    } catch (err) { wrong.push(`${address} — will not import: ${String(err.message).slice(0, 60)}`); continue }
+    if (loaded !== null && loaded.join('.') !== address) wrong.push(`${address} — loads ${JSON.stringify(loaded)}, which is not its own address`)
+  }
+  if (vortexRange.length > 0 && (!existsSync(VORTEX_LOADER) || readFileSync(VORTEX_LOADER, 'utf8') !== vortexLoaderModule())) {
+    wrong.push('a432.vortex.addresses.ts is missing or has drifted from the family')
+  }
   if (!existsSync(LOADER) || readFileSync(LOADER, 'utf8') !== loaderModule()) {
     console.error('a432:orbit:check FAIL — a432.orbit.ts is missing or has drifted from the orbit; run npm run a432:orbit')
     process.exit(1)
   }
-  console.log(`a432:orbit:check ok — every prefix of ${orbit.join('-')} has a module, each loads its own address, and all ${orbit.length} are reachable through a432.orbit.ts`)
+  console.log(`a432:orbit:check ok — ${orbit.length} orbit and ${vortexRange.length} vortex addresses, each loading its own sequence, all reachable through their loaders`)
   process.exit(0)
 }
 
+claim(LOADER, 'the orbit loader')
 writeFileSync(LOADER, loaderModule())
+for (const n of vortexMissing) {
+  claim(vortexFile(n), 'a vortex address module')
+  writeFileSync(vortexFile(n), vortexModule(n))
+  console.log(`  wrote a432.${vortexAddress(n)}.ts — the full vortex to ${vortexCycle.slice(0, n).join('-')}`)
+}
+if (vortexRange.length > 0) { claim(VORTEX_LOADER, 'the vortex loader'); writeFileSync(VORTEX_LOADER, vortexLoaderModule()) }
 
-if (missing.length === 0) {
-  console.log(`a432:orbit ok — all ${orbit.length} prefixes of ${orbit.join('-')} addressed, and a432.orbit.ts loads them`)
+if (missing.length === 0 && vortexMissing.length === 0) {
+  console.log(`a432:orbit ok — ${orbit.length} orbit and ${vortexRange.length} vortex addresses, all occupied and loadable`)
   process.exit(0)
 }
 
 for (const n of missing) {
+  claim(fileOf(n), 'an orbit address module')
   writeFileSync(fileOf(n), moduleFor(n))
   console.log(`  wrote a432.${addressOf(n)}.ts — the open sequence ${orbit.slice(0, n).join('-')}`)
 }
-console.log(`a432:orbit — ${missing.length} address(es) filled from the template in a432.${addressOf(donorLength)}.ts`)
+console.log(`a432:orbit — ${missing.length} orbit and ${vortexMissing.length} vortex address(es) filled`)

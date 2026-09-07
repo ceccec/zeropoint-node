@@ -8,7 +8,9 @@
  */
 import { ORBIT_ADDRESSES, ORBIT_HANDLES, loadOrbitAddress } from './a432.orbit.ts'
 import { createChecker } from '../../../../../../../../../../../verification/harness.ts'
-import { VORTEX_ORBIT } from '../../../../../../../../../../../kernel/index.ts'
+import { VORTEX_ORBIT, VORTEX_AXIS } from '../../../../../../../../../../../kernel/index.ts'
+import { VORTEX_ADDRESSES, VORTEX_HANDLES, loadVortexAddress } from './a432.vortex.addresses.ts'
+import { throughVoid } from '../../../../../../../../../../index.ts'
 import { legacyDigitalRoot } from './a432.roots.ts'
 
 const checker = createChecker('a432.orbit')
@@ -73,6 +75,79 @@ for (let i = 1; i < ORBIT_ADDRESSES.length; i += 1) {
   let refusedEmpty = false
   try { await loadOrbitAddress('') } catch { refusedEmpty = true }
   checker.check('and so is an empty address', refusedEmpty, true)
+}
+
+/**
+ * ── the full vortex, which doubling does not reach ─────────────────────────
+ *
+ * The orbit closes on 1 by doubling and never touches the axis: 3 and 6
+ * exchange under the same map and 9 is fixed, so 3-6-9 is a separate orbit and
+ * the full sequence is the two concatenated. These addresses are therefore read
+ * from the kernel rather than iterated, and the law is the same — an address
+ * loads itself.
+ */
+checker.check('the vortex family has addresses past the orbit', VORTEX_ADDRESSES.length > 0, true)
+checker.check('every vortex address has a handle',
+  VORTEX_ADDRESSES.every((a) => typeof VORTEX_HANDLES[a] === 'function'), true)
+
+for (const address of VORTEX_ADDRESSES) {
+  const loaded = await loadVortexAddress(address)
+  checker.check(`a432.${address} loads exactly ${address}`, loaded.join('.'), address)
+}
+
+{
+  // The orbit is a prefix of every vortex address, and the tail past it is the
+  // axis — checked against the kernel's own arrays, which no digital root
+  // computes.
+  const longest = await loadVortexAddress(VORTEX_ADDRESSES[VORTEX_ADDRESSES.length - 1]!)
+  checker.check('the orbit is a prefix of the full vortex',
+    longest.slice(0, VORTEX_ORBIT.length).join('.'), [...VORTEX_ORBIT].join('.'))
+  checker.check('the tail past the orbit is the axis',
+    longest.slice(VORTEX_ORBIT.length, VORTEX_ORBIT.length + VORTEX_AXIS.length).join('.'), [...VORTEX_AXIS].join('.'))
+  checker.check('and the last address closes back onto the seed',
+    longest[longest.length - 1], longest[0])
+
+  // THE THING THAT WOULD BE WRONG IF THE DOUBLING TEMPLATE HAD BEEN USED: the
+  // seventh digit is 3, and doubling from 1 gives 1 there.
+  checker.check('the seventh digit is the axis, not the doubling map\'s return to 1', longest[6], 3)
+
+  /**
+   * AND THE AXIS IS DERIVED, which I first wrote up as impossible.
+   *
+   * I claimed the tail could only be read from the kernel because doubling
+   * never reaches it. Doubling does not, and that is not the same as no rule:
+   * every digit carries its reflection, and the axis is where the orbit's
+   * reflections land. throughVoid is 1<->9, 2<->8, 3<->7, 4<->6 with 5 fixed,
+   * so reflecting every second orbit element and reading backwards gives
+   * exactly 3, 6, 9 — computed here from VORTEX_ORBIT and throughVoid, with
+   * the kernel's VORTEX_AXIS on the other side of the equals sign.
+   */
+  const reflected = [...VORTEX_ORBIT]
+    .map((d, i) => ({ i, r: throughVoid(d) }))
+    .filter((x) => x.i % 2 === 0)
+    .sort((x, y) => y.i - x.i)
+    .map((x) => x.r)
+  checker.check('the axis is the reflection of every second orbit element, read backwards',
+    reflected.join('.'), [...VORTEX_AXIS].join('.'))
+  checker.check('so the full vortex is the orbit followed by its own reflections',
+    [...VORTEX_ORBIT, ...reflected].join('.'), longest.slice(0, VORTEX_ORBIT.length + VORTEX_AXIS.length).join('.'))
+
+  // AND THE REFLECTION MUST BE ABLE TO DISAGREE. Reflecting the ODD positions
+  // gives 8, 2, 5 — none of which is the axis — so the parity in the rule is
+  // doing work rather than being decoration.
+  const oddReflected = [...VORTEX_ORBIT]
+    .map((d, i) => ({ i, r: throughVoid(d) }))
+    .filter((x) => x.i % 2 === 1)
+    .sort((x, y) => y.i - x.i)
+    .map((x) => x.r)
+  checker.check('reflecting the other positions does NOT give the axis',
+    oddReflected.join('.') === [...VORTEX_AXIS].join('.'), false)
+}
+
+{
+  let refused = false
+  try { await loadVortexAddress('1.2.4') } catch { refused = true }
+  checker.check('an orbit address is refused by the vortex loader', refused, true)
 }
 
 checker.report()

@@ -52,6 +52,7 @@ const loaded = [
   ['query-cost.json', read('query-cost.json'), 'npm run query:cost'],
   ['quantum-capacity.json', read('quantum-capacity.json'), 'npm run capacity'],
   ['shor-exhaustive.json', read('shor-exhaustive.json'), 'npm run shor:exhaustive'],
+  ['qpu-pentagram.json', read('qpu-pentagram.json'), 'npm run qpu:pentagram'],
 ]
 const unreadable = loaded.filter(([, v]) => v.unreadable)
 const absent = loaded.filter(([, v]) => v.absent)
@@ -67,7 +68,10 @@ if (absent.length > 0) {
   process.exit(1)
 }
 
-const [impostors, cost, capacity, shor] = loaded.map(([, v]) => v.record)
+const [impostors, cost, capacity, shor, qpu] = loaded.map(([, v]) => v.record)
+
+/** Bytes as GiB, for the one place the page names a capacity. */
+const gib = (b) => `${(b / 1024 ** 3).toFixed(0)} GiB`
 const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'))
 const server = readFileSync(join(ROOT, 'src/mcp/server.ts'), 'utf8')
 
@@ -204,14 +208,33 @@ for (const u of capacity.axes?.unmeasured ?? []) L.push(`- ${u}`)
 L.push('')
 L.push('## The QPU')
 L.push('')
-L.push('There is no quantum processor here and no access to one. The five resources this')
-L.push('package actually runs on — CPU, GPU, RAM, cache and storage — are measured by')
-L.push('`npm run qpu:pentagram`, and **RAM is what binds**: a state vector stops at about')
-L.push('31 qubits because 2^31 amplitudes stop fitting, and neither CPU nor GPU adds a')
-L.push('single qubit to that.')
+L.push('There is no quantum processor here and no access to one. Six axes are measured by')
+L.push('`npm run qpu:pentagram` — five machine resources and the representation the state')
+L.push(`is written in. **${qpu.binding.name} is what binds**: a state vector stops at ${qpu.binding.width} qubits,`)
+L.push('and neither CPU nor GPU adds a single qubit to that.')
 L.push('')
-L.push('That ceiling belongs to the representation, not the machine. The same Clifford')
-if (beyond.length > 0) L.push(`circuits reach ${beyond[beyond.length - 1].n} qubits on a tableau, on the same hardware, in ${beyond[beyond.length - 1].stMs} ms.`)
+// This sentence said "about 31 qubits" as a literal, and stayed at 31 while the
+// measurement moved to 29 — the amplitude cost had been TYPED as 16 bytes and
+// the shipped Complex[] simulator costs three times that. Every figure in this
+// section is now read from the record.
+L.push('That ceiling belongs to the REPRESENTATION rather than to the machine, and the')
+L.push('representation turns out to be the larger lever of the two:')
+L.push('')
+L.push('| representation | cost of one unit | width in ' + gib(qpu.binding.capacity) + ' | covers |')
+L.push('| --- | --- | --- | --- |')
+for (const r of qpu.representations) {
+  L.push(`| \`${r.module}\` | ${r.bytesPerUnit.toFixed(2)} B / ${r.unit} | ${r.width.toLocaleString('en-US')} qubits | ${r.covers} |`)
+}
+L.push('')
+L.push(`The same memory holds ${qpu.narrowest.width} qubits or ${qpu.widest.width.toLocaleString('en-US')} — a factor of ${Math.round(qpu.representationFactor).toLocaleString('en-US')} in width, against`)
+L.push(`the ${qpu.pentagramSpanQubits} qubits spanned by every machine resource put together.`)
+if (beyond.length > 0) L.push(`Measured rather than argued: the same Clifford circuits reach ${beyond[beyond.length - 1].n} qubits on a tableau, on the same hardware, in ${beyond[beyond.length - 1].stMs} ms.`)
+L.push('')
+L.push('It is not a way around the exponential and is not offered as one. A tableau covers')
+L.push('the Clifford fragment; a circuit with t T-gates is an exact sum of 2^t Clifford')
+L.push('circuits (`src/quantum/stabilizer-rank.ts`), so the exponent moves from n to t.')
+L.push('Where the exponent sits is a property of the representation and the fragment, never')
+L.push('of the work being quantum.')
 L.push('')
 L.push('## Use it from npm')
 L.push('')
@@ -286,5 +309,5 @@ if (CHECK) {
 }
 
 writeFileSync(PAGE, page)
-console.log(`quantum:doc — wrote docs/QUANTUM_COMPUTER.md from 4 records and ${quantumTools.length} MCP tools`)
+console.log(`quantum:doc — wrote docs/QUANTUM_COMPUTER.md from ${loaded.length} records and ${quantumTools.length} MCP tools`)
 console.log(`              ${impostors.identifiedByMethod} algorithms identified by method, ${cost.queryAdvantagesFound} query advantages, ${(capacity.axes?.unmeasured ?? []).length} axes named as unmeasured`)

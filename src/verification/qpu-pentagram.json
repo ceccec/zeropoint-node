@@ -1,0 +1,90 @@
+{
+  "what": "The QPU as six axes: five machine resources and the representation the state is written in.",
+  "doesNotEstablish": "that any of this is quantum hardware, or that the exponential is avoidable. The tableau width applies to the CLIFFORD fragment only; a circuit with t T-gates is an exact sum of 2^t Clifford circuits, so the exponent moves from n to t rather than disappearing.",
+  "machine": {
+    "cores": 10,
+    "gpuCores": 32,
+    "gpuName": "Apple M1 Max",
+    "ramBytes": 34359738368,
+    "freeBytes": 9110208512,
+    "l1dBytes": 131072,
+    "l2Bytes": 12582912,
+    "storageFreeBytes": 32403730432
+  },
+  "bytesPerAmplitudeFloor": 16,
+  "points": [
+    {
+      "name": "CACHE (L1d)",
+      "capacity": 131072,
+      "width": 11
+    },
+    {
+      "name": "CACHE (L2)",
+      "capacity": 12582912,
+      "width": 18
+    },
+    {
+      "name": "RAM (free)",
+      "capacity": 9110208512,
+      "width": 27
+    },
+    {
+      "name": "RAM (total)",
+      "capacity": 34359738368,
+      "width": 29
+    },
+    {
+      "name": "STORAGE (free)",
+      "capacity": 32403730432,
+      "width": 29
+    }
+  ],
+  "binding": {
+    "name": "RAM (total)",
+    "width": 29,
+    "capacity": 34359738368
+  },
+  "representations": [
+    {
+      "name": "state vector (float)",
+      "module": "src/quantum/simulator.ts",
+      "bytesPerUnit": 47.67891245039682,
+      "unit": "amplitude",
+      "width": 29,
+      "law": "2^n amplitudes",
+      "covers": "any circuit, approximately — amplitudes are binary floating point"
+    },
+    {
+      "name": "state vector (exact)",
+      "module": "src/quantum/exact.ts",
+      "bytesPerUnit": 50.84371899801587,
+      "unit": "amplitude",
+      "width": 29,
+      "law": "2^n amplitudes",
+      "covers": "Clifford+T exactly, in Z[zeta8] — no rounding at any width"
+    },
+    {
+      "name": "stabilizer tableau",
+      "module": "src/quantum/stabilizer.ts",
+      "bytesPerUnit": 0.6719876665278934,
+      "unit": "tableau bit",
+      "width": 113060,
+      "law": "2n(2n+1)+2n bits — QUADRATIC",
+      "covers": "the CLIFFORD fragment only. T gates cost 2^t branches, not width"
+    }
+  ],
+  "widest": {
+    "name": "stabilizer tableau",
+    "width": 113060
+  },
+  "narrowest": {
+    "name": "state vector (float)",
+    "width": 29
+  },
+  "representationFactor": 3898.6206896551726,
+  "pentagramSpanQubits": 18,
+  "controls": {
+    "floatZeroState": 35.80912078373016,
+    "exactZeroState": 5.967261904761905
+  }
+}

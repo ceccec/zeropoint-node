@@ -125,14 +125,29 @@ prevent. These are not measured anywhere in this package:
 
 ## The QPU
 
-There is no quantum processor here and no access to one. The five resources this
-package actually runs on — CPU, GPU, RAM, cache and storage — are measured by
-`npm run qpu:pentagram`, and **RAM is what binds**: a state vector stops at about
-31 qubits because 2^31 amplitudes stop fitting, and neither CPU nor GPU adds a
-single qubit to that.
+There is no quantum processor here and no access to one. Six axes are measured by
+`npm run qpu:pentagram` — five machine resources and the representation the state
+is written in. **RAM (total) is what binds**: a state vector stops at 29 qubits,
+and neither CPU nor GPU adds a single qubit to that.
 
-That ceiling belongs to the representation, not the machine. The same Clifford
-circuits reach 1000 qubits on a tableau, on the same hardware, in 222 ms.
+That ceiling belongs to the REPRESENTATION rather than to the machine, and the
+representation turns out to be the larger lever of the two:
+
+| representation | cost of one unit | width in 32 GiB | covers |
+| --- | --- | --- | --- |
+| `src/quantum/simulator.ts` | 47.68 B / amplitude | 29 qubits | any circuit, approximately — amplitudes are binary floating point |
+| `src/quantum/exact.ts` | 50.84 B / amplitude | 29 qubits | Clifford+T exactly, in Z[zeta8] — no rounding at any width |
+| `src/quantum/stabilizer.ts` | 0.67 B / tableau bit | 113,060 qubits | the CLIFFORD fragment only. T gates cost 2^t branches, not width |
+
+The same memory holds 29 qubits or 113,060 — a factor of 3,899 in width, against
+the 18 qubits spanned by every machine resource put together.
+Measured rather than argued: the same Clifford circuits reach 1000 qubits on a tableau, on the same hardware, in 222 ms.
+
+It is not a way around the exponential and is not offered as one. A tableau covers
+the Clifford fragment; a circuit with t T-gates is an exact sum of 2^t Clifford
+circuits (`src/quantum/stabilizer-rank.ts`), so the exponent moves from n to t.
+Where the exponent sits is a property of the representation and the fragment, never
+of the work being quantum.
 
 ## Use it from npm
 

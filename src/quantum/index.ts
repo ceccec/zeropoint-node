@@ -57,11 +57,12 @@ export * from './stabilizer.ts'
 export * from './stabilizer-rank.ts'
 
 /**
- * And the structure the lattice sits in: with polarity carried alongside the
- * six-bit cell, every state has twelve neighbours and the space is
- * vertex-transitive — every state is the centre of a vector equilibrium.
+ * The six-bit cell doubled by polarity: 128 states, twelve neighbours each,
+ * vertex-transitive. NOT a vector equilibrium — the twelve neighbours have no
+ * edges among them where a cuboctahedron has 24 — and the transitivity was
+ * already there in the undoubled cube. The module records both refusals.
  */
-export * from './vector-equilibrium.ts'
+export * from './polarity-lattice.ts'
 export * from './end-to-end.ts'
 export * from './meta-verifier.ts'
 export * from './composability.ts'

@@ -54,13 +54,13 @@ features:
     link: /QUANTUM_COMPUTER
     linkText: What it costs
 
-  - title: Every state is a centre
+  - title: Twelve neighbours, and what that is not
     details: >-
-      Six hexbit neighbours is half a vector equilibrium. Carry a polarity
-      beside the cell and all 128 states have exactly twelve, the space is
-      connected, and exclusive-or by any cell is an automorphism — so a symmetry
-      carries any state onto any other and none is distinguished. Twelve
-      vertices, fourteen faces, neither of them fitted.
+      Carry a polarity beside the six-bit cell and all 128 states have exactly
+      twelve neighbours, connected and vertex-transitive. Not a vector
+      equilibrium: a cuboctahedron's twelve vertices carry 24 edges among
+      themselves and these carry none. The count matched, the geometry did not,
+      and the module records the refusal rather than the name.
     link: /QUANTUM_COMPUTER
     linkText: The structure
 

@@ -11,7 +11,7 @@
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 28716
+    "unguardedReadme": 28918
   },
   "raised": {
     "unguardedReadme": [
@@ -64,6 +64,11 @@
         "from": 27564,
         "to": 28716,
         "reason": "The vector equilibrium, stated where a reader meets the quantum surface. The hexbit lattice gives each cell six neighbours and six is half a cuboctahedron; carrying a polarity beside the cell makes 128 states each with exactly twelve, connected, and vertex-transitive under exclusive-or — so a symmetry carries any state onto any other and none is distinguished. The counts fall out rather than being fitted: 12 vertices are the 6 bit positions doubled by polarity, 14 faces are 6 squares plus 8 triangles. 1152 bytes buy the claim, the table, the statement that the doubling is load-bearing rather than decorative, and the negative result beside it — that it is NOT in the digit space, where degrees are 1, 2 and 3. Both halves are checked by npm run test:vector-equilibrium, and both mutations fire: removing the doubling gives degree 6 and breaks connectivity, replacing exclusive-or with addition breaks transitivity. A structural claim with its own refutation beside it is worth more README than one without."
+      },
+      {
+        "from": 28716,
+        "to": 28918,
+        "reason": "A retraction is longer than the claim it retracts, and that is the right way round. The section said the lattice was a vector equilibrium; two peers took that apart from opposite ends and both were right. A cuboctahedron's twelve vertices carry 24 edges among themselves and these carry ZERO — the neighbourhood is an independent set, so the vertex count matched and the geometry did not. And the polarity did not buy the transitivity: the undoubled 6-cube is already vertex-transitive at degree 6, so a negative arm showing 12 fall to 6 proves the degree moved and nothing about what the mechanism produced. 202 bytes buy both refusals stated where the claim was, plus the rule they leave behind — before crediting a mechanism with a property, compute the property without the mechanism. Saying what a thing is not, next to what it is, costs more prose than the overclaim did and is the only version that survives being checked."
       }
     ]
   },

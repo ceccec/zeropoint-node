@@ -26,30 +26,31 @@ is exact and what is affordable. All four are exported from `zeropoint-node/quan
 | `clifford-t.ts` | Clifford **+ T** | `ℤ[ζ₈]/√2^k` | `(p + q√2)/2^scale`, exact | 2^n |
 | `stabilizer.ts` | Clifford | *none* | determined / undetermined | **polynomial** |
 
-### Every state is the centre of a vector equilibrium
+### Twelve neighbours, and what that is not
 
-The hexbit lattice gives each cell six neighbours, one per bit, and six is half
-of what a cuboctahedron has. Carry a **polarity** alongside the cell and each bit
-offers two moves:
+The hexbit lattice gives each cell six neighbours, one per bit. Carry a
+**polarity** alongside the cell and each bit offers two moves:
 
 | | |
 | --- | --- |
 | states | 128 — 64 cells × 2 polarities |
-| neighbours per state | **12, uniform, every one** |
+| neighbours per state | 12, uniform |
 | connectivity | one component |
-| exclusive-or by any cell | an automorphism → **vertex-transitive** |
+| symmetry | vertex-transitive |
+| edges among the twelve | **0** — a cuboctahedron has 24 |
 
-Vertex-transitivity is the content of the claim: a symmetry carries any state onto
-any other, so none is distinguished and only the neighbours' identities change.
-The cuboctahedron's counts fall out rather than being fitted — 12 vertices are the
-6 bit positions doubled by polarity, and its 14 faces are 6 squares (the bit
-positions) plus 8 triangles (2³ sign choices over three axis-pairs).
+Twelve is what a sphere touches in closest packing, which is why a vector
+equilibrium looked like the answer. It is not one: two states reached by flipping
+different bits differ in two bits, and two bits apart is not adjacent, so the
+neighbourhood is an independent set. This is the 6-cube with every vertex doubled
+into a non-adjacent twin — the vertex count of a cuboctahedron and none of its
+geometry.
 
-The doubling is load-bearing: drop polarity and every state has 6 neighbours,
-which is a different solid, and the suite asserts that difference rather than
-describing it. It is **not** in the digit space — 1..9 under doubling, halving and
-reflection is connected but has degrees 1, 2 and 3, so it is neither uniform nor
-transitive. Checked, and reported as checked.
+The polarity did not buy the transitivity either: the undoubled 6-cube is already
+vertex-transitive at degree 6, so the doubling changed the degree and not the
+property. `npm run test:polarity-lattice` asserts both refusals. The rule that
+leaves: before crediting a mechanism with a property, compute the property
+without the mechanism.
 
 `eisenstein.ts` sits beside them for the hexagonal case: ω = e^{iπ/3} satisfies
 ω² = ω − 1, so a 60° rotation is `(a, b) → (−b, a+b)` — integer arithmetic with no

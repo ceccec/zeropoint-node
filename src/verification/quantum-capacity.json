@@ -1,0 +1,177 @@
+{
+  "what": "Several axes of quantum simulation cost, measured, after this package measured ONE (oracle calls) and generalised it in prose to all of them. A Clifford circuit is polynomial classically; the exponential cost here is the state-vector representation, not the quantum content.",
+  "inputsFingerprint": "39d0c962273745046aec202b8e5db4de",
+  "axes": {
+    "measured": [
+      "wall-clock for identical Clifford circuits in both representations",
+      "memory: amplitudes against tableau bits",
+      "reach: qubit counts the state vector cannot represent at all",
+      "T-count scaling: 2^t branches, from an EXACT decomposition T = a*I + b*S checked against direct simulation",
+      "circuit depth, counted separately from gate count"
+    ],
+    "unmeasured": [
+      "the SPEEDUP a stabilizer-rank simulator would give — the 2^t scaling is measured here, but realising it needs tableau branches with amplitude extraction, and the better ~2^{0.23t} decompositions, neither of which is implemented",
+      "noise, error correction and the physical qubit overhead a real device needs per logical qubit",
+      "any hardware timing whatsoever — no quantum processor was involved in any number in this repository",
+      "communication and readout cost, which dominate on real devices and are free in every simulator",
+      "the asymptotic separations themselves (Simon, Shor), which are proven results about query and gate complexity and are not measurable at the sizes anything here can run"
+    ]
+  },
+  "tDecompositionExact": {
+    "sumsToOne": true,
+    "reproducesT": true
+  },
+  "tCountScaling": [
+    {
+      "tCount": 0,
+      "branches": "1",
+      "qubits": 1,
+      "cliffordGates": 1,
+      "agreesWithDirect": true,
+      "depth": 1
+    },
+    {
+      "tCount": 1,
+      "branches": "2",
+      "qubits": 1,
+      "cliffordGates": 2,
+      "agreesWithDirect": true,
+      "depth": 3
+    },
+    {
+      "tCount": 2,
+      "branches": "4",
+      "qubits": 2,
+      "cliffordGates": 2,
+      "agreesWithDirect": true,
+      "depth": 4
+    },
+    {
+      "tCount": 3,
+      "branches": "8",
+      "qubits": 2,
+      "cliffordGates": 3,
+      "agreesWithDirect": true,
+      "depth": 5
+    },
+    {
+      "tCount": 4,
+      "branches": "16",
+      "qubits": 3,
+      "cliffordGates": 4,
+      "agreesWithDirect": true,
+      "depth": 5
+    }
+  ],
+  "depth": [
+    {
+      "name": "three H on disjoint qubits",
+      "gates": 3,
+      "depth": 1
+    },
+    {
+      "name": "three H on one qubit",
+      "gates": 3,
+      "depth": 3
+    },
+    {
+      "name": "a CNOT chain over five qubits",
+      "gates": 4,
+      "depth": 4
+    },
+    {
+      "name": "four disjoint CNOTs",
+      "gates": 4,
+      "depth": 1
+    }
+  ],
+  "stateVectorVsStabilizer": [
+    {
+      "n": 4,
+      "svMs": 0,
+      "stMs": 0,
+      "amplitudes": 16,
+      "tableauBits": 80
+    },
+    {
+      "n": 8,
+      "svMs": 2,
+      "stMs": 0,
+      "amplitudes": 256,
+      "tableauBits": 288
+    },
+    {
+      "n": 12,
+      "svMs": 7,
+      "stMs": 0,
+      "amplitudes": 4096,
+      "tableauBits": 624
+    },
+    {
+      "n": 16,
+      "svMs": 510,
+      "stMs": 0,
+      "amplitudes": 65536,
+      "tableauBits": 1088
+    },
+    {
+      "n": 18,
+      "svMs": 3265,
+      "stMs": 0,
+      "amplitudes": 262144,
+      "tableauBits": 1368
+    },
+    {
+      "n": 20,
+      "svMs": 16494,
+      "stMs": 0,
+      "amplitudes": 1048576,
+      "tableauBits": 1680
+    }
+  ],
+  "stabilizerBeyondStateVector": [
+    {
+      "n": 100,
+      "stMs": 1,
+      "tableauBits": 40400
+    },
+    {
+      "n": 400,
+      "stMs": 27,
+      "tableauBits": 641600
+    },
+    {
+      "n": 1000,
+      "stMs": 222,
+      "tableauBits": 4004000
+    }
+  ],
+  "growth": [
+    {
+      "n": 8,
+      "svRatio": 3,
+      "stRatio": 1
+    },
+    {
+      "n": 12,
+      "svRatio": 2.6666666666666665,
+      "stRatio": 1
+    },
+    {
+      "n": 16,
+      "svRatio": 63.875,
+      "stRatio": 1
+    },
+    {
+      "n": 18,
+      "svRatio": 6.391389432485323,
+      "stRatio": 1
+    },
+    {
+      "n": 20,
+      "svRatio": 5.050520514390692,
+      "stRatio": 1
+    }
+  ],
+  "contentHash": "a0f5f603ed3581a4dc3f308e0048dac9"
+}

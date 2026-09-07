@@ -135,7 +135,7 @@ export const MUTATIONS = [
     'if (width !== 1 << n) break', 'if (width !== 1 << n) break; if (n > 2) return { qubits: 0, ns: 0, deadlineNs: DEADLINE_NS, wall: "stopped" }',
     'the quantum-scale reach stops reaching and the criterion should notice'],
   ['verification/realtime-criterion.ts', 'verification/realtime-criterion.test.ts',
-    'if (dt > worst) worst = dt', 'if (dt < worst) worst = dt',
+    'if (dt > trialWorst) trialWorst = dt', 'if (dt < trialWorst) trialWorst = dt',
     'the worst step stops being the worst, which is the whole measure'],
   // The accumulated work must reach the RETURNED value, or V8 eliminates the
   // loop as dead and the mutation measures nothing. The first version of this

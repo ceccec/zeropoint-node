@@ -11,7 +11,7 @@ The previous version of this file was hand-written and documented 32 functions,
 reader more than no reference at all, because it looks authoritative while it
 misleads them.
 
-**873 exports across 23 entry points.**
+**944 exports across 23 entry points.**
 
 ## `zeropoint-node`
 
@@ -526,6 +526,8 @@ Source: `./dist/quantum.esm.js`
 | export | kind |
 | --- | --- |
 | `AdaptiveOptimizer` | class |
+| `EISENSTEIN_ONE` | object |
+| `EISENSTEIN_ZERO` | object |
 | `FALCON_PROFILE` | object |
 | `FOUNDATION_DIMENSION` | number |
 | `H` | array (4) |
@@ -533,6 +535,7 @@ Source: `./dist/quantum.esm.js`
 | `HarmonicSolutionsVortex` | class |
 | `I1` | array (4) |
 | `ISING_MODEL` | object |
+| `OMEGA` | object |
 | `PERFECT_BALANCE` | number |
 | `PRESENT_DIMENSION` | number |
 | `REALITIES` | array (5) |
@@ -547,12 +550,20 @@ Source: `./dist/quantum.esm.js`
 | `TESLA_GATEWAY_PORTALS` | object |
 | `TRINITY_DIGITS` | array (3) |
 | `TRINITY_PORTAL_PI` | object |
+| `T_BRANCH_DENOMINATOR` | bigint |
+| `T_BRANCH_I` | object |
+| `T_BRANCH_S` | object |
 | `VORTEX_CHALLENGES` | array (9) |
 | `X` | array (4) |
 | `Y` | array (4) |
 | `Z` | array (4) |
+| `Z8_I` | object |
+| `Z8_ONE` | object |
+| `Z8_SQRT2` | object |
+| `Z8_ZERO` | object |
 | `ZENODO_CONFIG` | object |
 | `ZEROPOINT_FLOW_SEQUENCE` | array (11) |
+| `ZETA` | object |
 | `accessUniversalConsciousness` | function (0 args) |
 | `activateSwitch` | function (2 args) |
 | `adaptCompositionGraph` | function (3 args) |
@@ -563,6 +574,8 @@ Source: `./dist/quantum.esm.js`
 | `allPhaseAmplitudes` | function (0 args) |
 | `amplitudeDamping` | function (1 arg) |
 | `amplitudeEstimation` | function (3 args) |
+| `amplitudesByBranching` | function (2 args) |
+| `amplitudesDirect` | function (2 args) |
 | `analyzeChallengeResolution` | function (1 arg) |
 | `analyzeGatewayConsciousnessFlow` | function (0 args) |
 | `analyzeHarmonicSolutionsGatewayDistribution` | function (0 args) |
@@ -575,6 +588,7 @@ Source: `./dist/quantum.esm.js`
 | `applyGate` | function (3 args) |
 | `applyGate1` | function (3 args) |
 | `applyVortexCSS` | function (2 args) |
+| `asFloat` | function (1 arg) |
 | `assessCodeBased` | function (1 arg) |
 | `assessCryptographicPortfolio` | function (1 arg) |
 | `assessECDLP` | function (1 arg) |
@@ -591,6 +605,8 @@ Source: `./dist/quantum.esm.js`
 | `bernsteinVazirani` | function (2 args) |
 | `bitFlip` | function (1 arg) |
 | `bitFlipCode` | function (2 args) |
+| `branchCount` | function (1 arg) |
+| `branchingAgreesWithDirect` | function (2 args) |
 | `buildCompositionGraph` | function (1 arg) |
 | `cabs2` | function (1 arg) |
 | `cadd` | function (2 args) |
@@ -617,6 +633,7 @@ Source: `./dist/quantum.esm.js`
 | `ccx` | function (4 args) |
 | `checkVortexInvariants` | function (1 arg) |
 | `circuit` | function (1 arg) |
+| `circuitDepth` | function (1 arg) |
 | `classicalKernelOptimize` | function (3 args) |
 | `classifyMeasurement` | function (1 arg) |
 | `clusterMesh` | function (2 args) |
@@ -651,6 +668,17 @@ Source: `./dist/quantum.esm.js`
 | `createVortexState` | function (0 args) |
 | `createWaveParticleDualityChallenge` | function (0 args) |
 | `csub` | function (2 args) |
+| `ctCnot` | function (3 args) |
+| `ctCz` | function (3 args) |
+| `ctExactlyNormalised` | function (1 arg) |
+| `ctH` | function (2 args) |
+| `ctProbability` | function (2 args) |
+| `ctS` | function (2 args) |
+| `ctT` | function (2 args) |
+| `ctTdg` | function (2 args) |
+| `ctX` | function (2 args) |
+| `ctZ` | function (2 args) |
+| `ctZeroState` | function (1 arg) |
 | `cutValue` | function (2 args) |
 | `cx` | function (1 arg) |
 | `cxGate` | array (4) |
@@ -671,7 +699,15 @@ Source: `./dist/quantum.esm.js`
 | `deutschJozsa` | function (2 args) |
 | `deutschJozsaQueries` | function (2 args) |
 | `diagnosisSystem` | function (4 args) |
+| `doublingOrbit` | function (0 args) |
 | `drawSpiral` | function (0 args) |
+| `eisenstein` | function (2 args) |
+| `eisensteinAdd` | function (2 args) |
+| `eisensteinConj` | function (1 arg) |
+| `eisensteinEquals` | function (2 args) |
+| `eisensteinMul` | function (2 args) |
+| `eisensteinNorm` | function (1 arg) |
+| `eisensteinSub` | function (2 args) |
 | `emitNextWaves` | function (0 args) |
 | `encodeFeatures` | function (2 args) |
 | `encodeLogicalPlus` | function (1 arg) |
@@ -682,6 +718,17 @@ Source: `./dist/quantum.esm.js`
 | `estimateGroundStateEnergy` | function (2 args) |
 | `estimateSurfaceCodeThreshold` | function (2 args) |
 | `evolveVortex` | function (1 arg) |
+| `exactCnot` | function (3 args) |
+| `exactCz` | function (3 args) |
+| `exactH` | function (2 args) |
+| `exactProbabilities` | function (1 arg) |
+| `exactProbability` | function (2 args) |
+| `exactS` | function (2 args) |
+| `exactX` | function (2 args) |
+| `exactY` | function (2 args) |
+| `exactZ` | function (2 args) |
+| `exactZeroState` | function (1 arg) |
+| `exactlyNormalised` | function (1 arg) |
 | `executeInSuperposition` | function (0 args) |
 | `expandConsciousness` | function (0 args) |
 | `expandConsciousnessSummary` | function (0 args) |
@@ -772,6 +819,7 @@ Source: `./dist/quantum.esm.js`
 | `phase7_orchestratorAmplitudes` | function (0 args) |
 | `phaseEstimation` | function (2 args) |
 | `phaseFlip` | function (1 arg) |
+| `piInSixthTurns` | function (0 args) |
 | `planMigration` | function (2 args) |
 | `predictFidelity` | function (2 args) |
 | `prepareDeposit` | function (1 arg) |
@@ -827,6 +875,7 @@ Source: `./dist/quantum.esm.js`
 | `resolveTherapyError` | function (1 arg) |
 | `resolveVRError` | function (1 arg) |
 | `resolveWithVortex` | function (1 arg) |
+| `rotate60` | function (1 arg) |
 | `runApplicationSuite` | function (0 args) |
 | `runField` | function (1 arg) |
 | `runOrchestration` | function (0 args) |
@@ -840,14 +889,25 @@ Source: `./dist/quantum.esm.js`
 | `simplifyCircuitSequence` | function (1 arg) |
 | `simulateMolecule` | function (1 arg) |
 | `simulateZenodoPublication` | function (1 arg) |
+| `sixthRootsOfUnity` | function (0 args) |
 | `solveApplication` | function (2 args) |
 | `solveHybrid` | function (2 args) |
 | `solveMaxCutClassical` | function (1 arg) |
 | `splitHexColorIntoTrinityVortices` | function (1 arg) |
+| `stabilizerBits` | function (1 arg) |
+| `stabilizerCnot` | function (3 args) |
+| `stabilizerGateCost` | function (1 arg) |
+| `stabilizerH` | function (2 args) |
+| `stabilizerMeasure` | function (2 args) |
+| `stabilizerS` | function (2 args) |
+| `stabilizerX` | function (2 args) |
+| `stabilizerZ` | function (2 args) |
+| `stabilizerZeroState` | function (1 arg) |
 | `stepField` | function (1 arg) |
 | `superdenseCoding` | function (2 args) |
 | `swap` | function (3 args) |
 | `symplecticProduct` | function (2 args) |
+| `tCountOf` | function (1 arg) |
 | `teleport` | function (2 args) |
 | `toffoli` | function (4 args) |
 | `tomatoSingleQubit` | function (2 args) |
@@ -871,6 +931,7 @@ Source: `./dist/quantum.esm.js`
 | `validateSingleDigits` | function (1 arg) |
 | `verifyHybridSystemEnd2End` | function (0 args) |
 | `verifyReproducibility` | function (1 arg) |
+| `verifyTDecomposition` | function (0 args) |
 | `verifyTomography` | function (2 args) |
 | `verifyTomographyProof` | function (1 arg) |
 | `vortexGuidanceForQuantum` | function (1 arg) |
@@ -878,7 +939,17 @@ Source: `./dist/quantum.esm.js`
 | `vqe1` | function (2 args) |
 | `vqeAdaptive` | function (4 args) |
 | `vqeWarmStart` | function (4 args) |
+| `z8Add` | function (2 args) |
+| `z8Conj` | function (1 arg) |
+| `z8Equals` | function (2 args) |
+| `z8Mul` | function (2 args) |
+| `z8Neg` | function (1 arg) |
+| `z8NormSquared` | function (1 arg) |
+| `z8SignIsNonNegative` | function (2 args) |
+| `z8Sub` | function (2 args) |
+| `z8TimesZeta` | function (1 arg) |
 | `zeroState` | function (1 arg) |
+| `zeta8` | function (4 args) |
 
 ## `zeropoint-node/sacred-geometry`
 
@@ -1046,4 +1117,4 @@ Source: `./dist/a432.wave.energy.esm.js`
 | `calculateWaveHarmonics` | function (1 arg) |
 | `isA432Harmonic` | function (1 arg) |
 
-<!-- digest 9c1c39c4f46a -->
+<!-- digest 9292db36fdd4 -->

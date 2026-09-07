@@ -2,9 +2,6 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22178675.svg)](https://doi.org/10.5281/zenodo.22178675)
 
-Cite the concept DOI above: it resolves to the newest release. The per-version
-DOI is pinned and goes stale.
-
 One structure, read twice: the vortex sequence `0\1\2\4\8/7/5/3\6\9/0\1`, its
 reflection through the void, and a kernel that **computes both rather than
 asserting them**.
@@ -18,7 +15,7 @@ gate that re-performs the measurement and fails if this block disagrees with it.
 
 | | |
 | --- | --- |
-| exported values reachable from no law at all | **1455 of 1810** |
+| exported values reachable from no law at all | **1475 of 1830** |
 | exported literal constants held by nothing | **49 of 57** |
 | constants forced by at least one law | 8 |
 | seal predicates that are *pinned* rather than forced | 3 of 42 |
@@ -50,7 +47,7 @@ Three things a reader can actually use, and one honest warning.
   against NIST's own ACVP vectors and 10 000 pq-crystals KAT cases. **It is not
   constant time**, so it is for study and conformance work, not for guarding
   anything.
-- **`zeropoint-mcp`** — an MCP server exposing 11 kernel tools to an agent.
+- **`zeropoint-mcp`** — an MCP server exposing 14 kernel tools to an agent.
   `npx zeropoint-mcp`. Three answer about verification rather than arithmetic:
   `zeropoint.criteria`, `zeropoint.seals`, `zeropoint.claims`.
 
@@ -62,7 +59,7 @@ and figures that recompute rather than being typed.
 The Lean files hold 83 statements. **59 are accepted by the Lean kernel** and 24 are not:
 19 are closed with `sorry`, 5 import Mathlib and cannot be built here.
 `npm run lean:check` fails if the ledger and the files disagree. `npm run coverage:audit`
-reports that 148 of 1343 exported functions have never been called by anything —
+reports that 148 of 1360 exported functions have never been called by anything —
 published because a reader deserves to know which parts have never run.
 
 ### What is aimed at, and what is built
@@ -270,7 +267,7 @@ at best across all 8000 points of the efficiency grid. A closed loop that gains
 is not an engineering target here; it is the sign of ΔG.
 
 ### Zero Entropy Mathematics
-- **Exact ratios, not decimals**: calculations carry an integer numerator over an integer denominator. Some *values* are non-integer rationals (`2592/5` = 518.4 Hz); what is refused is the lossy float, not the fraction — collapsing `2592/5` to a `number` stores 518.39999999999997726 and accumulates error. See `CMYK_FREQUENCY_RATIOS`
+- **Exact ratios, not decimals** — see the vocabulary below; the rule and its one subtlety are stated there once.
 - **Digital Roots**: Multi-digit numbers reduced to single digits
 - **Fractional Harmony**: 1/2, 1/3, 1/4, 1/8, 1/12, etc.
 - **Perfect Balance**: Zero entropy through harmonic relationships
@@ -347,6 +344,39 @@ and the command that recomputes it:
 ```bash
 npm run withdrawn
 ```
+
+## The quantum computer
+
+Four representations of a quantum state, all exported from
+`zeropoint-node/quantum`, and the choice between them decides what is exact and
+what is affordable:
+
+| module | fragment | probabilities | cost |
+| --- | --- | --- | --- |
+| `simulator.ts` | everything | floats | 2^n |
+| `exact.ts` | Clifford | rational, exact | 2^n |
+| `clifford-t.ts` | Clifford **+ T** | `(p + q√2)/2^scale`, exact | 2^n |
+| `stabilizer.ts` | Clifford | determined / undetermined | **polynomial** |
+
+```javascript
+import { stabilizerZeroState, stabilizerH, stabilizerCnot, stabilizerMeasure } from 'zeropoint-node/quantum'
+
+const s = stabilizerZeroState(200)          // 200 qubits, 160800 bits
+stabilizerH(s, 0); stabilizerCnot(s, 0, 1)
+stabilizerMeasure(s, 0, 1)                  // undetermined — your coin decides
+stabilizerMeasure(s, 1)                     // determined, and equal to it
+```
+
+From an MCP client, `zeropoint.quantumRun`, `zeropoint.quantumExact` and
+`zeropoint.quantumCapacity` do the same three things over the wire.
+
+**No quantum advantage is claimed and none is present.** 0 of 7 oracle-call
+measurements show one; simulating a single quantum query costs 2^n classical
+evaluations. What is offered is exactness and an honest account of the cost —
+including [what was not measured](docs/QUANTUM_COMPUTER.md#what-was-not-measured).
+
+Full account, generated from the measurements themselves:
+[docs/QUANTUM_COMPUTER.md](docs/QUANTUM_COMPUTER.md).
 
 ## 📦 Installation
 
@@ -453,10 +483,29 @@ console.log(sequenceStatus);
 ### Quantum Encryption Security Framework
 - **`src/security/quantum-fold-cipher.ts`**: Unified quantum cipher (5 fold tiers × 11 dimensions)
 - **`src/security/quantum-threat-landscape.ts`**: Quantum threat modeling via sequence inversion
-- **`QUANTUM_ENCRYPTION_SECURITY_FRAMEWORK.md`**: Complete security analysis (no gaps)
+- **`QUANTUM_ENCRYPTION_SECURITY_FRAMEWORK.md`**: the security analysis, and what it does not cover
 - **`docs/QUANTUM_SECURITY_COMPLETE.md`**: Public documentation and integration guide
 
-The framework applies the principle: **"The sequence reflecting in its inversion makes everything possible."** Each quantum encryption problem maps locally to a fold tier + dimension. All solutions are tested. No gaps: what is broken ⇌ how it's solved.
+**No gaps, and now that is a checkable statement.** `VULNERABILITY_MAPPINGS`
+enumerates the vulnerabilities, each naming the fold tier that answers it and
+the test that shows it. Every one of those tests is now executed:
+
+```bash
+npm run test:gaps
+```
+
+It runs in **both directions** — an enumerated vulnerability with no executable
+verification is a gap, and a verification naming nothing enumerated is a check
+that outlived its subject — and each verification must be able to say *no*, so
+none of them is a predicate that passes everything. Adding a vulnerability
+without a verification fails the gate.
+
+The claim was previously unbounded, in the same shape as the "100% coverage, No
+gaps" that this repository retracted from `STATUS_READY_GO.md` as false against
+a measurement. The difference is not that this one is stated more carefully. It
+is that the set is named and the gaps in it were filled: 5 enumerated, 5
+verified by execution, 0 remaining. "No gaps" over a named set is a fact; over
+an unnamed one it is a mood.
 
 **Quick Start:**
 ```typescript

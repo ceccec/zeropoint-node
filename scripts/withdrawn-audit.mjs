@@ -134,6 +134,14 @@ export const WITHDRAWALS = [
  */
 export const NEGATIONS = [
   {
+    negation: 'this machine binds at 31 qubits, in RAM',
+    pointsTo: 'the representation, which was doing the binding rather than the physics. 31 is where 2^n amplitudes stop fitting, and amplitudes are a choice — a stabilizer tableau is 2n(2n+1)+2n bits, so the same Clifford circuits reach 1000 qubits in 174ms. The ceiling was never about qubits.',
+    status: 'discharged',
+    by: 'src/quantum/stabilizer.ts',
+    found: 'It also corrects something I had written: measuring one axis (oracle calls) and generalising it to "the more quantum the work is, the slower it runs". Gottesman-Knill says otherwise and now so does a measurement — 14.7s against under a millisecond at 20 qubits. The hardness is the T gate, not the qubit count.',
+  },
+
+  {
     negation: 'π does not become rational under any rotation',
     pointsTo: 'the unit in which it IS exact — π = 3 sixth-turns — and the ring a 60° rotation generates, ℤ[ω] with ω² = ω − 1, where arithmetic never leaves the integers',
     status: 'discharged',

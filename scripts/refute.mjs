@@ -63,6 +63,14 @@ const CLAIMS = [
     'npm run query:cost',
     'an oracle-taking function whose counted calls come in under the classical worst case'],
 
+  ['CPU and GPU add no qubits and only divide the TIME one gate sweep takes — and the REFLECTION of that division is FTL. One sweep at this machine\'s binding point touches 2.15e9 amplitudes; at a 10 mm signalling distance light crosses in 33.4 ps, so the sweep cannot finish under 71.6 ms serially or 7.2 ms across ten cores, and the division ends at 2.15e9 processors. Past that, dividing further asks a signal to cross d in less than d/c.',
+    'npm run qpu:pentagram',
+    'a parallel arrangement that beats amplitudes x d/c for the same sweep, or a sixth resource that adds qubits rather than dividing time'],
+
+  ['The exponential cost in this package is the REPRESENTATION, not the quantum content. The same Clifford circuits that take a state vector 14.7 seconds at 20 qubits run on a stabilizer tableau in under a millisecond, and at 1000 qubits the tableau finishes in 174ms where a state vector would need 2^1000 amplitudes.',
+    'npm run capacity',
+    'a Clifford circuit the tableau cannot run in polynomial time, or a disagreement between the two simulators — the stabilizer suite checks 200 random circuits in both directions'],
+
   ['Seven of eight quantum algorithms are identified by their METHOD: a classical stand-in returning identical answers is caught by the checks over them. The eighth cannot be, and the floor is 1 rather than 0 — deutsch has one bit of output over a two-element domain, so there is no residue to read and no query pattern to compare.',
     'npm run impostors',
     'an answer-equivalent classical stand-in that survives every check for any of the seven'],

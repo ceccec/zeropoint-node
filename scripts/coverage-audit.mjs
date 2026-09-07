@@ -113,6 +113,9 @@ const EXERCISERS = [
   ['src/quantum/exact.test.ts', null],
   ['src/quantum/eisenstein.test.ts', null],
   ['src/quantum/clifford-t.test.ts', null],
+  ['src/quantum/stabilizer.test.ts', null],
+  ['src/quantum/stabilizer-rank.test.ts', null],
+  ['src/security/vulnerability-coverage.test.ts', null],
   ['src/multidimensional-vortex-framework.test.ts', 'scripts/jest-lite.mjs'],
   ['scripts/quantum-sim.mjs', null],
   // Forgotten the first time, and it exercises the nine prove* functions that

@@ -1,11 +1,11 @@
 {
   "what": "The twelve ratchet surfaces measured against their ceilings. Folded behind a fingerprint of the .ts sources, the README, the rollup and tsconfig and eslint configs, package.json, ratchet.json and this script.",
   "doesNotEstablish": "that the ceilings are right. It compares a measurement to a number someone chose, and only refuses to let that number rise silently.",
-  "inputsFingerprint": "bb130b796c805e4974f33177a53928b0",
+  "inputsFingerprint": "4dcce8b5293d805c6ff9cf26f54a51d0",
   "rows": [
     "  unbounded effect claims in prose: 50 (at ceiling)",
     "  boolean claims that cannot be false: 0 (at ceiling)",
-    "  README bytes no generator guards: 25627 (at ceiling)",
+    "  README bytes no generator guards: 27563 (at ceiling)",
     "  modules reachable from no STATIC entry (not dead: see coverage:audit): 104 (at ceiling)",
     "  import cycles: 0 (at ceiling)",
     "  TypeScript errors: 0 (at ceiling)",
@@ -18,5 +18,5 @@
   ],
   "grew": false,
   "fell": false,
-  "contentHash": "2ac4a94e6b067d1d3c7a8c115f981058"
+  "contentHash": "321660cdd1ee45adc95d2b1010687760"
 }

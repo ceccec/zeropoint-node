@@ -27,6 +27,11 @@
   ],
   "negations": [
     {
+      "negation": "this machine binds at 31 qubits, in RAM",
+      "status": "discharged",
+      "by": "src/quantum/stabilizer.ts"
+    },
+    {
       "negation": "π does not become rational under any rotation",
       "status": "discharged",
       "by": "src/quantum/eisenstein.ts"
@@ -52,5 +57,5 @@
       "by": "src/quantum/exact.ts"
     }
   ],
-  "contentHash": "a32c18ca8be3abcb1243d2a93434d714"
+  "contentHash": "fd77e75a98539a798714f7a3d75cc88a"
 }

@@ -30,6 +30,31 @@ export * from './applications.ts'
 export * from './security-bridge.ts'
 export * from './vortex-bridge.ts'
 export * from './kernel-adaptation.ts'
+
+/**
+ * THE FOUR REPRESENTATIONS, all reachable from `zeropoint-node/quantum`.
+ *
+ * A quantum state can be carried in more than one way and the choice decides
+ * what is exact and what is affordable. `exact.ts` was already here in spirit
+ * but not on this surface, so a consumer could install the package and never
+ * find it. All four are exported now, and the differences are the point:
+ *
+ *   simulator.ts    floats, every gate, 2^n amplitudes — the general case
+ *   exact.ts        Clifford only, (x + yi)/√2^k, probabilities RATIONAL
+ *   clifford-t.ts   Clifford+T, ℤ[ζ₈], probabilities in ℤ[√2] — T is exact
+ *   stabilizer.ts   Clifford only, a 2n×(2n+1) tableau, POLYNOMIAL in n
+ *
+ * The last is the one that matters for cost: the same circuits the state vector
+ * takes 14.7 seconds over at 20 qubits run in under a millisecond, and 1000
+ * qubits are reachable where 2^1000 amplitudes are not. `npm run capacity`
+ * measures it; `npm run impostors` says which algorithms are identified by
+ * their method rather than their answer.
+ */
+export * from './exact.ts'
+export * from './eisenstein.ts'
+export * from './clifford-t.ts'
+export * from './stabilizer.ts'
+export * from './stabilizer-rank.ts'
 export * from './end-to-end.ts'
 export * from './meta-verifier.ts'
 export * from './composability.ts'

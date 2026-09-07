@@ -11,7 +11,7 @@
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 25627
+    "unguardedReadme": 27563
   },
   "raised": {
     "unguardedReadme": [
@@ -44,6 +44,16 @@
         "from": 23907,
         "to": 25627,
         "reason": "Restored content, not new prose. A 157-line passage was deleted in 1.5.4 for asserting that a 60 degree rotation makes pi rational; that claim is false and stays withdrawn, but the deletion took three true statements with it, because a claim is false relative to a frame and cutting the sentence instead of naming the frame loses whatever was true. The three are now arithmetic in src/quantum/eisenstein.ts and the README states them with the frame each holds in: a 60 degree rotation is (a,b) -> (-b, a+b) with no decimal because omega squared is omega minus one; pi is exactly 3 in units of 60 degrees, a count and not a rounding; and 60 degrees is the eigenangle because the doubling orbit is a six-cycle whose eigenvalues are the sixth roots of unity. 1720 bytes against 3333 removed, so the section is smaller than what it replaces and every line of it computes. npm run withdrawn audits all 12 withdrawals and runs the command behind each restoration."
+      },
+      {
+        "from": 25627,
+        "to": 27105,
+        "reason": "The quantum surface was unreachable from the package's own landing page. Four representations of a quantum state, six exact modules and three MCP tools shipped, and a person who installed zeropoint-node could find none of them: the README described digit arithmetic and the quantum computer was reachable only by reading src/. 1478 bytes buy a table of the four representations, a six-line runnable example that makes a 200-qubit Bell pair, the three MCP tool names, and a link to docs/QUANTUM_COMPUTER.md which is generated from the measurement records rather than written. The section states in its own first breath that no quantum advantage is claimed and none is present, and links to what was NOT measured. Documentation that makes a shipped surface usable is not prose drift; unguarded is the correct classification for it, since no generator owns those bytes, and the ceiling is the right place to record the cost."
+      },
+      {
+        "from": 27105,
+        "to": 27563,
+        "reason": "The no-gaps section became a checkable claim instead of a softened one. It previously said the framework had no gaps, which is the unbounded shape this repository retracted from STATUS_READY_GO as false against a measurement; I then softened it to what-is-tested-is-what-is-listed, which hides the gap rather than closing it. Neither is right. VULNERABILITY_MAPPINGS names the set, npm run test:gaps executes every stated verification in both directions with a negative arm on each, and 5 of 5 are verified with 0 remaining. 458 bytes buy the named set, the command, and the sentence that no gaps over a named set is a fact while over an unnamed one it is a mood. A claim that can be checked is longer than one that cannot, and that is the trade the ceiling exists to record."
       }
     ]
   },

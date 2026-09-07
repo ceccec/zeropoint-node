@@ -61,6 +61,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { join } from 'node:path'
+import { totalmem } from 'node:os'
 import { contentHashOf, sealRecord } from './lib/fingerprint.mjs'
 
 const ROOT = new URL('..', import.meta.url).pathname
@@ -88,7 +89,74 @@ const CHECK = process.argv.includes('--check')
  * next probe is PREDICTED from the observed growth factor, and a width whose
  * predicted band already exceeds the remaining budget is never run at all.
  */
-const BUDGET_MS = Number(process.env.SHOR_BUDGET_MS ?? 120_000)
+/**
+ * THE BUDGET IS THE MACHINE'S, NOT MINE.
+ *
+ * This read `Number(process.env.SHOR_BUDGET_MS ?? 120_000)`, and I then passed
+ * SHOR_BUDGET_MS=25000 on every run so the gate chain would finish. That put
+ * the arbitrariness straight back one level up: the typed ceiling was replaced
+ * by a measured one, and then the measurement was governed by a number I chose
+ * to suit myself. A knob is a constant with a person attached.
+ *
+ * The QPU already answers this. `qpu:pentagram` measures five resources and
+ * names the binding one — on this machine RAM, at 2^31 amplitudes — and it
+ * records that CPU and GPU add no state and only divide the TIME one sweep
+ * takes. So the budget has a definition that needs no human: the time this
+ * machine takes to touch its binding capacity ONCE, which is that capacity
+ * divided by the amplitude-gate throughput measured here, now.
+ *
+ * Both halves are measured. Neither is typed. A faster machine gets a smaller
+ * budget and a wider sweep in the same wall time, which is what "sized by the
+ * hardware" has to mean if it means anything.
+ */
+function measuredBudgetMs() {
+  // The binding point, by the pentagram's own arithmetic: 16 bytes an amplitude
+  // (two float64), and RAM is what binds on this machine.
+  const amplitudesAtCapacity = totalmem() / 16
+
+  // Amplitude-gate throughput, measured on a register small enough to sit in
+  // cache so this calibration is quick and not itself the thing being budgeted.
+  const calibrationQubits = 12
+  const size = 1 << calibrationQubits
+  const re = new Float64Array(size)
+  const im = new Float64Array(size)
+  re[0] = 1
+  const sweep = () => {
+    for (let q = 0; q < calibrationQubits; q += 1) {
+      const bit = 1 << q
+      for (let i = 0; i < size; i += 1) {
+        if ((i & bit) !== 0) continue
+        const j = i | bit
+        const ar = re[i], ai = im[i], br = re[j], bi = im[j]
+        re[i] = ar + br; im[i] = ai + bi
+        re[j] = ar - br; im[j] = ai - bi
+      }
+    }
+  }
+  sweep() // warm the path; a cold run is not a sample
+  const trials = []
+  for (let k = 0; k < 3; k += 1) {
+    const t0 = Date.now()
+    sweep()
+    trials.push(Date.now() - t0)
+  }
+  trials.sort((a, b) => a - b)
+  const perSweepMs = Math.max(trials[1], 1)
+  const opsPerSweep = calibrationQubits * size
+  const opsPerMs = opsPerSweep / perSweepMs
+
+  return { budgetMs: Math.round(amplitudesAtCapacity / opsPerMs), amplitudesAtCapacity, opsPerMs }
+}
+
+const measured = measuredBudgetMs()
+/**
+ * The override remains, because a CI runner may need to bound the wall clock —
+ * but it is RECORDED as a deviation rather than silently becoming the budget.
+ * A smaller sweep that looks identical to a full one is how a ceiling stops
+ * meaning anything.
+ */
+const BUDGET_OVERRIDE = process.env.SHOR_BUDGET_MS ? Number(process.env.SHOR_BUDGET_MS) : null
+const BUDGET_MS = BUDGET_OVERRIDE ?? measured.budgetMs
 
 const SOURCES = ['src/quantum/algorithms.ts', 'src/quantum/simulator.ts', 'scripts/shor-exhaustive.mjs']
 const fingerprint = (() => {
@@ -132,73 +200,52 @@ const orderOf = (a, N) => { let x = a % N; let r = 1; while (x !== 1) { x = (x *
 const powMod = (a, e, N) => { let x = 1; for (let i = 0; i < e; i += 1) x = (x * a) % N; return x }
 const bits = (n) => { let b = 0; while ((1 << b) < n) b += 1; return b }
 
+
+/**
+ * THE BAND COST IS DERIVED, NOT TIMED — and that is what makes the ceiling
+ * reproducible.
+ *
+ * This timed one real `shor()` per width, warmed and taking the median of
+ * three. It was still a stopwatch on a shared machine: three runs of identical
+ * code read the 15-qubit band at ~30s, ~30s and 63.4s, and the sweep stopped at
+ * N=31, N=31 and N=15. A ceiling that moves with the load average is not a
+ * property of the code, and a peer recomputing the record would disagree with
+ * it for reasons that have nothing to do with Shor.
+ *
+ * But the work is already known exactly. A modulus N with m = bits(N) uses
+ * t = 2m counting qubits over a 3m-qubit register, and the circuit is t
+ * Hadamards, t controlled modular multiplications and an inverse QFT over t
+ * qubits — every one of them touching all 2^(3m) amplitudes. So the cost of a
+ * band is an arithmetic fact, and the only measured quantity left is the
+ * machine's throughput, which the budget already needed.
+ *
+ * One measurement of the machine, one calculation from it. Nothing here is
+ * timed twice, and the same tree gives the same ceiling on the same hardware
+ * whatever else is running.
+ */
 const runsInBand = (lo, hi) => { let r = 0; for (let N = lo; N <= hi; N += 1) r += N - 2; return r }
+
+/** Amplitude-gate operations for one (N, a) pair at m = bits(N). */
+const opsPerRun = (m) => {
+  const t = 2 * m
+  const size = 2 ** (t + m)
+  return (t + t + (t * (t + 1)) / 2) * size
+}
 
 function measureCapacity() {
   const bands = []
   let spent = 0
-  let prev = null
-  let prevPrev = 0
-  let growth = 8 // 3 qubits per bit of N, so 8x is the a-priori factor
   for (let m = 3; m <= 12; m += 1) {
     const lo = (1 << (m - 1)) + 1
     const hi = (1 << m) - 1
     const runs = runsInBand(lo, hi)
-
-    // Past the second width, PREDICT rather than probe. Running the probe to
-    // find out it was unaffordable is the cost we are trying to avoid.
-    if (prev !== null && m >= 5) {
-      const predicted = prev * growth * runs
-      if (spent + predicted > BUDGET_MS) {
-        bands.push({ m, lo, hi, perRun: prev * growth, runs, bandMs: predicted, measured: false, admitted: false })
-        break
-      }
-    }
-
-    // THE FIRST CALL IS NOT A SAMPLE OF THE REST. Timing one cold run charged
-    // the whole band for JIT warm-up, and it was not merely pessimistic, it was
-    // UNSTABLE: two runs of this identical file read the 15-qubit band at 27.4s
-    // and then 62.4s, moving the sweep's ceiling from N=31 to N=15. A bound
-    // that halves on a rerun is no more measured than a typed one.
-    //
-    // So warm the path, then take the MEDIAN of three. The min is an optimistic
-    // floor and would overrun the budget; the mean follows a single outlier;
-    // and every N in a band has the same register width and so the same cost,
-    // which is what makes one representative sample legitimate here at all.
-    try { shor(hi, 2) } catch { /* warm-up; the cost of a throw is still a cost */ }
-    const samples = []
-    for (let k = 0; k < 3; k += 1) {
-      const t0 = Date.now()
-      try { shor(hi, 2) } catch { /* a throw still tells us the cost */ }
-      samples.push(Date.now() - t0)
-    }
-    samples.sort((x, y) => x - y)
-    const perRun = Math.max(samples[1], 1)
-    // A RATIO OF TWO NOISY SAMPLES IS NOISE, AND THIS ONE WAS PUBLISHING A
-    // RECOMMENDATION. `growth` came from perRun(m)/perRun(m-1), and at the low
-    // widths perRun is 1-2ms — quantised at the clock, so the ratio was mostly
-    // rounding. Three consecutive runs of the same file estimated the unswept
-    // band at 110 min, 37 min and 4 min, and each printed an exact
-    // SHOR_BUDGET_MS that "admits it". The 4-minute one was a lie by a factor
-    // of 27.
-    //
-    // The analytic factor is known: 3 qubits per bit of N, so 8x the
-    // amplitudes. Trust a measured ratio only when both samples are clear of
-    // the clock, and never let it fall below the analytic floor.
-    const NOISE_FLOOR_MS = 20
-    if (prev !== null && perRun >= NOISE_FLOOR_MS && prevPrev >= NOISE_FLOOR_MS) {
-      growth = Math.max(perRun / prev, 8)
-    }
-    prevPrev = prev
-    prev = perRun
-
-    const bandMs = perRun * runs
+    const bandMs = (opsPerRun(m) * runs) / measured.opsPerMs
     if (spent + bandMs > BUDGET_MS) {
-      bands.push({ m, lo, hi, perRun, runs, bandMs, measured: true, admitted: false })
+      bands.push({ m, lo, hi, runs, bandMs, admitted: false })
       break
     }
     spent += bandMs
-    bands.push({ m, lo, hi, perRun, runs, bandMs, measured: true, admitted: true })
+    bands.push({ m, lo, hi, runs, bandMs, admitted: true })
   }
   const admitted = bands.filter((b) => b.admitted)
   if (admitted.length === 0) {
@@ -211,9 +258,12 @@ function measureCapacity() {
 const capacity = measureCapacity()
 const MAX_N = capacity.maxN
 console.log(`  capacity measured against a ${(BUDGET_MS / 1000).toFixed(0)}s budget — no bound is typed`)
+console.log(`    the budget is the machine's: ${(measured.amplitudesAtCapacity / 1e9).toFixed(1)}e9 amplitudes at the binding point,`)
+console.log(`    divided by ${(measured.opsPerMs / 1e3).toFixed(0)}k measured amplitude-gate ops per ms = ${(measured.budgetMs / 1000).toFixed(0)}s`)
+if (BUDGET_OVERRIDE !== null) console.log(`    OVERRIDDEN to ${(BUDGET_OVERRIDE / 1000).toFixed(0)}s by SHOR_BUDGET_MS — this sweep is smaller than the machine allows`)
 for (const b of capacity.bands) {
   console.log(`    ${b.admitted ? 'take' : 'STOP'}  N=${String(b.lo).padStart(4)}..${String(b.hi).padStart(4)}  ${3 * b.m} qubits  `
-    + `${String(b.runs).padStart(6)} runs  ~${(b.bandMs / 1000).toFixed(1)}s  ${b.measured ? 'measured' : 'predicted, never run'}`)
+    + `${String(b.runs).padStart(6)} runs  ~${(b.bandMs / 1000).toFixed(1)}s  derived from ${(measured.opsPerMs / 1e3).toFixed(0)}k ops/ms`)
 }
 console.log(`    -> sweeping every input to N=${MAX_N}\n`)
 
@@ -347,6 +397,10 @@ const record = sealRecord({
   inputsFingerprint: fingerprint,
   maxN: MAX_N,
   budgetMs: BUDGET_MS,
+  budgetIsMeasured: BUDGET_OVERRIDE === null,
+  measuredBudgetMs: measured.budgetMs,
+  amplitudesAtBindingPoint: measured.amplitudesAtCapacity,
+  measuredOpsPerMs: Math.round(measured.opsPerMs),
   capacityBands: capacity.bands,
   // "EXHAUSTIVE" IS A CLAIM ABOUT A RANGE, AND THE RANGE MOVED. The typed bound
   // said 63 and never measured whether 63 was reachable; the measured bound
@@ -355,8 +409,8 @@ const record = sealRecord({
   // because the word "every" survives the narrowing.
   notSwept: capacity.bands.filter((b) => !b.admitted).map((b) => ({
     range: `${b.lo}..${b.hi}`, qubits: 3 * b.m, runs: b.runs,
-    estimateMs: Math.round(b.bandMs), measured: b.measured,
-    admittedBy: `SHOR_BUDGET_MS=${Math.ceil(b.bandMs / 1000) * 1000}`,
+    estimateMs: Math.round(b.bandMs),
+    wouldNeedMs: Math.round(b.bandMs),
   })),
   runs,
   correct,
@@ -421,6 +475,5 @@ console.log(`                    the first cleanly (0 wrong, 0 unexplained) and 
 console.log(`                    ${classicalCaught} of these ${runs} inputs — computed on this run, not quoted.`)
 for (const b of capacity.bands.filter((x) => !x.admitted)) {
   console.log(`                    NOT swept: N=${b.lo}..${b.hi} (${b.runs} inputs, ${3 * b.m} qubits) — `
-    + `${b.measured ? 'measured' : 'extrapolated'} at ~${(b.bandMs / 60000).toFixed(0)} min, and an`)
-  console.log(`                    extrapolation is not a measurement — try SHOR_BUDGET_MS=${Math.ceil(b.bandMs / 1000) * 4000} to reach it.`)
+    + `~${(b.bandMs / 60000).toFixed(0)} min of derived work at this machine's measured throughput.`)
 }

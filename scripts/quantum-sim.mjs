@@ -294,10 +294,13 @@ const HALF = 1 / 2
   // and -1/(4*sqrt(8)): probabilities 121/128 on the target and 1/128 on each
   // of the other seven. Nothing but that rotation lands there — a delta gives
   // 1 and 0, and one iteration gives 25/32 and 1/32.
-  assert(near(p[target], 121 / 128, 1 / 1000000000000),
+  // 2^-40, a halving rather than a tenth: the float grid is dyadic, so a
+  // decimal threshold names a value the machine cannot hold. The quantities
+  // being compared — 121/128 and 1/128 — are halvings themselves.
+  assert(near(p[target], 121 / 128, 1 / 1099511627776),
     `Grover leaves exactly 121/128 on the marked state after 2 iterations (got ${p[target]})`)
   assert(
-    p.every((x, i) => i === target || near(x, 1 / 128, 1 / 1000000000000)),
+    p.every((x, i) => i === target || near(x, 1 / 128, 1 / 1099511627776)),
     'Grover leaves exactly 1/128 on each unmarked state — the residue a rotation must leave',
   )
 }

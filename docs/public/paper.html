@@ -324,13 +324,13 @@ accepted by the Lean kernel &mdash; the rest are written down and not proved,
 and say so.</p>
 
 <p><strong>How much of this package those predicates actually hold.</strong>
-1475 of
-1830 exported values are not reachable
+1495 of
+1850 exported values are not reachable
 from any law, so nothing here constrains them; that count is a floor, because
 the reachability closure over-approximates. Of the
-57 exported literal constants,
+60 exported literal constants,
 8 are forced by at least one law and
-49 are held by nothing. And of the
+52 are held by nothing. And of the
 42 predicates, 3 are
 <em>pinned</em> rather than forced &mdash; they hold an expected value as a
 literal, which falls for a convention as readily as for a law. These are
@@ -845,8 +845,8 @@ than its amount.</p>
 <h2>Appendix E&ensp;Mutations</h2>
 <p>A suite that survives a broken implementation has not tested it. Each row
 corrupts one line and requires the suite over it to fail; all
-35 are caught, across
-27 modules.</p>
+38 are caught, across
+28 modules.</p>
 <table class="muts"><thead><tr><th>module</th><th>what the mutation breaks</th></tr></thead><tbody>
 <tr><td><code>a432.yin.yang.ts</code></td><td>simplify stops being canonical</td></tr>
 <tr><td><code>a432.yin.yang.ts</code></td><td>a zero denominator makes NaN again</td></tr>
@@ -883,6 +883,9 @@ corrupts one line and requires the suite over it to fail; all
 <tr><td><code>a432.body.ts</code></td><td>nine stops being the full scale of the harmonic</td></tr>
 <tr><td><code>a432.harmonized.ts</code></td><td>registering a name twice stops replacing the strategy</td></tr>
 <tr><td><code>a432.sequence.ts</code></td><td>consciousness stops being the sum of the pattern</td></tr>
+<tr><td><code>a432.radiesthesia.ts</code></td><td>the period halves and the seconds pendulum stops beating seconds</td></tr>
+<tr><td><code>a432.radiesthesia.ts</code></td><td>the neutral point is claimed by two classes, and the first wins</td></tr>
+<tr><td><code>a432.radiesthesia.ts</code></td><td>opposite stops being half a turn, so it stops being an involution</td></tr>
 </tbody></table>
 </section>
 
@@ -1120,7 +1123,7 @@ npm run test:verification</code></pre>
 <p>Licence: CC BY-NC-ND 4.0. Deriving from this document requires written
 permission.</p>
 </section>
-<p class="receipt">Generated from source. Model receipt <code>3098acab63ff72fb</code> over
+<p class="receipt">Generated from source. Model receipt <code>230ca59581c1cec3</code> over
 18 equations, 42 seals and 3 axioms. Any change to
 the arithmetic this page reports moves the receipt, and <code>npm run paper:check</code>
 fails until the page is regenerated.</p>

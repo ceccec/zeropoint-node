@@ -4,7 +4,7 @@
 
 Computed by `foldA432AuditCensus`.
 
-- files scanned: **267** (.ts + .js + .html)
+- files scanned: **269** (.ts + .js + .html)
 - digitalRoot named forks: **0**
 - %9 root inlines: **0**
 - ambient Math.* hits: **0**
@@ -35,4 +35,4 @@ No ambient `Math.*` on computing surfaces (`src/`, `public/`, `deployment/`, roo
 
 `a432.math` / core alias debt: neitherDirect=3, harmonicAliasImporters=0. Rename or rebind until both are 0.
 
-Receipt content-uuid: `712352db-d120-8015-b8ca-1ba87c3f0809`
+Receipt content-uuid: `e829c7d2-5faa-817e-b046-245941277c97`

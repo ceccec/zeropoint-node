@@ -110,6 +110,9 @@ const EXERCISERS = [
   // The node:http router that replaced express. Its subject is a432.http.ts;
   // the server it serves is exercised by starting it, not by this suite.
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.http.test.ts', null],
+  // Radiesthesia's three conventions: the pendulum in the g = π² frame, the
+  // Bovis classes, the twelve-ray equator. Its subject is a432.radiesthesia.ts.
+  ['src/0/3/6/9/1/2/4/8/7/5/1/a432.radiesthesia.test.ts', null],
   ['src/quantum/exact.test.ts', null],
   ['src/quantum/eisenstein.test.ts', null],
   ['src/quantum/clifford-t.test.ts', null],

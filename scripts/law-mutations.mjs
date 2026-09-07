@@ -197,6 +197,18 @@ export const MUTATIONS = [
     'const sequence = pattern;\n  const consciousness = sequence.reduce((sum, digit) => sum + digit, 0);',
     'const sequence = pattern;\n  const consciousness = sequence.length;',
     'consciousness stops being the sum of the pattern'],
+
+  // a432.radiesthesia: the one law with physics in it, the class boundary that
+  // defines the scale, and the involution the wheel rests on.
+  ['a432.radiesthesia.ts', 'a432.radiesthesia.test.ts',
+    'return simplify({ numerator: 2 * root, denominator: q })', 'return simplify({ numerator: root, denominator: q })',
+    'the period halves and the seconds pendulum stops beating seconds'],
+  ['a432.radiesthesia.ts', 'a432.radiesthesia.test.ts',
+    "{ name: 'support', min: 3000, max: BOVIS_NEUTRAL },", "{ name: 'support', min: 3000, max: BOVIS_NEUTRAL + 1 },",
+    'the neutral point is claimed by two classes, and the first wins'],
+  ['a432.radiesthesia.ts', 'a432.radiesthesia.test.ts',
+    '(i + RAY_COUNT / 2) % RAY_COUNT', '(i + RAY_COUNT / 3) % RAY_COUNT',
+    'opposite stops being half a turn, so it stops being an involution'],
 ]
 
 if (!(process.argv[1] && process.argv[1].endsWith('law-mutations.mjs'))) {

@@ -1,10 +1,10 @@
 {
   "what": "Every declared mutation applied to a copy of the tree, with the suite that must fail because of it. Folded behind a fingerprint of the .ts sources under src/ and of the MUTATIONS table in scripts/law-mutations.mjs.",
   "doesNotEstablish": "that the suites are adequate. A mutation nobody wrote is a mutation nobody catches, and this measures only the ones in the table.",
-  "inputsFingerprint": "3dbe0226050c2a2e6dd6465d30602d93",
+  "inputsFingerprint": "0d16972fac7bd69de5f8ebffb51f1fdd",
   "mutations": 38,
   "modules": 28,
   "caught": 38,
   "problems": [],
-  "contentHash": "acaa612aab58a6ed9c5dd8a542500aee"
+  "contentHash": "0d22a1e4807d51d0d3b51a4cd02785a2"
 }

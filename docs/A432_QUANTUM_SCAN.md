@@ -9,9 +9,9 @@ regenerate with `npm run a432:scan`; drift fails `npm run a432:scan:check`.
 - files scanned: **315**
 - by extension: `ts=236 · html=41 · md=34 · json=3 · js=1`
 - byte-identical duplicate groups: **0**
-- corpus quantum root: `4737a254-0dbd-80db-9fa4-bdb93bd4e321`
+- corpus quantum root: `538c6c31-af3d-8723-a2c0-04cad1f69409`
 - import/export census: files=237 · edges=715 · exports=1694 · root=`02c632f6-be6c-81eb-b8af-e8d29f1dca89`
-- scan receipt: `60df160f-3b57-89b1-9f19-5efbd2e0cdfb`
+- scan receipt: `a61f0b01-dffa-8251-b8cd-0319b9e36f71`
 
 ## Vortex-digit spectrum
 
@@ -20,7 +20,7 @@ always 1–9, so the void digit 0 is structurally empty.
 
 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
 | --: | --: | --: | --: | --: | --: | --: | --: | --: |
-| 30 | 37 | 41 | 31 | 37 | 44 | 26 | 31 | 38 |
+| 30 | 37 | 41 | 31 | 37 | 45 | 26 | 31 | 37 |
 
 ## Quantum register
 

@@ -1,0 +1,122 @@
+{
+  "what": "The a432 filename address space, audited as an address space. The names are payloadless by design, so this asks what a name computes to and which addresses are unoccupied — not whether a name describes its contents.",
+  "files": 226,
+  "distinctSegments": 194,
+  "orbit": [
+    1,
+    2,
+    4,
+    8,
+    7,
+    5
+  ],
+  "orbitPrefixes": [
+    "1",
+    "1.2",
+    "1.2.4",
+    "1.2.4.8",
+    "1.2.4.8.7",
+    "1.2.4.8.7.5",
+    "1.2.4.8.7.5.1"
+  ],
+  "orbitOccupied": [
+    "1",
+    "1.2",
+    "1.2.4.8.7.5",
+    "1.2.4.8.7.5.1"
+  ],
+  "orbitGaps": [
+    "1.2.4",
+    "1.2.4.8",
+    "1.2.4.8.7"
+  ],
+  "spellingDrift": [
+    {
+      "stem": "stream",
+      "spellings": [
+        "stream",
+        "streams"
+      ]
+    },
+    {
+      "stem": "event",
+      "spellings": [
+        "event",
+        "events"
+      ]
+    },
+    {
+      "stem": "flow",
+      "spellings": [
+        "flow",
+        "flower"
+      ]
+    },
+    {
+      "stem": "challenge",
+      "spellings": [
+        "challenge",
+        "challenges"
+      ]
+    }
+  ],
+  "absentCombinations": 27,
+  "foldDistribution": {
+    "1": 25,
+    "2": 27,
+    "3": 20,
+    "4": 27,
+    "5": 26,
+    "6": 23,
+    "7": 25,
+    "8": 25,
+    "9": 28
+  },
+  "hexbitOccupied": 63,
+  "hexbitEmpty": [
+    11
+  ],
+  "leads": [
+    {
+      "kind": "orbit-gap",
+      "lead": "a432.1.2.4.ts",
+      "why": "1.2.4 is a prefix of the kernel's doubling orbit and no file addresses it"
+    },
+    {
+      "kind": "orbit-gap",
+      "lead": "a432.1.2.4.8.ts",
+      "why": "1.2.4.8 is a prefix of the kernel's doubling orbit and no file addresses it"
+    },
+    {
+      "kind": "orbit-gap",
+      "lead": "a432.1.2.4.8.7.ts",
+      "why": "1.2.4.8.7 is a prefix of the kernel's doubling orbit and no file addresses it"
+    },
+    {
+      "kind": "spelling-drift",
+      "lead": "stream",
+      "why": "addressed as stream, streams — one coordinate, 2 spellings"
+    },
+    {
+      "kind": "spelling-drift",
+      "lead": "event",
+      "why": "addressed as event, events — one coordinate, 2 spellings"
+    },
+    {
+      "kind": "spelling-drift",
+      "lead": "flow",
+      "why": "addressed as flow, flower — one coordinate, 2 spellings"
+    },
+    {
+      "kind": "spelling-drift",
+      "lead": "challenge",
+      "why": "addressed as challenge, challenges — one coordinate, 2 spellings"
+    },
+    {
+      "kind": "empty-hexbit",
+      "lead": "001011",
+      "why": "no handle loads to lattice cell 11"
+    }
+  ],
+  "contentHash": "ad3c3dfc75de737e071c80eb12735be1"
+}

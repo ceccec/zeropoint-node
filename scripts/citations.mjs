@@ -111,7 +111,22 @@ if (i < 0) {
   if (anchor < 0) { console.error('citations FAIL — no VERSION block to place the citation block before'); process.exit(1) }
   next = readme.slice(0, anchor) + block + '\n\n' + readme.slice(anchor)
 } else {
-  next = readme.slice(0, i) + block + readme.slice(readme.indexOf(END, i) + END.length)
+  // Same guard as readme-census. The END must exist, and no other block's BEGIN
+  // may sit between the markers: reordering the README once split a generated
+  // block across a section boundary, and the unguarded form of this line
+  // replaced 28,000 bytes of the file with a 1.3 KB block. A missing END is
+  // worse still — indexOf returns -1 and the slice starts mid-marker.
+  const endAt = readme.indexOf(END, i)
+  if (endAt < 0) {
+    console.error(`citations FAIL — the citation block has no matching ${END}; refusing to rewrite the rest of the file`)
+    process.exit(1)
+  }
+  const foreign = readme.slice(i + BEGIN.length, endAt).match(/<!-- [A-Z]+:BEGIN/)
+  if (foreign) {
+    console.error(`citations FAIL — ${foreign[0]} appears inside the citation block's own markers, so the END found belongs to something else`)
+    process.exit(1)
+  }
+  next = readme.slice(0, i) + block + readme.slice(endAt + END.length)
 }
 
 const BIB = join(ROOT, 'CITATION.bib')

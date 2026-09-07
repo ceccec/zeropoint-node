@@ -154,6 +154,79 @@ the two are different in a way worth being exact about:
 The rest of this file keeps the boundary it has always kept: proven group theory
 over (ℤ/9ℤ), used as the order of work. No claim outside arithmetic.
 
+## 📦 Installation
+
+```bash
+npm install zeropoint-node
+```
+
+Published name on npm is **`zeropoint-node`** (maintainer `ceccec`). Historical local name `a432-consciousness-system` was never published and is not the install id.
+
+## 🧪 Quick Start
+
+```typescript
+import { 
+  boot2432OS, 
+  getOSStatus, 
+  getSequenceStatus,
+  getQuantumStatus,
+  getChargingStatus 
+} from 'zeropoint-node';
+
+// Boot the enhanced A432 OS
+const bootMessage = boot2432OS();
+console.log(bootMessage);
+
+// Get comprehensive system status
+const status = getOSStatus();
+console.log(status);
+
+// Monitor sequence evolution
+const sequenceStatus = getSequenceStatus();
+console.log(sequenceStatus);
+
+// Check quantum computing status
+const quantumStatus = getQuantumStatus();
+console.log(quantumStatus);
+
+// Monitor charging system
+const chargingStatus = getChargingStatus();
+console.log(chargingStatus);
+```
+
+## The quantum computer
+
+Four representations of a quantum state, all exported from
+`zeropoint-node/quantum`, and the choice between them decides what is exact and
+what is affordable:
+
+| module | fragment | probabilities | cost |
+| --- | --- | --- | --- |
+| `simulator.ts` | everything | floats | 2^n |
+| `exact.ts` | Clifford | rational, exact | 2^n |
+| `clifford-t.ts` | Clifford **+ T** | `(p + q√2)/2^scale`, exact | 2^n |
+| `stabilizer.ts` | Clifford | determined / undetermined | **polynomial** |
+
+```javascript
+import { stabilizerZeroState, stabilizerH, stabilizerCnot, stabilizerMeasure } from 'zeropoint-node/quantum'
+
+const s = stabilizerZeroState(200)          // 200 qubits, 160800 bits
+stabilizerH(s, 0); stabilizerCnot(s, 0, 1)
+stabilizerMeasure(s, 0, 1)                  // undetermined — your coin decides
+stabilizerMeasure(s, 1)                     // determined, and equal to it
+```
+
+From an MCP client, `zeropoint.quantumRun`, `zeropoint.quantumExact` and
+`zeropoint.quantumCapacity` do the same three things over the wire.
+
+**No quantum advantage is claimed and none is present.** 0 of 7 oracle-call
+measurements show one; simulating a single quantum query costs 2^n classical
+evaluations. What is offered is exactness and an honest account of the cost —
+including [what was not measured](docs/QUANTUM_COMPUTER.md#what-was-not-measured).
+
+Full account, generated from the measurements themselves:
+[docs/QUANTUM_COMPUTER.md](docs/QUANTUM_COMPUTER.md).
+
 ## 🚀 Key Features
 
 ### Enhanced Sequence Integration
@@ -345,79 +418,6 @@ and the command that recomputes it:
 npm run withdrawn
 ```
 
-## The quantum computer
-
-Four representations of a quantum state, all exported from
-`zeropoint-node/quantum`, and the choice between them decides what is exact and
-what is affordable:
-
-| module | fragment | probabilities | cost |
-| --- | --- | --- | --- |
-| `simulator.ts` | everything | floats | 2^n |
-| `exact.ts` | Clifford | rational, exact | 2^n |
-| `clifford-t.ts` | Clifford **+ T** | `(p + q√2)/2^scale`, exact | 2^n |
-| `stabilizer.ts` | Clifford | determined / undetermined | **polynomial** |
-
-```javascript
-import { stabilizerZeroState, stabilizerH, stabilizerCnot, stabilizerMeasure } from 'zeropoint-node/quantum'
-
-const s = stabilizerZeroState(200)          // 200 qubits, 160800 bits
-stabilizerH(s, 0); stabilizerCnot(s, 0, 1)
-stabilizerMeasure(s, 0, 1)                  // undetermined — your coin decides
-stabilizerMeasure(s, 1)                     // determined, and equal to it
-```
-
-From an MCP client, `zeropoint.quantumRun`, `zeropoint.quantumExact` and
-`zeropoint.quantumCapacity` do the same three things over the wire.
-
-**No quantum advantage is claimed and none is present.** 0 of 7 oracle-call
-measurements show one; simulating a single quantum query costs 2^n classical
-evaluations. What is offered is exactness and an honest account of the cost —
-including [what was not measured](docs/QUANTUM_COMPUTER.md#what-was-not-measured).
-
-Full account, generated from the measurements themselves:
-[docs/QUANTUM_COMPUTER.md](docs/QUANTUM_COMPUTER.md).
-
-## 📦 Installation
-
-```bash
-npm install zeropoint-node
-```
-
-Published name on npm is **`zeropoint-node`** (maintainer `ceccec`). Historical local name `a432-consciousness-system` was never published and is not the install id.
-
-## 🧪 Quick Start
-
-```typescript
-import { 
-  boot2432OS, 
-  getOSStatus, 
-  getSequenceStatus,
-  getQuantumStatus,
-  getChargingStatus 
-} from 'zeropoint-node';
-
-// Boot the enhanced A432 OS
-const bootMessage = boot2432OS();
-console.log(bootMessage);
-
-// Get comprehensive system status
-const status = getOSStatus();
-console.log(status);
-
-// Monitor sequence evolution
-const sequenceStatus = getSequenceStatus();
-console.log(sequenceStatus);
-
-// Check quantum computing status
-const quantumStatus = getQuantumStatus();
-console.log(quantumStatus);
-
-// Monitor charging system
-const chargingStatus = getChargingStatus();
-console.log(chargingStatus);
-```
-
 ## 🔧 Advanced Usage
 
 ### Consciousness Integration
@@ -546,21 +546,6 @@ The test suite validates:
 - **[A432 Framework Documentation](docs/A432_FRAMEWORK_DOCUMENTATION.md)**: Framework overview
 - **[A432 Quick Reference](docs/A432_QUICK_REFERENCE.md)**: Quick reference guide
 
-## 🌟 Naming
-
-What the vocabulary denotes, which is arithmetic:
-
-- **432** — the base of every frequency ratio, carried as an integer fraction.
-- **3, 6, 9** — the axis; **1-2-4-8-7-5** the doubling orbit. Together they are
-  the group structure over ℤ/9ℤ that the seals prove.
-- **Golden ratio** — used as the fraction 8/5; the decimal is not carried.
-- **Exact ratios, not decimals** — an integer numerator over an integer
-  denominator. Some values are non-integer rationals (`2592/5` = 518.4 Hz);
-  what is refused is the lossy float, not the fraction, because collapsing
-  `2592/5` to a `number` stores 518.39999999999997726 and accumulates error.
-  See `CMYK_FREQUENCY_RATIOS`.
-- **Digital root** — reduction to one digit, the operation the rest is built on.
-
 ## 🔮 Future Enhancements
 
 ### Planned Features
@@ -603,6 +588,21 @@ No claim below is measured here.
 
 **Not research areas**: energy harvesting and therapeutic use. `src/thermo`
 computes why the first cannot work, and the second is addressed below.
+
+## 🌟 Naming
+
+What the vocabulary denotes, which is arithmetic:
+
+- **432** — the base of every frequency ratio, carried as an integer fraction.
+- **3, 6, 9** — the axis; **1-2-4-8-7-5** the doubling orbit. Together they are
+  the group structure over ℤ/9ℤ that the seals prove.
+- **Golden ratio** — used as the fraction 8/5; the decimal is not carried.
+- **Exact ratios, not decimals** — an integer numerator over an integer
+  denominator. Some values are non-integer rationals (`2592/5` = 518.4 Hz);
+  what is refused is the lossy float, not the fraction, because collapsing
+  `2592/5` to a `number` stores 518.39999999999997726 and accumulates error.
+  See `CMYK_FREQUENCY_RATIOS`.
+- **Digital root** — reduction to one digit, the operation the rest is built on.
 
 ## Health and safety
 

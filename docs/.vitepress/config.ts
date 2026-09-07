@@ -130,6 +130,7 @@ const CURATED = [
       {
         text: 'Quantum computing',
         items: [
+          { text: 'The quantum computer, and what it costs', link: '/QUANTUM_COMPUTER' },
           { text: 'Technical specification', link: '/QUANTUM_SPECIFICATION' },
           { text: 'Usage guide', link: '/QUANTUM_GUIDE' },
         ],

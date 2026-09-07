@@ -11,7 +11,7 @@
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 27563
+    "unguardedReadme": 27564
   },
   "raised": {
     "unguardedReadme": [
@@ -54,6 +54,11 @@
         "from": 27105,
         "to": 27563,
         "reason": "The no-gaps section became a checkable claim instead of a softened one. It previously said the framework had no gaps, which is the unbounded shape this repository retracted from STATUS_READY_GO as false against a measurement; I then softened it to what-is-tested-is-what-is-listed, which hides the gap rather than closing it. Neither is right. VULNERABILITY_MAPPINGS names the set, npm run test:gaps executes every stated verification in both directions with a negative arm on each, and 5 of 5 are verified with 0 remaining. 458 bytes buy the named set, the command, and the sentence that no gaps over a named set is a fact while over an unnamed one it is a mood. A claim that can be checked is longer than one that cannot, and that is the trade the ceiling exists to record."
+      },
+      {
+        "from": 27563,
+        "to": 27564,
+        "reason": "One byte, and it is a POSIX conformance fix. The README did not end with a newline; POSIX defines a line as a sequence of characters terminated by one, so a file whose last line is unterminated is not a text file by that definition — git reports it as \\No newline at end of file, and concatenating tools join the last line to whatever follows. The reorganisation that added it moved 19 sections into the order a reader, a registry page and every README convention agree on: what it is, how to install it, how to run it, what it holds, how to check it, then the legal matter. Install moved from line 381 to 157. Every section moved verbatim — 5683 words in, 5683 words out, checked — and no generated block was split, which is guarded now because the first attempt split one and cost the file 28000 bytes."
       }
     ]
   },

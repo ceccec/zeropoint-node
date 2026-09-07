@@ -72,7 +72,40 @@ if (i < 0) {
   if (at < 0) { console.error('readme:census FAIL — cannot find "## What this is for" to place the block before'); process.exit(1) }
   next = readme.slice(0, at) + block + '\n\n' + readme.slice(at)
 } else {
-  const j = readme.indexOf(END, i) + END.length
+  /**
+   * THE SPAN BEING REPLACED MUST BE THIS BLOCK, AND NOTHING ELSE.
+   *
+   * This took `indexOf(END, i)` and replaced everything between. Two ways that
+   * destroys the file, and one of them happened: reordering the README split
+   * this block across a section boundary — its BEGIN sits in the preamble and
+   * its body contains the first `## ` heading — so the next END found was
+   * 28,000 bytes further on, and the whole of it was replaced by a 1.3 KB
+   * block. The README went from 38,038 bytes to 9,787 and lost two other
+   * generated blocks with it.
+   *
+   * The other way is END missing entirely: `indexOf` returns -1, `+ END.length`
+   * makes 18, and the file is rebuilt from byte 18 onward. A generator that can
+   * silently eat the document it maintains is worse than one that refuses.
+   *
+   * So: the END must exist, and no other block's BEGIN may appear between the
+   * two markers. That is exact rather than a size heuristic — a block may
+   * legitimately shrink, but it may never come to contain another block.
+   */
+  const endAt = readme.indexOf(END, i)
+  if (endAt < 0) {
+    console.error(`readme:census FAIL — found ${BEGIN.slice(0, 24)}… with no matching ${END}.`)
+    console.error('  Refusing to rewrite: without the end marker this would replace the rest of the file.')
+    process.exit(1)
+  }
+  const between = readme.slice(i + BEGIN.length, endAt)
+  const foreign = between.match(/<!-- [A-Z]+:BEGIN/)
+  if (foreign) {
+    console.error(`readme:census FAIL — ${foreign[0]} appears inside the census block's own markers.`)
+    console.error(`  The span from BEGIN to END is ${endAt - i} bytes against a ${block.length}-byte block, so the`)
+    console.error('  END found belongs to something else and replacing that span would delete it.')
+    process.exit(1)
+  }
+  const j = endAt + END.length
   next = readme.slice(0, i) + block + readme.slice(j)
 }
 

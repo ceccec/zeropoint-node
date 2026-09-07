@@ -11,7 +11,7 @@ The previous version of this file was hand-written and documented 32 functions,
 reader more than no reference at all, because it looks authoritative while it
 misleads them.
 
-**962 exports across 23 entry points.**
+**966 exports across 23 entry points.**
 
 ## `zeropoint-node`
 
@@ -574,6 +574,7 @@ Source: `./dist/quantum.esm.js`
 | `adaptCompositionGraph` | function (3 args) |
 | `adaptiveTuning` | function (3 args) |
 | `addNodeToMesh` | function (4 args) |
+| `adjacencyIgnoresPolarity` | function (0 args) |
 | `adjoint` | function (1 arg) |
 | `advantageSelfTest` | function (0 args) |
 | `allPhaseAmplitudes` | function (0 args) |
@@ -787,8 +788,10 @@ Source: `./dist/quantum.esm.js`
 | `latticeFlip` | function (1 arg) |
 | `latticeFromIndex` | function (1 arg) |
 | `latticeIndex` | function (1 arg) |
+| `latticeIsBipartite` | function (0 args) |
 | `latticeIsConnected` | function (0 args) |
 | `latticeNeighbours` | function (1 arg) |
+| `latticePart` | function (1 arg) |
 | `latticeState` | function (2 args) |
 | `latticeTranslate` | function (2 args) |
 | `layer1_riemannSimulator` | function (0 args) |
@@ -839,6 +842,7 @@ Source: `./dist/quantum.esm.js`
 | `phaseFlip` | function (1 arg) |
 | `piInSixthTurns` | function (0 args) |
 | `planMigration` | function (2 args) |
+| `polaritiesAreTwins` | function (0 args) |
 | `predictFidelity` | function (2 args) |
 | `prepareDeposit` | function (1 arg) |
 | `probabilities` | function (1 arg) |
@@ -1135,4 +1139,4 @@ Source: `./dist/a432.wave.energy.esm.js`
 | `calculateWaveHarmonics` | function (1 arg) |
 | `isA432Harmonic` | function (1 arg) |
 
-<!-- digest dd05a3cd9152 -->
+<!-- digest c17ebb24a348 -->

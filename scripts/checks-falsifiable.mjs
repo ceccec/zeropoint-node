@@ -3,7 +3,15 @@
  * checks-falsifiable — prove the generator/checker pairs can actually fail.
  *
  * The gate is roughly half `X && X --check`: regenerate an artifact, then
- * confirm the committed copy matches. A checker like that is worth exactly as
+ * confirm the copy on disk matches.
+ *
+ * THAT SENTENCE SAID "THE COMMITTED COPY" AND IT WAS WRONG. The generator runs
+ * first and repairs the working tree, so the checker never sees a stale
+ * committed file — the pair tests the generator's DETERMINISM, and a document
+ * four exports out of date rode through every gate run for ten hours while the
+ * repair was left behind each time as residue. scripts/generated-current.mjs
+ * asks the question this file's own description claimed: it runs each checker
+ * WITHOUT its generator, and requires what git holds to be what they approved. A checker like that is worth exactly as
  * much as its ability to say no, and nothing in the pipeline ever asked it to.
  * A --check that compared the wrong file, exited 0 on a read error, or silently
  * regenerated before comparing would pass every gate run for the rest of time
@@ -23,35 +31,12 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { tmpdir } from 'node:os'
 import { pipelineFiles } from './lib/pipeline.mjs'
+import { GUARDS } from './lib/generated-artifacts.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const sha = (b) => createHash('sha256').update(b).digest('hex')
 
-/** checker npm script -> the generated artifact it is supposed to be guarding. */
-const GUARDS = {
-  // readme:check does NOT check README.md — it guards the two documents it
-  // generates. Mapping it by its name is how this table got its first entry
-  // wrong, and the probe caught that before the table was ever committed.
-  'readme:check': 'docs/KERNEL.md',
-  'docs:index:check': 'docs/DOCUMENTATION_INDEX.md',
-  'a432:scan:check': 'docs/A432_QUANTUM_SCAN.md',
-  'api:reference:check': 'docs/API_REFERENCE.md',
-  'docs:pages:check': 'docs/pages/index.md',
-  'vortex:svg:check': 'docs/public/vortex.svg',
-  'paper:check': 'docs/public/paper.html',
-  'bundle:a432:check': 'public/a432.bundle.js',
-  'derivation:check': 'src/verification/derivation.json',
-  'lean:bounds:check': 'lean/bounds.json',
-  'seal:pinning:check': 'src/verification/seal-pinning.json',
-  'constrained:check': 'src/verification/constrained.json',
-  'zenodo:deposits:check': 'src/verification/deposits.json',
-  'axiom:index:check': 'src/verification/axiom-index.json',
-  // Block-scoped: these own a marked region of README.md and nothing else, so
-  // the probe has to land inside the region or it proves nothing.
-  'spectrum:check': ['README.md', 'SPECTRUM'],
-  'readme:census:check': ['README.md', 'CENSUS'],
-  'citations:check': 'CITATION.bib',
-}
+
 
 /**
  * Checkers that read SOURCE rather than a generated artifact. Corrupting a
@@ -103,6 +88,10 @@ const READS_SOURCE = {
   'registry:check': 'reads the npm registry',
   'semver:check': 'diffs against the published package',
   'prose:check': 'reads prose in docs/ and src/',
+  // Declared by hand: the completeness guard below matches names ending in
+  // ":check", and this one does not, so it would have slipped past unasked.
+  // Several others here are in the same position and were declared the same way.
+  'generated:current': 'runs every artifact\'s checker WITHOUT running its generator first, which is the one question the chain cannot ask. Twelve entries in npm run check read `npm run X && npm run X:check` \u2014 the generator repairs the working tree and the checker then compares the file to what the generator just wrote, so the pair tests DETERMINISM and can never fail on a stale COMMITTED document. Demonstrated in a clone: commit an API_REFERENCE.md saying 962 exports where the measurement is 966, leave the tree clean, run the pair as the chain runs it \u2014 "ok, 966 exports", exit 0, HEAD still 962; run the checker alone against the same tree and it fails by name. Same file, same checker, opposite verdicts, and the only difference is whether the generator ran first. It had cost twice that day: API_REFERENCE.md four exports stale on origin for ten hours across pushes that each ran the full chain, and paper.tex stating a census the pushing commit had already superseded, both repaired every run and the repair discarded as residue. TWO CONDITIONS, and the first version had only the weaker one: it compared the working tree to git, which passes whenever the generators have not run, since then the two agree by construction \u2014 caught by its own arm-one probe failing to fire. Now (1) every checker passes without its generator and (2) every artifact is tracked and matches HEAD; either holds without the other, and only together do they say what git holds is what the repo measures. Falsified by three arms and two controls: a stale committed artifact with a clean tree, a correct artifact left unstaged, a declared exclusion naming a checker that does not exist, against a clean synced tree and an untracked file no generator reads. lean:bounds:check is declared environment-dependent and skipped for condition 1 only \u2014 it runs the Lean kernel with a 300-second timeout, documents its own VOID path, and was verified to give opposite verdicts on two byte-identical trees on this machine. It does NOT establish that any artifact is correct; the checkers own that and this probe owns whether they can fail. It owns only the gap, which is that neither of them looks at git.',
   'qpu:pentagram:check': 'MEASURES what one unit of state costs, for all three representations this repository ships, and checks RELATIONS between them rather than numbers \u2014 every figure depends on the machine, so a gate pinning 29 qubits would fail on every other computer and mean nothing on this one. The axis it measures used to be TYPED: BYTES_PER_AMP = 16, the two-float64 floor, while the shipped simulator stores Complex[] and one amplitude costs about 48 bytes. Every width this script printed was therefore the width of a representation nobody ships, which is the same error the file already documents twice \u2014 a number measured on one thing and reported as the capacity of another. The finding: the same 32 GiB holds 29 qubits as a state vector or 113,060 as a stabilizer tableau, a factor of 3,899 against the 18 qubits spanned by every machine resource put together, so the representation is the larger lever and it was the one axis never measured. THE FIRST VERSION OF THE CHECK WAS SURVIVED BY ITS OWN MUTATION: asserting that the tableau reaches far, then replacing stabilizerBits with 2^n, drove the fitted cost to nearly zero and the reported width to 34 BILLION qubits \u2014 and every relation still passed, because a broken cost law made the tableau reach further and the property was monotone under the change. The LAW is checked instead: the slope is fitted on two widths and must predict a THIRD it never saw, which under that mutation is wrong by 10^295. Falsified by three mutations, one of which is a control that must NOT fail \u2014 making the tableau exponential (fires on two relations), measuring the exact register on the ZERO STATE, where 2^n slots share one object and exact arithmetic reads as the CHEAPEST representation here at 5.97 bytes against 50.86 (fires on two), and rewording a comment (passes). It also refuses a cost measured as zero or negative, since a search for the widest state that fits a free representation does not terminate \u2014 which is not hypothetical, it span until the process was killed.',
   'sequence:check': 'reads every digit sequence the kernel EXPORTS and refuses any page that names one and spells another. SEQUENCE.md opens by warning that two spines share digits and are not the same ordering; the warning was prose, and prose did not stop four pages inside the corpus it heads from binding VORTEX_SEQUENCE to the legacy spine 0369124875 or to the six-digit orbit. Seventeen statements across four pages, each one an identifier a reader could copy into a file that imports this package and have resolve to something else. Two forms are read out of the markdown and both are unambiguous: a binding NAME = [...] is compared elementwise, and an index NAME[i] is compared against that element or refused for reaching past the end \u2014 which is how the switches page was caught indexing an eleven-position path through a nine-element export. FALSIFIED IN BOTH DIRECTIONS, which is the only property that makes it worth having: changing a page fails it, and changing VORTEX_SEQUENCE in src/0/index.ts from ...3,6,9 to ...3,6,8 fails it too \u2014 on SEQUENCE.md itself \u2014 because this file holds no copy of any sequence and reads all seven at run time. Both arms were run against the working tree and reverted. It does NOT check that a page states the sequence at all, only that a page which names one is not spelling a different one; a page free of kernel identifiers passes, correctly, since naming is the entire subject. It refuses when src/0 exports no sequence to check against, since a run with nothing to compare would print the same green as a run that compared everything.',
   'description:check': 'binds every claim in the npm description to a module, an export and a criterion where one exists; falsified by the three mutations in the commit that added it — rewording the description, naming an export that does not exist, and forcing the consciousness criterion unmet, which proves the criterion is evaluated rather than recorded',

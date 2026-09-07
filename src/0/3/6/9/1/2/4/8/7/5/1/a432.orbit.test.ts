@@ -8,6 +8,7 @@
  */
 import { ORBIT_ADDRESSES, ORBIT_HANDLES, loadOrbitAddress } from './a432.orbit.ts'
 import { createChecker } from '../../../../../../../../../../../verification/harness.ts'
+import { VORTEX_ORBIT } from '../../../../../../../../../../../kernel/index.ts'
 import { legacyDigitalRoot } from './a432.roots.ts'
 
 const checker = createChecker('a432.orbit')
@@ -34,8 +35,30 @@ for (let i = 1; i < ORBIT_ADDRESSES.length; i += 1) {
 // ── the doubling that generates them ───────────────────────────────────────
 {
   const full = await loadOrbitAddress(ORBIT_ADDRESSES[ORBIT_ADDRESSES.length - 1]!)
+
+  /**
+   * THIS LINE ALONE IS CIRCULAR, AND THE ONE BELOW IT IS NOT.
+   *
+   * The orbit modules GENERATE their sequence with legacyDigitalRoot, so
+   * checking the doubling with the same function cannot detect an error in it —
+   * both sides move together. (It read `(x * 2) % 9 || 9` until the spine audit
+   * counted an inline % 9 in an a432 file as debt; the substitution is right and
+   * the reason given for it, that the semantics are identical on the orbit, is
+   * not the reason it stays honest.)
+   *
+   * What keeps the suite falsifiable is the ADDRESS: `1.2.4.8.7` is a literal in
+   * a filename and owes nothing to a432.roots, so corrupting legacyDigitalRoot
+   * changes what loads and the address checks above fail — verified by making
+   * legacyDigitalRoot(16) return 8, which fails two of them. The same edit made
+   * to an address check rather than to this one would have been fatal.
+   *
+   * So the doubling gets an independent anchor too: the kernel's own orbit is a
+   * literal array, computed by nothing.
+   */
   const doubles = full.every((d, i) => i === 0 || d === legacyDigitalRoot(full[i - 1]! * 2))
   checker.check('each digit is the double of the one before it, mod 9', doubles, true)
+  checker.check('and the whole sequence is the kernel\'s own VORTEX_ORBIT, which no digital root computes',
+    full.join('.'), [...VORTEX_ORBIT].join('.'))
 }
 
 /**

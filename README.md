@@ -15,8 +15,8 @@ gate that re-performs the measurement and fails if this block disagrees with it.
 
 | | |
 | --- | --- |
-| exported values reachable from no law at all | **1522 of 1877** |
-| exported literal constants held by nothing | **59 of 67** |
+| exported values reachable from no law at all | **1527 of 1882** |
+| exported literal constants held by nothing | **58 of 66** |
 | constants forced by at least one law | 8 |
 | seal predicates that are *pinned* rather than forced | 3 of 42 |
 | Lean statements the kernel accepts | 59 of 83 |

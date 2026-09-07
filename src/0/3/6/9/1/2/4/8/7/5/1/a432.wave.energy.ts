@@ -6,6 +6,7 @@
 
 import { round } from './a432.algebra.ts'
 import { GOLDEN_RATIO, TAU, FIBONACCI_SEQUENCE, calculateDigitalRoot, A432_BASE_FREQUENCY, A432_VORTEX_MULTIPLIER, isA432Harmonic } from './a432.math.constants.ts';
+import { PLANCK_J_S } from './a432.ts';
 
 // === WAVE ENERGY INTERFACES ===
 export interface WavePattern {
@@ -52,7 +53,7 @@ export const WAVE_ENERGY_CONSTANTS = {
   THOUGHT_WAVE_MAX: 100, // Hz (gamma)
   
   // Reality waves (quantum)
-  PLANCK_CONSTANT: 6.62607015e-34, // J⋅s
+  PLANCK_CONSTANT: PLANCK_J_S, // J⋅s, exact by SI definition; one carrier, in a432.ts
   QUANTUM_FREQUENCY: 1e43, // Hz (Planck frequency)
   
   // Sacred geometry waves

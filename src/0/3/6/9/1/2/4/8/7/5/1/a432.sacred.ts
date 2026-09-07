@@ -32,7 +32,7 @@ export const SACRED_GEOMETRIC_CONSTANTS = {
 
   // Silver Ratio (δ) - Sacred Proportion
   SILVER_RATIO: {
-    value: 2.414213562373095,
+    value: 1 + SQRT_2, // δ = 1 + √2
     fraction: { numerator: 17, denominator: 7 }, // Sacred silver fraction
     geometric: 'Silver proportion for sacred geometric harmony',
     a432: 'Silver ratio creates geometric resonance with A432 system'
@@ -40,7 +40,9 @@ export const SACRED_GEOMETRIC_CONSTANTS = {
 
   // Bronze Ratio (θ) - Harmonic Proportion
   BRONZE_RATIO: {
-    value: 3.303577269034296,
+    // (3 + √13)/2 = 3.3027756… The literal this replaces, 3.303577269034296,
+    // matched no definition of the bronze ratio and was 8e-4 from this one.
+    value: (3 + sqrt(13)) / 2,
     fraction: { numerator: 23, denominator: 7 }, // Sacred bronze fraction
     geometric: 'Bronze proportion for harmonic geometric relationships',
     a432: 'Bronze ratio establishes geometric foundation for A432 harmony'
@@ -72,7 +74,7 @@ export const SACRED_GEOMETRIC_CONSTANTS = {
 
   // Flower of Life Ratio - Creation Proportion
   FLOWER_OF_LIFE: {
-    value: 2.598076211353316, // 3√3/2
+    value: 3 * SQRT_3 / 2,
     fraction: { numerator: 13, denominator: 5 }, // Sacred flower fraction
     geometric: 'Creation proportion for geometric genesis',
     a432: 'Flower of life creates genesis harmony in A432 consciousness'

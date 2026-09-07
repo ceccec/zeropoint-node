@@ -41,7 +41,7 @@ export class AdvancedVBM {
      * Calculate torus coordinates for VBM number mapping
      * Maps numbers onto the surface of a torus using polar coordinates
      */
-    static calculateTorusCoordinates(number: number, majorRadius: number = 1, minorRadius: number = 0.3): {
+    static calculateTorusCoordinates(number: number, majorRadius: number = 1, minorRadius: number = 3 / 10): {
         x: number, y: number, z: number, 
         theta: number, phi: number,
         digitalRoot: number
@@ -417,7 +417,7 @@ export class RodinCoilCalculator {
         enhancement: number,
         percentageIncrease: number
     } {
-        const enhancement = 1.6; // 60% increase according to VBM
+        const enhancement = 8 / 5; // 60% increase according to VBM
         const rodinField = conventionalField * enhancement;
         
         return {

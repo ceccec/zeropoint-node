@@ -9,9 +9,10 @@
  *
  * The Bovis classes and the twelve rays are conventions, so the laws are
  * structural: the classes partition the scale, the rays close the circle,
- * opposite is an involution, and what the sources agree on (positive green at
- * north opposite negative green, red at west, infrared beside red, ultraviolet
- * beside violet) is pinned while what they disagree on is not.
+ * opposite is an involution, and what the sources state is pinned: positive
+ * green at north opposite negative green, red at west opposite violet (the
+ * electric meridian), infrared between black and red, ultraviolet between
+ * violet and white.
  *
  * Nothing here asserts that any of it detects anything.
  */
@@ -68,9 +69,13 @@ const adjacent = (a: string, b: string): boolean => {
   const d = (rayAngle(a) - rayAngle(b) + 360) % 360
   return d === RAY_STEP_DEGREES || d === 360 - RAY_STEP_DEGREES
 }
-check('infrared sits beside red and ultraviolet beside violet, the side unpinned',
-  adjacent('infrared', 'red') && adjacent('ultraviolet', 'violet'),
-  'sources agree on the adjacency and differ on the side, so only the adjacency is law')
+check('red is diametrically opposite violet: the electric meridian crosses the equator at both',
+  rayOpposite('red') === 'violet' && rayOpposite('violet') === 'red')
+
+check('infrared sits between black and red, ultraviolet between violet and white',
+  adjacent('infrared', 'red') && adjacent('infrared', 'black')
+  && adjacent('ultraviolet', 'violet') && adjacent('ultraviolet', 'white'),
+  'the order the pendulum\'s own 24-point listing gives; one vendor page swaps UV and violet and contradicts its own red–violet meridian')
 
 check('symbols and names reach the same ray, whatever the case',
   rayAngle('V+') === rayAngle('positive green') && rayAngle('V-') === rayAngle('negative green')

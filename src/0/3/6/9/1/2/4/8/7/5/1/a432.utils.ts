@@ -7,6 +7,7 @@
 import { PI, abs, cos, floor, log2, max as algMax, min as algMin, round, sin } from './a432.algebra.ts'
 import { A432_TRINITY, A432_CYCLE } from './a432.math.ts'
 import { A432_FREQUENCY } from './a432.core.ts'
+import { GOLDEN_RATIO, SQRT_2 } from './a432.math.constants.ts'
 import { legacyDigitalRoot } from './a432.roots.ts'
 
 // === MATHEMATICAL UTILITIES ===
@@ -265,14 +266,14 @@ export class A432Frequency {
    * Calculate golden ratio frequency
    */
   static goldenRatio(base: number): number {
-    return base * 1.618033988749895;
+    return base * GOLDEN_RATIO;
   }
 
   /**
    * Calculate silver ratio frequency
    */
   static silverRatio(base: number): number {
-    return base * 1.4142135623730951;
+    return base * SQRT_2;
   }
 }
 

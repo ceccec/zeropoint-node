@@ -1,7 +1,7 @@
 {
   "what": "The a432 filename address space, audited as an address space. The names are payloadless by design, so this asks what a name computes to and which addresses are unoccupied — not whether a name describes its contents.",
-  "files": 226,
-  "distinctSegments": 194,
+  "files": 231,
+  "distinctSegments": 195,
   "orbit": [
     1,
     2,
@@ -10,7 +10,118 @@
     7,
     5
   ],
-  "orbitPrefixes": [
+  "families": [
+    {
+      "name": "VORTEX_ORBIT",
+      "sequence": [
+        1,
+        2,
+        4,
+        8,
+        7,
+        5
+      ],
+      "prefixes": 7,
+      "occupied": 7
+    },
+    {
+      "name": "KERNEL_VORTEX_SEQUENCE",
+      "sequence": [
+        1,
+        2,
+        4,
+        8,
+        7,
+        5,
+        3,
+        6,
+        9
+      ],
+      "prefixes": 10,
+      "occupied": 6
+    },
+    {
+      "name": "VORTEX_SEQUENCE",
+      "sequence": [
+        1,
+        2,
+        4,
+        8,
+        7,
+        5,
+        3,
+        6,
+        9
+      ],
+      "prefixes": 10,
+      "occupied": 6
+    },
+    {
+      "name": "LEGACY_CONSCIOUSNESS_SEQUENCE",
+      "sequence": [
+        0,
+        3,
+        6,
+        9,
+        1,
+        2,
+        4,
+        8,
+        7,
+        5
+      ],
+      "prefixes": 11,
+      "occupied": 0
+    },
+    {
+      "name": "VORTEX_AXIS",
+      "sequence": [
+        3,
+        6,
+        9
+      ],
+      "prefixes": 4,
+      "occupied": 0
+    },
+    {
+      "name": "VORTEX_MIRROR",
+      "sequence": [
+        9,
+        8,
+        6,
+        2,
+        3,
+        5,
+        7,
+        4,
+        1
+      ],
+      "prefixes": 10,
+      "occupied": 0
+    },
+    {
+      "name": "VORTEX_REVERSE",
+      "sequence": [
+        9,
+        6,
+        3,
+        5,
+        7,
+        8,
+        4,
+        2,
+        1
+      ],
+      "prefixes": 10,
+      "occupied": 0
+    }
+  ],
+  "familiesInUse": [
+    "VORTEX_ORBIT",
+    "KERNEL_VORTEX_SEQUENCE",
+    "VORTEX_SEQUENCE"
+  ],
+  "orbitOccupied": [
     "1",
     "1.2",
     "1.2.4",
@@ -19,16 +130,11 @@
     "1.2.4.8.7.5",
     "1.2.4.8.7.5.1"
   ],
-  "orbitOccupied": [
-    "1",
-    "1.2",
-    "1.2.4.8.7.5",
-    "1.2.4.8.7.5.1"
-  ],
   "orbitGaps": [
-    "1.2.4",
-    "1.2.4.8",
-    "1.2.4.8.7"
+    "1.2.4.8.7.5.3",
+    "1.2.4.8.7.5.3.6",
+    "1.2.4.8.7.5.3.6.9",
+    "1.2.4.8.7.5.3.6.9.1"
   ],
   "spellingDrift": [
     {
@@ -64,13 +170,13 @@
   "foldDistribution": {
     "1": 25,
     "2": 27,
-    "3": 20,
-    "4": 27,
-    "5": 26,
+    "3": 22,
+    "4": 28,
+    "5": 27,
     "6": 23,
     "7": 25,
     "8": 25,
-    "9": 28
+    "9": 29
   },
   "hexbitOccupied": 63,
   "hexbitEmpty": [
@@ -78,19 +184,24 @@
   ],
   "leads": [
     {
-      "kind": "orbit-gap",
-      "lead": "a432.1.2.4.ts",
-      "why": "1.2.4 is a prefix of the kernel's doubling orbit and no file addresses it"
+      "kind": "family-gap",
+      "lead": "a432.1.2.4.8.7.5.3.ts",
+      "why": "1.2.4.8.7.5.3 is a prefix of a kernel sequence that is in use as an address space, and nothing sits at it"
     },
     {
-      "kind": "orbit-gap",
-      "lead": "a432.1.2.4.8.ts",
-      "why": "1.2.4.8 is a prefix of the kernel's doubling orbit and no file addresses it"
+      "kind": "family-gap",
+      "lead": "a432.1.2.4.8.7.5.3.6.ts",
+      "why": "1.2.4.8.7.5.3.6 is a prefix of a kernel sequence that is in use as an address space, and nothing sits at it"
     },
     {
-      "kind": "orbit-gap",
-      "lead": "a432.1.2.4.8.7.ts",
-      "why": "1.2.4.8.7 is a prefix of the kernel's doubling orbit and no file addresses it"
+      "kind": "family-gap",
+      "lead": "a432.1.2.4.8.7.5.3.6.9.ts",
+      "why": "1.2.4.8.7.5.3.6.9 is a prefix of a kernel sequence that is in use as an address space, and nothing sits at it"
+    },
+    {
+      "kind": "family-gap",
+      "lead": "a432.1.2.4.8.7.5.3.6.9.1.ts",
+      "why": "1.2.4.8.7.5.3.6.9.1 is a prefix of a kernel sequence that is in use as an address space, and nothing sits at it"
     },
     {
       "kind": "spelling-drift",
@@ -118,5 +229,5 @@
       "why": "no handle loads to lattice cell 11"
     }
   ],
-  "contentHash": "ad3c3dfc75de737e071c80eb12735be1"
+  "contentHash": "c6ca92fdf6d83543ac4404aa66805554"
 }

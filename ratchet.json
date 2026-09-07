@@ -2,9 +2,9 @@
   "ceilings": {
     "typecheck": 0,
     "lint": 0,
-    "decimals": 9,
+    "decimals": 0,
     "cycles": 0,
-    "unreachable": 104,
+    "unreachable": 102,
     "unloadable": 0,
     "prose": 50,
     "tautology": 0,

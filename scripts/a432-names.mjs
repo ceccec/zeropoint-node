@@ -41,7 +41,8 @@ const A432 = join(ROOT, 'src/0/3/6/9/1/2/4/8/7/5/1')
 const RECORD = join(ROOT, 'src/verification/a432-names.json')
 const CHECK = process.argv.includes('--check')
 
-const { VORTEX_ORBIT } = await import(join(ROOT, 'src/kernel/index.ts'))
+const kernel = await import(join(ROOT, 'src/kernel/index.ts'))
+const { VORTEX_ORBIT } = kernel
 const { digitalRoot } = await import(join(ROOT, 'src/0/index.ts'))
 
 const files = readdirSync(A432)
@@ -70,16 +71,49 @@ console.log('')
  * Digit-only names address the doubling orbit. Its prefixes are the addresses
  * that exist by construction; the ones with no file are the gaps.
  */
+/**
+ * EVERY DIGIT SEQUENCE THE KERNEL EXPORTS IS A CANDIDATE ADDRESS FAMILY, and
+ * which ones actually are is decided by the files, not by me.
+ *
+ * The first version hardcoded the doubling orbit. The kernel exports seven
+ * digit sequences — the orbit, the axis, the mirror, the reverse, the full
+ * vortex, the kernel vortex and the legacy consciousness stream — and each one
+ * defines a set of prefix addresses just as the orbit does. Listing one of them
+ * here was a choice I made and could not justify.
+ *
+ * But a family with NO file at any of its prefixes is not an address space with
+ * gaps, it is simply not an address space. Claiming the mirror's prefixes ought
+ * to be modules because the mirror exists would manufacture dozens of "leads"
+ * out of nothing. So occupancy decides: a family with at least one file at one
+ * of its prefixes is in use, and only then are its empty prefixes gaps.
+ */
 const orbit = [...VORTEX_ORBIT]
-const cycle = [...orbit, orbit[0]]
-const prefixes = cycle.map((_, k) => cycle.slice(0, k + 1).join('.')).filter((p) => p.length > 0)
 const numericFiles = new Set(entries.filter((e) => e.segments.every((s) => /^\d+$/.test(s))).map((e) => e.segments.join('.')))
-const orbitGaps = prefixes.filter((p) => !numericFiles.has(p))
-const orbitStrays = [...numericFiles].filter((p) => !prefixes.includes(p))
 
-console.log(`  ORBIT ADDRESSES — the kernel's orbit is ${orbit.join(' -> ')}, so ${prefixes.length} prefixes are addresses`)
-for (const p of prefixes) console.log(`    ${numericFiles.has(p) ? '●' : '○'} a432.${p}.ts${numericFiles.has(p) ? '' : '   ← no file at this address'}`)
-if (orbitStrays.length > 0) console.log(`    numeric names that are NOT orbit prefixes: ${orbitStrays.join(', ')}`)
+const candidates = Object.entries(kernel)
+  .filter(([, v]) => Array.isArray(v) && v.length > 1 && v.every((x) => typeof x === 'number' && x >= 0 && x <= 9))
+  .map(([name, seq]) => {
+    const cycle = seq[0] === seq[seq.length - 1] ? [...seq] : [...seq, seq[0]]
+    const prefixes = cycle.map((_, k) => cycle.slice(0, k + 1).join('.'))
+    const occupied = prefixes.filter((p) => numericFiles.has(p))
+    return { name, seq: [...seq], prefixes, occupied, gaps: prefixes.filter((p) => !numericFiles.has(p)) }
+  })
+  .sort((a, b) => b.occupied.length - a.occupied.length || a.name.localeCompare(b.name))
+
+const inUse = candidates.filter((f) => f.occupied.length > 0)
+const unused = candidates.filter((f) => f.occupied.length === 0)
+
+console.log(`  ADDRESS FAMILIES — ${candidates.length} digit sequences exported by the kernel, ${inUse.length} with files at their prefixes`)
+for (const f of inUse) {
+  console.log(`    ${f.name} = ${f.seq.join('-')} — ${f.occupied.length}/${f.prefixes.length} addressed`)
+  for (const p of f.prefixes) console.log(`      ${numericFiles.has(p) ? '●' : '○'} a432.${p}.ts${numericFiles.has(p) ? '' : '   ← nothing at this address'}`)
+}
+if (unused.length > 0) {
+  console.log(`    not address spaces (no file at any prefix): ${unused.map((f) => f.name).join(', ')}`)
+}
+const orbitGaps = [...new Set(inUse.flatMap((f) => f.gaps))].sort()
+const orbitStrays = [...numericFiles].filter((p) => !inUse.some((f) => f.prefixes.includes(p)))
+if (orbitStrays.length > 0) console.log(`    numeric names on no family's prefix: ${orbitStrays.join(', ')}`)
 console.log('')
 
 /**
@@ -209,7 +243,7 @@ console.log(`  THE HEXBIT LATTICE — 64 cells, ${64 - emptyCells.length} occupi
 console.log('')
 
 const leads = [
-  ...orbitGaps.map((p) => ({ kind: 'orbit-gap', lead: `a432.${p}.ts`, why: `${p} is a prefix of the kernel's doubling orbit and no file addresses it` })),
+  ...orbitGaps.map((p) => ({ kind: 'family-gap', lead: `a432.${p}.ts`, why: `${p} is a prefix of a kernel sequence that is in use as an address space, and nothing sits at it` })),
   ...drift.map(([stem, spellings]) => ({ kind: 'spelling-drift', lead: stem, why: `addressed as ${spellings.join(', ')} — one coordinate, ${spellings.length} spellings` })),
   ...emptyCells.map((c) => ({ kind: 'empty-hexbit', lead: c.toString(2).padStart(6, '0'), why: `no handle loads to lattice cell ${c}` })),
 ]
@@ -222,7 +256,8 @@ const record = sealRecord({
   files: files.length,
   distinctSegments: vocabulary.length,
   orbit,
-  orbitPrefixes: prefixes,
+  families: candidates.map((f) => ({ name: f.name, sequence: f.seq, prefixes: f.prefixes.length, occupied: f.occupied.length })),
+  familiesInUse: inUse.map((f) => f.name),
   orbitOccupied: [...numericFiles].sort(),
   orbitGaps,
   spellingDrift: drift.map(([stem, spellings]) => ({ stem, spellings })),

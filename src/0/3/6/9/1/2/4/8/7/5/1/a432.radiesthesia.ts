@@ -28,11 +28,15 @@
  *   ray*        a convention. Twelve names at 30 degree steps around the
  *               equator of the universal pendulum, positive green at north and
  *               red at west, negative green diametrically opposite positive
- *               green, infrared beside red, ultraviolet beside violet. The
- *               order pinned here is the one the pendulum's own meridian
- *               listing gives (Centre Amyris, pendule universel); sources
- *               differ on whether ultraviolet sits before or after violet, and
- *               the tests pin the adjacency, not the side.
+ *               green, red diametrically opposite violet (the electric
+ *               meridian crosses the equator at those two), infrared between
+ *               black and red, ultraviolet between violet and white. The order
+ *               is read off the pendulum's own 24-point electromagnetic
+ *               listing (V-, α, β, θ, χ, ν, ζ, N, IR, R, O, J, V+, Bl, I, Vi,
+ *               UV, Bc, ε, κ, λ, ψ, ρ, ω — the Greek letters are the negative
+ *               green sub-points and are not carried here). One vendor
+ *               listing swaps ultraviolet and violet; it loses because it
+ *               contradicts the red–violet meridian the same vendor states.
  *
  * Fractions, not floats: every pendulum quantity is a Fraction from a432.math,
  * reduced by its simplify, and every ray angle is an integer of degrees.
@@ -57,8 +61,8 @@ export const UNIVERSAL_PENDULUM_EQUATOR: readonly { readonly name: string; reado
   { name: 'positive green', symbol: 'V+' },
   { name: 'blue', symbol: 'Bl' },
   { name: 'indigo', symbol: 'I' },
-  { name: 'ultraviolet', symbol: 'UV' },
   { name: 'violet', symbol: 'Vi' },
+  { name: 'ultraviolet', symbol: 'UV' },
   { name: 'white', symbol: 'Bc' },
   { name: 'negative green', symbol: 'V-' },
   { name: 'black', symbol: 'N' },

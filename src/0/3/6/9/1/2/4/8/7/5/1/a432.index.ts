@@ -6,6 +6,10 @@
 export * from './a432.factory.ts';
 export * from './a432.utils.ts';
 export * from './a432.registry.ts';
+// The orbit family is reached by ADDRESS, not by re-export: its seven modules
+// all declare the same names. a432.orbit.ts is the map from an address to the
+// module that holds it.
+export * from './a432.orbit.ts';
 export * from './a432.navigation.map.ts';
 export * from './a432.self.evolution.ts';
 export * from './a432.self.rebuilder.ts';

@@ -223,12 +223,13 @@ export { exp_ as exp }
 
 /** Natural log via artanh series on reduced argument. */
 /**
- * ln 2, to the last bit a double carries. Irrational, so it has no integer
- * ratio and stays a literal — but it was declared THREE times in this file,
- * once inside each of exp, log and log2, which is three places for one of them
- * to be typed differently.
+ * ln 2, to the last bit a double carries. Irrational, so no ratio is EQUAL to
+ * it; this ratio is the one the double approximates, written as integers the
+ * way E is above, and it divides to the identical double. It was declared
+ * THREE times in this file, once inside each of exp, log and log2, which is
+ * three places for one of them to be typed differently.
  */
-const LN2 = 0.6931471805599453
+const LN2 = 6931471805599453 / 10_000_000_000_000_000
 
 export function log(n: number): number {
   // log(0) is -Infinity, not NaN: it is a limit, not a domain error. Only a

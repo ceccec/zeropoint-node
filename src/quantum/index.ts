@@ -55,6 +55,13 @@ export * from './eisenstein.ts'
 export * from './clifford-t.ts'
 export * from './stabilizer.ts'
 export * from './stabilizer-rank.ts'
+
+/**
+ * And the structure the lattice sits in: with polarity carried alongside the
+ * six-bit cell, every state has twelve neighbours and the space is
+ * vertex-transitive — every state is the centre of a vector equilibrium.
+ */
+export * from './vector-equilibrium.ts'
 export * from './end-to-end.ts'
 export * from './meta-verifier.ts'
 export * from './composability.ts'

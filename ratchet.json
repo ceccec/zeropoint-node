@@ -11,7 +11,7 @@
     "frameworkTests": 0,
     "docFunctions": 4,
     "entryPoints": 0,
-    "unguardedReadme": 27564
+    "unguardedReadme": 28716
   },
   "raised": {
     "unguardedReadme": [
@@ -59,6 +59,11 @@
         "from": 27563,
         "to": 27564,
         "reason": "One byte, and it is a POSIX conformance fix. The README did not end with a newline; POSIX defines a line as a sequence of characters terminated by one, so a file whose last line is unterminated is not a text file by that definition — git reports it as \\No newline at end of file, and concatenating tools join the last line to whatever follows. The reorganisation that added it moved 19 sections into the order a reader, a registry page and every README convention agree on: what it is, how to install it, how to run it, what it holds, how to check it, then the legal matter. Install moved from line 381 to 157. Every section moved verbatim — 5683 words in, 5683 words out, checked — and no generated block was split, which is guarded now because the first attempt split one and cost the file 28000 bytes."
+      },
+      {
+        "from": 27564,
+        "to": 28716,
+        "reason": "The vector equilibrium, stated where a reader meets the quantum surface. The hexbit lattice gives each cell six neighbours and six is half a cuboctahedron; carrying a polarity beside the cell makes 128 states each with exactly twelve, connected, and vertex-transitive under exclusive-or — so a symmetry carries any state onto any other and none is distinguished. The counts fall out rather than being fitted: 12 vertices are the 6 bit positions doubled by polarity, 14 faces are 6 squares plus 8 triangles. 1152 bytes buy the claim, the table, the statement that the doubling is load-bearing rather than decorative, and the negative result beside it — that it is NOT in the digit space, where degrees are 1, 2 and 3. Both halves are checked by npm run test:vector-equilibrium, and both mutations fire: removing the doubling gives degree 6 and breaks connectivity, replacing exclusive-or with addition breaks transitivity. A structural claim with its own refutation beside it is worth more README than one without."
       }
     ]
   },

@@ -118,6 +118,7 @@ const EXERCISERS = [
   ['src/quantum/clifford-t.test.ts', null],
   ['src/quantum/stabilizer.test.ts', null],
   ['src/quantum/stabilizer-rank.test.ts', null],
+  ['src/quantum/vector-equilibrium.test.ts', null],
   ['src/0/3/6/9/1/2/4/8/7/5/1/a432.orbit.test.ts', null],
   ['src/security/vulnerability-coverage.test.ts', null],
   ['src/multidimensional-vortex-framework.test.ts', 'scripts/jest-lite.mjs'],

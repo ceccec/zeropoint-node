@@ -59,7 +59,7 @@ and figures that recompute rather than being typed.
 The Lean files hold 83 statements. **59 are accepted by the Lean kernel** and 24 are not:
 19 are closed with `sorry`, 5 import Mathlib and cannot be built here.
 `npm run lean:check` fails if the ledger and the files disagree. `npm run coverage:audit`
-reports that 148 of 1384 exported functions have never been called by anything —
+reports that 148 of 1394 exported functions have never been called by anything —
 published because a reader deserves to know which parts have never run.
 
 ### What is aimed at, and what is built
@@ -206,6 +206,25 @@ what is affordable:
 | `exact.ts` | Clifford | rational, exact | 2^n |
 | `clifford-t.ts` | Clifford **+ T** | `(p + q√2)/2^scale`, exact | 2^n |
 | `stabilizer.ts` | Clifford | determined / undetermined | **polynomial** |
+
+**Every state is the centre of a vector equilibrium.** The hexbit lattice gives
+each cell six neighbours, one per bit — and six is half of what a cuboctahedron
+has. Carry a polarity alongside the cell and each bit offers two moves, so the
+128 states each have exactly **12** neighbours, the space is connected, and
+exclusive-or by any cell is an automorphism: **vertex-transitive**, meaning a
+symmetry carries any state onto any other and none is distinguished. Only the
+neighbours' identities change.
+
+The cuboctahedron's counts fall out rather than being fitted — 12 vertices are
+the 6 bit positions doubled by polarity, and its 14 faces are 6 squares (the bit
+positions) plus 8 triangles (2³ sign choices over three axis-pairs).
+
+The doubling is load-bearing, not decoration: drop polarity and every state has
+6 neighbours, which is a different solid, and `npm run test:vector-equilibrium`
+asserts that difference rather than describing it. It is also **not** in the
+digit space — 1..9 under doubling, halving and reflection is connected but has
+degrees 1, 2 and 3, so it is neither uniform nor transitive. Checked, and
+reported as checked.
 
 ```javascript
 import { stabilizerZeroState, stabilizerH, stabilizerCnot, stabilizerMeasure } from 'zeropoint-node/quantum'

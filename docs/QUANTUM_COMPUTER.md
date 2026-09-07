@@ -26,6 +26,31 @@ is exact and what is affordable. All four are exported from `zeropoint-node/quan
 | `clifford-t.ts` | Clifford **+ T** | `ℤ[ζ₈]/√2^k` | `(p + q√2)/2^scale`, exact | 2^n |
 | `stabilizer.ts` | Clifford | *none* | determined / undetermined | **polynomial** |
 
+### Every state is the centre of a vector equilibrium
+
+The hexbit lattice gives each cell six neighbours, one per bit, and six is half
+of what a cuboctahedron has. Carry a **polarity** alongside the cell and each bit
+offers two moves:
+
+| | |
+| --- | --- |
+| states | 128 — 64 cells × 2 polarities |
+| neighbours per state | **12, uniform, every one** |
+| connectivity | one component |
+| exclusive-or by any cell | an automorphism → **vertex-transitive** |
+
+Vertex-transitivity is the content of the claim: a symmetry carries any state onto
+any other, so none is distinguished and only the neighbours' identities change.
+The cuboctahedron's counts fall out rather than being fitted — 12 vertices are the
+6 bit positions doubled by polarity, and its 14 faces are 6 squares (the bit
+positions) plus 8 triangles (2³ sign choices over three axis-pairs).
+
+The doubling is load-bearing: drop polarity and every state has 6 neighbours,
+which is a different solid, and the suite asserts that difference rather than
+describing it. It is **not** in the digit space — 1..9 under doubling, halving and
+reflection is connected but has degrees 1, 2 and 3, so it is neither uniform nor
+transitive. Checked, and reported as checked.
+
 `eisenstein.ts` sits beside them for the hexagonal case: ω = e^{iπ/3} satisfies
 ω² = ω − 1, so a 60° rotation is `(a, b) → (−b, a+b)` — integer arithmetic with no
 decimal at all.

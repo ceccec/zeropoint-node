@@ -54,6 +54,16 @@ features:
     link: /QUANTUM_COMPUTER
     linkText: What it costs
 
+  - title: Every state is a centre
+    details: >-
+      Six hexbit neighbours is half a vector equilibrium. Carry a polarity
+      beside the cell and all 128 states have exactly twelve, the space is
+      connected, and exclusive-or by any cell is an automorphism — so a symmetry
+      carries any state onto any other and none is distinguished. Twelve
+      vertices, fourteen faces, neither of them fitted.
+    link: /QUANTUM_COMPUTER
+    linkText: The structure
+
   - title: Method, not just answer
     details: >-
       Classical trial division once passed the exhaustive Shor check with no

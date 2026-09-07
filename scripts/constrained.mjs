@@ -27,7 +27,8 @@
  *   npm run constrained
  */
 import { readFileSync, readdirSync, statSync, writeFileSync, rmSync, mkdirSync, cpSync } from 'node:fs'
-import { execFileSync } from 'node:child_process'
+import { execFile, execFileSync } from 'node:child_process'
+import { cpus } from 'node:os'
 import { createHash } from 'node:crypto'
 import { join, relative } from 'node:path'
 import { tmpdir } from 'node:os'
@@ -164,41 +165,83 @@ if (CHECK) {
   console.log(`constrained — sources have moved since the record was written; re-running the experiment in full`)
 }
 
-const TREE = join(process.env.CLAUDE_SCRATCHPAD ?? tmpdir(), `constrained-tree-${process.pid}`)
-rmSync(TREE, { recursive: true, force: true }); mkdirSync(TREE, { recursive: true })
-try { execFileSync('cp', ['-Rc', join(ROOT, 'src'), join(TREE, 'src')], { stdio: 'pipe' }) }
-catch { cpSync(join(ROOT, 'src'), join(TREE, 'src'), { recursive: true }) }
-cpSync(join(ROOT, 'package.json'), join(TREE, 'package.json'))
-process.on('exit', () => rmSync(TREE, { recursive: true, force: true }))
+/**
+ * ONE CLONE PER LANE. SLOW IS A CRACK, NOT A COST.
+ *
+ * Every constant here spawns a child process, and they all mutated the SAME
+ * clone — so the census was serial by construction, minutes of one core while
+ * nine sat idle, and it was the slowest generator in the release path. The QPU
+ * measurement in this repository says what those cores are for: CPU adds no
+ * state and divides the TIME a sweep takes. This is a sweep, and it was
+ * undivided.
+ *
+ * Copy-on-write makes the clones nearly free — `cp -Rc` on APFS costs no disk
+ * and a fraction of a second — so each lane gets its own tree and the
+ * mutations cannot collide. The measurements are independent by construction:
+ * one constant perturbed, the seals read, the file restored.
+ */
+const LANES = Math.max(1, Math.min(cpus().length, 10))
+const TREES = []
+for (let lane = 0; lane < LANES; lane += 1) {
+  const t = join(process.env.CLAUDE_SCRATCHPAD ?? tmpdir(), `constrained-tree-${process.pid}-${lane}`)
+  rmSync(t, { recursive: true, force: true }); mkdirSync(t, { recursive: true })
+  try { execFileSync('cp', ['-Rc', join(ROOT, 'src'), join(t, 'src')], { stdio: 'pipe' }) }
+  catch { cpSync(join(ROOT, 'src'), join(t, 'src'), { recursive: true }) }
+  cpSync(join(ROOT, 'package.json'), join(t, 'package.json'))
+  TREES.push(t)
+}
+const TREE = TREES[0]
+process.on('exit', () => { for (const t of TREES) rmSync(t, { recursive: true, force: true }) })
 
-function measure(rel, name) {
+/**
+ * ASYNC, AND THAT IS THE WHOLE POINT. Giving each lane its own clone removed
+ * the collision but not the serialisation: `execFileSync` blocks the event
+ * loop, so ten lanes each waiting on a synchronous child still ran one at a
+ * time. The census took 9m23s at 55% CPU — five of ten cores idle while the
+ * work queued behind a blocking call. A lane that cannot yield is not a lane.
+ */
+function measure(rel, name, tree = TREE) {
   const src = `
-import * as v from ${JSON.stringify(join(TREE, 'src/verification/index.ts'))}
-import * as m from ${JSON.stringify(join(TREE, 'src/0/index.ts'))}
+import * as v from ${JSON.stringify(join(tree, 'src/verification/index.ts'))}
+import * as m from ${JSON.stringify(join(tree, 'src/0/index.ts'))}
 let probe = 'unimportable'
-try { const mod = await import(${JSON.stringify(join(TREE, rel))}); probe = JSON.stringify(mod[${JSON.stringify(name)}] ?? null) } catch (e) { probe = 'threw:' + e.message.slice(0, 60) }
+try { const mod = await import(${JSON.stringify(join(tree, rel))}); probe = JSON.stringify(mod[${JSON.stringify(name)}] ?? null) } catch (e) { probe = 'threw:' + e.message.slice(0, 60) }
 const fell = []
 for (const s of Object.keys(v.SEALS)) { let r; try { r = v.runSeal(s).seal } catch { r = 'threw' } ; if (r !== 'held') fell.push(s) }
 try { if (m.computeVortexInvariantsHold() !== true) fell.push('computeVortexInvariantsHold') } catch { fell.push('computeVortexInvariantsHold(threw)') }
 console.log(JSON.stringify({ fell, probe }))
+// LEAVE IMMEDIATELY. Importing these modules starts timers and animation
+// frames, so the child printed its answer and then sat holding the event loop
+// open until something drained it: 2.7s of CPU inside 33s of wall, ten lanes
+// each mostly waiting, and a census of 57 constants taking 379 seconds. The
+// noisy exit this file already knew about was not just a parsing nuisance, it
+// was thirty seconds per measurement. The answer is on stdout by this line;
+// there is nothing left to wait for.
+process.exit(0)
 `
-  try {
-    const out = execFileSync(process.execPath, ['--experimental-strip-types', '--input-type=module', '--eval', src],
-      { encoding: 'utf8', cwd: TREE, timeout: 180_000, stdio: ['ignore', 'pipe', 'pipe'] })
-    return JSON.parse(out.trim().split('\n').pop())
-  } catch (e) {
+  return new Promise((resolve) => {
+    execFile(process.execPath, ['--experimental-strip-types', '--input-type=module', '--eval', src],
+      { encoding: 'utf8', cwd: tree, timeout: 180_000 }, (err, stdout, stderr) => {
+        if (!err) { try { return resolve(JSON.parse(String(stdout).trim().split('\n').pop())) } catch { /* fall through */ } }
+        resolve(readNoisy(err ?? new Error('unparseable'), stdout, stderr))
+      })
+  })
+}
+
+function readNoisy(e, stdout, stderr) {
+  {
     // A non-zero exit is not automatically a failed measurement. Several
     // modules here disturb something on import — timers, animation frames — so
     // the child can print its result and THEN exit noisily. Four constants were
     // recorded inconclusive on exactly that, having produced a perfectly good
     // answer first. So the output is read before the exit code is believed.
-    const said = (e.stdout ?? '').toString().trim()
+    const said = String(stdout ?? e.stdout ?? '').trim()
     const line = said.split('\n').filter((l) => l.startsWith('{')).pop()
     if (line) { try { return { ...JSON.parse(line), noisyExit: true } } catch { /* fall through */ } }
     // And a measurement that truly crashed is not a law falling. The first
     // version put a sentinel into `fell`, and reported the constants forced on
     // the strength of the harness having died.
-    return { failed: true, fell: [], probe: 'measurement-failed', error: (e.stderr ?? e.message ?? '').toString().slice(-200) }
+    return { failed: true, fell: [], probe: 'measurement-failed', error: String(stderr ?? e.stderr ?? e.message ?? '').slice(-200) }
   }
 }
 
@@ -226,28 +269,46 @@ const perturb = (kind, text) => {
 
 const results = {}
 let forced = 0, free = 0, skipped = 0
-for (const lit of literals) {
-  const path = join(TREE, lit.rel)
+
+/** One constant, measured in the tree it was given. Nothing shared but the answer. */
+async function census(lit, tree) {
+  const key = `${lit.rel}::${lit.name}`
+  const path = join(tree, lit.rel)
   const before = readFileSync(path, 'utf8')
-  if (before.split(lit.decl).length - 1 !== 1) { results[`${lit.rel}::${lit.name}`] = { verdict: 'skipped', why: 'the declaration is not unique in its file, so the mutation could land on the wrong one' }; skipped++; continue }
-  const baseline = measure(lit.rel, lit.name)
+  if (before.split(lit.decl).length - 1 !== 1) {
+    return { key, verdict: 'skipped', why: 'the declaration is not unique in its file, so the mutation could land on the wrong one' }
+  }
+  const baseline = await measure(lit.rel, lit.name, tree)
   let after
-  try { writeFileSync(path, before.replace(lit.decl, mutateDecl(lit))); after = measure(lit.rel, lit.name) }
+  try { writeFileSync(path, before.replace(lit.decl, mutateDecl(lit))); after = await measure(lit.rel, lit.name, tree) }
   finally { writeFileSync(path, before) }
 
-  const key = `${lit.rel}::${lit.name}`
   if (baseline.failed || after.failed) {
-    results[key] = { verdict: 'inconclusive', why: `the measurement could not be completed${after.failed ? ' with the mutation applied' : ' before it'}`, error: (after.error ?? baseline.error ?? '').split('\n').filter(Boolean).slice(-2).join(' | ') }
-    skipped++; continue
+    return { key, verdict: 'inconclusive', why: `the measurement could not be completed${after.failed ? ' with the mutation applied' : ' before it'}`, error: (after.error ?? baseline.error ?? '').split('\n').filter(Boolean).slice(-2).join(' | ') }
   }
-  if (baseline.probe === after.probe) { results[key] = { verdict: 'skipped', why: `the mutation did not move the value (${baseline.probe})` }; skipped++; continue }
-  if (baseline.fell.length) { results[key] = { verdict: 'skipped', why: `laws already fall before the mutation: ${baseline.fell.join(', ')}` }; skipped++; continue }
-  const verdict = after.fell.length ? 'forced' : 'free'
-  results[key] = { verdict, kind: lit.kind, ...(after.fell.length ? { lawsFallen: after.fell } : {}) }
-  verdict === 'forced' ? forced++ : free++
-  console.log(`  ${verdict === 'forced' ? '●' : '○'} ${lit.name.padEnd(30)} ${verdict}${after.fell.length ? ` — ${after.fell.slice(0, 2).join(', ')}` : ''}`)
+  if (baseline.probe === after.probe) return { key, verdict: 'skipped', why: `the mutation did not move the value (${baseline.probe})` }
+  if (baseline.fell.length) return { key, verdict: 'skipped', why: `laws already fall before the mutation: ${baseline.fell.join(', ')}` }
+  return { key, verdict: after.fell.length ? 'forced' : 'free', kind: lit.kind, name: lit.name, ...(after.fell.length ? { lawsFallen: after.fell } : {}) }
 }
 
+const censusStarted = Date.now()
+const queue = [...literals]
+await Promise.all(TREES.map(async (tree) => {
+  for (;;) {
+    const lit = queue.shift()
+    if (lit === undefined) return
+    // Each measurement is synchronous inside its lane; yielding between them
+    // lets the other lanes' children run.
+    const r = await census(lit, tree)
+    const { key, ...rest } = r
+    results[key] = rest
+    if (rest.verdict === 'forced') { forced++; console.log(`  ● ${(rest.name ?? key).padEnd(30)} forced${rest.lawsFallen ? ` — ${rest.lawsFallen.slice(0, 2).join(', ')}` : ''}`) }
+    else if (rest.verdict === 'free') { free++; console.log(`  ○ ${(rest.name ?? key).padEnd(30)} free`) }
+    else skipped++
+  }
+}))
+
+console.log(`  [census took ${((Date.now() - censusStarted) / 1000).toFixed(0)}s across ${TREES.length} lanes]`)
 console.log(`constrained — part two, exported literal constants (census, not a sample):`)
 console.log(`  ${literals.length} perturbable; ${forced} forced by at least one law, ${free} held by nothing, ${skipped} not measurable`)
 

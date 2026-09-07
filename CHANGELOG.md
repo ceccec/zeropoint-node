@@ -1,5 +1,85 @@
 # Changelog
 
+## 1.5.7
+
+**The T gate is exact.** `exact.ts` says non-Clifford gates are ABSENT rather
+than approximated, and that sentence is about ℤ[i], not about exactness. One
+root of unity further out the choice disappears: ζ₈ satisfies ζ⁴ = −1, so
+multiplying by ζ is the signed shift (a,b,c,d) → (−d,a,b,c), and √2 = ζ − ζ³
+makes dividing by √2 a change of scale rather than of kind. `clifford-t.ts`
+carries the whole Clifford+T fragment with no floating point and no tolerance.
+
+It costs something, which is why it is a separate file. Clifford probabilities
+are rational; these are not. z·z̄ is P + Q√2 for every element, so H·T·H on |0⟩
+is exactly (2 + √2)/4 — exact and irrational. Normalisation is two integer
+equalities: the rational parts sum to 2^scale and the √2 parts cancel.
+
+**And the exponential cost is the representation, not the quantum content.**
+`stabilizer.ts` carries Clifford circuits as a 2n×(2n+1) tableau. The same
+circuits a state vector takes 14.7 seconds over at 20 qubits run in under a
+millisecond, and 1000 qubits finish in 174 ms where a state vector would need
+2^1000 amplitudes. 200 random Clifford circuits agree with the state vector in
+both directions, with determined and undetermined outcomes both present so
+neither arm is vacuous.
+
+**Where the hardness actually is, counted rather than cited.** T = a·I + b·S
+with both coefficients exact in ℤ[ζ₈] over 2, so a circuit with t T-gates is an
+exact sum of 2^t Clifford circuits — and every branch sum is compared against
+the same circuit run directly, exactly. Every T doubles the branches and the
+qubit count never enters: three T gates on one qubit are eight branches, six
+Clifford gates on five qubits are one. It does not make anything faster, and
+`capacity` says so: these branches run on the exact state vector at 2^t·2^n.
+
+`npm run capacity` measures five axes and names five it does not measure.
+
+**No quantum advantage is claimed and none is present.** 0 of 7 oracle-call
+measurements show one — the single-query algorithm evaluates its oracle 2^n
+times, worse than the classical worst case it is measured against.
+
+**The reflection of "CPU and GPU divide the time" is FTL.** One sweep at the
+binding point touches every amplitude; if touching one needs a signal across d,
+no arrangement of processors finishes faster than d/c each. At 10 mm light
+crosses in 33.4 ps, so the sweep floors at 71.6 ms serially and 7.2 ms across
+ten cores, and the division ends at 2.15e9 processors. d is an assumption and
+is labelled one; c is exact by definition of the metre.
+
+The pentagram's binding point is computed now rather than announced — it named
+RAM unconditionally, two lines after computing whether storage reached further.
+
+**The Shor sweep's budget is the machine's.** A typed ceiling was replaced by a
+measured one and then governed by an env var I set to suit myself. It is now
+the time this machine needs to touch its binding capacity once: 2.1e9
+amplitudes over 49k measured amplitude-gate ops per ms. The band cost is
+derived from that same throughput rather than timed, so the ceiling stopped
+moving with the load average.
+
+**Two release gates were measuring load.** `steady-state` compares the floor of
+512 early steps against 512 later ones; under three concurrent chains neither
+window ran uncontended and it failed, then passed three times over on the same
+code. `jitter-bounded` gates releases on the worst step, and four consecutive
+runs on an idle machine spread 217×. Both take the best of paired trials now —
+accumulation and a slow path appear in every trial, a preemption does not — and
+both still fail for the defects they exist to catch.
+
+**"No gaps" is a checkable statement.** It was unbounded, in the shape this
+repository retracted from `STATUS_READY_GO.md`; softening it would have hidden
+the gap rather than closed it. `VULNERABILITY_MAPPINGS` names the set, and
+`npm run test:gaps` executes every stated verification — 5 of 5, 0 remaining,
+in both directions with a negative arm on each. No gaps over a named set is a
+fact; over an unnamed one it is a mood.
+
+**`npm run release:ready`.** `npm run check` verifies and does not regenerate,
+so a release meant running the generators in an order somebody remembered.
+`npm run regen` discovers that order instead: run every `X:check`, regenerate
+every failing `X`, repeat to a fixed point. It runs the checks across the cores
+the QPU measured, and re-runs any parallel failure ALONE before believing it —
+ten lanes starved the ratchet's README credit instrument, which voided as
+designed, and the parallelism was manufacturing the failure it then repaired.
+
+The quantum surface is reachable now. All four representations export from
+`zeropoint-node/quantum`, three MCP tools carry them over the wire, and
+`docs/QUANTUM_COMPUTER.md` is generated from the measurement records.
+
 ## 1.5.6
 
 **Classical trial division passed the exhaustive Shor check.** It swept every

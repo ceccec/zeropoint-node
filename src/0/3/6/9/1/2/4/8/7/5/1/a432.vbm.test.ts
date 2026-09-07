@@ -135,8 +135,16 @@ check('each division carries the digit at its own index',
 check('every trinity sum is the sum of its own digits',
   SEQS.every((s) => getVBMDecodeTrinities(s).every((t) => t.sum === t.digits.reduce((a, b) => a + b, 0))))
 
-check('every trinity digital root is the digital root of its sum',
-  SEQS.every((s) => getVBMDecodeTrinities(s).every((t) => t.digitalRoot === legacyDigitalRoot(t.sum))))
+// vbm.decode computes this root with the spine's own function, so comparing
+// against that function alone is circular: corrupt the root and both sides move
+// together (measured: the suite passed under a corrupted legacyDigitalRoot).
+// A trinity sums three digits, so its sum is at most 27, and the roots of 0..27
+// are a literal table that owes nothing to a432.roots. The table is the anchor;
+// the spine comparison beside it is the identity the audit asks for.
+const ROOT_OF_SUM: readonly number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+check('every trinity digital root is the digital root of its sum, against a literal table',
+  SEQS.every((s) => getVBMDecodeTrinities(s).every((t) =>
+    t.sum >= 0 && t.sum <= 27 && t.digitalRoot === ROOT_OF_SUM[t.sum] && t.digitalRoot === legacyDigitalRoot(t.sum))))
 
 check('no trinity frequency is NaN or Infinity',
   SEQS.every((s) => getVBMDecodeTrinities(s).every((t) => Number.isFinite(t.frequency))))

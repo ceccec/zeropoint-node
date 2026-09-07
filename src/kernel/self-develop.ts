@@ -51,11 +51,12 @@ export const VAGUE_TIP_RE =
 
 /**
  * CODE must name a concrete path or npm script. The paths admitted are the
- * ones the finders above can NAME: findUndeclaredPackageImport walks scripts/
- * and the root build configs as well as src/, so a tip about scripts/x.mjs is
- * exactly as concrete as one about src/x.ts. Before scripts/ was listed here
- * the first undeclared import under scripts/ produced a tip this rule refused
- * as vague, and the kernel smoke failed on the rule rather than on the code.
+ * ones the finders above can NAME: findUndeclaredPackageImport walks the
+ * scripts directory and the root build configs as well as src, so a tip about
+ * a file under scripts is exactly as concrete as one about a file under src.
+ * Before the scripts directory was admitted here, the first undeclared import
+ * found there produced a tip this rule refused as vague, and the kernel smoke
+ * failed on the rule rather than on the code.
  */
 export const CONCRETE_CODE_RE =
   /(?:src\/[\w./-]+|scripts\/[\w./-]+|README\.md|public\/[\w./-]+|(?:eslint|rollup|jest|webpack|next-sitemap)\.config\.[cm]?js|npm\s+run\s+[\w:-]+|bundle:a432)/

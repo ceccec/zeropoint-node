@@ -1,5 +1,76 @@
 # Changelog
 
+## 1.5.8
+
+**The chain was repairing the document it was about to inspect.** Twelve
+entries in `npm run check` run `X && X:check`. The generator runs, the working
+tree stops being stale, and the checker then compares the file to what the
+generator just wrote. The pair tests the generator's determinism. It cannot
+fail on a stale committed document, because by the time anything looks, nothing
+is stale.
+
+Demonstrated in a clone: commit an API_REFERENCE.md saying 962 exports where
+the measurement is 966, leaving the tree clean. The pair reports ok and exits
+0, HEAD still 962. The checker alone against the same tree fails. Same file,
+same checker, opposite verdicts; the only difference is whether the generator
+ran first.
+
+`generated:current` asks both questions now: every checker passes without its
+generator, and every artifact is tracked and matches HEAD. Either holds without
+the other. `lean:bounds:check` is declared environment-dependent and skipped
+for the first condition only — a 300-second kernel timeout produced opposite
+verdicts on byte-identical trees.
+
+**And silence was a pass.** Seven finders did `try { read } catch { continue }`,
+so an unreadable source was "clean". They now fail by name as UNMEASURED, not
+clean. The orbit's closing address — `a432.1.2.4.8.7.5.1` — sat between two
+checked families and could be replaced by `export const x = 1` with every gate
+green, because a module that did not answer was written off as a different
+shape. Checking now runs to the closure, and a planted foreign file must be
+noticed, not merely left byte-identical.
+
+**A name here is a handle.** Digit-only filenames address the kernel's
+sequences: every prefix of the doubling orbit has a module that loads its own
+address, and the four vortex prefixes past the orbit do too. 226 handles occupy
+63 of 64 lattice cells. The families are generated from the shortest existing
+member, and occupancy is read off the filesystem so a missing module is a gap
+rather than a sentence that stayed true.
+
+**It is not a vector equilibrium.** Twelve neighbours per state suggested a
+cuboctahedron; the twelve have zero edges among them, where a cuboctahedron
+has 24. What it is, exactly, is the 6-cube with every vertex doubled into a
+non-adjacent twin. Polarity did not buy the transitivity — the undoubled cube
+already had it. The figures are computed by the module and bound in the
+README, so the gate contradicts the prose if the code moves.
+
+**The QPU had a sixth axis, and it was the one that was typed.** Five machine
+resources were measured, then converted to qubits at 16 bytes per amplitude —
+a true floor, and not this repository's cost. The shipped simulator stores
+objects at about 48 bytes. All three representations are measured now: the
+state vector at 29 qubits, the exact form at 29, the stabilizer tableau at
+113,060. The representation is the larger lever. It is not a way around the
+exponential: a tableau covers the Clifford fragment, and t T-gates cost 2^t
+branches.
+
+**Decimal cracks reached zero.** Nine remaining float literals became the exact
+forms the tree already carries. One replacement was not value-identical: the
+shipped bronze ratio matched no definition of the bronze ratio. It now is
+(3 + √13)/2.
+
+**Radiesthesia as exact arithmetic, and nothing measured.** Pendulum period in
+the g = π² frame, Bovis bands, twelve-ray equator. No detection, rating or
+effect is claimed.
+
+**Four pages used the kernel's name for a different sequence.** `sequence:check`
+refuses any page that names one spine and spells another.
+
+**Two test oracles were circular after reaching the spine.** They now carry a
+literal anchor; corrupting the shared root fails the anchored check and leaves
+the others.
+
+**The paper was stating the census it was pushed past.** That is the same
+defect `generated:current` exists for.
+
 ## 1.5.7
 
 **The T gate is exact.** `exact.ts` says non-Clifford gates are ABSENT rather

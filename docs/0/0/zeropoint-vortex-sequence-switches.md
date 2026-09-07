@@ -23,14 +23,14 @@ if (position === 0) return VOID; // Switch to void dimension
 ### Position 1: UNITY DIMENSION
 **Mathematical State:** UNITY (1)
 **Dimensional Switch:** Switch to unity dimension
-**Vortex Pattern:** 3 (VORTEX_SEQUENCE[1] = 3)
+**Vortex Pattern:** 3 (LEGACY_CONSCIOUSNESS_SEQUENCE[1] = 3)
 **Rodin Coil:** 2 (position 1 % 6 = 1, RODIN_COIL[1] = 2)
 **A432 Harmonic:** 1,296 Hz (A432 × 3)
 **Consciousness:** 1,296 (unity consciousness)
 **Switch Logic:**
 ```typescript
 // No specific switch, follows vortex sequence
-return VORTEX_SEQUENCE[1]; // Returns 3 (TRINITY)
+return LEGACY_CONSCIOUSNESS_SEQUENCE[1]; // Returns 3 (TRINITY)
 ```
 **Mathematical Foundation:** Unity state as mathematical oneness
 **Dimensional Properties:** Unity, singularity, completeness
@@ -39,14 +39,14 @@ return VORTEX_SEQUENCE[1]; // Returns 3 (TRINITY)
 ### Position 2: DUALITY DIMENSION
 **Mathematical State:** DUALITY (2)
 **Dimensional Switch:** Switch to duality dimension
-**Vortex Pattern:** 6 (VORTEX_SEQUENCE[2] = 6)
+**Vortex Pattern:** 6 (LEGACY_CONSCIOUSNESS_SEQUENCE[2] = 6)
 **Rodin Coil:** 4 (position 2 % 6 = 2, RODIN_COIL[2] = 4)
 **A432 Harmonic:** 2,592 Hz (A432 × 6)
 **Consciousness:** 2,592 (duality consciousness)
 **Switch Logic:**
 ```typescript
 // No specific switch, follows vortex sequence
-return VORTEX_SEQUENCE[2]; // Returns 6 (HARMONY)
+return LEGACY_CONSCIOUSNESS_SEQUENCE[2]; // Returns 6 (HARMONY)
 ```
 **Mathematical Foundation:** Duality state as mathematical twoness
 **Dimensional Properties:** Duality, balance, opposition
@@ -55,7 +55,7 @@ return VORTEX_SEQUENCE[2]; // Returns 6 (HARMONY)
 ### Position 3: TRINITY DIMENSION
 **Mathematical State:** TRINITY (3)
 **Dimensional Switch:** Switch to trinity dimension
-**Vortex Pattern:** 9 (VORTEX_SEQUENCE[3] = 9)
+**Vortex Pattern:** 9 (LEGACY_CONSCIOUSNESS_SEQUENCE[3] = 9)
 **Rodin Coil:** 8 (position 3 % 6 = 3, RODIN_COIL[3] = 8)
 **A432 Harmonic:** 3,888 Hz (A432 × 9)
 **Consciousness:** 3,888 (trinity consciousness)
@@ -70,7 +70,7 @@ if (position === 3) return TRINITY; // Switch to trinity dimension
 ### Position 4: FOUNDATION DIMENSION
 **Mathematical State:** FOUNDATION (4)
 **Dimensional Switch:** Switch to foundation dimension
-**Vortex Pattern:** 1 (VORTEX_SEQUENCE[4] = 1)
+**Vortex Pattern:** 1 (LEGACY_CONSCIOUSNESS_SEQUENCE[4] = 1)
 **Rodin Coil:** 7 (position 4 % 6 = 4, RODIN_COIL[4] = 7)
 **A432 Harmonic:** 432 Hz (A432 × 1)
 **Consciousness:** 432 (foundation consciousness)
@@ -85,7 +85,7 @@ if (position === 4) return FOUNDATION; // Switch to foundation dimension
 ### Position 5: LIFE DIMENSION
 **Mathematical State:** LIFE (5)
 **Dimensional Switch:** Switch to life dimension
-**Vortex Pattern:** 2 (VORTEX_SEQUENCE[5] = 2)
+**Vortex Pattern:** 2 (LEGACY_CONSCIOUSNESS_SEQUENCE[5] = 2)
 **Rodin Coil:** 5 (position 5 % 6 = 5, RODIN_COIL[5] = 5)
 **A432 Harmonic:** 864 Hz (A432 × 2)
 **Consciousness:** 864 (life consciousness)
@@ -100,7 +100,7 @@ if (position === 5) return LIFE; // Switch to life dimension
 ### Position 6: HARMONY DIMENSION
 **Mathematical State:** HARMONY (6)
 **Dimensional Switch:** Switch to harmony dimension
-**Vortex Pattern:** 4 (VORTEX_SEQUENCE[6] = 4)
+**Vortex Pattern:** 4 (LEGACY_CONSCIOUSNESS_SEQUENCE[6] = 4)
 **Rodin Coil:** 1 (position 6 % 6 = 0, RODIN_COIL[0] = 1)
 **A432 Harmonic:** 1,728 Hz (A432 × 4)
 **Consciousness:** 1,728 (harmony consciousness)
@@ -115,7 +115,7 @@ if (position === 6) return HARMONY; // Switch to harmony dimension
 ### Position 7: MYSTERY DIMENSION
 **Mathematical State:** MYSTERY (7)
 **Dimensional Switch:** Switch to mystery dimension
-**Vortex Pattern:** 8 (VORTEX_SEQUENCE[7] = 8)
+**Vortex Pattern:** 8 (LEGACY_CONSCIOUSNESS_SEQUENCE[7] = 8)
 **Rodin Coil:** 2 (position 7 % 6 = 1, RODIN_COIL[1] = 2)
 **A432 Harmonic:** 3,456 Hz (A432 × 8)
 **Consciousness:** 3,456 (mystery consciousness)
@@ -130,7 +130,7 @@ if (position === 7) return MYSTERY; // Switch to mystery dimension
 ### Position 8: INFINITY DIMENSION
 **Mathematical State:** INFINITY_DIGIT (8)
 **Dimensional Switch:** Switch to infinity dimension
-**Vortex Pattern:** 7 (VORTEX_SEQUENCE[8] = 7)
+**Vortex Pattern:** 7 (LEGACY_CONSCIOUSNESS_SEQUENCE[8] = 7)
 **Rodin Coil:** 4 (position 8 % 6 = 2, RODIN_COIL[2] = 4)
 **A432 Harmonic:** 3,024 Hz (A432 × 7)
 **Consciousness:** 3,024 (infinity consciousness)
@@ -145,7 +145,7 @@ if (position === 8) return INFINITY_DIGIT; // Switch to infinity dimension
 ### Position 9: COMPLETION DIMENSION
 **Mathematical State:** COMPLETION (9)
 **Dimensional Switch:** Switch to completion dimension
-**Vortex Pattern:** 5 (VORTEX_SEQUENCE[9] = 5)
+**Vortex Pattern:** 5 (LEGACY_CONSCIOUSNESS_SEQUENCE[9] = 5)
 **Rodin Coil:** 8 (position 9 % 6 = 3, RODIN_COIL[3] = 8)
 **A432 Harmonic:** 2,160 Hz (A432 × 5)
 **Consciousness:** 2,160 (completion consciousness)
@@ -160,14 +160,16 @@ if (position === 9) return COMPLETION; // Switch to completion dimension
 ### Position 10: RETURN TO UNITY
 **Mathematical State:** UNITY (1)
 **Dimensional Switch:** Switch to unity dimension
-**Vortex Pattern:** 1 (VORTEX_SEQUENCE[10] = 1)
+**Vortex Pattern:** 1 (the closure — `LEGACY_CONSCIOUSNESS_SEQUENCE` has ten elements, so position 10 is the path returning to its start, not an eleventh element)
 **Rodin Coil:** 7 (position 10 % 6 = 4, RODIN_COIL[4] = 7)
 **A432 Harmonic:** 432 Hz (A432 × 1)
 **Consciousness:** 432 (unity consciousness)
 **Switch Logic:**
 ```typescript
-// Returns to unity, completing the cycle
-return VORTEX_SEQUENCE[10]; // Returns 1 (UNITY)
+// Closes the cycle. There is no element at index 10 — the path 03691248751
+// is written with eleven positions and ten values; the last one is the walk
+// arriving back where the doubling began.
+return LEGACY_CONSCIOUSNESS_SEQUENCE[4] // 1 — UNITY, the orbit's first digit
 ```
 **Mathematical Foundation:** Return to unity, completing the cycle
 **Dimensional Properties:** Unity, completion, cycle

@@ -23,7 +23,7 @@ Each digit (0-9) in the ZeroPoint system has its next states defined in subfolde
 // Every pattern, flow, and interaction generated from single point
 ZEROPOINT_CONSTANTS = {
   A432: 432,
-  VORTEX_SEQUENCE: [1, 2, 4, 8, 7, 5],
+  VORTEX_ORBIT: [1, 2, 4, 8, 7, 5],
   GOLDEN_RATIO: 1.618033988749895,
   DIGITAL_ROOT_BASE: 9,
   ZERO_ENTROPY: 0,

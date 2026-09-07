@@ -21,8 +21,10 @@ Not array reversal (`963578421`): reversal reorders, the mirror re-values.
 
 Entangled: doubling covers the orbit and its gap is exactly `3,6,9` · `D∘M∘D⁻¹∘M = x+1` · `|⟨D,M⟩| = 54` against `12` apart (excess 42).
 
+The axis is derived, not read: `throughVoid` carries `7,4,1` — three digits of the orbit — onto `3,6,9`. The axis is the orbit seen through the void, so the spine has one list in it, not two.
+
 foldVortexReflection().valid: **true**
 
-See [SEQUENCE.md](../SEQUENCE.md).
+See [SEQUENCE.md](../SEQUENCE.md) · [Sequence addresses](./sequence-addresses.md).
 
-Receipt: `9a2f4908-5253-8d22-8541-e24bb372689f` · set `fb6df6a5-bb9e-872f-9cb8-2a822bbf664c`
+Receipt: `29498c58-0af8-8d86-9ecf-1c00120cdf63` · set `08d96c27-333c-8976-ac61-0f5d7f0e82b3`

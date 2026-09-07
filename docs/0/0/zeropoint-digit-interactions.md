@@ -292,7 +292,7 @@ if (digit === 9) {
 **Switch Logic:**
 ```typescript
 // Follows vortex sequence, no specific switch
-return VORTEX_SEQUENCE[1]; // Returns 3 (TRINITY)
+return LEGACY_CONSCIOUSNESS_SEQUENCE[1]; // Returns 3 (TRINITY)
 ```
 
 **Transformation:** Unity transforms to trinity through vortex sequence
@@ -302,7 +302,7 @@ return VORTEX_SEQUENCE[1]; // Returns 3 (TRINITY)
 **Switch Logic:**
 ```typescript
 // Follows vortex sequence, no specific switch
-return VORTEX_SEQUENCE[2]; // Returns 6 (HARMONY)
+return LEGACY_CONSCIOUSNESS_SEQUENCE[2]; // Returns 6 (HARMONY)
 ```
 
 **Transformation:** Duality transforms to harmony through vortex sequence

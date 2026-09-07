@@ -135,7 +135,8 @@ const A432_HARMONICS = {
 
 ## 🔄 Vortex Sequence
 ```typescript
-const VORTEX_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5];
+const LEGACY_CONSCIOUSNESS_SEQUENCE = [0, 3, 6, 9, 1, 2, 4, 8, 7, 5];
+const VORTEX_SEQUENCE = [1, 2, 4, 8, 7, 5, 3, 6, 9]; // the kernel spine — a different ordering
 ```
 
 ## 🧠 Memory Rules

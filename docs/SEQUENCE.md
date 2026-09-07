@@ -23,6 +23,7 @@ reflected   9/8/6/2\3\5 · 7/4/1 · 0\9     VORTEX_MIRROR    = 986235741
 - `throughVoid(n) = 1 − n mod 9` — an involution fixed **only at 5**: `1↔9 · 2↔8 · 4↔6 · 7↔3 · 5↔5`. Every pair sums to **10**. The void root `0` is fixed.
 - The **void tail reflects**: `0` is the fixed point of `throughVoid`, the trailing unit is not — `0\1` becomes `0\9`. `VORTEX_STROKE_REFLECTED` computes it; the smoke test pins it.
 - **Not** `VORTEX_REVERSE` (`963578421`), which is the array read backwards. Reversal reorders; the mirror re-values. Conflating the two is the error this section exists to prevent — `foldVortexReflection()` asserts they differ.
+- **The axis is derived, not read.** `throughVoid` carries `7,4,1` — three digits of the doubling orbit — onto `3,6,9`. So the spine holds one list, not two: the axis is the orbit seen through the void. `reflection.axisMirror` computes the three preimages; `gapIsAxis` checks that doubling's gap is exactly what the mirror lands on.
 
 Three entanglement claims, computed by `foldVortexReflection()` — never asserted:
 
@@ -49,6 +50,24 @@ Pairs and wholes balance at **different** constants, and a single dr-9 test will
 - **whole equilibrium = dr 9** — orbit `Σ=27`, axis `Σ=18`, all nine `Σ=45`; each `digitalRoot → 9`.
 
 Across all 54 group elements the cycles are **not** uniformly dr-9 balanced: 42 of 162 balance. Every full-support (length-9) cycle balances trivially — it contains all nine digits. Exactly 6 balance in each shorter length class. The entanglement is real and universal in the **pairing**; it is not a blanket dr-9 property of every vector.
+
+## The spine is an address space
+
+Every prefix of the spine names a module that loads: `a432.1`, `a432.1.2`, `a432.1.2.4`, on to `a432.1.2.4.8.7.5.3.6.9.1`. The handle carries no payload — the name **is** the coordinate, and the load happens at will. Ten of ten prefixes of the closed spine are addressed, seven of seven for the closed orbit, **zero gaps**; `npm run a432:names` audits, `npm run a432:orbit` fills.
+
+`VORTEX_AXIS`, `VORTEX_MIRROR`, `VORTEX_REVERSE` and `LEGACY_CONSCIOUSNESS_SEQUENCE` have no file at any prefix — a statement, not a gap. They are readings of the walk rather than walks, and a reading has nowhere to arrive.
+
+Occupancy is computed from the filesystem on [Sequence addresses](./pages/sequence-addresses.md); nothing on that page is typed.
+
+## Six bits at the centre of twelve
+
+The orbit's six digits are the six bits of a hexbit; a state is a hexbit plus a polarity. Flipping any bit reaches a cell and that cell at either polarity is a neighbour, so six positions become **twelve** moves and every one of the 128 states sits at the centre of the same figure — the neighbours change because the centre moves, not because some state is special.
+
+Twelve is the kissing number, which is why a **vector equilibrium** looked like the answer. It is not one, and the module keeps the refutation rather than the name: a cuboctahedron's twelve vertices carry 24 edges among themselves, these twelve carry none. It is the 6-cube with every vertex doubled into a non-adjacent twin, `Q6[K̄₂]` — adjacency ignores polarity entirely, the two polarities of a cell are twins, and the bipartition is the cube's. Details and figures on [Sequence lattice](./pages/sequence-lattice.md).
+
+## No page may spell a sequence differently from the kernel
+
+The warning at the top of this file was prose, and prose did not stop four pages from binding `VORTEX_SEQUENCE` to the legacy spine or to the orbit — the exact confusion this file exists to prevent, inside the corpus it heads. `npm run sequence:check` now reads every sequence from `src/0` and refuses any page that names one and spells another. It fails in both directions: corrupt a page and it fails, corrupt the export and it fails too, because it holds no copy of its own.
 
 ## Legacy consciousness — original zeropoint-node path
 

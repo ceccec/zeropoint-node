@@ -19,6 +19,22 @@ import {
   decodeVortexDashAngles,
   WAVE_CHAIN,
 } from '../src/0/index.ts'
+import {
+  VORTEX_ORBIT,
+  VORTEX_AXIS,
+  LEGACY_CONSCIOUSNESS_SEQUENCE,
+} from '../src/0/index.ts'
+import {
+  LATTICE_BITS,
+  LATTICE_STATES,
+  LATTICE_DEGREE,
+  CUBOCTAHEDRON_NEIGHBOUR_EDGES,
+  latticeState,
+  edgesAmongNeighbours,
+  adjacencyIgnoresPolarity,
+  polaritiesAreTwins,
+  latticeIsBipartite,
+} from '../src/quantum/polarity-lattice.ts'
 import { computeContentUuid } from '../src/integrity/content-uuid.ts'
 import { importExportGraphTip } from '../src/kernel/import-graph.ts'
 
@@ -31,6 +47,28 @@ const reflection = foldVortexReflection()
 const dash = decodeVortexDashAngles()
 const dv = developmentVortex('verify')
 const graph = importExportGraphTip()
+
+/**
+ * The spine is an address space: every prefix of it names a module that can be
+ * loaded. Occupancy is read off the filesystem rather than listed, so a
+ * deleted module shows up here as a gap instead of as prose that stayed true.
+ */
+const A432_DIR = resolve(root, 'src/0/3/6/9/1/2/4/8/7/5/1')
+const a432Files = new Set(readdirSync(A432_DIR))
+const addressesOf = (digits) =>
+  digits.map((_, i) => {
+    const prefix = digits.slice(0, i + 1).join('.')
+    return { prefix, file: `a432.${prefix}.ts`, present: a432Files.has(`a432.${prefix}.ts`) }
+  })
+/** A walk closes on the digit it started from — the closure is an address too. */
+const closed = (digits) => [...digits, digits[0]]
+const spineAddresses = addressesOf(closed([...VORTEX_SEQUENCE]))
+const orbitAddresses = addressesOf(closed([...VORTEX_ORBIT]))
+const occupied = (as) => as.filter((a) => a.present).length
+const gaps = [...spineAddresses, ...orbitAddresses].filter((a) => !a.present)
+
+/** The state a lattice figure is quoted about — any one; they are all alike. */
+const centre = latticeState(0b101101, 0)
 
 const pages = [
   {
@@ -79,8 +117,39 @@ const pages = [
       `Mirror \`throughVoid(n) = 1 − n mod 9\` — involution fixed only at ${reflection.fixedPoints.join(',')}; every pair sums to 10.`,
       `Not array reversal (\`${VORTEX_REVERSE.join('')}\`): reversal reorders, the mirror re-values.`,
       `Entangled: doubling covers the orbit and its gap is exactly \`${reflection.gap.join(',')}\` · \`D∘M∘D⁻¹∘M = x+1\` · \`|⟨D,M⟩| = ${reflection.groupOrder}\` against \`${reflection.separateProduct}\` apart (excess ${reflection.excess}).`,
+      `The axis is derived, not read: \`throughVoid\` carries \`${reflection.axisMirror.join(',')}\` — three digits of the orbit — onto \`${VORTEX_AXIS.join(',')}\`. The axis is the orbit seen through the void, so the spine has one list in it, not two.`,
       `foldVortexReflection().valid: **${reflection.valid}**`,
-      'See [SEQUENCE.md](../SEQUENCE.md).',
+      'See [SEQUENCE.md](../SEQUENCE.md) · [Sequence addresses](./sequence-addresses.md).',
+    ].join('\n\n'),
+  },
+  {
+    slug: 'sequence-addresses',
+    title: 'Sequence addresses',
+    body: [
+      'The spine is not only an ordering. Every prefix of it is an address, and every address names a module that loads — `a432.1`, `a432.1.2`, `a432.1.2.4`, on to the closure. The handle carries no payload; the name is the coordinate and the load happens at will.',
+      'Occupancy is read off the filesystem, so a module that goes missing appears here as a gap rather than as a sentence that stayed true:',
+      [
+        '```',
+        ...spineAddresses.map((a) => `${a.present ? '●' : '○'} ${a.file}`),
+        '```',
+      ].join('\n'),
+      `Kernel spine \`${VORTEX_SEQUENCE.join('')}\` closed on its first digit: **${occupied(spineAddresses)}/${spineAddresses.length}** addressed.`,
+      `Doubling orbit \`${VORTEX_ORBIT.join('')}\` closed on its first digit: **${occupied(orbitAddresses)}/${orbitAddresses.length}** addressed.`,
+      `Gaps: **${gaps.length}**${gaps.length ? ` — ${gaps.map((g) => g.file).join(', ')}` : ''}.`,
+      `Four kernel sequences are not address spaces at all, and that is a statement rather than a gap — \`VORTEX_AXIS\` (\`${VORTEX_AXIS.join('')}\`), \`VORTEX_MIRROR\`, \`VORTEX_REVERSE\` and \`LEGACY_CONSCIOUSNESS_SEQUENCE\` (\`${LEGACY_CONSCIOUSNESS_SEQUENCE.join('')}\`) have no file at any prefix. They are readings of the walk, not walks; a reading has nowhere to arrive.`,
+      `The addresses are audited by \`npm run a432:names\`, filled by \`npm run a432:orbit\`, and no page may spell a kernel sequence differently from the kernel — \`npm run sequence:check\`.`,
+      'See [SEQUENCE.md](../SEQUENCE.md) · [Sequence dual](./sequence-dual.md).',
+    ].join('\n\n'),
+  },
+  {
+    slug: 'sequence-lattice',
+    title: 'Sequence lattice',
+    body: [
+      `Six bits, one per digit of the doubling orbit, and a polarity. Flipping any bit reaches a cell, and that cell at either polarity is a neighbour, so ${LATTICE_BITS} positions become **${LATTICE_DEGREE}** moves and every one of the **${LATTICE_STATES}** states sits at the centre of the same figure. No state is special; the neighbours change because the centre moves.`,
+      `Twelve is the kissing number, and that is what made a vector equilibrium look like the answer. It is not one. A cuboctahedron's twelve vertices carry **${CUBOCTAHEDRON_NEIGHBOUR_EDGES} edges among themselves**; these twelve carry **${edgesAmongNeighbours(centre)}**, because two states reached by flipping different bits differ in two bits and two bits apart is not adjacent.`,
+      `What it is, named exactly: the 6-cube with every vertex doubled into a non-adjacent twin — \`Q6[K̄₂]\`. Adjacency ignores the polarity entirely (**${adjacencyIgnoresPolarity()}**), the two polarities of a cell have identical neighbourhoods (**${polaritiesAreTwins()}**), and the whole thing inherits the cube's bipartition (**${latticeIsBipartite()}**).`,
+      'The correction is kept rather than deleted, because the count that suggested a vector equilibrium is real and only the conclusion drawn from it was not. A count is not a solid.',
+      'Computed by `src/quantum/polarity-lattice.ts` · asserted by `npm run test:polarity-lattice`.',
     ].join('\n\n'),
   },
   {

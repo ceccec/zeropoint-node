@@ -8,5 +8,7 @@ Projections of `src/0` / integrity / kernel — not second sources.
 - [Vortex stroke](./vortex-stroke.md)
 - [Content-uuid](./content-uuid.md)
 - [Sequence dual](./sequence-dual.md)
+- [Sequence addresses](./sequence-addresses.md)
+- [Sequence lattice](./sequence-lattice.md)
 - [Development vortex](./development-vortex.md)
-Receipt: `fb6df6a5-bb9e-872f-9cb8-2a822bbf664c`
+Receipt: `08d96c27-333c-8976-ac61-0f5d7f0e82b3`

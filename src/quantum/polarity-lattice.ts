@@ -49,6 +49,26 @@
  * THE RULE THIS LEAVES, which is the only part worth carrying elsewhere:
  * before crediting a mechanism with a property, compute the property WITHOUT
  * the mechanism.
+ *
+ * millennium-solutions sharpened that, and the sharper form is the one to keep:
+ * a negative arm proves the mechanism CHANGES something. It proves the
+ * mechanism PRODUCED the property only if the property is ABSENT when the
+ * mechanism is. Those come apart whenever the property is monotone under the
+ * change — degree-doubling preserves vertex-transitivity, so no negative arm on
+ * the DEGREE could ever have caught this. The test has to be run on the
+ * property being claimed, never on the quantity the mechanism moves.
+ *
+ * AND WHAT IT ACTUALLY IS, since naming what a thing is not leaves the thing
+ * unnamed. Adjacency here depends only on the cells: two states are adjacent
+ * exactly when their cells differ in one bit, whatever their polarities. So
+ * this is the 6-cube with every vertex replaced by two non-adjacent twins —
+ * the lexicographic product Q6[K̄2] — and it inherits Q6's bipartition, 64
+ * states of even cell-popcount against 64 of odd.
+ *
+ * Which says the last word on the polarity. The two states of a cell have
+ * IDENTICAL neighbourhoods: they are twins. A label that changes no adjacency
+ * cannot be what makes the structure what it is, and every check below that
+ * looked like it was about polarity was really about the cube underneath.
  */
 
 export const LATTICE_BITS = 6
@@ -166,6 +186,52 @@ export function orbitCount(generators: readonly ((s: LatticeState) => LatticeSta
     }
   }
   return orbits
+}
+
+/** Popcount, for the bipartition Q6 hands down to the blow-up. */
+const bitsSet = (n: number): number => {
+  let c = 0
+  let v = n
+  while (v > 0) { c += v & 1; v >>= 1 }
+  return c
+}
+
+/** Which side of the bipartition a state sits on: the parity of its cell. */
+export const latticePart = (s: LatticeState): 0 | 1 => (bitsSet(s.cell) % 2) as 0 | 1
+
+/** No edge runs within a part — the blow-up inherits Q6's bipartition. */
+export function latticeIsBipartite(): boolean {
+  for (const s of latticeAllStates()) {
+    for (const n of latticeNeighbours(s)) if (latticePart(n) === latticePart(s)) return false
+  }
+  return true
+}
+
+/**
+ * Adjacency depends ONLY on the cells, which is what makes this the
+ * lexicographic product rather than something subtler.
+ */
+export function adjacencyIgnoresPolarity(): boolean {
+  const all = latticeAllStates()
+  for (const s of all) {
+    for (const t of all) {
+      const cellsAdjacent = bitsSet(s.cell ^ t.cell) === 1
+      const adjacent = latticeNeighbours(s).some((n) => latticeIndex(n) === latticeIndex(t))
+      if (cellsAdjacent !== adjacent) return false
+    }
+  }
+  return true
+}
+
+/** The two polarities of a cell have the same neighbours. They are twins. */
+export function polaritiesAreTwins(): boolean {
+  for (let c = 0; c < LATTICE_CELLS; c += 1) {
+    const a = new Set(latticeNeighbours(latticeState(c, 0)).map(latticeIndex))
+    const b = new Set(latticeNeighbours(latticeState(c, 1)).map(latticeIndex))
+    if (a.size !== b.size) return false
+    for (const i of a) if (!b.has(i)) return false
+  }
+  return true
 }
 
 export function latticeIsConnected(): boolean {

@@ -12,6 +12,7 @@ import {
   latticeState, latticeIndex, latticeFromIndex, latticeNeighbours, latticeDegree,
   latticeTranslate, latticeFlip, latticeAllStates, latticeIsConnected,
   edgesAmongNeighbours, cubeNeighbours, cubeIsVertexTransitive, orbitCount,
+  latticePart, latticeIsBipartite, adjacencyIgnoresPolarity, polaritiesAreTwins,
 } from './polarity-lattice.ts'
 import { createChecker } from '../verification/harness.ts'
 
@@ -96,6 +97,25 @@ checker.check('every state is reachable from every other', latticeIsConnected(),
   checker.check('an index past the states is refused', refuses(() => latticeFromIndex(LATTICE_STATES)), true)
   checker.check('a translation past the lattice is refused', refuses(() => latticeTranslate(latticeState(0, 0), 64)), true)
   checker.check('and a valid state is not refused', refuses(() => latticeState(63, 1)), false)
+}
+
+/**
+ * ── WHAT IT IS, since naming what a thing is not leaves it unnamed ─────────
+ *
+ * millennium-solutions replaced a degree theorem of their own with one that
+ * says WHICH GRAPH, after this same finding. The same move applies here.
+ */
+{
+  checker.check('adjacency depends only on the cells', adjacencyIgnoresPolarity(), true)
+  checker.check('so the two polarities of a cell are twins', polaritiesAreTwins(), true)
+  checker.check('and the blow-up inherits the cube\'s bipartition', latticeIsBipartite(), true)
+  checker.check('with the parts equal',
+    latticeAllStates().filter((s) => latticePart(s) === 0).length, LATTICE_STATES / 2)
+
+  // A twin pair is the strongest form of the retraction: a label that changes
+  // no adjacency cannot be what makes the structure what it is.
+  checker.check('the twins are not adjacent to each other',
+    latticeNeighbours(latticeState(9, 0)).some((n) => latticeIndex(n) === latticeIndex(latticeFlip(latticeState(9, 0)))), false)
 }
 
 checker.report()

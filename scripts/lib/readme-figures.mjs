@@ -21,6 +21,7 @@ export function statedNumber(s) {
 }
 
 export async function readmeFigures(root) {
+  const lattice = await import(pathToFileURL(join(root, 'src/quantum/polarity-lattice.ts')).href)
   const { SEALS } = await import(pathToFileURL(join(root, 'src/verification/lean-bridge.ts')).href)
   const ratchet = JSON.parse(readFileSync(join(root, 'ratchet.json'), 'utf8'))
   // coverage:audit owns these two numbers; reading its output is how they stop
@@ -33,6 +34,30 @@ export async function readmeFigures(root) {
     return { total: Number(m[1]), never: Number(m[2]) }
   })()
   return [
+    /**
+     * The lattice figures. Stated once in the README and recomputed here, so
+     * the gate contradicts them if the module moves — zeropoint-node-8f's
+     * point, and the right one: a number sitting in prose that the code can
+     * silently disagree with is the defect this whole file exists for.
+     */
+    {
+      what: 'polarity lattice states',
+      value: lattice.LATTICE_STATES,
+      where: 'src/quantum/polarity-lattice.ts LATTICE_STATES',
+      pattern: new RegExp(String.raw`the (\d+) states each have`, 'gi'),
+    },
+    {
+      what: 'lattice neighbours per state',
+      value: lattice.LATTICE_DEGREE,
+      where: 'src/quantum/polarity-lattice.ts LATTICE_DEGREE',
+      pattern: new RegExp(String.raw`each have exactly \*\*(\d+)\*\*\s*\n?\s*neighbours`, 'gi'),
+    },
+    {
+      what: 'edges a cuboctahedron carries among its vertices',
+      value: lattice.CUBOCTAHEDRON_NEIGHBOUR_EDGES,
+      where: 'src/quantum/polarity-lattice.ts CUBOCTAHEDRON_NEIGHBOUR_EDGES',
+      pattern: new RegExp(String.raw`\*\*(\d+) edges among themselves\*\*`, 'gi'),
+    },
     {
       what: 'sealed theorems',
       value: Object.keys(SEALS).length,

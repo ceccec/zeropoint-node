@@ -11,7 +11,7 @@ The previous version of this file was hand-written and documented 32 functions,
 reader more than no reference at all, because it looks authoritative while it
 misleads them.
 
-**944 exports across 23 entry points.**
+**962 exports across 23 entry points.**
 
 ## `zeropoint-node`
 
@@ -526,6 +526,7 @@ Source: `./dist/quantum.esm.js`
 | export | kind |
 | --- | --- |
 | `AdaptiveOptimizer` | class |
+| `CUBOCTAHEDRON_NEIGHBOUR_EDGES` | number |
 | `EISENSTEIN_ONE` | object |
 | `EISENSTEIN_ZERO` | object |
 | `FALCON_PROFILE` | object |
@@ -535,6 +536,10 @@ Source: `./dist/quantum.esm.js`
 | `HarmonicSolutionsVortex` | class |
 | `I1` | array (4) |
 | `ISING_MODEL` | object |
+| `LATTICE_BITS` | number |
+| `LATTICE_CELLS` | number |
+| `LATTICE_DEGREE` | number |
+| `LATTICE_STATES` | number |
 | `OMEGA` | object |
 | `PERFECT_BALANCE` | number |
 | `PRESENT_DIMENSION` | number |
@@ -679,6 +684,8 @@ Source: `./dist/quantum.esm.js`
 | `ctX` | function (2 args) |
 | `ctZ` | function (2 args) |
 | `ctZeroState` | function (1 arg) |
+| `cubeIsVertexTransitive` | function (0 args) |
+| `cubeNeighbours` | function (1 arg) |
 | `cutValue` | function (2 args) |
 | `cx` | function (1 arg) |
 | `cxGate` | array (4) |
@@ -701,6 +708,7 @@ Source: `./dist/quantum.esm.js`
 | `diagnosisSystem` | function (4 args) |
 | `doublingOrbit` | function (0 args) |
 | `drawSpiral` | function (0 args) |
+| `edgesAmongNeighbours` | function (1 arg) |
 | `eisenstein` | function (2 args) |
 | `eisensteinAdd` | function (2 args) |
 | `eisensteinConj` | function (1 arg) |
@@ -774,6 +782,15 @@ Source: `./dist/quantum.esm.js`
 | `isNormalized` | function (1 arg) |
 | `isVortexFlowPossible` | function (2 args) |
 | `kernelHintFromQuantum` | function (3 args) |
+| `latticeAllStates` | function (0 args) |
+| `latticeDegree` | function (1 arg) |
+| `latticeFlip` | function (1 arg) |
+| `latticeFromIndex` | function (1 arg) |
+| `latticeIndex` | function (1 arg) |
+| `latticeIsConnected` | function (0 args) |
+| `latticeNeighbours` | function (1 arg) |
+| `latticeState` | function (2 args) |
+| `latticeTranslate` | function (2 args) |
 | `layer1_riemannSimulator` | function (0 args) |
 | `layer2_pvsNPAlgorithms` | function (0 args) |
 | `layer3_navierStokesHybrid` | function (0 args) |
@@ -806,6 +823,7 @@ Source: `./dist/quantum.esm.js`
 | `optimizeConsciousnessFlow` | function (0 args) |
 | `optimizeHarmonicSolutionGeneration` | function (1 arg) |
 | `optimizeMentalClarity` | function (0 args) |
+| `orbitCount` | function (1 arg) |
 | `orchestrationCycle` | function (1 arg) |
 | `parallelWorkStreams` | function (0 args) |
 | `parameterizedAnsatz` | function (2 args) |
@@ -1117,4 +1135,4 @@ Source: `./dist/a432.wave.energy.esm.js`
 | `calculateWaveHarmonics` | function (1 arg) |
 | `isA432Harmonic` | function (1 arg) |
 
-<!-- digest 9292db36fdd4 -->
+<!-- digest dd05a3cd9152 -->

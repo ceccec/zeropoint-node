@@ -1,7 +1,7 @@
 {
   "what": "The twelve ratchet surfaces measured against their ceilings. Folded behind a fingerprint of the .ts sources, the README, the rollup and tsconfig and eslint configs, package.json, ratchet.json and this script.",
   "doesNotEstablish": "that the ceilings are right. It compares a measurement to a number someone chose, and only refuses to let that number rise silently.",
-  "inputsFingerprint": "f2789f40761a8441a445ebfb80ca1d4b",
+  "inputsFingerprint": "797bbc4d270a0faa489689dcde98473c",
   "rows": [
     "  unbounded effect claims in prose: 50 (at ceiling)",
     "  boolean claims that cannot be false: 0 (at ceiling)",
@@ -18,5 +18,5 @@
   ],
   "grew": false,
   "fell": false,
-  "contentHash": "307d5dba7ad6de36a05c6a48eb82e63a"
+  "contentHash": "5ee77a5ff313fcd741286166930078cb"
 }

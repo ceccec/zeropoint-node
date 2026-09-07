@@ -212,7 +212,94 @@ for (const [script, entry] of Object.entries(GUARDS)) {
   if (args.includes('--verbose')) console.log(`  ${noticed ? 'ok  ' : 'FAIL'} ${script} <- ${rel}${block ? ` [${block}]` : ''}`)
 }
 
-console.log(`checks-falsifiable — ${probed} generated artifact(s) probed, ${Object.keys(READS_SOURCE).length} source-reading checker(s) declared`)
+/**
+ * ── THE SECOND ARM: A GENERATOR MAY ONLY OVERWRITE WHAT IT CAN PROVE IT WROTE.
+ *
+ * Everything above probes CHECKERS: corrupt what one guards and require it to
+ * notice. That leaves the other half of every pair untested, and the other half
+ * is where the damage came from. a432-orbit-fill wrote straight over
+ * a432.vortex.ts — 4231 bytes of createVortexStream, imagineAll and
+ * treeToVortexStream that a suite imported — and readme-census replaced 28,000
+ * bytes of README between markers it had not written. Both were silent, both
+ * read as a peer's breakage for several minutes, and no probe here would have
+ * caught either: the checkers were working perfectly, on artifacts that had
+ * already been destroyed.
+ *
+ * So each guard is exercised, and zeropoint-node-8f's sharpening is the second
+ * condition — the half I would have left out:
+ *
+ *   1. the generator LEAVES THE FOREIGN BYTES BYTE-IDENTICAL. Refusing after
+ *      truncating the file has still destroyed it, and an exit code alone
+ *      cannot tell the two apart.
+ *   2. SOMETHING NOTICES. A generator that silently skips a foreign file has
+ *      honoured the rule and told nobody, so the paired checker is run over
+ *      the same planted state and must exit non-zero.
+ *
+ * BOTH CONDITIONS FOUND SOMETHING ON THE FIRST RUN. The a432 orbit's CLOSING
+ * address, a432.1.2.4.8.7.5.1, was checked by nothing: the orbit loops ran to
+ * six and the vortex family began at the seventh, and the closure fell between
+ * them. Two hundred and eighty-seven lines could be replaced by `export const
+ * x = 1` with every gate in this repository green. The checker also skipped any
+ * module that answered to no known name — "every module that answers, answers
+ * correctly" is satisfied by a module that says nothing — which is how a real
+ * member answering under getDoublingSequence had never once been asked.
+ *
+ * Only generators that CLAIM a guard are listed. One that owns its output path
+ * unconditionally is not failing this test; it is not taking it.
+ */
+const GENERATOR_GUARDS = [
+  {
+    generator: 'a432:orbit',
+    checker: 'a432:orbit:check',
+    path: 'src/0/3/6/9/1/2/4/8/7/5/1/a432.1.2.4.8.7.5.1.ts',
+    // The whole file replaced by something no generator authored.
+    plant: (original) => Buffer.from(
+      '// PLANTED BY checks-falsifiable. Surviving this is the point.\n'
+      + 'export const somethingAPeerWasWriting = 42\n'
+      + `// (was ${original.length} bytes)\n`),
+  },
+  {
+    generator: 'readme:census',
+    checker: 'readme:census:check',
+    path: 'README.md',
+    // The block guard's own failure mode: an END marker that is gone, which
+    // once made the generator replace everything after BEGIN.
+    plant: (original) => Buffer.from(original.toString('utf8').replace('<!-- CENSUS:END -->', ''), 'utf8'),
+  },
+]
+let guarded = 0
+for (const { generator, checker, path: rel, plant } of GENERATOR_GUARDS) {
+  const path = join(TREE, rel)
+  if (!existsSync(path)) { problems.push(`${generator}: guard target ${rel} does not exist`); continue }
+  const original = readFileSync(path)
+  const before = sha(original)
+  const planted = plant(original)
+  if (sha(planted) === before) { problems.push(`${generator}: the plant for ${rel} changed nothing, so it tests nothing`); continue }
+  let intact = false
+  let noticed = false
+  try {
+    writeFileSync(path, planted)
+    try { execFileSync('npm', ['run', generator, '--silent'], { cwd: TREE, stdio: 'pipe' }) } catch { /* refusing is allowed; destroying is not */ }
+    intact = sha(readFileSync(path)) === sha(planted)
+    // Re-plant before asking the checker: a generator that refused left the
+    // plant in place, and one that overwrote it must not be handed its own
+    // output to approve.
+    writeFileSync(path, planted)
+    try { execFileSync('npm', ['run', checker, '--silent'], { cwd: TREE, stdio: 'pipe' }) } catch { noticed = true }
+  } finally {
+    writeFileSync(path, original)
+    if (sha(readFileSync(path)) !== before) {
+      console.error(`checks-falsifiable ABORT — failed to restore ${rel} inside the clone at ${TREE}. The working tree was never written to.`)
+      process.exit(2)
+    }
+  }
+  guarded++
+  if (!intact) problems.push(`${generator}: overwrote bytes it did not write at ${rel}`)
+  if (!noticed) problems.push(`${checker}: passed with a foreign file at ${rel} — nothing notices`)
+  if (args.includes('--verbose')) console.log(`  ${intact && noticed ? 'ok  ' : 'FAIL'} ${generator} + ${checker} -> planted ${rel} (intact=${intact} noticed=${noticed})`)
+}
+
+console.log(`checks-falsifiable — ${probed} generated artifact(s) probed, ${Object.keys(READS_SOURCE).length} source-reading checker(s) declared, ${guarded} generator(s) refused a file they did not write`)
 if (problems.length) {
   for (const p of problems) console.error(`  ✗ ${p}`)
   console.error(`checks-falsifiable FAIL — ${problems.length} problem(s)`)

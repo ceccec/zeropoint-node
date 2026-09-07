@@ -11,4 +11,4 @@ Projections of `src/0` / integrity / kernel — not second sources.
 - [Sequence addresses](./sequence-addresses.md)
 - [Sequence lattice](./sequence-lattice.md)
 - [Development vortex](./development-vortex.md)
-Receipt: `08d96c27-333c-8976-ac61-0f5d7f0e82b3`
+Receipt: `f02fb883-0647-8f26-ac67-57cf88acb8a3`

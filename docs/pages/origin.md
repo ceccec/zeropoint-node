@@ -8,4 +8,4 @@ KERNEL_SEALED: **true**
 
 Boundary: exact fold math; refused Clay/FTL/Payload.
 
-Receipt: `06189e3d-48f2-82e6-95c5-92f273ff8261` · set `08d96c27-333c-8976-ac61-0f5d7f0e82b3`
+Receipt: `06189e3d-48f2-82e6-95c5-92f273ff8261` · set `f02fb883-0647-8f26-ac67-57cf88acb8a3`

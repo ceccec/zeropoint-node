@@ -36,7 +36,20 @@ for (let i = 1; i < ORBIT_ADDRESSES.length; i += 1) {
 
 // ── the doubling that generates them ───────────────────────────────────────
 {
-  const full = await loadOrbitAddress(ORBIT_ADDRESSES[ORBIT_ADDRESSES.length - 1]!)
+  /**
+   * THE LAST ADDRESS IS THE CLOSURE, NOT THE ORBIT.
+   *
+   * This read the longest address and called it "the whole sequence". That was
+   * true while the family stopped at the open prefix, and became false the day
+   * a432.1.2.4.8.7.5.1 joined the loader — the walk returns to where it began,
+   * so the longest address is the orbit CLOSED and is one digit longer than
+   * VORTEX_ORBIT. Both are checked now, and separately: the open orbit against
+   * the kernel's literal array, the closure against that array plus its own
+   * first digit.
+   */
+  const open = await loadOrbitAddress(ORBIT_ADDRESSES[VORTEX_ORBIT.length - 1]!)
+  const closed = await loadOrbitAddress(ORBIT_ADDRESSES[ORBIT_ADDRESSES.length - 1]!)
+  const full = open
 
   /**
    * THIS LINE ALONE IS CIRCULAR, AND THE ONE BELOW IT IS NOT.
@@ -60,7 +73,13 @@ for (let i = 1; i < ORBIT_ADDRESSES.length; i += 1) {
   const doubles = full.every((d, i) => i === 0 || d === legacyDigitalRoot(full[i - 1]! * 2))
   checker.check('each digit is the double of the one before it, mod 9', doubles, true)
   checker.check('and the whole sequence is the kernel\'s own VORTEX_ORBIT, which no digital root computes',
-    full.join('.'), [...VORTEX_ORBIT].join('.'))
+    open.join('.'), [...VORTEX_ORBIT].join('.'))
+  checker.check('the longest address is that orbit closed on its own first digit',
+    closed.join('.'), [...VORTEX_ORBIT, VORTEX_ORBIT[0]!].join('.'))
+  // The closure continues the doubling rather than merely repeating a digit:
+  // 5 doubled is 10, whose digital root is 1. It is a step, not a bookend.
+  checker.check('and the closing digit is the double of the one before it',
+    closed[closed.length - 1], legacyDigitalRoot(closed[closed.length - 2]! * 2))
 }
 
 /**

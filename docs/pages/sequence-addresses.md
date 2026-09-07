@@ -31,4 +31,4 @@ The addresses are audited by `npm run a432:names`, filled by `npm run a432:orbit
 
 See [SEQUENCE.md](../SEQUENCE.md) · [Sequence dual](./sequence-dual.md).
 
-Receipt: `cfeaabc6-2f8d-8f80-8b58-86bec4edb7af` · set `08d96c27-333c-8976-ac61-0f5d7f0e82b3`
+Receipt: `cfeaabc6-2f8d-8f80-8b58-86bec4edb7af` · set `f02fb883-0647-8f26-ac67-57cf88acb8a3`

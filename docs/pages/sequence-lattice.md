@@ -12,4 +12,4 @@ The correction is kept rather than deleted, because the count that suggested a v
 
 Computed by `src/quantum/polarity-lattice.ts` · asserted by `npm run test:polarity-lattice`.
 
-Receipt: `f3b11f45-05e6-82d8-b1de-21ccaa6aca61` · set `08d96c27-333c-8976-ac61-0f5d7f0e82b3`
+Receipt: `f3b11f45-05e6-82d8-b1de-21ccaa6aca61` · set `f02fb883-0647-8f26-ac67-57cf88acb8a3`

@@ -14,6 +14,7 @@ export const ORBIT_ADDRESSES = [
   '1.2.4.8',
   '1.2.4.8.7',
   '1.2.4.8.7.5',
+  '1.2.4.8.7.5.1',
 ] as const
 
 export type OrbitAddress = typeof ORBIT_ADDRESSES[number]
@@ -26,6 +27,7 @@ export const ORBIT_HANDLES: Record<string, () => Promise<unknown>> = {
   '1.2.4.8': () => import('./a432.1.2.4.8.ts'),
   '1.2.4.8.7': () => import('./a432.1.2.4.8.7.ts'),
   '1.2.4.8.7.5': () => import('./a432.1.2.4.8.7.5.ts'),
+  '1.2.4.8.7.5.1': () => import('./a432.1.2.4.8.7.5.1.ts'),
 }
 
 /**
@@ -35,8 +37,13 @@ export const ORBIT_HANDLES: Record<string, () => Promise<unknown>> = {
 export async function loadOrbitAddress(address: string): Promise<readonly number[]> {
   const handle = ORBIT_HANDLES[address]
   if (handle === undefined) throw new Error(`a432.orbit: no handle at address ${address}`)
-  const mod = await handle() as { getOpenDoublingSequence?: () => number[] }
-  const seq = mod.getOpenDoublingSequence?.()
+  // Two spellings, because the family has two authors. The generated members
+  // export getOpenDoublingSequence; the hand-written closure at
+  // a432.1.2.4.8.7.5.1 has answered [1,2,4,8,7,5,1] under getDoublingSequence
+  // since before this loader existed, and asking for one name only is how it
+  // went unchecked.
+  const mod = await handle() as { getOpenDoublingSequence?: () => number[]; getDoublingSequence?: () => number[] }
+  const seq = mod.getOpenDoublingSequence?.() ?? mod.getDoublingSequence?.()
   if (seq === undefined) throw new Error(`a432.orbit: the module at ${address} holds no sequence`)
   return seq
 }

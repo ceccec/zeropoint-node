@@ -8,6 +8,7 @@
  */
 import { ORBIT_ADDRESSES, ORBIT_HANDLES, loadOrbitAddress } from './a432.orbit.ts'
 import { createChecker } from '../../../../../../../../../../../verification/harness.ts'
+import { legacyDigitalRoot } from './a432.roots.ts'
 
 const checker = createChecker('a432.orbit')
 
@@ -33,7 +34,7 @@ for (let i = 1; i < ORBIT_ADDRESSES.length; i += 1) {
 // ── the doubling that generates them ───────────────────────────────────────
 {
   const full = await loadOrbitAddress(ORBIT_ADDRESSES[ORBIT_ADDRESSES.length - 1]!)
-  const doubles = full.every((d, i) => i === 0 || d === ((full[i - 1]! * 2) % 9 || 9))
+  const doubles = full.every((d, i) => i === 0 || d === legacyDigitalRoot(full[i - 1]! * 2))
   checker.check('each digit is the double of the one before it, mod 9', doubles, true)
 }
 

@@ -44,6 +44,7 @@ import {
   createA432ImperialState, analyzeA432ImperialState, harmonizeA432ImperialStates,
   getA432ImperialMetaphysicalEssence, generateA432ImperialMathematicalProof,
 } from './a432.imperial.ts'
+import { legacyDigitalRoot } from './a432.roots.ts'
 
 let failures = 0
 const check = (name: string, ok: boolean, detail = ''): void => {
@@ -99,7 +100,7 @@ check('a flow is six digits, all in 1..9',
   }))
 
 check('a flow starts where it was asked to start',
-  DIGITS.filter((d) => d > 0 && d < 9).every((d) => getFlow(d)[0] === ((d % 9) + 1)),
+  DIGITS.filter((d) => d > 0 && d < 9).every((d) => getFlow(d)[0] === legacyDigitalRoot(d + 1)),
   'each flow is the doubling walk begun one past the digit')
 
 check('nine is the full scale: nine ninths is 100 percent and one octave up',
@@ -251,7 +252,7 @@ check('an imperial state carries what it was built from',
   imp.name === 'GOLDEN' && imp.frequency === 432 && imp.consciousness === 9)
 
 check('analysis reports the digital root of the state\'s consciousness',
-  analyzeA432ImperialState(imp).consciousnessBalance === ((imp.consciousness - 1) % 9) + 1)
+  analyzeA432ImperialState(imp).consciousnessBalance === legacyDigitalRoot(imp.consciousness))
 
 check('harmonising totals the consciousness of its states',
   harmonizeA432ImperialStates([imp, imp]).totalConsciousness === 2 * imp.consciousness

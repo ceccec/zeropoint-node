@@ -61,6 +61,7 @@
     }
     return sum;
   }
+  var LN2 = 6931471805599453 / 1e16;
 
   // node_modules/@hotwired/stimulus/dist/stimulus.js
   var EventListener = class {

@@ -21,6 +21,7 @@ import {
   decodeVBMSequence, getVBMDecodeDigits, getVBMDecodeDivisions,
   getVBMDecodeTrinities, getVBMDecodeStatistics, VBM_DECODE_CONSTANTS,
 } from './a432.vbm.decode.ts'
+import { legacyDigitalRoot } from './a432.roots.ts'
 
 let failures = 0
 const check = (name: string, ok: boolean, detail = ''): void => {
@@ -135,7 +136,7 @@ check('every trinity sum is the sum of its own digits',
   SEQS.every((s) => getVBMDecodeTrinities(s).every((t) => t.sum === t.digits.reduce((a, b) => a + b, 0))))
 
 check('every trinity digital root is the digital root of its sum',
-  SEQS.every((s) => getVBMDecodeTrinities(s).every((t) => t.digitalRoot === (t.sum === 0 ? 0 : ((t.sum - 1) % 9) + 1))))
+  SEQS.every((s) => getVBMDecodeTrinities(s).every((t) => t.digitalRoot === legacyDigitalRoot(t.sum))))
 
 check('no trinity frequency is NaN or Infinity',
   SEQS.every((s) => getVBMDecodeTrinities(s).every((t) => Number.isFinite(t.frequency))))

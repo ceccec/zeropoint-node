@@ -13,6 +13,7 @@ import { a432ShearCycle, a432ShearProduct, a432ShearTriangulation } from './a432
 import { a432BinaryTriplet, a432MirrorMate, a432OverlappingRegistration } from './a432.double.ts'
 import { calculateConductivity, calculateNaturalAlignment, calculatePathResistance, isSacredTransition } from './a432.electric.flow.ts'
 import { generateA432Sequence, analyzeA432Sequence, harmonizeA432Sequences, harmonizeStreams } from './a432.sequence.ts'
+import { legacyDigitalRoot, kernelDigitalRoot } from './a432.roots.ts' // the triplet folds zero to nine: the kernel spine, not the legacy one
 
 let failures = 0
 const check = (name: string, ok: boolean, detail = ''): void => {
@@ -54,7 +55,7 @@ check('a vortex fold advances evolution by the fold count, modulo the full turn'
 
 // --- sacred self-division ------------------------------------------------
 check('self-division doubles within the digital root',
-  ORBIT.every((d) => sacredSelfDivision(d) === ((2 * d - 1) % 9) + 1))
+  ORBIT.every((d) => sacredSelfDivision(d) === legacyDigitalRoot(2 * d)))
 
 check('self-division keeps the orbit inside the orbit',
   ORBIT.every((d) => ORBIT.includes(sacredSelfDivision(d))))
@@ -94,7 +95,7 @@ check('the shear product is commutative and lands on a single digit',
 
 check('the shear product is the digital root of the product',
   DIGITS.slice(1).every((a) => DIGITS.slice(1).every((b) => {
-    const dr = ((a * b - 1) % 9) + 1
+    const dr = legacyDigitalRoot(a * b)
     return a432ShearProduct(a, b) === dr
   })))
 
@@ -111,7 +112,7 @@ check('nine is its own mirror',
 check('the binary triplet keeps its two inputs and hides their root',
   DIGITS.every((a) => DIGITS.every((b) => {
     const [x, y, h] = a432BinaryTriplet(a, b)
-    return x === a && y === b && h >= 1 && h <= 9 && h === ((a + b) % 9 === 0 ? 9 : (a + b) % 9)
+    return x === a && y === b && h >= 1 && h <= 9 && h === kernelDigitalRoot(a + b)
   })))
 
 check('overlapping registration partitions a sequence and loses nothing',
@@ -165,8 +166,8 @@ check('generating the same pattern twice gives the same consciousness and freque
   })())
 
 check('analysis reports the digital root of the sequence\'s own consciousness',
-  analyzeA432Sequence(seqA).consciousnessBalance === ((seqA.consciousness - 1) % 9) + 1
-  && analyzeA432Sequence(seqB).consciousnessBalance === ((seqB.consciousness - 1) % 9) + 1)
+  analyzeA432Sequence(seqA).consciousnessBalance === legacyDigitalRoot(seqA.consciousness)
+  && analyzeA432Sequence(seqB).consciousnessBalance === legacyDigitalRoot(seqB.consciousness))
 
 check('harmonising sequences totals their consciousness',
   harmonizeA432Sequences([seqA, seqB]).totalConsciousness === seqA.consciousness + seqB.consciousness

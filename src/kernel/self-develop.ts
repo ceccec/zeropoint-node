@@ -49,9 +49,16 @@ const ROOT_ADAPTERS = new Set(['a432.roots.ts', 'a432.math.ts', 'a432.core.ts'])
 export const VAGUE_TIP_RE =
   /\b(continue improving|keep going|do better|self-?improve|polish|somehow|maybe|various|etc\.?)\b/i
 
-/** CODE must name a concrete path or npm script. */
+/**
+ * CODE must name a concrete path or npm script. The paths admitted are the
+ * ones the finders above can NAME: findUndeclaredPackageImport walks scripts/
+ * and the root build configs as well as src/, so a tip about scripts/x.mjs is
+ * exactly as concrete as one about src/x.ts. Before scripts/ was listed here
+ * the first undeclared import under scripts/ produced a tip this rule refused
+ * as vague, and the kernel smoke failed on the rule rather than on the code.
+ */
 export const CONCRETE_CODE_RE =
-  /(?:src\/[\w./-]+|README\.md|public\/[\w./-]+|npm\s+run\s+[\w:-]+|bundle:a432)/
+  /(?:src\/[\w./-]+|scripts\/[\w./-]+|README\.md|public\/[\w./-]+|(?:eslint|rollup|jest|webpack|next-sitemap)\.config\.[cm]?js|npm\s+run\s+[\w:-]+|bundle:a432)/
 
 /** PROOF must name an exact green signal. */
 export const CONCRETE_PROOF_RE =
@@ -280,11 +287,19 @@ function findUndeclaredPackageImport(): FeedHit | null {
   const pkgPath = join(REPO_ROOT, 'package.json')
   if (!existsSync(pkgPath)) return null
   const pkg = JSON.parse(readFileSync(pkgPath, 'utf8')) as {
+    name?: string
     dependencies?: Record<string, string>
     devDependencies?: Record<string, string>
     peerDependencies?: Record<string, string>
   }
+  // The package's own name is declared by definition: Node resolves a bare
+  // import of a package's own name through its "exports" (self-referencing),
+  // so it cannot fail npm ci, which is the only thing this finder is for. It
+  // fired on scripts/quantum-computer-doc.mjs, where `from 'zeropoint-node/quantum'`
+  // is a string being written INTO the generated document as the reader's
+  // import line — not even an import, but a self-import would be fine too.
   const declared = new Set([
+    ...(pkg.name ? [pkg.name] : []),
     ...Object.keys(pkg.dependencies ?? {}),
     ...Object.keys(pkg.devDependencies ?? {}),
     ...Object.keys(pkg.peerDependencies ?? {}),

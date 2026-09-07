@@ -50,8 +50,8 @@
  */
 import { execFileSync } from 'node:child_process'
 import { cpus, totalmem, freemem } from 'node:os'
-import { statfsSync, writeFileSync } from 'node:fs'
-import { relative } from 'node:path'
+import { existsSync, readdirSync, readFileSync, statfsSync, writeFileSync } from 'node:fs'
+import { join, relative } from 'node:path'
 
 const RECORD = new URL('../src/verification/qpu-pentagram.json', import.meta.url).pathname
 
@@ -76,7 +76,15 @@ const REPRESENTATIONS = (() => {
 })()
 
 /** Width from a capacity, for a state whose cost is 2^n units. */
-const widthExponential = (bytes, perUnit) => Math.floor(Math.log2(bytes / perUnit))
+const widthExponential = (bytes, perUnit) => {
+  // log2(0) is -Infinity. On a GitHub runner, macOS sysctl is absent, l1d
+  // came back 0, RAM minus -Infinity was Infinity, and "the representation is
+  // a larger lever than the pentagram" compared 6163 to Infinity — which is
+  // how v1.5.8's first publish died. A capacity that was not measured is not
+  // a width of anything.
+  if (!(bytes > 0) || !(perUnit > 0)) return NaN
+  return Math.floor(Math.log2(bytes / perUnit))
+}
 /**
  * Width from a capacity, for a state whose cost is polynomial. Solved by
  * search rather than by inverting the quadratic in closed form, so that a
@@ -111,9 +119,34 @@ const widthFor = (bytes) => widthExponential(bytes, BYTES_PER_AMP)
 const sysctl = (key) => {
   try { return Number(execFileSync('sysctl', ['-n', key], { encoding: 'utf8' }).trim()) } catch { return 0 }
 }
+/**
+ * Linux cache sizes live in sysfs, not sysctl. index0 is typically L1 Data,
+ * index2 Unified L2; the files say so rather than the names.
+ * Size is written as "32K" / "1024K".
+ */
+const linuxCache = (level, wantType) => {
+  const dir = '/sys/devices/system/cpu/cpu0/cache'
+  if (!existsSync(dir)) return 0
+  try {
+    for (const name of readdirSync(dir)) {
+      const base = join(dir, name)
+      const lvl = Number(readFileSync(join(base, 'level'), 'utf8').trim())
+      const type = readFileSync(join(base, 'type'), 'utf8').trim()
+      if (lvl !== level) continue
+      if (type !== wantType && !(wantType === 'Data' && type === 'Unified')) continue
+      const raw = readFileSync(join(base, 'size'), 'utf8').trim()
+      const m = /^(\d+)\s*([KMG])?i?B?$/i.exec(raw)
+      if (!m) return 0
+      const mul = { '': 1, K: 1024, M: 1024 ** 2, G: 1024 ** 3 }[m[2] ? m[2].toUpperCase() : '']
+      return Number(m[1]) * mul
+    }
+  } catch { return 0 }
+  return 0
+}
 // Units that suit the magnitude. Printing a 128 KiB cache as "0.0 GiB" makes
 // three of the five points read as nothing at all.
 const size = (b) => {
+  if (!(b > 0)) return 'unmeasured'
   if (b >= 1024 ** 3) return `${(b / 1024 ** 3).toFixed(1)} GiB`
   if (b >= 1024 ** 2) return `${(b / 1024 ** 2).toFixed(1)} MiB`
   return `${(b / 1024).toFixed(0)} KiB`
@@ -123,8 +156,8 @@ const size = (b) => {
 const cores = cpus().length
 const ram = totalmem()
 const free = freemem()
-const l1d = sysctl('hw.perflevel0.l1dcachesize') || sysctl('hw.l1dcachesize')
-const l2 = sysctl('hw.perflevel0.l2cachesize') || sysctl('hw.l2cachesize')
+const l1d = sysctl('hw.perflevel0.l1dcachesize') || sysctl('hw.l1dcachesize') || linuxCache(1, 'Data')
+const l2 = sysctl('hw.perflevel0.l2cachesize') || sysctl('hw.l2cachesize') || linuxCache(2, 'Unified') || linuxCache(2, 'Data')
 let storageFree = 0
 try { const s = statfsSync('/'); storageFree = s.bavail * s.bsize } catch { storageFree = 0 }
 
@@ -163,7 +196,8 @@ console.log('  the pentagram, each point measured and converted to qubits')
 console.log(`  (a state of n qubits is 2^n amplitudes at ${BYTES_PER_AMP.toFixed(1)} bytes — MEASURED for the`)
 console.log(`   shipped Complex[] simulator, against a ${BYTES_PER_AMP_FLOOR}-byte floor for two float64)\n`)
 for (const p of points) {
-  console.log(`    ${p.name.padEnd(15)} ${size(p.capacity).padStart(9)}   ${String(p.width).padStart(2)} qubits   ${p.note}`)
+  const w = Number.isFinite(p.width) ? String(p.width).padStart(2) : '??'
+  console.log(`    ${p.name.padEnd(15)} ${size(p.capacity).padStart(9)}   ${w} qubits   ${p.note}`)
 }
 console.log(`    ${'CPU'.padEnd(15)} ${String(cores).padStart(7)} cores   —          divides the TIME per sweep, never the state`)
 console.log(`    ${'GPU'.padEnd(15)} ${String(gpuCores).padStart(7)} cores   —          ${gpuName}; same: parallel width, not more state`)
@@ -188,6 +222,7 @@ const holders = points.filter((p) => p.name === 'RAM (total)' || p.name.startsWi
 const binding = holders.reduce((widest, p) => (p.width > widest.width ? p : widest))
 const storageWidth = points.find((p) => p.name.startsWith('STORAGE')).width
 const ramWidth = points.find((p) => p.name === 'RAM (total)').width
+const pentagramSpan = ramWidth - widthFor(l1d)
 const spillHelps = storageWidth > ramWidth
 console.log(`\n  BINDING POINT: ${binding.name} — ${binding.width} qubits.`)
 /**
@@ -223,7 +258,7 @@ const universeAtoms = 1e80
 const at300 = 2 ** 300
 console.log('\n  AND THE EXPONENT IS UNTOUCHED BY ALL FIVE.')
 console.log(`    every qubit added DOUBLES the state, so each point buys a fixed few:`)
-console.log(`    L1d to RAM is a factor of ${(ram / l1d).toExponential(1)} in bytes and ${ramWidth - widthFor(l1d)} qubits.`)
+console.log(`    L1d to RAM is a factor of ${l1d > 0 ? (ram / l1d).toExponential(1) : 'unmeasured'} in bytes and ${Number.isFinite(pentagramSpan) ? pentagramSpan : 'unmeasured'} qubits.`)
 console.log(`    a 300-qubit register is 2^300 ≈ ${at300.toExponential(1)} amplitudes, against roughly`)
 console.log(`    ${universeAtoms.toExponential(0)} atoms in the observable universe. No arrangement of these five`)
 console.log('    reaches it, which is the entire argument for quantum hardware.')
@@ -331,7 +366,7 @@ const representationFactor = widest.width / narrowest.width
 console.log('')
 console.log(`  The same ${size(bindingBytes)} holds ${narrowest.width} qubits or ${widest.width}, a factor of ${representationFactor.toFixed(0)} in width,`)
 console.log('  decided entirely by how the state is written down. Every point of the')
-console.log(`  pentagram together spans ${ramWidth - widthFor(l1d)} qubits, from L1d to RAM. THE REPRESENTATION IS`)
+console.log(`  pentagram together spans ${Number.isFinite(pentagramSpan) ? pentagramSpan : 'unmeasured'} qubits, from L1d to RAM. THE REPRESENTATION IS`)
 console.log('  THE LARGER LEVER, and it was the one axis here that was never measured.')
 console.log('')
 console.log('  It is not a route around the exponential either, and is not reported as one:')
@@ -436,9 +471,16 @@ if (process.argv.includes('--check')) {
 
   // The finding this upgrade exists for: the axis that was typed outweighs the
   // five that were measured. If that ever stops being true, the headline goes.
-  assert(representationFactor > (ramWidth - widthFor(l1d)),
+  //
+  // THE SPAN MUST BE A NUMBER. v1.5.8's first publish compared 6163 to Infinity
+  // because L1d was 0 on a Linux runner, log2(0) is -Infinity, and RAM minus
+  // that is Infinity. A missing cache is UNMEASURED, not an infinite pentagram.
+  assert(l1d > 0 && Number.isFinite(pentagramSpan) && pentagramSpan >= 0,
+    'L1d cache should have been measured — a missing sysctl is not Infinity qubits',
+    `l1d=${l1d} span=${pentagramSpan}`)
+  assert(representationFactor > pentagramSpan,
     'the representation should be a larger lever than the whole pentagram',
-    `factor ${representationFactor.toFixed(0)} against ${ramWidth - widthFor(l1d)} qubits`)
+    `factor ${representationFactor.toFixed(0)} against ${pentagramSpan} qubits`)
 
   // Fail closed. A run that measured nothing prints the same green as one that
   // measured everything, which is the failure mode every gate here guards.
@@ -482,7 +524,7 @@ const record = {
   widest: { name: widest.name, width: widest.width },
   narrowest: { name: narrowest.name, width: narrowest.width },
   representationFactor,
-  pentagramSpanQubits: ramWidth - widthFor(l1d),
+  pentagramSpanQubits: Number.isFinite(pentagramSpan) ? pentagramSpan : null,
   controls: REPRESENTATIONS.controls,
 }
 if (!process.argv.includes('--check')) {

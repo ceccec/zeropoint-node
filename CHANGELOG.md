@@ -71,6 +71,12 @@ the others.
 **The paper was stating the census it was pushed past.** That is the same
 defect `generated:current` exists for.
 
+**The first publish of this version died on a missing cache.** GitHub Actions
+has no macOS `sysctl`, so L1d came back 0, `log2(0)` is −∞, RAM minus that is
+Infinity, and "the representation is a larger lever than the pentagram"
+compared 6163 to Infinity. Linux cache sizes are read from sysfs now, and a
+capacity that was not measured is UNMEASURED — not a width of anything.
+
 ## 1.5.7
 
 **The T gate is exact.** `exact.ts` says non-Clifford gates are ABSENT rather

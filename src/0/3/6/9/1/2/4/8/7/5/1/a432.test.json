@@ -46,7 +46,11 @@
   "triadByDesign": {
     "a432.coil.ts:a432VortexWell": "named for the doubling circuit but contains 3, 6 or 9",
     "a432.trinity.ts:getTrinityAxisFromRodin": "named for the doubling circuit but contains 3, 6 or 9",
-    "a432.trinity.ts:getTrinityTriangulationFromRodin": "named for the doubling circuit but contains 3, 6 or 9"
+    "a432.trinity.ts:getTrinityTriangulationFromRodin": "named for the doubling circuit but contains 3, 6 or 9",
+    "a432.1.2.4.8.7.5.3.ts:getVortexSequence": "the address names the full vortex 1-2-4-8-7-5-3-6-9-1: the doubling orbit, then the axis, then the return to the seed. The triad is the point of the address, not a leak into the orbit",
+    "a432.1.2.4.8.7.5.3.6.ts:getVortexSequence": "the address names the full vortex 1-2-4-8-7-5-3-6-9-1: the doubling orbit, then the axis, then the return to the seed. The triad is the point of the address, not a leak into the orbit",
+    "a432.1.2.4.8.7.5.3.6.9.ts:getVortexSequence": "the address names the full vortex 1-2-4-8-7-5-3-6-9-1: the doubling orbit, then the axis, then the return to the seed. The triad is the point of the address, not a leak into the orbit",
+    "a432.1.2.4.8.7.5.3.6.9.1.ts:getVortexSequence": "the address names the full vortex 1-2-4-8-7-5-3-6-9-1: the doubling orbit, then the axis, then the return to the seed. The triad is the point of the address, not a leak into the orbit"
   },
   "sharedValues": {
     "a432ApertureFlow = a432RodinCoil = getOpenDoublingSequence = rodinOrbit = stringTheoryOrbit": "[1,2,4,8,7,5]",

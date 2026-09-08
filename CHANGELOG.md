@@ -2,6 +2,15 @@
 
 ## 1.5.8
 
+**An assertion that compares an expression to itself after a mutation cannot
+fail.** `npm run assert:tautology:check` reads every test under `src/` for
+that shape. A determinism check — the same call twice, nothing between — is
+the survey and is not a gap; the same text after a filesystem write in the same
+body is, because both sides evaluate after the write. The tree has none of
+those dead lines today. The matcher is held to a self-test: the committed dead
+shape is caught, a determinism check is not, and an unreadable test file is
+UNMEASURED rather than clean.
+
 **The chain was repairing the document it was about to inspect.** Twelve
 entries in `npm run check` run `X && X:check`. The generator runs, the working
 tree stops being stale, and the checker then compares the file to what the

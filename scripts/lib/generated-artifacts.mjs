@@ -27,6 +27,7 @@ export const GUARDS = {
   'constrained:check': 'src/verification/constrained.json',
   'zenodo:deposits:check': 'src/verification/deposits.json',
   'axiom:index:check': 'src/verification/axiom-index.json',
+  'qpu:agrees:check': 'src/verification/qpu-agrees.json',
   // Block-scoped: these own a marked region of README.md and nothing else, so
   // the probe has to land inside the region or it proves nothing.
   'spectrum:check': ['README.md', 'SPECTRUM'],

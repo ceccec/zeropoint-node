@@ -219,7 +219,30 @@ const TOOLS = [
       + 'simulating one quantum query costs 2^n classical evaluations, and every measurement says so.',
     inputSchema: { type: 'object', properties: {} },
   },
+  {
+    name: 'zeropoint.quantumAgrees',
+    description:
+      'What qpu.uuidna.com serves about its quantum processing unit, recomputed by instruments that never '
+      + 'read its source: the exact simulator for the Bell, GHZ and product states, the Shor of this package for '
+      + 'the factorisation of 91, and the Lean kernel on the recording machine for the served proof. Per-claim '
+      + 'agreement from src/verification/qpu-agrees.json; nothing is fetched at call time.',
+    inputSchema: { type: 'object', properties: {} },
+  },
 ]
+
+/**
+ * BOTH LAYOUTS. The built server ships beside verification/ and the source sits
+ * beside src/verification/, and this file already has one scar from resolving
+ * only the second. Absent or unreadable is null, and every caller says so
+ * rather than inferring a record in its place.
+ */
+function readRecord(f: string): any {
+  const here = typeof __dirname === 'string' ? pathToFileURL(join(__dirname, 'x')) : import.meta.url
+  for (const rel of [`../verification/${f}`, `../src/verification/${f}`]) {
+    try { return JSON.parse(readFileSync(new URL(rel, here), 'utf8')) } catch { /* try the other layout */ }
+  }
+  return null
+}
 
 function result(id: string | number | null | undefined, payload: unknown) {
   return JSON.stringify({
@@ -337,16 +360,7 @@ function callTool(name: string, args: Record<string, unknown>) {
       }
     }
     case 'zeropoint.quantumCapacity': {
-      // BOTH LAYOUTS, like LEDGER above. The built server ships beside
-      // verification/ and the source sits beside src/verification/, and this
-      // file already has one scar from resolving only the second.
-      const read = (f: string) => {
-        const here = typeof __dirname === 'string' ? pathToFileURL(join(__dirname, 'x')) : import.meta.url
-        for (const rel of [`../verification/${f}`, `../src/verification/${f}`]) {
-          try { return JSON.parse(readFileSync(new URL(rel, here), 'utf8')) } catch { /* try the other layout */ }
-        }
-        return null
-      }
+      const read = readRecord
       const capacity = read('quantum-capacity.json')
       const cost = read('query-cost.json')
       const impostors = read('impostors.json')
@@ -363,6 +377,29 @@ function callTool(name: string, args: Record<string, unknown>) {
         note: capacity === null
           ? 'The capacity record is absent — run npm run capacity. Nothing is inferred in its place.'
           : 'Every number here is recomputed by npm run capacity, npm run query:cost and npm run impostors.',
+      }
+    }
+    case 'zeropoint.quantumAgrees': {
+      const agrees = readRecord('qpu-agrees.json')
+      if (agrees === null) {
+        return {
+          summary: 'The qpu-agrees record is absent — run npm run qpu:agrees. Nothing is inferred in its place.',
+          holds: null,
+        }
+      }
+      return {
+        summary: `${agrees.agree} of ${agrees.claims.length} claims served by ${agrees.served.host} agree with what this `
+          + `package recomputes; ${agrees.disagree} disagree, ${agrees.unmeasured.length} unmeasured; the record `
+          + `${agrees.holds ? 'holds' : 'does NOT hold'}.`,
+        host: agrees.served.host,
+        fetched: agrees.source.fetched,
+        kernel: agrees.source.kernel,
+        servedToolchain: agrees.served.lean?.toolchain ?? null,
+        holds: agrees.holds,
+        claims: (agrees.claims ?? []).map((c: any) => ({ name: c.name, agree: c.agree ?? null, unmeasured: c.unmeasured ?? null })),
+        notPinned: agrees.notPinned,
+        doesNotEstablish: agrees.doesNotEstablish,
+        note: 'Recomputed offline by npm run qpu:agrees:check on every gate run; refreshed from the network only by npm run qpu:agrees.',
       }
     }
     case 'zeropoint.fold': {

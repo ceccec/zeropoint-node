@@ -53,6 +53,7 @@ const loaded = [
   ['quantum-capacity.json', read('quantum-capacity.json'), 'npm run capacity'],
   ['shor-exhaustive.json', read('shor-exhaustive.json'), 'npm run shor:exhaustive'],
   ['qpu-pentagram.json', read('qpu-pentagram.json'), 'npm run qpu:pentagram'],
+  ['qpu-agrees.json', read('qpu-agrees.json'), 'npm run qpu:agrees'],
 ]
 const unreadable = loaded.filter(([, v]) => v.unreadable)
 const absent = loaded.filter(([, v]) => v.absent)
@@ -68,7 +69,7 @@ if (absent.length > 0) {
   process.exit(1)
 }
 
-const [impostors, cost, capacity, shor, qpu] = loaded.map(([, v]) => v.record)
+const [impostors, cost, capacity, shor, qpu, agrees] = loaded.map(([, v]) => v.record)
 
 /** Bytes as GiB, for the one place the page names a capacity. */
 const gib = (b) => `${(b / 1024 ** 3).toFixed(0)} GiB`
@@ -235,6 +236,42 @@ L.push('the Clifford fragment; a circuit with t T-gates is an exact sum of 2^t C
 L.push('circuits (`src/quantum/stabilizer-rank.ts`), so the exponent moves from n to t.')
 L.push('Where the exponent sits is a property of the representation and the fragment, never')
 L.push('of the work being quantum.')
+L.push('')
+L.push('### One QPU on the network, recomputed here')
+L.push('')
+// Every figure below is read from the record that npm run qpu:agrees writes.
+// The Worker's own `holds` flags are its self-certificate; the numbers here are
+// what THIS package's instruments found when they recomputed the same claims.
+const instrument = (c) => /^(lean|constant|theorem)\./.test(c.name) ? 'the Lean kernel on the recording machine'
+  : /^shor\./.test(c.name) ? '`src/quantum/algorithms.ts` (Shor by phase estimation)'
+  : /^lattice\./.test(c.name) ? 'integer arithmetic on the served lattice'
+  : '`src/quantum/exact.ts` (Gaussian-integer amplitudes)'
+const byInstrument = new Map()
+for (const c of agrees.claims ?? []) {
+  const k = instrument(c)
+  const row = byInstrument.get(k) ?? { claims: 0, agree: 0, unmeasured: 0 }
+  row.claims += 1
+  if (c.agree === true) row.agree += 1
+  if (c.unmeasured) row.unmeasured += 1
+  byInstrument.set(k, row)
+}
+L.push(`\`npm run qpu:agrees\` — ${agrees.served.host} serves one quantum processing unit as JSON-LD: a`)
+L.push(`${agrees.served.register.qubits}-qubit exact simulator, a Shor run on ${agrees.served.shor.n}, a ${agrees.served.lattice.faces}-face lattice and a Lean`)
+L.push(`file whose ${agrees.served.theorems.length} listed theorems each carry a \`holds\` that Worker computed about itself. Every`)
+L.push('claim is recomputed here by instruments that never read its source, and the offline')
+L.push('check reruns all of them on every gate run without the network.')
+L.push('')
+L.push('| instrument | served claims | agree | unmeasured |')
+L.push('| --- | --- | --- | --- |')
+for (const [k, r] of byInstrument) L.push(`| ${k} | ${r.claims} | ${r.agree} | ${r.unmeasured} |`)
+L.push('')
+L.push(`**${agrees.agree} of ${agrees.claims.length} served claims agree**, ${agrees.disagree} disagree, ${agrees.unmeasured.length} unmeasured; the record`)
+L.push(`${agrees.holds ? 'holds' : 'does NOT hold'}. The served proof was re-accepted by \`${agrees.source.kernel?.version ?? 'no Lean kernel on the recording machine'}\``)
+L.push(`against a served toolchain of \`${agrees.served.lean.toolchain}\`, and its constants as the kernel evaluates them match the numbers the JSON serves.`)
+L.push('')
+L.push('Not recomputed, by name:')
+L.push('')
+for (const [k, why] of Object.entries(agrees.notPinned ?? {})) L.push(`- \`${k}\` — ${why}`)
 L.push('')
 L.push('## Use it from npm')
 L.push('')

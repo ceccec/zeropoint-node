@@ -1,0 +1,5818 @@
+{
+  "what": "Every (N, a) pair of this repository's exhaustive Shor sweep, N = 4..31, sent to https://qpu.uuidna.com crypto_shor and compared arm by arm — coprimality, period, factors — with what this repository's Shor and a classical order finder compute for the same pair.",
+  "doesNotEstablish": "any speedup — both sides simulate, and the period arm is decided classically; or correctness beyond this range, which is the range shor-exhaustive.mjs measured. Pairs the Worker declares beyond its two-qubit counting width are counted, not scored.",
+  "host": "qpu.uuidna.com",
+  "tool": "crypto_shor",
+  "maxN": 31,
+  "pairs": 434,
+  "kinds": {
+    "gcd": 158,
+    "period": 38,
+    "refused": 42,
+    "beyondCountingWidth": 196
+  },
+  "agree": 434,
+  "disagree": 0,
+  "identicalPairs": 38,
+  "disagreements": [],
+  "fold": "097fa2ef1e1faf45b78e1cd61c2f4a25536c353d645c509b50da27113ce6d43a",
+  "served": [
+    {
+      "n": 4,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        2
+      ],
+      "holds": true
+    },
+    {
+      "n": 4,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 5,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 5,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 5,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 6,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        3
+      ],
+      "holds": true
+    },
+    {
+      "n": 6,
+      "a": 3,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        3
+      ],
+      "holds": true
+    },
+    {
+      "n": 6,
+      "a": 4,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        3
+      ],
+      "holds": true
+    },
+    {
+      "n": 6,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 7,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 7,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 7,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 7,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 7,
+      "a": 6,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 8,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 8,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 8,
+      "a": 4,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 8,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 8,
+      "a": 6,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 8,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 9,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 9,
+      "a": 3,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        3
+      ],
+      "holds": true
+    },
+    {
+      "n": 9,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 9,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 9,
+      "a": 6,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        3
+      ],
+      "holds": true
+    },
+    {
+      "n": 9,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 9,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 10,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 10,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 10,
+      "a": 4,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 10,
+      "a": 5,
+      "coprime": false,
+      "gcd": 5,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 10,
+      "a": 6,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 10,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 10,
+      "a": 8,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 10,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 11,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 11,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 11,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 11,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 11,
+      "a": 6,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 11,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 11,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 11,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 11,
+      "a": 10,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 12,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 12,
+      "a": 3,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 12,
+      "a": 4,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 12,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        3,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 12,
+      "a": 6,
+      "coprime": false,
+      "gcd": 6,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 12,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 12,
+      "a": 8,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 12,
+      "a": 9,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 12,
+      "a": 10,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 12,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 13,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 13,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 13,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 13,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 13,
+      "a": 6,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 13,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 13,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 13,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 13,
+      "a": 10,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 13,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 13,
+      "a": 12,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 14,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 14,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 14,
+      "a": 4,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 14,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 14,
+      "a": 6,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 14,
+      "a": 7,
+      "coprime": false,
+      "gcd": 7,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 14,
+      "a": 8,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 14,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 14,
+      "a": 10,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 14,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 14,
+      "a": 12,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 14,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 15,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 3,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 5,
+      "coprime": false,
+      "gcd": 5,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 6,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 9,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 10,
+      "coprime": false,
+      "gcd": 5,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 12,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        3,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 15,
+      "a": 14,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 16,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 4,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 6,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 8,
+      "coprime": false,
+      "gcd": 8,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 10,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 12,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        4
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 14,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 16,
+      "a": 15,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 6,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 10,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 12,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 14,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 15,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 17,
+      "a": 16,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 18,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 18,
+      "a": 3,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 18,
+      "a": 4,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 18,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 18,
+      "a": 6,
+      "coprime": false,
+      "gcd": 6,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 18,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 18,
+      "a": 8,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 18,
+      "a": 9,
+      "coprime": false,
+      "gcd": 9,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 18,
+      "a": 10,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 18,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 18,
+      "a": 12,
+      "coprime": false,
+      "gcd": 6,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 18,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 18,
+      "a": 14,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 18,
+      "a": 15,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 18,
+      "a": 16,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 18,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 6,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 10,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 12,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 14,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 15,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 16,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 19,
+      "a": 18,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 20,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        4,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 4,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 5,
+      "coprime": false,
+      "gcd": 5,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 6,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        4,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 8,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        4,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 10,
+      "coprime": false,
+      "gcd": 10,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 12,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        4,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 14,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 15,
+      "coprime": false,
+      "gcd": 5,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 16,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        4,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 18,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 20,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 21,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 21,
+      "a": 3,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 21,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 21,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 21,
+      "a": 6,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 21,
+      "a": 7,
+      "coprime": false,
+      "gcd": 7,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 21,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        3,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 21,
+      "a": 9,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 21,
+      "a": 10,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 21,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 21,
+      "a": 12,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 21,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        3,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 21,
+      "a": 14,
+      "coprime": false,
+      "gcd": 7,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 21,
+      "a": 15,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 21,
+      "a": 16,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 21,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 21,
+      "a": 18,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 21,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 21,
+      "a": 20,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 22,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        11
+      ],
+      "holds": true
+    },
+    {
+      "n": 22,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 22,
+      "a": 4,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        11
+      ],
+      "holds": true
+    },
+    {
+      "n": 22,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 22,
+      "a": 6,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        11
+      ],
+      "holds": true
+    },
+    {
+      "n": 22,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 22,
+      "a": 8,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        11
+      ],
+      "holds": true
+    },
+    {
+      "n": 22,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 22,
+      "a": 10,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        11
+      ],
+      "holds": true
+    },
+    {
+      "n": 22,
+      "a": 11,
+      "coprime": false,
+      "gcd": 11,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        11
+      ],
+      "holds": true
+    },
+    {
+      "n": 22,
+      "a": 12,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        11
+      ],
+      "holds": true
+    },
+    {
+      "n": 22,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 22,
+      "a": 14,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        11
+      ],
+      "holds": true
+    },
+    {
+      "n": 22,
+      "a": 15,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 22,
+      "a": 16,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        11
+      ],
+      "holds": true
+    },
+    {
+      "n": 22,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 22,
+      "a": 18,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        11
+      ],
+      "holds": true
+    },
+    {
+      "n": 22,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 22,
+      "a": 20,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        11
+      ],
+      "holds": true
+    },
+    {
+      "n": 22,
+      "a": 21,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 6,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 10,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 12,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 14,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 15,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 16,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 18,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 20,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 21,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 23,
+      "a": 22,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 24,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        12
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 3,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 4,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        4,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 6,
+      "coprime": false,
+      "gcd": 6,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        4,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 8,
+      "coprime": false,
+      "gcd": 8,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 9,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 10,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        12
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        12
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 12,
+      "coprime": false,
+      "gcd": 12,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        12
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        12
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 14,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        12
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 15,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 16,
+      "coprime": false,
+      "gcd": 8,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        3,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 18,
+      "coprime": false,
+      "gcd": 6,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        4,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 20,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 21,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        8
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 22,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        12
+      ],
+      "holds": true
+    },
+    {
+      "n": 24,
+      "a": 23,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 5,
+      "coprime": false,
+      "gcd": 5,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        5,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 25,
+      "a": 6,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 10,
+      "coprime": false,
+      "gcd": 5,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        5,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 25,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 12,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 14,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 15,
+      "coprime": false,
+      "gcd": 5,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        5,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 25,
+      "a": 16,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 18,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 20,
+      "coprime": false,
+      "gcd": 5,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        5,
+        5
+      ],
+      "holds": true
+    },
+    {
+      "n": 25,
+      "a": 21,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 22,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 23,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 25,
+      "a": 24,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 26,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 26,
+      "a": 4,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 26,
+      "a": 6,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 26,
+      "a": 8,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 26,
+      "a": 10,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 26,
+      "a": 12,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 13,
+      "coprime": false,
+      "gcd": 13,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 14,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 15,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 26,
+      "a": 16,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 26,
+      "a": 18,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 26,
+      "a": 20,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 21,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 26,
+      "a": 22,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 23,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 26,
+      "a": 24,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        13
+      ],
+      "holds": true
+    },
+    {
+      "n": 26,
+      "a": 25,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 3,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 27,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 6,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 27,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 9,
+      "coprime": false,
+      "gcd": 9,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 27,
+      "a": 10,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 12,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 27,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 14,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 15,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 27,
+      "a": 16,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 18,
+      "coprime": false,
+      "gcd": 9,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 27,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 20,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 21,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 27,
+      "a": 22,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 23,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 24,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        9
+      ],
+      "holds": true
+    },
+    {
+      "n": 27,
+      "a": 25,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 27,
+      "a": 26,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 28,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        14
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 28,
+      "a": 4,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 28,
+      "a": 6,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        14
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 7,
+      "coprime": false,
+      "gcd": 7,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 8,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 28,
+      "a": 10,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        14
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 28,
+      "a": 12,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        4,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 14,
+      "coprime": false,
+      "gcd": 14,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        14
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 15,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        2,
+        14
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 16,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 28,
+      "a": 18,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        14
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 28,
+      "a": 20,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 21,
+      "coprime": false,
+      "gcd": 7,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 22,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        14
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 23,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 28,
+      "a": 24,
+      "coprime": false,
+      "gcd": 4,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        4,
+        7
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 25,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 28,
+      "a": 26,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        14
+      ],
+      "holds": true
+    },
+    {
+      "n": 28,
+      "a": 27,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 6,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 10,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 12,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 14,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 15,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 16,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 18,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 20,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 21,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 22,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 23,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 24,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 25,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 26,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 27,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 29,
+      "a": 28,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 30,
+      "a": 2,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        15
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 3,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 4,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        15
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 5,
+      "coprime": false,
+      "gcd": 5,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        5,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 6,
+      "coprime": false,
+      "gcd": 6,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        5,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        5,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 8,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        15
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 9,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 10,
+      "coprime": false,
+      "gcd": 10,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        3,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 12,
+      "coprime": false,
+      "gcd": 6,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        5,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        5,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 14,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        15
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 15,
+      "coprime": false,
+      "gcd": 15,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        15
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 16,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        15
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        5,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 18,
+      "coprime": false,
+      "gcd": 6,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        5,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        5,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 20,
+      "coprime": false,
+      "gcd": 10,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 21,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 22,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        15
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 23,
+      "coprime": true,
+      "gcd": 1,
+      "period": 4,
+      "beyond": false,
+      "resolvable": true,
+      "by": "period",
+      "factors": [
+        5,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 24,
+      "coprime": false,
+      "gcd": 6,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        5,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 25,
+      "coprime": false,
+      "gcd": 5,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        5,
+        6
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 26,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        15
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 27,
+      "coprime": false,
+      "gcd": 3,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        3,
+        10
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 28,
+      "coprime": false,
+      "gcd": 2,
+      "period": 0,
+      "beyond": false,
+      "resolvable": false,
+      "by": "gcd",
+      "factors": [
+        2,
+        15
+      ],
+      "holds": true
+    },
+    {
+      "n": 30,
+      "a": 29,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 2,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 3,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 4,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 5,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 6,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 7,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 8,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 9,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 10,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 11,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 12,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 13,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 14,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 15,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 16,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 17,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 18,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 19,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 20,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 21,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 22,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 23,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 24,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 25,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 26,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 27,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 28,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 29,
+      "coprime": true,
+      "gcd": 1,
+      "period": 0,
+      "beyond": true,
+      "resolvable": false,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    },
+    {
+      "n": 31,
+      "a": 30,
+      "coprime": true,
+      "gcd": 1,
+      "period": 2,
+      "beyond": false,
+      "resolvable": true,
+      "by": "none",
+      "factors": null,
+      "holds": false
+    }
+  ],
+  "holds": true
+}

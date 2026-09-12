@@ -54,6 +54,7 @@ const loaded = [
   ['shor-exhaustive.json', read('shor-exhaustive.json'), 'npm run shor:exhaustive'],
   ['qpu-pentagram.json', read('qpu-pentagram.json'), 'npm run qpu:pentagram'],
   ['qpu-agrees.json', read('qpu-agrees.json'), 'npm run qpu:agrees'],
+  ['qpu-shor-agrees.json', read('qpu-shor-agrees.json'), 'npm run qpu:shor:agrees'],
 ]
 const unreadable = loaded.filter(([, v]) => v.unreadable)
 const absent = loaded.filter(([, v]) => v.absent)
@@ -69,7 +70,7 @@ if (absent.length > 0) {
   process.exit(1)
 }
 
-const [impostors, cost, capacity, shor, qpu, agrees] = loaded.map(([, v]) => v.record)
+const [impostors, cost, capacity, shor, qpu, agrees, shorAgrees] = loaded.map(([, v]) => v.record)
 
 /** Bytes as GiB, for the one place the page names a capacity. */
 const gib = (b) => `${(b / 1024 ** 3).toFixed(0)} GiB`
@@ -272,6 +273,27 @@ L.push('')
 L.push('Not recomputed, by name:')
 L.push('')
 for (const [k, why] of Object.entries(agrees.notPinned ?? {})) L.push(`- \`${k}\` — ${why}`)
+L.push('')
+L.push('### The same Shor sweep, sent to that QPU')
+L.push('')
+// The sweep above answers against N itself. This one answers against another
+// implementation: every (N, a) pair of it, sent to the Worker's crypto_shor and
+// compared arm by arm. Every figure is read from the record.
+const k3 = shorAgrees.kinds ?? {}
+L.push(`\`npm run qpu:shor:agrees\` — every pair of the sweep, N = 4..${shorAgrees.maxN}, ${shorAgrees.pairs} in all, sent to`)
+L.push(`${shorAgrees.host} \`${shorAgrees.tool}\` and compared on three arms: coprimality, period, factors.`)
+L.push('')
+L.push('| the Worker | pairs | what must hold here |')
+L.push('| --- | --- | --- |')
+L.push(`| factored by gcd (base shares a factor) | ${k3.gcd ?? 0} | the same first step, an identical pair |`)
+L.push(`| factored by period | ${k3.period ?? 0} | phase estimation here also factors; ${shorAgrees.identicalPairs} of ${k3.period ?? 0} pairs identical |`)
+L.push(`| refused inside its width | ${k3.refused ?? 0} | the refusal here is N prime or a^(r/2) ≡ −1 |`)
+L.push(`| declared beyond its two-qubit counting width | ${k3.beyondCountingWidth ?? 0} | the order here does not divide 4 — counted, not scored |`)
+L.push('')
+L.push(`**${shorAgrees.agree} of ${shorAgrees.pairs} pairs agree on every arm**, ${shorAgrees.disagree} disagree; the record ${shorAgrees.holds ? 'holds' : 'does NOT hold'}.`)
+L.push('The Worker recovers a period only when it divides 4 and says so in advance; this')
+L.push('repository uses 2·bits(N) counting qubits and factors most of what the Worker')
+L.push('declares beyond it. A declared limit is disclosure, not a defect, and is not scored.')
 L.push('')
 L.push('## Use it from npm')
 L.push('')

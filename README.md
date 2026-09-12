@@ -47,7 +47,7 @@ Three things a reader can actually use, and one honest warning.
   against NIST's own ACVP vectors and 10 000 pq-crystals KAT cases. **It is not
   constant time**, so it is for study and conformance work, not for guarding
   anything.
-- **`zeropoint-mcp`** — an MCP server exposing 14 kernel tools to an agent.
+- **`zeropoint-mcp`** — an MCP server exposing 15 kernel tools to an agent.
   `npx zeropoint-mcp`. Three answer about verification rather than arithmetic:
   `zeropoint.criteria`, `zeropoint.seals`, `zeropoint.claims`.
 

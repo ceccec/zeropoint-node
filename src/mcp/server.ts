@@ -224,8 +224,9 @@ const TOOLS = [
     description:
       'What qpu.uuidna.com serves about its quantum processing unit, recomputed by instruments that never '
       + 'read its source: the exact simulator for the Bell, GHZ and product states, the Shor of this package for '
-      + 'the factorisation of 91, and the Lean kernel on the recording machine for the served proof. Per-claim '
-      + 'agreement from src/verification/qpu-agrees.json; nothing is fetched at call time.',
+      + 'the factorisation of 91, and the Lean kernel on the recording machine for the served proof, plus the '
+      + 'exhaustive Shor sweep of this package sent pair by pair to that QPU and compared arm by arm. Per-claim agreement '
+      + 'as recorded in src/verification/qpu-agrees.json and qpu-shor-agrees.json; nothing is fetched at call time.',
     inputSchema: { type: 'object', properties: {} },
   },
 ]
@@ -399,6 +400,10 @@ function callTool(name: string, args: Record<string, unknown>) {
         claims: (agrees.claims ?? []).map((c: any) => ({ name: c.name, agree: c.agree ?? null, unmeasured: c.unmeasured ?? null })),
         notPinned: agrees.notPinned,
         doesNotEstablish: agrees.doesNotEstablish,
+        shorSweep: (() => {
+          const s = readRecord('qpu-shor-agrees.json')
+          return s === null ? null : { host: s.host, tool: s.tool, maxN: s.maxN, pairs: s.pairs, kinds: s.kinds, agree: s.agree, disagree: s.disagree, identicalPairs: s.identicalPairs, holds: s.holds }
+        })(),
         note: 'Recomputed offline by npm run qpu:agrees:check on every gate run; refreshed from the network only by npm run qpu:agrees.',
       }
     }

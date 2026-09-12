@@ -387,6 +387,12 @@
       "agree": true
     },
     {
+      "name": "lean.theoremCount",
+      "served": 84,
+      "local": 84,
+      "agree": true
+    },
+    {
       "name": "constant.n",
       "served": 3,
       "local": "3",
@@ -717,7 +723,7 @@
       "agree": true
     }
   ],
-  "agree": 49,
+  "agree": 50,
   "disagree": 0,
   "unmeasured": [],
   "holds": true

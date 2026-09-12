@@ -318,6 +318,9 @@ const recompute = async (served) => {
     for (const t of served.theorems) unmeasured(`theorem.${t.heading}`, 'kernel not run')
   } else {
     claim('lean.kernel', { toolchain: served.lean.toolchain, sha256: served.lean.sha256 }, { accepted: k.accepted, why: k.why ?? null }, k.accepted && !k.why)
+    // The Worker says how many theorems the file holds; count the declarations in the accepted source.
+    const declared = (served.leanSource.match(/^theorem\s+\S+/gm) ?? []).length
+    claim('lean.theoremCount', served.lean.theoremsServed, declared, Number.isInteger(served.lean.theoremsServed) && declared === served.lean.theoremsServed)
     for (const n of CONSTANT_NAMES) {
       const s = served.constants[n]
       const l = k.constants?.[n]

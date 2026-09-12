@@ -21,18 +21,21 @@
  * exponent — three packing hypotheses in this repository failed to — and
  * neither does any point of the pentagram.
  *
- * TWO: THE DRIFT. uuidna's simulator carries Gaussian-integer amplitudes over
- * √(2^scale) and returns EXACT RATIONALS — 1/2, not 0.5. This one carries
- * floats. That is a live inconsistency: this package bans decimal literals in
- * code, ratchets a decimal-crack surface, and writes its physical constants as
- * integer fractions — and then computes its quantum amplitudes in binary
- * floating point. uuidna's exact answers are used as the reference and the
- * drift is measured rather than assumed absent.
+ * TWO: THE DRIFT. The float simulator carries binary floats; src/quantum/exact.ts
+ * carries Gaussian-integer amplitudes over √(2^scale) and returns EXACT
+ * RATIONALS — 1/2, not 0.5 — and qpu.uuidna.com's simulator does the same on
+ * the same representation (qpu-agrees.json records the two agreeing on GHZ_3).
+ * The reference below used to be TYPED, as `1n/2n` with a comment that uuidna
+ * had returned it: a constant written into the instrument that measures drift
+ * from it, which is the shape shadowed:check exists for. It is now COMPUTED by
+ * exact.ts at every width measured, so the float simulator is compared with an
+ * exact answer this repository derives rather than one it remembers.
  *
  *   npm run qpu:reality
  */
 const ROOT = new URL('..', import.meta.url).pathname
 const { zeroState, applyGate1, cnot, probabilities, H } = await import(ROOT + 'src/quantum/simulator.ts')
+const { exactZeroState, exactH, exactCnot, exactProbability } = await import(ROOT + 'src/quantum/exact.ts')
 
 /** GHZ_n: H on qubit 0, then a CNOT ladder. Exactly what uuidna was asked for. */
 const ghz = (n) => {
@@ -42,16 +45,18 @@ const ghz = (n) => {
 }
 
 // ─────────────────────────────────────────────── drift against an exact source
-// uuidna returns 1/2 for both outcomes of GHZ at every width it was asked.
-// Recorded here as an exact rational, compared as one — not as 0.5, because
-// writing the reference as a float would hide precisely the error being looked
-// for.
-const EXACT_NUM = 1n
-const EXACT_DEN = 2n
-const exactAsFloat = Number(EXACT_NUM) / Number(EXACT_DEN)
+// The same GHZ_n on exact.ts, whose probabilities are integer fractions over
+// 2^scale. The reference is computed at each width and converted to a float
+// only at the comparison — writing it as 0.5 in the source would hide precisely
+// the error being looked for, and writing it as 1n/2n hid where it came from.
+const exactGhz = (n) => {
+  let reg = exactH(exactZeroState(n), 0)
+  for (let q = 0; q + 1 < n; q += 1) reg = exactCnot(reg, q, q + 1)
+  return reg
+}
+const asFloat = (p) => Number(p.numerator) / Number(p.denominator)
 
-console.log('  drift of this float simulator against uuidna\'s exact rationals')
-console.log('  (uuidna: GHZ_n outcomes are 1/2 and 1/2, at every width asked)')
+console.log('  drift of this float simulator against the exact simulator in src/quantum/exact.ts')
 let worstDrift = 0
 let worstAt = 0
 for (const n of [2, 4, 6, 8, 10, 12, 14]) {
@@ -59,9 +64,12 @@ for (const n of [2, 4, 6, 8, 10, 12, 14]) {
   const first = ps[0]
   const last = ps[ps.length - 1]
   const total = ps.reduce((t, p) => t + p, 0)
-  const drift = Math.max(Math.abs(first - exactAsFloat), Math.abs(last - exactAsFloat))
+  const ex = exactGhz(n)
+  const exFirst = exactProbability(ex, 0)
+  const exLast = exactProbability(ex, ex.amps.length - 1)
+  const drift = Math.max(Math.abs(first - asFloat(exFirst)), Math.abs(last - asFloat(exLast)))
   if (drift > worstDrift) { worstDrift = drift; worstAt = n }
-  console.log(`    n=${String(n).padStart(2)}  p(0…0)=${first.toExponential(17)}  |error|=${drift.toExponential(3)}  Σp−1=${(total - 1).toExponential(3)}`)
+  console.log(`    n=${String(n).padStart(2)}  exact p(0…0)=${exFirst.numerator}/${exFirst.denominator}  float=${first.toExponential(17)}  |error|=${drift.toExponential(3)}  Σp−1=${(total - 1).toExponential(3)}`)
 }
 console.log(`    worst drift ${worstDrift.toExponential(3)} at n=${worstAt}`)
 if (worstDrift === 0) {
@@ -74,9 +82,10 @@ if (worstDrift === 0) {
   console.log('    mathematics fixes at exactly one half arrives one ulp away and the')
   console.log('    distribution sums to 1 + 2.2e-16 rather than to 1.')
   console.log('')
-  console.log('    uuidna gets 1/2 EXACTLY for the same circuits because it never materialises')
+  console.log('    exact.ts gets 1/2 EXACTLY for the same circuits because it never materialises')
   console.log('    the irrational: amplitudes are Gaussian integers over a √(2^scale) factor')
-  console.log('    kept symbolic, so the √2 cancels in the square instead of rounding.')
+  console.log('    kept symbolic, so the √2 cancels in the square instead of rounding. So does')
+  console.log('    qpu.uuidna.com, on the same representation (qpu-agrees.json).')
   console.log('')
   console.log('    That is a live inconsistency in this package rather than a rounding')
   console.log('    curiosity. math:ban forbids ambient Math, the ratchet counts decimal-crack')
@@ -87,8 +96,8 @@ if (worstDrift === 0) {
   console.log('')
   console.log('    DOES NOT ESTABLISH that the drift matters for any shipped claim: 1.1e-16 is')
   console.log('    far inside the 1e-9 tolerance every seal uses. What it establishes is that')
-  console.log('    the exactness is ASSUMED and is not there, and that an exact representation')
-  console.log('    exists and a peer already runs one.')
+  console.log('    the float simulator\'s exactness is ASSUMED and is not there, while the exact')
+  console.log('    representation ships beside it and a peer runs the same one.')
 }
 
 // ─────────────────────────────────────────────────────────────────── the wall

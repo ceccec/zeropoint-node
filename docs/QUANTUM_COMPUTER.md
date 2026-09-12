@@ -161,10 +161,10 @@ check reruns all of them on every gate run without the network.
 | --- | --- | --- | --- |
 | `src/quantum/exact.ts` (Gaussian-integer amplitudes) | 13 | 13 | 0 |
 | integer arithmetic on the served lattice | 3 | 3 | 0 |
-| the Lean kernel on the recording machine | 21 | 21 | 0 |
+| the Lean kernel on the recording machine | 22 | 22 | 0 |
 | `src/quantum/algorithms.ts` (Shor by phase estimation) | 12 | 12 | 0 |
 
-**49 of 49 served claims agree**, 0 disagree, 0 unmeasured; the record
+**50 of 50 served claims agree**, 0 disagree, 0 unmeasured; the record
 holds. The served proof was re-accepted by `Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)`
 against a served toolchain of `leanprover/lean4:v4.33.0`, and its constants as the kernel evaluates them match the numbers the JSON serves.
 

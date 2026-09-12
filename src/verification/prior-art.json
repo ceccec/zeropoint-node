@@ -437,6 +437,50 @@
       "novelty": {
         "backedBy": "no_prior_art_is_undecidable"
       }
+    },
+    "cross-implementation-agreement": {
+      "what": "Every claim a second, independently written quantum simulator serves about itself — states, a Lean proof, a Shor run and its nine-qubit circuit — recomputed by this repository's exact simulator, its Shor, and the Lean kernel on the recording machine, plus this repository's exhaustive Shor sweep sent to that simulator pair by pair; agreement recorded per claim and per arm, declared limits counted rather than scored, and the checks offline so a corrupted record fails rather than being repaired.",
+      "files": [
+        "scripts/qpu-agrees.mjs",
+        "scripts/qpu-shor-agrees.mjs",
+        "src/verification/qpu-agrees.json",
+        "src/verification/qpu-shor-agrees.json"
+      ],
+      "priorArt": {
+        "status": "known-art-in-part",
+        "citations": [
+          {
+            "text": "qpu.uuidna.com — the unit under comparison: a 3-qubit exact state-vector simulator, its Lean 4 proofs and an MCP server in one Cloudflare Worker, archived on Zenodo; the served holds it computes about itself are what this contribution recomputes from outside",
+            "id": "10.5281/zenodo.22717782",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "QPU",
+            "resolvedOn": "2026-09-12",
+            "resolvedVia": "https://api.datacite.org/dois/<doi>"
+          },
+          {
+            "text": "N-version programming — independently written implementations of one specification compared on the same inputs, with disagreement as the signal; this applies the shape to two quantum simulators and a proof checker rather than to a fault-tolerant runtime",
+            "id": "10.1109/TSE.1985.231893",
+            "kind": "doi",
+            "resolved": true,
+            "resolvedTitle": "The N-Version Approach to Fault-Tolerant Software",
+            "resolvedOn": "2026-09-12",
+            "resolvedVia": "https://api.crossref.org/works/<doi>"
+          },
+          {
+            "text": "Differential testing (McKeeman, Digital Technical Journal 10(1), 1998) — the same inputs to several implementations, any disagreement a defect in one of them; the two-way Shor sweep is differential testing over an exhaustive input range",
+            "id": null,
+            "kind": "paper",
+            "resolved": false
+          }
+        ]
+      },
+      "domains": [
+        "N-version programming and design diversity",
+        "differential testing of compilers and interpreters",
+        "cross-validation of quantum circuit simulators",
+        "proof-checker independence and re-verification"
+      ]
     }
   },
   "citationPolicy": "Every claim of known art carries a RESOLVABLE identifier where one exists, and says so when one does not. `resolved` records whether the identifier was actually fetched and confirmed to name the cited work — not whether the author believes it. An unresolved DOI is a DOI nobody has checked, and this ledger prints how many there are rather than letting a plausible-looking string pass for a citation. Identifiers written from memory are exactly the kind of claim this repository exists to refuse, so they start unresolved. All nine DOIs were resolved against Crossref on 2026-09-04 and each returned the title of the work cited; the returned title is recorded beside the identifier so a reader can see WHAT resolved, not merely that something did.",

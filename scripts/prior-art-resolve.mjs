@@ -41,22 +41,42 @@ for (const { id, i, cite } of targets) {
   // match nor a mismatch, and reporting it as a mismatch would train a reader
   // to ignore this tool's failures. Back off and retry; only then give up, and
   // say which kind of failure it was.
-  let returned = null, inconclusive = null
-  for (let attempt = 0; attempt < 4; attempt++) {
-    if (attempt > 0) await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt))
-    try {
-      const res = await fetch(`https://api.crossref.org/works/${cite.id}`, {
-        headers: { 'User-Agent': `zeropoint-node/${led.version ?? ''} (prior-art resolver)` },
-        signal: AbortSignal.timeout(30_000),
-      })
-      if (res.ok) { returned = (await res.json())?.message?.title?.[0] ?? null; inconclusive = null; break }
-      if (res.status === 429 || res.status >= 500) { inconclusive = `the registry answers ${res.status}`; continue }
-      inconclusive = null
-      if (cite.resolved === true) problems.push(`${id} citation ${i}: DOI ${cite.id} is recorded as resolved and the registry answers ${res.status}`)
-      break
-    } catch (e) {
-      inconclusive = `could not be reached (${e.name})`
+  // TWO REGISTRIES, NOT ONE. Crossref holds journal and conference DOIs;
+  // Zenodo's 10.5281 prefix is registered with DataCite and Crossref answers
+  // 404 for it. A resolver that asked Crossref alone would report a Zenodo
+  // record as unresolvable, which is the ledger understating what is known —
+  // the exact failure this script exists to catch. Crossref is asked first;
+  // a clean 404 there is followed by DataCite, and `resolvedVia` names
+  // whichever registry actually returned the title.
+  const registries = [
+    { name: 'https://api.crossref.org/works/<doi>', url: `https://api.crossref.org/works/${cite.id}`, title: (j) => j?.message?.title?.[0] ?? null },
+    { name: 'https://api.datacite.org/dois/<doi>', url: `https://api.datacite.org/dois/${cite.id}`, title: (j) => j?.data?.attributes?.titles?.[0]?.title ?? null },
+  ]
+  let returned = null, inconclusive = null, via = null, lastStatus = null
+  for (const reg of registries) {
+    for (let attempt = 0; attempt < 4; attempt++) {
+      if (attempt > 0) await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt))
+      try {
+        const res = await fetch(reg.url, {
+          headers: { 'User-Agent': `zeropoint-node/${led.version ?? ''} (prior-art resolver)` },
+          signal: AbortSignal.timeout(30_000),
+        })
+        if (res.ok) { returned = reg.title(await res.json()); via = reg.name; inconclusive = null; break }
+        if (res.status === 429 || res.status >= 500) { inconclusive = `the registry answers ${res.status}`; continue }
+        inconclusive = null
+        lastStatus = res.status
+        break
+      } catch (e) {
+        inconclusive = `could not be reached (${e.name})`
+      }
     }
+    if (returned !== null || inconclusive) break
+  }
+  if (returned === null && !inconclusive && lastStatus !== null && cite.resolved === true) {
+    problems.push(`${id} citation ${i}: DOI ${cite.id} is recorded as resolved and neither registry returns it (last answer ${lastStatus})`)
+  }
+  if (returned !== null && cite.resolved === true && cite.resolvedVia && cite.resolvedVia !== via) {
+    problems.push(`${id} citation ${i}: DOI ${cite.id} is recorded as resolved via ${cite.resolvedVia} and was returned today by ${via}`)
   }
   if (inconclusive) {
     problems.push(`${id} citation ${i}: DOI ${cite.id} — ${inconclusive}. INCONCLUSIVE: this run neither confirms nor refutes the recorded title`)

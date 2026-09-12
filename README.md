@@ -699,7 +699,7 @@ Rouschev, T. (2026). *ZeroPoint Node* (Version 1.5.9) [Computer software]. https
 | | |
 | --- | --- |
 | proof kernel | Lean 4 — 59 of 83 statements accepted, dependency sets recorded per theorem |
-| reference resolution | Crossref REST API — 19 DOIs, each re-resolved to the title recorded beside it |
+| reference resolution | Crossref REST API — 21 DOIs, each re-resolved to the title recorded beside it |
 | archive | Zenodo — concept DOI [10.5281/zenodo.22178675](https://doi.org/10.5281/zenodo.22178675) |
 | licence | CC-BY-NC-ND-4.0 |
 

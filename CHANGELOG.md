@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.5.8
+## 1.5.9
 
 **An assertion that compares an expression to itself after a mutation cannot
 fail.** `npm run assert:tautology:check` reads every test under `src/` for
@@ -10,6 +10,8 @@ body is, because both sides evaluate after the write. The tree has none of
 those dead lines today. The matcher is held to a self-test: the committed dead
 shape is caught, a determinism check is not, and an unreadable test file is
 UNMEASURED rather than clean.
+
+## 1.5.8
 
 **The chain was repairing the document it was about to inspect.** Twelve
 entries in `npm run check` run `X && X:check`. The generator runs, the working

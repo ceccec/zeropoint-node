@@ -162,9 +162,9 @@ check reruns all of them on every gate run without the network.
 | `src/quantum/exact.ts` (Gaussian-integer amplitudes) | 13 | 13 | 0 |
 | integer arithmetic on the served lattice | 3 | 3 | 0 |
 | the Lean kernel on the recording machine | 21 | 21 | 0 |
-| `src/quantum/algorithms.ts` (Shor by phase estimation) | 6 | 6 | 0 |
+| `src/quantum/algorithms.ts` (Shor by phase estimation) | 12 | 12 | 0 |
 
-**43 of 43 served claims agree**, 0 disagree, 0 unmeasured; the record
+**49 of 49 served claims agree**, 0 disagree, 0 unmeasured; the record
 holds. The served proof was re-accepted by `Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)`
 against a served toolchain of `leanprover/lean4:v4.33.0`, and its constants as the kernel evaluates them match the numbers the JSON serves.
 
@@ -172,9 +172,13 @@ Not recomputed, by name:
 
 - `measurement` — served as {index, bits, support}; the meaning of index and bits is not stated as an equation
 - `interfere` — cancelled and restored are counters whose definition is not served; only the support of H·H|0⟩ is pinned
-- `shorCircuit` — cmodexp, csdg and swap are not in the exact simulator here; the circuit is not re-run gate for gate
+- `prepareAmplitudes` — served as a count of 16 after preparation under a definition the Worker does not serve; the exact register here holds 4 nonzero amplitudes at that point, and the circuit is re-run gate for gate regardless
 - `fold` — the Worker's 16-character fold of index.lean is not this repository's hash; recorded under served.lean.fold, not compared
 - `prose` — speed, messaging, neuro, design, css, docs, glossary and ui are counters or prose
+
+Found by recomputing, not served:
+
+- The served two-qubit counting marginal cannot see the modular arithmetic: with four distinct work values it is uniform whatever the multipliers are, and replacing 64 by 63 in the served cmodexp left it at 1/4 four times. The multipliers and the work values the circuit reaches are therefore compared as their own claims; the marginal alone would pass a wrong circuit.
 
 ### The same Shor sweep, sent to that QPU
 

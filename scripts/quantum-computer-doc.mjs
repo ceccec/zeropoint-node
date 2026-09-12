@@ -274,6 +274,13 @@ L.push('Not recomputed, by name:')
 L.push('')
 for (const [k, why] of Object.entries(agrees.notPinned ?? {})) L.push(`- \`${k}\` — ${why}`)
 L.push('')
+// What the recomputation found that a served `holds` could not have said.
+if ((agrees.findings ?? []).length > 0) {
+  L.push('Found by recomputing, not served:')
+  L.push('')
+  for (const f of agrees.findings) L.push(`- ${f}`)
+  L.push('')
+}
 L.push('### The same Shor sweep, sent to that QPU')
 L.push('')
 // The sweep above answers against N itself. This one answers against another

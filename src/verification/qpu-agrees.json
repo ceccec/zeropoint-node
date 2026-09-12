@@ -1,13 +1,16 @@
 {
   "what": "Every claim qpu.uuidna.com serves about its quantum processing unit, recomputed here by instruments that never read its source: the exact simulator for the states, the Lean kernel on this machine for the proof, and this repository's Shor for the factorisation.",
-  "doesNotEstablish": "that the Worker is quantum hardware (it says simulator, and so does everything here), that its nine-qubit Shor circuit is correct gate for gate (only its factorisation, period and peak set are recomputed), or anything about the served blocks listed under notPinned.",
+  "doesNotEstablish": "that the Worker is quantum hardware (it says simulator, and so does everything here), that the served circuit is the one the Worker actually executes (only the gate list it serves is re-run), or anything about the served blocks listed under notPinned.",
   "notPinned": {
     "measurement": "served as {index, bits, support}; the meaning of index and bits is not stated as an equation",
     "interfere": "cancelled and restored are counters whose definition is not served; only the support of H·H|0⟩ is pinned",
-    "shorCircuit": "cmodexp, csdg and swap are not in the exact simulator here; the circuit is not re-run gate for gate",
+    "prepareAmplitudes": "served as a count of 16 after preparation under a definition the Worker does not serve; the exact register here holds 4 nonzero amplitudes at that point, and the circuit is re-run gate for gate regardless",
     "fold": "the Worker's 16-character fold of index.lean is not this repository's hash; recorded under served.lean.fold, not compared",
     "prose": "speed, messaging, neuro, design, css, docs, glossary and ui are counters or prose"
   },
+  "findings": [
+    "The served two-qubit counting marginal cannot see the modular arithmetic: with four distinct work values it is uniform whatever the multipliers are, and replacing 64 by 63 in the served cmodexp left it at 1/4 four times. The multipliers and the work values the circuit reaches are therefore compared as their own claims; the marginal alone would pass a wrong circuit."
+  ],
   "source": {
     "host": "qpu.uuidna.com",
     "id": "https://qpu.uuidna.com",
@@ -16,7 +19,7 @@
       "https://qpu.uuidna.com/mcp tools/call qpu_prove",
       "https://qpu.uuidna.com/src/quantum/processing/unit/index.lean"
     ],
-    "fold": "b0a90fa1629c3982537ac76a4f10f2277d13e6453656047bca6eacee02bd86fe",
+    "fold": "80e77dc8c2cafbe31b471a5bc447a8a994dfc2c20e75aee9e1a1125d71283c52",
     "kernel": {
       "version": "Lean (version 4.33.1, arm64-apple-darwin24.6.0, commit 819816b2e0a3bf405af45ae5c7af2491d8f5bee6, Release)"
     }
@@ -110,7 +113,64 @@
         4,
         4
       ],
-      "holds": true
+      "holds": true,
+      "circuit": {
+        "qubits": 9,
+        "dim": 512,
+        "work": 7,
+        "counting": 2,
+        "native": [
+          "h",
+          "cnot"
+        ],
+        "gates": [
+          {
+            "name": "x",
+            "q": 2
+          },
+          {
+            "name": "h",
+            "q": 0
+          },
+          {
+            "name": "h",
+            "q": 1
+          },
+          {
+            "name": "cmodexp",
+            "c": 0,
+            "a": 8,
+            "modulus": 91,
+            "power": 1
+          },
+          {
+            "name": "cmodexp",
+            "c": 1,
+            "a": 64,
+            "modulus": 91,
+            "power": 2
+          },
+          {
+            "name": "swap",
+            "a": 0,
+            "b": 1
+          },
+          {
+            "name": "h",
+            "q": 1
+          },
+          {
+            "name": "csdg",
+            "c": 1,
+            "t": 0
+          },
+          {
+            "name": "h",
+            "q": 0
+          }
+        ],
+        "prepareAmplitudes": 16
+      }
     },
     "theorems": [
       {
@@ -533,9 +593,131 @@
       "served": true,
       "local": true,
       "agree": true
+    },
+    {
+      "name": "shor.circuit.gates",
+      "served": [
+        "x",
+        "h",
+        "h",
+        "cmodexp",
+        "cmodexp",
+        "swap",
+        "h",
+        "csdg",
+        "h"
+      ],
+      "local": [
+        "x",
+        "h",
+        "cmodexp",
+        "swap",
+        "csdg"
+      ],
+      "agree": true
+    },
+    {
+      "name": "shor.circuit.dim",
+      "served": 512,
+      "local": 512,
+      "agree": true
+    },
+    {
+      "name": "shor.circuit.modulus",
+      "served": 91,
+      "local": 91,
+      "agree": true
+    },
+    {
+      "name": "shor.circuit.multipliers",
+      "served": [
+        {
+          "c": 0,
+          "power": 1,
+          "a": 8,
+          "modulus": 91
+        },
+        {
+          "c": 1,
+          "power": 2,
+          "a": 64,
+          "modulus": 91
+        }
+      ],
+      "local": [
+        {
+          "c": 0,
+          "power": 1,
+          "a": 8,
+          "modulus": 91
+        },
+        {
+          "c": 1,
+          "power": 2,
+          "a": 64,
+          "modulus": 91
+        }
+      ],
+      "agree": true
+    },
+    {
+      "name": "shor.circuit.work",
+      "served": {
+        "a": 8,
+        "n": 91,
+        "period": 4
+      },
+      "local": [
+        1,
+        8,
+        57,
+        64
+      ],
+      "agree": true
+    },
+    {
+      "name": "shor.circuit.counting",
+      "served": {
+        "support": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "uniform": true
+      },
+      "local": {
+        "support": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "marginal": [
+          {
+            "numerator": "4",
+            "denominator": "16"
+          },
+          {
+            "numerator": "4",
+            "denominator": "16"
+          },
+          {
+            "numerator": "4",
+            "denominator": "16"
+          },
+          {
+            "numerator": "4",
+            "denominator": "16"
+          }
+        ],
+        "equal": true,
+        "stateFold": "35a11d4cf8312d89fbb80b485f1190765451501ef0a4e308ebe76335ba306ab3"
+      },
+      "agree": true
     }
   ],
-  "agree": 43,
+  "agree": 49,
   "disagree": 0,
   "unmeasured": [],
   "holds": true

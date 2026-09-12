@@ -33,17 +33,27 @@
  *              and the counting-register peaks the served two-qubit circuit
  *              claims (period 4 over 4 outcomes: every outcome, equal weight)
  *              are compared with what the Worker serves.
+ *   circuit    the served nine-qubit Shor circuit itself — x, h, cmodexp,
+ *              swap, csdg, h — run gate for gate on the exact simulator's
+ *              register. exact.ts has no controlled-S† and no modular
+ *              multiplication, so both are written here ON its representation:
+ *              csdg multiplies an amplitude by −i, which on Gaussian integers
+ *              is (re, im) ↦ (im, −re) and exact; cmodexp is a permutation of
+ *              basis states, exact by construction; swap is a permutation. The
+ *              counting-register marginal that comes out is compared, as exact
+ *              fractions, with the support and equal weights the Worker serves.
+ *              This is the arm the first version of this file declared it
+ *              could not do; it could, on the same integers.
  *
- * WHAT IS NOT RECOMPUTED, BY NAME. The served nine-qubit Shor circuit uses
- * cmodexp, csdg and swap; the exact simulator here has no controlled-S† and no
- * modular-multiplication permutation, so that circuit is not re-run gate for
- * gate — the factorisation, the period and the peak set are. The served
- * `measurement`, `interfere.cancelled/restored`, `speed`, `messaging`, `neuro`,
- * `design` and `css` blocks are counters or prose whose meaning this script
- * cannot state as an equation, and a claim you cannot state you cannot check;
- * they are listed under notPinned rather than silently dropped. The Worker's
- * 16-character `fold` of the Lean source is not this repository's hash and is
- * recorded, not compared.
+ * WHAT IS NOT RECOMPUTED, BY NAME. The served `prepare.amplitudes` count is
+ * not stated as an equation (the exact register after preparation holds four
+ * nonzero amplitudes, and the Worker reports sixteen under a definition it
+ * does not serve). The served `measurement`, `interfere.cancelled/restored`,
+ * `speed`, `messaging`, `neuro`, `design` and `css` blocks are counters or
+ * prose whose meaning this script cannot state as an equation, and a claim you
+ * cannot state you cannot check; they are listed under notPinned rather than
+ * silently dropped. The Worker's 16-character `fold` of the Lean source is not
+ * this repository's hash and is recorded, not compared.
  *
  * THREE ANSWERS, NOT TWO. No network is UNMEASURED: exit 2, nothing written,
  * the previous record stands and nothing here writes "agrees" on a run that
@@ -124,6 +134,76 @@ const states = () => {
   return { bell: describe(bell), plus: describe(plus), hadamard: describe(hadamard), ghz: describe(ghz), interfere: describe(interfere) }
 }
 
+// ── instrument 4: the served Shor circuit, gate for gate, on the exact register ──
+// Three gates exact.ts does not export, written on its representation. Each
+// returns a new register of the same shape; the scale is untouched because
+// none of them introduces a 1/√2.
+const withAmps = (reg, amps) => ({ n: reg.n, amps, scale: reg.scale })
+/** SWAP(a, b): a permutation of basis states. */
+const exactSwap = (reg, a, b) => {
+  const amps = reg.amps.slice()
+  for (let i = 0; i < amps.length; i += 1) {
+    const ba = (i >> a) & 1
+    const bb = (i >> b) & 1
+    if (ba !== bb) { const j = i ^ (1 << a) ^ (1 << b); if (i < j) { amps[i] = reg.amps[j]; amps[j] = reg.amps[i] } }
+  }
+  return withAmps(reg, amps)
+}
+/** Controlled S† = diag(1, 1, 1, −i): multiply by −i where both bits are set. (re + im·i)(−i) = im − re·i. */
+const exactCsdg = (reg, c, t) => withAmps(reg, reg.amps.map((z, i) => (((i >> c) & 1) && ((i >> t) & 1)) ? { re: z.im, im: -z.re } : z))
+/**
+ * Controlled modular multiplication: where control bit c is set, the work
+ * register w (qubits t..t+m−1) becomes (a·w) mod N; values at or above N are
+ * left alone, as in algorithms.ts. A permutation, so exact.
+ */
+const exactCmodexp = (reg, c, a, N, t, m) => {
+  const mask = ((1 << m) - 1) << t
+  const amps = new Array(reg.amps.length).fill(ZERO_AMP)
+  for (let i = 0; i < reg.amps.length; i += 1) {
+    const z = reg.amps[i]
+    if (isZero(z)) continue
+    if (((i >> c) & 1) === 0) { amps[i] = z; continue }
+    const w = (i >> t) & ((1 << m) - 1)
+    if (w >= N) { amps[i] = z; continue }
+    amps[(i & ~mask) | (((a * w) % N) << t)] = z
+  }
+  return withAmps(reg, amps)
+}
+const ZERO_AMP = { re: 0n, im: 0n }
+
+/** Run the served gate list. Returns the final register or the name of a gate it cannot run. */
+const runServedCircuit = (circuit) => {
+  const { qubits, counting, work } = circuit
+  let reg = ex.exactZeroState(qubits)
+  let modulus = null
+  for (const g of circuit.gates) {
+    switch (g.name) {
+      case 'x': reg = ex.exactX(reg, g.q); break
+      case 'h': reg = ex.exactH(reg, g.q); break
+      case 'swap': reg = exactSwap(reg, g.a, g.b); break
+      case 'csdg': reg = exactCsdg(reg, g.c, g.t); break
+      case 'cmodexp': modulus = g.modulus; reg = exactCmodexp(reg, g.c, g.a, g.modulus, counting, work); break
+      default: return { unknown: g.name }
+    }
+  }
+  if (!ex.exactlyNormalised(reg)) throw new Error('the served circuit left the exact register unnormalised')
+  // The counting-register marginal, as exact fractions over 2^scale.
+  const q = 1 << counting
+  const num = new Array(q).fill(0n)
+  for (let i = 0; i < reg.amps.length; i += 1) { const z = reg.amps[i]; num[i & (q - 1)] += z.re * z.re + z.im * z.im }
+  const den = 1n << BigInt(reg.scale)
+  const marginal = num.map((n) => ({ numerator: String(n), denominator: String(den) }))
+  const support = num.map((n, i) => (n === 0n ? -1 : i)).filter((i) => i >= 0)
+  const equal = num.every((n) => n === num[0])
+  const nonzero = reg.amps.filter((z) => !isZero(z)).length
+  // The work values the circuit actually reached, and a fold of the whole
+  // exact state so that any change to the served gate list moves the record.
+  const workSet = new Set()
+  for (let i = 0; i < reg.amps.length; i += 1) if (!isZero(reg.amps[i])) workSet.add((i >> counting) & ((1 << work) - 1))
+  const stateFold = sha(canon({ scale: reg.scale, amps: reg.amps.map((z) => [String(z.re), String(z.im)]) }))
+  return { modulus, marginal, support, equal, nonzero, dim: reg.amps.length, work: [...workSet].sort((x, y) => x - y), stateFold }
+}
+
 // ── instrument 2: the Lean kernel on this machine ─────────────────────────────
 const EVAL = '\n#eval (n, seed, coins, rays, vertices, hexbit, bits, faces, fused)\n#eval faces * mintOf (bits + coins)\n'
 const CONSTANT_NAMES = ['n', 'seed', 'coins', 'rays', 'vertices', 'hexbit', 'bits', 'faces', 'fused']
@@ -196,6 +276,10 @@ const extract = (root, prove, leanText) => {
       coprime: root.shor?.coprime, period: root.shor?.post?.period, counting: root.shor?.circuitry?.counting,
       qftSize: root.shor?.qft?.size, measureSupport: root.shor?.measure?.support, measureWeights: root.shor?.measure?.weights,
       holds: root.shor?.holds,
+      circuit: {
+        qubits: root.shor?.circuitry?.qubits, dim: root.shor?.circuitry?.dim, work: root.shor?.circuitry?.work, counting: root.shor?.circuitry?.counting,
+        native: root.shor?.circuitry?.native, gates: root.shor?.circuitry?.gates, prepareAmplitudes: root.shor?.prepare?.amplitudes,
+      },
     },
     theorems: (prove.lean?.rows ?? []).map((r) => ({ heading: r.heading, theorem: r.theorem, holds: r.holds })),
     lean: { path: prove.source?.path, bytes: Buffer.byteLength(leanText), sha256: sha(leanText), fold: prove.source?.fold, toolchain: prove.source?.toolchain, theoremsServed: prove.source?.theorems },
@@ -258,6 +342,35 @@ const recompute = async (served) => {
   const uniform = Array.isArray(S.measureWeights) && S.measureWeights.length > 0 && S.measureWeights.every((w) => w === S.measureWeights[0])
   claim('shor.peaks', { support: S.measureSupport, uniform }, { support: f.peaks, uniform: f.peaks !== null }, f.peaks !== null && same(S.measureSupport, f.peaks) && uniform)
   claim('shor.holds', S.holds, f.factors !== null, S.holds === (f.factors !== null))
+
+  // the served circuit, gate for gate
+  const C = S.circuit
+  if (!Array.isArray(C?.gates) || !Number.isInteger(C.qubits) || !Number.isInteger(C.counting) || !Number.isInteger(C.work)) {
+    unmeasured('shor.circuit', 'the served circuitry block has no gate list or no register widths')
+  } else {
+    const run = runServedCircuit(C)
+    if (run.unknown) unmeasured('shor.circuit', `served gate "${run.unknown}" is not one this script can run on the exact register`)
+    else {
+      claim('shor.circuit.gates', C.gates.map((g) => g.name), ['x', 'h', 'cmodexp', 'swap', 'csdg'], C.gates.every((g) => ['x', 'h', 'cmodexp', 'swap', 'csdg'].includes(g.name)))
+      claim('shor.circuit.dim', C.dim, run.dim, C.dim === run.dim && run.dim === 1 << C.qubits)
+      claim('shor.circuit.modulus', S.n, run.modulus, run.modulus === S.n)
+      // THE COUNTING MARGINAL CANNOT SEE THE ARITHMETIC. With two counting
+      // qubits and four distinct work values the marginal after the inverse
+      // QFT is uniform whatever the multipliers are — replacing 64 by 63 left
+      // it at 1/4, 1/4, 1/4, 1/4. So the marginal is one arm, and the two
+      // below are the ones that move when the modular arithmetic is wrong:
+      // each cmodexp must multiply by a^(2^j) mod N for the served base, and
+      // the work values the circuit actually reaches must be the powers of a.
+      const mults = C.gates.filter((g) => g.name === 'cmodexp')
+      const expectMults = mults.map((_, j) => ({ c: j, power: 2 ** j, a: Number(BigInt(S.a) ** BigInt(2 ** j) % BigInt(S.n)), modulus: S.n }))
+      claim('shor.circuit.multipliers', mults.map((g) => ({ c: g.c, power: g.power, a: g.a, modulus: g.modulus })), expectMults,
+        mults.length === C.counting && same(mults.map((g) => ({ c: g.c, power: g.power, a: g.a, modulus: g.modulus })), expectMults))
+      const powers = [...new Set(Array.from({ length: Math.max(f.period, 1) }, (_, k) => Number(BigInt(S.a) ** BigInt(k) % BigInt(S.n))))].sort((x, y) => x - y)
+      claim('shor.circuit.work', { a: S.a, n: S.n, period: f.period }, run.work, same(run.work, powers))
+      claim('shor.circuit.counting', { support: S.measureSupport, uniform }, { support: run.support, marginal: run.marginal, equal: run.equal, stateFold: run.stateFold },
+        same(S.measureSupport, run.support) && uniform === run.equal && run.equal)
+    }
+  }
 
   return { claims, kernel: k.version ? { version: k.version } : null }
 }
@@ -328,14 +441,17 @@ const holds = sum.disagree === 0 && sum.unmeasured.length === 0 && claims.length
 
 const record = {
   what: `Every claim ${served.host} serves about its quantum processing unit, recomputed here by instruments that never read its source: the exact simulator for the states, the Lean kernel on this machine for the proof, and this repository's Shor for the factorisation.`,
-  doesNotEstablish: 'that the Worker is quantum hardware (it says simulator, and so does everything here), that its nine-qubit Shor circuit is correct gate for gate (only its factorisation, period and peak set are recomputed), or anything about the served blocks listed under notPinned.',
+  doesNotEstablish: 'that the Worker is quantum hardware (it says simulator, and so does everything here), that the served circuit is the one the Worker actually executes (only the gate list it serves is re-run), or anything about the served blocks listed under notPinned.',
   notPinned: {
     measurement: 'served as {index, bits, support}; the meaning of index and bits is not stated as an equation',
     interfere: 'cancelled and restored are counters whose definition is not served; only the support of H·H|0⟩ is pinned',
-    shorCircuit: 'cmodexp, csdg and swap are not in the exact simulator here; the circuit is not re-run gate for gate',
+    prepareAmplitudes: 'served as a count of 16 after preparation under a definition the Worker does not serve; the exact register here holds 4 nonzero amplitudes at that point, and the circuit is re-run gate for gate regardless',
     fold: 'the Worker\'s 16-character fold of index.lean is not this repository\'s hash; recorded under served.lean.fold, not compared',
     prose: 'speed, messaging, neuro, design, css, docs, glossary and ui are counters or prose',
   },
+  findings: [
+    'The served two-qubit counting marginal cannot see the modular arithmetic: with four distinct work values it is uniform whatever the multipliers are, and replacing 64 by 63 in the served cmodexp left it at 1/4 four times. The multipliers and the work values the circuit reaches are therefore compared as their own claims; the marginal alone would pass a wrong circuit.',
+  ],
   source: {
     host: served.host,
     id: served.id,

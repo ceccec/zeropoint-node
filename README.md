@@ -686,13 +686,13 @@ one.
   title   = {ZeroPoint Node},
   author  = {Rouschev, Tsvetan},
   year    = {2026},
-  version = {1.5.8},
+  version = {1.5.9},
   doi     = {10.5281/zenodo.22178675},
   url     = {https://node.zeropoint.bg},
 }
 ```
 
-Rouschev, T. (2026). *ZeroPoint Node* (Version 1.5.8) [Computer software]. https://doi.org/10.5281/zenodo.22178675
+Rouschev, T. (2026). *ZeroPoint Node* (Version 1.5.9) [Computer software]. https://doi.org/10.5281/zenodo.22178675
 
 ### Built on
 

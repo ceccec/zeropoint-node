@@ -1,7 +1,7 @@
 {
   "what": "Two measurements of the same question. Reachability is exact and decides what a law COULD constrain. The literal census is an experiment and decides what one DOES.",
   "doesNotEstablish": "that a reachable value is constrained, or that a forced value is forced for a good reason. A law may read a value without asserting anything about it, and a law that pins a literal falls for a convention as readily as for a law — see seal-pinning.json.",
-  "inputsFingerprint": "52ac7b0a70b8778d82c05eff9318415e",
+  "inputsFingerprint": "f5e8ae724747b740dfc1a7de0894eecb",
   "reachability": {
     "exportedValues": 1882,
     "reachable": 355,
@@ -15,30 +15,10 @@
     "skipped": 0
   },
   "literals": {
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts::LINEAR_PATTERN": {
-      "verdict": "free",
-      "kind": "number[]",
-      "name": "LINEAR_PATTERN"
-    },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts::SACRED_PATTERN": {
       "verdict": "free",
       "kind": "number[]",
       "name": "SACRED_PATTERN"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.1.2.4.8.7.5.3.6.ts::VORTEX_ORBIT_LENGTH": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "VORTEX_ORBIT_LENGTH"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.mapping.ts::digitFrequencies": {
-      "verdict": "free",
-      "kind": "number[]",
-      "name": "digitFrequencies"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.1.2.4.8.7.5.3.ts::VORTEX_ORBIT_LENGTH": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "VORTEX_ORBIT_LENGTH"
     },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.core.ts::A432_FREQUENCY": {
       "verdict": "forced",
@@ -48,7 +28,32 @@
         "a432_base_frequency_agrees_with_the_axis_math"
       ]
     },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::FIBONACCI_SEQUENCE": {
+      "verdict": "free",
+      "kind": "number[]",
+      "name": "FIBONACCI_SEQUENCE"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.1.2.4.8.7.5.3.6.ts::VORTEX_ORBIT_LENGTH": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "VORTEX_ORBIT_LENGTH"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.electric.flow.ts::LINEAR_PATTERN": {
+      "verdict": "free",
+      "kind": "number[]",
+      "name": "LINEAR_PATTERN"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.1.2.4.8.7.5.3.ts::VORTEX_ORBIT_LENGTH": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "VORTEX_ORBIT_LENGTH"
+    },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.1.2.4.8.7.5.3.6.9.1.ts::VORTEX_ORBIT_LENGTH": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "VORTEX_ORBIT_LENGTH"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.1.2.4.8.7.5.3.6.9.ts::VORTEX_ORBIT_LENGTH": {
       "verdict": "free",
       "kind": "number",
       "name": "VORTEX_ORBIT_LENGTH"
@@ -58,30 +63,20 @@
       "kind": "number[]",
       "name": "CMYK_SEQUENCE"
     },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::FIBONACCI_SEQUENCE": {
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.mapping.ts::digitFrequencies": {
       "verdict": "free",
       "kind": "number[]",
-      "name": "FIBONACCI_SEQUENCE"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.1.2.4.8.7.5.3.6.9.ts::VORTEX_ORBIT_LENGTH": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "VORTEX_ORBIT_LENGTH"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::A432_TRINITY": {
-      "verdict": "free",
-      "kind": "number[]",
-      "name": "A432_TRINITY"
+      "name": "digitFrequencies"
     },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::DIGITAL_ROOT_MODULO": {
       "verdict": "free",
       "kind": "number",
       "name": "DIGITAL_ROOT_MODULO"
     },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::A432_BASE_FREQUENCY": {
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::A432_TRINITY_MULTIPLIER": {
       "verdict": "free",
       "kind": "number",
-      "name": "A432_BASE_FREQUENCY"
+      "name": "A432_TRINITY_MULTIPLIER"
     },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::A432_VORTEX_MULTIPLIER": {
       "verdict": "free",
@@ -93,15 +88,15 @@
       "kind": "number",
       "name": "A432_OCTAVE_RATIO"
     },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::A432_TRINITY_MULTIPLIER": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "A432_TRINITY_MULTIPLIER"
-    },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::DIGITAL_ROOT_BASE": {
       "verdict": "free",
       "kind": "number",
       "name": "DIGITAL_ROOT_BASE"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.constants.ts::A432_BASE_FREQUENCY": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "A432_BASE_FREQUENCY"
     },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::A432_RETURN": {
       "verdict": "free",
@@ -113,65 +108,65 @@
       "kind": "number[]",
       "name": "A432_AXIS"
     },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::A432_TRINITY": {
+      "verdict": "free",
+      "kind": "number[]",
+      "name": "A432_TRINITY"
+    },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::RODIN_COIL_DIPOLES": {
       "verdict": "free",
       "kind": "number[]",
       "name": "RODIN_COIL_DIPOLES"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::RODIN_COIL_MONOPOLE": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "RODIN_COIL_MONOPOLE"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::RODIN_COIL_GAP_SPACE": {
-      "verdict": "free",
-      "kind": "number[]",
-      "name": "RODIN_COIL_GAP_SPACE"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts::IMPERIAL_ANGULAR_STEP": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "IMPERIAL_ANGULAR_STEP"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::A432_SEQUENCE": {
-      "verdict": "free",
-      "kind": "number[]",
-      "name": "A432_SEQUENCE"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts::ZEROPOINT": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "ZEROPOINT"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.radiesthesia.ts::RAY_STEP_DEGREES": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "RAY_STEP_DEGREES"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.radiesthesia.ts::RAY_COUNT": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "RAY_COUNT"
     },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.kernel.ts::SCHEDULING_QUANTUM": {
       "verdict": "free",
       "kind": "number",
       "name": "SCHEDULING_QUANTUM"
     },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts::A432_GATEWAYS": {
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.radiesthesia.ts::RAY_STEP_DEGREES": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "RAY_STEP_DEGREES"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::RODIN_COIL_GAP_SPACE": {
       "verdict": "free",
       "kind": "number[]",
-      "name": "A432_GATEWAYS"
+      "name": "RODIN_COIL_GAP_SPACE"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::RODIN_COIL_MONOPOLE": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "RODIN_COIL_MONOPOLE"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.math.ts::A432_SEQUENCE": {
+      "verdict": "free",
+      "kind": "number[]",
+      "name": "A432_SEQUENCE"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts::IMPERIAL_ANGULAR_STEP": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "IMPERIAL_ANGULAR_STEP"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.radiesthesia.ts::RAY_COUNT": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "RAY_COUNT"
+    },
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts::ZEROPOINT": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "ZEROPOINT"
     },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.radiesthesia.ts::BOVIS_NEUTRAL": {
       "verdict": "free",
       "kind": "number",
       "name": "BOVIS_NEUTRAL"
     },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.tesla.coil.ts::TESLA_BASE_VOLTAGE": {
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.os.ts::A432_GATEWAYS": {
       "verdict": "free",
-      "kind": "number",
-      "name": "TESLA_BASE_VOLTAGE"
+      "kind": "number[]",
+      "name": "A432_GATEWAYS"
     },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.tesla.coil.ts::TESLA_BASE_FREQUENCY": {
       "verdict": "free",
@@ -183,37 +178,25 @@
       "kind": "number",
       "name": "DEFAULT_TESLA_POLARITY"
     },
-    "src/0/3/6/9/1/2/4/8/7/5/1/a432.trinity.ts::VOID_PATTERN": {
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.tesla.coil.ts::TESLA_BASE_VOLTAGE": {
       "verdict": "free",
-      "kind": "number[]",
-      "name": "VOID_PATTERN"
-    },
-    "src/0/3/6/9/1/2/4/8/7/5/1/index.ts::VORTEX_FLOW": {
-      "verdict": "free",
-      "kind": "number[]",
-      "name": "VORTEX_FLOW"
+      "kind": "number",
+      "name": "TESLA_BASE_VOLTAGE"
     },
     "src/0/3/6/9/1/2/4/8/7/5/1/a432.ts::HARMONICS": {
       "verdict": "free",
       "kind": "number[]",
       "name": "HARMONICS"
     },
-    "src/0/index.ts::VORTEX_SEQUENCE": {
-      "verdict": "forced",
+    "src/0/3/6/9/1/2/4/8/7/5/1/index.ts::VORTEX_FLOW": {
+      "verdict": "free",
       "kind": "number[]",
-      "name": "VORTEX_SEQUENCE",
-      "lawsFallen": [
-        "doubling_avoids_the_triad",
-        "computeVortexInvariantsHold"
-      ]
+      "name": "VORTEX_FLOW"
     },
-    "src/0/index.ts::VORTEX_REVERSE": {
-      "verdict": "forced",
+    "src/0/3/6/9/1/2/4/8/7/5/1/a432.trinity.ts::VOID_PATTERN": {
+      "verdict": "free",
       "kind": "number[]",
-      "name": "VORTEX_REVERSE",
-      "lawsFallen": [
-        "computeVortexInvariantsHold"
-      ]
+      "name": "VOID_PATTERN"
     },
     "src/0/index.ts::VORTEX_ORBIT": {
       "verdict": "forced",
@@ -223,6 +206,14 @@
         "doubling_avoids_the_triad",
         "a432_vortex_is_the_doubling_orbit",
         "consciousness_criterion_has_teeth_and_is_not_a_claim"
+      ]
+    },
+    "src/0/index.ts::VORTEX_REVERSE": {
+      "verdict": "forced",
+      "kind": "number[]",
+      "name": "VORTEX_REVERSE",
+      "lawsFallen": [
+        "computeVortexInvariantsHold"
       ]
     },
     "src/0/index.ts::VORTEX_AXIS": {
@@ -237,10 +228,44 @@
         "agl_acts_on_the_three_triangles"
       ]
     },
+    "src/0/index.ts::VORTEX_SEQUENCE": {
+      "verdict": "forced",
+      "kind": "number[]",
+      "name": "VORTEX_SEQUENCE",
+      "lawsFallen": [
+        "doubling_avoids_the_triad",
+        "computeVortexInvariantsHold"
+      ]
+    },
     "src/0/index.ts::LEGACY_CONSCIOUSNESS_SEQUENCE": {
       "verdict": "free",
       "kind": "number[]",
       "name": "LEGACY_CONSCIOUSNESS_SEQUENCE"
+    },
+    "src/quantum/a432-error-resolvers.ts::FOUNDATION_DIMENSION": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "FOUNDATION_DIMENSION"
+    },
+    "src/0/index.ts::TORUS_RING_R": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "TORUS_RING_R"
+    },
+    "src/0/index.ts::TORUS_TUBE_R_BASE": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "TORUS_TUBE_R_BASE"
+    },
+    "src/0/index.ts::TORUS_LOBE_OFFSET": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "TORUS_LOBE_OFFSET"
+    },
+    "src/quantum/a432-error-resolvers.ts::PERFECT_BALANCE": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "PERFECT_BALANCE"
     },
     "src/0/index.ts::VORTEX_DASH_ANGLE_DEG": {
       "verdict": "forced",
@@ -250,30 +275,10 @@
         "computeVortexInvariantsHold"
       ]
     },
-    "src/0/index.ts::TORUS_RING_R": {
+    "src/quantum/polarity-lattice.ts::LATTICE_BITS": {
       "verdict": "free",
       "kind": "number",
-      "name": "TORUS_RING_R"
-    },
-    "src/0/index.ts::TORUS_LOBE_OFFSET": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "TORUS_LOBE_OFFSET"
-    },
-    "src/quantum/a432-error-resolvers.ts::FOUNDATION_DIMENSION": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "FOUNDATION_DIMENSION"
-    },
-    "src/0/index.ts::TORUS_TUBE_R_BASE": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "TORUS_TUBE_R_BASE"
-    },
-    "src/quantum/a432-error-resolvers.ts::PERFECT_BALANCE": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "PERFECT_BALANCE"
+      "name": "LATTICE_BITS"
     },
     "src/quantum/a432-frequency-flow.ts::ZEROPOINT_FLOW_SEQUENCE": {
       "verdict": "free",
@@ -285,35 +290,25 @@
       "kind": "number",
       "name": "PRESENT_DIMENSION"
     },
-    "src/quantum/polarity-lattice.ts::LATTICE_BITS": {
+    "src/quantum/simulator.ts::RNG_MODULUS": {
       "verdict": "free",
       "kind": "number",
-      "name": "LATTICE_BITS"
+      "name": "RNG_MODULUS"
     },
     "src/quantum/polarity-lattice.ts::CUBOCTAHEDRON_NEIGHBOUR_EDGES": {
       "verdict": "free",
       "kind": "number",
       "name": "CUBOCTAHEDRON_NEIGHBOUR_EDGES"
     },
-    "src/quantum/simulator.ts::RNG_MODULUS": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "RNG_MODULUS"
-    },
     "src/security/quantum-fold-cipher.ts::DEFAULT_KEY_BITS": {
       "verdict": "free",
       "kind": "number",
       "name": "DEFAULT_KEY_BITS"
     },
-    "src/security/quantum-threat-landscape.ts::RODIN_SEQUENCE_QUANTUM": {
-      "verdict": "free",
-      "kind": "number[]",
-      "name": "RODIN_SEQUENCE_QUANTUM"
-    },
-    "src/security/quantum-fold-cipher.ts::SCRYPT_SALT_BYTES": {
+    "src/thermo/free-energy.ts::FARADAY": {
       "verdict": "free",
       "kind": "number",
-      "name": "SCRYPT_SALT_BYTES"
+      "name": "FARADAY"
     },
     "src/thermo/free-energy.ts::SCALE": {
       "verdict": "forced",
@@ -323,15 +318,25 @@
         "every_model_inverts"
       ]
     },
-    "src/thermo/free-energy.ts::FARADAY": {
+    "src/security/quantum-fold-cipher.ts::SCRYPT_SALT_BYTES": {
       "verdict": "free",
       "kind": "number",
-      "name": "FARADAY"
+      "name": "SCRYPT_SALT_BYTES"
+    },
+    "src/verification/lean-status.ts::LEAN_PROVEN_COUNT": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "LEAN_PROVEN_COUNT"
     },
     "src/thermo/wastewater-energy.ts::TREATMENT_DEMAND_DECIJOULES_PER_LITRE": {
       "verdict": "free",
       "kind": "number",
       "name": "TREATMENT_DEMAND_DECIJOULES_PER_LITRE"
+    },
+    "src/security/quantum-threat-landscape.ts::RODIN_SEQUENCE_QUANTUM": {
+      "verdict": "free",
+      "kind": "number[]",
+      "name": "RODIN_SEQUENCE_QUANTUM"
     },
     "src/thermo/free-energy.ts::ELECTRONS": {
       "verdict": "forced",
@@ -341,35 +346,30 @@
         "free_energy_of_splitting_is_positive"
       ]
     },
-    "src/verification/lean-status.ts::LEAN_PROVEN_COUNT": {
+    "src/verification/realtime-criterion.ts::FRAME_HZ": {
       "verdict": "free",
       "kind": "number",
-      "name": "LEAN_PROVEN_COUNT"
-    },
-    "src/verification/lean-status.ts::LEAN_SORRY_COUNT": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "LEAN_SORRY_COUNT"
+      "name": "FRAME_HZ"
     },
     "src/verification/lean-status.ts::LEAN_CORPUS_THEOREM_COUNT": {
       "verdict": "free",
       "kind": "number",
       "name": "LEAN_CORPUS_THEOREM_COUNT"
     },
-    "src/verification/realtime-criterion.ts::JITTER_FRACTION_NUMERATOR": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "JITTER_FRACTION_NUMERATOR"
-    },
-    "src/verification/realtime-criterion.ts::FRAME_HZ": {
-      "verdict": "free",
-      "kind": "number",
-      "name": "FRAME_HZ"
-    },
     "src/verification/lean-status.ts::LEAN_CORPUS_PROVEN_COUNT": {
       "verdict": "free",
       "kind": "number",
       "name": "LEAN_CORPUS_PROVEN_COUNT"
+    },
+    "src/verification/lean-status.ts::LEAN_SORRY_COUNT": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "LEAN_SORRY_COUNT"
+    },
+    "src/verification/realtime-criterion.ts::JITTER_FRACTION_NUMERATOR": {
+      "verdict": "free",
+      "kind": "number",
+      "name": "JITTER_FRACTION_NUMERATOR"
     },
     "src/verification/realtime-criterion.ts::JITTER_FRACTION_DENOMINATOR": {
       "verdict": "free",
@@ -377,5 +377,5 @@
       "name": "JITTER_FRACTION_DENOMINATOR"
     }
   },
-  "contentHash": "272c2c51544ef5eb5c1164c6068950ce"
+  "contentHash": "979bdac3b9ea3877f205f8bbd40d2941"
 }
